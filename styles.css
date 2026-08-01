@@ -1,0 +1,63 @@
+:root {
+  font-family: Inter, Pretendard, "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #172033;
+  background: #f3f5f8;
+  font-synthesis: none;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 960px; }
+button, input, select, textarea { font: inherit; }
+.app-shell { width: min(1500px, calc(100% - 48px)); margin: 0 auto; padding: 30px 0 48px; }
+.topbar { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 20px; }
+h1, h2 { margin: 0; letter-spacing: -0.03em; }
+h1 { font-size: 30px; }
+.subtitle { margin: 8px 0 0; color: #697386; }
+.eyebrow { margin: 0 0 6px; font-size: 11px; font-weight: 800; letter-spacing: .18em; color: #5b67d7; }
+.card { background: #fff; border: 1px solid #dde2ea; border-radius: 12px; box-shadow: 0 4px 15px rgba(24, 36, 58, .05); }
+.toolbar { display: flex; justify-content: space-between; gap: 16px; padding: 14px; margin-bottom: 14px; }
+.toolbar-left, .filters { display: flex; align-items: center; gap: 9px; }
+.filters input { width: 280px; }
+input, select, textarea { border: 1px solid #cfd6e1; border-radius: 8px; padding: 9px 11px; background: #fff; color: #172033; }
+input:focus, select:focus, textarea:focus { outline: 2px solid rgba(85, 99, 217, .18); border-color: #5967d9; }
+.btn { border: 1px solid #cfd6e1; border-radius: 8px; padding: 9px 13px; background: #fff; color: #263044; cursor: pointer; font-weight: 650; }
+.btn:hover { background: #f7f8fb; }
+.btn-primary { color: #fff; background: #5360d6; border-color: #5360d6; }
+.btn-primary:hover { background: #4652c5; }
+.file-button { display: inline-flex; align-items: center; }
+.status { display: inline-flex; align-items: center; border-radius: 999px; padding: 7px 11px; font-size: 12px; font-weight: 750; }
+.status-ok { color: #17663c; background: #e7f6ed; }
+.status-warn { color: #815b10; background: #fff3d6; }
+.status-error { color: #9b2e36; background: #fde9eb; }
+.table-card { overflow: hidden; }
+.table-meta { display: flex; justify-content: space-between; padding: 13px 16px; color: #6b7383; font-size: 13px; border-bottom: 1px solid #e1e5ec; }
+.table-meta strong { color: #263044; }
+.table-scroll { overflow: auto; max-height: calc(100vh - 245px); }
+table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+th, td { border-bottom: 1px solid #e5e8ee; border-right: 1px solid #edf0f4; padding: 10px 11px; text-align: left; vertical-align: middle; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+th:last-child, td:last-child { border-right: 0; }
+th { position: sticky; top: 0; z-index: 2; background: #f7f8fa; color: #4d5667; font-size: 12px; font-weight: 800; }
+td { font-size: 13px; }
+tr:hover td { background: #fafbff; }
+th:nth-child(1) { width: 180px; }
+th:nth-child(2) { width: 210px; }
+th.year { width: 95px; }
+th:nth-child(5) { width: 130px; }
+th:nth-child(6) { width: 120px; }
+th.actions { width: 105px; }
+.action-buttons { display: flex; gap: 5px; }
+.mini-btn { border: 0; border-radius: 6px; padding: 5px 8px; cursor: pointer; font-weight: 700; background: #eef1f6; }
+.mini-btn.danger { color: #a42c35; background: #fdebee; }
+.empty-state { padding: 70px 20px; text-align: center; color: #798294; }
+dialog { width: min(720px, calc(100vw - 40px)); border: 0; border-radius: 14px; padding: 0; box-shadow: 0 25px 80px rgba(16, 24, 40, .28); }
+dialog::backdrop { background: rgba(19, 25, 40, .55); }
+#editorForm { padding: 22px; }
+.dialog-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+.icon-button { border: 0; background: transparent; font-size: 28px; line-height: 1; cursor: pointer; color: #6c7483; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-grid label { display: grid; gap: 6px; color: #4b5566; font-size: 13px; font-weight: 700; }
+.full-width { grid-column: 1 / -1; }
+textarea { resize: vertical; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+.form-error { color: #a32c36; background: #fdebed; border-radius: 8px; padding: 9px 11px; font-size: 13px; }
+.toast { position: fixed; right: 24px; bottom: 24px; max-width: 380px; padding: 12px 15px; color: #fff; background: #273148; border-radius: 9px; box-shadow: 0 12px 30px rgba(0,0,0,.2); z-index: 100; }
+@media (max-width: 1100px) { .toolbar { align-items: stretch; flex-direction: column; } .filters input { flex: 1; width: auto; } }
