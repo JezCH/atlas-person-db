@@ -7,6 +7,8 @@ window.addEventListener("load", () => {
   const files = ["person-locales.js", "status-summary.js"];
   if (location.pathname.endsWith("/admin.html") || location.pathname.endsWith("admin.html")) {
     files.push("admin-timeline-verification.js");
+  } else {
+    files.push("non-timeline-list.js");
   }
   files.forEach((file) => {
     const script = document.createElement("script");
