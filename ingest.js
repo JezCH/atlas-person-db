@@ -9,7 +9,10 @@
     "람세스 2세": "Ramses II",
     "콘스탄티누스 1세": "Constantine I",
     "유스티니아누스 1세": "Justinian I",
-    "벨리사리우스": "Belisarius"
+    "벨리사리우스": "Belisarius",
+    "도쿠가와 이에야스": "Tokugawa Ieyasu",
+    "나폴레옹": "Napoleon I",
+    "샤카 카센장가코나": "Shaka kaSenzangakhona"
   };
 
   const basisMap = {
@@ -23,15 +26,6 @@
     "주요 활동": "general_activity"
   };
 
-  function keyOf(record) {
-    return [
-      record.person_name,
-      record.politic_name,
-      Number(record.activity_start),
-      Number(record.activity_end)
-    ].join("|");
-  }
-
   function normalizeRecord(record) {
     return {
       person_name: legacyNames[record.person_name] || record.person_name,
@@ -42,6 +36,10 @@
       period_basis: basisMap[record.period_basis] || record.period_basis || "general_activity",
       notes: record.notes || null
     };
+  }
+
+  function keyOf(record) {
+    return [record.person_name, record.politic_name, Number(record.activity_start), Number(record.activity_end)].join("|");
   }
 
   async function runIngest() {
@@ -55,8 +53,10 @@
 
       const pendingRaw = await response.json();
       if (!Array.isArray(pendingRaw)) return;
+
       const pending = pendingRaw.map(normalizeRecord);
       const pendingByKey = new Map(pending.map((record) => [keyOf(record), record]));
+      const managedPersons = new Set(pending.map((record) => record.person_name));
 
       const { data: existingRows, error: existingError } = await db
         .from("person_politics")
@@ -64,61 +64,58 @@
         .order("id", { ascending: true });
 
       if (existingError) {
-        console.error("ATLAS cleanup lookup failed", existingError);
+        console.error("ATLAS activity reconciliation lookup failed", existingError);
         return;
       }
 
       let changed = 0;
-      const groups = new Map();
+      const seenKeys = new Set();
 
       for (const row of existingRows || []) {
         const normalized = normalizeRecord(row);
         const key = keyOf(normalized);
-        if (!groups.has(key)) groups.set(key, []);
-        groups.get(key).push({ row, normalized });
-      }
+        const canonical = pendingByKey.get(key);
 
-      for (const [key, items] of groups.entries()) {
-        const keeper = items[0];
-        const canonical = pendingByKey.get(key) || keeper.normalized;
-
-        const { error: updateError } = await db
-          .from("person_politics")
-          .update(canonical)
-          .eq("id", keeper.row.id);
-
-        if (updateError) console.error("ATLAS canonical update failed", updateError);
-        else changed += 1;
-
-        for (const duplicate of items.slice(1)) {
-          const { error: deleteError } = await db
-            .from("person_politics")
-            .delete()
-            .eq("id", duplicate.row.id);
-          if (deleteError) console.error("ATLAS duplicate cleanup failed", deleteError);
+        if (managedPersons.has(normalized.person_name) && !canonical) {
+          const { error } = await db.from("person_politics").delete().eq("id", row.id);
+          if (error) console.error("ATLAS obsolete activity cleanup failed", error);
           else changed += 1;
+          continue;
         }
+
+        if (seenKeys.has(key)) {
+          const { error } = await db.from("person_politics").delete().eq("id", row.id);
+          if (error) console.error("ATLAS duplicate activity cleanup failed", error);
+          else changed += 1;
+          continue;
+        }
+
+        seenKeys.add(key);
+        if (!canonical) continue;
+
+        const { error } = await db.from("person_politics").update(canonical).eq("id", row.id);
+        if (error) console.error("ATLAS canonical activity update failed", error);
+        else changed += 1;
       }
 
-      const existingKeys = new Set(groups.keys());
       for (const record of pending) {
         const key = keyOf(record);
-        if (existingKeys.has(key)) continue;
+        if (seenKeys.has(key)) continue;
 
-        const { error: insertError } = await db.from("person_politics").insert(record);
-        if (insertError) console.error("ATLAS ingest insert failed", insertError);
+        const { error } = await db.from("person_politics").insert(record);
+        if (error) console.error("ATLAS activity insert failed", error);
         else {
-          existingKeys.add(key);
+          seenKeys.add(key);
           changed += 1;
         }
       }
 
-      if (changed > 0 && !sessionStorage.getItem("atlas-normalized-v1")) {
-        sessionStorage.setItem("atlas-normalized-v1", "1");
+      if (changed > 0 && !sessionStorage.getItem("atlas-person-activity-v2")) {
+        sessionStorage.setItem("atlas-person-activity-v2", "1");
         location.reload();
       }
     } catch (error) {
-      console.error("ATLAS ingest failed", error);
+      console.error("ATLAS activity reconciliation failed", error);
     }
   }
 
