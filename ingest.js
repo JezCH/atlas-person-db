@@ -1,140 +1,47 @@
 (() => {
   "use strict";
 
-  const legacyMigrations = [
-    {
-      old_name: "이순신",
-      person_name: "Yi Sun-sin",
-      politic_name: "Joseon",
-      activity_start: 1576,
-      activity_end: 1598,
-      role: "Military officer and naval commander",
-      period_basis: "military_activity",
-      notes: "Passed the military examination and entered government service in 1576; served as Joseon's leading naval commander and was killed at the Battle of Noryang in 1598."
-    },
-    {
-      old_name: "율리우스 카이사르",
-      person_name: "Julius Caesar",
-      politic_name: "Roman Republic",
-      activity_start: -49,
-      activity_end: -44,
-      role: "Dictator, consul and general",
-      period_basis: "de_facto_rule",
-      notes: "Seized effective control during the civil war beginning in 49 BCE, held repeated dictatorships, became dictator perpetuo in 44 BCE, and was assassinated on 15 March of that year."
-    },
-    {
-      old_name: "프리드리히 대왕",
-      person_name: "Frederick the Great",
-      politic_name: "Kingdom of Prussia",
-      activity_start: 1740,
-      activity_end: 1786,
-      role: "King and military commander",
-      period_basis: "reign",
-      notes: "Reigned as king of Prussia from 1740 until his death in 1786 and transformed Prussia into a major European power through war, territorial expansion and state reform."
-    },
-    {
-      old_name: "함무라비",
-      person_name: "Hammurabi",
-      politic_name: "Old Babylonian Empire",
-      activity_start: -1792,
-      activity_end: -1750,
-      role: "King, conqueror and lawgiver",
-      period_basis: "reign",
-      notes: "Reigned as the sixth king of Babylon's First Dynasty from 1792 to 1750 BCE under the Middle Chronology. He extended Babylonian rule across much of Mesopotamia and is best known for the Code of Hammurabi. Ancient Near Eastern absolute chronology remains disputed; ATLAS uses the Middle Chronology for this record."
-    },
-    {
-      old_name: "람세스 2세",
-      person_name: "Ramses II",
-      politic_name: "New Kingdom of Egypt",
-      activity_start: -1279,
-      activity_end: -1213,
-      role: "Pharaoh and military commander",
-      period_basis: "reign",
-      notes: "Reigned as a pharaoh of Egypt's Nineteenth Dynasty from 1279 to 1213 BCE. He is associated with the Battle of Kadesh, extensive building programs and a reign of about sixty-six years."
-    },
-    {
-      old_name: "콘스탄티누스 1세",
-      person_name: "Constantine I",
-      politic_name: "Roman Empire",
-      activity_start: 306,
-      activity_end: 337,
-      role: "Emperor",
-      period_basis: "reign"
-    },
-    {
-      old_name: "유스티니아누스 1세",
-      person_name: "Justinian I",
-      politic_name: "Byzantine Empire",
-      activity_start: 527,
-      activity_end: 565,
-      role: "Emperor",
-      period_basis: "reign"
-    },
-    {
-      old_name: "벨리사리우스",
-      person_name: "Belisarius",
-      politic_name: "Byzantine Empire",
-      activity_start: 527,
-      activity_end: 565,
-      role: "General",
-      period_basis: "military_activity"
-    }
-  ];
+  const legacyNames = {
+    "이순신": "Yi Sun-sin",
+    "율리우스 카이사르": "Julius Caesar",
+    "프리드리히 대왕": "Frederick the Great",
+    "함무라비": "Hammurabi",
+    "람세스 2세": "Ramses II",
+    "콘스탄티누스 1세": "Constantine I",
+    "유스티니아누스 1세": "Justinian I",
+    "벨리사리우스": "Belisarius"
+  };
 
-  async function migrateLegacyRecords(db) {
-    let changed = 0;
+  const basisMap = {
+    "재위": "reign",
+    "임기": "term",
+    "실권 장악": "de_facto_rule",
+    "군사 활동": "military_activity",
+    "종교 활동": "religious_activity",
+    "학술 활동": "intellectual_activity",
+    "예술 활동": "artistic_activity",
+    "주요 활동": "general_activity"
+  };
 
-    for (const migration of legacyMigrations) {
-      const { data: legacyRows, error: legacyError } = await db
-        .from("person_politics")
-        .select("id")
-        .eq("person_name", migration.old_name);
+  function keyOf(record) {
+    return [
+      record.person_name,
+      record.politic_name,
+      Number(record.activity_start),
+      Number(record.activity_end)
+    ].join("|");
+  }
 
-      if (legacyError) {
-        console.error("ATLAS legacy lookup failed", legacyError);
-        continue;
-      }
-      if (!legacyRows?.length) continue;
-
-      const { data: canonicalRows, error: canonicalError } = await db
-        .from("person_politics")
-        .select("id")
-        .eq("person_name", migration.person_name)
-        .eq("politic_name", migration.politic_name)
-        .eq("activity_start", migration.activity_start)
-        .eq("activity_end", migration.activity_end)
-        .limit(1);
-
-      if (canonicalError) {
-        console.error("ATLAS canonical lookup failed", canonicalError);
-        continue;
-      }
-
-      for (const legacyRow of legacyRows) {
-        if (canonicalRows?.length) {
-          const { error: deleteError } = await db.from("person_politics").delete().eq("id", legacyRow.id);
-          if (deleteError) console.error("ATLAS duplicate cleanup failed", deleteError);
-          else changed += 1;
-          continue;
-        }
-
-        const payload = {
-          person_name: migration.person_name,
-          politic_name: migration.politic_name,
-          activity_start: migration.activity_start,
-          activity_end: migration.activity_end,
-          role: migration.role,
-          period_basis: migration.period_basis
-        };
-        if (migration.notes) payload.notes = migration.notes;
-
-        const { error: updateError } = await db.from("person_politics").update(payload).eq("id", legacyRow.id);
-        if (updateError) console.error("ATLAS legacy migration failed", updateError);
-        else changed += 1;
-      }
-    }
-
-    return changed;
+  function normalizeRecord(record) {
+    return {
+      person_name: legacyNames[record.person_name] || record.person_name,
+      politic_name: record.politic_name,
+      activity_start: Number(record.activity_start),
+      activity_end: Number(record.activity_end),
+      role: record.role || null,
+      period_basis: basisMap[record.period_basis] || record.period_basis || "general_activity",
+      notes: record.notes || null
+    };
   }
 
   async function runIngest() {
@@ -143,47 +50,71 @@
 
     try {
       const db = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
-      let changed = await migrateLegacyRecords(db);
-
       const response = await fetch(`./pending-records.json?v=${Date.now()}`, { cache: "no-store" });
       if (!response.ok) return;
-      const pending = await response.json();
-      if (!Array.isArray(pending)) return;
 
-      for (const record of pending) {
-        const { data, error } = await db
-          .from("person_politics")
-          .select("id")
-          .eq("person_name", record.person_name)
-          .eq("politic_name", record.politic_name)
-          .eq("activity_start", record.activity_start)
-          .eq("activity_end", record.activity_end)
-          .limit(1);
+      const pendingRaw = await response.json();
+      if (!Array.isArray(pendingRaw)) return;
+      const pending = pendingRaw.map(normalizeRecord);
+      const pendingByKey = new Map(pending.map((record) => [keyOf(record), record]));
 
-        if (error) {
-          console.error("ATLAS ingest lookup failed", error);
-          continue;
-        }
-        if (data?.length) {
-          const { error: updateError } = await db
-            .from("person_politics")
-            .update(record)
-            .eq("id", data[0].id);
-          if (updateError) console.error("ATLAS ingest refresh failed", updateError);
-          else changed += 1;
-          continue;
-        }
+      const { data: existingRows, error: existingError } = await db
+        .from("person_politics")
+        .select("*")
+        .order("id", { ascending: true });
 
-        const { error: insertError } = await db.from("person_politics").insert(record);
-        if (insertError) {
-          console.error("ATLAS ingest insert failed", insertError);
-          continue;
-        }
-        changed += 1;
+      if (existingError) {
+        console.error("ATLAS cleanup lookup failed", existingError);
+        return;
       }
 
-      if (changed > 0 && !sessionStorage.getItem("atlas-ingest-reloaded")) {
-        sessionStorage.setItem("atlas-ingest-reloaded", "1");
+      let changed = 0;
+      const groups = new Map();
+
+      for (const row of existingRows || []) {
+        const normalized = normalizeRecord(row);
+        const key = keyOf(normalized);
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key).push({ row, normalized });
+      }
+
+      for (const [key, items] of groups.entries()) {
+        const keeper = items[0];
+        const canonical = pendingByKey.get(key) || keeper.normalized;
+
+        const { error: updateError } = await db
+          .from("person_politics")
+          .update(canonical)
+          .eq("id", keeper.row.id);
+
+        if (updateError) console.error("ATLAS canonical update failed", updateError);
+        else changed += 1;
+
+        for (const duplicate of items.slice(1)) {
+          const { error: deleteError } = await db
+            .from("person_politics")
+            .delete()
+            .eq("id", duplicate.row.id);
+          if (deleteError) console.error("ATLAS duplicate cleanup failed", deleteError);
+          else changed += 1;
+        }
+      }
+
+      const existingKeys = new Set(groups.keys());
+      for (const record of pending) {
+        const key = keyOf(record);
+        if (existingKeys.has(key)) continue;
+
+        const { error: insertError } = await db.from("person_politics").insert(record);
+        if (insertError) console.error("ATLAS ingest insert failed", insertError);
+        else {
+          existingKeys.add(key);
+          changed += 1;
+        }
+      }
+
+      if (changed > 0 && !sessionStorage.getItem("atlas-normalized-v1")) {
+        sessionStorage.setItem("atlas-normalized-v1", "1");
         location.reload();
       }
     } catch (error) {
