@@ -1,5 +1,32 @@
 [
   {
+    "person_name": "Constantine I",
+    "politic_name": "Roman Empire",
+    "activity_start": 306,
+    "activity_end": 337,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Reigned as Roman emperor from 306 to 337. He became sole ruler of the Roman Empire in 324 and founded Constantinople as an imperial capital."
+  },
+  {
+    "person_name": "Justinian I",
+    "politic_name": "Byzantine Empire",
+    "activity_start": 527,
+    "activity_end": 565,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Reigned as Byzantine emperor from 527 to 565. His reign is associated with the Corpus Juris Civilis, major building projects including Hagia Sophia, and campaigns that restored imperial rule over parts of the western Mediterranean."
+  },
+  {
+    "person_name": "Belisarius",
+    "politic_name": "Byzantine Empire",
+    "activity_start": 527,
+    "activity_end": 565,
+    "role": "General",
+    "period_basis": "military_activity",
+    "notes": "Served as a leading Byzantine general during the reign of Justinian I, commanding campaigns against the Sasanian Empire, the Vandal Kingdom and the Ostrogothic Kingdom."
+  },
+  {
     "person_name": "Yi Sun-sin",
     "politic_name": "Joseon",
     "activity_start": 1576,
