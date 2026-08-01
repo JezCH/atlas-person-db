@@ -1,47 +1,56 @@
 [
   {
-    "person_name": "이순신",
+    "person_name": "Yi Sun-sin",
     "politic_name": "Joseon",
     "activity_start": 1576,
     "activity_end": 1598,
-    "role": "무관·수군 지휘관",
+    "role": "Military officer and naval commander",
     "period_basis": "military_activity",
-    "notes": "1576년 무과 급제 후 관직에 진출했으며, 1598년 노량해전에서 전사했다."
+    "notes": "Passed the military examination and entered government service in 1576; served as Joseon's leading naval commander and was killed at the Battle of Noryang in 1598."
   },
   {
-    "person_name": "율리우스 카이사르",
+    "person_name": "Julius Caesar",
     "politic_name": "Roman Republic",
     "activity_start": -49,
     "activity_end": -44,
-    "role": "독재관·집정관·장군",
+    "role": "Dictator, consul and general",
     "period_basis": "de_facto_rule",
-    "notes": "기원전 49년 내전을 시작하며 로마의 실권을 장악했고, 여러 차례 독재관에 임명된 뒤 기원전 44년 종신 독재관이 되었으나 같은 해 3월 15일 암살되었다."
+    "notes": "Seized effective control during the civil war beginning in 49 BCE, held repeated dictatorships, became dictator perpetuo in 44 BCE, and was assassinated on 15 March of that year."
   },
   {
-    "person_name": "프리드리히 대왕",
+    "person_name": "Frederick the Great",
     "politic_name": "Kingdom of Prussia",
     "activity_start": 1740,
     "activity_end": 1786,
-    "role": "국왕·군사 지휘관",
+    "role": "King and military commander",
     "period_basis": "reign",
-    "notes": "1740년 프로이센 왕위에 올라 1786년 사망할 때까지 재위했으며, 전쟁과 영토 확장을 통해 프로이센을 유럽의 주요 강국으로 성장시켰다."
+    "notes": "Reigned as king of Prussia from 1740 until his death in 1786 and transformed Prussia into a major European power through war, territorial expansion and state reform."
   },
   {
-    "person_name": "함무라비",
+    "person_name": "Hammurabi",
     "politic_name": "Old Babylonian Empire",
     "activity_start": -1792,
     "activity_end": -1750,
-    "role": "국왕·정복자·법전 편찬자",
+    "role": "King, conqueror and lawgiver",
     "period_basis": "reign",
-    "notes": "중기 연대기 기준 기원전 1792년부터 1750년까지 바빌론 제1왕조의 제6대 왕으로 재위했다. 주변 왕국들을 정복해 바빌론의 지배권을 메소포타미아 전역으로 확대했으며, 함무라비 법전으로 널리 알려져 있다. 고대 근동 절대연대에는 학설 차이가 있어 본 DB는 중기 연대기를 채택한다."
+    "notes": "Reigned as the sixth king of Babylon's First Dynasty from 1792 to 1750 BCE under the Middle Chronology. He extended Babylonian rule across much of Mesopotamia and is best known for the Code of Hammurabi. Ancient Near Eastern absolute chronology remains disputed; ATLAS uses the Middle Chronology for this record."
   },
   {
-    "person_name": "람세스 2세",
+    "person_name": "Ramses II",
     "politic_name": "New Kingdom of Egypt",
     "activity_start": -1279,
     "activity_end": -1213,
-    "role": "파라오·군사 지휘관",
+    "role": "Pharaoh and military commander",
     "period_basis": "reign",
-    "notes": "이집트 신왕국 제19왕조의 파라오로 기원전 1279년부터 1213년까지 재위했다. 카데시 전투와 대규모 건축 사업으로 유명하며, 66년 동안 통치했다."
+    "notes": "Reigned as a pharaoh of Egypt's Nineteenth Dynasty from 1279 to 1213 BCE. He is associated with the Battle of Kadesh, extensive building programs and a reign of about sixty-six years."
+  },
+  {
+    "person_name": "Abraham Lincoln",
+    "politic_name": "United States",
+    "activity_start": 1861,
+    "activity_end": 1865,
+    "role": "President",
+    "period_basis": "term",
+    "notes": "Served as the sixteenth president of the United States from 1861 until his assassination in 1865, leading the Union through the American Civil War."
   }
 ]
