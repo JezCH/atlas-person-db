@@ -85,14 +85,13 @@
   function render() {
     const items = visibleRecords();
     els.body.innerHTML = items.map((r) => `
-      <tr data-id="${r.id}" class="${String(r.id) === String(selectedId) ? "selected" : ""}">
+      <tr data-id="${r.id}" class="${String(r.id) === String(selectedId) ? "selected" : ""}" aria-selected="${String(r.id) === String(selectedId)}">
         <td>${escapeHtml(r.person_name)}</td>
         <td>${escapeHtml(r.politic_name)}</td>
         <td>${escapeHtml(formatYear(r.activity_start))}</td>
         <td>${escapeHtml(formatYear(r.activity_end))}</td>
         <td>${escapeHtml(r.role || "")}</td>
         <td>${escapeHtml(basisLabels[r.period_basis] || r.period_basis || "")}</td>
-        <td title="${escapeHtml(r.notes || "")}">${escapeHtml(r.notes || "")}</td>
         <td><div class="action-buttons"><button class="mini-btn edit" data-id="${r.id}">수정</button><button class="mini-btn danger delete" data-id="${r.id}">삭제</button></div></td>
       </tr>`).join("");
     els.rowCount.textContent = `${items.length}개 행`;
