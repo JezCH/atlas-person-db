@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATLAS Batch Import</title>
+  <link rel="stylesheet" href="./admin.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <main class="admin-shell">
+    <header class="admin-head">
+      <div>
+        <p class="eyebrow">ATLAS AUTHORING</p>
+        <h1>JSON 일괄 입력</h1>
+        <p>검증된 Person–Politic 레코드를 Supabase에 한 번에 추가하거나 갱신합니다.</p>
+      </div>
+      <a class="button secondary" href="./index.html">Persons로 돌아가기</a>
+    </header>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>입력 데이터</h2>
+          <p>영어 canonical name과 음수 BCE 연도를 사용합니다.</p>
+        </div>
+        <button id="sampleButton" class="button secondary" type="button">예시 불러오기</button>
+      </div>
+
+      <textarea id="jsonInput" spellcheck="false" placeholder='[{"person_name":"Mahatma Gandhi","politic_name":"British Raj","activity_start":1915,"activity_end":1948,"role":"Political leader","period_basis":"general_activity","notes":"..."}]'></textarea>
+
+      <div class="actions">
+        <button id="validateButton" class="button secondary" type="button">형식 검사</button>
+        <button id="saveButton" class="button primary" type="button">DB에 저장</button>
+      </div>
+
+      <pre id="result" class="result" aria-live="polite">대기 중</pre>
+    </section>
+
+    <section class="panel compact">
+      <h2>필수 필드</h2>
+      <code>person_name, politic_name, activity_start, activity_end, period_basis</code>
+      <p>동일한 인물·Politic·시작·종료 조합이 있으면 새 행을 만들지 않고 기존 행을 갱신합니다.</p>
+    </section>
+  </main>
+
+  <script src="./config.js"></script>
+  <script src="./admin.js"></script>
+</body>
+</html>
