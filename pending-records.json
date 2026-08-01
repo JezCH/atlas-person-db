@@ -79,5 +79,14 @@
     "role": "President",
     "period_basis": "term",
     "notes": "Served as the sixteenth president of the United States from 1861 until his assassination in 1865, leading the Union through the American Civil War."
+  },
+  {
+    "person_name": "Alexander the Great",
+    "politic_name": "Macedonian Empire",
+    "activity_start": -336,
+    "activity_end": -323,
+    "role": "King and military commander",
+    "period_basis": "reign",
+    "notes": "Reigned as king of Macedon from 336 to 323 BCE and led the conquests that overthrew the Achaemenid Empire and created a vast Macedonian empire extending into Egypt and northwestern India."
   }
 ]
