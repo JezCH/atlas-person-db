@@ -4,8 +4,10 @@ window.ATLAS_CONFIG = {
 };
 
 window.addEventListener("load", () => {
-  const script = document.createElement("script");
-  script.src = `./person-locales.js?v=${Date.now()}`;
-  script.defer = true;
-  document.body.appendChild(script);
+  ["person-locales.js", "status-summary.js"].forEach((file) => {
+    const script = document.createElement("script");
+    script.src = `./${file}?v=${Date.now()}`;
+    script.defer = true;
+    document.body.appendChild(script);
+  });
 });
