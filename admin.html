@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ATLAS Batch Import</title>
+  <title>ATLAS Admin</title>
   <link rel="stylesheet" href="./admin.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -12,8 +12,8 @@
     <header class="admin-head">
       <div>
         <p class="eyebrow">ATLAS AUTHORING</p>
-        <h1>JSON 일괄 입력</h1>
-        <p>검증된 Person–Politic 레코드를 Supabase에 한 번에 추가하거나 갱신합니다.</p>
+        <h1>데이터 관리자</h1>
+        <p>JSON 입력과 실제 Supabase 데이터 무결성 검사를 수행합니다.</p>
       </div>
       <a class="button secondary" href="./index.html">Persons로 돌아가기</a>
     </header>
@@ -21,7 +21,18 @@
     <section class="panel">
       <div class="panel-head">
         <div>
-          <h2>입력 데이터</h2>
+          <h2>DB 검증</h2>
+          <p>등록 예정 명단, GitHub 기준 데이터, Supabase 실제 데이터를 서로 대조합니다.</p>
+        </div>
+        <button id="verifyButton" class="button primary" type="button">Verify Database</button>
+      </div>
+      <pre id="verifyResult" class="result" aria-live="polite">검증 대기 중</pre>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>JSON 일괄 입력</h2>
           <p>영어 canonical name과 음수 BCE 연도를 사용합니다.</p>
         </div>
         <button id="sampleButton" class="button secondary" type="button">예시 불러오기</button>
@@ -35,6 +46,13 @@
       </div>
 
       <pre id="result" class="result" aria-live="polite">대기 중</pre>
+    </section>
+
+    <section class="panel compact">
+      <h2>검증 기준</h2>
+      <p><code>expected-persons.json</code>: 대화에서 등록하기로 한 전체 인물 명단</p>
+      <p><code>pending-records.json</code>: GitHub에서 관리하는 표준 활동 데이터</p>
+      <p><code>person_politics</code>: Supabase 실제 저장 데이터</p>
     </section>
 
     <section class="panel compact">
