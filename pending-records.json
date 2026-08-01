@@ -99,6 +99,15 @@
     "notes": "Served as a leading Byzantine general during the reign of Justinian I, commanding campaigns against the Sasanian Empire, the Vandal Kingdom and the Ostrogothic Kingdom."
   },
   {
+    "person_name": "Wu Zetian",
+    "politic_name": "Wu Zhou",
+    "activity_start": 690,
+    "activity_end": 705,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Founded the Wu Zhou dynasty and ruled China as emperor from 690 until her abdication in 705. She had exercised substantial political authority before formally taking the throne, but this timeline record uses her sovereign reign as the map-display period."
+  },
+  {
     "person_name": "Genghis Khan",
     "politic_name": "Mongol Empire",
     "activity_start": 1206,
