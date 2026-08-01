@@ -1,6 +1,5 @@
 @media (max-width: 760px) {
-  /* Mobile-only application chrome */
-  body { min-width: 0; }
+  body { min-width:0; }
   .mobile-appbar { display:flex; position:sticky; top:0; z-index:40; height:74px; padding:12px 16px; align-items:center; gap:12px; background:#101827; color:#fff; }
   .mobile-menu-button { width:46px; height:46px; border:0; border-radius:12px; color:#fff; background:#1e293b; font-size:25px; }
   .mobile-brand { display:flex; align-items:center; gap:10px; min-width:0; }
@@ -31,24 +30,24 @@
   table,tbody { display:block; width:100%; }
   thead { display:none; }
 
-  /* Reset all legacy table-cell mobile labels and positioning. */
+  #dataBody { display:grid; gap:10px; }
   #dataBody tr,
-  #dataBody td { position:static; float:none; width:auto !important; min-width:0; max-width:none; }
+  #dataBody td { float:none; width:auto !important; min-width:0; max-width:none; }
   #dataBody td::before { content:none !important; display:none !important; }
 
-  #dataBody { display:grid; gap:10px; }
   #dataBody tr {
     position:relative;
     display:grid;
-    grid-template-columns:1fr auto;
+    grid-template-columns:auto auto minmax(0,1fr) auto;
     grid-template-areas:
-      "person arrow"
-      "politic politic"
-      "period role"
-      "basis basis"
-      "actions actions";
-    gap:5px 12px;
-    padding:16px 18px;
+      "person person person arrow"
+      "politic politic politic politic"
+      "start end role role"
+      "basis basis basis basis"
+      "actions actions actions actions";
+    column-gap:8px;
+    row-gap:6px;
+    padding:15px 17px;
     border:1px solid var(--border);
     border-radius:14px;
     background:#fff;
@@ -61,50 +60,33 @@
     align-self:center;
     justify-self:end;
     color:#7b8494;
-    font-size:28px;
+    font-size:27px;
     line-height:1;
-    transform:rotate(90deg);
     transition:transform .18s ease,color .18s ease;
   }
-  #dataBody tr.selected::after { transform:rotate(270deg); color:var(--primary); }
+  #dataBody tr.selected::after { transform:rotate(90deg); color:var(--primary); }
   #dataBody tr.selected { border-color:#aeb7ff; box-shadow:0 7px 22px rgba(62,76,170,.12); }
 
-  #dataBody td { display:block; border:0; padding:0; overflow:visible; white-space:normal; text-overflow:clip; background:transparent !important; }
+  #dataBody td { display:block; position:static; border:0; padding:0; overflow:visible; white-space:normal; text-overflow:clip; background:transparent !important; }
   #dataBody td:nth-child(1) { grid-area:person; padding-right:8px; font-size:21px; font-weight:900; line-height:1.25; }
   #dataBody td:nth-child(2) { grid-area:politic; color:#4f596a; font-size:14px; font-weight:700; }
-  #dataBody td:nth-child(3),#dataBody td:nth-child(4) { display:none; }
-  #dataBody td:nth-child(5) { grid-area:role; justify-self:end; color:#5b6576; font-size:13px; font-weight:700; }
-  #dataBody td:nth-child(5)::before { content:"" !important; }
-  #dataBody td:nth-child(2)::after {
-    content:attr(data-period);
-  }
-
-  /* The period is assembled visually from the hidden year cells via generated content. */
-  #dataBody tr { --start:""; --end:""; }
-  #dataBody td:nth-child(3),#dataBody td:nth-child(4) { font-size:0; }
-  #dataBody td:nth-child(2) { display:flex; flex-wrap:wrap; gap:7px; align-items:center; }
-  #dataBody td:nth-child(2)::after { content:none; }
-  #dataBody td:nth-child(3)::before,#dataBody td:nth-child(4)::before { content:none !important; }
-
-  /* Show actual start/end in one compact row without pseudo-label overlap. */
-  #dataBody td:nth-child(3),#dataBody td:nth-child(4) { display:block; position:absolute; top:76px; font-size:13px; color:#6c7585; font-weight:700; }
-  #dataBody td:nth-child(3) { left:18px; }
-  #dataBody td:nth-child(3)::after { content:" –"; }
-  #dataBody td:nth-child(4) { left:70px; }
-  #dataBody td:nth-child(5) { margin-top:22px; }
+  #dataBody td:nth-child(3) { grid-area:start; color:#6c7585; font-size:13px; font-weight:700; }
+  #dataBody td:nth-child(3)::after { content:"–"; display:inline; margin-left:8px; color:#9aa2af; }
+  #dataBody td:nth-child(4) { grid-area:end; color:#6c7585; font-size:13px; font-weight:700; }
+  #dataBody td:nth-child(5) { grid-area:role; justify-self:end; color:#4f596a; font-size:13px; font-weight:800; }
 
   #dataBody td:nth-child(6),#dataBody td:nth-child(7) { display:none; }
   #dataBody tr.selected td:nth-child(6) {
     grid-area:basis;
     display:block;
-    margin-top:10px;
+    margin-top:8px;
     padding-top:12px;
     border-top:1px solid #edf0f4;
     color:#526071;
     font-size:13px;
     font-weight:700;
   }
-  #dataBody tr.selected td:nth-child(6)::before { content:"기간 기준  "; display:inline !important; color:#8992a1; font-weight:800; }
+  #dataBody tr.selected td:nth-child(6)::before { content:"기간 기준  " !important; display:inline !important; color:#8992a1; font-weight:800; }
   #dataBody tr.selected td:nth-child(7) { grid-area:actions; display:block; padding-top:8px; }
   #dataBody tr.selected .action-buttons { display:grid; grid-template-columns:1fr 1fr; gap:8px; width:100%; }
   #dataBody tr.selected .mini-btn { min-height:43px; font-size:14px; }
