@@ -42,21 +42,30 @@
     return [record.person_name, record.politic_name, Number(record.activity_start), Number(record.activity_end)].join("|");
   }
 
+  async function fetchJson(path) {
+    const response = await fetch(`${path}?v=${Date.now()}`, { cache: "no-store" });
+    if (!response.ok) throw new Error(`${path} lookup failed (${response.status})`);
+    return response.json();
+  }
+
   async function runIngest() {
     const config = window.ATLAS_CONFIG || {};
     if (!config.SUPABASE_URL || !config.SUPABASE_ANON_KEY || !window.supabase) return;
 
     try {
       const db = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
-      const response = await fetch(`./pending-records.json?v=${Date.now()}`, { cache: "no-store" });
-      if (!response.ok) return;
+      const [pendingRaw, nonTimelineRaw] = await Promise.all([
+        fetchJson("./pending-records.json"),
+        fetchJson("./non-timeline-persons.json")
+      ]);
+      if (!Array.isArray(pendingRaw) || !Array.isArray(nonTimelineRaw)) return;
 
-      const pendingRaw = await response.json();
-      if (!Array.isArray(pendingRaw)) return;
-
-      const pending = pendingRaw.map(normalizeRecord);
+      const excludedPersons = new Set(nonTimelineRaw.map((item) => String(item.person_name || "").trim()).filter(Boolean));
+      const pending = pendingRaw
+        .filter((record) => !excludedPersons.has(String(record.person_name || "").trim()))
+        .map(normalizeRecord);
       const pendingByKey = new Map(pending.map((record) => [keyOf(record), record]));
-      const managedPersons = new Set(pending.map((record) => record.person_name));
+      const managedPersons = new Set([...pending.map((record) => record.person_name), ...excludedPersons]);
 
       const { data: existingRows, error: existingError } = await db
         .from("person_politics")
@@ -75,6 +84,13 @@
         const normalized = normalizeRecord(row);
         const key = keyOf(normalized);
         const canonical = pendingByKey.get(key);
+
+        if (excludedPersons.has(normalized.person_name)) {
+          const { error } = await db.from("person_politics").delete().eq("id", row.id);
+          if (error) console.error("ATLAS non-timeline cleanup failed", error);
+          else changed += 1;
+          continue;
+        }
 
         if (managedPersons.has(normalized.person_name) && !canonical) {
           const { error } = await db.from("person_politics").delete().eq("id", row.id);
@@ -110,8 +126,8 @@
         }
       }
 
-      if (changed > 0 && !sessionStorage.getItem("atlas-person-activity-v2")) {
-        sessionStorage.setItem("atlas-person-activity-v2", "1");
+      if (changed > 0 && !sessionStorage.getItem("atlas-person-activity-v3")) {
+        sessionStorage.setItem("atlas-person-activity-v3", "1");
         location.reload();
       }
     } catch (error) {
