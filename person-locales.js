@@ -16,7 +16,15 @@
     "Joseph Stalin": "이오시프 스탈린",
     "Shaka kaSenzangakhona": "샤카 카센장가코나",
     "Tokugawa Ieyasu": "도쿠가와 이에야스",
-    "Napoleon I": "나폴레옹 1세"
+    "Napoleon I": "나폴레옹 1세",
+    "Moctezuma II": "몬테수마 2세",
+    "Mao Zedong": "마오쩌둥",
+    "Elizabeth I": "엘리자베스 1세",
+    "Genghis Khan": "칭기즈 칸",
+    "Hannibal Barca": "한니발 바르카",
+    "Dido": "디도",
+    "Cunobeline": "쿠노벨리누스",
+    "Boudica": "부디카"
   };
 
   const koPolities = {
@@ -33,7 +41,14 @@
     "Soviet Union": "소련",
     "Zulu Kingdom": "줄루 왕국",
     "Tokugawa Shogunate": "도쿠가와 막부",
-    "First French Empire": "프랑스 제1제국"
+    "First French Empire": "프랑스 제1제국",
+    "Aztec Empire": "아즈텍 제국",
+    "People's Republic of China": "중화인민공화국",
+    "Kingdom of England": "잉글랜드 왕국",
+    "Mongol Empire": "몽골 제국",
+    "Carthage": "카르타고",
+    "Catuvellauni": "카투벨라우니",
+    "Iceni": "이케니"
   };
 
   const koDisplay = Object.freeze({ ...koPersons, ...koPolities });
