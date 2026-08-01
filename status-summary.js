@@ -16,14 +16,7 @@
     .registration-summary-detail{margin-top:3px;color:#6f7888;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .registration-summary-actions{display:flex;align-items:center;gap:8px;flex:0 0 auto}
     .registration-summary-link{border:1px solid #cfd6e1;border-radius:8px;padding:8px 11px;background:#fff;color:#172033;text-decoration:none;font-size:12px;font-weight:800}
-    @media(max-width:760px){
-      .admin-nav-link{display:none}
-      .registration-summary{align-items:flex-start;padding:12px;margin-bottom:12px}
-      .registration-summary-main{align-items:flex-start}
-      .registration-summary-detail{white-space:normal;line-height:1.45}
-      .registration-summary-actions{flex-direction:column;align-items:stretch}
-      .registration-summary-link{padding:7px 9px;text-align:center}
-    }
+    @media(max-width:760px){.admin-nav-link{display:none}.registration-summary{align-items:flex-start;padding:12px;margin-bottom:12px}.registration-summary-main{align-items:flex-start}.registration-summary-detail{white-space:normal;line-height:1.45}.registration-summary-actions{flex-direction:column;align-items:stretch}.registration-summary-link{padding:7px 9px;text-align:center}}
   `;
   document.head.appendChild(style);
 
@@ -36,7 +29,6 @@
       link.innerHTML = "<span>⚙</span><span>데이터 관리자</span><small>검증</small>";
       desktopNav.appendChild(link);
     }
-
     const mobileNav = document.querySelector(".mobile-nav");
     if (mobileNav && !mobileNav.querySelector(".mobile-admin-link")) {
       const link = document.createElement("a");
@@ -54,18 +46,7 @@
     section.id = "registrationSummary";
     section.className = "registration-summary card";
     section.dataset.state = "loading";
-    section.innerHTML = `
-      <div class="registration-summary-main">
-        <span class="registration-summary-dot" aria-hidden="true"></span>
-        <div>
-          <div id="registrationSummaryTitle" class="registration-summary-title">등록 상태 확인 중</div>
-          <div id="registrationSummaryDetail" class="registration-summary-detail">기대 명단, GitHub 기준 데이터, Supabase 실제 데이터를 비교하고 있습니다.</div>
-        </div>
-      </div>
-      <div class="registration-summary-actions">
-        <button id="registrationSummaryRefresh" class="registration-summary-link" type="button">다시 확인</button>
-        <a class="registration-summary-link" href="./admin.html">관리자 페이지</a>
-      </div>`;
+    section.innerHTML = `<div class="registration-summary-main"><span class="registration-summary-dot" aria-hidden="true"></span><div><div id="registrationSummaryTitle" class="registration-summary-title">등록 상태 확인 중</div><div id="registrationSummaryDetail" class="registration-summary-detail">연표 데이터와 비연표 인물을 분리해 확인하고 있습니다.</div></div></div><div class="registration-summary-actions"><button id="registrationSummaryRefresh" class="registration-summary-link" type="button">다시 확인</button><a class="registration-summary-link" href="./admin.html">관리자 페이지</a></div>`;
     toolbar.insertAdjacentElement("afterend", section);
     section.querySelector("#registrationSummaryRefresh").addEventListener("click", verifySummary);
     return section;
@@ -81,40 +62,44 @@
     const detail = document.getElementById("registrationSummaryDetail");
     box.dataset.state = "loading";
     title.textContent = "등록 상태 확인 중";
-    detail.textContent = "기대 명단, GitHub 기준 데이터, Supabase 실제 데이터를 비교하고 있습니다.";
+    detail.textContent = "연표 데이터와 비연표 인물을 분리해 확인하고 있습니다.";
 
     try {
-      const [expectedResponse, pendingResponse] = await Promise.all([
+      const [expectedResponse, pendingResponse, nonTimelineResponse] = await Promise.all([
         fetch(`./expected-persons.json?v=${Date.now()}`, { cache: "no-store" }),
-        fetch(`./pending-records.json?v=${Date.now()}`, { cache: "no-store" })
+        fetch(`./pending-records.json?v=${Date.now()}`, { cache: "no-store" }),
+        fetch(`./non-timeline-persons.json?v=${Date.now()}`, { cache: "no-store" })
       ]);
-      if (!expectedResponse.ok || !pendingResponse.ok) throw new Error("기준 데이터 파일을 읽지 못했습니다.");
+      if (!expectedResponse.ok || !pendingResponse.ok || !nonTimelineResponse.ok) throw new Error("기준 데이터 파일을 읽지 못했습니다.");
 
       const expected = await expectedResponse.json();
-      const pending = await pendingResponse.json();
+      const pendingRaw = await pendingResponse.json();
+      const nonTimeline = await nonTimelineResponse.json();
+      const excludedNames = new Set((nonTimeline || []).map((item) => String(item.person_name || "").trim()).filter(Boolean));
+      const pending = (pendingRaw || []).filter((row) => !excludedNames.has(String(row.person_name || "").trim()));
+
       const config = window.ATLAS_CONFIG || {};
       if (!window.supabase || !config.SUPABASE_URL || !config.SUPABASE_ANON_KEY) throw new Error("Supabase 설정을 찾지 못했습니다.");
-
       const db = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
       const { data: dbRows, error } = await db.from("person_politics").select("person_name,politic_name,activity_start,activity_end");
       if (error) throw error;
 
-      const expectedNames = new Set((expected || []).map((item) => typeof item === "string" ? item : item.person_name).filter(Boolean));
+      const timelineExpected = new Set((expected || []).map((item) => typeof item === "string" ? item : item.person_name).filter((name) => name && !excludedNames.has(name)));
       const pendingNames = personSet(pending);
       const dbNames = personSet(dbRows);
-      const pendingKeys = new Set((pending || []).map(activityKey));
+      const pendingKeys = new Set(pending.map(activityKey));
       const dbKeys = new Set((dbRows || []).map(activityKey));
-
-      const missingPending = [...expectedNames].filter((name) => !pendingNames.has(name));
-      const missingDb = [...expectedNames].filter((name) => !dbNames.has(name));
+      const missingPending = [...timelineExpected].filter((name) => !pendingNames.has(name));
+      const missingDb = [...timelineExpected].filter((name) => !dbNames.has(name));
       const missingActivities = [...pendingKeys].filter((key) => !dbKeys.has(key));
-      const ok = missingPending.length === 0 && missingDb.length === 0 && missingActivities.length === 0;
+      const excludedStillInDb = [...excludedNames].filter((name) => dbNames.has(name));
+      const ok = missingPending.length === 0 && missingDb.length === 0 && missingActivities.length === 0 && excludedStillInDb.length === 0;
 
       box.dataset.state = ok ? "ok" : "error";
-      title.textContent = ok ? "전체 등록 정상" : "등록 누락 확인 필요";
+      title.textContent = ok ? "연표 데이터 정상" : "등록 상태 확인 필요";
       detail.textContent = ok
-        ? `인물 ${expectedNames.size}명 · 활동 ${pendingKeys.size}개가 GitHub와 Supabase에 모두 등록되어 있습니다.`
-        : `GitHub 누락 ${missingPending.length}명 · DB 누락 ${missingDb.length}명 · 활동행 누락 ${missingActivities.length}개`;
+        ? `연표 인물 ${timelineExpected.size}명 · 활동 ${pendingKeys.size}개 정상 · 비연표 인물 ${excludedNames.size}명 분리 보관`
+        : `GitHub 누락 ${missingPending.length}명 · DB 누락 ${missingDb.length}명 · 활동 누락 ${missingActivities.length}개 · 비연표 DB 잔존 ${excludedStillInDb.length}명`;
     } catch (error) {
       console.error("ATLAS public verification failed", error);
       box.dataset.state = "error";
@@ -123,12 +108,7 @@
     }
   }
 
-  function start() {
-    addAdminLinks();
-    buildSummary();
-    verifySummary();
-  }
-
+  function start() { addAdminLinks(); buildSummary(); verifySummary(); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start, { once: true });
   else start();
 })();
