@@ -97,5 +97,14 @@
     "role": "Political leader and independence movement leader",
     "period_basis": "general_activity",
     "notes": "Returned to India in 1915 and became the leading figure of the Indian independence movement through mass civil resistance and nonviolent political campaigns. He remained politically active until his assassination in 1948."
+  },
+  {
+    "person_name": "Joseph Stalin",
+    "politic_name": "Soviet Union",
+    "activity_start": 1924,
+    "activity_end": 1953,
+    "role": "General Secretary and de facto leader",
+    "period_basis": "de_facto_rule",
+    "notes": "Became the dominant leader of the Soviet Union after Lenin's death in 1924 and ruled until his own death in 1953. By the mid-1930s he had eliminated major political opposition and exercised dictatorial control over party and state."
   }
 ]
