@@ -88,5 +88,14 @@
     "role": "King and military commander",
     "period_basis": "reign",
     "notes": "Reigned as king of Macedon from 336 to 323 BCE and led the conquests that overthrew the Achaemenid Empire and created a vast Macedonian empire extending into Egypt and northwestern India."
+  },
+  {
+    "person_name": "Mahatma Gandhi",
+    "politic_name": "British Raj",
+    "activity_start": 1915,
+    "activity_end": 1948,
+    "role": "Political leader and independence movement leader",
+    "period_basis": "general_activity",
+    "notes": "Returned to India in 1915 and became the leading figure of the Indian independence movement through mass civil resistance and nonviolent political campaigns. He remained politically active until his assassination in 1948."
   }
 ]
