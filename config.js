@@ -4,7 +4,11 @@ window.ATLAS_CONFIG = {
 };
 
 window.addEventListener("load", () => {
-  ["person-locales.js", "status-summary.js"].forEach((file) => {
+  const files = ["person-locales.js", "status-summary.js"];
+  if (location.pathname.endsWith("/admin.html") || location.pathname.endsWith("admin.html")) {
+    files.push("admin-timeline-verification.js");
+  }
+  files.forEach((file) => {
     const script = document.createElement("script");
     script.src = `./${file}?v=${Date.now()}`;
     script.defer = true;
