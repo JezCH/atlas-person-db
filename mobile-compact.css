@@ -1,0 +1,73 @@
+@media (max-width: 760px) {
+  /* Mobile cards stay compact until tapped. */
+  #dataBody tr {
+    position: relative;
+    padding-bottom: 14px;
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+
+  #dataBody tr::after {
+    content: "⌄";
+    position: absolute;
+    right: 18px;
+    top: 19px;
+    color: #7b8494;
+    font-size: 20px;
+    line-height: 1;
+    pointer-events: none;
+    transition: transform .15s ease;
+  }
+
+  #dataBody tr.selected::after {
+    transform: rotate(180deg);
+    color: var(--primary);
+  }
+
+  /* The existing mobile card already shows person, Politic, start/end and role. */
+  #dataBody tr td:nth-child(6),
+  #dataBody tr td:nth-child(7) {
+    display: none;
+  }
+
+  #dataBody tr.selected td:nth-child(6),
+  #dataBody tr.selected td:nth-child(7) {
+    display: grid;
+  }
+
+  #dataBody tr.selected {
+    border-color: #aeb7ff;
+    box-shadow: 0 8px 24px rgba(62, 76, 170, .12);
+  }
+
+  #dataBody tr.selected td:nth-child(6) {
+    margin-top: 4px;
+    padding-top: 16px;
+    border-top: 1px solid #edf0f4;
+  }
+
+  #dataBody tr.selected td:nth-child(7) {
+    grid-template-columns: 1fr;
+    padding-top: 12px;
+  }
+
+  #dataBody tr.selected .action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+    width: 100%;
+  }
+
+  #dataBody tr.selected .mini-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  /* Avoid duplicating the same selected record below the list on phones. */
+  .detail-panel {
+    display: none;
+  }
+
+  .table-meta span::after {
+    content: " · 카드를 누르면 펼쳐집니다";
+  }
+}
