@@ -4,11 +4,11 @@ window.ATLAS_CONFIG = {
 };
 
 window.addEventListener("load", () => {
-  const files = ["person-locales.js", "status-summary.js"];
+  const files = ["person-locales.js", "status-summary.js", "compact-era-format.js", "table-sort-controls.js"];
   if (location.pathname.endsWith("/admin.html") || location.pathname.endsWith("admin.html")) {
     files.push("admin-timeline-verification.js");
   } else {
-    files.push("non-timeline-list.js", "era-format.js");
+    files.push("non-timeline-list.js");
   }
   files.forEach((file) => {
     const script = document.createElement("script");
