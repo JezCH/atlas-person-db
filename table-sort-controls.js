@@ -4,6 +4,7 @@
   const state = { key: "start", direction: "asc" };
   const columnIndex = { person: 0, politic: 1, start: 2, end: 3 };
   let applying = false;
+  let observer = null;
 
   function parseYear(text) {
     const value = String(text || "").trim();
@@ -38,9 +39,18 @@
       updateIndicators();
       return;
     }
-    applying = true;
-    rows.sort(compareRows).forEach((row) => tbody.appendChild(row));
+
+    const sorted = [...rows].sort(compareRows);
+    const changed = sorted.some((row, index) => row !== rows[index]);
     updateIndicators();
+    if (!changed) return;
+
+    applying = true;
+    observer?.disconnect();
+    const fragment = document.createDocumentFragment();
+    sorted.forEach((row) => fragment.appendChild(row));
+    tbody.appendChild(fragment);
+    observer?.observe(tbody, { childList: true, subtree: false });
     applying = false;
   }
 
@@ -102,15 +112,25 @@
   `;
   document.head.appendChild(style);
 
+  let scheduled = false;
+  function scheduleSort() {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(() => {
+      scheduled = false;
+      sortTable();
+    });
+  }
+
   function start() {
     injectControls();
     const tbody = document.getElementById("dataBody");
     if (!tbody) return;
-    const observer = new MutationObserver(() => {
-      if (!applying) queueMicrotask(sortTable);
+    observer = new MutationObserver(() => {
+      if (!applying) scheduleSort();
     });
     observer.observe(tbody, { childList: true, subtree: false });
-    sortTable();
+    scheduleSort();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start, { once: true });
