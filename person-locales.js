@@ -5,6 +5,7 @@
     "Constantine I": "콘스탄티누스 1세",
     "Justinian I": "유스티니아누스 1세",
     "Belisarius": "벨리사리우스",
+    "Wu Zetian": "측천무후",
     "Yi Sun-sin": "이순신",
     "Julius Caesar": "율리우스 카이사르",
     "Frederick the Great": "프리드리히 대왕",
@@ -30,6 +31,7 @@
   const koPolities = {
     "Roman Empire": "로마 제국",
     "Byzantine Empire": "비잔티움 제국",
+    "Wu Zhou": "무주",
     "Joseon": "조선",
     "Roman Republic": "로마 공화정",
     "Kingdom of Prussia": "프로이센 왕국",
