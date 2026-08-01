@@ -1,5 +1,41 @@
 [
   {
+    "person_name": "Hammurabi",
+    "politic_name": "Old Babylonian Empire",
+    "activity_start": -1792,
+    "activity_end": -1750,
+    "role": "King, conqueror and lawgiver",
+    "period_basis": "reign",
+    "notes": "Reigned as the sixth king of Babylon's First Dynasty from 1792 to 1750 BCE under the Middle Chronology. He extended Babylonian rule across much of Mesopotamia and is best known for the Code of Hammurabi. Ancient Near Eastern absolute chronology remains disputed; ATLAS uses the Middle Chronology for this record."
+  },
+  {
+    "person_name": "Ramses II",
+    "politic_name": "New Kingdom of Egypt",
+    "activity_start": -1279,
+    "activity_end": -1213,
+    "role": "Pharaoh and military commander",
+    "period_basis": "reign",
+    "notes": "Reigned as a pharaoh of Egypt's Nineteenth Dynasty from 1279 to 1213 BCE. He is associated with the Battle of Kadesh, extensive building programs and a reign of about sixty-six years."
+  },
+  {
+    "person_name": "Alexander the Great",
+    "politic_name": "Macedonian Empire",
+    "activity_start": -336,
+    "activity_end": -323,
+    "role": "King and military commander",
+    "period_basis": "reign",
+    "notes": "Reigned as king of Macedon from 336 to 323 BCE and led the conquests that overthrew the Achaemenid Empire and created a vast Macedonian empire extending into Egypt and northwestern India."
+  },
+  {
+    "person_name": "Julius Caesar",
+    "politic_name": "Roman Republic",
+    "activity_start": -49,
+    "activity_end": -44,
+    "role": "Dictator, consul and general",
+    "period_basis": "de_facto_rule",
+    "notes": "Seized effective control during the civil war beginning in 49 BCE, held repeated dictatorships, became dictator perpetuo in 44 BCE, and was assassinated on 15 March of that year."
+  },
+  {
     "person_name": "Constantine I",
     "politic_name": "Roman Empire",
     "activity_start": 306,
@@ -27,6 +63,24 @@
     "notes": "Served as a leading Byzantine general during the reign of Justinian I, commanding campaigns against the Sasanian Empire, the Vandal Kingdom and the Ostrogothic Kingdom."
   },
   {
+    "person_name": "Tokugawa Ieyasu",
+    "politic_name": "Tokugawa Shogunate",
+    "activity_start": 1603,
+    "activity_end": 1605,
+    "role": "Shogun and military commander",
+    "period_basis": "reign",
+    "notes": "Served as the first shogun of the Tokugawa Shogunate from 1603 until his formal abdication in 1605."
+  },
+  {
+    "person_name": "Tokugawa Ieyasu",
+    "politic_name": "Tokugawa Shogunate",
+    "activity_start": 1605,
+    "activity_end": 1616,
+    "role": "Retired shogun and de facto ruler",
+    "period_basis": "de_facto_rule",
+    "notes": "Continued to exercise decisive political authority as retired shogun from 1605 until his death in 1616."
+  },
+  {
     "person_name": "Yi Sun-sin",
     "politic_name": "Joseon",
     "activity_start": 1576,
@@ -34,15 +88,6 @@
     "role": "Military officer and naval commander",
     "period_basis": "military_activity",
     "notes": "Passed the military examination and entered government service in 1576; served as Joseon's leading naval commander and was killed at the Battle of Noryang in 1598."
-  },
-  {
-    "person_name": "Julius Caesar",
-    "politic_name": "Roman Republic",
-    "activity_start": -49,
-    "activity_end": -44,
-    "role": "Dictator, consul and general",
-    "period_basis": "de_facto_rule",
-    "notes": "Seized effective control during the civil war beginning in 49 BCE, held repeated dictatorships, became dictator perpetuo in 44 BCE, and was assassinated on 15 March of that year."
   },
   {
     "person_name": "Frederick the Great",
@@ -54,22 +99,31 @@
     "notes": "Reigned as king of Prussia from 1740 until his death in 1786 and transformed Prussia into a major European power through war, territorial expansion and state reform."
   },
   {
-    "person_name": "Hammurabi",
-    "politic_name": "Old Babylonian Empire",
-    "activity_start": -1792,
-    "activity_end": -1750,
-    "role": "King, conqueror and lawgiver",
+    "person_name": "Shaka kaSenzangakhona",
+    "politic_name": "Zulu Kingdom",
+    "activity_start": 1816,
+    "activity_end": 1828,
+    "role": "King and military commander",
     "period_basis": "reign",
-    "notes": "Reigned as the sixth king of Babylon's First Dynasty from 1792 to 1750 BCE under the Middle Chronology. He extended Babylonian rule across much of Mesopotamia and is best known for the Code of Hammurabi. Ancient Near Eastern absolute chronology remains disputed; ATLAS uses the Middle Chronology for this record."
+    "notes": "Reigned as king of the Zulu from 1816 until his assassination in 1828 and expanded the Zulu polity through military and administrative reorganization."
   },
   {
-    "person_name": "Ramses II",
-    "politic_name": "New Kingdom of Egypt",
-    "activity_start": -1279,
-    "activity_end": -1213,
-    "role": "Pharaoh and military commander",
+    "person_name": "Napoleon I",
+    "politic_name": "First French Empire",
+    "activity_start": 1804,
+    "activity_end": 1814,
+    "role": "Emperor and military commander",
     "period_basis": "reign",
-    "notes": "Reigned as a pharaoh of Egypt's Nineteenth Dynasty from 1279 to 1213 BCE. He is associated with the Battle of Kadesh, extensive building programs and a reign of about sixty-six years."
+    "notes": "Reigned as Emperor of the French from 1804 until his first abdication in 1814."
+  },
+  {
+    "person_name": "Napoleon I",
+    "politic_name": "First French Empire",
+    "activity_start": 1815,
+    "activity_end": 1815,
+    "role": "Emperor and military commander",
+    "period_basis": "reign",
+    "notes": "Returned from exile and ruled again during the Hundred Days in 1815 before his final abdication."
   },
   {
     "person_name": "Abraham Lincoln",
@@ -79,15 +133,6 @@
     "role": "President",
     "period_basis": "term",
     "notes": "Served as the sixteenth president of the United States from 1861 until his assassination in 1865, leading the Union through the American Civil War."
-  },
-  {
-    "person_name": "Alexander the Great",
-    "politic_name": "Macedonian Empire",
-    "activity_start": -336,
-    "activity_end": -323,
-    "role": "King and military commander",
-    "period_basis": "reign",
-    "notes": "Reigned as king of Macedon from 336 to 323 BCE and led the conquests that overthrew the Achaemenid Empire and created a vast Macedonian empire extending into Egypt and northwestern India."
   },
   {
     "person_name": "Mahatma Gandhi",
