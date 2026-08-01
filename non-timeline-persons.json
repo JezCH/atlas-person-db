@@ -1,0 +1,16 @@
+[
+  {
+    "person_name": "Dido",
+    "politic_name": "Carthage",
+    "display_name_ko": "디도",
+    "historicity": "legendary",
+    "timeline_status": "excluded",
+    "date_basis": "traditional_foundation_association",
+    "traditional_year": -814,
+    "traditional_year_alternative": -813,
+    "activity_start": null,
+    "activity_end": null,
+    "reason": "Dido is a legendary founder associated by tradition with the foundation of Carthage in 814/813 BCE. Her personal reign and death dates are not securely known, so she is excluded from year-based map queries.",
+    "map_policy": "Do not display on the year timeline unless a separate legendary/traditional overlay is enabled."
+  }
+]
