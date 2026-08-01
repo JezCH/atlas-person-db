@@ -4,7 +4,13 @@ window.ATLAS_CONFIG = {
 };
 
 window.addEventListener("load", () => {
-  const files = ["person-locales.js", "status-summary.js", "compact-era-format.js", "table-sort-controls.js"];
+  const files = [
+    "person-locales.js",
+    "status-summary.js",
+    "compact-era-format.js",
+    "table-sort-controls.js",
+    "detail-panel-collapse.js"
+  ];
   if (location.pathname.endsWith("/admin.html") || location.pathname.endsWith("admin.html")) {
     files.push("admin-timeline-verification.js");
   } else {
