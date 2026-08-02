@@ -178,5 +178,122 @@
     "role": "Queen consort and queen mother",
     "period_basis": "general_activity",
     "notes": "Chronology and biography are partly reconstructed from Norse sagas; the activity period is approximate."
+  },
+  {
+    "person_name": "Otto von Bismarck",
+    "politic_name": "German Empire",
+    "activity_start": 1871,
+    "activity_end": 1890,
+    "role": "Chancellor",
+    "period_basis": "term",
+    "notes": "Served as the first chancellor of the German Empire from 1871 until his dismissal in 1890."
+  },
+  {
+    "person_name": "Hiawatha",
+    "politic_name": "Haudenosaunee Confederacy",
+    "activity_start": 1450,
+    "activity_end": 1475,
+    "role": "Co-founder and statesman",
+    "period_basis": "general_activity",
+    "notes": "Traditional co-founder of the Haudenosaunee Confederacy. The activity dates are approximate and the confederacy's foundation chronology remains debated."
+  },
+  {
+    "person_name": "Abu Bakr",
+    "politic_name": "Rashidun Caliphate",
+    "activity_start": 632,
+    "activity_end": 634,
+    "role": "Caliph",
+    "period_basis": "reign",
+    "notes": "Served as the first Rashidun caliph from 632 until his death in 634."
+  },
+  {
+    "person_name": "Osman I",
+    "politic_name": "Ottoman Empire",
+    "activity_start": 1299,
+    "activity_end": 1324,
+    "role": "Founder and ruler",
+    "period_basis": "reign",
+    "notes": "Founder of the Ottoman polity. The conventional start date is 1299 and the end date follows the commonly used chronology of his death around 1324."
+  },
+  {
+    "person_name": "Brennus (Senones)",
+    "politic_name": "Senones",
+    "activity_start": -390,
+    "activity_end": -387,
+    "role": "Chieftain",
+    "period_basis": "military_activity",
+    "notes": "Leader associated with the Senones and the Gallic sack of Rome, conventionally dated to 390 or 387 BCE."
+  },
+  {
+    "person_name": "Brennus (Galatia)",
+    "politic_name": "Gallic Coalition",
+    "activity_start": -280,
+    "activity_end": -279,
+    "role": "Chieftain",
+    "period_basis": "military_activity",
+    "notes": "Led the Gallic invasion of the Balkans and Greece culminating in the expedition against Delphi in 279 BCE."
+  },
+  {
+    "person_name": "William I of Orange",
+    "politic_name": "Dutch Revolt",
+    "activity_start": 1568,
+    "activity_end": 1584,
+    "role": "Revolt leader and stadtholder",
+    "period_basis": "general_activity",
+    "notes": "Principal leader of the Dutch Revolt from its conventional outbreak in 1568 until his assassination in 1584."
+  },
+  {
+    "person_name": "Chan Imix Kʼawiil",
+    "politic_name": "Copán",
+    "activity_start": 628,
+    "activity_end": 695,
+    "role": "Ajaw",
+    "period_basis": "reign",
+    "notes": "Twelfth ruler of Copán, reigning from 628 until his death in 695."
+  },
+  {
+    "person_name": "Theodora",
+    "politic_name": "Byzantine Empire",
+    "activity_start": 527,
+    "activity_end": 548,
+    "role": "Empress",
+    "period_basis": "term",
+    "notes": "Byzantine empress and influential political partner of Justinian I from 527 until her death in 548."
+  },
+  {
+    "person_name": "Pachacuti",
+    "politic_name": "Inca Empire",
+    "activity_start": 1438,
+    "activity_end": 1471,
+    "role": "Sapa Inca",
+    "period_basis": "reign",
+    "notes": "Ruled as Sapa Inca from about 1438 to 1471 and transformed the Inca state into a major empire."
+  },
+  {
+    "person_name": "Henry the Navigator",
+    "politic_name": "Kingdom of Portugal",
+    "activity_start": 1415,
+    "activity_end": 1460,
+    "role": "Prince and patron of exploration",
+    "period_basis": "general_activity",
+    "notes": "Portuguese prince and patron of Atlantic and African exploration from the conquest of Ceuta in 1415 until his death in 1460."
+  },
+  {
+    "person_name": "Mursili I",
+    "politic_name": "Hittite Kingdom",
+    "activity_start": -1620,
+    "activity_end": -1590,
+    "role": "Great King",
+    "period_basis": "reign",
+    "notes": "Early Hittite king whose reign is conventionally placed around 1620 to 1590 BCE under one Middle Chronology reconstruction; absolute dates remain disputed."
+  },
+  {
+    "person_name": "Charles V",
+    "politic_name": "Holy Roman Empire",
+    "activity_start": 1519,
+    "activity_end": 1556,
+    "role": "Holy Roman Emperor",
+    "period_basis": "reign",
+    "notes": "Served as Holy Roman Emperor from 1519 until his abdication in 1556."
   }
 ]
