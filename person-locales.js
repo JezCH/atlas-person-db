@@ -12,7 +12,7 @@
     "Hammurabi": "함무라비",
     "Ramses II": "람세스 2세",
     "Abraham Lincoln": "에이브러햄 링컨",
-    "Alexander the Great": "알렉산더 대왕",
+    "Alexander the Great": "알렉산드로스 대왕",
     "Mahatma Gandhi": "마하트마 간디",
     "Joseph Stalin": "이오시프 스탈린",
     "Shaka kaSenzangakhona": "샤카 카센장가코나",
