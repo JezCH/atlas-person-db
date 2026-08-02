@@ -5,7 +5,7 @@
     "activity_start": -490,
     "activity_end": -480,
     "role": "Queen and royal adviser",
-    "period_basis": "historical_activity",
+    "period_basis": "general_activity",
     "notes": "Active in the early fifth century BCE as Spartan queen and political adviser."
   },
   {
@@ -77,7 +77,7 @@
     "activity_start": 1547,
     "activity_end": 1589,
     "role": "Queen consort and regent",
-    "period_basis": "political_influence",
+    "period_basis": "general_activity",
     "notes": "Held royal and regency authority in France from 1547 until 1589."
   },
   {
@@ -140,7 +140,7 @@
     "activity_start": 1541,
     "activity_end": 1557,
     "role": "Toqui",
-    "period_basis": "military_leadership",
+    "period_basis": "military_activity",
     "notes": "Active as a Mapuche military leader during the Arauco War until 1557."
   },
   {
@@ -176,7 +176,7 @@
     "activity_start": 1873,
     "activity_end": 1885,
     "role": "Chief",
-    "period_basis": "leadership",
+    "period_basis": "general_activity",
     "notes": "Recognized as a Plains Cree chief from 1873 until 1885."
   },
   {
@@ -194,7 +194,7 @@
     "activity_start": 900,
     "activity_end": 1200,
     "role": "Navigator and ancestral figure",
-    "period_basis": "traditional_chronology",
+    "period_basis": "general_activity",
     "notes": "Traditional Polynesian navigator and ancestral figure; chronology varies widely by tradition."
   },
   {
@@ -221,7 +221,7 @@
     "activity_start": 1137,
     "activity_end": 1204,
     "role": "Duchess",
-    "period_basis": "tenure",
+    "period_basis": "term",
     "notes": "Held the duchy of Aquitaine from 1137 until 1204."
   },
   {
@@ -266,7 +266,7 @@
     "activity_start": -54,
     "activity_end": -53,
     "role": "King and war leader",
-    "period_basis": "military_leadership",
+    "period_basis": "military_activity",
     "notes": "Led the Eburones against Rome in 54–53 BCE."
   },
   {
@@ -275,7 +275,7 @@
     "activity_start": 248,
     "activity_end": 248,
     "role": "Rebel leader",
-    "period_basis": "uprising",
+    "period_basis": "military_activity",
     "notes": "Led an anti-Wu uprising in 248."
   },
   {
