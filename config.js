@@ -12,6 +12,7 @@ window.addEventListener("load", () => {
     "person-locales-supplement.js",
     "person-locales-supplement-2.js",
     "person-locales-supplement-3.js",
+    "person-locales-supplement-4.js",
     "status-summary.js",
     "compact-era-format.js",
     "table-sort-controls.js",
