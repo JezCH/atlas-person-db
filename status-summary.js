@@ -20,6 +20,33 @@
   `;
   document.head.appendChild(style);
 
+  const normalize = (value) => String(value || "").trim().toLowerCase();
+  const activityKey = (row) => [row.person_name, row.politic_name, Number(row.activity_start), Number(row.activity_end)].join("|").toLowerCase();
+  const personSet = (rows) => new Set((rows || []).map((row) => normalize(row.person_name)).filter(Boolean));
+
+  const obsoleteKeys = new Set([
+    "dido|carthage|-814|-814",
+    "isabella i|crown of castile|1474|1504",
+    "jesus|roman judaea|27|30",
+    "gautama buddha|shakya|-445|-400",
+    "muhammad|medina|610|632",
+    "toyotomi hideyoshi|japan|1582|1598",
+    "benjamin franklin|united states|1757|1790",
+    "edward teach|republic of pirates|1716|1718",
+    "tecumseh|shawnee|1805|1813",
+    "haile selassie i|ethiopian empire|1930|1974",
+    "peter i|russian empire|1682|1725",
+    "kublai khan|yuan dynasty|1260|1294",
+    "cnut the great|north sea empire|1016|1035",
+    "philip ii of spain|spanish empire|1556|1598",
+    "simon bolivar|gran colombia|1819|1830",
+    "nzinga mbande|kingdoms of ndongo and matamba|1624|1663",
+    "maria i of portugal|kingdom of portugal|1777|1816",
+    "hypatia|roman empire|393|415",
+    "tokugawa ieyasu|tokugawa shogunate|1603|1605",
+    "tokugawa ieyasu|tokugawa shogunate|1605|1616"
+  ]);
+
   function addAdminLinks() {
     const desktopNav = document.querySelector(".nav-list");
     if (desktopNav && !desktopNav.querySelector(".admin-nav-link")) {
@@ -52,15 +79,36 @@
     return section;
   }
 
-  const activityKey = (row) => [row.person_name, row.politic_name, Number(row.activity_start), Number(row.activity_end)].join("|").toLowerCase();
-  const personSet = (rows) => new Set((rows || []).map((row) => String(row.person_name || "").trim().toLowerCase()).filter(Boolean));
-
   async function fetchJson(path) {
     const response = await fetch(`${path}?v=${Date.now()}`, { cache: "no-store" });
     if (!response.ok) throw new Error(`${path} 불러오기 실패 (${response.status})`);
     return response.json();
   }
 
+  async function loadCanonicalRows() {
+    const paths = [
+      "./pending-records.json",
+      "./pending-records-supplement.json",
+      "./pending-records-supplement-2.json",
+      "./pending-records-supplement-3.json",
+      "./pending-records-supplement-4.json",
+      "./pending-records-supplement-5.json",
+      "./pending-records-corrections.json"
+    ];
+    const [datasets, nonTimeline] = await Promise.all([
+      Promise.all(paths.map(fetchJson)),
+      fetchJson("./non-timeline-persons.json")
+    ]);
+    const excluded = new Set((nonTimeline || []).map((item) => normalize(item.person_name)).filter(Boolean));
+    const byKey = new Map();
+    datasets.flatMap((rows) => Array.isArray(rows) ? rows : []).forEach((row) => {
+      const key = activityKey(row);
+      if (!excluded.has(normalize(row.person_name)) && !obsoleteKeys.has(key)) byKey.set(key, row);
+    });
+    return { rows: [...byKey.values()], excluded };
+  }
+
+  let realtimeChannel = null;
   async function verifySummary() {
     const box = document.getElementById("registrationSummary") || buildSummary();
     if (!box) return;
@@ -73,38 +121,33 @@
     try {
       const config = window.ATLAS_CONFIG || {};
       if (!window.supabase || !config.SUPABASE_URL || !config.SUPABASE_ANON_KEY) throw new Error("Supabase 설정을 찾지 못했습니다.");
-
-      const [base, supplement1, supplement2, supplement3, nonTimeline] = await Promise.all([
-        fetchJson("./pending-records.json"),
-        fetchJson("./pending-records-supplement.json"),
-        fetchJson("./pending-records-supplement-2.json"),
-        fetchJson("./pending-records-supplement-3.json"),
-        fetchJson("./non-timeline-persons.json")
-      ]);
-
-      const excluded = new Set((nonTimeline || []).map((item) => String(item.person_name || "").trim().toLowerCase()).filter(Boolean));
-      const expectedRows = [base, supplement1, supplement2, supplement3]
-        .flatMap((rows) => Array.isArray(rows) ? rows : [])
-        .filter((row) => !excluded.has(String(row.person_name || "").trim().toLowerCase()));
-
+      const { rows: expectedRows, excluded } = await loadCanonicalRows();
       const db = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
-      const { data: dbRows, error } = await db.from("person_politics").select("person_name,politic_name,activity_start,activity_end");
+      const { data, error } = await db.from("person_politics").select("person_name,politic_name,activity_start,activity_end");
       if (error) throw error;
+      const dbRows = (data || []).filter((row) => !excluded.has(normalize(row.person_name)));
 
       const expectedNames = personSet(expectedRows);
       const expectedKeys = new Set(expectedRows.map(activityKey));
       const dbNames = personSet(dbRows);
-      const dbKeys = new Set((dbRows || []).map(activityKey));
+      const dbKeys = new Set(dbRows.map(activityKey));
       const missingPersons = [...expectedNames].filter((name) => !dbNames.has(name));
       const missingActivities = [...expectedKeys].filter((key) => !dbKeys.has(key));
-      const extraPersons = [...dbNames].filter((name) => !expectedNames.has(name) && !excluded.has(name));
-      const ok = missingPersons.length === 0 && missingActivities.length === 0;
+      const extraPersons = [...dbNames].filter((name) => !expectedNames.has(name));
+      const extraActivities = [...dbKeys].filter((key) => !expectedKeys.has(key));
+      const ok = missingPersons.length === 0 && missingActivities.length === 0 && extraPersons.length === 0 && extraActivities.length === 0;
 
       box.dataset.state = ok ? "ok" : "error";
       title.textContent = ok ? "실시간 DB 정상" : "실시간 DB 확인 필요";
       detail.textContent = ok
-        ? `현재 DB 인물 ${dbNames.size}명 · 활동 ${dbRows.length}개 · GitHub 기준 ${expectedNames.size}명/${expectedKeys.size}개 · 추가 DB 인물 ${extraPersons.length}명`
-        : `현재 DB 인물 ${dbNames.size}명 · 활동 ${dbRows.length}개 · 누락 인물 ${missingPersons.length}명 · 누락 활동 ${missingActivities.length}개`;
+        ? `현재 DB 인물 ${dbNames.size}명 · 활동 ${dbRows.length}개 · GitHub 기준과 완전 일치`
+        : `현재 DB 인물 ${dbNames.size}명 · 활동 ${dbRows.length}개 · 누락 인물 ${missingPersons.length}명 · 누락 활동 ${missingActivities.length}개 · 추가 인물 ${extraPersons.length}명 · 추가 활동 ${extraActivities.length}개`;
+
+      if (!realtimeChannel) {
+        realtimeChannel = db.channel("atlas-person-politics-live-summary")
+          .on("postgres_changes", { event: "*", schema: "public", table: "person_politics" }, () => verifySummary())
+          .subscribe();
+      }
     } catch (error) {
       console.error("ATLAS live summary failed", error);
       box.dataset.state = "error";
