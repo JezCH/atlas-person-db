@@ -9,6 +9,7 @@ window.addEventListener("load", () => {
     "ingest-supplement.js",
     "person-locales.js",
     "person-locales-supplement.js",
+    "person-locales-supplement-2.js",
     "status-summary.js",
     "compact-era-format.js",
     "table-sort-controls.js",
