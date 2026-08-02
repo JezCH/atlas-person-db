@@ -28,6 +28,7 @@
         "./pending-records-supplement-2.json",
         "./pending-records-supplement-3.json",
         "./pending-records-supplement-4.json",
+        "./pending-records-supplement-5.json",
         "./pending-records-corrections.json"
       ];
       const responses = await Promise.all(paths.map((path) => fetch(`${path}?v=${Date.now()}`, { cache: "no-store" })));
@@ -88,8 +89,8 @@
         else changed += 1;
       }
 
-      if (changed > 0 && !sessionStorage.getItem("atlas-person-map-corrections-v1")) {
-        sessionStorage.setItem("atlas-person-map-corrections-v1", "1");
+      if (changed > 0 && !sessionStorage.getItem("atlas-person-map-corrections-v2")) {
+        sessionStorage.setItem("atlas-person-map-corrections-v2", "1");
         location.reload();
       }
     } catch (error) {
