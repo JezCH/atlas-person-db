@@ -6,6 +6,7 @@ window.ATLAS_CONFIG = {
 window.addEventListener("load", () => {
   const files = [
     "person-locales.js",
+    "person-locales-supplement.js",
     "status-summary.js",
     "compact-era-format.js",
     "table-sort-controls.js",
