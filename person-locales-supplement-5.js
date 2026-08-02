@@ -18,7 +18,15 @@
     "Hypatia": "히파티아",
     "Roman Empire": "로마 제국",
     "Leonardo da Vinci": "레오나르도 다빈치",
-    "Republic of Florence": "피렌체 공화국"
+    "Republic of Florence": "피렌체 공화국",
+    "Maximilien Robespierre": "막시밀리앙 드 로베스피에르",
+    "French First Republic": "프랑스 제1공화국",
+    "Owain Glyndwr": "오와인 글린두르",
+    "Principality of Wales": "웨일스 공국",
+    "Oliver Cromwell": "올리버 크롬웰",
+    "Commonwealth of England": "잉글랜드 공화국",
+    "Yasovarman IV": "야소바르만 4세",
+    "Khmer Empire": "크메르 제국"
   };
 
   function apply(root = document) {
