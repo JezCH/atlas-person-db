@@ -5,6 +5,7 @@ window.ATLAS_CONFIG = {
 
 window.addEventListener("load", () => {
   const files = [
+    "verification-data-merge.js",
     "ingest-supplement.js",
     "person-locales.js",
     "person-locales-supplement.js",
