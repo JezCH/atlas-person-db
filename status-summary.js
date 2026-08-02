@@ -16,6 +16,7 @@
     .registration-summary-detail{margin-top:3px;color:#6f7888;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .registration-summary-actions{display:flex;align-items:center;gap:8px;flex:0 0 auto}
     .registration-summary-link{border:1px solid #cfd6e1;border-radius:8px;padding:8px 11px;background:#fff;color:#172033;text-decoration:none;font-size:12px;font-weight:800}
+    .registration-summary-link:disabled{opacity:.55;cursor:wait}
     @media(max-width:760px){.admin-nav-link{display:none}.registration-summary{align-items:flex-start;padding:12px;margin-bottom:12px}.registration-summary-main{align-items:flex-start}.registration-summary-detail{white-space:normal;line-height:1.45}.registration-summary-actions{flex-direction:column;align-items:stretch}.registration-summary-link{padding:7px 9px;text-align:center}}
   `;
   document.head.appendChild(style);
@@ -23,6 +24,7 @@
   const normalize = (value) => String(value || "").trim().toLowerCase();
   const activityKey = (row) => [row.person_name, row.politic_name, Number(row.activity_start), Number(row.activity_end)].join("|").toLowerCase();
   const personSet = (rows) => new Set((rows || []).map((row) => normalize(row.person_name)).filter(Boolean));
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const obsoleteKeys = new Set([
     "dido|carthage|-814|-814",
@@ -75,7 +77,7 @@
     section.dataset.state = "loading";
     section.innerHTML = `<div class="registration-summary-main"><span class="registration-summary-dot" aria-hidden="true"></span><div><div id="registrationSummaryTitle" class="registration-summary-title">실시간 DB 상태 확인 중</div><div id="registrationSummaryDetail" class="registration-summary-detail">Supabase의 현재 인물·활동 수를 조회하고 있습니다.</div></div></div><div class="registration-summary-actions"><button id="registrationSummaryRefresh" class="registration-summary-link" type="button">다시 확인</button><a class="registration-summary-link" href="./admin.html">관리자 페이지</a></div>`;
     toolbar.insertAdjacentElement("afterend", section);
-    section.querySelector("#registrationSummaryRefresh").addEventListener("click", verifySummary);
+    section.querySelector("#registrationSummaryRefresh").addEventListener("click", () => verifySummary("manual"));
     return section;
   }
 
@@ -108,24 +110,52 @@
     return { rows: [...byKey.values()], excluded };
   }
 
+  function snapshotSignature(rows) {
+    return [...new Set(rows.map(activityKey))].sort().join("\n");
+  }
+
+  async function readStableDbRows(db, excluded) {
+    let previousSignature = null;
+    let latestRows = [];
+    for (let attempt = 0; attempt < 6; attempt += 1) {
+      const { data, error } = await db.from("person_politics").select("person_name,politic_name,activity_start,activity_end");
+      if (error) throw error;
+      latestRows = (data || [])
+        .filter((row) => !excluded.has(normalize(row.person_name)))
+        .filter((row) => !obsoleteKeys.has(activityKey(row)));
+      const signature = snapshotSignature(latestRows);
+      if (signature === previousSignature) return latestRows;
+      previousSignature = signature;
+      await sleep(300);
+    }
+    return latestRows;
+  }
+
   let realtimeChannel = null;
-  async function verifySummary() {
+  let realtimeTimer = null;
+  let requestSerial = 0;
+  let activeDb = null;
+
+  async function verifySummary(source = "auto") {
+    const serial = ++requestSerial;
     const box = document.getElementById("registrationSummary") || buildSummary();
     if (!box) return;
     const title = document.getElementById("registrationSummaryTitle");
     const detail = document.getElementById("registrationSummaryDetail");
+    const refreshButton = document.getElementById("registrationSummaryRefresh");
+    if (refreshButton) refreshButton.disabled = true;
     box.dataset.state = "loading";
     title.textContent = "실시간 DB 상태 확인 중";
-    detail.textContent = "Supabase의 현재 인물·활동 수를 조회하고 있습니다.";
+    detail.textContent = source === "realtime" ? "DB 변경 완료를 기다린 뒤 안정된 값을 확인하고 있습니다." : "Supabase에서 동일한 결과가 연속 확인될 때까지 재검증합니다.";
 
     try {
       const config = window.ATLAS_CONFIG || {};
       if (!window.supabase || !config.SUPABASE_URL || !config.SUPABASE_ANON_KEY) throw new Error("Supabase 설정을 찾지 못했습니다.");
       const { rows: expectedRows, excluded } = await loadCanonicalRows();
-      const db = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
-      const { data, error } = await db.from("person_politics").select("person_name,politic_name,activity_start,activity_end");
-      if (error) throw error;
-      const dbRows = (data || []).filter((row) => !excluded.has(normalize(row.person_name)));
+      const db = activeDb || window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
+      activeDb = db;
+      const dbRows = await readStableDbRows(db, excluded);
+      if (serial !== requestSerial) return;
 
       const expectedNames = personSet(expectedRows);
       const expectedKeys = new Set(expectedRows.map(activityKey));
@@ -140,23 +170,29 @@
       box.dataset.state = ok ? "ok" : "error";
       title.textContent = ok ? "실시간 DB 정상" : "실시간 DB 확인 필요";
       detail.textContent = ok
-        ? `현재 DB 인물 ${dbNames.size}명 · 활동 ${dbRows.length}개 · GitHub 기준과 완전 일치`
-        : `현재 DB 인물 ${dbNames.size}명 · 활동 ${dbRows.length}개 · 누락 인물 ${missingPersons.length}명 · 누락 활동 ${missingActivities.length}개 · 추가 인물 ${extraPersons.length}명 · 추가 활동 ${extraActivities.length}개`;
+        ? `현재 DB 인물 ${dbNames.size}명 · 활동 ${dbKeys.size}개 · GitHub 기준과 완전 일치`
+        : `현재 DB 인물 ${dbNames.size}명 · 활동 ${dbKeys.size}개 · 누락 인물 ${missingPersons.length}명 · 누락 활동 ${missingActivities.length}개 · 추가 인물 ${extraPersons.length}명 · 추가 활동 ${extraActivities.length}개`;
 
       if (!realtimeChannel) {
-        realtimeChannel = db.channel("atlas-person-politics-live-summary")
-          .on("postgres_changes", { event: "*", schema: "public", table: "person_politics" }, () => verifySummary())
+        realtimeChannel = db.channel("atlas-person-politics-live-summary-v2")
+          .on("postgres_changes", { event: "*", schema: "public", table: "person_politics" }, () => {
+            clearTimeout(realtimeTimer);
+            realtimeTimer = setTimeout(() => verifySummary("realtime"), 900);
+          })
           .subscribe();
       }
     } catch (error) {
+      if (serial !== requestSerial) return;
       console.error("ATLAS live summary failed", error);
       box.dataset.state = "error";
       title.textContent = "실시간 상태 확인 실패";
       detail.textContent = error?.message || "관리자 페이지에서 상세 검증을 실행하세요.";
+    } finally {
+      if (serial === requestSerial && refreshButton) refreshButton.disabled = false;
     }
   }
 
-  function start() { addAdminLinks(); buildSummary(); verifySummary(); }
+  function start() { addAdminLinks(); buildSummary(); verifySummary("initial"); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start, { once: true });
   else start();
 })();
