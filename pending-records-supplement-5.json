@@ -124,5 +124,68 @@
     "role": "Emperor",
     "period_basis": "reign",
     "notes": "Reigned as emperor of the Khmer Empire from 928 to 941 and established Koh Ker as the imperial capital."
+  },
+  {
+    "person_name": "Narai",
+    "politic_name": "Ayutthaya Kingdom",
+    "activity_start": 1656,
+    "activity_end": 1688,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Reigned as king of the Ayutthaya Kingdom from 1656 until 1688. His reign was marked by extensive international trade and diplomatic relations, especially with France, Persia and European trading powers."
+  },
+  {
+    "person_name": "Bayinnaung",
+    "politic_name": "Toungoo Empire",
+    "activity_start": 1550,
+    "activity_end": 1581,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Reigned as king of the Toungoo Empire from 1550 until 1581 and created the largest empire in the history of mainland Southeast Asia."
+  },
+  {
+    "person_name": "Hadrian",
+    "politic_name": "Roman Empire",
+    "activity_start": 117,
+    "activity_end": 138,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Reigned as Roman emperor from 117 to 138, consolidated the empire's frontiers, and sponsored major building projects across the Roman world."
+  },
+  {
+    "person_name": "Vercingetorix",
+    "politic_name": "Gaul",
+    "activity_start": -52,
+    "activity_end": -52,
+    "role": "King of the Arverni and leader of the Gallic Confederation",
+    "period_basis": "military_activity",
+    "notes": "United many Gallic tribes against Julius Caesar in 52 BCE, won at Gergovia, and surrendered after the Siege of Alesia. Gaul is used as the map-level polity label for the coalition."
+  },
+  {
+    "person_name": "Idris Alooma",
+    "politic_name": "Kanem-Bornu Empire",
+    "activity_start": 1571,
+    "activity_end": 1603,
+    "role": "Mai",
+    "period_basis": "reign",
+    "notes": "Reigned as Mai of the Kanem-Bornu Empire from about 1571 to 1603, reforming its military and administration and presiding over the empire's height."
+  },
+  {
+    "person_name": "Rurik",
+    "politic_name": "Kievan Rus'",
+    "activity_start": 862,
+    "activity_end": 879,
+    "role": "Prince",
+    "period_basis": "reign",
+    "notes": "Traditionally regarded as the founder of the Rurikid dynasty. According to the Primary Chronicle, he began ruling in Novgorod in 862 and ruled until 879; Kievan Rus' is used as the map-level successor polity label."
+  },
+  {
+    "person_name": "Ingólfr Arnarson",
+    "politic_name": "Settlement of Iceland",
+    "activity_start": 874,
+    "activity_end": 900,
+    "role": "Founder and settler",
+    "period_basis": "general_activity",
+    "notes": "Traditionally regarded as the first permanent Norse settler of Iceland and the founder of the settlement at Reykjavik around 874. Settlement of Iceland is treated as a distinct map polity before the Icelandic Commonwealth."
   }
 ]
