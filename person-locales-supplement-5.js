@@ -27,7 +27,20 @@
     "Oliver Cromwell": "올리버 크롬웰",
     "Commonwealth of England": "잉글랜드 공화국",
     "Yasovarman IV": "야소바르만 4세",
-    "Khmer Empire": "크메르 제국"
+    "Khmer Empire": "크메르 제국",
+    "Narai": "나라이",
+    "Ayutthaya Kingdom": "아유타야 왕국",
+    "Bayinnaung": "버인나웅",
+    "Toungoo Empire": "통구 제국",
+    "Hadrian": "하드리아누스",
+    "Vercingetorix": "베르킨게토릭스",
+    "Gaul": "갈리아",
+    "Idris Alooma": "이드리스 알루마",
+    "Kanem-Bornu Empire": "카넴-보르누 제국",
+    "Rurik": "류리크",
+    "Kievan Rus'": "키이우 루스",
+    "Ingólfr Arnarson": "잉골프 아르나르손",
+    "Settlement of Iceland": "아이슬란드 정착기"
   };
 
   function apply(root = document) {
