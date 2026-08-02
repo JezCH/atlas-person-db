@@ -7,6 +7,7 @@ window.addEventListener("load", () => {
   const files = [
     "verification-data-merge.js",
     "ingest-supplement.js",
+    "trigger-ingest-supplement-3.js",
     "person-locales.js",
     "person-locales-supplement.js",
     "person-locales-supplement-2.js",
