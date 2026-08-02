@@ -23,6 +23,7 @@
     "Elizabeth I": "엘리자베스 1세",
     "Genghis Khan": "칭기즈 칸",
     "Hannibal Barca": "한니발 바르카",
+    "Cleopatra VII": "클레오파트라 7세",
     "Dido": "디도",
     "Cunobeline": "쿠노벨리누스",
     "Boudica": "부디카"
@@ -37,6 +38,7 @@
     "Kingdom of Prussia": "프로이센 왕국",
     "Old Babylonian Empire": "고바빌로니아 제국",
     "New Kingdom of Egypt": "이집트 신왕국",
+    "Ptolemaic Kingdom": "프톨레마이오스 왕국",
     "United States": "미국",
     "Macedonian Empire": "마케도니아 제국",
     "British Raj": "영국령 인도",
