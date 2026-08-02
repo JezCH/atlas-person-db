@@ -19,7 +19,7 @@ jobs:
           SUPABASE_ANON_KEY: sb_publishable_W2y0WbNhOVj8eWrTWTRqJw_WLregXP0
         run: |
           python - <<'PY'
-          import json, os, urllib.request, urllib.parse
+          import json, os, urllib.request
 
           base = os.environ['SUPABASE_URL'].rstrip('/') + '/rest/v1/person_politics'
           key = os.environ['SUPABASE_ANON_KEY']
