@@ -40,26 +40,32 @@
 
     button.disabled = true;
     output.dataset.type = "info";
-    output.textContent = "Supabase 실시간 데이터와 GitHub 전체 기준 데이터를 검증하는 중...";
+    output.textContent = "Supabase 실시간 데이터와 GitHub 연표 데이터를 검증하는 중...";
 
     try {
-      const [base, supplement1, supplement2, supplement3, nonTimelineRaw] = await Promise.all([
+      const [base, supplement1, supplement2, supplement3, supplement4, corrections, nonTimelineRaw] = await Promise.all([
         fetchJson("./pending-records.json"),
         fetchJson("./pending-records-supplement.json"),
         fetchJson("./pending-records-supplement-2.json"),
         fetchJson("./pending-records-supplement-3.json"),
+        fetchJson("./pending-records-supplement-4.json"),
+        fetchJson("./pending-records-corrections.json"),
         fetchJson("./non-timeline-persons.json")
       ]);
 
-      const excludedNames = new Set(nonTimelineRaw.map((item) => normalize(item.person_name)).filter(Boolean));
-      const expectedRows = [base, supplement1, supplement2, supplement3]
+      const excludedNames = new Set((Array.isArray(nonTimelineRaw) ? nonTimelineRaw : []).map((item) => normalize(item.person_name)).filter(Boolean));
+      const allTimelineRows = [base, supplement1, supplement2, supplement3, supplement4, corrections]
         .flatMap((rows) => Array.isArray(rows) ? rows : [])
         .filter((row) => !excludedNames.has(normalize(row.person_name)));
+
+      const expectedByKey = new Map();
+      allTimelineRows.forEach((row) => expectedByKey.set(activityKey(row), row));
+      const expectedRows = [...expectedByKey.values()];
 
       const db = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
       const { data, error } = await db.from("person_politics").select("*");
       if (error) throw error;
-      const dbRows = data || [];
+      const dbRows = (data || []).filter((row) => !excludedNames.has(normalize(row.person_name)));
 
       const expectedNames = new Set(expectedRows.map((row) => normalize(row.person_name)).filter(Boolean));
       const expectedKeys = new Set(expectedRows.map(activityKey));
@@ -68,25 +74,24 @@
 
       const missingDbPersons = [...expectedNames].filter((name) => !dbNames.has(name));
       const missingDbActivities = expectedRows.filter((row) => !dbKeys.has(activityKey(row)));
-      const excludedStillInDb = [...excludedNames].filter((name) => dbNames.has(name));
-      const extraDbPersons = [...dbNames].filter((name) => !expectedNames.has(name) && !excludedNames.has(name));
-      const extraDbActivities = dbRows.filter((row) => !expectedKeys.has(activityKey(row)) && !excludedNames.has(normalize(row.person_name)));
+      const extraDbPersons = [...dbNames].filter((name) => !expectedNames.has(name));
+      const extraDbActivities = dbRows.filter((row) => !expectedKeys.has(activityKey(row)));
       const invalidExpected = invalidRows(expectedRows);
       const invalidDb = invalidRows(dbRows);
       const expectedDuplicates = duplicates(expectedRows);
       const dbDuplicates = duplicates(dbRows);
 
-      const failures = missingDbPersons.length + missingDbActivities.length + excludedStillInDb.length + invalidExpected.length + invalidDb.length + expectedDuplicates + dbDuplicates;
+      const failures = missingDbPersons.length + missingDbActivities.length + extraDbPersons.length + extraDbActivities.length + invalidExpected.length + invalidDb.length + expectedDuplicates + dbDuplicates;
       const lines = [
         "ATLAS Database Verification — LIVE", "",
-        `GitHub persons      : ${expectedNames.size}`,
-        `GitHub activities   : ${expectedKeys.size}`,
+        `Timeline persons    : ${expectedNames.size}`,
+        `Timeline activities : ${expectedKeys.size}`,
         `Supabase persons    : ${dbNames.size}`,
         `Supabase activities : ${dbRows.length}`,
-        `Non-timeline persons: ${excludedNames.size}`, "",
+        `Non-timeline persons: ${excludedNames.size}`,
+        `Total canonical     : ${expectedNames.size + excludedNames.size}`, "",
         `Missing Supabase persons   : ${missingDbPersons.length}`,
         `Missing Supabase activities: ${missingDbActivities.length}`,
-        `Non-timeline still in DB   : ${excludedStillInDb.length}`,
         `Invalid GitHub rows        : ${invalidExpected.length}`,
         `Invalid Supabase rows      : ${invalidDb.length}`,
         `Duplicate GitHub rows      : ${expectedDuplicates}`,
@@ -98,7 +103,6 @@
 
       if (missingDbPersons.length) lines.push("", "[Supabase 누락 인물]", ...missingDbPersons.map((name) => `- ${name}`));
       if (missingDbActivities.length) lines.push("", "[Supabase 누락 활동]", ...missingDbActivities.map((row) => `- ${row.person_name} | ${row.politic_name} | ${row.activity_start}–${row.activity_end}`));
-      if (excludedStillInDb.length) lines.push("", "[비연표 인물 DB 잔존]", ...excludedStillInDb.map((name) => `- ${name}`));
       if (extraDbPersons.length) lines.push("", "[GitHub 기준 외 Supabase 인물]", ...extraDbPersons.map((name) => `- ${name}`));
       if (extraDbActivities.length) lines.push("", "[GitHub 기준 외 Supabase 활동]", ...extraDbActivities.map((row) => `- ${row.person_name} | ${row.politic_name} | ${row.activity_start}–${row.activity_end}`));
 
