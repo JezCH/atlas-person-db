@@ -124,5 +124,158 @@
     "role": "Emperor and Khagan",
     "period_basis": "reign",
     "notes": "Ruled the Yuan dynasty from its formal proclamation until his death."
+  },
+  {
+    "person_name": "Cnut the Great",
+    "politic_name": "Kingdom of England",
+    "activity_start": 1016,
+    "activity_end": 1035,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Ruled England from 1016 until his death in 1035."
+  },
+  {
+    "person_name": "Cnut the Great",
+    "politic_name": "Kingdom of Denmark",
+    "activity_start": 1018,
+    "activity_end": 1035,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Ruled Denmark from about 1018 until his death in 1035."
+  },
+  {
+    "person_name": "Cnut the Great",
+    "politic_name": "Kingdom of Norway",
+    "activity_start": 1028,
+    "activity_end": 1035,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Ruled Norway from 1028 until his death in 1035."
+  },
+  {
+    "person_name": "Charles V",
+    "politic_name": "Spanish Monarchy",
+    "activity_start": 1516,
+    "activity_end": 1556,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Ruled the Spanish Monarchy as Charles I from 1516 until his abdication in 1556."
+  },
+  {
+    "person_name": "Charles V",
+    "politic_name": "Holy Roman Empire",
+    "activity_start": 1519,
+    "activity_end": 1556,
+    "role": "Holy Roman Emperor",
+    "period_basis": "reign",
+    "notes": "Served as Holy Roman Emperor from 1519 until his abdication in 1556."
+  },
+  {
+    "person_name": "Philip II of Spain",
+    "politic_name": "Spanish Monarchy",
+    "activity_start": 1556,
+    "activity_end": 1598,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Ruled the Spanish Monarchy from 1556 until his death in 1598."
+  },
+  {
+    "person_name": "Philip II of Spain",
+    "politic_name": "Kingdom of Portugal",
+    "activity_start": 1580,
+    "activity_end": 1598,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Ruled Portugal as Philip I from 1580 until his death in 1598."
+  },
+  {
+    "person_name": "Simon Bolivar",
+    "politic_name": "Gran Colombia",
+    "activity_start": 1819,
+    "activity_end": 1830,
+    "role": "President and liberator",
+    "period_basis": "term",
+    "notes": "Led and governed Gran Colombia from 1819 until 1830."
+  },
+  {
+    "person_name": "Simon Bolivar",
+    "politic_name": "Peru",
+    "activity_start": 1824,
+    "activity_end": 1826,
+    "role": "Supreme political and military leader",
+    "period_basis": "de_facto_rule",
+    "notes": "Exercised supreme political and military authority in Peru from 1824 to 1826."
+  },
+  {
+    "person_name": "Simon Bolivar",
+    "politic_name": "Bolivia",
+    "activity_start": 1825,
+    "activity_end": 1825,
+    "role": "First president",
+    "period_basis": "term",
+    "notes": "Served briefly as the first president of Bolivia in 1825."
+  },
+  {
+    "person_name": "Nzinga Mbande",
+    "politic_name": "Kingdom of Ndongo",
+    "activity_start": 1624,
+    "activity_end": 1663,
+    "role": "Queen regnant and claimant",
+    "period_basis": "reign",
+    "notes": "Ruled and continued to claim the throne of Ndongo from 1624 until her death in 1663."
+  },
+  {
+    "person_name": "Nzinga Mbande",
+    "politic_name": "Kingdom of Matamba",
+    "activity_start": 1631,
+    "activity_end": 1663,
+    "role": "Queen regnant",
+    "period_basis": "reign",
+    "notes": "Ruled Matamba from about 1631 until her death in 1663."
+  },
+  {
+    "person_name": "Maria I of Portugal",
+    "politic_name": "Kingdom of Portugal",
+    "activity_start": 1777,
+    "activity_end": 1815,
+    "role": "Queen",
+    "period_basis": "reign",
+    "notes": "Ruled Portugal from 1777 until the creation of the United Kingdom of Portugal, Brazil and the Algarves in 1815."
+  },
+  {
+    "person_name": "Maria I of Portugal",
+    "politic_name": "United Kingdom of Portugal, Brazil and the Algarves",
+    "activity_start": 1815,
+    "activity_end": 1816,
+    "role": "Queen",
+    "period_basis": "reign",
+    "notes": "Ruled the United Kingdom of Portugal, Brazil and the Algarves from its creation in 1815 until her death in 1816."
+  },
+  {
+    "person_name": "Hypatia",
+    "politic_name": "Roman Empire",
+    "activity_start": 393,
+    "activity_end": 395,
+    "role": "Mathematician, philosopher and astronomer",
+    "period_basis": "intellectual_activity",
+    "notes": "Active in Alexandria before the permanent administrative division of the Roman Empire in 395."
+  },
+  {
+    "person_name": "Hypatia",
+    "politic_name": "Byzantine Empire",
+    "activity_start": 395,
+    "activity_end": 415,
+    "role": "Mathematician, philosopher and astronomer",
+    "period_basis": "intellectual_activity",
+    "notes": "Active in Alexandria under the Eastern Roman Empire from 395 until her death in 415."
+  },
+  {
+    "person_name": "Tokugawa Ieyasu",
+    "politic_name": "Tokugawa Shogunate",
+    "activity_start": 1603,
+    "activity_end": 1616,
+    "role": "Shogun and retired de facto ruler",
+    "period_basis": "de_facto_rule",
+    "notes": "Founded the Tokugawa Shogunate in 1603 and continued to exercise decisive authority after his formal abdication until his death in 1616."
   }
 ]
