@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>ATLAS Admin</title>
-  <link rel="stylesheet" href="./admin.css" />
+  <link rel="stylesheet" href="./admin.css?v=20260802-live2" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -22,7 +25,7 @@
       <div class="panel-head">
         <div>
           <h2>DB 검증</h2>
-          <p>등록 예정 명단, GitHub 기준 데이터, Supabase 실제 데이터를 서로 대조합니다.</p>
+          <p>GitHub 연표 기준 데이터와 Supabase 실제 데이터를 실시간으로 대조합니다.</p>
         </div>
         <button id="verifyButton" class="button primary" type="button">Verify Database</button>
       </div>
@@ -50,9 +53,9 @@
 
     <section class="panel compact">
       <h2>검증 기준</h2>
-      <p><code>expected-persons.json</code>: 대화에서 등록하기로 한 전체 인물 명단</p>
-      <p><code>pending-records.json</code>: GitHub에서 관리하는 표준 활동 데이터</p>
-      <p><code>person_politics</code>: Supabase 실제 저장 데이터</p>
+      <p>모든 <code>pending-records*.json</code>과 교정 파일을 합쳐 현재 연표 기준을 구성합니다.</p>
+      <p><code>non-timeline-persons.json</code>의 신화·전설 인물은 연표 검증에서 제외합니다.</p>
+      <p><code>person_politics</code>는 Supabase에서 버튼 클릭 시마다 다시 조회합니다.</p>
     </section>
 
     <section class="panel compact">
@@ -62,7 +65,8 @@
     </section>
   </main>
 
-  <script src="./config.js"></script>
-  <script src="./admin.js"></script>
+  <script src="./config.js?v=20260802-live2"></script>
+  <script src="./admin.js?v=20260802-live2"></script>
+  <script src="./admin-timeline-verification.js?v=20260802-live2"></script>
 </body>
 </html>
