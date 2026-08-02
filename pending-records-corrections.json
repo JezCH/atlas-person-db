@@ -1,0 +1,128 @@
+[
+  {
+    "person_name": "Jesus",
+    "politic_name": "Roman Empire",
+    "activity_start": 27,
+    "activity_end": 30,
+    "role": "Religious leader and preacher",
+    "period_basis": "religious_activity",
+    "notes": "Public ministry in Roman-ruled Judaea, represented at the map-level polity as the Roman Empire."
+  },
+  {
+    "person_name": "Gautama Buddha",
+    "politic_name": "Shakya Republic",
+    "activity_start": -445,
+    "activity_end": -400,
+    "role": "Religious leader and philosopher",
+    "period_basis": "religious_activity",
+    "notes": "Teaching period after enlightenment; chronology remains debated. The Shakya polity is represented as a republic at map level."
+  },
+  {
+    "person_name": "Muhammad",
+    "politic_name": "Medinan Polity",
+    "activity_start": 622,
+    "activity_end": 632,
+    "role": "Religious leader, statesman and military leader",
+    "period_basis": "de_facto_rule",
+    "notes": "Represents Muhammad's leadership of the Medinan polity from the Hijra until his death."
+  },
+  {
+    "person_name": "Toyotomi Hideyoshi",
+    "politic_name": "Toyotomi Regime",
+    "activity_start": 1582,
+    "activity_end": 1598,
+    "role": "Military leader and Kampaku",
+    "period_basis": "de_facto_rule",
+    "notes": "Represents the Toyotomi-led national regime from Hideyoshi's succession to Oda Nobunaga until his death."
+  },
+  {
+    "person_name": "Benjamin Franklin",
+    "politic_name": "Province of Pennsylvania",
+    "activity_start": 1757,
+    "activity_end": 1776,
+    "role": "Colonial agent, scientist and writer",
+    "period_basis": "general_activity",
+    "notes": "Represents Franklin's public and diplomatic activity before American independence."
+  },
+  {
+    "person_name": "Benjamin Franklin",
+    "politic_name": "United States",
+    "activity_start": 1776,
+    "activity_end": 1790,
+    "role": "Statesman, diplomat, scientist and inventor",
+    "period_basis": "general_activity",
+    "notes": "Represents Franklin's service to the United States from independence until his death."
+  },
+  {
+    "person_name": "Edward Teach",
+    "politic_name": "Nassau Pirate Republic",
+    "activity_start": 1716,
+    "activity_end": 1718,
+    "role": "Pirate captain",
+    "period_basis": "military_activity",
+    "notes": "Associated with the non-state pirate community centered on Nassau; the name is a conventional map label rather than a formal state title."
+  },
+  {
+    "person_name": "Tecumseh",
+    "politic_name": "Tecumseh's Confederacy",
+    "activity_start": 1805,
+    "activity_end": 1813,
+    "role": "Confederacy leader and military commander",
+    "period_basis": "military_activity",
+    "notes": "Represents the pan-Indigenous confederacy organized by Tecumseh and Tenskwatawa against United States expansion."
+  },
+  {
+    "person_name": "Haile Selassie I",
+    "politic_name": "Ethiopian Empire",
+    "activity_start": 1930,
+    "activity_end": 1936,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "First phase of his imperial rule before the Italian occupation."
+  },
+  {
+    "person_name": "Haile Selassie I",
+    "politic_name": "Ethiopian Empire",
+    "activity_start": 1941,
+    "activity_end": 1974,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Restored imperial rule after liberation in 1941, continuing until his deposition in 1974."
+  },
+  {
+    "person_name": "Peter I",
+    "politic_name": "Tsardom of Russia",
+    "activity_start": 1682,
+    "activity_end": 1721,
+    "role": "Tsar",
+    "period_basis": "reign",
+    "notes": "Ruled the Tsardom of Russia before proclaiming the Russian Empire in 1721."
+  },
+  {
+    "person_name": "Peter I",
+    "politic_name": "Russian Empire",
+    "activity_start": 1721,
+    "activity_end": 1725,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Ruled as emperor from the proclamation of the Russian Empire until his death."
+  },
+  {
+    "person_name": "Kublai Khan",
+    "politic_name": "Mongol Empire",
+    "activity_start": 1260,
+    "activity_end": 1271,
+    "role": "Khagan",
+    "period_basis": "reign",
+    "notes": "Ruled as Great Khan before proclaiming the Yuan dynasty in 1271."
+  },
+  {
+    "person_name": "Kublai Khan",
+    "politic_name": "Yuan Dynasty",
+    "activity_start": 1271,
+    "activity_end": 1294,
+    "role": "Emperor and Khagan",
+    "period_basis": "reign",
+    "notes": "Ruled the Yuan dynasty from its formal proclamation until his death."
+  }
+]
