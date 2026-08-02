@@ -1,0 +1,58 @@
+name: Ingest supplement 3
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'pending-records-supplement-3.json'
+      - '.github/workflows/ingest-supplement-3.yml'
+  workflow_dispatch:
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Insert missing person records into Supabase
+        env:
+          SUPABASE_URL: https://wfrbxltvpmlprgwfysxq.supabase.co
+          SUPABASE_ANON_KEY: sb_publishable_W2y0WbNhOVj8eWrTWTRqJw_WLregXP0
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request, urllib.parse
+
+          base = os.environ['SUPABASE_URL'].rstrip('/') + '/rest/v1/person_politics'
+          key = os.environ['SUPABASE_ANON_KEY']
+          headers = {
+              'apikey': key,
+              'Authorization': f'Bearer {key}',
+              'Content-Type': 'application/json',
+              'Prefer': 'return=minimal'
+          }
+
+          req = urllib.request.Request(base + '?select=id,person_name,politic_name,activity_start,activity_end', headers=headers)
+          with urllib.request.urlopen(req) as r:
+              existing = json.load(r)
+
+          def k(row):
+              return (row['person_name'], row['politic_name'], int(row['activity_start']), int(row['activity_end']))
+
+          existing_keys = {k(row) for row in existing}
+          with open('pending-records-supplement-3.json', encoding='utf-8') as f:
+              rows = json.load(f)
+
+          inserted = 0
+          skipped = 0
+          for row in rows:
+              if k(row) in existing_keys:
+                  skipped += 1
+                  continue
+              data = json.dumps(row, ensure_ascii=False).encode('utf-8')
+              req = urllib.request.Request(base, data=data, headers=headers, method='POST')
+              with urllib.request.urlopen(req):
+                  pass
+              existing_keys.add(k(row))
+              inserted += 1
+
+          print(f'Inserted {inserted}; skipped existing {skipped}; total supplement rows {len(rows)}')
+          PY
