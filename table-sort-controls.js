@@ -10,7 +10,9 @@
     const value = String(text || "").trim();
     const number = Number((value.match(/\d+/) || [""])[0]);
     if (!Number.isFinite(number)) return Number.POSITIVE_INFINITY;
-    return /^BC\b/i.test(value) ? -number : number;
+
+    const isBce = /^(?:BC\b|BCE\b|기원전\b)/i.test(value) || /^-\s*\d+/.test(value);
+    return isBce ? -number : number;
   }
 
   function getValue(row, key) {
@@ -29,6 +31,10 @@
     if (result === 0 && state.key !== "start") result = parseYear(a.cells[2]?.textContent) - parseYear(b.cells[2]?.textContent);
     if (result === 0) result = String(a.cells[0]?.textContent || "").localeCompare(String(b.cells[0]?.textContent || ""), "ko", { numeric: true, sensitivity: "base" });
     return state.direction === "asc" ? result : -result;
+  }
+
+  function observeBody(tbody) {
+    observer?.observe(tbody, { childList: true, subtree: true, characterData: true });
   }
 
   function sortTable() {
@@ -50,7 +56,7 @@
     const fragment = document.createDocumentFragment();
     sorted.forEach((row) => fragment.appendChild(row));
     tbody.appendChild(fragment);
-    observer?.observe(tbody, { childList: true, subtree: false });
+    observeBody(tbody);
     applying = false;
   }
 
@@ -129,7 +135,7 @@
     observer = new MutationObserver(() => {
       if (!applying) scheduleSort();
     });
-    observer.observe(tbody, { childList: true, subtree: false });
+    observeBody(tbody);
     scheduleSort();
   }
 
