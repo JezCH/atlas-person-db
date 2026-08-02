@@ -6,6 +6,7 @@
     "Goguryeo": "고구려",
     "Liu Bei": "유비",
     "Zhuge Liang": "제갈량",
+    "Guan Yu": "관우",
     "Shu Han": "촉한",
     "Emperor Gaozu of Han": "한고조(유방)",
     "Western Han": "전한",
