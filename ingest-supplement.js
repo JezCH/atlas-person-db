@@ -11,7 +11,8 @@
       const paths = [
         "./pending-records-supplement.json",
         "./pending-records-supplement-2.json",
-        "./pending-records-supplement-3.json"
+        "./pending-records-supplement-3.json",
+        "./pending-records-supplement-4.json"
       ];
       const responses = await Promise.all(paths.map((path) => fetch(`${path}?v=${Date.now()}`, { cache: "no-store" })));
       responses.forEach((response, index) => {
@@ -55,8 +56,8 @@
         else changed += 1;
       }
 
-      if (changed > 0 && !sessionStorage.getItem("atlas-person-supplement-v3")) {
-        sessionStorage.setItem("atlas-person-supplement-v3", "1");
+      if (changed > 0 && !sessionStorage.getItem("atlas-person-supplement-v4")) {
+        sessionStorage.setItem("atlas-person-supplement-v4", "1");
         location.reload();
       }
     } catch (error) {
