@@ -27,5 +27,35 @@
     "role_ko": "아마존의 여왕 (신화)",
     "reason": "Hippolyta is a queen of the Amazons in Greek mythology and has no secure historical chronology.",
     "map_policy": "Do not display on the year timeline unless a separate legendary or mythical overlay is enabled."
+  },
+  {
+    "person_name": "Ragnar Lodbrok",
+    "politic_name": "Scandinavia",
+    "display_name_ko": "라그나르 로드브로크",
+    "historicity": "legendary_or_composite",
+    "timeline_status": "excluded",
+    "date_basis": "none",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "전설적 바이킹 왕",
+    "reason": "Ragnar Lodbrok is known primarily from later Norse and Danish traditions. His historicity is disputed and he may be a composite of multiple Viking leaders.",
+    "map_policy": "Do not display on the year timeline unless a separate legendary overlay is enabled."
+  },
+  {
+    "person_name": "Gilgamesh",
+    "politic_name": "Uruk",
+    "display_name_ko": "길가메시",
+    "historicity": "legendary_possible_historical_core",
+    "timeline_status": "excluded",
+    "date_basis": "uncertain_king_list_tradition",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "전설적 우루크 왕",
+    "reason": "Gilgamesh appears in the Sumerian King List and later literary traditions, but his historicity and personal chronology are not securely established.",
+    "map_policy": "Do not display on the year timeline unless a separate legendary or traditional overlay is enabled."
   }
 ]
