@@ -295,5 +295,203 @@
     "role": "Holy Roman Emperor",
     "period_basis": "reign",
     "notes": "Served as Holy Roman Emperor from 1519 until his abdication in 1556."
+  },
+  {
+    "person_name": "Pericles",
+    "politic_name": "Athens",
+    "activity_start": -461,
+    "activity_end": -429,
+    "role": "Strategos and statesman",
+    "period_basis": "general_activity",
+    "notes": "Dominant Athenian statesman from the political ascendancy following Ephialtes' death until his own death in 429 BCE."
+  },
+  {
+    "person_name": "Peter I",
+    "politic_name": "Russian Empire",
+    "activity_start": 1682,
+    "activity_end": 1725,
+    "role": "Tsar and emperor",
+    "period_basis": "reign",
+    "notes": "Ruled Russia from 1682 and adopted the title of emperor in 1721, serving until his death in 1725."
+  },
+  {
+    "person_name": "Augustus",
+    "politic_name": "Roman Empire",
+    "activity_start": -27,
+    "activity_end": 14,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "First Roman emperor, ruling from 27 BCE until his death in 14 CE."
+  },
+  {
+    "person_name": "Mansa Musa",
+    "politic_name": "Mali Empire",
+    "activity_start": 1312,
+    "activity_end": 1337,
+    "role": "Mansa",
+    "period_basis": "reign",
+    "notes": "Ruled the Mali Empire from about 1312 until about 1337."
+  },
+  {
+    "person_name": "Kublai Khan",
+    "politic_name": "Yuan Dynasty",
+    "activity_start": 1260,
+    "activity_end": 1294,
+    "role": "Khagan and emperor",
+    "period_basis": "reign",
+    "notes": "Ruled as Great Khan from 1260 and founded the Yuan dynasty in 1271, reigning until 1294."
+  },
+  {
+    "person_name": "George Washington",
+    "politic_name": "United States",
+    "activity_start": 1789,
+    "activity_end": 1797,
+    "role": "President",
+    "period_basis": "term",
+    "notes": "Served as the first president of the United States from 1789 to 1797."
+  },
+  {
+    "person_name": "Franklin D. Roosevelt",
+    "politic_name": "United States",
+    "activity_start": 1933,
+    "activity_end": 1945,
+    "role": "President",
+    "period_basis": "term",
+    "notes": "Served as president of the United States from 1933 until his death in 1945."
+  },
+  {
+    "person_name": "Saladin",
+    "politic_name": "Ayyubid Sultanate",
+    "activity_start": 1174,
+    "activity_end": 1193,
+    "role": "Sultan",
+    "period_basis": "reign",
+    "notes": "Ruled the Ayyubid realm from 1174 until his death in 1193."
+  },
+  {
+    "person_name": "Hatshepsut",
+    "politic_name": "New Kingdom of Egypt",
+    "activity_start": -1479,
+    "activity_end": -1458,
+    "role": "Pharaoh",
+    "period_basis": "reign",
+    "notes": "Ruled as pharaoh of Egypt from about 1479 to 1458 BCE."
+  },
+  {
+    "person_name": "Ashoka",
+    "politic_name": "Maurya Empire",
+    "activity_start": -268,
+    "activity_end": -232,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Reigned over the Maurya Empire from about 268 to 232 BCE."
+  },
+  {
+    "person_name": "Victoria",
+    "politic_name": "United Kingdom",
+    "activity_start": 1837,
+    "activity_end": 1901,
+    "role": "Queen",
+    "period_basis": "reign",
+    "notes": "Reigned as queen of the United Kingdom from 1837 until her death in 1901."
+  },
+  {
+    "person_name": "Winston Churchill",
+    "politic_name": "United Kingdom",
+    "activity_start": 1940,
+    "activity_end": 1945,
+    "role": "Prime Minister",
+    "period_basis": "term",
+    "notes": "Served his first premiership during the Second World War from 1940 to 1945."
+  },
+  {
+    "person_name": "Huayna Capac",
+    "politic_name": "Inca Empire",
+    "activity_start": 1493,
+    "activity_end": 1527,
+    "role": "Sapa Inca",
+    "period_basis": "reign",
+    "notes": "Ruled the Inca Empire from about 1493 until about 1527."
+  },
+  {
+    "person_name": "Cyrus the Great",
+    "politic_name": "Achaemenid Empire",
+    "activity_start": -559,
+    "activity_end": -530,
+    "role": "King of Kings",
+    "period_basis": "reign",
+    "notes": "Ruled from 559 to 530 BCE and founded the Achaemenid Empire."
+  },
+  {
+    "person_name": "Darius I",
+    "politic_name": "Achaemenid Empire",
+    "activity_start": -522,
+    "activity_end": -486,
+    "role": "King of Kings",
+    "period_basis": "reign",
+    "notes": "Reigned as king of the Achaemenid Empire from 522 to 486 BCE."
+  },
+  {
+    "person_name": "Charles de Gaulle",
+    "politic_name": "French Fifth Republic",
+    "activity_start": 1959,
+    "activity_end": 1969,
+    "role": "President",
+    "period_basis": "term",
+    "notes": "Served as the first president of the French Fifth Republic from 1959 until his resignation in 1969."
+  },
+  {
+    "person_name": "Mehmed II",
+    "politic_name": "Ottoman Empire",
+    "activity_start": 1451,
+    "activity_end": 1481,
+    "role": "Sultan",
+    "period_basis": "reign",
+    "notes": "Second reign as Ottoman sultan from 1451 until his death in 1481."
+  },
+  {
+    "person_name": "Suleiman I",
+    "politic_name": "Ottoman Empire",
+    "activity_start": 1520,
+    "activity_end": 1566,
+    "role": "Sultan",
+    "period_basis": "reign",
+    "notes": "Reigned as Ottoman sultan from 1520 until his death in 1566."
+  },
+  {
+    "person_name": "Charlemagne",
+    "politic_name": "Carolingian Empire",
+    "activity_start": 768,
+    "activity_end": 814,
+    "role": "King and emperor",
+    "period_basis": "reign",
+    "notes": "Ruled from 768 until his death in 814 and was crowned emperor in 800."
+  },
+  {
+    "person_name": "Zara Yaqob",
+    "politic_name": "Ethiopian Empire",
+    "activity_start": 1434,
+    "activity_end": 1468,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Reigned as emperor of Ethiopia from 1434 until his death in 1468."
+  },
+  {
+    "person_name": "Suryavarman II",
+    "politic_name": "Khmer Empire",
+    "activity_start": 1113,
+    "activity_end": 1150,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Ruled the Khmer Empire from about 1113 until about 1150 and commissioned Angkor Wat."
+  },
+  {
+    "person_name": "João II of Portugal",
+    "politic_name": "Kingdom of Portugal",
+    "activity_start": 1481,
+    "activity_end": 1495,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Reigned as king of Portugal from 1481 until his death in 1495."
   }
 ]
