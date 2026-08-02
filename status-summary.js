@@ -46,14 +46,20 @@
     section.id = "registrationSummary";
     section.className = "registration-summary card";
     section.dataset.state = "loading";
-    section.innerHTML = `<div class="registration-summary-main"><span class="registration-summary-dot" aria-hidden="true"></span><div><div id="registrationSummaryTitle" class="registration-summary-title">등록 상태 확인 중</div><div id="registrationSummaryDetail" class="registration-summary-detail">연표 데이터와 비연표 인물을 분리해 확인하고 있습니다.</div></div></div><div class="registration-summary-actions"><button id="registrationSummaryRefresh" class="registration-summary-link" type="button">다시 확인</button><a class="registration-summary-link" href="./admin.html">관리자 페이지</a></div>`;
+    section.innerHTML = `<div class="registration-summary-main"><span class="registration-summary-dot" aria-hidden="true"></span><div><div id="registrationSummaryTitle" class="registration-summary-title">실시간 DB 상태 확인 중</div><div id="registrationSummaryDetail" class="registration-summary-detail">Supabase의 현재 인물·활동 수를 조회하고 있습니다.</div></div></div><div class="registration-summary-actions"><button id="registrationSummaryRefresh" class="registration-summary-link" type="button">다시 확인</button><a class="registration-summary-link" href="./admin.html">관리자 페이지</a></div>`;
     toolbar.insertAdjacentElement("afterend", section);
     section.querySelector("#registrationSummaryRefresh").addEventListener("click", verifySummary);
     return section;
   }
 
-  const personSet = (rows) => new Set((rows || []).map((row) => String(row.person_name || "").trim()).filter(Boolean));
-  const activityKey = (row) => [row.person_name, row.politic_name, Number(row.activity_start), Number(row.activity_end)].join("|");
+  const activityKey = (row) => [row.person_name, row.politic_name, Number(row.activity_start), Number(row.activity_end)].join("|").toLowerCase();
+  const personSet = (rows) => new Set((rows || []).map((row) => String(row.person_name || "").trim().toLowerCase()).filter(Boolean));
+
+  async function fetchJson(path) {
+    const response = await fetch(`${path}?v=${Date.now()}`, { cache: "no-store" });
+    if (!response.ok) throw new Error(`${path} 불러오기 실패 (${response.status})`);
+    return response.json();
+  }
 
   async function verifySummary() {
     const box = document.getElementById("registrationSummary") || buildSummary();
@@ -61,49 +67,48 @@
     const title = document.getElementById("registrationSummaryTitle");
     const detail = document.getElementById("registrationSummaryDetail");
     box.dataset.state = "loading";
-    title.textContent = "등록 상태 확인 중";
-    detail.textContent = "연표 데이터와 비연표 인물을 분리해 확인하고 있습니다.";
+    title.textContent = "실시간 DB 상태 확인 중";
+    detail.textContent = "Supabase의 현재 인물·활동 수를 조회하고 있습니다.";
 
     try {
-      const [expectedResponse, pendingResponse, nonTimelineResponse] = await Promise.all([
-        fetch(`./expected-persons.json?v=${Date.now()}`, { cache: "no-store" }),
-        fetch(`./pending-records.json?v=${Date.now()}`, { cache: "no-store" }),
-        fetch(`./non-timeline-persons.json?v=${Date.now()}`, { cache: "no-store" })
-      ]);
-      if (!expectedResponse.ok || !pendingResponse.ok || !nonTimelineResponse.ok) throw new Error("기준 데이터 파일을 읽지 못했습니다.");
-
-      const expected = await expectedResponse.json();
-      const pendingRaw = await pendingResponse.json();
-      const nonTimeline = await nonTimelineResponse.json();
-      const excludedNames = new Set((nonTimeline || []).map((item) => String(item.person_name || "").trim()).filter(Boolean));
-      const pending = (pendingRaw || []).filter((row) => !excludedNames.has(String(row.person_name || "").trim()));
-
       const config = window.ATLAS_CONFIG || {};
       if (!window.supabase || !config.SUPABASE_URL || !config.SUPABASE_ANON_KEY) throw new Error("Supabase 설정을 찾지 못했습니다.");
+
+      const [base, supplement1, supplement2, supplement3, nonTimeline] = await Promise.all([
+        fetchJson("./pending-records.json"),
+        fetchJson("./pending-records-supplement.json"),
+        fetchJson("./pending-records-supplement-2.json"),
+        fetchJson("./pending-records-supplement-3.json"),
+        fetchJson("./non-timeline-persons.json")
+      ]);
+
+      const excluded = new Set((nonTimeline || []).map((item) => String(item.person_name || "").trim().toLowerCase()).filter(Boolean));
+      const expectedRows = [base, supplement1, supplement2, supplement3]
+        .flatMap((rows) => Array.isArray(rows) ? rows : [])
+        .filter((row) => !excluded.has(String(row.person_name || "").trim().toLowerCase()));
+
       const db = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
       const { data: dbRows, error } = await db.from("person_politics").select("person_name,politic_name,activity_start,activity_end");
       if (error) throw error;
 
-      const timelineExpected = new Set((expected || []).map((item) => typeof item === "string" ? item : item.person_name).filter((name) => name && !excludedNames.has(name)));
-      const pendingNames = personSet(pending);
+      const expectedNames = personSet(expectedRows);
+      const expectedKeys = new Set(expectedRows.map(activityKey));
       const dbNames = personSet(dbRows);
-      const pendingKeys = new Set(pending.map(activityKey));
       const dbKeys = new Set((dbRows || []).map(activityKey));
-      const missingPending = [...timelineExpected].filter((name) => !pendingNames.has(name));
-      const missingDb = [...timelineExpected].filter((name) => !dbNames.has(name));
-      const missingActivities = [...pendingKeys].filter((key) => !dbKeys.has(key));
-      const excludedStillInDb = [...excludedNames].filter((name) => dbNames.has(name));
-      const ok = missingPending.length === 0 && missingDb.length === 0 && missingActivities.length === 0 && excludedStillInDb.length === 0;
+      const missingPersons = [...expectedNames].filter((name) => !dbNames.has(name));
+      const missingActivities = [...expectedKeys].filter((key) => !dbKeys.has(key));
+      const extraPersons = [...dbNames].filter((name) => !expectedNames.has(name) && !excluded.has(name));
+      const ok = missingPersons.length === 0 && missingActivities.length === 0;
 
       box.dataset.state = ok ? "ok" : "error";
-      title.textContent = ok ? "연표 데이터 정상" : "등록 상태 확인 필요";
+      title.textContent = ok ? "실시간 DB 정상" : "실시간 DB 확인 필요";
       detail.textContent = ok
-        ? `연표 인물 ${timelineExpected.size}명 · 활동 ${pendingKeys.size}개 정상 · 비연표 인물 ${excludedNames.size}명 분리 보관`
-        : `GitHub 누락 ${missingPending.length}명 · DB 누락 ${missingDb.length}명 · 활동 누락 ${missingActivities.length}개 · 비연표 DB 잔존 ${excludedStillInDb.length}명`;
+        ? `현재 DB 인물 ${dbNames.size}명 · 활동 ${dbRows.length}개 · GitHub 기준 ${expectedNames.size}명/${expectedKeys.size}개 · 추가 DB 인물 ${extraPersons.length}명`
+        : `현재 DB 인물 ${dbNames.size}명 · 활동 ${dbRows.length}개 · 누락 인물 ${missingPersons.length}명 · 누락 활동 ${missingActivities.length}개`;
     } catch (error) {
-      console.error("ATLAS public verification failed", error);
+      console.error("ATLAS live summary failed", error);
       box.dataset.state = "error";
-      title.textContent = "등록 상태 확인 실패";
+      title.textContent = "실시간 상태 확인 실패";
       detail.textContent = error?.message || "관리자 페이지에서 상세 검증을 실행하세요.";
     }
   }
