@@ -15,7 +15,15 @@
     "Tecumseh|Shawnee|1805|1813",
     "Haile Selassie I|Ethiopian Empire|1930|1974",
     "Peter I|Russian Empire|1682|1725",
-    "Kublai Khan|Yuan Dynasty|1260|1294"
+    "Kublai Khan|Yuan Dynasty|1260|1294",
+    "Cnut the Great|North Sea Empire|1016|1035",
+    "Philip II of Spain|Spanish Empire|1556|1598",
+    "Simon Bolivar|Gran Colombia|1819|1830",
+    "Nzinga Mbande|Kingdoms of Ndongo and Matamba|1624|1663",
+    "Maria I of Portugal|Kingdom of Portugal|1777|1816",
+    "Hypatia|Roman Empire|393|415",
+    "Tokugawa Ieyasu|Tokugawa Shogunate|1603|1605",
+    "Tokugawa Ieyasu|Tokugawa Shogunate|1605|1616"
   ]);
 
   async function run() {
@@ -89,8 +97,8 @@
         else changed += 1;
       }
 
-      if (changed > 0 && !sessionStorage.getItem("atlas-person-map-corrections-v2")) {
-        sessionStorage.setItem("atlas-person-map-corrections-v2", "1");
+      if (changed > 0 && !sessionStorage.getItem("atlas-person-map-corrections-v3")) {
+        sessionStorage.setItem("atlas-person-map-corrections-v3", "1");
         location.reload();
       }
     } catch (error) {
