@@ -45,6 +45,15 @@
     "notes": "Served as Carthage's leading commander from 221 BCE and commanded its forces during the Second Punic War, including the invasion of Italy after crossing the Alps. He died in exile around 183 BCE."
   },
   {
+    "person_name": "Cleopatra VII",
+    "politic_name": "Ptolemaic Kingdom",
+    "activity_start": -51,
+    "activity_end": -30,
+    "role": "Queen and pharaoh",
+    "period_basis": "reign",
+    "notes": "Ruled the Ptolemaic Kingdom from 51 to 30 BCE, initially with dynastic co-rulers and later as its dominant sovereign. Her death in 30 BCE marked the end of Ptolemaic rule and preceded Egypt's annexation by Rome."
+  },
+  {
     "person_name": "Julius Caesar",
     "politic_name": "Roman Republic",
     "activity_start": -49,
