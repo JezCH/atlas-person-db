@@ -79,5 +79,41 @@
     "role": "Artist, engineer and polymath",
     "period_basis": "artistic_activity",
     "notes": "Activity period begins with his admission to the Guild of Saint Luke in 1472 and ends with his death in 1519. Republic of Florence is used as his representative polity; later residences belong in place-level data."
+  },
+  {
+    "person_name": "Maximilien Robespierre",
+    "politic_name": "French First Republic",
+    "activity_start": 1793,
+    "activity_end": 1794,
+    "role": "Member of the Committee of Public Safety and de facto leader",
+    "period_basis": "de_facto_rule",
+    "notes": "Served as a dominant member of the Committee of Public Safety during the French First Republic from 1793 until his overthrow and execution in 1794."
+  },
+  {
+    "person_name": "Owain Glyndwr",
+    "politic_name": "Principality of Wales",
+    "activity_start": 1400,
+    "activity_end": 1415,
+    "role": "Prince of Wales and rebel leader",
+    "period_basis": "de_facto_rule",
+    "notes": "Led the Welsh revolt from 1400, proclaimed himself Prince of Wales, and headed a de facto independent Welsh government. His last reliably documented activity dates to 1415."
+  },
+  {
+    "person_name": "Oliver Cromwell",
+    "politic_name": "Commonwealth of England",
+    "activity_start": 1653,
+    "activity_end": 1658,
+    "role": "Lord Protector",
+    "period_basis": "de_facto_rule",
+    "notes": "Served as Lord Protector and exercised supreme executive authority over the Commonwealth of England, Scotland and Ireland from 1653 until his death in 1658."
+  },
+  {
+    "person_name": "Yasovarman IV",
+    "politic_name": "Khmer Empire",
+    "activity_start": 928,
+    "activity_end": 941,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Reigned as emperor of the Khmer Empire from 928 to 941 and established Koh Ker as the imperial capital."
   }
 ]
