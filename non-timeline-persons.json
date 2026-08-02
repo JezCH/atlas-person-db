@@ -12,5 +12,20 @@
     "activity_end": null,
     "reason": "Dido is a legendary founder associated by tradition with the foundation of Carthage in 814/813 BCE. Her personal reign and death dates are not securely known, so she is excluded from year-based map queries.",
     "map_policy": "Do not display on the year timeline unless a separate legendary/traditional overlay is enabled."
+  },
+  {
+    "person_name": "Hippolyta",
+    "politic_name": "Amazons",
+    "display_name_ko": "히폴리타",
+    "historicity": "mythical",
+    "timeline_status": "excluded",
+    "date_basis": "none",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "아마존의 여왕 (신화)",
+    "reason": "Hippolyta is a queen of the Amazons in Greek mythology and has no secure historical chronology.",
+    "map_policy": "Do not display on the year timeline unless a separate legendary or mythical overlay is enabled."
   }
 ]
