@@ -1,7 +1,4 @@
-window.ATLAS_CONFIG = {
-  SUPABASE_URL: "https://wfrbxltvpmlprgwfysxq.supabase.co",
-  SUPABASE_ANON_KEY: "sb_publishable_W2y0WbNhOVj8eWrTWTRqJw_WLregXP0"
-};
+window.ATLAS_CONFIG = window.ATLAS_CONFIG || {};
 
 window.addEventListener("load", () => {
   const files = [
@@ -13,6 +10,7 @@ window.addEventListener("load", () => {
     "person-locales-supplement-2.js",
     "person-locales-supplement-3.js",
     "person-locales-supplement-4.js",
+    "person-locales-supplement-5.js",
     "status-summary.js",
     "compact-era-format.js",
     "table-sort-controls.js",
