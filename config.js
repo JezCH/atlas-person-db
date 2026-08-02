@@ -8,6 +8,7 @@ window.addEventListener("load", () => {
     "verification-data-merge.js",
     "ingest-supplement.js",
     "trigger-ingest-supplement-3.js",
+    "manual-supplement-import.js",
     "person-locales.js",
     "person-locales-supplement.js",
     "person-locales-supplement-2.js",
