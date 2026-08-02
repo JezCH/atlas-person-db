@@ -1,0 +1,83 @@
+[
+  {
+    "person_name": "Gwanggaeto the Great",
+    "politic_name": "Goguryeo",
+    "activity_start": 391,
+    "activity_end": 413,
+    "role": "King of Goguryeo",
+    "period_basis": "reign",
+    "notes": "Reigned as king of Goguryeo from 391 until 413 and led major territorial expansion across Manchuria and the Korean Peninsula."
+  },
+  {
+    "person_name": "Liu Bei",
+    "politic_name": "Shu Han",
+    "activity_start": 221,
+    "activity_end": 223,
+    "role": "Emperor of Shu Han",
+    "period_basis": "reign",
+    "notes": "Reigned as the founding emperor of Shu Han from 221 until his death in 223."
+  },
+  {
+    "person_name": "Zhuge Liang",
+    "politic_name": "Shu Han",
+    "activity_start": 221,
+    "activity_end": 234,
+    "role": "Chancellor and regent",
+    "period_basis": "de_facto_rule",
+    "notes": "Served as chancellor of Shu Han from its foundation in 221 and later as regent for Liu Shan until his death in 234."
+  },
+  {
+    "person_name": "Emperor Gaozu of Han",
+    "politic_name": "Western Han",
+    "activity_start": -202,
+    "activity_end": -195,
+    "role": "Founding emperor",
+    "period_basis": "reign",
+    "notes": "Liu Bang reigned as the founding emperor of the Han dynasty from 202 to 195 BCE. The polity is labeled Western Han for map-level distinction from Eastern Han."
+  },
+  {
+    "person_name": "Sophia Duleep Singh",
+    "politic_name": "United Kingdom",
+    "activity_start": 1907,
+    "activity_end": 1948,
+    "role": "Suffragette and social activist",
+    "period_basis": "general_activity",
+    "notes": "Became active in the British women's suffrage movement after 1907 and remained engaged in public and charitable work until her death in 1948."
+  },
+  {
+    "person_name": "Subhas Chandra Bose",
+    "politic_name": "Provisional Government of Free India",
+    "activity_start": 1943,
+    "activity_end": 1945,
+    "role": "Head of State and Supreme Commander",
+    "period_basis": "de_facto_rule",
+    "notes": "Led the Provisional Government of Free India and the Indian National Army from 1943 until 1945."
+  },
+  {
+    "person_name": "Solomon",
+    "politic_name": "Kingdom of Israel",
+    "activity_start": -970,
+    "activity_end": -931,
+    "role": "King of Israel",
+    "period_basis": "reign",
+    "notes": "Conventionally dated as king of the united Kingdom of Israel from about 970 to 931 BCE; the chronology is traditional and debated."
+  },
+  {
+    "person_name": "Hypatia",
+    "politic_name": "Roman Empire",
+    "activity_start": 393,
+    "activity_end": 415,
+    "role": "Mathematician, philosopher and astronomer",
+    "period_basis": "intellectual_activity",
+    "notes": "Active as a leading Neoplatonist teacher and scholar in Alexandria from the late fourth century until her death in 415."
+  },
+  {
+    "person_name": "Leonardo da Vinci",
+    "politic_name": "Republic of Florence",
+    "activity_start": 1472,
+    "activity_end": 1519,
+    "role": "Artist, engineer and polymath",
+    "period_basis": "artistic_activity",
+    "notes": "Activity period begins with his admission to the Guild of Saint Luke in 1472 and ends with his death in 1519. Republic of Florence is used as his representative polity; later residences belong in place-level data."
+  }
+]
