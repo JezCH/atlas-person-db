@@ -35,7 +35,29 @@
     "Pachacuti": "파차쿠티",
     "Henry the Navigator": "인판트 동 엔히크",
     "Mursili I": "무르실리 1세",
-    "Charles V": "카를 5세"
+    "Charles V": "카를 5세",
+    "Pericles": "페리클레스",
+    "Peter I": "표트르 1세",
+    "Augustus": "아우구스투스",
+    "Mansa Musa": "만사 무사",
+    "Kublai Khan": "쿠빌라이 칸",
+    "George Washington": "조지 워싱턴",
+    "Franklin D. Roosevelt": "프랭클린 D. 루스벨트",
+    "Saladin": "살라딘",
+    "Hatshepsut": "하트셉수트",
+    "Ashoka": "아소카",
+    "Victoria": "빅토리아 여왕",
+    "Winston Churchill": "윈스턴 처칠",
+    "Huayna Capac": "우아이나 카팍",
+    "Cyrus the Great": "키루스 대왕",
+    "Darius I": "다리우스 1세",
+    "Charles de Gaulle": "샤를 드골",
+    "Mehmed II": "메흐메트 2세",
+    "Suleiman I": "술레이만 1세",
+    "Charlemagne": "카롤루스 대제",
+    "Zara Yaqob": "자라 야콥",
+    "Suryavarman II": "수리야바르만 2세",
+    "João II of Portugal": "주앙 2세"
   };
 
   const polities = {
@@ -66,7 +88,17 @@
     "Hittite Kingdom": "히타이트 왕국",
     "Holy Roman Empire": "신성 로마 제국",
     "Scandinavia": "스칸디나비아",
-    "Uruk": "우루크"
+    "Uruk": "우루크",
+    "Athens": "아테네",
+    "Mali Empire": "말리 제국",
+    "Yuan Dynasty": "원나라",
+    "Ayyubid Sultanate": "아이유브 술탄국",
+    "Maurya Empire": "마우리아 제국",
+    "United Kingdom": "영국",
+    "French Fifth Republic": "프랑스 제5공화국",
+    "Carolingian Empire": "카롤링거 제국",
+    "Ethiopian Empire": "에티오피아 제국",
+    "Khmer Empire": "크메르 제국"
   };
 
   const map = { ...persons, ...polities };
