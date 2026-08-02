@@ -10,6 +10,29 @@
   const normalize = (value) => String(value || "").trim().toLowerCase();
   const activityKey = (row) => [row.person_name, row.politic_name, Number(row.activity_start), Number(row.activity_end)].join("\u0001").toLowerCase();
 
+  const obsoleteKeys = new Set([
+    "dido\u0001carthage\u0001-814\u0001-814",
+    "isabella i\u0001crown of castile\u00011474\u00011504",
+    "jesus\u0001roman judaea\u000127\u000130",
+    "gautama buddha\u0001shakya\u0001-445\u0001-400",
+    "muhammad\u0001medina\u0001610\u0001632",
+    "toyotomi hideyoshi\u0001japan\u00011582\u00011598",
+    "benjamin franklin\u0001united states\u00011757\u00011790",
+    "edward teach\u0001republic of pirates\u00011716\u00011718",
+    "tecumseh\u0001shawnee\u00011805\u00011813",
+    "haile selassie i\u0001ethiopian empire\u00011930\u00011974",
+    "peter i\u0001russian empire\u00011682\u00011725",
+    "kublai khan\u0001yuan dynasty\u00011260\u00011294",
+    "cnut the great\u0001north sea empire\u00011016\u00011035",
+    "philip ii of spain\u0001spanish empire\u00011556\u00011598",
+    "simon bolivar\u0001gran colombia\u00011819\u00011830",
+    "nzinga mbande\u0001kingdoms of ndongo and matamba\u00011624\u00011663",
+    "maria i of portugal\u0001kingdom of portugal\u00011777\u00011816",
+    "hypatia\u0001roman empire\u0001393\u0001415",
+    "tokugawa ieyasu\u0001tokugawa shogunate\u00011603\u00011605",
+    "tokugawa ieyasu\u0001tokugawa shogunate\u00011605\u00011616"
+  ]);
+
   async function fetchJson(path) {
     const response = await fetch(`${path}?v=${Date.now()}`, { cache: "no-store" });
     if (!response.ok) throw new Error(`${path} 불러오기 실패 (${response.status})`);
@@ -43,20 +66,22 @@
     output.textContent = "Supabase 실시간 데이터와 GitHub 연표 데이터를 검증하는 중...";
 
     try {
-      const [base, supplement1, supplement2, supplement3, supplement4, corrections, nonTimelineRaw] = await Promise.all([
+      const [base, supplement1, supplement2, supplement3, supplement4, supplement5, corrections, nonTimelineRaw] = await Promise.all([
         fetchJson("./pending-records.json"),
         fetchJson("./pending-records-supplement.json"),
         fetchJson("./pending-records-supplement-2.json"),
         fetchJson("./pending-records-supplement-3.json"),
         fetchJson("./pending-records-supplement-4.json"),
+        fetchJson("./pending-records-supplement-5.json"),
         fetchJson("./pending-records-corrections.json"),
         fetchJson("./non-timeline-persons.json")
       ]);
 
       const excludedNames = new Set((Array.isArray(nonTimelineRaw) ? nonTimelineRaw : []).map((item) => normalize(item.person_name)).filter(Boolean));
-      const allTimelineRows = [base, supplement1, supplement2, supplement3, supplement4, corrections]
+      const allTimelineRows = [base, supplement1, supplement2, supplement3, supplement4, supplement5, corrections]
         .flatMap((rows) => Array.isArray(rows) ? rows : [])
-        .filter((row) => !excludedNames.has(normalize(row.person_name)));
+        .filter((row) => !excludedNames.has(normalize(row.person_name)))
+        .filter((row) => !obsoleteKeys.has(activityKey(row)));
 
       const expectedByKey = new Map();
       allTimelineRows.forEach((row) => expectedByKey.set(activityKey(row), row));
@@ -65,7 +90,9 @@
       const db = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
       const { data, error } = await db.from("person_politics").select("*");
       if (error) throw error;
-      const dbRows = (data || []).filter((row) => !excludedNames.has(normalize(row.person_name)));
+      const dbRows = (data || [])
+        .filter((row) => !excludedNames.has(normalize(row.person_name)))
+        .filter((row) => !obsoleteKeys.has(activityKey(row)));
 
       const expectedNames = new Set(expectedRows.map((row) => normalize(row.person_name)).filter(Boolean));
       const expectedKeys = new Set(expectedRows.map(activityKey));
