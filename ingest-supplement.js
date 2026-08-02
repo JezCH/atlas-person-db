@@ -8,7 +8,11 @@
     if (!window.supabase || !config.SUPABASE_URL || !config.SUPABASE_ANON_KEY) return;
 
     try {
-      const paths = ["./pending-records-supplement.json", "./pending-records-supplement-2.json"];
+      const paths = [
+        "./pending-records-supplement.json",
+        "./pending-records-supplement-2.json",
+        "./pending-records-supplement-3.json"
+      ];
       const responses = await Promise.all(paths.map((path) => fetch(`${path}?v=${Date.now()}`, { cache: "no-store" })));
       responses.forEach((response, index) => {
         if (!response.ok) throw new Error(`${paths[index]} lookup failed (${response.status})`);
@@ -51,8 +55,8 @@
         else changed += 1;
       }
 
-      if (changed > 0 && !sessionStorage.getItem("atlas-person-supplement-v2")) {
-        sessionStorage.setItem("atlas-person-supplement-v2", "1");
+      if (changed > 0 && !sessionStorage.getItem("atlas-person-supplement-v3")) {
+        sessionStorage.setItem("atlas-person-supplement-v3", "1");
         location.reload();
       }
     } catch (error) {
