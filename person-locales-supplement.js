@@ -20,7 +20,22 @@
     "Philip II of Spain": "펠리페 2세",
     "Isabella I of Castile": "이사벨라 1세",
     "Cnut the Great": "크누트 대왕",
-    "Gunnhild Konungamóðir": "군느힐드 코눙가모디르"
+    "Gunnhild Konungamóðir": "군느힐드 코눙가모디르",
+    "Otto von Bismarck": "오토 폰 비스마르크",
+    "Hiawatha": "히아와타",
+    "Ragnar Lodbrok": "라그나르 로드브로크",
+    "Abu Bakr": "아부 바크르",
+    "Osman I": "오스만 1세",
+    "Brennus (Senones)": "브렌누스",
+    "Brennus (Galatia)": "브렌누스",
+    "William I of Orange": "빌럼 1세",
+    "Chan Imix Kʼawiil": "찬 이믹스 카윌",
+    "Theodora": "테오도라",
+    "Gilgamesh": "길가메시",
+    "Pachacuti": "파차쿠티",
+    "Henry the Navigator": "인판트 동 엔히크",
+    "Mursili I": "무르실리 1세",
+    "Charles V": "카를 5세"
   };
 
   const polities = {
@@ -37,7 +52,21 @@
     "Spanish Empire": "스페인 제국",
     "Crown of Castile": "카스티야 왕국",
     "North Sea Empire": "북해 제국",
-    "Kingdom of Norway": "노르웨이 왕국"
+    "Kingdom of Norway": "노르웨이 왕국",
+    "German Empire": "독일 제국",
+    "Haudenosaunee Confederacy": "하우데노사우니 연맹",
+    "Rashidun Caliphate": "라시둔 칼리파국",
+    "Ottoman Empire": "오스만 제국",
+    "Senones": "세노네스",
+    "Gallic Coalition": "갈리아 연합",
+    "Dutch Revolt": "네덜란드 독립전쟁",
+    "Copán": "코판",
+    "Inca Empire": "잉카 제국",
+    "Kingdom of Portugal": "포르투갈 왕국",
+    "Hittite Kingdom": "히타이트 왕국",
+    "Holy Roman Empire": "신성 로마 제국",
+    "Scandinavia": "스칸디나비아",
+    "Uruk": "우루크"
   };
 
   const map = { ...persons, ...polities };
