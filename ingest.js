@@ -26,6 +26,29 @@
     "주요 활동": "general_activity"
   };
 
+  const obsoleteKeys = new Set([
+    "Dido|Carthage|-814|-814",
+    "Isabella I|Crown of Castile|1474|1504",
+    "Jesus|Roman Judaea|27|30",
+    "Gautama Buddha|Shakya|-445|-400",
+    "Muhammad|Medina|610|632",
+    "Toyotomi Hideyoshi|Japan|1582|1598",
+    "Benjamin Franklin|United States|1757|1790",
+    "Edward Teach|Republic of Pirates|1716|1718",
+    "Tecumseh|Shawnee|1805|1813",
+    "Haile Selassie I|Ethiopian Empire|1930|1974",
+    "Peter I|Russian Empire|1682|1725",
+    "Kublai Khan|Yuan Dynasty|1260|1294",
+    "Cnut the Great|North Sea Empire|1016|1035",
+    "Philip II of Spain|Spanish Empire|1556|1598",
+    "Simon Bolivar|Gran Colombia|1819|1830",
+    "Nzinga Mbande|Kingdoms of Ndongo and Matamba|1624|1663",
+    "Maria I of Portugal|Kingdom of Portugal|1777|1816",
+    "Hypatia|Roman Empire|393|415",
+    "Tokugawa Ieyasu|Tokugawa Shogunate|1603|1605",
+    "Tokugawa Ieyasu|Tokugawa Shogunate|1605|1616"
+  ]);
+
   function normalizeRecord(record) {
     return {
       person_name: legacyNames[record.person_name] || record.person_name,
@@ -48,92 +71,98 @@
     return response.json();
   }
 
-  async function runIngest() {
+  async function reconcile() {
     const config = window.ATLAS_CONFIG || {};
-    if (!config.SUPABASE_URL || !config.SUPABASE_ANON_KEY || !window.supabase) return;
+    if (!config.SUPABASE_URL || !config.SUPABASE_ANON_KEY || !window.supabase) return { changed: 0 };
 
-    try {
-      const db = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
-      const [pendingRaw, nonTimelineRaw] = await Promise.all([
-        fetchJson("./pending-records.json"),
-        fetchJson("./non-timeline-persons.json")
-      ]);
-      if (!Array.isArray(pendingRaw) || !Array.isArray(nonTimelineRaw)) return;
+    const paths = [
+      "./pending-records.json",
+      "./pending-records-supplement.json",
+      "./pending-records-supplement-2.json",
+      "./pending-records-supplement-3.json",
+      "./pending-records-supplement-4.json",
+      "./pending-records-supplement-5.json",
+      "./pending-records-corrections.json"
+    ];
 
-      const excludedPersons = new Set(nonTimelineRaw.map((item) => String(item.person_name || "").trim()).filter(Boolean));
-      const pending = pendingRaw
-        .filter((record) => !excludedPersons.has(String(record.person_name || "").trim()))
-        .map(normalizeRecord);
-      const pendingByKey = new Map(pending.map((record) => [keyOf(record), record]));
-      const managedPersons = new Set([...pending.map((record) => record.person_name), ...excludedPersons]);
+    const [datasets, nonTimelineRaw] = await Promise.all([
+      Promise.all(paths.map(fetchJson)),
+      fetchJson("./non-timeline-persons.json")
+    ]);
 
-      const { data: existingRows, error: existingError } = await db
-        .from("person_politics")
-        .select("*")
-        .order("id", { ascending: true });
+    const excludedPersons = new Set((Array.isArray(nonTimelineRaw) ? nonTimelineRaw : [])
+      .map((item) => String(item.person_name || "").trim())
+      .filter(Boolean));
 
-      if (existingError) {
-        console.error("ATLAS activity reconciliation lookup failed", existingError);
-        return;
-      }
-
-      let changed = 0;
-      const seenKeys = new Set();
-
-      for (const row of existingRows || []) {
-        const normalized = normalizeRecord(row);
-        const key = keyOf(normalized);
-        const canonical = pendingByKey.get(key);
-
-        if (excludedPersons.has(normalized.person_name)) {
-          const { error } = await db.from("person_politics").delete().eq("id", row.id);
-          if (error) console.error("ATLAS non-timeline cleanup failed", error);
-          else changed += 1;
-          continue;
-        }
-
-        if (managedPersons.has(normalized.person_name) && !canonical) {
-          const { error } = await db.from("person_politics").delete().eq("id", row.id);
-          if (error) console.error("ATLAS obsolete activity cleanup failed", error);
-          else changed += 1;
-          continue;
-        }
-
-        if (seenKeys.has(key)) {
-          const { error } = await db.from("person_politics").delete().eq("id", row.id);
-          if (error) console.error("ATLAS duplicate activity cleanup failed", error);
-          else changed += 1;
-          continue;
-        }
-
-        seenKeys.add(key);
-        if (!canonical) continue;
-
-        const { error } = await db.from("person_politics").update(canonical).eq("id", row.id);
-        if (error) console.error("ATLAS canonical activity update failed", error);
-        else changed += 1;
-      }
-
-      for (const record of pending) {
-        const key = keyOf(record);
-        if (seenKeys.has(key)) continue;
-
-        const { error } = await db.from("person_politics").insert(record);
-        if (error) console.error("ATLAS activity insert failed", error);
-        else {
-          seenKeys.add(key);
-          changed += 1;
-        }
-      }
-
-      if (changed > 0 && !sessionStorage.getItem("atlas-person-activity-v3")) {
-        sessionStorage.setItem("atlas-person-activity-v3", "1");
-        location.reload();
-      }
-    } catch (error) {
-      console.error("ATLAS activity reconciliation failed", error);
+    const canonicalByKey = new Map();
+    for (const raw of datasets.flatMap((rows) => Array.isArray(rows) ? rows : [])) {
+      const record = normalizeRecord(raw);
+      const key = keyOf(record);
+      if (!record.person_name || !record.politic_name) continue;
+      if (excludedPersons.has(record.person_name) || obsoleteKeys.has(key)) continue;
+      canonicalByKey.set(key, record);
     }
+
+    const canonical = [...canonicalByKey.values()];
+    const managedPersons = new Set([...canonical.map((record) => record.person_name), ...excludedPersons]);
+    const db = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
+    const { data: existingRows, error } = await db.from("person_politics").select("*").order("id", { ascending: true });
+    if (error) throw error;
+
+    let changed = 0;
+    const retainedKeys = new Set();
+
+    for (const row of existingRows || []) {
+      const normalized = normalizeRecord(row);
+      const key = keyOf(normalized);
+      const desired = canonicalByKey.get(key);
+
+      if ((managedPersons.has(normalized.person_name) && !desired) || obsoleteKeys.has(key)) {
+        const { error: deleteError } = await db.from("person_politics").delete().eq("id", row.id);
+        if (deleteError) throw deleteError;
+        changed += 1;
+        continue;
+      }
+
+      if (!desired) continue;
+
+      if (retainedKeys.has(key)) {
+        const { error: duplicateError } = await db.from("person_politics").delete().eq("id", row.id);
+        if (duplicateError) throw duplicateError;
+        changed += 1;
+        continue;
+      }
+
+      retainedKeys.add(key);
+      const differs = ["person_name", "politic_name", "activity_start", "activity_end", "role", "period_basis", "notes"]
+        .some((field) => String(row[field] ?? "") !== String(desired[field] ?? ""));
+      if (differs) {
+        const { error: updateError } = await db.from("person_politics").update(desired).eq("id", row.id);
+        if (updateError) throw updateError;
+        changed += 1;
+      }
+    }
+
+    for (const record of canonical) {
+      const key = keyOf(record);
+      if (retainedKeys.has(key)) continue;
+      const { error: insertError } = await db.from("person_politics").insert(record);
+      if (insertError) throw insertError;
+      retainedKeys.add(key);
+      changed += 1;
+    }
+
+    return { changed, persons: new Set(canonical.map((row) => row.person_name)).size, activities: canonical.length };
   }
 
-  runIngest();
+  window.ATLAS_RECONCILE_PROMISE = reconcile()
+    .then((result) => {
+      window.dispatchEvent(new CustomEvent("atlas:reconciled", { detail: result }));
+      return result;
+    })
+    .catch((error) => {
+      console.error("ATLAS canonical reconciliation failed", error);
+      window.dispatchEvent(new CustomEvent("atlas:reconcile-error", { detail: error }));
+      return { changed: 0, error };
+    });
 })();
