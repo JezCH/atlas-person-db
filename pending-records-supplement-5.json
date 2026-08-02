@@ -11,20 +11,29 @@
   {
     "person_name": "Liu Bei",
     "politic_name": "Shu Han",
-    "activity_start": 221,
+    "activity_start": 211,
     "activity_end": 223,
-    "role": "Emperor of Shu Han",
-    "period_basis": "reign",
-    "notes": "Reigned as the founding emperor of Shu Han from 221 until his death in 223."
+    "role": "Founder, ruler and emperor",
+    "period_basis": "de_facto_rule",
+    "notes": "Represents Liu Bei's territorial regime from his entry into Yi Province in 211 through the formal establishment of Shu Han in 221 and his imperial reign until 223. Shu Han is used as the map-level polity label for the wider Liu Bei faction."
   },
   {
     "person_name": "Zhuge Liang",
     "politic_name": "Shu Han",
-    "activity_start": 221,
+    "activity_start": 211,
     "activity_end": 234,
-    "role": "Chancellor and regent",
+    "role": "Strategist, chancellor and regent",
     "period_basis": "de_facto_rule",
-    "notes": "Served as chancellor of Shu Han from its foundation in 221 and later as regent for Liu Shan until his death in 234."
+    "notes": "Represents Zhuge Liang's service to the Liu Bei faction from the Yi Province campaign in 211 through the establishment of Shu Han and his later service as chancellor and regent until 234. Shu Han is used as the map-level polity label for the wider faction."
+  },
+  {
+    "person_name": "Guan Yu",
+    "politic_name": "Shu Han",
+    "activity_start": 211,
+    "activity_end": 220,
+    "role": "General and governor of Jing Province",
+    "period_basis": "military_activity",
+    "notes": "Served as a leading general of Liu Bei's faction from the Yi Province campaign period until his defeat and death in 220. Although he died before the formal proclamation of Shu Han in 221, Shu Han is used as the map-level polity label for the wider Liu Bei faction."
   },
   {
     "person_name": "Emperor Gaozu of Han",
