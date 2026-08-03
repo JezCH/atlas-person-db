@@ -80,14 +80,20 @@
         <aside id="detailPanel" class="detail-panel card" aria-live="polite">
           <div id="detailEmpty" hidden></div>
           <div id="detailContent" hidden>
-            <div class="portrait-placeholder" aria-hidden="true"><span>인물 초상화</span></div>
-            <div class="detail-head"><div><p class="eyebrow">SELECTED RECORD</p><h2 id="detailPerson"></h2></div><button id="detailEdit" class="btn">수정</button></div>
+            <div class="detail-head">
+              <div class="detail-title-block">
+                <p class="eyebrow">SELECTED RECORD</p>
+                <h2 id="detailPerson"></h2>
+                <p class="detail-summary"><span id="detailSummaryPolitic"></span><span aria-hidden="true">·</span><span id="detailSummaryPeriod"></span></p>
+              </div>
+              <button id="detailEdit" class="btn detail-edit">✎ 수정</button>
+            </div>
             <dl class="detail-list">
-              <div><dt>Politic</dt><dd id="detailPolitic"></dd></div>
-              <div><dt>활동 기간</dt><dd id="detailPeriod"></dd></div>
+              <div><dt>정치체</dt><dd id="detailPolitic"></dd></div>
               <div><dt>역할</dt><dd id="detailRole"></dd></div>
-              <div><dt>기간 기준</dt><dd id="detailBasis"></dd></div>
-              <div class="detail-notes"><dt>비고</dt><dd id="detailNotes"></dd></div>
+              <div><dt>활동 기간</dt><dd id="detailPeriod"></dd></div>
+              <div><dt>기간 기준</dt><dd><span id="detailBasis" class="detail-badge"></span></dd></div>
+              <div class="detail-notes"><dt>비고</dt><dd id="detailNotes" lang="en"></dd></div>
             </dl>
           </div>
         </aside>
