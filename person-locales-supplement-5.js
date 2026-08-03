@@ -250,7 +250,12 @@
     "Robert Guiscard": "로베르 기스카르",
     "Duchy of Apulia and Calabria": "아풀리아와 칼라브리아 공국",
     "Lady K'ab'al Xook": "레이디 카브알 쇼크",
-    "Yaxchilan": "야슈칠란"
+    "Yaxchilan": "야슈칠란",
+    "Satuq Bughra Khan": "사투크 부그라 칸",
+    "Qarakhanid Khanate": "카라한 칸국",
+    "Nefertiti": "네페르티티",
+    "Modu Chanyu": "묵돌선우",
+    "Xiongnu Empire": "흉노 제국"
   };
 
   const locales = window.ATLAS_LOCALES || {};
