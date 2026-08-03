@@ -92,7 +92,6 @@
     "Japan": "일본",
     "Shō Shin": "쇼 신왕",
     "Ryukyu Kingdom": "류큐 왕국",
-
     "Spanish Monarchy": "스페인 군주국",
     "Kingdom of England": "잉글랜드 왕국",
     "Kingdom of Denmark": "덴마크 왕국",
@@ -107,23 +106,17 @@
     "United Kingdom of Portugal, Brazil and the Algarves": "포르투갈·브라질·알가르브 연합왕국"
   };
 
-  function apply(root = document) {
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    const nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-    nodes.forEach((node) => {
-      const value = node.nodeValue?.trim();
-      if (value && map[value]) node.nodeValue = node.nodeValue.replace(value, map[value]);
-    });
-  }
+  const locales = window.ATLAS_LOCALES || {};
+  const ko = locales.ko || {};
+  const existingPersons = ko.persons || {};
+  const existingPolities = ko.polities || {};
 
-  const observer = new MutationObserver(() => apply(document));
-
-  function start() {
-    apply(document);
-    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
-  }
-
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start, { once: true });
-  else start();
+  window.ATLAS_LOCALES = Object.freeze({
+    ...locales,
+    ko: Object.freeze({
+      ...ko,
+      persons: Object.freeze({ ...existingPersons, ...map }),
+      polities: Object.freeze({ ...existingPolities, ...map })
+    })
+  });
 })();
