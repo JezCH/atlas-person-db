@@ -205,5 +205,203 @@
     "role": "Ajaw",
     "period_basis": "reign",
     "notes": "Ruled Palenque from 615 until 683 and oversaw a major period of political recovery, architectural expansion and dynastic commemoration. Also known as Pakal the Great."
+  },
+  {
+    "person_name": "Wanli Emperor",
+    "politic_name": "Ming Dynasty",
+    "activity_start": 1572,
+    "activity_end": 1620,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Zhu Yijun reigned as emperor of the Ming dynasty from 1572 until his death in 1620. The Wanli era formally began in 1573."
+  },
+  {
+    "person_name": "Seonjo of Joseon",
+    "politic_name": "Joseon",
+    "activity_start": 1567,
+    "activity_end": 1608,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "The fourteenth king of Joseon, who reigned from 1567 to 1608. His reign included the Imjin War from 1592 to 1598."
+  },
+  {
+    "person_name": "Empress Myeongseong",
+    "politic_name": "Joseon",
+    "activity_start": 1866,
+    "activity_end": 1895,
+    "role": "Queen consort and political figure",
+    "period_basis": "general_activity",
+    "notes": "Became queen consort of Joseon in 1866 and remained a central political figure at court until her assassination in 1895. She was posthumously honored as Empress Myeongseong in 1897."
+  },
+  {
+    "person_name": "Park Chung Hee",
+    "politic_name": "South Korea",
+    "activity_start": 1963,
+    "activity_end": 1979,
+    "role": "President",
+    "period_basis": "term",
+    "notes": "Served as president of South Korea from 1963 until his assassination in 1979."
+  },
+  {
+    "person_name": "Jangsu of Goguryeo",
+    "politic_name": "Goguryeo",
+    "activity_start": 413,
+    "activity_end": 491,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Reigned as the twentieth king of Goguryeo from 413 to 491 and moved the capital to Pyongyang in 427."
+  },
+  {
+    "person_name": "Kim Il Sung",
+    "politic_name": "North Korea",
+    "activity_start": 1948,
+    "activity_end": 1994,
+    "role": "Premier and President",
+    "period_basis": "de_facto_rule",
+    "notes": "Founded North Korea in 1948 and exercised supreme political authority until his death in 1994."
+  },
+  {
+    "person_name": "Emperor Wu of Han",
+    "politic_name": "Western Han",
+    "activity_start": -141,
+    "activity_end": -87,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Liu Che reigned as emperor of the Western Han from 141 to 87 BCE and presided over major territorial expansion and institutional consolidation."
+  },
+  {
+    "person_name": "Cao Cao",
+    "politic_name": "Cao Wei",
+    "activity_start": 196,
+    "activity_end": 220,
+    "role": "Chancellor and de facto ruler",
+    "period_basis": "de_facto_rule",
+    "notes": "Represents Cao Cao's territorial regime from his control of Emperor Xian and the Han court in 196 until his death in 220. Cao Wei is used as the map-level polity label for the wider Cao faction."
+  },
+  {
+    "person_name": "Emperor Taizong of Tang",
+    "politic_name": "Tang Dynasty",
+    "activity_start": 626,
+    "activity_end": 649,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Li Shimin reigned as the second emperor of the Tang dynasty from 626 to 649."
+  },
+  {
+    "person_name": "Emperor Taizu of Song",
+    "politic_name": "Song Dynasty",
+    "activity_start": 960,
+    "activity_end": 976,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Zhao Kuangyin founded the Song dynasty in 960 and reigned until 976."
+  },
+  {
+    "person_name": "Jia Sidao",
+    "politic_name": "Southern Song",
+    "activity_start": 1260,
+    "activity_end": 1275,
+    "role": "Grand Chancellor and chief minister",
+    "period_basis": "de_facto_rule",
+    "notes": "Served as the dominant grand chancellor of the Southern Song from 1260 until his dismissal in 1275."
+  },
+  {
+    "person_name": "Qianlong Emperor",
+    "politic_name": "Qing Dynasty",
+    "activity_start": 1735,
+    "activity_end": 1796,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Hongli reigned as emperor of the Qing dynasty from 1735 until his abdication in 1796."
+  },
+  {
+    "person_name": "Sun Yat-sen",
+    "politic_name": "Republic of China",
+    "activity_start": 1912,
+    "activity_end": 1925,
+    "role": "Provisional President and revolutionary leader",
+    "period_basis": "general_activity",
+    "notes": "Founded the Republic of China in 1912 and remained a leading revolutionary figure until his death in 1925."
+  },
+  {
+    "person_name": "Chiang Kai-shek",
+    "politic_name": "Republic of China",
+    "activity_start": 1928,
+    "activity_end": 1975,
+    "role": "Generalissimo and President",
+    "period_basis": "de_facto_rule",
+    "notes": "Served as the principal leader of the Republic of China from 1928 until his death in 1975."
+  },
+  {
+    "person_name": "Mao Zedong",
+    "politic_name": "People's Republic of China",
+    "activity_start": 1949,
+    "activity_end": 1976,
+    "role": "Chairman and paramount leader",
+    "period_basis": "de_facto_rule",
+    "notes": "Founded the People's Republic of China in 1949 and remained its paramount leader until his death in 1976."
+  },
+  {
+    "person_name": "Deng Xiaoping",
+    "politic_name": "People's Republic of China",
+    "activity_start": 1978,
+    "activity_end": 1992,
+    "role": "Paramount Leader",
+    "period_basis": "de_facto_rule",
+    "notes": "Served as the paramount leader of the People's Republic of China from 1978 to 1992 and led the Reform and Opening-up era."
+  },
+  {
+    "person_name": "Uesugi Kenshin",
+    "politic_name": "Uesugi Clan",
+    "activity_start": 1548,
+    "activity_end": 1578,
+    "role": "Daimyo",
+    "period_basis": "de_facto_rule",
+    "notes": "Ruled the Uesugi domain from 1548 until his death in 1578."
+  },
+  {
+    "person_name": "Emperor Meiji",
+    "politic_name": "Empire of Japan",
+    "activity_start": 1867,
+    "activity_end": 1912,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Mutsuhito reigned as emperor from 1867 to 1912; his reign encompassed the Meiji Restoration and the modernization of Japan."
+  },
+  {
+    "person_name": "Enomoto Takeaki",
+    "politic_name": "Republic of Ezo",
+    "activity_start": 1868,
+    "activity_end": 1869,
+    "role": "President",
+    "period_basis": "de_facto_rule",
+    "notes": "Led the Ezo Republic from 1868 until its defeat in 1869."
+  },
+  {
+    "person_name": "Hideki Tojo",
+    "politic_name": "Empire of Japan",
+    "activity_start": 1941,
+    "activity_end": 1944,
+    "role": "Prime Minister",
+    "period_basis": "term",
+    "notes": "Served as prime minister of the Empire of Japan from 1941 to 1944 during most of the Pacific War."
+  },
+  {
+    "person_name": "Shigeru Yoshida",
+    "politic_name": "Japan",
+    "activity_start": 1946,
+    "activity_end": 1954,
+    "role": "Prime Minister",
+    "period_basis": "term",
+    "notes": "Served as prime minister of Japan in 1946–1947 and again from 1948 to 1954; represented here as one continuous map-level leadership period."
+  },
+  {
+    "person_name": "Shō Shin",
+    "politic_name": "Ryukyu Kingdom",
+    "activity_start": 1477,
+    "activity_end": 1526,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Reigned as king of the Ryukyu Kingdom from 1477 to 1526 and strengthened royal centralization."
   }
 ]
