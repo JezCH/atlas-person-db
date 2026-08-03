@@ -12,6 +12,10 @@
   const mobileSearchClear = document.getElementById("mobileSearchClear");
   const mobileSearchCount = document.getElementById("mobileSearchCount");
   const rowCount = document.getElementById("rowCount");
+  const toolsButton = document.getElementById("mobileToolsButton");
+  const toolsMenu = document.getElementById("mobileToolsMenu");
+  const exportButton = document.getElementById("exportButton");
+  const importInput = document.getElementById("importInput");
 
   function setMenu(open) {
     if (!drawer || !backdrop || !menuButton) return;
@@ -21,6 +25,12 @@
     drawer.setAttribute("aria-hidden", String(!open));
     menuButton.setAttribute("aria-expanded", String(open));
     document.body.classList.toggle("mobile-menu-open", open);
+  }
+
+  function setToolsMenu(open) {
+    if (!toolsButton || !toolsMenu) return;
+    toolsMenu.hidden = !open;
+    toolsButton.setAttribute("aria-expanded", String(open));
   }
 
   function updateMobileSearchState() {
@@ -40,9 +50,28 @@
     requestAnimationFrame(updateMobileSearchState);
   }
 
-  menuButton?.addEventListener("click", () => setMenu(true));
+  menuButton?.addEventListener("click", () => {
+    setToolsMenu(false);
+    setMenu(true);
+  });
   menuClose?.addEventListener("click", () => setMenu(false));
   backdrop?.addEventListener("click", () => setMenu(false));
+
+  toolsButton?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    setToolsMenu(toolsMenu?.hidden !== false);
+  });
+  toolsMenu?.addEventListener("click", (event) => {
+    const action = event.target.closest("[data-mobile-action]")?.dataset.mobileAction;
+    if (!action) return;
+    setToolsMenu(false);
+    if (action === "export") exportButton?.click();
+    if (action === "import") importInput?.click();
+  });
+  document.addEventListener("click", (event) => {
+    if (!toolsMenu || toolsMenu.hidden) return;
+    if (!event.target.closest("#mobileToolsMenu") && !event.target.closest("#mobileToolsButton")) setToolsMenu(false);
+  });
 
   mobileSearch?.addEventListener("input", syncMobileSearchToMain);
   mobileSearchClear?.addEventListener("click", () => {
@@ -66,6 +95,7 @@
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
       setMenu(false);
+      setToolsMenu(false);
       if (mq.matches && document.activeElement === mobileSearch && mobileSearch?.value) {
         mobileSearch.value = "";
         syncMobileSearchToMain();
@@ -74,15 +104,16 @@
   });
 
   mq.addEventListener("change", (event) => {
-    if (!event.matches) setMenu(false);
+    if (!event.matches) {
+      setMenu(false);
+      setToolsMenu(false);
+    }
     if (event.matches && mobileSearch && desktopSearch) {
       mobileSearch.value = desktopSearch.value;
       updateMobileSearchState();
     }
   });
 
-  // On phones the row itself is an accordion. Management buttons continue
-  // through the existing CRUD handlers in app.js.
   dataBody?.addEventListener("click", (event) => {
     if (!mq.matches || event.target.closest("button[data-id]")) return;
     const row = event.target.closest("tr[data-id]");
