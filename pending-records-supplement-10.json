@@ -7,5 +7,14 @@
     "role": "Queen",
     "period_basis": "reign",
     "notes": "Queen Seondeok, born Kim Deokman, was the 27th ruler of Silla and the first reigning queen in Korean history. She ruled from 632 to 647."
+  },
+  {
+    "person_name": "Sejong the Great",
+    "politic_name": "Joseon",
+    "activity_start": 1418,
+    "activity_end": 1450,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Sejong the Great was the fourth ruler of Joseon. His reign is noted for the creation of Hangul, advances in science and technology, and the strengthening of royal administration."
   }
 ]
