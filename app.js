@@ -25,22 +25,6 @@
     general_activity: "주요 활동"
   };
 
-  const roleLabels = {
-    king: "왕",
-    emperor: "황제",
-    pharaoh: "파라오",
-    queen: "여왕",
-    president: "대통령",
-    "prime minister": "총리",
-    chancellor: "재상",
-    regent: "섭정",
-    daimyo: "다이묘",
-    chairman: "주석",
-    "paramount leader": "최고지도자",
-    "great king": "대왕",
-    "king of kings": "왕중왕"
-  };
-
   function showToast(message) {
     els.toast.textContent = message;
     els.toast.hidden = false;
@@ -54,12 +38,6 @@
   }
 
   function normalize(value) { return String(value ?? "").trim().toLocaleLowerCase("ko-KR"); }
-
-  function localizeRole(role) {
-    const raw = String(role ?? "").trim();
-    if (!raw) return "";
-    return roleLabels[raw.toLocaleLowerCase("en-US")] || raw;
-  }
 
   function sortRecords(items) {
     return [...items].sort((a, b) =>
@@ -87,13 +65,13 @@
     const q = normalize(els.search.value);
     const politic = els.filter.value;
     return sortRecords(records.filter((r) => {
-      const haystack = normalize([r.person_name, r.politic_name, r.role, localizeRole(r.role), r.notes].join(" "));
+      const haystack = normalize([r.person_name, r.politic_name, r.role, r.notes].join(" "));
       return (!q || haystack.includes(q)) && (!politic || r.politic_name === politic);
     }));
   }
 
   function escapeHtml(value) {
-    return String(value ?? "").replace(/[&<>'"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[c]));
+    return String(value ?? "").replace(/[&<>'\"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[c]));
   }
 
   function selectedRecord() {
@@ -111,26 +89,23 @@
     els.detailPeriod.textContent = period;
     els.detailSummaryPolitic.textContent = record.politic_name;
     els.detailSummaryPeriod.textContent = period;
-    els.detailRole.textContent = localizeRole(record.role) || "—";
+    els.detailRole.textContent = record.role || "—";
     els.detailBasis.textContent = basisLabels[record.period_basis] || record.period_basis || "—";
     els.detailNotes.textContent = record.notes || "";
   }
 
   function render() {
     const items = visibleRecords();
-    els.body.innerHTML = items.map((r) => {
-      const displayRole = localizeRole(r.role);
-      return `
+    els.body.innerHTML = items.map((r) => `
       <tr data-id="${r.id}" class="${String(r.id) === String(selectedId) ? "selected" : ""}" aria-selected="${String(r.id) === String(selectedId)}">
         <td>${escapeHtml(r.person_name)}</td>
         <td>${escapeHtml(r.politic_name)}</td>
         <td>${escapeHtml(formatYear(r.activity_start))}</td>
         <td>${escapeHtml(formatYear(r.activity_end))}</td>
-        <td title="${escapeHtml(displayRole)}">${escapeHtml(displayRole)}</td>
+        <td title="${escapeHtml(r.role || "")}">${escapeHtml(r.role || "")}</td>
         <td>${escapeHtml(basisLabels[r.period_basis] || r.period_basis || "")}</td>
         <td><div class="action-buttons"><button class="mini-btn edit" data-id="${r.id}">수정</button><button class="mini-btn danger delete" data-id="${r.id}">삭제</button></div></td>
-      </tr>`;
-    }).join("");
+      </tr>`).join("");
     els.rowCount.textContent = `${items.length}개 행`;
     els.empty.hidden = items.length !== 0;
 
