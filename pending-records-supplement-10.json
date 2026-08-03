@@ -16,5 +16,23 @@
     "role": "King",
     "period_basis": "reign",
     "notes": "Sejong the Great was the fourth ruler of Joseon. His reign is noted for the creation of Hangul, advances in science and technology, and the strengthening of royal administration."
+  },
+  {
+    "person_name": "Gorgo",
+    "politic_name": "Sparta",
+    "activity_start": -490,
+    "activity_end": -480,
+    "role": "Queen",
+    "period_basis": "general_activity",
+    "notes": "Gorgo was Queen of Sparta, daughter of King Cleomenes I and wife of King Leonidas I. Ancient sources preserve several traditions about her political judgment and prominence during the Persian Wars."
+  },
+  {
+    "person_name": "Leonidas I",
+    "politic_name": "Sparta",
+    "activity_start": -490,
+    "activity_end": -480,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Leonidas I was king of Sparta from about 490 to 480 BCE. He commanded the Greek defense at the Battle of Thermopylae against Xerxes I of Persia."
   }
 ]
