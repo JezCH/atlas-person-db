@@ -19,17 +19,18 @@
     .registration-summary-link:disabled{opacity:.55;cursor:wait}
     @media(max-width:760px){
       .admin-nav-link{display:none}
-      .registration-summary{align-items:center;gap:8px;min-height:44px;padding:7px 8px;margin-bottom:8px;border-radius:11px}
-      .registration-summary-main{align-items:center;gap:8px;overflow:hidden}
-      .registration-summary-dot{width:8px;height:8px;box-shadow:0 0 0 3px #fff3d6}
-      .registration-summary[data-state="ok"] .registration-summary-dot{box-shadow:0 0 0 3px #e7f6ed}
-      .registration-summary[data-state="error"] .registration-summary-dot{box-shadow:0 0 0 3px #fde9eb}
-      .registration-summary-title{font-size:12px;line-height:1.2;white-space:nowrap}
-      .registration-summary-detail{margin-top:1px;font-size:10px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100vw - 168px)}
-      .registration-summary-actions{flex-direction:row;gap:4px}
-      .registration-summary-link{display:grid;place-items:center;width:34px;height:34px;padding:0;border-radius:8px;font-size:0;text-align:center}
-      #registrationSummaryRefresh::before{content:"↻";font-size:17px}
-      .registration-summary-actions a::before{content:"⚙";font-size:15px}
+      .registration-summary{align-items:center;gap:6px;min-height:34px;padding:5px 6px;margin-bottom:6px;border-radius:9px}
+      .registration-summary-main{align-items:center;gap:7px;overflow:hidden}
+      .registration-summary-main>div{display:flex;align-items:center;gap:7px;min-width:0}
+      .registration-summary-dot{width:7px;height:7px;box-shadow:0 0 0 2px #fff3d6}
+      .registration-summary[data-state="ok"] .registration-summary-dot{box-shadow:0 0 0 2px #e7f6ed}
+      .registration-summary[data-state="error"] .registration-summary-dot{box-shadow:0 0 0 2px #fde9eb}
+      .registration-summary-title{font-size:11px;line-height:1.1;white-space:nowrap}
+      .registration-summary-detail{margin:0;font-size:9px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100vw - 196px)}
+      .registration-summary-actions{flex-direction:row;gap:3px}
+      .registration-summary-link{display:grid;place-items:center;width:30px;height:30px;padding:0;border-radius:7px;font-size:0;text-align:center}
+      #registrationSummaryRefresh::before{content:"↻";font-size:15px}
+      .registration-summary-actions a::before{content:"⚙";font-size:13px}
     }
   `;
   document.head.appendChild(style);
@@ -134,9 +135,9 @@
       const ok = missingPersons.length === 0 && missingActivities.length === 0 && extraPersons.length === 0 && extraActivities.length === 0;
 
       box.dataset.state = ok ? "ok" : "error";
-      title.textContent = ok ? "실시간 DB 정상" : "실시간 DB 확인 필요";
+      title.textContent = ok ? "DB 정상" : "DB 확인 필요";
       detail.textContent = ok
-        ? `${dbNames.size}명 · ${dbKeys.size}활동 · GitHub 일치`
+        ? `${dbNames.size}명 · ${dbKeys.size}활동`
         : `${dbNames.size}명 · ${dbKeys.size}활동 · 누락 ${missingPersons.length + missingActivities.length} · 추가 ${extraPersons.length + extraActivities.length}`;
 
       if (!realtimeChannel) {
@@ -151,7 +152,7 @@
       if (serial !== requestSerial) return;
       console.error("ATLAS live summary failed", error);
       box.dataset.state = "error";
-      title.textContent = "실시간 상태 확인 실패";
+      title.textContent = "DB 확인 실패";
       detail.textContent = error?.message || "관리자 페이지에서 상세 검증을 실행하세요.";
     } finally {
       if (serial === requestSerial && refreshButton) refreshButton.disabled = false;
