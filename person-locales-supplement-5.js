@@ -187,7 +187,23 @@
     "Later Han": "후한(오대십국)",
     "Emperor Taizu of Later Zhou": "후주 태조",
     "Emperor Shizong of Later Zhou": "후주 세종",
-    "Later Zhou": "후주"
+    "Later Zhou": "후주",
+    "Duke Xiao of Qin": "진 효공",
+    "King Zhaoxiang of Qin": "진 소양왕",
+    "King Wei of Qi": "제 위왕",
+    "King Wei of Chu": "초 위왕",
+    "King Zhao of Yan": "연 소왕",
+    "Yan": "연나라",
+    "King Wuling of Zhao": "조 무령왕",
+    "Zhao": "조나라",
+    "King Hui of Wei": "위 혜왕",
+    "Wei": "위나라",
+    "Marquess Lie of Han": "한 열후",
+    "Han": "한나라",
+    "Emperor Shenzong of Song": "송 신종",
+    "Emperor Jingzong of Western Xia": "서하 경종",
+    "Western Xia": "서하",
+    "Nurhaci": "누르하치"
   };
 
   const locales = window.ATLAS_LOCALES || {};
