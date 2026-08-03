@@ -187,5 +187,23 @@
     "role": "Founder and settler",
     "period_basis": "general_activity",
     "notes": "Traditionally regarded as the first permanent Norse settler of Iceland and the founder of the settlement at Reykjavik around 874. Settlement of Iceland is treated as a distinct map polity before the Icelandic Commonwealth."
+  },
+  {
+    "person_name": "Akhenaten",
+    "politic_name": "New Kingdom of Egypt",
+    "activity_start": -1353,
+    "activity_end": -1336,
+    "role": "Pharaoh",
+    "period_basis": "reign",
+    "notes": "Pharaoh of Egypt's Eighteenth Dynasty. Reigned under the birth name Amenhotep IV before adopting the name Akhenaten, promoted the cult of Aten, and founded Akhetaten as a new royal capital."
+  },
+  {
+    "person_name": "K'inich Janaab' Pakal",
+    "politic_name": "Palenque",
+    "activity_start": 615,
+    "activity_end": 683,
+    "role": "Ajaw",
+    "period_basis": "reign",
+    "notes": "Ruled Palenque from 615 until 683 and oversaw a major period of political recovery, architectural expansion and dynastic commemoration. Also known as Pakal the Great."
   }
 ]
