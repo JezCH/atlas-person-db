@@ -232,5 +232,32 @@
     "role": "Hegemon-King",
     "period_basis": "reign",
     "notes": "Xiang Yu established Western Chu after the fall of the Qin dynasty and ruled as Hegemon-King from 206 to 202 BCE. He was Liu Bang's principal rival during the Chu-Han Contention and was defeated at Gaixia in 202 BCE."
+  },
+  {
+    "person_name": "Dong Zhuo",
+    "politic_name": "Eastern Han",
+    "activity_start": 189,
+    "activity_end": 192,
+    "role": "Warlord",
+    "period_basis": "de_facto_rule",
+    "notes": "Dong Zhuo seized control of the Eastern Han court in 189, deposed Emperor Shao, installed Emperor Xian, and ruled as the de facto head of the imperial government until his assassination in 192."
+  },
+  {
+    "person_name": "Yuan Shu",
+    "politic_name": "Zhong Dynasty",
+    "activity_start": 197,
+    "activity_end": 199,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Yuan Shu proclaimed himself emperor of the Zhong dynasty in 197. His regime rapidly declined and collapsed before his death in 199."
+  },
+  {
+    "person_name": "Liu Biao",
+    "politic_name": "Eastern Han",
+    "activity_start": 190,
+    "activity_end": 208,
+    "role": "Warlord",
+    "period_basis": "de_facto_rule",
+    "notes": "Liu Biao governed Jing Province as one of the most powerful regional warlords of the late Eastern Han from 190 until his death in 208."
   }
 ]
