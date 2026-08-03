@@ -25,6 +25,18 @@
     general_activity: "주요 활동"
   };
 
+  function localeMap(type) {
+    return window.ATLAS_LOCALES?.ko?.[type] || {};
+  }
+
+  function displayPerson(value) {
+    return localeMap("persons")[value] || value || "";
+  }
+
+  function displayPolitic(value) {
+    return localeMap("polities")[value] || value || "";
+  }
+
   function showToast(message) {
     els.toast.textContent = message;
     els.toast.hidden = false;
@@ -65,7 +77,14 @@
     const q = normalize(els.search.value);
     const politic = els.filter.value;
     return sortRecords(records.filter((r) => {
-      const haystack = normalize([r.person_name, r.politic_name, r.role, r.notes].join(" "));
+      const haystack = normalize([
+        r.person_name,
+        displayPerson(r.person_name),
+        r.politic_name,
+        displayPolitic(r.politic_name),
+        r.role,
+        r.notes
+      ].join(" "));
       return (!q || haystack.includes(q)) && (!politic || r.politic_name === politic);
     }));
   }
@@ -84,10 +103,12 @@
     els.detailContent.hidden = !record;
     if (!record) return;
     const period = formatPeriod(record.activity_start, record.activity_end);
-    els.detailPerson.textContent = record.person_name;
-    els.detailPolitic.textContent = record.politic_name;
+    const person = displayPerson(record.person_name);
+    const politic = displayPolitic(record.politic_name);
+    els.detailPerson.textContent = person;
+    els.detailPolitic.textContent = politic;
     els.detailPeriod.textContent = period;
-    els.detailSummaryPolitic.textContent = record.politic_name;
+    els.detailSummaryPolitic.textContent = politic;
     els.detailSummaryPeriod.textContent = period;
     els.detailRole.textContent = record.role || "—";
     els.detailBasis.textContent = basisLabels[record.period_basis] || record.period_basis || "—";
@@ -98,8 +119,8 @@
     const items = visibleRecords();
     els.body.innerHTML = items.map((r) => `
       <tr data-id="${r.id}" class="${String(r.id) === String(selectedId) ? "selected" : ""}" aria-selected="${String(r.id) === String(selectedId)}">
-        <td>${escapeHtml(r.person_name)}</td>
-        <td>${escapeHtml(r.politic_name)}</td>
+        <td>${escapeHtml(displayPerson(r.person_name))}</td>
+        <td>${escapeHtml(displayPolitic(r.politic_name))}</td>
         <td>${escapeHtml(formatYear(r.activity_start))}</td>
         <td>${escapeHtml(formatYear(r.activity_end))}</td>
         <td title="${escapeHtml(r.role || "")}">${escapeHtml(r.role || "")}</td>
@@ -111,7 +132,7 @@
 
     const current = els.filter.value;
     const politics = [...new Set(records.map((r) => r.politic_name).filter(Boolean))].sort((a,b) => a.localeCompare(b, "en", { sensitivity: "base" }));
-    els.filter.innerHTML = '<option value="">모든 정치체</option>' + politics.map((p) => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join("");
+    els.filter.innerHTML = '<option value="">모든 정치체</option>' + politics.map((p) => `<option value="${escapeHtml(p)}">${escapeHtml(displayPolitic(p))}</option>`).join("");
     if (politics.includes(current)) els.filter.value = current;
     renderDetail();
   }
