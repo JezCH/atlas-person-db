@@ -26,6 +26,16 @@
     general_activity: "주요 활동"
   };
 
+  const searchAliases = Object.freeze({
+    "Augustus": ["아우구스투스", "옥타비아누스", "가이우스 옥타비우스", "octavian", "gaius octavius"],
+    "Gaius Octavius": ["아우구스투스", "옥타비아누스", "augustus", "octavian"],
+    "Sejong the Great": ["세종", "세종대왕", "이도", "yi do"],
+    "Queen Seondeok": ["선덕", "선덕여왕", "김덕만", "deokman"],
+    "Emperor Gaozu of Han": ["유방", "한고조", "고조"],
+    "Emperor Wu of Han": ["한무제", "유철", "liu che"],
+    "K'inich Janaab' Pakal": ["파칼", "파칼 2세", "킨이치 하나브 파칼"]
+  });
+
   function localeMap(type) {
     return window.ATLAS_LOCALES?.ko?.[type] || {};
   }
@@ -50,7 +60,49 @@
     els.status.textContent = text;
   }
 
-  function normalize(value) { return String(value ?? "").trim().toLocaleLowerCase("ko-KR"); }
+  function normalize(value) {
+    return String(value ?? "")
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[’‘`´]/g, "'")
+      .replace(/[‐‑‒–—―]/g, "-")
+      .replace(/[^\p{L}\p{N}]+/gu, " ")
+      .trim()
+      .toLocaleLowerCase("ko-KR");
+  }
+
+  function compact(value) {
+    return normalize(value).replace(/\s+/g, "");
+  }
+
+  function searchTokens(value) {
+    return normalize(value).split(/\s+/).filter(Boolean);
+  }
+
+  function recordSearchText(record) {
+    const aliases = searchAliases[record.person_name] || [];
+    const pieces = [
+      record.person_name,
+      displayPerson(record.person_name),
+      ...aliases,
+      record.politic_name,
+      displayPolitic(record.politic_name),
+      record.role,
+      basisLabels[record.period_basis],
+      record.notes
+    ];
+    const normalized = normalize(pieces.join(" "));
+    return { normalized, compact: normalized.replace(/\s+/g, "") };
+  }
+
+  function matchesSearch(record, query) {
+    if (!query) return true;
+    const { normalized, compact: compactHaystack } = recordSearchText(record);
+    const compactQuery = compact(query);
+    if (compactQuery && compactHaystack.includes(compactQuery)) return true;
+    const tokens = searchTokens(query);
+    return tokens.length > 0 && tokens.every((token) => normalized.includes(token));
+  }
 
   function sortRecords(items) {
     return [...items].sort((a, b) =>
@@ -81,19 +133,11 @@
   }
 
   function visibleRecords() {
-    const q = normalize(els.search.value);
+    const q = els.search.value;
     const politic = els.filter.value;
-    return sortRecords(records.filter((r) => {
-      const haystack = normalize([
-        r.person_name,
-        displayPerson(r.person_name),
-        r.politic_name,
-        displayPolitic(r.politic_name),
-        r.role,
-        r.notes
-      ].join(" "));
-      return (!q || haystack.includes(q)) && (!politic || r.politic_name === politic);
-    }));
+    return sortRecords(records.filter((r) =>
+      matchesSearch(r, q) && (!politic || r.politic_name === politic)
+    ));
   }
 
   function escapeHtml(value) {
