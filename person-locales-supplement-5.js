@@ -142,7 +142,11 @@
     "Emperor Taizu of Ming": "명 태조",
     "Emperor Xuanzong of Tang": "당 현종",
     "Xiang Yu": "항우",
-    "Western Chu": "서초"
+    "Western Chu": "서초",
+    "Dong Zhuo": "동탁",
+    "Yuan Shu": "원술",
+    "Zhong Dynasty": "중",
+    "Liu Biao": "유표"
   };
 
   const locales = window.ATLAS_LOCALES || {};
