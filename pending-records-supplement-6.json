@@ -223,5 +223,14 @@
     "role": "Emperor",
     "period_basis": "reign",
     "notes": "Li Longji reigned as Emperor Xuanzong of Tang from 712 to 756. His early reign marked the Kaiyuan prosperity, while his later years culminated in the An Lushan Rebellion."
+  },
+  {
+    "person_name": "Xiang Yu",
+    "politic_name": "Western Chu",
+    "activity_start": -206,
+    "activity_end": -202,
+    "role": "Hegemon-King",
+    "period_basis": "reign",
+    "notes": "Xiang Yu established Western Chu after the fall of the Qin dynasty and ruled as Hegemon-King from 206 to 202 BCE. He was Liu Bang's principal rival during the Chu-Han Contention and was defeated at Gaixia in 202 BCE."
   }
 ]
