@@ -237,7 +237,20 @@
     "Sun Ce": "손책",
     "Tao Qian": "도겸",
     "Zhang Lu": "장로",
-    "Hanzhong": "한중"
+    "Hanzhong": "한중",
+    "Kamehameha I": "카메하메하 1세",
+    "Kingdom of Hawaii": "하와이 왕국",
+    "Mehmed II": "메흐메트 2세",
+    "Ottoman Empire": "오스만 제국",
+    "Constantine XI Palaiologos": "콘스탄티노스 11세 팔레올로고스",
+    "Pocatello": "포카텔로",
+    "Northwestern Shoshone": "북서부 쇼쇼니",
+    "Said bin Sultan": "사이드 빈 술탄",
+    "Omani Empire": "오만 제국",
+    "Robert Guiscard": "로베르 기스카르",
+    "Duchy of Apulia and Calabria": "아풀리아와 칼라브리아 공국",
+    "Lady K'ab'al Xook": "레이디 카브알 쇼크",
+    "Yaxchilan": "야슈칠란"
   };
 
   const locales = window.ATLAS_LOCALES || {};
