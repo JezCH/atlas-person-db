@@ -330,7 +330,7 @@
     "activity_end": -196,
     "role": "King",
     "period_basis": "reign",
-    "notes": "Ying Bu, also known as Qing Bu, was enfeoffed as King of Huainan after supporting Liu Bang during the Chu-Han Contention and ruled until his rebellion and defeat in 196 BCE."
+    "notes": "Ying Bu, also known as Qing Bu, was enfeoffed as King of Huainan by Liu Bang after supporting Han during the Chu-Han Contention. He ruled from 202 to 196 BCE before rebelling and being defeated."
   },
   {
     "person_name": "Wang Mang",
@@ -339,7 +339,7 @@
     "activity_end": 23,
     "role": "Emperor",
     "period_basis": "reign",
-    "notes": "Wang Mang founded the Xin dynasty in 9 CE after usurping the Western Han throne and ruled until the collapse of his regime in 23 CE."
+    "notes": "Wang Mang usurped the Western Han throne and founded the Xin dynasty in 9 CE. His reforms failed amid widespread unrest, and he was killed during the collapse of the dynasty in 23 CE."
   },
   {
     "person_name": "Tian Heng",
@@ -348,7 +348,7 @@
     "activity_end": -202,
     "role": "King",
     "period_basis": "de_facto_rule",
-    "notes": "Tian Heng was the last independent leader of the restored State of Qi during the Chu-Han Contention and died in 202 BCE after refusing to submit to the Han."
+    "notes": "Tian Heng was the last independent leader of the restored State of Qi during the Chu-Han Contention and died in 202 BCE after refusing to submit to Han rule."
   },
   {
     "person_name": "Zhang Han",
@@ -357,7 +357,7 @@
     "activity_end": -205,
     "role": "King",
     "period_basis": "reign",
-    "notes": "Zhang Han was the leading Qin general during the dynasty's collapse and later ruled as King of Yong from 206 to 205 BCE after surrendering to Xiang Yu."
+    "notes": "Zhang Han was a leading Qin general who surrendered to Xiang Yu and was enfeoffed as King of Yong. He ruled until his defeat by Liu Bang in 205 BCE."
   },
   {
     "person_name": "Emperor Xuan of Han",
@@ -366,7 +366,7 @@
     "activity_end": -49,
     "role": "Emperor",
     "period_basis": "reign",
-    "notes": "Liu Bingyi, later known as Liu Xun and posthumously as Emperor Xuan of Han, reigned from 74 to 49 BCE and restored Western Han authority after the Huo clan's dominance."
+    "notes": "Liu Bingyi, later renamed Liu Xun and posthumously known as Emperor Xuan of Han, reigned from 74 to 49 BCE and restored the strength of the Western Han."
   },
   {
     "person_name": "Zhao Tuo",
@@ -375,7 +375,7 @@
     "activity_end": -137,
     "role": "King",
     "period_basis": "reign",
-    "notes": "Zhao Tuo founded Nanyue around 204 BCE after the collapse of the Qin dynasty and ruled until 137 BCE over a realm centered on Lingnan."
+    "notes": "Zhao Tuo founded Nanyue around 204 BCE following the collapse of Qin and ruled until 137 BCE over a kingdom spanning Lingnan and northern Vietnam."
   },
   {
     "person_name": "Emperor Guangwu of Han",
@@ -384,7 +384,7 @@
     "activity_end": 57,
     "role": "Emperor",
     "period_basis": "reign",
-    "notes": "Liu Xiu founded the Eastern Han dynasty in 25 CE, reunified much of China after the fall of Xin, and ruled until 57 CE."
+    "notes": "Liu Xiu founded the Eastern Han dynasty in 25 CE, reunified much of China, and restored Han imperial rule."
   },
   {
     "person_name": "Emperor Wu of Song",
@@ -393,7 +393,7 @@
     "activity_end": 422,
     "role": "Emperor",
     "period_basis": "reign",
-    "notes": "Liu Yu founded the Liu Song dynasty in 420 after replacing the Eastern Jin and ruled until 422."
+    "notes": "Liu Yu founded the Liu Song dynasty in 420 after overthrowing the Eastern Jin and ruled until 422."
   },
   {
     "person_name": "Huang Chao",
@@ -402,7 +402,7 @@
     "activity_end": 884,
     "role": "Emperor",
     "period_basis": "reign",
-    "notes": "Huang Chao captured Chang'an and proclaimed the Great Qi regime in 881, ruling until his defeat and death in 884."
+    "notes": "Huang Chao proclaimed himself emperor of Great Qi after capturing Chang'an in 881. His regime collapsed in 884."
   },
   {
     "person_name": "Emperor Taizu of Later Liang",
@@ -411,7 +411,7 @@
     "activity_end": 912,
     "role": "Emperor",
     "period_basis": "reign",
-    "notes": "Zhu Wen overthrew the Tang dynasty and founded the Later Liang in 907, beginning the Five Dynasties period, and ruled until 912."
+    "notes": "Zhu Wen overthrew the Tang dynasty and founded the Later Liang in 907, beginning the Five Dynasties period. He ruled until 912."
   },
   {
     "person_name": "Li Keyong",
@@ -420,7 +420,7 @@
     "activity_end": 908,
     "role": "Prince",
     "period_basis": "de_facto_rule",
-    "notes": "Li Keyong was a Shatuo military leader and Prince of Jin who helped suppress the Huang Chao Rebellion and established the political foundation later used by his son to found Later Tang."
+    "notes": "Li Keyong was a Shatuo military leader and Prince of Jin who established the political and military foundation from which his son founded the Later Tang dynasty."
   },
   {
     "person_name": "Emperor Zhuangzong of Later Tang",
@@ -429,7 +429,7 @@
     "activity_end": 926,
     "role": "Emperor",
     "period_basis": "reign",
-    "notes": "Li Cunxu founded the Later Tang dynasty in 923, destroyed Later Liang, and ruled until his death during a mutiny in 926."
+    "notes": "Li Cunxu founded the Later Tang dynasty in 923, defeated the Later Liang, and ruled until his death during a mutiny in 926."
   },
   {
     "person_name": "Emperor Mingzong of Later Tang",
@@ -438,7 +438,7 @@
     "activity_end": 933,
     "role": "Emperor",
     "period_basis": "reign",
-    "notes": "Li Siyuan reigned as Emperor Mingzong of Later Tang from 926 to 933 and restored stability after the death of Emperor Zhuangzong."
+    "notes": "Li Siyuan reigned as Emperor Mingzong of Later Tang from 926 to 933 and restored political stability after the death of Emperor Zhuangzong."
   },
   {
     "person_name": "Emperor Gaozu of Later Jin",
@@ -447,7 +447,7 @@
     "activity_end": 942,
     "role": "Emperor",
     "period_basis": "reign",
-    "notes": "Shi Jingtang founded the Later Jin in 936 with Khitan support and ceded the Sixteen Prefectures to the Liao, ruling until 942."
+    "notes": "Shi Jingtang founded the Later Jin dynasty in 936 with Khitan support and ceded the Sixteen Prefectures to the Liao. He ruled until 942."
   },
   {
     "person_name": "Emperor Gaozu of Later Han",
@@ -456,7 +456,7 @@
     "activity_end": 948,
     "role": "Emperor",
     "period_basis": "reign",
-    "notes": "Liu Zhiyuan founded the Later Han in 947 after the fall of Later Jin and ruled until his death in 948."
+    "notes": "Liu Zhiyuan founded the Later Han dynasty in 947 after the collapse of the Later Jin and ruled until his death in 948."
   },
   {
     "person_name": "Emperor Taizu of Later Zhou",
@@ -465,7 +465,7 @@
     "activity_end": 954,
     "role": "Emperor",
     "period_basis": "reign",
-    "notes": "Guo Wei overthrew the Later Han and founded the Later Zhou in 951, ruling until 954."
+    "notes": "Guo Wei overthrew the Later Han and founded the Later Zhou dynasty in 951. His reforms were continued by his successor."
   },
   {
     "person_name": "Emperor Shizong of Later Zhou",
@@ -475,5 +475,104 @@
     "role": "Emperor",
     "period_basis": "reign",
     "notes": "Guo Rong reigned as Emperor Shizong of Later Zhou from 954 to 959 and strengthened the state through military victories and administrative reforms."
+  },
+  {
+    "person_name": "Duke Xiao of Qin",
+    "politic_name": "Qin",
+    "activity_start": -361,
+    "activity_end": -338,
+    "role": "Duke",
+    "period_basis": "reign",
+    "notes": "Ying Quliang, posthumously known as Duke Xiao of Qin, ruled Qin from 361 to 338 BCE and sponsored Shang Yang's reforms."
+  },
+  {
+    "person_name": "King Zhaoxiang of Qin",
+    "politic_name": "Qin",
+    "activity_start": -306,
+    "activity_end": -251,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Ying Ji, posthumously known as King Zhaoxiang of Qin, ruled from 306 to 251 BCE and made Qin the dominant Warring States power."
+  },
+  {
+    "person_name": "King Wei of Qi",
+    "politic_name": "Qi",
+    "activity_start": -356,
+    "activity_end": -320,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Tian Yinqi, posthumously known as King Wei of Qi, ruled from 356 to 320 BCE and transformed Qi into one of the strongest Warring States powers."
+  },
+  {
+    "person_name": "King Wei of Chu",
+    "politic_name": "Chu",
+    "activity_start": -339,
+    "activity_end": -329,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Xiong Shang, posthumously known as King Wei of Chu, reigned from 339 to 329 BCE during the height of Chu's power."
+  },
+  {
+    "person_name": "King Zhao of Yan",
+    "politic_name": "Yan",
+    "activity_start": -311,
+    "activity_end": -279,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Ji Zhi, posthumously known as King Zhao of Yan, reigned from 311 to 279 BCE and rebuilt Yan after the Qi invasion."
+  },
+  {
+    "person_name": "King Wuling of Zhao",
+    "politic_name": "Zhao",
+    "activity_start": -325,
+    "activity_end": -299,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Zhao Yong, posthumously known as King Wuling of Zhao, ruled from 325 to 299 BCE and introduced the Hu clothing and cavalry reforms."
+  },
+  {
+    "person_name": "King Hui of Wei",
+    "politic_name": "Wei",
+    "activity_start": -370,
+    "activity_end": -319,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Wei Ying, posthumously known as King Hui of Wei, ruled from 370 to 319 BCE and moved the capital to Daliang."
+  },
+  {
+    "person_name": "Marquess Lie of Han",
+    "politic_name": "Han",
+    "activity_start": -399,
+    "activity_end": -387,
+    "role": "Marquess",
+    "period_basis": "reign",
+    "notes": "Han Qu, posthumously known as Marquess Lie of Han and also recorded as Marquess Wu of Han, ruled from 399 to 387 BCE."
+  },
+  {
+    "person_name": "Emperor Shenzong of Song",
+    "politic_name": "Song Dynasty",
+    "activity_start": 1067,
+    "activity_end": 1085,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Zhao Xu reigned as Emperor Shenzong of Song from 1067 to 1085 and supported Wang Anshi's New Policies."
+  },
+  {
+    "person_name": "Emperor Jingzong of Western Xia",
+    "politic_name": "Western Xia",
+    "activity_start": 1038,
+    "activity_end": 1048,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Weiming Yuanhao, also known as Li Yuanhao, founded the Western Xia Empire in 1038 and ruled until 1048."
+  },
+  {
+    "person_name": "Nurhaci",
+    "politic_name": "Later Jin",
+    "activity_start": 1616,
+    "activity_end": 1626,
+    "role": "Khan",
+    "period_basis": "reign",
+    "notes": "Nurhaci founded the Later Jin in 1616 after unifying the Jurchen tribes and established the Eight Banners system."
   }
 ]
