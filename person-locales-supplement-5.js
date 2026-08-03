@@ -266,7 +266,9 @@
     "Kingdom of Prussia": "프로이센 왕국",
     "German Empire": "독일 제국",
     "Catherine the Great": "예카테리나 2세",
-    "Russian Empire": "러시아 제국"
+    "Russian Empire": "러시아 제국",
+    "Hiawatha": "히아와타",
+    "Iroquois Confederacy": "이로쿼이 연맹"
   };
 
   const locales = window.ATLAS_LOCALES || {};
