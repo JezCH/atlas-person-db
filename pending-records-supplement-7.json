@@ -1,0 +1,227 @@
+[
+  {
+    "person_name": "Emperor Yang of Sui",
+    "politic_name": "Sui Dynasty",
+    "activity_start": 604,
+    "activity_end": 618,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Yang Guang, posthumously known as Emperor Yang of Sui, reigned from 604 to 618. He completed the Grand Canal, expanded Luoyang, launched major campaigns against Goguryeo, and ruled during the unrest that brought down the Sui dynasty."
+  },
+  {
+    "person_name": "Emperor Taizu of Jin",
+    "politic_name": "Jin Dynasty",
+    "activity_start": 1115,
+    "activity_end": 1123,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Wanyan Aguda founded the Jin dynasty in 1115 after unifying the Jurchen tribes and began the campaigns that destroyed the Liao dynasty."
+  },
+  {
+    "person_name": "Emperor Taizong of Jin",
+    "politic_name": "Jin Dynasty",
+    "activity_start": 1123,
+    "activity_end": 1135,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Wanyan Wuqimai succeeded Emperor Taizu in 1123. During his reign the Jin conquered the Liao and captured the Northern Song capital Kaifeng in 1127."
+  },
+  {
+    "person_name": "Emperor Taizu of Liao",
+    "politic_name": "Liao Dynasty",
+    "activity_start": 916,
+    "activity_end": 926,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Yelu Abaoji founded the Liao dynasty in 916 after unifying the Khitan tribes and established the institutions of the new empire."
+  },
+  {
+    "person_name": "Emperor Taizong of Liao",
+    "politic_name": "Liao Dynasty",
+    "activity_start": 926,
+    "activity_end": 947,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Yelu Deguang reigned from 926 to 947, completed the conquest of Balhae, destroyed the Later Jin, and briefly occupied Kaifeng."
+  },
+  {
+    "person_name": "Empress Dowager Chengtian",
+    "politic_name": "Liao Dynasty",
+    "activity_start": 982,
+    "activity_end": 1009,
+    "role": "Empress Dowager and Regent",
+    "period_basis": "de_facto_rule",
+    "notes": "Xiao Chuo served as regent and de facto ruler of the Liao dynasty from 982 to 1009, directed campaigns against Song, and helped conclude the Chanyuan Treaty."
+  },
+  {
+    "person_name": "Emperor Dezong of Western Liao",
+    "politic_name": "Western Liao",
+    "activity_start": 1124,
+    "activity_end": 1143,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Yelu Dashi founded the Western Liao in Central Asia and ruled until 1143, establishing the state as the dominant regional power after the Battle of Qatwan."
+  },
+  {
+    "person_name": "Emperor Xuanzhao of Former Qin",
+    "politic_name": "Former Qin",
+    "activity_start": 357,
+    "activity_end": 385,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Fu Jian ruled Former Qin from 357 to 385, unified most of northern China, and suffered the decisive defeat at the Battle of Fei River in 383."
+  },
+  {
+    "person_name": "Kanishka I",
+    "politic_name": "Kushan Empire",
+    "activity_start": 127,
+    "activity_end": 150,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Kanishka I, often called Kanishka the Great, ruled the Kushan Empire during its height, expanded across Central Asia and northern India, and became a major patron of Buddhism."
+  },
+  {
+    "person_name": "Yongle Emperor",
+    "politic_name": "Ming Dynasty",
+    "activity_start": 1402,
+    "activity_end": 1424,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Zhu Di reigned as the Yongle Emperor from 1402 to 1424. He moved the capital to Beijing, commissioned the Forbidden City, sponsored Zheng He's voyages, and oversaw the Yongle Encyclopedia."
+  },
+  {
+    "person_name": "Emperor Wen of Wei",
+    "politic_name": "Cao Wei",
+    "activity_start": 220,
+    "activity_end": 226,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Cao Pi founded Cao Wei in 220 after accepting the abdication of Emperor Xian of Han and reigned until 226."
+  },
+  {
+    "person_name": "Gongsun Du",
+    "politic_name": "Liaodong",
+    "activity_start": 190,
+    "activity_end": 204,
+    "role": "Warlord",
+    "period_basis": "de_facto_rule",
+    "notes": "Gongsun Du established an autonomous regime in Liaodong around 190 and ruled the region independently in practice until his death in 204."
+  },
+  {
+    "person_name": "Gongsun Zan",
+    "politic_name": "Eastern Han",
+    "activity_start": 191,
+    "activity_end": 199,
+    "role": "Warlord",
+    "period_basis": "de_facto_rule",
+    "notes": "Gongsun Zan controlled much of You Province during the late Eastern Han and fought Yuan Shao for dominance in northern China until his defeat in 199."
+  },
+  {
+    "person_name": "Liu Shan",
+    "politic_name": "Shu Han",
+    "activity_start": 223,
+    "activity_end": 263,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Liu Shan was the second and final emperor of Shu Han, reigning from 223 until the conquest of the state by Cao Wei in 263."
+  },
+  {
+    "person_name": "Liu Yan",
+    "politic_name": "Eastern Han",
+    "activity_start": 188,
+    "activity_end": 194,
+    "role": "Warlord",
+    "period_basis": "de_facto_rule",
+    "notes": "Liu Yan became governor of Yi Province in 188 and established an autonomous power base later inherited by Liu Zhang and ultimately taken by Liu Bei."
+  },
+  {
+    "person_name": "Liu Yao",
+    "politic_name": "Eastern Han",
+    "activity_start": 194,
+    "activity_end": 198,
+    "role": "Warlord",
+    "period_basis": "de_facto_rule",
+    "notes": "Liu Yao controlled parts of Yang Province and opposed Sun Ce for control of the lower Yangtze region until his defeat and death in 198."
+  },
+  {
+    "person_name": "Liu Yu",
+    "politic_name": "Eastern Han",
+    "activity_start": 189,
+    "activity_end": 193,
+    "role": "Governor",
+    "period_basis": "de_facto_rule",
+    "notes": "Liu Yu governed You Province during the late Eastern Han and became a rival of Gongsun Zan before being defeated and killed in 193."
+  },
+  {
+    "person_name": "Lu Bu",
+    "politic_name": "Eastern Han",
+    "activity_start": 192,
+    "activity_end": 198,
+    "role": "Warlord",
+    "period_basis": "de_facto_rule",
+    "notes": "Lu Bu emerged as an independent warlord after the assassination of Dong Zhuo and controlled Xu Province before his defeat and execution at Xiapi in 198."
+  },
+  {
+    "person_name": "Ma Teng",
+    "politic_name": "Eastern Han",
+    "activity_start": 189,
+    "activity_end": 212,
+    "role": "Warlord",
+    "period_basis": "de_facto_rule",
+    "notes": "Ma Teng was a powerful Liang Province warlord who controlled territory in northwestern China before being summoned to court and executed in 212."
+  },
+  {
+    "person_name": "Meng Huo",
+    "politic_name": "Nanzhong",
+    "activity_start": 225,
+    "activity_end": 225,
+    "role": "Regional leader",
+    "period_basis": "general_activity",
+    "notes": "Meng Huo was a prominent leader associated with resistance in Nanzhong during Zhuge Liang's southern campaign of 225."
+  },
+  {
+    "person_name": "Shi Xie",
+    "politic_name": "Jiaozhou",
+    "activity_start": 187,
+    "activity_end": 226,
+    "role": "Governor",
+    "period_basis": "de_facto_rule",
+    "notes": "Shi Xie governed Jiaozhou from the late Eastern Han into the early Three Kingdoms period and exercised broad autonomous control until his death in 226."
+  },
+  {
+    "person_name": "Sun Jian",
+    "politic_name": "Eastern Han",
+    "activity_start": 184,
+    "activity_end": 191,
+    "role": "Warlord",
+    "period_basis": "general_activity",
+    "notes": "Sun Jian distinguished himself during the Yellow Turban Rebellion and the coalition against Dong Zhuo, laying the foundations later used by Sun Ce and Sun Quan."
+  },
+  {
+    "person_name": "Sun Ce",
+    "politic_name": "Eastern Han",
+    "activity_start": 194,
+    "activity_end": 200,
+    "role": "Warlord",
+    "period_basis": "de_facto_rule",
+    "notes": "Sun Ce established an independent power base in Jiangdong between 194 and 200 and laid the foundation for the later Eastern Wu state."
+  },
+  {
+    "person_name": "Tao Qian",
+    "politic_name": "Eastern Han",
+    "activity_start": 188,
+    "activity_end": 194,
+    "role": "Warlord",
+    "period_basis": "de_facto_rule",
+    "notes": "Tao Qian governed Xu Province during the late Eastern Han and resisted Cao Cao before his death in 194."
+  },
+  {
+    "person_name": "Zhang Lu",
+    "politic_name": "Hanzhong",
+    "activity_start": 191,
+    "activity_end": 215,
+    "role": "Theocratic ruler",
+    "period_basis": "de_facto_rule",
+    "notes": "Zhang Lu ruled an autonomous theocratic regime in Hanzhong based on the Way of the Five Pecks of Rice until surrendering to Cao Cao in 215."
+  }
+]
