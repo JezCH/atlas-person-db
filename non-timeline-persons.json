@@ -72,5 +72,35 @@
     "role_ko": "전승상 올멕 군주",
     "reason": "Po Ngbe is reported in a non-mainstream interpretation of alleged Olmec inscriptions as a ruler in Guerrero between about 900 and 600 BCE. The reading and the individual's historicity are not accepted as secure by mainstream Olmec scholarship.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or unverified overlay is enabled."
+  },
+  {
+    "person_name": "Minos",
+    "politic_name": "Minoan Crete",
+    "display_name_ko": "미노스",
+    "historicity": "legendary",
+    "timeline_status": "excluded",
+    "date_basis": "mythological_tradition",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "전설적 크레타 왕",
+    "reason": "Minos is a legendary king of Crete in Greek tradition. Bronze Age Crete is archaeologically established, but Minos cannot be securely identified as a historical individual.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary overlay is enabled."
+  },
+  {
+    "person_name": "Agamemnon",
+    "politic_name": "Mycenaean Greece",
+    "display_name_ko": "아가멤논",
+    "historicity": "legendary",
+    "timeline_status": "excluded",
+    "date_basis": "epic_tradition",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "전설적 미케네 왕",
+    "reason": "Agamemnon is a legendary king of Mycenae in Greek epic and later tradition. Mycenaean civilization is historically established, but Agamemnon's historicity is not securely demonstrated.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary overlay is enabled."
   }
 ]
