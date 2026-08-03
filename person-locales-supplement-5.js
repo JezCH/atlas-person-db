@@ -258,7 +258,10 @@
     "Xiongnu Empire": "흉노 제국",
     "Queen Seondeok": "선덕여왕",
     "Silla": "신라",
-    "Sejong the Great": "세종대왕"
+    "Sejong the Great": "세종대왕",
+    "Gorgo": "고르고",
+    "Sparta": "스파르타",
+    "Leonidas I": "레오니다스 1세"
   };
 
   const locales = window.ATLAS_LOCALES || {};
