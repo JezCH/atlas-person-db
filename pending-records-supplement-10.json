@@ -34,5 +34,32 @@
     "role": "King",
     "period_basis": "reign",
     "notes": "Leonidas I was king of Sparta from about 490 to 480 BCE. He commanded the Greek defense at the Battle of Thermopylae against Xerxes I of Persia."
+  },
+  {
+    "person_name": "Otto von Bismarck",
+    "politic_name": "Kingdom of Prussia",
+    "activity_start": 1862,
+    "activity_end": 1871,
+    "role": "Minister President",
+    "period_basis": "term",
+    "notes": "Otto von Bismarck served as Minister President of Prussia and led the wars and diplomacy that culminated in German unification."
+  },
+  {
+    "person_name": "Otto von Bismarck",
+    "politic_name": "German Empire",
+    "activity_start": 1871,
+    "activity_end": 1890,
+    "role": "Chancellor",
+    "period_basis": "term",
+    "notes": "Otto von Bismarck served as the first Chancellor of the German Empire from 1871 to 1890."
+  },
+  {
+    "person_name": "Catherine the Great",
+    "politic_name": "Russian Empire",
+    "activity_start": 1762,
+    "activity_end": 1796,
+    "role": "Empress",
+    "period_basis": "reign",
+    "notes": "Catherine the Great ruled the Russian Empire from 1762 to 1796. Her reign expanded Russian power and territory and is associated with Enlightenment-era reform and imperial consolidation."
   }
 ]
