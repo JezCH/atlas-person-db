@@ -259,5 +259,68 @@
     "role": "Warlord",
     "period_basis": "de_facto_rule",
     "notes": "Liu Biao governed Jing Province as one of the most powerful regional warlords of the late Eastern Han from 190 until his death in 208."
+  },
+  {
+    "person_name": "Duke Huan of Qi",
+    "politic_name": "Qi",
+    "activity_start": -685,
+    "activity_end": -643,
+    "role": "Duke",
+    "period_basis": "reign",
+    "notes": "Xiaobai, posthumously known as Duke Huan of Qi, ruled Qi from 685 to 643 BCE and became the first of the Five Hegemons with the assistance of Guan Zhong."
+  },
+  {
+    "person_name": "Duke Xiang of Song",
+    "politic_name": "Song",
+    "activity_start": -650,
+    "activity_end": -637,
+    "role": "Duke",
+    "period_basis": "reign",
+    "notes": "Zifu, posthumously known as Duke Xiang of Song, ruled Song from 650 to 637 BCE and pursued hegemony during the Spring and Autumn period."
+  },
+  {
+    "person_name": "Duke Wen of Jin",
+    "politic_name": "Jin",
+    "activity_start": -636,
+    "activity_end": -628,
+    "role": "Duke",
+    "period_basis": "reign",
+    "notes": "Chonger, posthumously known as Duke Wen of Jin, returned from exile to rule Jin from 636 to 628 BCE and became one of the Five Hegemons."
+  },
+  {
+    "person_name": "Duke Mu of Qin",
+    "politic_name": "Qin",
+    "activity_start": -659,
+    "activity_end": -621,
+    "role": "Duke",
+    "period_basis": "reign",
+    "notes": "Renhao, posthumously known as Duke Mu of Qin, ruled Qin from 659 to 621 BCE and expanded Qin's power across western China."
+  },
+  {
+    "person_name": "King Helu of Wu",
+    "politic_name": "Wu",
+    "activity_start": -514,
+    "activity_end": -496,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Helu ruled Wu from 514 to 496 BCE and transformed it into a major power with the assistance of Wu Zixu and Sun Tzu."
+  },
+  {
+    "person_name": "King Goujian of Yue",
+    "politic_name": "Yue",
+    "activity_start": -496,
+    "activity_end": -465,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Goujian ruled Yue from 496 to 465 BCE, rebuilt the state after defeat by Wu, conquered Wu in 473 BCE, and became a hegemon of the late Spring and Autumn period."
+  },
+  {
+    "person_name": "Duke Zhuang of Zheng",
+    "politic_name": "Zheng",
+    "activity_start": -743,
+    "activity_end": -701,
+    "role": "Duke",
+    "period_basis": "reign",
+    "notes": "Ji Wusheng, posthumously known as Duke Zhuang of Zheng, ruled Zheng from 743 to 701 BCE and made it the leading power of the early Spring and Autumn period."
   }
 ]
