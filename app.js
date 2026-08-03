@@ -14,9 +14,10 @@
     title: $("dialogTitle"), id: $("recordId"), person: $("personName"), politic: $("politicName"),
     start: $("activityStart"), end: $("activityEnd"), role: $("role"), basis: $("periodBasis"), notes: $("notes"),
     error: $("formError"), toast: $("toast"), detailEmpty: $("detailEmpty"), detailContent: $("detailContent"),
-    detailPerson: $("detailPerson"), detailPolitic: $("detailPolitic"), detailPeriod: $("detailPeriod"),
+    detailPerson: $("detailPerson"), detailPolitic: $("detailPolitic"),
     detailRole: $("detailRole"), detailBasis: $("detailBasis"), detailNotes: $("detailNotes"), detailEdit: $("detailEdit"),
-    detailSummaryPolitic: $("detailSummaryPolitic"), detailSummaryPeriod: $("detailSummaryPeriod")
+    detailSummaryPolitic: $("detailSummaryPolitic"), detailSummaryStart: $("detailSummaryStart"), detailSummaryEnd: $("detailSummaryEnd"),
+    detailPeriodStart: $("detailPeriodStart"), detailPeriodEnd: $("detailPeriodEnd")
   };
 
   const basisLabels = {
@@ -60,17 +61,23 @@
     );
   }
 
-  function formatYear(year) {
-    const n = Number(year);
-    return n < 0 ? `BC ${Math.abs(n)}` : `AD ${n}`;
+  function yearEra(year) {
+    return Number(year) < 0 ? "BC" : "AD";
   }
 
-  function formatPeriod(start, end) {
-    const a = Number(start);
-    const b = Number(end);
-    if (a < 0 && b < 0) return `BC ${Math.abs(a)}–${Math.abs(b)}`;
-    if (a >= 0 && b >= 0) return `AD ${a}–${b}`;
-    return `${formatYear(a)}–${formatYear(b)}`;
+  function yearNumber(year) {
+    return Math.abs(Number(year));
+  }
+
+  function formatYear(year) {
+    return `${yearEra(year)} ${yearNumber(year)}`;
+  }
+
+  function setPeriodParts(start, end, startEl, endEl) {
+    const startEra = yearEra(start);
+    const endEra = yearEra(end);
+    startEl.textContent = `${startEra} ${yearNumber(start)}`;
+    endEl.textContent = startEra === endEra ? String(yearNumber(end)) : `${endEra} ${yearNumber(end)}`;
   }
 
   function visibleRecords() {
@@ -102,14 +109,13 @@
     els.detailEmpty.hidden = Boolean(record);
     els.detailContent.hidden = !record;
     if (!record) return;
-    const period = formatPeriod(record.activity_start, record.activity_end);
     const person = displayPerson(record.person_name);
     const politic = displayPolitic(record.politic_name);
     els.detailPerson.textContent = person;
     els.detailPolitic.textContent = politic;
-    els.detailPeriod.textContent = period;
     els.detailSummaryPolitic.textContent = politic;
-    els.detailSummaryPeriod.textContent = period;
+    setPeriodParts(record.activity_start, record.activity_end, els.detailSummaryStart, els.detailSummaryEnd);
+    setPeriodParts(record.activity_start, record.activity_end, els.detailPeriodStart, els.detailPeriodEnd);
     els.detailRole.textContent = record.role || "—";
     els.detailBasis.textContent = basisLabels[record.period_basis] || record.period_basis || "—";
     els.detailNotes.textContent = record.notes || "";
