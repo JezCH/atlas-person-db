@@ -15,7 +15,8 @@
     start: $("activityStart"), end: $("activityEnd"), role: $("role"), basis: $("periodBasis"), notes: $("notes"),
     error: $("formError"), toast: $("toast"), detailEmpty: $("detailEmpty"), detailContent: $("detailContent"),
     detailPerson: $("detailPerson"), detailPolitic: $("detailPolitic"), detailPeriod: $("detailPeriod"),
-    detailRole: $("detailRole"), detailBasis: $("detailBasis"), detailNotes: $("detailNotes"), detailEdit: $("detailEdit")
+    detailRole: $("detailRole"), detailBasis: $("detailBasis"), detailNotes: $("detailNotes"), detailEdit: $("detailEdit"),
+    detailSummaryPolitic: $("detailSummaryPolitic"), detailSummaryPeriod: $("detailSummaryPeriod")
   };
 
   const basisLabels = {
@@ -52,6 +53,14 @@
     return n < 0 ? `기원전 ${Math.abs(n)}` : String(n);
   }
 
+  function formatPeriod(start, end) {
+    const a = Number(start);
+    const b = Number(end);
+    if (a < 0 && b < 0) return `기원전 ${Math.abs(a)}–${Math.abs(b)}`;
+    if (a >= 0 && b >= 0) return `${a}–${b}`;
+    return `${formatYear(a)}–${formatYear(b)}`;
+  }
+
   function visibleRecords() {
     const q = normalize(els.search.value);
     const politic = els.filter.value;
@@ -74,12 +83,15 @@
     els.detailEmpty.hidden = Boolean(record);
     els.detailContent.hidden = !record;
     if (!record) return;
+    const period = formatPeriod(record.activity_start, record.activity_end);
     els.detailPerson.textContent = record.person_name;
     els.detailPolitic.textContent = record.politic_name;
-    els.detailPeriod.textContent = `${formatYear(record.activity_start)} – ${formatYear(record.activity_end)}`;
+    els.detailPeriod.textContent = period;
+    els.detailSummaryPolitic.textContent = record.politic_name;
+    els.detailSummaryPeriod.textContent = period;
     els.detailRole.textContent = record.role || "—";
     els.detailBasis.textContent = basisLabels[record.period_basis] || record.period_basis || "—";
-    els.detailNotes.textContent = record.notes || "—";
+    els.detailNotes.textContent = record.notes || "";
   }
 
   function render() {
