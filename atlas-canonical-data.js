@@ -66,7 +66,7 @@
     "simon bolivar\u0001gran colombia\u00011819\u00011830",
     "nzinga mbande\u0001kingdoms of ndongo and matamba\u00011624\u00011663",
     "maria i of portugal\u0001kingdom of portugal\u00011777\u00011816",
-    "hypatia\u0001roman empire\u0001393\u0001395",
+    "hypatia\u0001roman empire\u0001393\u0001415",
     "tokugawa ieyasu\u0001tokugawa shogunate\u00011603\u00011605",
     "tokugawa ieyasu\u0001tokugawa shogunate\u00011605\u00011616"
   ]);
