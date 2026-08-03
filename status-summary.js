@@ -17,7 +17,20 @@
     .registration-summary-actions{display:flex;align-items:center;gap:8px;flex:0 0 auto}
     .registration-summary-link{border:1px solid #cfd6e1;border-radius:8px;padding:8px 11px;background:#fff;color:#172033;text-decoration:none;font-size:12px;font-weight:800}
     .registration-summary-link:disabled{opacity:.55;cursor:wait}
-    @media(max-width:760px){.admin-nav-link{display:none}.registration-summary{align-items:flex-start;padding:12px;margin-bottom:12px}.registration-summary-main{align-items:flex-start}.registration-summary-detail{white-space:normal;line-height:1.45}.registration-summary-actions{flex-direction:column;align-items:stretch}.registration-summary-link{padding:7px 9px;text-align:center}}
+    @media(max-width:760px){
+      .admin-nav-link{display:none}
+      .registration-summary{align-items:center;gap:8px;min-height:44px;padding:7px 8px;margin-bottom:8px;border-radius:11px}
+      .registration-summary-main{align-items:center;gap:8px;overflow:hidden}
+      .registration-summary-dot{width:8px;height:8px;box-shadow:0 0 0 3px #fff3d6}
+      .registration-summary[data-state="ok"] .registration-summary-dot{box-shadow:0 0 0 3px #e7f6ed}
+      .registration-summary[data-state="error"] .registration-summary-dot{box-shadow:0 0 0 3px #fde9eb}
+      .registration-summary-title{font-size:12px;line-height:1.2;white-space:nowrap}
+      .registration-summary-detail{margin-top:1px;font-size:10px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100vw - 168px)}
+      .registration-summary-actions{flex-direction:row;gap:4px}
+      .registration-summary-link{display:grid;place-items:center;width:34px;height:34px;padding:0;border-radius:8px;font-size:0;text-align:center}
+      #registrationSummaryRefresh::before{content:"↻";font-size:17px}
+      .registration-summary-actions a::before{content:"⚙";font-size:15px}
+    }
   `;
   document.head.appendChild(style);
 
@@ -49,7 +62,7 @@
     section.id = "registrationSummary";
     section.className = "registration-summary card";
     section.dataset.state = "loading";
-    section.innerHTML = `<div class="registration-summary-main"><span class="registration-summary-dot" aria-hidden="true"></span><div><div id="registrationSummaryTitle" class="registration-summary-title">실시간 DB 상태 확인 중</div><div id="registrationSummaryDetail" class="registration-summary-detail">Supabase의 현재 인물·활동 수를 조회하고 있습니다.</div></div></div><div class="registration-summary-actions"><button id="registrationSummaryRefresh" class="registration-summary-link" type="button">다시 확인</button><a class="registration-summary-link" href="./admin.html">관리자 페이지</a></div>`;
+    section.innerHTML = `<div class="registration-summary-main"><span class="registration-summary-dot" aria-hidden="true"></span><div><div id="registrationSummaryTitle" class="registration-summary-title">실시간 DB 상태 확인 중</div><div id="registrationSummaryDetail" class="registration-summary-detail">Supabase의 현재 인물·활동 수를 조회하고 있습니다.</div></div></div><div class="registration-summary-actions"><button id="registrationSummaryRefresh" class="registration-summary-link" type="button" aria-label="DB 상태 다시 확인">다시 확인</button><a class="registration-summary-link" href="./admin.html" aria-label="관리자 페이지">관리자 페이지</a></div>`;
     toolbar.insertAdjacentElement("afterend", section);
     section.querySelector("#registrationSummaryRefresh").addEventListener("click", () => verifySummary("manual"));
     return section;
@@ -123,8 +136,8 @@
       box.dataset.state = ok ? "ok" : "error";
       title.textContent = ok ? "실시간 DB 정상" : "실시간 DB 확인 필요";
       detail.textContent = ok
-        ? `현재 DB 인물 ${dbNames.size}명 · 활동 ${dbKeys.size}개 · GitHub 기준과 완전 일치`
-        : `현재 DB 인물 ${dbNames.size}명 · 활동 ${dbKeys.size}개 · 누락 인물 ${missingPersons.length}명 · 누락 활동 ${missingActivities.length}개 · 추가 인물 ${extraPersons.length}명 · 추가 활동 ${extraActivities.length}개`;
+        ? `${dbNames.size}명 · ${dbKeys.size}활동 · GitHub 일치`
+        : `${dbNames.size}명 · ${dbKeys.size}활동 · 누락 ${missingPersons.length + missingActivities.length} · 추가 ${extraPersons.length + extraActivities.length}`;
 
       if (!realtimeChannel) {
         realtimeChannel = db.channel("atlas-person-politics-live-summary-v3")
