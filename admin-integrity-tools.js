@@ -22,6 +22,43 @@
     "nzinga mbande"
   ]);
 
+  async function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    const copied = document.execCommand("copy");
+    textarea.remove();
+    if (!copied) throw new Error("클립보드 복사에 실패했습니다.");
+  }
+
+  async function copyResult(outputId, button) {
+    const output = document.getElementById(outputId);
+    const text = String(output?.textContent || "").trim();
+    if (!text) return;
+
+    const originalLabel = button.textContent;
+    try {
+      await copyText(text);
+      button.textContent = "복사됨 ✓";
+    } catch (error) {
+      console.error("Audit result copy failed", error);
+      button.textContent = "복사 실패";
+    } finally {
+      window.setTimeout(() => {
+        button.textContent = originalLabel;
+      }, 1400);
+    }
+  }
+
   function panelHtml() {
     return `
       <section class="panel" id="identityLookupPanel">
@@ -44,7 +81,10 @@
             <h2>중복·명칭 무결성 검사</h2>
             <p>정확 중복, 표기 변형, 동일 정치체 기간 충돌, 정상 전환과 복수 통치를 구분합니다.</p>
           </div>
-          <button id="integrityAuditButton" class="button primary" type="button">중복 검사 실행</button>
+          <div class="actions">
+            <button id="integrityAuditButton" class="button primary" type="button">중복 검사 실행</button>
+            <button id="integrityAuditCopyButton" class="button secondary" type="button" disabled>결과 복사</button>
+          </div>
         </div>
         <pre id="integrityAuditResult" class="result" aria-live="polite">검사 대기 중</pre>
       </section>`;
@@ -60,6 +100,9 @@
       if (event.key === "Enter") lookupIdentity();
     });
     document.getElementById("integrityAuditButton").addEventListener("click", auditIntegrity);
+    document.getElementById("integrityAuditCopyButton").addEventListener("click", (event) => {
+      copyResult("integrityAuditResult", event.currentTarget);
+    });
   }
 
   async function lookupIdentity() {
@@ -190,8 +233,10 @@
 
   async function auditIntegrity() {
     const button = document.getElementById("integrityAuditButton");
+    const copyButton = document.getElementById("integrityAuditCopyButton");
     const output = document.getElementById("integrityAuditResult");
     button.disabled = true;
+    if (copyButton) copyButton.disabled = true;
     output.dataset.type = "info";
     output.textContent = "실제 Supabase 데이터를 검사 중...";
 
@@ -260,6 +305,7 @@
       output.textContent = `검사 실패: ${error.message}`;
     } finally {
       button.disabled = false;
+      if (copyButton) copyButton.disabled = false;
     }
   }
 
