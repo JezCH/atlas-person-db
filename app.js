@@ -25,6 +25,22 @@
     general_activity: "주요 활동"
   };
 
+  const roleLabels = {
+    king: "왕",
+    emperor: "황제",
+    pharaoh: "파라오",
+    queen: "여왕",
+    president: "대통령",
+    "prime minister": "총리",
+    chancellor: "재상",
+    regent: "섭정",
+    daimyo: "다이묘",
+    chairman: "주석",
+    "paramount leader": "최고지도자",
+    "great king": "대왕",
+    "king of kings": "왕중왕"
+  };
+
   function showToast(message) {
     els.toast.textContent = message;
     els.toast.hidden = false;
@@ -38,6 +54,12 @@
   }
 
   function normalize(value) { return String(value ?? "").trim().toLocaleLowerCase("ko-KR"); }
+
+  function localizeRole(role) {
+    const raw = String(role ?? "").trim();
+    if (!raw) return "";
+    return roleLabels[raw.toLocaleLowerCase("en-US")] || raw;
+  }
 
   function sortRecords(items) {
     return [...items].sort((a, b) =>
@@ -65,7 +87,7 @@
     const q = normalize(els.search.value);
     const politic = els.filter.value;
     return sortRecords(records.filter((r) => {
-      const haystack = normalize([r.person_name, r.politic_name, r.role, r.notes].join(" "));
+      const haystack = normalize([r.person_name, r.politic_name, r.role, localizeRole(r.role), r.notes].join(" "));
       return (!q || haystack.includes(q)) && (!politic || r.politic_name === politic);
     }));
   }
@@ -89,29 +111,32 @@
     els.detailPeriod.textContent = period;
     els.detailSummaryPolitic.textContent = record.politic_name;
     els.detailSummaryPeriod.textContent = period;
-    els.detailRole.textContent = record.role || "—";
+    els.detailRole.textContent = localizeRole(record.role) || "—";
     els.detailBasis.textContent = basisLabels[record.period_basis] || record.period_basis || "—";
     els.detailNotes.textContent = record.notes || "";
   }
 
   function render() {
     const items = visibleRecords();
-    els.body.innerHTML = items.map((r) => `
+    els.body.innerHTML = items.map((r) => {
+      const displayRole = localizeRole(r.role);
+      return `
       <tr data-id="${r.id}" class="${String(r.id) === String(selectedId) ? "selected" : ""}" aria-selected="${String(r.id) === String(selectedId)}">
         <td>${escapeHtml(r.person_name)}</td>
         <td>${escapeHtml(r.politic_name)}</td>
         <td>${escapeHtml(formatYear(r.activity_start))}</td>
         <td>${escapeHtml(formatYear(r.activity_end))}</td>
-        <td>${escapeHtml(r.role || "")}</td>
+        <td title="${escapeHtml(displayRole)}">${escapeHtml(displayRole)}</td>
         <td>${escapeHtml(basisLabels[r.period_basis] || r.period_basis || "")}</td>
         <td><div class="action-buttons"><button class="mini-btn edit" data-id="${r.id}">수정</button><button class="mini-btn danger delete" data-id="${r.id}">삭제</button></div></td>
-      </tr>`).join("");
+      </tr>`;
+    }).join("");
     els.rowCount.textContent = `${items.length}개 행`;
     els.empty.hidden = items.length !== 0;
 
     const current = els.filter.value;
     const politics = [...new Set(records.map((r) => r.politic_name).filter(Boolean))].sort((a,b) => a.localeCompare(b, "en", { sensitivity: "base" }));
-    els.filter.innerHTML = '<option value="">모든 Politic</option>' + politics.map((p) => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join("");
+    els.filter.innerHTML = '<option value="">모든 정치체</option>' + politics.map((p) => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join("");
     if (politics.includes(current)) els.filter.value = current;
     renderDetail();
   }
@@ -198,7 +223,7 @@
 
   function exportExcel() {
     const rows = visibleRecords().map((r) => ({
-      "인물": r.person_name, "Politic": r.politic_name, "활동 시작연도": r.activity_start,
+      "인물": r.person_name, "정치체": r.politic_name, "활동 시작연도": r.activity_start,
       "활동 종료연도": r.activity_end, "역할": r.role || "", "기간 기준": basisLabels[r.period_basis] || r.period_basis || "", "비고": r.notes || ""
     }));
     const ws = XLSX.utils.json_to_sheet(rows);
@@ -219,7 +244,7 @@
     const wb = XLSX.read(buffer);
     const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: "" });
     const payload = rows.map((r) => ({
-      person_name: String(r["인물"] || r.person_name || "").trim(), politic_name: String(r["Politic"] || r.politic_name || "").trim(),
+      person_name: String(r["인물"] || r.person_name || "").trim(), politic_name: String(r["정치체"] || r["Politic"] || r.politic_name || "").trim(),
       activity_start: Number(r["활동 시작연도"] ?? r.activity_start), activity_end: Number(r["활동 종료연도"] ?? r.activity_end),
       role: String(r["역할"] || r.role || "").trim() || null, period_basis: resolveBasis(r["기간 기준"] || r.period_basis),
       notes: String(r["비고"] || r.notes || "").trim() || null
