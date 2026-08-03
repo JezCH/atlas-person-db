@@ -18,6 +18,7 @@
     "Kingdom of Israel": "이스라엘 왕국",
     "Hypatia": "히파티아",
     "Roman Empire": "로마 제국",
+    "Byzantine Empire": "비잔티움 제국",
     "Leonardo da Vinci": "레오나르도 다빈치",
     "Republic of Florence": "피렌체 공화국",
     "Maximilien Robespierre": "막시밀리앙 드 로베스피에르",
@@ -40,7 +41,20 @@
     "Rurik": "류리크",
     "Kievan Rus'": "키이우 루스",
     "Ingólfr Arnarson": "잉골프 아르나르손",
-    "Settlement of Iceland": "아이슬란드 정착기"
+    "Settlement of Iceland": "아이슬란드 정착기",
+
+    "Spanish Monarchy": "스페인 군주국",
+    "Kingdom of England": "잉글랜드 왕국",
+    "Kingdom of Denmark": "덴마크 왕국",
+    "Kingdom of Norway": "노르웨이 왕국",
+    "Holy Roman Empire": "신성 로마 제국",
+    "Kingdom of Portugal": "포르투갈 왕국",
+    "Peru": "페루",
+    "Bolivia": "볼리비아",
+    "Gran Colombia": "그란콜롬비아",
+    "Kingdom of Ndongo": "은동고 왕국",
+    "Kingdom of Matamba": "마탐바 왕국",
+    "United Kingdom of Portugal, Brazil and the Algarves": "포르투갈·브라질·알가르브 연합왕국"
   };
 
   function apply(root = document) {
