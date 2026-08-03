@@ -7,7 +7,7 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <title>ATLAS Admin</title>
-  <link rel="stylesheet" href="./admin.css?v=20260803-integrity2" />
+  <link rel="stylesheet" href="./admin.css?v=20260803-canonical-loader" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -53,7 +53,7 @@
 
     <section class="panel compact">
       <h2>검증 기준</h2>
-      <p>모든 <code>pending-records*.json</code>과 교정 파일을 합쳐 현재 연표 기준을 구성합니다.</p>
+      <p>공통 canonical manifest에 등록된 모든 연표 파일을 하나의 기준으로 사용합니다.</p>
       <p><code>non-timeline-persons.json</code>의 신화·전설 인물은 연표 검증에서 제외합니다.</p>
       <p><code>person_politics</code>는 Supabase에서 버튼 클릭 시마다 다시 조회합니다.</p>
     </section>
@@ -65,9 +65,10 @@
     </section>
   </main>
 
-  <script src="./config.js?v=20260803-integrity2"></script>
-  <script src="./admin.js?v=20260803-integrity2"></script>
-  <script src="./admin-timeline-verification.js?v=20260803-integrity2"></script>
-  <script src="./admin-integrity-tools.js?v=20260803-integrity2"></script>
+  <script src="./config.js?v=20260803-canonical-loader"></script>
+  <script src="./atlas-canonical-data.js?v=20260803-canonical-loader"></script>
+  <script src="./admin.js?v=20260803-canonical-loader"></script>
+  <script src="./admin-timeline-verification.js?v=20260803-canonical-loader"></script>
+  <script src="./admin-integrity-tools.js?v=20260803-canonical-loader"></script>
 </body>
 </html>
