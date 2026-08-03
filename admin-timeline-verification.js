@@ -24,13 +24,52 @@
     );
   }
 
+  async function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    const copied = document.execCommand("copy");
+    textarea.remove();
+    if (!copied) throw new Error("클립보드 복사에 실패했습니다.");
+  }
+
+  async function copyVerificationResult(button) {
+    const output = document.getElementById("verifyResult");
+    const text = String(output?.textContent || "").trim();
+    if (!text) return;
+
+    const originalLabel = button.textContent;
+    try {
+      await copyText(text);
+      button.textContent = "복사됨 ✓";
+    } catch (error) {
+      console.error("Verification result copy failed", error);
+      button.textContent = "복사 실패";
+    } finally {
+      window.setTimeout(() => {
+        button.textContent = originalLabel;
+      }, 1400);
+    }
+  }
+
   async function verifyTimelineDatabase(button) {
     const output = document.getElementById("verifyResult");
+    const copyButton = document.getElementById("verifyCopyButton");
     const config = window.ATLAS_CONFIG || {};
     const canonicalApi = window.ATLAS_CANONICAL_DATA;
     if (!output || !window.supabase || !config.SUPABASE_URL || !config.SUPABASE_ANON_KEY) return;
 
     button.disabled = true;
+    if (copyButton) copyButton.disabled = true;
     output.dataset.type = "info";
     output.textContent = "Supabase 실시간 데이터와 GitHub 연표 데이터를 검증하는 중...";
 
@@ -92,16 +131,28 @@
       output.textContent = error.message;
     } finally {
       button.disabled = false;
+      if (copyButton) copyButton.disabled = false;
     }
   }
 
   function replaceVerifier() {
     const oldButton = document.getElementById("verifyButton");
     if (!oldButton || oldButton.dataset.timelineVerifier === "true") return;
+
     const button = oldButton.cloneNode(true);
     button.dataset.timelineVerifier = "true";
     oldButton.replaceWith(button);
+
+    const copyButton = document.createElement("button");
+    copyButton.id = "verifyCopyButton";
+    copyButton.className = "button secondary";
+    copyButton.type = "button";
+    copyButton.textContent = "결과 복사";
+    copyButton.disabled = true;
+    button.insertAdjacentElement("afterend", copyButton);
+
     button.addEventListener("click", () => verifyTimelineDatabase(button));
+    copyButton.addEventListener("click", () => copyVerificationResult(copyButton));
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", replaceVerifier, { once: true });
