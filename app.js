@@ -6,6 +6,7 @@
   const db = configured ? window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY) : null;
   let records = [];
   let selectedId = null;
+  let detailPeriodShadow = null;
 
   const $ = (id) => document.getElementById(id);
   const els = {
@@ -48,21 +49,24 @@
     );
   }
 
-  function formatSignedYear(value) {
-    const raw = String(value ?? "").trim();
-    if (!raw) return "";
-    const n = Number(raw);
-    if (!Number.isFinite(n)) return raw;
+  function formatYear(year) {
+    const n = Number(year);
     return n < 0 ? `BC ${Math.abs(n)}` : `AD ${n}`;
   }
 
-  function formatSignedPeriod(start, end) {
+  function formatPeriod(start, end) {
     const a = Number(start);
     const b = Number(end);
-    if (!Number.isFinite(a) || !Number.isFinite(b)) return `${String(start ?? "")}–${String(end ?? "")}`;
     if (a < 0 && b < 0) return `BC ${Math.abs(a)}–${Math.abs(b)}`;
     if (a >= 0 && b >= 0) return `AD ${a}–${b}`;
-    return `${formatSignedYear(a)}–${formatSignedYear(b)}`;
+    return `${formatYear(a)}–${formatYear(b)}`;
+  }
+
+  function setDetailPeriod(period) {
+    if (!detailPeriodShadow) detailPeriodShadow = els.detailPeriod.attachShadow({ mode: "closed" });
+    detailPeriodShadow.textContent = period;
+    els.detailPeriod.textContent = "";
+    els.detailPeriod.setAttribute("aria-label", period);
   }
 
   function visibleRecords() {
@@ -87,10 +91,10 @@
     els.detailEmpty.hidden = Boolean(record);
     els.detailContent.hidden = !record;
     if (!record) return;
-    const period = formatSignedPeriod(record.activity_start, record.activity_end);
+    const period = formatPeriod(record.activity_start, record.activity_end);
     els.detailPerson.textContent = record.person_name;
     els.detailPolitic.textContent = record.politic_name;
-    els.detailPeriod.textContent = period;
+    setDetailPeriod(period);
     els.detailSummaryPolitic.textContent = record.politic_name;
     els.detailSummaryPeriod.textContent = period;
     els.detailRole.textContent = record.role || "—";
@@ -104,8 +108,8 @@
       <tr data-id="${r.id}" class="${String(r.id) === String(selectedId) ? "selected" : ""}" aria-selected="${String(r.id) === String(selectedId)}">
         <td>${escapeHtml(r.person_name)}</td>
         <td>${escapeHtml(r.politic_name)}</td>
-        <td>${escapeHtml(formatSignedYear(r.activity_start))}</td>
-        <td>${escapeHtml(formatSignedYear(r.activity_end))}</td>
+        <td>${escapeHtml(formatYear(r.activity_start))}</td>
+        <td>${escapeHtml(formatYear(r.activity_end))}</td>
         <td title="${escapeHtml(r.role || "")}">${escapeHtml(r.role || "")}</td>
         <td>${escapeHtml(basisLabels[r.period_basis] || r.period_basis || "")}</td>
         <td><div class="action-buttons"><button class="mini-btn edit" data-id="${r.id}">수정</button><button class="mini-btn danger delete" data-id="${r.id}">삭제</button></div></td>
