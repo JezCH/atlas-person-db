@@ -7,39 +7,7 @@
     "general_activity"
   ]);
 
-  const normalize = (value) => String(value || "").trim().toLowerCase();
-  const activityKey = (row) => [row.person_name, row.politic_name, Number(row.activity_start), Number(row.activity_end)].join("\u0001").toLowerCase();
-
-  const obsoleteKeys = new Set([
-    "dido\u0001carthage\u0001-814\u0001-814",
-    "isabella i\u0001crown of castile\u00011474\u00011504",
-    "jesus\u0001roman judaea\u000127\u000130",
-    "gautama buddha\u0001shakya\u0001-445\u0001-400",
-    "muhammad\u0001medina\u0001610\u0001632",
-    "toyotomi hideyoshi\u0001japan\u00011582\u00011598",
-    "benjamin franklin\u0001united states\u00011757\u00011790",
-    "edward teach\u0001republic of pirates\u00011716\u00011718",
-    "tecumseh\u0001shawnee\u00011805\u00011813",
-    "haile selassie i\u0001ethiopian empire\u00011930\u00011974",
-    "peter i\u0001russian empire\u00011682\u00011725",
-    "kublai khan\u0001yuan dynasty\u00011260\u00011294",
-    "cnut the great\u0001north sea empire\u00011016\u00011035",
-    "philip ii of spain\u0001spanish empire\u00011556\u00011598",
-    "simon bolivar\u0001gran colombia\u00011819\u00011830",
-    "nzinga mbande\u0001kingdoms of ndongo and matamba\u00011624\u00011663",
-    "maria i of portugal\u0001kingdom of portugal\u00011777\u00011816",
-    "hypatia\u0001roman empire\u0001393\u0001415",
-    "tokugawa ieyasu\u0001tokugawa shogunate\u00011603\u00011605",
-    "tokugawa ieyasu\u0001tokugawa shogunate\u00011605\u00011616"
-  ]);
-
-  async function fetchJson(path) {
-    const response = await fetch(`${path}?v=${Date.now()}`, { cache: "no-store" });
-    if (!response.ok) throw new Error(`${path} 불러오기 실패 (${response.status})`);
-    return response.json();
-  }
-
-  function duplicates(rows) {
+  function duplicates(rows, activityKey) {
     const counts = new Map();
     rows.forEach((row) => counts.set(activityKey(row), (counts.get(activityKey(row)) || 0) + 1));
     return [...counts.values()].filter((count) => count > 1).length;
@@ -59,6 +27,7 @@
   async function verifyTimelineDatabase(button) {
     const output = document.getElementById("verifyResult");
     const config = window.ATLAS_CONFIG || {};
+    const canonicalApi = window.ATLAS_CANONICAL_DATA;
     if (!output || !window.supabase || !config.SUPABASE_URL || !config.SUPABASE_ANON_KEY) return;
 
     button.disabled = true;
@@ -66,55 +35,30 @@
     output.textContent = "Supabase 실시간 데이터와 GitHub 연표 데이터를 검증하는 중...";
 
     try {
-      const paths = [
-        "./pending-records.json",
-        "./pending-records-supplement.json",
-        "./pending-records-supplement-2.json",
-        "./pending-records-supplement-3.json",
-        "./pending-records-supplement-4.json",
-        "./pending-records-supplement-5.json",
-        "./pending-records-supplement-6.json",
-        "./pending-records-supplement-7.json",
-        "./pending-records-supplement-8.json",
-        "./pending-records-supplement-9.json",
-        "./pending-records-corrections.json"
-      ];
-
-      const [datasets, nonTimelineRaw] = await Promise.all([
-        Promise.all(paths.map(fetchJson)),
-        fetchJson("./non-timeline-persons.json")
-      ]);
-
-      const excludedNames = new Set((Array.isArray(nonTimelineRaw) ? nonTimelineRaw : []).map((item) => normalize(item.person_name)).filter(Boolean));
-      const allTimelineRows = datasets
-        .flatMap((rows) => Array.isArray(rows) ? rows : [])
-        .filter((row) => !excludedNames.has(normalize(row.person_name)))
-        .filter((row) => !obsoleteKeys.has(activityKey(row)));
-
-      const expectedByKey = new Map();
-      allTimelineRows.forEach((row) => expectedByKey.set(activityKey(row), row));
-      const expectedRows = [...expectedByKey.values()];
-
+      if (!canonicalApi) throw new Error("ATLAS canonical data loader is not available.");
+      const { rows: expectedRows, excludedNames } = await canonicalApi.loadCanonical();
       const db = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
       const { data, error } = await db.from("person_politics").select("*");
       if (error) throw error;
-      const dbRows = (data || [])
-        .filter((row) => !excludedNames.has(normalize(row.person_name)))
-        .filter((row) => !obsoleteKeys.has(activityKey(row)));
 
-      const expectedNames = new Set(expectedRows.map((row) => normalize(row.person_name)).filter(Boolean));
-      const expectedKeys = new Set(expectedRows.map(activityKey));
-      const dbNames = new Set(dbRows.map((row) => normalize(row.person_name)).filter(Boolean));
-      const dbKeys = new Set(dbRows.map(activityKey));
+      const dbRows = (data || [])
+        .map(canonicalApi.normalizeRecord)
+        .filter((row) => !excludedNames.has(canonicalApi.normalizeLookup(row.person_name)))
+        .filter((row) => !canonicalApi.OBSOLETE_KEYS.has(canonicalApi.activityKey(row)));
+
+      const expectedNames = new Set(expectedRows.map((row) => canonicalApi.normalizeLookup(row.person_name)).filter(Boolean));
+      const expectedKeys = new Set(expectedRows.map(canonicalApi.activityKey));
+      const dbNames = new Set(dbRows.map((row) => canonicalApi.normalizeLookup(row.person_name)).filter(Boolean));
+      const dbKeys = new Set(dbRows.map(canonicalApi.activityKey));
 
       const missingDbPersons = [...expectedNames].filter((name) => !dbNames.has(name));
-      const missingDbActivities = expectedRows.filter((row) => !dbKeys.has(activityKey(row)));
+      const missingDbActivities = expectedRows.filter((row) => !dbKeys.has(canonicalApi.activityKey(row)));
       const extraDbPersons = [...dbNames].filter((name) => !expectedNames.has(name));
-      const extraDbActivities = dbRows.filter((row) => !expectedKeys.has(activityKey(row)));
+      const extraDbActivities = dbRows.filter((row) => !expectedKeys.has(canonicalApi.activityKey(row)));
       const invalidExpected = invalidRows(expectedRows);
       const invalidDb = invalidRows(dbRows);
-      const expectedDuplicates = duplicates(expectedRows);
-      const dbDuplicates = duplicates(dbRows);
+      const expectedDuplicates = duplicates(expectedRows, canonicalApi.activityKey);
+      const dbDuplicates = duplicates(dbRows, canonicalApi.activityKey);
 
       const failures = missingDbPersons.length + missingDbActivities.length + extraDbPersons.length + extraDbActivities.length + invalidExpected.length + invalidDb.length + expectedDuplicates + dbDuplicates;
       const lines = [
