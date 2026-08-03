@@ -55,43 +55,6 @@
     "Iceni": "이케니"
   };
 
-  const koDisplay = Object.freeze({ ...koPersons, ...koPolities });
-
-  function localizeTextNode(node) {
-    const value = node.nodeValue?.trim();
-    if (!value || !koDisplay[value]) return;
-    node.nodeValue = node.nodeValue.replace(value, koDisplay[value]);
-  }
-
-  function localizeTree(root) {
-    if (!root) return;
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    const nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-    nodes.forEach(localizeTextNode);
-  }
-
-  function applyLocalization() {
-    localizeTree(document.getElementById("dataBody"));
-    localizeTree(document.getElementById("detailPanel"));
-    localizeTree(document.getElementById("politicFilter"));
-  }
-
-  const observer = new MutationObserver(applyLocalization);
-
-  function start() {
-    applyLocalization();
-    const targets = [
-      document.getElementById("dataBody"),
-      document.getElementById("detailPanel"),
-      document.getElementById("politicFilter")
-    ].filter(Boolean);
-    targets.forEach((target) => observer.observe(target, { childList: true, subtree: true, characterData: true }));
-  }
-
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start, { once: true });
-  else start();
-
   window.ATLAS_LOCALES = Object.freeze({
     ko: Object.freeze({
       persons: Object.freeze(koPersons),
