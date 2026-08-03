@@ -7,6 +7,11 @@
   const drawer = document.getElementById("mobileDrawer");
   const backdrop = document.getElementById("mobileDrawerBackdrop");
   const dataBody = document.getElementById("dataBody");
+  const desktopSearch = document.getElementById("searchInput");
+  const mobileSearch = document.getElementById("mobileSearchInput");
+  const mobileSearchClear = document.getElementById("mobileSearchClear");
+  const mobileSearchCount = document.getElementById("mobileSearchCount");
+  const rowCount = document.getElementById("rowCount");
 
   function setMenu(open) {
     if (!drawer || !backdrop || !menuButton) return;
@@ -18,16 +23,62 @@
     document.body.classList.toggle("mobile-menu-open", open);
   }
 
+  function updateMobileSearchState() {
+    if (!mobileSearch) return;
+    const hasValue = mobileSearch.value.trim().length > 0;
+    if (mobileSearchClear) mobileSearchClear.hidden = !hasValue;
+    if (mobileSearchCount) {
+      const count = rowCount?.textContent?.match(/\d+/)?.[0] || "0";
+      mobileSearchCount.textContent = hasValue ? `${count}건` : "";
+    }
+  }
+
+  function syncMobileSearchToMain() {
+    if (!mobileSearch || !desktopSearch) return;
+    if (desktopSearch.value !== mobileSearch.value) desktopSearch.value = mobileSearch.value;
+    desktopSearch.dispatchEvent(new Event("input", { bubbles: true }));
+    requestAnimationFrame(updateMobileSearchState);
+  }
+
   menuButton?.addEventListener("click", () => setMenu(true));
   menuClose?.addEventListener("click", () => setMenu(false));
   backdrop?.addEventListener("click", () => setMenu(false));
 
+  mobileSearch?.addEventListener("input", syncMobileSearchToMain);
+  mobileSearchClear?.addEventListener("click", () => {
+    if (!mobileSearch) return;
+    mobileSearch.value = "";
+    syncMobileSearchToMain();
+    mobileSearch.focus();
+  });
+
+  desktopSearch?.addEventListener("input", () => {
+    if (!mobileSearch || document.activeElement === mobileSearch) return;
+    mobileSearch.value = desktopSearch.value;
+    updateMobileSearchState();
+  });
+
+  const countObserver = rowCount && "MutationObserver" in window
+    ? new MutationObserver(updateMobileSearchState)
+    : null;
+  countObserver?.observe(rowCount, { childList: true, characterData: true, subtree: true });
+
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") setMenu(false);
+    if (event.key === "Escape") {
+      setMenu(false);
+      if (mq.matches && document.activeElement === mobileSearch && mobileSearch?.value) {
+        mobileSearch.value = "";
+        syncMobileSearchToMain();
+      }
+    }
   });
 
   mq.addEventListener("change", (event) => {
     if (!event.matches) setMenu(false);
+    if (event.matches && mobileSearch && desktopSearch) {
+      mobileSearch.value = desktopSearch.value;
+      updateMobileSearchState();
+    }
   });
 
   // On phones the row itself is an accordion. Management buttons continue
@@ -48,4 +99,9 @@
       row.setAttribute("aria-expanded", "true");
     }
   }, true);
+
+  if (mobileSearch && desktopSearch) {
+    mobileSearch.value = desktopSearch.value;
+    updateMobileSearchState();
+  }
 })();
