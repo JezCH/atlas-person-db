@@ -66,20 +66,27 @@
     output.textContent = "Supabase 실시간 데이터와 GitHub 연표 데이터를 검증하는 중...";
 
     try {
-      const [base, supplement1, supplement2, supplement3, supplement4, supplement5, supplement6, corrections, nonTimelineRaw] = await Promise.all([
-        fetchJson("./pending-records.json"),
-        fetchJson("./pending-records-supplement.json"),
-        fetchJson("./pending-records-supplement-2.json"),
-        fetchJson("./pending-records-supplement-3.json"),
-        fetchJson("./pending-records-supplement-4.json"),
-        fetchJson("./pending-records-supplement-5.json"),
-        fetchJson("./pending-records-supplement-6.json"),
-        fetchJson("./pending-records-corrections.json"),
+      const paths = [
+        "./pending-records.json",
+        "./pending-records-supplement.json",
+        "./pending-records-supplement-2.json",
+        "./pending-records-supplement-3.json",
+        "./pending-records-supplement-4.json",
+        "./pending-records-supplement-5.json",
+        "./pending-records-supplement-6.json",
+        "./pending-records-supplement-7.json",
+        "./pending-records-supplement-8.json",
+        "./pending-records-supplement-9.json",
+        "./pending-records-corrections.json"
+      ];
+
+      const [datasets, nonTimelineRaw] = await Promise.all([
+        Promise.all(paths.map(fetchJson)),
         fetchJson("./non-timeline-persons.json")
       ]);
 
       const excludedNames = new Set((Array.isArray(nonTimelineRaw) ? nonTimelineRaw : []).map((item) => normalize(item.person_name)).filter(Boolean));
-      const allTimelineRows = [base, supplement1, supplement2, supplement3, supplement4, supplement5, supplement6, corrections]
+      const allTimelineRows = datasets
         .flatMap((rows) => Array.isArray(rows) ? rows : [])
         .filter((row) => !excludedNames.has(normalize(row.person_name)))
         .filter((row) => !obsoleteKeys.has(activityKey(row)));
