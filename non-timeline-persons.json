@@ -102,5 +102,20 @@
     "role_ko": "전설적 미케네 왕",
     "reason": "Agamemnon is a legendary king of Mycenae in Greek epic and later tradition. Mycenaean civilization is historically established, but Agamemnon's historicity is not securely demonstrated.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary overlay is enabled."
+  },
+  {
+    "person_name": "Yu the Great",
+    "politic_name": "Xia",
+    "display_name_ko": "우왕",
+    "historicity": "legendary_possible_historical_core",
+    "timeline_status": "excluded",
+    "date_basis": "traditional_chinese_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "하 왕조의 전설적 창건 군주",
+    "reason": "Yu the Great is the traditional founder of the Xia dynasty, but his historicity cannot be securely established from contemporary evidence.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or traditional overlay is enabled."
   }
 ]
