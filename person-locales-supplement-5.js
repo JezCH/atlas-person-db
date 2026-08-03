@@ -255,7 +255,9 @@
     "Qarakhanid Khanate": "카라한 칸국",
     "Nefertiti": "네페르티티",
     "Modu Chanyu": "묵돌선우",
-    "Xiongnu Empire": "흉노 제국"
+    "Xiongnu Empire": "흉노 제국",
+    "Queen Seondeok": "선덕여왕",
+    "Silla": "신라"
   };
 
   const locales = window.ATLAS_LOCALES || {};
