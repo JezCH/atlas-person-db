@@ -48,17 +48,21 @@
     );
   }
 
-  function formatYear(year) {
-    const n = Number(year);
-    return n < 0 ? `기원전 ${Math.abs(n)}` : String(n);
+  function formatSignedYear(value) {
+    const raw = String(value ?? "").trim();
+    if (!raw) return "";
+    const n = Number(raw);
+    if (!Number.isFinite(n)) return raw;
+    return n < 0 ? `BC ${Math.abs(n)}` : `AD ${n}`;
   }
 
-  function formatPeriod(start, end) {
+  function formatSignedPeriod(start, end) {
     const a = Number(start);
     const b = Number(end);
-    if (a < 0 && b < 0) return `기원전 ${Math.abs(a)}–${Math.abs(b)}`;
-    if (a >= 0 && b >= 0) return `${a}–${b}`;
-    return `${formatYear(a)}–${formatYear(b)}`;
+    if (!Number.isFinite(a) || !Number.isFinite(b)) return `${String(start ?? "")}–${String(end ?? "")}`;
+    if (a < 0 && b < 0) return `BC ${Math.abs(a)}–${Math.abs(b)}`;
+    if (a >= 0 && b >= 0) return `AD ${a}–${b}`;
+    return `${formatSignedYear(a)}–${formatSignedYear(b)}`;
   }
 
   function visibleRecords() {
@@ -83,7 +87,7 @@
     els.detailEmpty.hidden = Boolean(record);
     els.detailContent.hidden = !record;
     if (!record) return;
-    const period = formatPeriod(record.activity_start, record.activity_end);
+    const period = formatSignedPeriod(record.activity_start, record.activity_end);
     els.detailPerson.textContent = record.person_name;
     els.detailPolitic.textContent = record.politic_name;
     els.detailPeriod.textContent = period;
@@ -100,8 +104,8 @@
       <tr data-id="${r.id}" class="${String(r.id) === String(selectedId) ? "selected" : ""}" aria-selected="${String(r.id) === String(selectedId)}">
         <td>${escapeHtml(r.person_name)}</td>
         <td>${escapeHtml(r.politic_name)}</td>
-        <td>${escapeHtml(formatYear(r.activity_start))}</td>
-        <td>${escapeHtml(formatYear(r.activity_end))}</td>
+        <td>${escapeHtml(formatSignedYear(r.activity_start))}</td>
+        <td>${escapeHtml(formatSignedYear(r.activity_end))}</td>
         <td title="${escapeHtml(r.role || "")}">${escapeHtml(r.role || "")}</td>
         <td>${escapeHtml(basisLabels[r.period_basis] || r.period_basis || "")}</td>
         <td><div class="action-buttons"><button class="mini-btn edit" data-id="${r.id}">수정</button><button class="mini-btn danger delete" data-id="${r.id}">삭제</button></div></td>
