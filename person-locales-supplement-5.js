@@ -257,7 +257,8 @@
     "Modu Chanyu": "묵돌선우",
     "Xiongnu Empire": "흉노 제국",
     "Queen Seondeok": "선덕여왕",
-    "Silla": "신라"
+    "Silla": "신라",
+    "Sejong the Great": "세종대왕"
   };
 
   const locales = window.ATLAS_LOCALES || {};
