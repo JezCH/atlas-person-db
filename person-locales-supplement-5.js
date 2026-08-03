@@ -146,7 +146,21 @@
     "Dong Zhuo": "동탁",
     "Yuan Shu": "원술",
     "Zhong Dynasty": "중",
-    "Liu Biao": "유표"
+    "Liu Biao": "유표",
+    "Duke Huan of Qi": "제 환공",
+    "Qi": "제나라",
+    "Duke Xiang of Song": "송 양공",
+    "Song": "송나라",
+    "Duke Wen of Jin": "진 문공",
+    "Jin": "진나라",
+    "Duke Mu of Qin": "진 목공",
+    "Qin": "진나라",
+    "King Helu of Wu": "오왕 합려",
+    "Wu": "오나라",
+    "King Goujian of Yue": "월왕 구천",
+    "Yue": "월나라",
+    "Duke Zhuang of Zheng": "정 장공",
+    "Zheng": "정나라"
   };
 
   const locales = window.ATLAS_LOCALES || {};
