@@ -26,6 +26,10 @@
     "주요 활동": "general_activity"
   };
 
+  const canonicalPolityNames = {
+    "ming dynasty": "Ming Dynasty"
+  };
+
   const obsoleteKeys = new Set([
     "Dido|Carthage|-814|-814",
     "Isabella I|Crown of Castile|1474|1504",
@@ -50,9 +54,13 @@
   ]);
 
   function normalizeRecord(record) {
+    const rawPersonName = String(record.person_name || "").trim();
+    const rawPolityName = String(record.politic_name || "").trim();
+    const normalizedPolityKey = rawPolityName.replace(/\s+/g, " ").toLowerCase();
+
     return {
-      person_name: legacyNames[record.person_name] || record.person_name,
-      politic_name: record.politic_name,
+      person_name: legacyNames[rawPersonName] || rawPersonName,
+      politic_name: canonicalPolityNames[normalizedPolityKey] || rawPolityName.replace(/\s+/g, " "),
       activity_start: Number(record.activity_start),
       activity_end: Number(record.activity_end),
       role: record.role || null,
