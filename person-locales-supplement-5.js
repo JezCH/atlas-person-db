@@ -140,7 +140,9 @@
     "Taiping Heavenly Kingdom": "태평천국",
     "Ching Shih": "정일수",
     "Emperor Taizu of Ming": "명 태조",
-    "Emperor Xuanzong of Tang": "당 현종"
+    "Emperor Xuanzong of Tang": "당 현종",
+    "Xiang Yu": "항우",
+    "Western Chu": "서초"
   };
 
   const locales = window.ATLAS_LOCALES || {};
