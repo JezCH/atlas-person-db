@@ -61,5 +61,14 @@
     "role": "Empress",
     "period_basis": "reign",
     "notes": "Catherine the Great ruled the Russian Empire from 1762 to 1796. Her reign expanded Russian power and territory and is associated with Enlightenment-era reform and imperial consolidation."
+  },
+  {
+    "person_name": "Hiawatha",
+    "politic_name": "Iroquois Confederacy",
+    "activity_start": 1450,
+    "activity_end": 1475,
+    "role": "Founder",
+    "period_basis": "general_activity",
+    "notes": "Hiawatha was a co-founder of the Iroquois Confederacy (Haudenosaunee) who, together with the Great Peacemaker, helped establish the Great Law of Peace and unite the Five Nations. The chronology is traditional and approximate."
   }
 ]
