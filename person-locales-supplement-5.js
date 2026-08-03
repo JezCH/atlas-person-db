@@ -42,6 +42,8 @@
     "Kievan Rus'": "키이우 루스",
     "Ingólfr Arnarson": "잉골프 아르나르손",
     "Settlement of Iceland": "아이슬란드 정착기",
+    "Po Ngbe": "포 응베",
+    "Olmec": "올멕",
 
     "Spanish Monarchy": "스페인 군주국",
     "Kingdom of England": "잉글랜드 왕국",
