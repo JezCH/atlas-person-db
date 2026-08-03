@@ -261,7 +261,12 @@
     "Sejong the Great": "세종대왕",
     "Gorgo": "고르고",
     "Sparta": "스파르타",
-    "Leonidas I": "레오니다스 1세"
+    "Leonidas I": "레오니다스 1세",
+    "Otto von Bismarck": "비스마르크",
+    "Kingdom of Prussia": "프로이센 왕국",
+    "German Empire": "독일 제국",
+    "Catherine the Great": "예카테리나 2세",
+    "Russian Empire": "러시아 제국"
   };
 
   const locales = window.ATLAS_LOCALES || {};
