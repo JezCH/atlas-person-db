@@ -95,6 +95,7 @@
       "./pending-records-supplement-3.json",
       "./pending-records-supplement-4.json",
       "./pending-records-supplement-5.json",
+      "./pending-records-supplement-6.json",
       "./pending-records-corrections.json"
     ];
     const [datasets, nonTimeline] = await Promise.all([
