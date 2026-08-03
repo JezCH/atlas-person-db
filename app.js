@@ -6,7 +6,6 @@
   const db = configured ? window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY) : null;
   let records = [];
   let selectedId = null;
-  let detailPeriodShadow = null;
 
   const $ = (id) => document.getElementById(id);
   const els = {
@@ -62,13 +61,6 @@
     return `${formatYear(a)}–${formatYear(b)}`;
   }
 
-  function setDetailPeriod(period) {
-    if (!detailPeriodShadow) detailPeriodShadow = els.detailPeriod.attachShadow({ mode: "closed" });
-    detailPeriodShadow.textContent = period;
-    els.detailPeriod.textContent = "";
-    els.detailPeriod.setAttribute("aria-label", period);
-  }
-
   function visibleRecords() {
     const q = normalize(els.search.value);
     const politic = els.filter.value;
@@ -94,7 +86,7 @@
     const period = formatPeriod(record.activity_start, record.activity_end);
     els.detailPerson.textContent = record.person_name;
     els.detailPolitic.textContent = record.politic_name;
-    setDetailPeriod(period);
+    els.detailPeriod.textContent = period;
     els.detailSummaryPolitic.textContent = record.politic_name;
     els.detailSummaryPeriod.textContent = period;
     els.detailRole.textContent = record.role || "—";
