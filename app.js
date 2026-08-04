@@ -59,25 +59,45 @@
   }
 
   function normalize(value) {
-    return window.ATLAS_SEARCH?.normalize(value) || String(value ?? "").trim().toLocaleLowerCase("ko-KR");
+    return String(value ?? "")
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[’‘`´]/g, "'")
+      .replace(/[‐‑‒–—―]/g, "-")
+      .replace(/[^\p{L}\p{N}]+/gu, " ")
+      .trim()
+      .toLocaleLowerCase("ko-KR");
+  }
+
+  function compact(value) {
+    return normalize(value).replace(/\s+/g, "");
   }
 
   function matchesSearch(record, query) {
-    const searchable = withDisplayValues(record);
-    if (window.ATLAS_SEARCH?.matches) return window.ATLAS_SEARCH.matches(searchable, query, basisLabels);
-    if (!query) return true;
-    const pieces = [
-      searchable.person_name,
-      searchable.display_person,
-      searchable.politic_name,
-      searchable.display_politic,
-      searchable.role,
-      basisLabels[searchable.period_basis],
-      searchable.notes,
-      searchable.activity_start,
-      searchable.activity_end
+    if (!String(query ?? "").trim()) return true;
+    const view = withDisplayValues(record);
+    const renderedValues = [
+      view.display_person,
+      view.display_politic,
+      formatYear(record.activity_start),
+      formatYear(record.activity_end),
+      record.role,
+      basisLabels[record.period_basis] || record.period_basis || ""
     ];
-    return normalize(pieces.join(" ")).includes(normalize(query));
+    const sourceValues = [
+      record.person_name,
+      record.politic_name,
+      record.notes,
+      record.activity_start,
+      record.activity_end
+    ];
+    const haystack = normalize([...renderedValues, ...sourceValues].join(" "));
+    const compactHaystack = haystack.replace(/\s+/g, "");
+    const normalizedQuery = normalize(query);
+    const compactQuery = compact(query);
+    if (compactQuery && compactHaystack.includes(compactQuery)) return true;
+    const tokens = normalizedQuery.split(/\s+/).filter(Boolean);
+    return tokens.length > 0 && tokens.every((token) => haystack.includes(token));
   }
 
   function sortRecords(items) {
