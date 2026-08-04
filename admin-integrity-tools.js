@@ -42,8 +42,9 @@
       displayPolity: displayPolity(row.politic_name),
       start: Number(row.activity_start),
       end: Number(row.activity_end),
-      role: row.role,
-      periodBasis: row.period_basis
+      role: compact(row.role),
+      periodBasis: compact(row.period_basis),
+      notes: compact(row.notes)
     }));
   }
 
@@ -94,15 +95,12 @@
   }
 
   function findDuplicatePersonRegistrations(rows) {
-    return groupByExactValue(rows, (row) => row.canonicalPerson)
-      .filter((bucket) => {
-        const samePerson = new Set(bucket.map((row) => row.canonicalPerson)).size === 1;
-        const hasMultipleRows = bucket.length > 1;
-        const isKnownLegitimateMultiRow = bucket.every((row, index, all) =>
-          all.every((other) => row.id === other.id || row.rawPolity !== other.rawPolity || row.start !== other.start || row.end !== other.end)
-        );
-        return samePerson && hasMultipleRows && !isKnownLegitimateMultiRow;
-      });
+    return groupByExactValue(rows, (row) => JSON.stringify([
+      row.displayPerson,
+      row.displayPolity,
+      row.start,
+      row.end
+    ]));
   }
 
   const acceptedConcurrentPeople = new Set([
@@ -150,7 +148,7 @@
   }
 
   function rowLine(row) {
-    return `${row.rawPerson} → ${row.canonicalPerson} | ${row.displayPerson} | ${row.displayPolity} | ${row.start}–${row.end} | ID ${row.id}`;
+    return `${row.rawPerson} → ${row.canonicalPerson} | ${row.displayPerson} | ${row.displayPolity} | ${row.start}–${row.end} | ${row.role || "—"} | ID ${row.id}`;
   }
 
   function relationLine([a, b]) {
@@ -193,7 +191,7 @@
         <div class="panel-head">
           <div>
             <h2>중복·명칭 무결성 검사</h2>
-            <p>DB 행을 그대로 읽어 원본명·canonical·한국어 표시명을 각각 독립 검사합니다.</p>
+            <p>일반 화면과 동일한 한국어 표시명·정치체·기간 기준으로 중복 등록을 검사합니다.</p>
           </div>
           <div class="actions">
             <button id="integrityAuditButton" class="button primary" type="button">중복 검사 실행</button>
@@ -246,7 +244,7 @@
 
     try {
       const { data, error } = await db.from("person_politics")
-        .select("id,person_name,politic_name,activity_start,activity_end,role,period_basis");
+        .select("id,person_name,politic_name,activity_start,activity_end,role,period_basis,notes");
       if (error) throw error;
 
       const rows = await buildRows(data || []);
@@ -284,11 +282,11 @@
     button.disabled = true;
     copyButton.disabled = true;
     output.dataset.type = "info";
-    output.textContent = "DB 행을 읽어 각 기준을 독립 검사 중...";
+    output.textContent = "일반 화면 표시값 기준으로 중복 등록을 검사 중...";
 
     try {
       const { data, error } = await db.from("person_politics")
-        .select("id,person_name,politic_name,activity_start,activity_end,role,period_basis");
+        .select("id,person_name,politic_name,activity_start,activity_end,role,period_basis,notes");
       if (error) throw error;
 
       const rows = await buildRows(data || []);
@@ -296,12 +294,11 @@
       const canonicalDuplicates = findCanonicalExactDuplicates(rows);
       const duplicateRegistrations = findDuplicatePersonRegistrations(rows);
       const sameDisplayNames = findSameDisplayNames(rows);
-      const sameRenderedActivities = findSameRenderedActivities(rows);
       const aliases = findAliasGroups(rows);
       const relations = classifyCanonicalRelations(rows);
 
       const hardFailures = rawDuplicates.length + canonicalDuplicates.length + duplicateRegistrations.length + relations.samePolityConflicts.length;
-      const reviewItems = sameDisplayNames.length + sameRenderedActivities.length + aliases.length + relations.unresolvedConcurrent.length;
+      const reviewItems = sameDisplayNames.length + aliases.length + relations.unresolvedConcurrent.length;
       const status = hardFailures > 0 ? "FAIL ❌" : reviewItems > 0 ? "PASS WITH REVIEW ⚠️" : "PASS ✅";
 
       const lines = [
@@ -314,7 +311,6 @@
         `canonical 정확 중복 묶음: ${canonicalDuplicates.length}`,
         `동일 인물 중복 등록 후보: ${duplicateRegistrations.length}`,
         `한국어 동일 인물명 그룹: ${sameDisplayNames.length}`,
-        `한국어 표시 완전 중복 후보: ${sameRenderedActivities.length}`,
         `alias/canonical 통합 후보: ${aliases.length}`,
         `동일 canonical 인물·정치체 기간 충돌: ${relations.samePolityConflicts.length}`,
         `정상 정치체 전환: ${relations.transitions.length}`,
@@ -335,8 +331,10 @@
       }
 
       if (duplicateRegistrations.length) {
-        lines.push("", "[오류 — 동일 인물이 중복 등록된 후보]");
-        duplicateRegistrations.forEach((bucket) => lines.push(`- ${bucket[0].displayPerson}: ${bucket.map(rowLine).join(" ↔ ")}`));
+        lines.push("", "[오류 — 일반 화면 기준 동일 인물 중복 등록]");
+        duplicateRegistrations.forEach((bucket) => {
+          lines.push(`- ${bucket[0].displayPerson}: ${bucket.map(rowLine).join(" ↔ ")}`);
+        });
       }
 
       if (sameDisplayNames.length) {
@@ -344,11 +342,6 @@
         sameDisplayNames.forEach((bucket) => {
           lines.push(`- ${bucket[0].displayPerson}: ${bucket.map(rowLine).join(" ↔ ")}`);
         });
-      }
-
-      if (sameRenderedActivities.length) {
-        lines.push("", "[검토 — 한국어 표시명·정치체·기간이 모두 같은 활동행]");
-        sameRenderedActivities.forEach((bucket) => lines.push(`- ${bucket.map(rowLine).join(" ↔ ")}`));
       }
 
       if (aliases.length) {
