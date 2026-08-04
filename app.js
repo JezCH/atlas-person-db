@@ -73,7 +73,9 @@
       searchable.display_politic,
       searchable.role,
       basisLabels[searchable.period_basis],
-      searchable.notes
+      searchable.notes,
+      searchable.activity_start,
+      searchable.activity_end
     ];
     return normalize(pieces.join(" ")).includes(normalize(query));
   }
