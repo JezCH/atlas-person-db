@@ -7,7 +7,7 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <title>ATLAS Admin</title>
-  <link rel="stylesheet" href="./admin.css?v=20260804-canonical-audit-v3" />
+  <link rel="stylesheet" href="./admin.css?v=20260804-asset-sync-v1" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -65,12 +65,21 @@
     </section>
   </main>
 
-  <script src="./config.js?v=20260804-canonical-audit-v3"></script>
-  <script src="./atlas-canonical-data.js?v=20260804-canonical-audit-v3"></script>
-  <script src="./person-locales.js?v=20260804-canonical-audit-v3"></script>
-  <script src="./person-locales-supplement-5.js?v=20260804-canonical-audit-v3"></script>
-  <script src="./admin.js?v=20260804-canonical-audit-v3"></script>
-  <script src="./admin-timeline-verification.js?v=20260804-canonical-audit-v3"></script>
-  <script src="./admin-integrity-tools.js?v=20260804-canonical-audit-v3"></script>
+  <script src="./asset-loader.js?v=20260804-asset-sync-v1"></script>
+  <script>
+    window.ATLAS_ASSETS.loadSeries([
+      "./config.js",
+      "./atlas-canonical-data.js",
+      "./person-locales.js",
+      "./person-locales-supplement-5.js",
+      "./admin.js",
+      "./admin-timeline-verification.js",
+      "./admin-integrity-tools.js"
+    ]).catch((error) => {
+      console.error(error);
+      const output = document.getElementById("verifyResult");
+      if (output) output.textContent = `자산 로드 실패: ${error.message}`;
+    });
+  </script>
 </body>
 </html>
