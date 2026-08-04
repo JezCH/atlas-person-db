@@ -37,11 +37,15 @@
   function snapshotRows(rows, canonicalMap) {
     return rows.map((row) => {
       const canonical = canonicalMap.get(row.person_name) || row.person_name || "";
+      const shownPerson = displayPerson(row.person_name);
+      const shownPolity = displayPolity(row.politic_name);
       return Object.freeze({
         ...row,
         canonical,
-        shownPerson: displayPerson(row.person_name),
-        shownPolity: displayPolity(row.politic_name),
+        shownPerson,
+        shownPolity,
+        shownPersonKey: loose(shownPerson),
+        shownPolityKey: loose(shownPolity),
         start: Number(row.activity_start),
         end: Number(row.activity_end),
         rawPersonKey: loose(row.person_name),
@@ -51,83 +55,37 @@
     });
   }
 
-  function exactRawDuplicateGroups(rows) {
+  function groupRows(rows, keyOf) {
     const map = new Map();
     for (const row of rows) {
-      const key = JSON.stringify([row.rawPersonKey, row.polityKey, row.start, row.end]);
+      const key = keyOf(row);
+      if (!key) continue;
       const bucket = map.get(key) || [];
       bucket.push(row);
       map.set(key, bucket);
     }
     return [...map.values()].filter((bucket) => bucket.length > 1);
+  }
+
+  function exactRawDuplicateGroups(rows) {
+    return groupRows(rows, (row) => JSON.stringify([row.rawPersonKey, row.polityKey, row.start, row.end]));
   }
 
   function exactCanonicalDuplicateGroups(rows) {
-    const map = new Map();
-    for (const row of rows) {
-      const key = JSON.stringify([row.canonicalPersonKey, row.polityKey, row.start, row.end]);
-      const bucket = map.get(key) || [];
-      bucket.push(row);
-      map.set(key, bucket);
-    }
-    return [...map.values()].filter((bucket) => bucket.length > 1);
+    return groupRows(rows, (row) => JSON.stringify([row.canonicalPersonKey, row.polityKey, row.start, row.end]));
   }
 
-  function sameDisplayedNameGroups(rows) {
-    const groups = [];
-    for (let i = 0; i < rows.length; i += 1) {
-      const a = rows[i];
-      const matches = [a];
-      for (let j = i + 1; j < rows.length; j += 1) {
-        const b = rows[j];
-        if (a.rawPersonKey !== b.rawPersonKey && a.shownPerson === b.shownPerson) matches.push(b);
-      }
-      if (matches.length > 1) {
-        const signature = [...new Set(matches.map((row) => row.rawPersonKey))].sort().join("|");
-        if (!groups.some((group) => group.signature === signature)) groups.push({ signature, bucket: matches });
-      }
-    }
-    return groups.map((group) => group.bucket);
+  function koreanDisplayNameGroups(rows) {
+    return groupRows(rows, (row) => row.shownPersonKey);
   }
 
-  function sameRenderedActivityGroups(rows) {
-    const groups = [];
-    for (let i = 0; i < rows.length; i += 1) {
-      const a = rows[i];
-      const matches = [a];
-      for (let j = i + 1; j < rows.length; j += 1) {
-        const b = rows[j];
-        if (
-          a.rawPersonKey !== b.rawPersonKey &&
-          a.shownPerson === b.shownPerson &&
-          a.shownPolity === b.shownPolity &&
-          a.start === b.start &&
-          a.end === b.end
-        ) matches.push(b);
-      }
-      if (matches.length > 1) {
-        const signature = [...new Set(matches.map((row) => row.rawPersonKey))].sort().join("|");
-        if (!groups.some((group) => group.signature === signature)) groups.push({ signature, bucket: matches });
-      }
-    }
-    return groups.map((group) => group.bucket);
+  function koreanRenderedActivityGroups(rows) {
+    return groupRows(rows, (row) => JSON.stringify([row.shownPersonKey, row.shownPolityKey, row.start, row.end]));
   }
 
   function aliasGroups(rows) {
-    const groups = [];
-    for (let i = 0; i < rows.length; i += 1) {
-      const a = rows[i];
-      const matches = [a];
-      for (let j = i + 1; j < rows.length; j += 1) {
-        const b = rows[j];
-        if (a.rawPersonKey !== b.rawPersonKey && a.canonicalPersonKey === b.canonicalPersonKey) matches.push(b);
-      }
-      if (matches.length > 1) {
-        const signature = [...new Set(matches.map((row) => row.rawPersonKey))].sort().join("|");
-        if (!groups.some((group) => group.signature === signature)) groups.push({ signature, bucket: matches });
-      }
-    }
-    return groups.map((group) => group.bucket);
+    return groupRows(rows, (row) => row.canonicalPersonKey)
+      .filter((bucket) => new Set(bucket.map((row) => row.rawPersonKey)).size > 1);
   }
 
   function classifyRelations(rows) {
@@ -164,7 +122,7 @@
   }
 
   function panelHtml() {
-    return `<section class="panel" id="identityLookupPanel"><div class="panel-head"><div><h2>인물 등록 여부 확인</h2><p>Supabase canonical registry와 실제 활동행을 직접 조회합니다.</p></div></div><div class="actions"><input id="identityLookupInput" type="search" placeholder="예: Askia Muhammad / 아스키아 무함마드" style="flex:1;min-width:240px;padding:12px;border:1px solid #cfd6e1;border-radius:8px"/><button id="identityLookupButton" class="button primary" type="button">DB에서 확인</button></div><pre id="identityLookupResult" class="result" aria-live="polite">검색어를 입력하세요.</pre></section><section class="panel" id="integrityAuditPanel"><div class="panel-head"><div><h2>중복·명칭 무결성 검사</h2><p>단순 쌍대 비교로 원본·canonical·화면 표시값을 검사합니다.</p></div><div class="actions"><button id="integrityAuditButton" class="button primary" type="button">중복 검사 실행</button><button id="integrityAuditCopyButton" class="button secondary" type="button" disabled>결과 복사</button></div></div><pre id="integrityAuditResult" class="result" aria-live="polite">검사 대기 중</pre></section>`;
+    return `<section class="panel" id="identityLookupPanel"><div class="panel-head"><div><h2>인물 등록 여부 확인</h2><p>Supabase canonical registry와 실제 활동행을 직접 조회합니다.</p></div></div><div class="actions"><input id="identityLookupInput" type="search" placeholder="예: Askia Muhammad / 아스키아 무함마드" style="flex:1;min-width:240px;padding:12px;border:1px solid #cfd6e1;border-radius:8px"/><button id="identityLookupButton" class="button primary" type="button">DB에서 확인</button></div><pre id="identityLookupResult" class="result" aria-live="polite">검색어를 입력하세요.</pre></section><section class="panel" id="integrityAuditPanel"><div class="panel-head"><div><h2>중복·명칭 무결성 검사</h2><p>한국어 화면 표시명을 기준으로 중복을 직접 검사합니다.</p></div><div class="actions"><button id="integrityAuditButton" class="button primary" type="button">중복 검사 실행</button><button id="integrityAuditCopyButton" class="button secondary" type="button" disabled>결과 복사</button></div></div><pre id="integrityAuditResult" class="result" aria-live="polite">검사 대기 중</pre></section>`;
   }
 
   function installPanels() {
@@ -217,7 +175,7 @@
     button.disabled = true;
     copy.disabled = true;
     output.dataset.type = "info";
-    output.textContent = "원본·canonical·화면 표시값을 직접 비교 중...";
+    output.textContent = "한국어 화면 표시명 기준으로 중복을 검사 중...";
 
     try {
       const { data, error } = await db.from("person_politics").select("id,person_name,politic_name,activity_start,activity_end,role,period_basis");
@@ -227,8 +185,8 @@
 
       const rawGroups = exactRawDuplicateGroups(rows);
       const canonicalGroups = exactCanonicalDuplicateGroups(rows);
-      const renderedGroups = sameRenderedActivityGroups(rows);
-      const sameDisplayGroups = sameDisplayedNameGroups(rows);
+      const renderedGroups = koreanRenderedActivityGroups(rows);
+      const sameDisplayGroups = koreanDisplayNameGroups(rows);
       const aliases = aliasGroups(rows);
       const relations = classifyRelations(rows);
 
@@ -244,8 +202,8 @@
         `고유 canonical 인물: ${new Set(rows.map((row) => row.canonicalPersonKey)).size}`,
         `원본 저장명 정확 중복 묶음: ${rawGroups.length}`,
         `canonical 정확 중복 묶음: ${canonicalGroups.length}`,
-        `화면 표시 완전 중복 후보: ${renderedGroups.length}`,
-        `동일 화면 인물명 후보: ${sameDisplayGroups.length}`,
+        `한국어 표시 완전 중복 후보: ${renderedGroups.length}`,
+        `한국어 동일 인물명 그룹: ${sameDisplayGroups.length}`,
         `alias/canonical 통합 후보: ${aliases.length}`,
         `동일 canonical 인물·정치체 기간 충돌: ${relations.samePolity.length}`,
         `정상 정치체 전환: ${relations.transitions.length}`,
@@ -257,9 +215,9 @@
 
       if (rawGroups.length) lines.push("", "[오류 — 원본 저장명·정치체·기간 정확 중복]", ...rawGroups.map((bucket) => `- ${bucket.map(rowText).join(" ↔ ")}`));
       if (canonicalGroups.length) lines.push("", "[오류 — canonical registry 기준 정확 중복]", ...canonicalGroups.map((bucket) => `- ${bucket.map(rowText).join(" ↔ ")}`));
+      if (sameDisplayGroups.length) lines.push("", "[검토 — 한국어로 같은 인물명 필터 결과]", ...sameDisplayGroups.map((bucket) => `- ${bucket[0].shownPerson}: ${bucket.map(rowText).join(" ↔ ")}`));
+      if (renderedGroups.length) lines.push("", "[검토 — 한국어 표시명·정치체·기간 완전 중복]", ...renderedGroups.map((bucket) => `- ${bucket.map(rowText).join(" ↔ ")}`));
       if (aliases.length) lines.push("", "[검토 — 서로 다른 저장명이 같은 canonical 인물로 통합됨]", ...aliases.map((bucket) => `- ${bucket.map(rowText).join(" ↔ ")}`));
-      if (sameDisplayGroups.length) lines.push("", "[검토 — 실제 화면에 같은 인물명으로 보이는 서로 다른 저장명]", ...sameDisplayGroups.map((bucket) => `- ${bucket[0].shownPerson}: ${bucket.map(rowText).join(" ↔ ")}`));
-      if (renderedGroups.length) lines.push("", "[검토 — 실제 화면 표시명·정치체·기간 완전 중복]", ...renderedGroups.map((bucket) => `- ${bucket.map(rowText).join(" ↔ ")}`));
       if (relations.samePolity.length) lines.push("", "[오류 — 동일 canonical 인물·정치체 기간 중첩]", ...relations.samePolity.map(relationText));
       if (relations.unresolved.length) lines.push("", "[검토 — 미분류 복수 정치체]", ...relations.unresolved.map(relationText));
       if (relations.accepted.length) lines.push("", "[정상 — 검토 완료 복수 통치·동군연합]", ...relations.accepted.map(relationText));
