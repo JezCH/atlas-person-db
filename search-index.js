@@ -21,7 +21,7 @@
     "Emperor Gaozu of Han": ["유방", "한고조", "고조"],
     "Emperor Wu of Han": ["한무제", "유철", "liu che"],
     "K'inich Janaab' Pakal": ["파칼", "파칼 2세", "킨이치 하나브 파칼"],
-    "Joan of Arc": ["jeanne d'arc", "jeanne d arc"]
+    "Joan of Arc": ["잔 다르크", "잔다르크", "jeanne d'arc", "jeanne d arc"]
   });
 
   function recordText(record, basisLabels = {}) {
