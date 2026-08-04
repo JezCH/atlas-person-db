@@ -191,6 +191,18 @@
     return [...grouped.values()].filter((bucket) => bucket.length > 1);
   }
 
+  function groupedByKey(rows, keyFn) {
+    const grouped = new Map();
+    for (const row of rows) {
+      const key = keyFn(row);
+      if (!key) continue;
+      const bucket = grouped.get(key) || [];
+      bucket.push(row);
+      grouped.set(key, bucket);
+    }
+    return grouped;
+  }
+
   function classifyPeriodRelations(rows) {
     const byPerson = new Map();
     for (const row of rows) {
@@ -254,9 +266,9 @@
       const canonicalDuplicates = groupedDuplicates(actual, canonicalActivityKey);
       const renderedDuplicates = groupedDuplicates(actual, renderedActivityKey)
         .filter((bucket) => new Set(bucket.map(rawPersonKey)).size > 1 || new Set(bucket.map(canonicalPolityKey)).size > 1);
-      const sameCanonicalNameGroups = groupedDuplicates(actual, canonicalPersonKey)
-        .filter((bucket) => new Set(bucket.map((row) => row.person_name)).size > 1);
-      const sameDisplayedNameGroups = groupedDuplicates(actual, displayNameKey)
+      const sameCanonicalNameGroups = [...groupedByKey(actual, canonicalPersonKey).values()]
+        .filter((bucket) => new Set(bucket.map(rawPersonKey)).size > 1);
+      const sameDisplayedNameGroups = [...groupedByKey(actual, displayNameKey).values()]
         .filter((bucket) => new Set(bucket.map(rawPersonKey)).size > 1);
       const relations = classifyPeriodRelations(actual);
 
