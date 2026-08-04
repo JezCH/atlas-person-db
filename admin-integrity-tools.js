@@ -11,10 +11,11 @@
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[^a-z0-9가-힣]/g, "");
 
-  const localeMap = (type) => window.ATLAS_LOCALES?.ko?.[type] || {};
-  const exactLookup = (map, key, fallback = "") => Object.prototype.hasOwnProperty.call(map, key) ? map[key] : (key || fallback);
-  const displayPerson = (value) => exactLookup(localeMap("persons"), value, "");
-  const displayPolity = (value) => exactLookup(localeMap("polities"), value, "");
+  const hasOwn = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
+  const personLocales = () => window.ATLAS_LOCALES?.ko?.persons || {};
+  const polityLocales = () => window.ATLAS_LOCALES?.ko?.polities || {};
+  const displayPerson = (value) => hasOwn(personLocales(), value) ? personLocales()[value] : (value || "");
+  const displayPolity = (value) => hasOwn(polityLocales(), value) ? polityLocales()[value] : (value || "");
 
   const expectedLocales = Object.freeze({
     "Constantine I": "콘스탄티누스 1세",
@@ -56,32 +57,36 @@
       const canonical = canonicalMap.get(row.person_name) || row.person_name || "";
       const shownPerson = displayPerson(row.person_name);
       const shownPolity = displayPolity(row.politic_name);
+      const start = Number(row.activity_start);
+      const end = Number(row.activity_end);
+      const rawPersonKey = loose(row.person_name);
+      const canonicalPersonKey = loose(canonical);
+      const polityKey = loose(row.politic_name);
+      const shownPersonKey = loose(shownPerson);
+      const shownPolityKey = loose(shownPolity);
       return Object.freeze({
         ...row,
         canonical,
         shownPerson,
         shownPolity,
-        rawPersonKey: loose(row.person_name),
-        canonicalPersonKey: loose(canonical),
-        polityKey: loose(row.politic_name),
-        shownPersonKey: loose(shownPerson),
-        shownPolityKey: loose(shownPolity),
-        start: Number(row.activity_start),
-        end: Number(row.activity_end)
+        start,
+        end,
+        rawPersonKey,
+        canonicalPersonKey,
+        polityKey,
+        shownPersonKey,
+        shownPolityKey,
+        rawActivityKey: [rawPersonKey, polityKey, start, end].join("\u0001"),
+        canonicalActivityKey: [canonicalPersonKey, polityKey, start, end].join("\u0001"),
+        renderedActivityKey: [shownPersonKey, shownPolityKey, start, end].join("\u0001")
       });
     });
   }
 
-  const rawActivityKey = (row) => [row.rawPersonKey, row.polityKey, row.start, row.end].join("\u0001");
-  const canonicalActivityKey = (row) => [row.canonicalPersonKey, row.polityKey, row.start, row.end].join("\u0001");
-  const renderedActivityKey = (row) => [row.shownPersonKey, row.shownPolityKey, row.start, row.end].join("\u0001");
-  const shownPersonGroupKey = (row) => row.shownPersonKey;
-  const canonicalPersonGroupKey = (row) => row.canonicalPersonKey;
-
-  function groupExact(rows, keyOf) {
+  function groupByField(rows, field) {
     const map = new Map();
     for (const row of rows) {
-      const key = String(keyOf(row));
+      const key = String(row[field] ?? "");
       if (!key) continue;
       if (!map.has(key)) map.set(key, []);
       map.get(key).push(row);
@@ -89,18 +94,18 @@
     return [...map.entries()].map(([key, bucket]) => ({ key, bucket }));
   }
 
-  function duplicateGroups(rows, keyOf) {
-    return groupExact(rows, keyOf).filter(({ bucket }) => bucket.length > 1);
+  function duplicateGroupsByField(rows, field) {
+    return groupByField(rows, field).filter(({ bucket }) => bucket.length > 1);
   }
 
   function differentRawNames(bucket) {
     return new Set(bucket.map((row) => row.rawPersonKey)).size > 1;
   }
 
-  function assertGroupIntegrity(groups, keyOf, label) {
+  function assertGroupIntegrity(groups, field, label) {
     const errors = [];
     for (const group of groups) {
-      const actualKeys = new Set(group.bucket.map((row) => String(keyOf(row))));
+      const actualKeys = new Set(group.bucket.map((row) => String(row[field] ?? "")));
       if (actualKeys.size !== 1 || !actualKeys.has(group.key)) {
         errors.push(`${label}: 저장 키 ${group.key} / 실제 키 ${[...actualKeys].join(" | ")}`);
       }
@@ -110,30 +115,37 @@
 
   function runGroupingSelfTests() {
     const samples = [
-      Object.freeze({ rawPersonKey: "liu", canonicalPersonKey: "liu", polityKey: "han", shownPersonKey: "유언", shownPolityKey: "후한", start: 188, end: 194 }),
-      Object.freeze({ rawPersonKey: "tao", canonicalPersonKey: "tao", polityKey: "han", shownPersonKey: "도겸", shownPolityKey: "후한", start: 188, end: 194 }),
-      Object.freeze({ rawPersonKey: "napoleon", canonicalPersonKey: "napoleon", polityKey: "france", shownPersonKey: "나폴레옹1세", shownPolityKey: "프랑스", start: 1804, end: 1814 }),
-      Object.freeze({ rawPersonKey: "napoleon", canonicalPersonKey: "napoleon", polityKey: "france", shownPersonKey: "나폴레옹1세", shownPolityKey: "프랑스", start: 1815, end: 1815 })
-    ];
+      { rawPersonKey: "liu", canonicalPersonKey: "liu", polityKey: "han", shownPersonKey: "유언", shownPolityKey: "후한", start: 188, end: 194 },
+      { rawPersonKey: "tao", canonicalPersonKey: "tao", polityKey: "han", shownPersonKey: "도겸", shownPolityKey: "후한", start: 188, end: 194 },
+      { rawPersonKey: "napoleon", canonicalPersonKey: "napoleon", polityKey: "france", shownPersonKey: "나폴레옹1세", shownPolityKey: "프랑스", start: 1804, end: 1814 },
+      { rawPersonKey: "napoleon", canonicalPersonKey: "napoleon", polityKey: "france", shownPersonKey: "나폴레옹1세", shownPolityKey: "프랑스", start: 1815, end: 1815 }
+    ].map((row) => ({
+      ...row,
+      rawActivityKey: [row.rawPersonKey, row.polityKey, row.start, row.end].join("\u0001"),
+      canonicalActivityKey: [row.canonicalPersonKey, row.polityKey, row.start, row.end].join("\u0001"),
+      renderedActivityKey: [row.shownPersonKey, row.shownPolityKey, row.start, row.end].join("\u0001")
+    }));
 
     const errors = [];
-    const sameDisplay = groupExact(samples, shownPersonGroupKey).filter(({ bucket }) => differentRawNames(bucket));
-    if (sameDisplay.length !== 0) errors.push(`표시명 그룹 자가검사 실패: 예상 0 / 실제 ${sameDisplay.length}`);
+    if (groupByField(samples, "shownPersonKey").filter(({ bucket }) => differentRawNames(bucket)).length !== 0) errors.push("표시명 그룹 자가검사 실패");
+    if (duplicateGroupsByField(samples, "renderedActivityKey").filter(({ bucket }) => differentRawNames(bucket)).length !== 0) errors.push("완전 표시 중복 자가검사 실패");
+    if (duplicateGroupsByField(samples, "rawActivityKey").length !== 0) errors.push("원본 중복 자가검사 실패");
+    if (duplicateGroupsByField(samples, "canonicalActivityKey").length !== 0) errors.push("canonical 중복 자가검사 실패");
 
-    const rendered = duplicateGroups(samples, renderedActivityKey).filter(({ bucket }) => differentRawNames(bucket));
-    if (rendered.length !== 0) errors.push(`완전 표시 중복 자가검사 실패: 예상 0 / 실제 ${rendered.length}`);
-
-    const raw = duplicateGroups(samples, rawActivityKey);
-    if (raw.length !== 0) errors.push(`원본 중복 자가검사 실패: 예상 0 / 실제 ${raw.length}`);
-
-    const canonical = duplicateGroups(samples, canonicalActivityKey);
-    if (canonical.length !== 0) errors.push(`canonical 중복 자가검사 실패: 예상 0 / 실제 ${canonical.length}`);
-
-    const deliberateCollision = samples.concat(Object.freeze({ rawPersonKey: "liu2", canonicalPersonKey: "liu2", polityKey: "han", shownPersonKey: "유언", shownPolityKey: "후한", start: 188, end: 194 }));
-    const collisionGroups = duplicateGroups(deliberateCollision, renderedActivityKey).filter(({ bucket }) => differentRawNames(bucket));
-    if (collisionGroups.length !== 1 || collisionGroups[0].bucket.length !== 2) {
-      errors.push(`의도적 충돌 자가검사 실패: 예상 1개 2행 그룹 / 실제 ${collisionGroups.length}개`);
-    }
+    const collision = samples.concat({
+      rawPersonKey: "liu2",
+      canonicalPersonKey: "liu2",
+      polityKey: "han",
+      shownPersonKey: "유언",
+      shownPolityKey: "후한",
+      start: 188,
+      end: 194,
+      rawActivityKey: "liu2\u0001han\u0001188\u0001194",
+      canonicalActivityKey: "liu2\u0001han\u0001188\u0001194",
+      renderedActivityKey: "유언\u0001후한\u0001188\u0001194"
+    });
+    const collisionGroups = duplicateGroupsByField(collision, "renderedActivityKey").filter(({ bucket }) => differentRawNames(bucket));
+    if (collisionGroups.length !== 1 || collisionGroups[0].bucket.length !== 2) errors.push("의도적 충돌 자가검사 실패");
     return errors;
   }
 
@@ -150,12 +162,12 @@
 
   function classifyRelations(rows) {
     const samePolity = [], transitions = [], accepted = [], unresolved = [];
-    const byCanonical = groupExact(rows, canonicalPersonGroupKey);
+    const byCanonical = groupByField(rows, "canonicalPersonKey");
     for (const { bucket } of byCanonical) {
       for (let i = 0; i < bucket.length; i += 1) {
         for (let j = i + 1; j < bucket.length; j += 1) {
           const a = bucket[i], b = bucket[j];
-          if (canonicalActivityKey(a) === canonicalActivityKey(b)) continue;
+          if (a.canonicalActivityKey === b.canonicalActivityKey) continue;
           const overlapStart = Math.max(a.start, b.start);
           const overlapEnd = Math.min(a.end, b.end);
           if (overlapStart > overlapEnd) continue;
@@ -184,7 +196,7 @@
   }
 
   function panelHtml() {
-    return `<section class="panel" id="identityLookupPanel"><div class="panel-head"><div><h2>인물 등록 여부 확인</h2><p>Supabase canonical registry와 실제 활동행을 직접 조회합니다.</p></div></div><div class="actions"><input id="identityLookupInput" type="search" placeholder="예: Askia Muhammad / 아스키아 무함마드" style="flex:1;min-width:240px;padding:12px;border:1px solid #cfd6e1;border-radius:8px"/><button id="identityLookupButton" class="button primary" type="button">DB에서 확인</button></div><pre id="identityLookupResult" class="result" aria-live="polite">검색어를 입력하세요.</pre></section><section class="panel" id="integrityAuditPanel"><div class="panel-head"><div><h2>중복·명칭 무결성 검사</h2><p>정확 키 함수와 자가검사를 통과한 뒤 원본·canonical·화면 표시값을 검사합니다.</p></div><div class="actions"><button id="integrityAuditButton" class="button primary" type="button">중복 검사 실행</button><button id="integrityAuditCopyButton" class="button secondary" type="button" disabled>결과 복사</button></div></div><pre id="integrityAuditResult" class="result" aria-live="polite">검사 대기 중</pre></section>`;
+    return `<section class="panel" id="identityLookupPanel"><div class="panel-head"><div><h2>인물 등록 여부 확인</h2><p>Supabase canonical registry와 실제 활동행을 직접 조회합니다.</p></div></div><div class="actions"><input id="identityLookupInput" type="search" placeholder="예: Askia Muhammad / 아스키아 무함마드" style="flex:1;min-width:240px;padding:12px;border:1px solid #cfd6e1;border-radius:8px"/><button id="identityLookupButton" class="button primary" type="button">DB에서 확인</button></div><pre id="identityLookupResult" class="result" aria-live="polite">검색어를 입력하세요.</pre></section><section class="panel" id="integrityAuditPanel"><div class="panel-head"><div><h2>중복·명칭 무결성 검사</h2><p>명시적 키 필드만 사용해 원본·canonical·화면 표시값을 검사합니다.</p></div><div class="actions"><button id="integrityAuditButton" class="button primary" type="button">중복 검사 실행</button><button id="integrityAuditCopyButton" class="button secondary" type="button" disabled>결과 복사</button></div></div><pre id="integrityAuditResult" class="result" aria-live="polite">검사 대기 중</pre></section>`;
   }
 
   function installPanels() {
@@ -248,21 +260,19 @@
       const names = [...new Set((data || []).map((row) => row.person_name).filter(Boolean))];
       const rows = snapshotRows(data || [], await resolveCanonicalMap(names));
 
-      const rawGroups = duplicateGroups(rows, rawActivityKey);
-      const canonicalGroups = duplicateGroups(rows, canonicalActivityKey);
-      const renderedGroups = duplicateGroups(rows, renderedActivityKey).filter(({ bucket }) => differentRawNames(bucket));
-      const sameDisplayGroups = groupExact(rows, shownPersonGroupKey)
-        .filter(({ bucket }) => differentRawNames(bucket));
-      const aliasGroups = groupExact(rows, canonicalPersonGroupKey)
-        .filter(({ bucket }) => differentRawNames(bucket));
+      const rawGroups = duplicateGroupsByField(rows, "rawActivityKey");
+      const canonicalGroups = duplicateGroupsByField(rows, "canonicalActivityKey");
+      const renderedGroups = duplicateGroupsByField(rows, "renderedActivityKey").filter(({ bucket }) => differentRawNames(bucket));
+      const sameDisplayGroups = groupByField(rows, "shownPersonKey").filter(({ bucket }) => differentRawNames(bucket));
+      const aliasGroups = groupByField(rows, "canonicalPersonKey").filter(({ bucket }) => differentRawNames(bucket));
       const relations = classifyRelations(rows);
 
       const invariants = [
-        ...assertGroupIntegrity(rawGroups, rawActivityKey, "원본 중복"),
-        ...assertGroupIntegrity(canonicalGroups, canonicalActivityKey, "canonical 중복"),
-        ...assertGroupIntegrity(renderedGroups, renderedActivityKey, "표시 중복"),
-        ...assertGroupIntegrity(sameDisplayGroups, shownPersonGroupKey, "표시명 그룹"),
-        ...assertGroupIntegrity(aliasGroups, canonicalPersonGroupKey, "canonical 그룹")
+        ...assertGroupIntegrity(rawGroups, "rawActivityKey", "원본 중복"),
+        ...assertGroupIntegrity(canonicalGroups, "canonicalActivityKey", "canonical 중복"),
+        ...assertGroupIntegrity(renderedGroups, "renderedActivityKey", "표시 중복"),
+        ...assertGroupIntegrity(sameDisplayGroups, "shownPersonKey", "표시명 그룹"),
+        ...assertGroupIntegrity(aliasGroups, "canonicalPersonKey", "canonical 그룹")
       ];
       const locale = localeErrors(rows);
       const hard = rawGroups.length + canonicalGroups.length + relations.samePolity.length + locale.length + invariants.length;
