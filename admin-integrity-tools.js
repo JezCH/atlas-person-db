@@ -93,6 +93,18 @@
       .filter((bucket) => new Set(bucket.map((row) => row.rawPerson)).size > 1);
   }
 
+  function findDuplicatePersonRegistrations(rows) {
+    return groupByExactValue(rows, (row) => row.canonicalPerson)
+      .filter((bucket) => {
+        const samePerson = new Set(bucket.map((row) => row.canonicalPerson)).size === 1;
+        const hasMultipleRows = bucket.length > 1;
+        const isKnownLegitimateMultiRow = bucket.every((row, index, all) =>
+          all.every((other) => row.id === other.id || row.rawPolity !== other.rawPolity || row.start !== other.start || row.end !== other.end)
+        );
+        return samePerson && hasMultipleRows && !isKnownLegitimateMultiRow;
+      });
+  }
+
   const acceptedConcurrentPeople = new Set([
     "charles v",
     "cnut the great",
@@ -282,12 +294,13 @@
       const rows = await buildRows(data || []);
       const rawDuplicates = findRawExactDuplicates(rows);
       const canonicalDuplicates = findCanonicalExactDuplicates(rows);
+      const duplicateRegistrations = findDuplicatePersonRegistrations(rows);
       const sameDisplayNames = findSameDisplayNames(rows);
       const sameRenderedActivities = findSameRenderedActivities(rows);
       const aliases = findAliasGroups(rows);
       const relations = classifyCanonicalRelations(rows);
 
-      const hardFailures = rawDuplicates.length + canonicalDuplicates.length + relations.samePolityConflicts.length;
+      const hardFailures = rawDuplicates.length + canonicalDuplicates.length + duplicateRegistrations.length + relations.samePolityConflicts.length;
       const reviewItems = sameDisplayNames.length + sameRenderedActivities.length + aliases.length + relations.unresolvedConcurrent.length;
       const status = hardFailures > 0 ? "FAIL ❌" : reviewItems > 0 ? "PASS WITH REVIEW ⚠️" : "PASS ✅";
 
@@ -299,6 +312,7 @@
         `고유 canonical 인물: ${new Set(rows.map((row) => row.canonicalPerson)).size}`,
         `원본 저장명 정확 중복 묶음: ${rawDuplicates.length}`,
         `canonical 정확 중복 묶음: ${canonicalDuplicates.length}`,
+        `동일 인물 중복 등록 후보: ${duplicateRegistrations.length}`,
         `한국어 동일 인물명 그룹: ${sameDisplayNames.length}`,
         `한국어 표시 완전 중복 후보: ${sameRenderedActivities.length}`,
         `alias/canonical 통합 후보: ${aliases.length}`,
@@ -318,6 +332,11 @@
       if (canonicalDuplicates.length) {
         lines.push("", "[오류 — canonical 인물·정치체·기간 정확 중복]");
         canonicalDuplicates.forEach((bucket) => lines.push(`- ${bucket.map(rowLine).join(" ↔ ")}`));
+      }
+
+      if (duplicateRegistrations.length) {
+        lines.push("", "[오류 — 동일 인물이 중복 등록된 후보]");
+        duplicateRegistrations.forEach((bucket) => lines.push(`- ${bucket[0].displayPerson}: ${bucket.map(rowLine).join(" ↔ ")}`));
       }
 
       if (sameDisplayNames.length) {
@@ -357,7 +376,7 @@
         relations.transitions.forEach((pair) => lines.push(relationLine(pair)));
       }
 
-      output.dataset.type = hardFailures ? "error" : reviewItems ? "info" : "success";
+      output.dataset.type = hardFailures > 0 ? "error" : reviewItems > 0 ? "info" : "success";
       output.textContent = lines.join("\n");
       copyButton.disabled = false;
     } catch (error) {
