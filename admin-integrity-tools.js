@@ -32,21 +32,19 @@
   }
 
   function canonicalActivityKey(row) {
-    return [
-      canonicalPersonKey(row),
-      canonicalPolityKey(row),
-      Number(row.activity_start),
-      Number(row.activity_end)
-    ].join("\u0001");
+    return [canonicalPersonKey(row), canonicalPolityKey(row), Number(row.activity_start), Number(row.activity_end)].join("\u0001");
+  }
+
+  function renderedNameKey(row) {
+    return looseNormalize(displayPerson(row.person_name));
+  }
+
+  function renderedPolityKey(row) {
+    return looseNormalize(displayPolitic(row.politic_name));
   }
 
   function renderedActivityKey(row) {
-    return [
-      looseNormalize(displayPerson(row.person_name)),
-      looseNormalize(displayPolitic(row.politic_name)),
-      Number(row.activity_start),
-      Number(row.activity_end)
-    ].join("\u0001");
+    return [renderedNameKey(row), renderedPolityKey(row), Number(row.activity_start), Number(row.activity_end)].join("\u0001");
   }
 
   const acceptedConcurrentPersons = new Set([
@@ -171,23 +169,25 @@
     }
     return [...grouped.values()].filter((bucket) => {
       if (bucket.length < 2) return false;
-      const canonicalNames = new Set(bucket.map((row) => canonicalPersonKey(row)));
-      const canonicalPolities = new Set(bucket.map((row) => canonicalPolityKey(row)));
+      const canonicalNames = new Set(bucket.map(canonicalPersonKey));
+      const canonicalPolities = new Set(bucket.map(canonicalPolityKey));
       return canonicalNames.size > 1 || canonicalPolities.size > 1;
     });
   }
 
-  function displayNameCollisions(rows) {
+  function sameRenderedNameCandidates(rows) {
     const grouped = new Map();
     for (const row of rows) {
-      const display = displayPerson(row.person_name);
-      const key = looseNormalize(display);
+      const key = renderedNameKey(row);
       if (!key) continue;
-      const bucket = grouped.get(key) || { display, sourceNames: new Set() };
-      bucket.sourceNames.add(row.person_name);
+      const bucket = grouped.get(key) || [];
+      bucket.push(row);
       grouped.set(key, bucket);
     }
-    return [...grouped.values()].filter((bucket) => bucket.sourceNames.size > 1);
+    return [...grouped.values()].filter((bucket) => {
+      const canonicalNames = new Set(bucket.map(canonicalPersonKey));
+      return canonicalNames.size > 1;
+    });
   }
 
   function classifyPeriodRelations(rows) {
@@ -243,10 +243,10 @@
       const actual = rows || [];
       const canonicalDuplicates = exactCanonicalDuplicates(actual);
       const renderedCandidates = renderedDuplicateCandidates(actual);
-      const displayCollisions = displayNameCollisions(actual);
+      const sameNameCandidates = sameRenderedNameCandidates(actual);
       const relations = classifyPeriodRelations(actual);
       const hardFailureCount = canonicalDuplicates.length + relations.samePolityConflicts.length;
-      const reviewCount = renderedCandidates.length + displayCollisions.length + relations.unresolvedConcurrent.length;
+      const reviewCount = renderedCandidates.length + sameNameCandidates.length + relations.unresolvedConcurrent.length;
       const status = hardFailureCount > 0 ? "FAIL ❌" : reviewCount > 0 ? "PASS WITH REVIEW ⚠️" : "PASS ✅";
       const lines = [
         "ATLAS DB Integrity Audit — LIVE",
@@ -254,8 +254,8 @@
         `전체 활동행: ${actual.length}`,
         `고유 canonical 인물: ${new Set(actual.map(canonicalPersonKey)).size}`,
         `canonical 정확 중복 묶음: ${canonicalDuplicates.length}`,
-        `화면 표시 중복 후보: ${renderedCandidates.length}`,
-        `표시명 충돌 후보: ${displayCollisions.length}`,
+        `화면 표시 완전 중복 후보: ${renderedCandidates.length}`,
+        `동일 화면 인물명 후보: ${sameNameCandidates.length}`,
         `동일 canonical 인물·정치체 기간 충돌: ${relations.samePolityConflicts.length}`,
         `정상 정치체 전환: ${relations.boundaryTransitions.length}`,
         `검토 완료 복수 통치: ${relations.acceptedConcurrent.length}`,
@@ -268,12 +268,16 @@
         canonicalDuplicates.forEach((bucket) => lines.push(`- ${displayPerson(bucket[0].person_name)} [${bucket[0].person_name}] | ${displayPolitic(bucket[0].politic_name)} [${bucket[0].politic_name}] | ${bucket[0].activity_start}–${bucket[0].activity_end} | IDs ${bucket.map((row) => row.id).join(", ")}`));
       }
       if (renderedCandidates.length) {
-        lines.push("", "[검토 — 화면에는 같게 보이지만 canonical 값이 다른 중복 후보]");
+        lines.push("", "[검토 — 화면 표시명·정치체·기간이 모두 같은 중복 후보]");
         renderedCandidates.forEach((bucket) => lines.push(`- ${displayPerson(bucket[0].person_name)} | ${displayPolitic(bucket[0].politic_name)} | ${bucket[0].activity_start}–${bucket[0].activity_end} | 원본 ${bucket.map((row) => `${row.person_name} / ${row.politic_name} / ID ${row.id}`).join(" ↔ ")}`));
       }
-      if (displayCollisions.length) {
-        lines.push("", "[검토 — 서로 다른 canonical 인물명이 같은 화면 표시명으로 보임]");
-        displayCollisions.forEach((bucket) => lines.push(`- ${bucket.display}: ${[...bucket.sourceNames].join(" / ")}`));
+      if (sameNameCandidates.length) {
+        lines.push("", "[검토 — 화면에 같은 인물명으로 보이는 canonical 인물들]");
+        sameNameCandidates.forEach((bucket) => {
+          const display = displayPerson(bucket[0].person_name);
+          const rowsText = bucket.map((row) => `${row.person_name} | ${displayPolitic(row.politic_name)} | ${row.activity_start}–${row.activity_end} | ID ${row.id}`).join(" ↔ ");
+          lines.push(`- ${display}: ${rowsText}`);
+        });
       }
       if (relations.samePolityConflicts.length) {
         lines.push("", "[오류 — 동일 canonical 인물·동일 정치체 기간 중첩]");
