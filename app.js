@@ -38,6 +38,14 @@
     return localeMap("polities")[value] || value || "";
   }
 
+  function withDisplayValues(record) {
+    return {
+      ...record,
+      display_person: displayPerson(record.person_name),
+      display_politic: displayPolitic(record.politic_name)
+    };
+  }
+
   function showToast(message) {
     els.toast.textContent = message;
     els.toast.hidden = false;
@@ -55,16 +63,17 @@
   }
 
   function matchesSearch(record, query) {
-    if (window.ATLAS_SEARCH?.matches) return window.ATLAS_SEARCH.matches(record, query, basisLabels);
+    const searchable = withDisplayValues(record);
+    if (window.ATLAS_SEARCH?.matches) return window.ATLAS_SEARCH.matches(searchable, query, basisLabels);
     if (!query) return true;
     const pieces = [
-      record.person_name,
-      displayPerson(record.person_name),
-      record.politic_name,
-      displayPolitic(record.politic_name),
-      record.role,
-      basisLabels[record.period_basis],
-      record.notes
+      searchable.person_name,
+      searchable.display_person,
+      searchable.politic_name,
+      searchable.display_politic,
+      searchable.role,
+      basisLabels[searchable.period_basis],
+      searchable.notes
     ];
     return normalize(pieces.join(" ")).includes(normalize(query));
   }
@@ -118,11 +127,10 @@
     els.detailEmpty.hidden = Boolean(record);
     els.detailContent.hidden = !record;
     if (!record) return;
-    const person = displayPerson(record.person_name);
-    const politic = displayPolitic(record.politic_name);
-    els.detailPerson.textContent = person;
-    els.detailPolitic.textContent = politic;
-    els.detailSummaryPolitic.textContent = politic;
+    const view = withDisplayValues(record);
+    els.detailPerson.textContent = view.display_person;
+    els.detailPolitic.textContent = view.display_politic;
+    els.detailSummaryPolitic.textContent = view.display_politic;
     setPeriodParts(record.activity_start, record.activity_end, els.detailSummaryStart, els.detailSummaryEnd);
     setPeriodParts(record.activity_start, record.activity_end, els.detailPeriodStart, els.detailPeriodEnd);
     els.detailRole.textContent = record.role || "—";
@@ -132,16 +140,19 @@
 
   function render() {
     const items = visibleRecords();
-    els.body.innerHTML = items.map((r) => `
+    els.body.innerHTML = items.map((r) => {
+      const view = withDisplayValues(r);
+      return `
       <tr data-id="${r.id}" class="${String(r.id) === String(selectedId) ? "selected" : ""}" aria-selected="${String(r.id) === String(selectedId)}">
-        <td>${escapeHtml(displayPerson(r.person_name))}</td>
-        <td>${escapeHtml(displayPolitic(r.politic_name))}</td>
+        <td>${escapeHtml(view.display_person)}</td>
+        <td>${escapeHtml(view.display_politic)}</td>
         <td>${escapeHtml(formatYear(r.activity_start))}</td>
         <td>${escapeHtml(formatYear(r.activity_end))}</td>
         <td title="${escapeHtml(r.role || "")}">${escapeHtml(r.role || "")}</td>
         <td>${escapeHtml(basisLabels[r.period_basis] || r.period_basis || "")}</td>
         <td><div class="action-buttons"><button class="mini-btn edit" data-id="${r.id}">수정</button><button class="mini-btn danger delete" data-id="${r.id}">삭제</button></div></td>
-      </tr>`).join("");
+      </tr>`;
+    }).join("");
     els.rowCount.textContent = `${items.length}개 행`;
     els.empty.hidden = items.length !== 0;
 
