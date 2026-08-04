@@ -12,10 +12,22 @@
   const mobileSearchClear = document.getElementById("mobileSearchClear");
   const mobileSearchCount = document.getElementById("mobileSearchCount");
   const rowCount = document.getElementById("rowCount");
+  const emptyState = document.getElementById("emptyState");
   const toolsButton = document.getElementById("mobileToolsButton");
   const toolsMenu = document.getElementById("mobileToolsMenu");
   const exportButton = document.getElementById("exportButton");
   const importInput = document.getElementById("importInput");
+
+  const normalizeSearchText = (value) => String(value ?? "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[’‘`´]/g, "'")
+    .replace(/[‐‑‒–—―]/g, "-")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .trim()
+    .toLocaleLowerCase("ko-KR");
+
+  const compactSearchText = (value) => normalizeSearchText(value).replace(/\s+/g, "");
 
   function setMenu(open) {
     if (!drawer || !backdrop || !menuButton) return;
@@ -33,21 +45,51 @@
     toolsButton.setAttribute("aria-expanded", String(open));
   }
 
-  function updateMobileSearchState() {
+  function visibleRowCount() {
+    if (!dataBody) return 0;
+    return [...dataBody.querySelectorAll("tr[data-id]")]
+      .filter((row) => row.style.display !== "none").length;
+  }
+
+  function updateMobileSearchState(count = null) {
     if (!mobileSearch) return;
     const hasValue = mobileSearch.value.trim().length > 0;
     if (mobileSearchClear) mobileSearchClear.hidden = !hasValue;
     if (mobileSearchCount) {
-      const count = rowCount?.textContent?.match(/\d+/)?.[0] || "0";
-      mobileSearchCount.textContent = hasValue ? `${count}건` : "";
+      const value = count ?? visibleRowCount();
+      mobileSearchCount.textContent = hasValue ? `${value}건` : "";
     }
   }
 
+  function filterRenderedRows(query) {
+    if (!dataBody) return 0;
+    const normalizedQuery = normalizeSearchText(query);
+    const compactQuery = compactSearchText(query);
+    const queryTokens = normalizedQuery.split(/\s+/).filter(Boolean);
+    let count = 0;
+
+    dataBody.querySelectorAll("tr[data-id]").forEach((row) => {
+      const renderedText = row.textContent || "";
+      const normalizedRow = normalizeSearchText(renderedText);
+      const compactRow = compactSearchText(renderedText);
+      const matched = !normalizedQuery ||
+        (compactQuery && compactRow.includes(compactQuery)) ||
+        (queryTokens.length > 0 && queryTokens.every((token) => normalizedRow.includes(token)));
+      row.style.display = matched ? "" : "none";
+      if (matched) count += 1;
+    });
+
+    if (rowCount) rowCount.textContent = `${count}개 행`;
+    if (emptyState) emptyState.hidden = count !== 0;
+    return count;
+  }
+
   function syncMobileSearchToMain() {
-    if (!mobileSearch || !desktopSearch) return;
-    if (desktopSearch.value !== mobileSearch.value) desktopSearch.value = mobileSearch.value;
-    desktopSearch.dispatchEvent(new Event("input", { bubbles: true }));
-    requestAnimationFrame(updateMobileSearchState);
+    if (!mobileSearch) return;
+    const query = mobileSearch.value;
+    const count = filterRenderedRows(query);
+    if (desktopSearch && desktopSearch.value !== query) desktopSearch.value = query;
+    updateMobileSearchState(count);
   }
 
   menuButton?.addEventListener("click", () => {
@@ -84,13 +126,18 @@
   desktopSearch?.addEventListener("input", () => {
     if (!mobileSearch || document.activeElement === mobileSearch) return;
     mobileSearch.value = desktopSearch.value;
-    updateMobileSearchState();
+    const count = filterRenderedRows(mobileSearch.value);
+    updateMobileSearchState(count);
   });
 
-  const countObserver = rowCount && "MutationObserver" in window
-    ? new MutationObserver(updateMobileSearchState)
+  const bodyObserver = dataBody && "MutationObserver" in window
+    ? new MutationObserver(() => {
+        const query = mobileSearch?.value || "";
+        const count = filterRenderedRows(query);
+        updateMobileSearchState(count);
+      })
     : null;
-  countObserver?.observe(rowCount, { childList: true, characterData: true, subtree: true });
+  bodyObserver?.observe(dataBody, { childList: true, subtree: true });
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
@@ -108,9 +155,10 @@
       setMenu(false);
       setToolsMenu(false);
     }
-    if (event.matches && mobileSearch && desktopSearch) {
-      mobileSearch.value = desktopSearch.value;
-      updateMobileSearchState();
+    if (event.matches && mobileSearch) {
+      mobileSearch.value = desktopSearch?.value || mobileSearch.value;
+      const count = filterRenderedRows(mobileSearch.value);
+      updateMobileSearchState(count);
     }
   });
 
@@ -131,8 +179,9 @@
     }
   }, true);
 
-  if (mobileSearch && desktopSearch) {
-    mobileSearch.value = desktopSearch.value;
-    updateMobileSearchState();
+  if (mobileSearch) {
+    mobileSearch.value = desktopSearch?.value || "";
+    const count = filterRenderedRows(mobileSearch.value);
+    updateMobileSearchState(count);
   }
 })();
