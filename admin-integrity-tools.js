@@ -23,8 +23,40 @@
     return localeMap("polities")[value] || value || "";
   }
 
+  const acceptedConcurrentPersons = new Set([
+    "charles v",
+    "cnut the great",
+    "philip ii of spain",
+    "simon bolivar",
+    "nzinga mbande"
+  ]);
+
+  async function resolveCanonicalNames(rows) {
+    const uniqueNames = [...new Set(rows.map((row) => row.person_name).filter(Boolean))];
+    const resolved = new Map();
+
+    for (const name of uniqueNames) {
+      let canonicalName = name;
+      try {
+        const { data, error } = await db.rpc("resolve_person_identity", { input_name: name });
+        if (!error && Array.isArray(data) && data.length && data[0]?.canonical_name) {
+          canonicalName = data[0].canonical_name;
+        }
+      } catch (_) {
+        canonicalName = name;
+      }
+      resolved.set(name, canonicalName);
+    }
+
+    return rows.map((row) => ({ ...row, __canonical_person_name: resolved.get(row.person_name) || row.person_name }));
+  }
+
+  function canonicalPersonName(row) {
+    return row.__canonical_person_name || row.person_name || "";
+  }
+
   function canonicalPersonKey(row) {
-    return looseNormalize(row.person_name);
+    return looseNormalize(canonicalPersonName(row));
   }
 
   function canonicalPolityKey(row) {
@@ -35,25 +67,17 @@
     return [canonicalPersonKey(row), canonicalPolityKey(row), Number(row.activity_start), Number(row.activity_end)].join("\u0001");
   }
 
-  function renderedNameKey(row) {
-    return looseNormalize(displayPerson(row.person_name));
+  function displayNameKey(row) {
+    return looseNormalize(displayPerson(canonicalPersonName(row)));
   }
 
-  function renderedPolityKey(row) {
+  function displayPolityKey(row) {
     return looseNormalize(displayPolitic(row.politic_name));
   }
 
   function renderedActivityKey(row) {
-    return [renderedNameKey(row), renderedPolityKey(row), Number(row.activity_start), Number(row.activity_end)].join("\u0001");
+    return [displayNameKey(row), displayPolityKey(row), Number(row.activity_start), Number(row.activity_end)].join("\u0001");
   }
-
-  const acceptedConcurrentPersons = new Set([
-    "charles v",
-    "cnut the great",
-    "philip ii of spain",
-    "simon bolivar",
-    "nzinga mbande"
-  ]);
 
   async function copyText(text) {
     if (navigator.clipboard && window.isSecureContext) {
@@ -91,12 +115,12 @@
   function panelHtml() {
     return `
       <section class="panel" id="identityLookupPanel">
-        <div class="panel-head"><div><h2>인물 등록 여부 확인</h2><p>대화 기억이 아니라 Supabase의 canonical registry와 실제 활동행을 직접 조회합니다.</p></div></div>
+        <div class="panel-head"><div><h2>인물 등록 여부 확인</h2><p>Supabase canonical registry와 실제 활동행을 직접 조회합니다.</p></div></div>
         <div class="actions"><input id="identityLookupInput" type="search" placeholder="예: Askia Muhammad / 아스키아 무함마드" style="flex:1;min-width:240px;padding:12px;border:1px solid #cfd6e1;border-radius:8px" /><button id="identityLookupButton" class="button primary" type="button">DB에서 확인</button></div>
         <pre id="identityLookupResult" class="result" aria-live="polite">검색어를 입력하세요.</pre>
       </section>
       <section class="panel" id="integrityAuditPanel">
-        <div class="panel-head"><div><h2>중복·명칭 무결성 검사</h2><p>canonical identity로 관계를 판정하고, 화면 표시명은 중복 후보 탐지와 결과 표시에만 사용합니다.</p></div><div class="actions"><button id="integrityAuditButton" class="button primary" type="button">중복 검사 실행</button><button id="integrityAuditCopyButton" class="button secondary" type="button" disabled>결과 복사</button></div></div>
+        <div class="panel-head"><div><h2>중복·명칭 무결성 검사</h2><p>canonical registry로 인물 identity를 먼저 통합한 뒤 중복과 기간 충돌을 검사합니다.</p></div><div class="actions"><button id="integrityAuditButton" class="button primary" type="button">중복 검사 실행</button><button id="integrityAuditCopyButton" class="button secondary" type="button" disabled>결과 복사</button></div></div>
         <pre id="integrityAuditResult" class="result" aria-live="polite">검사 대기 중</pre>
       </section>`;
   }
@@ -141,53 +165,22 @@
       }
       const canonicalName = canonical?.canonical_name || matched[0]?.person_name || name;
       output.dataset.type = "success";
-      output.textContent = ["등록됨 ✅", `Canonical name: ${canonicalName}`, canonical?.matched_alias ? `Matched alias: ${canonical.matched_alias}` : null, `Activity rows: ${matched.length}`, "", ...matched.map((row) => `- ${row.person_name} (${displayPerson(row.person_name)}) | ${row.politic_name} (${displayPolitic(row.politic_name)}) | ${row.activity_start}–${row.activity_end}`)].filter(Boolean).join("\n");
+      output.textContent = ["등록됨 ✅", `Canonical name: ${canonicalName}`, canonical?.matched_alias ? `Matched alias: ${canonical.matched_alias}` : null, `Activity rows: ${matched.length}`, "", ...matched.map((row) => `- ${row.person_name} | ${row.politic_name} | ${row.activity_start}–${row.activity_end}`)].filter(Boolean).join("\n");
     } catch (error) {
       output.dataset.type = "error";
       output.textContent = `조회 실패: ${error.message}`;
     }
   }
 
-  function exactCanonicalDuplicates(rows) {
+  function groupedDuplicates(rows, keyFn) {
     const grouped = new Map();
     for (const row of rows) {
-      const key = canonicalActivityKey(row);
+      const key = keyFn(row);
       const bucket = grouped.get(key) || [];
       bucket.push(row);
       grouped.set(key, bucket);
     }
     return [...grouped.values()].filter((bucket) => bucket.length > 1);
-  }
-
-  function renderedDuplicateCandidates(rows) {
-    const grouped = new Map();
-    for (const row of rows) {
-      const key = renderedActivityKey(row);
-      const bucket = grouped.get(key) || [];
-      bucket.push(row);
-      grouped.set(key, bucket);
-    }
-    return [...grouped.values()].filter((bucket) => {
-      if (bucket.length < 2) return false;
-      const canonicalNames = new Set(bucket.map(canonicalPersonKey));
-      const canonicalPolities = new Set(bucket.map(canonicalPolityKey));
-      return canonicalNames.size > 1 || canonicalPolities.size > 1;
-    });
-  }
-
-  function sameRenderedNameCandidates(rows) {
-    const grouped = new Map();
-    for (const row of rows) {
-      const key = renderedNameKey(row);
-      if (!key) continue;
-      const bucket = grouped.get(key) || [];
-      bucket.push(row);
-      grouped.set(key, bucket);
-    }
-    return [...grouped.values()].filter((bucket) => {
-      const canonicalNames = new Set(bucket.map(canonicalPersonKey));
-      return canonicalNames.size > 1;
-    });
   }
 
   function classifyPeriodRelations(rows) {
@@ -198,11 +191,13 @@
       bucket.push(row);
       byPerson.set(key, bucket);
     }
+
     const samePolityConflicts = [];
     const boundaryTransitions = [];
     const acceptedConcurrent = [];
     const unresolvedConcurrent = [];
-    for (const [personKey, bucket] of byPerson.entries()) {
+
+    for (const bucket of byPerson.values()) {
       for (let i = 0; i < bucket.length; i += 1) {
         for (let j = i + 1; j < bucket.length; j += 1) {
           const a = bucket[i];
@@ -210,24 +205,28 @@
           const overlapStart = Math.max(Number(a.activity_start), Number(b.activity_start));
           const overlapEnd = Math.min(Number(a.activity_end), Number(b.activity_end));
           if (overlapStart > overlapEnd || canonicalActivityKey(a) === canonicalActivityKey(b)) continue;
+
           if (canonicalPolityKey(a) === canonicalPolityKey(b)) {
             samePolityConflicts.push([a, b]);
             continue;
           }
+
           const touchesAtBoundary = Number(a.activity_end) === Number(b.activity_start) || Number(b.activity_end) === Number(a.activity_start);
           if (touchesAtBoundary && overlapStart === overlapEnd) {
             boundaryTransitions.push([a, b]);
             continue;
           }
-          if (acceptedConcurrentPersons.has(normalize(a.person_name))) acceptedConcurrent.push([a, b]);
+
+          if (acceptedConcurrentPersons.has(normalize(canonicalPersonName(a)))) acceptedConcurrent.push([a, b]);
           else unresolvedConcurrent.push([a, b]);
         }
       }
     }
+
     return { samePolityConflicts, boundaryTransitions, acceptedConcurrent, unresolvedConcurrent };
   }
 
-  const relationLine = ([a, b]) => `- ${displayPerson(a.person_name)} [${a.person_name}] : ${displayPolitic(a.politic_name)} ${a.activity_start}–${a.activity_end} ↔ ${displayPolitic(b.politic_name)} ${b.activity_start}–${b.activity_end}`;
+  const relationLine = ([a, b]) => `- ${displayPerson(canonicalPersonName(a))} [${canonicalPersonName(a)}] : ${displayPolitic(a.politic_name)} ${a.activity_start}–${a.activity_end} ↔ ${displayPolitic(b.politic_name)} ${b.activity_start}–${b.activity_end}`;
 
   async function auditIntegrity() {
     const button = document.getElementById("integrityAuditButton");
@@ -236,26 +235,32 @@
     button.disabled = true;
     if (copyButton) copyButton.disabled = true;
     output.dataset.type = "info";
-    output.textContent = "실제 Supabase 데이터를 검사 중...";
+    output.textContent = "Supabase canonical registry로 인물명을 통합한 뒤 검사 중...";
+
     try {
       const { data: rows, error } = await db.from("person_politics").select("id,person_name,politic_name,activity_start,activity_end");
       if (error) throw error;
-      const actual = rows || [];
-      const canonicalDuplicates = exactCanonicalDuplicates(actual);
-      const renderedCandidates = renderedDuplicateCandidates(actual);
-      const sameNameCandidates = sameRenderedNameCandidates(actual);
+      const actual = await resolveCanonicalNames(rows || []);
+
+      const canonicalDuplicates = groupedDuplicates(actual, canonicalActivityKey);
+      const renderedDuplicates = groupedDuplicates(actual, renderedActivityKey)
+        .filter((bucket) => new Set(bucket.map(canonicalPersonKey)).size > 1 || new Set(bucket.map(canonicalPolityKey)).size > 1);
+      const sameCanonicalNameGroups = groupedDuplicates(actual, canonicalPersonKey)
+        .filter((bucket) => new Set(bucket.map((row) => row.person_name)).size > 1);
       const relations = classifyPeriodRelations(actual);
+
       const hardFailureCount = canonicalDuplicates.length + relations.samePolityConflicts.length;
-      const reviewCount = renderedCandidates.length + sameNameCandidates.length + relations.unresolvedConcurrent.length;
+      const reviewCount = renderedDuplicates.length + sameCanonicalNameGroups.length + relations.unresolvedConcurrent.length;
       const status = hardFailureCount > 0 ? "FAIL ❌" : reviewCount > 0 ? "PASS WITH REVIEW ⚠️" : "PASS ✅";
+
       const lines = [
         "ATLAS DB Integrity Audit — LIVE",
         "",
         `전체 활동행: ${actual.length}`,
         `고유 canonical 인물: ${new Set(actual.map(canonicalPersonKey)).size}`,
         `canonical 정확 중복 묶음: ${canonicalDuplicates.length}`,
-        `화면 표시 완전 중복 후보: ${renderedCandidates.length}`,
-        `동일 화면 인물명 후보: ${sameNameCandidates.length}`,
+        `화면 표시 완전 중복 후보: ${renderedDuplicates.length}`,
+        `alias/canonical 통합 후보: ${sameCanonicalNameGroups.length}`,
         `동일 canonical 인물·정치체 기간 충돌: ${relations.samePolityConflicts.length}`,
         `정상 정치체 전환: ${relations.boundaryTransitions.length}`,
         `검토 완료 복수 통치: ${relations.acceptedConcurrent.length}`,
@@ -263,22 +268,24 @@
         "",
         `Status: ${status}`
       ];
+
       if (canonicalDuplicates.length) {
-        lines.push("", "[오류 — canonical 정확 중복 활동행]");
-        canonicalDuplicates.forEach((bucket) => lines.push(`- ${displayPerson(bucket[0].person_name)} [${bucket[0].person_name}] | ${displayPolitic(bucket[0].politic_name)} [${bucket[0].politic_name}] | ${bucket[0].activity_start}–${bucket[0].activity_end} | IDs ${bucket.map((row) => row.id).join(", ")}`));
+        lines.push("", "[오류 — canonical registry 기준 정확 중복 활동행]");
+        canonicalDuplicates.forEach((bucket) => lines.push(`- ${displayPerson(canonicalPersonName(bucket[0]))} [${canonicalPersonName(bucket[0])}] | ${displayPolitic(bucket[0].politic_name)} | ${bucket[0].activity_start}–${bucket[0].activity_end} | 원본 ${bucket.map((row) => `${row.person_name} / ID ${row.id}`).join(" ↔ ")}`));
       }
-      if (renderedCandidates.length) {
-        lines.push("", "[검토 — 화면 표시명·정치체·기간이 모두 같은 중복 후보]");
-        renderedCandidates.forEach((bucket) => lines.push(`- ${displayPerson(bucket[0].person_name)} | ${displayPolitic(bucket[0].politic_name)} | ${bucket[0].activity_start}–${bucket[0].activity_end} | 원본 ${bucket.map((row) => `${row.person_name} / ${row.politic_name} / ID ${row.id}`).join(" ↔ ")}`));
-      }
-      if (sameNameCandidates.length) {
-        lines.push("", "[검토 — 화면에 같은 인물명으로 보이는 canonical 인물들]");
-        sameNameCandidates.forEach((bucket) => {
-          const display = displayPerson(bucket[0].person_name);
-          const rowsText = bucket.map((row) => `${row.person_name} | ${displayPolitic(row.politic_name)} | ${row.activity_start}–${row.activity_end} | ID ${row.id}`).join(" ↔ ");
-          lines.push(`- ${display}: ${rowsText}`);
+
+      if (sameCanonicalNameGroups.length) {
+        lines.push("", "[검토 — 서로 다른 저장명이 같은 canonical 인물로 통합됨]");
+        sameCanonicalNameGroups.forEach((bucket) => {
+          lines.push(`- ${displayPerson(canonicalPersonName(bucket[0]))} [${canonicalPersonName(bucket[0])}]: ${bucket.map((row) => `${row.person_name} | ${displayPolitic(row.politic_name)} | ${row.activity_start}–${row.activity_end} | ID ${row.id}`).join(" ↔ ")}`);
         });
       }
+
+      if (renderedDuplicates.length) {
+        lines.push("", "[검토 — 화면 표시명·정치체·기간이 모두 같은 별도 canonical 후보]");
+        renderedDuplicates.forEach((bucket) => lines.push(`- ${displayPerson(canonicalPersonName(bucket[0]))} | ${displayPolitic(bucket[0].politic_name)} | ${bucket[0].activity_start}–${bucket[0].activity_end} | ${bucket.map((row) => `${canonicalPersonName(row)} (${row.person_name}) / ID ${row.id}`).join(" ↔ ")}`));
+      }
+
       if (relations.samePolityConflicts.length) {
         lines.push("", "[오류 — 동일 canonical 인물·동일 정치체 기간 중첩]");
         relations.samePolityConflicts.forEach((pair) => lines.push(relationLine(pair)));
@@ -295,6 +302,7 @@
         lines.push("", "[정상 — 같은 연도에 정치체가 전환된 관계]");
         relations.boundaryTransitions.forEach((pair) => lines.push(relationLine(pair)));
       }
+
       output.dataset.type = hardFailureCount > 0 ? "error" : reviewCount > 0 ? "info" : "success";
       output.textContent = lines.join("\n");
     } catch (error) {
