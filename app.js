@@ -73,31 +73,15 @@
     return normalize(value).replace(/\s+/g, "");
   }
 
-  function matchesSearch(record, query) {
+  function rowMatches(row, query) {
     if (!String(query ?? "").trim()) return true;
-    const view = withDisplayValues(record);
-    const renderedValues = [
-      view.display_person,
-      view.display_politic,
-      formatYear(record.activity_start),
-      formatYear(record.activity_end),
-      record.role,
-      basisLabels[record.period_basis] || record.period_basis || ""
-    ];
-    const sourceValues = [
-      record.person_name,
-      record.politic_name,
-      record.notes,
-      record.activity_start,
-      record.activity_end
-    ];
-    const haystack = normalize([...renderedValues, ...sourceValues].join(" "));
-    const compactHaystack = haystack.replace(/\s+/g, "");
+    const normalizedRow = normalize(row.textContent || "");
+    const compactRow = normalizedRow.replace(/\s+/g, "");
     const normalizedQuery = normalize(query);
     const compactQuery = compact(query);
-    if (compactQuery && compactHaystack.includes(compactQuery)) return true;
+    if (compactQuery && compactRow.includes(compactQuery)) return true;
     const tokens = normalizedQuery.split(/\s+/).filter(Boolean);
-    return tokens.length > 0 && tokens.every((token) => haystack.includes(token));
+    return tokens.length > 0 && tokens.every((token) => normalizedRow.includes(token));
   }
 
   function sortRecords(items) {
@@ -129,11 +113,8 @@
   }
 
   function visibleRecords() {
-    const q = els.search.value;
     const politic = els.filter.value;
-    return sortRecords(records.filter((r) =>
-      matchesSearch(r, q) && (!politic || r.politic_name === politic)
-    ));
+    return sortRecords(records.filter((r) => !politic || r.politic_name === politic));
   }
 
   function escapeHtml(value) {
@@ -160,6 +141,18 @@
     els.detailNotes.textContent = record.notes || "";
   }
 
+  function applyRenderedSearch() {
+    const query = els.search.value;
+    let count = 0;
+    els.body.querySelectorAll("tr[data-id]").forEach((row) => {
+      const matched = rowMatches(row, query);
+      row.hidden = !matched;
+      if (matched) count += 1;
+    });
+    els.rowCount.textContent = `${count}개 행`;
+    els.empty.hidden = count !== 0;
+  }
+
   function render() {
     const items = visibleRecords();
     els.body.innerHTML = items.map((r) => {
@@ -175,13 +168,12 @@
         <td><div class="action-buttons"><button class="mini-btn edit" data-id="${r.id}">수정</button><button class="mini-btn danger delete" data-id="${r.id}">삭제</button></div></td>
       </tr>`;
     }).join("");
-    els.rowCount.textContent = `${items.length}개 행`;
-    els.empty.hidden = items.length !== 0;
 
     const current = els.filter.value;
     const politics = [...new Set(records.map((r) => r.politic_name).filter(Boolean))].sort((a,b) => a.localeCompare(b, "en", { sensitivity: "base" }));
     els.filter.innerHTML = '<option value="">모든 정치체</option>' + politics.map((p) => `<option value="${escapeHtml(p)}">${escapeHtml(displayPolitic(p))}</option>`).join("");
     if (politics.includes(current)) els.filter.value = current;
+    applyRenderedSearch();
     renderDetail();
   }
 
@@ -266,7 +258,8 @@
   }
 
   function exportExcel() {
-    const rows = visibleRecords().map((r) => ({
+    const visibleIds = new Set([...els.body.querySelectorAll("tr[data-id]:not([hidden])")].map((row) => String(row.dataset.id)));
+    const rows = visibleRecords().filter((r) => visibleIds.has(String(r.id))).map((r) => ({
       "인물": r.person_name, "정치체": r.politic_name, "활동 시작연도": r.activity_start,
       "활동 종료연도": r.activity_end, "역할": r.role || "", "기간 기준": basisLabels[r.period_basis] || r.period_basis || "", "비고": r.notes || ""
     }));
@@ -306,7 +299,7 @@
   $("closeDialog").addEventListener("click", () => els.dialog.close());
   $("cancelButton").addEventListener("click", () => els.dialog.close());
   els.form.addEventListener("submit", saveRecord);
-  els.search.addEventListener("input", render);
+  els.search.addEventListener("input", applyRenderedSearch);
   els.filter.addEventListener("change", render);
   els.detailEdit.addEventListener("click", () => { const record = selectedRecord(); if (record) openEditor(record); });
   els.body.addEventListener("click", (e) => {
