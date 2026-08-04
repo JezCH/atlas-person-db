@@ -23,6 +23,24 @@
     return localeMap("polities")[value] || value || "";
   }
 
+  const expectedPersonLocales = Object.freeze({
+    "Constantine I": "콘스탄티누스 1세",
+    "Justinian I": "유스티니아누스 1세",
+    "Napoleon I": "나폴레옹 1세",
+    "Elizabeth I": "엘리자베스 1세",
+    "Kanishka I": "카니슈카 1세",
+    "Kamehameha I": "카메하메하 1세",
+    "Leonidas I": "레오니다스 1세",
+    "Ramses II": "람세스 2세",
+    "Moctezuma II": "몬테수마 2세",
+    "Mehmed II": "메흐메트 2세",
+    "Catherine the Great": "예카테리나 2세",
+    "Liu Yan": "유언",
+    "Tao Qian": "도겸",
+    "Nefertiti": "네페르티티",
+    "Akhenaten": "아크나톤"
+  });
+
   const acceptedConcurrentPersons = new Set([
     "charles v",
     "cnut the great",
@@ -39,9 +57,7 @@
       let canonicalName = name;
       try {
         const { data, error } = await db.rpc("resolve_person_identity", { input_name: name });
-        if (!error && Array.isArray(data) && data.length && data[0]?.canonical_name) {
-          canonicalName = data[0].canonical_name;
-        }
+        if (!error && Array.isArray(data) && data.length && data[0]?.canonical_name) canonicalName = data[0].canonical_name;
       } catch (_) {
         canonicalName = name;
       }
@@ -87,6 +103,32 @@
     return [displayNameKey(row), displayPolityKey(row), Number(row.activity_start), Number(row.activity_end)].join("\u0001");
   }
 
+  function groupByKey(rows, keyFn) {
+    const grouped = new Map();
+    for (const row of rows) {
+      const key = keyFn(row);
+      if (!key) continue;
+      const bucket = grouped.get(key) || [];
+      bucket.push(row);
+      grouped.set(key, bucket);
+    }
+    return grouped;
+  }
+
+  function duplicateGroups(rows, keyFn) {
+    return [...groupByKey(rows, keyFn).values()].filter((bucket) => bucket.length > 1);
+  }
+
+  function distinctRawPersonCount(bucket) {
+    return new Set(bucket.map(rawPersonKey)).size;
+  }
+
+  function localeMismatches() {
+    return Object.entries(expectedPersonLocales)
+      .map(([canonical, expected]) => ({ canonical, expected, actual: displayPerson(canonical) }))
+      .filter((item) => item.actual !== item.expected);
+  }
+
   async function copyText(text) {
     if (navigator.clipboard && window.isSecureContext) {
       await navigator.clipboard.writeText(text);
@@ -128,7 +170,7 @@
         <pre id="identityLookupResult" class="result" aria-live="polite">검색어를 입력하세요.</pre>
       </section>
       <section class="panel" id="integrityAuditPanel">
-        <div class="panel-head"><div><h2>중복·명칭 무결성 검사</h2><p>원본 저장명, 화면 표시명, canonical registry를 각각 독립적으로 검사합니다.</p></div><div class="actions"><button id="integrityAuditButton" class="button primary" type="button">중복 검사 실행</button><button id="integrityAuditCopyButton" class="button secondary" type="button" disabled>결과 복사</button></div></div>
+        <div class="panel-head"><div><h2>중복·명칭 무결성 검사</h2><p>원본 저장명, 화면 표시명, canonical registry, 로케일 런타임을 독립 검사합니다.</p></div><div class="actions"><button id="integrityAuditButton" class="button primary" type="button">중복 검사 실행</button><button id="integrityAuditCopyButton" class="button secondary" type="button" disabled>결과 복사</button></div></div>
         <pre id="integrityAuditResult" class="result" aria-live="polite">검사 대기 중</pre>
       </section>`;
   }
@@ -180,38 +222,8 @@
     }
   }
 
-  function groupedDuplicates(rows, keyFn) {
-    const grouped = new Map();
-    for (const row of rows) {
-      const key = keyFn(row);
-      const bucket = grouped.get(key) || [];
-      bucket.push(row);
-      grouped.set(key, bucket);
-    }
-    return [...grouped.values()].filter((bucket) => bucket.length > 1);
-  }
-
-  function groupedByKey(rows, keyFn) {
-    const grouped = new Map();
-    for (const row of rows) {
-      const key = keyFn(row);
-      if (!key) continue;
-      const bucket = grouped.get(key) || [];
-      bucket.push(row);
-      grouped.set(key, bucket);
-    }
-    return grouped;
-  }
-
   function classifyPeriodRelations(rows) {
-    const byPerson = new Map();
-    for (const row of rows) {
-      const key = canonicalPersonKey(row);
-      const bucket = byPerson.get(key) || [];
-      bucket.push(row);
-      byPerson.set(key, bucket);
-    }
-
+    const byPerson = groupByKey(rows, canonicalPersonKey);
     const samePolityConflicts = [];
     const boundaryTransitions = [];
     const acceptedConcurrent = [];
@@ -225,18 +237,15 @@
           const overlapStart = Math.max(Number(a.activity_start), Number(b.activity_start));
           const overlapEnd = Math.min(Number(a.activity_end), Number(b.activity_end));
           if (overlapStart > overlapEnd || canonicalActivityKey(a) === canonicalActivityKey(b)) continue;
-
           if (canonicalPolityKey(a) === canonicalPolityKey(b)) {
             samePolityConflicts.push([a, b]);
             continue;
           }
-
           const touchesAtBoundary = Number(a.activity_end) === Number(b.activity_start) || Number(b.activity_end) === Number(a.activity_start);
           if (touchesAtBoundary && overlapStart === overlapEnd) {
             boundaryTransitions.push([a, b]);
             continue;
           }
-
           if (acceptedConcurrentPersons.has(normalize(canonicalPersonName(a)))) acceptedConcurrent.push([a, b]);
           else unresolvedConcurrent.push([a, b]);
         }
@@ -255,24 +264,25 @@
     button.disabled = true;
     if (copyButton) copyButton.disabled = true;
     output.dataset.type = "info";
-    output.textContent = "원본 저장명·화면 표시명·canonical registry를 교차 검사 중...";
+    output.textContent = "원본 저장명·화면 표시명·canonical registry·로케일 런타임을 교차 검사 중...";
 
     try {
       const { data: rows, error } = await db.from("person_politics").select("id,person_name,politic_name,activity_start,activity_end,role,period_basis");
       if (error) throw error;
       const actual = await resolveCanonicalNames(rows || []);
 
-      const rawDuplicates = groupedDuplicates(actual, rawActivityKey);
-      const canonicalDuplicates = groupedDuplicates(actual, canonicalActivityKey);
-      const renderedDuplicates = groupedDuplicates(actual, renderedActivityKey)
-        .filter((bucket) => new Set(bucket.map(rawPersonKey)).size > 1 || new Set(bucket.map(canonicalPolityKey)).size > 1);
-      const sameCanonicalNameGroups = [...groupedByKey(actual, canonicalPersonKey).values()]
-        .filter((bucket) => new Set(bucket.map(rawPersonKey)).size > 1);
-      const sameDisplayedNameGroups = [...groupedByKey(actual, displayNameKey).values()]
-        .filter((bucket) => new Set(bucket.map(rawPersonKey)).size > 1);
+      const rawDuplicates = duplicateGroups(actual, rawActivityKey);
+      const canonicalDuplicates = duplicateGroups(actual, canonicalActivityKey);
+      const renderedDuplicates = duplicateGroups(actual, renderedActivityKey)
+        .filter((bucket) => distinctRawPersonCount(bucket) > 1 || new Set(bucket.map(canonicalPolityKey)).size > 1);
+      const sameCanonicalNameGroups = [...groupByKey(actual, canonicalPersonKey).values()]
+        .filter((bucket) => distinctRawPersonCount(bucket) > 1);
+      const sameDisplayedNameGroups = [...groupByKey(actual, displayNameKey).values()]
+        .filter((bucket) => distinctRawPersonCount(bucket) > 1);
       const relations = classifyPeriodRelations(actual);
+      const localeErrors = localeMismatches();
 
-      const hardFailureCount = rawDuplicates.length + canonicalDuplicates.length + relations.samePolityConflicts.length;
+      const hardFailureCount = rawDuplicates.length + canonicalDuplicates.length + relations.samePolityConflicts.length + localeErrors.length;
       const reviewCount = renderedDuplicates.length + sameCanonicalNameGroups.length + sameDisplayedNameGroups.length + relations.unresolvedConcurrent.length;
       const status = hardFailureCount > 0 ? "FAIL ❌" : reviewCount > 0 ? "PASS WITH REVIEW ⚠️" : "PASS ✅";
 
@@ -287,6 +297,7 @@
         `화면 표시 완전 중복 후보: ${renderedDuplicates.length}`,
         `동일 화면 인물명 후보: ${sameDisplayedNameGroups.length}`,
         `alias/canonical 통합 후보: ${sameCanonicalNameGroups.length}`,
+        `로케일 런타임 불일치: ${localeErrors.length}`,
         `동일 canonical 인물·정치체 기간 충돌: ${relations.samePolityConflicts.length}`,
         `정상 정치체 전환: ${relations.boundaryTransitions.length}`,
         `검토 완료 복수 통치: ${relations.acceptedConcurrent.length}`,
@@ -294,6 +305,11 @@
         "",
         `Status: ${status}`
       ];
+
+      if (localeErrors.length) {
+        lines.push("", "[오류 — 로케일 런타임 값이 기준 매핑과 다름]");
+        localeErrors.forEach((item) => lines.push(`- ${item.canonical}: 기대 ${item.expected} / 실제 ${item.actual}`));
+      }
 
       if (rawDuplicates.length) {
         lines.push("", "[오류 — 원본 저장명·정치체·기간이 모두 같은 중복 활동행]");
@@ -307,16 +323,12 @@
 
       if (sameCanonicalNameGroups.length) {
         lines.push("", "[검토 — 서로 다른 저장명이 같은 canonical 인물로 통합됨]");
-        sameCanonicalNameGroups.forEach((bucket) => {
-          lines.push(`- ${canonicalPersonName(bucket[0])}: ${bucket.map((row) => `${row.person_name} (${displayPerson(row.person_name)}) | ${displayPolitic(row.politic_name)} | ${row.activity_start}–${row.activity_end} | ID ${row.id}`).join(" ↔ ")}`);
-        });
+        sameCanonicalNameGroups.forEach((bucket) => lines.push(`- ${canonicalPersonName(bucket[0])}: ${bucket.map((row) => `${row.person_name} (${displayPerson(row.person_name)}) | ${displayPolitic(row.politic_name)} | ${row.activity_start}–${row.activity_end} | ID ${row.id}`).join(" ↔ ")}`));
       }
 
       if (sameDisplayedNameGroups.length) {
         lines.push("", "[검토 — 화면에 같은 인물명으로 보이는 서로 다른 원본 저장명]");
-        sameDisplayedNameGroups.forEach((bucket) => {
-          lines.push(`- ${displayPerson(bucket[0].person_name)}: ${bucket.map((row) => `${row.person_name} → ${canonicalPersonName(row)} | ${displayPolitic(row.politic_name)} | ${row.activity_start}–${row.activity_end} | ID ${row.id}`).join(" ↔ ")}`);
-        });
+        sameDisplayedNameGroups.forEach((bucket) => lines.push(`- ${displayPerson(bucket[0].person_name)}: ${bucket.map((row) => `${row.person_name} → ${canonicalPersonName(row)} | ${displayPolitic(row.politic_name)} | ${row.activity_start}–${row.activity_end} | ID ${row.id}`).join(" ↔ ")}`));
       }
 
       if (renderedDuplicates.length) {
