@@ -59,6 +59,10 @@
     return looseNormalize(canonicalPersonName(row));
   }
 
+  function rawPersonKey(row) {
+    return looseNormalize(row.person_name);
+  }
+
   function canonicalPolityKey(row) {
     return looseNormalize(row.politic_name);
   }
@@ -67,8 +71,12 @@
     return [canonicalPersonKey(row), canonicalPolityKey(row), Number(row.activity_start), Number(row.activity_end)].join("\u0001");
   }
 
+  function rawActivityKey(row) {
+    return [rawPersonKey(row), canonicalPolityKey(row), Number(row.activity_start), Number(row.activity_end)].join("\u0001");
+  }
+
   function displayNameKey(row) {
-    return looseNormalize(displayPerson(canonicalPersonName(row)));
+    return looseNormalize(displayPerson(row.person_name));
   }
 
   function displayPolityKey(row) {
@@ -120,7 +128,7 @@
         <pre id="identityLookupResult" class="result" aria-live="polite">검색어를 입력하세요.</pre>
       </section>
       <section class="panel" id="integrityAuditPanel">
-        <div class="panel-head"><div><h2>중복·명칭 무결성 검사</h2><p>canonical registry로 인물 identity를 먼저 통합한 뒤 중복과 기간 충돌을 검사합니다.</p></div><div class="actions"><button id="integrityAuditButton" class="button primary" type="button">중복 검사 실행</button><button id="integrityAuditCopyButton" class="button secondary" type="button" disabled>결과 복사</button></div></div>
+        <div class="panel-head"><div><h2>중복·명칭 무결성 검사</h2><p>원본 저장명, 화면 표시명, canonical registry를 각각 독립적으로 검사합니다.</p></div><div class="actions"><button id="integrityAuditButton" class="button primary" type="button">중복 검사 실행</button><button id="integrityAuditCopyButton" class="button secondary" type="button" disabled>결과 복사</button></div></div>
         <pre id="integrityAuditResult" class="result" aria-live="polite">검사 대기 중</pre>
       </section>`;
   }
@@ -165,7 +173,7 @@
       }
       const canonicalName = canonical?.canonical_name || matched[0]?.person_name || name;
       output.dataset.type = "success";
-      output.textContent = ["등록됨 ✅", `Canonical name: ${canonicalName}`, canonical?.matched_alias ? `Matched alias: ${canonical.matched_alias}` : null, `Activity rows: ${matched.length}`, "", ...matched.map((row) => `- ${row.person_name} | ${row.politic_name} | ${row.activity_start}–${row.activity_end}`)].filter(Boolean).join("\n");
+      output.textContent = ["등록됨 ✅", `Canonical name: ${canonicalName}`, canonical?.matched_alias ? `Matched alias: ${canonical.matched_alias}` : null, `Activity rows: ${matched.length}`, "", ...matched.map((row) => `- ${row.person_name} (${displayPerson(row.person_name)}) | ${row.politic_name} (${displayPolitic(row.politic_name)}) | ${row.activity_start}–${row.activity_end} | ID ${row.id}`)].filter(Boolean).join("\n");
     } catch (error) {
       output.dataset.type = "error";
       output.textContent = `조회 실패: ${error.message}`;
@@ -226,7 +234,7 @@
     return { samePolityConflicts, boundaryTransitions, acceptedConcurrent, unresolvedConcurrent };
   }
 
-  const relationLine = ([a, b]) => `- ${displayPerson(canonicalPersonName(a))} [${canonicalPersonName(a)}] : ${displayPolitic(a.politic_name)} ${a.activity_start}–${a.activity_end} ↔ ${displayPolitic(b.politic_name)} ${b.activity_start}–${b.activity_end}`;
+  const relationLine = ([a, b]) => `- ${displayPerson(a.person_name)} [${a.person_name} → ${canonicalPersonName(a)}] : ${displayPolitic(a.politic_name)} ${a.activity_start}–${a.activity_end} ↔ ${displayPolitic(b.politic_name)} ${b.activity_start}–${b.activity_end}`;
 
   async function auditIntegrity() {
     const button = document.getElementById("integrityAuditButton");
@@ -235,31 +243,37 @@
     button.disabled = true;
     if (copyButton) copyButton.disabled = true;
     output.dataset.type = "info";
-    output.textContent = "Supabase canonical registry로 인물명을 통합한 뒤 검사 중...";
+    output.textContent = "원본 저장명·화면 표시명·canonical registry를 교차 검사 중...";
 
     try {
-      const { data: rows, error } = await db.from("person_politics").select("id,person_name,politic_name,activity_start,activity_end");
+      const { data: rows, error } = await db.from("person_politics").select("id,person_name,politic_name,activity_start,activity_end,role,period_basis");
       if (error) throw error;
       const actual = await resolveCanonicalNames(rows || []);
 
+      const rawDuplicates = groupedDuplicates(actual, rawActivityKey);
       const canonicalDuplicates = groupedDuplicates(actual, canonicalActivityKey);
       const renderedDuplicates = groupedDuplicates(actual, renderedActivityKey)
-        .filter((bucket) => new Set(bucket.map(canonicalPersonKey)).size > 1 || new Set(bucket.map(canonicalPolityKey)).size > 1);
+        .filter((bucket) => new Set(bucket.map(rawPersonKey)).size > 1 || new Set(bucket.map(canonicalPolityKey)).size > 1);
       const sameCanonicalNameGroups = groupedDuplicates(actual, canonicalPersonKey)
         .filter((bucket) => new Set(bucket.map((row) => row.person_name)).size > 1);
+      const sameDisplayedNameGroups = groupedDuplicates(actual, displayNameKey)
+        .filter((bucket) => new Set(bucket.map(rawPersonKey)).size > 1);
       const relations = classifyPeriodRelations(actual);
 
-      const hardFailureCount = canonicalDuplicates.length + relations.samePolityConflicts.length;
-      const reviewCount = renderedDuplicates.length + sameCanonicalNameGroups.length + relations.unresolvedConcurrent.length;
+      const hardFailureCount = rawDuplicates.length + canonicalDuplicates.length + relations.samePolityConflicts.length;
+      const reviewCount = renderedDuplicates.length + sameCanonicalNameGroups.length + sameDisplayedNameGroups.length + relations.unresolvedConcurrent.length;
       const status = hardFailureCount > 0 ? "FAIL ❌" : reviewCount > 0 ? "PASS WITH REVIEW ⚠️" : "PASS ✅";
 
       const lines = [
         "ATLAS DB Integrity Audit — LIVE",
         "",
         `전체 활동행: ${actual.length}`,
+        `고유 원본 저장명: ${new Set(actual.map(rawPersonKey)).size}`,
         `고유 canonical 인물: ${new Set(actual.map(canonicalPersonKey)).size}`,
+        `원본 저장명 정확 중복 묶음: ${rawDuplicates.length}`,
         `canonical 정확 중복 묶음: ${canonicalDuplicates.length}`,
         `화면 표시 완전 중복 후보: ${renderedDuplicates.length}`,
+        `동일 화면 인물명 후보: ${sameDisplayedNameGroups.length}`,
         `alias/canonical 통합 후보: ${sameCanonicalNameGroups.length}`,
         `동일 canonical 인물·정치체 기간 충돌: ${relations.samePolityConflicts.length}`,
         `정상 정치체 전환: ${relations.boundaryTransitions.length}`,
@@ -269,21 +283,33 @@
         `Status: ${status}`
       ];
 
+      if (rawDuplicates.length) {
+        lines.push("", "[오류 — 원본 저장명·정치체·기간이 모두 같은 중복 활동행]");
+        rawDuplicates.forEach((bucket) => lines.push(`- ${bucket[0].person_name} (${displayPerson(bucket[0].person_name)}) | ${bucket[0].politic_name} (${displayPolitic(bucket[0].politic_name)}) | ${bucket[0].activity_start}–${bucket[0].activity_end} | IDs ${bucket.map((row) => row.id).join(", ")}`));
+      }
+
       if (canonicalDuplicates.length) {
         lines.push("", "[오류 — canonical registry 기준 정확 중복 활동행]");
-        canonicalDuplicates.forEach((bucket) => lines.push(`- ${displayPerson(canonicalPersonName(bucket[0]))} [${canonicalPersonName(bucket[0])}] | ${displayPolitic(bucket[0].politic_name)} | ${bucket[0].activity_start}–${bucket[0].activity_end} | 원본 ${bucket.map((row) => `${row.person_name} / ID ${row.id}`).join(" ↔ ")}`));
+        canonicalDuplicates.forEach((bucket) => lines.push(`- ${displayPerson(bucket[0].person_name)} [${canonicalPersonName(bucket[0])}] | ${displayPolitic(bucket[0].politic_name)} | ${bucket[0].activity_start}–${bucket[0].activity_end} | 원본 ${bucket.map((row) => `${row.person_name} / ID ${row.id}`).join(" ↔ ")}`));
       }
 
       if (sameCanonicalNameGroups.length) {
         lines.push("", "[검토 — 서로 다른 저장명이 같은 canonical 인물로 통합됨]");
         sameCanonicalNameGroups.forEach((bucket) => {
-          lines.push(`- ${displayPerson(canonicalPersonName(bucket[0]))} [${canonicalPersonName(bucket[0])}]: ${bucket.map((row) => `${row.person_name} | ${displayPolitic(row.politic_name)} | ${row.activity_start}–${row.activity_end} | ID ${row.id}`).join(" ↔ ")}`);
+          lines.push(`- ${canonicalPersonName(bucket[0])}: ${bucket.map((row) => `${row.person_name} (${displayPerson(row.person_name)}) | ${displayPolitic(row.politic_name)} | ${row.activity_start}–${row.activity_end} | ID ${row.id}`).join(" ↔ ")}`);
+        });
+      }
+
+      if (sameDisplayedNameGroups.length) {
+        lines.push("", "[검토 — 화면에 같은 인물명으로 보이는 서로 다른 원본 저장명]");
+        sameDisplayedNameGroups.forEach((bucket) => {
+          lines.push(`- ${displayPerson(bucket[0].person_name)}: ${bucket.map((row) => `${row.person_name} → ${canonicalPersonName(row)} | ${displayPolitic(row.politic_name)} | ${row.activity_start}–${row.activity_end} | ID ${row.id}`).join(" ↔ ")}`);
         });
       }
 
       if (renderedDuplicates.length) {
-        lines.push("", "[검토 — 화면 표시명·정치체·기간이 모두 같은 별도 canonical 후보]");
-        renderedDuplicates.forEach((bucket) => lines.push(`- ${displayPerson(canonicalPersonName(bucket[0]))} | ${displayPolitic(bucket[0].politic_name)} | ${bucket[0].activity_start}–${bucket[0].activity_end} | ${bucket.map((row) => `${canonicalPersonName(row)} (${row.person_name}) / ID ${row.id}`).join(" ↔ ")}`));
+        lines.push("", "[검토 — 화면 표시명·정치체·기간이 모두 같은 별도 원본 후보]");
+        renderedDuplicates.forEach((bucket) => lines.push(`- ${displayPerson(bucket[0].person_name)} | ${displayPolitic(bucket[0].politic_name)} | ${bucket[0].activity_start}–${bucket[0].activity_end} | ${bucket.map((row) => `${row.person_name} → ${canonicalPersonName(row)} / ID ${row.id}`).join(" ↔ ")}`));
       }
 
       if (relations.samePolityConflicts.length) {
@@ -303,17 +329,16 @@
         relations.boundaryTransitions.forEach((pair) => lines.push(relationLine(pair)));
       }
 
-      output.dataset.type = hardFailureCount > 0 ? "error" : reviewCount > 0 ? "info" : "success";
+      output.dataset.type = hardFailureCount ? "error" : reviewCount ? "info" : "success";
       output.textContent = lines.join("\n");
+      if (copyButton) copyButton.disabled = false;
     } catch (error) {
       output.dataset.type = "error";
       output.textContent = `검사 실패: ${error.message}`;
     } finally {
       button.disabled = false;
-      if (copyButton) copyButton.disabled = false;
     }
   }
 
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", installPanels, { once: true });
-  else installPanels();
+  installPanels();
 })();
