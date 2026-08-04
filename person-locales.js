@@ -26,7 +26,16 @@
     "Cleopatra VII": "클레오파트라 7세",
     "Dido": "디도",
     "Cunobeline": "쿠노벨리누스",
-    "Boudica": "부디카"
+    "Boudica": "부디카",
+    "Catherine the Great": "예카테리나 2세",
+    "Akhenaten": "아크나톤",
+    "Nefertiti": "네페르티티",
+    "Tao Qian": "도겸",
+    "Liu Yan": "유언",
+    "Kanishka I": "카니슈카 1세",
+    "Kamehameha I": "카메하메하 1세",
+    "Leonidas I": "레오니다스 1세",
+    "Mehmed II": "메흐메트 2세"
   };
 
   const koPolities = {
@@ -52,7 +61,12 @@
     "Mongol Empire": "몽골 제국",
     "Carthage": "카르타고",
     "Catuvellauni": "카투벨라우니",
-    "Iceni": "이케니"
+    "Iceni": "이케니",
+    "Russian Empire": "러시아 제국",
+    "Ottoman Empire": "오스만 제국",
+    "Eastern Han": "후한",
+    "Kushan Empire": "쿠샨 제국",
+    "Kingdom of Hawaii": "하와이 왕국"
   };
 
   window.ATLAS_LOCALES = Object.freeze({
