@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "forbidden_patterns": [
+    "\\bdrop\\s+table\\b",
+    "\\bdrop\\s+schema\\b",
+    "\\btruncate\\b",
+    "\\bdelete\\s+from\\b",
+    "\\bupdate\\s+public\\.person_politics\\b",
+    "\\binsert\\s+into\\s+public\\.person_politics\\b",
+    "\\balter\\s+table\\s+public\\.person_politics\\b",
+    "\\bcreate\\s+or\\s+replace\\s+function\\s+public\\.",
+    "supabase",
+    "vercel",
+    "secrets\\.",
+    "git\\s+push",
+    "gh\\s+workflow"
+  ]
+}

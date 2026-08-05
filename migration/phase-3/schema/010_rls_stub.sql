@@ -1,0 +1,3 @@
+-- Phase 3 definition-only RLS stub.
+-- No policies are created or altered in this phase.
+-- Operational RLS design and deployment are deferred to the Supabase shadow-schema phase.

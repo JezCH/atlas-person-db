@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "legacy_fields": {
+    "id": ["person_politics_v2.legacy_source_key"],
+    "person_name": ["persons.canonical_key", "person_names.name"],
+    "politic_name": ["polities.canonical_key", "polity_names.name"],
+    "activity_start": ["person_politics_v2.activity_start", "chronology_claims.start_year"],
+    "activity_end": ["person_politics_v2.activity_end", "chronology_claims.end_year"],
+    "role": ["roles.code", "role_names.name", "person_politics_v2.role_id"],
+    "period_basis": ["period_bases.code", "period_basis_names.name", "person_politics_v2.period_basis_id"],
+    "notes": ["person_politics_v2.notes", "relationship_descriptions.content"],
+    "created_at": ["person_politics_v2.legacy_created_at"],
+    "updated_at": ["person_politics_v2.legacy_updated_at"]
+  }
+}

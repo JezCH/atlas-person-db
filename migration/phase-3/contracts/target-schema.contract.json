@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "required_tables": [
+    "persons",
+    "person_names",
+    "polities",
+    "polity_names",
+    "roles",
+    "role_names",
+    "period_bases",
+    "period_basis_names",
+    "person_politics_v2",
+    "sources",
+    "chronology_claims",
+    "person_descriptions",
+    "polity_descriptions",
+    "relationship_descriptions",
+    "person_sources",
+    "polity_sources",
+    "person_politics_sources",
+    "chronology_claim_sources"
+  ],
+  "required_types": [
+    "person_type_code",
+    "historicity_code",
+    "name_type_code",
+    "role_category_code",
+    "confidence_code",
+    "chronology_status_code",
+    "chronology_precision_code",
+    "chronology_claim_type_code",
+    "description_type_code",
+    "source_type_code"
+  ],
+  "required_fragments": [
+    "legacy_source_key text not null unique",
+    "references persons(id) on delete restrict",
+    "references polities(id) on delete restrict",
+    "references roles(id) on delete restrict",
+    "references period_bases(id) on delete restrict",
+    "activity_start <> 0",
+    "activity_end <> 0",
+    "num_nonnulls(person_politics_id, person_id, polity_id) = 1",
+    "person_names_one_preferred_per_locale",
+    "polity_names_one_preferred_per_locale",
+    "phase-3-schema-contract"
+  ],
+  "period_basis_codes": [
+    "reign",
+    "term",
+    "de_facto_rule",
+    "military_activity",
+    "religious_activity",
+    "intellectual_activity",
+    "artistic_activity",
+    "general_activity"
+  ]
+}

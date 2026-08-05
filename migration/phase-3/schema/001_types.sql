@@ -1,0 +1,10 @@
+create type person_type_code as enum ('historical','legendary','mythological');
+create type historicity_code as enum ('historical','disputed','legendary','mythological');
+create type name_type_code as enum ('canonical','preferred','original','historical','alias','regnal','translated');
+create type role_category_code as enum ('ruler','government','military','religious','intellectual','artistic','exploration','revolutionary','other');
+create type confidence_code as enum ('high','medium','low','disputed');
+create type chronology_status_code as enum ('exact','approximate','disputed','legendary','unknown');
+create type chronology_precision_code as enum ('year','decade','century','range','unknown');
+create type chronology_claim_type_code as enum ('birth','death','activity_start','activity_end','reign','term','event','other');
+create type description_type_code as enum ('summary','notes','historical_context','display');
+create type source_type_code as enum ('primary','secondary','tertiary','dataset','web','other');

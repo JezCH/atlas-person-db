@@ -1,0 +1,92 @@
+name: Phase 3 Target Schema
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - agent/phase3-target-schema
+    paths:
+      - 'migration/phase-3/**'
+      - '.github/workflows/phase-3-schema.yml'
+      - 'migration/MIGRATION_PLAN.md'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase-3-schema-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Prepare independent outputs
+        run: |
+          rm -rf migration/phase-3/tmp
+          mkdir -p migration/phase-3/tmp/run-1 migration/phase-3/tmp/run-2 migration/phase-3/tmp/artifact
+
+      - name: Assemble schema run 1
+        run: node migration/phase-3/scripts/assemble-schema.mjs --root . --output migration/phase-3/tmp/run-1 --branch "${GITHUB_REF_NAME}" --commit "${GITHUB_SHA}"
+
+      - name: Validate contract run 1
+        run: node migration/phase-3/scripts/validate-schema-contract.mjs --root . --output migration/phase-3/tmp/run-1
+
+      - name: Validate safety run 1
+        run: node migration/phase-3/scripts/validate-sql-safety.mjs --root . --output migration/phase-3/tmp/run-1
+
+      - name: Validate legacy coverage run 1
+        run: node migration/phase-3/scripts/validate-legacy-coverage.mjs --root . --output migration/phase-3/tmp/run-1
+
+      - name: Assemble schema run 2
+        run: node migration/phase-3/scripts/assemble-schema.mjs --root . --output migration/phase-3/tmp/run-2 --branch "${GITHUB_REF_NAME}" --commit "${GITHUB_SHA}"
+
+      - name: Validate contract run 2
+        run: node migration/phase-3/scripts/validate-schema-contract.mjs --root . --output migration/phase-3/tmp/run-2
+
+      - name: Validate safety run 2
+        run: node migration/phase-3/scripts/validate-sql-safety.mjs --root . --output migration/phase-3/tmp/run-2
+
+      - name: Validate legacy coverage run 2
+        run: node migration/phase-3/scripts/validate-legacy-coverage.mjs --root . --output migration/phase-3/tmp/run-2
+
+      - name: Verify deterministic outputs
+        run: node migration/phase-3/scripts/verify-determinism.mjs migration/phase-3/tmp/run-1 migration/phase-3/tmp/run-2
+
+      - name: Verify protected scope
+        run: node migration/phase-3/scripts/verify-phase3-scope.mjs ce4b1b714f3c9ebc2da2bb7e56d76479a33e4580
+
+      - name: Build human-readable summary
+        run: |
+          {
+            echo '# Phase 3 Target Schema Validation'
+            echo
+            echo "- Audited commit: \`${GITHUB_SHA}\`"
+            echo '- Contract validation: PASS'
+            echo '- SQL safety: PASS'
+            echo '- Legacy-field coverage: PASS'
+            echo '- Determinism: PASS'
+            echo '- Protected scope: PASS'
+            echo '- Database deployment: none'
+            echo '- Runtime changes: none'
+          } > migration/phase-3/tmp/run-1/phase-3-schema.md
+          cp migration/phase-3/tmp/run-1/phase-3-* migration/phase-3/tmp/artifact/
+
+      - name: Upload validated reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-3-schema-reports-${{ github.sha }}
+          path: migration/phase-3/tmp/artifact
+          if-no-files-found: error
+          retention-days: 30

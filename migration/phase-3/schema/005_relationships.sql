@@ -1,0 +1,21 @@
+create table person_politics_v2 (
+  id uuid primary key,
+  person_id uuid not null references persons(id) on delete restrict,
+  polity_id uuid not null references polities(id) on delete restrict,
+  activity_start integer,
+  activity_end integer,
+  role_id uuid not null references roles(id) on delete restrict,
+  period_basis_id uuid not null references period_bases(id) on delete restrict,
+  confidence confidence_code not null default 'medium',
+  chronology_status chronology_status_code not null default 'exact',
+  legacy_source_key text not null unique check (char_length(trim(legacy_source_key)) > 0),
+  notes text,
+  legacy_created_at timestamptz,
+  legacy_updated_at timestamptz,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  check (activity_start is null or (activity_start between -10000 and 9999 and activity_start <> 0)),
+  check (activity_end is null or (activity_end between -10000 and 9999 and activity_end <> 0)),
+  check (activity_start is null or activity_end is null or activity_end >= activity_start),
+  unique (person_id, polity_id, activity_start, activity_end, role_id, period_basis_id)
+);
