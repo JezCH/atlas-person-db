@@ -87,37 +87,27 @@
       .filter((group) => new Set(group.map((row) => normalized(row.rawPerson))).size === 1);
   }
 
-  const englishQualifierPatterns = [
-    /\bof\s+[\p{L}\p{N}'’-]+(?:\s+[\p{L}\p{N}'’-]+)*$/u,
-    /\bthe\s+(?:great|elder|younger|conqueror|navigator|terrible|bold|bruce|wise|lionheart)$/u
-  ];
-
-  const koreanQualifierPatterns = [
-    /\s*(?:왕비|왕후|여왕|황후|황제|왕|대왕|공주|태후|섭정|장군|성인)$/u
-  ];
-
   function stripEnglishQualifier(value) {
-    let result = normalized(value);
-    for (const pattern of englishQualifierPatterns) result = result.replace(pattern, "").trim();
-    return result;
+    return normalized(value)
+      .replace(/\s+of\s+[\p{L}\p{N}'’-]+(?:\s+[\p{L}\p{N}'’-]+)*$/u, "")
+      .replace(/\s+the\s+(?:great|elder|younger|conqueror|navigator|terrible|bold|wise|lionheart)$/u, "")
+      .trim();
   }
 
   function stripKoreanQualifier(value) {
-    let result = normalized(value);
-    for (const pattern of koreanQualifierPatterns) result = result.replace(pattern, "").trim();
-    return result;
+    return normalized(value)
+      .replace(/\s*(?:왕비|왕후|여왕|황후|황제|왕|대왕|공주|태후|섭정|장군|성인)$/u, "")
+      .trim();
   }
 
   function samePeriodAndPolity(a, b) {
-    return normalized(a.displayPolity) === normalized(b.displayPolity)
+    return normalized(a.rawPolity) === normalized(b.rawPolity)
       && a.start === b.start
       && a.end === b.end;
   }
 
   function qualifiedNameDuplicateCandidates(rows) {
     const candidates = [];
-    const seen = new Set();
-
     for (let i = 0; i < rows.length; i += 1) {
       for (let j = i + 1; j < rows.length; j += 1) {
         const a = rows[i];
@@ -133,15 +123,9 @@
 
         const englishMatch = englishBaseA && englishBaseA === englishBaseB;
         const koreanMatch = koreanBaseA && koreanBaseA === koreanBaseB;
-        if (!englishMatch || !koreanMatch) continue;
-
-        const key = [a.id, b.id].sort().join("|");
-        if (seen.has(key)) continue;
-        seen.add(key);
-        candidates.push([a, b]);
+        if (englishMatch && koreanMatch) candidates.push([a, b]);
       }
     }
-
     return candidates;
   }
 
