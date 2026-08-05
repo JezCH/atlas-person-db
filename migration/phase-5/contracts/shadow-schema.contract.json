@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "phase4_closing_sha": "3093cdd558e879338fdab31586eafbcf2cace217",
+  "phase4_artifact_digest": "sha256:3842e7807b73238ac5f2d772ae87fea4f0e85bc338292a9883b2cc227d9345bc",
+  "schema": "atlas_v2",
+  "expected_counts": {
+    "persons": 303,
+    "polities": 211,
+    "person_politics_v2": 349,
+    "person_names": 599,
+    "polity_names": 407,
+    "roles": 149,
+    "sources": 20
+  },
+  "required_tables": [
+    "migration_metadata",
+    "persons",
+    "person_names",
+    "polities",
+    "polity_names",
+    "roles",
+    "role_names",
+    "period_bases",
+    "period_basis_names",
+    "person_politics_v2",
+    "chronology_claims",
+    "sources",
+    "person_sources",
+    "polity_sources",
+    "person_politics_sources",
+    "person_descriptions",
+    "polity_descriptions",
+    "relationship_descriptions"
+  ],
+  "legacy_source_key": {
+    "expected_rows": 349,
+    "expected_distinct": 349,
+    "expected_nulls": 0
+  },
+  "security": {
+    "rls_required": true,
+    "anon_access": false,
+    "authenticated_access": false
+  }
+}
