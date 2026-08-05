@@ -1,0 +1,67 @@
+name: Phase 4 Deterministic Compiler
+
+on:
+  push:
+    branches:
+      - agent/phase4-deterministic-compiler
+    paths:
+      - 'migration/phase-4/**'
+      - '.github/workflows/phase-4-compiler.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase-4-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  compile:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Prepare independent outputs
+        run: |
+          rm -rf migration/phase-4/tmp
+          mkdir -p migration/phase-4/tmp/run-1 migration/phase-4/tmp/run-2 migration/phase-4/tmp/artifact
+
+      - name: Compile run 1
+        run: node migration/phase-4/scripts/compile-all.mjs --root . --output migration/phase-4/tmp/run-1 --branch "${GITHUB_REF_NAME}" --commit "${GITHUB_SHA}"
+
+      - name: Validate run 1
+        run: node migration/phase-4/scripts/validate-output.mjs --output migration/phase-4/tmp/run-1
+
+      - name: Compile run 2
+        run: node migration/phase-4/scripts/compile-all.mjs --root . --output migration/phase-4/tmp/run-2 --branch "${GITHUB_REF_NAME}" --commit "${GITHUB_SHA}"
+
+      - name: Validate run 2
+        run: node migration/phase-4/scripts/validate-output.mjs --output migration/phase-4/tmp/run-2
+
+      - name: Verify determinism
+        run: node migration/phase-4/scripts/verify-determinism.mjs --a migration/phase-4/tmp/run-1 --b migration/phase-4/tmp/run-2
+
+      - name: Verify protected scope
+        run: node migration/phase-4/scripts/verify-phase4-scope.mjs
+
+      - name: Stage artifact
+        run: |
+          cp -R migration/phase-4/tmp/run-1/. migration/phase-4/tmp/artifact/
+          printf '# Phase 4 Compiler Summary\n\n- Commit: `%s`\n- Branch: `%s`\n- Two-run determinism: PASS\n- Protected scope: PASS\n' "${GITHUB_SHA}" "${GITHUB_REF_NAME}" > migration/phase-4/tmp/artifact/phase-4-compiler.md
+
+      - name: Upload compiler outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-4-compiler-${{ github.sha }}
+          path: migration/phase-4/tmp/artifact
+          if-no-files-found: error
