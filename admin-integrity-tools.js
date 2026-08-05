@@ -87,6 +87,64 @@
       .filter((group) => new Set(group.map((row) => normalized(row.rawPerson))).size === 1);
   }
 
+  const englishQualifierPatterns = [
+    /\bof\s+[\p{L}\p{N}'’-]+(?:\s+[\p{L}\p{N}'’-]+)*$/u,
+    /\bthe\s+(?:great|elder|younger|conqueror|navigator|terrible|bold|bruce|wise|lionheart)$/u
+  ];
+
+  const koreanQualifierPatterns = [
+    /\s*(?:왕비|왕후|여왕|황후|황제|왕|대왕|공주|태후|섭정|장군|성인)$/u
+  ];
+
+  function stripEnglishQualifier(value) {
+    let result = normalized(value);
+    for (const pattern of englishQualifierPatterns) result = result.replace(pattern, "").trim();
+    return result;
+  }
+
+  function stripKoreanQualifier(value) {
+    let result = normalized(value);
+    for (const pattern of koreanQualifierPatterns) result = result.replace(pattern, "").trim();
+    return result;
+  }
+
+  function samePeriodAndPolity(a, b) {
+    return normalized(a.displayPolity) === normalized(b.displayPolity)
+      && a.start === b.start
+      && a.end === b.end;
+  }
+
+  function qualifiedNameDuplicateCandidates(rows) {
+    const candidates = [];
+    const seen = new Set();
+
+    for (let i = 0; i < rows.length; i += 1) {
+      for (let j = i + 1; j < rows.length; j += 1) {
+        const a = rows[i];
+        const b = rows[j];
+        if (!samePeriodAndPolity(a, b)) continue;
+        if (normalized(a.rawPerson) === normalized(b.rawPerson)) continue;
+        if (normalized(a.displayPerson) === normalized(b.displayPerson)) continue;
+
+        const englishBaseA = stripEnglishQualifier(a.rawPerson);
+        const englishBaseB = stripEnglishQualifier(b.rawPerson);
+        const koreanBaseA = stripKoreanQualifier(a.displayPerson);
+        const koreanBaseB = stripKoreanQualifier(b.displayPerson);
+
+        const englishMatch = englishBaseA && englishBaseA === englishBaseB;
+        const koreanMatch = koreanBaseA && koreanBaseA === koreanBaseB;
+        if (!englishMatch || !koreanMatch) continue;
+
+        const key = [a.id, b.id].sort().join("|");
+        if (seen.has(key)) continue;
+        seen.add(key);
+        candidates.push([a, b]);
+      }
+    }
+
+    return candidates;
+  }
+
   const acceptedConcurrentPeople = new Set([
     "charles v",
     "cnut the great",
@@ -168,7 +226,7 @@
       </section>
       <section class="panel" id="integrityAuditPanel">
         <div class="panel-head">
-          <div><h2>중복·명칭 무결성 검사</h2><p>한국어 표시명이 같고 원본 저장명이 다른 인물을 중복 등록 후보로 잡습니다.</p></div>
+          <div><h2>중복·명칭 무결성 검사</h2><p>한국어 정확 일치와 칭호·지명 설명어 차이를 각각 검사합니다.</p></div>
           <div class="actions">
             <button id="integrityAuditButton" class="button primary" type="button">중복 검사 실행</button>
             <button id="integrityAuditCopyButton" class="button secondary" type="button" disabled>결과 복사</button>
@@ -250,17 +308,18 @@
     button.disabled = true;
     copyButton.disabled = true;
     output.dataset.type = "info";
-    output.textContent = "한국어 표시명 기준으로 중복을 검사 중...";
+    output.textContent = "한국어 표시명과 설명어 차이를 검사 중...";
 
     try {
       const rows = await fetchRows();
       const rawDuplicates = rawExactDuplicates(rows);
       const canonicalDuplicates = canonicalExactDuplicates(rows);
       const koreanDuplicates = koreanNameDuplicateCandidates(rows);
+      const qualifiedDuplicates = qualifiedNameDuplicateCandidates(rows);
       const legitimateMultiRows = legitimateMultiActivityGroups(rows);
       const relations = classifyRelations(rows);
 
-      const hardFailures = rawDuplicates.length + canonicalDuplicates.length + koreanDuplicates.length + relations.samePolityConflicts.length;
+      const hardFailures = rawDuplicates.length + canonicalDuplicates.length + koreanDuplicates.length + qualifiedDuplicates.length + relations.samePolityConflicts.length;
       const reviewItems = relations.unresolvedConcurrent.length;
       const status = hardFailures ? "FAIL ❌" : reviewItems ? "PASS WITH REVIEW ⚠️" : "PASS ✅";
 
@@ -273,6 +332,7 @@
         `원본 저장명 정확 중복 묶음: ${rawDuplicates.length}`,
         `canonical 정확 중복 묶음: ${canonicalDuplicates.length}`,
         `한국어명 기준 중복 등록 후보: ${koreanDuplicates.length}`,
+        `칭호·지명 설명어 중복 후보: ${qualifiedDuplicates.length}`,
         `정상 복수 활동행 그룹: ${legitimateMultiRows.length}`,
         `동일 canonical 인물·정치체 기간 충돌: ${relations.samePolityConflicts.length}`,
         `정상 정치체 전환: ${relations.transitions.length}`,
@@ -285,6 +345,10 @@
       if (koreanDuplicates.length) {
         lines.push("", "[오류 — 한국어 표시명이 같지만 원본 저장명이 다른 중복 등록 후보]");
         koreanDuplicates.forEach((group) => lines.push(`- ${group[0].displayPerson}: ${group.map(rowLine).join(" ↔ ")}`));
+      }
+      if (qualifiedDuplicates.length) {
+        lines.push("", "[오류 — 칭호·지명 설명어만 다른 동일 인물 중복 후보]");
+        qualifiedDuplicates.forEach((pair) => lines.push(`- ${pair.map(rowLine).join(" ↔ ")}`));
       }
       if (rawDuplicates.length) {
         lines.push("", "[오류 — 원본 저장명·정치체·기간 정확 중복]");
