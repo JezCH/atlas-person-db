@@ -1,0 +1,185 @@
+{
+  "files": [
+    {
+      "bytes": 3968,
+      "category": "html",
+      "path": "admin.html",
+      "sha256": "d2913f939dbc656a1480926e978cf4c87fdf19f6852312b2dd5ebbba27ac64f4"
+    },
+    {
+      "bytes": 11651,
+      "category": "javascript",
+      "path": "admin.js",
+      "sha256": "8473b96c8c6c4525ae04768ae502d90795682aea40d7b77ea15cf44496ad2662"
+    },
+    {
+      "bytes": 14178,
+      "category": "javascript",
+      "path": "app.js",
+      "sha256": "5d85ed8f5733c62df2850ac1ac0a6efee7722e071c9e630654790bd49cfe44db"
+    },
+    {
+      "bytes": 5381,
+      "category": "javascript",
+      "path": "atlas-canonical-data.js",
+      "sha256": "0ae7194e39a07abc63c53c09637683690b8846f59bfb79e69a7087bc15955154"
+    },
+    {
+      "bytes": 9199,
+      "category": "html",
+      "path": "index.html",
+      "sha256": "ad416fda180e21287ba23d072c5a7c84d5ee4aa90835be1884d608eb57d4e3a7"
+    },
+    {
+      "bytes": 3186,
+      "category": "javascript",
+      "path": "ingest.js",
+      "sha256": "244eaf3cad99b4b4fecc8ea82c6fc68e970aede0a8d8cb26f9880529f7fdb3be"
+    },
+    {
+      "bytes": 200,
+      "category": "sql",
+      "path": "migrations/002_add_verified.sql",
+      "sha256": "32fbc01160eb717eded136f1536e21c51c4d58ad109ff2e5dcbedd5289d74b95"
+    },
+    {
+      "bytes": 7112,
+      "category": "json",
+      "path": "non-timeline-persons.json",
+      "sha256": "876549e9ff2247ceabb0528df13bf3752de069bd85ded4079a4202d801d08a92"
+    },
+    {
+      "bytes": 9482,
+      "category": "json",
+      "path": "pending-records-corrections.json",
+      "sha256": "f74e9ad540c30dae3c626f2ef9c0de3fb463de29d72c3540d555ef3c2bf35448"
+    },
+    {
+      "bytes": 2924,
+      "category": "json",
+      "path": "pending-records-supplement-10.json",
+      "sha256": "59dcd36b1c0b1ec53402560f4fd710c20dfc4910386ed6cff7eda8f912e09b01"
+    },
+    {
+      "bytes": 3817,
+      "category": "json",
+      "path": "pending-records-supplement-11.json",
+      "sha256": "e5b5358ea96331bf5199b676ef21372d5711cf95076c764a96629ce4ca0d96f7"
+    },
+    {
+      "bytes": 4763,
+      "category": "json",
+      "path": "pending-records-supplement-2.json",
+      "sha256": "c36e4669946af18222913b8fa6efa8e91608f3ee78d2ba438e4d5a8309de7a75"
+    },
+    {
+      "bytes": 10061,
+      "category": "json",
+      "path": "pending-records-supplement-3.json",
+      "sha256": "8e9ddc2a2a5623dee0703ab6e6fb30630a026c1cf23e0c150f2265d5b0bf455c"
+    },
+    {
+      "bytes": 7450,
+      "category": "json",
+      "path": "pending-records-supplement-4.json",
+      "sha256": "4175719ce805726bfa809c5296e02e3adfb3578bae7ca34aa5ff8c542194168a"
+    },
+    {
+      "bytes": 16202,
+      "category": "json",
+      "path": "pending-records-supplement-5.json",
+      "sha256": "317c8cd0f4df2fd2d3bf2e3c84304e1dad16633cfb8ce31843ba1f7e98a05e4d"
+    },
+    {
+      "bytes": 21432,
+      "category": "json",
+      "path": "pending-records-supplement-6.json",
+      "sha256": "54b23a3c209bc6bb36bc44cb1a47daa57462fcb6cf7e96ad6796fab611d7fdb7"
+    },
+    {
+      "bytes": 8779,
+      "category": "json",
+      "path": "pending-records-supplement-7.json",
+      "sha256": "6c80ab6e6ed6d3eee3e47e769abf3b3f659079f20fd271f9dad30c9d76dbcae3"
+    },
+    {
+      "bytes": 2807,
+      "category": "json",
+      "path": "pending-records-supplement-8.json",
+      "sha256": "2e6c18765e0c23dafd582077e6b5a42e8af1e768cd929ce8e9f38ec733402257"
+    },
+    {
+      "bytes": 1188,
+      "category": "json",
+      "path": "pending-records-supplement-9.json",
+      "sha256": "98834bc15cf2f4ca1dc4d966962e04143e6d04097afa272870f9c0c4150e5974"
+    },
+    {
+      "bytes": 16549,
+      "category": "json",
+      "path": "pending-records-supplement.json",
+      "sha256": "719b77b0a781d991f6a1df24a999a90cb37d84e8be2bc5dee3b7af8c342e5093"
+    },
+    {
+      "bytes": 10686,
+      "category": "json",
+      "path": "pending-records.json",
+      "sha256": "8b78952fb503f17cc79de160232d60d75623b9605360c3db6fb1a36209b02f2a"
+    },
+    {
+      "bytes": 2177,
+      "category": "javascript",
+      "path": "person-locales-supplement-2.js",
+      "sha256": "a329c309ed1d83343ae6e0b97e1757e1f3e10d5d9c192c7ece9dcca2360dd67e"
+    },
+    {
+      "bytes": 3771,
+      "category": "javascript",
+      "path": "person-locales-supplement-3.js",
+      "sha256": "6ba4ba9f2987973f24a9835f922fa2dc1ec4ef1ca2b2ceab8e17a24dbfd58650"
+    },
+    {
+      "bytes": 2707,
+      "category": "javascript",
+      "path": "person-locales-supplement-4.js",
+      "sha256": "d6d4d3a5108317323bafb876bc92d6bcca5aa84d48a9ff18e3e267a99ca4258c"
+    },
+    {
+      "bytes": 10327,
+      "category": "javascript",
+      "path": "person-locales-supplement-5.js",
+      "sha256": "dbbfa5af106d25bb65ddbdc772c833a3227d6cd6d5d4eb4aef3dc89dab8ae376"
+    },
+    {
+      "bytes": 2170,
+      "category": "javascript",
+      "path": "person-locales-supplement-6.js",
+      "sha256": "70287bd9d7e4dc4552c877ebfb7bfd202df3ad4bba0f5563183b739e2f132e04"
+    },
+    {
+      "bytes": 4739,
+      "category": "javascript",
+      "path": "person-locales-supplement.js",
+      "sha256": "e25bd02fb3410648a3465e12ca96473080e7202d5660808e5bffdbbe7aa37e69"
+    },
+    {
+      "bytes": 2855,
+      "category": "javascript",
+      "path": "person-locales.js",
+      "sha256": "150586fd47814749310c5869ff43da1cfe1458cb188d8bb98c9febebce5d3c04"
+    },
+    {
+      "bytes": 2977,
+      "category": "sql",
+      "path": "schema.sql",
+      "sha256": "f7dc91837bca6b5d2a1c12869dc7c60487ab77abd861ec5029878161eacac3b1"
+    }
+  ],
+  "metadata": {
+    "audit_version": 2,
+    "audited_commit_sha": "396aef63d09e3e1023f922b14c7407ec84ce1fb3",
+    "baseline_main_sha": "a8ed85b7cf8bf687450688eb7f2216c766112950",
+    "branch": "agent/phase2-audit-hardening",
+    "repository": "JezCH/atlas-person-db"
+  }
+}

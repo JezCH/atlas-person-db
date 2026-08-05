@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "audit_version": 2,
+    "audited_commit_sha": "396aef63d09e3e1023f922b14c7407ec84ce1fb3",
+    "baseline_main_sha": "a8ed85b7cf8bf687450688eb7f2216c766112950",
+    "branch": "agent/phase2-audit-hardening",
+    "repository": "JezCH/atlas-person-db"
+  },
+  "counts": {
+    "fatal": 0,
+    "error": 143,
+    "warning": 14
+  },
+  "artifact": {
+    "run_id": 31017316444,
+    "artifact_id": 8935034380,
+    "artifact_name": "phase-2-audit-reports-396aef63d09e3e1023f922b14c7407ec84ce1fb3",
+    "digest": "sha256:618d4deba5d1e3b32b9b6ff8ffe990e4edf636959488405763ee0433b579e108"
+  },
+  "note": "The complete anomaly payload is preserved in the verified GitHub Actions artifact referenced above. This committed summary records the verified counts and artifact identity without altering source data."
+}
