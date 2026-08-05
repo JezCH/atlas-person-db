@@ -1,0 +1,66 @@
+name: Phase 5 Shadow Schema Dry Gate
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - agent/phase5-shadow-schema
+    paths:
+      - 'migration/phase-5/**'
+      - '.github/workflows/phase-5-shadow-dry.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase-5-shadow-dry-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  dry:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Prepare independent outputs
+        run: |
+          rm -rf migration/phase-5/tmp
+          mkdir -p migration/phase-5/tmp/run-1 migration/phase-5/tmp/run-2 migration/phase-5/tmp/artifact
+
+      - name: Build run 1
+        run: node migration/phase-5/scripts/build-shadow-bundle.mjs . migration/phase-5/tmp/run-1
+
+      - name: Validate run 1
+        run: node migration/phase-5/scripts/validate-shadow-bundle.mjs . migration/phase-5/tmp/run-1
+
+      - name: Build run 2
+        run: node migration/phase-5/scripts/build-shadow-bundle.mjs . migration/phase-5/tmp/run-2
+
+      - name: Validate run 2
+        run: node migration/phase-5/scripts/validate-shadow-bundle.mjs . migration/phase-5/tmp/run-2
+
+      - name: Verify determinism
+        run: node migration/phase-5/scripts/verify-determinism.mjs migration/phase-5/tmp/run-1 migration/phase-5/tmp/run-2
+
+      - name: Verify protected scope
+        run: node migration/phase-5/scripts/verify-phase5-scope.mjs
+
+      - name: Stage artifact
+        run: cp migration/phase-5/tmp/run-1/phase-5-* migration/phase-5/tmp/artifact/
+
+      - name: Upload dry reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-5-shadow-dry-${{ github.sha }}
+          path: migration/phase-5/tmp/artifact
+          if-no-files-found: error
+          retention-days: 90
