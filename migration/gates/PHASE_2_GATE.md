@@ -4,6 +4,15 @@
 
 Confirm that the current repository can be inventoried and audited deterministically without modifying production data, runtime behavior, Supabase, or Vercel configuration.
 
+## Authorized paths
+
+Only these paths may differ from the Phase 1 baseline during Phase 2:
+
+- `migration/**`
+- `.github/workflows/phase-2-audit.yml`
+
+The workflow file must remain read-only with `permissions: contents: read` and must not use deployment or database secrets.
+
 ## Required checks
 
 - [ ] Phase 1 gate remains valid.
@@ -11,7 +20,10 @@ Confirm that the current repository can be inventoried and audited deterministic
 - [ ] Existing production files changed: 0.
 - [ ] Existing production files deleted or renamed: 0.
 - [ ] Supabase changes: none.
-- [ ] Vercel and workflow changes: none.
+- [ ] Vercel changes: none.
+- [ ] No pre-existing workflow changed.
+- [ ] Audit workflow has read-only permissions.
+- [ ] Audit workflow contains no database or deployment secret references.
 - [ ] All canonical dataset files discovered.
 - [ ] All locale files discovered.
 - [ ] All JSON sources parsed successfully.
@@ -22,11 +34,14 @@ Confirm that the current repository can be inventoried and audited deterministic
 - [ ] Machine-readable baseline report generated.
 - [ ] Human-readable baseline report generated.
 - [ ] Anomaly report generated.
-- [ ] Report schema validation passed.
-- [ ] Two executions against the same input are byte-for-byte deterministic.
+- [ ] Report schema validation passed for both independent runs.
+- [ ] Two independent executions against the same commit are byte-for-byte deterministic.
 - [ ] Existing English-display locale loader defect is detected and documented.
-- [ ] Audit command returns exit code 0 when the engine itself succeeds.
-- [ ] Main-to-migration diff remains confined to `migration/**`.
+- [ ] Audit engine returns exit code 0 when execution succeeds.
+- [ ] Protected-path check passes against the Phase 1 baseline SHA.
+- [ ] Validated report artifact uploaded by GitHub Actions.
+- [ ] GitHub Actions workflow conclusion is `success`.
+- [ ] Main-to-migration diff remains confined to authorized paths.
 
 ## Gate semantics
 
@@ -36,14 +51,17 @@ Confirm that the current repository can be inventoried and audited deterministic
 
 ## Automatic failure conditions
 
-- Existing runtime, data, locale, schema, workflow, or deployment file changed.
-- Any database or network write occurred.
+- Existing runtime, data, locale, schema, deployment, or pre-existing workflow file changed.
+- Any database, deployment, or network write other than artifact upload occurred.
 - Repository JavaScript executed during locale parsing.
 - Source file silently skipped.
 - Declared source file missing without a fatal diagnostic.
 - Non-deterministic report output.
 - Audit report violates its schema.
-- Audit tool writes outside `migration/reports`.
+- Audit tool writes outside its explicit output directory.
+- Workflow has `contents: write` or broader permissions.
+- Workflow references Supabase, Vercel, production, or deployment secrets.
+- Workflow pushes a commit or updates a branch.
 
 ## Completion record
 
@@ -52,14 +70,22 @@ Status: PENDING
 - Branch:
 - Baseline main SHA:
 - Phase 2 start SHA:
+- Audited commit SHA:
 - Phase 2 end SHA:
-- Existing files changed:
+- Workflow file:
+- Workflow run ID:
+- Workflow conclusion:
+- Artifact name:
+- Existing production files changed:
 - Database changes:
 - Runtime changes:
 - Audit exit code:
 - Fatal anomalies:
 - Errors:
 - Warnings:
+- Report schema validation:
 - Determinism check:
+- Protected-path check:
 - Gate result:
+- Data clean:
 - Phase 3 authorized: no
