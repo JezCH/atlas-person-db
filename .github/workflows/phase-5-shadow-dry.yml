@@ -31,6 +31,16 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Rebuild verified Phase 4 outputs
+        run: |
+          rm -rf migration/phase-4/output
+          mkdir -p migration/phase-4/output
+          node migration/phase-4/scripts/compile-all.mjs \
+            --root . \
+            --output migration/phase-4/output \
+            --branch agent/phase5-shadow-schema \
+            --commit "${GITHUB_SHA}"
+
       - name: Prepare independent outputs
         run: |
           rm -rf migration/phase-5/tmp
