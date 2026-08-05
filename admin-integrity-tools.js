@@ -5,33 +5,42 @@
   if (!window.supabase || !config.SUPABASE_URL || !config.SUPABASE_ANON_KEY) return;
 
   const db = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
-  const hasOwn = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
   const compact = (value) => String(value ?? "").trim();
   const normalized = (value) => compact(value).toLowerCase().replace(/\s+/g, " ");
+  const hasOwn = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
+
+  function personMap() {
+    return window.ATLAS_LOCALES?.ko?.persons || {};
+  }
+
+  function polityMap() {
+    return window.ATLAS_LOCALES?.ko?.polities || {};
+  }
 
   function displayPerson(name) {
-    const map = window.ATLAS_LOCALES?.ko?.persons || {};
+    const map = personMap();
     return hasOwn(map, name) ? compact(map[name]) : compact(name);
   }
 
   function displayPolity(name) {
-    const map = window.ATLAS_LOCALES?.ko?.polities || {};
+    const map = polityMap();
     return hasOwn(map, name) ? compact(map[name]) : compact(name);
   }
 
   async function resolveCanonical(name) {
     try {
       const { data, error } = await db.rpc("resolve_person_identity", { input_name: name });
-      if (!error && Array.isArray(data) && data[0]?.canonical_name) return compact(data[0].canonical_name);
+      if (!error && Array.isArray(data) && data[0]?.canonical_name) {
+        return compact(data[0].canonical_name);
+      }
     } catch (_) {}
     return compact(name);
   }
 
   async function buildRows(rawRows) {
     const canonicalByName = new Map();
-    for (const name of [...new Set(rawRows.map((row) => compact(row.person_name)).filter(Boolean))]) {
-      canonicalByName.set(name, await resolveCanonical(name));
-    }
+    const uniqueNames = [...new Set(rawRows.map((row) => compact(row.person_name)).filter(Boolean))];
+    for (const name of uniqueNames) canonicalByName.set(name, await resolveCanonical(name));
 
     return rawRows.map((row) => ({
       id: row.id,
@@ -48,69 +57,39 @@
     }));
   }
 
-  function groupByExactValue(rows, valueOf) {
-    const map = new Map();
+  function groupBy(rows, keyOf) {
+    const groups = new Map();
     for (const row of rows) {
-      const value = valueOf(row);
-      if (!map.has(value)) map.set(value, []);
-      map.get(value).push(row);
+      const key = keyOf(row);
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(row);
     }
-    return [...map.values()].filter((bucket) => bucket.length > 1);
+    return [...groups.values()].filter((group) => group.length > 1);
   }
 
-  function findRawExactDuplicates(rows) {
-    return groupByExactValue(rows, (row) => JSON.stringify([
-      row.rawPerson,
-      row.rawPolity,
-      row.start,
-      row.end
-    ]));
+  function rawExactDuplicates(rows) {
+    return groupBy(rows, (row) => JSON.stringify([row.rawPerson, row.rawPolity, row.start, row.end]));
   }
 
-  function findCanonicalExactDuplicates(rows) {
-    return groupByExactValue(rows, (row) => JSON.stringify([
-      row.canonicalPerson,
-      row.rawPolity,
-      row.start,
-      row.end
-    ]));
+  function canonicalExactDuplicates(rows) {
+    return groupBy(rows, (row) => JSON.stringify([row.canonicalPerson, row.rawPolity, row.start, row.end]));
   }
 
-  function findSameDisplayNames(rows) {
-    return groupByExactValue(rows, (row) => row.displayPerson);
+  // 핵심 검사: 일반 화면에 같은 이름으로 보이지만 DB 원본명이 서로 다르면 중복 등록 후보이다.
+  // 정치체·기간·역할은 판정 조건으로 사용하지 않는다.
+  function koreanNameDuplicateCandidates(rows) {
+    return groupBy(rows, (row) => row.displayPerson)
+      .filter((group) => new Set(group.map((row) => row.rawPerson)).size > 1);
   }
 
-  function findAliasGroups(rows) {
-    return groupByExactValue(rows, (row) => row.canonicalPerson)
-      .filter((bucket) => new Set(bucket.map((row) => row.rawPerson)).size > 1);
+  // 동일 원본 인물의 정상적인 복수 활동행은 별도 참고 목록으로만 표시한다.
+  function legitimateMultiActivityGroups(rows) {
+    return groupBy(rows, (row) => row.displayPerson)
+      .filter((group) => new Set(group.map((row) => row.rawPerson)).size === 1);
   }
 
-  function findDuplicatePersonRegistrations(rows) {
-    return groupByExactValue(rows, (row) => JSON.stringify([
-      row.displayPerson,
-      row.displayPolity,
-      row.start,
-      row.end
-    ]));
-  }
-
-  function findUnlocalizedRows(rows) {
+  function unlocalizedRows(rows) {
     return rows.filter((row) => row.displayPerson === row.rawPerson);
-  }
-
-  function findPotentialAliasDuplicates(rows) {
-    const unlocalized = findUnlocalizedRows(rows);
-    const candidates = [];
-    for (let i = 0; i < unlocalized.length; i += 1) {
-      for (let j = i + 1; j < unlocalized.length; j += 1) {
-        const a = unlocalized[i];
-        const b = unlocalized[j];
-        const sameRenderedContext = a.displayPolity === b.displayPolity && a.start === b.start && a.end === b.end;
-        const sameCanonical = normalized(a.canonicalPerson) === normalized(b.canonicalPerson);
-        if (sameRenderedContext && sameCanonical) candidates.push([a, b]);
-      }
-    }
-    return candidates;
   }
 
   const acceptedConcurrentPeople = new Set([
@@ -121,7 +100,7 @@
     "nzinga mbande"
   ]);
 
-  function classifyCanonicalRelations(rows) {
+  function classifyRelations(rows) {
     const samePolityConflicts = [];
     const transitions = [];
     const acceptedConcurrent = [];
@@ -185,24 +164,16 @@
   function panelHtml() {
     return `
       <section class="panel" id="identityLookupPanel">
-        <div class="panel-head">
-          <div>
-            <h2>인물 등록 여부 확인</h2>
-            <p>Supabase canonical registry와 실제 활동행을 직접 조회합니다.</p>
-          </div>
-        </div>
+        <div class="panel-head"><div><h2>인물 등록 여부 확인</h2><p>원본명·canonical·한국어 표시명을 조회합니다.</p></div></div>
         <div class="actions">
-          <input id="identityLookupInput" type="search" placeholder="예: Askia Muhammad / 아스키아 무함마드" style="flex:1;min-width:240px;padding:12px;border:1px solid #cfd6e1;border-radius:8px" />
+          <input id="identityLookupInput" type="search" placeholder="예: 예카테리나 2세 / Catherine II" style="flex:1;min-width:240px;padding:12px;border:1px solid #cfd6e1;border-radius:8px" />
           <button id="identityLookupButton" class="button primary" type="button">DB에서 확인</button>
         </div>
         <pre id="identityLookupResult" class="result" aria-live="polite">검색어를 입력하세요.</pre>
       </section>
       <section class="panel" id="integrityAuditPanel">
         <div class="panel-head">
-          <div>
-            <h2>중복·명칭 무결성 검사</h2>
-            <p>한국어 표시 중복, 미번역 행, canonical 중복을 각각 독립 검사합니다.</p>
-          </div>
+          <div><h2>중복·명칭 무결성 검사</h2><p>한국어 표시명이 같고 원본 저장명이 다른 인물을 중복 등록 후보로 잡습니다.</p></div>
           <div class="actions">
             <button id="integrityAuditButton" class="button primary" type="button">중복 검사 실행</button>
             <button id="integrityAuditCopyButton" class="button secondary" type="button" disabled>결과 복사</button>
@@ -238,11 +209,17 @@
     });
   }
 
+  async function fetchRows() {
+    const { data, error } = await db.from("person_politics")
+      .select("id,person_name,politic_name,activity_start,activity_end,role,period_basis,notes");
+    if (error) throw error;
+    return buildRows(data || []);
+  }
+
   async function lookupIdentity() {
     const input = document.getElementById("identityLookupInput");
     const output = document.getElementById("identityLookupResult");
     const query = compact(input.value);
-
     if (!query) {
       output.dataset.type = "error";
       output.textContent = "인물명을 입력하세요.";
@@ -251,19 +228,11 @@
 
     output.dataset.type = "info";
     output.textContent = "Supabase에서 확인 중...";
-
     try {
-      const { data, error } = await db.from("person_politics")
-        .select("id,person_name,politic_name,activity_start,activity_end,role,period_basis,notes");
-      if (error) throw error;
-
-      const rows = await buildRows(data || []);
+      const rows = await fetchRows();
       const queryKey = normalized(query);
-      const matches = rows.filter((row) => [
-        row.rawPerson,
-        row.canonicalPerson,
-        row.displayPerson
-      ].some((value) => normalized(value) === queryKey));
+      const matches = rows.filter((row) => [row.rawPerson, row.canonicalPerson, row.displayPerson]
+        .some((value) => normalized(value) === queryKey));
 
       if (!matches.length) {
         output.dataset.type = "error";
@@ -272,12 +241,7 @@
       }
 
       output.dataset.type = "success";
-      output.textContent = [
-        "등록됨 ✅",
-        `Activity rows: ${matches.length}`,
-        "",
-        ...matches.map((row) => `- ${rowLine(row)}`)
-      ].join("\n");
+      output.textContent = ["등록됨 ✅", `Activity rows: ${matches.length}`, "", ...matches.map((row) => `- ${rowLine(row)}`)].join("\n");
     } catch (error) {
       output.dataset.type = "error";
       output.textContent = `조회 실패: ${error.message}`;
@@ -288,30 +252,23 @@
     const button = document.getElementById("integrityAuditButton");
     const copyButton = document.getElementById("integrityAuditCopyButton");
     const output = document.getElementById("integrityAuditResult");
-
     button.disabled = true;
     copyButton.disabled = true;
     output.dataset.type = "info";
-    output.textContent = "한국어 표시명과 canonical 기준을 함께 검사 중...";
+    output.textContent = "한국어 표시명 기준으로 중복을 검사 중...";
 
     try {
-      const { data, error } = await db.from("person_politics")
-        .select("id,person_name,politic_name,activity_start,activity_end,role,period_basis,notes");
-      if (error) throw error;
+      const rows = await fetchRows();
+      const rawDuplicates = rawExactDuplicates(rows);
+      const canonicalDuplicates = canonicalExactDuplicates(rows);
+      const koreanDuplicates = koreanNameDuplicateCandidates(rows);
+      const legitimateMultiRows = legitimateMultiActivityGroups(rows);
+      const missingLocales = unlocalizedRows(rows);
+      const relations = classifyRelations(rows);
 
-      const rows = await buildRows(data || []);
-      const rawDuplicates = findRawExactDuplicates(rows);
-      const canonicalDuplicates = findCanonicalExactDuplicates(rows);
-      const duplicateRegistrations = findDuplicatePersonRegistrations(rows);
-      const sameDisplayNames = findSameDisplayNames(rows);
-      const aliases = findAliasGroups(rows);
-      const unlocalizedRows = findUnlocalizedRows(rows);
-      const potentialAliasDuplicates = findPotentialAliasDuplicates(rows);
-      const relations = classifyCanonicalRelations(rows);
-
-      const hardFailures = rawDuplicates.length + canonicalDuplicates.length + duplicateRegistrations.length + potentialAliasDuplicates.length + relations.samePolityConflicts.length;
-      const reviewItems = sameDisplayNames.length + aliases.length + unlocalizedRows.length + relations.unresolvedConcurrent.length;
-      const status = hardFailures > 0 ? "FAIL ❌" : reviewItems > 0 ? "PASS WITH REVIEW ⚠️" : "PASS ✅";
+      const hardFailures = rawDuplicates.length + canonicalDuplicates.length + koreanDuplicates.length + relations.samePolityConflicts.length;
+      const reviewItems = relations.unresolvedConcurrent.length;
+      const status = hardFailures ? "FAIL ❌" : reviewItems ? "PASS WITH REVIEW ⚠️" : "PASS ✅";
 
       const lines = [
         "ATLAS DB Integrity Audit — LIVE",
@@ -321,11 +278,9 @@
         `고유 canonical 인물: ${new Set(rows.map((row) => row.canonicalPerson)).size}`,
         `원본 저장명 정확 중복 묶음: ${rawDuplicates.length}`,
         `canonical 정확 중복 묶음: ${canonicalDuplicates.length}`,
-        `동일 인물 중복 등록 후보: ${duplicateRegistrations.length}`,
-        `한국어 동일 인물명 그룹: ${sameDisplayNames.length}`,
-        `한국어 미번역 활동행: ${unlocalizedRows.length}`,
-        `미번역 canonical 중복 후보: ${potentialAliasDuplicates.length}`,
-        `alias/canonical 통합 후보: ${aliases.length}`,
+        `한국어명 기준 중복 등록 후보: ${koreanDuplicates.length}`,
+        `정상 복수 활동행 그룹: ${legitimateMultiRows.length}`,
+        `한국어 미번역 활동행: ${missingLocales.length}`,
         `동일 canonical 인물·정치체 기간 충돌: ${relations.samePolityConflicts.length}`,
         `정상 정치체 전환: ${relations.transitions.length}`,
         `검토 완료 복수 통치: ${relations.acceptedConcurrent.length}`,
@@ -334,66 +289,32 @@
         `Status: ${status}`
       ];
 
+      if (koreanDuplicates.length) {
+        lines.push("", "[오류 — 한국어 표시명이 같지만 원본 저장명이 다른 중복 등록 후보]");
+        koreanDuplicates.forEach((group) => lines.push(`- ${group[0].displayPerson}: ${group.map(rowLine).join(" ↔ ")}`));
+      }
       if (rawDuplicates.length) {
         lines.push("", "[오류 — 원본 저장명·정치체·기간 정확 중복]");
-        rawDuplicates.forEach((bucket) => lines.push(`- ${bucket.map(rowLine).join(" ↔ ")}`));
+        rawDuplicates.forEach((group) => lines.push(`- ${group.map(rowLine).join(" ↔ ")}`));
       }
-
       if (canonicalDuplicates.length) {
         lines.push("", "[오류 — canonical 인물·정치체·기간 정확 중복]");
-        canonicalDuplicates.forEach((bucket) => lines.push(`- ${bucket.map(rowLine).join(" ↔ ")}`));
+        canonicalDuplicates.forEach((group) => lines.push(`- ${group.map(rowLine).join(" ↔ ")}`));
       }
-
-      if (duplicateRegistrations.length) {
-        lines.push("", "[오류 — 일반 화면 기준 동일 인물 중복 등록]");
-        duplicateRegistrations.forEach((bucket) => {
-          lines.push(`- ${bucket[0].displayPerson}: ${bucket.map(rowLine).join(" ↔ ")}`);
-        });
-      }
-
-      if (potentialAliasDuplicates.length) {
-        lines.push("", "[오류 — 미번역 원본명은 다르지만 canonical·정치체·기간이 같은 후보]");
-        potentialAliasDuplicates.forEach((pair) => lines.push(`- ${pair.map(rowLine).join(" ↔ ")}`));
-      }
-
-      if (sameDisplayNames.length) {
-        lines.push("", "[검토 — 한국어 표시명이 같은 모든 활동행]");
-        sameDisplayNames.forEach((bucket) => {
-          lines.push(`- ${bucket[0].displayPerson}: ${bucket.map(rowLine).join(" ↔ ")}`);
-        });
-      }
-
-      if (unlocalizedRows.length) {
-        lines.push("", "[검토 — 한국어 로케일이 없어 원본 영문명으로 표시되는 활동행]");
-        unlocalizedRows.forEach((row) => lines.push(`- ${rowLine(row)}`));
-      }
-
-      if (aliases.length) {
-        lines.push("", "[검토 — 서로 다른 원본명이 같은 canonical 인물로 통합됨]");
-        aliases.forEach((bucket) => lines.push(`- ${bucket.map(rowLine).join(" ↔ ")}`));
-      }
-
       if (relations.samePolityConflicts.length) {
-        lines.push("", "[오류 — 동일 canonical 인물·동일 정치체 기간 중첩]");
-        relations.samePolityConflicts.forEach((pair) => lines.push(relationLine(pair)));
+        lines.push("", "[오류 — 동일 canonical 인물·동일 정치체 기간 중첩]", ...relations.samePolityConflicts.map(relationLine));
       }
-
       if (relations.unresolvedConcurrent.length) {
-        lines.push("", "[검토 — 미분류 복수 정치체]");
-        relations.unresolvedConcurrent.forEach((pair) => lines.push(relationLine(pair)));
+        lines.push("", "[검토 — 미분류 복수 정치체]", ...relations.unresolvedConcurrent.map(relationLine));
       }
-
       if (relations.acceptedConcurrent.length) {
-        lines.push("", "[정상 — 검토 완료 복수 통치·동군연합]");
-        relations.acceptedConcurrent.forEach((pair) => lines.push(relationLine(pair)));
+        lines.push("", "[정상 — 검토 완료 복수 통치·동군연합]", ...relations.acceptedConcurrent.map(relationLine));
       }
-
       if (relations.transitions.length) {
-        lines.push("", "[정상 — 같은 연도 정치체 전환]");
-        relations.transitions.forEach((pair) => lines.push(relationLine(pair)));
+        lines.push("", "[정상 — 같은 연도 정치체 전환]", ...relations.transitions.map(relationLine));
       }
 
-      output.dataset.type = hardFailures > 0 ? "error" : reviewItems > 0 ? "info" : "success";
+      output.dataset.type = hardFailures ? "error" : reviewItems ? "info" : "success";
       output.textContent = lines.join("\n");
       copyButton.disabled = false;
     } catch (error) {
