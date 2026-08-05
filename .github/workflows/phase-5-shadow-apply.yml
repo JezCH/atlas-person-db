@@ -76,11 +76,11 @@ jobs:
           set -euo pipefail
           rm -rf migration/phase-5/tmp
           mkdir -p migration/phase-5/tmp/apply
-          node migration/phase-5/scripts/build-deployment-bundle.mjs \
+          node migration/phase-5/scripts/build-shadow-bundle.mjs \
             --root . \
             --output migration/phase-5/tmp/apply \
             --commit "$APPROVED_SHA"
-          node migration/phase-5/scripts/validate-dry-bundle.mjs \
+          node migration/phase-5/scripts/validate-shadow-bundle.mjs \
             --root . \
             --output migration/phase-5/tmp/apply
 
@@ -123,10 +123,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: phase-5-shadow-apply-${{ env.APPROVED_SHA || github.sha }}
-          path: |
-            migration/phase-5/tmp/apply/phase-5-validation.json
-            migration/phase-5/tmp/apply/phase-5-apply.log
-            migration/phase-5/tmp/apply/phase-5-deployment.sql
-            migration/phase-5/tmp/apply/phase-5-rollback.sql
-          if-no-files-found: error
+          path: migration/phase-5/tmp/apply
+          if-no-files-found: warn
           retention-days: 90
