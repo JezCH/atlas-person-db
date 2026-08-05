@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "required_tables": 18,
+  "required_types": 10,
+  "required_fragments": 11,
+  "failures": []
+}

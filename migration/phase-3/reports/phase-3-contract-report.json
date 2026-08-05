@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "repository": "JezCH/atlas-person-db",
+    "branch": "agent/phase3-target-schema",
+    "audited_commit_sha": "c17c3e3f132dd2e32bdaf70992e41e116e36bfd0",
+    "phase2_baseline_sha": "ce4b1b714f3c9ebc2da2bb7e56d76479a33e4580",
+    "generator_version": 1
+  },
+  "fragment_count": 11,
+  "fragments": [
+    "001_types.sql",
+    "002_core_entities.sql",
+    "003_names.sql",
+    "004_vocabularies.sql",
+    "005_relationships.sql",
+    "006_chronology.sql",
+    "007_descriptions.sql",
+    "008_sources.sql",
+    "009_indexes.sql",
+    "010_rls_stub.sql",
+    "099_schema_contract.sql"
+  ],
+  "bytes": 11009,
+  "sha256": "b9f63fb2b5f1b87816b084a10588e54854d1ce51b0871330c05b53bd8deaa65d"
+}
