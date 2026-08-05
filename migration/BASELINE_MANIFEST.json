@@ -1,0 +1,37 @@
+{
+  "repository": "JezCH/atlas-person-db",
+  "base_branch": "main",
+  "migration_branch": "agent/normalized-i18n-migration",
+  "base_commit": "a8ed85b7cf8bf687450688eb7f2216c766112950",
+  "runtime_entrypoints": [
+    "index.html",
+    "admin.html"
+  ],
+  "current_primary_table": "public.person_politics",
+  "canonical_manifest": "atlas-canonical-data.js",
+  "non_timeline_dataset": "non-timeline-persons.json",
+  "legacy_locale_files": [
+    "person-locales.js",
+    "person-locales-supplement-2.js",
+    "person-locales-supplement-3.js",
+    "person-locales-supplement-4.js",
+    "person-locales-supplement-5.js",
+    "person-locales-supplement-6.js"
+  ],
+  "protected_paths": [
+    "pending-records*.json",
+    "non-timeline-persons.json",
+    "schema.sql",
+    "config.js",
+    "app.js",
+    "admin.js",
+    "ingest.js",
+    "atlas-canonical-data.js",
+    "index.html",
+    "admin.html",
+    "person-locales*.js"
+  ],
+  "phase_1_runtime_changes_allowed": false,
+  "phase_1_database_changes_allowed": false,
+  "phase_1_data_changes_allowed": false
+}
