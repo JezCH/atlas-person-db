@@ -7,5 +7,14 @@
     "role": "King",
     "period_basis": "reign",
     "notes": "Taejo of Goryeo, born Wang Geon, founded the Goryeo dynasty in 918 and completed the unification of the Later Three Kingdoms in 936."
+  },
+  {
+    "person_name": "Gustav II Adolf",
+    "politic_name": "Sweden",
+    "activity_start": 1611,
+    "activity_end": 1632,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Gustav II Adolf ruled Sweden from 1611 to 1632. He strengthened the Swedish state, reformed its army, and made Sweden a major European power during the Thirty Years' War. He was killed at the Battle of Lutzen in 1632."
   }
 ]
