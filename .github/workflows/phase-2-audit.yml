@@ -1,0 +1,68 @@
+name: Phase 2 Baseline Audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - agent/phase2-audit-hardening
+    paths:
+      - 'migration/**'
+      - '.github/workflows/phase-2-audit.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase-2-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Prepare output directories
+        run: |
+          rm -rf migration/tmp
+          mkdir -p migration/tmp/run-1 migration/tmp/run-2
+
+      - name: Audit run 1
+        run: node migration/scripts/audit-baseline.mjs --root . --output migration/tmp/run-1 --branch "${GITHUB_REF_NAME}" --commit "${GITHUB_SHA}"
+
+      - name: Audit run 2
+        run: node migration/scripts/audit-baseline.mjs --root . --output migration/tmp/run-2 --branch "${GITHUB_REF_NAME}" --commit "${GITHUB_SHA}"
+
+      - name: Validate run 1
+        run: node migration/scripts/validate-report.mjs migration/tmp/run-1
+
+      - name: Validate run 2
+        run: node migration/scripts/validate-report.mjs migration/tmp/run-2
+
+      - name: Verify deterministic outputs
+        run: node migration/scripts/verify-determinism.mjs migration/tmp/run-1 migration/tmp/run-2
+
+      - name: Verify protected paths
+        run: node migration/scripts/verify-protected-paths.mjs a8ed85b7cf8bf687450688eb7f2216c766112950
+
+      - name: Stage validated reports
+        run: |
+          rm -rf migration/tmp/artifact
+          mkdir -p migration/tmp/artifact
+          cp migration/tmp/run-1/phase-2-* migration/tmp/artifact/
+
+      - name: Upload validated reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-2-audit-reports-${{ github.sha }}
+          path: migration/tmp/artifact
+          if-no-files-found: error
+          retention-days: 30
