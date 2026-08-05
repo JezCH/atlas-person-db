@@ -89,7 +89,7 @@
 
   function stripEnglishQualifier(value) {
     return normalized(value)
-      .replace(/\s+of\s+[\p{L}\p{N}'’-]+(?:\s+[\p{L}\p{N}'’-]+)*$/u, "")
+      .replace(/\s+of\s+.+$/u, "")
       .replace(/\s+the\s+(?:great|elder|younger|conqueror|navigator|terrible|bold|wise|lionheart)$/u, "")
       .trim();
   }
