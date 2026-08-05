@@ -2,11 +2,13 @@
   "use strict";
 
   const personAdditions = Object.freeze({
-    "Taejo of Goryeo": "왕건"
+    "Taejo of Goryeo": "왕건",
+    "Gustav II Adolf": "구스타브 2세 아돌프"
   });
 
   const polityAdditions = Object.freeze({
-    "Goryeo": "고려"
+    "Goryeo": "고려",
+    "Sweden": "스웨덴"
   });
 
   const current = window.ATLAS_LOCALES || {};
