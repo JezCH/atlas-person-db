@@ -1,0 +1,132 @@
+name: Phase 5 Shadow Schema Apply
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_ref:
+        description: Branch or commit to apply
+        required: true
+        default: agent/phase5-shadow-schema
+        type: string
+      expected_commit_sha:
+        description: Exact approved commit SHA
+        required: true
+        type: string
+      expected_artifact_digest:
+        description: Exact dry artifact digest
+        required: true
+        type: string
+      confirmation_token:
+        description: Type APPLY_ATLAS_V2_PHASE_5
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase-5-shadow-apply
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-24.04
+    environment: phase-5-shadow
+    steps:
+      - name: Checkout approved target
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target_ref }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Validate authorization inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          ACTUAL_SHA="$(git rev-parse HEAD)"
+          test "${{ inputs.target_ref }}" = "agent/phase5-shadow-schema"
+          test "$ACTUAL_SHA" = "${{ inputs.expected_commit_sha }}"
+          test "${{ inputs.expected_artifact_digest }}" = "sha256:6fe8fea9ab44525d3275463754df71e3002c7a1234ed031d4246c2b5c7aed0ba"
+          test "${{ inputs.confirmation_token }}" = "APPLY_ATLAS_V2_PHASE_5"
+          echo "APPROVED_SHA=$ACTUAL_SHA" >> "$GITHUB_ENV"
+
+      - name: Verify database secret exists
+        shell: bash
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          set -euo pipefail
+          test -n "${SUPABASE_DB_URL:-}"
+          case "$SUPABASE_DB_URL" in
+            postgresql://*|postgres://*) ;;
+            *) echo "SUPABASE_DB_URL must be a PostgreSQL URI" >&2; exit 41 ;;
+          esac
+
+      - name: Install PostgreSQL client
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Build and validate deployment bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf migration/phase-5/tmp
+          mkdir -p migration/phase-5/tmp/apply
+          node migration/phase-5/scripts/build-deployment-bundle.mjs \
+            --root . \
+            --output migration/phase-5/tmp/apply \
+            --commit "$APPROVED_SHA"
+          node migration/phase-5/scripts/validate-dry-bundle.mjs \
+            --root . \
+            --output migration/phase-5/tmp/apply
+
+      - name: Apply shadow schema transaction
+        shell: bash
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          set -euo pipefail
+          psql "$SUPABASE_DB_URL" \
+            --set=ON_ERROR_STOP=1 \
+            --no-psqlrc \
+            --file migration/phase-5/tmp/apply/phase-5-deployment.sql \
+            > migration/phase-5/tmp/apply/phase-5-apply.log 2>&1
+
+      - name: Verify shadow schema and legacy integrity
+        shell: bash
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          set -euo pipefail
+          psql "$SUPABASE_DB_URL" \
+            --set=ON_ERROR_STOP=1 \
+            --no-psqlrc \
+            --tuples-only \
+            --no-align \
+            --command "select jsonb_build_object(
+              'schema_exists', exists(select 1 from information_schema.schemata where schema_name='atlas_v2'),
+              'persons', (select count(*) from atlas_v2.persons),
+              'polities', (select count(*) from atlas_v2.polities),
+              'relationships', (select count(*) from atlas_v2.person_politics_v2),
+              'legacy_source_keys', (select count(distinct legacy_source_key) from atlas_v2.person_politics_v2),
+              'legacy_source_key_nulls', (select count(*) from atlas_v2.person_politics_v2 where legacy_source_key is null),
+              'legacy_rows', (select count(*) from public.person_politics)
+            );" \
+            > migration/phase-5/tmp/apply/phase-5-validation.json
+
+      - name: Upload apply evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-5-shadow-apply-${{ env.APPROVED_SHA || github.sha }}
+          path: |
+            migration/phase-5/tmp/apply/phase-5-validation.json
+            migration/phase-5/tmp/apply/phase-5-apply.log
+            migration/phase-5/tmp/apply/phase-5-deployment.sql
+            migration/phase-5/tmp/apply/phase-5-rollback.sql
+          if-no-files-found: error
+          retention-days: 90
