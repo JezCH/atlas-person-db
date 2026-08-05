@@ -35,7 +35,8 @@
     "Kanishka I": "카니슈카 1세",
     "Kamehameha I": "카메하메하 1세",
     "Leonidas I": "레오니다스 1세",
-    "Mehmed II": "메흐메트 2세"
+    "Mehmed II": "메흐메트 2세",
+    "Taejo of Goryeo": "왕건"
   };
 
   const koPolities = {
@@ -66,7 +67,8 @@
     "Ottoman Empire": "오스만 제국",
     "Eastern Han": "후한",
     "Kushan Empire": "쿠샨 제국",
-    "Kingdom of Hawaii": "하와이 왕국"
+    "Kingdom of Hawaii": "하와이 왕국",
+    "Goryeo": "고려"
   };
 
   window.ATLAS_LOCALES = Object.freeze({
