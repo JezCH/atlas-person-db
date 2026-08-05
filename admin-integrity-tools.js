@@ -6,8 +6,10 @@
 
   const db = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
   const compact = (value) => String(value ?? "").trim();
-  const normalized = (value) => compact(value).toLowerCase().replace(/\s+/g, " ");
-  const hasOwn = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
+  const normalized = (value) => compact(value)
+    .normalize("NFKC")
+    .replace(/\s+/g, " ")
+    .toLocaleLowerCase("ko-KR");
 
   function personMap() {
     return window.ATLAS_LOCALES?.ko?.persons || {};
@@ -18,21 +20,21 @@
   }
 
   function displayPerson(name) {
+    const raw = compact(name);
     const map = personMap();
-    return hasOwn(map, name) ? compact(map[name]) : compact(name);
+    return compact(map[raw] || raw);
   }
 
   function displayPolity(name) {
+    const raw = compact(name);
     const map = polityMap();
-    return hasOwn(map, name) ? compact(map[name]) : compact(name);
+    return compact(map[raw] || raw);
   }
 
   async function resolveCanonical(name) {
     try {
       const { data, error } = await db.rpc("resolve_person_identity", { input_name: name });
-      if (!error && Array.isArray(data) && data[0]?.canonical_name) {
-        return compact(data[0].canonical_name);
-      }
+      if (!error && Array.isArray(data) && data[0]?.canonical_name) return compact(data[0].canonical_name);
     } catch (_) {}
     return compact(name);
   }
@@ -75,21 +77,14 @@
     return groupBy(rows, (row) => JSON.stringify([row.canonicalPerson, row.rawPolity, row.start, row.end]));
   }
 
-  // 핵심 검사: 일반 화면에 같은 이름으로 보이지만 DB 원본명이 서로 다르면 중복 등록 후보이다.
-  // 정치체·기간·역할은 판정 조건으로 사용하지 않는다.
   function koreanNameDuplicateCandidates(rows) {
-    return groupBy(rows, (row) => row.displayPerson)
-      .filter((group) => new Set(group.map((row) => row.rawPerson)).size > 1);
+    return groupBy(rows, (row) => normalized(row.displayPerson))
+      .filter((group) => new Set(group.map((row) => normalized(row.rawPerson))).size > 1);
   }
 
-  // 동일 원본 인물의 정상적인 복수 활동행은 별도 참고 목록으로만 표시한다.
   function legitimateMultiActivityGroups(rows) {
-    return groupBy(rows, (row) => row.displayPerson)
-      .filter((group) => new Set(group.map((row) => row.rawPerson)).size === 1);
-  }
-
-  function unlocalizedRows(rows) {
-    return rows.filter((row) => row.displayPerson === row.rawPerson);
+    return groupBy(rows, (row) => normalized(row.displayPerson))
+      .filter((group) => new Set(group.map((row) => normalized(row.rawPerson))).size === 1);
   }
 
   const acceptedConcurrentPeople = new Set([
@@ -263,7 +258,6 @@
       const canonicalDuplicates = canonicalExactDuplicates(rows);
       const koreanDuplicates = koreanNameDuplicateCandidates(rows);
       const legitimateMultiRows = legitimateMultiActivityGroups(rows);
-      const missingLocales = unlocalizedRows(rows);
       const relations = classifyRelations(rows);
 
       const hardFailures = rawDuplicates.length + canonicalDuplicates.length + koreanDuplicates.length + relations.samePolityConflicts.length;
@@ -280,7 +274,6 @@
         `canonical 정확 중복 묶음: ${canonicalDuplicates.length}`,
         `한국어명 기준 중복 등록 후보: ${koreanDuplicates.length}`,
         `정상 복수 활동행 그룹: ${legitimateMultiRows.length}`,
-        `한국어 미번역 활동행: ${missingLocales.length}`,
         `동일 canonical 인물·정치체 기간 충돌: ${relations.samePolityConflicts.length}`,
         `정상 정치체 전환: ${relations.transitions.length}`,
         `검토 완료 복수 통치: ${relations.acceptedConcurrent.length}`,
