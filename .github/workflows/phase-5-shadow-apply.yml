@@ -77,12 +77,17 @@ jobs:
           rm -rf migration/phase-5/tmp
           mkdir -p migration/phase-5/tmp/apply
           node migration/phase-5/scripts/build-shadow-bundle.mjs \
-            --root . \
-            --output migration/phase-5/tmp/apply \
-            --commit "$APPROVED_SHA"
+            . \
+            migration/phase-5/tmp/apply
           node migration/phase-5/scripts/validate-shadow-bundle.mjs \
-            --root . \
-            --output migration/phase-5/tmp/apply
+            migration/phase-5/tmp/apply
+
+          # Phase 5 requires the verified Phase 4 records to be loaded, not only table definitions.
+          # Refuse database execution while the generated bundle still identifies itself as definition-only.
+          if grep -q "PHASE 5 DEFINITION-ONLY SHADOW BUNDLE" migration/phase-5/tmp/apply/phase-5-deployment.sql; then
+            echo "Refusing apply: deployment bundle is definition-only and does not load Phase 4 records." >&2
+            exit 52
+          fi
 
       - name: Apply shadow schema transaction
         shell: bash
