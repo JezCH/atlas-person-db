@@ -6,7 +6,10 @@
     "Gustav II Adolf": "구스타브 2세 아돌프",
     "Yasovarman I": "야소바르만 1세",
     "Chulalongkorn": "쭐랄롱꼰",
-    "Aung San Suu Kyi": "아웅 산 수 치"
+    "Aung San Suu Kyi": "아웅 산 수 치",
+    "Parameswara": "파라메스와라",
+    "Tun Perak": "툰 페락",
+    "Dayang Kalangitan": "다양 칼랑이탄"
   });
 
   const polityAdditions = Object.freeze({
@@ -14,7 +17,9 @@
     "Sweden": "스웨덴",
     "Khmer Empire": "크메르 제국",
     "Kingdom of Siam": "시암 왕국",
-    "Myanmar": "미얀마"
+    "Myanmar": "미얀마",
+    "Malacca Sultanate": "말라카 술탄국",
+    "Kingdom of Tondo": "톤도 왕국"
   });
 
   const current = window.ATLAS_LOCALES || {};
