@@ -16,5 +16,32 @@
     "role": "King",
     "period_basis": "reign",
     "notes": "Gustav II Adolf ruled Sweden from 1611 to 1632. He strengthened the Swedish state, reformed its army, and made Sweden a major European power during the Thirty Years' War. He was killed at the Battle of Lutzen in 1632."
+  },
+  {
+    "person_name": "Yasovarman I",
+    "politic_name": "Khmer Empire",
+    "activity_start": 889,
+    "activity_end": 910,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Yasovarman I ruled the Khmer Empire from 889 to 910. He established Yasodharapura at Angkor and commissioned major hydraulic and temple works, including Phnom Bakheng."
+  },
+  {
+    "person_name": "Chulalongkorn",
+    "politic_name": "Kingdom of Siam",
+    "activity_start": 1868,
+    "activity_end": 1910,
+    "role": "King",
+    "period_basis": "reign",
+    "notes": "Chulalongkorn (Rama V) ruled Siam from 1868 to 1910. He carried out administrative, legal, military, educational, and social reforms and helped preserve Siamese independence during the age of European imperialism."
+  },
+  {
+    "person_name": "Aung San Suu Kyi",
+    "politic_name": "Myanmar",
+    "activity_start": 1988,
+    "activity_end": 2021,
+    "role": "State Counsellor",
+    "period_basis": "general_activity",
+    "notes": "Aung San Suu Kyi became a leading figure in Myanmar's pro-democracy movement in 1988 and served as State Counsellor from 2016 until the 2021 military coup."
   }
 ]
