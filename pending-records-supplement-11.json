@@ -43,5 +43,23 @@
     "role": "State Counsellor",
     "period_basis": "general_activity",
     "notes": "Aung San Suu Kyi became a leading figure in Myanmar's pro-democracy movement in 1988 and served as State Counsellor from 2016 until the 2021 military coup."
+  },
+  {
+    "person_name": "Parameswara",
+    "politic_name": "Malacca Sultanate",
+    "activity_start": 1400,
+    "activity_end": 1414,
+    "role": "Founder and Ruler",
+    "period_basis": "reign",
+    "notes": "Parameswara founded Malacca around 1400 and ruled until about 1414. The identification of Parameswara with Iskandar Shah is disputed, so the canonical record keeps Parameswara as the primary name."
+  },
+  {
+    "person_name": "Tun Perak",
+    "politic_name": "Malacca Sultanate",
+    "activity_start": 1456,
+    "activity_end": 1498,
+    "role": "Bendahara",
+    "period_basis": "term",
+    "notes": "Tun Perak served as Bendahara of the Malacca Sultanate from about 1456 until his death in 1498 and was a central figure in Malacca's political expansion and regional influence."
   }
 ]
