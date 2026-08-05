@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "forbidden_patterns": [
+    "ALTER TABLE public.person_politics",
+    "DROP TABLE public.person_politics",
+    "TRUNCATE public.person_politics",
+    "INSERT INTO public.person_politics",
+    "UPDATE public.person_politics",
+    "DELETE FROM public.person_politics",
+    "DROP POLICY ON public.person_politics",
+    "ALTER POLICY ON public.person_politics",
+    "CREATE OR REPLACE FUNCTION public.set_updated_at",
+    "GRANT .* TO anon",
+    "GRANT .* TO authenticated"
+  ],
+  "allowed_target_schema": "atlas_v2",
+  "allow_temporary_objects": true,
+  "repository_writes_from_workflows": false,
+  "database_apply_from_push": false
+}
