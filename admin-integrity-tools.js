@@ -80,15 +80,6 @@
     return groupByExactValue(rows, (row) => row.displayPerson);
   }
 
-  function findSameRenderedActivities(rows) {
-    return groupByExactValue(rows, (row) => JSON.stringify([
-      row.displayPerson,
-      row.displayPolity,
-      row.start,
-      row.end
-    ]));
-  }
-
   function findAliasGroups(rows) {
     return groupByExactValue(rows, (row) => row.canonicalPerson)
       .filter((bucket) => new Set(bucket.map((row) => row.rawPerson)).size > 1);
@@ -101,6 +92,25 @@
       row.start,
       row.end
     ]));
+  }
+
+  function findUnlocalizedRows(rows) {
+    return rows.filter((row) => row.displayPerson === row.rawPerson);
+  }
+
+  function findPotentialAliasDuplicates(rows) {
+    const unlocalized = findUnlocalizedRows(rows);
+    const candidates = [];
+    for (let i = 0; i < unlocalized.length; i += 1) {
+      for (let j = i + 1; j < unlocalized.length; j += 1) {
+        const a = unlocalized[i];
+        const b = unlocalized[j];
+        const sameRenderedContext = a.displayPolity === b.displayPolity && a.start === b.start && a.end === b.end;
+        const sameCanonical = normalized(a.canonicalPerson) === normalized(b.canonicalPerson);
+        if (sameRenderedContext && sameCanonical) candidates.push([a, b]);
+      }
+    }
+    return candidates;
   }
 
   const acceptedConcurrentPeople = new Set([
@@ -191,7 +201,7 @@
         <div class="panel-head">
           <div>
             <h2>중복·명칭 무결성 검사</h2>
-            <p>일반 화면과 동일한 한국어 표시명·정치체·기간 기준으로 중복 등록을 검사합니다.</p>
+            <p>한국어 표시 중복, 미번역 행, canonical 중복을 각각 독립 검사합니다.</p>
           </div>
           <div class="actions">
             <button id="integrityAuditButton" class="button primary" type="button">중복 검사 실행</button>
@@ -282,7 +292,7 @@
     button.disabled = true;
     copyButton.disabled = true;
     output.dataset.type = "info";
-    output.textContent = "일반 화면 표시값 기준으로 중복 등록을 검사 중...";
+    output.textContent = "한국어 표시명과 canonical 기준을 함께 검사 중...";
 
     try {
       const { data, error } = await db.from("person_politics")
@@ -295,10 +305,12 @@
       const duplicateRegistrations = findDuplicatePersonRegistrations(rows);
       const sameDisplayNames = findSameDisplayNames(rows);
       const aliases = findAliasGroups(rows);
+      const unlocalizedRows = findUnlocalizedRows(rows);
+      const potentialAliasDuplicates = findPotentialAliasDuplicates(rows);
       const relations = classifyCanonicalRelations(rows);
 
-      const hardFailures = rawDuplicates.length + canonicalDuplicates.length + duplicateRegistrations.length + relations.samePolityConflicts.length;
-      const reviewItems = sameDisplayNames.length + aliases.length + relations.unresolvedConcurrent.length;
+      const hardFailures = rawDuplicates.length + canonicalDuplicates.length + duplicateRegistrations.length + potentialAliasDuplicates.length + relations.samePolityConflicts.length;
+      const reviewItems = sameDisplayNames.length + aliases.length + unlocalizedRows.length + relations.unresolvedConcurrent.length;
       const status = hardFailures > 0 ? "FAIL ❌" : reviewItems > 0 ? "PASS WITH REVIEW ⚠️" : "PASS ✅";
 
       const lines = [
@@ -311,6 +323,8 @@
         `canonical 정확 중복 묶음: ${canonicalDuplicates.length}`,
         `동일 인물 중복 등록 후보: ${duplicateRegistrations.length}`,
         `한국어 동일 인물명 그룹: ${sameDisplayNames.length}`,
+        `한국어 미번역 활동행: ${unlocalizedRows.length}`,
+        `미번역 canonical 중복 후보: ${potentialAliasDuplicates.length}`,
         `alias/canonical 통합 후보: ${aliases.length}`,
         `동일 canonical 인물·정치체 기간 충돌: ${relations.samePolityConflicts.length}`,
         `정상 정치체 전환: ${relations.transitions.length}`,
@@ -337,11 +351,21 @@
         });
       }
 
+      if (potentialAliasDuplicates.length) {
+        lines.push("", "[오류 — 미번역 원본명은 다르지만 canonical·정치체·기간이 같은 후보]");
+        potentialAliasDuplicates.forEach((pair) => lines.push(`- ${pair.map(rowLine).join(" ↔ ")}`));
+      }
+
       if (sameDisplayNames.length) {
         lines.push("", "[검토 — 한국어 표시명이 같은 모든 활동행]");
         sameDisplayNames.forEach((bucket) => {
           lines.push(`- ${bucket[0].displayPerson}: ${bucket.map(rowLine).join(" ↔ ")}`);
         });
+      }
+
+      if (unlocalizedRows.length) {
+        lines.push("", "[검토 — 한국어 로케일이 없어 원본 영문명으로 표시되는 활동행]");
+        unlocalizedRows.forEach((row) => lines.push(`- ${rowLine(row)}`));
       }
 
       if (aliases.length) {
