@@ -8,13 +8,16 @@ Phase 2 does not alter production data, Supabase, Vercel behavior, runtime entry
 
 ## Allowed changes
 
-Only paths under `migration/` may be added or changed:
+Only the following paths may be added or changed during Phase 2:
 
 - `migration/PHASE_2_PLAN.md`
 - `migration/scripts/**`
 - `migration/schemas/**`
 - `migration/reports/**`
 - `migration/gates/PHASE_2_GATE.md`
+- `.github/workflows/phase-2-audit.yml`
+
+The workflow exception is strictly limited to a read-only audit workflow. No other workflow file may be changed.
 
 ## Protected scope
 
@@ -30,7 +33,7 @@ The following paths are read-only during Phase 2:
 - `pending-records*.json`
 - `non-timeline-persons.json`
 - `person-locales*.js`
-- `.github/workflows/**`
+- `.github/workflows/**` except `.github/workflows/phase-2-audit.yml`
 
 ## Audit coverage
 
@@ -49,10 +52,12 @@ Inspect `non-timeline-persons.json` for historicity, chronology, duplicate names
 
 ### Locale sources
 
-Discover and safely parse:
+Discover and parse without executing repository JavaScript:
 
 - `person-locales.js`
 - `person-locales-supplement*.js`
+
+The parser must accept only static object-literal assignments used by the locale files. Dynamic expressions, function calls inside locale data, or unsupported syntax are fatal audit-engine errors.
 
 The audit must compare repository locale files with script references in `index.html` and `admin.html`.
 
@@ -94,35 +99,66 @@ Phase 2 may pass while current data remains imperfect. PASS means the audit is c
 
 ## Outputs
 
+The audit engine accepts an explicit output directory:
+
+```bash
+node migration/scripts/audit-baseline.mjs --root . --output migration/tmp/run-1
+```
+
+Final committed outputs:
+
 - `migration/reports/phase-2-file-inventory.json`
 - `migration/reports/phase-2-baseline.json`
 - `migration/reports/phase-2-baseline.md`
 - `migration/reports/phase-2-anomalies.json`
 
-## Execution
+## Validation tools
 
-```bash
-node migration/scripts/audit-baseline.mjs --check
-node migration/scripts/audit-baseline.mjs --write
-```
+- `migration/scripts/audit-baseline.mjs`: generate deterministic audit outputs.
+- `migration/scripts/validate-report.mjs`: validate JSON reports against the repository schema.
+- `migration/scripts/verify-determinism.mjs`: compare two independent output directories byte-for-byte.
+- `migration/scripts/verify-protected-paths.mjs`: verify that changes remain within the authorized Phase 2 paths.
 
-Default mode is `--check`. The audit must not execute repository JavaScript, use `eval`, write outside `migration/reports`, access the network, or connect to Supabase.
+## GitHub Actions execution
+
+`.github/workflows/phase-2-audit.yml` is the authoritative execution environment.
+
+The workflow must:
+
+1. use `actions/checkout` with full history;
+2. use a fixed Node major version;
+3. run with `permissions: contents: read`;
+4. use no Supabase, Vercel, or deployment secrets;
+5. run the audit twice into separate temporary directories;
+6. validate both reports;
+7. compare both runs byte-for-byte;
+8. verify protected paths against the Phase 1 baseline SHA;
+9. upload the validated reports as an artifact;
+10. never push commits or alter repository data.
+
+Concurrency must cancel superseded runs on the same branch.
 
 ## Exit codes
 
-- `0`: audit completed; no audit-engine fatal error;
-- `1`: source parsing failure;
-- `2`: required source missing;
-- `3`: destructive data conflict detected;
-- `4`: locale loader defect detected;
-- `5`: report schema or determinism failure.
+Audit-engine exit codes describe execution failure only. Existing data-quality defects are reported in the outputs and do not make the audit engine fail by themselves.
+
+- `0`: audit completed successfully;
+- `10`: source access or required source failure;
+- `11`: parse or structural source failure;
+- `12`: report schema validation failure;
+- `13`: deterministic output comparison failure;
+- `14`: protected-path violation;
+- `15`: baseline or branch invariant failure.
 
 ## Commit sequence
 
-1. `docs(migration): define phase 2 audit scope and invariants`
-2. `feat(migration): add deterministic baseline audit engine`
-3. `test(migration): add audit report schema and determinism checks`
-4. `chore(migration): record phase 2 baseline reports`
+1. `docs(migration): amend phase 2 for isolated CI execution`
+2. `refactor(migration): harden audit parsing and report validation`
+3. `test(migration): add independent determinism and protected-path checks`
+4. `ci(migration): add read-only phase 2 audit workflow`
+5. Run GitHub Actions and inspect evidence.
+6. `chore(migration): record verified phase 2 baseline reports`
+7. `docs(migration): close phase 2 gate with workflow evidence`
 
 ## Stop condition
 
