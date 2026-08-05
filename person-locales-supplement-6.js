@@ -9,7 +9,11 @@
     "Aung San Suu Kyi": "아웅 산 수 치",
     "Parameswara": "파라메스와라",
     "Tun Perak": "툰 페락",
-    "Dayang Kalangitan": "다양 칼랑이탄"
+    "Dayang Kalangitan": "다양 칼랑이탄",
+    "Muhammad Kudarat": "무함마드 쿠다라트",
+    "José Rizal": "호세 리살",
+    "Corazon Aquino": "코라손 아키노",
+    "Hotu Matu'a": "호투 마투아"
   });
 
   const polityAdditions = Object.freeze({
@@ -19,7 +23,10 @@
     "Kingdom of Siam": "시암 왕국",
     "Myanmar": "미얀마",
     "Malacca Sultanate": "말라카 술탄국",
-    "Kingdom of Tondo": "톤도 왕국"
+    "Kingdom of Tondo": "톤도 왕국",
+    "Sultanate of Maguindanao": "마긴다나오 술탄국",
+    "Philippines": "필리핀",
+    "Rapa Nui": "라파누이"
   });
 
   const current = window.ATLAS_LOCALES || {};
