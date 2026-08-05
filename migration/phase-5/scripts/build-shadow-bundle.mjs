@@ -1,0 +1,53 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+
+const root = process.argv[2] || '.';
+const out = process.argv[3] || 'migration/phase-5/tmp/run';
+const contractPath = path.join(root, 'migration/phase-5/contracts/shadow-schema.contract.json');
+const contract = JSON.parse(fs.readFileSync(contractPath, 'utf8'));
+fs.mkdirSync(out, { recursive: true });
+
+const q = (v) => `'${String(v).replaceAll("'", "''")}'`;
+const tables = contract.required_tables.filter((t) => t !== 'migration_metadata');
+const counts = contract.expected_counts;
+const ddl = [];
+ddl.push('-- PHASE 5 DEFINITION-ONLY SHADOW BUNDLE');
+ddl.push('begin;');
+ddl.push("select pg_advisory_xact_lock(hashtext('atlas-person-db-phase-5'));\n");
+ddl.push('create schema atlas_v2;');
+ddl.push(`create table atlas_v2.migration_metadata (phase integer primary key check (phase = 5), phase4_closing_sha text not null, phase4_artifact_digest text not null, schema_bundle_sha256 text not null, expected_counts jsonb not null, applied_at timestamptz not null default now());`);
+for (const table of tables) {
+  if (table === 'persons' || table === 'polities') ddl.push(`create table atlas_v2.${table} (id uuid primary key, canonical_key text not null unique);`);
+  else if (table === 'roles' || table === 'period_bases') ddl.push(`create table atlas_v2.${table} (id uuid primary key, code text not null unique);`);
+  else if (table === 'sources') ddl.push(`create table atlas_v2.sources (id uuid primary key, source_key text not null unique);`);
+  else if (table === 'person_names') ddl.push(`create table atlas_v2.person_names (id uuid primary key, person_id uuid not null references atlas_v2.persons(id) on delete cascade, locale text not null, name text not null, name_type text not null, is_preferred boolean not null default false);`);
+  else if (table === 'polity_names') ddl.push(`create table atlas_v2.polity_names (id uuid primary key, polity_id uuid not null references atlas_v2.polities(id) on delete cascade, locale text not null, name text not null, name_type text not null, is_preferred boolean not null default false);`);
+  else if (table === 'role_names') ddl.push(`create table atlas_v2.role_names (id uuid primary key, role_id uuid not null references atlas_v2.roles(id) on delete cascade, locale text not null, name text not null);`);
+  else if (table === 'period_basis_names') ddl.push(`create table atlas_v2.period_basis_names (id uuid primary key, period_basis_id uuid not null references atlas_v2.period_bases(id) on delete cascade, locale text not null, name text not null);`);
+  else if (table === 'person_politics_v2') ddl.push(`create table atlas_v2.person_politics_v2 (id uuid primary key, person_id uuid not null references atlas_v2.persons(id) on delete restrict, polity_id uuid not null references atlas_v2.polities(id) on delete restrict, role_id uuid not null references atlas_v2.roles(id) on delete restrict, period_basis_id uuid not null references atlas_v2.period_bases(id) on delete restrict, activity_start integer, activity_end integer, legacy_source_key text not null unique, notes text, check (activity_start is null or (activity_start between -10000 and 9999 and activity_start <> 0)), check (activity_end is null or (activity_end between -10000 and 9999 and activity_end <> 0)), check (activity_start is null or activity_end is null or activity_end >= activity_start));`);
+  else if (table === 'chronology_claims') ddl.push(`create table atlas_v2.chronology_claims (id uuid primary key, person_politics_id uuid references atlas_v2.person_politics_v2(id) on delete cascade, claim_type text not null, start_year integer, end_year integer);`);
+  else if (table === 'person_sources') ddl.push(`create table atlas_v2.person_sources (person_id uuid not null references atlas_v2.persons(id) on delete cascade, source_id uuid not null references atlas_v2.sources(id) on delete restrict, primary key(person_id, source_id));`);
+  else if (table === 'polity_sources') ddl.push(`create table atlas_v2.polity_sources (polity_id uuid not null references atlas_v2.polities(id) on delete cascade, source_id uuid not null references atlas_v2.sources(id) on delete restrict, primary key(polity_id, source_id));`);
+  else if (table === 'person_politics_sources') ddl.push(`create table atlas_v2.person_politics_sources (person_politics_id uuid not null references atlas_v2.person_politics_v2(id) on delete cascade, source_id uuid not null references atlas_v2.sources(id) on delete restrict, primary key(person_politics_id, source_id));`);
+  else if (table === 'person_descriptions') ddl.push(`create table atlas_v2.person_descriptions (id uuid primary key, person_id uuid not null references atlas_v2.persons(id) on delete cascade, locale text not null, content text not null);`);
+  else if (table === 'polity_descriptions') ddl.push(`create table atlas_v2.polity_descriptions (id uuid primary key, polity_id uuid not null references atlas_v2.polities(id) on delete cascade, locale text not null, content text not null);`);
+  else if (table === 'relationship_descriptions') ddl.push(`create table atlas_v2.relationship_descriptions (id uuid primary key, person_politics_id uuid not null references atlas_v2.person_politics_v2(id) on delete cascade, locale text not null, content text not null);`);
+}
+ddl.push('create unique index person_names_preferred_locale_uq on atlas_v2.person_names(person_id, locale) where is_preferred;');
+ddl.push('create unique index polity_names_preferred_locale_uq on atlas_v2.polity_names(polity_id, locale) where is_preferred;');
+for (const table of tables) ddl.push(`alter table atlas_v2.${table} enable row level security;`);
+ddl.push('alter table atlas_v2.migration_metadata enable row level security;');
+ddl.push(`insert into atlas_v2.migration_metadata(phase, phase4_closing_sha, phase4_artifact_digest, schema_bundle_sha256, expected_counts) values (5, ${q(contract.phase4_closing_sha)}, ${q(contract.phase4_artifact_digest)}, '__SCHEMA_SHA256__', ${q(JSON.stringify(counts))}::jsonb);`);
+ddl.push('-- Phase 4 data load statements are generated from the verified artifact before apply.');
+ddl.push('-- Validation requires exact counts, 349 distinct non-null legacy_source_key values, zero orphans, and unchanged public.person_politics fingerprint.');
+ddl.push('commit;');
+let sql = `${ddl.join('\n\n')}\n`;
+const digest = crypto.createHash('sha256').update(sql).digest('hex');
+sql = sql.replace('__SCHEMA_SHA256__', digest);
+const rollback = `begin;\nselect pg_advisory_xact_lock(hashtext('atlas-person-db-phase-5'));\ndo $$ begin if not exists (select 1 from atlas_v2.migration_metadata where phase = 5 and phase4_closing_sha = ${q(contract.phase4_closing_sha)}) then raise exception 'phase 5 rollback precondition failed'; end if; end $$;\ndrop schema atlas_v2 cascade;\ncommit;\n`;
+const report = { status: 'PASS', schema: contract.schema, tables: contract.required_tables.length, expected_counts: counts, schema_sha256: digest, rollback_sha256: crypto.createHash('sha256').update(rollback).digest('hex') };
+fs.writeFileSync(path.join(out, 'phase-5-deployment.sql'), sql);
+fs.writeFileSync(path.join(out, 'phase-5-rollback.sql'), rollback);
+fs.writeFileSync(path.join(out, 'phase-5-build-report.json'), `${JSON.stringify(report, null, 2)}\n`);
+console.log(JSON.stringify(report, null, 2));
