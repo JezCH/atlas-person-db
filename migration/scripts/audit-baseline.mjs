@@ -131,9 +131,15 @@ function scriptsIn(htmlPath) {
   const html = read(htmlPath);
   return [...html.matchAll(/<script[^>]+src=["'](?:\.\/)?([^"'?]+)(?:\?[^"']*)?["']/g)].map(m => m[1]);
 }
+function emitFatalAndExit(code) {
+  const fatal = anomalies.filter(a => a.severity === 'fatal');
+  const payload = { status: 'FAIL', exit_code: code, fatal_count: fatal.length, fatal };
+  process.stderr.write(stableJson(payload));
+  process.exit(code);
+}
 
 for (const rel of REQUIRED) if (!exists(rel)) issue('fatal','REQUIRED_SOURCE_MISSING',rel,`Required source is missing: ${rel}`);
-if (anomalies.some(a => a.severity === 'fatal')) process.exit(10);
+if (anomalies.some(a => a.severity === 'fatal')) emitFatalAndExit(10);
 
 const top = listTopFiles();
 const canonicalFiles = top.filter(n => /^pending-records(?:-supplement(?:-\d+)?)?\.json$/.test(n) || n === 'pending-records-corrections.json').sort(stableFileSort);
@@ -218,7 +224,7 @@ const report = {
   gate:{audit_engine:severityCounts.fatal===0?'PASS':'FAIL',data_clean:severityCounts.fatal+severityCounts.error===0,locale_loader_defect_detected:sortedAnomalies.some(a=>a.code==='LOCALE_FILE_NOT_LOADED'&&a.evidence.locale_file==='person-locales-supplement-6.js')}
 };
 
-if (severityCounts.fatal > 0) process.exit(11);
+if (severityCounts.fatal > 0) emitFatalAndExit(11);
 fs.mkdirSync(outputDir,{recursive:true});
 const outputs = {
   'phase-2-file-inventory.json': stableJson({metadata:report.metadata,files:inventory}),
