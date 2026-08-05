@@ -61,5 +61,32 @@
     "role": "Bendahara",
     "period_basis": "term",
     "notes": "Tun Perak served as Bendahara of the Malacca Sultanate from about 1456 until his death in 1498 and was a central figure in Malacca's political expansion and regional influence."
+  },
+  {
+    "person_name": "Muhammad Kudarat",
+    "politic_name": "Sultanate of Maguindanao",
+    "activity_start": 1619,
+    "activity_end": 1671,
+    "role": "Sultan",
+    "period_basis": "reign",
+    "notes": "Muhammad Kudarat ruled the Sultanate of Maguindanao from 1619 to 1671. He consolidated power in Mindanao and resisted Spanish colonial expansion for decades."
+  },
+  {
+    "person_name": "José Rizal",
+    "politic_name": "Philippines",
+    "activity_start": 1882,
+    "activity_end": 1896,
+    "role": "Nationalist and Reformist",
+    "period_basis": "general_activity",
+    "notes": "José Rizal was a Filipino nationalist, physician, writer, and reformist whose writings inspired the Philippine nationalist movement. He was executed in 1896."
+  },
+  {
+    "person_name": "Corazon Aquino",
+    "politic_name": "Philippines",
+    "activity_start": 1986,
+    "activity_end": 1992,
+    "role": "President",
+    "period_basis": "term",
+    "notes": "Corazon Aquino served as President of the Philippines from 1986 to 1992 after the People Power Revolution and oversaw the restoration of democratic institutions."
   }
 ]
