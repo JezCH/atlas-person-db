@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/atlas-person-db/audit-report.schema.json",
+  "title": "ATLAS Phase 2 Audit Report",
+  "type": "object",
+  "required": [
+    "metadata",
+    "inventory",
+    "canonical",
+    "non_timeline",
+    "locales",
+    "schema",
+    "anomalies",
+    "gate"
+  ],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["repository", "branch", "baseline_main_sha", "audit_version"],
+      "properties": {
+        "repository": { "type": "string", "const": "JezCH/atlas-person-db" },
+        "branch": { "type": "string", "const": "agent/normalized-i18n-migration" },
+        "baseline_main_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "audit_version": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": true
+    },
+    "inventory": { "type": "object" },
+    "canonical": { "type": "object" },
+    "non_timeline": { "type": "object" },
+    "locales": { "type": "object" },
+    "schema": { "type": "object" },
+    "anomalies": {
+      "type": "object",
+      "required": ["counts", "items"],
+      "properties": {
+        "counts": {
+          "type": "object",
+          "required": ["fatal", "error", "warning"],
+          "properties": {
+            "fatal": { "type": "integer", "minimum": 0 },
+            "error": { "type": "integer", "minimum": 0 },
+            "warning": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "items": { "type": "array" }
+      }
+    },
+    "gate": {
+      "type": "object",
+      "required": ["audit_engine", "data_clean", "locale_loader_defect_detected"],
+      "properties": {
+        "audit_engine": { "enum": ["PASS", "FAIL"] },
+        "data_clean": { "type": "boolean" },
+        "locale_loader_defect_detected": { "type": "boolean" }
+      }
+    }
+  },
+  "additionalProperties": false
+}
