@@ -3,12 +3,18 @@
 
   const personAdditions = Object.freeze({
     "Taejo of Goryeo": "왕건",
-    "Gustav II Adolf": "구스타브 2세 아돌프"
+    "Gustav II Adolf": "구스타브 2세 아돌프",
+    "Yasovarman I": "야소바르만 1세",
+    "Chulalongkorn": "쭐랄롱꼰",
+    "Aung San Suu Kyi": "아웅 산 수 치"
   });
 
   const polityAdditions = Object.freeze({
     "Goryeo": "고려",
-    "Sweden": "스웨덴"
+    "Sweden": "스웨덴",
+    "Khmer Empire": "크메르 제국",
+    "Kingdom of Siam": "시암 왕국",
+    "Myanmar": "미얀마"
   });
 
   const current = window.ATLAS_LOCALES || {};
