@@ -248,16 +248,12 @@
     "Yan": "연나라",
     "Zhao": "조나라",
     "Wei": "위나라",
-    "Western Xia": "서하",
-    "Jin Dynasty": "금나라",
+    "Han": "한나라",
+    "Later Jin": "후진",
     "Liao Dynasty": "요나라",
+    "Jin Dynasty": "금나라",
     "Western Liao": "서요",
     "Former Qin": "전진",
-    "Duchy of Wei": "위공국",
-    "Liaodong Commandery": "요동군",
-    "Yan State": "연나라",
-    "Shu Han": "촉한",
-    "Yizhou": "익주",
     "Hanzhong": "한중",
     "Kingdom of Hawaii": "하와이 왕국",
     "Ottoman Empire": "오스만 제국",
@@ -275,15 +271,13 @@
     "Iroquois Confederacy": "이로쿼이 연맹"
   };
 
-  const locales = window.ATLAS_LOCALES || {};
-  const ko = locales.ko || {};
+  const basePersons = window.ATLAS_LOCALES?.ko?.persons || {};
+  const basePolities = window.ATLAS_LOCALES?.ko?.polities || {};
 
-  window.ATLAS_LOCALES = Object.freeze({
-    ...locales,
-    ko: Object.freeze({
-      ...ko,
-      persons: Object.freeze({ ...(ko.persons || {}), ...persons }),
-      polities: Object.freeze({ ...(ko.polities || {}), ...polities })
-    })
-  });
+  window.ATLAS_LOCALES = {
+    ko: {
+      persons: Object.freeze({ ...basePersons, ...persons }),
+      polities: Object.freeze({ ...basePolities, ...polities })
+    }
+  };
 })();
