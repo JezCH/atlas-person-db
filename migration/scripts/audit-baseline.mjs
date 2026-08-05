@@ -86,7 +86,7 @@ function parseStaticObject(source, openIndex, rel, label) {
     i = skipTrivia(source, i + 1);
     if (source[i] !== '"' && source[i] !== "'") throw new Error(`${label}: expected quoted value for ${key.value}`);
     const val = decodeStringLiteral(source, i); i = skipTrivia(source, val.end);
-    if (Object.hasOwn(out,key.value) && out[key.value] !== val.value) issue('fatal','LOCALE_CONFLICT_IN_FILE',rel,`Conflicting locale key ${key.value}`,{old:out[key.value],new:val.value});
+    if (Object.hasOwn(out,key.value) && out[key.value] !== val.value) issue('error','LOCALE_CONFLICT_IN_FILE',rel,`Conflicting locale key ${key.value}`,{old:out[key.value],new:val.value});
     out[key.value] = val.value;
     if (source[i] === ',') { i++; continue; }
     if (source[i] === '}') return { value: out, end: i + 1 };
@@ -182,11 +182,11 @@ const personLocales = {}, polityLocales = {};
 for (const rel of localeFiles) {
   const parsed = parseLocaleFile(rel);
   for (const [k,v] of Object.entries(parsed.persons)) {
-    if (Object.hasOwn(personLocales,k) && personLocales[k] !== v) issue('fatal','PERSON_LOCALE_CONFLICT',rel,`Conflicting translation for ${k}`,{old:personLocales[k],new:v});
+    if (Object.hasOwn(personLocales,k) && personLocales[k] !== v) issue('error','PERSON_LOCALE_CONFLICT',rel,`Conflicting translation for ${k}`,{old:personLocales[k],new:v});
     personLocales[k] = v;
   }
   for (const [k,v] of Object.entries(parsed.polities)) {
-    if (Object.hasOwn(polityLocales,k) && polityLocales[k] !== v) issue('fatal','POLITY_LOCALE_CONFLICT',rel,`Conflicting translation for ${k}`,{old:polityLocales[k],new:v});
+    if (Object.hasOwn(polityLocales,k) && polityLocales[k] !== v) issue('error','POLITY_LOCALE_CONFLICT',rel,`Conflicting translation for ${k}`,{old:polityLocales[k],new:v});
     polityLocales[k] = v;
   }
 }
