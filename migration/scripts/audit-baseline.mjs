@@ -123,7 +123,7 @@ function parseLocaleFile(rel) {
     if (Object.keys(polities).length === 0) polities = findObjectAfter(source, 'const polities', rel);
     return { persons, polities };
   } catch (error) {
-    issue('fatal','LOCALE_PARSE_FAILED',rel,error.message);
+    issue('error','LOCALE_PARSE_FAILED',rel,error.message);
     return { persons:{}, polities:{} };
   }
 }
