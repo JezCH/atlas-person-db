@@ -7,36 +7,34 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <title>ATLAS Admin</title>
-  <link rel="stylesheet" href="./admin.css?v=20260804-runtime-sync-v2" />
+  <link rel="stylesheet" href="./admin.css?v=20260807-admin-v2-reset" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
   <main class="admin-shell">
     <header class="admin-head">
       <div>
-        <p class="eyebrow">ATLAS AUTHORING</p>
+        <p class="eyebrow">ATLAS ADMIN V2</p>
         <h1>데이터 관리자</h1>
-        <p>JSON 입력과 실제 Supabase 데이터 무결성 검사를 수행합니다.</p>
+        <p>기존 검증·중복검사 화면을 제거하고, 새 관리 체계를 다시 설계하는 동안 최소 입력 기능만 유지합니다.</p>
       </div>
       <a class="button secondary" href="./index.html">Persons로 돌아가기</a>
     </header>
 
-    <section class="panel">
-      <div class="panel-head">
-        <div>
-          <h2>DB 검증</h2>
-          <p>GitHub 연표 기준 데이터와 Supabase 실제 데이터를 실시간으로 대조합니다.</p>
-        </div>
-        <button id="verifyButton" class="button primary" type="button">Verify Database</button>
+    <section class="status-card" aria-labelledby="redesign-title">
+      <div>
+        <p class="status-label">REDESIGN IN PROGRESS</p>
+        <h2 id="redesign-title">중복 검사 시스템 재설계 중</h2>
+        <p>기존 단순 문자열 중복검사는 제거했습니다. 별칭, 한국어명, 칭호, 복수 정치체 활동과 정상 복수 활동행을 구분하는 새 검토형 시스템을 별도 단계에서 구축합니다.</p>
       </div>
-      <pre id="verifyResult" class="result" aria-live="polite">검증 대기 중</pre>
+      <span class="status-badge">비활성</span>
     </section>
 
-    <section class="panel">
+    <section class="panel" aria-labelledby="input-title">
       <div class="panel-head">
         <div>
-          <h2>JSON 일괄 입력</h2>
-          <p>영어 canonical name과 음수 BCE 연도를 사용합니다.</p>
+          <h2 id="input-title">최소 JSON 입력</h2>
+          <p>현재 production write 경로인 <code>public.person_politics</code>만 유지합니다.</p>
         </div>
         <button id="sampleButton" class="button secondary" type="button">예시 불러오기</button>
       </div>
@@ -51,17 +49,9 @@
       <pre id="result" class="result" aria-live="polite">대기 중</pre>
     </section>
 
-    <section class="panel compact">
-      <h2>검증 기준</h2>
-      <p>공통 canonical manifest에 등록된 모든 연표 파일을 하나의 기준으로 사용합니다.</p>
-      <p><code>non-timeline-persons.json</code>의 신화·전설 인물은 연표 검증에서 제외합니다.</p>
-      <p><code>person_politics</code>는 Supabase에서 버튼 클릭 시마다 다시 조회합니다.</p>
-    </section>
-
-    <section class="panel compact">
-      <h2>필수 필드</h2>
-      <code>person_name, politic_name, activity_start, activity_end, period_basis</code>
-      <p>동일한 인물·Politic·시작·종료 조합이 있으면 새 행을 만들지 않고 기존 행을 갱신합니다.</p>
+    <section class="notice">
+      <strong>현재 제외된 기능</strong>
+      <p>기존 DB 검증 패널, 타임라인 대조, 무결성 도구, 단순 중복 판정은 더 이상 이 페이지에서 실행되지 않습니다.</p>
     </section>
   </main>
 
@@ -72,20 +62,15 @@
       loader.onload = () => {
         window.ATLAS_ASSETS.loadSeries([
           "./config.js",
-          "./atlas-canonical-data.js",
-          "./person-locales.js",
-          "./person-locales-supplement-5.js",
-          "./admin.js",
-          "./admin-timeline-verification.js",
-          "./admin-integrity-tools.js"
+          "./admin.js"
         ]).catch((error) => {
           console.error(error);
-          const output = document.getElementById("verifyResult");
+          const output = document.getElementById("result");
           if (output) output.textContent = `자산 로드 실패: ${error.message}`;
         });
       };
       loader.onerror = () => {
-        const output = document.getElementById("verifyResult");
+        const output = document.getElementById("result");
         if (output) output.textContent = "자산 로더를 불러오지 못했습니다.";
       };
       document.head.appendChild(loader);
