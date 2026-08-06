@@ -1,0 +1,127 @@
+name: Phase 7C Production Evidence
+
+on:
+  workflow_dispatch:
+    inputs:
+      approved_activation_sha:
+        description: Exact merged activation SHA
+        required: true
+        type: string
+      confirmation_token:
+        description: Type RUN_ATLAS_PHASE_7C_PRODUCTION_EVIDENCE
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+env:
+  EXPECTED_ACTIVATION_SHA: b80fbdf4371b813a686c84c8dc9696e7b8efcd63
+  REQUIRED_CONFIRMATION_TOKEN: RUN_ATLAS_PHASE_7C_PRODUCTION_EVIDENCE
+
+concurrency:
+  group: atlas-phase-7c-production-evidence
+  cancel-in-progress: false
+
+jobs:
+  production-evidence:
+    runs-on: ubuntu-24.04
+    environment: phase-5-shadow
+    steps:
+      - name: Validate authorization inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "${{ inputs.approved_activation_sha }}" = "$EXPECTED_ACTIVATION_SHA"
+          test "${{ inputs.confirmation_token }}" = "$REQUIRED_CONFIRMATION_TOKEN"
+
+      - name: Checkout exact activation SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.approved_activation_sha }}
+          fetch-depth: 0
+
+      - name: Verify checked-out SHA and activation manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$EXPECTED_ACTIVATION_SHA"
+          test "$(git rev-parse HEAD)" = "${{ inputs.approved_activation_sha }}"
+          grep -Fx '  DATA_SOURCE: "v2-shadow"' atlas-production-source.js
+          test "$(git diff --name-only HEAD^ HEAD | wc -l)" -eq 1
+          test "$(git diff --name-only HEAD^ HEAD)" = "atlas-production-source.js"
+          git diff --exit-code HEAD^ HEAD -- . ':(exclude)atlas-production-source.js'
+
+      - name: Verify database secret
+        shell: bash
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          set -euo pipefail
+          test -n "$SUPABASE_DB_URL"
+
+      - name: Install PostgreSQL client
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Run static and live read-only preflight
+        shell: bash
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: bash migration/phase-7/scripts/run-phase7c-preflight.sh
+
+      - name: Build production evidence report
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p migration/phase-7/tmp/activation
+          node - <<'NODE'
+          const fs = require('fs');
+          const dir = 'migration/phase-7/tmp/activation';
+          const read = (name) => {
+            const p = `${dir}/${name}`;
+            return fs.existsSync(p) ? JSON.parse(fs.readFileSync(p, 'utf8')) : null;
+          };
+          const staticReport = read('phase7c-static.json');
+          const dbReport = read('phase7c-db.json');
+          const failures = [];
+          if (!staticReport?.pass) failures.push('static preflight did not pass');
+          if (staticReport?.manifest !== 'v2-shadow') failures.push('production manifest is not v2-shadow');
+          if (!dbReport?.pass) failures.push('database preflight did not pass');
+          if (dbReport?.counts?.legacy !== 319) failures.push('legacy row count differs from 319');
+          if (dbReport?.counts?.v2 !== 349) failures.push('v2 row count differs from 349');
+          if (!dbReport?.privileges?.anon_select || !dbReport?.privileges?.authenticated_select) failures.push('compatibility SELECT privilege missing');
+          if (!dbReport?.privileges?.anon_write_denied || !dbReport?.privileges?.authenticated_write_denied) failures.push('compatibility write denial failed');
+          const report = {
+            marker: 'PHASE_7C_PRODUCTION_EVIDENCE',
+            approved_activation_sha: process.env.EXPECTED_ACTIVATION_SHA,
+            checked_out_sha: process.env.GITHUB_SHA,
+            requested_source: 'v2-shadow',
+            effective_source_expected: 'v2-shadow',
+            fallback_expected: false,
+            v2_rows: dbReport?.counts?.v2 ?? null,
+            legacy_rows: dbReport?.counts?.legacy ?? null,
+            validation_failures_expected: 0,
+            write_target: 'public.person_politics',
+            preflight: failures.length === 0 ? 'PASS' : 'FAIL',
+            rollback_package: 'READY',
+            result: failures.length === 0 ? 'PASS' : 'HOLD',
+            failures
+          };
+          fs.writeFileSync(`${dir}/phase7c-production-evidence.json`, JSON.stringify(report, null, 2) + '\n');
+          console.log(JSON.stringify(report, null, 2));
+          if (failures.length) process.exitCode = 2;
+          NODE
+
+      - name: Upload production evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-7c-production-evidence-${{ inputs.approved_activation_sha }}
+          path: migration/phase-7/tmp/activation
+          if-no-files-found: error
+          retention-days: 90
