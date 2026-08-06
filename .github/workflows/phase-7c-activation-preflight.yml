@@ -1,0 +1,39 @@
+name: Phase 7C Activation Preflight
+
+on:
+  pull_request:
+    paths:
+      - "atlas-production-source.js"
+      - "atlas-source-control.js"
+      - "atlas-reader.js"
+      - "atlas-reader-observability.js"
+      - "app.js"
+      - "migration/phase-7/PHASE_7C_ACTIVATION_PLAN.md"
+      - "migration/phase-7/PHASE_7_ROLLBACK_RUNBOOK.md"
+      - "migration/phase-7/scripts/phase7c-preflight.mjs"
+      - ".github/workflows/phase-7c-activation-preflight.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-preflight:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Run Phase 7A contract
+        run: node migration/phase-7/scripts/phase7a-contract.mjs
+
+      - name: Run Phase 7B contract
+        run: node migration/phase-7/scripts/phase7b-contract.mjs
+
+      - name: Run Phase 7C static preflight
+        run: node migration/phase-7/scripts/phase7c-preflight.mjs
