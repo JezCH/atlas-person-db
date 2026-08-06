@@ -116,7 +116,8 @@ for (const signature of allSignatures) {
       signature,
       payload: canonicalPayload(legacyRows[0] || v2Rows[0]),
       legacy_count: legacyRows.length,
-      v2_count: v2Rows.length
+      v2_count: v2Rows.length,
+      delta: v2Rows.length - legacyRows.length
     });
   }
   for (let i = common; i < legacyRows.length; i += 1) missingInV2.push({signature, row: legacyRows[i]});
@@ -127,7 +128,12 @@ const structuralPass = legacyValidation.failures.length === 0 &&
   v2Validation.failures.length === 0 &&
   legacyValidation.duplicateIds.length === 0 &&
   v2Validation.duplicateIds.length === 0;
-const parityPass = missingInV2.length === 0 && multiplicityMismatches.length === extraInV2.length;
+const expansionRowDelta = multiplicityMismatches.reduce((sum, item) => sum + Math.max(0, item.delta), 0);
+const contractionRowDelta = multiplicityMismatches.reduce((sum, item) => sum + Math.max(0, -item.delta), 0);
+const duplicatePayloadExpansions = multiplicityMismatches.filter((item) => item.delta > 1);
+const parityPass = missingInV2.length === 0 &&
+  contractionRowDelta === 0 &&
+  expansionRowDelta === extraInV2.length;
 
 const report = {
   marker: 'PHASE_6_LINEAGE_PARITY',
@@ -140,7 +146,10 @@ const report = {
     missing_in_v2: missingInV2.length,
     approved_v2_expansion_candidates: extraInV2.length,
     multiplicity_mismatches: multiplicityMismatches.length,
-    unexplained_differences: missingInV2.length
+    expansion_row_delta: expansionRowDelta,
+    contraction_row_delta: contractionRowDelta,
+    duplicate_payload_expansion_groups: duplicatePayloadExpansions.length,
+    unexplained_differences: missingInV2.length + contractionRowDelta
   },
   fingerprints: { legacy: fingerprint(legacy), v2: fingerprint(v2) },
   validation: {
@@ -149,10 +158,11 @@ const report = {
     legacy_duplicate_ids: legacyValidation.duplicateIds,
     v2_duplicate_ids: v2Validation.duplicateIds
   },
-  matched: matched,
+  matched,
   missing_in_v2: missingInV2,
   approved_v2_expansion_candidates: extraInV2,
   multiplicity_mismatches: multiplicityMismatches,
+  duplicate_payload_expansions: duplicatePayloadExpansions,
   structural_pass: structuralPass,
   parity_pass: structuralPass && parityPass
 };
