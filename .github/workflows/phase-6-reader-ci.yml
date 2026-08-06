@@ -1,0 +1,40 @@
+name: Phase 6 Reader Contract
+
+on:
+  push:
+    branches:
+      - agent/phase6-reader-integration
+    paths:
+      - atlas-reader.js
+      - app.js
+      - index.html
+      - migration/phase-6/scripts/test-reader-contract.mjs
+      - .github/workflows/phase-6-reader-ci.yml
+  pull_request:
+    paths:
+      - atlas-reader.js
+      - app.js
+      - index.html
+      - migration/phase-6/scripts/test-reader-contract.mjs
+      - .github/workflows/phase-6-reader-ci.yml
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run reader contract tests
+        run: node migration/phase-6/scripts/test-reader-contract.mjs
+      - name: Verify read abstraction and legacy-only writes
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -Fq 'window.AtlasReader.loadPersonPolitics' app.js
+          ! grep -Fq 'select("*")' app.js
+          test "$(grep -o 'db.from("person_politics")' app.js | wc -l | tr -d ' ')" -ge 3
+          ! grep -Eq 'from\("atlas_person_politics_compat_v1"\).*(insert|update|delete)' app.js atlas-reader.js
+          ! grep -Eq 'from\("atlas_v2' app.js atlas-reader.js
+          grep -Fq './atlas-reader.js' index.html
