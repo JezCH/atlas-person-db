@@ -78,23 +78,13 @@ jobs:
           mkdir -p migration/phase-6/tmp/shadow
           cat > migration/phase-6/tmp/shadow/export.sql <<'SQL'
           begin read only;
-          \copy (
-            select jsonb_agg(to_jsonb(x) order by politic_name, activity_start, activity_end, person_name, id)::text
-            from (
-              select id, person_name, politic_name, activity_start, activity_end, role, period_basis, notes
-              from public.person_politics
-            ) x
-          ) to 'migration/phase-6/tmp/shadow/legacy.raw';
-          \copy (
-            select jsonb_agg(to_jsonb(x) order by politic_name, activity_start, activity_end, person_name, id)::text
-            from (
-              select id, person_name, politic_name, activity_start, activity_end, role, period_basis, notes
-              from public.atlas_person_politics_compat_v1
-            ) x
-          ) to 'migration/phase-6/tmp/shadow/v2.raw';
+          \copy (select jsonb_agg(to_jsonb(x) order by politic_name, activity_start, activity_end, person_name, id)::text from (select id, person_name, politic_name, activity_start, activity_end, role, period_basis, notes from public.person_politics) x) to 'migration/phase-6/tmp/shadow/legacy.raw';
+          \copy (select jsonb_agg(to_jsonb(x) order by politic_name, activity_start, activity_end, person_name, id)::text from (select id, person_name, politic_name, activity_start, activity_end, role, period_basis, notes from public.atlas_person_politics_compat_v1) x) to 'migration/phase-6/tmp/shadow/v2.raw';
           rollback;
           SQL
           psql "$SUPABASE_DB_URL" --set=ON_ERROR_STOP=1 --no-psqlrc --file migration/phase-6/tmp/shadow/export.sql > migration/phase-6/tmp/shadow/export.log 2>&1
+          test -s migration/phase-6/tmp/shadow/legacy.raw
+          test -s migration/phase-6/tmp/shadow/v2.raw
           cp migration/phase-6/tmp/shadow/legacy.raw migration/phase-6/tmp/shadow/legacy.json
           cp migration/phase-6/tmp/shadow/v2.raw migration/phase-6/tmp/shadow/v2.json
 
