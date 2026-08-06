@@ -45,7 +45,7 @@ join atlas_v2.polity_names ptn
 join atlas_v2.roles r on r.id = pp.role_id
 join atlas_v2.period_bases pb on pb.id = pp.period_basis_id;
 
-revoke all on public.atlas_person_politics_compat_v1 from public;
+revoke all on public.atlas_person_politics_compat_v1 from public, anon, authenticated;
 grant select on public.atlas_person_politics_compat_v1 to anon, authenticated;
 
 do $$ declare
