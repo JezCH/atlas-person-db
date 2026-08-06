@@ -184,17 +184,27 @@
       render();
       return;
     }
-    setStatus("warn", "데이터 불러오는 중");
-    const { data, error } = await db.from("person_politics").select("*").order("politic_name").order("activity_start").order("activity_end").order("person_name");
-    if (error) {
-      console.error(error);
-      setStatus("error", "DB 연결 실패");
-      showToast(`불러오기 실패: ${error.message}`);
+    if (!window.AtlasReader) {
+      setStatus("error", "Reader 모듈 누락");
+      showToast("데이터 리더 모듈을 불러오지 못했습니다.");
       return;
     }
-    records = data || [];
+    setStatus("warn", "데이터 불러오는 중");
+    const result = await window.AtlasReader.loadPersonPolitics({
+      client: db,
+      source: window.ATLAS_DATA_SOURCE || "legacy",
+      fallbackToLegacy: true
+    });
+    if (result.error) {
+      console.error(result.error, result.diagnostics || []);
+      setStatus("error", "DB 연결 실패");
+      showToast(`불러오기 실패: ${result.error.message}`);
+      return;
+    }
+    records = result.data || [];
     if (selectedId && !selectedRecord()) selectedId = null;
-    setStatus("ok", "온라인 저장 연결됨");
+    if ((result.diagnostics || []).length) console.warn("AtlasReader diagnostics", result.diagnostics);
+    setStatus("ok", result.source === "v2-shadow" ? "V2 미리보기 연결됨" : "온라인 저장 연결됨");
     render();
   }
 
@@ -299,25 +309,21 @@
   $("closeDialog").addEventListener("click", () => els.dialog.close());
   $("cancelButton").addEventListener("click", () => els.dialog.close());
   els.form.addEventListener("submit", saveRecord);
-  els.search.addEventListener("input", applyRenderedSearch);
   els.filter.addEventListener("change", render);
-  els.detailEdit.addEventListener("click", () => { const record = selectedRecord(); if (record) openEditor(record); });
-  els.body.addEventListener("click", (e) => {
-    const button = e.target.closest("button[data-id]");
-    if (button) {
-      const record = records.find((r) => String(r.id) === String(button.dataset.id));
-      if (button.classList.contains("edit")) openEditor(record);
-      if (button.classList.contains("delete")) deleteRecord(button.dataset.id);
-      return;
+  els.search.addEventListener("input", applyRenderedSearch);
+  els.body.addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-id]");
+    const row = event.target.closest("tr[data-id]");
+    if (button?.classList.contains("edit")) return openEditor(records.find((r) => String(r.id) === String(button.dataset.id)));
+    if (button?.classList.contains("delete")) return deleteRecord(button.dataset.id);
+    if (row) {
+      selectedId = row.dataset.id;
+      render();
     }
-    const row = e.target.closest("tr[data-id]");
-    if (!row) return;
-    selectedId = row.dataset.id;
-    render();
   });
-  els.body.addEventListener("dblclick", (e) => {
-    const row = e.target.closest("tr[data-id]");
-    if (row) openEditor(records.find((r) => String(r.id) === String(row.dataset.id)));
+  els.detailEdit.addEventListener("click", () => {
+    const record = selectedRecord();
+    if (record) openEditor(record);
   });
 
   loadRecords();
