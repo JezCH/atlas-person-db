@@ -49,8 +49,20 @@
     return query;
   }
 
+  function emitOutcome({ requestedSource, effectiveSource, fallback, rows, validationFailures }) {
+    window.AtlasReaderObservability?.record({
+      requested_source: requestedSource,
+      effective_source: effectiveSource,
+      fallback,
+      row_count: rows,
+      validation_failures: validationFailures
+    });
+  }
+
   async function loadPersonPolitics({ client, source, fallbackToLegacy = true } = {}) {
+    const requestedSource = source || window.ATLAS_DATA_SOURCE || "legacy";
     if (!client) {
+      emitOutcome({ requestedSource, effectiveSource: "legacy", fallback: false, rows: 0, validationFailures: 1 });
       return { data: null, error: new Error("Supabase client is required"), source: "legacy", diagnostics: ["missing client"] };
     }
     const resolved = resolveSource(source);
@@ -58,8 +70,14 @@
     const primary = await queryRows(client, resolved.source);
     if (!primary.error) {
       const failures = validateRows(primary.data || []);
-      if (!failures.length) return { data: primary.data || [], error: null, source: resolved.source, diagnostics };
+      if (!failures.length) {
+        emitOutcome({ requestedSource, effectiveSource: resolved.source, fallback: false, rows: (primary.data || []).length, validationFailures: 0 });
+        return { data: primary.data || [], error: null, source: resolved.source, diagnostics };
+      }
       diagnostics.push(...failures);
+      if (resolved.source !== "v2-shadow" || !fallbackToLegacy) {
+        emitOutcome({ requestedSource, effectiveSource: resolved.source, fallback: false, rows: (primary.data || []).length, validationFailures: failures.length });
+      }
     } else {
       diagnostics.push(`${resolved.source} read failed: ${primary.error.message}`);
     }
@@ -70,6 +88,7 @@
         const failures = validateRows(fallback.data || []);
         if (!failures.length) {
           diagnostics.push("fallback to legacy");
+          emitOutcome({ requestedSource, effectiveSource: "legacy", fallback: true, rows: (fallback.data || []).length, validationFailures: diagnostics.filter((item) => !String(item).includes("fallback to legacy")).length });
           return { data: fallback.data || [], error: null, source: "legacy", diagnostics };
         }
         diagnostics.push(...failures);
@@ -78,6 +97,7 @@
       }
     }
 
+    emitOutcome({ requestedSource, effectiveSource: resolved.source, fallback: false, rows: 0, validationFailures: diagnostics.length || 1 });
     return { data: null, error: primary.error || new Error("Row contract validation failed"), source: resolved.source, diagnostics };
   }
 
