@@ -1,0 +1,39 @@
+name: Phase 8A Dependency Inventory
+
+on:
+  pull_request:
+    paths:
+      - "migration/phase-8/**"
+      - ".github/workflows/phase-8a-dependency-inventory.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  repository-inventory:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Run repository dependency inventory
+        run: |
+          set -euo pipefail
+          bash migration/phase-8/scripts/run-phase8a-inventory.sh
+
+      - name: Upload repository inventory evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-8a-repository-inventory-${{ github.sha }}
+          path: migration/phase-8/tmp/phase8a
+          if-no-files-found: error
+          retention-days: 90
