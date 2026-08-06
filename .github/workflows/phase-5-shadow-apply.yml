@@ -97,7 +97,7 @@ jobs:
             . \
             migration/phase-5/tmp/apply
 
-          grep -Fq -- "-- PHASE 5 FULL DATA SHADOW BUNDLE" migration/phase-5/tmp/apply/phase-5-deployment.sql
+          grep -Fq -- "-- PHASE 5 FULL SHADOW LOAD BUNDLE" migration/phase-5/tmp/apply/phase-5-deployment.sql
           grep -Fq -- "insert into atlas_v2.persons" migration/phase-5/tmp/apply/phase-5-deployment.sql
           grep -Fq -- "insert into atlas_v2.person_politics_v2" migration/phase-5/tmp/apply/phase-5-deployment.sql
 
