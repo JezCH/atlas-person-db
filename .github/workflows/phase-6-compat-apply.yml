@@ -6,17 +6,17 @@ on:
       target_ref:
         description: Exact approved Phase 6 commit SHA to apply
         required: true
-        default: 1c84199a5f57e41aa54468e9489efffed87cbbb4
+        default: dac791bbe5a29eda468a576d604fd91a32b9641a
         type: string
       expected_commit_sha:
         description: Exact approved Phase 6 commit SHA
         required: true
-        default: 1c84199a5f57e41aa54468e9489efffed87cbbb4
+        default: dac791bbe5a29eda468a576d604fd91a32b9641a
         type: string
       expected_artifact_digest:
         description: Exact approved dry artifact digest
         required: true
-        default: sha256:68e499e4956d5603cc1da0477d03f8df4f456936e04d0189fb109ea0144b088d
+        default: sha256:0faf2e227bc8529d9f2a6f49e7197a65befa0535018c1d24ca64eda55deaa26d
         type: string
       confirmation_token:
         description: Type APPLY_ATLAS_V2_PHASE_6_COMPAT
@@ -47,8 +47,8 @@ jobs:
         run: |
           set -euo pipefail
           ACTUAL_SHA="$(git rev-parse HEAD)"
-          APPROVED_SHA="1c84199a5f57e41aa54468e9489efffed87cbbb4"
-          APPROVED_DIGEST="sha256:68e499e4956d5603cc1da0477d03f8df4f456936e04d0189fb109ea0144b088d"
+          APPROVED_SHA="dac791bbe5a29eda468a576d604fd91a32b9641a"
+          APPROVED_DIGEST="sha256:0faf2e227bc8529d9f2a6f49e7197a65befa0535018c1d24ca64eda55deaa26d"
           test "${{ inputs.target_ref }}" = "$APPROVED_SHA"
           test "$ACTUAL_SHA" = "$APPROVED_SHA"
           test "${{ inputs.expected_commit_sha }}" = "$APPROVED_SHA"
