@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "phase5_closing_sha": "4e12721dde17c0a4140ba7dbbcb03bb1ae2274fa",
+  "branch": "agent/phase6-compatibility-reader",
+  "compat_object": "public.atlas_person_politics_compat_v1",
+  "legacy_table": "public.person_politics",
+  "v2_schema": "atlas_v2",
+  "runtime_contract": {
+    "columns": [
+      {"name":"id","type":"uuid","nullable":false},
+      {"name":"person_name","type":"text","nullable":false},
+      {"name":"politic_name","type":"text","nullable":false},
+      {"name":"activity_start","type":"integer","nullable":false},
+      {"name":"activity_end","type":"integer","nullable":false},
+      {"name":"role","type":"text","nullable":true},
+      {"name":"period_basis","type":"text","nullable":false},
+      {"name":"notes","type":"text","nullable":true}
+    ],
+    "period_basis_values": [
+      "reign",
+      "term",
+      "de_facto_rule",
+      "military_activity",
+      "religious_activity",
+      "intellectual_activity",
+      "artistic_activity",
+      "general_activity"
+    ],
+    "ordering": ["politic_name","activity_start","activity_end","person_name"]
+  },
+  "security": {
+    "base_table_access_for_public": false,
+    "base_table_access_for_anon": false,
+    "base_table_access_for_authenticated": false,
+    "compat_select_for_anon": true,
+    "compat_select_for_authenticated": true,
+    "compat_write": false
+  },
+  "expected_v2_rows": 349,
+  "expected_legacy_lineage_rows": 319
+}

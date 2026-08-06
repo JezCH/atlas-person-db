@@ -1,0 +1,66 @@
+name: Phase 6 Compatibility Dry
+
+on:
+  push:
+    branches: [agent/phase6-compatibility-reader]
+    paths:
+      - 'migration/phase-6/**'
+      - 'atlas-reader.js'
+      - 'app.js'
+      - 'index.html'
+      - '.github/workflows/phase-6-compat-dry.yml'
+  pull_request:
+    paths:
+      - 'migration/phase-6/**'
+      - 'atlas-reader.js'
+      - 'app.js'
+      - 'index.html'
+      - '.github/workflows/phase-6-compat-dry.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dry:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Build bundle twice
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf migration/phase-6/tmp
+          mkdir -p migration/phase-6/tmp/a migration/phase-6/tmp/b
+          node migration/phase-6/scripts/build-compat-bundle.mjs . migration/phase-6/tmp/a
+          node migration/phase-6/scripts/validate-compat-bundle.mjs . migration/phase-6/tmp/a
+          node migration/phase-6/scripts/build-compat-bundle.mjs . migration/phase-6/tmp/b
+          node migration/phase-6/scripts/validate-compat-bundle.mjs . migration/phase-6/tmp/b
+          diff -u migration/phase-6/tmp/a/phase-6-deployment.sql migration/phase-6/tmp/b/phase-6-deployment.sql
+          diff -u migration/phase-6/tmp/a/phase-6-rollback.sql migration/phase-6/tmp/b/phase-6-rollback.sql
+
+      - name: Static runtime safeguards
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f atlas-reader.js
+          grep -Fq 'window.AtlasReader' atlas-reader.js
+          grep -Fq '"legacy"' atlas-reader.js
+          grep -Fq '"v2-shadow"' atlas-reader.js
+          ! grep -Eiq '(insert|update|delete|upsert|rpc)\s*\(' atlas-reader.js
+          ! grep -Eiq 'from\(["'"']atlas_v2' atlas-reader.js app.js admin.js
+          grep -Fq 'from("person_politics").update' app.js
+          grep -Fq 'from("person_politics").insert' app.js
+          grep -Fq 'from("person_politics").delete' app.js
+
+      - name: Upload evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-6-compat-dry-${{ github.sha }}
+          path: migration/phase-6/tmp/a
+          if-no-files-found: error
+          retention-days: 90
