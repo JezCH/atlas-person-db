@@ -109,17 +109,23 @@ jobs:
             --no-psqlrc \
             --tuples-only \
             --no-align \
-            --command "select jsonb_build_object(
+            --command "with explicit_grants as (
+              select grantee, privilege_type
+              from information_schema.role_table_grants
+              where table_schema = 'public'
+                and table_name = 'atlas_person_politics_compat_v1'
+            )
+            select jsonb_build_object(
               'view_exists', to_regclass('public.atlas_person_politics_compat_v1') is not null,
               'rows', (select count(*) from public.atlas_person_politics_compat_v1),
               'duplicate_ids', (select count(*) from (select id from public.atlas_person_politics_compat_v1 group by id having count(*) > 1) d),
               'invalid_periods', (select count(*) from public.atlas_person_politics_compat_v1 where activity_end < activity_start),
               'invalid_basis', (select count(*) from public.atlas_person_politics_compat_v1 where period_basis not in ('reign','term','de_facto_rule','military_activity','religious_activity','intellectual_activity','artistic_activity','general_activity')),
               'legacy_rows', (select count(*) from public.person_politics),
-              'anon_select', has_table_privilege('anon','public.atlas_person_politics_compat_v1','SELECT'),
-              'authenticated_select', has_table_privilege('authenticated','public.atlas_person_politics_compat_v1','SELECT'),
-              'anon_insert', has_table_privilege('anon','public.atlas_person_politics_compat_v1','INSERT'),
-              'authenticated_insert', has_table_privilege('authenticated','public.atlas_person_politics_compat_v1','INSERT')
+              'anon_select_explicit', exists (select 1 from explicit_grants where grantee = 'anon' and privilege_type = 'SELECT'),
+              'authenticated_select_explicit', exists (select 1 from explicit_grants where grantee = 'authenticated' and privilege_type = 'SELECT'),
+              'anon_write_explicit', exists (select 1 from explicit_grants where grantee = 'anon' and privilege_type in ('INSERT','UPDATE','DELETE','TRUNCATE','REFERENCES','TRIGGER')),
+              'authenticated_write_explicit', exists (select 1 from explicit_grants where grantee = 'authenticated' and privilege_type in ('INSERT','UPDATE','DELETE','TRUNCATE','REFERENCES','TRIGGER'))
             );" \
             > migration/phase-6/tmp/apply/phase-6-validation.json
 
@@ -134,15 +140,40 @@ jobs:
               invalid_periods: 0,
               invalid_basis: 0,
               legacy_rows: 319,
-              anon_select: true,
-              authenticated_select: true,
-              anon_insert: false,
-              authenticated_insert: false
+              anon_select_explicit: true,
+              authenticated_select_explicit: true,
+              anon_write_explicit: false,
+              authenticated_write_explicit: false
             };
             for (const [k,v] of Object.entries(expected)) {
               if (data[k] !== v) throw new Error(`${k}: expected ${v}, got ${data[k]}`);
             }
           '
+
+          cat > migration/phase-6/tmp/apply/phase-6-write-denial.sql <<'SQL'
+          begin;
+          set local role anon;
+          do $$
+          begin
+            begin
+              insert into public.atlas_person_politics_compat_v1
+                (id, person_name, politic_name, activity_start, activity_end, role, period_basis, notes)
+              values
+                ('00000000-0000-0000-0000-000000000000', 'DENY_TEST', 'DENY_TEST', 1, 1, null, 'general_activity', null);
+              raise exception 'anon write unexpectedly succeeded';
+            exception
+              when insufficient_privilege or object_not_in_prerequisite_state or feature_not_supported then
+                null;
+            end;
+          end $$;
+          rollback;
+          SQL
+
+          psql "$SUPABASE_DB_URL" \
+            --set=ON_ERROR_STOP=1 \
+            --no-psqlrc \
+            --file migration/phase-6/tmp/apply/phase-6-write-denial.sql \
+            > migration/phase-6/tmp/apply/phase-6-write-denial.log 2>&1
 
       - name: Upload apply evidence
         if: always()
