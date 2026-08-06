@@ -1,0 +1,159 @@
+name: Phase 6 Shadow Compare
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_ref:
+        description: Exact approved reader integration commit SHA
+        required: true
+        default: 04dacd1422558ba3e6ec306c8e9eda8632d60ce4
+        type: string
+      expected_commit_sha:
+        description: Exact approved reader integration commit SHA
+        required: true
+        default: 04dacd1422558ba3e6ec306c8e9eda8632d60ce4
+        type: string
+      confirmation_token:
+        description: Type RUN_ATLAS_PHASE_6_SHADOW_COMPARE
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase-6-shadow-compare
+  cancel-in-progress: false
+
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    environment: phase-5-shadow
+    steps:
+      - name: Checkout approved target
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target_ref }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Validate authorization inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          ACTUAL_SHA="$(git rev-parse HEAD)"
+          APPROVED_SHA="04dacd1422558ba3e6ec306c8e9eda8632d60ce4"
+          test "${{ inputs.target_ref }}" = "$APPROVED_SHA"
+          test "$ACTUAL_SHA" = "$APPROVED_SHA"
+          test "${{ inputs.expected_commit_sha }}" = "$APPROVED_SHA"
+          test "${{ inputs.confirmation_token }}" = "RUN_ATLAS_PHASE_6_SHADOW_COMPARE"
+          echo "APPROVED_SHA=$ACTUAL_SHA" >> "$GITHUB_ENV"
+
+      - name: Verify database secret exists
+        shell: bash
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          set -euo pipefail
+          test -n "${SUPABASE_DB_URL:-}"
+          case "$SUPABASE_DB_URL" in
+            postgresql://*|postgres://*) ;;
+            *) echo "SUPABASE_DB_URL must be a PostgreSQL URI" >&2; exit 41 ;;
+          esac
+
+      - name: Install PostgreSQL client
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Export read-only source snapshots
+        shell: bash
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          set -euo pipefail
+          rm -rf migration/phase-6/tmp/shadow
+          mkdir -p migration/phase-6/tmp/shadow
+          cat > migration/phase-6/tmp/shadow/export.sql <<'SQL'
+          begin read only;
+          \copy (
+            select jsonb_agg(to_jsonb(x) order by politic_name, activity_start, activity_end, person_name, id)::text
+            from (
+              select id, person_name, politic_name, activity_start, activity_end, role, period_basis, notes
+              from public.person_politics
+            ) x
+          ) to 'migration/phase-6/tmp/shadow/legacy.raw';
+          \copy (
+            select jsonb_agg(to_jsonb(x) order by politic_name, activity_start, activity_end, person_name, id)::text
+            from (
+              select id, person_name, politic_name, activity_start, activity_end, role, period_basis, notes
+              from public.atlas_person_politics_compat_v1
+            ) x
+          ) to 'migration/phase-6/tmp/shadow/v2.raw';
+          rollback;
+          SQL
+          psql "$SUPABASE_DB_URL" --set=ON_ERROR_STOP=1 --no-psqlrc --file migration/phase-6/tmp/shadow/export.sql > migration/phase-6/tmp/shadow/export.log 2>&1
+          cp migration/phase-6/tmp/shadow/legacy.raw migration/phase-6/tmp/shadow/legacy.json
+          cp migration/phase-6/tmp/shadow/v2.raw migration/phase-6/tmp/shadow/v2.json
+
+      - name: Build deterministic comparison twice
+        shell: bash
+        run: |
+          set -euo pipefail
+          node migration/phase-6/scripts/shadow-compare.mjs migration/phase-6/tmp/shadow/legacy.json migration/phase-6/tmp/shadow/v2.json migration/phase-6/tmp/shadow/report-1.json
+          node migration/phase-6/scripts/shadow-compare.mjs migration/phase-6/tmp/shadow/legacy.json migration/phase-6/tmp/shadow/v2.json migration/phase-6/tmp/shadow/report-2.json
+          node - <<'NODE'
+          const fs = require('fs');
+          const crypto = require('crypto');
+          function stable(path) {
+            const value = JSON.parse(fs.readFileSync(path, 'utf8'));
+            delete value.generated_at;
+            return JSON.stringify(value);
+          }
+          const a = stable('migration/phase-6/tmp/shadow/report-1.json');
+          const b = stable('migration/phase-6/tmp/shadow/report-2.json');
+          if (a !== b) throw new Error('shadow report is not deterministic');
+          const digest = 'sha256:' + crypto.createHash('sha256').update(a).digest('hex');
+          fs.writeFileSync('migration/phase-6/tmp/shadow/report.digest.txt', digest + '\n');
+          const report = JSON.parse(fs.readFileSync('migration/phase-6/tmp/shadow/report-1.json', 'utf8'));
+          const summary = [
+            '# Phase 6 Shadow Comparison',
+            '',
+            `- Legacy rows: ${report.counts.legacy}`,
+            `- V2 rows: ${report.counts.v2}`,
+            `- Exact shared IDs: ${report.counts.exact_matches}`,
+            `- Changed shared IDs: ${report.counts.changed_shared_ids}`,
+            `- Missing in V2: ${report.counts.missing_in_v2}`,
+            `- Extra in V2: ${report.counts.extra_in_v2}`,
+            `- Unexplained differences: ${report.counts.unexplained_differences}`,
+            `- Legacy fingerprint: ${report.fingerprints.legacy}`,
+            `- V2 fingerprint: ${report.fingerprints.v2}`,
+            `- Structural validation: ${report.pass ? 'PASS' : 'FAIL'}`,
+            '',
+            'This workflow is read-only and does not authorize production cutover.'
+          ].join('\n');
+          fs.writeFileSync('migration/phase-6/tmp/shadow/SUMMARY.md', summary + '\n');
+          NODE
+
+      - name: Verify known source counts
+        shell: bash
+        run: |
+          set -euo pipefail
+          node - <<'NODE'
+          const fs = require('fs');
+          const report = JSON.parse(fs.readFileSync('migration/phase-6/tmp/shadow/report-1.json', 'utf8'));
+          if (report.counts.legacy !== 319) throw new Error(`legacy row count changed: ${report.counts.legacy}`);
+          if (report.counts.v2 !== 349) throw new Error(`v2 row count changed: ${report.counts.v2}`);
+          if (!report.pass) throw new Error('structural parity validation failed');
+          NODE
+
+      - name: Upload shadow evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-6-shadow-compare-${{ env.APPROVED_SHA || github.sha }}
+          path: migration/phase-6/tmp/shadow
+          if-no-files-found: error
+          retention-days: 90
