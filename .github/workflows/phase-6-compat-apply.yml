@@ -83,7 +83,7 @@ jobs:
           mkdir -p migration/phase-6/tmp/apply
           node migration/phase-6/scripts/build-compat-bundle.mjs . migration/phase-6/tmp/apply
           node migration/phase-6/scripts/validate-compat-bundle.mjs . migration/phase-6/tmp/apply
-          grep -Fq -- "PHASE_6_COMPATIBILITY_READER" migration/phase-6/tmp/apply/phase-6-deployment.sql
+          grep -Fq -- "PHASE 6 COMPATIBILITY READER BUNDLE" migration/phase-6/tmp/apply/phase-6-deployment.sql
           grep -Fq -- "public.atlas_person_politics_compat_v1" migration/phase-6/tmp/apply/phase-6-deployment.sql
 
       - name: Apply compatibility object transaction
