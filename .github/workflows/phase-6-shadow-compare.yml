@@ -6,12 +6,12 @@ on:
       target_ref:
         description: Exact approved lineage parity commit SHA
         required: true
-        default: 3ae9e44847fa4e4a012207028245036b006cce4f
+        default: 3ac910790ac380ad05656006859f5e5bba52d91f
         type: string
       expected_commit_sha:
         description: Exact approved lineage parity commit SHA
         required: true
-        default: 3ae9e44847fa4e4a012207028245036b006cce4f
+        default: 3ac910790ac380ad05656006859f5e5bba52d91f
         type: string
       confirmation_token:
         description: Type RUN_ATLAS_PHASE_6_SHADOW_COMPARE
@@ -42,7 +42,7 @@ jobs:
         run: |
           set -euo pipefail
           ACTUAL_SHA="$(git rev-parse HEAD)"
-          APPROVED_SHA="3ae9e44847fa4e4a012207028245036b006cce4f"
+          APPROVED_SHA="3ac910790ac380ad05656006859f5e5bba52d91f"
           test "${{ inputs.target_ref }}" = "$APPROVED_SHA"
           test "$ACTUAL_SHA" = "$APPROVED_SHA"
           test "${{ inputs.expected_commit_sha }}" = "$APPROVED_SHA"
@@ -116,7 +116,10 @@ jobs:
             `- Matched lineage rows: ${report.counts.matched_lineage_rows}`,
             `- Missing in V2: ${report.counts.missing_in_v2}`,
             `- Approved V2 expansion candidates: ${report.counts.approved_v2_expansion_candidates}`,
-            `- Multiplicity mismatches: ${report.counts.multiplicity_mismatches}`,
+            `- Multiplicity mismatch groups: ${report.counts.multiplicity_mismatches}`,
+            `- Expansion row delta: ${report.counts.expansion_row_delta}`,
+            `- Contraction row delta: ${report.counts.contraction_row_delta}`,
+            `- Duplicate-payload expansion groups: ${report.counts.duplicate_payload_expansion_groups}`,
             `- Unexplained differences: ${report.counts.unexplained_differences}`,
             `- Legacy fingerprint: ${report.fingerprints.legacy}`,
             `- V2 fingerprint: ${report.fingerprints.v2}`,
@@ -141,6 +144,13 @@ jobs:
           if (report.counts.missing_in_v2 !== 0) throw new Error(`legacy rows missing in v2: ${report.counts.missing_in_v2}`);
           if (report.counts.unexplained_differences !== 0) throw new Error(`unexplained differences: ${report.counts.unexplained_differences}`);
           if (report.counts.approved_v2_expansion_candidates !== 30) throw new Error(`unexpected v2 expansion count: ${report.counts.approved_v2_expansion_candidates}`);
+          if (report.counts.expansion_row_delta !== 30) throw new Error(`unexpected expansion row delta: ${report.counts.expansion_row_delta}`);
+          if (report.counts.contraction_row_delta !== 0) throw new Error(`unexpected contraction row delta: ${report.counts.contraction_row_delta}`);
+          if (report.counts.duplicate_payload_expansion_groups !== 1) throw new Error(`unexpected duplicate-payload expansion groups: ${report.counts.duplicate_payload_expansion_groups}`);
+          const duplicate = report.duplicate_payload_expansions?.[0];
+          if (!duplicate || duplicate.payload.person !== 'Simon Bolivar' || duplicate.payload.polity !== 'Gran Colombia' || duplicate.payload.start !== 1819 || duplicate.payload.end !== 1830 || duplicate.delta !== 2) {
+            throw new Error('unexpected duplicate-payload expansion classification');
+          }
           if (!report.structural_pass || !report.parity_pass) throw new Error('lineage parity gate failed');
           NODE
 
