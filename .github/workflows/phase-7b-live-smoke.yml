@@ -1,0 +1,72 @@
+name: Phase 7B Live Dual-Source Smoke
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_ref:
+        description: Exact approved Phase 7B live-smoke commit SHA
+        required: true
+        type: string
+      expected_commit_sha:
+        description: Exact approved Phase 7B live-smoke commit SHA
+        required: true
+        type: string
+      confirmation_token:
+        description: Type RUN_ATLAS_PHASE_7B_LIVE_SMOKE
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase-7b-live-smoke
+  cancel-in-progress: false
+
+jobs:
+  live-smoke:
+    runs-on: ubuntu-24.04
+    environment: phase-5-shadow
+    steps:
+      - name: Checkout approved target
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target_ref }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Validate authorization inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          ACTUAL_SHA="$(git rev-parse HEAD)"
+          test "${{ inputs.target_ref }}" = "${{ inputs.expected_commit_sha }}"
+          test "$ACTUAL_SHA" = "${{ inputs.expected_commit_sha }}"
+          test "${{ inputs.confirmation_token }}" = "RUN_ATLAS_PHASE_7B_LIVE_SMOKE"
+          echo "APPROVED_SHA=$ACTUAL_SHA" >> "$GITHUB_ENV"
+
+      - name: Verify database secret
+        shell: bash
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          set -euo pipefail
+          test -n "${SUPABASE_DB_URL:-}"
+
+      - name: Install PostgreSQL client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: Run live dual-source smoke and fallback injection
+        shell: bash
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: bash migration/phase-7/scripts/run-phase7b-live-smoke.sh
+
+      - name: Upload Phase 7B live evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-7b-live-smoke-${{ env.APPROVED_SHA || github.sha }}
+          path: migration/phase-7/tmp/live
+          if-no-files-found: error
+          retention-days: 90
