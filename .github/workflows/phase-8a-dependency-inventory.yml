@@ -12,7 +12,8 @@ permissions:
 
 jobs:
   repository-inventory:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4
