@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       target_ref:
-        description: Branch or commit to apply
+        description: Exact approved Phase 6 commit SHA to apply
         required: true
-        default: agent/phase6-compatibility-reader
+        default: 1c84199a5f57e41aa54468e9489efffed87cbbb4
         type: string
       expected_commit_sha:
         description: Exact approved Phase 6 commit SHA
@@ -47,10 +47,12 @@ jobs:
         run: |
           set -euo pipefail
           ACTUAL_SHA="$(git rev-parse HEAD)"
-          test "${{ inputs.target_ref }}" = "agent/phase6-compatibility-reader"
-          test "$ACTUAL_SHA" = "${{ inputs.expected_commit_sha }}"
-          test "${{ inputs.expected_commit_sha }}" = "1c84199a5f57e41aa54468e9489efffed87cbbb4"
-          test "${{ inputs.expected_artifact_digest }}" = "sha256:68e499e4956d5603cc1da0477d03f8df4f456936e04d0189fb109ea0144b088d"
+          APPROVED_SHA="1c84199a5f57e41aa54468e9489efffed87cbbb4"
+          APPROVED_DIGEST="sha256:68e499e4956d5603cc1da0477d03f8df4f456936e04d0189fb109ea0144b088d"
+          test "${{ inputs.target_ref }}" = "$APPROVED_SHA"
+          test "$ACTUAL_SHA" = "$APPROVED_SHA"
+          test "${{ inputs.expected_commit_sha }}" = "$APPROVED_SHA"
+          test "${{ inputs.expected_artifact_digest }}" = "$APPROVED_DIGEST"
           test "${{ inputs.confirmation_token }}" = "APPLY_ATLAS_V2_PHASE_6_COMPAT"
           echo "APPROVED_SHA=$ACTUAL_SHA" >> "$GITHUB_ENV"
 
