@@ -4,14 +4,14 @@ on:
   workflow_dispatch:
     inputs:
       target_ref:
-        description: Exact approved reader integration commit SHA
+        description: Exact approved lineage parity commit SHA
         required: true
-        default: 04dacd1422558ba3e6ec306c8e9eda8632d60ce4
+        default: 3ae9e44847fa4e4a012207028245036b006cce4f
         type: string
       expected_commit_sha:
-        description: Exact approved reader integration commit SHA
+        description: Exact approved lineage parity commit SHA
         required: true
-        default: 04dacd1422558ba3e6ec306c8e9eda8632d60ce4
+        default: 3ae9e44847fa4e4a012207028245036b006cce4f
         type: string
       confirmation_token:
         description: Type RUN_ATLAS_PHASE_6_SHADOW_COMPARE
@@ -42,7 +42,7 @@ jobs:
         run: |
           set -euo pipefail
           ACTUAL_SHA="$(git rev-parse HEAD)"
-          APPROVED_SHA="04dacd1422558ba3e6ec306c8e9eda8632d60ce4"
+          APPROVED_SHA="3ae9e44847fa4e4a012207028245036b006cce4f"
           test "${{ inputs.target_ref }}" = "$APPROVED_SHA"
           test "$ACTUAL_SHA" = "$APPROVED_SHA"
           test "${{ inputs.expected_commit_sha }}" = "$APPROVED_SHA"
@@ -88,7 +88,7 @@ jobs:
           cp migration/phase-6/tmp/shadow/legacy.raw migration/phase-6/tmp/shadow/legacy.json
           cp migration/phase-6/tmp/shadow/v2.raw migration/phase-6/tmp/shadow/v2.json
 
-      - name: Build deterministic comparison twice
+      - name: Build deterministic lineage comparison twice
         shell: bash
         run: |
           set -euo pipefail
@@ -104,30 +104,31 @@ jobs:
           }
           const a = stable('migration/phase-6/tmp/shadow/report-1.json');
           const b = stable('migration/phase-6/tmp/shadow/report-2.json');
-          if (a !== b) throw new Error('shadow report is not deterministic');
+          if (a !== b) throw new Error('lineage report is not deterministic');
           const digest = 'sha256:' + crypto.createHash('sha256').update(a).digest('hex');
           fs.writeFileSync('migration/phase-6/tmp/shadow/report.digest.txt', digest + '\n');
           const report = JSON.parse(fs.readFileSync('migration/phase-6/tmp/shadow/report-1.json', 'utf8'));
           const summary = [
-            '# Phase 6 Shadow Comparison',
+            '# Phase 6 Lineage Parity',
             '',
             `- Legacy rows: ${report.counts.legacy}`,
             `- V2 rows: ${report.counts.v2}`,
-            `- Exact shared IDs: ${report.counts.exact_matches}`,
-            `- Changed shared IDs: ${report.counts.changed_shared_ids}`,
+            `- Matched lineage rows: ${report.counts.matched_lineage_rows}`,
             `- Missing in V2: ${report.counts.missing_in_v2}`,
-            `- Extra in V2: ${report.counts.extra_in_v2}`,
+            `- Approved V2 expansion candidates: ${report.counts.approved_v2_expansion_candidates}`,
+            `- Multiplicity mismatches: ${report.counts.multiplicity_mismatches}`,
             `- Unexplained differences: ${report.counts.unexplained_differences}`,
             `- Legacy fingerprint: ${report.fingerprints.legacy}`,
             `- V2 fingerprint: ${report.fingerprints.v2}`,
-            `- Structural validation: ${report.pass ? 'PASS' : 'FAIL'}`,
+            `- Structural validation: ${report.structural_pass ? 'PASS' : 'FAIL'}`,
+            `- Lineage parity: ${report.parity_pass ? 'PASS' : 'FAIL'}`,
             '',
             'This workflow is read-only and does not authorize production cutover.'
           ].join('\n');
           fs.writeFileSync('migration/phase-6/tmp/shadow/SUMMARY.md', summary + '\n');
           NODE
 
-      - name: Verify known source counts
+      - name: Verify lineage gate
         shell: bash
         run: |
           set -euo pipefail
@@ -136,14 +137,18 @@ jobs:
           const report = JSON.parse(fs.readFileSync('migration/phase-6/tmp/shadow/report-1.json', 'utf8'));
           if (report.counts.legacy !== 319) throw new Error(`legacy row count changed: ${report.counts.legacy}`);
           if (report.counts.v2 !== 349) throw new Error(`v2 row count changed: ${report.counts.v2}`);
-          if (!report.pass) throw new Error('structural parity validation failed');
+          if (report.counts.matched_lineage_rows !== 319) throw new Error(`lineage coverage incomplete: ${report.counts.matched_lineage_rows}`);
+          if (report.counts.missing_in_v2 !== 0) throw new Error(`legacy rows missing in v2: ${report.counts.missing_in_v2}`);
+          if (report.counts.unexplained_differences !== 0) throw new Error(`unexplained differences: ${report.counts.unexplained_differences}`);
+          if (report.counts.approved_v2_expansion_candidates !== 30) throw new Error(`unexpected v2 expansion count: ${report.counts.approved_v2_expansion_candidates}`);
+          if (!report.structural_pass || !report.parity_pass) throw new Error('lineage parity gate failed');
           NODE
 
       - name: Upload shadow evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: phase-6-shadow-compare-${{ env.APPROVED_SHA || github.sha }}
+          name: phase-6-lineage-parity-${{ env.APPROVED_SHA || github.sha }}
           path: migration/phase-6/tmp/shadow
           if-no-files-found: error
           retention-days: 90
