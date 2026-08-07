@@ -9,6 +9,7 @@ const observability = fs.readFileSync('atlas-reader-observability.js', 'utf8');
 const reader = fs.readFileSync('atlas-reader.js', 'utf8');
 const app = fs.readFileSync('app.js', 'utf8');
 const adapter = fs.readFileSync('atlas-write-adapter.js', 'utf8');
+const compiler = fs.readFileSync('atlas-v2-shadow-compiler.js', 'utf8');
 const index = fs.readFileSync('index.html', 'utf8');
 const productionSource = fs.readFileSync('atlas-production-source.js', 'utf8');
 const rollbackRunbook = fs.readFileSync('migration/phase-7/PHASE_7_ROLLBACK_RUNBOOK.md', 'utf8');
@@ -21,29 +22,16 @@ class CustomEvent {
   constructor(type, options = {}) { this.type = type; this.detail = options.detail; }
 }
 const sandbox = {
-  window: {
-    dispatchEvent(event) { events.push(event); }
-  },
-  CustomEvent,
-  Date,
-  Object,
-  Number,
-  String,
-  Boolean,
-  Array,
-  Set
+  window: { dispatchEvent(event) { events.push(event); } },
+  CustomEvent, Date, Object, Number, String, Boolean, Array, Set
 };
 vm.createContext(sandbox);
 vm.runInContext(observability, sandbox);
 
 const event = sandbox.window.AtlasReaderObservability.record({
-  requested_source: 'v2-shadow',
-  effective_source: 'legacy',
-  fallback: true,
-  row_count: 319,
-  validation_failures: 1,
-  notes: 'must not be recorded',
-  secret: 'must not be recorded'
+  requested_source: 'v2-shadow', effective_source: 'legacy', fallback: true,
+  row_count: 319, validation_failures: 1,
+  notes: 'must not be recorded', secret: 'must not be recorded'
 });
 const keys = Object.keys(event).sort();
 assert(keys.join(',') === ['effective_source','fallback','marker','requested_source','row_count','timestamp','validation_failures'].sort().join(','), 'observability event contains unapproved fields');
@@ -69,12 +57,17 @@ assert(reader.includes('resolved.source === "v2-shadow" && fallbackToLegacy'), '
 
 assert(productionSource === expectedLegacyManifest || productionSource === expectedV2Manifest, 'production source declaration must be an exact approved manifest');
 assert(app.includes('ATLAS_WRITE_ADAPTER.createAdapter'), 'app write adapter missing');
-assert(app.includes('mode: "legacy-only"'), 'app legacy-only write mode missing');
+assert(app.includes('mode: "legacy-only"') || app.includes('mode: "shadow-validate"'), 'approved app write mode missing');
 assert(adapter.includes('db.from("person_politics").update'), 'legacy update target missing');
 assert(adapter.includes('db.from("person_politics").insert'), 'legacy insert target missing');
 assert(adapter.includes('db.from("person_politics").delete'), 'legacy delete target missing');
 assert(!/db\.from\("atlas_person_politics_compat_v1"\)\.(?:insert|update|delete)/.test(app + adapter), 'compatibility view mutation detected');
-assert(!/db\.from\("atlas_v2\./.test(app + adapter), 'v2 physical table mutation detected');
+assert(!/db\.from\("atlas_v2\./.test(app + adapter + compiler), 'v2 physical table mutation detected');
+if (app.includes('mode: "shadow-validate"')) {
+  assert(app.includes('shadowCompiler: window.ATLAS_V2_SHADOW_COMPILER.compile'), 'shadow compiler injection missing');
+  assert(compiler.includes('commit: false'), 'shadow compiler commit guard missing');
+  assert(compiler.includes('writes_performed: 0'), 'shadow compiler zero-write guard missing');
+}
 assert(rollbackRunbook.includes('DATA_SOURCE: "legacy"'), 'rollback runbook lost exact legacy declaration');
 assert(rollbackRunbook.includes('public.person_politics'), 'rollback runbook lost legacy write invariant');
 
@@ -88,7 +81,7 @@ const report = {
     script_order: failures.filter((x) => /load before|missing from index/.test(x)).length === 0,
     reader_emission: failures.filter((x) => /reader|fallback diagnostic|fallback condition/.test(x)).length === 0,
     source_manifest_exact: failures.filter((x) => /approved manifest/.test(x)).length === 0,
-    write_guard: failures.filter((x) => /target|mutation|adapter|legacy-only/.test(x)).length === 0,
+    write_guard: failures.filter((x) => /target|mutation|adapter|write mode|shadow compiler/.test(x)).length === 0,
     rollback_ready: failures.filter((x) => /rollback runbook/.test(x)).length === 0
   },
   failures,
