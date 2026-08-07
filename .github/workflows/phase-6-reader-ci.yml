@@ -34,7 +34,12 @@ jobs:
           set -euo pipefail
           grep -Fq 'window.AtlasReader.loadPersonPolitics' app.js
           ! grep -Fq 'select("*")' app.js
-          test "$(grep -o 'db.from("person_politics")' app.js | wc -l | tr -d ' ')" -ge 3
-          ! grep -Eq 'from\("atlas_person_politics_compat_v1"\).*(insert|update|delete)' app.js atlas-reader.js
-          ! grep -Eq 'from\("atlas_v2' app.js atlas-reader.js
+          grep -Fq 'ATLAS_WRITE_ADAPTER.createAdapter' app.js
+          grep -Fq 'mode: "legacy-only"' app.js
+          grep -Fq 'db.from("person_politics").update' atlas-write-adapter.js
+          grep -Fq 'db.from("person_politics").insert' atlas-write-adapter.js
+          grep -Fq 'db.from("person_politics").delete' atlas-write-adapter.js
+          ! grep -Eq 'from\("atlas_person_politics_compat_v1"\).*(insert|update|delete)' app.js atlas-reader.js atlas-write-adapter.js
+          ! grep -Eq 'from\("atlas_v2' app.js atlas-reader.js atlas-write-adapter.js
           grep -Fq './atlas-reader.js' index.html
+          grep -Fq './atlas-write-adapter.js' index.html
