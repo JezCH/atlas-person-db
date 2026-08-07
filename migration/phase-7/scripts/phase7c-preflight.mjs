@@ -8,6 +8,7 @@ const sourceManifest = fs.readFileSync('atlas-production-source.js', 'utf8');
 const sourceControl = fs.readFileSync('atlas-source-control.js', 'utf8');
 const reader = fs.readFileSync('atlas-reader.js', 'utf8');
 const app = fs.readFileSync('app.js', 'utf8');
+const adapter = fs.readFileSync('atlas-write-adapter.js', 'utf8');
 const rollbackRunbook = fs.readFileSync('migration/phase-7/PHASE_7_ROLLBACK_RUNBOOK.md', 'utf8');
 
 const expectedLegacyManifest = 'window.ATLAS_CONFIG = Object.freeze({\n  ...(window.ATLAS_CONFIG || {}),\n  DATA_SOURCE: "legacy"\n});\n';
@@ -19,11 +20,13 @@ assert(sourceControl.includes('window.ATLAS_DATA_SOURCE = state.effective'), 'ef
 assert(reader.includes('source || window.ATLAS_DATA_SOURCE || "legacy"'), 'reader source precedence changed unexpectedly');
 assert(reader.includes('source === "v2-shadow" ? "atlas_person_politics_compat_v1" : "person_politics"'), 'reader table mapping changed unexpectedly');
 assert(reader.includes('resolved.source === "v2-shadow" && fallbackToLegacy'), 'legacy fallback contract changed unexpectedly');
-assert(app.includes('db.from("person_politics").insert'), 'legacy insert target missing');
-assert(app.includes('db.from("person_politics").update'), 'legacy update target missing');
-assert(app.includes('db.from("person_politics").delete'), 'legacy delete target missing');
-assert(!/db\.from\("atlas_person_politics_compat_v1"\)\.(?:insert|update|delete)/.test(app), 'compatibility view mutation detected');
-assert(!/db\.from\("atlas_v2\./.test(app), 'v2 physical table mutation detected');
+assert(app.includes('ATLAS_WRITE_ADAPTER.createAdapter'), 'app write adapter missing');
+assert(app.includes('mode: "legacy-only"'), 'app legacy-only write mode missing');
+assert(adapter.includes('db.from("person_politics").insert'), 'legacy insert target missing');
+assert(adapter.includes('db.from("person_politics").update'), 'legacy update target missing');
+assert(adapter.includes('db.from("person_politics").delete'), 'legacy delete target missing');
+assert(!/db\.from\("atlas_person_politics_compat_v1"\)\.(?:insert|update|delete)/.test(app + adapter), 'compatibility view mutation detected');
+assert(!/db\.from\("atlas_v2\./.test(app + adapter), 'v2 physical table mutation detected');
 assert(rollbackRunbook.includes('DATA_SOURCE: "legacy"'), 'rollback runbook does not preserve exact legacy source');
 assert(rollbackRunbook.includes('public.person_politics'), 'rollback runbook lost legacy write invariant');
 assert(!/[?&](?:source|data_source)=/i.test(sourceControl + sourceManifest), 'query-string source override is prohibited');
@@ -36,7 +39,7 @@ const report = {
     source_manifest_exact: failures.filter((x) => x.includes('source manifest')).length === 0,
     source_contract: failures.filter((x) => x.includes('source set') || x.includes('effective source')).length === 0,
     reader_contract: failures.filter((x) => x.includes('reader') || x.includes('fallback contract')).length === 0,
-    write_guard: failures.filter((x) => x.includes('target') || x.includes('mutation')).length === 0,
+    write_guard: failures.filter((x) => x.includes('target') || x.includes('mutation') || x.includes('adapter') || x.includes('legacy-only')).length === 0,
     rollback_ready: failures.filter((x) => x.includes('rollback')).length === 0,
     override_prohibition: failures.filter((x) => x.includes('override')).length === 0
   },
