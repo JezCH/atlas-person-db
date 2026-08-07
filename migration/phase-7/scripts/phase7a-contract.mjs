@@ -10,6 +10,7 @@ const sourceControl = fs.readFileSync('atlas-source-control.js', 'utf8');
 const reader = fs.readFileSync('atlas-reader.js', 'utf8');
 const app = fs.readFileSync('app.js', 'utf8');
 const adapter = fs.readFileSync('atlas-write-adapter.js', 'utf8');
+const compiler = fs.readFileSync('atlas-v2-shadow-compiler.js', 'utf8');
 const index = fs.readFileSync('index.html', 'utf8');
 
 const expectedLegacyManifest = 'window.ATLAS_CONFIG = Object.freeze({\n  ...(window.ATLAS_CONFIG || {}),\n  DATA_SOURCE: "legacy"\n});\n';
@@ -49,8 +50,9 @@ const controlPos = index.indexOf('./atlas-source-control.js');
 const readerPos = index.indexOf('./atlas-reader.js');
 const writeModePos = index.indexOf('./atlas-write-mode.js');
 const adapterPos = index.indexOf('./atlas-write-adapter.js');
+const compilerPos = index.indexOf('./atlas-v2-shadow-compiler.js');
 const appPos = index.indexOf('./app.js');
-assert(configPos >= 0 && productionPos > configPos && controlPos > productionPos && readerPos > controlPos && writeModePos > readerPos && adapterPos > writeModePos && appPos > adapterPos, 'script load order must be config -> production source -> source control -> reader -> write mode -> adapter -> app');
+assert(configPos >= 0 && productionPos > configPos && controlPos > productionPos && readerPos > controlPos && writeModePos > readerPos && adapterPos > writeModePos && compilerPos > adapterPos && appPos > compilerPos, 'script load order must be config -> production source -> source control -> reader -> write mode -> adapter -> shadow compiler -> app');
 
 assert(reader.includes('new Set(["legacy", "v2-shadow"])'), 'reader allowed-source contract changed unexpectedly');
 assert(reader.includes('source || window.ATLAS_DATA_SOURCE || "legacy"'), 'reader source precedence changed unexpectedly');
@@ -58,12 +60,17 @@ assert(reader.includes('source === "v2-shadow" ? "atlas_person_politics_compat_v
 assert(reader.includes('resolved.source === "v2-shadow" && fallbackToLegacy'), 'reader fallback contract changed unexpectedly');
 
 assert(app.includes('ATLAS_WRITE_ADAPTER.createAdapter'), 'app write adapter missing');
-assert(app.includes('mode: "legacy-only"'), 'app legacy-only write mode missing');
+assert(app.includes('mode: "legacy-only"') || app.includes('mode: "shadow-validate"'), 'approved app write mode missing');
 assert(adapter.includes('db.from("person_politics").update'), 'legacy update target missing from adapter');
 assert(adapter.includes('db.from("person_politics").insert'), 'legacy insert target missing from adapter');
 assert(adapter.includes('db.from("person_politics").delete'), 'legacy delete target missing from adapter');
 assert(!/db\.from\("atlas_person_politics_compat_v1"\)\.(?:insert|update|delete)/.test(app + adapter), 'compatibility view mutation detected');
-assert(!/db\.from\("atlas_v2\./.test(app + adapter), 'v2 physical table mutation detected');
+assert(!/db\.from\("atlas_v2\./.test(app + adapter + compiler), 'v2 physical table mutation detected');
+if (app.includes('mode: "shadow-validate"')) {
+  assert(app.includes('shadowCompiler: window.ATLAS_V2_SHADOW_COMPILER.compile'), 'shadow compiler injection missing');
+  assert(compiler.includes('commit: false'), 'shadow compiler commit guard missing');
+  assert(compiler.includes('writes_performed: 0'), 'shadow compiler zero-write guard missing');
+}
 
 const manifest = productionSource === expectedV2Manifest ? 'v2-shadow' : 'legacy';
 const report = {
@@ -77,7 +84,7 @@ const report = {
     override_prohibition: failures.filter((x) => /override/.test(x)).length === 0,
     script_order: failures.filter((x) => /load order/.test(x)).length === 0,
     reader_contract: failures.filter((x) => /reader/.test(x)).length === 0,
-    write_guard: failures.filter((x) => /target|mutation|adapter|legacy-only/.test(x)).length === 0
+    write_guard: failures.filter((x) => /target|mutation|adapter|write mode|shadow compiler/.test(x)).length === 0
   },
   failures,
   pass: failures.length === 0
