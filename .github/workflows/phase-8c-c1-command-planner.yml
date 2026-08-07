@@ -1,0 +1,64 @@
+name: Phase 8C C1 Command Planner
+
+on:
+  pull_request:
+    paths:
+      - "atlas-v2-command-planner.js"
+      - "tests/atlas-v2-command-planner.test.mjs"
+      - ".github/workflows/phase-8c-c1-command-planner.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run planner tests
+        run: node --test tests/atlas-v2-command-planner.test.mjs
+      - name: Verify zero DB surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          node - <<'NODE'
+          const fs = require('fs');
+          const src = fs.readFileSync('atlas-v2-command-planner.js','utf8');
+          const failures = [];
+          for (const token of ['.from(', '.insert(', '.update(', '.delete(', '.rpc(', 'SUPABASE']) {
+            if (src.includes(token)) failures.push(`forbidden token: ${token}`);
+          }
+          if (!src.includes('commit: false')) failures.push('commit:false missing');
+          if (!src.includes('writes_performed: 0')) failures.push('writes_performed:0 missing');
+          if (!src.includes('atlas_v2.person_politics_v2')) failures.push('normalized relationship target missing');
+          if (!src.includes('RESOLVE_PERSON_EXACT')) failures.push('exact person resolution missing');
+          if (!src.includes('RESOLVE_POLITY_EXACT')) failures.push('exact polity resolution missing');
+          if (src.includes('fuzzy')) failures.push('fuzzy identity logic prohibited');
+          fs.mkdirSync('migration/phase-8/tmp/phase8c-c1-command-planner',{recursive:true});
+          const report = {
+            marker:'PHASE_8C_C1_COMMAND_PLANNER',
+            target_schema:'atlas_v2',
+            production_loaded:false,
+            database_calls:0,
+            writes_performed:0,
+            commit:false,
+            failures,
+            pass:failures.length===0
+          };
+          fs.writeFileSync('migration/phase-8/tmp/phase8c-c1-command-planner/verification.json', JSON.stringify(report,null,2)+'\n');
+          console.log(JSON.stringify(report,null,2));
+          if (failures.length) process.exit(2);
+          NODE
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-8c-c1-command-planner-${{ github.sha }}
+          path: migration/phase-8/tmp/phase8c-c1-command-planner
+          if-no-files-found: error
+          retention-days: 90
