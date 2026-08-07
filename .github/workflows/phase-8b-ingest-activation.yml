@@ -1,0 +1,53 @@
+name: Phase 8B Ingest Activation
+
+on:
+  pull_request:
+    paths:
+      - "index.html"
+      - "atlas-reconciliation-bootstrap.js"
+      - "tests/phase8b-ingest-activation.test.mjs"
+      - ".github/workflows/phase-8b-ingest-activation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: atlas-phase-8b-ingest-activation
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Run activation contract tests
+        run: node --test tests/phase8b-ingest-activation.test.mjs
+
+      - name: Run previously approved component tests
+        run: |
+          node --test tests/atlas-reconciliation-planner.test.mjs
+          node --test tests/atlas-reconciliation-controller.test.mjs
+          node --test tests/atlas-legacy-reconciliation-executor.test.mjs
+          node --test tests/atlas-reconciliation-integration.test.mjs
+
+      - name: Emit activation evidence
+        run: |
+          mkdir -p migration/phase-8/tmp/phase8b-ingest-activation
+          printf '{"marker":"PHASE_8B_INGEST_ACTIVATION","legacy_ingest_loaded":false,"new_chain_loaded":true,"write_target":"person_politics","v2_commit_enabled":false,"rollback":"restore ingest.js script tag"}\n' > migration/phase-8/tmp/phase8b-ingest-activation/verification.json
+
+      - name: Upload evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-8b-ingest-activation-${{ github.sha }}
+          path: migration/phase-8/tmp/phase8b-ingest-activation
+          if-no-files-found: error
+          retention-days: 90
