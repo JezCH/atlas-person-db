@@ -1,0 +1,105 @@
+name: Phase 8C C2 Protected Live Smoke
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_ref:
+        description: Exact branch/ref to test
+        required: true
+        default: agent/phase8c-c2-protected-live-smoke
+        type: string
+      expected_commit_sha:
+        description: Exact approved commit SHA
+        required: true
+        type: string
+      confirmation_token:
+        description: Type RUN_PHASE8C_C2_ROLLBACK_ONLY
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase-8c-c2-protected-live-smoke
+  cancel-in-progress: false
+
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+    environment: phase-5-shadow
+    steps:
+      - name: Checkout approved target
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target_ref }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Validate exact authorization
+        shell: bash
+        run: |
+          set -euo pipefail
+          ACTUAL_SHA="$(git rev-parse HEAD)"
+          test "${{ inputs.target_ref }}" = "agent/phase8c-c2-protected-live-smoke"
+          test "$ACTUAL_SHA" = "${{ inputs.expected_commit_sha }}"
+          test "${{ inputs.confirmation_token }}" = "RUN_PHASE8C_C2_ROLLBACK_ONLY"
+          echo "APPROVED_SHA=$ACTUAL_SHA" >> "$GITHUB_ENV"
+
+      - name: Verify database secret
+        shell: bash
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          set -euo pipefail
+          test -n "${SUPABASE_DB_URL:-}"
+          case "$SUPABASE_DB_URL" in
+            postgresql://*|postgres://*) ;;
+            *) echo "SUPABASE_DB_URL must be a PostgreSQL URI" >&2; exit 41 ;;
+          esac
+
+      - name: Install PostgreSQL client
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Run rollback-only isolated v2 smoke
+        shell: bash
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          set -euo pipefail
+          mkdir -p migration/phase-8/tmp/phase8c-c2-live-smoke
+          psql "$SUPABASE_DB_URL" --no-psqlrc --set=ON_ERROR_STOP=1 --tuples-only --no-align \
+            --file migration/phase-8/scripts/phase8c-c2-live-smoke.sql \
+            > migration/phase-8/tmp/phase8c-c2-live-smoke/raw.log
+
+          node - <<'NODE'
+          const fs = require('fs');
+          const path = 'migration/phase-8/tmp/phase8c-c2-live-smoke/raw.log';
+          const lines = fs.readFileSync(path,'utf8').split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+          const jsons = lines.filter(x=>x.startsWith('{')).map(x=>JSON.parse(x));
+          const smoke = jsons.find(x=>x.marker==='PHASE_8C_C2_LIVE_SMOKE');
+          const post = jsons.find(x=>x.marker==='PHASE_8C_C2_POST_ROLLBACK');
+          const failures=[];
+          const assert=(ok,msg)=>{if(!ok)failures.push(msg)};
+          assert(smoke?.inserted_rows===1,'isolated v2 smoke insert did not execute exactly once');
+          assert(smoke?.rollback_only===true,'smoke was not rollback-only');
+          assert(smoke?.legacy_mutations===0,'legacy mutation detected');
+          assert(post?.smoke_rows_remaining===0,'smoke row persisted after rollback');
+          const report={marker:'PHASE_8C_C2_PROTECTED_LIVE_SMOKE',approved_sha:process.env.APPROVED_SHA,smoke,post,failures,pass:failures.length===0};
+          fs.writeFileSync('migration/phase-8/tmp/phase8c-c2-live-smoke/verification.json',JSON.stringify(report,null,2)+'\n');
+          console.log(JSON.stringify(report,null,2));
+          if(failures.length) process.exit(2);
+          NODE
+
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-8c-c2-protected-live-smoke-${{ env.APPROVED_SHA || github.sha }}
+          path: migration/phase-8/tmp/phase8c-c2-live-smoke
+          if-no-files-found: error
+          retention-days: 90
