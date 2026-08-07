@@ -215,13 +215,14 @@
     const config = window.ATLAS_CONFIG || {};
     const adapterApi = window.ATLAS_WRITE_ADAPTER;
     const modeApi = window.ATLAS_WRITE_MODE;
+    const shadowApi = window.ATLAS_V2_SHADOW_COMPILER;
     const serviceApi = window.ATLAS_ADMIN_WRITE_SERVICE;
 
     if (!config.SUPABASE_URL || !config.SUPABASE_ANON_KEY || !window.supabase) {
       setResult("Supabase 설정을 찾을 수 없습니다.", "error");
       return;
     }
-    if (!adapterApi || !modeApi || !serviceApi) {
+    if (!adapterApi || !modeApi || !shadowApi || !serviceApi) {
       setResult("ATLAS 쓰기 계층을 불러오지 못했습니다.", "error");
       return;
     }
@@ -242,8 +243,9 @@
       const service = serviceApi.createAdminWriteService({
         db,
         adapterApi,
-        mode: "legacy-only",
-        modeResolver: modeApi.resolveMode
+        mode: "shadow-validate",
+        modeResolver: modeApi.resolveMode,
+        shadowCompiler: shadowApi.compile
       });
       const outcome = await service.saveRows(rows);
       const lines = [

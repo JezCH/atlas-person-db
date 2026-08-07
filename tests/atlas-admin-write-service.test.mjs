@@ -5,6 +5,7 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const adapterApi = require('../atlas-write-adapter.js');
 const modeApi = require('../atlas-write-mode.js');
+const shadowCompiler = require('../atlas-v2-shadow-compiler.js');
 const { createAdminWriteService } = require('../atlas-admin-write-service.js');
 
 function fakeDb(existingIds = new Map()) {
@@ -62,6 +63,23 @@ test('admin write service creates through the adapter in legacy-only mode', asyn
   assert.equal(result.updated, 0);
   assert.deepEqual(result.failures, []);
   assert.equal(result.mode, 'legacy-only');
+  assert.equal(db.calls.filter((call) => call[0] === 'from').every((call) => call[1] === 'person_politics'), true);
+});
+
+test('admin shadow-validate still commits legacy and compiles without v2 writes', async () => {
+  const db = fakeDb();
+  const service = createAdminWriteService({
+    db,
+    adapterApi,
+    mode: 'shadow-validate',
+    modeResolver: modeApi.resolveMode,
+    shadowCompiler: shadowCompiler.compile
+  });
+  const result = await service.saveRows([row]);
+  assert.equal(result.inserted, 1);
+  assert.equal(result.updated, 0);
+  assert.deepEqual(result.failures, []);
+  assert.equal(result.mode, 'shadow-validate');
   assert.equal(db.calls.filter((call) => call[0] === 'from').every((call) => call[1] === 'person_politics'), true);
 });
 
