@@ -8,6 +8,7 @@ const assert = (condition, message) => { if (!condition) failures.push(message);
 const observability = fs.readFileSync('atlas-reader-observability.js', 'utf8');
 const reader = fs.readFileSync('atlas-reader.js', 'utf8');
 const app = fs.readFileSync('app.js', 'utf8');
+const adapter = fs.readFileSync('atlas-write-adapter.js', 'utf8');
 const index = fs.readFileSync('index.html', 'utf8');
 const productionSource = fs.readFileSync('atlas-production-source.js', 'utf8');
 const rollbackRunbook = fs.readFileSync('migration/phase-7/PHASE_7_ROLLBACK_RUNBOOK.md', 'utf8');
@@ -67,11 +68,13 @@ assert(reader.includes('diagnostics.push("fallback to legacy")'), 'fallback diag
 assert(reader.includes('resolved.source === "v2-shadow" && fallbackToLegacy'), 'fallback condition changed unexpectedly');
 
 assert(productionSource === expectedLegacyManifest || productionSource === expectedV2Manifest, 'production source declaration must be an exact approved manifest');
-assert(app.includes('db.from("person_politics").update'), 'legacy update target missing');
-assert(app.includes('db.from("person_politics").insert'), 'legacy insert target missing');
-assert(app.includes('db.from("person_politics").delete'), 'legacy delete target missing');
-assert(!/db\.from\("atlas_person_politics_compat_v1"\)\.(?:insert|update|delete)/.test(app), 'compatibility view mutation detected');
-assert(!/db\.from\("atlas_v2\./.test(app), 'v2 physical table mutation detected');
+assert(app.includes('ATLAS_WRITE_ADAPTER.createAdapter'), 'app write adapter missing');
+assert(app.includes('mode: "legacy-only"'), 'app legacy-only write mode missing');
+assert(adapter.includes('db.from("person_politics").update'), 'legacy update target missing');
+assert(adapter.includes('db.from("person_politics").insert'), 'legacy insert target missing');
+assert(adapter.includes('db.from("person_politics").delete'), 'legacy delete target missing');
+assert(!/db\.from\("atlas_person_politics_compat_v1"\)\.(?:insert|update|delete)/.test(app + adapter), 'compatibility view mutation detected');
+assert(!/db\.from\("atlas_v2\./.test(app + adapter), 'v2 physical table mutation detected');
 assert(rollbackRunbook.includes('DATA_SOURCE: "legacy"'), 'rollback runbook lost exact legacy declaration');
 assert(rollbackRunbook.includes('public.person_politics'), 'rollback runbook lost legacy write invariant');
 
@@ -85,7 +88,7 @@ const report = {
     script_order: failures.filter((x) => /load before|missing from index/.test(x)).length === 0,
     reader_emission: failures.filter((x) => /reader|fallback diagnostic|fallback condition/.test(x)).length === 0,
     source_manifest_exact: failures.filter((x) => /approved manifest/.test(x)).length === 0,
-    write_guard: failures.filter((x) => /target|mutation/.test(x)).length === 0,
+    write_guard: failures.filter((x) => /target|mutation|adapter|legacy-only/.test(x)).length === 0,
     rollback_ready: failures.filter((x) => /rollback runbook/.test(x)).length === 0
   },
   failures,
