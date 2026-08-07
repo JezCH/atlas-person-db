@@ -1,0 +1,83 @@
+name: Phase 8B Admin Write Adapter
+
+on:
+  pull_request:
+    paths:
+      - "admin.html"
+      - "admin.js"
+      - "atlas-admin-write-service.js"
+      - "atlas-write-adapter.js"
+      - "atlas-write-mode.js"
+      - "tests/atlas-admin-write-service.test.mjs"
+      - ".github/workflows/phase-8b-admin-write-adapter.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: atlas-phase-8b-admin-write-adapter
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Run admin write service tests
+        run: node --test tests/atlas-admin-write-service.test.mjs
+
+      - name: Run existing adapter tests
+        run: node --test tests/atlas-write-adapter.test.mjs
+
+      - name: Verify admin route uses adapter chain only
+        shell: bash
+        run: |
+          set -euo pipefail
+          node - <<'NODE'
+          const fs = require('fs');
+          const html = fs.readFileSync('admin.html','utf8');
+          const admin = fs.readFileSync('admin.js','utf8');
+          const service = fs.readFileSync('atlas-admin-write-service.js','utf8');
+          const failures = [];
+          const assert = (ok, msg) => { if (!ok) failures.push(msg); };
+          assert(html.includes('./atlas-write-mode.js'), 'admin write mode not loaded');
+          assert(html.includes('./atlas-write-adapter.js'), 'admin write adapter not loaded');
+          assert(html.includes('./atlas-admin-write-service.js'), 'admin write service not loaded');
+          assert(admin.includes('ATLAS_ADMIN_WRITE_SERVICE'), 'admin.js does not use write service');
+          assert(!admin.includes('.from("person_politics").update('), 'admin.js still directly updates legacy table');
+          assert(!admin.includes('.from("person_politics").insert('), 'admin.js still directly inserts legacy table');
+          assert(!service.includes('atlas_v2'), 'admin write service contains atlas_v2 reference');
+          assert(service.includes('mode = "legacy-only"'), 'legacy-only default missing');
+          fs.mkdirSync('migration/phase-8/tmp/phase8b-admin-write-adapter', {recursive:true});
+          const report = {
+            marker:'PHASE_8B_ADMIN_WRITE_ADAPTER',
+            admin_adapter_loaded:true,
+            admin_direct_mutation:false,
+            write_target:'person_politics',
+            write_mode:'legacy-only',
+            v2_commit_enabled:false,
+            failures,
+            pass:failures.length===0
+          };
+          fs.writeFileSync('migration/phase-8/tmp/phase8b-admin-write-adapter/verification.json', JSON.stringify(report,null,2)+'\n');
+          console.log(JSON.stringify(report,null,2));
+          if (failures.length) process.exit(2);
+          NODE
+
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-8b-admin-write-adapter-${{ github.sha }}
+          path: migration/phase-8/tmp/phase8b-admin-write-adapter
+          if-no-files-found: error
+          retention-days: 90
