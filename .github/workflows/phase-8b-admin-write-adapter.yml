@@ -8,6 +8,7 @@ on:
       - "atlas-admin-write-service.js"
       - "atlas-write-adapter.js"
       - "atlas-write-mode.js"
+      - "atlas-v2-shadow-compiler.js"
       - "tests/atlas-admin-write-service.test.mjs"
       - ".github/workflows/phase-8b-admin-write-adapter.yml"
   workflow_dispatch:
@@ -38,7 +39,10 @@ jobs:
       - name: Run existing adapter tests
         run: node --test tests/atlas-write-adapter.test.mjs
 
-      - name: Verify admin route uses adapter chain only
+      - name: Run shadow compiler tests
+        run: node --test tests/atlas-v2-shadow-compiler.test.mjs
+
+      - name: Verify admin route uses protected shadow validation
         shell: bash
         run: |
           set -euo pipefail
@@ -47,24 +51,35 @@ jobs:
           const html = fs.readFileSync('admin.html','utf8');
           const admin = fs.readFileSync('admin.js','utf8');
           const service = fs.readFileSync('atlas-admin-write-service.js','utf8');
+          const compiler = fs.readFileSync('atlas-v2-shadow-compiler.js','utf8');
           const failures = [];
           const assert = (ok, msg) => { if (!ok) failures.push(msg); };
           assert(html.includes('./atlas-write-mode.js'), 'admin write mode not loaded');
           assert(html.includes('./atlas-write-adapter.js'), 'admin write adapter not loaded');
+          assert(html.includes('./atlas-v2-shadow-compiler.js'), 'admin shadow compiler not loaded');
           assert(html.includes('./atlas-admin-write-service.js'), 'admin write service not loaded');
           assert(admin.includes('ATLAS_ADMIN_WRITE_SERVICE'), 'admin.js does not use write service');
+          assert(admin.includes('mode: "shadow-validate"'), 'admin shadow-validate mode missing');
+          assert(admin.includes('shadowCompiler: shadowApi.compile'), 'admin shadow compiler injection missing');
           assert(!admin.includes('.from("person_politics").update('), 'admin.js still directly updates legacy table');
           assert(!admin.includes('.from("person_politics").insert('), 'admin.js still directly inserts legacy table');
           assert(!service.includes('atlas_v2'), 'admin write service contains atlas_v2 reference');
-          assert(service.includes('mode = "legacy-only"'), 'legacy-only default missing');
+          assert(service.includes('mode = "legacy-only"'), 'service safe default missing');
+          assert(compiler.includes('commit: false'), 'shadow compiler commit:false missing');
+          assert(compiler.includes('writes_performed: 0'), 'shadow compiler writes_performed:0 missing');
+          for (const token of ['.from(', '.insert(', '.update(', '.delete(', '.rpc(']) {
+            assert(!compiler.includes(token), `shadow compiler DB token detected: ${token}`);
+          }
           fs.mkdirSync('migration/phase-8/tmp/phase8b-admin-write-adapter', {recursive:true});
           const report = {
-            marker:'PHASE_8B_ADMIN_WRITE_ADAPTER',
+            marker:'PHASE_8B_ADMIN_SHADOW_VALIDATE',
             admin_adapter_loaded:true,
             admin_direct_mutation:false,
-            write_target:'person_politics',
-            write_mode:'legacy-only',
+            legacy_write_target:'person_politics',
+            write_mode:'shadow-validate',
+            shadow_compiler_loaded:true,
             v2_commit_enabled:false,
+            v2_writes_performed:0,
             failures,
             pass:failures.length===0
           };
