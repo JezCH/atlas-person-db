@@ -4,6 +4,13 @@
   const config = window.ATLAS_CONFIG || {};
   const configured = config.SUPABASE_URL && config.SUPABASE_ANON_KEY && !config.SUPABASE_URL.includes("YOUR_PROJECT_ID") && !config.SUPABASE_ANON_KEY.includes("YOUR_SUPABASE");
   const db = configured ? window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY) : null;
+  const writeAdapter = db && window.ATLAS_WRITE_ADAPTER && window.ATLAS_WRITE_MODE
+    ? window.ATLAS_WRITE_ADAPTER.createAdapter({
+        db,
+        mode: "legacy-only",
+        modeResolver: window.ATLAS_WRITE_MODE.resolveMode
+      })
+    : null;
   let records = [];
   let selectedId = null;
 
@@ -224,10 +231,14 @@
     setTimeout(() => els.person.focus(), 20);
   }
 
+  function adapterError(result) {
+    return result?.errors?.length ? result.errors.join("; ") : "쓰기 작업이 완료되지 않았습니다.";
+  }
+
   async function saveRecord(event) {
     event.preventDefault();
-    if (!db) {
-      els.error.textContent = "먼저 config.js에 Supabase URL과 공개 키를 입력해야 합니다.";
+    if (!db || !writeAdapter) {
+      els.error.textContent = "ATLAS 쓰기 계층을 사용할 수 없습니다.";
       els.error.hidden = false;
       return;
     }
@@ -244,14 +255,15 @@
       period_basis: els.basis.value, notes: els.notes.value.trim() || null
     };
     const id = els.id.value;
-    const query = id ? db.from("person_politics").update(payload).eq("id", id) : db.from("person_politics").insert(payload).select("id").single();
-    const { data, error } = await query;
-    if (error) {
-      els.error.textContent = error.message;
+    const outcome = id
+      ? await writeAdapter.updateActivity(id, payload)
+      : await writeAdapter.createActivity(payload);
+    if (outcome.errors?.length || !outcome.legacy?.committed) {
+      els.error.textContent = adapterError(outcome);
       els.error.hidden = false;
       return;
     }
-    if (!id && data?.id) selectedId = data.id;
+    if (!id && outcome.legacy.record_ids?.length) selectedId = outcome.legacy.record_ids[0];
     if (id) selectedId = id;
     els.dialog.close();
     showToast(id ? "기록을 수정했습니다." : "기록을 추가했습니다.");
@@ -259,9 +271,9 @@
   }
 
   async function deleteRecord(id) {
-    if (!db || !confirm("이 기록을 삭제할까요?")) return;
-    const { error } = await db.from("person_politics").delete().eq("id", id);
-    if (error) return showToast(`삭제 실패: ${error.message}`);
+    if (!db || !writeAdapter || !confirm("이 기록을 삭제할까요?")) return;
+    const outcome = await writeAdapter.deleteActivity(id);
+    if (outcome.errors?.length || !outcome.legacy?.committed) return showToast(`삭제 실패: ${adapterError(outcome)}`);
     if (String(selectedId) === String(id)) selectedId = null;
     showToast("기록을 삭제했습니다.");
     await loadRecords();
@@ -286,7 +298,7 @@
   }
 
   async function importExcel(file) {
-    if (!db) return showToast("Supabase 연결 후 불러올 수 있습니다.");
+    if (!db || !writeAdapter) return showToast("ATLAS 쓰기 계층을 사용할 수 없습니다.");
     const buffer = await file.arrayBuffer();
     const wb = XLSX.read(buffer);
     const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: "" });
@@ -297,8 +309,8 @@
       notes: String(r["비고"] || r.notes || "").trim() || null
     })).filter((r) => r.person_name && r.politic_name && Number.isFinite(r.activity_start) && Number.isFinite(r.activity_end) && r.activity_end >= r.activity_start);
     if (!payload.length) return showToast("가져올 수 있는 유효한 행이 없습니다.");
-    const { error } = await db.from("person_politics").insert(payload);
-    if (error) return showToast(`가져오기 실패: ${error.message}`);
+    const outcome = await writeAdapter.importActivities(payload);
+    if (outcome.errors?.length || !outcome.legacy?.committed) return showToast(`가져오기 실패: ${adapterError(outcome)}`);
     showToast(`${payload.length}개 행을 가져왔습니다.`);
     await loadRecords();
   }
