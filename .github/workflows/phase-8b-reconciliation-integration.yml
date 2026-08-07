@@ -1,0 +1,52 @@
+name: Phase 8B Reconciliation Integration
+
+on:
+  pull_request:
+    paths:
+      - "atlas-reconciliation-integration.js"
+      - "tests/atlas-reconciliation-integration.test.mjs"
+      - "migration/phase-8/scripts/verify-phase8b-reconciliation-integration.mjs"
+      - ".github/workflows/phase-8b-reconciliation-integration.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: atlas-phase-8b-reconciliation-integration
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Run integration tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --test tests/atlas-reconciliation-integration.test.mjs
+
+      - name: Verify wrapper remains unloaded
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf migration/phase-8/tmp/phase8b-integration
+          node migration/phase-8/scripts/verify-phase8b-reconciliation-integration.mjs \
+            migration/phase-8/tmp/phase8b-integration/verification.json
+
+      - name: Upload evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-8b-reconciliation-integration-${{ github.sha }}
+          path: migration/phase-8/tmp/phase8b-integration
+          if-no-files-found: error
+          retention-days: 90
