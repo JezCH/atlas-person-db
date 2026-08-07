@@ -65,13 +65,29 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y postgresql-client
 
-      - name: Run rollback-only isolated v2 smoke
+      - name: Export live v2 table contract
         shell: bash
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
           set -euo pipefail
           mkdir -p migration/phase-8/tmp/phase8c-c2-live-smoke
+          psql "$SUPABASE_DB_URL" --no-psqlrc --set=ON_ERROR_STOP=1 --tuples-only --no-align --field-separator='|' \
+            --command "select ordinal_position,column_name,data_type,is_nullable,coalesce(column_default,'') from information_schema.columns where table_schema='atlas_v2' and table_name='person_politics_v2' order by ordinal_position;" \
+            > migration/phase-8/tmp/phase8c-c2-live-smoke/live-columns.txt
+          psql "$SUPABASE_DB_URL" --no-psqlrc --set=ON_ERROR_STOP=1 --tuples-only --no-align \
+            --command "select pg_get_tabledef is not null from (select null) x" \
+            > /dev/null 2>&1 || true
+          psql "$SUPABASE_DB_URL" --no-psqlrc --set=ON_ERROR_STOP=1 --tuples-only --no-align \
+            --command "select jsonb_agg(jsonb_build_object('column',column_name,'nullable',is_nullable,'default',column_default,'type',data_type) order by ordinal_position) from information_schema.columns where table_schema='atlas_v2' and table_name='person_politics_v2';" \
+            > migration/phase-8/tmp/phase8c-c2-live-smoke/live-columns.json
+
+      - name: Run rollback-only isolated v2 smoke
+        shell: bash
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          set -euo pipefail
           psql "$SUPABASE_DB_URL" --no-psqlrc --set=ON_ERROR_STOP=1 --tuples-only --no-align \
             --file migration/phase-8/scripts/phase8c-c2-live-smoke.sql \
             > migration/phase-8/tmp/phase8c-c2-live-smoke/raw.log
