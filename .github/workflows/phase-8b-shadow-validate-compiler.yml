@@ -1,0 +1,68 @@
+name: Phase 8B Shadow Validate Compiler
+
+on:
+  pull_request:
+    paths:
+      - "atlas-v2-shadow-compiler.js"
+      - "atlas-write-adapter.js"
+      - "tests/atlas-v2-shadow-compiler.test.mjs"
+      - ".github/workflows/phase-8b-shadow-validate-compiler.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Run shadow compiler tests
+        run: node --test tests/atlas-v2-shadow-compiler.test.mjs
+
+      - name: Run existing adapter tests
+        run: node --test tests/atlas-write-adapter.test.mjs
+
+      - name: Verify no DB mutation surface exists
+        shell: bash
+        run: |
+          set -euo pipefail
+          node - <<'NODE'
+          const fs = require('fs');
+          const src = fs.readFileSync('atlas-v2-shadow-compiler.js','utf8');
+          const failures = [];
+          const bad = ['.from(', '.insert(', '.update(', '.delete(', '.rpc('];
+          for (const token of bad) if (src.includes(token)) failures.push(`forbidden DB token: ${token}`);
+          if (!src.includes('commit: false')) failures.push('commit:false missing');
+          if (!src.includes('writes_performed: 0')) failures.push('writes_performed:0 missing');
+          const report = {
+            marker:'PHASE_8B_SHADOW_VALIDATE_COMPILER',
+            production_loaded:false,
+            active_write_mode:'legacy-only',
+            v2_commit_enabled:false,
+            writes_performed:0,
+            failures,
+            pass:failures.length===0
+          };
+          fs.mkdirSync('migration/phase-8/tmp/phase8b-shadow-validate-compiler',{recursive:true});
+          fs.writeFileSync('migration/phase-8/tmp/phase8b-shadow-validate-compiler/verification.json', JSON.stringify(report,null,2)+'\n');
+          console.log(JSON.stringify(report,null,2));
+          if (failures.length) process.exit(2);
+          NODE
+
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-8b-shadow-validate-compiler-${{ github.sha }}
+          path: migration/phase-8/tmp/phase8b-shadow-validate-compiler
+          if-no-files-found: error
+          retention-days: 90
