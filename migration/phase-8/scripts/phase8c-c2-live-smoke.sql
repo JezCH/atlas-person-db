@@ -8,25 +8,50 @@ select
   (select count(*) from atlas_v2.person_politics_v2) as relationships_before,
   (select count(*) from public.person_politics) as legacy_before;
 
-with seed as (
+with source_relationship as (
   select person_id, polity_id, role_id, period_basis_id
   from atlas_v2.person_politics_v2
   order by id
+  limit 1
+), candidate_years as (
+  select y as activity_start, y + 1 as activity_end
+  from generate_series(-9999, -9900) as y
+), smoke_candidate as (
+  select
+    s.person_id,
+    s.polity_id,
+    s.role_id,
+    s.period_basis_id,
+    c.activity_start,
+    c.activity_end
+  from source_relationship s
+  cross join candidate_years c
+  where not exists (
+    select 1
+    from atlas_v2.person_politics_v2 existing
+    where existing.person_id = s.person_id
+      and existing.polity_id = s.polity_id
+      and existing.role_id = s.role_id
+      and existing.period_basis_id = s.period_basis_id
+      and existing.activity_start = c.activity_start
+      and existing.activity_end = c.activity_end
+  )
+  order by c.activity_start
   limit 1
 ), inserted as (
   insert into atlas_v2.person_politics_v2
     (id, person_id, polity_id, activity_start, activity_end, role_id, period_basis_id, legacy_source_key, notes)
   select
-    gen_random_uuid(), person_id, polity_id, null, null, role_id, period_basis_id,
+    gen_random_uuid(), person_id, polity_id, activity_start, activity_end, role_id, period_basis_id,
     'phase8c-c2-live-smoke-rollback-only',
     'Phase 8C C2 rollback-only smoke; must never persist.'
-  from seed
+  from smoke_candidate
   returning id
 )
 select jsonb_build_object(
   'marker','PHASE_8C_C2_LIVE_SMOKE',
   'inserted_rows',(select count(*) from inserted),
-  'seed_rows',(select count(*) from seed),
+  'candidate_rows',(select count(*) from smoke_candidate),
   'rollback_only',true,
   'legacy_mutations',0
 );
