@@ -9,21 +9,18 @@ select
   (select count(*) from public.person_politics) as legacy_before;
 
 with source_relationship as (
-  select person_id, polity_id, role_id, period_basis_id
-  from atlas_v2.person_politics_v2
-  order by id
+  select r.*
+  from atlas_v2.person_politics_v2 r
+  order by r.id
   limit 1
 ), candidate_years as (
   select y as activity_start, y + 1 as activity_end
   from generate_series(-9999, -9900) as y
 ), smoke_candidate as (
   select
-    s.person_id,
-    s.polity_id,
-    s.role_id,
-    s.period_basis_id,
-    c.activity_start,
-    c.activity_end
+    s.*,
+    c.activity_start as smoke_activity_start,
+    c.activity_end as smoke_activity_end
   from source_relationship s
   cross join candidate_years c
   where not exists (
@@ -40,11 +37,20 @@ with source_relationship as (
   limit 1
 ), inserted as (
   insert into atlas_v2.person_politics_v2
-    (id, person_id, polity_id, activity_start, activity_end, role_id, period_basis_id, legacy_source_key, notes)
   select
-    gen_random_uuid(), person_id, polity_id, activity_start, activity_end, role_id, period_basis_id,
-    'phase8c-c2-live-smoke-rollback-only',
-    'Phase 8C C2 rollback-only smoke; must never persist.'
+    gen_random_uuid() as id,
+    person_id,
+    polity_id,
+    role_id,
+    period_basis_id,
+    smoke_activity_start as activity_start,
+    smoke_activity_end as activity_end,
+    confidence,
+    source_url,
+    'phase8c-c2-live-smoke-rollback-only' as legacy_source_key,
+    'Phase 8C C2 rollback-only smoke; must never persist.' as notes,
+    created_at,
+    updated_at
   from smoke_candidate
   returning id
 )
