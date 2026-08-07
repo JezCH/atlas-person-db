@@ -1,0 +1,56 @@
+name: Phase 8C C2 Isolated Executor
+
+on:
+  pull_request:
+    paths:
+      - "atlas-v2-command-planner.js"
+      - "atlas-v2-writer-contract.js"
+      - "atlas-v2-isolated-executor.js"
+      - "tests/atlas-v2-isolated-executor.test.mjs"
+      - ".github/workflows/phase-8c-c2-isolated-executor.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run isolated executor tests
+        run: node --test tests/atlas-v2-isolated-executor.test.mjs
+      - name: Verify production isolation and no direct DB client surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          node - <<'NODE'
+          const fs = require('fs');
+          const index = fs.readFileSync('index.html','utf8');
+          const admin = fs.readFileSync('admin.html','utf8');
+          const source = fs.readFileSync('atlas-v2-isolated-executor.js','utf8');
+          const failures = [];
+          const assert = (ok,msg) => { if (!ok) failures.push(msg); };
+          assert(!index.includes('atlas-v2-isolated-executor.js'), 'executor loaded by production index');
+          assert(!admin.includes('atlas-v2-isolated-executor.js'), 'executor loaded by admin page');
+          for (const token of ['window.supabase','createClient(','db.from(','.rpc(']) assert(!source.includes(token), `direct DB surface found: ${token}`);
+          assert(source.includes('transactionFactory'), 'transaction boundary missing');
+          assert(source.includes('ROLLBACK') === false, 'executor must not fake transaction commands');
+          fs.mkdirSync('migration/phase-8/tmp/phase8c-c2-isolated-executor',{recursive:true});
+          const report = {marker:'PHASE_8C_C2_ISOLATED_EXECUTOR',production_loaded:false,direct_db_surface:false,transaction_boundary:'injected',live_v2_authorized:false,failures,pass:failures.length===0};
+          fs.writeFileSync('migration/phase-8/tmp/phase8c-c2-isolated-executor/verification.json',JSON.stringify(report,null,2)+'\n');
+          console.log(JSON.stringify(report,null,2));
+          if (failures.length) process.exit(2);
+          NODE
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-8c-c2-isolated-executor-${{ github.sha }}
+          path: migration/phase-8/tmp/phase8c-c2-isolated-executor
+          if-no-files-found: error
+          retention-days: 90
