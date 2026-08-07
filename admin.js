@@ -213,8 +213,16 @@
 
   async function saveRows() {
     const config = window.ATLAS_CONFIG || {};
+    const adapterApi = window.ATLAS_WRITE_ADAPTER;
+    const modeApi = window.ATLAS_WRITE_MODE;
+    const serviceApi = window.ATLAS_ADMIN_WRITE_SERVICE;
+
     if (!config.SUPABASE_URL || !config.SUPABASE_ANON_KEY || !window.supabase) {
       setResult("Supabase 설정을 찾을 수 없습니다.", "error");
+      return;
+    }
+    if (!adapterApi || !modeApi || !serviceApi) {
+      setResult("ATLAS 쓰기 계층을 불러오지 못했습니다.", "error");
       return;
     }
 
@@ -229,46 +237,29 @@
     saveButton.disabled = true;
     setResult(`${rows.length}개 레코드를 처리하는 중...`);
 
-    const db = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
-    let inserted = 0;
-    let updated = 0;
-    const failures = [];
-
-    for (const row of rows) {
-      const { data, error: lookupError } = await db
-        .from("person_politics")
-        .select("id")
-        .eq("person_name", row.person_name)
-        .eq("politic_name", row.politic_name)
-        .eq("activity_start", row.activity_start)
-        .eq("activity_end", row.activity_end)
-        .limit(1);
-
-      if (lookupError) {
-        failures.push(`${row.person_name}: 조회 실패 - ${lookupError.message}`);
-        continue;
-      }
-
-      if (data?.length) {
-        const { error } = await db.from("person_politics").update(row).eq("id", data[0].id);
-        if (error) failures.push(`${row.person_name}: 갱신 실패 - ${error.message}`);
-        else updated += 1;
-      } else {
-        const { error } = await db.from("person_politics").insert(row);
-        if (error) failures.push(`${row.person_name}: 추가 실패 - ${error.message}`);
-        else inserted += 1;
-      }
+    try {
+      const db = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
+      const service = serviceApi.createAdminWriteService({
+        db,
+        adapterApi,
+        mode: "legacy-only",
+        modeResolver: modeApi.resolveMode
+      });
+      const outcome = await service.saveRows(rows);
+      const lines = [
+        `완료: ${rows.length}개 처리`,
+        `신규 추가: ${outcome.inserted}`,
+        `기존 갱신: ${outcome.updated}`,
+        `실패: ${outcome.failures.length}`,
+        `쓰기 모드: ${outcome.mode}`
+      ];
+      if (outcome.failures.length) lines.push("", ...outcome.failures);
+      setResult(lines.join("\n"), outcome.failures.length ? "error" : "success");
+    } catch (error) {
+      setResult(error.message, "error");
+    } finally {
+      saveButton.disabled = false;
     }
-
-    const lines = [
-      `완료: ${rows.length}개 처리`,
-      `신규 추가: ${inserted}`,
-      `기존 갱신: ${updated}`,
-      `실패: ${failures.length}`
-    ];
-    if (failures.length) lines.push("", ...failures);
-    setResult(lines.join("\n"), failures.length ? "error" : "success");
-    saveButton.disabled = false;
   }
 
   sampleButton.addEventListener("click", () => {
