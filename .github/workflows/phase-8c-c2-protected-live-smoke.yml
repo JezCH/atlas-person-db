@@ -65,13 +65,40 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y postgresql-client
 
-      - name: Run rollback-only isolated v2 smoke
+      - name: Export and validate live v2 table contract
         shell: bash
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
           set -euo pipefail
           mkdir -p migration/phase-8/tmp/phase8c-c2-live-smoke
+          psql "$SUPABASE_DB_URL" --no-psqlrc --set=ON_ERROR_STOP=1 --tuples-only --no-align --field-separator='|' \
+            --command "select ordinal_position,column_name,udt_name,is_nullable,coalesce(column_default,'') from information_schema.columns where table_schema='atlas_v2' and table_name='person_politics_v2' order by ordinal_position;" \
+            > migration/phase-8/tmp/phase8c-c2-live-smoke/live-columns.txt
+          psql "$SUPABASE_DB_URL" --no-psqlrc --set=ON_ERROR_STOP=1 --tuples-only --no-align \
+            --command "select jsonb_agg(jsonb_build_object('ordinal',ordinal_position,'column',column_name,'nullable',is_nullable,'default',column_default,'udt',udt_name) order by ordinal_position) from information_schema.columns where table_schema='atlas_v2' and table_name='person_politics_v2';" \
+            > migration/phase-8/tmp/phase8c-c2-live-smoke/live-columns.json
+          node - <<'NODE'
+          const fs = require('fs');
+          const raw = fs.readFileSync('migration/phase-8/tmp/phase8c-c2-live-smoke/live-columns.json','utf8').trim();
+          const columns = JSON.parse(raw || 'null');
+          const failures = [];
+          const required = new Set(['id','person_id','polity_id','role_id','period_basis_id','activity_start','activity_end','legacy_source_key','notes']);
+          if (!Array.isArray(columns) || columns.length === 0) failures.push('atlas_v2.person_politics_v2 columns not found');
+          const names = new Set((columns || []).map(c => c.column));
+          for (const name of required) if (!names.has(name)) failures.push(`required live column missing: ${name}`);
+          const report = { marker:'PHASE_8C_C2_LIVE_SCHEMA_CONTRACT', columns, failures, pass: failures.length===0 };
+          fs.writeFileSync('migration/phase-8/tmp/phase8c-c2-live-smoke/schema-contract.json', JSON.stringify(report,null,2)+'\n');
+          console.log(JSON.stringify(report,null,2));
+          if (failures.length) process.exit(42);
+          NODE
+
+      - name: Run schema-driven rollback-only isolated v2 smoke
+        shell: bash
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          set -euo pipefail
           psql "$SUPABASE_DB_URL" --no-psqlrc --set=ON_ERROR_STOP=1 --tuples-only --no-align \
             --file migration/phase-8/scripts/phase8c-c2-live-smoke.sql \
             > migration/phase-8/tmp/phase8c-c2-live-smoke/raw.log
@@ -86,6 +113,7 @@ jobs:
           const failures=[];
           const assert=(ok,msg)=>{if(!ok)failures.push(msg)};
           assert(smoke?.inserted_rows===1,'isolated v2 smoke insert did not execute exactly once');
+          assert(smoke?.candidate_rows===1,'schema-driven smoke candidate was not unique');
           assert(smoke?.rollback_only===true,'smoke was not rollback-only');
           assert(smoke?.legacy_mutations===0,'legacy mutation detected');
           assert(post?.smoke_rows_remaining===0,'smoke row persisted after rollback');
