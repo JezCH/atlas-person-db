@@ -33,6 +33,7 @@
     if (Number.isInteger(start) && (start === 0 || start < -10000 || start > 9999)) blockers.push({ code: "ACTIVITY_START_OUT_OF_RANGE", field: "activity_start" });
     if (Number.isInteger(end) && (end === 0 || end < -10000 || end > 9999)) blockers.push({ code: "ACTIVITY_END_OUT_OF_RANGE", field: "activity_end" });
     if (Number.isInteger(start) && Number.isInteger(end) && end < start) blockers.push({ code: "ACTIVITY_RANGE_INVALID", field: "activity_end" });
+    if (!role) blockers.push({ code: "ROLE_REQUIRED_BY_CURRENT_V2_SCHEMA", field: "role" });
     if (!periodBasis) blockers.push({ code: "PERIOD_BASIS_REQUIRED", field: "period_basis" });
     else if (!PERIOD_BASES.has(periodBasis)) blockers.push({ code: "PERIOD_BASIS_UNSUPPORTED", field: "period_basis" });
 
@@ -94,7 +95,7 @@
       {
         type: "RESOLVE_ROLE_EXACT",
         table: "atlas_v2.roles",
-        lookup: { code_or_name: value.role || "unspecified" },
+        lookup: { code_or_name: value.role },
         resolution: "exact_reviewed_vocabulary"
       },
       {
