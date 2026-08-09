@@ -61,12 +61,20 @@ test('invalid chronology and unsupported period basis fail before transaction', 
   assert.deepEqual(result.blockers.map(x=>x.code).sort(), ['ACTIVITY_START_OUT_OF_RANGE','PERIOD_BASIS_UNSUPPORTED']);
 });
 
-test('empty role fails closed because current live v2 role_id is not nullable', () => {
+test('empty role is preserved as null and skips vocabulary resolution', () => {
   const result = planner.plan('create', {...row,role:null});
-  assert.deepEqual(result.blockers.map(x=>x.code), ['ROLE_REQUIRED_BY_CURRENT_V2_SCHEMA']);
-  assert.equal(result.commands.find(x=>x.type==='RESOLVE_ROLE_EXACT').lookup.code_or_name,null);
+  assert.deepEqual(result.blockers, []);
+  assert.equal(result.commands.some(x=>x.type==='RESOLVE_ROLE_EXACT'), false);
+  assert.equal(result.commands.at(-1).optional_dependencies.includes('role_id'), true);
   assert.equal(result.normalized_payload.role,null);
   assert.equal(JSON.stringify(result).includes('unspecified'), false);
+});
+
+test('blank role normalizes to null with the same command shape as explicit null', () => {
+  const explicit = planner.plan('create', {...row,role:null});
+  const blank = planner.plan('create', {...row,role:'   '});
+  assert.deepEqual(blank.normalized_payload, explicit.normalized_payload);
+  assert.deepEqual(blank.commands, explicit.commands);
 });
 
 test('normalization produces one canonical payload for retry identity', () => {
@@ -84,10 +92,12 @@ test('normalization produces one canonical payload for retry identity', () => {
   });
 });
 
-test('import creates isolated normalized row command groups', () => {
-  const result = planner.plan('import', [row, { ...row, person_name: 'Grace Hopper', activity_start: 1944, activity_end: 1986 }]);
+test('import creates isolated normalized row command groups and permits mixed role presence', () => {
+  const result = planner.plan('import', [row, { ...row, person_name: 'Grace Hopper', activity_start: 1944, activity_end: 1986, role:null }]);
   assert.equal(result.commands.filter((x) => x.type === 'BEGIN_IMPORT_ROW').length, 2);
   assert.equal(result.commands.filter((x) => x.type === 'UPSERT_PERSON_POLITICS_V2').length, 2);
+  assert.equal(result.commands.filter((x) => x.type === 'RESOLVE_ROLE_EXACT').length, 1);
+  assert.equal(result.normalized_payload[1].role,null);
   assert.equal(result.normalized_payload.length,2);
   assert.equal(result.writes_performed, 0);
 });

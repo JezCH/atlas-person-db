@@ -29,6 +29,7 @@ function fakeClient({ forceParityMismatch = false, failV2 = false } = {}) {
   let v2Seq = 1;
 
   function v2id() { const suffix=String(v2Seq++).padStart(12,'0'); return `55555555-5555-5555-5555-${suffix}`; }
+  function roleLabel(roleId) { return roleId == null ? null : 'Mathematician'; }
   return {
     calls, legacy, v2,
     async query(sql, params = []) {
@@ -64,7 +65,7 @@ function fakeClient({ forceParityMismatch = false, failV2 = false } = {}) {
 
       if (text.startsWith('select pp.id, pp.legacy_source_key')) {
         const [person,polity,start,end,role,basis,notes]=params;
-        const matches=[...v2.values()].filter(r=>r.person_name===person&&r.politic_name===polity&&Number(r.activity_start)===Number(start)&&Number(r.activity_end)===Number(end)&&r.role===role&&r.period_basis===basis&&(r.notes??null)===(notes??null));
+        const matches=[...v2.values()].filter(r=>r.person_name===person&&r.politic_name===polity&&Number(r.activity_start)===Number(start)&&Number(r.activity_end)===Number(end)&&(r.role??null)===(role??null)&&r.period_basis===basis&&(r.notes??null)===(notes??null));
         return {rows:matches.slice(0,2).map(r=>({id:r.id,legacy_source_key:r.legacy_source_key,source_locator:r.source_locator,content_hash:r.content_hash})),rowCount:matches.length};
       }
       if (text.startsWith('insert into atlas_v2.person_politics_v2')) {
@@ -72,13 +73,13 @@ function fakeClient({ forceParityMismatch = false, failV2 = false } = {}) {
         const [person_id,polity_id,start,end,role_id,basis_id,lineage,notes,source_locator,content_hash]=params;
         const existing=[...v2.values()].find(r=>r.legacy_source_key===lineage);
         const id=existing?.id || v2id();
-        v2.set(id,{id,person_id,polity_id,role_id,period_basis_id:basis_id,person_name:'Ada Lovelace',politic_name:'United Kingdom',activity_start:start,activity_end:end,role:'Mathematician',period_basis:'intellectual_activity',legacy_source_key:lineage,notes,source_locator:JSON.parse(source_locator),content_hash});
+        v2.set(id,{id,person_id,polity_id,role_id,period_basis_id:basis_id,person_name:'Ada Lovelace',politic_name:'United Kingdom',activity_start:start,activity_end:end,role:roleLabel(role_id),period_basis:'intellectual_activity',legacy_source_key:lineage,notes,source_locator:JSON.parse(source_locator),content_hash});
         return {rows:[{id}],rowCount:1};
       }
       if (text.startsWith('update atlas_v2.person_politics_v2 set')) {
         const [person_id,polity_id,start,end,role_id,basis_id,notes,id]=params;
         const v2Row=v2.get(String(id)); if(!v2Row) return {rows:[],rowCount:0};
-        Object.assign(v2Row,{person_id,polity_id,activity_start:start,activity_end:end,role_id,period_basis_id:basis_id,notes,person_name:'Ada Lovelace',politic_name:'United Kingdom',role:'Mathematician',period_basis:'intellectual_activity'});
+        Object.assign(v2Row,{person_id,polity_id,activity_start:start,activity_end:end,role_id,period_basis_id:basis_id,notes,person_name:'Ada Lovelace',politic_name:'United Kingdom',role:roleLabel(role_id),period_basis:'intellectual_activity'});
         return {rows:[{id:String(id)}],rowCount:1};
       }
       if (text.startsWith('select id from atlas_v2.person_politics_v2 where legacy_source_key=$1')) {
@@ -210,12 +211,72 @@ test('create replay reuses deterministic legacy and normalized lineage instead o
   assert.equal(client.v2.size,1);
 });
 
-test('null role is blocked before any transaction work', async () => {
+test('null role create preserves null on both sides and maintains parity', async () => {
   const client=fakeClient();
-  const result=await serviceFor(client).mutate({operation:'create',payload:{...row,role:null}});
-  assert.equal(result.committed,false);
-  assert.deepEqual(result.validation_failures.map(x=>x.code),['ROLE_REQUIRED_BY_CURRENT_V2_SCHEMA']);
-  assert.equal(client.calls.length,0);
+  const service=serviceFor(client);
+  const nullRoleRow={...row,role:null};
+  const result=await service.mutate({operation:'create',payload:nullRoleRow,request_id:'null-role-create'});
+  assert.equal(result.committed,true,JSON.stringify(result));
+  assert.equal(result.parity.match,true,JSON.stringify(result));
+  const legacyId=result.legacy.record_ids[0];
+  const v2Id=result.v2.normalized_relationship_ids[0];
+  assert.equal(client.legacy.get(legacyId).role,null);
+  assert.equal(client.v2.get(v2Id).role_id,null);
+  assert.equal(client.v2.get(v2Id).role,null);
+  assert.equal(client.calls.some(([sql])=>sql.includes('from atlas_v2.roles r left join atlas_v2.role_names')),false);
+});
+
+test('null-role preimage can be updated to an exact reviewed role', async () => {
+  const client=fakeClient();
+  const service=serviceFor(client);
+  const created=await service.mutate({operation:'create',payload:{...row,role:null},request_id:'null-role-seed'});
+  assert.equal(created.committed,true,JSON.stringify(created));
+  const legacyId=created.legacy.record_ids[0];
+  const v2Id=created.v2.normalized_relationship_ids[0];
+
+  const updated=await service.mutate({operation:'update',payload:{id:legacyId,value:row},request_id:'null-to-role'});
+  assert.equal(updated.committed,true,JSON.stringify(updated));
+  assert.equal(updated.v2.normalized_relationship_ids[0],v2Id);
+  assert.equal(client.legacy.get(legacyId).role,'Mathematician');
+  assert.equal(client.v2.get(v2Id).role_id,IDS.role);
+  assert.equal(client.v2.get(v2Id).role,'Mathematician');
+});
+
+test('reviewed role can be explicitly cleared to null without changing lineage provenance', async () => {
+  const client=fakeClient();
+  const service=serviceFor(client);
+  const created=await service.mutate({operation:'create',payload:row,request_id:'role-seed'});
+  assert.equal(created.committed,true,JSON.stringify(created));
+  const legacyId=created.legacy.record_ids[0];
+  const v2Id=created.v2.normalized_relationship_ids[0];
+  const before=structuredClone(client.v2.get(v2Id));
+
+  const updated=await service.mutate({operation:'update',payload:{id:legacyId,value:{...row,role:null}},request_id:'role-to-null'});
+  assert.equal(updated.committed,true,JSON.stringify(updated));
+  const after=client.v2.get(v2Id);
+  assert.equal(after.role_id,null);
+  assert.equal(after.role,null);
+  assert.equal(after.legacy_source_key,before.legacy_source_key);
+  assert.deepEqual(after.source_locator,before.source_locator);
+  assert.equal(after.content_hash,before.content_hash);
+});
+
+test('mixed-role import keeps row state isolated', async () => {
+  const client=fakeClient();
+  const service=serviceFor(client);
+  const result=await service.mutate({
+    operation:'import',
+    payload:[
+      {...row,activity_start:1900,activity_end:1901},
+      {...row,activity_start:1902,activity_end:1903,role:null}
+    ],
+    request_id:'mixed-role-import'
+  });
+  assert.equal(result.committed,true,JSON.stringify(result));
+  const [firstId,secondId]=result.v2.normalized_relationship_ids;
+  assert.equal(client.v2.get(firstId).role_id,IDS.role);
+  assert.equal(client.v2.get(secondId).role_id,null);
+  assert.equal(client.v2.get(secondId).role,null);
 });
 
 test('parity mismatch rolls back both legacy and normalized writes', async () => {
