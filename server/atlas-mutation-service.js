@@ -31,11 +31,11 @@ function createMutationService({ planner, transactionFactory, parityVerifier } =
   async function mutate(request = {}) {
     const operation = normalizeOperation(request.operation);
     const rawPayload = request.payload ?? null;
-    const requestId = request.request_id || deterministicRequestId(operation, rawPayload);
     const plan = planner.plan(operation, rawPayload);
     const payload = Object.prototype.hasOwnProperty.call(plan, "normalized_payload")
       ? plan.normalized_payload
       : rawPayload;
+    const requestId = request.request_id || deterministicRequestId(operation, payload);
 
     if (Array.isArray(plan.blockers) && plan.blockers.length) {
       return Object.freeze({
