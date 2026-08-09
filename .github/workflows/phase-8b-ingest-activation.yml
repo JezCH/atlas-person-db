@@ -42,7 +42,7 @@ jobs:
       - name: Emit activation evidence
         run: |
           mkdir -p migration/phase-8/tmp/phase8b-ingest-activation
-          printf '{"marker":"PHASE_8B_INGEST_ACTIVATION","legacy_ingest_loaded":false,"new_chain_loaded":true,"write_target":"person_politics","v2_commit_enabled":false,"rollback":"restore ingest.js script tag"}\n' > migration/phase-8/tmp/phase8b-ingest-activation/verification.json
+          printf '{"marker":"PHASE_8B_INGEST_ACTIVATION","legacy_ingest_loaded":false,"new_chain_loaded":true,"reconciliation_state":"dry-run","page_load_database_writes":0,"v2_commit_enabled":false,"rollback":"restore previous reconciliation bootstrap state"}\n' > migration/phase-8/tmp/phase8b-ingest-activation/verification.json
 
       - name: Upload evidence
         uses: actions/upload-artifact@v4

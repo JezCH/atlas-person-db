@@ -25,10 +25,13 @@ test('legacy ingest page-load script is no longer loaded', () => {
   assert.equal(index.includes('./ingest.js'), false);
 });
 
-test('bootstrap preserves legacy target state and does not enable v2 commits', () => {
-  assert.equal(bootstrap.includes('state: "legacy-commit"'), true);
-  assert.equal(bootstrap.includes('v2_committed: result.v2_committed === true'), true);
+test('bootstrap is dry-run only and does not enable browser commits', () => {
+  assert.equal(bootstrap.includes('state: "dry-run"'), true);
+  assert.equal(bootstrap.includes('state: "legacy-commit"'), false);
+  assert.equal(bootstrap.includes('changed: 0'), true);
+  assert.equal(bootstrap.includes('v2_committed: false'), true);
   assert.equal(bootstrap.includes('atlas_v2'), false);
+  assert.equal(/\.(insert|update|delete)\(/.test(bootstrap), false);
 });
 
 test('bootstrap preserves reconcile promise and event contract', () => {
