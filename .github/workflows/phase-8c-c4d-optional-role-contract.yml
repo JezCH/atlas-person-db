@@ -38,14 +38,17 @@ jobs:
           node-version: "22"
       - name: Verify optional-role schema contract package
         run: node --test tests/atlas-optional-role-schema-contract.test.mjs
-      - name: Verify no synthetic role vocabulary is introduced
+      - name: Verify null-role-only uniqueness and no synthetic vocabulary
         shell: bash
         run: |
           set -euo pipefail
           ! grep -ni 'unspecified' migration/phase-8/phase8c-c4d-optional-role-contract.sql
           ! grep -ni 'insert into atlas_v2.roles' migration/phase-8/phase8c-c4d-optional-role-contract.sql
           grep -ni 'left join atlas_v2.roles' migration/phase-8/phase8c-c4d-optional-role-contract.sql
+          grep -ni 'person_politics_v2_null_role_semantic_uidx' migration/phase-8/phase8c-c4d-optional-role-contract.sql
           grep -ni 'nulls not distinct' migration/phase-8/phase8c-c4d-optional-role-contract.sql
+          grep -ni 'where role_id is null' migration/phase-8/phase8c-c4d-optional-role-contract.sql
+          ! grep -ni 'create unique index person_politics_v2_semantic_nullsafe_uidx' migration/phase-8/phase8c-c4d-optional-role-contract.sql
 
   protected-apply:
     if: github.event_name == 'workflow_dispatch'
@@ -94,7 +97,15 @@ jobs:
               'role_nullable',(select is_nullable from information_schema.columns where table_schema='atlas_v2' and table_name='person_politics_v2' and column_name='role_id'),
               'normalized_rows',(select count(*) from atlas_v2.person_politics_v2),
               'compat_rows',(select count(*) from public.atlas_person_politics_compat_v1),
-              'normalized_null_roles',(select count(*) from atlas_v2.person_politics_v2 where role_id is null)
+              'normalized_null_roles',(select count(*) from atlas_v2.person_politics_v2 where role_id is null),
+              'existing_semantic_duplicate_groups',(
+                select count(*) from (
+                  select person_id,polity_id,activity_start,activity_end,role_id,period_basis_id
+                  from atlas_v2.person_politics_v2
+                  group by person_id,polity_id,activity_start,activity_end,role_id,period_basis_id
+                  having count(*) > 1
+                ) d
+              )
             );" > migration/phase-8/tmp/phase8c-c4d-optional-role/before.json
 
       - name: Apply optional-role schema and compatibility contract
@@ -120,7 +131,21 @@ jobs:
               'normalized_rows',(select count(*) from atlas_v2.person_politics_v2),
               'compat_rows',(select count(*) from public.atlas_person_politics_compat_v1),
               'normalized_null_roles',(select count(*) from atlas_v2.person_politics_v2 where role_id is null),
-              'nullsafe_unique',coalesce((select i.indisunique and i.indnullsnotdistinct from pg_index i join pg_class c on c.oid=i.indexrelid join pg_namespace n on n.oid=c.relnamespace where n.nspname='atlas_v2' and c.relname='person_politics_v2_semantic_nullsafe_uidx'),false)
+              'existing_semantic_duplicate_groups',(
+                select count(*) from (
+                  select person_id,polity_id,activity_start,activity_end,role_id,period_basis_id
+                  from atlas_v2.person_politics_v2
+                  group by person_id,polity_id,activity_start,activity_end,role_id,period_basis_id
+                  having count(*) > 1
+                ) d
+              ),
+              'null_role_unique',coalesce((
+                select i.indisunique and i.indnullsnotdistinct and position('role_id IS NULL' in pg_get_expr(i.indpred,i.indrelid)) > 0
+                from pg_index i
+                join pg_class c on c.oid=i.indexrelid
+                join pg_namespace n on n.oid=c.relnamespace
+                where n.nspname='atlas_v2' and c.relname='person_politics_v2_null_role_semantic_uidx'
+              ),false)
             );" > migration/phase-8/tmp/phase8c-c4d-optional-role/after.json
           node - <<'NODE'
           const fs=require('fs');
@@ -133,7 +158,8 @@ jobs:
           if (after.normalized_rows !== before.normalized_rows) throw new Error('normalized row count changed during schema apply');
           if (after.compat_rows !== after.normalized_rows) throw new Error('compatibility projection lost normalized rows');
           if (after.normalized_null_roles !== 0) throw new Error('schema apply created null-role data unexpectedly');
-          if (after.nullsafe_unique !== true) throw new Error('NULLS NOT DISTINCT semantic uniqueness is not active');
+          if (after.existing_semantic_duplicate_groups !== before.existing_semantic_duplicate_groups) throw new Error('existing semantic duplicate groups changed during C4D apply');
+          if (after.null_role_unique !== true) throw new Error('null-role-only semantic uniqueness is not active');
           NODE
           psql "$SUPABASE_DB_URL" -X -qAt -v ON_ERROR_STOP=1 -c "select pg_get_viewdef('public.atlas_person_politics_compat_v1'::regclass,true);" \
             > migration/phase-8/tmp/phase8c-c4d-optional-role/view-after.sql
@@ -158,6 +184,7 @@ jobs:
       - name: Verify probe left zero residue
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          APPROVED_SHA: ${{ inputs.approved_sha }}
         shell: bash
         run: |
           set -euo pipefail
@@ -169,11 +196,19 @@ jobs:
             );" > migration/phase-8/tmp/phase8c-c4d-optional-role/residue.json
           node - <<'NODE'
           const fs=require('fs');
+          const before=JSON.parse(fs.readFileSync('migration/phase-8/tmp/phase8c-c4d-optional-role/before.json','utf8'));
           const residue=JSON.parse(fs.readFileSync('migration/phase-8/tmp/phase8c-c4d-optional-role/residue.json','utf8'));
           if (residue.legacy_probe_rows !== 0 || residue.normalized_probe_rows !== 0) throw new Error(`probe residue detected: ${JSON.stringify(residue)}`);
+          fs.writeFileSync('migration/phase-8/tmp/phase8c-c4d-optional-role/report.json', JSON.stringify({
+            marker:'PHASE8C_C4D_OPTIONAL_ROLE_APPLY',
+            approved_sha:process.env.APPROVED_SHA,
+            schema_applied:true,
+            null_role_probe:true,
+            probe_residue:0,
+            synthetic_role_vocabulary:false,
+            existing_semantic_duplicate_groups_preserved:before.existing_semantic_duplicate_groups
+          }, null, 2)+'\n');
           NODE
-          printf '{"marker":"PHASE8C_C4D_OPTIONAL_ROLE_APPLY","approved_sha":"%s","schema_applied":true,"null_role_probe":true,"probe_residue":0,"synthetic_role_vocabulary":false}\n' \
-            "${{ inputs.approved_sha }}" > migration/phase-8/tmp/phase8c-c4d-optional-role/report.json
 
       - name: Upload evidence
         if: always()

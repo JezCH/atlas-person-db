@@ -44,6 +44,7 @@ JOIN atlas_v2.period_bases pb
 REVOKE ALL ON public.atlas_person_politics_compat_v1 FROM public, anon, authenticated;
 GRANT SELECT ON public.atlas_person_politics_compat_v1 TO anon, authenticated;
 
+DROP INDEX IF EXISTS atlas_v2.person_politics_v2_null_role_semantic_uidx;
 DROP INDEX IF EXISTS atlas_v2.person_politics_v2_semantic_nullsafe_uidx;
 
 ALTER TABLE atlas_v2.person_politics_v2

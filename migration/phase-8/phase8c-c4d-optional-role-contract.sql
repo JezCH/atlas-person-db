@@ -44,10 +44,14 @@ $$;
 ALTER TABLE atlas_v2.person_politics_v2
   ALTER COLUMN role_id DROP NOT NULL;
 
-CREATE UNIQUE INDEX person_politics_v2_semantic_nullsafe_uidx
+-- Existing non-null semantic duplicates are historical data and are intentionally
+-- outside this contract. C4D only prevents duplicate rows in the newly admitted
+-- null-role state. NULLS NOT DISTINCT also closes nullable-period duplicate gaps.
+CREATE UNIQUE INDEX person_politics_v2_null_role_semantic_uidx
   ON atlas_v2.person_politics_v2
-  (person_id, polity_id, activity_start, activity_end, role_id, period_basis_id)
-  NULLS NOT DISTINCT;
+  (person_id, polity_id, activity_start, activity_end, period_basis_id)
+  NULLS NOT DISTINCT
+  WHERE role_id IS NULL;
 
 CREATE OR REPLACE VIEW public.atlas_person_politics_compat_v1
 WITH (security_invoker = false)
@@ -83,7 +87,7 @@ DECLARE
   role_nullable text;
   normalized_rows bigint;
   compat_rows bigint;
-  nullsafe_unique boolean;
+  null_role_unique boolean;
 BEGIN
   SELECT is_nullable INTO role_nullable
   FROM information_schema.columns
@@ -100,15 +104,18 @@ BEGIN
     RAISE EXCEPTION 'compatibility view lost rows after LEFT JOIN conversion: normalized %, compat %', normalized_rows, compat_rows;
   END IF;
 
-  SELECT i.indisunique AND i.indnullsnotdistinct INTO nullsafe_unique
+  SELECT i.indisunique
+         AND i.indnullsnotdistinct
+         AND position('role_id IS NULL' in pg_get_expr(i.indpred, i.indrelid)) > 0
+    INTO null_role_unique
   FROM pg_index i
   JOIN pg_class c ON c.oid = i.indexrelid
   JOIN pg_namespace n ON n.oid = c.relnamespace
   WHERE n.nspname = 'atlas_v2'
-    AND c.relname = 'person_politics_v2_semantic_nullsafe_uidx';
+    AND c.relname = 'person_politics_v2_null_role_semantic_uidx';
 
-  IF nullsafe_unique IS DISTINCT FROM true THEN
-    RAISE EXCEPTION 'null-safe semantic unique index is missing or not NULLS NOT DISTINCT';
+  IF null_role_unique IS DISTINCT FROM true THEN
+    RAISE EXCEPTION 'null-role partial semantic unique index is missing or invalid';
   END IF;
 END
 $$;
