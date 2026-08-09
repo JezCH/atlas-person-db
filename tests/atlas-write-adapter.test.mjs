@@ -36,11 +36,12 @@ const valid = {
   notes: ''
 };
 
-test('mode resolver fails closed', () => {
+test('mode resolver fails closed while recognizing the protected dual-write contract', () => {
   assert.equal(resolveMode('legacy-only', () => {}), 'legacy-only');
   assert.equal(resolveMode('shadow-validate', () => {}), 'shadow-validate');
-  assert.equal(resolveMode('dual-write', () => {}), 'legacy-only');
+  assert.equal(resolveMode('dual-write', () => {}), 'dual-write');
   assert.equal(resolveMode('v2-only', () => {}), 'legacy-only');
+  assert.equal(resolveMode('anything-else', () => {}), 'legacy-only');
 });
 
 test('normalization validates and trims', () => {
@@ -59,6 +60,16 @@ test('legacy create targets only person_politics', async () => {
   assert.equal(result.v2.committed, false);
   assert.deepEqual(result.legacy.record_ids, [101]);
   assert.equal(db.calls.some((call) => call[0] === 'from' && call[1] === 'person_politics'), true);
+  assert.equal(db.calls.some((call) => String(call[1] || '').includes('atlas_v2')), false);
+});
+
+test('dual-write mode alone does not cause the legacy adapter to write v2', async () => {
+  const db = fakeDb();
+  const adapter = createAdapter({ db, mode: 'dual-write', modeResolver: resolveMode });
+  const result = await adapter.createActivity(valid);
+  assert.equal(result.mode, 'dual-write');
+  assert.equal(result.legacy.committed, true);
+  assert.equal(result.v2.committed, false);
   assert.equal(db.calls.some((call) => String(call[1] || '').includes('atlas_v2')), false);
 });
 
