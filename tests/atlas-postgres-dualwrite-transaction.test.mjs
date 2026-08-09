@@ -24,8 +24,8 @@ function fakeClient({ failV2 = false } = {}) {
       }
       if (text.includes('from atlas_v2.write_request_log')) return { rows: [], rowCount: 0 };
       if (text.includes('insert into atlas_v2.write_request_log')) return { rows: [], rowCount: 1 };
-      if (text.includes('from public.person_politics where id = any')) return { rows: [{ person_name:'Ada Lovelace', politic_name:'United Kingdom', activity_start:1842, activity_end:1852, role:'Mathematician', period_basis:'intellectual_activity', notes:null }], rowCount:1 };
       if (text.includes('from atlas_v2.person_politics_v2 pp')) return { rows: [{ person_name:'Ada Lovelace', politic_name:'United Kingdom', activity_start:1842, activity_end:1852, role:'Mathematician', period_basis:'intellectual_activity', notes:null }], rowCount:1 };
+      if (text.includes('from public.person_politics where id = any')) return { rows: [{ person_name:'Ada Lovelace', politic_name:'United Kingdom', activity_start:1842, activity_end:1852, role:'Mathematician', period_basis:'intellectual_activity', notes:null }], rowCount:1 };
       return { rows: [], rowCount: 0 };
     }
   };
