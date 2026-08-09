@@ -6,12 +6,14 @@ const applySql = fs.readFileSync(new URL('../migration/phase-8/phase8c-c4d-optio
 const rollbackSql = fs.readFileSync(new URL('../migration/phase-8/phase8c-c4d-optional-role-rollback.sql', import.meta.url), 'utf8');
 const probeSql = fs.readFileSync(new URL('../migration/phase-8/phase8c-c4d-null-role-probe.sql', import.meta.url), 'utf8');
 
-test('optional-role apply loosens only role_id and keeps compatibility projection row-complete', () => {
+test('optional-role apply loosens only role_id and protects only newly admitted null-role semantics', () => {
   assert.match(applySql, /ALTER COLUMN role_id DROP NOT NULL/i);
   assert.match(applySql, /LEFT JOIN atlas_v2\.roles r/i);
+  assert.match(applySql, /CREATE UNIQUE INDEX person_politics_v2_null_role_semantic_uidx/i);
   assert.match(applySql, /NULLS NOT DISTINCT/i);
-  assert.match(applySql, /person_politics_v2_semantic_nullsafe_uidx/);
+  assert.match(applySql, /WHERE role_id IS NULL/i);
   assert.match(applySql, /normalized_rows <> compat_rows/);
+  assert.doesNotMatch(applySql, /CREATE UNIQUE INDEX person_politics_v2_semantic_nullsafe_uidx/i);
   assert.doesNotMatch(applySql, /unspecified/i);
   assert.doesNotMatch(applySql, /insert into atlas_v2\.roles/i);
 });
@@ -22,6 +24,7 @@ test('rollback is guarded against discarding real null-role data', () => {
   assert.match(rollbackSql, /ALTER COLUMN role_id SET NOT NULL/i);
   assert.match(rollbackSql, /JOIN atlas_v2\.roles r/i);
   assert.doesNotMatch(rollbackSql, /LEFT JOIN atlas_v2\.roles r/i);
+  assert.match(rollbackSql, /DROP INDEX IF EXISTS atlas_v2\.person_politics_v2_null_role_semantic_uidx/i);
 });
 
 test('live probe exercises legacy and normalized null role then rolls back', () => {
