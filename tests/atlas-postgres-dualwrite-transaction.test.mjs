@@ -3,76 +3,167 @@ import test from 'node:test';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const { createDualWriteTransactionFactory } = require('../server/atlas-postgres-dualwrite-transaction.js');
+const planner = require('../atlas-v2-command-planner.js');
+const { createDualWriteTransactionFactory, runtimeLineageKey } = require('../server/atlas-postgres-dualwrite-transaction.js');
+const { createMutationService } = require('../server/atlas-mutation-service.js');
 
-function fakeClient({ failV2 = false } = {}) {
+const IDS = {
+  person:'11111111-1111-1111-1111-111111111111',
+  polity:'22222222-2222-2222-2222-222222222222',
+  role:'33333333-3333-3333-3333-333333333333',
+  basis:'44444444-4444-4444-4444-444444444444'
+};
+
+function cloneMap(map) { return new Map([...map].map(([k,v]) => [k, structuredClone(v)])); }
+
+function fakeClient({ forceParityMismatch = false, failV2 = false } = {}) {
   const calls = [];
+  const legacy = new Map();
+  const v2 = new Map();
+  let snapshot = null;
+  let v2Seq = 1;
+
+  function v2id() { const suffix=String(v2Seq++).padStart(12,'0'); return `55555555-5555-5555-5555-${suffix}`; }
   return {
-    calls,
+    calls, legacy, v2,
     async query(sql, params = []) {
       const text = String(sql).replace(/\s+/g, ' ').trim();
       calls.push([text, params]);
-      if (text === 'begin' || text === 'commit' || text === 'rollback') return { rows: [], rowCount: null };
-      if (text.includes('insert into public.person_politics')) return { rows: [{ id: 11 }], rowCount: 1 };
-      if (text.includes('from atlas_v2.person_names pn where pn.name')) return { rows: [{ id: '11111111-1111-1111-1111-111111111111' }], rowCount: 1 };
-      if (text.includes('from atlas_v2.polity_names pn where pn.name')) return { rows: [{ id: '22222222-2222-2222-2222-222222222222' }], rowCount: 1 };
-      if (text.includes('from atlas_v2.roles r left join atlas_v2.role_names')) return { rows: [{ id: '33333333-3333-3333-3333-333333333333' }], rowCount: 1 };
-      if (text.includes('from atlas_v2.period_bases where code')) return { rows: [{ id: '44444444-4444-4444-4444-444444444444' }], rowCount: 1 };
-      if (text.includes('insert into atlas_v2.person_politics_v2')) {
-        if (failV2) throw new Error('v2 failed');
-        return { rows: [{ id: '55555555-5555-5555-5555-555555555555' }], rowCount: 1 };
+      if (text === 'begin') { snapshot={legacy:cloneMap(legacy),v2:cloneMap(v2)}; return {rows:[],rowCount:null}; }
+      if (text === 'commit') { snapshot=null; return {rows:[],rowCount:null}; }
+      if (text === 'rollback') { if(snapshot){legacy.clear(); for(const [k,v] of snapshot.legacy) legacy.set(k,v); v2.clear(); for(const [k,v] of snapshot.v2) v2.set(k,v);} snapshot=null; return {rows:[],rowCount:null}; }
+
+      if (text.startsWith('insert into public.person_politics (id,')) {
+        const [id,person_name,politic_name,activity_start,activity_end,role,period_basis,notes] = params;
+        if (legacy.has(String(id))) return {rows:[],rowCount:0};
+        legacy.set(String(id),{id:String(id),person_name,politic_name,activity_start,activity_end,role,period_basis,notes});
+        return {rows:[{id:String(id)}],rowCount:1};
       }
-      if (text.includes('from atlas_v2.write_request_log')) return { rows: [], rowCount: 0 };
-      if (text.includes('insert into atlas_v2.write_request_log')) return { rows: [], rowCount: 1 };
-      if (text.includes('from public.person_politics where id = any')) return { rows: [{ person_name:'Ada Lovelace', politic_name:'United Kingdom', activity_start:1842, activity_end:1852, role:'Mathematician', period_basis:'intellectual_activity', notes:null }], rowCount:1 };
-      if (text.includes('from atlas_v2.person_politics_v2 pp')) return { rows: [{ person_name:'Ada Lovelace', politic_name:'United Kingdom', activity_start:1842, activity_end:1852, role:'Mathematician', period_basis:'intellectual_activity', notes:null }], rowCount:1 };
-      return { rows: [], rowCount: 0 };
+      if (text.startsWith('select id,person_name,politic_name,activity_start,activity_end,role,period_basis,notes from public.person_politics where id=$1')) {
+        const row=legacy.get(String(params[0])); return {rows:row?[structuredClone(row)]:[],rowCount:row?1:0};
+      }
+      if (text.startsWith('update public.person_politics set')) {
+        const [person_name,politic_name,activity_start,activity_end,role,period_basis,notes,id]=params;
+        if(!legacy.has(String(id))) return {rows:[],rowCount:0};
+        legacy.set(String(id),{id:String(id),person_name,politic_name,activity_start,activity_end,role,period_basis,notes});
+        return {rows:[],rowCount:1};
+      }
+      if (text.startsWith('delete from public.person_politics where id=$1')) {
+        const ok=legacy.delete(String(params[0])); return {rows:[],rowCount:ok?1:0};
+      }
+
+      if (text.includes('from atlas_v2.person_names pn where pn.name=$1 group by')) return {rows:params[0]==='Ada Lovelace'?[{id:IDS.person}]:[],rowCount:1};
+      if (text.includes('from atlas_v2.polity_names pn where pn.name=$1 group by')) return {rows:params[0]==='United Kingdom'?[{id:IDS.polity}]:[],rowCount:1};
+      if (text.includes('from atlas_v2.roles r left join atlas_v2.role_names')) return {rows:['Mathematician','unspecified'].includes(params[0])?[{id:IDS.role}]:[],rowCount:1};
+      if (text.includes('from atlas_v2.period_bases where code=$1')) return {rows:params[0]==='intellectual_activity'?[{id:IDS.basis}]:[],rowCount:1};
+
+      if (text.startsWith('select pp.id, pp.legacy_source_key from atlas_v2.person_politics_v2')) {
+        const [person,polity,start,end,role,basis,notes]=params;
+        const matches=[...v2.values()].filter(r=>r.person_name===person&&r.politic_name===polity&&Number(r.activity_start)===Number(start)&&Number(r.activity_end)===Number(end)&&r.role===role&&r.period_basis===basis&&(r.notes??null)===(notes??null));
+        return {rows:matches.slice(0,2).map(r=>({id:r.id,legacy_source_key:r.legacy_source_key})),rowCount:matches.length};
+      }
+      if (text.startsWith('insert into atlas_v2.person_politics_v2')) {
+        if (failV2) throw new Error('v2 failed');
+        const [person_id,polity_id,start,end,role_id,basis_id,lineage,notes,source_locator,content_hash]=params;
+        const existing=[...v2.values()].find(r=>r.legacy_source_key===lineage);
+        const id=existing?.id || v2id();
+        v2.set(id,{id,person_id,polity_id,role_id,period_basis_id:basis_id,person_name:'Ada Lovelace',politic_name:'United Kingdom',activity_start:start,activity_end:end,role: notes==='NULLROLE'?'unspecified':'Mathematician',period_basis:'intellectual_activity',legacy_source_key:lineage,notes,source_locator:JSON.parse(source_locator),content_hash});
+        return {rows:[{id}],rowCount:1};
+      }
+      if (text.startsWith('update atlas_v2.person_politics_v2 set')) {
+        const [person_id,polity_id,start,end,role_id,basis_id,notes,content_hash,locator,id]=params;
+        const row=v2.get(String(id)); if(!row) return {rows:[],rowCount:0};
+        Object.assign(row,{person_id,polity_id,activity_start:start,activity_end:end,role_id,period_basis_id:basis_id,notes,content_hash,person_name:'Ada Lovelace',politic_name:'United Kingdom',role:'Mathematician',period_basis:'intellectual_activity',last_mutation:JSON.parse(locator)});
+        return {rows:[{id:String(id)}],rowCount:1};
+      }
+      if (text.startsWith('select id from atlas_v2.person_politics_v2 where legacy_source_key=$1')) {
+        const matches=[...v2.values()].filter(r=>r.legacy_source_key===params[0]); return {rows:matches.slice(0,2).map(r=>({id:r.id})),rowCount:matches.length};
+      }
+      if (text.startsWith('delete from atlas_v2.person_politics_v2 where id=$1')) {
+        const ok=v2.delete(String(params[0])); return {rows:[],rowCount:ok?1:0};
+      }
+      if (text.startsWith('select pp.activity_start, pp.activity_end, pp.notes')) {
+        if (forceParityMismatch) return {rows:[{activity_start:9999,activity_end:9999,notes:null,role:'Mathematician',period_basis:'intellectual_activity',person_match:true,polity_match:true}],rowCount:1};
+        const row=v2.get(String(params[0]));
+        return {rows:row?[{activity_start:row.activity_start,activity_end:row.activity_end,notes:row.notes,role:row.role,period_basis:row.period_basis,person_match:row.person_name===params[1],polity_match:row.politic_name===params[2]}]:[],rowCount:row?1:0};
+      }
+      if (text.startsWith('select count(*)::int as count from atlas_v2.person_politics_v2 where id=$1')) return {rows:[{count:v2.has(String(params[0]))?1:0}],rowCount:1};
+      throw new Error(`Unhandled SQL: ${text}`);
     }
   };
 }
 
-const plan = {
-  commit:false,
-  writes_performed:0,
-  blockers:[],
-  commands:[
-    {type:'RESOLVE_PERSON_EXACT',lookup:{name:'Ada Lovelace'}},
-    {type:'RESOLVE_POLITY_EXACT',lookup:{name:'United Kingdom'}},
-    {type:'RESOLVE_ROLE_EXACT',lookup:{code_or_name:'Mathematician'}},
-    {type:'RESOLVE_PERIOD_BASIS_EXACT',lookup:{code:'intellectual_activity'}},
-    {type:'UPSERT_PERSON_POLITICS_V2',legacy_source_key:'ada\u0001united kingdom\u00011842\u00011852',values:{activity_start:1842,activity_end:1852,notes:null}}
-  ]
-};
+const row = { person_name:'Ada Lovelace', politic_name:'United Kingdom', activity_start:1842, activity_end:1852, role:'Mathematician', period_basis:'intellectual_activity', notes:null };
 
-const payload = { person_name:'Ada Lovelace', politic_name:'United Kingdom', activity_start:1842, activity_end:1852, role:'Mathematician', period_basis:'intellectual_activity', notes:null };
+function serviceFor(client, rollbackOnly=false) {
+  const {transactionFactory,parityVerifier}=createDualWriteTransactionFactory({client,rollbackOnly});
+  return createMutationService({planner,transactionFactory,parityVerifier});
+}
 
-test('dual-write uses one begin and one commit', async () => {
-  const client = fakeClient();
-  const { transactionFactory, parityVerifier } = createDualWriteTransactionFactory({ client });
-  const result = await transactionFactory(async (tx) => {
-    const legacy = await tx.executeLegacy({ operation:'create', payload });
-    const v2 = await tx.executeV2({ plan, context:{ request_id:'req-1' } });
-    assert.equal(v2.committed, true, v2.transaction_failure || 'v2 should commit');
-    const parity = await parityVerifier({ operation:'create', payload, legacy, v2 });
-    assert.deepEqual(parity, { checked:true, match:true, legacy_rows:1, v2_rows:1 });
-    return { legacy, v2 };
-  });
-  assert.equal(result.legacy.committed, true);
-  assert.equal(result.v2.committed, true);
-  assert.equal(client.calls.filter(([sql]) => sql === 'begin').length, 1);
-  assert.equal(client.calls.filter(([sql]) => sql === 'commit').length, 1);
-  assert.equal(client.calls.filter(([sql]) => sql === 'rollback').length, 0);
+test('create/update/import/delete share one transaction and maintain parity', async () => {
+  const client=fakeClient();
+  const service=serviceFor(client);
+
+  const created=await service.mutate({operation:'create',payload:row,request_id:'req-create'});
+  assert.equal(created.committed,true,JSON.stringify(created));
+  const legacyId=created.legacy.record_ids[0];
+  const v2Id=created.v2.normalized_relationship_ids[0];
+  assert.equal(client.v2.get(v2Id).legacy_source_key,runtimeLineageKey(legacyId));
+
+  const updatedRow={...row,activity_end:1853,notes:'reviewed update'};
+  const updated=await service.mutate({operation:'update',payload:{id:legacyId,value:updatedRow},request_id:'req-update'});
+  assert.equal(updated.committed,true,JSON.stringify(updated));
+  assert.equal(updated.v2.normalized_relationship_ids[0],v2Id);
+  assert.equal(client.legacy.get(legacyId).activity_end,1853);
+  assert.equal(client.v2.get(v2Id).activity_end,1853);
+
+  const imported=await service.mutate({operation:'import',payload:[{...row,activity_start:1900,activity_end:1901},{...row,activity_start:1902,activity_end:1903}],request_id:'req-import'});
+  assert.equal(imported.committed,true,JSON.stringify(imported));
+  assert.equal(imported.legacy.record_ids.length,2);
+  assert.equal(imported.v2.normalized_relationship_ids.length,2);
+
+  const deleted=await service.mutate({operation:'delete',payload:{id:legacyId},request_id:'req-delete'});
+  assert.equal(deleted.committed,true,JSON.stringify(deleted));
+  assert.equal(client.legacy.has(legacyId),false);
+  assert.equal(client.v2.has(v2Id),false);
+
+  assert.equal(client.calls.filter(([sql])=>sql==='begin').length,4);
+  assert.equal(client.calls.filter(([sql])=>sql==='commit').length,4);
+  assert.equal(client.calls.filter(([sql])=>sql==='rollback').length,0);
 });
 
-test('v2 failure rolls back the shared transaction', async () => {
-  const client = fakeClient({ failV2:true });
-  const { transactionFactory } = createDualWriteTransactionFactory({ client });
-  await assert.rejects(() => transactionFactory(async (tx) => {
-    await tx.executeLegacy({ operation:'create', payload });
-    const v2 = await tx.executeV2({ plan, context:{ request_id:'req-2' } });
-    if (!v2.committed) throw new Error(v2.transaction_failure || 'v2 failed');
-  }));
-  assert.equal(client.calls.filter(([sql]) => sql === 'begin').length, 1);
-  assert.equal(client.calls.filter(([sql]) => sql === 'rollback').length, 1);
-  assert.equal(client.calls.filter(([sql]) => sql === 'commit').length, 0);
+test('create replay reuses deterministic legacy and normalized lineage instead of duplicating', async () => {
+  const client=fakeClient();
+  const service=serviceFor(client);
+  const first=await service.mutate({operation:'create',payload:row,request_id:'same-request'});
+  const second=await service.mutate({operation:'create',payload:row,request_id:'same-request'});
+  assert.equal(first.committed,true);
+  assert.equal(second.committed,true,JSON.stringify(second));
+  assert.equal(second.legacy.replay,true);
+  assert.deepEqual(second.legacy.record_ids,first.legacy.record_ids);
+  assert.deepEqual(second.v2.normalized_relationship_ids,first.v2.normalized_relationship_ids);
+  assert.equal(client.legacy.size,1);
+  assert.equal(client.v2.size,1);
+});
+
+test('parity mismatch rolls back both legacy and normalized writes', async () => {
+  const client=fakeClient({forceParityMismatch:true});
+  const service=serviceFor(client);
+  const result=await service.mutate({operation:'create',payload:row,request_id:'bad-parity'});
+  assert.equal(result.committed,false);
+  assert.equal(result.rollback,true);
+  assert.match(result.transaction_failure,/parity mismatch/);
+  assert.equal(client.legacy.size,0);
+  assert.equal(client.v2.size,0);
+  assert.equal(client.calls.filter(([sql])=>sql==='rollback').length,1);
+});
+
+test('v2 failure rolls back shared transaction', async () => {
+  const client=fakeClient({failV2:true});
+  const service=serviceFor(client);
+  const result=await service.mutate({operation:'create',payload:row,request_id:'v2-fail'});
+  assert.equal(result.committed,false);
+  assert.equal(result.rollback,true);
+  assert.equal(client.legacy.size,0);
+  assert.equal(client.v2.size,0);
 });
