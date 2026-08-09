@@ -14,18 +14,18 @@ function fakeClient({ failV2 = false } = {}) {
       calls.push([text, params]);
       if (text === 'begin' || text === 'commit' || text === 'rollback') return { rows: [], rowCount: null };
       if (text.includes('insert into public.person_politics')) return { rows: [{ id: 11 }], rowCount: 1 };
-      if (text.includes('from atlas_v2.person_names')) return { rows: [{ id: '11111111-1111-1111-1111-111111111111' }], rowCount: 1 };
-      if (text.includes('from atlas_v2.polity_names')) return { rows: [{ id: '22222222-2222-2222-2222-222222222222' }], rowCount: 1 };
-      if (text.includes('from atlas_v2.roles')) return { rows: [{ id: '33333333-3333-3333-3333-333333333333' }], rowCount: 1 };
-      if (text.includes('from atlas_v2.period_bases')) return { rows: [{ id: '44444444-4444-4444-4444-444444444444' }], rowCount: 1 };
+      if (text.includes('from atlas_v2.person_names pn where pn.name')) return { rows: [{ id: '11111111-1111-1111-1111-111111111111' }], rowCount: 1 };
+      if (text.includes('from atlas_v2.polity_names pn where pn.name')) return { rows: [{ id: '22222222-2222-2222-2222-222222222222' }], rowCount: 1 };
+      if (text.includes('from atlas_v2.roles r left join atlas_v2.role_names')) return { rows: [{ id: '33333333-3333-3333-3333-333333333333' }], rowCount: 1 };
+      if (text.includes('from atlas_v2.period_bases where code')) return { rows: [{ id: '44444444-4444-4444-4444-444444444444' }], rowCount: 1 };
       if (text.includes('insert into atlas_v2.person_politics_v2')) {
         if (failV2) throw new Error('v2 failed');
         return { rows: [{ id: '55555555-5555-5555-5555-555555555555' }], rowCount: 1 };
       }
       if (text.includes('from atlas_v2.write_request_log')) return { rows: [], rowCount: 0 };
       if (text.includes('insert into atlas_v2.write_request_log')) return { rows: [], rowCount: 1 };
-      if (text.includes('from atlas_v2.person_politics_v2 pp')) return { rows: [{ person_name:'Ada Lovelace', politic_name:'United Kingdom', activity_start:1842, activity_end:1852, role:'Mathematician', period_basis:'intellectual_activity', notes:null }], rowCount:1 };
       if (text.includes('from public.person_politics where id = any')) return { rows: [{ person_name:'Ada Lovelace', politic_name:'United Kingdom', activity_start:1842, activity_end:1852, role:'Mathematician', period_basis:'intellectual_activity', notes:null }], rowCount:1 };
+      if (text.includes('from atlas_v2.person_politics_v2 pp')) return { rows: [{ person_name:'Ada Lovelace', politic_name:'United Kingdom', activity_start:1842, activity_end:1852, role:'Mathematician', period_basis:'intellectual_activity', notes:null }], rowCount:1 };
       return { rows: [], rowCount: 0 };
     }
   };
@@ -52,8 +52,9 @@ test('dual-write uses one begin and one commit', async () => {
   const result = await transactionFactory(async (tx) => {
     const legacy = await tx.executeLegacy({ operation:'create', payload });
     const v2 = await tx.executeV2({ plan, context:{ request_id:'req-1' } });
+    assert.equal(v2.committed, true, v2.transaction_failure || 'v2 should commit');
     const parity = await parityVerifier({ operation:'create', payload, legacy, v2 });
-    assert.equal(parity.match, true);
+    assert.deepEqual(parity, { checked:true, match:true, legacy_rows:1, v2_rows:1 });
     return { legacy, v2 };
   });
   assert.equal(result.legacy.committed, true);
