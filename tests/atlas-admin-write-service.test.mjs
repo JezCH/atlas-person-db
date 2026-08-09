@@ -94,9 +94,18 @@ test('admin write service updates through the adapter when exact activity exists
   assert.equal(db.calls.some((call) => call[0] === 'update'), true);
 });
 
-test('unknown admin write mode fails closed to legacy-only', async () => {
+test('dual-write is a recognized contract but admin service alone remains legacy-targeted', async () => {
   const db = fakeDb();
   const service = createAdminWriteService({ db, adapterApi, mode: 'dual-write', modeResolver: (value) => modeApi.resolveMode(value, () => {}) });
+  const result = await service.saveRows([row]);
+  assert.equal(result.mode, 'dual-write');
+  assert.equal(result.inserted, 1);
+  assert.equal(db.calls.filter((call) => call[0] === 'from').every((call) => call[1] === 'person_politics'), true);
+});
+
+test('truly unknown admin write mode still fails closed to legacy-only', async () => {
+  const db = fakeDb();
+  const service = createAdminWriteService({ db, adapterApi, mode: 'v2-only', modeResolver: (value) => modeApi.resolveMode(value, () => {}) });
   const result = await service.saveRows([row]);
   assert.equal(result.mode, 'legacy-only');
   assert.equal(result.inserted, 1);
