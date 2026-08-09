@@ -8,6 +8,7 @@ on:
       - atlas-reader.js
       - app.js
       - index.html
+      - atlas-server-write-adapter.js
       - migration/phase-6/scripts/test-reader-contract.mjs
       - .github/workflows/phase-6-reader-ci.yml
   pull_request:
@@ -15,6 +16,7 @@ on:
       - atlas-reader.js
       - app.js
       - index.html
+      - atlas-server-write-adapter.js
       - migration/phase-6/scripts/test-reader-contract.mjs
       - .github/workflows/phase-6-reader-ci.yml
 
@@ -28,24 +30,28 @@ jobs:
       - uses: actions/checkout@v4
       - name: Run reader contract tests
         run: node migration/phase-6/scripts/test-reader-contract.mjs
-      - name: Verify read abstraction and protected legacy writes
+      - name: Verify read abstraction and authenticated server writes
         shell: bash
         run: |
           set -euo pipefail
           grep -Fq 'window.AtlasReader.loadPersonPolitics' app.js
           ! grep -Fq 'select("*")' app.js
-          grep -Fq 'ATLAS_WRITE_ADAPTER.createAdapter' app.js
-          grep -Eq 'mode: "(legacy-only|shadow-validate)"' app.js
-          grep -Fq 'db.from("person_politics").update' atlas-write-adapter.js
-          grep -Fq 'db.from("person_politics").insert' atlas-write-adapter.js
-          grep -Fq 'db.from("person_politics").delete' atlas-write-adapter.js
-          ! grep -Eq 'from\("atlas_person_politics_compat_v1"\).*(insert|update|delete)' app.js atlas-reader.js atlas-write-adapter.js
-          ! grep -Eq 'from\("atlas_v2' app.js atlas-reader.js atlas-write-adapter.js atlas-v2-shadow-compiler.js
+          grep -Fq 'ATLAS_SERVER_WRITE_ADAPTER' app.js
+          grep -Fq 'writeAdapter.createActivity' app.js
+          grep -Fq 'writeAdapter.updateActivity' app.js
+          grep -Fq 'writeAdapter.deleteActivity' app.js
+          grep -Fq 'writeAdapter.importActivities' app.js
+          ! grep -Fq 'ATLAS_WRITE_ADAPTER' app.js
+          ! grep -Fq '.from("person_politics").insert' app.js
+          ! grep -Fq '.from("person_politics").update' app.js
+          ! grep -Fq '.from("person_politics").delete' app.js
+          ! grep -Eq 'from\("atlas_person_politics_compat_v1"\).*(insert|update|delete)' app.js atlas-reader.js atlas-server-write-adapter.js
+          ! grep -Eq 'from\("atlas_v2' app.js atlas-reader.js atlas-server-write-adapter.js
           grep -Fq './atlas-reader.js' index.html
-          grep -Fq './atlas-write-adapter.js' index.html
-          if grep -Fq 'mode: "shadow-validate"' app.js; then
-            grep -Fq './atlas-v2-shadow-compiler.js' index.html
-            grep -Fq 'shadowCompiler: window.ATLAS_V2_SHADOW_COMPILER.compile' app.js
-            grep -Fq 'commit: false' atlas-v2-shadow-compiler.js
-            grep -Fq 'writes_performed: 0' atlas-v2-shadow-compiler.js
-          fi
+          grep -Fq './atlas-server-write-adapter.js' index.html
+          ! grep -Fq './atlas-write-adapter.js' index.html
+          ! grep -Fq './atlas-write-mode.js' index.html
+          ! grep -Fq './atlas-v2-shadow-compiler.js' index.html
+          ! grep -Fq 'ATLAS_MUTATION_TOKEN' atlas-server-write-adapter.js
+          ! grep -Fq 'Authorization' atlas-server-write-adapter.js
+          grep -Fq 'credentials: "same-origin"' atlas-server-write-adapter.js
