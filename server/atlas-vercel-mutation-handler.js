@@ -27,7 +27,7 @@ function createHeaderAuthorizer({ env = process.env } = {}) {
   };
 }
 
-function createVercelMutationHandler({ clientFactory, env = process.env } = {}) {
+function createVercelMutationHandler({ clientFactory, env = process.env, transactionOptions = {} } = {}) {
   if (typeof clientFactory !== "function") throw new Error("clientFactory is required");
   const databaseUrl = requireEnv(env, "SUPABASE_DB_URL");
   const authorize = createHeaderAuthorizer({ env });
@@ -35,7 +35,7 @@ function createVercelMutationHandler({ clientFactory, env = process.env } = {}) 
   return async function handler(req, res) {
     const client = await clientFactory(databaseUrl);
     try {
-      const { transactionFactory, parityVerifier } = createDualWriteTransactionFactory({ client });
+      const { transactionFactory, parityVerifier } = createDualWriteTransactionFactory({ client, ...transactionOptions });
       const mutationService = createMutationService({ planner, transactionFactory, parityVerifier });
       const transport = createMutationTransport({ mutationService, authorize });
       const response = await transport.handle({
