@@ -1,0 +1,185 @@
+name: Phase 8C C4D Optional Role Contract
+
+on:
+  pull_request:
+    paths:
+      - "migration/phase-8/phase8c-c4d-optional-role-contract.sql"
+      - "migration/phase-8/phase8c-c4d-optional-role-rollback.sql"
+      - "migration/phase-8/phase8c-c4d-null-role-probe.sql"
+      - "tests/atlas-optional-role-schema-contract.test.mjs"
+      - ".github/workflows/phase-8c-c4d-optional-role-contract.yml"
+  workflow_dispatch:
+    inputs:
+      approved_sha:
+        description: Exact commit SHA approved for the live optional-role contract apply
+        required: true
+        type: string
+      confirm:
+        description: Type PHASE8C_C4D_APPLY_OPTIONAL_ROLE_CONTRACT
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: atlas-phase8c-c4d-optional-role-contract
+  cancel-in-progress: false
+
+jobs:
+  static-contract:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify optional-role schema contract package
+        run: node --test tests/atlas-optional-role-schema-contract.test.mjs
+      - name: Verify no synthetic role vocabulary is introduced
+        shell: bash
+        run: |
+          set -euo pipefail
+          ! grep -ni 'unspecified' migration/phase-8/phase8c-c4d-optional-role-contract.sql
+          ! grep -ni 'insert into atlas_v2.roles' migration/phase-8/phase8c-c4d-optional-role-contract.sql
+          grep -ni 'left join atlas_v2.roles' migration/phase-8/phase8c-c4d-optional-role-contract.sql
+          grep -ni 'nulls not distinct' migration/phase-8/phase8c-c4d-optional-role-contract.sql
+
+  protected-apply:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: phase-5-shadow
+    steps:
+      - name: Guard exact SHA and explicit confirmation
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "${{ inputs.confirm }}" = "PHASE8C_C4D_APPLY_OPTIONAL_ROLE_CONTRACT"
+          test "${{ inputs.approved_sha }}" = "${{ github.sha }}"
+
+      - name: Checkout exact approved SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.approved_sha }}
+          persist-credentials: false
+
+      - name: Verify database secret exists
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${SUPABASE_DB_URL:-}"
+          case "$SUPABASE_DB_URL" in
+            postgresql://*|postgres://*) ;;
+            *) echo "SUPABASE_DB_URL must be a PostgreSQL URI" >&2; exit 41 ;;
+          esac
+
+      - name: Install PostgreSQL client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: Capture before state
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p migration/phase-8/tmp/phase8c-c4d-optional-role
+          psql "$SUPABASE_DB_URL" -X -qAt -v ON_ERROR_STOP=1 -c "
+            select jsonb_build_object(
+              'marker','PHASE8C_C4D_BEFORE',
+              'role_nullable',(select is_nullable from information_schema.columns where table_schema='atlas_v2' and table_name='person_politics_v2' and column_name='role_id'),
+              'normalized_rows',(select count(*) from atlas_v2.person_politics_v2),
+              'compat_rows',(select count(*) from public.atlas_person_politics_compat_v1),
+              'normalized_null_roles',(select count(*) from atlas_v2.person_politics_v2 where role_id is null)
+            );" > migration/phase-8/tmp/phase8c-c4d-optional-role/before.json
+
+      - name: Apply optional-role schema and compatibility contract
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql "$SUPABASE_DB_URL" -X -v ON_ERROR_STOP=1 \
+            -f migration/phase-8/phase8c-c4d-optional-role-contract.sql \
+            | tee migration/phase-8/tmp/phase8c-c4d-optional-role/apply.log
+
+      - name: Verify live shape after apply
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql "$SUPABASE_DB_URL" -X -qAt -v ON_ERROR_STOP=1 -c "
+            select jsonb_build_object(
+              'marker','PHASE8C_C4D_AFTER',
+              'role_nullable',(select is_nullable from information_schema.columns where table_schema='atlas_v2' and table_name='person_politics_v2' and column_name='role_id'),
+              'normalized_rows',(select count(*) from atlas_v2.person_politics_v2),
+              'compat_rows',(select count(*) from public.atlas_person_politics_compat_v1),
+              'normalized_null_roles',(select count(*) from atlas_v2.person_politics_v2 where role_id is null),
+              'nullsafe_unique',coalesce((select i.indisunique and i.indnullsnotdistinct from pg_index i join pg_class c on c.oid=i.indexrelid join pg_namespace n on n.oid=c.relnamespace where n.nspname='atlas_v2' and c.relname='person_politics_v2_semantic_nullsafe_uidx'),false)
+            );" > migration/phase-8/tmp/phase8c-c4d-optional-role/after.json
+          node - <<'NODE'
+          const fs=require('fs');
+          const before=JSON.parse(fs.readFileSync('migration/phase-8/tmp/phase8c-c4d-optional-role/before.json','utf8'));
+          const after=JSON.parse(fs.readFileSync('migration/phase-8/tmp/phase8c-c4d-optional-role/after.json','utf8'));
+          if (before.role_nullable !== 'NO') throw new Error(`expected pre-apply role_nullable NO, got ${before.role_nullable}`);
+          if (before.normalized_rows !== before.compat_rows) throw new Error('pre-apply compatibility row count mismatch');
+          if (before.normalized_null_roles !== 0) throw new Error('unexpected pre-apply null-role rows');
+          if (after.role_nullable !== 'YES') throw new Error(`expected post-apply role_nullable YES, got ${after.role_nullable}`);
+          if (after.normalized_rows !== before.normalized_rows) throw new Error('normalized row count changed during schema apply');
+          if (after.compat_rows !== after.normalized_rows) throw new Error('compatibility projection lost normalized rows');
+          if (after.normalized_null_roles !== 0) throw new Error('schema apply created null-role data unexpectedly');
+          if (after.nullsafe_unique !== true) throw new Error('NULLS NOT DISTINCT semantic uniqueness is not active');
+          NODE
+          psql "$SUPABASE_DB_URL" -X -qAt -v ON_ERROR_STOP=1 -c "select pg_get_viewdef('public.atlas_person_politics_compat_v1'::regclass,true);" \
+            > migration/phase-8/tmp/phase8c-c4d-optional-role/view-after.sql
+
+      - name: Probe real null-role write/read semantics with rollback
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql "$SUPABASE_DB_URL" -X -qAt -v ON_ERROR_STOP=1 \
+            -f migration/phase-8/phase8c-c4d-null-role-probe.sql \
+            > migration/phase-8/tmp/phase8c-c4d-optional-role/probe.json
+          node - <<'NODE'
+          const fs=require('fs');
+          const probe=JSON.parse(fs.readFileSync('migration/phase-8/tmp/phase8c-c4d-optional-role/probe.json','utf8'));
+          for (const key of ['normalized_role_null','compat_row_present','compat_role_null','legacy_role_null']) {
+            if (probe[key] !== true) throw new Error(`probe failed: ${key}=${probe[key]}`);
+          }
+          NODE
+
+      - name: Verify probe left zero residue
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql "$SUPABASE_DB_URL" -X -qAt -v ON_ERROR_STOP=1 -c "
+            select jsonb_build_object(
+              'marker','PHASE8C_C4D_RESIDUE',
+              'legacy_probe_rows',(select count(*) from public.person_politics where notes='PHASE8C_C4D_NULL_ROLE_PROBE'),
+              'normalized_probe_rows',(select count(*) from atlas_v2.person_politics_v2 where source_locator->>'kind'='phase8c_c4d_null_role_probe')
+            );" > migration/phase-8/tmp/phase8c-c4d-optional-role/residue.json
+          node - <<'NODE'
+          const fs=require('fs');
+          const residue=JSON.parse(fs.readFileSync('migration/phase-8/tmp/phase8c-c4d-optional-role/residue.json','utf8'));
+          if (residue.legacy_probe_rows !== 0 || residue.normalized_probe_rows !== 0) throw new Error(`probe residue detected: ${JSON.stringify(residue)}`);
+          NODE
+          printf '{"marker":"PHASE8C_C4D_OPTIONAL_ROLE_APPLY","approved_sha":"%s","schema_applied":true,"null_role_probe":true,"probe_residue":0,"synthetic_role_vocabulary":false}\n' \
+            "${{ inputs.approved_sha }}" > migration/phase-8/tmp/phase8c-c4d-optional-role/report.json
+
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase8c-c4d-optional-role-${{ inputs.approved_sha }}
+          path: migration/phase-8/tmp/phase8c-c4d-optional-role
+          if-no-files-found: error
+          retention-days: 90
