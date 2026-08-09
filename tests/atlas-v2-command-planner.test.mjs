@@ -61,11 +61,27 @@ test('invalid chronology and unsupported period basis fail before transaction', 
   assert.deepEqual(result.blockers.map(x=>x.code).sort(), ['ACTIVITY_START_OUT_OF_RANGE','PERIOD_BASIS_UNSUPPORTED']);
 });
 
-test('empty role resolves to reviewed unspecified vocabulary instead of period basis', () => {
+test('empty role fails closed because current live v2 role_id is not nullable', () => {
   const result = planner.plan('create', {...row,role:null});
-  assert.equal(result.blockers.length,0);
-  assert.equal(result.commands.find(x=>x.type==='RESOLVE_ROLE_EXACT').lookup.code_or_name,'unspecified');
+  assert.deepEqual(result.blockers.map(x=>x.code), ['ROLE_REQUIRED_BY_CURRENT_V2_SCHEMA']);
+  assert.equal(result.commands.find(x=>x.type==='RESOLVE_ROLE_EXACT').lookup.code_or_name,null);
   assert.equal(result.normalized_payload.role,null);
+  assert.equal(JSON.stringify(result).includes('unspecified'), false);
+});
+
+test('normalization produces one canonical payload for retry identity', () => {
+  const result = planner.plan('create', {
+    ...row,
+    person_name: '  Ada   Lovelace  ',
+    politic_name: ' United   Kingdom ',
+    role: ' Mathematician ',
+    notes: '  reviewed   note  '
+  });
+  assert.equal(result.blockers.length, 0);
+  assert.deepEqual(result.normalized_payload, {
+    ...row,
+    notes: 'reviewed note'
+  });
 });
 
 test('import creates isolated normalized row command groups', () => {
