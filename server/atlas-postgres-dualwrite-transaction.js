@@ -26,9 +26,9 @@ function runtimeLineageKey(legacyRecordId) {
   return `legacy-db:public.person_politics:${String(legacyRecordId)}`;
 }
 
-function normalizedRole(value) {
+function exactRole(value) {
   const role = String(value ?? "").trim();
-  return role || "unspecified";
+  return role || null;
 }
 
 function comparableLegacyRow(row) {
@@ -47,18 +47,6 @@ function sameLegacyRow(left, right) {
   return JSON.stringify(comparableLegacyRow(left)) === JSON.stringify(comparableLegacyRow(right));
 }
 
-function relationshipHash(input) {
-  return contentHash({
-    person_id: input.person_id,
-    polity_id: input.polity_id,
-    role_id: input.role_id,
-    period_basis_id: input.period_basis_id,
-    activity_start: Number(input.activity_start),
-    activity_end: Number(input.activity_end),
-    notes: input.notes ?? null
-  });
-}
-
 function mutationLocator({ legacyRecordId, requestId }) {
   return {
     kind: "phase8c_dualwrite",
@@ -71,8 +59,10 @@ function mutationLocator({ legacyRecordId, requestId }) {
 function createNormalizedTx(client) {
   async function resolveRelationshipExactSnapshot(row) {
     if (!row) return null;
+    const role = exactRole(row.role);
+    if (!role) return null;
     const result = await client.query(`
-      select pp.id, pp.legacy_source_key
+      select pp.id, pp.legacy_source_key, pp.source_locator, pp.content_hash
         from atlas_v2.person_politics_v2 pp
         join atlas_v2.roles r on r.id = pp.role_id
         join atlas_v2.period_bases pb on pb.id = pp.period_basis_id
@@ -99,7 +89,7 @@ function createNormalizedTx(client) {
       row.politic_name,
       Number(row.activity_start),
       Number(row.activity_end),
-      normalizedRole(row.role),
+      role,
       row.period_basis,
       row.notes ?? null
     ]);
@@ -116,6 +106,7 @@ function createNormalizedTx(client) {
       return result.rows.length === 1 ? result.rows[0].id : null;
     },
     async resolveRoleExact({ code_or_name }) {
+      if (!code_or_name) return null;
       const result = await client.query(`select r.id from atlas_v2.roles r left join atlas_v2.role_names rn on rn.role_id=r.id where r.code=$1 or r.source_label=$1 or rn.name=$1 group by r.id order by r.id limit 2`, [code_or_name]);
       return result.rows.length === 1 ? result.rows[0].id : null;
     },
@@ -124,17 +115,13 @@ function createNormalizedTx(client) {
       return result.rows.length === 1 ? result.rows[0].id : null;
     },
     async upsertPersonPoliticsV2(input) {
-      const hash = relationshipHash(input);
-      const locator = mutationLocator({ legacyRecordId: input.legacy_record_id, requestId: input.request_id });
-
       if (input.legacy_before) {
         const existing = await resolveRelationshipExactSnapshot(input.legacy_before);
         if (!existing) throw new Error("existing normalized relationship is not uniquely resolved from legacy preimage");
         const result = await client.query(`update atlas_v2.person_politics_v2
           set person_id=$1, polity_id=$2, activity_start=$3, activity_end=$4, role_id=$5,
-              period_basis_id=$6, notes=$7, content_hash=$8,
-              source_locator=source_locator || jsonb_build_object('last_mutation',$9::jsonb)
-          where id=$10 returning id`, [
+              period_basis_id=$6, notes=$7
+          where id=$8 returning id`, [
           input.person_id,
           input.polity_id,
           input.activity_start,
@@ -142,8 +129,6 @@ function createNormalizedTx(client) {
           input.role_id,
           input.period_basis_id,
           input.notes ?? null,
-          hash,
-          JSON.stringify(locator),
           existing.id
         ]);
         return result.rows[0]?.id ?? null;
@@ -152,7 +137,12 @@ function createNormalizedTx(client) {
       if (input.legacy_record_id == null || input.legacy_record_id === "") {
         throw new Error("legacy record id is required for normalized create/import lineage");
       }
+      if (!input.legacy_source_row) {
+        throw new Error("legacy source row is required for normalized create/import provenance");
+      }
       const lineage = runtimeLineageKey(input.legacy_record_id);
+      const locator = mutationLocator({ legacyRecordId: input.legacy_record_id, requestId: input.request_id });
+      const sourceHash = contentHash(comparableLegacyRow(input.legacy_source_row));
       const result = await client.query(`insert into atlas_v2.person_politics_v2
         (id,person_id,polity_id,activity_start,activity_end,role_id,period_basis_id,confidence,chronology_status,legacy_source_key,notes,source_locator,content_hash)
         values (gen_random_uuid(),$1,$2,$3,$4,$5,$6,'legacy_asserted','exact_as_recorded',$7,$8,$9::jsonb,$10)
@@ -171,7 +161,7 @@ function createNormalizedTx(client) {
         lineage,
         input.notes ?? null,
         JSON.stringify(locator),
-        hash
+        sourceHash
       ]);
       return result.rows[0]?.id ?? null;
     },
@@ -215,6 +205,9 @@ async function executeV2Plan(tx, plan, context = {}) {
         case "UPSERT_PERSON_POLITICS_V2": {
           const legacyRecordId = command.legacy_record_id ?? legacy.record_ids?.[state.row_index] ?? legacy.record_ids?.[0] ?? null;
           const legacyBefore = command.legacy_record_id != null ? legacy.before_rows?.[0] ?? null : null;
+          const legacySourceRow = command.legacy_record_id != null
+            ? legacy.after_rows?.[0] ?? null
+            : legacy.after_rows?.[state.row_index] ?? legacy.after_rows?.[0] ?? null;
           const id = await tx.upsertPersonPoliticsV2({
             person_id:state.person_id,
             polity_id:state.polity_id,
@@ -222,6 +215,7 @@ async function executeV2Plan(tx, plan, context = {}) {
             period_basis_id:state.period_basis_id,
             legacy_record_id:legacyRecordId,
             legacy_before:legacyBefore,
+            legacy_source_row:legacySourceRow,
             request_id:context.request_id ?? null,
             ...command.values
           });
@@ -276,22 +270,22 @@ function createLegacyExecutor(client) {
     if (operation === "create") {
       const row = normalizeLegacyPayload(operation, payload);
       const inserted = await insertReplaySafe(row, request_id, 0);
-      return { committed:true, record_ids:[inserted.id], before_rows:[], replay:inserted.replay };
+      return { committed:true, record_ids:[inserted.id], before_rows:[], after_rows:[row], replay:inserted.replay };
     }
     if (operation === "update") {
       const row = normalizeLegacyPayload(operation, payload);
       const id = payload?.id;
       const before = await selectLegacyRow(id, true);
-      if (!before) return { committed:false, record_ids:[], before_rows:[], error:"legacy update target not found" };
+      if (!before) return { committed:false, record_ids:[], before_rows:[], after_rows:[], error:"legacy update target not found" };
       const result = await client.query(`update public.person_politics set person_name=$1,politic_name=$2,activity_start=$3,activity_end=$4,role=$5,period_basis=$6,notes=$7 where id=$8`, [row.person_name,row.politic_name,row.activity_start,row.activity_end,row.role ?? null,row.period_basis,row.notes ?? null,id]);
-      return { committed:result.rowCount === 1, record_ids:[id], before_rows:[before], replay:sameLegacyRow(before,row) };
+      return { committed:result.rowCount === 1, record_ids:[id], before_rows:[before], after_rows:[row], replay:sameLegacyRow(before,row) };
     }
     if (operation === "delete") {
       const id = payload?.id;
       const before = await selectLegacyRow(id, true);
-      if (!before) return { committed:false, record_ids:[], before_rows:[], error:"legacy delete target not found" };
+      if (!before) return { committed:false, record_ids:[], before_rows:[], after_rows:[], error:"legacy delete target not found" };
       const result = await client.query(`delete from public.person_politics where id=$1`, [id]);
-      return { committed:result.rowCount === 1, record_ids:[id], before_rows:[before], replay:false };
+      return { committed:result.rowCount === 1, record_ids:[id], before_rows:[before], after_rows:[], replay:false };
     }
     if (operation === "import") {
       const ids=[];
@@ -302,9 +296,9 @@ function createLegacyExecutor(client) {
         ids.push(inserted.id);
         replay = replay && inserted.replay;
       }
-      return { committed:true, record_ids:ids, before_rows:[], replay };
+      return { committed:true, record_ids:ids, before_rows:[], after_rows:rows, replay };
     }
-    return { committed:false, record_ids:[], before_rows:[], error:operation === "reconcile" ? "reconcile requires dedicated canonical transaction payload" : `unsupported legacy operation: ${operation}` };
+    return { committed:false, record_ids:[], before_rows:[], after_rows:[], error:operation === "reconcile" ? "reconcile requires dedicated canonical transaction payload" : `unsupported legacy operation: ${operation}` };
   };
 }
 
@@ -329,7 +323,7 @@ function createParityVerifier(client) {
       && row.polity_match === true
       && Number(row.activity_start) === Number(legacyRow.activity_start)
       && Number(row.activity_end) === Number(legacyRow.activity_end)
-      && String(row.role ?? "") === normalizedRole(legacyRow.role)
+      && String(row.role ?? "") === String(exactRole(legacyRow.role) ?? "")
       && String(row.period_basis ?? "") === String(legacyRow.period_basis ?? "")
       && (row.notes ?? null) === (legacyRow.notes ?? null);
   }
@@ -392,5 +386,6 @@ module.exports=Object.freeze({
   executeV2Plan,
   deterministicUuid,
   runtimeLineageKey,
-  contentHash
+  contentHash,
+  comparableLegacyRow
 });
