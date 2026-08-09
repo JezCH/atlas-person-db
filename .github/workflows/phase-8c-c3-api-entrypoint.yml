@@ -1,0 +1,35 @@
+name: Phase 8C C3 API Entrypoint
+
+on:
+  pull_request:
+    paths:
+      - "api/atlas-mutate.js"
+      - "package.json"
+      - "tests/atlas-api-entrypoint.test.mjs"
+      - ".github/workflows/phase-8c-c3-api-entrypoint.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install server dependency
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Run API entrypoint tests
+        run: node --test tests/atlas-api-entrypoint.test.mjs
+      - name: Verify server handler tests still pass
+        run: node --test tests/atlas-vercel-mutation-handler.test.mjs tests/atlas-server-mutation-service.test.mjs
+      - name: Verify browser secret boundary
+        run: |
+          set -euo pipefail
+          ! grep -R "SUPABASE_DB_URL\|ATLAS_MUTATION_TOKEN\|postgres://\|postgresql://\|service_role" index.html admin.html app.js admin.js
