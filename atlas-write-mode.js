@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const ALLOWED = new Set(["legacy-only", "shadow-validate"]);
+  const ALLOWED = new Set(["legacy-only", "shadow-validate", "dual-write"]);
 
   function resolveMode(value, warn = console.warn) {
     const requested = String(value || "legacy-only").trim();
@@ -13,7 +13,7 @@
   }
 
   const api = Object.freeze({
-    allowedModes: Object.freeze(["legacy-only", "shadow-validate"]),
+    allowedModes: Object.freeze(["legacy-only", "shadow-validate", "dual-write"]),
     resolveMode
   });
 
