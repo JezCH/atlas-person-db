@@ -1,0 +1,31 @@
+name: Phase 8C C3 Postgres Dual Write Adapter
+
+on:
+  pull_request:
+    paths:
+      - "server/atlas-postgres-dualwrite-transaction.js"
+      - "tests/atlas-postgres-dualwrite-transaction.test.mjs"
+      - ".github/workflows/phase-8c-c3-postgres-dualwrite-adapter.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run atomic dual-write adapter tests
+        run: node --test tests/atlas-postgres-dualwrite-transaction.test.mjs
+      - name: Verify browser boundary remains clean
+        run: |
+          set -euo pipefail
+          ! grep -R "atlas-postgres-dualwrite-transaction" index.html admin.html app.js admin.js
+          ! grep -R "SUPABASE_DB_URL\|postgresql://\|service_role" index.html admin.html app.js admin.js
