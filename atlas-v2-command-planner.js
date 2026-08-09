@@ -1,16 +1,62 @@
 (() => {
   "use strict";
 
+  const PERIOD_BASES = new Set([
+    "reign", "term", "de_facto_rule", "military_activity",
+    "religious_activity", "intellectual_activity", "artistic_activity",
+    "general_activity"
+  ]);
+
   function normalizeExact(value) {
-    return String(value ?? "").trim();
+    return String(value ?? "").normalize("NFC").trim().replace(/\s+/g, " ");
+  }
+
+  function normalizeOptional(value) {
+    const normalized = normalizeExact(value);
+    return normalized || null;
+  }
+
+  function normalizeRow(row) {
+    const personName = normalizeExact(row?.person_name);
+    const polityName = normalizeExact(row?.politic_name);
+    const start = Number(row?.activity_start);
+    const end = Number(row?.activity_end);
+    const role = normalizeOptional(row?.role);
+    const periodBasis = normalizeExact(row?.period_basis);
+    const notes = normalizeOptional(row?.notes);
+    const blockers = [];
+
+    if (!personName) blockers.push({ code: "PERSON_IDENTITY_REQUIRED", field: "person_name" });
+    if (!polityName) blockers.push({ code: "POLITY_IDENTITY_REQUIRED", field: "politic_name" });
+    if (!Number.isInteger(start)) blockers.push({ code: "ACTIVITY_START_INTEGER_REQUIRED", field: "activity_start" });
+    if (!Number.isInteger(end)) blockers.push({ code: "ACTIVITY_END_INTEGER_REQUIRED", field: "activity_end" });
+    if (Number.isInteger(start) && (start === 0 || start < -10000 || start > 9999)) blockers.push({ code: "ACTIVITY_START_OUT_OF_RANGE", field: "activity_start" });
+    if (Number.isInteger(end) && (end === 0 || end < -10000 || end > 9999)) blockers.push({ code: "ACTIVITY_END_OUT_OF_RANGE", field: "activity_end" });
+    if (Number.isInteger(start) && Number.isInteger(end) && end < start) blockers.push({ code: "ACTIVITY_RANGE_INVALID", field: "activity_end" });
+    if (!periodBasis) blockers.push({ code: "PERIOD_BASIS_REQUIRED", field: "period_basis" });
+    else if (!PERIOD_BASES.has(periodBasis)) blockers.push({ code: "PERIOD_BASIS_UNSUPPORTED", field: "period_basis" });
+
+    return {
+      value: {
+        person_name: personName,
+        politic_name: polityName,
+        activity_start: start,
+        activity_end: end,
+        role,
+        period_basis: periodBasis,
+        notes
+      },
+      blockers
+    };
   }
 
   function activityKey(row) {
+    const normalized = normalizeRow(row).value;
     return [
-      normalizeExact(row?.person_name),
-      normalizeExact(row?.politic_name),
-      Number(row?.activity_start),
-      Number(row?.activity_end)
+      normalized.person_name,
+      normalized.politic_name,
+      normalized.activity_start,
+      normalized.activity_end
     ].join("\u0001").toLowerCase();
   }
 
@@ -23,45 +69,38 @@
       target_schema: "atlas_v2",
       commands: [],
       blockers: [],
-      warnings: []
+      warnings: [],
+      normalized_payload: null
     };
   }
 
   function resolveCommands(row, legacyRecordId = null) {
-    const personName = normalizeExact(row?.person_name);
-    const polityName = normalizeExact(row?.politic_name);
-    const role = normalizeExact(row?.role);
-    const periodBasis = normalizeExact(row?.period_basis);
-    const key = activityKey(row);
-    const blockers = [];
-
-    if (!personName) blockers.push({ code: "PERSON_IDENTITY_REQUIRED", field: "person_name" });
-    if (!polityName) blockers.push({ code: "POLITY_IDENTITY_REQUIRED", field: "politic_name" });
-    if (!periodBasis) blockers.push({ code: "PERIOD_BASIS_REQUIRED", field: "period_basis" });
-
+    const normalized = normalizeRow(row);
+    const value = normalized.value;
+    const key = activityKey(value);
     const commands = [
       {
         type: "RESOLVE_PERSON_EXACT",
         table: "atlas_v2.person_names",
-        lookup: { name: personName },
+        lookup: { name: value.person_name },
         resolution: "reviewed_exact_name_or_alias_only"
       },
       {
         type: "RESOLVE_POLITY_EXACT",
         table: "atlas_v2.polity_names",
-        lookup: { name: polityName },
+        lookup: { name: value.politic_name },
         resolution: "reviewed_exact_name_or_alias_only"
       },
       {
         type: "RESOLVE_ROLE_EXACT",
         table: "atlas_v2.roles",
-        lookup: { code_or_name: role || "general_activity" },
+        lookup: { code_or_name: value.role || "unspecified" },
         resolution: "exact_reviewed_vocabulary"
       },
       {
         type: "RESOLVE_PERIOD_BASIS_EXACT",
         table: "atlas_v2.period_bases",
-        lookup: { code: periodBasis },
+        lookup: { code: value.period_basis },
         resolution: "exact_reviewed_vocabulary"
       },
       {
@@ -70,15 +109,15 @@
         legacy_record_id: legacyRecordId,
         legacy_source_key: key,
         values: {
-          activity_start: Number(row?.activity_start),
-          activity_end: Number(row?.activity_end),
-          notes: row?.notes ?? null
+          activity_start: value.activity_start,
+          activity_end: value.activity_end,
+          notes: value.notes
         },
         dependencies: ["person_id", "polity_id", "role_id", "period_basis_id"]
       }
     ];
 
-    return { commands, blockers, activity_key: key };
+    return { commands, blockers: normalized.blockers, activity_key: key, value };
   }
 
   function plan(operation, payload) {
@@ -91,6 +130,7 @@
     if (operation === "delete") {
       const id = payload?.id ?? null;
       if (id == null || id === "") result.blockers.push({ code: "LEGACY_LINEAGE_ID_REQUIRED", field: "id" });
+      result.normalized_payload = { id };
       result.commands.push({
         type: "RESOLVE_RELATIONSHIP_BY_LEGACY_LINEAGE",
         table: "atlas_v2.person_politics_v2",
@@ -100,7 +140,7 @@
         type: "RETIRE_OR_DELETE_PERSON_POLITICS_V2",
         table: "atlas_v2.person_politics_v2",
         legacy_record_id: id,
-        resolution: "deterministic_lineage_only"
+        resolution: "deterministic_lineage_or_exact_preimage_only"
       });
       return Object.freeze(result);
     }
@@ -108,27 +148,33 @@
     if (operation === "import") {
       const rows = Array.isArray(payload) ? payload : [];
       if (!rows.length) result.blockers.push({ code: "IMPORT_ROWS_REQUIRED" });
+      const normalizedRows = [];
       rows.forEach((row, index) => {
         const child = resolveCommands(row, null);
+        normalizedRows.push(child.value);
         result.commands.push({ type: "BEGIN_IMPORT_ROW", row_index: index });
         result.commands.push(...child.commands.map((command) => ({ ...command, row_index: index })));
         result.blockers.push(...child.blockers.map((blocker) => ({ ...blocker, row_index: index })));
       });
+      result.normalized_payload = normalizedRows;
       return Object.freeze(result);
     }
 
-    const value = operation === "update" ? payload?.value : payload;
+    const rawValue = operation === "update" ? payload?.value : payload;
     const legacyRecordId = operation === "update" ? payload?.id ?? null : null;
     if (operation === "update" && (legacyRecordId == null || legacyRecordId === "")) {
       result.blockers.push({ code: "LEGACY_LINEAGE_ID_REQUIRED", field: "id" });
     }
-    const compiled = resolveCommands(value, legacyRecordId);
+    const compiled = resolveCommands(rawValue, legacyRecordId);
     result.commands.push(...compiled.commands);
     result.blockers.push(...compiled.blockers);
+    result.normalized_payload = operation === "update"
+      ? { id: legacyRecordId, value: compiled.value }
+      : compiled.value;
     return Object.freeze(result);
   }
 
-  const api = Object.freeze({ plan, activityKey });
+  const api = Object.freeze({ plan, activityKey, normalizeRow });
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   if (typeof window !== "undefined") window.ATLAS_V2_COMMAND_PLANNER = api;
 })();
