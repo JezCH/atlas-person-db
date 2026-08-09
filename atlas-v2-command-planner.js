@@ -121,8 +121,78 @@
     return { commands, blockers: normalized.blockers, activity_key: key, value };
   }
 
+  function reconciliationStep(kind, index, item, operation, payload) {
+    const childPlan = plan(operation, payload);
+    return {
+      kind,
+      index,
+      reason_code: item?.reason_code || null,
+      operation,
+      payload: childPlan.normalized_payload,
+      plan: childPlan
+    };
+  }
+
+  function planReconciliation(payload, result) {
+    if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+      result.blockers.push({ code: "RECONCILIATION_PLAN_REQUIRED" });
+      return Object.freeze(result);
+    }
+    if (payload.commit !== false || Number(payload.database_writes) !== 0) {
+      result.blockers.push({ code: "RECONCILIATION_PLAN_MUST_BE_NON_MUTATING" });
+    }
+    if (payload.marker !== "PHASE_8B_RECONCILIATION_DRY_RUN") {
+      result.blockers.push({ code: "RECONCILIATION_PLAN_MARKER_INVALID" });
+    }
+
+    const validationFailures = Array.isArray(payload.validation_failures) ? payload.validation_failures : [];
+    if (validationFailures.length) {
+      result.blockers.push({
+        code: "RECONCILIATION_VALIDATION_FAILURES_PRESENT",
+        count: validationFailures.length
+      });
+    }
+
+    const steps = [];
+    const append = (kind, items, operation, makePayload) => {
+      (Array.isArray(items) ? items : []).forEach((item, index) => {
+        const step = reconciliationStep(kind, index, item, operation, makePayload(item));
+        steps.push(step);
+        for (const blocker of step.plan.blockers || []) {
+          result.blockers.push({
+            ...blocker,
+            reconciliation_kind: kind,
+            reconciliation_index: index,
+            reason_code: item?.reason_code || null
+          });
+        }
+      });
+    };
+
+    append("delete", payload.proposed_deletes, "delete", (item) => ({ id: item?.id ?? null }));
+    append("duplicate_removal", payload.proposed_duplicate_removals, "delete", (item) => ({ id: item?.id ?? null }));
+    append("update", payload.proposed_updates, "update", (item) => ({ id: item?.id ?? null, value: item?.after ?? null }));
+    append("insert", payload.proposed_inserts, "create", (item) => item?.after ?? null);
+
+    result.reconciliation_steps = steps;
+    result.normalized_payload = {
+      canonical_snapshot: payload.canonical_snapshot || null,
+      steps: steps.map((step) => ({
+        kind: step.kind,
+        index: step.index,
+        reason_code: step.reason_code,
+        operation: step.operation,
+        payload: step.payload
+      }))
+    };
+    return Object.freeze(result);
+  }
+
   function plan(operation, payload) {
     const result = basePlan(operation);
+
+    if (operation === "reconcile") return planReconciliation(payload, result);
+
     if (!["create", "update", "delete", "import"].includes(operation)) {
       result.blockers.push({ code: "UNSUPPORTED_OPERATION", operation });
       return Object.freeze(result);

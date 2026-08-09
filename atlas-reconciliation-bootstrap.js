@@ -24,22 +24,22 @@
       plannerApi,
       controllerApi,
       executorApi,
-      state: "legacy-commit"
+      state: "dry-run"
     });
 
     const result = await integration.run();
     const plan = result.plan || {};
-    const changed = Number(result.database_writes || 0);
     const canonicalRows = Array.isArray(plan.proposed_inserts)
       ? Number(plan.canonical_valid_row_count || 0)
       : 0;
 
     return {
-      changed,
+      changed: 0,
       persons: null,
       activities: canonicalRows,
       controller_state: result.state,
-      v2_committed: result.v2_committed === true
+      reconciliation_plan: plan,
+      v2_committed: false
     };
   }
 

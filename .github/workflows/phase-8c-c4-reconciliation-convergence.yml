@@ -1,0 +1,44 @@
+name: Phase 8C C4 Reconciliation Convergence
+
+on:
+  pull_request:
+    paths:
+      - "atlas-v2-command-planner.js"
+      - "atlas-reconciliation-bootstrap.js"
+      - "server/atlas-mutation-service.js"
+      - "tests/atlas-reconciliation-convergence.test.mjs"
+      - ".github/workflows/phase-8c-c4-reconciliation-convergence.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run focused reconciliation and mutation-service tests
+        run: >-
+          node --test
+          tests/atlas-reconciliation-convergence.test.mjs
+          tests/atlas-server-mutation-service.test.mjs
+          tests/atlas-v2-command-planner.test.mjs
+      - name: Verify browser commit path is disabled
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -n 'state: "dry-run"' atlas-reconciliation-bootstrap.js
+          ! grep -n 'state: "legacy-commit"' atlas-reconciliation-bootstrap.js
+          ! grep -nE '\.(insert|update|delete)\(' atlas-reconciliation-bootstrap.js
+      - name: Verify reconciliation reuses the C3 mutation service
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -n 'operation === "reconcile"' server/atlas-mutation-service.js
+          grep -n 'executePlannedMutation' server/atlas-mutation-service.js
+          grep -n 'reconciliation_steps' atlas-v2-command-planner.js
