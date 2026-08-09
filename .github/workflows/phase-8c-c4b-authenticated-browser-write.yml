@@ -1,0 +1,51 @@
+name: Phase 8C C4B Authenticated Browser Write Boundary
+
+on:
+  pull_request:
+    paths:
+      - "server/atlas-session-auth.js"
+      - "server/atlas-vercel-mutation-handler.js"
+      - "api/atlas-session.js"
+      - "atlas-server-write-adapter.js"
+      - "tests/atlas-session-auth.test.mjs"
+      - "tests/atlas-session-api.test.mjs"
+      - "tests/atlas-server-write-adapter.test.mjs"
+      - "tests/atlas-vercel-mutation-handler.test.mjs"
+      - ".github/workflows/phase-8c-c4b-authenticated-browser-write.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run authenticated-boundary tests
+        run: >-
+          node --test
+          tests/atlas-session-auth.test.mjs
+          tests/atlas-session-api.test.mjs
+          tests/atlas-server-write-adapter.test.mjs
+          tests/atlas-vercel-mutation-handler.test.mjs
+          tests/atlas-server-mutation-service.test.mjs
+      - name: Prove browser adapter contains no server mutation secret
+        shell: bash
+        run: |
+          set -euo pipefail
+          ! grep -n 'ATLAS_MUTATION_TOKEN' atlas-server-write-adapter.js
+          ! grep -n 'Authorization' atlas-server-write-adapter.js
+          grep -n 'credentials: "same-origin"' atlas-server-write-adapter.js
+          grep -n 'HttpOnly' server/atlas-session-auth.js
+          grep -n 'SameSite=Strict' server/atlas-session-auth.js
+      - name: Prove production write activation is not part of this unit
+        shell: bash
+        run: |
+          set -euo pipefail
+          ! grep -n 'atlas-server-write-adapter.js' index.html
+          ! grep -n 'atlas-server-write-adapter.js' admin.html
