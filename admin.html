@@ -34,7 +34,7 @@
       <div class="panel-head">
         <div>
           <h2 id="input-title">최소 JSON 입력</h2>
-          <p>현재 쓰기는 보호된 ATLAS adapter + shadow-validation 계층을 통해 기존 production write 경로를 유지합니다.</p>
+          <p>저장은 관리자 인증 후 ATLAS 서버 mutation 계층을 통해 legacy + normalized v2에 동일 트랜잭션으로 반영됩니다.</p>
         </div>
         <button id="sampleButton" class="button secondary" type="button">예시 불러오기</button>
       </div>
@@ -62,9 +62,7 @@
       loader.onload = () => {
         window.ATLAS_ASSETS.loadSeries([
           "./config.js",
-          "./atlas-write-mode.js",
-          "./atlas-write-adapter.js",
-          "./atlas-v2-shadow-compiler.js",
+          "./atlas-server-write-adapter.js",
           "./atlas-admin-write-service.js",
           "./admin.js"
         ]).catch((error) => {

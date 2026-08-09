@@ -7,11 +7,11 @@
       .toLowerCase();
   }
 
-  function createAdminWriteService({ db, adapterApi, mode = "legacy-only", modeResolver, shadowCompiler } = {}) {
-    if (!db || typeof db.from !== "function") throw new Error("A Supabase-compatible db client is required");
-    if (!adapterApi || typeof adapterApi.createAdapter !== "function") throw new Error("ATLAS write adapter is required");
+  function createAdminWriteService({ db, adapterApi } = {}) {
+    if (!db || typeof db.from !== "function") throw new Error("A Supabase-compatible db client is required for read lookup");
+    if (!adapterApi || typeof adapterApi.createAdapter !== "function") throw new Error("ATLAS server write adapter is required");
 
-    const adapter = adapterApi.createAdapter({ db, mode, modeResolver, shadowCompiler });
+    const adapter = adapterApi.createAdapter();
 
     async function saveRows(rows) {
       if (!Array.isArray(rows) || rows.length === 0) {
@@ -42,7 +42,7 @@
           : await adapter.createActivity(row);
 
         if (result.errors?.length || !result.legacy?.committed) {
-          const detail = result.errors?.length ? result.errors.join("; ") : "legacy write was not committed";
+          const detail = result.errors?.length ? result.errors.join("; ") : "server mutation was not committed";
           failures.push(`${row.person_name}: ${detail}`);
           continue;
         }

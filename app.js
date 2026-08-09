@@ -4,13 +4,8 @@
   const config = window.ATLAS_CONFIG || {};
   const configured = config.SUPABASE_URL && config.SUPABASE_ANON_KEY && !config.SUPABASE_URL.includes("YOUR_PROJECT_ID") && !config.SUPABASE_ANON_KEY.includes("YOUR_SUPABASE");
   const db = configured ? window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY) : null;
-  const writeAdapter = db && window.ATLAS_WRITE_ADAPTER && window.ATLAS_WRITE_MODE && window.ATLAS_V2_SHADOW_COMPILER
-    ? window.ATLAS_WRITE_ADAPTER.createAdapter({
-        db,
-        mode: "shadow-validate",
-        modeResolver: window.ATLAS_WRITE_MODE.resolveMode,
-        shadowCompiler: window.ATLAS_V2_SHADOW_COMPILER.compile
-      })
+  const writeAdapter = window.ATLAS_SERVER_WRITE_ADAPTER
+    ? window.ATLAS_SERVER_WRITE_ADAPTER.createAdapter()
     : null;
   let records = [];
   let selectedId = null;

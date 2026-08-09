@@ -71,17 +71,15 @@
 
   async function saveRows() {
     const config = window.ATLAS_CONFIG || {};
-    const adapterApi = window.ATLAS_WRITE_ADAPTER;
-    const modeApi = window.ATLAS_WRITE_MODE;
-    const shadowApi = window.ATLAS_V2_SHADOW_COMPILER;
+    const adapterApi = window.ATLAS_SERVER_WRITE_ADAPTER;
     const serviceApi = window.ATLAS_ADMIN_WRITE_SERVICE;
 
     if (!config.SUPABASE_URL || !config.SUPABASE_ANON_KEY || !window.supabase) {
-      setResult("Supabase 설정을 찾을 수 없습니다.", "error");
+      setResult("Supabase 읽기 설정을 찾을 수 없습니다.", "error");
       return;
     }
-    if (!adapterApi || !modeApi || !shadowApi || !serviceApi) {
-      setResult("ATLAS 쓰기 계층을 불러오지 못했습니다.", "error");
+    if (!adapterApi || !serviceApi) {
+      setResult("ATLAS 인증 서버 쓰기 계층을 불러오지 못했습니다.", "error");
       return;
     }
 
@@ -98,13 +96,7 @@
 
     try {
       const db = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
-      const service = serviceApi.createAdminWriteService({
-        db,
-        adapterApi,
-        mode: "shadow-validate",
-        modeResolver: modeApi.resolveMode,
-        shadowCompiler: shadowApi.compile
-      });
+      const service = serviceApi.createAdminWriteService({ db, adapterApi });
       const outcome = await service.saveRows(rows);
       const lines = [
         `완료: ${rows.length}개 처리`,

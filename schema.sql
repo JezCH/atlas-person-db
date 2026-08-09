@@ -34,19 +34,27 @@ for each row execute function public.set_updated_at();
 
 alter table public.person_politics enable row level security;
 
--- 개인용 초기 버전: URL을 아는 사용자는 읽고 쓸 수 있습니다.
--- 배포 후 로그인 기능을 붙이면 이 정책을 사용자 계정 기반으로 교체하십시오.
+-- Browser clients are read-only. All production mutations go through the
+-- authenticated ATLAS server mutation boundary.
 drop policy if exists "public read person politics" on public.person_politics;
 create policy "public read person politics" on public.person_politics for select using (true);
 
 drop policy if exists "public insert person politics" on public.person_politics;
-create policy "public insert person politics" on public.person_politics for insert with check (true);
-
 drop policy if exists "public update person politics" on public.person_politics;
-create policy "public update person politics" on public.person_politics for update using (true) with check (true);
-
 drop policy if exists "public delete person politics" on public.person_politics;
-create policy "public delete person politics" on public.person_politics for delete using (true);
+
+revoke insert, update, delete on table public.person_politics from public;
+
+do $$
+begin
+  if exists (select 1 from pg_roles where rolname = 'anon') then
+    execute 'revoke insert, update, delete on table public.person_politics from anon';
+  end if;
+  if exists (select 1 from pg_roles where rolname = 'authenticated') then
+    execute 'revoke insert, update, delete on table public.person_politics from authenticated';
+  end if;
+end
+$$;
 
 insert into public.person_politics
 (person_name, politic_name, activity_start, activity_end, role, period_basis, notes)
