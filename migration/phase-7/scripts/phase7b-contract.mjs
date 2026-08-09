@@ -8,8 +8,7 @@ const assert = (condition, message) => { if (!condition) failures.push(message);
 const observability = fs.readFileSync('atlas-reader-observability.js', 'utf8');
 const reader = fs.readFileSync('atlas-reader.js', 'utf8');
 const app = fs.readFileSync('app.js', 'utf8');
-const adapter = fs.readFileSync('atlas-write-adapter.js', 'utf8');
-const compiler = fs.readFileSync('atlas-v2-shadow-compiler.js', 'utf8');
+const serverAdapter = fs.readFileSync('atlas-server-write-adapter.js', 'utf8');
 const index = fs.readFileSync('index.html', 'utf8');
 const productionSource = fs.readFileSync('atlas-production-source.js', 'utf8');
 const rollbackRunbook = fs.readFileSync('migration/phase-7/PHASE_7_ROLLBACK_RUNBOOK.md', 'utf8');
@@ -56,18 +55,16 @@ assert(reader.includes('diagnostics.push("fallback to legacy")'), 'fallback diag
 assert(reader.includes('resolved.source === "v2-shadow" && fallbackToLegacy'), 'fallback condition changed unexpectedly');
 
 assert(productionSource === expectedLegacyManifest || productionSource === expectedV2Manifest, 'production source declaration must be an exact approved manifest');
-assert(app.includes('ATLAS_WRITE_ADAPTER.createAdapter'), 'app write adapter missing');
-assert(app.includes('mode: "legacy-only"') || app.includes('mode: "shadow-validate"'), 'approved app write mode missing');
-assert(adapter.includes('db.from("person_politics").update'), 'legacy update target missing');
-assert(adapter.includes('db.from("person_politics").insert'), 'legacy insert target missing');
-assert(adapter.includes('db.from("person_politics").delete'), 'legacy delete target missing');
-assert(!/db\.from\("atlas_person_politics_compat_v1"\)\.(?:insert|update|delete)/.test(app + adapter), 'compatibility view mutation detected');
-assert(!/db\.from\("atlas_v2\./.test(app + adapter + compiler), 'v2 physical table mutation detected');
-if (app.includes('mode: "shadow-validate"')) {
-  assert(app.includes('shadowCompiler: window.ATLAS_V2_SHADOW_COMPILER.compile'), 'shadow compiler injection missing');
-  assert(compiler.includes('commit: false'), 'shadow compiler commit guard missing');
-  assert(compiler.includes('writes_performed: 0'), 'shadow compiler zero-write guard missing');
-}
+assert(index.includes('./atlas-server-write-adapter.js'), 'authenticated server write adapter missing from index');
+assert(!index.includes('./atlas-write-adapter.js'), 'legacy browser write adapter still runtime-loaded');
+assert(!index.includes('./atlas-write-mode.js'), 'legacy browser write mode still runtime-loaded');
+assert(!index.includes('./atlas-v2-shadow-compiler.js'), 'legacy shadow compiler still runtime-loaded');
+assert(app.includes('ATLAS_SERVER_WRITE_ADAPTER'), 'authenticated server write adapter missing from app');
+assert(!app.includes('ATLAS_WRITE_ADAPTER'), 'legacy browser write adapter still referenced by app');
+assert(!serverAdapter.includes('ATLAS_MUTATION_TOKEN'), 'server mutation secret reference detected in browser adapter');
+assert(!serverAdapter.includes('Authorization'), 'Authorization header detected in browser adapter');
+assert(serverAdapter.includes('credentials: "same-origin"'), 'browser adapter must use same-origin session credentials');
+assert(!/\.from\("(?:person_politics|atlas_person_politics_compat_v1|atlas_v2)/.test(app + serverAdapter), 'browser mutation path contains direct database target');
 assert(rollbackRunbook.includes('DATA_SOURCE: "legacy"'), 'rollback runbook lost exact legacy declaration');
 assert(rollbackRunbook.includes('public.person_politics'), 'rollback runbook lost legacy write invariant');
 
@@ -75,13 +72,14 @@ const manifest = productionSource === expectedV2Manifest ? 'v2-shadow' : 'legacy
 const report = {
   marker: 'PHASE_7B_OBSERVABILITY_ROLLBACK_CONTRACT',
   production_manifest: manifest,
+  mutation_boundary: 'authenticated-server',
   rollback_target: 'legacy',
   checks: {
     event_schema: failures.filter((x) => /event|field|recorded|timestamp|payload/.test(x)).length === 0,
-    script_order: failures.filter((x) => /load before|missing from index/.test(x)).length === 0,
+    script_order: failures.filter((x) => /load before|missing from index|runtime-loaded/.test(x)).length === 0,
     reader_emission: failures.filter((x) => /reader|fallback diagnostic|fallback condition/.test(x)).length === 0,
     source_manifest_exact: failures.filter((x) => /approved manifest/.test(x)).length === 0,
-    write_guard: failures.filter((x) => /target|mutation|adapter|write mode|shadow compiler/.test(x)).length === 0,
+    write_guard: failures.filter((x) => /write|mutation|adapter|database target|Authorization|secret|session credentials/.test(x)).length === 0,
     rollback_ready: failures.filter((x) => /rollback runbook/.test(x)).length === 0
   },
   failures,
