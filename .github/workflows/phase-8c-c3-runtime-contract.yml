@@ -1,0 +1,34 @@
+name: Phase 8C C3 Runtime Contract
+
+on:
+  pull_request:
+    paths:
+      - "atlas-write-mode.js"
+      - "tests/atlas-write-adapter.test.mjs"
+      - ".github/workflows/phase-8c-c3-runtime-contract.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run write adapter tests
+        run: node --test tests/atlas-write-adapter.test.mjs
+      - name: Verify production pages remain unactivated
+        shell: bash
+        run: |
+          set -euo pipefail
+          ! grep -q 'atlas-dual-write-coordinator.js' index.html
+          ! grep -q 'mode: "dual-write"' app.js
+          ! grep -q 'mode: "dual-write"' admin.js
+          grep -q '"dual-write"' atlas-write-mode.js
