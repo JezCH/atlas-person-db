@@ -42,4 +42,7 @@ jobs:
           ! grep -R "atlas-postgres-dualwrite-transaction" index.html admin.html app.js admin.js
           ! grep -R "SUPABASE_DB_URL\|postgresql://\|service_role" index.html admin.html app.js admin.js
           ! grep -n "globalThis.__ATLAS_ACTIVE_TX\|write_request_log\|updated_at=now()" server/atlas-postgres-dualwrite-transaction.js
+          ! grep -n '"unspecified"' atlas-v2-command-planner.js server/atlas-postgres-dualwrite-transaction.js
+          ! grep -n "last_mutation\|relationshipHash\|normalizedRole" server/atlas-postgres-dualwrite-transaction.js
+          grep -n "ROLE_REQUIRED_BY_CURRENT_V2_SCHEMA" atlas-v2-command-planner.js
           grep -n "confidence,chronology_status,legacy_source_key,notes,source_locator,content_hash" server/atlas-postgres-dualwrite-transaction.js
