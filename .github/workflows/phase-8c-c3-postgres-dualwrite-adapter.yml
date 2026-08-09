@@ -3,8 +3,15 @@ name: Phase 8C C3 Postgres Dual Write Adapter
 on:
   pull_request:
     paths:
+      - "atlas-v2-command-planner.js"
+      - "server/atlas-mutation-service.js"
       - "server/atlas-postgres-dualwrite-transaction.js"
+      - "server/atlas-vercel-mutation-handler.js"
+      - "tests/atlas-v2-command-planner.test.mjs"
+      - "tests/atlas-server-mutation-service.test.mjs"
       - "tests/atlas-postgres-dualwrite-transaction.test.mjs"
+      - "tests/atlas-vercel-mutation-handler.test.mjs"
+      - "migration/phase-8/scripts/phase8c-c3-live-api-smoke.mjs"
       - ".github/workflows/phase-8c-c3-postgres-dualwrite-adapter.yml"
   workflow_dispatch:
 
@@ -22,10 +29,20 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Run atomic dual-write adapter tests
-        run: node --test tests/atlas-postgres-dualwrite-transaction.test.mjs
-      - name: Verify browser boundary remains clean
+      - name: Run focused C3 server-path tests
+        run: >-
+          node --test
+          tests/atlas-v2-command-planner.test.mjs
+          tests/atlas-server-mutation-service.test.mjs
+          tests/atlas-postgres-dualwrite-transaction.test.mjs
+          tests/atlas-vercel-mutation-handler.test.mjs
+      - name: Verify transaction and browser boundaries remain clean
         run: |
           set -euo pipefail
           ! grep -R "atlas-postgres-dualwrite-transaction" index.html admin.html app.js admin.js
           ! grep -R "SUPABASE_DB_URL\|postgresql://\|service_role" index.html admin.html app.js admin.js
+          ! grep -n "globalThis.__ATLAS_ACTIVE_TX\|write_request_log\|updated_at=now()" server/atlas-postgres-dualwrite-transaction.js
+          ! grep -n '"unspecified"' atlas-v2-command-planner.js server/atlas-postgres-dualwrite-transaction.js
+          ! grep -n "last_mutation\|relationshipHash\|normalizedRole" server/atlas-postgres-dualwrite-transaction.js
+          grep -n "ROLE_REQUIRED_BY_CURRENT_V2_SCHEMA" atlas-v2-command-planner.js
+          grep -n "confidence,chronology_status,legacy_source_key,notes,source_locator,content_hash" server/atlas-postgres-dualwrite-transaction.js

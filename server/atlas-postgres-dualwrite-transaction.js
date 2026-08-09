@@ -1,46 +1,181 @@
 "use strict";
 
+const crypto = require("node:crypto");
+
+function stable(value) {
+  if (Array.isArray(value)) return value.map(stable);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.keys(value).sort().map((key) => [key, stable(value[key])]));
+  }
+  return value;
+}
+
+function contentHash(value) {
+  return crypto.createHash("sha256").update(JSON.stringify(stable(value))).digest("hex");
+}
+
+function deterministicUuid(seed) {
+  const bytes = crypto.createHash("sha256").update(String(seed)).digest().subarray(0, 16);
+  bytes[6] = (bytes[6] & 0x0f) | 0x50;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  const hex = bytes.toString("hex");
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+}
+
+function runtimeLineageKey(legacyRecordId) {
+  return `legacy-db:public.person_politics:${String(legacyRecordId)}`;
+}
+
+function exactRole(value) {
+  const role = String(value ?? "").trim();
+  return role || null;
+}
+
+function comparableLegacyRow(row) {
+  return {
+    person_name: String(row?.person_name ?? "").trim(),
+    politic_name: String(row?.politic_name ?? "").trim(),
+    activity_start: Number(row?.activity_start),
+    activity_end: Number(row?.activity_end),
+    role: row?.role == null || String(row.role).trim() === "" ? null : String(row.role).trim(),
+    period_basis: String(row?.period_basis ?? "").trim(),
+    notes: row?.notes == null || String(row.notes).trim() === "" ? null : String(row.notes).trim()
+  };
+}
+
+function sameLegacyRow(left, right) {
+  return JSON.stringify(comparableLegacyRow(left)) === JSON.stringify(comparableLegacyRow(right));
+}
+
+function mutationLocator({ legacyRecordId, requestId }) {
+  return {
+    kind: "phase8c_dualwrite",
+    legacy_table: "public.person_politics",
+    legacy_record_id: String(legacyRecordId),
+    request_id: requestId == null ? null : String(requestId)
+  };
+}
+
 function createNormalizedTx(client) {
+  async function resolveRelationshipExactSnapshot(row) {
+    if (!row) return null;
+    const role = exactRole(row.role);
+    if (!role) return null;
+    const result = await client.query(`
+      select pp.id, pp.legacy_source_key, pp.source_locator, pp.content_hash
+        from atlas_v2.person_politics_v2 pp
+        join atlas_v2.roles r on r.id = pp.role_id
+        join atlas_v2.period_bases pb on pb.id = pp.period_basis_id
+       where pp.activity_start = $3
+         and pp.activity_end = $4
+         and pp.notes is not distinct from $7
+         and pb.code = $6
+         and exists (
+           select 1 from atlas_v2.person_names pn
+            where pn.person_id = pp.person_id and pn.name = $1
+         )
+         and exists (
+           select 1 from atlas_v2.polity_names pn
+            where pn.polity_id = pp.polity_id and pn.name = $2
+         )
+         and (
+           r.code = $5 or r.source_label = $5 or exists (
+             select 1 from atlas_v2.role_names rn where rn.role_id = r.id and rn.name = $5
+           )
+         )
+       order by pp.id
+       limit 2`, [
+      row.person_name,
+      row.politic_name,
+      Number(row.activity_start),
+      Number(row.activity_end),
+      role,
+      row.period_basis,
+      row.notes ?? null
+    ]);
+    return result.rows.length === 1 ? result.rows[0] : null;
+  }
+
   return {
     async resolvePersonExact({ name }) {
-      const result = await client.query(`select pn.person_id as id from atlas_v2.person_names pn where pn.name=$1 order by pn.is_preferred desc,pn.id limit 2`, [name]);
+      const result = await client.query(`select pn.person_id as id from atlas_v2.person_names pn where pn.name=$1 group by pn.person_id order by pn.person_id limit 2`, [name]);
       return result.rows.length === 1 ? result.rows[0].id : null;
     },
     async resolvePolityExact({ name }) {
-      const result = await client.query(`select pn.polity_id as id from atlas_v2.polity_names pn where pn.name=$1 order by pn.is_preferred desc,pn.id limit 2`, [name]);
+      const result = await client.query(`select pn.polity_id as id from atlas_v2.polity_names pn where pn.name=$1 group by pn.polity_id order by pn.polity_id limit 2`, [name]);
       return result.rows.length === 1 ? result.rows[0].id : null;
     },
     async resolveRoleExact({ code_or_name }) {
-      const result = await client.query(`select r.id from atlas_v2.roles r left join atlas_v2.role_names rn on rn.role_id=r.id where r.code=$1 or rn.name=$1 group by r.id order by r.id limit 2`, [code_or_name]);
+      if (!code_or_name) return null;
+      const result = await client.query(`select r.id from atlas_v2.roles r left join atlas_v2.role_names rn on rn.role_id=r.id where r.code=$1 or r.source_label=$1 or rn.name=$1 group by r.id order by r.id limit 2`, [code_or_name]);
       return result.rows.length === 1 ? result.rows[0].id : null;
     },
     async resolvePeriodBasisExact({ code }) {
-      const result = await client.query(`select id from atlas_v2.period_bases where code=$1 limit 2`, [code]);
+      const result = await client.query(`select id from atlas_v2.period_bases where code=$1 order by id limit 2`, [code]);
       return result.rows.length === 1 ? result.rows[0].id : null;
     },
     async upsertPersonPoliticsV2(input) {
+      if (input.legacy_before) {
+        const existing = await resolveRelationshipExactSnapshot(input.legacy_before);
+        if (!existing) throw new Error("existing normalized relationship is not uniquely resolved from legacy preimage");
+        const result = await client.query(`update atlas_v2.person_politics_v2
+          set person_id=$1, polity_id=$2, activity_start=$3, activity_end=$4, role_id=$5,
+              period_basis_id=$6, notes=$7
+          where id=$8 returning id`, [
+          input.person_id,
+          input.polity_id,
+          input.activity_start,
+          input.activity_end,
+          input.role_id,
+          input.period_basis_id,
+          input.notes ?? null,
+          existing.id
+        ]);
+        return result.rows[0]?.id ?? null;
+      }
+
+      if (input.legacy_record_id == null || input.legacy_record_id === "") {
+        throw new Error("legacy record id is required for normalized create/import lineage");
+      }
+      if (!input.legacy_source_row) {
+        throw new Error("legacy source row is required for normalized create/import provenance");
+      }
+      const lineage = runtimeLineageKey(input.legacy_record_id);
+      const locator = mutationLocator({ legacyRecordId: input.legacy_record_id, requestId: input.request_id });
+      const sourceHash = contentHash(comparableLegacyRow(input.legacy_source_row));
       const result = await client.query(`insert into atlas_v2.person_politics_v2
-        (id,person_id,polity_id,activity_start,activity_end,role_id,period_basis_id,legacy_source_key,notes)
-        values (gen_random_uuid(),$1,$2,$3,$4,$5,$6,$7,$8)
-        on conflict (legacy_source_key) do update set person_id=excluded.person_id,polity_id=excluded.polity_id,
-        activity_start=excluded.activity_start,activity_end=excluded.activity_end,role_id=excluded.role_id,
-        period_basis_id=excluded.period_basis_id,notes=excluded.notes,updated_at=now() returning id`,
-        [input.person_id,input.polity_id,input.activity_start,input.activity_end,input.role_id,input.period_basis_id,input.legacy_source_key,input.notes ?? null]);
+        (id,person_id,polity_id,activity_start,activity_end,role_id,period_basis_id,confidence,chronology_status,legacy_source_key,notes,source_locator,content_hash)
+        values (gen_random_uuid(),$1,$2,$3,$4,$5,$6,'legacy_asserted','exact_as_recorded',$7,$8,$9::jsonb,$10)
+        on conflict (legacy_source_key) do update set
+          person_id=excluded.person_id, polity_id=excluded.polity_id,
+          activity_start=excluded.activity_start, activity_end=excluded.activity_end,
+          role_id=excluded.role_id, period_basis_id=excluded.period_basis_id,
+          notes=excluded.notes, source_locator=excluded.source_locator, content_hash=excluded.content_hash
+        returning id`, [
+        input.person_id,
+        input.polity_id,
+        input.activity_start,
+        input.activity_end,
+        input.role_id,
+        input.period_basis_id,
+        lineage,
+        input.notes ?? null,
+        JSON.stringify(locator),
+        sourceHash
+      ]);
       return result.rows[0]?.id ?? null;
     },
-    async resolveRelationshipByLegacyLineage({ legacy_record_id }) {
-      const result = await client.query(`select id from atlas_v2.person_politics_v2 where legacy_source_key=$1 limit 2`, [String(legacy_record_id)]);
+    async resolveRelationshipByLegacyLineage({ legacy_record_id, legacy_before }) {
+      if (legacy_before) {
+        const exact = await resolveRelationshipExactSnapshot(legacy_before);
+        return exact?.id ?? null;
+      }
+      const result = await client.query(`select id from atlas_v2.person_politics_v2 where legacy_source_key=$1 order by id limit 2`, [runtimeLineageKey(legacy_record_id)]);
       return result.rows.length === 1 ? result.rows[0].id : null;
     },
     async retireOrDeletePersonPoliticsV2({ relationship_id }) {
-      await client.query(`delete from atlas_v2.person_politics_v2 where id=$1`, [relationship_id]);
-    },
-    async findReplay(requestId) {
-      const result = await client.query(`select normalized_relationship_ids from atlas_v2.write_request_log where request_id=$1`, [requestId]);
-      return result.rows[0] ?? null;
-    },
-    async recordRequest({ request_id, normalized_relationship_ids }) {
-      await client.query(`insert into atlas_v2.write_request_log(request_id,normalized_relationship_ids) values ($1,$2::uuid[]) on conflict (request_id) do nothing`, [request_id, normalized_relationship_ids]);
+      const result = await client.query(`delete from atlas_v2.person_politics_v2 where id=$1`, [relationship_id]);
+      if (result.rowCount !== 1) throw new Error("normalized relationship delete did not affect exactly one row");
     }
   };
 }
@@ -49,34 +184,61 @@ async function executeV2Plan(tx, plan, context = {}) {
   if (!plan || plan.commit !== false || plan.writes_performed !== 0) return { committed:false, normalized_relationship_ids:[], replay:false, transaction_failure:"unapproved command plan" };
   if (Array.isArray(plan.blockers) && plan.blockers.length) return { committed:false, normalized_relationship_ids:[], replay:false, transaction_failure:"command plan blocked" };
 
-  const requestId = context.request_id ?? null;
   try {
-    if (requestId && typeof tx.findReplay === "function") {
-      const replay = await tx.findReplay(requestId);
-      if (replay) return { committed:true, normalized_relationship_ids:Array.isArray(replay.normalized_relationship_ids) ? replay.normalized_relationship_ids : [], replay:true, transaction_failure:null };
-    }
-    const state = { person_id:null, polity_id:null, role_id:null, period_basis_id:null, relationship_id:null, relationshipIds:[] };
+    const state = {
+      person_id:null,
+      polity_id:null,
+      role_id:null,
+      period_basis_id:null,
+      relationship_id:null,
+      relationshipIds:[],
+      row_index:0
+    };
+    const legacy = context.legacy || {};
     for (const command of plan.commands || []) {
       switch (command.type) {
-        case "BEGIN_IMPORT_ROW": break;
+        case "BEGIN_IMPORT_ROW": state.row_index = Number(command.row_index || 0); break;
         case "RESOLVE_PERSON_EXACT": state.person_id = await tx.resolvePersonExact(command.lookup); if (!state.person_id) throw new Error("person identity unresolved"); break;
         case "RESOLVE_POLITY_EXACT": state.polity_id = await tx.resolvePolityExact(command.lookup); if (!state.polity_id) throw new Error("polity identity unresolved"); break;
         case "RESOLVE_ROLE_EXACT": state.role_id = await tx.resolveRoleExact(command.lookup); if (!state.role_id) throw new Error("role vocabulary unresolved"); break;
         case "RESOLVE_PERIOD_BASIS_EXACT": state.period_basis_id = await tx.resolvePeriodBasisExact(command.lookup); if (!state.period_basis_id) throw new Error("period basis unresolved"); break;
         case "UPSERT_PERSON_POLITICS_V2": {
-          const id = await tx.upsertPersonPoliticsV2({ person_id:state.person_id, polity_id:state.polity_id, role_id:state.role_id, period_basis_id:state.period_basis_id, legacy_record_id:command.legacy_record_id ?? null, legacy_source_key:command.legacy_source_key, ...command.values });
+          const legacyRecordId = command.legacy_record_id ?? legacy.record_ids?.[state.row_index] ?? legacy.record_ids?.[0] ?? null;
+          const legacyBefore = command.legacy_record_id != null ? legacy.before_rows?.[0] ?? null : null;
+          const legacySourceRow = command.legacy_record_id != null
+            ? legacy.after_rows?.[0] ?? null
+            : legacy.after_rows?.[state.row_index] ?? legacy.after_rows?.[0] ?? null;
+          const id = await tx.upsertPersonPoliticsV2({
+            person_id:state.person_id,
+            polity_id:state.polity_id,
+            role_id:state.role_id,
+            period_basis_id:state.period_basis_id,
+            legacy_record_id:legacyRecordId,
+            legacy_before:legacyBefore,
+            legacy_source_row:legacySourceRow,
+            request_id:context.request_id ?? null,
+            ...command.values
+          });
           if (!id) throw new Error("relationship upsert did not return id");
           state.relationshipIds.push(id);
           state.person_id = state.polity_id = state.role_id = state.period_basis_id = null;
           break;
         }
-        case "RESOLVE_RELATIONSHIP_BY_LEGACY_LINEAGE": state.relationship_id = await tx.resolveRelationshipByLegacyLineage(command.lookup); if (!state.relationship_id) throw new Error("relationship lineage unresolved"); break;
-        case "RETIRE_OR_DELETE_PERSON_POLITICS_V2": await tx.retireOrDeletePersonPoliticsV2({ relationship_id:state.relationship_id, legacy_record_id:command.legacy_record_id ?? null }); state.relationshipIds.push(state.relationship_id); state.relationship_id=null; break;
+        case "RESOLVE_RELATIONSHIP_BY_LEGACY_LINEAGE": {
+          const legacyBefore = legacy.before_rows?.[0] ?? null;
+          state.relationship_id = await tx.resolveRelationshipByLegacyLineage({ ...command.lookup, legacy_before:legacyBefore });
+          if (!state.relationship_id) throw new Error("relationship lineage unresolved");
+          break;
+        }
+        case "RETIRE_OR_DELETE_PERSON_POLITICS_V2":
+          await tx.retireOrDeletePersonPoliticsV2({ relationship_id:state.relationship_id });
+          state.relationshipIds.push(state.relationship_id);
+          state.relationship_id=null;
+          break;
         default: throw new Error(`unsupported executor command: ${command.type}`);
       }
     }
-    if (requestId && typeof tx.recordRequest === "function") await tx.recordRequest({ request_id:requestId, normalized_relationship_ids:state.relationshipIds.slice() });
-    return { committed:true, normalized_relationship_ids:state.relationshipIds.slice(), replay:false, transaction_failure:null };
+    return { committed:true, normalized_relationship_ids:state.relationshipIds.slice(), replay:Boolean(legacy.replay), transaction_failure:null };
   } catch (error) {
     return { committed:false, normalized_relationship_ids:[], replay:false, transaction_failure:error?.message || String(error) };
   }
@@ -90,52 +252,140 @@ function normalizeLegacyPayload(operation, payload) {
 }
 
 function createLegacyExecutor(client) {
-  return async function executeLegacy({ operation, payload }) {
+  async function selectLegacyRow(id, forUpdate = false) {
+    const result = await client.query(`select id,person_name,politic_name,activity_start,activity_end,role,period_basis,notes from public.person_politics where id=$1${forUpdate ? " for update" : ""}`, [id]);
+    return result.rows.length === 1 ? result.rows[0] : null;
+  }
+
+  async function insertReplaySafe(row, requestId, rowIndex) {
+    const id = deterministicUuid(JSON.stringify(["public.person_politics", requestId, rowIndex, comparableLegacyRow(row)]));
+    const result = await client.query(`insert into public.person_politics (id,person_name,politic_name,activity_start,activity_end,role,period_basis,notes) values ($1,$2,$3,$4,$5,$6,$7,$8) on conflict (id) do nothing returning id`, [id,row.person_name,row.politic_name,row.activity_start,row.activity_end,row.role ?? null,row.period_basis,row.notes ?? null]);
+    if (result.rowCount === 1) return { id, replay:false };
+    const existing = await selectLegacyRow(id, true);
+    if (!existing || !sameLegacyRow(existing, row)) throw new Error("legacy idempotency collision with non-identical row");
+    return { id, replay:true };
+  }
+
+  return async function executeLegacy({ operation, payload, request_id }) {
     if (operation === "create") {
       const row = normalizeLegacyPayload(operation, payload);
-      const result = await client.query(`insert into public.person_politics (person_name,politic_name,activity_start,activity_end,role,period_basis,notes) values ($1,$2,$3,$4,$5,$6,$7) returning id`, [row.person_name,row.politic_name,row.activity_start,row.activity_end,row.role ?? null,row.period_basis,row.notes ?? null]);
-      return { committed:result.rowCount === 1, record_ids:result.rows.map((r) => r.id) };
+      const inserted = await insertReplaySafe(row, request_id, 0);
+      return { committed:true, record_ids:[inserted.id], before_rows:[], after_rows:[row], replay:inserted.replay };
     }
     if (operation === "update") {
-      const row = normalizeLegacyPayload(operation, payload); const id = payload?.id;
+      const row = normalizeLegacyPayload(operation, payload);
+      const id = payload?.id;
+      const before = await selectLegacyRow(id, true);
+      if (!before) return { committed:false, record_ids:[], before_rows:[], after_rows:[], error:"legacy update target not found" };
       const result = await client.query(`update public.person_politics set person_name=$1,politic_name=$2,activity_start=$3,activity_end=$4,role=$5,period_basis=$6,notes=$7 where id=$8`, [row.person_name,row.politic_name,row.activity_start,row.activity_end,row.role ?? null,row.period_basis,row.notes ?? null,id]);
-      return { committed:result.rowCount === 1, record_ids:[id] };
+      return { committed:result.rowCount === 1, record_ids:[id], before_rows:[before], after_rows:[row], replay:sameLegacyRow(before,row) };
     }
     if (operation === "delete") {
-      const id = payload?.id; const result = await client.query(`delete from public.person_politics where id=$1`, [id]); return { committed:result.rowCount === 1, record_ids:[id] };
+      const id = payload?.id;
+      const before = await selectLegacyRow(id, true);
+      if (!before) return { committed:false, record_ids:[], before_rows:[], after_rows:[], error:"legacy delete target not found" };
+      const result = await client.query(`delete from public.person_politics where id=$1`, [id]);
+      return { committed:result.rowCount === 1, record_ids:[id], before_rows:[before], after_rows:[], replay:false };
     }
     if (operation === "import") {
-      const ids=[]; for (const row of normalizeLegacyPayload(operation,payload)) { const result=await client.query(`insert into public.person_politics (person_name,politic_name,activity_start,activity_end,role,period_basis,notes) values ($1,$2,$3,$4,$5,$6,$7) returning id`, [row.person_name,row.politic_name,row.activity_start,row.activity_end,row.role ?? null,row.period_basis,row.notes ?? null]); if (result.rowCount !== 1) return {committed:false,record_ids:ids,error:"legacy import row failed"}; ids.push(result.rows[0].id); } return { committed:true, record_ids:ids };
+      const ids=[];
+      let replay=true;
+      const rows = normalizeLegacyPayload(operation,payload);
+      for (let index=0; index<rows.length; index += 1) {
+        const inserted = await insertReplaySafe(rows[index], request_id, index);
+        ids.push(inserted.id);
+        replay = replay && inserted.replay;
+      }
+      return { committed:true, record_ids:ids, before_rows:[], after_rows:rows, replay };
     }
-    return { committed:false, record_ids:[], error:operation === "reconcile" ? "reconcile requires dedicated canonical transaction payload" : `unsupported legacy operation: ${operation}` };
+    return { committed:false, record_ids:[], before_rows:[], after_rows:[], error:operation === "reconcile" ? "reconcile requires dedicated canonical transaction payload" : `unsupported legacy operation: ${operation}` };
   };
 }
 
 function createParityVerifier(client) {
-  return async function parityVerifier({ operation, payload, legacy, v2 }) {
-    if (operation === "delete") {
-      const r=await client.query(`select count(*)::int as count from public.person_politics where id=$1`, [payload?.id]); const remaining=Number(r.rows[0]?.count || 0); return {checked:true,match:remaining===0,legacy_remaining:remaining};
+  async function currentLegacyRow(id) {
+    const result = await client.query(`select id,person_name,politic_name,activity_start,activity_end,role,period_basis,notes from public.person_politics where id=$1`, [id]);
+    return result.rows.length === 1 ? result.rows[0] : null;
+  }
+
+  async function normalizedRowMatches(id, legacyRow) {
+    const result = await client.query(`
+      select pp.activity_start, pp.activity_end, pp.notes, r.source_label as role, pb.code as period_basis,
+             exists (select 1 from atlas_v2.person_names pn where pn.person_id=pp.person_id and pn.name=$2) as person_match,
+             exists (select 1 from atlas_v2.polity_names pn where pn.polity_id=pp.polity_id and pn.name=$3) as polity_match
+        from atlas_v2.person_politics_v2 pp
+        join atlas_v2.roles r on r.id=pp.role_id
+        join atlas_v2.period_bases pb on pb.id=pp.period_basis_id
+       where pp.id=$1`, [id, legacyRow.person_name, legacyRow.politic_name]);
+    if (result.rows.length !== 1) return false;
+    const row = result.rows[0];
+    return row.person_match === true
+      && row.polity_match === true
+      && Number(row.activity_start) === Number(legacyRow.activity_start)
+      && Number(row.activity_end) === Number(legacyRow.activity_end)
+      && String(row.role ?? "") === String(exactRole(legacyRow.role) ?? "")
+      && String(row.period_basis ?? "") === String(legacyRow.period_basis ?? "")
+      && (row.notes ?? null) === (legacyRow.notes ?? null);
+  }
+
+  return async function parityVerifier({ operation, legacy, v2 }) {
+    const legacyIds = Array.isArray(legacy?.record_ids) ? legacy.record_ids : [];
+    const v2Ids = Array.isArray(v2?.normalized_relationship_ids) ? v2.normalized_relationship_ids : [];
+    if (!legacyIds.length || legacyIds.length !== v2Ids.length) {
+      return { checked:true, match:false, reason:"legacy/v2 relationship id cardinality mismatch", legacy_rows:legacyIds.length, v2_rows:v2Ids.length };
     }
-    const ids=Array.isArray(legacy?.record_ids) ? legacy.record_ids : []; if (!ids.length) return {checked:true,match:false,reason:"legacy ids missing"};
-    const leftQ=await client.query(`select person_name,politic_name,activity_start,activity_end,role,period_basis,notes from public.person_politics where id = any($1::bigint[])`, [ids]);
-    const rightQ=await client.query(`select coalesce(pn.name,p.canonical_name) as person_name,coalesce(poln.name,pol.canonical_name) as politic_name,pp.activity_start,pp.activity_end,coalesce(rn.name,r.code) as role,pb.code as period_basis,pp.notes from atlas_v2.person_politics_v2 pp join atlas_v2.persons p on p.id=pp.person_id left join lateral (select name from atlas_v2.person_names where person_id=p.id order by is_preferred desc,id limit 1) pn on true join atlas_v2.polities pol on pol.id=pp.polity_id left join lateral (select name from atlas_v2.polity_names where polity_id=pol.id order by is_preferred desc,id limit 1) poln on true left join atlas_v2.roles r on r.id=pp.role_id left join lateral (select name from atlas_v2.role_names where role_id=r.id order by id limit 1) rn on true join atlas_v2.period_bases pb on pb.id=pp.period_basis_id where pp.id = any($1::uuid[])`, [v2?.normalized_relationship_ids || []]);
-    const norm=(row)=>({person_name:String(row.person_name||"").trim(),politic_name:String(row.politic_name||"").trim(),activity_start:Number(row.activity_start),activity_end:Number(row.activity_end),role:row.role==null?null:String(row.role).trim(),period_basis:String(row.period_basis||"").trim(),notes:row.notes==null?null:String(row.notes)});
-    const left=leftQ.rows.map(norm).sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b))); const right=rightQ.rows.map(norm).sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b)));
-    return {checked:true,match:JSON.stringify(left)===JSON.stringify(right),legacy_rows:left.length,v2_rows:right.length};
+
+    if (operation === "delete") {
+      const legacyRow = await currentLegacyRow(legacyIds[0]);
+      const normalized = await client.query(`select count(*)::int as count from atlas_v2.person_politics_v2 where id=$1`, [v2Ids[0]]);
+      const normalizedRemaining = Number(normalized.rows[0]?.count || 0);
+      return {
+        checked:true,
+        match:legacyRow === null && normalizedRemaining === 0,
+        legacy_remaining:legacyRow === null ? 0 : 1,
+        v2_remaining:normalizedRemaining
+      };
+    }
+
+    for (let index=0; index<legacyIds.length; index += 1) {
+      const legacyRow = await currentLegacyRow(legacyIds[index]);
+      if (!legacyRow) return { checked:true, match:false, reason:`legacy row ${index} missing`, legacy_rows:index, v2_rows:index };
+      if (!await normalizedRowMatches(v2Ids[index], legacyRow)) {
+        return { checked:true, match:false, reason:`normalized row ${index} mismatch`, legacy_rows:legacyIds.length, v2_rows:v2Ids.length };
+      }
+    }
+    return { checked:true, match:true, legacy_rows:legacyIds.length, v2_rows:v2Ids.length };
   };
 }
 
-function createDualWriteTransactionFactory({ client } = {}) {
+function createDualWriteTransactionFactory({ client, rollbackOnly = false } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client with query() is required");
-  const legacyExecutor=createLegacyExecutor(client); const normalizedTx=createNormalizedTx(client);
+  const legacyExecutor=createLegacyExecutor(client);
+  const normalizedTx=createNormalizedTx(client);
   async function transactionFactory(work) {
     await client.query("begin");
     try {
       const tx={...normalizedTx,executeLegacy:legacyExecutor,async executeV2({plan,context}){return executeV2Plan(normalizedTx,plan,context);}};
-      const result=await work(tx); await client.query("commit"); return result;
-    } catch (error) { await client.query("rollback"); throw error; }
+      const result=await work(tx);
+      if (rollbackOnly) await client.query("rollback");
+      else await client.query("commit");
+      return result;
+    } catch (error) {
+      await client.query("rollback");
+      throw error;
+    }
   }
   return { transactionFactory, parityVerifier:createParityVerifier(client) };
 }
 
-module.exports=Object.freeze({createDualWriteTransactionFactory,createLegacyExecutor,createParityVerifier,createNormalizedTx,executeV2Plan});
+module.exports=Object.freeze({
+  createDualWriteTransactionFactory,
+  createLegacyExecutor,
+  createParityVerifier,
+  createNormalizedTx,
+  executeV2Plan,
+  deterministicUuid,
+  runtimeLineageKey,
+  contentHash,
+  comparableLegacyRow
+});

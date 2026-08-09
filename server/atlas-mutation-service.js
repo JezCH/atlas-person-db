@@ -30,9 +30,12 @@ function createMutationService({ planner, transactionFactory, parityVerifier } =
 
   async function mutate(request = {}) {
     const operation = normalizeOperation(request.operation);
-    const payload = request.payload ?? null;
+    const rawPayload = request.payload ?? null;
+    const plan = planner.plan(operation, rawPayload);
+    const payload = Object.prototype.hasOwnProperty.call(plan, "normalized_payload")
+      ? plan.normalized_payload
+      : rawPayload;
     const requestId = request.request_id || deterministicRequestId(operation, payload);
-    const plan = planner.plan(operation, payload);
 
     if (Array.isArray(plan.blockers) && plan.blockers.length) {
       return Object.freeze({
@@ -57,7 +60,7 @@ function createMutationService({ planner, transactionFactory, parityVerifier } =
         const legacy = await tx.executeLegacy({ operation, payload, request_id: requestId });
         if (!legacy?.committed) fail(legacy?.error || "legacy mutation did not commit inside transaction");
 
-        const v2 = await tx.executeV2({ plan, context: { request_id: requestId } });
+        const v2 = await tx.executeV2({ plan, context: { request_id: requestId, operation, legacy } });
         if (!v2?.committed || v2?.transaction_failure) {
           fail(v2?.transaction_failure || "v2 mutation did not commit inside transaction");
         }

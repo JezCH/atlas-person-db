@@ -43,7 +43,7 @@ jobs:
           node-version: "22"
 
       - name: Install server dependency
-        run: npm ci
+        run: npm install --no-package-lock --ignore-scripts --no-audit --no-fund
 
       - name: Run rollback-only live API-path smoke
         env:
