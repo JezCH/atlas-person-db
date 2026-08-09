@@ -60,6 +60,26 @@ try {
   assert.equal(legacyIdSchema.rows.length, 1, 'live public.person_politics.id column is missing');
   assert.equal(legacyIdSchema.rows[0].data_type, 'uuid', 'live public.person_politics.id must be uuid for deterministic request idempotency');
 
+  const baseline = await probe.query(`
+    select
+      (select count(*)::int from public.person_politics) as legacy_rows,
+      (select count(*)::int from public.atlas_person_politics_compat_v1) as compatibility_rows,
+      (select count(*)::int from (
+        select person_name,politic_name,activity_start,activity_end,role,period_basis,notes
+          from public.person_politics
+        except all
+        select person_name,politic_name,activity_start,activity_end,role,period_basis,notes
+          from public.atlas_person_politics_compat_v1
+      ) missing) as legacy_rows_missing_from_v2
+  `);
+  assert.equal(baseline.rows.length, 1, 'live legacy/v2 baseline query failed');
+  const legacyRows = Number(baseline.rows[0].legacy_rows);
+  const compatibilityRows = Number(baseline.rows[0].compatibility_rows);
+  const legacyRowsMissingFromV2 = Number(baseline.rows[0].legacy_rows_missing_from_v2);
+  assert.equal(legacyRows > 0, true, 'live legacy baseline unexpectedly empty');
+  assert.equal(compatibilityRows >= legacyRows, true, 'compatibility projection has fewer rows than legacy baseline');
+  assert.equal(legacyRowsMissingFromV2, 0, 'one or more live legacy rows are missing from the normalized compatibility projection');
+
   const optionalRequestLog = await probe.query(`
     select to_regclass('atlas_v2.write_request_log') as write_request_log
   `);
@@ -194,6 +214,11 @@ try {
     unauthorized_rejected: true,
     shared_postgres_transaction: true,
     exact_preimage_resolution: true,
+    baseline: {
+      legacy_rows: legacyRows,
+      compatibility_rows: compatibilityRows,
+      legacy_rows_missing_from_v2: legacyRowsMissingFromV2
+    },
     operations: {
       create: true,
       update: true,
