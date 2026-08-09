@@ -60,11 +60,10 @@ function createNormalizedTx(client) {
   async function resolveRelationshipExactSnapshot(row) {
     if (!row) return null;
     const role = exactRole(row.role);
-    if (!role) return null;
     const result = await client.query(`
       select pp.id, pp.legacy_source_key, pp.source_locator, pp.content_hash
         from atlas_v2.person_politics_v2 pp
-        join atlas_v2.roles r on r.id = pp.role_id
+        left join atlas_v2.roles r on r.id = pp.role_id
         join atlas_v2.period_bases pb on pb.id = pp.period_basis_id
        where pp.activity_start = $3
          and pp.activity_end = $4
@@ -79,8 +78,13 @@ function createNormalizedTx(client) {
             where pn.polity_id = pp.polity_id and pn.name = $2
          )
          and (
-           r.code = $5 or r.source_label = $5 or exists (
-             select 1 from atlas_v2.role_names rn where rn.role_id = r.id and rn.name = $5
+           ($5::text is null and pp.role_id is null)
+           or (
+             $5::text is not null and (
+               r.code = $5 or r.source_label = $5 or exists (
+                 select 1 from atlas_v2.role_names rn where rn.role_id = r.id and rn.name = $5
+               )
+             )
            )
          )
        order by pp.id
@@ -126,7 +130,7 @@ function createNormalizedTx(client) {
           input.polity_id,
           input.activity_start,
           input.activity_end,
-          input.role_id,
+          input.role_id ?? null,
           input.period_basis_id,
           input.notes ?? null,
           existing.id
@@ -156,7 +160,7 @@ function createNormalizedTx(client) {
         input.polity_id,
         input.activity_start,
         input.activity_end,
-        input.role_id,
+        input.role_id ?? null,
         input.period_basis_id,
         lineage,
         input.notes ?? null,
@@ -314,7 +318,7 @@ function createParityVerifier(client) {
              exists (select 1 from atlas_v2.person_names pn where pn.person_id=pp.person_id and pn.name=$2) as person_match,
              exists (select 1 from atlas_v2.polity_names pn where pn.polity_id=pp.polity_id and pn.name=$3) as polity_match
         from atlas_v2.person_politics_v2 pp
-        join atlas_v2.roles r on r.id=pp.role_id
+        left join atlas_v2.roles r on r.id=pp.role_id
         join atlas_v2.period_bases pb on pb.id=pp.period_basis_id
        where pp.id=$1`, [id, legacyRow.person_name, legacyRow.politic_name]);
     if (result.rows.length !== 1) return false;

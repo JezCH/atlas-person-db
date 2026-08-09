@@ -44,5 +44,9 @@ jobs:
           ! grep -n "globalThis.__ATLAS_ACTIVE_TX\|write_request_log\|updated_at=now()" server/atlas-postgres-dualwrite-transaction.js
           ! grep -n '"unspecified"' atlas-v2-command-planner.js server/atlas-postgres-dualwrite-transaction.js
           ! grep -n "last_mutation\|relationshipHash\|normalizedRole" server/atlas-postgres-dualwrite-transaction.js
-          grep -n "ROLE_REQUIRED_BY_CURRENT_V2_SCHEMA" atlas-v2-command-planner.js
+          ! grep -n "ROLE_REQUIRED_BY_CURRENT_V2_SCHEMA" atlas-v2-command-planner.js
+          grep -n "optional_dependencies: \[\"role_id\"\]" atlas-v2-command-planner.js
+          grep -n "left join atlas_v2.roles r on r.id = pp.role_id" server/atlas-postgres-dualwrite-transaction.js
+          grep -n '\$5::text is null and pp.role_id is null' server/atlas-postgres-dualwrite-transaction.js
+          grep -n "input.role_id ?? null" server/atlas-postgres-dualwrite-transaction.js
           grep -n "confidence,chronology_status,legacy_source_key,notes,source_locator,content_hash" server/atlas-postgres-dualwrite-transaction.js
