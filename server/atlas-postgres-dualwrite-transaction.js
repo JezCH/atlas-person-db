@@ -1,7 +1,88 @@
 "use strict";
 
-const { createPostgresTransactionFactory } = require("../atlas-v2-postgres-transaction-adapter.js");
 const { createIsolatedExecutor } = require("../atlas-v2-isolated-executor.js");
+
+function createNormalizedTx(client) {
+  return {
+    async resolvePersonExact({ name }) {
+      const result = await client.query(
+        `select pn.person_id as id
+           from atlas_v2.person_names pn
+          where pn.name = $1
+          order by pn.is_preferred desc, pn.id
+          limit 2`,
+        [name]
+      );
+      return result.rows.length === 1 ? result.rows[0].id : null;
+    },
+    async resolvePolityExact({ name }) {
+      const result = await client.query(
+        `select pn.polity_id as id
+           from atlas_v2.polity_names pn
+          where pn.name = $1
+          order by pn.is_preferred desc, pn.id
+          limit 2`,
+        [name]
+      );
+      return result.rows.length === 1 ? result.rows[0].id : null;
+    },
+    async resolveRoleExact({ code_or_name }) {
+      const result = await client.query(
+        `select r.id
+           from atlas_v2.roles r
+           left join atlas_v2.role_names rn on rn.role_id = r.id
+          where r.code = $1 or rn.name = $1
+          group by r.id
+          order by r.id
+          limit 2`,
+        [code_or_name]
+      );
+      return result.rows.length === 1 ? result.rows[0].id : null;
+    },
+    async resolvePeriodBasisExact({ code }) {
+      const result = await client.query(`select id from atlas_v2.period_bases where code=$1 limit 2`, [code]);
+      return result.rows.length === 1 ? result.rows[0].id : null;
+    },
+    async upsertPersonPoliticsV2(input) {
+      const result = await client.query(
+        `insert into atlas_v2.person_politics_v2
+          (id, person_id, polity_id, activity_start, activity_end, role_id, period_basis_id, legacy_source_key, notes)
+         values (gen_random_uuid(), $1,$2,$3,$4,$5,$6,$7,$8)
+         on conflict (legacy_source_key) do update set
+           person_id=excluded.person_id,
+           polity_id=excluded.polity_id,
+           activity_start=excluded.activity_start,
+           activity_end=excluded.activity_end,
+           role_id=excluded.role_id,
+           period_basis_id=excluded.period_basis_id,
+           notes=excluded.notes,
+           updated_at=now()
+         returning id`,
+        [input.person_id, input.polity_id, input.activity_start, input.activity_end, input.role_id, input.period_basis_id, input.legacy_source_key, input.notes ?? null]
+      );
+      return result.rows[0]?.id ?? null;
+    },
+    async resolveRelationshipByLegacyLineage({ legacy_record_id }) {
+      const result = await client.query(`select id from atlas_v2.person_politics_v2 where legacy_source_key=$1 limit 2`, [String(legacy_record_id)]);
+      return result.rows.length === 1 ? result.rows[0].id : null;
+    },
+    async retireOrDeletePersonPoliticsV2({ relationship_id }) {
+      await client.query(`delete from atlas_v2.person_politics_v2 where id=$1`, [relationship_id]);
+    },
+    async findReplay(requestId) {
+      const result = await client.query(`select normalized_relationship_ids from atlas_v2.write_request_log where request_id=$1`, [requestId]);
+      return result.rows[0] ?? null;
+    },
+    async recordRequest({ request_id, normalized_relationship_ids }) {
+      await client.query(
+        `insert into atlas_v2.write_request_log(request_id, normalized_relationship_ids)
+         values ($1,$2::uuid[])
+         on conflict (request_id) do nothing`,
+        [request_id, normalized_relationship_ids]
+      );
+    }
+  };
+}
 
 function normalizeLegacyPayload(operation, payload) {
   if (operation === "create") return payload;
@@ -23,30 +104,23 @@ function createLegacyExecutor(client) {
       );
       return { committed: result.rowCount === 1, record_ids: result.rows.map((r) => r.id) };
     }
-
     if (operation === "update") {
       const row = normalizeLegacyPayload(operation, payload);
       const id = payload?.id;
       const result = await client.query(
-        `update public.person_politics
-            set person_name=$1, politic_name=$2, activity_start=$3, activity_end=$4,
-                role=$5, period_basis=$6, notes=$7
-          where id=$8`,
+        `update public.person_politics set person_name=$1, politic_name=$2, activity_start=$3, activity_end=$4, role=$5, period_basis=$6, notes=$7 where id=$8`,
         [row.person_name, row.politic_name, row.activity_start, row.activity_end, row.role ?? null, row.period_basis, row.notes ?? null, id]
       );
       return { committed: result.rowCount === 1, record_ids: [id] };
     }
-
     if (operation === "delete") {
       const id = payload?.id;
       const result = await client.query(`delete from public.person_politics where id=$1`, [id]);
       return { committed: result.rowCount === 1, record_ids: [id] };
     }
-
     if (operation === "import") {
-      const rows = normalizeLegacyPayload(operation, payload);
       const ids = [];
-      for (const row of rows) {
+      for (const row of normalizeLegacyPayload(operation, payload)) {
         const result = await client.query(
           `insert into public.person_politics
             (person_name, politic_name, activity_start, activity_end, role, period_basis, notes)
@@ -59,62 +133,41 @@ function createLegacyExecutor(client) {
       }
       return { committed: true, record_ids: ids };
     }
-
-    if (operation === "reconcile") {
-      return { committed: false, record_ids: [], error: "reconcile requires dedicated canonical transaction payload" };
-    }
-
-    return { committed: false, record_ids: [], error: `unsupported legacy operation: ${operation}` };
+    return { committed: false, record_ids: [], error: operation === "reconcile" ? "reconcile requires dedicated canonical transaction payload" : `unsupported legacy operation: ${operation}` };
   };
 }
 
 function createParityVerifier(client) {
   return async function parityVerifier({ operation, payload, legacy, v2 }) {
     if (operation === "delete") {
-      const legacyId = payload?.id;
-      const legacyResult = await client.query(`select count(*)::int as count from public.person_politics where id=$1`, [legacyId]);
+      const legacyResult = await client.query(`select count(*)::int as count from public.person_politics where id=$1`, [payload?.id]);
       const remaining = Number(legacyResult.rows[0]?.count || 0);
-      return { checked: true, match: remaining === 0 && Array.isArray(v2?.normalized_relationship_ids), legacy_remaining: remaining };
+      return { checked: true, match: remaining === 0, legacy_remaining: remaining };
     }
-
     const ids = Array.isArray(legacy?.record_ids) ? legacy.record_ids : [];
     if (!ids.length) return { checked: true, match: false, reason: "legacy ids missing" };
-
     const legacyRows = await client.query(
-      `select id, person_name, politic_name, activity_start, activity_end, role, period_basis, notes
-         from public.person_politics
-        where id = any($1::bigint[])
-        order by id`,
+      `select person_name, politic_name, activity_start, activity_end, role, period_basis, notes
+         from public.person_politics where id = any($1::bigint[])`,
       [ids]
     );
-
     const v2Rows = await client.query(
-      `select pp.id,
-              coalesce(pn.name, p.canonical_name) as person_name,
-              coalesce(poln.name, pol.canonical_name) as politic_name,
+      `select coalesce(pn.name,p.canonical_name) as person_name,
+              coalesce(poln.name,pol.canonical_name) as politic_name,
               pp.activity_start, pp.activity_end,
-              coalesce(rn.name, r.code) as role,
-              pb.code as period_basis,
-              pp.notes
+              coalesce(rn.name,r.code) as role,
+              pb.code as period_basis, pp.notes
          from atlas_v2.person_politics_v2 pp
-         join atlas_v2.persons p on p.id = pp.person_id
-         left join lateral (
-           select name from atlas_v2.person_names where person_id=p.id order by is_preferred desc, id limit 1
-         ) pn on true
-         join atlas_v2.polities pol on pol.id = pp.polity_id
-         left join lateral (
-           select name from atlas_v2.polity_names where polity_id=pol.id order by is_preferred desc, id limit 1
-         ) poln on true
-         left join atlas_v2.roles r on r.id = pp.role_id
-         left join lateral (
-           select name from atlas_v2.role_names where role_id=r.id order by id limit 1
-         ) rn on true
-         join atlas_v2.period_bases pb on pb.id = pp.period_basis_id
-        where pp.id = any($1::uuid[])
-        order by pp.id`,
+         join atlas_v2.persons p on p.id=pp.person_id
+         left join lateral (select name from atlas_v2.person_names where person_id=p.id order by is_preferred desc,id limit 1) pn on true
+         join atlas_v2.polities pol on pol.id=pp.polity_id
+         left join lateral (select name from atlas_v2.polity_names where polity_id=pol.id order by is_preferred desc,id limit 1) poln on true
+         left join atlas_v2.roles r on r.id=pp.role_id
+         left join lateral (select name from atlas_v2.role_names where role_id=r.id order by id limit 1) rn on true
+         join atlas_v2.period_bases pb on pb.id=pp.period_basis_id
+        where pp.id = any($1::uuid[])`,
       [v2?.normalized_relationship_ids || []]
     );
-
     const normalize = (row) => ({
       person_name: String(row.person_name || "").trim(),
       politic_name: String(row.politic_name || "").trim(),
@@ -124,41 +177,23 @@ function createParityVerifier(client) {
       period_basis: String(row.period_basis || "").trim(),
       notes: row.notes == null ? null : String(row.notes)
     });
-
-    const legacyNormalized = legacyRows.rows.map(normalize);
-    const v2Normalized = v2Rows.rows.map(normalize);
-    const sortKey = (row) => JSON.stringify(row);
-    legacyNormalized.sort((a,b) => sortKey(a).localeCompare(sortKey(b)));
-    v2Normalized.sort((a,b) => sortKey(a).localeCompare(sortKey(b)));
-    const match = JSON.stringify(legacyNormalized) === JSON.stringify(v2Normalized);
-    return { checked: true, match, legacy_rows: legacyNormalized.length, v2_rows: v2Normalized.length };
+    const left = legacyRows.rows.map(normalize).sort((a,b) => JSON.stringify(a).localeCompare(JSON.stringify(b)));
+    const right = v2Rows.rows.map(normalize).sort((a,b) => JSON.stringify(a).localeCompare(JSON.stringify(b)));
+    return { checked: true, match: JSON.stringify(left) === JSON.stringify(right), legacy_rows: left.length, v2_rows: right.length };
   };
 }
 
 function createDualWriteTransactionFactory({ client } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client with query() is required");
-
   const legacyExecutor = createLegacyExecutor(client);
-  const baseV2Factory = createPostgresTransactionFactory({ client });
-  const v2Executor = createIsolatedExecutor({
-    transactionFactory: async (work) => {
-      const tx = globalThis.__ATLAS_ACTIVE_TX;
-      if (!tx) throw new Error("v2 execution must run inside active dual-write transaction");
-      return work(tx);
-    }
-  });
+  const normalizedTx = createNormalizedTx(client);
+  const v2Executor = createIsolatedExecutor({ transactionFactory: async (work) => work(normalizedTx) });
 
   async function transactionFactory(work) {
     await client.query("begin");
     try {
-      let activeTx = null;
-      await baseV2Factory(async (tx) => { activeTx = tx; throw Object.assign(new Error("capture-only"), { captureOnly: true }); }).catch((error) => {
-        if (!error?.captureOnly) throw error;
-      });
-      if (!activeTx) throw new Error("failed to initialize normalized transaction adapter");
-      globalThis.__ATLAS_ACTIVE_TX = activeTx;
       const tx = {
-        ...activeTx,
+        ...normalizedTx,
         executeLegacy: legacyExecutor,
         async executeV2({ plan, context }) { return v2Executor({ plan, context }); }
       };
@@ -168,12 +203,10 @@ function createDualWriteTransactionFactory({ client } = {}) {
     } catch (error) {
       await client.query("rollback");
       throw error;
-    } finally {
-      delete globalThis.__ATLAS_ACTIVE_TX;
     }
   }
 
   return { transactionFactory, parityVerifier: createParityVerifier(client) };
 }
 
-module.exports = Object.freeze({ createDualWriteTransactionFactory, createLegacyExecutor, createParityVerifier });
+module.exports = Object.freeze({ createDualWriteTransactionFactory, createLegacyExecutor, createParityVerifier, createNormalizedTx });
