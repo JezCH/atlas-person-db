@@ -1,25 +1,27 @@
-name: Phase 9A Admin Duplicate Review V2
+name: Phase 9 Admin Duplicate Review V2
 
 on:
   pull_request:
     paths:
       - "api/atlas-duplicate-review.js"
       - "server/atlas-duplicate-*.js"
+      - "server/atlas-person-merge-service.js"
       - "atlas-admin-duplicate-review.js"
       - "admin.*"
       - "migration/phase-9/**"
       - "tests/atlas-duplicate-detector.test.mjs"
       - "tests/phase9a-admin-duplicate-review-contract.test.mjs"
       - "tests/phase9b-person-reference-inventory-contract.test.mjs"
+      - "tests/phase9b-person-merge-contract.test.mjs"
       - ".github/workflows/phase-9a-admin-duplicate-review.yml"
   workflow_dispatch:
     inputs:
       approved_sha:
-        description: Exact current main SHA approved for Phase 9A review schema apply
+        description: Exact current main SHA approved for Phase 9B person merge schema apply
         required: true
         type: string
       confirm:
-        description: Type PHASE9A_APPLY_DUPLICATE_REVIEW_SCHEMA
+        description: Type PHASE9B_APPLY_PERSON_MERGE_SCHEMA
         required: true
         type: string
 
@@ -36,37 +38,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Verify Phase 9A/9B contracts
-        run: node --test tests/atlas-duplicate-detector.test.mjs tests/phase9a-admin-duplicate-review-contract.test.mjs tests/phase9b-person-reference-inventory-contract.test.mjs
-
-  live-person-reference-inventory:
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    environment: phase-5-shadow
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-      - run: npm install --no-package-lock --ignore-scripts --no-audit --no-fund
-      - name: Re-run inventory contract before DB connection
-        run: node --test tests/phase9b-person-reference-inventory-contract.test.mjs
-      - name: Inventory every live person reference surface read-only
-        env:
-          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
-          PHASE9B_OUTPUT_DIR: migration/phase-9/tmp/person-reference-inventory
-        run: node migration/phase-9/scripts/phase9b-live-person-reference-inventory.mjs
-      - name: Upload Phase 9B live inventory
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: phase9b-live-person-reference-inventory-${{ github.sha }}
-          path: migration/phase-9/tmp/person-reference-inventory
-          if-no-files-found: error
-          retention-days: 90
+      - name: Verify Phase 9 review and merge contracts
+        run: >-
+          node --test
+          tests/atlas-duplicate-detector.test.mjs
+          tests/phase9a-admin-duplicate-review-contract.test.mjs
+          tests/phase9b-person-reference-inventory-contract.test.mjs
+          tests/phase9b-person-merge-contract.test.mjs
 
   protected-schema-apply:
     if: github.event_name == 'workflow_dispatch'
@@ -80,7 +58,7 @@ jobs:
           set -euo pipefail
           test "${{ github.ref }}" = "refs/heads/main"
           test "${{ inputs.approved_sha }}" = "${{ github.sha }}"
-          test "${{ inputs.confirm }}" = "PHASE9A_APPLY_DUPLICATE_REVIEW_SCHEMA"
+          test "${{ inputs.confirm }}" = "PHASE9B_APPLY_PERSON_MERGE_SCHEMA"
       - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.approved_sha }}
@@ -89,18 +67,22 @@ jobs:
         with:
           node-version: "22"
       - run: npm install --no-package-lock --ignore-scripts --no-audit --no-fund
-      - name: Re-run static contract before DB connection
-        run: node --test tests/atlas-duplicate-detector.test.mjs tests/phase9a-admin-duplicate-review-contract.test.mjs
-      - name: Apply normalized review schema
+      - name: Re-run Phase 9B contracts before DB connection
+        run: >-
+          node --test
+          tests/phase9a-admin-duplicate-review-contract.test.mjs
+          tests/phase9b-person-reference-inventory-contract.test.mjs
+          tests/phase9b-person-merge-contract.test.mjs
+      - name: Apply Phase 9B merge audit schema
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
-          PHASE9A_OUTPUT_DIR: migration/phase-9/tmp/schema-apply
-        run: node migration/phase-9/scripts/phase9a-apply-duplicate-review-schema.mjs
-      - name: Upload schema evidence
+          PHASE9B_SCHEMA_OUTPUT_DIR: migration/phase-9/tmp/person-merge-schema-apply
+        run: node migration/phase-9/scripts/phase9b-apply-person-merge-schema.mjs
+      - name: Upload Phase 9B schema evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: phase9a-admin-duplicate-review-${{ inputs.approved_sha }}
-          path: migration/phase-9/tmp/schema-apply
+          name: phase9b-person-merge-schema-${{ inputs.approved_sha }}
+          path: migration/phase-9/tmp/person-merge-schema-apply
           if-no-files-found: error
           retention-days: 90
