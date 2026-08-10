@@ -58,12 +58,17 @@ test('merge executor is serializable, approval-gated, evidence-pinned and drift-
   assert.match(mergeService, /latestReview\.rows\[0\]\.decision !== "MERGE"/);
   assert.match(mergeService, /person metadata conflict/);
   assert.match(mergeService, /person reference schema drift/);
-  assert.match(mergeService, /RELATIONSHIP_COLLISION/);
+  assert.match(mergeService, /RELATIONSHIP_RECONCILIATION_REQUIRED/);
 });
 
-test('relationship collisions fail closed and relationship UUIDs are otherwise preserved', () => {
-  assert.match(mergeService, /d\.role_id is not distinct from s\.role_id/);
-  assert.match(mergeService, /relationship semantic collision requires manual review/);
+test('same-context relationship conflicts fail closed and relationship UUIDs are otherwise preserved', () => {
+  assert.match(mergeService, /d\.polity_id=s\.polity_id/);
+  assert.match(mergeService, /d\.period_basis_id=s\.period_basis_id/);
+  assert.match(mergeService, /d\.activity_start=s\.activity_start/);
+  assert.match(mergeService, /d\.activity_end=s\.activity_end/);
+  assert.match(mergeService, /SAME_CONTEXT_ROLE_VARIANT/);
+  assert.match(mergeService, /EXACT_RELATIONSHIP/);
+  assert.match(mergeService, /relationship reconciliation required before person merge/);
   assert.match(mergeService, /update atlas_v2\.person_politics_v2 set person_id=\$2 where person_id=\$1 returning id/);
   assert.doesNotMatch(mergeService, /delete from atlas_v2\.person_politics_v2/i);
 });

@@ -93,7 +93,7 @@ function createDuplicateReviewHandler({ clientFactory, env = process.env, now } 
       } else if (/PHASE9B_SCHEMA_REQUIRED|person_merge_audits/i.test(message)) {
         sendJson(res, 503, { ok: false, code: "PHASE9B_SCHEMA_REQUIRED", error: "person merge schema is not applied" });
       } else if (
-        error?.code === "RELATIONSHIP_COLLISION" ||
+        error?.code === "RELATIONSHIP_RECONCILIATION_REQUIRED" ||
         /candidate not found|candidate is stale|decision must|request_id|required|too long|MERGE approval|evidence changed|latest candidate review|latest MERGE review|survivor_person_id|metadata conflict|schema drift|candidate persons are not both live/i.test(message)
       ) {
         sendJson(res, 409, { ok: false, code: error?.code || "MERGE_PRECONDITION_FAILED", error: message, ...(error?.collisions ? { collisions: error.collisions } : {}) });

@@ -1,0 +1,47 @@
+{
+  "marker": "PHASE9C_LIVE_CANDIDATE_PREVIEW_SUMMARY",
+  "status": "PASS",
+  "source": {
+    "workflow_run_id": 31384829510,
+    "artifact_id": 9061275580,
+    "artifact_digest": "sha256:8b45a766f52e393b399d96ab1dd66e13944395bcde5d45879fcc04df2c04dc86",
+    "read_only": true,
+    "detector_version": "phase9a-v1"
+  },
+  "counts": {
+    "persons": 303,
+    "person_names": 608,
+    "relationships": 349,
+    "detected_candidates": 3,
+    "confidence_090_plus": 3,
+    "persons_with_internal_relationship_duplicates": 0
+  },
+  "candidates": [
+    {
+      "confidence": 0.98,
+      "low": {"id": "005e9004-89b0-5f00-b6c7-7852bfa3d677", "canonical_key": "Catherine II", "display_ko": "예카테리나 2세"},
+      "high": {"id": "ed32430e-504d-5eb5-89bf-7f58ca43209d", "canonical_key": "Catherine the Great", "display_ko": "예카테리나 2세"},
+      "same_context_conflicts": [
+        {"kind": "EXACT_RELATIONSHIP", "polity": "러시아 제국", "activity_start": 1762, "activity_end": 1796, "role_low": "황후", "role_high": "황후"},
+        {"kind": "LOW_SIDE_ADDITIONAL_ROLE", "polity": "러시아 제국", "activity_start": 1762, "activity_end": 1796, "role_low": "러시아 여제"}
+      ],
+      "requires_relationship_reconciliation": true
+    },
+    {
+      "confidence": 0.98,
+      "low": {"id": "896fb899-5097-51d2-bf7b-b4e5fc7f4d86", "canonical_key": "Isabella I", "display_ko": "이사벨 1세"},
+      "high": {"id": "eb02f6c0-14c7-59bc-8e7e-c54ef2536c9c", "canonical_key": "Isabella I of Castile", "display_ko": "이사벨 1세"},
+      "same_context_conflicts": [
+        {"kind": "SAME_CONTEXT_ROLE_VARIANT", "polity": "카스티야 왕국", "activity_start": 1474, "activity_end": 1504, "role_low": "카스티야 여왕", "role_high": "여왕"}
+      ],
+      "requires_relationship_reconciliation": true
+    },
+    {
+      "confidence": 0.96,
+      "low": {"id": "821eba4d-47af-5e0f-b183-be624f960b93", "canonical_key": "Jose Rizal", "display_ko": "호세 리살"},
+      "high": {"id": "d717df67-109b-5b96-8d55-e7f7100f686b", "canonical_key": "José Rizal", "display_ko": "호세 리살"},
+      "same_context_conflicts": [],
+      "requires_relationship_reconciliation": false
+    }
+  ]
+}
