@@ -11,11 +11,14 @@ await client.connect();
 
 async function q(text, params = []) { return (await client.query(text, params)).rows; }
 const quoteIdent = (value) => `"${String(value).replaceAll('"','""')}"`;
+const relevantTables = [
+  'persons','person_names','person_sources','person_descriptions','person_politics_v2',
+  'chronology_claims','person_politics_sources','relationship_descriptions',
+  'person_duplicate_candidates','person_duplicate_reviews'
+];
 
-try {
-  await client.query('begin transaction isolation level repeatable read read only');
-
-  const directFks = await q(`
+async function foreignKeysTo(regclass) {
+  return q(`
     select ns.nspname as table_schema,
            cls.relname as table_name,
            con.conname as constraint_name,
@@ -27,10 +30,29 @@ try {
       join pg_namespace ns on ns.oid=cls.relnamespace
       join unnest(con.conkey) with ordinality u(attnum,ord) on true
       join pg_attribute att on att.attrelid=con.conrelid and att.attnum=u.attnum
-     where con.contype='f'
-       and con.confrelid='atlas_v2.persons'::regclass
+     where con.contype='f' and con.confrelid=$1::regclass
      group by ns.nspname,cls.relname,con.conname,con.confupdtype,con.confdeltype
-     order by ns.nspname,cls.relname,con.conname`);
+     order by ns.nspname,cls.relname,con.conname`, [regclass]);
+}
+
+async function countReferences(fks) {
+  const counts = {};
+  for (const fk of fks) {
+    if (fk.columns.length !== 1) continue;
+    const column = fk.columns[0];
+    const key = `${fk.table_schema}.${fk.table_name}.${column}`;
+    const relation = `${quoteIdent(fk.table_schema)}.${quoteIdent(fk.table_name)}`;
+    const rows = await q(`select count(*)::int as count from ${relation} where ${quoteIdent(column)} is not null`);
+    counts[key] = rows[0].count;
+  }
+  return counts;
+}
+
+try {
+  await client.query('begin transaction isolation level repeatable read read only');
+
+  const directFksToPersons = await foreignKeysTo('atlas_v2.persons');
+  const directFksToRelationships = await foreignKeysTo('atlas_v2.person_politics_v2');
 
   const personUuidColumns = await q(`
     select table_schema,table_name,column_name,is_nullable
@@ -39,9 +61,29 @@ try {
        and data_type='uuid'
        and column_name ~* '(^|_)person(_|$)|person_(low|high)_id'
      order by table_name,ordinal_position`);
-
-  const fkColumns = new Set(directFks.flatMap((fk) => fk.columns.map((column) => `${fk.table_schema}.${fk.table_name}.${column}`)));
+  const fkColumns = new Set(directFksToPersons.flatMap((fk) => fk.columns.map((column) => `${fk.table_schema}.${fk.table_name}.${column}`)));
   const nonFkPersonUuidColumns = personUuidColumns.filter((row) => !fkColumns.has(`${row.table_schema}.${row.table_name}.${row.column_name}`));
+
+  const tableColumns = await q(`
+    select table_name,ordinal_position,column_name,data_type,is_nullable,column_default
+      from information_schema.columns
+     where table_schema='atlas_v2' and table_name = any($1::text[])
+     order by table_name,ordinal_position`, [relevantTables]);
+
+  const relevantConstraints = await q(`
+    select n.nspname as schema_name,c.relname as table_name,con.conname as constraint_name,
+           con.contype as constraint_type,pg_get_constraintdef(con.oid,true) as definition
+      from pg_constraint con
+      join pg_class c on c.oid=con.conrelid
+      join pg_namespace n on n.oid=c.relnamespace
+     where n.nspname='atlas_v2' and c.relname = any($1::text[])
+     order by c.relname,con.conname`, [relevantTables]);
+
+  const relevantIndexes = await q(`
+    select schemaname as schema_name,tablename as table_name,indexname as index_name,indexdef as definition
+      from pg_indexes
+     where schemaname='atlas_v2' and tablename = any($1::text[])
+     order by tablename,indexname`, [relevantTables]);
 
   const relationDefinitions = await q(`
     select schemaname as schema_name,viewname as object_name,'view'::text as object_type
@@ -69,54 +111,42 @@ try {
       from pg_trigger t
       join pg_class c on c.oid=t.tgrelid
       join pg_namespace n on n.oid=c.relnamespace
-     where not t.tgisinternal
-       and n.nspname='atlas_v2'
-       and (c.relname in ('persons','person_names','person_politics_v2','person_duplicate_candidates','person_duplicate_reviews')
-            or pg_get_triggerdef(t.oid,true) ilike '%person%')
-     order by n.nspname,c.relname,t.tgname`);
-
-  const relevantConstraints = await q(`
-    select n.nspname as schema_name,c.relname as table_name,con.conname as constraint_name,con.contype as constraint_type,pg_get_constraintdef(con.oid,true) as definition
-      from pg_constraint con
-      join pg_class c on c.oid=con.conrelid
-      join pg_namespace n on n.oid=c.relnamespace
-     where n.nspname='atlas_v2'
-       and c.relname in ('persons','person_names','person_politics_v2','person_duplicate_candidates','person_duplicate_reviews')
-     order by c.relname,con.conname`);
+     where not t.tgisinternal and n.nspname='atlas_v2'
+       and (c.relname = any($1::text[]) or pg_get_triggerdef(t.oid,true) ilike '%person%')
+     order by n.nspname,c.relname,t.tgname`, [relevantTables]);
 
   const counts = (await q(`
     select
       (select count(*)::int from atlas_v2.persons) as persons,
       (select count(distinct person_id)::int from atlas_v2.person_politics_v2) as active_persons,
       (select count(*)::int from atlas_v2.person_names) as person_names,
+      (select count(*)::int from atlas_v2.person_sources) as person_sources,
+      (select count(*)::int from atlas_v2.person_descriptions) as person_descriptions,
       (select count(*)::int from atlas_v2.person_politics_v2) as relationships,
+      (select count(*)::int from atlas_v2.chronology_claims) as chronology_claims,
+      (select count(*)::int from atlas_v2.person_politics_sources) as relationship_sources,
+      (select count(*)::int from atlas_v2.relationship_descriptions) as relationship_descriptions,
       (select count(*)::int from atlas_v2.person_duplicate_candidates) as duplicate_candidates,
       (select count(*)::int from atlas_v2.person_duplicate_reviews) as duplicate_reviews
   `))[0];
-
-  const referenceCounts = {};
-  for (const fk of directFks) {
-    if (fk.columns.length !== 1) continue;
-    const column = fk.columns[0];
-    const key = `${fk.table_schema}.${fk.table_name}.${column}`;
-    const relation = `${quoteIdent(fk.table_schema)}.${quoteIdent(fk.table_name)}`;
-    const rows = await q(`select count(*)::int as count from ${relation} where ${quoteIdent(column)} is not null`);
-    referenceCounts[key] = rows[0].count;
-  }
 
   const report = {
     marker: 'PHASE9B_LIVE_PERSON_REFERENCE_INVENTORY',
     status: 'PASS',
     read_only: true,
     counts,
-    direct_fks_to_persons: directFks,
+    direct_fks_to_persons: directFksToPersons,
+    direct_fks_to_relationships: directFksToRelationships,
     person_like_uuid_columns: personUuidColumns,
     non_fk_person_uuid_columns: nonFkPersonUuidColumns,
+    table_columns: tableColumns,
+    relevant_constraints: relevantConstraints,
+    relevant_indexes: relevantIndexes,
     relation_definitions: relationDefinitions,
     function_definitions: functionDefinitions,
     triggers,
-    relevant_constraints: relevantConstraints,
-    reference_counts: referenceCounts
+    person_reference_counts: await countReferences(directFksToPersons),
+    relationship_reference_counts: await countReferences(directFksToRelationships)
   };
 
   await client.query('commit');
