@@ -1,7 +1,7 @@
 "use strict";
 
 const crypto = require("node:crypto");
-const { detectPersonDuplicateCandidates } = require("./atlas-duplicate-detector.js");
+const { detectPersonDuplicateCandidates, stableFingerprint } = require("./atlas-duplicate-detector.js");
 const {
   buildRelationshipReconciliationGroups,
   buildReconciliationPlan,
@@ -20,6 +20,18 @@ function validUuid(value, label) {
   const normalized = String(value || "").trim();
   if (!UUID_RE.test(normalized)) throw new Error(`${label} must be a valid UUID`);
   return normalized;
+}
+
+function canonicalJson(value) {
+  if (Array.isArray(value)) return value.map(canonicalJson);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.keys(value).sort().map((key) => [key, canonicalJson(value[key])]));
+  }
+  return value;
+}
+
+function stableJson(value) {
+  return JSON.stringify(canonicalJson(value));
 }
 
 function resolveMergeSides(candidate, survivorPersonId) {
@@ -112,13 +124,12 @@ function assertLiveCandidateEvidence(candidateRow, liveState) {
   const high = String(candidateRow.person_high_id);
   const current = detected.find((item) => item.person_low_id === low && item.person_high_id === high);
   if (!current) throw new Error("LIVE_EVIDENCE_CHANGED: approved duplicate pair is no longer detected from live person state");
-  const storedEvidence = JSON.stringify(candidateRow.evidence || []);
-  const currentEvidence = JSON.stringify(current.evidence || []);
+  const storedEvidenceFingerprint = stableFingerprint(candidateRow.evidence || []);
   if (
+    storedEvidenceFingerprint !== candidateRow.evidence_fingerprint ||
     current.evidence_fingerprint !== candidateRow.evidence_fingerprint ||
     current.detector_version !== candidateRow.detector_version ||
-    Number(current.confidence) !== Number(candidateRow.confidence) ||
-    currentEvidence !== storedEvidence
+    Number(current.confidence) !== Number(candidateRow.confidence)
   ) {
     throw new Error("LIVE_EVIDENCE_CHANGED: approved duplicate evidence no longer matches live person state");
   }
@@ -218,7 +229,7 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
       if (
         String(replay.rows[0].candidate_id) !== candidate ||
         String(replay.rows[0].survivor_person_id) !== survivorInput ||
-        JSON.stringify(previousResolutions) !== JSON.stringify(normalizedResolutions)
+        stableJson(previousResolutions) !== stableJson(normalizedResolutions)
       ) throw new Error("merge request_id collision with different payload");
       await client.query("COMMIT");
       return { replayed: true, merge_audit_id: String(replay.rows[0].id), candidate_id: String(replay.rows[0].candidate_id), survivor_person_id: String(replay.rows[0].survivor_person_id), source_person_id: String(replay.rows[0].source_person_id), mutation_summary: replay.rows[0].mutation_summary };
@@ -257,8 +268,7 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
     });
     const reconciliationPlan = buildReconciliationPlan({
       groups,
-      resolutions: normalizedResolutions,
-      survivorPersonId: sides.survivor_person_id
+      resolutions: normalizedResolutions
     });
 
     const beforeCounts = await globalCounts(client);
@@ -328,6 +338,8 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
 
 module.exports = Object.freeze({
   EXPECTED_PERSON_FKS,
+  canonicalJson,
+  stableJson,
   resolveMergeSides,
   ensureMergeSchema,
   lockLiveMergeState,
