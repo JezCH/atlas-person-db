@@ -1,6 +1,6 @@
 # Phase 8C C9 — Legacy DB Object Retirement
 
-Status: C9A LIVE INVENTORY PASS / C9B BUNDLE PREPARED / DESTRUCTIVE EXECUTION NOT YET AUTHORIZED
+Status: C9A LIVE INVENTORY PASS / C9B GUARDED BUNDLE INSTALLED / FINAL REPOSITORY CLEANUP REQUIRED BEFORE DROP
 
 ## Objective
 
@@ -9,8 +9,9 @@ Retire the final transitional database objects only after the application has al
 - v2-authoritative / v2-only writes
 - direct normalized reads
 - zero reachable legacy runtime
+- zero active repository bootstrap/migration path capable of recreating the retired legacy objects
 
-C9 is the first destructive stage. Code/runtime retirement in C7/C8 does **not** authorize database object deletion.
+C9 is the first destructive stage. Code/runtime retirement in C7/C8 does **not** by itself authorize database object deletion.
 
 ## Objects in scope
 
@@ -52,15 +53,34 @@ Verified live state:
 
 The legacy table retains its own `trg_person_politics_updated_at` trigger. This is an internal table trigger, not an external dependency, and disappears with the table.
 
+## Final repository cleanup precondition
+
+A final review after the C9B bundle was installed found active root/bootstrap artifacts that could recreate or directly mutate the retired legacy table even though production runtime was already v2-only.
+
+The final repository cleanup therefore retires these active paths before any DROP:
+
+- `schema.sql`
+- `supabase-integrity.sql`
+- `migrations/002_add_verified.sql`
+- `config.js`
+- `config.example.js`
+
+Their exact historical blob SHAs are retained in `migration/phase-8/reports/phase8c-c9-final-repository-cleanup.json`; the executable/bootstrap paths themselves must remain absent.
+
+`README.md` and `DATA_MODEL.md` are replaced with the current normalized-v2 architecture so operators are no longer instructed to recreate the MVP schema.
+
+The protected C9B dispatch re-runs the repository retirement contract before any database connection/destructive step. If any retired active path returns, C9B fails before DROP.
+
 ## C9B — destructive retirement bundle
 
-The C9B bundle is pinned to the C9A evidence above. It is designed to fail closed unless the execution-time live state still satisfies all retirement invariants.
+The C9B bundle is pinned to the C9A evidence above and fails closed unless the execution-time repository and live database state still satisfy all retirement invariants.
 
 Before any DROP, the protected workflow must:
 
 - run only by `workflow_dispatch` on `main`
 - require exact current main SHA
 - require explicit token `PHASE8C_C9_RETIRE_LEGACY_DB_OBJECTS`
+- prove final repository cleanup preconditions still pass
 - prove the deployed repository still has `ZERO_REACHABLE_LEGACY_RUNTIME`
 - verify the exact C9A SHA/run/artifact/digest pin
 - open a PostgreSQL SERIALIZABLE transaction
@@ -91,6 +111,7 @@ Any error after BEGIN triggers ROLLBACK. The old legacy table is not automatical
 
 A successful protected C9B run must retain:
 
+- final runtime-dependency inventory
 - pre-drop dependency/coverage report
 - legacy row snapshot
 - post-drop object/count report
@@ -101,6 +122,4 @@ A successful protected C9B run must retain:
 
 ## Authorization boundary
 
-C9A completion and this prepared C9B code **do not themselves authorize the DROP**.
-
-Actual C9B execution requires a separate explicit destructive authorization from the user, followed by a manual protected workflow dispatch on the exact then-current main SHA.
+The destructive workflow remains manual-only and exact-SHA guarded. It must not be converted into a push/scheduled job or invoked from PR validation.

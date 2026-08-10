@@ -3,6 +3,14 @@ name: Phase 8C C9B Retire Legacy DB Objects
 on:
   pull_request:
     paths:
+      - "README.md"
+      - "DATA_MODEL.md"
+      - "schema.sql"
+      - "supabase-integrity.sql"
+      - "migrations/002_add_verified.sql"
+      - "config.js"
+      - "config.example.js"
+      - "migration/phase-8/reports/phase8c-c9-final-repository-cleanup.json"
       - "migration/phase-8/scripts/phase8c-c9b-retire-legacy-db.mjs"
       - "migration/phase-8/PHASE_8C_C9_LEGACY_DB_RETIREMENT.md"
       - "tests/phase8c-c9b-legacy-db-retirement.test.mjs"
@@ -58,6 +66,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+
+      - name: Verify final repository retirement preconditions
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --test tests/phase8c-c9b-legacy-db-retirement.test.mjs tests/phase8c-c8-runtime-retirement.test.mjs
 
       - name: Prove zero reachable legacy runtime before destructive DB step
         shell: bash

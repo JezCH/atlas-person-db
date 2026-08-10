@@ -1,46 +1,57 @@
 # ATLAS Person Activity Model
 
-## Current physical table
+## Current authoritative model
 
-`person_politics` is treated as the activity-relation table for the current MVP. Each row represents one bounded activity period linking a canonical person name to a polity.
+The production relationship model is normalized and lives under the `atlas_v2` schema.
 
-Required fields:
+Core entities used by the current runtime include:
 
-- `person_name`: canonical English person name
-- `politic_name`: canonical English polity name
-- `activity_start`: signed integer year; BCE years are negative
-- `activity_end`: signed integer year; BCE years are negative
-- `role`: English role label for this activity period
-- `period_basis`: controlled activity-period type
-- `notes`: English explanatory note
+- `atlas_v2.persons`
+- `atlas_v2.person_names`
+- `atlas_v2.polities`
+- `atlas_v2.polity_names`
+- `atlas_v2.roles`
+- `atlas_v2.role_names`
+- `atlas_v2.period_bases`
+- `atlas_v2.person_politics_v2`
 
-## Cardinality
+`atlas_v2.person_politics_v2` is the authoritative person–polity activity relationship table. Each row has its own normalized UUID and links normalized person/polity identities plus chronology, optional role, period basis, notes, confidence/chronology metadata and provenance.
 
-A person may have multiple rows. This is intentional and represents a one-to-many relationship between Person and PersonActivity.
+## Identity
 
-Examples:
+Person and polity identity is UUID-based. Human-readable names are resolved through normalized name tables; names are not primary identity keys.
 
-- Napoleon I: 1804–1814 reign; 1815 reign
-- Tokugawa Ieyasu: 1603–1605 reign; 1605–1616 de facto rule
+The runtime uses exact resolution and fails closed when an identity is unresolved or ambiguous. Fuzzy similarity is not an automatic write/merge rule.
 
-## Identity rule
+## Activity relationship semantics
 
-Until the normalized `persons` table is introduced, `person_name` is the temporary canonical person identity. New records must use one canonical English name consistently.
+A person may have multiple activity rows. Multiple rows are valid when they represent distinct reigns, terms, political entities, military periods, intellectual periods, or other historically separate activity intervals.
 
-## Duplicate key
+The relationship identity used for new semantic-duplicate prevention is based on the resolved normalized person, polity, chronology, nullable role and period basis. Existing historical duplicate cases are not silently merged by runtime code.
 
-The current activity identity key is:
+`role_id` is nullable. A missing role is stored as SQL `NULL`; no synthetic `unspecified` role is created.
 
-`person_name + politic_name + activity_start + activity_end`
+## Read projection
 
-The ingest reconciler removes duplicate keys and removes obsolete activity periods for persons managed by `pending-records.json`.
+Production reads are assembled directly from normalized tables by the server read service:
 
-## Future normalized schema
+`person_politics_v2 + person_names + polity_names + roles + period_bases`
 
-The current table can later migrate without changing activity semantics:
+The browser receives the familiar projection fields (`id`, person name, polity name, start/end year, role, period basis, notes), but the returned `id` is the normalized relationship UUID.
 
-- `persons(id, canonical_name, ...)`
-- `polities(id, canonical_name, ...)`
-- `person_activities(id, person_id, polity_id, activity_start, activity_end, role, period_basis, notes, ...)`
+## Write model
 
-The present dataset is already structured so each existing row maps directly to one future `person_activities` row.
+Production create/update/delete/import operations use the v2-authoritative PostgreSQL transaction path only.
+
+- create/import records receive normalized UUIDs and runtime provenance
+- update/delete address the normalized relationship UUID directly
+- duplicate introduction fails closed
+- exact request/provenance semantics are retained for replay/idempotency where supported
+
+## Retired legacy model
+
+`public.person_politics` was the original MVP activity table and is no longer an application model. `public.atlas_person_politics_compat_v1` was a temporary compatibility projection during migration.
+
+Neither object is a valid runtime dependency. C9 is the final database-object retirement stage for those two transitional objects.
+
+Historical Phase 6–8 migration documents and evidence may still mention the retired names; those files are audit/history material, not current architecture.
