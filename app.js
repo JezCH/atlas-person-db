@@ -233,6 +233,12 @@
       && !outcome?.errors?.length;
   }
 
+  function canonicalIfUnchanged(typed, displayValue, canonicalValue) {
+    const value = String(typed ?? "").trim();
+    if (displayValue != null && value === String(displayValue).trim()) return canonicalValue;
+    return value;
+  }
+
   async function saveRecord(event) {
     event.preventDefault();
     if (!writeAdapter) {
@@ -247,12 +253,24 @@
       els.error.hidden = false;
       return;
     }
+    const id = els.id.value;
+    const existing = id ? records.find((record) => String(record.id) === String(id)) : null;
+    const view = existing ? withDisplayValues(existing) : null;
+    const personName = existing
+      ? canonicalIfUnchanged(els.person.value, view.display_person, existing.person_name)
+      : els.person.value.trim();
+    const politicName = existing
+      ? canonicalIfUnchanged(els.politic.value, view.display_politic, existing.politic_name)
+      : els.politic.value.trim();
+    const roleInput = els.role.value.trim();
+    const role = roleInput === "" ? null : (existing
+      ? canonicalIfUnchanged(roleInput, view.display_role, existing.role)
+      : roleInput);
     const payload = {
-      person_name: els.person.value.trim(), politic_name: els.politic.value.trim(),
-      activity_start: start, activity_end: end, role: els.role.value.trim() || null,
+      person_name: personName, politic_name: politicName,
+      activity_start: start, activity_end: end, role,
       period_basis: els.basis.value, notes: els.notes.value.trim() || null
     };
-    const id = els.id.value;
     const outcome = id
       ? await writeAdapter.updateActivity(id, payload)
       : await writeAdapter.createActivity(payload);
@@ -283,11 +301,15 @@
       const view = withDisplayValues(r);
       return {
         "인물": view.display_person, "정치체": view.display_politic, "활동 시작연도": r.activity_start,
-        "활동 종료연도": r.activity_end, "역할": view.display_role, "기간 기준": basisLabels[r.period_basis] || r.period_basis || "", "비고": r.notes || ""
+        "활동 종료연도": r.activity_end, "역할": view.display_role, "기간 기준": basisLabels[r.period_basis] || r.period_basis || "", "비고": r.notes || "",
+        "__person_name": r.person_name, "__politic_name": r.politic_name, "__role": r.role || ""
       };
     });
     const ws = XLSX.utils.json_to_sheet(rows);
-    ws["!cols"] = [{wch:24},{wch:28},{wch:14},{wch:14},{wch:22},{wch:16},{wch:40}];
+    ws["!cols"] = [
+      {wch:24},{wch:28},{wch:14},{wch:14},{wch:22},{wch:16},{wch:40},
+      {wch:2, hidden:true},{wch:2, hidden:true},{wch:2, hidden:true}
+    ];
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Person Politics");
     XLSX.writeFile(wb, `atlas-person-db-${new Date().toISOString().slice(0,10)}.xlsx`);
@@ -304,9 +326,11 @@
     const wb = XLSX.read(buffer);
     const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: "" });
     const payload = rows.map((r) => ({
-      person_name: String(r["인물"] || r.person_name || "").trim(), politic_name: String(r["정치체"] || r["Politic"] || r.politic_name || "").trim(),
+      person_name: String(r["__person_name"] || r["인물"] || r.person_name || "").trim(),
+      politic_name: String(r["__politic_name"] || r["정치체"] || r["Politic"] || r.politic_name || "").trim(),
       activity_start: Number(r["활동 시작연도"] ?? r.activity_start), activity_end: Number(r["활동 종료연도"] ?? r.activity_end),
-      role: String(r["역할"] || r.role || "").trim() || null, period_basis: resolveBasis(r["기간 기준"] || r.period_basis),
+      role: String(r["__role"] || r["역할"] || r.role || "").trim() || null,
+      period_basis: resolveBasis(r["기간 기준"] || r.period_basis),
       notes: String(r["비고"] || r.notes || "").trim() || null
     })).filter((r) => r.person_name && r.politic_name && Number.isFinite(r.activity_start) && Number.isFinite(r.activity_end) && r.activity_end >= r.activity_start);
     if (!payload.length) return showToast("가져올 수 있는 유효한 행이 없습니다.");
