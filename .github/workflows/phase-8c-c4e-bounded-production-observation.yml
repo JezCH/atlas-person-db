@@ -1,0 +1,91 @@
+name: Phase 8C C4E Bounded Production Dual Write Observation
+
+on:
+  pull_request:
+    paths:
+      - "migration/phase-8/scripts/phase8c-c4e-bounded-production-observation.mjs"
+      - "tests/phase8c-c4e-observation-contract.test.mjs"
+      - ".github/workflows/phase-8c-c4e-bounded-production-observation.yml"
+      - "migration/phase-8/PHASE_8C_C4E_BOUNDED_PRODUCTION_OBSERVATION.md"
+  workflow_dispatch:
+    inputs:
+      approved_sha:
+        description: Exact main SHA approved for committed production observation
+        required: true
+        type: string
+      confirm:
+        description: Type PHASE8C_C4E_COMMITTED_DUALWRITE_OBSERVATION
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: atlas-phase8c-c4e-bounded-production-observation
+  cancel-in-progress: false
+
+jobs:
+  static-contract:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run observation contract tests
+        run: node --test tests/phase8c-c4e-observation-contract.test.mjs
+      - name: Verify committed observation boundaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -n "rollback_only: false" migration/phase-8/scripts/phase8c-c4e-bounded-production-observation.mjs
+          grep -n "public_write_policies: 0" migration/phase-8/scripts/phase8c-c4e-bounded-production-observation.mjs
+          grep -n "cleanup_fallback_used: false" migration/phase-8/scripts/phase8c-c4e-bounded-production-observation.mjs
+          grep -n "mixed_import_null_and_role: true" migration/phase-8/scripts/phase8c-c4e-bounded-production-observation.mjs
+
+  protected-observe:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: phase-5-shadow
+    steps:
+      - name: Guard exact SHA and confirmation
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "${{ inputs.confirm }}" = "PHASE8C_C4E_COMMITTED_DUALWRITE_OBSERVATION"
+          test "${{ inputs.approved_sha }}" = "${{ github.sha }}"
+
+      - name: Checkout approved SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.approved_sha }}
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install server dependency
+        run: npm install --no-package-lock --ignore-scripts --no-audit --no-fund
+
+      - name: Run committed bounded dual-write observation
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p migration/phase-8/tmp/phase8c-c4e-observation
+          node migration/phase-8/scripts/phase8c-c4e-bounded-production-observation.mjs \
+            | tee migration/phase-8/tmp/phase8c-c4e-observation/report.json
+
+      - name: Upload evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase8c-c4e-observation-${{ inputs.approved_sha }}
+          path: migration/phase-8/tmp/phase8c-c4e-observation
+          if-no-files-found: error
+          retention-days: 90
