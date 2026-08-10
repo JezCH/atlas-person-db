@@ -20,15 +20,43 @@ function preferredName(rows, locale) {
     || null;
 }
 
+function semanticKey(row) {
+  return [
+    String(row.polity_id),
+    row.role_id == null ? '' : String(row.role_id),
+    String(row.period_basis_id),
+    Number(row.activity_start),
+    Number(row.activity_end)
+  ].join('|');
+}
+
+function internalDuplicateGroups(rows) {
+  const groups = new Map();
+  for (const row of rows) {
+    const key = semanticKey(row);
+    const list = groups.get(key) || [];
+    list.push(row);
+    groups.set(key, list);
+  }
+  return [...groups.entries()]
+    .filter(([, list]) => list.length > 1)
+    .map(([key, list]) => ({ semantic_key: key, relationship_ids: list.map((row) => row.id), rows: list }));
+}
+
 await client.connect();
 try {
   await client.query('begin transaction isolation level repeatable read read only');
 
-  const [peopleResult, namesResult, activitiesResult, polityNamesResult] = await Promise.all([
+  const [peopleResult, namesResult, activitiesResult, polityNamesResult, roleNamesResult] = await Promise.all([
     client.query(`select id,canonical_key,person_type,historicity from atlas_v2.persons order by id`),
     client.query(`select person_id,name,locale,is_preferred from atlas_v2.person_names order by person_id,is_preferred desc,locale,name`),
-    client.query(`select person_id,polity_id,activity_start,activity_end from atlas_v2.person_politics_v2 order by person_id,activity_start,activity_end,polity_id`),
-    client.query(`select polity_id,name,locale,is_preferred from atlas_v2.polity_names where is_preferred=true order by polity_id,locale,name`)
+    client.query(`
+      select id,person_id,polity_id,role_id,period_basis_id,activity_start,activity_end,notes,source_locator
+        from atlas_v2.person_politics_v2
+       order by person_id,activity_start,activity_end,polity_id,role_id,id
+    `),
+    client.query(`select polity_id,name,locale,is_preferred from atlas_v2.polity_names where is_preferred=true order by polity_id,locale,name`),
+    client.query(`select role_id,name,locale,is_preferred from atlas_v2.role_names where is_preferred=true order by role_id,locale,name`)
   ]);
 
   const names = namesResult.rows || [];
@@ -43,26 +71,39 @@ try {
     namesByPerson.set(key, list);
   }
 
-  const polityNames = new Map();
-  for (const row of polityNamesResult.rows || []) {
-    const key = String(row.polity_id);
-    const item = polityNames.get(key) || {};
-    if (row.locale === 'ko') item.ko = String(row.name);
-    if (row.locale === 'en') item.en = String(row.name);
-    polityNames.set(key, item);
-  }
+  const localized = (rows, idField) => {
+    const map = new Map();
+    for (const row of rows || []) {
+      const key = String(row[idField]);
+      const item = map.get(key) || {};
+      if (row.locale === 'ko') item.ko = String(row.name);
+      if (row.locale === 'en') item.en = String(row.name);
+      map.set(key, item);
+    }
+    return map;
+  };
+  const polityNames = localized(polityNamesResult.rows, 'polity_id');
+  const roleNames = localized(roleNamesResult.rows, 'role_id');
 
   const activitiesByPerson = new Map();
   for (const row of activities) {
     const key = String(row.person_id);
     const list = activitiesByPerson.get(key) || [];
     const polity = polityNames.get(String(row.polity_id)) || {};
+    const role = row.role_id == null ? {} : (roleNames.get(String(row.role_id)) || {});
     list.push({
+      id: String(row.id),
       polity_id: String(row.polity_id),
       polity_ko: polity.ko || null,
       polity_en: polity.en || null,
+      role_id: row.role_id == null ? null : String(row.role_id),
+      role_ko: role.ko || null,
+      role_en: role.en || null,
+      period_basis_id: String(row.period_basis_id),
       activity_start: Number(row.activity_start),
-      activity_end: Number(row.activity_end)
+      activity_end: Number(row.activity_end),
+      notes: row.notes || null,
+      source_locator: row.source_locator || null
     });
     activitiesByPerson.set(key, list);
   }
@@ -71,6 +112,7 @@ try {
   const decorate = (personId) => {
     const personNames = namesByPerson.get(personId) || [];
     const meta = personMeta.get(personId) || {};
+    const personActivities = activitiesByPerson.get(personId) || [];
     return {
       id: personId,
       canonical_key: meta.canonical_key || null,
@@ -79,18 +121,47 @@ try {
       display_ko: preferredName(personNames, 'ko'),
       display_en: preferredName(personNames, 'en'),
       names: personNames,
-      activities: activitiesByPerson.get(personId) || []
+      activities: personActivities,
+      internal_relationship_duplicates: internalDuplicateGroups(personActivities)
     };
   };
 
-  const candidates = detected.map((candidate) => ({
-    confidence: candidate.confidence,
-    detector_version: candidate.detector_version,
-    evidence_fingerprint: candidate.evidence_fingerprint,
-    evidence: candidate.evidence,
-    low: decorate(String(candidate.person_low_id)),
-    high: decorate(String(candidate.person_high_id))
-  }));
+  const candidates = detected.map((candidate) => {
+    const low = decorate(String(candidate.person_low_id));
+    const high = decorate(String(candidate.person_high_id));
+    const highBySemanticKey = new Map();
+    for (const row of high.activities) {
+      const key = semanticKey(row);
+      const list = highBySemanticKey.get(key) || [];
+      list.push(row);
+      highBySemanticKey.set(key, list);
+    }
+    const semanticCollisions = [];
+    for (const lowRow of low.activities) {
+      for (const highRow of highBySemanticKey.get(semanticKey(lowRow)) || []) {
+        semanticCollisions.push({
+          semantic_key: semanticKey(lowRow),
+          low_relationship_id: lowRow.id,
+          high_relationship_id: highRow.id,
+          low_row: lowRow,
+          high_row: highRow
+        });
+      }
+    }
+    return {
+      confidence: candidate.confidence,
+      detector_version: candidate.detector_version,
+      evidence_fingerprint: candidate.evidence_fingerprint,
+      evidence: candidate.evidence,
+      semantic_relationship_collisions: semanticCollisions,
+      merge_ready_without_relationship_reconciliation:
+        semanticCollisions.length === 0
+        && low.person_type === high.person_type
+        && low.historicity === high.historicity,
+      low,
+      high
+    };
+  });
 
   const report = {
     marker: 'PHASE9C_LIVE_CANDIDATE_PREVIEW',
@@ -104,7 +175,10 @@ try {
       detected_candidates: candidates.length,
       confidence_090_plus: candidates.filter((item) => item.confidence >= 0.9).length,
       confidence_075_08999: candidates.filter((item) => item.confidence >= 0.75 && item.confidence < 0.9).length,
-      confidence_below_075: candidates.filter((item) => item.confidence < 0.75).length
+      confidence_below_075: candidates.filter((item) => item.confidence < 0.75).length,
+      merge_ready_without_relationship_reconciliation: candidates.filter((item) => item.merge_ready_without_relationship_reconciliation).length,
+      candidates_with_relationship_collisions: candidates.filter((item) => item.semantic_relationship_collisions.length > 0).length,
+      persons_with_internal_relationship_duplicates: new Set(candidates.flatMap((item) => [item.low, item.high]).filter((person) => person.internal_relationship_duplicates.length > 0).map((person) => person.id)).size
     },
     candidates
   };
