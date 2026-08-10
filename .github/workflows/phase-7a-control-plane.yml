@@ -9,6 +9,7 @@ on:
       - "app.js"
       - "index.html"
       - "migration/phase-7/scripts/phase7a-contract.mjs"
+      - "tests/phase8c-c6-direct-normalized-read-activation.test.mjs"
       - ".github/workflows/phase-7a-control-plane.yml"
   workflow_dispatch:
 
@@ -27,5 +28,12 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Run Phase 7A contract
-        run: node migration/phase-7/scripts/phase7a-contract.mjs
+      - name: Run source-control contract or C6 successor contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -Fq 'ATLAS_READER_V2_DIRECT' atlas-reader.js; then
+            node --test tests/phase8c-c6-direct-normalized-read-activation.test.mjs
+          else
+            node migration/phase-7/scripts/phase7a-contract.mjs
+          fi

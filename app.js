@@ -1,9 +1,6 @@
 (() => {
   "use strict";
 
-  const config = window.ATLAS_CONFIG || {};
-  const configured = config.SUPABASE_URL && config.SUPABASE_ANON_KEY && !config.SUPABASE_URL.includes("YOUR_PROJECT_ID") && !config.SUPABASE_ANON_KEY.includes("YOUR_SUPABASE");
-  const db = configured ? window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY) : null;
   const writeAdapter = window.ATLAS_SERVER_WRITE_ADAPTER
     ? window.ATLAS_SERVER_WRITE_ADAPTER.createAdapter()
     : null;
@@ -181,33 +178,23 @@
   }
 
   async function loadRecords() {
-    if (!db) {
-      setStatus("warn", "Supabase 설정 필요");
-      records = [];
-      render();
-      return;
-    }
     if (!window.AtlasReader) {
       setStatus("error", "Reader 모듈 누락");
       showToast("데이터 리더 모듈을 불러오지 못했습니다.");
       return;
     }
     setStatus("warn", "데이터 불러오는 중");
-    const result = await window.AtlasReader.loadPersonPolitics({
-      client: db,
-      source: window.ATLAS_DATA_SOURCE || "legacy",
-      fallbackToLegacy: true
-    });
+    const result = await window.AtlasReader.loadPersonPolitics();
     if (result.error) {
       console.error(result.error, result.diagnostics || []);
-      setStatus("error", "DB 연결 실패");
+      setStatus("error", "V2 읽기 실패");
       showToast(`불러오기 실패: ${result.error.message}`);
       return;
     }
     records = result.data || [];
     if (selectedId && !selectedRecord()) selectedId = null;
     if ((result.diagnostics || []).length) console.warn("AtlasReader diagnostics", result.diagnostics);
-    setStatus("ok", result.source === "v2-shadow" ? "V2 연결됨" : "온라인 저장 연결됨");
+    setStatus("ok", result.source === "v2-direct" ? "Normalized V2 연결됨" : "데이터 연결됨");
     render();
   }
 
@@ -239,7 +226,7 @@
 
   async function saveRecord(event) {
     event.preventDefault();
-    if (!db || !writeAdapter) {
+    if (!writeAdapter) {
       els.error.textContent = "ATLAS 쓰기 계층을 사용할 수 없습니다.";
       els.error.hidden = false;
       return;
@@ -273,7 +260,7 @@
   }
 
   async function deleteRecord(id) {
-    if (!db || !writeAdapter || !confirm("이 기록을 삭제할까요?")) return;
+    if (!writeAdapter || !confirm("이 기록을 삭제할까요?")) return;
     const outcome = await writeAdapter.deleteActivity(id);
     if (!mutationSucceeded(outcome)) return showToast(`삭제 실패: ${adapterError(outcome)}`);
     if (String(selectedId) === String(id)) selectedId = null;
@@ -300,7 +287,7 @@
   }
 
   async function importExcel(file) {
-    if (!db || !writeAdapter) return showToast("ATLAS 쓰기 계층을 사용할 수 없습니다.");
+    if (!writeAdapter) return showToast("ATLAS 쓰기 계층을 사용할 수 없습니다.");
     const buffer = await file.arrayBuffer();
     const wb = XLSX.read(buffer);
     const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: "" });

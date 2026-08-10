@@ -8,7 +8,6 @@
   <meta http-equiv="Expires" content="0" />
   <title>ATLAS Admin</title>
   <link rel="stylesheet" href="./admin.css?v=20260809-admin-v2-reset-current" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
   <main class="admin-shell">
@@ -34,7 +33,7 @@
       <div class="panel-head">
         <div>
           <h2 id="input-title">최소 JSON 입력</h2>
-          <p>저장은 관리자 인증 후 ATLAS 서버 mutation 계층을 통해 normalized v2에 authoritative 방식으로 반영됩니다.</p>
+          <p>조회는 normalized v2 direct API, 저장은 관리자 인증 서버 mutation 계층의 v2-authoritative 경로만 사용합니다.</p>
         </div>
         <button id="sampleButton" class="button secondary" type="button">예시 불러오기</button>
       </div>
@@ -61,7 +60,6 @@
       loader.src = `./asset-loader.js?bootstrap=${Date.now()}-${Math.random().toString(36).slice(2)}`;
       loader.onload = () => {
         window.ATLAS_ASSETS.loadSeries([
-          "./config.js",
           "./atlas-server-write-adapter.js",
           "./atlas-admin-write-service.js",
           "./admin.js"

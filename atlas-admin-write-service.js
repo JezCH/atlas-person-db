@@ -13,9 +13,28 @@
       && !result?.errors?.length;
   }
 
-  function createAdminWriteService({ db, adapterApi } = {}) {
-    if (!db || typeof db.from !== "function") throw new Error("A Supabase-compatible db client is required for read lookup");
+  async function loadDirectRows({ fetchImpl, endpoint }) {
+    const response = await fetchImpl(endpoint, {
+      method: "GET",
+      credentials: "same-origin",
+      cache: "no-store",
+      headers: { accept: "application/json" }
+    });
+    let body = null;
+    try { body = await response.json(); } catch { body = null; }
+    if (!response.ok || body?.ok !== true || body?.source !== "v2-direct" || !Array.isArray(body?.data)) {
+      throw new Error(body?.error || `normalized read failed (${response.status})`);
+    }
+    return body.data;
+  }
+
+  function createAdminWriteService({
+    adapterApi,
+    fetchImpl = globalThis.fetch,
+    readEndpoint = "/api/atlas-read"
+  } = {}) {
     if (!adapterApi || typeof adapterApi.createAdapter !== "function") throw new Error("ATLAS server write adapter is required");
+    if (typeof fetchImpl !== "function") throw new Error("fetch implementation is required for normalized read lookup");
 
     const adapter = adapterApi.createAdapter();
 
@@ -24,31 +43,35 @@
         return { inserted: 0, updated: 0, failures: ["at least one row is required"], mode: adapter.mode };
       }
 
+      let existingRows;
+      try {
+        existingRows = await loadDirectRows({ fetchImpl, endpoint: readEndpoint });
+      } catch (error) {
+        return { inserted: 0, updated: 0, failures: [`normalized lookup failed - ${error.message || error}`], mode: adapter.mode };
+      }
+
+      const byKey = new Map();
+      for (const existing of existingRows) {
+        const key = activityKey(existing);
+        const ids = byKey.get(key) || [];
+        ids.push(String(existing.id));
+        byKey.set(key, ids);
+      }
+
       let inserted = 0;
       let updated = 0;
       const failures = [];
 
       for (const row of rows) {
-        const { data, error: lookupError } = await db
-          .from("atlas_person_politics_compat_v1")
-          .select("id")
-          .eq("person_name", row.person_name)
-          .eq("politic_name", row.politic_name)
-          .eq("activity_start", row.activity_start)
-          .eq("activity_end", row.activity_end)
-          .limit(2);
-
-        if (lookupError) {
-          failures.push(`${row.person_name}: lookup failed - ${lookupError.message || lookupError}`);
-          continue;
-        }
-        if ((data || []).length > 1) {
+        const key = activityKey(row);
+        const ids = byKey.get(key) || [];
+        if (ids.length > 1) {
           failures.push(`${row.person_name}: normalized activity lookup is ambiguous; review required`);
           continue;
         }
 
-        const result = data?.length === 1
-          ? await adapter.updateActivity(data[0].id, row)
+        const result = ids.length === 1
+          ? await adapter.updateActivity(ids[0], row)
           : await adapter.createActivity(row);
 
         if (!mutationSucceeded(result)) {
@@ -57,8 +80,17 @@
           continue;
         }
 
-        if (data?.length === 1) updated += 1;
-        else inserted += 1;
+        if (ids.length === 1) {
+          updated += 1;
+        } else {
+          const newId = result?.v2?.normalized_relationship_ids?.[0];
+          if (!newId) {
+            failures.push(`${row.person_name}: committed create did not return normalized id`);
+            continue;
+          }
+          byKey.set(key, [String(newId)]);
+          inserted += 1;
+        }
       }
 
       return { inserted, updated, failures, mode: adapter.mode };
@@ -67,7 +99,7 @@
     return Object.freeze({ saveRows, activityKey, mode: adapter.mode });
   }
 
-  const api = Object.freeze({ createAdminWriteService, activityKey });
+  const api = Object.freeze({ createAdminWriteService, activityKey, loadDirectRows });
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   if (typeof window !== "undefined") window.ATLAS_ADMIN_WRITE_SERVICE = api;
 })();

@@ -1,21 +1,14 @@
 (() => {
   "use strict";
 
-  const VALID_SOURCES = new Set(["legacy", "v2-shadow"]);
-  const ORDER = ["politic_name", "activity_start", "activity_end", "person_name"];
+  const MARKER = "ATLAS_READER_V2_DIRECT";
+  const SOURCE = "v2-direct";
+  const DEFAULT_ENDPOINT = "/api/atlas-read";
   const PERIOD_BASES = new Set([
     "reign", "term", "de_facto_rule", "military_activity",
     "religious_activity", "intellectual_activity", "artistic_activity",
     "general_activity"
   ]);
-
-  function resolveSource(source) {
-    const configured = source || window.ATLAS_DATA_SOURCE || "legacy";
-    if (!VALID_SOURCES.has(configured)) {
-      return { source: "legacy", diagnostic: `invalid source '${configured}', using legacy` };
-    }
-    return { source: configured, diagnostic: null };
-  }
 
   function validateRows(rows) {
     const failures = [];
@@ -39,67 +32,69 @@
     return failures;
   }
 
-  function tableFor(source) {
-    return source === "v2-shadow" ? "atlas_person_politics_compat_v1" : "person_politics";
-  }
-
-  async function queryRows(client, source) {
-    let query = client.from(tableFor(source)).select("id,person_name,politic_name,activity_start,activity_end,role,period_basis,notes");
-    ORDER.forEach((column) => { query = query.order(column); });
-    return query;
-  }
-
-  function emitOutcome({ requestedSource, effectiveSource, fallback, rows, validationFailures }) {
+  function emitOutcome({ rows, validationFailures }) {
     window.AtlasReaderObservability?.record({
-      requested_source: requestedSource,
-      effective_source: effectiveSource,
-      fallback,
+      requested_source: SOURCE,
+      effective_source: SOURCE,
+      fallback: false,
       row_count: rows,
       validation_failures: validationFailures
     });
   }
 
-  async function loadPersonPolitics({ client, source, fallbackToLegacy = true } = {}) {
-    const requestedSource = source || window.ATLAS_DATA_SOURCE || "legacy";
-    if (!client) {
-      emitOutcome({ requestedSource, effectiveSource: "legacy", fallback: false, rows: 0, validationFailures: 1 });
-      return { data: null, error: new Error("Supabase client is required"), source: "legacy", diagnostics: ["missing client"] };
+  async function readJson(response) {
+    try {
+      return await response.json();
+    } catch {
+      return null;
     }
-    const resolved = resolveSource(source);
-    const diagnostics = resolved.diagnostic ? [resolved.diagnostic] : [];
-    const primary = await queryRows(client, resolved.source);
-    if (!primary.error) {
-      const failures = validateRows(primary.data || []);
-      if (!failures.length) {
-        emitOutcome({ requestedSource, effectiveSource: resolved.source, fallback: false, rows: (primary.data || []).length, validationFailures: 0 });
-        return { data: primary.data || [], error: null, source: resolved.source, diagnostics };
-      }
-      diagnostics.push(...failures);
-      if (resolved.source !== "v2-shadow" || !fallbackToLegacy) {
-        emitOutcome({ requestedSource, effectiveSource: resolved.source, fallback: false, rows: (primary.data || []).length, validationFailures: failures.length });
-      }
-    } else {
-      diagnostics.push(`${resolved.source} read failed: ${primary.error.message}`);
-    }
-
-    if (resolved.source === "v2-shadow" && fallbackToLegacy) {
-      const fallback = await queryRows(client, "legacy");
-      if (!fallback.error) {
-        const failures = validateRows(fallback.data || []);
-        if (!failures.length) {
-          diagnostics.push("fallback to legacy");
-          emitOutcome({ requestedSource, effectiveSource: "legacy", fallback: true, rows: (fallback.data || []).length, validationFailures: diagnostics.filter((item) => !String(item).includes("fallback to legacy")).length });
-          return { data: fallback.data || [], error: null, source: "legacy", diagnostics };
-        }
-        diagnostics.push(...failures);
-      } else {
-        diagnostics.push(`legacy fallback failed: ${fallback.error.message}`);
-      }
-    }
-
-    emitOutcome({ requestedSource, effectiveSource: resolved.source, fallback: false, rows: 0, validationFailures: diagnostics.length || 1 });
-    return { data: null, error: primary.error || new Error("Row contract validation failed"), source: resolved.source, diagnostics };
   }
 
-  window.AtlasReader = Object.freeze({ loadPersonPolitics, validateRows, resolveSource });
+  async function loadPersonPolitics({
+    fetchImpl = globalThis.fetch,
+    endpoint = DEFAULT_ENDPOINT
+  } = {}) {
+    const diagnostics = [];
+    if (typeof fetchImpl !== "function") {
+      const error = new Error("fetch implementation is required");
+      emitOutcome({ rows: 0, validationFailures: 1 });
+      return { data: null, error, source: SOURCE, diagnostics: [error.message] };
+    }
+
+    try {
+      const response = await fetchImpl(endpoint, {
+        method: "GET",
+        credentials: "same-origin",
+        cache: "no-store",
+        headers: { accept: "application/json" }
+      });
+      const body = await readJson(response);
+      if (!response.ok || body?.ok !== true || body?.source !== SOURCE || !Array.isArray(body?.data)) {
+        const message = body?.error || `normalized read failed (${response.status})`;
+        throw new Error(message);
+      }
+
+      const failures = validateRows(body.data);
+      if (failures.length) {
+        diagnostics.push(...failures);
+        emitOutcome({ rows: body.data.length, validationFailures: failures.length });
+        return { data: null, error: new Error("Row contract validation failed"), source: SOURCE, diagnostics };
+      }
+
+      emitOutcome({ rows: body.data.length, validationFailures: 0 });
+      return { data: body.data, error: null, source: SOURCE, diagnostics };
+    } catch (error) {
+      diagnostics.push(error?.message || String(error));
+      emitOutcome({ rows: 0, validationFailures: diagnostics.length });
+      return { data: null, error, source: SOURCE, diagnostics };
+    }
+  }
+
+  window.AtlasReader = Object.freeze({
+    MARKER,
+    SOURCE,
+    DEFAULT_ENDPOINT,
+    loadPersonPolitics,
+    validateRows
+  });
 })();

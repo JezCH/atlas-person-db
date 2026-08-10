@@ -70,16 +70,11 @@
   }
 
   async function saveRows() {
-    const config = window.ATLAS_CONFIG || {};
     const adapterApi = window.ATLAS_SERVER_WRITE_ADAPTER;
     const serviceApi = window.ATLAS_ADMIN_WRITE_SERVICE;
 
-    if (!config.SUPABASE_URL || !config.SUPABASE_ANON_KEY || !window.supabase) {
-      setResult("Supabase 읽기 설정을 찾을 수 없습니다.", "error");
-      return;
-    }
     if (!adapterApi || !serviceApi) {
-      setResult("ATLAS 인증 서버 쓰기 계층을 불러오지 못했습니다.", "error");
+      setResult("ATLAS V2 읽기/쓰기 계층을 불러오지 못했습니다.", "error");
       return;
     }
 
@@ -95,8 +90,7 @@
     setResult(`${rows.length}개 레코드를 처리하는 중...`);
 
     try {
-      const db = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
-      const service = serviceApi.createAdminWriteService({ db, adapterApi });
+      const service = serviceApi.createAdminWriteService({ adapterApi });
       const outcome = await service.saveRows(rows);
       const lines = [
         `완료: ${rows.length}개 처리`,
