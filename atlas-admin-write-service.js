@@ -7,6 +7,12 @@
       .toLowerCase();
   }
 
+  function mutationSucceeded(result) {
+    return result?.committed === true
+      && result?.v2?.committed === true
+      && !result?.errors?.length;
+  }
+
   function createAdminWriteService({ db, adapterApi } = {}) {
     if (!db || typeof db.from !== "function") throw new Error("A Supabase-compatible db client is required for read lookup");
     if (!adapterApi || typeof adapterApi.createAdapter !== "function") throw new Error("ATLAS server write adapter is required");
@@ -24,30 +30,34 @@
 
       for (const row of rows) {
         const { data, error: lookupError } = await db
-          .from("person_politics")
+          .from("atlas_person_politics_compat_v1")
           .select("id")
           .eq("person_name", row.person_name)
           .eq("politic_name", row.politic_name)
           .eq("activity_start", row.activity_start)
           .eq("activity_end", row.activity_end)
-          .limit(1);
+          .limit(2);
 
         if (lookupError) {
           failures.push(`${row.person_name}: lookup failed - ${lookupError.message || lookupError}`);
           continue;
         }
+        if ((data || []).length > 1) {
+          failures.push(`${row.person_name}: normalized activity lookup is ambiguous; review required`);
+          continue;
+        }
 
-        const result = data?.length
+        const result = data?.length === 1
           ? await adapter.updateActivity(data[0].id, row)
           : await adapter.createActivity(row);
 
-        if (result.errors?.length || !result.legacy?.committed) {
-          const detail = result.errors?.length ? result.errors.join("; ") : "server mutation was not committed";
+        if (!mutationSucceeded(result)) {
+          const detail = result?.errors?.length ? result.errors.join("; ") : "v2-only server mutation was not committed";
           failures.push(`${row.person_name}: ${detail}`);
           continue;
         }
 
-        if (data?.length) updated += 1;
+        if (data?.length === 1) updated += 1;
         else inserted += 1;
       }
 

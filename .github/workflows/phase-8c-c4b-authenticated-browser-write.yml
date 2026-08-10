@@ -43,9 +43,11 @@ jobs:
           grep -n 'credentials: "same-origin"' atlas-server-write-adapter.js
           grep -n 'HttpOnly' server/atlas-session-auth.js
           grep -n 'SameSite=Strict' server/atlas-session-auth.js
-      - name: Prove production write activation is not part of this unit
+      - name: Prove authenticated browser boundary remains production-selected
         shell: bash
         run: |
           set -euo pipefail
-          ! grep -n 'atlas-server-write-adapter.js' index.html
-          ! grep -n 'atlas-server-write-adapter.js' admin.html
+          grep -n 'atlas-server-write-adapter.js' index.html
+          grep -n 'atlas-server-write-adapter.js' admin.html
+          ! grep -n 'atlas-write-adapter.js' index.html admin.html
+          ! grep -n 'ATLAS_MUTATION_TOKEN' app.js admin.js atlas-server-write-adapter.js

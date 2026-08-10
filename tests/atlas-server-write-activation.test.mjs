@@ -20,9 +20,11 @@ test('authoring app selects only the authenticated server write adapter', () => 
   assert.equal(app.includes('window.ATLAS_WRITE_ADAPTER'), false);
   assert.equal(app.includes('window.ATLAS_WRITE_MODE'), false);
   assert.equal(app.includes('window.ATLAS_V2_SHADOW_COMPILER'), false);
+  assert.equal(app.includes('outcome.legacy?.committed'), false);
+  assert.equal(app.includes('outcome.v2.normalized_relationship_ids'), true);
 });
 
-test('admin selects server adapter and retains Supabase only for read lookup', () => {
+test('admin uses normalized compatibility lookup and never client-writes either store', () => {
   assert.equal(adminHtml.includes('./atlas-server-write-adapter.js'), true);
   assert.equal(adminHtml.includes('./atlas-write-adapter.js'), false);
   assert.equal(adminHtml.includes('./atlas-write-mode.js'), false);
@@ -31,7 +33,8 @@ test('admin selects server adapter and retains Supabase only for read lookup', (
   assert.equal(admin.includes('window.ATLAS_WRITE_ADAPTER'), false);
   assert.equal(admin.includes('window.ATLAS_WRITE_MODE'), false);
   assert.equal(admin.includes('window.ATLAS_V2_SHADOW_COMPILER'), false);
-  assert.equal(adminService.includes('.from("person_politics")'), true);
+  assert.equal(adminService.includes('.from("atlas_person_politics_compat_v1")'), true);
+  assert.equal(adminService.includes('.from("person_politics")'), false);
   assert.equal(adminService.includes('.select("id")'), true);
   assert.equal(adminService.includes('.insert('), false);
   assert.equal(adminService.includes('.update('), false);

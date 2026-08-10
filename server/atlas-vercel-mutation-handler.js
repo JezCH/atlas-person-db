@@ -1,8 +1,8 @@
 "use strict";
 
-const { createMutationService } = require("./atlas-mutation-service.js");
+const { createV2AuthoritativeMutationService } = require("./atlas-v2-authoritative-mutation-service.js");
 const { createMutationTransport, jsonResponse } = require("./atlas-mutation-transport.js");
-const { createDualWriteTransactionFactory } = require("./atlas-postgres-dualwrite-transaction.js");
+const { createV2AuthoritativeTransactionFactory } = require("./atlas-postgres-v2-authoritative-transaction.js");
 const {
   requireEnv,
   bearerToken,
@@ -43,8 +43,8 @@ function createVercelMutationHandler({ clientFactory, env = process.env, transac
 
     const client = await clientFactory(databaseUrl);
     try {
-      const { transactionFactory, parityVerifier } = createDualWriteTransactionFactory({ client, ...transactionOptions });
-      const mutationService = createMutationService({ planner, transactionFactory, parityVerifier });
+      const { transactionFactory, verificationVerifier } = createV2AuthoritativeTransactionFactory({ client, ...transactionOptions });
+      const mutationService = createV2AuthoritativeMutationService({ planner, transactionFactory, verificationVerifier });
       const transport = createMutationTransport({ mutationService });
       const response = await transport.handle(request);
       sendResponse(res, response);
