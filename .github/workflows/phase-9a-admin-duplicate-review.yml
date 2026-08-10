@@ -8,8 +8,10 @@ on:
       - "server/atlas-person-merge-*.js"
       - "server/atlas-relationship-reconciliation.js"
       - "atlas-admin-duplicate-review.js"
+      - "atlas-admin-session-gate.js"
       - "admin.*"
       - "migration/phase-9/**"
+      - "tests/admin-session-ui-contract.test.mjs"
       - "tests/atlas-duplicate-detector.test.mjs"
       - "tests/phase9a-admin-duplicate-review-contract.test.mjs"
       - "tests/phase9b-person-reference-inventory-contract.test.mjs"
@@ -30,9 +32,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Verify Phase 9 review, merge, and relationship reconciliation contracts
+      - name: Verify Phase 9 review, merge, relationship reconciliation, and admin session contracts
         run: >-
           node --test
+          tests/admin-session-ui-contract.test.mjs
           tests/atlas-duplicate-detector.test.mjs
           tests/phase9a-admin-duplicate-review-contract.test.mjs
           tests/phase9b-person-reference-inventory-contract.test.mjs

@@ -21,7 +21,7 @@ p { color: #657086; line-height: 1.55; }
 .panel-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
 .panel-actions, .candidate-actions, .actions, .filter-row { display: flex; gap: 10px; flex-wrap: wrap; }
 textarea { width: 100%; min-height: 320px; resize: vertical; margin-top: 14px; border: 1px solid #cfd6e3; border-radius: 14px; padding: 16px; font: 14px/1.55 ui-monospace, SFMono-Regular, Consolas, monospace; color: #172033; background: #fbfcff; }
-textarea:focus, .rationale-input:focus, select:focus { outline: 3px solid rgba(89,103,217,.18); border-color: #5967d9; }
+textarea:focus, .rationale-input:focus, select:focus, .auth-password-label input:focus { outline: 3px solid rgba(89,103,217,.18); border-color: #5967d9; }
 .actions { justify-content: flex-end; margin-top: 14px; }
 .button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 16px; border-radius: 11px; border: 1px solid #cfd6e3; font-weight: 800; text-decoration: none; cursor: pointer; background: #fff; color: #273148; }
 .button:disabled { opacity: .55; cursor: wait; }
@@ -83,6 +83,16 @@ code { padding: 2px 6px; border-radius: 6px; background: #eef1f7; overflow-wrap:
 .relationship-resolution-row select, .exact-role-row select { width: 100%; min-height: 42px; border: 1px solid #cfd6e3; border-radius: 9px; padding: 0 10px; background: #fff; color: #172033; font: inherit; font-weight: 600; }
 .exact-role-controls { display: grid; gap: 9px; padding: 10px; border-radius: 9px; background: #faf7ed; border: 1px dashed #ddd0a6; }
 .exact-role-controls > span { color: #7b682e; font-size: 12px; line-height: 1.45; }
+.auth-card { align-items: center; }
+.auth-card[data-authenticated="true"] { border-color: #bfe2cd; background: #f6fcf8; }
+.auth-form { display: grid; grid-template-columns: auto minmax(220px, 320px) auto; gap: 10px; align-items: end; min-width: min(100%, 560px); }
+.auth-form .status-badge { align-self: center; justify-self: end; }
+.auth-password-label { display: grid; gap: 6px; color: #596274; font-size: 12px; font-weight: 900; }
+.auth-password-label input { width: 100%; min-height: 44px; border: 1px solid #cfd6e3; border-radius: 10px; padding: 0 12px; font: inherit; color: #172033; background: #fff; }
+.auth-actions { display: flex; gap: 8px; }
+.admin-protected-area { transition: opacity .15s ease; }
+.admin-protected-area.is-locked { opacity: .58; }
+.admin-protected-area.is-locked::before { content: ""; }
 @media (max-width: 760px) {
   .admin-shell { width: min(100% - 24px, 1180px); padding-top: 22px; }
   .admin-head, .panel-head, .status-card { display: grid; }
@@ -95,4 +105,8 @@ code { padding: 2px 6px; border-radius: 6px; background: #eef1f7; overflow-wrap:
   textarea { min-height: 300px; }
   .actions { display: grid; grid-template-columns: 1fr 1fr; }
   .status-badge { width: fit-content; }
+  .auth-form { grid-template-columns: 1fr; min-width: 0; width: 100%; }
+  .auth-form .status-badge { justify-self: start; }
+  .auth-actions { display: grid; grid-template-columns: 1fr; }
+  .auth-actions .button { width: 100%; }
 }
