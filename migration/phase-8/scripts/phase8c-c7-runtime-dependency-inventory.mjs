@@ -91,6 +91,8 @@ const runtimeReachable = [...new Set([...browserReachable, ...allPublicApiReacha
 const forbidden = [
   ['legacy_public_table', /public\.person_politics\b/],
   ['legacy_rest_table', /rest\/v1\/person_politics\b/],
+  ['legacy_browser_table_query', /\.from\(\s*['"]person_politics['"]\s*\)/],
+  ['browser_supabase_client', /window\.supabase|SUPABASE_ANON_KEY|\bSUPABASE_URL\b/],
   ['compatibility_view', /atlas_person_politics_compat_v1/],
   ['legacy_fallback', /fallbackToLegacy|fallback to legacy/i],
   ['dual_write_mode', /server-dual-write|createDualWriteTransactionFactory|atlas-postgres-dualwrite-transaction/],
