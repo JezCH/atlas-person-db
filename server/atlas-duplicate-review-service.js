@@ -1,0 +1,244 @@
+"use strict";
+
+const crypto = require("node:crypto");
+const { detectPersonDuplicateCandidates } = require("./atlas-duplicate-detector.js");
+
+const DECISIONS = new Set(["MERGE", "KEEP_SEPARATE", "REVIEW"]);
+
+function schemaUnavailable(error) {
+  return error?.code === "42P01" || /person_duplicate_(?:candidates|reviews)/i.test(String(error?.message || ""));
+}
+
+async function loadDetectorInput(client) {
+  const [names, activities] = await Promise.all([
+    client.query(`
+      select person_id, name, locale, is_preferred
+      from atlas_v2.person_names
+      order by person_id, is_preferred desc, locale, name
+    `),
+    client.query(`
+      select person_id, polity_id, activity_start, activity_end
+      from atlas_v2.person_politics_v2
+      order by person_id, activity_start, activity_end, polity_id
+    `)
+  ]);
+  return { names: names.rows || [], activities: activities.rows || [] };
+}
+
+async function rebuildCandidates({ client }) {
+  const input = await loadDetectorInput(client);
+  const detected = detectPersonDuplicateCandidates(input);
+  await client.query("BEGIN");
+  try {
+    await client.query(`
+      update atlas_v2.person_duplicate_candidates
+      set candidate_state = 'STALE', updated_at = now()
+      where candidate_state = 'ACTIVE'
+    `);
+
+    for (const candidate of detected) {
+      await client.query(`
+        insert into atlas_v2.person_duplicate_candidates (
+          id, person_low_id, person_high_id, candidate_state, confidence,
+          evidence, evidence_fingerprint, detector_version,
+          first_detected_at, last_detected_at, updated_at
+        ) values ($1,$2,$3,'ACTIVE',$4,$5::jsonb,$6,$7,now(),now(),now())
+        on conflict (person_low_id, person_high_id) do update set
+          candidate_state = 'ACTIVE',
+          confidence = excluded.confidence,
+          evidence = excluded.evidence,
+          evidence_fingerprint = excluded.evidence_fingerprint,
+          detector_version = excluded.detector_version,
+          last_detected_at = now(),
+          current_decision = case
+            when atlas_v2.person_duplicate_candidates.current_decision in ('MERGE','KEEP_SEPARATE')
+             and atlas_v2.person_duplicate_candidates.decision_evidence_fingerprint is distinct from excluded.evidence_fingerprint
+            then 'REVIEW'
+            else atlas_v2.person_duplicate_candidates.current_decision
+          end,
+          updated_at = now()
+      `, [
+        crypto.randomUUID(),
+        candidate.person_low_id,
+        candidate.person_high_id,
+        candidate.confidence,
+        JSON.stringify(candidate.evidence),
+        candidate.evidence_fingerprint,
+        candidate.detector_version
+      ]);
+    }
+    await client.query("COMMIT");
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  }
+  const queue = await listCandidates({ client });
+  return { detected: detected.length, active: queue.candidates.length, summary: queue.summary };
+}
+
+function preferredName(rows) {
+  return rows.find((row) => row.is_preferred && row.locale === "en")?.name
+    || rows.find((row) => row.is_preferred)?.name
+    || rows[0]?.name
+    || null;
+}
+
+async function listCandidates({ client, includeStale = false } = {}) {
+  const result = await client.query(`
+    select id, person_low_id, person_high_id, candidate_state, current_decision,
+           confidence, evidence, evidence_fingerprint, detector_version,
+           first_detected_at, last_detected_at, reviewed_at, review_count
+    from atlas_v2.person_duplicate_candidates
+    ${includeStale ? "" : "where candidate_state = 'ACTIVE'"}
+    order by candidate_state, confidence desc, last_detected_at desc, id
+  `);
+  const rows = result.rows || [];
+  const personIds = [...new Set(rows.flatMap((row) => [String(row.person_low_id), String(row.person_high_id)]))];
+  const namesByPerson = new Map();
+  const activitiesByPerson = new Map();
+
+  if (personIds.length) {
+    const names = await client.query(`
+      select person_id, name, locale, is_preferred
+      from atlas_v2.person_names
+      where person_id = any($1::uuid[])
+      order by person_id, is_preferred desc, locale, name
+    `, [personIds]);
+    for (const row of names.rows || []) {
+      const key = String(row.person_id);
+      const list = namesByPerson.get(key) || [];
+      list.push({ name: String(row.name), locale: String(row.locale), is_preferred: Boolean(row.is_preferred) });
+      namesByPerson.set(key, list);
+    }
+
+    const activities = await client.query(`
+      select pp.person_id, pp.id, pp.activity_start, pp.activity_end,
+             pn.name::text as polity_name
+      from atlas_v2.person_politics_v2 pp
+      join atlas_v2.polity_names pn
+        on pn.polity_id = pp.polity_id
+       and pn.locale = 'en'
+       and pn.is_preferred = true
+      where pp.person_id = any($1::uuid[])
+      order by pp.person_id, pp.activity_start, pp.activity_end, pn.name
+    `, [personIds]);
+    for (const row of activities.rows || []) {
+      const key = String(row.person_id);
+      const list = activitiesByPerson.get(key) || [];
+      list.push({
+        id: String(row.id),
+        polity_name: String(row.polity_name),
+        activity_start: Number(row.activity_start),
+        activity_end: Number(row.activity_end)
+      });
+      activitiesByPerson.set(key, list);
+    }
+  }
+
+  const decorate = (personId) => {
+    const names = namesByPerson.get(personId) || [];
+    return {
+      id: personId,
+      display_name: preferredName(names) || personId,
+      names,
+      activities: activitiesByPerson.get(personId) || []
+    };
+  };
+
+  const candidates = rows.map((row) => ({
+    id: String(row.id),
+    candidate_state: String(row.candidate_state),
+    current_decision: row.current_decision == null ? null : String(row.current_decision),
+    confidence: Number(row.confidence),
+    evidence: Array.isArray(row.evidence) ? row.evidence : [],
+    evidence_fingerprint: String(row.evidence_fingerprint),
+    detector_version: String(row.detector_version),
+    first_detected_at: row.first_detected_at,
+    last_detected_at: row.last_detected_at,
+    reviewed_at: row.reviewed_at,
+    review_count: Number(row.review_count),
+    low: decorate(String(row.person_low_id)),
+    high: decorate(String(row.person_high_id))
+  }));
+
+  const summary = { total: candidates.length, open: 0, merge: 0, keep_separate: 0, review: 0 };
+  for (const candidate of candidates) {
+    if (candidate.current_decision === "MERGE") summary.merge += 1;
+    else if (candidate.current_decision === "KEEP_SEPARATE") summary.keep_separate += 1;
+    else if (candidate.current_decision === "REVIEW") summary.review += 1;
+    else summary.open += 1;
+  }
+  return { candidates, summary };
+}
+
+async function reviewCandidate({ client, candidateId, decision, rationale = null, requestId, reviewerKind = "admin_session" }) {
+  const normalizedDecision = String(decision || "").trim().toUpperCase();
+  if (!DECISIONS.has(normalizedDecision)) throw new Error("decision must be MERGE, KEEP_SEPARATE, or REVIEW");
+  const normalizedRequestId = String(requestId || "").trim();
+  if (!normalizedRequestId) throw new Error("request_id is required");
+  const normalizedCandidateId = String(candidateId || "").trim();
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(normalizedCandidateId)) {
+    throw new Error("valid candidate_id is required");
+  }
+  const rationaleText = String(rationale || "").trim() || null;
+  if (rationaleText && rationaleText.length > 2000) throw new Error("rationale is too long");
+
+  await client.query("BEGIN");
+  try {
+    const replay = await client.query(`
+      select candidate_id, decision
+      from atlas_v2.person_duplicate_reviews
+      where request_id = $1
+    `, [normalizedRequestId]);
+    if (replay.rowCount === 1) {
+      await client.query("COMMIT");
+      return { replayed: true, candidate_id: String(replay.rows[0].candidate_id), decision: String(replay.rows[0].decision) };
+    }
+
+    const locked = await client.query(`
+      select id, person_low_id, person_high_id, candidate_state,
+             evidence, evidence_fingerprint
+      from atlas_v2.person_duplicate_candidates
+      where id = $1
+      for update
+    `, [normalizedCandidateId]);
+    if (locked.rowCount !== 1) throw new Error("candidate not found");
+    const candidate = locked.rows[0];
+    if (candidate.candidate_state !== "ACTIVE") throw new Error("candidate is stale; rebuild before review");
+
+    await client.query(`
+      insert into atlas_v2.person_duplicate_reviews (
+        id, candidate_id, person_low_id, person_high_id, decision, rationale,
+        evidence_snapshot, evidence_fingerprint, reviewer_kind, request_id, reviewed_at
+      ) values ($1,$2,$3,$4,$5,$6,$7::jsonb,$8,$9,$10,now())
+    `, [
+      crypto.randomUUID(), normalizedCandidateId, candidate.person_low_id, candidate.person_high_id,
+      normalizedDecision, rationaleText, JSON.stringify(candidate.evidence), candidate.evidence_fingerprint,
+      reviewerKind === "server_bearer" ? "server_bearer" : "admin_session", normalizedRequestId
+    ]);
+
+    await client.query(`
+      update atlas_v2.person_duplicate_candidates
+      set current_decision = $2,
+          decision_evidence_fingerprint = evidence_fingerprint,
+          reviewed_at = now(),
+          review_count = review_count + 1,
+          updated_at = now()
+      where id = $1
+    `, [normalizedCandidateId, normalizedDecision]);
+    await client.query("COMMIT");
+    return { replayed: false, candidate_id: normalizedCandidateId, decision: normalizedDecision };
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  }
+}
+
+module.exports = Object.freeze({
+  DECISIONS,
+  schemaUnavailable,
+  loadDetectorInput,
+  rebuildCandidates,
+  listCandidates,
+  reviewCandidate
+});
