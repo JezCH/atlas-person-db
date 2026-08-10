@@ -1,0 +1,55 @@
+{
+  "marker": "PHASE8C_C7_PRE_RETIREMENT_INVENTORY",
+  "baseline_sha": "bd104ee6ac161d3f892c51c18e1e8bb4041d6c23",
+  "status": "RETIREMENT_REQUIRED",
+  "intended_production_graph": {
+    "api_routes": [
+      "api/atlas-mutate.js",
+      "api/atlas-read.js",
+      "api/atlas-session.js"
+    ],
+    "legacy_dependency_hits": 0
+  },
+  "public_vercel_api_routes": [
+    "api/atlas-mutate.js",
+    "api/atlas-read.js",
+    "api/atlas-session.js",
+    "api/run-ingest-3-7f4c9a.js"
+  ],
+  "blocking_reachable_routes": [
+    {
+      "file": "api/run-ingest-3-7f4c9a.js",
+      "reason": "Vercel-exposed legacy Supabase REST reader/writer targeting rest/v1/person_politics",
+      "contains_hardcoded_publishable_key": true,
+      "current_write_effect": "expected blocked by C4C public legacy write lockdown; route remains structurally reachable"
+    }
+  ],
+  "detached_legacy_browser_runtime": [
+    "ingest.js",
+    "ingest-supplement.js",
+    "trigger-ingest-supplement-3.js"
+  ],
+  "retirement_candidates_to_verify": [
+    "api/run-ingest-3-7f4c9a.js",
+    "ingest.js",
+    "ingest-supplement.js",
+    "trigger-ingest-supplement-3.js",
+    "atlas-dual-write-coordinator.js",
+    "atlas-legacy-reconciliation-executor.js",
+    "atlas-production-source.js",
+    "atlas-source-control.js",
+    "atlas-reconciliation-bootstrap.js",
+    "atlas-reconciliation-controller.js",
+    "atlas-reconciliation-integration.js",
+    "atlas-reconciliation-planner.js",
+    "atlas-v2-isolated-executor.js",
+    "atlas-v2-postgres-transaction-adapter.js",
+    "atlas-v2-shadow-compiler.js",
+    "atlas-v2-writer-contract.js",
+    "atlas-write-adapter.js",
+    "atlas-write-mode.js",
+    "server/atlas-postgres-dualwrite-transaction.js",
+    "server/atlas-mutation-service.js"
+  ],
+  "decision": "C7 does not declare zero dependency. C8 must remove exposed legacy route and all verified-unreachable transitional runtime while retaining migration evidence."
+}
