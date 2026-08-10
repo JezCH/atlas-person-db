@@ -10,6 +10,7 @@ on:
       - "migration/phase-9/**"
       - "tests/atlas-duplicate-detector.test.mjs"
       - "tests/phase9a-admin-duplicate-review-contract.test.mjs"
+      - "tests/phase9b-person-reference-inventory-contract.test.mjs"
       - ".github/workflows/phase-9a-admin-duplicate-review.yml"
   workflow_dispatch:
     inputs:
@@ -35,8 +36,37 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Verify Phase 9A review contracts
-        run: node --test tests/atlas-duplicate-detector.test.mjs tests/phase9a-admin-duplicate-review-contract.test.mjs
+      - name: Verify Phase 9A/9B contracts
+        run: node --test tests/atlas-duplicate-detector.test.mjs tests/phase9a-admin-duplicate-review-contract.test.mjs tests/phase9b-person-reference-inventory-contract.test.mjs
+
+  live-person-reference-inventory:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: phase-5-shadow
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install --no-package-lock --ignore-scripts --no-audit --no-fund
+      - name: Re-run inventory contract before DB connection
+        run: node --test tests/phase9b-person-reference-inventory-contract.test.mjs
+      - name: Inventory every live person reference surface read-only
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          PHASE9B_OUTPUT_DIR: migration/phase-9/tmp/person-reference-inventory
+        run: node migration/phase-9/scripts/phase9b-live-person-reference-inventory.mjs
+      - name: Upload Phase 9B live inventory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase9b-live-person-reference-inventory-${{ github.sha }}
+          path: migration/phase-9/tmp/person-reference-inventory
+          if-no-files-found: error
+          retention-days: 90
 
   protected-schema-apply:
     if: github.event_name == 'workflow_dispatch'
