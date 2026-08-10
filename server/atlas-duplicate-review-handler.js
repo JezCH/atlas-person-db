@@ -2,7 +2,7 @@
 
 const { createMutationAuthorizer, requireEnv } = require("./atlas-session-auth.js");
 const { rebuildCandidates, listCandidates, reviewCandidate, schemaUnavailable } = require("./atlas-duplicate-review-service.js");
-const { executeApprovedPersonMerge } = require("./atlas-person-merge-service.js");
+const { executePreflightedApprovedPersonMerge } = require("./atlas-person-merge-preflight.js");
 
 function sendJson(res, status, body) {
   res.statusCode = status;
@@ -77,7 +77,7 @@ function createDuplicateReviewHandler({ clientFactory, env = process.env, now } 
         return;
       }
 
-      const outcome = await executeApprovedPersonMerge({
+      const outcome = await executePreflightedApprovedPersonMerge({
         client,
         candidateId: body.candidate_id,
         survivorPersonId: body.survivor_person_id,
@@ -94,6 +94,7 @@ function createDuplicateReviewHandler({ clientFactory, env = process.env, now } 
         sendJson(res, 503, { ok: false, code: "PHASE9B_SCHEMA_REQUIRED", error: "person merge schema is not applied" });
       } else if (
         error?.code === "RELATIONSHIP_COLLISION" ||
+        error?.code === "RELATIONSHIP_RECONCILIATION_REQUIRED" ||
         /candidate not found|candidate is stale|decision must|request_id|required|too long|MERGE approval|evidence changed|latest candidate review|latest MERGE review|survivor_person_id|metadata conflict|schema drift|candidate persons are not both live/i.test(message)
       ) {
         sendJson(res, 409, { ok: false, code: error?.code || "MERGE_PRECONDITION_FAILED", error: message, ...(error?.collisions ? { collisions: error.collisions } : {}) });
