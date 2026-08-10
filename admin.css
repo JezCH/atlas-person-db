@@ -21,7 +21,7 @@ p { color: #657086; line-height: 1.55; }
 .panel-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
 .panel-actions, .candidate-actions, .actions, .filter-row { display: flex; gap: 10px; flex-wrap: wrap; }
 textarea { width: 100%; min-height: 320px; resize: vertical; margin-top: 14px; border: 1px solid #cfd6e3; border-radius: 14px; padding: 16px; font: 14px/1.55 ui-monospace, SFMono-Regular, Consolas, monospace; color: #172033; background: #fbfcff; }
-textarea:focus, .rationale-input:focus { outline: 3px solid rgba(89,103,217,.18); border-color: #5967d9; }
+textarea:focus, .rationale-input:focus, select:focus { outline: 3px solid rgba(89,103,217,.18); border-color: #5967d9; }
 .actions { justify-content: flex-end; margin-top: 14px; }
 .button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 16px; border-radius: 11px; border: 1px solid #cfd6e3; font-weight: 800; text-decoration: none; cursor: pointer; background: #fff; color: #273148; }
 .button:disabled { opacity: .55; cursor: wait; }
@@ -65,6 +65,24 @@ code { padding: 2px 6px; border-radius: 6px; background: #eef1f7; overflow-wrap:
 .merge-warning { margin: 10px 0 0; font-size: 12px; color: #8a6d2b; }
 .empty-state { margin: 0; padding: 28px; border: 1px dashed #d5dbe6; border-radius: 14px; text-align: center; }
 .muted { color: #929aaa; }
+.relationship-ok, .relationship-conflicts, .merge-execution { margin-top: 14px; border-radius: 13px; padding: 14px; }
+.relationship-ok { border: 1px solid #cce8d7; background: #f3fbf6; }
+.relationship-conflicts { border: 1px solid #eadfb6; background: #fffdf4; }
+.relationship-conflicts > p, .relationship-ok > p, .merge-execution > p { margin: 6px 0 0; }
+.relationship-conflict-group { margin-top: 12px; padding: 12px; border: 1px solid #e4dcc1; border-radius: 10px; background: rgba(255,255,255,.72); }
+.relationship-conflict-group > ul { margin: 10px 0; padding-left: 18px; }
+.relationship-row-detail { margin-bottom: 9px; }
+.relationship-row-detail b, .relationship-row-detail span, .relationship-row-detail small { display: block; }
+.relationship-row-detail span { margin-top: 3px; color: #566174; line-height: 1.45; }
+.relationship-row-detail small { margin-top: 3px; color: #8a93a3; }
+.merge-execution { border: 1px solid #c9cfee; background: #f7f8ff; }
+.relationship-resolution-controls { display: grid; gap: 12px; margin-top: 14px; }
+.relationship-resolution-controls > p { margin: 0; }
+.relationship-resolution-group { display: grid; gap: 9px; border: 1px solid #dce1f0; border-radius: 11px; padding: 12px; background: #fff; }
+.relationship-resolution-row, .exact-role-row { display: grid; gap: 6px; font-size: 12px; font-weight: 800; color: #596274; }
+.relationship-resolution-row select, .exact-role-row select { width: 100%; min-height: 42px; border: 1px solid #cfd6e3; border-radius: 9px; padding: 0 10px; background: #fff; color: #172033; font: inherit; font-weight: 600; }
+.exact-role-controls { display: grid; gap: 9px; padding: 10px; border-radius: 9px; background: #faf7ed; border: 1px dashed #ddd0a6; }
+.exact-role-controls > span { color: #7b682e; font-size: 12px; line-height: 1.45; }
 @media (max-width: 760px) {
   .admin-shell { width: min(100% - 24px, 1180px); padding-top: 22px; }
   .admin-head, .panel-head, .status-card { display: grid; }
