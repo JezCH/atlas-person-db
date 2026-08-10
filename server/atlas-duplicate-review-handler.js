@@ -2,6 +2,7 @@
 
 const { createMutationAuthorizer, requireEnv } = require("./atlas-session-auth.js");
 const { rebuildCandidates, listCandidates, reviewCandidate, schemaUnavailable } = require("./atlas-duplicate-review-service.js");
+const { executeApprovedPersonMerge } = require("./atlas-person-merge-service.js");
 
 function sendJson(res, status, body) {
   res.statusCode = status;
@@ -42,7 +43,7 @@ function createDuplicateReviewHandler({ clientFactory, env = process.env, now } 
         return;
       }
       const operation = String(body.operation || "").trim().toUpperCase();
-      if (!new Set(["REBUILD_CANDIDATES", "REVIEW_CANDIDATE"]).has(operation)) {
+      if (!new Set(["REBUILD_CANDIDATES", "REVIEW_CANDIDATE", "EXECUTE_APPROVED_MERGE"]).has(operation)) {
         sendJson(res, 400, { ok: false, error: "unknown duplicate-review operation" });
         return;
       }
@@ -63,21 +64,39 @@ function createDuplicateReviewHandler({ clientFactory, env = process.env, now } 
         return;
       }
 
-      const outcome = await reviewCandidate({
+      if (operation === "REVIEW_CANDIDATE") {
+        const outcome = await reviewCandidate({
+          client,
+          candidateId: body.candidate_id,
+          decision: body.decision,
+          rationale: body.rationale,
+          requestId: body.request_id,
+          reviewerKind: auth.method === "bearer" ? "server_bearer" : "admin_session"
+        });
+        sendJson(res, 200, { ok: true, source: "v2-duplicate-review", operation, ...outcome });
+        return;
+      }
+
+      const outcome = await executeApprovedPersonMerge({
         client,
         candidateId: body.candidate_id,
-        decision: body.decision,
-        rationale: body.rationale,
+        survivorPersonId: body.survivor_person_id,
         requestId: body.request_id,
         reviewerKind: auth.method === "bearer" ? "server_bearer" : "admin_session"
       });
       sendJson(res, 200, { ok: true, source: "v2-duplicate-review", operation, ...outcome });
     } catch (error) {
       console.error("ATLAS duplicate review failed", error);
+      const message = String(error?.message || "");
       if (schemaUnavailable(error)) {
         sendJson(res, 503, { ok: false, code: "PHASE9A_SCHEMA_REQUIRED", error: "duplicate review schema is not applied" });
-      } else if (/candidate not found|candidate is stale|decision must|request_id|required|too long/i.test(String(error?.message || ""))) {
-        sendJson(res, 409, { ok: false, error: error.message });
+      } else if (/PHASE9B_SCHEMA_REQUIRED|person_merge_audits/i.test(message)) {
+        sendJson(res, 503, { ok: false, code: "PHASE9B_SCHEMA_REQUIRED", error: "person merge schema is not applied" });
+      } else if (
+        error?.code === "RELATIONSHIP_COLLISION" ||
+        /candidate not found|candidate is stale|decision must|request_id|required|too long|MERGE approval|evidence changed|latest candidate review|latest MERGE review|survivor_person_id|metadata conflict|schema drift|candidate persons are not both live/i.test(message)
+      ) {
+        sendJson(res, 409, { ok: false, code: error?.code || "MERGE_PRECONDITION_FAILED", error: message, ...(error?.collisions ? { collisions: error.collisions } : {}) });
       } else {
         sendJson(res, 500, { ok: false, error: "duplicate review operation failed" });
       }
