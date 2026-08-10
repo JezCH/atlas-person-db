@@ -7,7 +7,7 @@ on:
       - "migration/phase-8/PHASE_8C_C9_LEGACY_DB_RETIREMENT.md"
       - "tests/phase8c-c9b-legacy-db-retirement.test.mjs"
       - "tests/phase8c-c8-runtime-retirement.test.mjs"
-      - ".github/workflows/phase-8c-c9b-retire-legacy-db.yml"
+      - ".github/workflows/phase-8c-c9-retire-legacy-db.yml"
   workflow_dispatch:
     inputs:
       approved_sha:

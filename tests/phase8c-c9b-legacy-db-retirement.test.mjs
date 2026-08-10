@@ -3,7 +3,7 @@ import test from 'node:test';
 import fs from 'node:fs';
 
 const script = fs.readFileSync(new URL('../migration/phase-8/scripts/phase8c-c9b-retire-legacy-db.mjs', import.meta.url), 'utf8');
-const workflow = fs.readFileSync(new URL('../.github/workflows/phase-8c-c9b-retire-legacy-db.yml', import.meta.url), 'utf8');
+const workflow = fs.readFileSync(new URL('../.github/workflows/phase-8c-c9-retire-legacy-db.yml', import.meta.url), 'utf8');
 const c8 = fs.readFileSync(new URL('./phase8c-c8-runtime-retirement.test.mjs', import.meta.url), 'utf8');
 
 const INVENTORY_SHA = '17f6af54fcb01a884e44b55c4e1ac2cad9d23faa';
