@@ -122,6 +122,8 @@ async function listCandidates({ client, includeStale = false } = {}) {
         pp.period_basis_id,
         pp.activity_start,
         pp.activity_end,
+        pp.notes,
+        pp.source_locator,
         coalesce(pko.name, pen.name)::text as polity_name,
         r.source_label::text as role_name_en,
         coalesce(rko.name, r.source_label)::text as role_name,
@@ -163,7 +165,9 @@ async function listCandidates({ client, includeStale = false } = {}) {
         period_basis_id: String(row.period_basis_id),
         period_basis: String(row.period_basis),
         activity_start: Number(row.activity_start),
-        activity_end: Number(row.activity_end)
+        activity_end: Number(row.activity_end),
+        notes: row.notes == null ? null : String(row.notes),
+        source_locator: row.source_locator && typeof row.source_locator === "object" ? row.source_locator : null
       });
       activitiesByPerson.set(key, list);
     }
