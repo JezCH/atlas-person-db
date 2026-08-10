@@ -12,8 +12,8 @@ BEGIN
   END IF;
 END $$;
 
--- Candidate person UUIDs become immutable historical snapshots after a merge.
--- Active candidates are still generated only from existing atlas_v2.persons.
+-- Candidate UUIDs become immutable historical snapshots after a merge.
+-- Candidate generation still reads only live atlas_v2.persons identities.
 ALTER TABLE atlas_v2.person_duplicate_candidates
   DROP CONSTRAINT IF EXISTS person_duplicate_candidates_person_low_id_fkey;
 ALTER TABLE atlas_v2.person_duplicate_candidates
@@ -46,7 +46,8 @@ CREATE INDEX IF NOT EXISTS person_merge_audits_source_idx
 DO $$
 DECLARE
   remaining_candidate_person_fks integer;
-  audit_columns integer;
+  missing_columns text[];
+  mismatched_columns text[];
 BEGIN
   SELECT count(*) INTO remaining_candidate_person_fks
   FROM pg_constraint
@@ -57,11 +58,49 @@ BEGIN
     RAISE EXCEPTION 'candidate person FK retirement incomplete: %', remaining_candidate_person_fks;
   END IF;
 
-  SELECT count(*) INTO audit_columns
-  FROM information_schema.columns
-  WHERE table_schema='atlas_v2' AND table_name='person_merge_audits';
-  IF audit_columns <> 13 THEN
-    RAISE EXCEPTION 'person_merge_audits contract incomplete: % columns', audit_columns;
+  WITH required(column_name, data_type) AS (VALUES
+    ('id','uuid'),
+    ('request_id','text'),
+    ('candidate_id','uuid'),
+    ('review_id','uuid'),
+    ('survivor_person_id','uuid'),
+    ('source_person_id','uuid'),
+    ('evidence_fingerprint','text'),
+    ('reviewer_kind','text'),
+    ('survivor_before','jsonb'),
+    ('source_before','jsonb'),
+    ('mutation_summary','jsonb'),
+    ('merged_at','timestamp with time zone')
+  ), actual AS (
+    SELECT column_name,data_type
+    FROM information_schema.columns
+    WHERE table_schema='atlas_v2' AND table_name='person_merge_audits'
+  )
+  SELECT array_agg(r.column_name ORDER BY r.column_name)
+    INTO missing_columns
+  FROM required r
+  LEFT JOIN actual a USING(column_name)
+  WHERE a.column_name IS NULL;
+
+  IF coalesce(cardinality(missing_columns),0) > 0 THEN
+    RAISE EXCEPTION 'person_merge_audits missing required columns: %', missing_columns;
+  END IF;
+
+  WITH required(column_name, data_type) AS (VALUES
+    ('id','uuid'),('request_id','text'),('candidate_id','uuid'),('review_id','uuid'),
+    ('survivor_person_id','uuid'),('source_person_id','uuid'),('evidence_fingerprint','text'),
+    ('reviewer_kind','text'),('survivor_before','jsonb'),('source_before','jsonb'),
+    ('mutation_summary','jsonb'),('merged_at','timestamp with time zone')
+  )
+  SELECT array_agg(r.column_name || ':' || a.data_type ORDER BY r.column_name)
+    INTO mismatched_columns
+  FROM required r
+  JOIN information_schema.columns a
+    ON a.table_schema='atlas_v2' AND a.table_name='person_merge_audits' AND a.column_name=r.column_name
+  WHERE a.data_type <> r.data_type;
+
+  IF coalesce(cardinality(mismatched_columns),0) > 0 THEN
+    RAISE EXCEPTION 'person_merge_audits column type mismatch: %', mismatched_columns;
   END IF;
 END $$;
 
