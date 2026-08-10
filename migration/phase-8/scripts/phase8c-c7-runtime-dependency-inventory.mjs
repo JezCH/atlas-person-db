@@ -24,6 +24,7 @@ const allFiles = walk();
 const jsFiles = new Set(allFiles.filter((p) => /\.(?:js|mjs|cjs)$/.test(p)));
 const apiRoutes = [...jsFiles].filter((p) => /^api\/[^/]+\.js$/.test(p)).sort();
 const intendedApiRoutes = [
+  'api/atlas-duplicate-review.js',
   'api/atlas-mutate.js',
   'api/atlas-read.js',
   'api/atlas-session.js'
@@ -81,10 +82,7 @@ function htmlLocalScripts(rel) {
   return [...results];
 }
 
-const browserEntrypoints = [...new Set([
-  ...htmlLocalScripts('index.html'),
-  ...htmlLocalScripts('admin.html')
-])].sort();
+const browserEntrypoints = [...new Set([...htmlLocalScripts('index.html'), ...htmlLocalScripts('admin.html')])].sort();
 const browserReachable = closure(browserEntrypoints);
 const intendedServerReachable = closure(intendedApiRoutes);
 const allPublicApiReachable = closure(apiRoutes);
@@ -105,39 +103,20 @@ function scan(paths) {
   for (const rel of paths) {
     if (!/\.(?:js|mjs|cjs|html)$/.test(rel) || !exists(rel)) continue;
     const source = text(rel);
-    for (const [code, pattern] of forbidden) {
-      if (pattern.test(source)) hits.push({ file: rel, code });
-    }
+    for (const [code, pattern] of forbidden) if (pattern.test(source)) hits.push({ file: rel, code });
   }
   return hits.sort((a, b) => a.file.localeCompare(b.file) || a.code.localeCompare(b.code));
 }
 
 const intendedRuntimeHits = scan([...new Set([...browserReachable, ...intendedServerReachable])]);
 const publicRuntimeHits = scan(runtimeReachable);
-
 const transitionalCandidates = [
-  'api/run-ingest-3-7f4c9a.js',
-  'ingest.js',
-  'ingest-supplement.js',
-  'trigger-ingest-supplement-3.js',
-  'atlas-dual-write-coordinator.js',
-  'atlas-legacy-reconciliation-executor.js',
-  'atlas-production-source.js',
-  'atlas-source-control.js',
-  'atlas-reconciliation-bootstrap.js',
-  'atlas-reconciliation-controller.js',
-  'atlas-reconciliation-integration.js',
-  'atlas-reconciliation-planner.js',
-  'atlas-v2-isolated-executor.js',
-  'atlas-v2-postgres-transaction-adapter.js',
-  'atlas-v2-shadow-compiler.js',
-  'atlas-v2-writer-contract.js',
-  'atlas-write-adapter.js',
-  'atlas-write-mode.js',
-  'server/atlas-postgres-dualwrite-transaction.js',
-  'server/atlas-mutation-service.js'
+  'api/run-ingest-3-7f4c9a.js','ingest.js','ingest-supplement.js','trigger-ingest-supplement-3.js',
+  'atlas-dual-write-coordinator.js','atlas-legacy-reconciliation-executor.js','atlas-production-source.js','atlas-source-control.js',
+  'atlas-reconciliation-bootstrap.js','atlas-reconciliation-controller.js','atlas-reconciliation-integration.js','atlas-reconciliation-planner.js',
+  'atlas-v2-isolated-executor.js','atlas-v2-postgres-transaction-adapter.js','atlas-v2-shadow-compiler.js','atlas-v2-writer-contract.js',
+  'atlas-write-adapter.js','atlas-write-mode.js','server/atlas-postgres-dualwrite-transaction.js','server/atlas-mutation-service.js'
 ].filter(exists);
-
 const candidateReachability = transitionalCandidates.map((file) => ({
   file,
   browser_reachable: browserReachable.includes(file),
@@ -145,7 +124,6 @@ const candidateReachability = transitionalCandidates.map((file) => ({
   public_api_reachable: allPublicApiReachable.includes(file),
   direct_api_route: apiRoutes.includes(file)
 }));
-
 const report = {
   marker: 'PHASE8C_C7_RUNTIME_DEPENDENCY_INVENTORY',
   baseline_sha: process.env.C7_BASELINE_SHA || null,
@@ -159,17 +137,13 @@ const report = {
   intended_runtime_forbidden_hits: intendedRuntimeHits,
   public_runtime_forbidden_hits: publicRuntimeHits,
   transitional_candidates: candidateReachability,
-  status: unexpectedApiRoutes.length === 0 && publicRuntimeHits.length === 0
-    ? 'ZERO_REACHABLE_LEGACY_RUNTIME'
-    : 'RETIREMENT_REQUIRED'
+  status: unexpectedApiRoutes.length === 0 && publicRuntimeHits.length === 0 ? 'ZERO_REACHABLE_LEGACY_RUNTIME' : 'RETIREMENT_REQUIRED'
 };
-
 if (out) {
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, `${JSON.stringify(report, null, 2)}\n`);
 }
 console.log(JSON.stringify(report, null, 2));
-
 if (intendedRuntimeHits.length) {
   console.error('C7 invariant failed: intended production graph still contains legacy dependencies');
   process.exit(2);

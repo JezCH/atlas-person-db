@@ -6,6 +6,12 @@
   const validateButton = document.getElementById("validateButton");
   const saveButton = document.getElementById("saveButton");
   const sampleButton = document.getElementById("sampleButton");
+  const queue = document.getElementById("candidateQueue");
+  const summary = document.getElementById("candidateSummary");
+  const statusBadge = document.getElementById("duplicateStatusBadge");
+  const refreshCandidatesButton = document.getElementById("refreshCandidatesButton");
+  const rebuildCandidatesButton = document.getElementById("rebuildCandidatesButton");
+  const filterButtons = [...document.querySelectorAll("[data-filter]")];
 
   const allowedBasis = new Set([
     "reign", "term", "de_facto_rule", "military_activity",
@@ -23,40 +29,42 @@
     notes: "Returned to India in 1915 and remained politically active until his assassination in 1948."
   }];
 
+  let candidateClient = null;
+  let candidates = [];
+  let activeFilter = "ALL";
+
   function setResult(message, type = "info") {
     result.textContent = message;
     result.dataset.type = type;
   }
 
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
   function parseAndValidate() {
     let rows;
-    try {
-      rows = JSON.parse(input.value);
-    } catch (error) {
-      throw new Error(`JSON 문법 오류: ${error.message}`);
-    }
-
-    if (!Array.isArray(rows) || rows.length === 0) {
-      throw new Error("최상위 값은 비어 있지 않은 JSON 배열이어야 합니다.");
-    }
+    try { rows = JSON.parse(input.value); }
+    catch (error) { throw new Error(`JSON 문법 오류: ${error.message}`); }
+    if (!Array.isArray(rows) || rows.length === 0) throw new Error("최상위 값은 비어 있지 않은 JSON 배열이어야 합니다.");
 
     return rows.map((row, index) => {
-      if (!row || typeof row !== "object" || Array.isArray(row)) {
-        throw new Error(`${index + 1}번째 항목이 객체가 아닙니다.`);
-      }
-
+      if (!row || typeof row !== "object" || Array.isArray(row)) throw new Error(`${index + 1}번째 항목이 객체가 아닙니다.`);
       const personName = String(row.person_name || "").trim();
       const politicName = String(row.politic_name || "").trim();
       const start = Number(row.activity_start);
       const end = Number(row.activity_end);
       const basis = String(row.period_basis || "").trim();
-
       if (!personName) throw new Error(`${index + 1}번째 항목에 person_name이 없습니다.`);
       if (!politicName) throw new Error(`${index + 1}번째 항목에 politic_name이 없습니다.`);
       if (!Number.isInteger(start) || !Number.isInteger(end)) throw new Error(`${index + 1}번째 연도는 정수여야 합니다.`);
       if (end < start) throw new Error(`${index + 1}번째 종료연도가 시작연도보다 빠릅니다.`);
       if (!allowedBasis.has(basis)) throw new Error(`${index + 1}번째 period_basis 값이 허용 목록에 없습니다: ${basis}`);
-
       return {
         person_name: personName,
         politic_name: politicName,
@@ -72,55 +80,162 @@
   async function saveRows() {
     const adapterApi = window.ATLAS_SERVER_WRITE_ADAPTER;
     const serviceApi = window.ATLAS_ADMIN_WRITE_SERVICE;
-
-    if (!adapterApi || !serviceApi) {
-      setResult("ATLAS V2 읽기/쓰기 계층을 불러오지 못했습니다.", "error");
-      return;
-    }
-
+    if (!adapterApi || !serviceApi) return setResult("ATLAS V2 읽기/쓰기 계층을 불러오지 못했습니다.", "error");
     let rows;
-    try {
-      rows = parseAndValidate();
-    } catch (error) {
-      setResult(error.message, "error");
-      return;
-    }
-
+    try { rows = parseAndValidate(); }
+    catch (error) { return setResult(error.message, "error"); }
     saveButton.disabled = true;
     setResult(`${rows.length}개 레코드를 처리하는 중...`);
-
     try {
       const service = serviceApi.createAdminWriteService({ adapterApi });
       const outcome = await service.saveRows(rows);
       const lines = [
-        `완료: ${rows.length}개 처리`,
-        `신규 추가: ${outcome.inserted}`,
-        `기존 갱신: ${outcome.updated}`,
-        `실패: ${outcome.failures.length}`,
-        `쓰기 모드: ${outcome.mode}`
+        `완료: ${rows.length}개 처리`, `신규 추가: ${outcome.inserted}`,
+        `기존 갱신: ${outcome.updated}`, `실패: ${outcome.failures.length}`, `쓰기 모드: ${outcome.mode}`
       ];
       if (outcome.failures.length) lines.push("", ...outcome.failures);
       setResult(lines.join("\n"), outcome.failures.length ? "error" : "success");
+    } catch (error) { setResult(error.message, "error"); }
+    finally { saveButton.disabled = false; }
+  }
+
+  function decisionLabel(value) {
+    return value === "MERGE" ? "병합 승인" : value === "KEEP_SEPARATE" ? "별개 인물" : value === "REVIEW" ? "추가 검토" : "미판정";
+  }
+
+  function evidenceLabel(item) {
+    if (item.kind === "EXACT_NAME") return `정규화 이름 일치 · ${item.key}`;
+    if (item.kind === "FOLDED_NAME") return `구두점/발음기호 정리 후 일치 · ${item.key}`;
+    if (item.kind === "TOKEN_SET_NAME") return `이름 토큰 구성 일치 · ${item.key}`;
+    if (item.kind === "SAME_POLITY_OVERLAP") return "동일 정치체 활동기간 중첩";
+    if (item.kind === "SAME_POLITY") return "동일 정치체 활동 기록";
+    if (item.kind === "CHRONOLOGY_SEPARATION") return `활동시기 장기 분리 · ${item.years}년`;
+    return item.kind || "근거";
+  }
+
+  function personBlock(person) {
+    const names = person.names.map((row) => `<span class="name-chip">${escapeHtml(row.name)} <small>${escapeHtml(row.locale)}</small>${row.is_preferred ? " ★" : ""}</span>`).join("");
+    const activities = person.activities.slice(0, 6).map((row) => `<li>${escapeHtml(row.polity_name)} · ${row.activity_start}–${row.activity_end}</li>`).join("");
+    return `<div class="person-side"><h4>${escapeHtml(person.display_name)}</h4><code>${escapeHtml(person.id)}</code><div class="name-list">${names || "<span class='muted'>이름 없음</span>"}</div><ul>${activities || "<li class='muted'>활동행 없음</li>"}</ul></div>`;
+  }
+
+  function filteredCandidates() {
+    if (activeFilter === "ALL") return candidates;
+    if (activeFilter === "OPEN") return candidates.filter((item) => !item.current_decision);
+    return candidates.filter((item) => item.current_decision === activeFilter);
+  }
+
+  function renderQueue() {
+    const visible = filteredCandidates();
+    if (!visible.length) {
+      queue.innerHTML = `<p class="empty-state">이 조건에 해당하는 활성 후보가 없습니다.</p>`;
+      return;
+    }
+    queue.innerHTML = visible.map((candidate) => {
+      const evidence = candidate.evidence.map((item) => `<li>${escapeHtml(evidenceLabel(item))}</li>`).join("");
+      const decision = decisionLabel(candidate.current_decision);
+      return `<article class="candidate-card" data-candidate-id="${escapeHtml(candidate.id)}">
+        <div class="candidate-top">
+          <div><span class="confidence">${Math.round(candidate.confidence * 100)}%</span><span class="decision decision-${escapeHtml(candidate.current_decision || "OPEN")}">${escapeHtml(decision)}</span></div>
+          <small>${escapeHtml(candidate.detector_version)} · 검토 ${candidate.review_count}회</small>
+        </div>
+        <div class="person-compare">${personBlock(candidate.low)}<div class="versus">VS</div>${personBlock(candidate.high)}</div>
+        <div class="evidence-box"><strong>판정 근거</strong><ul>${evidence}</ul></div>
+        <label class="rationale-label">검토 메모 <input class="rationale-input" type="text" maxlength="2000" placeholder="필요할 때만 근거/사유를 기록"></label>
+        <div class="candidate-actions">
+          <button class="button review-action merge" data-decision="MERGE" type="button">병합 승인</button>
+          <button class="button review-action keep" data-decision="KEEP_SEPARATE" type="button">별개 인물</button>
+          <button class="button review-action secondary" data-decision="REVIEW" type="button">추가 검토</button>
+        </div>
+        <p class="merge-warning">MERGE는 승인 기록만 남깁니다. 실제 병합은 Phase 9B에서 별도 transaction으로 수행됩니다.</p>
+      </article>`;
+    }).join("");
+  }
+
+  function renderSummary(values) {
+    const cards = summary.querySelectorAll("div strong");
+    const numbers = [values.total, values.open, values.merge, values.keep_separate, values.review];
+    cards.forEach((node, index) => { node.textContent = String(numbers[index] ?? 0); });
+  }
+
+  async function loadCandidates() {
+    if (!candidateClient) return;
+    refreshCandidatesButton.disabled = true;
+    try {
+      const payload = await candidateClient.listCandidates();
+      candidates = payload.candidates || [];
+      renderSummary(payload.summary || {});
+      renderQueue();
+      statusBadge.textContent = "검토 가능";
+      statusBadge.dataset.state = "ready";
     } catch (error) {
-      setResult(error.message, "error");
+      candidates = [];
+      renderSummary({ total: 0, open: 0, merge: 0, keep_separate: 0, review: 0 });
+      if (error.code === "PHASE9A_SCHEMA_REQUIRED") {
+        queue.innerHTML = `<p class="empty-state">Phase 9A DB schema 적용 대기 중입니다.</p>`;
+        statusBadge.textContent = "Schema 대기";
+      } else if (error.status === 401) {
+        queue.innerHTML = `<p class="empty-state">관리자 인증 세션이 필요합니다.</p>`;
+        statusBadge.textContent = "인증 필요";
+      } else {
+        queue.innerHTML = `<p class="empty-state">후보 조회 실패: ${escapeHtml(error.message)}</p>`;
+        statusBadge.textContent = "조회 실패";
+      }
+      statusBadge.dataset.state = "error";
     } finally {
-      saveButton.disabled = false;
+      refreshCandidatesButton.disabled = false;
     }
   }
 
-  sampleButton.addEventListener("click", () => {
-    input.value = JSON.stringify(sample, null, 2);
-    setResult("예시를 불러왔습니다.");
-  });
-
-  validateButton.addEventListener("click", () => {
+  async function rebuildCandidates() {
+    if (!candidateClient) return;
+    rebuildCandidatesButton.disabled = true;
+    statusBadge.textContent = "계산 중";
     try {
-      const rows = parseAndValidate();
-      setResult(`형식 정상: ${rows.length}개 레코드`, "success");
+      await candidateClient.rebuildCandidates();
+      await loadCandidates();
     } catch (error) {
-      setResult(error.message, "error");
+      statusBadge.textContent = error.code === "PHASE9A_SCHEMA_REQUIRED" ? "Schema 대기" : "계산 실패";
+      queue.innerHTML = `<p class="empty-state">후보 계산 실패: ${escapeHtml(error.message)}</p>`;
+    } finally {
+      rebuildCandidatesButton.disabled = false;
     }
-  });
+  }
 
+  async function handleReview(button) {
+    const card = button.closest(".candidate-card");
+    const candidateId = card?.dataset.candidateId;
+    const rationale = card?.querySelector(".rationale-input")?.value || "";
+    const decision = button.dataset.decision;
+    if (!candidateId || !decision) return;
+    [...card.querySelectorAll("button")].forEach((node) => { node.disabled = true; });
+    try {
+      await candidateClient.reviewCandidate({ candidateId, decision, rationale });
+      await loadCandidates();
+    } catch (error) {
+      alert(`검토 저장 실패: ${error.message}`);
+      [...card.querySelectorAll("button")].forEach((node) => { node.disabled = false; });
+    }
+  }
+
+  sampleButton.addEventListener("click", () => { input.value = JSON.stringify(sample, null, 2); setResult("예시를 불러왔습니다."); });
+  validateButton.addEventListener("click", () => { try { setResult(`형식 정상: ${parseAndValidate().length}개 레코드`, "success"); } catch (error) { setResult(error.message, "error"); } });
   saveButton.addEventListener("click", saveRows);
+  refreshCandidatesButton.addEventListener("click", loadCandidates);
+  rebuildCandidatesButton.addEventListener("click", rebuildCandidates);
+  queue.addEventListener("click", (event) => { const button = event.target.closest(".review-action"); if (button) handleReview(button); });
+  filterButtons.forEach((button) => button.addEventListener("click", () => {
+    activeFilter = button.dataset.filter;
+    filterButtons.forEach((node) => node.classList.toggle("is-active", node === button));
+    renderQueue();
+  }));
+
+  const duplicateApi = window.ATLAS_ADMIN_DUPLICATE_REVIEW;
+  if (duplicateApi?.createDuplicateReviewClient) {
+    candidateClient = duplicateApi.createDuplicateReviewClient();
+    loadCandidates();
+  } else {
+    queue.innerHTML = `<p class="empty-state">중복 검토 클라이언트를 불러오지 못했습니다.</p>`;
+    statusBadge.textContent = "로드 실패";
+  }
 })();

@@ -4,7 +4,7 @@
 
 The production relationship model is normalized and lives under the `atlas_v2` schema.
 
-Core entities used by the current runtime include:
+Core runtime entities include:
 
 - `atlas_v2.persons`
 - `atlas_v2.person_names`
@@ -48,10 +48,17 @@ Production create/update/delete/import operations use the v2-authoritative Postg
 - duplicate introduction fails closed
 - exact request/provenance semantics are retained for replay/idempotency where supported
 
+## Phase 9 duplicate-review domain
+
+Phase 9A adds a separate administrator review domain under `atlas_v2`:
+
+- `atlas_v2.person_duplicate_candidates`
+- `atlas_v2.person_duplicate_reviews`
+
+Candidate rows are evidence-bearing suggestions between two normalized person UUIDs. A candidate is not an identity key and not a merge instruction. Administrator decisions are `MERGE`, `KEEP_SEPARATE`, or `REVIEW`, and every decision is appended to the review audit table.
+
+`MERGE` in Phase 9A means approval for a later Phase 9B merge executor only. No person UUID is deleted or remapped by the Phase 9A review endpoint.
+
 ## Retired legacy model
 
-`public.person_politics` was the original MVP activity table and is no longer an application model. `public.atlas_person_politics_compat_v1` was a temporary compatibility projection during migration.
-
-Neither object is a valid runtime dependency. C9 is the final database-object retirement stage for those two transitional objects.
-
-Historical Phase 6–8 migration documents and evidence may still mention the retired names; those files are audit/history material, not current architecture.
+`public.person_politics` and `public.atlas_person_politics_compat_v1` were retired after the completed Phase 8C migration. Neither object is a valid runtime or bootstrap dependency. Historical migration evidence may still mention them as audit history only.
