@@ -115,7 +115,7 @@
 
   function personBlock(person) {
     const names = person.names.map((row) => `<span class="name-chip">${escapeHtml(row.name)} <small>${escapeHtml(row.locale)}</small>${row.is_preferred ? " ★" : ""}</span>`).join("");
-    const activities = person.activities.slice(0, 6).map((row) => `<li>${escapeHtml(row.polity_name)} · ${row.activity_start}–${row.activity_end}</li>`).join("");
+    const activities = person.activities.slice(0, 6).map((row) => `<li>${escapeHtml(row.polity_name)} · ${row.activity_start}–${row.activity_end}${row.role_name ? ` · ${escapeHtml(row.role_name)}` : ""}</li>`).join("");
     return `<div class="person-side"><h4>${escapeHtml(person.display_name)}</h4><code>${escapeHtml(person.id)}</code><div class="name-list">${names || "<span class='muted'>이름 없음</span>"}</div><ul>${activities || "<li class='muted'>활동행 없음</li>"}</ul></div>`;
   }
 
@@ -125,11 +125,48 @@
     return candidates.filter((item) => item.current_decision === activeFilter);
   }
 
+  function relationshipLabel(candidate, row) {
+    const side = row.person_id === candidate.low.id ? "왼쪽" : "오른쪽";
+    return `${side} · ${row.role_name || row.role_name_en || "역할 없음"} · ${row.id}`;
+  }
+
+  function relationshipConflictPreview(candidate) {
+    const groups = candidate.relationship_reconciliation?.groups || [];
+    if (!groups.length) return `<div class="relationship-ok"><strong>관계 충돌 없음</strong><p>동일 정치체·기간·기간기준의 관계 충돌이 없습니다.</p></div>`;
+    return `<div class="relationship-conflicts">
+      <strong>관계 정리 필요 · ${groups.length}그룹</strong>
+      <p>인물 자체를 병합하더라도 아래 활동 관계는 별도로 어떤 형태를 유지할지 결정해야 합니다.</p>
+      ${groups.map((group, index) => `<div class="relationship-conflict-group">
+        <b>${index + 1}. ${escapeHtml(group.polity_name)} · ${group.activity_start}–${group.activity_end} · ${escapeHtml(group.period_basis)}</b>
+        <ul>${group.relationships.map((row) => `<li>${escapeHtml(relationshipLabel(candidate, row))}</li>`).join("")}</ul>
+        <small>${group.has_exact_role_duplicates ? "동일 역할 중복 포함" : ""}${group.has_exact_role_duplicates && group.has_role_variants ? " · " : ""}${group.has_role_variants ? "역할 표현 차이 포함" : ""}</small>
+      </div>`).join("")}
+    </div>`;
+  }
+
+  function relationshipResolutionControls(candidate) {
+    const groups = candidate.relationship_reconciliation?.groups || [];
+    if (!groups.length) return "";
+    return `<div class="relationship-resolution-controls">
+      <strong>관계 정리 방식 선택</strong>
+      <p>각 그룹마다 반드시 하나를 선택해야 실제 병합을 실행할 수 있습니다. 기본값은 없습니다.</p>
+      ${groups.map((group, index) => `<label class="relationship-resolution-row">
+        <span>${index + 1}. ${escapeHtml(group.polity_name)} · ${group.activity_start}–${group.activity_end}</span>
+        <select class="relationship-resolution-select" data-group-fingerprint="${escapeHtml(group.group_fingerprint)}">
+          <option value="">처리 방법 선택</option>
+          <option value="KEEP_DISTINCT_ROLES">서로 다른 역할 유지 · 동일 역할 중복만 합침</option>
+          ${group.relationships.map((row) => `<option value="KEEP_ONE_RELATIONSHIP:${escapeHtml(row.id)}">이 관계 하나만 유지 · ${escapeHtml(relationshipLabel(candidate, row))}</option>`).join("")}
+        </select>
+      </label>`).join("")}
+    </div>`;
+  }
+
   function mergeExecutionBlock(candidate) {
     if (candidate.current_decision !== "MERGE") return "";
     return `<div class="merge-execution">
       <strong>승인된 실제 병합</strong>
       <p>유지할 인물을 직접 선택하세요. 선택하지 않은 인물 UUID는 모든 참조를 안전하게 이관한 뒤 삭제됩니다.</p>
+      ${relationshipResolutionControls(candidate)}
       <div class="candidate-actions">
         <button class="button merge-execute" data-survivor-id="${escapeHtml(candidate.low.id)}" type="button">왼쪽 인물 유지</button>
         <button class="button merge-execute" data-survivor-id="${escapeHtml(candidate.high.id)}" type="button">오른쪽 인물 유지</button>
@@ -153,13 +190,14 @@
         </div>
         <div class="person-compare">${personBlock(candidate.low)}<div class="versus">VS</div>${personBlock(candidate.high)}</div>
         <div class="evidence-box"><strong>판정 근거</strong><ul>${evidence}</ul></div>
+        ${relationshipConflictPreview(candidate)}
         <label class="rationale-label">검토 메모 <input class="rationale-input" type="text" maxlength="2000" placeholder="필요할 때만 근거/사유를 기록"></label>
         <div class="candidate-actions">
           <button class="button review-action merge" data-decision="MERGE" type="button">병합 승인</button>
           <button class="button review-action keep" data-decision="KEEP_SEPARATE" type="button">별개 인물</button>
           <button class="button review-action secondary" data-decision="REVIEW" type="button">추가 검토</button>
         </div>
-        <p class="merge-warning">병합 승인은 판정 기록입니다. 실제 병합은 승인 후 유지할 인물을 별도로 선택해야 실행됩니다.</p>
+        <p class="merge-warning">병합 승인은 판정 기록입니다. 실제 병합은 승인 후 유지할 인물과 관계 정리 방식을 별도로 선택해야 실행됩니다.</p>
         ${mergeExecutionBlock(candidate)}
       </article>`;
     }).join("");
@@ -231,28 +269,58 @@
     }
   }
 
+  function collectRelationshipResolutions(card, candidate) {
+    const groups = candidate.relationship_reconciliation?.groups || [];
+    return groups.map((group, index) => {
+      const select = card.querySelector(`.relationship-resolution-select[data-group-fingerprint="${group.group_fingerprint}"]`);
+      const value = String(select?.value || "");
+      if (!value) throw new Error(`${index + 1}번째 관계 충돌 그룹의 처리 방법을 선택해야 합니다.`);
+      if (value === "KEEP_DISTINCT_ROLES") {
+        return { group_fingerprint: group.group_fingerprint, action: "KEEP_DISTINCT_ROLES" };
+      }
+      if (value.startsWith("KEEP_ONE_RELATIONSHIP:")) {
+        return {
+          group_fingerprint: group.group_fingerprint,
+          action: "KEEP_ONE_RELATIONSHIP",
+          keep_relationship_id: value.slice("KEEP_ONE_RELATIONSHIP:".length)
+        };
+      }
+      throw new Error("알 수 없는 관계 정리 방식입니다.");
+    });
+  }
+
   async function handleApprovedMerge(button) {
     const card = button.closest(".candidate-card");
     const candidateId = card?.dataset.candidateId;
     const survivorId = button.dataset.survivorId;
     const candidate = candidates.find((item) => item.id === candidateId);
     if (!candidate || !survivorId) return;
+    let relationshipResolutions;
+    try { relationshipResolutions = collectRelationshipResolutions(card, candidate); }
+    catch (error) { alert(error.message); return; }
+
     const survivor = candidate.low.id === survivorId ? candidate.low : candidate.high;
     const source = candidate.low.id === survivorId ? candidate.high : candidate.low;
+    const relationSummary = relationshipResolutions.length
+      ? `\n관계 정리: ${relationshipResolutions.length}그룹에 대해 선택한 방식으로 처리`
+      : "\n관계 정리: 충돌 없음";
     const confirmed = globalThis.confirm(
-      `실제 인물 병합을 실행합니다.\n\n유지: ${survivor.display_name} (${survivor.id})\n삭제: ${source.display_name} (${source.id})\n\n이름·출처·활동 참조를 유지 인물로 이관한 뒤 삭제 인물 UUID를 제거합니다. 관계 충돌이나 승인 근거 변경이 있으면 서버가 전체 transaction을 롤백합니다. 계속할까요?`
+      `실제 인물 병합을 실행합니다.\n\n유지: ${survivor.display_name} (${survivor.id})\n삭제: ${source.display_name} (${source.id})${relationSummary}\n\n서버는 현재 이름·활동 상태를 승인 당시 근거와 다시 대조하고, 관계 출처·연대 주장·설명을 먼저 보존한 뒤 하나의 SERIALIZABLE transaction으로 처리합니다. 계속할까요?`
     );
     if (!confirmed) return;
     [...card.querySelectorAll("button")].forEach((node) => { node.disabled = true; });
     statusBadge.textContent = "병합 중";
     try {
-      const outcome = await candidateClient.executeApprovedMerge({ candidateId, survivorPersonId: survivorId });
+      const outcome = await candidateClient.executeApprovedMerge({
+        candidateId,
+        survivorPersonId: survivorId,
+        relationshipResolutions
+      });
       setResult(`병합 완료\n유지 UUID: ${outcome.survivor_person_id}\n삭제 UUID: ${outcome.source_person_id}\n감사 ID: ${outcome.merge_audit_id}`, "success");
       await candidateClient.rebuildCandidates();
       await loadCandidates();
     } catch (error) {
-      const collisionText = Array.isArray(error.collisions) && error.collisions.length ? `\n관계 충돌 ${error.collisions.length}건은 자동 병합하지 않았습니다.` : "";
-      alert(`실제 병합 실패: ${error.message}${collisionText}`);
+      alert(`실제 병합 실패: ${error.message}`);
       statusBadge.textContent = error.code === "PHASE9B_SCHEMA_REQUIRED" ? "Merge Schema 대기" : "병합 실패";
       [...card.querySelectorAll("button")].forEach((node) => { node.disabled = false; });
     }
@@ -264,10 +332,10 @@
   refreshCandidatesButton.addEventListener("click", loadCandidates);
   rebuildCandidatesButton.addEventListener("click", rebuildCandidates);
   queue.addEventListener("click", (event) => {
-    const mergeButton = event.target.closest(".merge-execute");
-    if (mergeButton) return handleApprovedMerge(mergeButton);
     const reviewButton = event.target.closest(".review-action");
-    if (reviewButton) handleReview(reviewButton);
+    if (reviewButton) { handleReview(reviewButton); return; }
+    const mergeButton = event.target.closest(".merge-execute");
+    if (mergeButton) handleApprovedMerge(mergeButton);
   });
   filterButtons.forEach((button) => button.addEventListener("click", () => {
     activeFilter = button.dataset.filter;
