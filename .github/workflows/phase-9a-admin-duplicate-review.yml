@@ -5,7 +5,7 @@ on:
     paths:
       - "api/atlas-duplicate-review.js"
       - "server/atlas-duplicate-*.js"
-      - "server/atlas-person-merge-service.js"
+      - "server/atlas-person-merge-*.js"
       - "atlas-admin-duplicate-review.js"
       - "admin.*"
       - "migration/phase-9/**"
@@ -14,6 +14,7 @@ on:
       - "tests/phase9b-person-reference-inventory-contract.test.mjs"
       - "tests/phase9b-person-merge-contract.test.mjs"
       - "tests/phase9c-live-candidate-preview-contract.test.mjs"
+      - "tests/phase9c-relationship-reconciliation-preflight.test.mjs"
       - ".github/workflows/phase-9a-admin-duplicate-review.yml"
   workflow_dispatch:
     inputs:
@@ -47,6 +48,7 @@ jobs:
           tests/phase9b-person-reference-inventory-contract.test.mjs
           tests/phase9b-person-merge-contract.test.mjs
           tests/phase9c-live-candidate-preview-contract.test.mjs
+          tests/phase9c-relationship-reconciliation-preflight.test.mjs
 
   live-candidate-preview:
     if: github.event_name == 'pull_request'
