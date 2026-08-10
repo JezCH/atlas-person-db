@@ -60,6 +60,7 @@ try {
       from pg_proc p
       join pg_namespace n on n.oid=p.pronamespace
      where n.nspname not in ('pg_catalog','information_schema')
+       and p.prokind in ('f','p')
        and (pg_get_functiondef(p.oid) ilike '%atlas_v2.persons%' or pg_get_functiondef(p.oid) ilike '%person_id%')
      order by n.nspname,p.proname,arguments`);
 
