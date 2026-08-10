@@ -10,6 +10,7 @@ const client = new Client({ connectionString, ssl: { rejectUnauthorized: false }
 await client.connect();
 
 async function q(text, params = []) { return (await client.query(text, params)).rows; }
+const quoteIdent = (value) => `"${String(value).replaceAll('"','""')}"`;
 
 try {
   await client.query('begin transaction isolation level repeatable read read only');
@@ -18,7 +19,7 @@ try {
     select ns.nspname as table_schema,
            cls.relname as table_name,
            con.conname as constraint_name,
-           array_agg(att.attname order by u.ord) as columns,
+           json_agg(att.attname order by u.ord) as columns,
            con.confupdtype as update_action_code,
            con.confdeltype as delete_action_code
       from pg_constraint con
@@ -95,13 +96,16 @@ try {
   const referenceCounts = {};
   for (const fk of directFks) {
     if (fk.columns.length !== 1) continue;
-    const key = `${fk.table_schema}.${fk.table_name}.${fk.columns[0]}`;
-    const rows = await q(`select count(*)::int as count from ${fk.table_schema}.${fk.table_name} where ${fk.columns[0]} is not null`);
+    const column = fk.columns[0];
+    const key = `${fk.table_schema}.${fk.table_name}.${column}`;
+    const relation = `${quoteIdent(fk.table_schema)}.${quoteIdent(fk.table_name)}`;
+    const rows = await q(`select count(*)::int as count from ${relation} where ${quoteIdent(column)} is not null`);
     referenceCounts[key] = rows[0].count;
   }
 
   const report = {
     marker: 'PHASE9B_LIVE_PERSON_REFERENCE_INVENTORY',
+    status: 'PASS',
     read_only: true,
     counts,
     direct_fks_to_persons: directFks,
