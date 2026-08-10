@@ -24,10 +24,13 @@
         const error = new Error(payload?.error || `duplicate review request failed (${response.status})`);
         error.code = payload?.code || null;
         error.status = response.status;
+        error.collisions = payload?.collisions || null;
         throw error;
       }
       return payload;
     }
+
+    const requestId = (prefix) => globalThis.crypto?.randomUUID?.() || `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
     return Object.freeze({
       listCandidates: () => request("GET"),
@@ -37,7 +40,13 @@
         candidate_id: candidateId,
         decision,
         rationale: String(rationale || "").trim() || null,
-        request_id: globalThis.crypto?.randomUUID?.() || `review-${Date.now()}-${Math.random().toString(36).slice(2)}`
+        request_id: requestId("review")
+      }),
+      executeApprovedMerge: ({ candidateId, survivorPersonId }) => request("POST", {
+        operation: "EXECUTE_APPROVED_MERGE",
+        candidate_id: candidateId,
+        survivor_person_id: survivorPersonId,
+        request_id: requestId("merge")
       })
     });
   }

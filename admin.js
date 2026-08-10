@@ -125,6 +125,18 @@
     return candidates.filter((item) => item.current_decision === activeFilter);
   }
 
+  function mergeExecutionBlock(candidate) {
+    if (candidate.current_decision !== "MERGE") return "";
+    return `<div class="merge-execution">
+      <strong>승인된 실제 병합</strong>
+      <p>유지할 인물을 직접 선택하세요. 선택하지 않은 인물 UUID는 모든 참조를 안전하게 이관한 뒤 삭제됩니다.</p>
+      <div class="candidate-actions">
+        <button class="button merge-execute" data-survivor-id="${escapeHtml(candidate.low.id)}" type="button">왼쪽 인물 유지</button>
+        <button class="button merge-execute" data-survivor-id="${escapeHtml(candidate.high.id)}" type="button">오른쪽 인물 유지</button>
+      </div>
+    </div>`;
+  }
+
   function renderQueue() {
     const visible = filteredCandidates();
     if (!visible.length) {
@@ -147,7 +159,8 @@
           <button class="button review-action keep" data-decision="KEEP_SEPARATE" type="button">별개 인물</button>
           <button class="button review-action secondary" data-decision="REVIEW" type="button">추가 검토</button>
         </div>
-        <p class="merge-warning">MERGE는 승인 기록만 남깁니다. 실제 병합은 Phase 9B에서 별도 transaction으로 수행됩니다.</p>
+        <p class="merge-warning">병합 승인은 판정 기록입니다. 실제 병합은 승인 후 유지할 인물을 별도로 선택해야 실행됩니다.</p>
+        ${mergeExecutionBlock(candidate)}
       </article>`;
     }).join("");
   }
@@ -218,12 +231,44 @@
     }
   }
 
+  async function handleApprovedMerge(button) {
+    const card = button.closest(".candidate-card");
+    const candidateId = card?.dataset.candidateId;
+    const survivorId = button.dataset.survivorId;
+    const candidate = candidates.find((item) => item.id === candidateId);
+    if (!candidate || !survivorId) return;
+    const survivor = candidate.low.id === survivorId ? candidate.low : candidate.high;
+    const source = candidate.low.id === survivorId ? candidate.high : candidate.low;
+    const confirmed = globalThis.confirm(
+      `실제 인물 병합을 실행합니다.\n\n유지: ${survivor.display_name} (${survivor.id})\n삭제: ${source.display_name} (${source.id})\n\n이름·출처·활동 참조를 유지 인물로 이관한 뒤 삭제 인물 UUID를 제거합니다. 관계 충돌이나 승인 근거 변경이 있으면 서버가 전체 transaction을 롤백합니다. 계속할까요?`
+    );
+    if (!confirmed) return;
+    [...card.querySelectorAll("button")].forEach((node) => { node.disabled = true; });
+    statusBadge.textContent = "병합 중";
+    try {
+      const outcome = await candidateClient.executeApprovedMerge({ candidateId, survivorPersonId: survivorId });
+      setResult(`병합 완료\n유지 UUID: ${outcome.survivor_person_id}\n삭제 UUID: ${outcome.source_person_id}\n감사 ID: ${outcome.merge_audit_id}`, "success");
+      await candidateClient.rebuildCandidates();
+      await loadCandidates();
+    } catch (error) {
+      const collisionText = Array.isArray(error.collisions) && error.collisions.length ? `\n관계 충돌 ${error.collisions.length}건은 자동 병합하지 않았습니다.` : "";
+      alert(`실제 병합 실패: ${error.message}${collisionText}`);
+      statusBadge.textContent = error.code === "PHASE9B_SCHEMA_REQUIRED" ? "Merge Schema 대기" : "병합 실패";
+      [...card.querySelectorAll("button")].forEach((node) => { node.disabled = false; });
+    }
+  }
+
   sampleButton.addEventListener("click", () => { input.value = JSON.stringify(sample, null, 2); setResult("예시를 불러왔습니다."); });
   validateButton.addEventListener("click", () => { try { setResult(`형식 정상: ${parseAndValidate().length}개 레코드`, "success"); } catch (error) { setResult(error.message, "error"); } });
   saveButton.addEventListener("click", saveRows);
   refreshCandidatesButton.addEventListener("click", loadCandidates);
   rebuildCandidatesButton.addEventListener("click", rebuildCandidates);
-  queue.addEventListener("click", (event) => { const button = event.target.closest(".review-action"); if (button) handleReview(button); });
+  queue.addEventListener("click", (event) => {
+    const mergeButton = event.target.closest(".merge-execute");
+    if (mergeButton) return handleApprovedMerge(mergeButton);
+    const reviewButton = event.target.closest(".review-action");
+    if (reviewButton) handleReview(reviewButton);
+  });
   filterButtons.forEach((button) => button.addEventListener("click", () => {
     activeFilter = button.dataset.filter;
     filterButtons.forEach((node) => node.classList.toggle("is-active", node === button));
