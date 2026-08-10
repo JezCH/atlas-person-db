@@ -6,16 +6,21 @@ const html = fs.readFileSync(new URL('../admin.html', import.meta.url), 'utf8');
 const gate = fs.readFileSync(new URL('../atlas-admin-session-gate.js', import.meta.url), 'utf8');
 const sessionApi = fs.readFileSync(new URL('../api/atlas-session.js', import.meta.url), 'utf8');
 
-test('admin page has an explicit same-origin session entry gate before protected runtime loads', () => {
+test('admin page has an explicit same-origin session entry gate before protected runtime activates', () => {
   assert.match(html, /id="adminLoginForm"/);
   assert.match(html, /id="adminPassword"[^>]+type="password"/);
   assert.match(html, /id="duplicateProtectedArea"[^>]+inert/);
   assert.match(html, /id="dataProtectedArea"[^>]+inert/);
-  assert.match(html, /loadScript\("\.\/atlas-admin-session-gate\.js"\)/);
+  assert.match(html, /await window\.ATLAS_ASSETS\.loadScript\("\.\/atlas-admin-session-gate\.js"\)/);
+  assert.match(html, /const gate = window\.ATLAS_ADMIN_SESSION_GATE/);
   assert.match(html, /await gate\.ready/);
   assert.match(html, /if \(gate\.isAuthenticated\(\)\) await loadAdminAssets\(\)/);
   assert.match(html, /atlas-admin-authenticated/);
-  assert.ok(html.indexOf('loadScript("./atlas-admin-session-gate.js")') < html.indexOf('"./admin.js"'));
+
+  const gateLoad = html.indexOf('await window.ATLAS_ASSETS.loadScript("./atlas-admin-session-gate.js")');
+  const gateReady = html.indexOf('await gate.ready');
+  const guardedActivation = html.indexOf('if (gate.isAuthenticated()) await loadAdminAssets()');
+  assert.ok(gateLoad >= 0 && gateReady > gateLoad && guardedActivation > gateReady);
 });
 
 test('session gate uses the existing server session API without persisting credentials', () => {
