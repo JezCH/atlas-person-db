@@ -1,0 +1,84 @@
+name: Phase 8C C4C Lock Down Public Legacy Writes
+
+on:
+  workflow_dispatch:
+    inputs:
+      approved_sha:
+        description: Exact production activation commit SHA approved for RLS lockdown
+        required: true
+        type: string
+      confirm:
+        description: Type PHASE8C_C4C_LOCKDOWN_PUBLIC_WRITES
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: atlas-phase8c-c4c-lockdown-public-writes
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: phase-5-shadow
+    steps:
+      - name: Guard exact SHA and confirmation
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "${{ inputs.confirm }}" = "PHASE8C_C4C_LOCKDOWN_PUBLIC_WRITES"
+          test "${{ inputs.approved_sha }}" = "${{ github.sha }}"
+
+      - name: Checkout approved SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.approved_sha }}
+
+      - name: Install PostgreSQL client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: Capture before state
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p migration/phase-8/tmp/phase8c-c4c-lockdown
+          psql "$SUPABASE_DB_URL" -X -v ON_ERROR_STOP=1 -Atc \
+            "select policyname || '|' || cmd || '|' || coalesce(array_to_string(roles, ','),'') from pg_policies where schemaname='public' and tablename='person_politics' order by policyname;" \
+            > migration/phase-8/tmp/phase8c-c4c-lockdown/policies-before.txt
+
+      - name: Apply public-write lockdown
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql "$SUPABASE_DB_URL" -X -v ON_ERROR_STOP=1 \
+            -f migration/phase-8/phase8c-c4c-lockdown-public-writes.sql \
+            | tee migration/phase-8/tmp/phase8c-c4c-lockdown/apply.log
+
+      - name: Verify and capture after state
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          psql "$SUPABASE_DB_URL" -X -v ON_ERROR_STOP=1 -Atc \
+            "select policyname || '|' || cmd || '|' || coalesce(array_to_string(roles, ','),'') from pg_policies where schemaname='public' and tablename='person_politics' order by policyname;" \
+            > migration/phase-8/tmp/phase8c-c4c-lockdown/policies-after.txt
+          test "$(psql "$SUPABASE_DB_URL" -X -Atc "select count(*) from pg_policies where schemaname='public' and tablename='person_politics' and cmd in ('ALL','INSERT','UPDATE','DELETE');")" = "0"
+          test "$(psql "$SUPABASE_DB_URL" -X -Atc "select count(*) from pg_policies where schemaname='public' and tablename='person_politics' and cmd='SELECT';")" -ge "1"
+          printf '{"marker":"PHASE8C_C4C_PUBLIC_WRITE_LOCKDOWN","approved_sha":"%s","write_policies":0,"read_policy_present":true}\n' \
+            "${{ inputs.approved_sha }}" > migration/phase-8/tmp/phase8c-c4c-lockdown/report.json
+
+      - name: Upload evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase8c-c4c-lockdown-${{ inputs.approved_sha }}
+          path: migration/phase-8/tmp/phase8c-c4c-lockdown
+          if-no-files-found: error
+          retention-days: 90

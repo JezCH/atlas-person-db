@@ -9,8 +9,8 @@ const sourceControl = fs.readFileSync('atlas-source-control.js', 'utf8');
 const reader = fs.readFileSync('atlas-reader.js', 'utf8');
 const observability = fs.readFileSync('atlas-reader-observability.js', 'utf8');
 const app = fs.readFileSync('app.js', 'utf8');
-const adapter = fs.readFileSync('atlas-write-adapter.js', 'utf8');
-const compiler = fs.readFileSync('atlas-v2-shadow-compiler.js', 'utf8');
+const serverAdapter = fs.readFileSync('atlas-server-write-adapter.js', 'utf8');
+const index = fs.readFileSync('index.html', 'utf8');
 const plan = fs.readFileSync('migration/phase-7/PHASE_7D_OBSERVATION_PLAN.md', 'utf8');
 const rollback = fs.readFileSync('migration/phase-7/PHASE_7_ROLLBACK_RUNBOOK.md', 'utf8');
 
@@ -26,38 +26,36 @@ assert(reader.includes('window.AtlasReaderObservability?.record'), 'reader outco
 assert(observability.includes('requested_source'), 'requested source field missing from observability');
 assert(observability.includes('effective_source'), 'effective source field missing from observability');
 assert(observability.includes('validation_failures'), 'validation failure field missing from observability');
-assert(app.includes('ATLAS_WRITE_ADAPTER.createAdapter'), 'app write adapter missing');
-assert(app.includes('mode: "legacy-only"') || app.includes('mode: "shadow-validate"'), 'approved app write mode missing');
-assert(adapter.includes('db.from("person_politics").insert'), 'legacy insert target missing');
-assert(adapter.includes('db.from("person_politics").update'), 'legacy update target missing');
-assert(adapter.includes('db.from("person_politics").delete'), 'legacy delete target missing');
-assert(!/db\.from\("atlas_person_politics_compat_v1"\)\.(?:insert|update|delete)/.test(app + adapter), 'compatibility view mutation detected');
-assert(!/db\.from\("atlas_v2\./.test(app + adapter + compiler), 'v2 physical table mutation detected');
-if (app.includes('mode: "shadow-validate"')) {
-  assert(app.includes('shadowCompiler: window.ATLAS_V2_SHADOW_COMPILER.compile'), 'shadow compiler injection missing');
-  assert(compiler.includes('commit: false'), 'shadow compiler commit guard missing');
-  assert(compiler.includes('writes_performed: 0'), 'shadow compiler zero-write guard missing');
-}
+
+assert(index.includes('./atlas-server-write-adapter.js'), 'authenticated server write adapter missing from index');
+assert(!index.includes('./atlas-write-adapter.js'), 'legacy browser write adapter still runtime-loaded');
+assert(!index.includes('./atlas-write-mode.js'), 'legacy browser write mode still runtime-loaded');
+assert(!index.includes('./atlas-v2-shadow-compiler.js'), 'legacy shadow compiler still runtime-loaded');
+assert(app.includes('ATLAS_SERVER_WRITE_ADAPTER'), 'authenticated server write adapter missing from app');
+assert(!app.includes('ATLAS_WRITE_ADAPTER'), 'legacy browser write adapter still referenced by app');
+assert(!serverAdapter.includes('ATLAS_MUTATION_TOKEN'), 'server mutation secret reference detected in browser adapter');
+assert(!serverAdapter.includes('Authorization'), 'Authorization header detected in browser adapter');
+assert(serverAdapter.includes('credentials: "same-origin"'), 'browser adapter must use same-origin session credentials');
+assert(!/\.from\("(?:person_politics|atlas_person_politics_compat_v1|atlas_v2)/.test(app + serverAdapter), 'browser mutation path contains direct database target');
+
 assert(rollback.includes('DATA_SOURCE: "legacy"'), 'rollback target lost exact legacy declaration');
 assert(rollback.includes('public.person_politics'), 'rollback write invariant missing');
-assert(plan.includes('31114892854'), 'production evidence run missing from observation plan');
-assert(plan.includes('8973230282'), 'production evidence artifact missing from observation plan');
-assert(plan.includes('sha256:52ba58bace8b7037f451f8fa97b54c9567d92af16cc351d823e2af6e5e133c17'), 'artifact digest missing from observation plan');
-assert(plan.includes('Phase 8 remains unauthorized'), 'Phase 8 boundary missing');
+assert(plan.includes('31114892854'), 'historical production evidence run missing from observation plan');
+assert(plan.includes('8973230282'), 'historical production evidence artifact missing from observation plan');
+assert(plan.includes('sha256:52ba58bace8b7037f451f8fa97b54c9567d92af16cc351d823e2af6e5e133c17'), 'historical artifact digest missing from observation plan');
 
 const report = {
   marker: 'PHASE_7D_OBSERVATION_CONTRACT',
   production_manifest: 'v2-shadow',
-  write_target: 'public.person_politics',
+  mutation_boundary: 'authenticated-server',
   rollback_target: 'legacy',
   checks: {
     source_manifest_exact: failures.filter((x) => x.includes('production manifest')).length === 0,
     source_and_reader_contract: failures.filter((x) => /source set|effective source|reader|fallback contract/.test(x)).length === 0,
     observability_contract: failures.filter((x) => /observability|field/.test(x)).length === 0,
-    write_guard: failures.filter((x) => /target|mutation|adapter|write mode|shadow compiler/.test(x)).length === 0,
+    write_guard: failures.filter((x) => /write|mutation|adapter|database target|Authorization|secret|session credentials/.test(x)).length === 0,
     rollback_ready: failures.filter((x) => /rollback/.test(x)).length === 0,
-    evidence_lineage: failures.filter((x) => /evidence run|artifact|digest/.test(x)).length === 0,
-    phase_boundary: failures.filter((x) => /Phase 8/.test(x)).length === 0
+    evidence_lineage: failures.filter((x) => /evidence run|evidence artifact|artifact digest/.test(x)).length === 0
   },
   failures,
   pass: failures.length === 0

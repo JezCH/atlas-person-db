@@ -1,0 +1,61 @@
+name: Phase 8C C4C Production Server Write Activation
+
+on:
+  pull_request:
+    paths:
+      - "index.html"
+      - "app.js"
+      - "admin.html"
+      - "admin.js"
+      - "atlas-admin-write-service.js"
+      - "schema.sql"
+      - "tests/atlas-admin-write-service.test.mjs"
+      - "tests/atlas-server-write-activation.test.mjs"
+      - "migration/phase-8/phase8c-c4c-lockdown-public-writes.sql"
+      - "migration/phase-8/phase8c-c4c-rollback-public-writes.sql"
+      - ".github/workflows/phase-8c-c4c-production-write-activation.yml"
+      - ".github/workflows/phase-8c-c4c-lockdown-public-writes.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run activation and server-adapter tests
+        run: >-
+          node --test
+          tests/atlas-server-write-activation.test.mjs
+          tests/atlas-admin-write-service.test.mjs
+          tests/atlas-server-write-adapter.test.mjs
+          tests/atlas-session-auth.test.mjs
+          tests/atlas-session-api.test.mjs
+      - name: Prove browser direct-write runtime is detached
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -n 'atlas-server-write-adapter.js' index.html admin.html
+          grep -n 'ATLAS_SERVER_WRITE_ADAPTER' app.js admin.js
+          ! grep -n 'atlas-write-adapter.js' index.html admin.html
+          ! grep -n 'atlas-write-mode.js' index.html admin.html
+          ! grep -n 'atlas-v2-shadow-compiler.js' index.html admin.html
+          ! grep -n 'ATLAS_MUTATION_TOKEN' app.js admin.js atlas-server-write-adapter.js
+      - name: Verify client write lockdown is durable and reversible
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -ni 'create policy "public read person politics"' schema.sql
+          ! grep -ni 'create policy "public insert person politics"' schema.sql
+          ! grep -ni 'create policy "public update person politics"' schema.sql
+          ! grep -ni 'create policy "public delete person politics"' schema.sql
+          grep -ni 'revoke insert, update, delete on table public.person_politics from public' schema.sql
+          grep -n 'public read person politics' migration/phase-8/phase8c-c4c-lockdown-public-writes.sql
+          grep -n 'REVOKE INSERT, UPDATE, DELETE' migration/phase-8/phase8c-c4c-lockdown-public-writes.sql
+          grep -n 'CREATE POLICY "public insert person politics"' migration/phase-8/phase8c-c4c-rollback-public-writes.sql

@@ -5,10 +5,9 @@ on:
     paths:
       - "index.html"
       - "app.js"
-      - "atlas-write-adapter.js"
-      - "atlas-write-mode.js"
-      - "atlas-v2-shadow-compiler.js"
+      - "atlas-server-write-adapter.js"
       - "tests/phase8b-app-write-adapter.test.mjs"
+      - "tests/atlas-server-write-adapter.test.mjs"
       - ".github/workflows/phase-8b-app-write-adapter.yml"
   workflow_dispatch:
 
@@ -35,21 +34,17 @@ jobs:
       - name: Run app write routing tests
         run: node --test tests/phase8b-app-write-adapter.test.mjs
 
-      - name: Run existing adapter tests
-        run: node --test tests/atlas-write-adapter.test.mjs
-
-      - name: Run shadow compiler tests
-        run: node --test tests/atlas-v2-shadow-compiler.test.mjs
+      - name: Run authenticated server adapter tests
+        run: node --test tests/atlas-server-write-adapter.test.mjs
 
       - name: Emit evidence
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p migration/phase-8/tmp/phase8b-app-write-adapter
-          printf '{"marker":"PHASE_8B_APP_SHADOW_VALIDATE","app_adapter_loaded":true,"app_direct_mutation":false,"legacy_write_target":"person_politics","write_mode":"shadow-validate","shadow_compiler_loaded":true,"v2_commit_enabled":false,"v2_writes_performed":0}\n' > migration/phase-8/tmp/phase8b-app-write-adapter/verification.json
+          printf '{"marker":"PHASE_8B_APP_WRITE_BOUNDARY","app_adapter_loaded":true,"app_direct_mutation":false,"mutation_boundary":"authenticated-server","client_fallback":false,"browser_mutation_secret":false}\n' > migration/phase-8/tmp/phase8b-app-write-adapter/verification.json
 
       - name: Upload evidence
-        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: phase-8b-app-write-adapter-${{ github.sha }}

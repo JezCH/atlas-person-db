@@ -3,9 +3,6 @@ import test from 'node:test';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const adapterApi = require('../atlas-write-adapter.js');
-const modeApi = require('../atlas-write-mode.js');
-const shadowCompiler = require('../atlas-v2-shadow-compiler.js');
 const { createAdminWriteService } = require('../atlas-admin-write-service.js');
 
 function fakeDb(existingIds = new Map()) {
@@ -17,6 +14,7 @@ function fakeDb(existingIds = new Map()) {
       const filters = {};
       return {
         select() {
+          calls.push(['select']);
           return {
             eq(field, value) {
               filters[field] = value;
@@ -29,16 +27,32 @@ function fakeDb(existingIds = new Map()) {
             }
           };
         },
-        insert(payload) {
-          calls.push(['insert', payload]);
-          return { select() { return { single: async () => ({ data: { id: 101 }, error: null }) }; } };
+        insert() { throw new Error('admin service must not write through Supabase'); },
+        update() { throw new Error('admin service must not write through Supabase'); },
+        delete() { throw new Error('admin service must not write through Supabase'); }
+      };
+    }
+  };
+}
+
+function fakeServerAdapterApi({ fail = false } = {}) {
+  const calls = [];
+  return {
+    calls,
+    createAdapter() {
+      return {
+        mode: 'server-dual-write',
+        async createActivity(payload) {
+          calls.push(['create', payload]);
+          return fail
+            ? { legacy: { committed: false }, errors: ['synthetic failure'] }
+            : { legacy: { committed: true, record_ids: ['new-id'] }, v2: { committed: true }, errors: [] };
         },
-        update(payload) {
-          calls.push(['update', payload]);
-          return { eq: async (...args) => { calls.push(['update-eq', ...args]); return { error: null }; } };
-        },
-        delete() {
-          return { eq: async (...args) => { calls.push(['delete-eq', ...args]); return { error: null }; } };
+        async updateActivity(id, payload) {
+          calls.push(['update', id, payload]);
+          return fail
+            ? { legacy: { committed: false }, errors: ['synthetic failure'] }
+            : { legacy: { committed: true, record_ids: [id] }, v2: { committed: true }, errors: [] };
         }
       };
     }
@@ -55,58 +69,39 @@ const row = {
   notes: null
 };
 
-test('admin write service creates through the adapter in legacy-only mode', async () => {
+test('admin creates through server adapter while Supabase is read lookup only', async () => {
   const db = fakeDb();
-  const service = createAdminWriteService({ db, adapterApi, mode: 'legacy-only', modeResolver: modeApi.resolveMode });
+  const adapterApi = fakeServerAdapterApi();
+  const service = createAdminWriteService({ db, adapterApi });
   const result = await service.saveRows([row]);
   assert.equal(result.inserted, 1);
   assert.equal(result.updated, 0);
   assert.deepEqual(result.failures, []);
-  assert.equal(result.mode, 'legacy-only');
+  assert.equal(result.mode, 'server-dual-write');
+  assert.deepEqual(adapterApi.calls.map((call) => call[0]), ['create']);
   assert.equal(db.calls.filter((call) => call[0] === 'from').every((call) => call[1] === 'person_politics'), true);
 });
 
-test('admin shadow-validate still commits legacy and compiles without v2 writes', async () => {
-  const db = fakeDb();
-  const service = createAdminWriteService({
-    db,
-    adapterApi,
-    mode: 'shadow-validate',
-    modeResolver: modeApi.resolveMode,
-    shadowCompiler: shadowCompiler.compile
-  });
-  const result = await service.saveRows([row]);
-  assert.equal(result.inserted, 1);
-  assert.equal(result.updated, 0);
-  assert.deepEqual(result.failures, []);
-  assert.equal(result.mode, 'shadow-validate');
-  assert.equal(db.calls.filter((call) => call[0] === 'from').every((call) => call[1] === 'person_politics'), true);
-});
-
-test('admin write service updates through the adapter when exact activity exists', async () => {
+test('admin updates through server adapter when exact activity already exists', async () => {
   const key = [row.person_name, row.politic_name, row.activity_start, row.activity_end].join('|');
-  const db = fakeDb(new Map([[key, 7]]));
-  const service = createAdminWriteService({ db, adapterApi, mode: 'legacy-only', modeResolver: modeApi.resolveMode });
+  const db = fakeDb(new Map([[key, 'legacy-7']]));
+  const adapterApi = fakeServerAdapterApi();
+  const service = createAdminWriteService({ db, adapterApi });
   const result = await service.saveRows([row]);
   assert.equal(result.inserted, 0);
   assert.equal(result.updated, 1);
   assert.deepEqual(result.failures, []);
-  assert.equal(db.calls.some((call) => call[0] === 'update'), true);
+  assert.deepEqual(adapterApi.calls[0].slice(0, 2), ['update', 'legacy-7']);
 });
 
-test('dual-write is a recognized contract but admin service alone remains legacy-targeted', async () => {
+test('admin reports server mutation failures without attempting a client-side fallback', async () => {
   const db = fakeDb();
-  const service = createAdminWriteService({ db, adapterApi, mode: 'dual-write', modeResolver: (value) => modeApi.resolveMode(value, () => {}) });
+  const adapterApi = fakeServerAdapterApi({ fail: true });
+  const service = createAdminWriteService({ db, adapterApi });
   const result = await service.saveRows([row]);
-  assert.equal(result.mode, 'dual-write');
-  assert.equal(result.inserted, 1);
-  assert.equal(db.calls.filter((call) => call[0] === 'from').every((call) => call[1] === 'person_politics'), true);
-});
-
-test('truly unknown admin write mode still fails closed to legacy-only', async () => {
-  const db = fakeDb();
-  const service = createAdminWriteService({ db, adapterApi, mode: 'v2-only', modeResolver: (value) => modeApi.resolveMode(value, () => {}) });
-  const result = await service.saveRows([row]);
-  assert.equal(result.mode, 'legacy-only');
-  assert.equal(result.inserted, 1);
+  assert.equal(result.inserted, 0);
+  assert.equal(result.updated, 0);
+  assert.equal(result.failures.length, 1);
+  assert.match(result.failures[0], /synthetic failure/);
+  assert.equal(adapterApi.calls.length, 1);
 });
