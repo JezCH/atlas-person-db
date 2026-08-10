@@ -13,6 +13,7 @@ on:
       - "tests/phase9a-admin-duplicate-review-contract.test.mjs"
       - "tests/phase9b-person-reference-inventory-contract.test.mjs"
       - "tests/phase9b-person-merge-contract.test.mjs"
+      - "tests/phase9c-live-candidate-preview-contract.test.mjs"
       - ".github/workflows/phase-9a-admin-duplicate-review.yml"
   workflow_dispatch:
     inputs:
@@ -45,6 +46,36 @@ jobs:
           tests/phase9a-admin-duplicate-review-contract.test.mjs
           tests/phase9b-person-reference-inventory-contract.test.mjs
           tests/phase9b-person-merge-contract.test.mjs
+          tests/phase9c-live-candidate-preview-contract.test.mjs
+
+  live-candidate-preview:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: phase-5-shadow
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install --no-package-lock --ignore-scripts --no-audit --no-fund
+      - name: Re-run preview contract before DB connection
+        run: node --test tests/phase9c-live-candidate-preview-contract.test.mjs
+      - name: Preview live duplicate candidates read-only
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          PHASE9C_OUTPUT_DIR: migration/phase-9/tmp/live-candidate-preview
+        run: node migration/phase-9/scripts/phase9c-live-candidate-preview.mjs
+      - name: Upload Phase 9C preview evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase9c-live-candidate-preview-${{ github.sha }}
+          path: migration/phase-9/tmp/live-candidate-preview
+          if-no-files-found: error
+          retention-days: 90
 
   protected-schema-apply:
     if: github.event_name == 'workflow_dispatch'
