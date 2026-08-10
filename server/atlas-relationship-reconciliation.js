@@ -54,10 +54,21 @@ function buildRelationshipReconciliationGroups({ rows = [], lowPersonId, highPer
     const hasLow = list.some((row) => row.person_id === low);
     const hasHigh = list.some((row) => row.person_id === high);
     if (!hasLow || !hasHigh) continue;
-    const roleCounts = new Map();
-    for (const row of list) roleCounts.set(roleKey(row), (roleCounts.get(roleKey(row)) || 0) + 1);
-    const distinctRoles = new Set(list.map(roleKey));
+    const byRole = new Map();
+    for (const row of list) {
+      const key = roleKey(row);
+      const roleRows = byRole.get(key) || [];
+      roleRows.push(row);
+      byRole.set(key, roleRows);
+    }
     const sorted = [...list].sort((a, b) => a.id.localeCompare(b.id));
+    const exactDuplicateRoleGroups = [...byRole.entries()]
+      .filter(([, roleRows]) => roleRows.length > 1)
+      .map(([role_key, roleRows]) => ({
+        role_key,
+        role_id: roleRows[0].role_id,
+        relationships: [...roleRows].sort((a, b) => a.id.localeCompare(b.id))
+      }));
     groups.push({
       context_key,
       group_fingerprint: groupFingerprint(sorted),
@@ -65,8 +76,9 @@ function buildRelationshipReconciliationGroups({ rows = [], lowPersonId, highPer
       period_basis_id: id(sorted[0].period_basis_id),
       activity_start: Number(sorted[0].activity_start),
       activity_end: Number(sorted[0].activity_end),
-      has_exact_role_duplicates: [...roleCounts.values()].some((count) => count > 1),
-      has_role_variants: distinctRoles.size > 1,
+      has_exact_role_duplicates: exactDuplicateRoleGroups.length > 0,
+      has_role_variants: byRole.size > 1,
+      exact_duplicate_role_groups: exactDuplicateRoleGroups,
       relationships: sorted
     });
   }
@@ -80,23 +92,18 @@ function normalizeResolutions(resolutions) {
     const group_fingerprint = String(item?.group_fingerprint || "").trim();
     const action = String(item?.action || "").trim().toUpperCase();
     const keep_relationship_id = item?.keep_relationship_id == null ? null : String(item.keep_relationship_id).trim();
+    const keep_relationship_ids = Array.isArray(item?.keep_relationship_ids)
+      ? [...new Set(item.keep_relationship_ids.map((value) => String(value || "").trim()).filter(Boolean))].sort()
+      : [];
     if (!/^[0-9a-f]{64}$/i.test(group_fingerprint)) throw new Error("valid relationship group_fingerprint is required");
     if (!ACTIONS.has(action)) throw new Error("relationship resolution action must be KEEP_DISTINCT_ROLES or KEEP_ONE_RELATIONSHIP");
     if (action === "KEEP_ONE_RELATIONSHIP" && !keep_relationship_id) throw new Error("keep_relationship_id is required for KEEP_ONE_RELATIONSHIP");
-    return { group_fingerprint, action, keep_relationship_id };
+    if (action === "KEEP_ONE_RELATIONSHIP" && keep_relationship_ids.length) throw new Error("keep_relationship_ids is only valid for KEEP_DISTINCT_ROLES");
+    return { group_fingerprint, action, keep_relationship_id, keep_relationship_ids };
   });
 }
 
-function choosePreferredRelationship(rows, survivorPersonId) {
-  const survivor = String(survivorPersonId);
-  return [...rows].sort((a, b) => {
-    const aSurvivor = a.person_id === survivor ? 0 : 1;
-    const bSurvivor = b.person_id === survivor ? 0 : 1;
-    return aSurvivor - bSurvivor || a.id.localeCompare(b.id);
-  })[0];
-}
-
-function buildReconciliationPlan({ groups = [], resolutions = [], survivorPersonId } = {}) {
+function buildReconciliationPlan({ groups = [], resolutions = [] } = {}) {
   const normalized = normalizeResolutions(resolutions);
   const resolutionByGroup = new Map();
   for (const item of normalized) {
@@ -120,21 +127,26 @@ function buildReconciliationPlan({ groups = [], resolutions = [], survivorPerson
         }
       }
     } else {
-      const byRole = new Map();
-      for (const row of group.relationships) {
-        const key = roleKey(row);
-        const list = byRole.get(key) || [];
-        list.push(row);
-        byRole.set(key, list);
+      const selected = new Set(resolution.keep_relationship_ids);
+      const requiredRoleGroups = group.exact_duplicate_role_groups || [];
+      if (selected.size !== requiredRoleGroups.length) {
+        throw new Error("KEEP_DISTINCT_ROLES requires exactly one explicit representative for every duplicated role");
       }
-      for (const rows of byRole.values()) {
-        if (rows.length < 2) continue;
-        const keep = choosePreferredRelationship(rows, survivorPersonId);
-        for (const row of rows) {
-          if (row.id !== keep.id) {
-            coalesces.push({ group_fingerprint: group.group_fingerprint, keep_relationship_id: keep.id, drop_relationship_id: row.id });
+      for (const duplicateRoleGroup of requiredRoleGroups) {
+        const ids = new Set(duplicateRoleGroup.relationships.map((row) => row.id));
+        const keepIds = [...selected].filter((selectedId) => ids.has(selectedId));
+        if (keepIds.length !== 1) {
+          throw new Error("KEEP_DISTINCT_ROLES representative does not match exactly one duplicated role group");
+        }
+        const keepId = keepIds[0];
+        for (const row of duplicateRoleGroup.relationships) {
+          if (row.id !== keepId) {
+            coalesces.push({ group_fingerprint: group.group_fingerprint, keep_relationship_id: keepId, drop_relationship_id: row.id });
           }
         }
+      }
+      for (const selectedId of selected) {
+        if (!relationshipIds.has(selectedId)) throw new Error("KEEP_DISTINCT_ROLES representative does not belong to its relationship conflict group");
       }
     }
     applied.push({ ...resolution, context_key: group.context_key });
@@ -151,6 +163,7 @@ function buildReconciliationPlan({ groups = [], resolutions = [], survivorPerson
 module.exports = Object.freeze({
   ACTIONS,
   contextKey,
+  roleKey,
   groupFingerprint,
   buildRelationshipReconciliationGroups,
   normalizeResolutions,
