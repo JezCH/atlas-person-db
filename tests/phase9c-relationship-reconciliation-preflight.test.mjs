@@ -16,7 +16,7 @@ test('core merge transaction treats same context with a different role as reconc
   assert.match(mergeService, /RELATIONSHIP_RECONCILIATION_REQUIRED/);
 
   const begin = mergeService.indexOf('BEGIN ISOLATION LEVEL SERIALIZABLE');
-  const relationshipGuard = mergeService.indexOf('relationshipReconciliationConflicts(client');
+  const relationshipGuard = mergeService.indexOf('const conflicts = await relationshipReconciliationConflicts');
   const relationshipMove = mergeService.indexOf('update atlas_v2.person_politics_v2 set person_id=$2');
   assert.ok(begin >= 0 && relationshipGuard > begin && relationshipMove > relationshipGuard);
 });
