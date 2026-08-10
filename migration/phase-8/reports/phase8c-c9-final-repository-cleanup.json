@@ -1,0 +1,55 @@
+{
+  "marker": "PHASE8C_C9_FINAL_REPOSITORY_CLEANUP",
+  "basis_main_sha": "088889c25b37f2dc595928d14d75bcc55ab46c13",
+  "purpose": "Remove active repository paths capable of recreating or directly mutating retired legacy database objects before final C9B DROP.",
+  "removed_active_paths": [
+    {
+      "path": "schema.sql",
+      "blob_sha": "0b1fe423f110ae1a616af0e2f64189996cf712eb",
+      "reason": "Root MVP bootstrap recreated public.person_politics and inserted sample rows."
+    },
+    {
+      "path": "supabase-integrity.sql",
+      "blob_sha": "d1cf80b3ba36e58fce4f877eb78e8a92cab8fc9a",
+      "reason": "Legacy integrity script deleted/altered public.person_politics and created legacy audit objects."
+    },
+    {
+      "path": "migrations/002_add_verified.sql",
+      "blob_sha": "b399c54b6a36bc77476e391a0c88d4c10f659dd8",
+      "reason": "Active migration path altered public.person_politics."
+    },
+    {
+      "path": "config.js",
+      "blob_sha": "1b00a66090696b0b84a3f3f069b4c9c83cb73ddd",
+      "reason": "Unused legacy browser Supabase configuration and stale dynamic loader."
+    },
+    {
+      "path": "config.example.js",
+      "blob_sha": "fccf0209fb32211eb121987deb4d0e67e24f0284",
+      "reason": "Unused legacy browser Supabase configuration template."
+    }
+  ],
+  "replaced_documents": [
+    {
+      "path": "README.md",
+      "previous_blob_sha": "14d86a73a4ab6a7402493939879b593fc92b8b19"
+    },
+    {
+      "path": "DATA_MODEL.md",
+      "previous_blob_sha": "0aa2ea8266bb13a11f476cbf5c3a7cba5ef27dec"
+    }
+  ],
+  "historical_recovery": "Exact removed content remains recoverable through Git by the pinned blob SHAs and basis commit. It is intentionally not retained in an active executable/bootstrap path.",
+  "required_final_state": {
+    "public_api_routes": [
+      "api/atlas-read.js",
+      "api/atlas-mutate.js",
+      "api/atlas-session.js"
+    ],
+    "read_mode": "direct-normalized-v2",
+    "write_mode": "v2-authoritative-only",
+    "legacy_runtime_dependency": 0,
+    "legacy_bootstrap_recreation_path": 0,
+    "destructive_db_retirement": "C9B only"
+  }
+}

@@ -5,11 +5,18 @@ import fs from 'node:fs';
 const script = fs.readFileSync(new URL('../migration/phase-8/scripts/phase8c-c9b-retire-legacy-db.mjs', import.meta.url), 'utf8');
 const workflow = fs.readFileSync(new URL('../.github/workflows/phase-8c-c9-retire-legacy-db.yml', import.meta.url), 'utf8');
 const c8 = fs.readFileSync(new URL('./phase8c-c8-runtime-retirement.test.mjs', import.meta.url), 'utf8');
+const cleanup = JSON.parse(fs.readFileSync(new URL('../migration/phase-8/reports/phase8c-c9-final-repository-cleanup.json', import.meta.url), 'utf8'));
+const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
+const dataModel = fs.readFileSync(new URL('../DATA_MODEL.md', import.meta.url), 'utf8');
 
 const INVENTORY_SHA = '17f6af54fcb01a884e44b55c4e1ac2cad9d23faa';
 const INVENTORY_RUN = '31362547973';
 const INVENTORY_ARTIFACT = '9052889263';
 const INVENTORY_DIGEST = 'sha256:3c31babe79115cf7f96b62eab1ea2ab5238ba5287beeb07386c65bb237c481a4';
+
+function exists(rel) {
+  return fs.existsSync(new URL(`../${rel}`, import.meta.url));
+}
 
 test('C9B is pinned to the reviewed C9A live inventory evidence', () => {
   for (const value of [INVENTORY_SHA, INVENTORY_RUN, INVENTORY_ARTIFACT, INVENTORY_DIGEST]) {
@@ -18,6 +25,25 @@ test('C9B is pinned to the reviewed C9A live inventory evidence', () => {
   }
   assert.match(script, /legacy_rows:\s*319/);
   assert.match(script, /LEGACY_ROW_COUNT_CHANGED_SINCE_C9A/);
+});
+
+test('final repository cannot recreate or actively mutate the retired legacy table', () => {
+  const expected = [
+    'schema.sql',
+    'supabase-integrity.sql',
+    'migrations/002_add_verified.sql',
+    'config.js',
+    'config.example.js'
+  ];
+  assert.deepEqual(cleanup.removed_active_paths.map((entry) => entry.path), expected);
+  for (const rel of expected) assert.equal(exists(rel), false, `${rel} must remain retired`);
+  assert.equal(cleanup.required_final_state.legacy_bootstrap_recreation_path, 0);
+  assert.match(readme, /old root `schema\.sql` MVP bootstrap has been retired/i);
+  assert.doesNotMatch(readme, /SQL Editor[^\n]*`schema\.sql`|run\s+`?schema\.sql`?/i);
+  assert.match(readme, /Production runtime is normalized-v2 only/i);
+  assert.doesNotMatch(dataModel, /## Current physical table/i);
+  assert.doesNotMatch(dataModel, /## Future normalized schema/i);
+  assert.match(dataModel, /production relationship model is normalized/i);
 });
 
 test('C9B rechecks retirement invariants inside one transactional lock boundary', () => {
@@ -41,15 +67,15 @@ test('C9B drops only compatibility then legacy with no CASCADE', () => {
   assert.doesNotMatch(script, /\bCASCADE\b/i);
   assert.doesNotMatch(script, /DROP\s+SCHEMA/i);
   assert.doesNotMatch(script, /DROP\s+TABLE\s+atlas_v2\./i);
-  const dropView = script.indexOf("DROP VIEW public.atlas_person_politics_compat_v1");
-  const dropLegacy = script.indexOf("DROP TABLE public.person_politics");
+  const dropView = script.indexOf('DROP VIEW public.atlas_person_politics_compat_v1');
+  const dropLegacy = script.indexOf('DROP TABLE public.person_politics');
   assert.ok(dropView >= 0, 'compatibility DROP missing');
   assert.ok(dropLegacy > dropView, 'legacy table must be dropped after compatibility view');
 });
 
 test('C9B captures a legacy snapshot and verifies normalized state before commit', () => {
-  const snapshot = script.indexOf("legacy-snapshot.json");
-  const dropView = script.indexOf("DROP VIEW public.atlas_person_politics_compat_v1");
+  const snapshot = script.indexOf('legacy-snapshot.json');
+  const dropView = script.indexOf('DROP VIEW public.atlas_person_politics_compat_v1');
   const commit = script.indexOf("client.query('COMMIT')");
   assert.ok(snapshot >= 0 && snapshot < dropView, 'legacy snapshot must precede DROP');
   assert.match(script, /normalized row count changed inside retirement transaction/);
@@ -70,6 +96,16 @@ test('destructive workflow is manual-only, exact-main-SHA guarded and explicitly
   assert.match(workflow, /environment:\s*phase-5-shadow/);
   assert.match(workflow, /ZERO_REACHABLE_LEGACY_RUNTIME/);
   assert.match(workflow, /if:\s*github\.event_name == 'workflow_dispatch'/);
+});
+
+test('destructive dispatch rechecks repository cleanup and runtime graph before DB DROP', () => {
+  const repositoryCheck = workflow.indexOf('Verify final repository retirement preconditions');
+  const runtimeCheck = workflow.indexOf('Prove zero reachable legacy runtime before destructive DB step');
+  const dbStep = workflow.indexOf('Retire compatibility view and legacy table transactionally');
+  assert.ok(repositoryCheck >= 0, 'repository retirement precondition step missing');
+  assert.ok(runtimeCheck > repositoryCheck, 'runtime graph check must follow repository cleanup check');
+  assert.ok(dbStep > runtimeCheck, 'database DROP step must follow both repository/runtime checks');
+  assert.match(workflow, /node --test tests\/phase8c-c9b-legacy-db-retirement\.test\.mjs tests\/phase8c-c8-runtime-retirement\.test\.mjs/);
 });
 
 test('PR validation cannot execute the destructive database job', () => {
