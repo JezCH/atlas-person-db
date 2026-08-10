@@ -62,6 +62,29 @@ test('large chronology separation lowers confidence and is visible as evidence',
   assert.ok(candidates[0].evidence.some((item) => item.kind === 'CHRONOLOGY_SEPARATION'));
 });
 
+test('fingerprint is canonical and changes when contextual duplicate evidence changes', () => {
+  const names = [
+    { person_id: A, name: 'John Smith', locale: 'en', is_preferred: true },
+    { person_id: B, name: 'John Smith', locale: 'en', is_preferred: true }
+  ];
+  const samePolity = detectPersonDuplicateCandidates({
+    names,
+    activities: [
+      { person_id: A, polity_id: 'p1', activity_start: 1000, activity_end: 1010 },
+      { person_id: B, polity_id: 'p1', activity_start: 1005, activity_end: 1015 }
+    ]
+  })[0];
+  const separated = detectPersonDuplicateCandidates({
+    names,
+    activities: [
+      { person_id: A, polity_id: 'p1', activity_start: 1000, activity_end: 1010 },
+      { person_id: B, polity_id: 'p2', activity_start: 1300, activity_end: 1310 }
+    ]
+  })[0];
+  assert.notEqual(samePolity.evidence_fingerprint, separated.evidence_fingerprint);
+  assert.notEqual(samePolity.detector_version, 'phase9a-v1');
+});
+
 test('different names with no supported signal are not invented as candidates', () => {
   const candidates = detectPersonDuplicateCandidates({
     names: [
