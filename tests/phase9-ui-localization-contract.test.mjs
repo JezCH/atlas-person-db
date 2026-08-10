@@ -63,7 +63,7 @@ test('static browser locale patches are retired from the active page', () => {
 
 test('localization apply is additive and proves relationship row immutability', () => {
   assert.match(applyScript, /relationshipSnapshot/);
-  assert.match(applyScript, /relationships_unchanged = true/);
+  assert.match(applyScript, /relationships_unchanged:\s*true/);
   assert.match(applyScript, /after\.digest !== before\.digest/);
   assert.doesNotMatch(applyScript, /insert into atlas_v2\.person_politics_v2/i);
   assert.doesNotMatch(applyScript, /update atlas_v2\.person_politics_v2/i);
