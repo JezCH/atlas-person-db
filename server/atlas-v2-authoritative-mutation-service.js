@@ -1,6 +1,6 @@
 "use strict";
 
-const { deterministicRequestId, normalizeOperation } = require("./atlas-mutation-service.js");
+const { deterministicRequestId, normalizeOperation } = require("./atlas-mutation-request-utils.js");
 
 function blockedOutcome({ requestId, operation, blockers }) {
   return Object.freeze({

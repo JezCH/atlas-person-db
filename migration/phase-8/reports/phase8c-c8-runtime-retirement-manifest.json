@@ -1,0 +1,60 @@
+{
+  "marker": "PHASE8C_C8_RUNTIME_RETIREMENT_MANIFEST",
+  "pre_retirement_main_sha": "bd104ee6ac161d3f892c51c18e1e8bb4041d6c23",
+  "c7_inventory_commit_sha": "4d8e6592bf0b6f1bf54879ea310059b7960c9345",
+  "retired_runtime_files": [
+    "api/run-ingest-3-7f4c9a.js",
+    "RUN_ENDPOINT_TEMP.txt",
+    "ingest.js",
+    "ingest-supplement.js",
+    "trigger-ingest-supplement-3.js",
+    "atlas-canonical-data.js",
+    "atlas-dual-write-coordinator.js",
+    "atlas-legacy-reconciliation-executor.js",
+    "atlas-production-source.js",
+    "atlas-source-control.js",
+    "atlas-reconciliation-bootstrap.js",
+    "atlas-reconciliation-controller.js",
+    "atlas-reconciliation-integration.js",
+    "atlas-reconciliation-planner.js",
+    "atlas-v2-isolated-executor.js",
+    "atlas-v2-postgres-transaction-adapter.js",
+    "atlas-v2-shadow-compiler.js",
+    "atlas-v2-writer-contract.js",
+    "atlas-write-adapter.js",
+    "atlas-write-mode.js",
+    "admin-integrity-tools.js",
+    "admin-timeline-verification.js",
+    "server/atlas-postgres-dualwrite-transaction.js",
+    "server/atlas-mutation-service.js"
+  ],
+  "retired_historical_tests": [
+    "tests/atlas-dual-write-coordinator.test.mjs",
+    "tests/atlas-legacy-reconciliation-executor.test.mjs",
+    "tests/atlas-postgres-dualwrite-transaction.test.mjs",
+    "tests/atlas-reconciliation-controller.test.mjs",
+    "tests/atlas-reconciliation-convergence.test.mjs",
+    "tests/atlas-reconciliation-integration.test.mjs",
+    "tests/atlas-reconciliation-planner.test.mjs",
+    "tests/atlas-server-mutation-service.test.mjs",
+    "tests/atlas-v2-isolated-executor.test.mjs",
+    "tests/atlas-v2-postgres-transaction-adapter.test.mjs",
+    "tests/atlas-v2-shadow-compiler.test.mjs",
+    "tests/atlas-v2-writer-contract.test.mjs",
+    "tests/atlas-write-adapter.test.mjs",
+    "tests/phase8b-ingest-activation.test.mjs",
+    "tests/phase8b-reconciliation-parity.test.mjs",
+    "tests/phase8c-c4e-observation-contract.test.mjs",
+    "tests/phase8c-c6-direct-normalized-read-activation.test.mjs"
+  ],
+  "helper_extraction": {
+    "from": "server/atlas-mutation-service.js",
+    "to": "server/atlas-mutation-request-utils.js",
+    "reason": "the v2-authoritative service still required only normalizeOperation and deterministicRequestId; extracting those pure helpers removes the last intended-server edge to the legacy dual-write service"
+  },
+  "database_objects_retained_for_c9": [
+    "public.person_politics",
+    "public.atlas_person_politics_compat_v1"
+  ],
+  "evidence_recovery": "Every retired file remains recoverable exactly from the listed pre-retirement/C7 commit SHAs. Migration SQL, plans, reports and historical Git evidence are intentionally retained in-tree until their own retirement boundary."
+}

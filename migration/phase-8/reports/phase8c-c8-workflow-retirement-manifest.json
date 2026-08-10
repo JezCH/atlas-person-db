@@ -1,0 +1,21 @@
+{
+  "marker": "PHASE8C_C8_WORKFLOW_RETIREMENT_MANIFEST",
+  "c7_commit_sha": "4d8e6592bf0b6f1bf54879ea310059b7960c9345",
+  "baseline_workflow_tree_sha": "80573157d2f1290fbed958d1ae291cd3090f995e",
+  "policy": "All workflows present in the C7 baseline workflow tree are retired from the active Actions surface except phase-8c-c7-runtime-dependency-inventory.yml. C8 adds one consolidated active-v2 runtime workflow.",
+  "active_after_c8": [
+    "phase-8c-c7-runtime-dependency-inventory.yml",
+    "phase-8c-c8-active-v2-runtime.yml"
+  ],
+  "reason": "Completed migration/apply/smoke/dual-write workflows must not remain manually dispatchable after runtime retirement. Historical evidence remains recoverable from Git history and recorded workflow artifacts.",
+  "recovery": {
+    "commit": "4d8e6592bf0b6f1bf54879ea310059b7960c9345",
+    "workflow_tree": "80573157d2f1290fbed958d1ae291cd3090f995e",
+    "example": "git show 4d8e6592bf0b6f1bf54879ea310059b7960c9345:.github/workflows/<workflow-file>"
+  },
+  "database_objects_unchanged": [
+    "public.person_politics",
+    "public.atlas_person_politics_compat_v1"
+  ],
+  "next_destructive_stage": "C9"
+}
