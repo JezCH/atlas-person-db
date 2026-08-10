@@ -64,13 +64,31 @@ async function globalCounts(client) {
   return result.rows[0];
 }
 
-async function semanticRelationshipCollisions(client, sourceId, survivorId) {
-  const result = await client.query(`select s.id as source_relationship_id,d.id as survivor_relationship_id,
-    s.polity_id,s.role_id,s.period_basis_id,s.activity_start,s.activity_end
-    from atlas_v2.person_politics_v2 s join atlas_v2.person_politics_v2 d
-      on d.person_id=$2 and d.polity_id=s.polity_id and d.role_id is not distinct from s.role_id
-     and d.period_basis_id=s.period_basis_id and d.activity_start=s.activity_start and d.activity_end=s.activity_end
-    where s.person_id=$1 order by s.id,d.id limit 50`, [sourceId, survivorId]);
+async function relationshipReconciliationConflicts(client, sourceId, survivorId) {
+  const result = await client.query(`
+    select
+      s.id as source_relationship_id,
+      d.id as survivor_relationship_id,
+      s.polity_id,
+      s.period_basis_id,
+      s.activity_start,
+      s.activity_end,
+      s.role_id as source_role_id,
+      d.role_id as survivor_role_id,
+      case
+        when s.role_id is not distinct from d.role_id then 'EXACT_RELATIONSHIP'
+        else 'SAME_CONTEXT_ROLE_VARIANT'
+      end as conflict_kind
+    from atlas_v2.person_politics_v2 s
+    join atlas_v2.person_politics_v2 d
+      on d.person_id=$2
+     and d.polity_id=s.polity_id
+     and d.period_basis_id=s.period_basis_id
+     and d.activity_start=s.activity_start
+     and d.activity_end=s.activity_end
+    where s.person_id=$1
+    order by s.activity_start,s.activity_end,s.polity_id,s.id,d.id
+    limit 100`, [sourceId, survivorId]);
   return result.rows;
 }
 
@@ -136,11 +154,11 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
     const sourceMeta = byId.get(sides.source_person_id);
     if (survivorMeta.person_type !== sourceMeta.person_type || survivorMeta.historicity !== sourceMeta.historicity) throw new Error("person metadata conflict: person_type/historicity must be reconciled before merge");
 
-    const collisions = await semanticRelationshipCollisions(client, sides.source_person_id, sides.survivor_person_id);
-    if (collisions.length) {
-      const error = new Error(`relationship semantic collision requires manual review (${collisions.length} collision${collisions.length === 1 ? "" : "s"})`);
-      error.code = "RELATIONSHIP_COLLISION";
-      error.collisions = collisions;
+    const conflicts = await relationshipReconciliationConflicts(client, sides.source_person_id, sides.survivor_person_id);
+    if (conflicts.length) {
+      const error = new Error(`relationship reconciliation required before person merge (${conflicts.length} same-context conflict${conflicts.length === 1 ? "" : "s"})`);
+      error.code = "RELATIONSHIP_RECONCILIATION_REQUIRED";
+      error.collisions = conflicts;
       throw error;
     }
 
@@ -182,4 +200,4 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
   }
 }
 
-module.exports = Object.freeze({ EXPECTED_PERSON_FKS, resolveMergeSides, ensureMergeSchema, semanticRelationshipCollisions, executeApprovedPersonMerge });
+module.exports = Object.freeze({ EXPECTED_PERSON_FKS, resolveMergeSides, ensureMergeSchema, relationshipReconciliationConflicts, executeApprovedPersonMerge });
