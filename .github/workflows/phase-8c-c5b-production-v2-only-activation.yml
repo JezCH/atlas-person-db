@@ -1,0 +1,67 @@
+name: Phase 8C C5B Production V2-Only Activation
+
+on:
+  pull_request:
+    paths:
+      - "server/atlas-vercel-mutation-handler.js"
+      - "atlas-server-write-adapter.js"
+      - "app.js"
+      - "admin.html"
+      - "atlas-admin-write-service.js"
+      - "tests/atlas-server-write-adapter.test.mjs"
+      - "tests/atlas-admin-write-service.test.mjs"
+      - "tests/atlas-server-write-activation.test.mjs"
+      - "tests/atlas-v2-only-production-activation.test.mjs"
+      - ".github/workflows/phase-8c-c4b-authenticated-browser-write.yml"
+      - ".github/workflows/phase-8c-c5b-production-v2-only-activation.yml"
+      - "migration/phase-8/PHASE_8C_C5B_PRODUCTION_V2_ONLY_ACTIVATION.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run production v2-only activation tests
+        run: >-
+          node --test
+          tests/atlas-v2-only-production-activation.test.mjs
+          tests/atlas-v2-authoritative-transaction-contract.test.mjs
+          tests/atlas-v2-authoritative-mutation-service.test.mjs
+          tests/atlas-server-write-adapter.test.mjs
+          tests/atlas-admin-write-service.test.mjs
+          tests/atlas-vercel-mutation-handler.test.mjs
+          tests/atlas-server-write-activation.test.mjs
+      - name: Prove production mutation path has zero legacy writer reachability
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -n 'createV2AuthoritativeTransactionFactory' server/atlas-vercel-mutation-handler.js
+          grep -n 'createV2AuthoritativeMutationService' server/atlas-vercel-mutation-handler.js
+          ! grep -n 'createDualWriteTransactionFactory' server/atlas-vercel-mutation-handler.js
+          ! grep -n 'atlas-postgres-dualwrite-transaction' server/atlas-vercel-mutation-handler.js
+          ! grep -n 'public.person_politics' server/atlas-vercel-mutation-handler.js server/atlas-postgres-v2-authoritative-transaction.js server/atlas-v2-authoritative-mutation-service.js
+          ! grep -n 'executeLegacy' server/atlas-vercel-mutation-handler.js server/atlas-postgres-v2-authoritative-transaction.js server/atlas-v2-authoritative-mutation-service.js
+      - name: Prove browser and admin use normalized IDs and v2 success semantics
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -n 'server-v2-only' atlas-server-write-adapter.js
+          grep -n 'outcome.v2.normalized_relationship_ids' app.js
+          ! grep -n 'outcome.legacy' app.js
+          grep -n 'atlas_person_politics_compat_v1' atlas-admin-write-service.js
+          ! grep -n '.from("person_politics")' atlas-admin-write-service.js
+          grep -n 'normalized v2' admin.html
+      - name: Prove read cutover is deliberately deferred to C6
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -n 'DATA_SOURCE: "v2-shadow"' atlas-production-source.js
+          grep -n 'fallbackToLegacy: true' app.js

@@ -207,7 +207,7 @@
     records = result.data || [];
     if (selectedId && !selectedRecord()) selectedId = null;
     if ((result.diagnostics || []).length) console.warn("AtlasReader diagnostics", result.diagnostics);
-    setStatus("ok", result.source === "v2-shadow" ? "V2 미리보기 연결됨" : "온라인 저장 연결됨");
+    setStatus("ok", result.source === "v2-shadow" ? "V2 연결됨" : "온라인 저장 연결됨");
     render();
   }
 
@@ -229,6 +229,12 @@
 
   function adapterError(result) {
     return result?.errors?.length ? result.errors.join("; ") : "쓰기 작업이 완료되지 않았습니다.";
+  }
+
+  function mutationSucceeded(outcome) {
+    return outcome?.committed === true
+      && outcome?.v2?.committed === true
+      && !outcome?.errors?.length;
   }
 
   async function saveRecord(event) {
@@ -254,12 +260,12 @@
     const outcome = id
       ? await writeAdapter.updateActivity(id, payload)
       : await writeAdapter.createActivity(payload);
-    if (outcome.errors?.length || !outcome.legacy?.committed) {
+    if (!mutationSucceeded(outcome)) {
       els.error.textContent = adapterError(outcome);
       els.error.hidden = false;
       return;
     }
-    if (!id && outcome.legacy.record_ids?.length) selectedId = outcome.legacy.record_ids[0];
+    if (!id && outcome.v2.normalized_relationship_ids?.length) selectedId = outcome.v2.normalized_relationship_ids[0];
     if (id) selectedId = id;
     els.dialog.close();
     showToast(id ? "기록을 수정했습니다." : "기록을 추가했습니다.");
@@ -269,7 +275,7 @@
   async function deleteRecord(id) {
     if (!db || !writeAdapter || !confirm("이 기록을 삭제할까요?")) return;
     const outcome = await writeAdapter.deleteActivity(id);
-    if (outcome.errors?.length || !outcome.legacy?.committed) return showToast(`삭제 실패: ${adapterError(outcome)}`);
+    if (!mutationSucceeded(outcome)) return showToast(`삭제 실패: ${adapterError(outcome)}`);
     if (String(selectedId) === String(id)) selectedId = null;
     showToast("기록을 삭제했습니다.");
     await loadRecords();
@@ -306,7 +312,7 @@
     })).filter((r) => r.person_name && r.politic_name && Number.isFinite(r.activity_start) && Number.isFinite(r.activity_end) && r.activity_end >= r.activity_start);
     if (!payload.length) return showToast("가져올 수 있는 유효한 행이 없습니다.");
     const outcome = await writeAdapter.importActivities(payload);
-    if (outcome.errors?.length || !outcome.legacy?.committed) return showToast(`가져오기 실패: ${adapterError(outcome)}`);
+    if (!mutationSucceeded(outcome)) return showToast(`가져오기 실패: ${adapterError(outcome)}`);
     showToast(`${payload.length}개 행을 가져왔습니다.`);
     await loadRecords();
   }

@@ -20,10 +20,12 @@ function fakeDb(existingIds = new Map()) {
               filters[field] = value;
               return this;
             },
-            limit: async () => {
+            limit: async (limit) => {
+              calls.push(['limit', limit]);
               const key = [filters.person_name, filters.politic_name, filters.activity_start, filters.activity_end].join('|');
-              const id = existingIds.get(key);
-              return { data: id == null ? [] : [{ id }], error: null };
+              const value = existingIds.get(key);
+              const ids = value == null ? [] : Array.isArray(value) ? value : [value];
+              return { data: ids.slice(0, limit).map((id) => ({ id })), error: null };
             }
           };
         },
@@ -41,18 +43,18 @@ function fakeServerAdapterApi({ fail = false } = {}) {
     calls,
     createAdapter() {
       return {
-        mode: 'server-dual-write',
+        mode: 'server-v2-only',
         async createActivity(payload) {
           calls.push(['create', payload]);
           return fail
-            ? { legacy: { committed: false }, errors: ['synthetic failure'] }
-            : { legacy: { committed: true, record_ids: ['new-id'] }, v2: { committed: true }, errors: [] };
+            ? { committed: false, v2: { committed: false }, errors: ['synthetic failure'] }
+            : { committed: true, legacy: { attempted: false, committed: false }, v2: { committed: true, normalized_relationship_ids: ['new-v2-id'] }, errors: [] };
         },
         async updateActivity(id, payload) {
           calls.push(['update', id, payload]);
           return fail
-            ? { legacy: { committed: false }, errors: ['synthetic failure'] }
-            : { legacy: { committed: true, record_ids: [id] }, v2: { committed: true }, errors: [] };
+            ? { committed: false, v2: { committed: false }, errors: ['synthetic failure'] }
+            : { committed: true, legacy: { attempted: false, committed: false }, v2: { committed: true, normalized_relationship_ids: [id] }, errors: [] };
         }
       };
     }
@@ -69,7 +71,7 @@ const row = {
   notes: null
 };
 
-test('admin creates through server adapter while Supabase is read lookup only', async () => {
+test('admin creates through v2-only server adapter while compatibility view is read lookup only', async () => {
   const db = fakeDb();
   const adapterApi = fakeServerAdapterApi();
   const service = createAdminWriteService({ db, adapterApi });
@@ -77,24 +79,36 @@ test('admin creates through server adapter while Supabase is read lookup only', 
   assert.equal(result.inserted, 1);
   assert.equal(result.updated, 0);
   assert.deepEqual(result.failures, []);
-  assert.equal(result.mode, 'server-dual-write');
+  assert.equal(result.mode, 'server-v2-only');
   assert.deepEqual(adapterApi.calls.map((call) => call[0]), ['create']);
-  assert.equal(db.calls.filter((call) => call[0] === 'from').every((call) => call[1] === 'person_politics'), true);
+  assert.equal(db.calls.filter((call) => call[0] === 'from').every((call) => call[1] === 'atlas_person_politics_compat_v1'), true);
 });
 
-test('admin updates through server adapter when exact activity already exists', async () => {
+test('admin update uses normalized relationship id returned by compatibility lookup', async () => {
   const key = [row.person_name, row.politic_name, row.activity_start, row.activity_end].join('|');
-  const db = fakeDb(new Map([[key, 'legacy-7']]));
+  const db = fakeDb(new Map([[key, 'normalized-7']]));
   const adapterApi = fakeServerAdapterApi();
   const service = createAdminWriteService({ db, adapterApi });
   const result = await service.saveRows([row]);
   assert.equal(result.inserted, 0);
   assert.equal(result.updated, 1);
   assert.deepEqual(result.failures, []);
-  assert.deepEqual(adapterApi.calls[0].slice(0, 2), ['update', 'legacy-7']);
+  assert.deepEqual(adapterApi.calls[0].slice(0, 2), ['update', 'normalized-7']);
 });
 
-test('admin reports server mutation failures without attempting a client-side fallback', async () => {
+test('admin fails closed on ambiguous normalized activity lookup', async () => {
+  const key = [row.person_name, row.politic_name, row.activity_start, row.activity_end].join('|');
+  const db = fakeDb(new Map([[key, ['normalized-1', 'normalized-2']]]));
+  const adapterApi = fakeServerAdapterApi();
+  const service = createAdminWriteService({ db, adapterApi });
+  const result = await service.saveRows([row]);
+  assert.equal(result.inserted, 0);
+  assert.equal(result.updated, 0);
+  assert.equal(adapterApi.calls.length, 0);
+  assert.match(result.failures[0], /ambiguous/);
+});
+
+test('admin reports v2-only server mutation failures without client fallback', async () => {
   const db = fakeDb();
   const adapterApi = fakeServerAdapterApi({ fail: true });
   const service = createAdminWriteService({ db, adapterApi });

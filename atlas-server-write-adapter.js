@@ -86,8 +86,10 @@
     function compatibleFailure(operation, message, status = null) {
       return {
         request_id: null,
-        mode: "server-dual-write",
+        mode: "server-v2-only",
+        write_mode: "v2-only",
         operation,
+        committed: false,
         legacy: { attempted: false, committed: false, record_ids: [] },
         v2: { attempted: false, committed: false, normalized_relationship_ids: [] },
         rollback_required: false,
@@ -101,9 +103,15 @@
       if (!response.ok || !body?.ok || !outcome) {
         return compatibleFailure(operation, errorText(body, `server mutation failed (${response.status})`), response.status);
       }
+      if (outcome.write_mode !== "v2-only") {
+        return compatibleFailure(operation, `unexpected server write mode: ${outcome.write_mode || "<missing>"}`, response.status);
+      }
+      if (outcome.committed !== true || outcome.v2?.committed !== true) {
+        return compatibleFailure(operation, errorText(body, "v2-only mutation was not committed"), response.status);
+      }
       return {
         ...outcome,
-        mode: "server-dual-write",
+        mode: "server-v2-only",
         errors: [],
         rollback_required: outcome.rollback === true,
         http_status: response.status
@@ -137,7 +145,7 @@
     }
 
     return Object.freeze({
-      mode: "server-dual-write",
+      mode: "server-v2-only",
       createActivity: (payload) => mutate("create", payload),
       updateActivity: (id, value) => mutate("update", { id, value }),
       deleteActivity: (id) => mutate("delete", { id }),
