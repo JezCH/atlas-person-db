@@ -5,6 +5,7 @@ on:
     paths:
       - "server/atlas-vercel-mutation-handler.js"
       - "atlas-server-write-adapter.js"
+      - "atlas-reader.js"
       - "app.js"
       - "admin.html"
       - "atlas-admin-write-service.js"
@@ -12,6 +13,7 @@ on:
       - "tests/atlas-admin-write-service.test.mjs"
       - "tests/atlas-server-write-activation.test.mjs"
       - "tests/atlas-v2-only-production-activation.test.mjs"
+      - "tests/phase8c-c6-direct-normalized-read-activation.test.mjs"
       - ".github/workflows/phase-8c-c4b-authenticated-browser-write.yml"
       - ".github/workflows/phase-8c-c5b-production-v2-only-activation.yml"
       - "migration/phase-8/PHASE_8C_C5B_PRODUCTION_V2_ONLY_ACTIVATION.md"
@@ -56,12 +58,21 @@ jobs:
           grep -n 'server-v2-only' atlas-server-write-adapter.js
           grep -n 'outcome.v2.normalized_relationship_ids' app.js
           ! grep -n 'outcome.legacy' app.js
-          grep -n 'atlas_person_politics_compat_v1' atlas-admin-write-service.js
-          ! grep -n '.from("person_politics")' atlas-admin-write-service.js
+          if grep -Fq 'ATLAS_READER_V2_DIRECT' atlas-reader.js; then
+            grep -n '/api/atlas-read' atlas-admin-write-service.js
+            ! grep -n '.from(' atlas-admin-write-service.js
+          else
+            grep -n 'atlas_person_politics_compat_v1' atlas-admin-write-service.js
+            ! grep -n '.from("person_politics")' atlas-admin-write-service.js
+          fi
           grep -n 'normalized v2' admin.html
-      - name: Prove read cutover is deliberately deferred to C6
+      - name: Verify read phase successor without regressing C5
         shell: bash
         run: |
           set -euo pipefail
-          grep -n 'DATA_SOURCE: "v2-shadow"' atlas-production-source.js
-          grep -n 'fallbackToLegacy: true' app.js
+          if grep -Fq 'ATLAS_READER_V2_DIRECT' atlas-reader.js; then
+            node --test tests/phase8c-c6-direct-normalized-read-activation.test.mjs
+          else
+            grep -n 'DATA_SOURCE: "v2-shadow"' atlas-production-source.js
+            grep -n 'fallbackToLegacy: true' app.js
+          fi

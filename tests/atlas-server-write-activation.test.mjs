@@ -24,7 +24,7 @@ test('authoring app selects only the authenticated server write adapter', () => 
   assert.equal(app.includes('outcome.v2.normalized_relationship_ids'), true);
 });
 
-test('admin uses normalized compatibility lookup and never client-writes either store', () => {
+test('admin uses direct normalized lookup and never client-writes either store', () => {
   assert.equal(adminHtml.includes('./atlas-server-write-adapter.js'), true);
   assert.equal(adminHtml.includes('./atlas-write-adapter.js'), false);
   assert.equal(adminHtml.includes('./atlas-write-mode.js'), false);
@@ -33,9 +33,9 @@ test('admin uses normalized compatibility lookup and never client-writes either 
   assert.equal(admin.includes('window.ATLAS_WRITE_ADAPTER'), false);
   assert.equal(admin.includes('window.ATLAS_WRITE_MODE'), false);
   assert.equal(admin.includes('window.ATLAS_V2_SHADOW_COMPILER'), false);
-  assert.equal(adminService.includes('.from("atlas_person_politics_compat_v1")'), true);
-  assert.equal(adminService.includes('.from("person_politics")'), false);
-  assert.equal(adminService.includes('.select("id")'), true);
+  assert.equal(adminService.includes('/api/atlas-read'), true);
+  assert.equal(adminService.includes('.from('), false);
+  assert.equal(adminService.includes('normalized activity lookup is ambiguous'), true);
   assert.equal(adminService.includes('.insert('), false);
   assert.equal(adminService.includes('.update('), false);
   assert.equal(adminService.includes('.delete('), false);

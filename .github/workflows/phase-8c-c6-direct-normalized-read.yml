@@ -1,0 +1,67 @@
+name: Phase 8C C6 Direct Normalized Read
+
+on:
+  pull_request:
+    paths:
+      - "server/atlas-normalized-read-service.js"
+      - "server/atlas-normalized-read-handler.js"
+      - "api/atlas-read.js"
+      - "atlas-reader.js"
+      - "app.js"
+      - "index.html"
+      - "admin.html"
+      - "admin.js"
+      - "atlas-admin-write-service.js"
+      - "atlas-reconciliation-bootstrap.js"
+      - "tests/atlas-normalized-read-service.test.mjs"
+      - "tests/atlas-normalized-read-handler.test.mjs"
+      - "tests/atlas-direct-normalized-reader.test.mjs"
+      - "tests/atlas-admin-write-service.test.mjs"
+      - "tests/phase8c-c6-direct-normalized-read-activation.test.mjs"
+      - ".github/workflows/phase-8c-c6-direct-normalized-read.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run C6 direct normalized read contracts
+        run: >-
+          node --test
+          tests/atlas-normalized-read-service.test.mjs
+          tests/atlas-normalized-read-handler.test.mjs
+          tests/atlas-direct-normalized-reader.test.mjs
+          tests/atlas-admin-write-service.test.mjs
+          tests/phase8c-c6-direct-normalized-read-activation.test.mjs
+          tests/atlas-v2-only-production-activation.test.mjs
+          tests/atlas-server-write-adapter.test.mjs
+      - name: Prove no legacy or compatibility reads in active runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          files=(
+            server/atlas-normalized-read-service.js
+            server/atlas-normalized-read-handler.js
+            api/atlas-read.js
+            atlas-reader.js
+            app.js
+            index.html
+            admin.html
+            admin.js
+            atlas-admin-write-service.js
+            atlas-reconciliation-bootstrap.js
+          )
+          ! grep -En 'public\.person_politics([^_]|$)|atlas_person_politics_compat_v1|fallbackToLegacy|fallback to legacy' "${files[@]}"
+          grep -Fq 'atlas_v2.person_politics_v2' server/atlas-normalized-read-service.js
+          grep -Fq 'ATLAS_READER_V2_DIRECT' atlas-reader.js
+          grep -Fq '/api/atlas-read' atlas-reader.js atlas-admin-write-service.js
+          ! grep -Fq 'supabase-js' index.html admin.html
+          ! grep -Eq 'atlas-(production-source|source-control|legacy-reconciliation-executor|reconciliation-integration|reconciliation-bootstrap)\.js' index.html

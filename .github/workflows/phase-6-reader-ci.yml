@@ -18,6 +18,8 @@ on:
       - index.html
       - atlas-server-write-adapter.js
       - migration/phase-6/scripts/test-reader-contract.mjs
+      - tests/atlas-direct-normalized-reader.test.mjs
+      - tests/phase8c-c6-direct-normalized-read-activation.test.mjs
       - .github/workflows/phase-6-reader-ci.yml
 
 permissions:
@@ -29,7 +31,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run reader contract tests
-        run: node migration/phase-6/scripts/test-reader-contract.mjs
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -Fq 'ATLAS_READER_V2_DIRECT' atlas-reader.js; then
+            node --test tests/atlas-direct-normalized-reader.test.mjs tests/phase8c-c6-direct-normalized-read-activation.test.mjs
+          else
+            node migration/phase-6/scripts/test-reader-contract.mjs
+          fi
       - name: Verify read abstraction and authenticated server writes
         shell: bash
         run: |
