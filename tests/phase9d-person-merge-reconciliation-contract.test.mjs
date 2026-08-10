@@ -20,21 +20,27 @@ test('candidate approval fingerprint covers the complete canonical evidence cont
 });
 
 test('relationship resolution is planned from locked live state inside the serializable person merge transaction', () => {
-  const begin = mergeService.indexOf('BEGIN ISOLATION LEVEL SERIALIZABLE');
-  const lock = mergeService.indexOf('const liveState = await lockLiveMergeState');
-  const evidence = mergeService.indexOf('assertLiveCandidateEvidence(candidateRow, liveState)');
-  const groups = mergeService.indexOf('const groups = buildRelationshipReconciliationGroups');
-  const plan = mergeService.indexOf('const reconciliationPlan = buildReconciliationPlan');
-  const mutation = mergeService.indexOf('for (const item of reconciliationPlan.coalesces)');
+  const executeStart = mergeService.indexOf('async function executeApprovedPersonMerge');
+  assert.ok(executeStart >= 0);
+  const executeBody = mergeService.slice(executeStart);
+  const begin = executeBody.indexOf('BEGIN ISOLATION LEVEL SERIALIZABLE');
+  const lock = executeBody.indexOf('const liveState = await lockLiveMergeState');
+  const evidence = executeBody.indexOf('assertLiveCandidateEvidence(candidateRow, liveState)');
+  const groups = executeBody.indexOf('const groups = buildRelationshipReconciliationGroups');
+  const plan = executeBody.indexOf('const reconciliationPlan = buildReconciliationPlan');
+  const mutation = executeBody.indexOf('for (const item of reconciliationPlan.coalesces)');
   assert.ok(begin >= 0 && lock > begin && evidence > lock && groups > evidence && plan > groups && mutation > plan);
 });
 
 test('relationship coalesce preserves dependent facts before deleting the redundant relationship', () => {
-  const sourceRead = mergeService.indexOf('from atlas_v2.person_politics_sources');
-  const sourceInsert = mergeService.indexOf('insert into atlas_v2.person_politics_sources');
-  const chronologyMove = mergeService.indexOf('update atlas_v2.chronology_claims set person_politics_id=$1');
-  const descriptionMove = mergeService.indexOf('update atlas_v2.relationship_descriptions set person_politics_id=$1');
-  const relationshipDelete = mergeService.indexOf('delete from atlas_v2.person_politics_v2 where id=$1 returning id');
+  const coalesceStart = mergeService.indexOf('async function coalesceRelationship');
+  assert.ok(coalesceStart >= 0);
+  const coalesceBody = mergeService.slice(coalesceStart, mergeService.indexOf('async function executeApprovedPersonMerge'));
+  const sourceRead = coalesceBody.indexOf('from atlas_v2.person_politics_sources');
+  const sourceInsert = coalesceBody.indexOf('insert into atlas_v2.person_politics_sources');
+  const chronologyMove = coalesceBody.indexOf('update atlas_v2.chronology_claims set person_politics_id=$1');
+  const descriptionMove = coalesceBody.indexOf('update atlas_v2.relationship_descriptions set person_politics_id=$1');
+  const relationshipDelete = coalesceBody.indexOf('delete from atlas_v2.person_politics_v2 where id=$1 returning id');
   assert.ok(sourceRead >= 0 && sourceInsert > sourceRead && chronologyMove > sourceInsert && descriptionMove > chronologyMove && relationshipDelete > descriptionMove);
   assert.match(mergeService, /RELATIONSHIP_SOURCE_LOCATOR_CONFLICT/);
   assert.match(mergeService, /duplicate_source_links_collapsed/);
