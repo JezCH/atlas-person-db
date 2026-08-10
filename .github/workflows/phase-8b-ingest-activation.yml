@@ -4,8 +4,10 @@ on:
   pull_request:
     paths:
       - "index.html"
+      - "atlas-reader.js"
       - "atlas-reconciliation-bootstrap.js"
       - "tests/phase8b-ingest-activation.test.mjs"
+      - "tests/phase8c-c6-direct-normalized-read-activation.test.mjs"
       - ".github/workflows/phase-8b-ingest-activation.yml"
   workflow_dispatch:
 
@@ -23,27 +25,33 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-
-      - name: Run activation contract tests
-        run: node --test tests/phase8b-ingest-activation.test.mjs
-
-      - name: Run previously approved component tests
+      - name: Run historical ingest contract or C6 successor contract
+        shell: bash
         run: |
-          node --test tests/atlas-reconciliation-planner.test.mjs
-          node --test tests/atlas-reconciliation-controller.test.mjs
-          node --test tests/atlas-legacy-reconciliation-executor.test.mjs
-          node --test tests/atlas-reconciliation-integration.test.mjs
-
+          set -euo pipefail
+          if grep -Fq 'ATLAS_READER_V2_DIRECT' atlas-reader.js; then
+            node --test tests/phase8c-c6-direct-normalized-read-activation.test.mjs
+          else
+            node --test tests/phase8b-ingest-activation.test.mjs
+            node --test tests/atlas-reconciliation-planner.test.mjs
+            node --test tests/atlas-reconciliation-controller.test.mjs
+            node --test tests/atlas-legacy-reconciliation-executor.test.mjs
+            node --test tests/atlas-reconciliation-integration.test.mjs
+          fi
       - name: Emit activation evidence
+        shell: bash
         run: |
+          set -euo pipefail
           mkdir -p migration/phase-8/tmp/phase8b-ingest-activation
-          printf '{"marker":"PHASE_8B_INGEST_ACTIVATION","legacy_ingest_loaded":false,"new_chain_loaded":true,"reconciliation_state":"dry-run","page_load_database_writes":0,"v2_commit_enabled":false,"rollback":"restore previous reconciliation bootstrap state"}\n' > migration/phase-8/tmp/phase8b-ingest-activation/verification.json
-
+          if grep -Fq 'ATLAS_READER_V2_DIRECT' atlas-reader.js; then
+            printf '{"marker":"PHASE_8B_INGEST_ACTIVATION","superseded_by":"PHASE_8C_C6_DIRECT_NORMALIZED_READ","page_load_reconciliation":"retired","page_load_database_writes":0,"active_read_source":"v2-direct"}\n' > migration/phase-8/tmp/phase8b-ingest-activation/verification.json
+          else
+            printf '{"marker":"PHASE_8B_INGEST_ACTIVATION","legacy_ingest_loaded":false,"new_chain_loaded":true,"reconciliation_state":"dry-run","page_load_database_writes":0,"v2_commit_enabled":false,"rollback":"restore previous reconciliation bootstrap state"}\n' > migration/phase-8/tmp/phase8b-ingest-activation/verification.json
+          fi
       - name: Upload evidence
         uses: actions/upload-artifact@v4
         with:

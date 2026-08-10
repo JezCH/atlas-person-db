@@ -10,6 +10,7 @@ on:
       - "index.html"
       - "migration/phase-7/scripts/phase7b-contract.mjs"
       - "migration/phase-7/PHASE_7_ROLLBACK_RUNBOOK.md"
+      - "tests/phase8c-c6-direct-normalized-read-activation.test.mjs"
       - ".github/workflows/phase-7b-observability-rollback.yml"
   workflow_dispatch:
 
@@ -22,14 +23,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-
-      - name: Run Phase 7A contract
-        run: node migration/phase-7/scripts/phase7a-contract.mjs
-
-      - name: Run Phase 7B contract
-        run: node migration/phase-7/scripts/phase7b-contract.mjs
+      - name: Run historical Phase 7 contract or C6 successor contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -Fq 'ATLAS_READER_V2_DIRECT' atlas-reader.js; then
+            node --test tests/phase8c-c6-direct-normalized-read-activation.test.mjs
+          else
+            node migration/phase-7/scripts/phase7a-contract.mjs
+            node migration/phase-7/scripts/phase7b-contract.mjs
+          fi

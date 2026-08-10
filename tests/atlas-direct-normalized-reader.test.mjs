@@ -69,7 +69,7 @@ test("browser reader fails closed on endpoint failure instead of falling back", 
 
 test("browser reader validates unique normalized ids and nullable role", () => {
   const reader = loadReader();
-  assert.deepEqual(reader.validateRows([validRow]), []);
+  assert.equal(reader.validateRows([validRow]).length, 0);
   const failures = reader.validateRows([validRow, { ...validRow }]);
   assert.equal(failures.some((item) => item.includes("duplicate id")), true);
 });

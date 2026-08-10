@@ -7,7 +7,7 @@ const adapter = fs.readFileSync(new URL("../atlas-server-write-adapter.js", impo
 const app = fs.readFileSync(new URL("../app.js", import.meta.url), "utf8");
 const adminService = fs.readFileSync(new URL("../atlas-admin-write-service.js", import.meta.url), "utf8");
 const adminHtml = fs.readFileSync(new URL("../admin.html", import.meta.url), "utf8");
-const productionSource = fs.readFileSync(new URL("../atlas-production-source.js", import.meta.url), "utf8");
+const reader = fs.readFileSync(new URL("../atlas-reader.js", import.meta.url), "utf8");
 
 test("production handler selects only the proven v2-authoritative persistence path", () => {
   assert.match(handler, /createV2AuthoritativeMutationService/);
@@ -30,17 +30,18 @@ test("browser mutation contract is explicitly v2-only and never fakes legacy com
   assert.doesNotMatch(app, /outcome\.legacy\.record_ids/);
 });
 
-test("admin exact lookup returns normalized compatibility id and has no legacy lookup", () => {
-  assert.match(adminService, /\.from\("atlas_person_politics_compat_v1"\)/);
-  assert.doesNotMatch(adminService, /\.from\("person_politics"\)/);
-  assert.match(adminService, /\.limit\(2\)/);
+test("admin exact lookup uses direct normalized projection and normalized ids after C6", () => {
+  assert.match(adminService, /\/api\/atlas-read/);
+  assert.doesNotMatch(adminService, /\.from\(/);
   assert.match(adminService, /normalized activity lookup is ambiguous/);
   assert.match(adminService, /result\?\.v2\?\.committed === true/);
-  assert.match(adminHtml, /normalized v2/);
+  assert.match(adminHtml, /normalized v2 direct API/);
   assert.doesNotMatch(adminHtml, /legacy \+ normalized v2/);
 });
 
-test("C5 changes writes only; compatibility read remains until C6", () => {
-  assert.match(productionSource, /DATA_SOURCE:\s*"v2-shadow"/);
-  assert.match(app, /fallbackToLegacy:\s*true/);
+test("C6 successor removes compatibility and fallback without regressing C5 writes", () => {
+  assert.match(reader, /ATLAS_READER_V2_DIRECT/);
+  assert.match(app, /AtlasReader\.loadPersonPolitics\(\)/);
+  assert.doesNotMatch(app, /fallbackToLegacy|ATLAS_DATA_SOURCE/);
+  assert.doesNotMatch(adminService, /atlas_person_politics_compat_v1|person_politics/);
 });
