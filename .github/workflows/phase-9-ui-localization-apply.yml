@@ -1,0 +1,78 @@
+name: Phase 9 UI Korean Localization Apply
+
+on:
+  pull_request:
+    paths:
+      - "app.js"
+      - "mobile-ui.js"
+      - "index.html"
+      - "atlas-reader.js"
+      - "server/atlas-normalized-read-service.js"
+      - "migration/phase-9/ui-localization-ko.json"
+      - "migration/phase-9/scripts/phase9-apply-ui-localization.mjs"
+      - "tests/atlas-normalized-read-service.test.mjs"
+      - "tests/phase9-ui-localization-contract.test.mjs"
+      - ".github/workflows/phase-9-ui-localization-apply.yml"
+  workflow_dispatch:
+    inputs:
+      approved_sha:
+        description: Exact current main SHA approved for Korean localization apply
+        required: true
+        type: string
+      confirm:
+        description: Type PHASE9_APPLY_UI_KOREAN_LOCALIZATION
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  static-contract:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify localization and chronology contracts
+        run: node --test tests/atlas-normalized-read-service.test.mjs tests/phase9-ui-localization-contract.test.mjs
+
+  protected-apply:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: phase-5-shadow
+    steps:
+      - name: Guard exact main SHA and confirmation
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "${{ github.ref }}" = "refs/heads/main"
+          test "${{ inputs.approved_sha }}" = "${{ github.sha }}"
+          test "${{ inputs.confirm }}" = "PHASE9_APPLY_UI_KOREAN_LOCALIZATION"
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.approved_sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install --no-package-lock --ignore-scripts --no-audit --no-fund
+      - name: Re-run contracts before DB connection
+        run: node --test tests/atlas-normalized-read-service.test.mjs tests/phase9-ui-localization-contract.test.mjs
+      - name: Apply Korean localization aliases only
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          PHASE9_UI_LOCALIZATION_OUTPUT_DIR: migration/phase-9/tmp/ui-localization-apply
+        run: node migration/phase-9/scripts/phase9-apply-ui-localization.mjs
+      - name: Upload localization evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase9-ui-korean-localization-${{ inputs.approved_sha }}
+          path: migration/phase-9/tmp/ui-localization-apply
+          if-no-files-found: error
+          retention-days: 90
