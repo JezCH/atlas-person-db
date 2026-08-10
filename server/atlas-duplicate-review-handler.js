@@ -82,6 +82,7 @@ function createDuplicateReviewHandler({ clientFactory, env = process.env, now } 
         candidateId: body.candidate_id,
         survivorPersonId: body.survivor_person_id,
         requestId: body.request_id,
+        relationshipResolutions: body.relationship_resolutions,
         reviewerKind: auth.method === "bearer" ? "server_bearer" : "admin_session"
       });
       sendJson(res, 200, { ok: true, source: "v2-duplicate-review", operation, ...outcome });
@@ -93,10 +94,15 @@ function createDuplicateReviewHandler({ clientFactory, env = process.env, now } 
       } else if (/PHASE9B_SCHEMA_REQUIRED|person_merge_audits/i.test(message)) {
         sendJson(res, 503, { ok: false, code: "PHASE9B_SCHEMA_REQUIRED", error: "person merge schema is not applied" });
       } else if (
-        error?.code === "RELATIONSHIP_RECONCILIATION_REQUIRED" ||
-        /candidate not found|candidate is stale|decision must|request_id|required|too long|MERGE approval|evidence changed|latest candidate review|latest MERGE review|survivor_person_id|metadata conflict|schema drift|candidate persons are not both live/i.test(message)
+        error?.code === "RELATIONSHIP_SOURCE_LOCATOR_CONFLICT" ||
+        /LIVE_EVIDENCE_CHANGED|candidate not found|candidate is stale|decision must|request_id|required|too long|MERGE approval|evidence changed|latest candidate review|latest MERGE review|survivor_person_id|metadata conflict|schema drift|candidate persons are not both live|relationship resolution|relationship conflict group|keep_relationship_id|relationship reconciliation/i.test(message)
       ) {
-        sendJson(res, 409, { ok: false, code: error?.code || "MERGE_PRECONDITION_FAILED", error: message, ...(error?.collisions ? { collisions: error.collisions } : {}) });
+        sendJson(res, 409, {
+          ok: false,
+          code: error?.code || (/LIVE_EVIDENCE_CHANGED/.test(message) ? "LIVE_EVIDENCE_CHANGED" : "MERGE_PRECONDITION_FAILED"),
+          error: message,
+          ...(error?.source_id ? { source_id: error.source_id } : {})
+        });
       } else {
         sendJson(res, 500, { ok: false, error: "duplicate review operation failed" });
       }
