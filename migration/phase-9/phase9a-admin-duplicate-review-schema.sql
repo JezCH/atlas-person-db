@@ -62,24 +62,72 @@ CREATE INDEX IF NOT EXISTS person_duplicate_reviews_candidate_idx
 
 DO $$
 DECLARE
-  candidate_columns integer;
-  review_columns integer;
+  candidate_contract_errors text;
+  review_contract_errors text;
 BEGIN
-  SELECT count(*) INTO candidate_columns
-  FROM information_schema.columns
-  WHERE table_schema = 'atlas_v2'
-    AND table_name = 'person_duplicate_candidates';
+  WITH expected(column_name, data_type) AS (
+    VALUES
+      ('id', 'uuid'),
+      ('person_low_id', 'uuid'),
+      ('person_high_id', 'uuid'),
+      ('candidate_state', 'text'),
+      ('current_decision', 'text'),
+      ('confidence', 'numeric'),
+      ('evidence', 'jsonb'),
+      ('evidence_fingerprint', 'text'),
+      ('decision_evidence_fingerprint', 'text'),
+      ('detector_version', 'text'),
+      ('first_detected_at', 'timestamp with time zone'),
+      ('last_detected_at', 'timestamp with time zone'),
+      ('reviewed_at', 'timestamp with time zone'),
+      ('review_count', 'integer'),
+      ('updated_at', 'timestamp with time zone')
+  )
+  SELECT string_agg(
+           expected.column_name || ':' || expected.data_type || '!=' || coalesce(actual.data_type, '<missing>'),
+           ', ' ORDER BY expected.column_name
+         )
+    INTO candidate_contract_errors
+    FROM expected
+    LEFT JOIN information_schema.columns actual
+      ON actual.table_schema = 'atlas_v2'
+     AND actual.table_name = 'person_duplicate_candidates'
+     AND actual.column_name = expected.column_name
+   WHERE actual.column_name IS NULL
+      OR actual.data_type <> expected.data_type;
 
-  SELECT count(*) INTO review_columns
-  FROM information_schema.columns
-  WHERE table_schema = 'atlas_v2'
-    AND table_name = 'person_duplicate_reviews';
+  WITH expected(column_name, data_type) AS (
+    VALUES
+      ('id', 'uuid'),
+      ('candidate_id', 'uuid'),
+      ('person_low_id', 'uuid'),
+      ('person_high_id', 'uuid'),
+      ('decision', 'text'),
+      ('rationale', 'text'),
+      ('evidence_snapshot', 'jsonb'),
+      ('evidence_fingerprint', 'text'),
+      ('reviewer_kind', 'text'),
+      ('request_id', 'text'),
+      ('reviewed_at', 'timestamp with time zone')
+  )
+  SELECT string_agg(
+           expected.column_name || ':' || expected.data_type || '!=' || coalesce(actual.data_type, '<missing>'),
+           ', ' ORDER BY expected.column_name
+         )
+    INTO review_contract_errors
+    FROM expected
+    LEFT JOIN information_schema.columns actual
+      ON actual.table_schema = 'atlas_v2'
+     AND actual.table_name = 'person_duplicate_reviews'
+     AND actual.column_name = expected.column_name
+   WHERE actual.column_name IS NULL
+      OR actual.data_type <> expected.data_type;
 
-  IF candidate_columns < 16 THEN
-    RAISE EXCEPTION 'person_duplicate_candidates contract incomplete: % columns', candidate_columns;
+  IF candidate_contract_errors IS NOT NULL THEN
+    RAISE EXCEPTION 'person_duplicate_candidates contract mismatch: %', candidate_contract_errors;
   END IF;
-  IF review_columns < 11 THEN
-    RAISE EXCEPTION 'person_duplicate_reviews contract incomplete: % columns', review_columns;
+  IF review_contract_errors IS NOT NULL THEN
+    RAISE EXCEPTION 'person_duplicate_reviews contract mismatch: %', review_contract_errors;
   END IF;
 END $$;
 
