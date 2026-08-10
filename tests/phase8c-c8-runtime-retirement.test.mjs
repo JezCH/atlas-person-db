@@ -31,16 +31,22 @@ test('v2-authoritative service uses extracted request helpers, not legacy mutati
   assert.doesNotMatch(utils, /executeLegacy|public\.person_politics|atlas_person_politics_compat_v1/);
 });
 
-test('completed migration workflows stay retired while successor C9 workflows may be added', () => {
+test('completed migration workflows stay retired while post-migration successor workflows may be added', () => {
   const workflows = fs.readdirSync(new URL('../.github/workflows/', import.meta.url))
     .filter((name) => name.endsWith('.yml') || name.endsWith('.yaml'))
     .sort();
-  for (const required of workflowManifest.active_after_c8) assert.equal(workflows.includes(required), true, `${required} must remain active`);
+  for (const required of workflowManifest.active_after_c8) {
+    assert.equal(workflows.includes(required), true, `${required} must remain active`);
+  }
   const allowedSuccessors = workflows.filter((name) => !workflowManifest.active_after_c8.includes(name));
-  assert.equal(allowedSuccessors.every((name) => name.startsWith('phase-8c-c9-')), true, `unexpected post-C8 workflow: ${allowedSuccessors.join(', ')}`);
+  assert.equal(
+    allowedSuccessors.every((name) => name.startsWith('phase-8c-c9-') || name.startsWith('phase-9')),
+    true,
+    `unexpected post-C8 workflow: ${allowedSuccessors.join(', ')}`
+  );
 });
 
-test('C8 remains code-only and explicitly defers legacy database object deletion to C9', () => {
+test('C8 historical manifest records the DB objects that were deferred to C9', () => {
   assert.equal(manifest.database_objects_retained_for_c9.includes('public.person_politics'), true);
   assert.equal(manifest.database_objects_retained_for_c9.includes('public.atlas_person_politics_compat_v1'), true);
   assert.equal(workflowManifest.next_destructive_stage, 'C9');
