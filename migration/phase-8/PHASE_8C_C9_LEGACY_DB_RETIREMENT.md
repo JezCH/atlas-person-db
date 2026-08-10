@@ -1,6 +1,6 @@
 # Phase 8C C9 — Legacy DB Object Retirement
 
-Status: PREPARATION / LIVE READ-ONLY INVENTORY REQUIRED
+Status: C9A LIVE INVENTORY PASS / C9B BUNDLE PREPARED / DESTRUCTIVE EXECUTION NOT YET AUTHORIZED
 
 ## Objective
 
@@ -21,55 +21,86 @@ Retirement targets, in mandatory order:
 
 Normalized `atlas_v2` objects are not retirement targets.
 
-## C9A — live read-only dependency inventory
+## C9A — completed live read-only dependency inventory
 
-Before any DROP statement is prepared for execution, the protected inventory must run on the exact current `main` SHA and prove:
+Protected live inventory passed on exact main SHA:
 
-- legacy table exists as a table
-- compatibility object exists as a view
-- normalized relationship table exists
-- every legacy semantic row is represented in the direct normalized projection
-- compatibility projection is exactly identical to the direct normalized projection
-- compatibility row count equals normalized relationship row count
-- no other view/matview depends on either retirement target
-- no registered function depends on either target
-- no stored function/procedure body text still references either target
-- no other view definition still references either target
-- no inbound foreign key references the legacy table
-- current triggers, publications, RLS policies and grants are recorded
-- compatibility view definition no longer reads the legacy table
+- SHA: `17f6af54fcb01a884e44b55c4e1ac2cad9d23faa`
+- workflow run: `31362547973`
+- artifact id: `9052889263`
+- artifact digest: `sha256:3c31babe79115cf7f96b62eab1ea2ab5238ba5287beeb07386c65bb237c481a4`
 
-The inventory performs no mutation and reports `destructive_action_performed: false`.
+Verified live state:
+
+- legacy rows: 319
+- compatibility rows: 349
+- normalized rows: 349
+- direct normalized projection rows: 349
+- legacy semantic rows missing from v2: 0
+- compatibility rows missing from direct projection: 0
+- direct projection rows missing from compatibility: 0
+- legacy relation dependents: 0
+- compatibility relation dependents: 0
+- legacy/compatibility function dependents: 0
+- textual stored function/procedure references: 0
+- textual view references: 0
+- foreign keys / inbound legacy foreign keys: 0
+- publication membership: 0
+- blockers: none
+- `retirement_ready: true`
+- `destructive_action_performed: false`
+
+The legacy table retains its own `trg_person_politics_updated_at` trigger. This is an internal table trigger, not an external dependency, and disappears with the table.
 
 ## C9B — destructive retirement bundle
 
-Only after C9A returns `retirement_ready: true` may a separate retirement bundle be finalized. That bundle must:
+The C9B bundle is pinned to the C9A evidence above. It is designed to fail closed unless the execution-time live state still satisfies all retirement invariants.
 
-- be pinned to the exact tested main SHA and C9A artifact evidence
-- require an explicit destructive confirmation token
-- acquire a PostgreSQL advisory transaction lock
-- re-check the critical C9A invariants inside the same transaction immediately before deletion
-- use **no `CASCADE`**
-- drop compatibility view first
-- drop legacy table second
-- verify both targets are absent and normalized objects/counts remain intact before commit
-- emit an apply artifact with the pre/post state
+Before any DROP, the protected workflow must:
 
-If any dependency appears between C9A and execution, the transaction must fail closed.
+- run only by `workflow_dispatch` on `main`
+- require exact current main SHA
+- require explicit token `PHASE8C_C9_RETIRE_LEGACY_DB_OBJECTS`
+- prove the deployed repository still has `ZERO_REACHABLE_LEGACY_RUNTIME`
+- verify the exact C9A SHA/run/artifact/digest pin
+- open a PostgreSQL SERIALIZABLE transaction
+- acquire an advisory transaction lock
+- acquire an ACCESS EXCLUSIVE lock on `public.person_politics`
+- acquire a SHARE lock on `atlas_v2.person_politics_v2`
+- re-check legacy count remains 319
+- re-check every legacy semantic row remains covered by v2
+- re-check compatibility/direct normalized projections remain identical
+- re-check no relation/function/textual/FK/publication blocker appeared
+- save a full `public.person_politics` JSON snapshot to the protected evidence artifact before DROP
 
-## Rollback reality
+Only after all checks pass may it execute, with **no `CASCADE`**:
 
-A DROP cannot be treated like a normal application rollback after the transaction commits. Therefore C9 safety is based on:
+1. `DROP VIEW public.atlas_person_politics_compat_v1`
+2. `DROP TABLE public.person_politics`
 
-- retained normalized authoritative data
-- exact pre-retirement Git/migration evidence
-- protected precondition checks
-- transactional DDL before commit
-- no CASCADE
-- explicit destructive approval
+Before COMMIT it must verify:
 
-The old legacy table is not to be recreated automatically after a successful C9 commit.
+- compatibility object absent
+- legacy table absent
+- normalized relationship table still present
+- normalized row count unchanged inside the retirement transaction
+
+Any error after BEGIN triggers ROLLBACK. The old legacy table is not automatically recreated after a successful committed retirement.
+
+## Evidence after C9B
+
+A successful protected C9B run must retain:
+
+- pre-drop dependency/coverage report
+- legacy row snapshot
+- post-drop object/count report
+- final committed report
+- exact main SHA
+- pinned C9A evidence identifiers
+- artifact digest
 
 ## Authorization boundary
 
-This preparation authorizes only the read-only C9A inventory. It does not authorize C9B DROP execution. A successful inventory will be reviewed and its artifact digest pinned before the destructive workflow is created/finalized and run.
+C9A completion and this prepared C9B code **do not themselves authorize the DROP**.
+
+Actual C9B execution requires a separate explicit destructive authorization from the user, followed by a manual protected workflow dispatch on the exact then-current main SHA.
