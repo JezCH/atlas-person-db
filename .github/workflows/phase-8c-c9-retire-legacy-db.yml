@@ -1,0 +1,117 @@
+name: Phase 8C C9B Retire Legacy DB Objects
+
+on:
+  pull_request:
+    paths:
+      - "migration/phase-8/scripts/phase8c-c9b-retire-legacy-db.mjs"
+      - "migration/phase-8/PHASE_8C_C9_LEGACY_DB_RETIREMENT.md"
+      - "tests/phase8c-c9b-legacy-db-retirement.test.mjs"
+      - "tests/phase8c-c8-runtime-retirement.test.mjs"
+      - ".github/workflows/phase-8c-c9-retire-legacy-db.yml"
+  workflow_dispatch:
+    inputs:
+      approved_sha:
+        description: Exact current main SHA approved for final legacy DB object retirement
+        required: true
+        type: string
+      confirm:
+        description: Type PHASE8C_C9_RETIRE_LEGACY_DB_OBJECTS
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  static-contract:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify destructive bundle contract without touching DB
+        run: node --test tests/phase8c-c9b-legacy-db-retirement.test.mjs tests/phase8c-c8-runtime-retirement.test.mjs
+
+  protected-retirement:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: phase-5-shadow
+    steps:
+      - name: Guard exact main SHA and destructive confirmation
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "${{ github.ref }}" = "refs/heads/main"
+          test "${{ inputs.confirm }}" = "PHASE8C_C9_RETIRE_LEGACY_DB_OBJECTS"
+          test "${{ inputs.approved_sha }}" = "${{ github.sha }}"
+
+      - name: Checkout approved SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.approved_sha }}
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Prove zero reachable legacy runtime before destructive DB step
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p migration/phase-8/tmp/c9b-runtime-inventory
+          node migration/phase-8/scripts/phase8c-c7-runtime-dependency-inventory.mjs \
+            . migration/phase-8/tmp/c9b-runtime-inventory/report.json
+          node - <<'NODE'
+          const fs = require('fs');
+          const r = JSON.parse(fs.readFileSync('migration/phase-8/tmp/c9b-runtime-inventory/report.json','utf8'));
+          if (r.status !== 'ZERO_REACHABLE_LEGACY_RUNTIME') throw new Error(`runtime status: ${r.status}`);
+          if (r.unexpected_api_routes.length) throw new Error(`unexpected API routes: ${JSON.stringify(r.unexpected_api_routes)}`);
+          if (r.intended_runtime_forbidden_hits.length) throw new Error(`intended legacy hits: ${JSON.stringify(r.intended_runtime_forbidden_hits)}`);
+          if (r.public_runtime_forbidden_hits.length) throw new Error(`public legacy hits: ${JSON.stringify(r.public_runtime_forbidden_hits)}`);
+          if (r.transitional_candidates.length) throw new Error(`transitional candidates: ${JSON.stringify(r.transitional_candidates)}`);
+          NODE
+
+      - name: Install server dependency
+        run: npm install --no-package-lock --ignore-scripts --no-audit --no-fund
+
+      - name: Retire compatibility view and legacy table transactionally
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          C9_OUTPUT_DIR: migration/phase-8/tmp/c9b-retirement
+          C9_INVENTORY_SHA: 17f6af54fcb01a884e44b55c4e1ac2cad9d23faa
+          C9_INVENTORY_RUN_ID: "31362547973"
+          C9_INVENTORY_ARTIFACT_ID: "9052889263"
+          C9_INVENTORY_DIGEST: sha256:3c31babe79115cf7f96b62eab1ea2ab5238ba5287beeb07386c65bb237c481a4
+        run: node migration/phase-8/scripts/phase8c-c9b-retire-legacy-db.mjs
+
+      - name: Validate committed retirement evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          node - <<'NODE'
+          const fs = require('fs');
+          const r = JSON.parse(fs.readFileSync('migration/phase-8/tmp/c9b-retirement/report.json','utf8'));
+          if (r.destructive_action_committed !== true) throw new Error('C9B retirement did not commit');
+          if (r.rollback_performed !== false) throw new Error('unexpected rollback marker');
+          if (r.after?.legacy !== null) throw new Error('legacy table still present');
+          if (r.after?.compatibility !== null) throw new Error('compatibility view still present');
+          if (!r.after?.normalized) throw new Error('normalized table missing');
+          if (Number(r.after.normalized_rows) !== Number(r.before?.coverage?.normalized_rows)) throw new Error('normalized count changed');
+          if (r.pinned_inventory?.digest !== 'sha256:3c31babe79115cf7f96b62eab1ea2ab5238ba5287beeb07386c65bb237c481a4') throw new Error('inventory digest mismatch');
+          NODE
+
+      - name: Upload destructive retirement evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase8c-c9b-legacy-db-retirement-${{ inputs.approved_sha }}
+          path: |
+            migration/phase-8/tmp/c9b-retirement
+            migration/phase-8/tmp/c9b-runtime-inventory
+          if-no-files-found: warn
+          retention-days: 90
