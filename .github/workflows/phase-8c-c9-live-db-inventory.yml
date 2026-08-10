@@ -1,0 +1,96 @@
+name: Phase 8C C9 Live DB Retirement Inventory
+
+on:
+  pull_request:
+    paths:
+      - "migration/phase-8/scripts/phase8c-c9-live-db-inventory.mjs"
+      - "migration/phase-8/PHASE_8C_C9_LEGACY_DB_RETIREMENT.md"
+      - "tests/phase8c-c9-live-db-inventory.test.mjs"
+      - "tests/phase8c-c8-runtime-retirement.test.mjs"
+      - ".github/workflows/phase-8c-c9-live-db-inventory.yml"
+  workflow_dispatch:
+    inputs:
+      approved_sha:
+        description: Exact main SHA approved for read-only C9 live DB inventory
+        required: true
+        type: string
+      confirm:
+        description: Type PHASE8C_C9_READ_ONLY_INVENTORY
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  static-contract:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify read-only inventory contract
+        run: node --test tests/phase8c-c9-live-db-inventory.test.mjs tests/phase8c-c8-runtime-retirement.test.mjs
+
+  live-inventory:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: phase-5-shadow
+    steps:
+      - name: Guard exact SHA and read-only confirmation
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "${{ inputs.confirm }}" = "PHASE8C_C9_READ_ONLY_INVENTORY"
+          test "${{ inputs.approved_sha }}" = "${{ github.sha }}"
+
+      - name: Checkout approved SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.approved_sha }}
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install server dependency
+        run: npm install --no-package-lock --ignore-scripts --no-audit --no-fund
+
+      - name: Run read-only live DB inventory
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p migration/phase-8/tmp/c9-live-db-inventory
+          node migration/phase-8/scripts/phase8c-c9-live-db-inventory.mjs \
+            | tee migration/phase-8/tmp/c9-live-db-inventory/report.json
+
+      - name: Validate retirement readiness
+        shell: bash
+        run: |
+          set -euo pipefail
+          node - <<'NODE'
+          const fs = require('fs');
+          const r = JSON.parse(fs.readFileSync('migration/phase-8/tmp/c9-live-db-inventory/report.json','utf8'));
+          if (r.destructive_action_performed !== false) throw new Error('inventory must remain read-only');
+          if (r.retirement_ready !== true) throw new Error(`C9 retirement blockers: ${JSON.stringify(r.blockers)}`);
+          if (!r.coverage) throw new Error('coverage report missing');
+          if (Number(r.coverage.legacy_rows_missing_from_v2) !== 0) throw new Error('legacy coverage incomplete');
+          if (Number(r.coverage.compatibility_rows_missing_from_direct) !== 0) throw new Error('compatibility/direct mismatch');
+          if (Number(r.coverage.direct_rows_missing_from_compatibility) !== 0) throw new Error('direct/compatibility mismatch');
+          NODE
+
+      - name: Upload inventory evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase8c-c9-live-db-inventory-${{ inputs.approved_sha }}
+          path: migration/phase-8/tmp/c9-live-db-inventory
+          if-no-files-found: warn
+          retention-days: 90

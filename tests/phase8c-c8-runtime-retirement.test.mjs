@@ -2,7 +2,6 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import fs from 'node:fs';
 
-const root = new URL('../', import.meta.url);
 const manifest = JSON.parse(fs.readFileSync(new URL('../migration/phase-8/reports/phase8c-c8-runtime-retirement-manifest.json', import.meta.url), 'utf8'));
 const workflowManifest = JSON.parse(fs.readFileSync(new URL('../migration/phase-8/reports/phase8c-c8-workflow-retirement-manifest.json', import.meta.url), 'utf8'));
 
@@ -32,15 +31,13 @@ test('v2-authoritative service uses extracted request helpers, not legacy mutati
   assert.doesNotMatch(utils, /executeLegacy|public\.person_politics|atlas_person_politics_compat_v1/);
 });
 
-test('active Actions surface contains only C7 inventory and C8 active-v2 contract', () => {
+test('completed migration workflows stay retired while successor C9 workflows may be added', () => {
   const workflows = fs.readdirSync(new URL('../.github/workflows/', import.meta.url))
     .filter((name) => name.endsWith('.yml') || name.endsWith('.yaml'))
     .sort();
-  assert.deepEqual(workflows, [
-    'phase-8c-c7-runtime-dependency-inventory.yml',
-    'phase-8c-c8-active-v2-runtime.yml'
-  ]);
-  assert.deepEqual(workflowManifest.active_after_c8, workflows);
+  for (const required of workflowManifest.active_after_c8) assert.equal(workflows.includes(required), true, `${required} must remain active`);
+  const allowedSuccessors = workflows.filter((name) => !workflowManifest.active_after_c8.includes(name));
+  assert.equal(allowedSuccessors.every((name) => name.startsWith('phase-8c-c9-')), true, `unexpected post-C8 workflow: ${allowedSuccessors.join(', ')}`);
 });
 
 test('C8 remains code-only and explicitly defers legacy database object deletion to C9', () => {
