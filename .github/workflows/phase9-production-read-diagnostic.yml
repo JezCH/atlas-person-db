@@ -1,0 +1,28 @@
+name: Phase 9 Production Read Diagnostic
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/phase9-production-read-diagnostic.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Probe production normalized read endpoint
+        shell: bash
+        run: |
+          set -uo pipefail
+          url="https://atlas-person-db.vercel.app/api/atlas-read"
+          echo "GET $url"
+          code=$(curl -sS -o /tmp/body.txt -w '%{http_code}' --max-time 20 "$url" || true)
+          echo "HTTP $code"
+          echo "--- response body ---"
+          cat /tmp/body.txt 2>/dev/null || true
+          echo
+          echo "--- end response body ---"
+          test "$code" = "200"
