@@ -1,63 +1,44 @@
 # Phase 8C C9 — Legacy DB Object Retirement
 
-Status: C9A LIVE INVENTORY PASS / C9B GUARDED BUNDLE INSTALLED / FINAL REPOSITORY CLEANUP REQUIRED BEFORE DROP
+Status: COMPLETE
 
-## Objective
+## Final outcome
 
-Retire the final transitional database objects only after the application has already reached:
+ATLAS completed the Phase 8 migration from the legacy `public.person_politics` runtime/data path to the normalized `atlas_v2` system.
 
-- v2-authoritative / v2-only writes
-- direct normalized reads
-- zero reachable legacy runtime
-- zero active repository bootstrap/migration path capable of recreating the retired legacy objects
+Final production state:
 
-C9 is the first destructive stage. Code/runtime retirement in C7/C8 does **not** by itself authorize database object deletion.
+- writes: v2-authoritative / v2-only
+- reads: direct normalized v2 projection
+- reachable legacy runtime: zero
+- active legacy bootstrap/recreation paths: zero
+- compatibility view: retired
+- legacy table: retired
+- normalized relationship table: retained with 349 rows
 
-## Objects in scope
+## C9A evidence
 
-Retirement targets, in mandatory order:
-
-1. `public.atlas_person_politics_compat_v1`
-2. `public.person_politics`
-
-Normalized `atlas_v2` objects are not retirement targets.
-
-## C9A — completed live read-only dependency inventory
-
-Protected live inventory passed on exact main SHA:
+Protected live read-only inventory:
 
 - SHA: `17f6af54fcb01a884e44b55c4e1ac2cad9d23faa`
 - workflow run: `31362547973`
 - artifact id: `9052889263`
 - artifact digest: `sha256:3c31babe79115cf7f96b62eab1ea2ab5238ba5287beeb07386c65bb237c481a4`
 
-Verified live state:
+Verified before retirement:
 
 - legacy rows: 319
 - compatibility rows: 349
 - normalized rows: 349
 - direct normalized projection rows: 349
 - legacy semantic rows missing from v2: 0
-- compatibility rows missing from direct projection: 0
-- direct projection rows missing from compatibility: 0
-- legacy relation dependents: 0
-- compatibility relation dependents: 0
-- legacy/compatibility function dependents: 0
-- textual stored function/procedure references: 0
-- textual view references: 0
-- foreign keys / inbound legacy foreign keys: 0
-- publication membership: 0
-- blockers: none
+- compatibility/direct projection differences: 0 in both directions
+- external relation/function/FK/publication blockers: 0
 - `retirement_ready: true`
-- `destructive_action_performed: false`
 
-The legacy table retains its own `trg_person_politics_updated_at` trigger. This is an internal table trigger, not an external dependency, and disappears with the table.
+## Final repository cleanup
 
-## Final repository cleanup precondition
-
-A final review after the C9B bundle was installed found active root/bootstrap artifacts that could recreate or directly mutate the retired legacy table even though production runtime was already v2-only.
-
-The final repository cleanup therefore retires these active paths before any DROP:
+Before destructive DB retirement, the final review removed active paths that could recreate or directly mutate the old MVP table:
 
 - `schema.sql`
 - `supabase-integrity.sql`
@@ -65,61 +46,49 @@ The final repository cleanup therefore retires these active paths before any DRO
 - `config.js`
 - `config.example.js`
 
-Their exact historical blob SHAs are retained in `migration/phase-8/reports/phase8c-c9-final-repository-cleanup.json`; the executable/bootstrap paths themselves must remain absent.
+Historical blob SHAs are retained in `migration/phase-8/reports/phase8c-c9-final-repository-cleanup.json`.
 
-`README.md` and `DATA_MODEL.md` are replaced with the current normalized-v2 architecture so operators are no longer instructed to recreate the MVP schema.
+`README.md` and `DATA_MODEL.md` were updated to the normalized-v2 architecture. C7/C8 verification then passed again on the final repository state before C9B execution.
 
-The protected C9B dispatch re-runs the repository retirement contract before any database connection/destructive step. If any retired active path returns, C9B fails before DROP.
+## C9B committed destructive retirement
 
-## C9B — destructive retirement bundle
+Final approved production SHA:
 
-The C9B bundle is pinned to the C9A evidence above and fails closed unless the execution-time repository and live database state still satisfy all retirement invariants.
+- `fcbf87019d71ccc6da47abe30ba6cff2824566d0`
 
-Before any DROP, the protected workflow must:
+Protected workflow:
 
-- run only by `workflow_dispatch` on `main`
-- require exact current main SHA
-- require explicit token `PHASE8C_C9_RETIRE_LEGACY_DB_OBJECTS`
-- prove final repository cleanup preconditions still pass
-- prove the deployed repository still has `ZERO_REACHABLE_LEGACY_RUNTIME`
-- verify the exact C9A SHA/run/artifact/digest pin
-- open a PostgreSQL SERIALIZABLE transaction
-- acquire an advisory transaction lock
-- acquire an ACCESS EXCLUSIVE lock on `public.person_politics`
-- acquire a SHARE lock on `atlas_v2.person_politics_v2`
-- re-check legacy count remains 319
-- re-check every legacy semantic row remains covered by v2
-- re-check compatibility/direct normalized projections remain identical
-- re-check no relation/function/textual/FK/publication blocker appeared
-- save a full `public.person_politics` JSON snapshot to the protected evidence artifact before DROP
+- workflow: `Phase 8C C9B Retire Legacy DB Objects`
+- workflow id: `330902640`
+- run: `31369351550`
+- event: `workflow_dispatch`
+- branch: `main`
+- conclusion: SUCCESS
 
-Only after all checks pass may it execute, with **no `CASCADE`**:
+Artifact:
 
-1. `DROP VIEW public.atlas_person_politics_compat_v1`
-2. `DROP TABLE public.person_politics`
+- id: `9055411446`
+- name: `phase8c-c9b-legacy-db-retirement-fcbf87019d71ccc6da47abe30ba6cff2824566d0`
+- digest: `sha256:6fd78e9157e19460bc7eb63c47c73db3c6d9f23a96da61856c1806ce43f852e5`
 
-Before COMMIT it must verify:
+The transaction revalidated repository/runtime and live DB retirement invariants, saved a full legacy JSON snapshot, and then retired in this order with no `CASCADE`:
 
-- compatibility object absent
-- legacy table absent
-- normalized relationship table still present
-- normalized row count unchanged inside the retirement transaction
+1. `public.atlas_person_politics_compat_v1`
+2. `public.person_politics`
 
-Any error after BEGIN triggers ROLLBACK. The old legacy table is not automatically recreated after a successful committed retirement.
+Committed post-state:
 
-## Evidence after C9B
+- compatibility object: absent
+- legacy table: absent
+- `atlas_v2.person_politics_v2`: present
+- normalized rows: 349
+- `destructive_action_committed: true`
+- `rollback_performed: false`
 
-A successful protected C9B run must retain:
+The full pre-drop legacy snapshot is retained in the protected artifact.
 
-- final runtime-dependency inventory
-- pre-drop dependency/coverage report
-- legacy row snapshot
-- post-drop object/count report
-- final committed report
-- exact main SHA
-- pinned C9A evidence identifiers
-- artifact digest
+## Operational closeout
 
-## Authorization boundary
+After successful retirement, the one-time C9A/C9B workflows, execution scripts, and dedicated execution-contract tests are removed from the active repository surface so the completed destructive stage cannot be accidentally re-run from current code. Historical implementation and evidence remain available through Git history, the artifacts above, and Issue #63.
 
-The destructive workflow remains manual-only and exact-SHA guarded. It must not be converted into a push/scheduled job or invoked from PR validation.
+C7 runtime-dependency inventory and C8 active-v2 runtime verification remain as the standing regression guardrails.
