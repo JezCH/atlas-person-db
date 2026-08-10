@@ -49,57 +49,61 @@ test('protected merge schema apply preserves all authoritative data cardinality'
   assert.doesNotMatch(applyScript, /update\s+atlas_v2\.person_politics_v2\s+set\s+person_id/i);
 });
 
-test('merge executor is serializable, approval-gated, evidence-pinned and drift-guarded', () => {
+test('merge executor is serializable, approval-gated, full-evidence-pinned and drift-guarded', () => {
   assert.match(mergeService, /BEGIN ISOLATION LEVEL SERIALIZABLE/);
   assert.match(mergeService, /pg_advisory_xact_lock/);
   assert.match(mergeService, /candidate_state !== "ACTIVE"/);
   assert.match(mergeService, /current_decision !== "MERGE"/);
   assert.match(mergeService, /decision_evidence_fingerprint !== candidateRow\.evidence_fingerprint/);
   assert.match(mergeService, /latestReview\.rows\[0\]\.decision !== "MERGE"/);
+  assert.match(mergeService, /stableFingerprint\(candidateRow\.evidence/);
+  assert.match(mergeService, /LIVE_EVIDENCE_CHANGED/);
   assert.match(mergeService, /person metadata conflict/);
   assert.match(mergeService, /person reference schema drift/);
-  assert.match(mergeService, /RELATIONSHIP_RECONCILIATION_REQUIRED/);
 });
 
-test('same-context relationship conflicts fail closed and relationship UUIDs are otherwise preserved', () => {
-  assert.match(mergeService, /d\.polity_id=s\.polity_id/);
-  assert.match(mergeService, /d\.period_basis_id=s\.period_basis_id/);
-  assert.match(mergeService, /d\.activity_start=s\.activity_start/);
-  assert.match(mergeService, /d\.activity_end=s\.activity_end/);
-  assert.match(mergeService, /SAME_CONTEXT_ROLE_VARIANT/);
-  assert.match(mergeService, /EXACT_RELATIONSHIP/);
-  assert.match(mergeService, /relationship reconciliation required before person merge/);
+test('relationship coalescing is explicit and normal relationship UUIDs are otherwise remapped in place', () => {
+  assert.match(mergeService, /buildReconciliationPlan/);
+  assert.match(mergeService, /coalesceRelationship/);
+  assert.match(mergeService, /delete from atlas_v2\.person_politics_v2 where id=\$1 returning id/);
   assert.match(mergeService, /update atlas_v2\.person_politics_v2 set person_id=\$2 where person_id=\$1 returning id/);
-  assert.doesNotMatch(mergeService, /delete from atlas_v2\.person_politics_v2/i);
+  assert.match(mergeService, /relationship count changed outside the approved reconciliation plan/);
 });
 
-test('source deletion occurs only after names, sources, descriptions and relationship remap', () => {
+test('source person deletion occurs only after relationship reconciliation and all person-level remaps', () => {
+  const reconciliation = mergeService.indexOf('for (const item of reconciliationPlan.coalesces)');
   const nameMove = mergeService.indexOf('const names = await moveNames');
   const sourceMove = mergeService.indexOf('const sources = await moveSources');
   const descriptionMove = mergeService.indexOf('update atlas_v2.person_descriptions set person_id=$2');
   const relationshipMove = mergeService.indexOf('update atlas_v2.person_politics_v2 set person_id=$2');
   const deleteSource = mergeService.indexOf('delete from atlas_v2.persons where id=$1 returning id');
-  assert.ok(nameMove >= 0 && sourceMove > nameMove && descriptionMove > sourceMove && relationshipMove > descriptionMove && deleteSource > relationshipMove);
+  assert.ok(reconciliation >= 0 && nameMove > reconciliation && sourceMove > nameMove && descriptionMove > sourceMove && relationshipMove > descriptionMove && deleteSource > relationshipMove);
   assert.match(mergeService, /source person references remain after merge/);
   assert.match(mergeService, /person count did not decrease by exactly one/);
 });
 
 test('merge creates immutable before-state audit and keeps idempotent request replay', () => {
   assert.match(mergeService, /from atlas_v2\.person_merge_audits where request_id=\$1/);
+  assert.match(mergeService, /stableJson\(previousResolutions\) !== stableJson\(normalizedResolutions\)/);
   assert.match(mergeService, /survivorBefore = await snapshotPerson/);
   assert.match(mergeService, /sourceBefore = await snapshotPerson/);
   assert.match(mergeService, /insert into atlas_v2\.person_merge_audits/);
+  assert.match(mergeService, /relationship_reconciliation/);
   assert.match(mergeService, /mutationSummary/);
   assert.doesNotMatch(mergeService, /public\.person_politics|atlas_person_politics_compat_v1/);
 });
 
-test('admin transport exposes execution only as a separately named approved operation with explicit survivor choice', () => {
+test('admin transport exposes execution only as a separately named approved operation with explicit survivor and relationship choices', () => {
   assert.match(handler, /EXECUTE_APPROVED_MERGE/);
   assert.match(handler, /executeApprovedPersonMerge/);
+  assert.match(handler, /relationshipResolutions: body\.relationship_resolutions/);
   assert.match(client, /executeApprovedMerge/);
   assert.match(client, /survivor_person_id/);
+  assert.match(client, /relationship_resolutions/);
   assert.match(admin, /왼쪽 인물 유지/);
   assert.match(admin, /오른쪽 인물 유지/);
+  assert.match(admin, /처리 방법 선택/);
+  assert.match(admin, /대표 관계 선택/);
   assert.match(admin, /globalThis\.confirm/);
   assert.doesNotMatch(admin, /survivorPersonId\s*=\s*candidate\.low\.id/);
 });

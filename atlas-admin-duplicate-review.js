@@ -24,7 +24,7 @@
         const error = new Error(payload?.error || `duplicate review request failed (${response.status})`);
         error.code = payload?.code || null;
         error.status = response.status;
-        error.collisions = payload?.collisions || null;
+        error.source_id = payload?.source_id || null;
         throw error;
       }
       return payload;
@@ -42,10 +42,11 @@
         rationale: String(rationale || "").trim() || null,
         request_id: requestId("review")
       }),
-      executeApprovedMerge: ({ candidateId, survivorPersonId }) => request("POST", {
+      executeApprovedMerge: ({ candidateId, survivorPersonId, relationshipResolutions = [] }) => request("POST", {
         operation: "EXECUTE_APPROVED_MERGE",
         candidate_id: candidateId,
         survivor_person_id: survivorPersonId,
+        relationship_resolutions: relationshipResolutions,
         request_id: requestId("merge")
       })
     });

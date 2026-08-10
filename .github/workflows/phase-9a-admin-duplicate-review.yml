@@ -6,6 +6,7 @@ on:
       - "api/atlas-duplicate-review.js"
       - "server/atlas-duplicate-*.js"
       - "server/atlas-person-merge-*.js"
+      - "server/atlas-relationship-reconciliation.js"
       - "atlas-admin-duplicate-review.js"
       - "admin.*"
       - "migration/phase-9/**"
@@ -13,7 +14,8 @@ on:
       - "tests/phase9a-admin-duplicate-review-contract.test.mjs"
       - "tests/phase9b-person-reference-inventory-contract.test.mjs"
       - "tests/phase9b-person-merge-contract.test.mjs"
-      - "tests/phase9c-relationship-reconciliation-preflight.test.mjs"
+      - "tests/phase9d-relationship-reconciliation.test.mjs"
+      - "tests/phase9d-person-merge-reconciliation-contract.test.mjs"
       - ".github/workflows/phase-9a-admin-duplicate-review.yml"
 
 permissions:
@@ -28,11 +30,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Verify Phase 9 review and merge contracts
+      - name: Verify Phase 9 review, merge, and relationship reconciliation contracts
         run: >-
           node --test
           tests/atlas-duplicate-detector.test.mjs
           tests/phase9a-admin-duplicate-review-contract.test.mjs
           tests/phase9b-person-reference-inventory-contract.test.mjs
           tests/phase9b-person-merge-contract.test.mjs
-          tests/phase9c-relationship-reconciliation-preflight.test.mjs
+          tests/phase9d-relationship-reconciliation.test.mjs
+          tests/phase9d-person-merge-reconciliation-contract.test.mjs

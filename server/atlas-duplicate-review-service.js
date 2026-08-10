@@ -2,6 +2,7 @@
 
 const crypto = require("node:crypto");
 const { detectPersonDuplicateCandidates } = require("./atlas-duplicate-detector.js");
+const { buildRelationshipReconciliationGroups } = require("./atlas-relationship-reconciliation.js");
 
 const DECISIONS = new Set(["MERGE", "KEEP_SEPARATE", "REVIEW"]);
 
@@ -77,7 +78,8 @@ async function rebuildCandidates({ client }) {
 }
 
 function preferredName(rows) {
-  return rows.find((row) => row.is_preferred && row.locale === "en")?.name
+  return rows.find((row) => row.is_preferred && row.locale === "ko")?.name
+    || rows.find((row) => row.is_preferred && row.locale === "en")?.name
     || rows.find((row) => row.is_preferred)?.name
     || rows[0]?.name
     || null;
@@ -112,24 +114,60 @@ async function listCandidates({ client, includeStale = false } = {}) {
     }
 
     const activities = await client.query(`
-      select pp.person_id, pp.id, pp.activity_start, pp.activity_end,
-             pn.name::text as polity_name
+      select
+        pp.person_id,
+        pp.id,
+        pp.polity_id,
+        pp.role_id,
+        pp.period_basis_id,
+        pp.activity_start,
+        pp.activity_end,
+        pp.notes,
+        pp.source_locator,
+        coalesce(pko.name, pen.name)::text as polity_name,
+        r.source_label::text as role_name_en,
+        coalesce(rko.name, r.source_label)::text as role_name,
+        pb.code::text as period_basis
       from atlas_v2.person_politics_v2 pp
-      join atlas_v2.polity_names pn
-        on pn.polity_id = pp.polity_id
-       and pn.locale = 'en'
-       and pn.is_preferred = true
+      join atlas_v2.polity_names pen
+        on pen.polity_id = pp.polity_id
+       and pen.locale = 'en'
+       and pen.is_preferred = true
+      left join atlas_v2.polity_names pko
+        on pko.polity_id = pp.polity_id
+       and pko.locale = 'ko'
+       and pko.is_preferred = true
+      left join atlas_v2.roles r on r.id = pp.role_id
+      left join lateral (
+        select rn.name
+          from atlas_v2.role_names rn
+         where rn.role_id = r.id
+           and rn.locale = 'ko'
+           and rn.is_preferred = true
+         order by rn.id
+         limit 1
+      ) rko on true
+      join atlas_v2.period_bases pb on pb.id = pp.period_basis_id
       where pp.person_id = any($1::uuid[])
-      order by pp.person_id, pp.activity_start, pp.activity_end, pn.name
+      order by pp.person_id, pp.activity_start, pp.activity_end, polity_name, pp.id
     `, [personIds]);
     for (const row of activities.rows || []) {
       const key = String(row.person_id);
       const list = activitiesByPerson.get(key) || [];
       list.push({
         id: String(row.id),
+        person_id: key,
+        polity_id: String(row.polity_id),
         polity_name: String(row.polity_name),
+        role_id: row.role_id == null ? null : String(row.role_id),
+        role_name: row.role_name == null ? null : String(row.role_name),
+        role_name_en: row.role_name_en == null ? null : String(row.role_name_en),
+        period_basis_id: String(row.period_basis_id),
+        period_basis: String(row.period_basis),
         activity_start: Number(row.activity_start),
-        activity_end: Number(row.activity_end)
+        activity_end: Number(row.activity_end),
+        notes: row.notes == null ? null : String(row.notes),
+        source_locator: row.source_locator && typeof row.source_locator === "object" ? row.source_locator : null
       });
       activitiesByPerson.set(key, list);
     }
@@ -145,21 +183,40 @@ async function listCandidates({ client, includeStale = false } = {}) {
     };
   };
 
-  const candidates = rows.map((row) => ({
-    id: String(row.id),
-    candidate_state: String(row.candidate_state),
-    current_decision: row.current_decision == null ? null : String(row.current_decision),
-    confidence: Number(row.confidence),
-    evidence: Array.isArray(row.evidence) ? row.evidence : [],
-    evidence_fingerprint: String(row.evidence_fingerprint),
-    detector_version: String(row.detector_version),
-    first_detected_at: row.first_detected_at,
-    last_detected_at: row.last_detected_at,
-    reviewed_at: row.reviewed_at,
-    review_count: Number(row.review_count),
-    low: decorate(String(row.person_low_id)),
-    high: decorate(String(row.person_high_id))
-  }));
+  const candidates = rows.map((row) => {
+    const lowId = String(row.person_low_id);
+    const highId = String(row.person_high_id);
+    const low = decorate(lowId);
+    const high = decorate(highId);
+    const relationshipGroups = buildRelationshipReconciliationGroups({
+      rows: [...low.activities, ...high.activities],
+      lowPersonId: lowId,
+      highPersonId: highId
+    }).map((group) => ({
+      ...group,
+      polity_name: group.relationships[0]?.polity_name || group.polity_id,
+      period_basis: group.relationships[0]?.period_basis || group.period_basis_id
+    }));
+    return {
+      id: String(row.id),
+      candidate_state: String(row.candidate_state),
+      current_decision: row.current_decision == null ? null : String(row.current_decision),
+      confidence: Number(row.confidence),
+      evidence: Array.isArray(row.evidence) ? row.evidence : [],
+      evidence_fingerprint: String(row.evidence_fingerprint),
+      detector_version: String(row.detector_version),
+      first_detected_at: row.first_detected_at,
+      last_detected_at: row.last_detected_at,
+      reviewed_at: row.reviewed_at,
+      review_count: Number(row.review_count),
+      relationship_reconciliation: {
+        required: relationshipGroups.length > 0,
+        groups: relationshipGroups
+      },
+      low,
+      high
+    };
+  });
 
   const summary = { total: candidates.length, open: 0, merge: 0, keep_separate: 0, review: 0 };
   for (const candidate of candidates) {

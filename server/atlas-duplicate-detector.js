@@ -2,7 +2,7 @@
 
 const crypto = require("node:crypto");
 
-const DETECTOR_VERSION = "phase9a-v1";
+const DETECTOR_VERSION = "phase9-v2-full-evidence";
 const MAX_NAME_GROUP = 12;
 const MIN_CONFIDENCE = 0.58;
 
@@ -35,17 +35,25 @@ function orderedPair(a, b) {
   const left = String(a);
   const right = String(b);
   if (left === right) return null;
-  return left < right ? [left, right] : [right, left];
+  if (left < right) return [left, right];
+  return [right, left];
 }
 
-function stableFingerprint(nameEvidence) {
-  const canonical = nameEvidence
-    .map((item) => ({
-      kind: item.kind,
-      key: item.key,
-      low_preferred: Boolean(item.low_preferred),
-      high_preferred: Boolean(item.high_preferred)
-    }))
+function canonicalJson(value) {
+  if (Array.isArray(value)) return value.map(canonicalJson);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.keys(value)
+        .sort()
+        .map((key) => [key, canonicalJson(value[key])])
+    );
+  }
+  return value;
+}
+
+function stableFingerprint(evidence) {
+  const canonical = [...(evidence || [])]
+    .map(canonicalJson)
     .sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)));
   return crypto.createHash("sha256").update(JSON.stringify(canonical)).digest("hex");
 }
@@ -203,12 +211,13 @@ function detectPersonDuplicateCandidates({ names = [], activities = [] } = {}) {
     if (confidence < MIN_CONFIDENCE) continue;
     const nameEvidence = candidate.name_evidence
       .sort((a, b) => a.kind.localeCompare(b.kind) || a.key.localeCompare(b.key));
+    const evidence = [...nameEvidence, ...context.evidence];
     candidates.push({
       person_low_id: candidate.person_low_id,
       person_high_id: candidate.person_high_id,
       confidence: Number(confidence.toFixed(4)),
-      evidence: [...nameEvidence, ...context.evidence],
-      evidence_fingerprint: stableFingerprint(nameEvidence),
+      evidence,
+      evidence_fingerprint: stableFingerprint(evidence),
       detector_version: DETECTOR_VERSION
     });
   }
@@ -226,5 +235,6 @@ module.exports = Object.freeze({
   strictName,
   foldedName,
   tokenSetName,
+  stableFingerprint,
   detectPersonDuplicateCandidates
 });
