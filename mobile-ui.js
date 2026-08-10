@@ -48,7 +48,7 @@
   function visibleRowCount() {
     if (!dataBody) return 0;
     return [...dataBody.querySelectorAll("tr[data-id]")]
-      .filter((row) => row.style.display !== "none").length;
+      .filter((row) => !row.hidden && row.style.display !== "none").length;
   }
 
   function updateMobileSearchState(count = null) {
@@ -69,12 +69,13 @@
     let count = 0;
 
     dataBody.querySelectorAll("tr[data-id]").forEach((row) => {
-      const renderedText = row.textContent || "";
+      const renderedText = row.dataset.search || row.textContent || "";
       const normalizedRow = normalizeSearchText(renderedText);
       const compactRow = compactSearchText(renderedText);
       const matched = !normalizedQuery ||
         (compactQuery && compactRow.includes(compactQuery)) ||
         (queryTokens.length > 0 && queryTokens.every((token) => normalizedRow.includes(token)));
+      row.hidden = !matched;
       row.style.display = matched ? "" : "none";
       if (matched) count += 1;
     });

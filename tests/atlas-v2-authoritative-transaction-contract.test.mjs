@@ -45,3 +45,42 @@ test("semantic key distinguishes null role from reviewed role", () => {
     txModule.semanticKey({ ...base, role_id: "role" })
   );
 });
+
+test("verification accepts localized role aliases instead of requiring English source label", async () => {
+  const calls = [];
+  const client = {
+    async query(sql, params) {
+      calls.push({ sql, params });
+      return { rows: [{
+        activity_start: 10,
+        activity_end: 20,
+        notes: null,
+        period_basis: "reign",
+        person_match: true,
+        polity_match: true,
+        role_match: true
+      }] };
+    }
+  };
+  const verify = txModule.createV2VerificationVerifier(client);
+  const result = await verify({
+    operation: "update",
+    payload: {
+      value: {
+        person_name: "키루스 2세",
+        politic_name: "아케메네스 제국",
+        activity_start: 10,
+        activity_end: 20,
+        role: "왕중왕",
+        period_basis: "reign",
+        notes: null
+      }
+    },
+    v2: { normalized_relationship_ids: ["11111111-1111-4111-8111-111111111111"] }
+  });
+  assert.equal(result.match, true);
+  assert.equal(calls.length, 1);
+  assert.match(calls[0].sql, /atlas_v2\.role_names/);
+  assert.match(calls[0].sql, /role_match/);
+  assert.equal(calls[0].params[3], "왕중왕");
+});

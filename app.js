@@ -10,7 +10,7 @@
   const $ = (id) => document.getElementById(id);
   const els = {
     body: $("dataBody"), empty: $("emptyState"), rowCount: $("rowCount"), status: $("connectionStatus"),
-    search: $("searchInput"), filter: $("politicFilter"), dialog: $("editorDialog"), form: $("editorForm"),
+    search: $("searchInput"), filter: $("politicFilter"), sort: $("sortOrder"), dialog: $("editorDialog"), form: $("editorForm"),
     title: $("dialogTitle"), id: $("recordId"), person: $("personName"), politic: $("politicName"),
     start: $("activityStart"), end: $("activityEnd"), role: $("role"), basis: $("periodBasis"), notes: $("notes"),
     error: $("formError"), toast: $("toast"), detailEmpty: $("detailEmpty"), detailContent: $("detailContent"),
@@ -26,23 +26,12 @@
     general_activity: "주요 활동"
   };
 
-  function localeMap(type) {
-    return window.ATLAS_LOCALES?.ko?.[type] || {};
-  }
-
-  function displayPerson(value) {
-    return localeMap("persons")[value] || value || "";
-  }
-
-  function displayPolitic(value) {
-    return localeMap("polities")[value] || value || "";
-  }
-
   function withDisplayValues(record) {
     return {
       ...record,
-      display_person: displayPerson(record.person_name),
-      display_politic: displayPolitic(record.politic_name)
+      display_person: record.person_display_name || record.person_name || "",
+      display_politic: record.politic_display_name || record.politic_name || "",
+      display_role: record.role == null ? "" : (record.role_display_name || record.role || "")
     };
   }
 
@@ -73,9 +62,20 @@
     return normalize(value).replace(/\s+/g, "");
   }
 
+  function searchText(record) {
+    const view = withDisplayValues(record);
+    return [
+      view.display_person, record.person_name,
+      view.display_politic, record.politic_name,
+      view.display_role, record.role,
+      basisLabels[record.period_basis], record.period_basis,
+      record.notes, record.activity_start, record.activity_end
+    ].filter((value) => value !== null && value !== undefined && String(value).trim() !== "").join(" ");
+  }
+
   function rowMatches(row, query) {
     if (!String(query ?? "").trim()) return true;
-    const normalizedRow = normalize(row.textContent || "");
+    const normalizedRow = normalize(row.dataset.search || row.textContent || "");
     const compactRow = normalizedRow.replace(/\s+/g, "");
     const normalizedQuery = normalize(query);
     const compactQuery = compact(query);
@@ -85,12 +85,16 @@
   }
 
   function sortRecords(items) {
-    return [...items].sort((a, b) =>
-      String(a.politic_name).localeCompare(String(b.politic_name), "en", { sensitivity: "base" }) ||
-      Number(a.activity_start) - Number(b.activity_start) ||
-      Number(a.activity_end) - Number(b.activity_end) ||
-      String(a.person_name).localeCompare(String(b.person_name), "ko")
-    );
+    const direction = els.sort?.value === "start-desc" ? -1 : 1;
+    return [...items].sort((a, b) => {
+      const av = withDisplayValues(a);
+      const bv = withDisplayValues(b);
+      return direction * (Number(a.activity_start) - Number(b.activity_start))
+        || direction * (Number(a.activity_end) - Number(b.activity_end))
+        || av.display_person.localeCompare(bv.display_person, "ko", { sensitivity: "base" })
+        || av.display_politic.localeCompare(bv.display_politic, "ko", { sensitivity: "base" })
+        || String(a.id).localeCompare(String(b.id));
+    });
   }
 
   function yearEra(year) {
@@ -136,7 +140,7 @@
     els.detailSummaryPolitic.textContent = view.display_politic;
     setPeriodParts(record.activity_start, record.activity_end, els.detailSummaryStart, els.detailSummaryEnd);
     setPeriodParts(record.activity_start, record.activity_end, els.detailPeriodStart, els.detailPeriodEnd);
-    els.detailRole.textContent = record.role || "—";
+    els.detailRole.textContent = view.display_role || "—";
     els.detailBasis.textContent = basisLabels[record.period_basis] || record.period_basis || "—";
     els.detailNotes.textContent = record.notes || "";
   }
@@ -147,6 +151,7 @@
     els.body.querySelectorAll("tr[data-id]").forEach((row) => {
       const matched = rowMatches(row, query);
       row.hidden = !matched;
+      row.style.display = matched ? "" : "none";
       if (matched) count += 1;
     });
     els.rowCount.textContent = `${count}개 행`;
@@ -158,21 +163,24 @@
     els.body.innerHTML = items.map((r) => {
       const view = withDisplayValues(r);
       return `
-      <tr data-id="${r.id}" class="${String(r.id) === String(selectedId) ? "selected" : ""}" aria-selected="${String(r.id) === String(selectedId)}">
+      <tr data-id="${escapeHtml(r.id)}" data-search="${escapeHtml(searchText(r))}" class="${String(r.id) === String(selectedId) ? "selected" : ""}" aria-selected="${String(r.id) === String(selectedId)}">
         <td>${escapeHtml(view.display_person)}</td>
         <td>${escapeHtml(view.display_politic)}</td>
         <td>${escapeHtml(formatYear(r.activity_start))}</td>
         <td>${escapeHtml(formatYear(r.activity_end))}</td>
-        <td title="${escapeHtml(r.role || "")}">${escapeHtml(r.role || "")}</td>
+        <td title="${escapeHtml(r.role || "")}">${escapeHtml(view.display_role)}</td>
         <td>${escapeHtml(basisLabels[r.period_basis] || r.period_basis || "")}</td>
-        <td><div class="action-buttons"><button class="mini-btn edit" data-id="${r.id}">수정</button><button class="mini-btn danger delete" data-id="${r.id}">삭제</button></div></td>
+        <td><div class="action-buttons"><button class="mini-btn edit" data-id="${escapeHtml(r.id)}">수정</button><button class="mini-btn danger delete" data-id="${escapeHtml(r.id)}">삭제</button></div></td>
       </tr>`;
     }).join("");
 
     const current = els.filter.value;
-    const politics = [...new Set(records.map((r) => r.politic_name).filter(Boolean))].sort((a,b) => a.localeCompare(b, "en", { sensitivity: "base" }));
-    els.filter.innerHTML = '<option value="">모든 정치체</option>' + politics.map((p) => `<option value="${escapeHtml(p)}">${escapeHtml(displayPolitic(p))}</option>`).join("");
-    if (politics.includes(current)) els.filter.value = current;
+    const politics = [...new Map(records.filter((r) => r.politic_name).map((r) => {
+      const view = withDisplayValues(r);
+      return [r.politic_name, view.display_politic];
+    })).entries()].sort((a, b) => a[1].localeCompare(b[1], "ko", { sensitivity: "base" }));
+    els.filter.innerHTML = '<option value="">모든 정치체</option>' + politics.map(([canonical, display]) => `<option value="${escapeHtml(canonical)}">${escapeHtml(display)}</option>`).join("");
+    if (politics.some(([canonical]) => canonical === current)) els.filter.value = current;
     applyRenderedSearch();
     renderDetail();
   }
@@ -201,13 +209,14 @@
   function openEditor(record = null) {
     els.form.reset();
     els.error.hidden = true;
+    const view = record ? withDisplayValues(record) : null;
     els.id.value = record?.id || "";
     els.title.textContent = record ? "기록 수정" : "인물 관계 추가";
-    els.person.value = record?.person_name || "";
-    els.politic.value = record?.politic_name || "";
+    els.person.value = view?.display_person || "";
+    els.politic.value = view?.display_politic || "";
     els.start.value = record?.activity_start ?? "";
     els.end.value = record?.activity_end ?? "";
-    els.role.value = record?.role || "";
+    els.role.value = view?.display_role || "";
     els.basis.value = record?.period_basis || "general_activity";
     els.notes.value = record?.notes || "";
     els.dialog.showModal();
@@ -224,6 +233,12 @@
       && !outcome?.errors?.length;
   }
 
+  function canonicalIfUnchanged(typed, displayValue, canonicalValue) {
+    const value = String(typed ?? "").trim();
+    if (displayValue != null && value === String(displayValue).trim()) return canonicalValue;
+    return value;
+  }
+
   async function saveRecord(event) {
     event.preventDefault();
     if (!writeAdapter) {
@@ -238,12 +253,24 @@
       els.error.hidden = false;
       return;
     }
+    const id = els.id.value;
+    const existing = id ? records.find((record) => String(record.id) === String(id)) : null;
+    const view = existing ? withDisplayValues(existing) : null;
+    const personName = existing
+      ? canonicalIfUnchanged(els.person.value, view.display_person, existing.person_name)
+      : els.person.value.trim();
+    const politicName = existing
+      ? canonicalIfUnchanged(els.politic.value, view.display_politic, existing.politic_name)
+      : els.politic.value.trim();
+    const roleInput = els.role.value.trim();
+    const role = roleInput === "" ? null : (existing
+      ? canonicalIfUnchanged(roleInput, view.display_role, existing.role)
+      : roleInput);
     const payload = {
-      person_name: els.person.value.trim(), politic_name: els.politic.value.trim(),
-      activity_start: start, activity_end: end, role: els.role.value.trim() || null,
+      person_name: personName, politic_name: politicName,
+      activity_start: start, activity_end: end, role,
       period_basis: els.basis.value, notes: els.notes.value.trim() || null
     };
-    const id = els.id.value;
     const outcome = id
       ? await writeAdapter.updateActivity(id, payload)
       : await writeAdapter.createActivity(payload);
@@ -270,12 +297,19 @@
 
   function exportExcel() {
     const visibleIds = new Set([...els.body.querySelectorAll("tr[data-id]:not([hidden])")].map((row) => String(row.dataset.id)));
-    const rows = visibleRecords().filter((r) => visibleIds.has(String(r.id))).map((r) => ({
-      "인물": r.person_name, "정치체": r.politic_name, "활동 시작연도": r.activity_start,
-      "활동 종료연도": r.activity_end, "역할": r.role || "", "기간 기준": basisLabels[r.period_basis] || r.period_basis || "", "비고": r.notes || ""
-    }));
+    const rows = visibleRecords().filter((r) => visibleIds.has(String(r.id))).map((r) => {
+      const view = withDisplayValues(r);
+      return {
+        "인물": view.display_person, "정치체": view.display_politic, "활동 시작연도": r.activity_start,
+        "활동 종료연도": r.activity_end, "역할": view.display_role, "기간 기준": basisLabels[r.period_basis] || r.period_basis || "", "비고": r.notes || "",
+        "__person_name": r.person_name, "__politic_name": r.politic_name, "__role": r.role || ""
+      };
+    });
     const ws = XLSX.utils.json_to_sheet(rows);
-    ws["!cols"] = [{wch:24},{wch:28},{wch:14},{wch:14},{wch:18},{wch:16},{wch:40}];
+    ws["!cols"] = [
+      {wch:24},{wch:28},{wch:14},{wch:14},{wch:22},{wch:16},{wch:40},
+      {wch:2, hidden:true},{wch:2, hidden:true},{wch:2, hidden:true}
+    ];
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Person Politics");
     XLSX.writeFile(wb, `atlas-person-db-${new Date().toISOString().slice(0,10)}.xlsx`);
@@ -292,9 +326,11 @@
     const wb = XLSX.read(buffer);
     const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: "" });
     const payload = rows.map((r) => ({
-      person_name: String(r["인물"] || r.person_name || "").trim(), politic_name: String(r["정치체"] || r["Politic"] || r.politic_name || "").trim(),
+      person_name: String(r["__person_name"] || r["인물"] || r.person_name || "").trim(),
+      politic_name: String(r["__politic_name"] || r["정치체"] || r["Politic"] || r.politic_name || "").trim(),
       activity_start: Number(r["활동 시작연도"] ?? r.activity_start), activity_end: Number(r["활동 종료연도"] ?? r.activity_end),
-      role: String(r["역할"] || r.role || "").trim() || null, period_basis: resolveBasis(r["기간 기준"] || r.period_basis),
+      role: String(r["__role"] || r["역할"] || r.role || "").trim() || null,
+      period_basis: resolveBasis(r["기간 기준"] || r.period_basis),
       notes: String(r["비고"] || r.notes || "").trim() || null
     })).filter((r) => r.person_name && r.politic_name && Number.isFinite(r.activity_start) && Number.isFinite(r.activity_end) && r.activity_end >= r.activity_start);
     if (!payload.length) return showToast("가져올 수 있는 유효한 행이 없습니다.");
@@ -311,6 +347,7 @@
   $("cancelButton").addEventListener("click", () => els.dialog.close());
   els.form.addEventListener("submit", saveRecord);
   els.filter.addEventListener("change", render);
+  els.sort?.addEventListener("change", render);
   els.search.addEventListener("input", applyRenderedSearch);
   els.body.addEventListener("click", (event) => {
     const button = event.target.closest("button[data-id]");

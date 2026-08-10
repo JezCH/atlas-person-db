@@ -19,11 +19,15 @@
       required.forEach((key) => {
         if (row[key] === null || row[key] === undefined || row[key] === "") failures.push(`row ${index}: ${key} required`);
       });
+      for (const key of ["person_display_name", "politic_display_name"]) {
+        if (row[key] !== null && row[key] !== undefined && (typeof row[key] !== "string" || !row[key].trim())) failures.push(`row ${index}: ${key} must be non-empty string when present`);
+      }
       if (!Number.isInteger(Number(row.activity_start))) failures.push(`row ${index}: activity_start integer required`);
       if (!Number.isInteger(Number(row.activity_end))) failures.push(`row ${index}: activity_end integer required`);
       if (Number(row.activity_end) < Number(row.activity_start)) failures.push(`row ${index}: invalid chronology`);
       if (!PERIOD_BASES.has(String(row.period_basis))) failures.push(`row ${index}: invalid period_basis`);
       if (row.role !== null && row.role !== undefined && typeof row.role !== "string") failures.push(`row ${index}: role must be string/null`);
+      if (row.role_display_name !== null && row.role_display_name !== undefined && typeof row.role_display_name !== "string") failures.push(`row ${index}: role_display_name must be string/null`);
       if (row.notes !== null && row.notes !== undefined && typeof row.notes !== "string") failures.push(`row ${index}: notes must be string/null`);
       const id = String(row.id);
       if (ids.has(id)) failures.push(`row ${index}: duplicate id ${id}`);

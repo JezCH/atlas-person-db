@@ -293,20 +293,29 @@ function createV2VerificationVerifier(client) {
     for (let index = 0; index < ids.length; index += 1) {
       const expected = comparablePayload(rows[index]);
       const result = await client.query(`
-        select pp.activity_start,pp.activity_end,pp.notes,r.source_label as role,pb.code as period_basis,
+        select pp.activity_start,pp.activity_end,pp.notes,pb.code as period_basis,
                exists(select 1 from atlas_v2.person_names pn where pn.person_id=pp.person_id and pn.name=$2) as person_match,
-               exists(select 1 from atlas_v2.polity_names pn where pn.polity_id=pp.polity_id and pn.name=$3) as polity_match
+               exists(select 1 from atlas_v2.polity_names pn where pn.polity_id=pp.polity_id and pn.name=$3) as polity_match,
+               case
+                 when $4::text is null then pp.role_id is null
+                 else exists(
+                   select 1
+                     from atlas_v2.roles vr
+                     left join atlas_v2.role_names vrn on vrn.role_id=vr.id
+                    where vr.id=pp.role_id
+                      and (vr.code=$4 or vr.source_label=$4 or vrn.name=$4)
+                 )
+               end as role_match
           from atlas_v2.person_politics_v2 pp
-          left join atlas_v2.roles r on r.id=pp.role_id
           join atlas_v2.period_bases pb on pb.id=pp.period_basis_id
-         where pp.id=$1`, [ids[index], expected.person_name, expected.politic_name]);
+         where pp.id=$1`, [ids[index], expected.person_name, expected.politic_name, expected.role]);
       if (result.rows.length !== 1) return { checked: true, match: false, reason: `normalized row ${index} missing` };
       const row = result.rows[0];
       const match = row.person_match === true
         && row.polity_match === true
+        && row.role_match === true
         && Number(row.activity_start) === expected.activity_start
         && Number(row.activity_end) === expected.activity_end
-        && String(row.role ?? "") === String(expected.role ?? "")
         && String(row.period_basis) === expected.period_basis
         && (row.notes ?? null) === expected.notes;
       if (!match) return { checked: true, match: false, reason: `normalized row ${index} mismatch` };
