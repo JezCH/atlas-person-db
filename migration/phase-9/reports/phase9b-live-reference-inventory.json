@@ -1,0 +1,60 @@
+{
+  "marker": "PHASE9B_LIVE_PERSON_REFERENCE_INVENTORY_EVIDENCE",
+  "source": {
+    "workflow_run_id": 31382299833,
+    "artifact_id": 9060334443,
+    "artifact_digest": "sha256:202bf2bb43c2ff1bc34d2155edf4e6ecb67627ee3acb6bfc1ffd3ad1c7c817a7",
+    "read_only": true
+  },
+  "counts": {
+    "persons": 303,
+    "active_persons": 303,
+    "person_names": 608,
+    "person_sources": 329,
+    "person_descriptions": 0,
+    "relationships": 349,
+    "chronology_claims": 0,
+    "relationship_sources": 349,
+    "relationship_descriptions": 0,
+    "duplicate_candidates": 0,
+    "duplicate_reviews": 0
+  },
+  "direct_person_foreign_keys": [
+    {"table":"person_descriptions","column":"person_id","on_delete":"CASCADE"},
+    {"table":"person_duplicate_candidates","column":"person_high_id","on_delete":"RESTRICT"},
+    {"table":"person_duplicate_candidates","column":"person_low_id","on_delete":"RESTRICT"},
+    {"table":"person_names","column":"person_id","on_delete":"CASCADE"},
+    {"table":"person_politics_v2","column":"person_id","on_delete":"RESTRICT"},
+    {"table":"person_sources","column":"person_id","on_delete":"CASCADE"}
+  ],
+  "direct_relationship_foreign_keys": [
+    {"table":"chronology_claims","column":"person_politics_id","on_delete":"CASCADE"},
+    {"table":"person_politics_sources","column":"person_politics_id","on_delete":"CASCADE"},
+    {"table":"relationship_descriptions","column":"person_politics_id","on_delete":"CASCADE"}
+  ],
+  "non_fk_person_snapshots": [
+    "person_duplicate_reviews.person_low_id",
+    "person_duplicate_reviews.person_high_id"
+  ],
+  "critical_indexes": [
+    "person_names_preferred_locale_uq: UNIQUE(person_id, locale) WHERE is_preferred",
+    "person_sources_pkey: UNIQUE(person_id, source_id)",
+    "person_politics_sources_pkey: UNIQUE(person_politics_id, source_id)",
+    "person_politics_v2_legacy_source_key_key: UNIQUE(legacy_source_key)",
+    "person_politics_v2_null_role_semantic_uidx: UNIQUE(person_id, polity_id, activity_start, activity_end, period_basis_id) NULLS NOT DISTINCT WHERE role_id IS NULL",
+    "person_duplicate_candidates_person_low_id_person_high_id_key: UNIQUE(person_low_id, person_high_id)"
+  ],
+  "hidden_dependency_surfaces": {
+    "views_or_materialized_views": 0,
+    "functions_or_procedures": 0,
+    "triggers": 0
+  },
+  "merge_design_implications": [
+    "Preserve person_politics_v2 relationship UUIDs and remap only person_id so all relationship child references remain valid.",
+    "Fail closed on semantic relationship collisions instead of automatically collapsing relationship rows.",
+    "Copy/deduplicate names, sources, and descriptions before deleting the source person.",
+    "Candidate person UUIDs must become historical snapshots before source deletion; review UUIDs are already non-FK snapshots.",
+    "Delete the source person only after every live person reference has been remapped or cleared.",
+    "Persist an immutable merge audit containing both pre-merge person snapshots and the mutation summary."
+  ]
+}
