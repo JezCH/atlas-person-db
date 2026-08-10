@@ -13,16 +13,31 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Probe production normalized read endpoint
+      - name: Probe production server endpoints
         shell: bash
         run: |
           set -uo pipefail
-          url="https://atlas-person-db.vercel.app/api/atlas-read"
-          echo "GET $url"
-          code=$(curl -sS -o /tmp/body.txt -w '%{http_code}' --max-time 20 "$url" || true)
-          echo "HTTP $code"
-          echo "--- response body ---"
-          cat /tmp/body.txt 2>/dev/null || true
-          echo
-          echo "--- end response body ---"
-          test "$code" = "200"
+          base="https://atlas-person-db.vercel.app"
+
+          probe() {
+            label="$1"; method="$2"; path="$3"; data="${4:-}"
+            out="/tmp/${label}.txt"
+            if [ -n "$data" ]; then
+              code=$(curl -sS -X "$method" -H 'content-type: application/json' -d "$data" -o "$out" -w '%{http_code}' --max-time 20 "$base$path" || true)
+            else
+              code=$(curl -sS -X "$method" -o "$out" -w '%{http_code}' --max-time 20 "$base$path" || true)
+            fi
+            echo "[$label] $method $path -> HTTP $code"
+            cat "$out" 2>/dev/null || true
+            echo
+            echo "$code"
+          }
+
+          read_code=$(probe read GET /api/atlas-read | tail -n1)
+          session_code=$(probe session GET /api/atlas-session | tail -n1)
+          mutate_code=$(probe mutate POST /api/atlas-mutate '{}' | tail -n1)
+
+          echo "SUMMARY read=$read_code session=$session_code mutate=$mutate_code"
+          test "$read_code" = "200"
+          test "$session_code" = "200"
+          test "$mutate_code" = "401"
