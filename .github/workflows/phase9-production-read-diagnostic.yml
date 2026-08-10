@@ -19,23 +19,20 @@ jobs:
           set -uo pipefail
           base="https://atlas-person-db.vercel.app"
 
-          probe() {
-            label="$1"; method="$2"; path="$3"; data="${4:-}"
-            out="/tmp/${label}.txt"
-            if [ -n "$data" ]; then
-              code=$(curl -sS -X "$method" -H 'content-type: application/json' -d "$data" -o "$out" -w '%{http_code}' --max-time 20 "$base$path" || true)
-            else
-              code=$(curl -sS -X "$method" -o "$out" -w '%{http_code}' --max-time 20 "$base$path" || true)
-            fi
-            echo "[$label] $method $path -> HTTP $code"
-            cat "$out" 2>/dev/null || true
-            echo
-            echo "$code"
-          }
+          read_code=$(curl -sS -o /tmp/read.txt -w '%{http_code}' --max-time 20 "$base/api/atlas-read" || true)
+          echo "[read] GET /api/atlas-read -> HTTP $read_code"
+          cat /tmp/read.txt 2>/dev/null || true
+          echo
 
-          read_code=$(probe read GET /api/atlas-read | tail -n1)
-          session_code=$(probe session GET /api/atlas-session | tail -n1)
-          mutate_code=$(probe mutate POST /api/atlas-mutate '{}' | tail -n1)
+          session_code=$(curl -sS -o /tmp/session.txt -w '%{http_code}' --max-time 20 "$base/api/atlas-session" || true)
+          echo "[session] GET /api/atlas-session -> HTTP $session_code"
+          cat /tmp/session.txt 2>/dev/null || true
+          echo
+
+          mutate_code=$(curl -sS -X POST -H 'content-type: application/json' -d '{}' -o /tmp/mutate.txt -w '%{http_code}' --max-time 20 "$base/api/atlas-mutate" || true)
+          echo "[mutate] POST /api/atlas-mutate -> HTTP $mutate_code"
+          cat /tmp/mutate.txt 2>/dev/null || true
+          echo
 
           echo "SUMMARY read=$read_code session=$session_code mutate=$mutate_code"
           test "$read_code" = "200"
