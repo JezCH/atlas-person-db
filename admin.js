@@ -125,9 +125,32 @@
     return candidates.filter((item) => item.current_decision === activeFilter);
   }
 
+  function relationshipSide(candidate, row) {
+    return row.person_id === candidate.low.id ? "왼쪽" : "오른쪽";
+  }
+
+  function relationshipRole(row) {
+    return row.role_name || row.role_name_en || "역할 없음";
+  }
+
   function relationshipLabel(candidate, row) {
-    const side = row.person_id === candidate.low.id ? "왼쪽" : "오른쪽";
-    return `${side} · ${row.role_name || row.role_name_en || "역할 없음"} · ${row.id}`;
+    return `${relationshipSide(candidate, row)} · ${relationshipRole(row)} · ${row.id}`;
+  }
+
+  function provenanceLabel(row) {
+    const locator = row.source_locator;
+    if (!locator || typeof locator !== "object") return "원본 위치 정보 없음";
+    const file = locator.file ? String(locator.file) : "원본 파일";
+    const index = Number.isInteger(locator.index) ? ` #${locator.index}` : "";
+    return `${file}${index}`;
+  }
+
+  function relationshipRowHtml(candidate, row) {
+    return `<li class="relationship-row-detail">
+      <b>${escapeHtml(relationshipLabel(candidate, row))}</b>
+      ${row.notes ? `<span>${escapeHtml(row.notes)}</span>` : ""}
+      <small>${escapeHtml(provenanceLabel(row))}</small>
+    </li>`;
   }
 
   function relationshipConflictPreview(candidate) {
@@ -138,9 +161,27 @@
       <p>인물 자체를 병합하더라도 아래 활동 관계는 별도로 어떤 형태를 유지할지 결정해야 합니다.</p>
       ${groups.map((group, index) => `<div class="relationship-conflict-group">
         <b>${index + 1}. ${escapeHtml(group.polity_name)} · ${group.activity_start}–${group.activity_end} · ${escapeHtml(group.period_basis)}</b>
-        <ul>${group.relationships.map((row) => `<li>${escapeHtml(relationshipLabel(candidate, row))}</li>`).join("")}</ul>
+        <ul>${group.relationships.map((row) => relationshipRowHtml(candidate, row)).join("")}</ul>
         <small>${group.has_exact_role_duplicates ? "동일 역할 중복 포함" : ""}${group.has_exact_role_duplicates && group.has_role_variants ? " · " : ""}${group.has_role_variants ? "역할 표현 차이 포함" : ""}</small>
       </div>`).join("")}
+    </div>`;
+  }
+
+  function exactDuplicateRepresentativeControls(candidate, group) {
+    const duplicateRoleGroups = group.exact_duplicate_role_groups || [];
+    if (!duplicateRoleGroups.length) return "";
+    return `<div class="exact-role-controls">
+      <span>‘서로 다른 역할 유지’를 선택할 경우 아래 동일 역할 중복마다 대표 관계를 직접 선택하세요.</span>
+      ${duplicateRoleGroups.map((roleGroup, index) => {
+        const roleName = relationshipRole(roleGroup.relationships[0] || {});
+        return `<label class="exact-role-row">
+          <span>${index + 1}. ${escapeHtml(roleName)} 대표 관계</span>
+          <select class="exact-role-representative" data-group-fingerprint="${escapeHtml(group.group_fingerprint)}" data-role-key="${escapeHtml(roleGroup.role_key)}">
+            <option value="">대표 관계 선택</option>
+            ${roleGroup.relationships.map((row) => `<option value="${escapeHtml(row.id)}">${escapeHtml(relationshipLabel(candidate, row))} · ${escapeHtml(provenanceLabel(row))}</option>`).join("")}
+          </select>
+        </label>`;
+      }).join("")}
     </div>`;
   }
 
@@ -150,14 +191,17 @@
     return `<div class="relationship-resolution-controls">
       <strong>관계 정리 방식 선택</strong>
       <p>각 그룹마다 반드시 하나를 선택해야 실제 병합을 실행할 수 있습니다. 기본값은 없습니다.</p>
-      ${groups.map((group, index) => `<label class="relationship-resolution-row">
-        <span>${index + 1}. ${escapeHtml(group.polity_name)} · ${group.activity_start}–${group.activity_end}</span>
-        <select class="relationship-resolution-select" data-group-fingerprint="${escapeHtml(group.group_fingerprint)}">
-          <option value="">처리 방법 선택</option>
-          <option value="KEEP_DISTINCT_ROLES">서로 다른 역할 유지 · 동일 역할 중복만 합침</option>
-          ${group.relationships.map((row) => `<option value="KEEP_ONE_RELATIONSHIP:${escapeHtml(row.id)}">이 관계 하나만 유지 · ${escapeHtml(relationshipLabel(candidate, row))}</option>`).join("")}
-        </select>
-      </label>`).join("")}
+      ${groups.map((group, index) => `<div class="relationship-resolution-group">
+        <label class="relationship-resolution-row">
+          <span>${index + 1}. ${escapeHtml(group.polity_name)} · ${group.activity_start}–${group.activity_end}</span>
+          <select class="relationship-resolution-select" data-group-fingerprint="${escapeHtml(group.group_fingerprint)}">
+            <option value="">처리 방법 선택</option>
+            <option value="KEEP_DISTINCT_ROLES">서로 다른 역할 유지</option>
+            ${group.relationships.map((row) => `<option value="KEEP_ONE_RELATIONSHIP:${escapeHtml(row.id)}">이 관계 하나만 유지 · ${escapeHtml(relationshipLabel(candidate, row))}</option>`).join("")}
+          </select>
+        </label>
+        ${exactDuplicateRepresentativeControls(candidate, group)}
+      </div>`).join("")}
     </div>`;
   }
 
@@ -276,7 +320,17 @@
       const value = String(select?.value || "");
       if (!value) throw new Error(`${index + 1}번째 관계 충돌 그룹의 처리 방법을 선택해야 합니다.`);
       if (value === "KEEP_DISTINCT_ROLES") {
-        return { group_fingerprint: group.group_fingerprint, action: "KEEP_DISTINCT_ROLES" };
+        const keepRelationshipIds = (group.exact_duplicate_role_groups || []).map((roleGroup, roleIndex) => {
+          const representative = card.querySelector(`.exact-role-representative[data-group-fingerprint="${group.group_fingerprint}"][data-role-key="${roleGroup.role_key}"]`);
+          const representativeId = String(representative?.value || "");
+          if (!representativeId) throw new Error(`${index + 1}번째 관계 그룹의 ${roleIndex + 1}번째 동일 역할 중복에서 대표 관계를 선택해야 합니다.`);
+          return representativeId;
+        });
+        return {
+          group_fingerprint: group.group_fingerprint,
+          action: "KEEP_DISTINCT_ROLES",
+          keep_relationship_ids: keepRelationshipIds
+        };
       }
       if (value.startsWith("KEEP_ONE_RELATIONSHIP:")) {
         return {
