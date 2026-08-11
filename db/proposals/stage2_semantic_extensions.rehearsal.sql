@@ -24,7 +24,7 @@ CREATE FUNCTION atlas_v2.temporal_boundary_detail_valid(
 LANGUAGE sql
 IMMUTABLE
 AS $$
-  SELECT
+  SELECT COALESCE(
     boundary_granularity IN ('year','month','day')
     AND boundary_certainty IN ('exact','approximate','uncertain')
     AND boundary_calendar IN ('gregorian','julian','unspecified_historical','source_calendar')
@@ -34,7 +34,9 @@ AS $$
       (boundary_granularity = 'year' AND boundary_month IS NULL AND boundary_day IS NULL)
       OR (boundary_granularity = 'month' AND boundary_month IS NOT NULL AND boundary_day IS NULL)
       OR (boundary_granularity = 'day' AND boundary_month IS NOT NULL AND boundary_day IS NOT NULL)
-    );
+    ),
+    false
+  );
 $$;
 
 CREATE TABLE atlas_v2.person_polity_relation_types (
