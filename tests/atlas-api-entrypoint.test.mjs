@@ -4,6 +4,7 @@ import fs from 'node:fs';
 
 const apiDir = new URL('../api/', import.meta.url);
 const apiFiles = fs.readdirSync(apiDir).filter((name) => name.endsWith('.js')).sort();
+const authoringApplyApi = fs.readFileSync(new URL('../api/atlas-authoring-apply.js', import.meta.url), 'utf8');
 const duplicateReviewApi = fs.readFileSync(new URL('../api/atlas-duplicate-review.js', import.meta.url), 'utf8');
 const identityApi = fs.readFileSync(new URL('../api/atlas-identity.js', import.meta.url), 'utf8');
 const mutateApi = fs.readFileSync(new URL('../api/atlas-mutate.js', import.meta.url), 'utf8');
@@ -16,6 +17,7 @@ const admin = fs.readFileSync(new URL('../admin.html', import.meta.url), 'utf8')
 
 test('Vercel exposes exactly the current ATLAS API entrypoints', () => {
   assert.deepEqual(apiFiles, [
+    'atlas-authoring-apply.js',
     'atlas-duplicate-review.js',
     'atlas-identity.js',
     'atlas-mutate.js',
@@ -24,7 +26,7 @@ test('Vercel exposes exactly the current ATLAS API entrypoints', () => {
   ]);
 });
 
-test('database-backed entrypoints share one server PostgreSQL client boundary', () => {
+test('database-backed browser entrypoints share one server PostgreSQL client boundary', () => {
   const sources = [duplicateReviewApi, identityApi, mutateApi, readApi];
   for (const source of sources) {
     assert.match(source, /atlas-postgres-client\.js/);
@@ -35,6 +37,12 @@ test('database-backed entrypoints share one server PostgreSQL client boundary', 
   assert.match(postgresClient, /require\("pg"\)/);
   assert.match(postgresClient, /new Client\(/);
   assert.match(postgresClient, /SUPABASE_DB_CA/);
+});
+
+test('server-only authoring apply endpoint delegates to its isolated handler', () => {
+  assert.match(authoringApplyApi, /atlas-authoring-apply-handler\.js/);
+  assert.match(authoringApplyApi, /createAuthoringApplyHandler/);
+  assert.doesNotMatch(authoringApplyApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
 });
 
 test('session entrypoint is the only browser authentication endpoint', () => {
@@ -51,7 +59,7 @@ test('server runtime dependency is explicit and lock-backed', () => {
 
 test('browser pages do not load server entrypoints or pg', () => {
   for (const html of [index, admin]) {
-    assert.doesNotMatch(html, /api\/atlas-(?:duplicate-review|identity|mutate|read|session)\.js/);
+    assert.doesNotMatch(html, /api\/atlas-(?:authoring-apply|duplicate-review|identity|mutate|read|session)\.js/);
     assert.doesNotMatch(html, /node_modules\/pg|require\("pg"\)/);
   }
 });
