@@ -16,6 +16,7 @@ const inputs = {
   governance: arg('--governance-summary'),
   polityRelation: arg('--polity-relation-summary'),
   polityIdentity: arg('--polity-identity-summary'),
+  continuity: arg('--continuity-summary'),
   temporal: arg('--temporal-summary')
 };
 const outPath = arg('--out', 'artifacts/stage2-preflight.json');
@@ -33,8 +34,10 @@ const direct = readJson(inputs.direct);
 const governance = readJson(inputs.governance);
 const polityRelation = readJson(inputs.polityRelation);
 const polityIdentity = readJson(inputs.polityIdentity);
+const continuity = readJson(inputs.continuity);
 const temporal = readJson(inputs.temporal);
 
+const allInputs = { master, relation, readiness, direct, governance, polityRelation, polityIdentity, continuity, temporal };
 const expectedSchemas = {
   master: 'atlas-polity-semantic-master-ledger-summary/v1',
   relation: 'atlas-relation-semantics-audit-summary/v1',
@@ -43,10 +46,11 @@ const expectedSchemas = {
   governance: 'atlas-governance-context-audit-summary/v1',
   polityRelation: 'atlas-polity-relation-audit-summary/v1',
   polityIdentity: 'atlas-polity-identity-audit-summary/v1',
+  continuity: 'atlas-polity-continuity-decisions-summary/v1',
   temporal: 'atlas-temporal-contract-audit-summary/v1'
 };
 for (const [name, schema] of Object.entries(expectedSchemas)) {
-  const actual = ({ master, relation, readiness, direct, governance, polityRelation, polityIdentity, temporal })[name]?.schema;
+  const actual = allInputs[name]?.schema;
   if (actual !== schema) throw new Error(`${name} summary schema drift: ${actual}`);
 }
 
@@ -79,15 +83,21 @@ requireEq(polityRelation.no_core_relation_proven_rows, 8, 'Polity-relation not-p
 requireEq(polityIdentity.old_dependency_signal_rows, 28, 'old Polity-identity planning signals');
 requireEq(polityIdentity.temporal_designation_rows, 7, 'temporal designation rows');
 requireEq(polityIdentity.duplicate_alias_rows, 5, 'duplicate/alias identity rows');
-requireEq(polityIdentity.continuity_review_rows, 13, 'continuity-review rows');
+requireEq(polityIdentity.continuity_review_rows, 13, 'legacy continuity-review rows');
 requireEq(polityIdentity.distinct_union_constituent_rows, 2, 'union/constituent identity rows');
 requireEq(polityIdentity.false_or_not_primary_rows, 1, 'false/not-primary identity rows');
-requireEq(temporal.explicit_sub_year_blockers, 1, 'sub-year blockers');
+requireEq(continuity.reviewed_continuity_rows, 13, 'source-backed continuity decisions');
+requireEq(continuity.reviewed_continuity_groups, 4, 'source-backed continuity groups');
+requireEq(continuity.unresolved_continuity_model_rows, 0, 'unresolved continuity model rows');
+requireEq(continuity.newly_identified_exact_transition_cases, 2, 'new exact temporal transition cases');
+requireEq(temporal.explicit_sub_year_blockers, 1, 'legacy explicit sub-year blockers');
 requireEq(temporal.reviewed_split_intervals, 2, 'reviewed Yoshida replacement intervals');
 
 if (stage2DomainContract.production_migration_authorized !== false) {
   throw new Error('Stage 2 domain contract unexpectedly authorizes Production migration');
 }
+
+const temporalCorrectionCases = temporal.explicit_sub_year_blockers + continuity.newly_identified_exact_transition_cases;
 
 const blockerFamilies = [
   {
@@ -115,10 +125,10 @@ const blockerFamilies = [
     basis: 'Current reviewed evidence is insufficient to harden the final Relation on these rows.'
   },
   {
-    code: 'POLITY_CONTINUITY_REVIEW',
+    code: 'POLITY_CONTINUITY_CORRECTIONS_PENDING',
     severity: 'HARD',
-    count: polityIdentity.continuity_review_rows,
-    basis: 'Roman/Byzantine, Yuan/Northern Yuan, Russia, Portugal and related continuity choices still need project-level historical decisions.'
+    count: continuity.reviewed_continuity_rows,
+    basis: 'The Roman/East-Roman, Yuan/Northern-Yuan, Russia-1721 and Portugal-1815 continuity models are now source-backed and machine-checked, but their exact UUID relink/retire/coalesce/designation/relation corrections are intentionally not applied to Production.'
   },
   {
     code: 'POLITY_STRUCTURAL_RELATION_BACKFILL_RESEARCH',
@@ -129,8 +139,8 @@ const blockerFamilies = [
   {
     code: 'TEMPORAL_SUB_YEAR_DATA_CORRECTION_PENDING',
     severity: 'HARD',
-    count: temporal.explicit_sub_year_blockers,
-    basis: 'The shared schema can represent Yoshida accurately, but the current Production row remains uncorrected.'
+    count: temporalCorrectionCases,
+    basis: 'The shared temporal schema can represent the reviewed cases, but Production still has Yoshida plus newly source-fixed Russia-1721 and Portugal-1815 transition cases in year-level form.'
   },
   {
     code: 'NEW_ASSERTION_PROVENANCE_BACKFILL_PENDING',
@@ -147,8 +157,7 @@ const blockerFamilies = [
 ];
 
 const hardBlockerFamilies = blockerFamilies.filter((b) => b.severity === 'HARD' && b.count > 0);
-const productionMigrationReady = hardBlockerFamilies.length === 0;
-if (productionMigrationReady) {
+if (hardBlockerFamilies.length === 0) {
   throw new Error('Stage 2 preflight unexpectedly became Production-migration-ready; explicit reviewed authorization is required before that state can exist');
 }
 
@@ -159,6 +168,8 @@ const validated = {
   governance_model_reconciled: true,
   polity_relation_model_reconciled: true,
   polity_identity_signal_reconciled: true,
+  polity_continuity_model_decisions_closed: true,
+  unresolved_polity_continuity_model_rows: 0,
   temporal_contract_acceptance_case_proven: true,
   domain_contract_verified_by_prior_ci_step: true,
   fresh_postgresql_schema_rehearsal_verified_by_prior_ci_step: true,
@@ -170,9 +181,9 @@ const validated = {
 };
 
 const canContinueWithoutVercel = [
-  'finish source-backed Polity continuity decisions',
+  'prepare exact UUID-bound Roman/East-Roman, Yuan/Northern-Yuan, Russia-1721 and Portugal-1815 correction manifests without applying them',
   'finish Japan/bakufu/domain and regional-authority research',
-  'prepare exact UUID-bound structural correction/backfill manifests without applying them',
+  'finish Kublai 1260–1271 Great-Khan authority target research',
   'prepare normalized Source links alongside every reviewed new assertion backfill',
   'prepare the versioned Activity planner/transaction/authoring-replay/merge cutover without activating it',
   'continue shared Polity UUID integration design with civilization-map-project'
@@ -196,9 +207,11 @@ const summary = {
   identity_reconciliation_first_from_original_66: 6,
   historical_research_first_from_original_66: 11,
   unresolved_direct_relation_review: 0,
-  continuity_review_rows: polityIdentity.continuity_review_rows,
+  continuity_review_rows: 0,
+  continuity_correction_rows: continuity.reviewed_continuity_rows,
+  continuity_groups_closed: continuity.reviewed_continuity_groups,
   polity_relation_model_relevant_rows: polityRelation.model_relevant_rows,
-  sub_year_blockers: temporal.explicit_sub_year_blockers,
+  sub_year_correction_cases: temporalCorrectionCases,
   provenance_schema_rehearsed: true,
   stage2_activity_semantic_identity_rehearsed: true,
   production_active_semantic_path_cutover_performed: false,
