@@ -1,13 +1,15 @@
 "use strict";
 
-const { verifyGitHubActionsOidc } = require("./atlas-github-oidc.js");
+const {
+  verifyGitHubActionsOidc,
+  EXPECTED_AUDIENCE: AUDIT_OIDC_AUDIENCE,
+  EXPECTED_WORKFLOW_REF: AUDIT_WORKFLOW_REF
+} = require("./atlas-audit-github-oidc.js");
 const { createPostgresClient } = require("./atlas-postgres-client.js");
 
 const MARKER = "ATLAS_AUDIT_INVENTORY_V1";
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const MAX_ACTIVITY_IDS = 100;
-const AUDIT_OIDC_AUDIENCE = "atlas-person-db-audit-inventory";
-const AUDIT_WORKFLOW_REF = "JezCH/atlas-person-db/.github/workflows/atlas-audit-inventory.yml@refs/heads/main";
 
 function json(res, statusCode, body) {
   res.statusCode = statusCode;
@@ -136,11 +138,7 @@ function createAuditInventoryHandler({
       const token = bearerToken(req);
       if (!token) throw new Error("GITHUB_OIDC_INVALID");
       const deployment = requireDeployment(req, env);
-      await verifyOidc(token, {
-        expectedSha: deployment.actualSha,
-        expectedAudience: AUDIT_OIDC_AUDIENCE,
-        expectedWorkflowRef: AUDIT_WORKFLOW_REF
-      });
+      await verifyOidc(token, { expectedSha: deployment.actualSha });
       const activityIds = normalizeActivityIds(req.body?.activity_ids);
       const connectionString = String(env.SUPABASE_DB_URL || "").trim();
       if (!connectionString) throw new Error("SERVER_CONFIGURATION_ERROR");
