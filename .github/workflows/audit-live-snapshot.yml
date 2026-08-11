@@ -1,0 +1,38 @@
+name: ATLAS Audit Live Snapshot
+
+on:
+  push:
+    branches:
+      - agent/polity-semantic-audit
+    paths:
+      - '.github/workflows/audit-live-snapshot.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch current public normalized read
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error \
+            --retry 3 --retry-delay 3 \
+            'https://atlas-person-db.vercel.app/api/atlas-read' \
+            -o audit-live-snapshot.json
+          jq -e '.ok == true and .source == "v2-direct" and (.data | type == "array")' audit-live-snapshot.json >/dev/null
+          jq '{ok, source, relationship_count:(.data|length)}' audit-live-snapshot.json > audit-live-summary.json
+          cat audit-live-summary.json
+
+      - name: Upload read-only snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-audit-live-snapshot
+          path: |
+            audit-live-snapshot.json
+            audit-live-summary.json
+          if-no-files-found: error
+          retention-days: 7
