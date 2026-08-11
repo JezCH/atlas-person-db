@@ -17,7 +17,6 @@ function sendJson(res, status, body) {
 
 function createNormalizedReadHandler({ clientFactory, env = process.env } = {}) {
   if (typeof clientFactory !== "function") throw new Error("clientFactory is required");
-  const databaseUrl = requireDatabaseUrl(env);
 
   return async function handler(req, res) {
     const method = String(req?.method || "GET").toUpperCase();
@@ -26,13 +25,27 @@ function createNormalizedReadHandler({ clientFactory, env = process.env } = {}) 
       return;
     }
 
-    const client = await clientFactory(databaseUrl);
+    let databaseUrl;
     try {
+      databaseUrl = requireDatabaseUrl(env);
+    } catch (error) {
+      console.error("ATLAS normalized read configuration error", error);
+      sendJson(res, 503, { ok: false, code: "SERVER_CONFIGURATION_ERROR", error: "normalized read service is not configured" });
+      return;
+    }
+
+    let client = null;
+    try {
+      client = await clientFactory(databaseUrl);
       const data = await readPersonPolitics({ client });
       sendJson(res, 200, { ok: true, source: "v2-direct", data });
     } catch (error) {
       console.error("ATLAS normalized read failed", error);
-      sendJson(res, 500, { ok: false, error: "normalized read failed" });
+      sendJson(res, client ? 500 : 503, {
+        ok: false,
+        code: client ? "NORMALIZED_READ_FAILED" : "DATABASE_UNAVAILABLE",
+        error: client ? "normalized read failed" : "database unavailable"
+      });
     } finally {
       if (client && typeof client.end === "function") await client.end();
     }

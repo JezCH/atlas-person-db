@@ -11,18 +11,54 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: atlas_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d atlas_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/atlas_ci
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Install runtime dependency
-        run: npm install --ignore-scripts --no-audit --no-fund
+
+      - name: Generate deterministic dependency lock candidate
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+
+      - name: Install locked dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Preserve lock candidate for reviewed commit
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-package-lock-${{ github.sha }}
+          path: package-lock.json
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Syntax check active JavaScript
         shell: bash
         run: |
           set -euo pipefail
-          find api server -type f -name '*.js' -print0 | while IFS= read -r -d '' f; do node --check "$f"; done
+          find api server scripts -type f \( -name '*.js' -o -name '*.mjs' -o -name '*.cjs' \) -print0 | while IFS= read -r -d '' f; do node --check "$f"; done
           for f in atlas-*.js admin.js app.js asset-loader.js; do test -f "$f" && node --check "$f"; done
+
       - name: Run complete test suite
-        run: node --test tests/*.test.mjs
+        run: npm test
+
+      - name: Verify runtime architecture
+        run: npm run test:runtime
+
+      - name: Rebuild current v2 schema on fresh PostgreSQL
+        run: npm run test:schema

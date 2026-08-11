@@ -63,10 +63,13 @@ test("session status recognizes valid cookie and logout clears it", async () => 
   assert.match(logoutRes.headers["set-cookie"], /Max-Age=0/);
 });
 
-test("session endpoint fails closed when server session secret is missing", async () => {
+test("session endpoint reports missing server session secret as deterministic JSON 503", async () => {
   const handler = createSessionHandler({ env: { ATLAS_ADMIN_PASSWORD: "x" } });
   const res = responseCapture();
   await handler({ method: "GET", headers: {} }, res);
-  assert.equal(res.statusCode, 500);
-  assert.match(JSON.parse(res.body).error, /ATLAS_MUTATION_TOKEN is required/);
+  assert.equal(res.statusCode, 503);
+  const body = JSON.parse(res.body);
+  assert.equal(body.ok, false);
+  assert.equal(body.code, "SERVER_CONFIGURATION_ERROR");
+  assert.equal(body.error, "administrator session service is not configured");
 });

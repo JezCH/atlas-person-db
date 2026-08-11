@@ -50,12 +50,18 @@ function createIdentityHandler({ clientFactory, env = process.env, now } = {}) {
       return;
     }
 
-    const client = await clientFactory(connectionString);
+    let client = null;
     try {
+      client = await clientFactory(connectionString);
       const service = createIdentityService({ client });
       const outcome = await service.mutate(operation, payload);
       sendJson(res, 200, { ok: true, outcome });
     } catch (error) {
+      if (!client) {
+        console.error("ATLAS identity database unavailable", error);
+        sendJson(res, 503, { ok: false, code: "DATABASE_UNAVAILABLE", error: "database unavailable" });
+        return;
+      }
       const message = error?.message || String(error);
       const conflict = /(?:CONFLICT|COLLISION|REVIEW_REQUIRED)/.test(message);
       const invalid = /required|UNSUPPORTED/.test(message);

@@ -82,7 +82,13 @@ function createSessionHandler({
         { "set-cookie": sessionCookie(token, { maxAgeSeconds: Math.floor(ttlMs / 1000) }) }
       );
     } catch (error) {
-      sendJson(res, Number(error?.status) || 500, { ok: false, error: error?.message || String(error) });
+      const message = error?.message || String(error);
+      if (/^[A-Z0-9_]+ is required$/.test(message)) {
+        console.error("ATLAS session configuration error", error);
+        sendJson(res, 503, { ok: false, code: "SERVER_CONFIGURATION_ERROR", error: "administrator session service is not configured" });
+        return;
+      }
+      sendJson(res, Number(error?.status) || 500, { ok: false, error: message });
     }
   };
 }
