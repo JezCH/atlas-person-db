@@ -1,0 +1,112 @@
+{
+  "schema": "atlas-stage2-domain-contract/v1",
+  "status": "NON_PRODUCTION_REVIEWED_DOMAIN_CONTRACT",
+  "production_migration_authorized": false,
+  "principles": {
+    "historical_accuracy_over_completeness": true,
+    "uuid_is_identity": true,
+    "person_owns_territory": false,
+    "territory_owner": "polity",
+    "unknown_values_may_remain_unresolved": true
+  },
+  "person_polity_relation_types": [
+    {
+      "code": "rules",
+      "meaning": "Sovereign/head-of-polity or supreme de facto political authority.",
+      "runtime": "Ruling-authority map context is allowed, but geometry still resolves from the Polity Territory history."
+    },
+    {
+      "code": "governs",
+      "meaning": "Top-level executive, regency, or governmental authority without treating the person as the polity sovereign identity.",
+      "runtime": "Governmental-authority context is allowed and may be visually distinct from sovereign rule."
+    },
+    {
+      "code": "serves",
+      "meaning": "Official, military, diplomatic, administrative, or institutional service without top-level governmental authority.",
+      "runtime": "Context only; never infer personal territorial ownership."
+    },
+    {
+      "code": "active_in",
+      "meaning": "Biographical, intellectual, religious, scientific, court, social, or other activity associated with the polity without asserting state service, government, or rule.",
+      "runtime": "Context only; no political-authority or personal-territory implication."
+    },
+    {
+      "code": "opposes",
+      "meaning": "Political or military resistance directed against the polity.",
+      "runtime": "Opponent/context relation only; never render the target polity as controlled by the person."
+    },
+    {
+      "code": "claims_rule",
+      "meaning": "Claim to sovereign rule that is not equivalent to accepted/effective control for the whole interval.",
+      "runtime": "Claim semantics only; direct control requires separate Territory evidence."
+    }
+  ],
+  "governance_types": [
+    "government",
+    "constitutional_regime",
+    "governing_regime"
+  ],
+  "temporal": {
+    "historical_year_zero_allowed": false,
+    "granularities": [
+      "year",
+      "month",
+      "day"
+    ],
+    "certainties": [
+      "exact",
+      "approximate",
+      "uncertain"
+    ],
+    "calendars": [
+      "gregorian",
+      "julian",
+      "unspecified_historical",
+      "source_calendar"
+    ],
+    "interval_semantics": "inclusive_without_fabricated_lower_precision_components"
+  },
+  "polity_designation_types": [
+    "official_name",
+    "state_form",
+    "historiographic_period",
+    "conventional_temporal_label"
+  ],
+  "polity_relation_candidate_types": [
+    {
+      "code": "constituent_of",
+      "category": "constituent"
+    },
+    {
+      "code": "dominion_of",
+      "category": "dependency"
+    },
+    {
+      "code": "colonial_dependency_of",
+      "category": "dependency"
+    },
+    {
+      "code": "vassal_of",
+      "category": "suzerainty"
+    },
+    {
+      "code": "tributary_to",
+      "category": "suzerainty"
+    },
+    {
+      "code": "protectorate_of",
+      "category": "dependency"
+    },
+    {
+      "code": "member_of_confederation",
+      "category": "confederation"
+    }
+  ],
+  "polity_identity_relation_candidate_types": [
+    "succeeds",
+    "secedes_from",
+    "formed_by_union_of",
+    "splits_from",
+    "annexed_into"
+  ]
+}
