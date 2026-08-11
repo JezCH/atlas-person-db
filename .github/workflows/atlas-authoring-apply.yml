@@ -60,10 +60,10 @@ jobs:
           while IFS= read -r manifest; do
             [[ -n "$manifest" ]] || continue
             [[ "$manifest" =~ ^authoring/requests/[A-Za-z0-9._-]+\.json$ ]] || { echo "Rejected manifest path: $manifest"; exit 1; }
-            if jq -e '.schema == "atlas-authoring-manifest/v1" and .review_status == "approved"' "$manifest" >/dev/null; then
+            if jq -e '((.schema == "atlas-authoring-manifest/v1") or (.schema == "atlas-authoring-manifest/v2")) and .review_status == "approved"' "$manifest" >/dev/null; then
               printf '%s\n' "$manifest" >> /tmp/atlas-manifests.txt
             else
-              echo "Skipping non-approved manifest: $manifest"
+              echo "Skipping non-approved or unsupported manifest: $manifest"
             fi
           done < /tmp/atlas-candidates.txt
 
