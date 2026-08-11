@@ -7,7 +7,7 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <title>ATLAS Admin</title>
-  <link rel="stylesheet" href="./admin.css?v=20260810-admin-session-gate" />
+  <link rel="stylesheet" href="./admin.css?v=20260811-maintenance-m1" />
 </head>
 <body>
   <main class="admin-shell">
@@ -15,7 +15,7 @@
       <div>
         <p class="eyebrow">ATLAS ADMIN V2</p>
         <h1>데이터 관리자</h1>
-        <p>normalized v2 identity를 기준으로 입력과 중복 후보 검토를 관리합니다.</p>
+        <p>normalized v2 identity를 기준으로 인물·정치체·역할과 활동 관계, 중복 후보를 관리합니다.</p>
       </div>
       <a class="button secondary" href="./index.html">Persons로 돌아가기</a>
     </header>
@@ -89,11 +89,60 @@
     </section>
 
     <section id="dataProtectedArea" class="admin-protected-area is-locked" inert aria-disabled="true">
+      <section class="panel" aria-labelledby="identity-title">
+        <div class="panel-head">
+          <div>
+            <p class="status-label">IDENTITY AUTHORING</p>
+            <h2 id="identity-title">신규 Identity 등록</h2>
+            <p>새 Person·Polity·Role을 먼저 normalized identity로 생성합니다. Person/Polity는 EN canonical과 KO preferred display를 같은 SERIALIZABLE transaction에서 함께 생성합니다.</p>
+          </div>
+        </div>
+
+        <div class="identity-layout">
+          <form id="createPersonForm" class="identity-form">
+            <h3>Person</h3>
+            <label>영문 canonical 이름<input id="personCanonicalNameEn" required /></label>
+            <label>한국어 표시명<input id="personDisplayNameKo" required /></label>
+            <label>Canonical key <small>비우면 영문 canonical 이름 사용</small><input id="personCanonicalKey" /></label>
+            <div class="identity-two">
+              <label>Person type<input id="personType" value="historical" required /></label>
+              <label>Historicity<input id="personHistoricity" value="historical" required /></label>
+            </div>
+            <label class="identity-check"><input id="personAllowKoCollision" type="checkbox" /> 동일 한국어 표시명이 다른 Person에 있어도 검토 후 허용</label>
+            <button class="button primary" type="submit">Person 생성</button>
+          </form>
+
+          <form id="createPolityForm" class="identity-form">
+            <h3>Polity</h3>
+            <label>영문 canonical 이름<input id="polityCanonicalNameEn" required /></label>
+            <label>한국어 표시명<input id="polityDisplayNameKo" required /></label>
+            <label>Canonical key <small>비우면 영문 canonical 이름 사용</small><input id="polityCanonicalKey" /></label>
+            <div class="identity-two">
+              <label>Polity type<input id="polityType" value="historical_polity" required /></label>
+              <label>Historicity<input id="polityHistoricity" value="historical" required /></label>
+            </div>
+            <label class="identity-check"><input id="polityAllowKoCollision" type="checkbox" /> 동일 한국어 표시명이 다른 Polity에 있어도 검토 후 허용</label>
+            <button class="button primary" type="submit">Polity 생성</button>
+          </form>
+
+          <form id="createRoleForm" class="identity-form">
+            <h3>Role</h3>
+            <label>Role code<input id="roleCode" placeholder="예: emperor" required /></label>
+            <label>영문 source label<input id="roleSourceLabel" placeholder="예: Emperor" required /></label>
+            <label>한국어 표시명<input id="roleDisplayNameKo" placeholder="예: 황제" required /></label>
+            <label>Category<input id="roleCategory" placeholder="분류를 명시적으로 입력" required /></label>
+            <p class="identity-help">Role은 정확 조회가 모호해지지 않도록 code·영문 label·한국어 이름 충돌을 자동 허용하지 않습니다.</p>
+            <button class="button primary" type="submit">Role 생성</button>
+          </form>
+        </div>
+        <pre id="identityResult" class="result" aria-live="polite">Identity authoring 준비됨</pre>
+      </section>
+
       <section class="panel" aria-labelledby="input-title">
         <div class="panel-head">
           <div>
-            <h2 id="input-title">JSON 입력</h2>
-            <p>조회는 normalized v2 direct API, 저장은 관리자 인증 서버 mutation 계층의 v2-authoritative 경로만 사용합니다.</p>
+            <h2 id="input-title">활동 관계 JSON 입력</h2>
+            <p>먼저 위에서 필요한 identity를 만든 뒤 활동 관계를 저장합니다. 동일 활동 판정은 Person + Polity + 시작/종료연도 + Role + Period basis 전체를 사용합니다.</p>
           </div>
           <button id="sampleButton" class="button secondary" type="button">예시 불러오기</button>
         </div>
@@ -122,8 +171,10 @@
           }
           adminLoaded = true;
           await window.ATLAS_ASSETS.loadSeries([
+            "./atlas-activity-semantics.js",
             "./atlas-server-write-adapter.js",
             "./atlas-admin-write-service.js",
+            "./atlas-admin-identity.js",
             "./atlas-admin-duplicate-review.js",
             "./admin.js"
           ]);

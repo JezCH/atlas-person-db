@@ -34,7 +34,7 @@ function fakeAdapterApi({ fail = false } = {}) {
           calls.push(["create", payload]);
           return fail
             ? { committed: false, v2: { committed: false }, errors: ["synthetic failure"] }
-            : { committed: true, v2: { committed: true, normalized_relationship_ids: ["new-v2-id"] }, errors: [] };
+            : { committed: true, v2: { committed: true, normalized_relationship_ids: [`new-v2-id-${calls.length}`] }, errors: [] };
         },
         async updateActivity(id, payload) {
           calls.push(["update", id, payload]);
@@ -63,7 +63,7 @@ test("admin creates through v2-only server adapter after one direct normalized l
   assert.deepEqual(adapterApi.calls.map((call) => call[0]), ["create"]);
 });
 
-test("admin updates exact normalized relationship id from direct projection", async () => {
+test("admin updates exact normalized relationship id from full semantic projection", async () => {
   const adapterApi = fakeAdapterApi();
   const service = createAdminWriteService({
     adapterApi,
@@ -76,7 +76,32 @@ test("admin updates exact normalized relationship id from direct projection", as
   assert.deepEqual(adapterApi.calls[0].slice(0, 2), ["update", "normalized-7"]);
 });
 
-test("admin fails closed when normalized activity lookup is ambiguous", async () => {
+test("same person polity and dates with a different role remains a distinct relationship", async () => {
+  const adapterApi = fakeAdapterApi();
+  const service = createAdminWriteService({
+    adapterApi,
+    fetchImpl: async () => readResponse([{ ...row, id: "normalized-7" }])
+  });
+  const changedRole = { ...row, role: "Programmer" };
+  const result = await service.saveRows([changedRole]);
+  assert.equal(result.inserted, 1);
+  assert.equal(result.updated, 0);
+  assert.equal(adapterApi.calls[0][0], "create");
+});
+
+test("same person polity dates and role with a different period basis remains distinct", async () => {
+  const adapterApi = fakeAdapterApi();
+  const service = createAdminWriteService({
+    adapterApi,
+    fetchImpl: async () => readResponse([{ ...row, id: "normalized-7" }])
+  });
+  const changedBasis = { ...row, period_basis: "general_activity" };
+  const result = await service.saveRows([changedBasis]);
+  assert.equal(result.inserted, 1);
+  assert.equal(result.updated, 0);
+});
+
+test("admin fails closed when normalized semantic activity lookup is ambiguous", async () => {
   const adapterApi = fakeAdapterApi();
   const service = createAdminWriteService({
     adapterApi,

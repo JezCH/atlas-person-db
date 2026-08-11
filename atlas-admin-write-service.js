@@ -1,11 +1,11 @@
 (() => {
   "use strict";
 
-  function activityKey(row) {
-    return [row.person_name, row.politic_name, Number(row.activity_start), Number(row.activity_end)]
-      .join("\u0001")
-      .toLowerCase();
-  }
+  const semantics = typeof module !== "undefined" && module.exports
+    ? require("./atlas-activity-semantics.js")
+    : window.ATLAS_ACTIVITY_SEMANTICS;
+  if (!semantics) throw new Error("ATLAS activity semantics are required");
+  const { activityKey } = semantics;
 
   function mutationSucceeded(result) {
     return result?.committed === true
@@ -66,7 +66,7 @@
         const key = activityKey(row);
         const ids = byKey.get(key) || [];
         if (ids.length > 1) {
-          failures.push(`${row.person_name}: normalized activity lookup is ambiguous; review required`);
+          failures.push(`${row.person_name}: normalized semantic activity lookup is ambiguous; review required`);
           continue;
         }
 

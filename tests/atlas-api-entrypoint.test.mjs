@@ -5,6 +5,7 @@ import fs from 'node:fs';
 const apiDir = new URL('../api/', import.meta.url);
 const apiFiles = fs.readdirSync(apiDir).filter((name) => name.endsWith('.js')).sort();
 const duplicateReviewApi = fs.readFileSync(new URL('../api/atlas-duplicate-review.js', import.meta.url), 'utf8');
+const identityApi = fs.readFileSync(new URL('../api/atlas-identity.js', import.meta.url), 'utf8');
 const mutateApi = fs.readFileSync(new URL('../api/atlas-mutate.js', import.meta.url), 'utf8');
 const readApi = fs.readFileSync(new URL('../api/atlas-read.js', import.meta.url), 'utf8');
 const sessionApi = fs.readFileSync(new URL('../api/atlas-session.js', import.meta.url), 'utf8');
@@ -15,6 +16,7 @@ const admin = fs.readFileSync(new URL('../admin.html', import.meta.url), 'utf8')
 test('Vercel exposes exactly the current ATLAS API entrypoints', () => {
   assert.deepEqual(apiFiles, [
     'atlas-duplicate-review.js',
+    'atlas-identity.js',
     'atlas-mutate.js',
     'atlas-read.js',
     'atlas-session.js'
@@ -24,14 +26,14 @@ test('Vercel exposes exactly the current ATLAS API entrypoints', () => {
 test('database-backed entrypoints use server handlers and pg clients only', () => {
   assert.match(duplicateReviewApi, /require\("pg"\)/);
   assert.match(duplicateReviewApi, /createDuplicateReviewHandler/);
-  assert.match(duplicateReviewApi, /await client\.connect\(\)/);
+  assert.match(identityApi, /require\("pg"\)/);
+  assert.match(identityApi, /createIdentityHandler/);
   assert.match(mutateApi, /require\("pg"\)/);
   assert.match(mutateApi, /createVercelMutationHandler/);
-  assert.match(mutateApi, /await client\.connect\(\)/);
   assert.match(readApi, /require\("pg"\)/);
   assert.match(readApi, /createNormalizedReadHandler/);
-  assert.match(readApi, /await client\.connect\(\)/);
-  for (const source of [duplicateReviewApi, mutateApi, readApi]) {
+  for (const source of [duplicateReviewApi, identityApi, mutateApi, readApi]) {
+    assert.match(source, /await client\.connect\(\)/);
     assert.doesNotMatch(source, /service_role|postgres:\/\/|postgresql:\/\//);
   }
 });
@@ -48,7 +50,7 @@ test('server runtime dependency is explicit', () => {
 
 test('browser pages do not load server entrypoints or pg', () => {
   for (const html of [index, admin]) {
-    assert.doesNotMatch(html, /atlas-(?:duplicate-review|mutate|read|session)\.js/);
+    assert.doesNotMatch(html, /api\/atlas-(?:duplicate-review|identity|mutate|read|session)\.js/);
     assert.doesNotMatch(html, /node_modules\/pg|require\("pg"\)/);
   }
 });
