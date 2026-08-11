@@ -15,6 +15,7 @@ const {
 const MANIFEST_V1 = "atlas-authoring-manifest/v1";
 const MANIFEST_V2 = "atlas-authoring-manifest/v2";
 const SUPPORTED_SCHEMAS = new Set([MANIFEST_V1, MANIFEST_V2]);
+const RESULT_SNAPSHOT_VERSION = 1;
 
 function stable(value) {
   if (Array.isArray(value)) return value.map(stable);
@@ -104,7 +105,7 @@ function markerForSchema(schema) {
 
 async function readLedger(client, requestId) {
   const result = await client.query(
-    `select request_id,manifest_hash,person_id,relationship_id,applied_at
+    `select request_id,manifest_hash,manifest_schema,person_id,relationship_id,result_snapshot,applied_at
        from atlas_v2.authoring_manifest_runs
       where request_id=$1
       for update`,
@@ -122,6 +123,129 @@ function activityFromManifest(personName, raw) {
     role: raw?.role,
     period_basis: raw?.period_basis,
     notes: raw?.notes
+  });
+}
+
+async function loadRelationshipIdentity(client, relationshipId) {
+  const result = await client.query(
+    `select id,person_id,polity_id,role_id,period_basis_id
+       from atlas_v2.person_politics_v2
+      where id=$1
+      for update`,
+    [relationshipId]
+  );
+  if (result.rows.length !== 1) throw new Error("AUTHORING_RELATIONSHIP_RESULT_NOT_FOUND");
+  return result.rows[0];
+}
+
+function assertExactId(actual, expected, code) {
+  if (String(actual ?? "") !== String(expected ?? "")) throw new Error(code);
+}
+
+function verifyPostwriteBinding({ relationship, personResult, polityResult, roleResult }) {
+  assertExactId(relationship?.person_id, personResult?.id, "AUTHORING_POSTWRITE_PERSON_MISMATCH");
+  if (polityResult) {
+    assertExactId(relationship?.polity_id, polityResult.id, "AUTHORING_POSTWRITE_POLITY_MISMATCH");
+  }
+  if (roleResult) {
+    assertExactId(relationship?.role_id, roleResult.id, "AUTHORING_POSTWRITE_ROLE_MISMATCH");
+  }
+}
+
+function identityDisposition(result) {
+  return result?.replay === true ? "reused" : "created";
+}
+
+function buildExecutionSnapshot({
+  schema,
+  marker,
+  personResult,
+  polityResult,
+  roleResult,
+  relationship,
+  activityReplay
+}) {
+  return Object.freeze({
+    version: RESULT_SNAPSHOT_VERSION,
+    schema,
+    marker,
+    provenance_complete: true,
+    entities: Object.freeze({
+      person: Object.freeze({
+        id: String(personResult.id),
+        disposition: identityDisposition(personResult)
+      }),
+      polity: Object.freeze({
+        id: String(relationship.polity_id),
+        disposition: polityResult ? identityDisposition(polityResult) : "resolved_existing"
+      }),
+      role: Object.freeze({
+        id: relationship.role_id == null ? null : String(relationship.role_id),
+        disposition: relationship.role_id == null
+          ? "not_applicable"
+          : roleResult ? identityDisposition(roleResult) : "resolved_existing"
+      }),
+      period_basis: Object.freeze({
+        id: String(relationship.period_basis_id),
+        disposition: "resolved_existing"
+      }),
+      activity: Object.freeze({
+        id: String(relationship.id),
+        disposition: activityReplay === true ? "reused" : "created"
+      })
+    })
+  });
+}
+
+function buildHistoricalReplaySnapshot({ schema, marker, ledger, relationship }) {
+  return Object.freeze({
+    version: RESULT_SNAPSHOT_VERSION,
+    schema,
+    marker,
+    provenance_complete: false,
+    provenance_note: "Execution predated durable entity-disposition snapshots; live UUID bindings are verified but original create/reuse dispositions are unknown.",
+    entities: Object.freeze({
+      person: Object.freeze({ id: String(ledger.person_id), disposition: "historical_unknown" }),
+      polity: Object.freeze({ id: String(relationship.polity_id), disposition: "historical_unknown" }),
+      role: Object.freeze({
+        id: relationship.role_id == null ? null : String(relationship.role_id),
+        disposition: relationship.role_id == null ? "not_applicable" : "historical_unknown"
+      }),
+      period_basis: Object.freeze({ id: String(relationship.period_basis_id), disposition: "historical_unknown" }),
+      activity: Object.freeze({ id: String(relationship.id), disposition: "historical_unknown" })
+    })
+  });
+}
+
+function assertSnapshotMatchesLive({ snapshot, ledger, relationship }) {
+  if (!snapshot || typeof snapshot !== "object" || Array.isArray(snapshot)) {
+    throw new Error("AUTHORING_LEDGER_RESULT_INVALID");
+  }
+  if (Number(snapshot.version) !== RESULT_SNAPSHOT_VERSION) {
+    throw new Error("AUTHORING_LEDGER_RESULT_VERSION_UNSUPPORTED");
+  }
+  const entities = snapshot.entities;
+  if (!entities || typeof entities !== "object" || Array.isArray(entities)) {
+    throw new Error("AUTHORING_LEDGER_RESULT_INVALID");
+  }
+  assertExactId(entities.person?.id, ledger.person_id, "AUTHORING_LEDGER_PERSON_DRIFT");
+  assertExactId(entities.activity?.id, ledger.relationship_id, "AUTHORING_LEDGER_ACTIVITY_DRIFT");
+  assertExactId(entities.polity?.id, relationship.polity_id, "AUTHORING_LEDGER_POLITY_DRIFT");
+  assertExactId(entities.role?.id, relationship.role_id, "AUTHORING_LEDGER_ROLE_DRIFT");
+  assertExactId(entities.period_basis?.id, relationship.period_basis_id, "AUTHORING_LEDGER_PERIOD_BASIS_DRIFT");
+}
+
+function outcomeFromSnapshot({ marker, requestId, replay, snapshot }) {
+  return Object.freeze({
+    marker,
+    request_id: requestId,
+    committed: true,
+    replay,
+    person_id: snapshot.entities.person.id,
+    relationship_id: snapshot.entities.activity.id,
+    polity_id: snapshot.entities.polity.id,
+    ...(snapshot.entities.role.id ? { role_id: snapshot.entities.role.id } : {}),
+    result: snapshot
   });
 }
 
@@ -147,15 +271,28 @@ function createAuthoringManifestService({ client } = {}) {
         const replay = await readLedger(client, requestId);
         if (replay) {
           if (replay.manifest_hash !== hash) throw new Error("AUTHORING_REQUEST_ID_COLLISION");
+          if (replay.manifest_schema && replay.manifest_schema !== schema) {
+            throw new Error("AUTHORING_LEDGER_SCHEMA_MISMATCH");
+          }
+          const relationship = await loadRelationshipIdentity(client, replay.relationship_id);
+          assertExactId(relationship.person_id, replay.person_id, "AUTHORING_LEDGER_PERSON_RELATIONSHIP_DRIFT");
+
+          let snapshot = replay.result_snapshot;
+          if (snapshot) {
+            assertSnapshotMatchesLive({ snapshot, ledger: replay, relationship });
+          } else {
+            snapshot = buildHistoricalReplaySnapshot({ schema, marker, ledger: replay, relationship });
+            await client.query(
+              `update atlas_v2.authoring_manifest_runs
+                  set manifest_schema=coalesce(manifest_schema,$2),
+                      result_snapshot=$3::jsonb
+                where request_id=$1`,
+              [requestId, schema, JSON.stringify(snapshot)]
+            );
+          }
+
           await client.query("commit");
-          return Object.freeze({
-            marker,
-            request_id: requestId,
-            committed: true,
-            replay: true,
-            person_id: replay.person_id,
-            relationship_id: replay.relationship_id
-          });
+          return outcomeFromSnapshot({ marker, requestId, replay: true, snapshot });
         }
 
         const personResult = await createPerson(client, person);
@@ -163,7 +300,8 @@ function createAuthoringManifestService({ client } = {}) {
         const roleResult = roleIdentity ? await createRole(client, roleIdentity) : null;
 
         const activityPayload = activityFromManifest(person.canonical_name_en, activity);
-        const created = await createV2AuthoritativeTx(client).executeV2Authoritative({
+        const activityTx = createV2AuthoritativeTx(client);
+        const created = await activityTx.executeV2Authoritative({
           operation: "create",
           payload: activityPayload,
           request_id: `authoring:${requestId}`
@@ -171,23 +309,27 @@ function createAuthoringManifestService({ client } = {}) {
         const relationshipId = created.normalized_relationship_ids?.[0] || null;
         if (!relationshipId) throw new Error("AUTHORING_ACTIVITY_CREATE_FAILED");
 
+        const relationship = await loadRelationshipIdentity(client, relationshipId);
+        verifyPostwriteBinding({ relationship, personResult, polityResult, roleResult });
+        const snapshot = buildExecutionSnapshot({
+          schema,
+          marker,
+          personResult,
+          polityResult,
+          roleResult,
+          relationship,
+          activityReplay: created.replay
+        });
+
         await client.query(
-          `insert into atlas_v2.authoring_manifest_runs(request_id,manifest_hash,person_id,relationship_id)
-           values($1,$2,$3,$4)`,
-          [requestId, hash, personResult.id, relationshipId]
+          `insert into atlas_v2.authoring_manifest_runs(
+             request_id,manifest_hash,manifest_schema,person_id,relationship_id,result_snapshot
+           ) values($1,$2,$3,$4,$5,$6::jsonb)`,
+          [requestId, hash, schema, personResult.id, relationshipId, JSON.stringify(snapshot)]
         );
         await client.query("commit");
 
-        return Object.freeze({
-          marker,
-          request_id: requestId,
-          committed: true,
-          replay: false,
-          person_id: personResult.id,
-          relationship_id: relationshipId,
-          ...(polityResult ? { polity_id: polityResult.id } : {}),
-          ...(roleResult ? { role_id: roleResult.id } : {})
-        });
+        return outcomeFromSnapshot({ marker, requestId, replay: false, snapshot });
       } catch (error) {
         try { await client.query("rollback"); } catch {}
         throw error;
@@ -200,11 +342,18 @@ module.exports = Object.freeze({
   MANIFEST_V1,
   MANIFEST_V2,
   SUPPORTED_SCHEMAS,
+  RESULT_SNAPSHOT_VERSION,
   createAuthoringManifestService,
   manifestHash,
   requireManifest,
   markerForSchema,
   validateDeclaredIdentityReferences,
   activityFromManifest,
-  readLedger
+  readLedger,
+  loadRelationshipIdentity,
+  verifyPostwriteBinding,
+  buildExecutionSnapshot,
+  buildHistoricalReplaySnapshot,
+  assertSnapshotMatchesLive,
+  outcomeFromSnapshot
 });

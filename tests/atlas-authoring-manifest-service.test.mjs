@@ -6,10 +6,15 @@ const require = createRequire(import.meta.url);
 const {
   MANIFEST_V1,
   MANIFEST_V2,
+  RESULT_SNAPSHOT_VERSION,
   requireManifest,
   manifestHash,
   markerForSchema,
-  activityFromManifest
+  activityFromManifest,
+  verifyPostwriteBinding,
+  buildExecutionSnapshot,
+  buildHistoricalReplaySnapshot,
+  assertSnapshotMatchesLive
 } = require('../server/atlas-authoring-manifest-service.js');
 
 test('authoring manifest v1 remains compatible and requires approval, stable request id, person and activity', () => {
@@ -124,4 +129,104 @@ test('activity manifest is normalized through authoritative comparable payload',
     period_basis: 'reign',
     notes: null
   });
+});
+
+test('execution snapshot records entity dispositions and normalized UUID bindings', () => {
+  const snapshot = buildExecutionSnapshot({
+    schema: MANIFEST_V2,
+    marker: 'ATLAS_AUTHORING_MANIFEST_V2',
+    personResult: { id: 'person-1', replay: false },
+    polityResult: { id: 'polity-1', replay: true },
+    roleResult: null,
+    relationship: {
+      id: 'activity-1',
+      person_id: 'person-1',
+      polity_id: 'polity-1',
+      role_id: 'role-1',
+      period_basis_id: 'period-1'
+    },
+    activityReplay: false
+  });
+
+  assert.equal(snapshot.version, RESULT_SNAPSHOT_VERSION);
+  assert.equal(snapshot.provenance_complete, true);
+  assert.deepEqual(snapshot.entities.person, { id: 'person-1', disposition: 'created' });
+  assert.deepEqual(snapshot.entities.polity, { id: 'polity-1', disposition: 'reused' });
+  assert.deepEqual(snapshot.entities.role, { id: 'role-1', disposition: 'resolved_existing' });
+  assert.deepEqual(snapshot.entities.activity, { id: 'activity-1', disposition: 'created' });
+});
+
+test('postwrite binding verification fails closed on identity drift before commit', () => {
+  const relationship = { person_id: 'person-1', polity_id: 'polity-1', role_id: 'role-1' };
+  assert.doesNotThrow(() => verifyPostwriteBinding({
+    relationship,
+    personResult: { id: 'person-1' },
+    polityResult: { id: 'polity-1' },
+    roleResult: { id: 'role-1' }
+  }));
+  assert.throws(() => verifyPostwriteBinding({
+    relationship,
+    personResult: { id: 'other-person' },
+    polityResult: { id: 'polity-1' },
+    roleResult: { id: 'role-1' }
+  }), /AUTHORING_POSTWRITE_PERSON_MISMATCH/);
+});
+
+test('historical ledger rows are backfilled without inventing original create/reuse provenance', () => {
+  const snapshot = buildHistoricalReplaySnapshot({
+    schema: MANIFEST_V1,
+    marker: 'ATLAS_AUTHORING_MANIFEST_V1',
+    ledger: { person_id: 'person-1' },
+    relationship: {
+      id: 'activity-1',
+      polity_id: 'polity-1',
+      role_id: null,
+      period_basis_id: 'period-1'
+    }
+  });
+  assert.equal(snapshot.provenance_complete, false);
+  assert.equal(snapshot.entities.person.disposition, 'historical_unknown');
+  assert.equal(snapshot.entities.role.disposition, 'not_applicable');
+});
+
+test('stored result snapshots are checked against live normalized bindings on replay', () => {
+  const snapshot = buildExecutionSnapshot({
+    schema: MANIFEST_V2,
+    marker: 'ATLAS_AUTHORING_MANIFEST_V2',
+    personResult: { id: 'person-1', replay: false },
+    polityResult: null,
+    roleResult: null,
+    relationship: {
+      id: 'activity-1',
+      person_id: 'person-1',
+      polity_id: 'polity-1',
+      role_id: null,
+      period_basis_id: 'period-1'
+    },
+    activityReplay: false
+  });
+
+  assert.doesNotThrow(() => assertSnapshotMatchesLive({
+    snapshot,
+    ledger: { person_id: 'person-1', relationship_id: 'activity-1' },
+    relationship: {
+      id: 'activity-1',
+      person_id: 'person-1',
+      polity_id: 'polity-1',
+      role_id: null,
+      period_basis_id: 'period-1'
+    }
+  }));
+
+  assert.throws(() => assertSnapshotMatchesLive({
+    snapshot,
+    ledger: { person_id: 'person-1', relationship_id: 'activity-1' },
+    relationship: {
+      id: 'activity-1',
+      person_id: 'person-1',
+      polity_id: 'other-polity',
+      role_id: null,
+      period_basis_id: 'period-1'
+    }
+  }), /AUTHORING_LEDGER_POLITY_DRIFT/);
 });

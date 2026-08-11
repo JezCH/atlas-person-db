@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 
 const serviceSource = fs.readFileSync(new URL('../server/atlas-authoring-manifest-service.js', import.meta.url), 'utf8');
+const migrationsSource = fs.readFileSync(new URL('../server/atlas-authoring-migrations.js', import.meta.url), 'utf8');
 const runnerSource = fs.readFileSync(new URL('../scripts/apply-authoring-manifest.mjs', import.meta.url), 'utf8');
 const handlerSource = fs.readFileSync(new URL('../server/atlas-authoring-apply-handler.js', import.meta.url), 'utf8');
 const oidcSource = fs.readFileSync(new URL('../server/atlas-github-oidc.js', import.meta.url), 'utf8');
@@ -25,6 +26,27 @@ test('v2 identity declarations are exact-reference gated before any authoring tr
   assert.match(serviceSource, /validateDeclaredIdentityReferences/);
 });
 
+test('authoring verifies normalized UUID binding before commit and persists entity result provenance', () => {
+  assert.match(serviceSource, /loadRelationshipIdentity/);
+  assert.match(serviceSource, /verifyPostwriteBinding/);
+  assert.match(serviceSource, /AUTHORING_POSTWRITE_PERSON_MISMATCH/);
+  assert.match(serviceSource, /AUTHORING_POSTWRITE_POLITY_MISMATCH/);
+  assert.match(serviceSource, /AUTHORING_POSTWRITE_ROLE_MISMATCH/);
+  assert.match(serviceSource, /result_snapshot/);
+  assert.match(serviceSource, /provenance_complete/);
+  assert.match(serviceSource, /historical_unknown/);
+  assert.match(serviceSource, /assertSnapshotMatchesLive/);
+});
+
+test('authoring migrations have one ordered registry shared by production and local runners', () => {
+  assert.match(migrationsSource, /AUTHORING_MIGRATION_PATHS/);
+  assert.match(migrationsSource, /20260811_authoring_manifest_runs\.sql/);
+  assert.match(migrationsSource, /20260811_authoring_result_snapshot\.sql/);
+  assert.match(migrationsSource, /applyAuthoringMigrations/);
+  assert.match(runnerSource, /applyAuthoringMigrations/);
+  assert.match(handlerSource, /applyAuthoringMigrations/);
+});
+
 test('local/manual runner remains normalized and path-confined', () => {
   assert.match(runnerSource, /authoring\/requests/);
   assert.match(runnerSource, /AUTHORING_MANIFEST_PATH_NOT_ALLOWED/);
@@ -39,6 +61,7 @@ test('production apply keeps database credentials inside Vercel and binds execut
   assert.match(handlerSource, /VERCEL_GIT_COMMIT_REF/);
   assert.match(handlerSource, /createAuthoringManifestService/);
   assert.match(handlerSource, /verifyGitHubActionsOidc/);
+  assert.match(handlerSource, /result: outcome\.result/);
   assert.doesNotMatch(handlerSource, /insert into atlas_v2\.persons/i);
 });
 
