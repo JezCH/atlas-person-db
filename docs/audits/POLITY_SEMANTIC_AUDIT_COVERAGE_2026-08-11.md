@@ -12,17 +12,18 @@ The audit must be provably exhaustive rather than a sequence of memorable exampl
 
 No claim of `full audit complete` is allowed until every frozen Activity UUID is covered and the post-2026-08-05 Production delta is reconciled with the same rules.
 
-## 2. Current exact coverage — after Wave 8
+## 2. Current exact coverage — after Wave 9
 
 - frozen baseline Activity rows: **309**
 - unique Activity UUIDs individually researched/reviewed in Waves 1–7: **71**
 - additional low-risk Activity UUIDs rule-closed in Wave 8: **96**
-- total frozen Activity UUIDs covered: **167 / 309 = 54.05%**
-- frozen Activity UUIDs still not covered: **142**
+- additional city/local-authority + Shu-Han/Jiaozhou Activity UUIDs audited in Wave 9: **13**
+- total frozen Activity UUIDs covered: **180 / 309 = 58.25%**
+- frozen Activity UUIDs still not covered: **129**
 - current Production delta after 2026-08-05: **not reconciled yet**
 - Production data mutations performed by this audit: **0**
 
-The first 71 rows were deliberately concentrated in high-risk semantic clusters. Wave 8 then used those calibrated rules to close low-risk state-polity rows without repeating full-biography research for obvious political entities.
+The first 71 rows were deliberately concentrated in high-risk semantic clusters. Wave 8 then used those calibrated rules to close low-risk state-polity rows. Wave 9 proved that city/local labels can be genuine Polities while also exposing chronology errors such as `Shu Han` being back-projected before its 221 foundation and continuous `Jhansi 1853–1858` rule across the 1854 annexation.
 
 ## 3. Coverage sources
 
@@ -36,6 +37,7 @@ The first 71 rows were deliberately concentrated in high-risk semantic clusters.
 | 6 | colonial / dependent / constituent authorities | individually researched |
 | 7 | all previously labeled `normal polity transitions` | individually re-audited |
 | 8 | obvious low-risk recognized political entities | rule-based UUID closure |
+| 9 | city-polity/local authority + Shu-Han chronology + Jiaozhou defer | individually researched |
 
 Authoritative files:
 
@@ -47,6 +49,7 @@ Authoritative files:
 - `POLITY_SEMANTIC_AUDIT_WAVE6_2026-08-11.md`
 - `POLITY_SEMANTIC_AUDIT_WAVE7_2026-08-11.md`
 - `POLITY_SEMANTIC_AUDIT_WAVE8_2026-08-11.md`
+- `POLITY_SEMANTIC_AUDIT_WAVE9_2026-08-11.md`
 
 ## 4. Rules now considered unsafe
 
@@ -57,46 +60,45 @@ The completed waves have falsified several tempting bulk rules:
 - `Ethnonym => not a Polity` — false for politically organized peoples/confederacies.
 - `Rebellion origin => not a Polity` — false for territorial rival states such as Shun and Taiping.
 - `Not sovereign => not a Polity` — false for useful colonial/constituent map-level authorities.
+- `City/region name => mere Place` — false for Athens, Sparta, Naranjo, Copán, Tétouan, Zazzau and Jhansi.
 - `end year A == start year B => normal succession` — false for Prussia/German Empire, RSFSR/USSR, Russia 1721, Roman/Byzantine 395 and likely Yuan/Northern Yuan.
 - `recognized Polity => whole Activity automatically correct` — false; valid Polity identity can coexist with wrong chronology or wrong relation semantics.
+- `later successful state label can be projected backward over its founder's whole rise` — false; current Shu-Han rows beginning in 211 are the clearest counterexample.
 
-## 5. Important new exclusions discovered during Wave 8
+## 5. Important unresolved or correction-grade clusters already found
 
-These rows were deliberately not bulk-closed:
+- Japan/bakufu/domain hierarchy — no blind `Shogunate -> Japan` replacement.
+- Ngawang Lobsang Gyatso — `Ganden Phodrang` is government context; target Polity must be reconciled before Production apply.
+- Roman/Byzantine continuity after 395.
+- Tsardom of Russia/Russian Empire 1721 likely same underlying polity with state-form/name change.
+- RSFSR/USSR parent-child overlap rather than rename.
+- Prussia/German Empire overlap under Bismarck.
+- Yuan/Northern Yuan continuity question.
+- Liu Bei/Guan Yu/Zhuge Liang pre-221 chronology must not be labeled Shu-Han.
+- Lakshmibai/Jhansi requires split around 1854 annexation and 1857 revolt administration.
+- Shi Xie/Jiaozhou remains explicit `RESEARCH`, not guessed.
+- Sun Yat-sen/ROC continuous 1912–1925 Activity likely conflates distinct offices/revolutionary phases.
+- historiographic-period labels such as Egyptian New Kingdom, Swedish Empire and Old Babylonian Empire still need identity/name review.
 
-- `Liu Bei -> Shu Han, 211–223` — starts before the Shu Han imperial polity was formally established.
-- `Guan Yu -> Shu Han, 211–220` — Guan Yu died before Shu Han's imperial foundation; current Polity/date pairing is anachronistic as written.
-- `Yuan Shu -> Zhong Dynasty, 197–199` — short-lived claimant state requires transitional-authority review.
-- `Hammurabi -> Old Babylonian Empire` — political authority is real, but the exact historiographic Polity identity/name needs review.
-- `Sun Yat-sen -> Republic of China, 1912–1925` — valid Polity but the continuous Activity conflates distinct offices/revolutionary phases.
-- `Hatshepsut -> Egyptian New Kingdom` — historiographic-period label requires identity/name review.
-- `Christina of Sweden -> Swedish Empire` — historiographic great-power-period label requires continuity/name review.
-- `Himiko -> Yamatai` — candidate polity with unresolved location/nature/historicity issues.
-- Maya/Greek city-polity cases (`Palenque`, `Naranjo`, `Copán`, `Athens`, `Sparta`, etc.) require one consistent city-polity rule; Pakal was closed in Wave 8 because the map project already has a dedicated Palenque polity model, while the remaining city-polity rows are reserved for the dedicated pass.
-
-## 6. Remaining 142-row plan
-
-### Pass B — non-ruler relation audit
-
-Generals, ministers, philosophers, diplomats, scientists, religious figures and rebels.
-
-Goal:
-- preserve a valid Polity identity;
-- distinguish `rules / serves / active_in / opposes / claims_rule / other`;
-- do not convert mere activity context into personal territorial rule.
-
-### Pass C — city-polity / local-domain audit
-
-Athens, Sparta, Copán, Naranjo, Tetouan, Zazzau, Jhansi, Jiaozhou and similar labels.
-
-Goal:
-- distinguish true city-states/kingdoms/domains/jurisdictions from mere geographic or administrative place names.
+## 6. Remaining 129-row plan
 
 ### Pass D — late-Han and comparable fragmented-authority audit
 
 Goal:
-- distinguish nominal service to an imperial polity from de facto regional rule and emergent rival Polities;
-- fix anachronistic later-state labels such as the current Shu Han rows where necessary.
+- distinguish formal/nominal Han allegiance from de facto regional territorial authority;
+- avoid painting the whole Later Han as a warlord's personal territory;
+- identify when a regional domain deserves its own Polity and when the correct model is a Person–Polity relation plus territorial/de facto authority metadata.
+
+Priority rows include Yuan Shao, Liu Yao, Lü Bu, Ma Teng, Sun Ce, Gongsun Zan, Liu Yan, Liu Yu, Sun Jian, Gongsun Du and the already-deferred Jiaozhou model.
+
+### Pass B — remaining non-ruler relation audit
+
+Generals, ministers, philosophers, diplomats, scientists, religious figures and rebels.
+
+Goal:
+- preserve valid Polity identity;
+- distinguish `rules / serves / active_in / opposes / claims_rule / other`;
+- do not convert mere activity context into personal territorial rule.
 
 ### Pass E — remaining temporal-name / period-label audit
 
@@ -108,6 +110,10 @@ Examples:
 
 Goal:
 - decide whether each is a true separate Polity identity, a temporal preferred name/state form, or a historiographic label attached to a continuing polity.
+
+### Final residual pass
+
+Any UUID not covered by the above passes is individually reviewed until the frozen set reaches 309/309. Then obtain a fresh Production snapshot and audit only the post-2026-08-05 delta before any correction manifest is written.
 
 ## 7. Hard completion criteria
 
