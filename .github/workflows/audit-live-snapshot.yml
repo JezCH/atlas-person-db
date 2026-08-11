@@ -1,12 +1,10 @@
 name: ATLAS Audit Live Snapshot
 
-# Temporary audit-only workflow. Remove before PR #101 is made merge-ready.
+# Temporary audit-only workflow. Verification run after Wave 15A-D.
 on:
   push:
-    branches:
-      - agent/polity-semantic-audit
-    paths:
-      - '.github/workflows/audit-live-snapshot.yml'
+    branches: [agent/polity-semantic-audit]
+    paths: ['.github/workflows/audit-live-snapshot.yml']
   workflow_dispatch:
 
 permissions:
@@ -17,95 +15,42 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Fetch current public normalized read
+      - name: Fetch normalized Production and compute UUID coverage
         shell: bash
         run: |
           set -euo pipefail
-          curl --fail --silent --show-error \
-            --retry 3 --retry-delay 3 \
-            'https://atlas-person-db.vercel.app/api/atlas-read' \
-            -o audit-live-snapshot.json
-          jq -e '.ok == true and .source == "v2-direct" and (.data | type == "array")' audit-live-snapshot.json >/dev/null
-
-      - name: Compute exact current UUID coverage
-        shell: bash
-        run: |
+          curl --fail --silent --show-error --retry 3 --retry-delay 3 \
+            'https://atlas-person-db.vercel.app/api/atlas-read' -o live.json
           python - <<'PY'
-          import json, pathlib, re, collections
-
-          live = json.loads(pathlib.Path('audit-live-snapshot.json').read_text(encoding='utf-8'))['data']
-          live_by_id = {str(row['id']).lower(): row for row in live}
-          live_ids = set(live_by_id)
-
-          audit_dir = pathlib.Path('docs/audits')
-          files = sorted(audit_dir.glob('POLITY_SEMANTIC_AUDIT*.md'))
-          uuid_re = re.compile(r'(?i)\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b')
-
-          mentions = collections.defaultdict(list)
-          for path in files:
-              text = path.read_text(encoding='utf-8')
-              for lineno, line in enumerate(text.splitlines(), 1):
-                  for match in uuid_re.finditer(line):
-                      uid = match.group(0).lower()
-                      mentions[uid].append({'file': path.name, 'line': lineno})
-
-          mentioned_ids = set(mentions)
-          covered_ids = live_ids & mentioned_ids
-          uncovered_ids = live_ids - mentioned_ids
-          stale_audit_ids = mentioned_ids - live_ids
-
-          uncovered_rows = [live_by_id[uid] for uid in uncovered_ids]
-          uncovered_rows.sort(key=lambda r: (int(r['activity_start']), str(r['person_name']), str(r['politic_name']), str(r['id'])))
-
-          exact_surface = collections.defaultdict(list)
-          for row in live:
-              key = (
-                  row.get('person_name'), row.get('politic_name'),
-                  int(row.get('activity_start')), int(row.get('activity_end')),
-                  row.get('role'), row.get('period_basis')
-              )
-              exact_surface[key].append(row)
-          duplicate_groups = [rows for rows in exact_surface.values() if len(rows) > 1]
-          duplicate_groups.sort(key=lambda rows: (str(rows[0].get('person_name')), str(rows[0].get('politic_name')), int(rows[0].get('activity_start'))))
-
-          summary = {
-              'snapshot_source': 'https://atlas-person-db.vercel.app/api/atlas-read',
-              'current_relationship_count': len(live),
-              'current_distinct_person_names': len({r.get('person_name') for r in live}),
-              'current_distinct_polity_names': len({r.get('politic_name') for r in live}),
-              'audit_document_count': len(files),
-              'audit_uuid_mentions_unique': len(mentioned_ids),
-              'covered_current_relationships': len(covered_ids),
-              'uncovered_current_relationships': len(uncovered_ids),
-              'stale_or_historical_audit_uuids': len(stale_audit_ids),
-              'exact_surface_duplicate_groups': len(duplicate_groups),
-              'exact_surface_duplicate_rows': sum(len(g) for g in duplicate_groups),
-          }
-
-          output = {
-              'summary': summary,
-              'covered_current_ids': sorted(covered_ids),
-              'uncovered_current_ids': sorted(uncovered_ids),
-              'stale_or_historical_audit_ids': sorted(stale_audit_ids),
-              'mentions': {uid: mentions[uid] for uid in sorted(mentions)},
-              'exact_surface_duplicate_groups': duplicate_groups,
-          }
-
-          pathlib.Path('audit-live-coverage.json').write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding='utf-8')
-          pathlib.Path('audit-current-uncovered.json').write_text(json.dumps(uncovered_rows, ensure_ascii=False, indent=2), encoding='utf-8')
-          pathlib.Path('audit-live-summary.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding='utf-8')
-          print(json.dumps(summary, indent=2))
+          import collections,json,pathlib,re
+          obj=json.loads(pathlib.Path('live.json').read_text())
+          assert obj.get('ok') is True and obj.get('source')=='v2-direct'
+          live=obj['data']; by={str(r['id']).lower():r for r in live}; ids=set(by)
+          rx=re.compile(r'(?i)\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b')
+          mentioned=set()
+          for p in pathlib.Path('docs/audits').glob('POLITY_SEMANTIC_AUDIT*.md'):
+              mentioned.update(x.lower() for x in rx.findall(p.read_text(encoding='utf-8')))
+          covered=ids & mentioned; missing=ids-mentioned
+          surface=collections.defaultdict(list)
+          for r in live:
+              k=(r.get('person_name'),r.get('politic_name'),int(r['activity_start']),int(r['activity_end']),r.get('role'),r.get('period_basis'))
+              surface[k].append(r)
+          dup=[v for v in surface.values() if len(v)>1]
+          summary={'current_relationship_count':len(live),'covered_current_relationships':len(covered),'uncovered_current_relationships':len(missing),'stale_or_historical_audit_uuids':len(mentioned-ids),'exact_surface_duplicate_groups':len(dup),'exact_surface_duplicate_rows':sum(map(len,dup))}
+          pathlib.Path('audit-live-summary.json').write_text(json.dumps(summary,indent=2))
+          pathlib.Path('audit-current-uncovered.json').write_text(json.dumps([by[x] for x in sorted(missing)],ensure_ascii=False,indent=2))
+          pathlib.Path('audit-live-coverage.json').write_text(json.dumps({'summary':summary,'covered_current_ids':sorted(covered),'uncovered_current_ids':sorted(missing),'duplicate_groups':dup},ensure_ascii=False,indent=2))
+          print(json.dumps(summary,indent=2))
+          if missing: raise SystemExit(f'{len(missing)} current relationships remain uncovered')
           PY
-
-      - name: Upload read-only current coverage
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: atlas-audit-current-coverage
+          name: atlas-audit-current-coverage-final
           path: |
-            audit-live-snapshot.json
+            live.json
             audit-live-summary.json
-            audit-live-coverage.json
             audit-current-uncovered.json
+            audit-live-coverage.json
           if-no-files-found: error
           retention-days: 7
