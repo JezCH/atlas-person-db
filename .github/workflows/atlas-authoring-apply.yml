@@ -1,0 +1,63 @@
+name: ATLAS Authoring Apply
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'authoring/requests/*.json'
+  workflow_dispatch:
+    inputs:
+      manifest:
+        description: 'Path under authoring/requests/'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: atlas-authoring-production
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install exact locked dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Resolve reviewed manifests
+        id: manifests
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            printf '%s\n' "${{ inputs.manifest }}" > /tmp/atlas-manifests.txt
+          else
+            git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}" -- 'authoring/requests/*.json' > /tmp/atlas-manifests.txt
+          fi
+          if [[ ! -s /tmp/atlas-manifests.txt ]]; then
+            echo 'No authoring manifests selected.'
+            exit 0
+          fi
+          cat /tmp/atlas-manifests.txt
+      - name: Apply manifests through normalized authoring service
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${SUPABASE_DB_URL:-}" || { echo 'SUPABASE_DB_URL secret is not configured'; exit 1; }
+          while IFS= read -r manifest; do
+            [[ -n "$manifest" ]] || continue
+            node scripts/apply-authoring-manifest.mjs "$manifest"
+          done < /tmp/atlas-manifests.txt
