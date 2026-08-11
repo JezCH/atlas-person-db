@@ -6,6 +6,12 @@ on:
       - main
     paths:
       - 'authoring/requests/*.json'
+      - '.github/workflows/atlas-authoring-apply.yml'
+      - 'api/atlas-authoring-apply.js'
+      - 'server/atlas-authoring-apply-handler.js'
+      - 'server/atlas-github-oidc.js'
+      - 'server/atlas-authoring-manifest-service.js'
+      - 'db/migrations/20260811_authoring_manifest_runs.sql'
   workflow_dispatch:
     inputs:
       manifest:
@@ -34,23 +40,38 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Resolve reviewed manifests
+      - name: Resolve approved manifests
         shell: bash
         run: |
           set -euo pipefail
+          : > /tmp/atlas-candidates.txt
+          : > /tmp/atlas-manifests.txt
+
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            printf '%s\n' "${{ inputs.manifest }}" > /tmp/atlas-manifests.txt
+            printf '%s\n' "${{ inputs.manifest }}" > /tmp/atlas-candidates.txt
           else
-            git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}" -- 'authoring/requests/*.json' > /tmp/atlas-manifests.txt
+            git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}" -- 'authoring/requests/*.json' > /tmp/atlas-candidates.txt
+            if [[ ! -s /tmp/atlas-candidates.txt ]]; then
+              find authoring/requests -maxdepth 1 -type f -name '*.json' -print | sort > /tmp/atlas-candidates.txt
+              echo 'Authoring transport changed without a manifest delta; replaying all approved manifests idempotently.'
+            fi
           fi
+
+          while IFS= read -r manifest; do
+            [[ -n "$manifest" ]] || continue
+            [[ "$manifest" =~ ^authoring/requests/[A-Za-z0-9._-]+\.json$ ]] || { echo "Rejected manifest path: $manifest"; exit 1; }
+            if jq -e '.schema == "atlas-authoring-manifest/v1" and .review_status == "approved"' "$manifest" >/dev/null; then
+              printf '%s\n' "$manifest" >> /tmp/atlas-manifests.txt
+            else
+              echo "Skipping non-approved manifest: $manifest"
+            fi
+          done < /tmp/atlas-candidates.txt
+
+          sort -u -o /tmp/atlas-manifests.txt /tmp/atlas-manifests.txt
           if [[ ! -s /tmp/atlas-manifests.txt ]]; then
-            echo 'No authoring manifests selected.'
+            echo 'No approved authoring manifests selected.'
             exit 0
           fi
-          while IFS= read -r manifest; do
-            [[ "$manifest" =~ ^authoring/requests/[A-Za-z0-9._-]+\.json$ ]] || { echo "Rejected manifest path: $manifest"; exit 1; }
-            jq -e '.schema == "atlas-authoring-manifest/v1" and .review_status == "approved"' "$manifest" >/dev/null || { echo "Manifest is not explicitly approved: $manifest"; exit 1; }
-          done < /tmp/atlas-manifests.txt
           cat /tmp/atlas-manifests.txt
 
       - name: Apply manifests through deployed Vercel server
