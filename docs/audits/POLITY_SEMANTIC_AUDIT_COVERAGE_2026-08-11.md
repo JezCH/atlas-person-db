@@ -1,113 +1,149 @@
 # ATLAS Polity Semantic Audit — Coverage Tracker
 
-> Status: AUDIT ONLY — NO PRODUCTION DB MUTATION
+> Status: **STAGE 1 CURRENT SEMANTIC COVERAGE COMPLETE**
 >
-> Frozen baseline: 2026-08-05 LIVE audit snapshot
->
-> Baseline size: 291 canonical persons / 309 Activity rows
+> Safety: **AUDIT ONLY — NO PRODUCTION DB MUTATION**
 
-## 1. Purpose
+## 1. Authoritative current baseline
 
-The audit must be provably exhaustive rather than a sequence of memorable examples. Coverage is tracked by exact Activity UUID. Individual Wave documents are the authoritative UUID inventories; this tracker summarizes their unique coverage and remaining work.
+The original 2026-08-05 309-row snapshot is retained only as historical audit provenance. During this audit, a fresh public normalized Production read proved that the current target dataset has **346 Activity relationships**.
 
-No claim of `full audit complete` is allowed until every frozen Activity UUID is covered and the post-2026-08-05 Production delta is reconciled with the same rules.
+Authoritative coverage verification:
 
-## 2. Current exact coverage — after Wave 12
+- endpoint: `GET https://atlas-person-db.vercel.app/api/atlas-read`
+- required source marker: `v2-direct`
+- GitHub Actions run: **31490306377**
+- verification head: `98a60cfff261030be29a020156bb6fb4f7a04e37`
+- artifact: `atlas-audit-current-coverage-final`
+- artifact id: **9100736121**
+- digest: `sha256:ff921c1299af176c1d30cb7f5833b13896693af29e6cb7fc194e78ab888a0986`
 
-- frozen baseline Activity rows: **309**
-- Waves 1–7 individually researched/reviewed: **71**
-- Wave 8 low-risk rule closure: **96**
-- Wave 9 city/local-authority + Shu-Han/Jiaozhou: **13**
-- Wave 10 late-Han fragmented authority: **14**
-- Wave 11 non-ruler/mobile activity: **13**
-- Wave 12 temporal labels + disputed/traditional polities: **8**
-- total frozen Activity UUIDs covered: **215 / 309 = 69.58%**
-- frozen Activity UUIDs still not covered: **94**
-- current Production delta after 2026-08-05: **not reconciled yet**
-- Production data mutations performed by this audit: **0**
+Machine result:
 
-## 3. Coverage sources
+- current relationships: **346**
+- current relationships with an explicit audit-document UUID decision: **346**
+- uncovered current relationships: **0**
+- exact surface duplicate groups: **6**
+- rows contained by those exact surface duplicate groups: **12**
 
-| Wave | Scope | Coverage status |
-|---|---|---|
-| 1 | government/regime/clan/event pseudo-polity candidates | individually researched |
-| 2 | tribal / ethnonym / confederacy candidates | individually researched |
-| 3 | composite monarchies / dynasty-state names | individually researched |
-| 4 | rebel / transitional authorities | individually researched |
-| 5 | polity identity continuity | individually researched |
-| 6 | colonial / dependent / constituent authorities | individually researched |
-| 7 | previously labeled `normal polity transitions` | individually re-audited |
-| 8 | obvious low-risk recognized political entities | rule-based UUID closure |
-| 9 | city/local authority + Shu-Han chronology + Jiaozhou | individually researched |
-| 10 | late-Han formal-vs-effective authority + Cao Cao anachronism | individually researched |
-| 11 | non-ruler / intellectual / religious / activist / traveler relations | individually researched |
-| 12 | historiographic/temporal labels + uncertain/traditional political entities | individually researched |
+The verification workflow was configured to fail if even one current relationship UUID was not mentioned in the audit corpus. Run 31490306377 completed successfully.
 
-Authoritative files are `POLITY_SEMANTIC_AUDIT_2026-08-11.md` and `POLITY_SEMANTIC_AUDIT_WAVE2...WAVE12_2026-08-11.md` under `docs/audits/`.
+## 2. What `346/346` means
+
+It means every Activity relationship visible through the current normalized Production read has now been assigned an explicit semantic audit position such as:
+
+- `KEEP_POLITY`
+- `RELATION_FIX / RELATION_REVIEW`
+- `RELINK`
+- `SPLIT`
+- `CONTINUITY_REVIEW`
+- `PARENT_CHILD_REVIEW`
+- `DUPLICATE / RECONCILIATION`
+- `OUT_OF_POLITY_MODEL`
+- `RESEARCH / DEFER`
+
+It does **not** mean all historical corrections are resolved or ready to apply.
+
+In particular:
+- a `KEEP_POLITY` verdict validates the political entity/context for map linkage, not every biography/date/geometry;
+- `RESEARCH` rows remain deliberately unresolved;
+- duplicate/overlap rows must be reconciled against underlying normalized identity UUIDs before deletion or merge;
+- no correction manifest has been executed;
+- Production data mutated by this audit: **0 rows**.
+
+## 3. Audit corpus
+
+Current decisions are preserved in GitHub under `docs/audits/`:
+
+- Wave 1: pseudo-polity / government / clan / event candidates
+- Wave 2: tribal / ethnonym / confederacy candidates
+- Wave 3: composite monarchies / dynasty-state names
+- Wave 4: rebel / transitional authorities
+- Wave 5: polity identity continuity
+- Wave 6: colonial / dependent / constituent authorities
+- Wave 7: previously assumed normal transitions re-audited
+- Wave 8: low-risk state-polity closure
+- Wave 9: city/local polities + Shu-Han chronology
+- Wave 10: late-Han formal vs effective authority
+- Wave 11: non-ruler / intellectual / religious / activist / traveler semantics
+- Wave 12: historiographic labels + disputed/traditional polities
+- Wave 13: fresh Production reconciliation and duplicate/overlap discovery
+- Wave 14: current high-risk UUID rebinding
+- Wave 15A–D: all remaining current Production UUIDs
+- `POLITY_SEMANTIC_AUDIT_CURRENT_UUID_CARRY_FORWARD_2026-08-11.md`: safe prior-decision → current-UUID carry-forward evidence
 
 ## 4. Rules proven unsafe
 
-- `Shogunate => replace with Japan` — unsafe without layered authority research.
-- `Dynasty => not a Polity` — false for state labels such as Sui/Ming/Qing/Yuan.
-- `Ethnonym => not a Polity` — false for organized peoples/confederacies.
-- `Rebellion origin => not a Polity` — false for territorial rival states.
-- `Not sovereign => not a Polity` — false for useful colonial/constituent map jurisdictions.
-- `City/region name => mere Place` — false for genuine city-states/domains.
-- `end A == start B => normal state succession` — false in several continuity/overlap cases.
-- `recognized Polity => entire Activity correct` — false; chronology/relation can still be wrong.
-- `later successful state name can be projected backward` — false for Shu-Han, Cao Wei, Kievan Rus'.
-- `formal allegiance => actual map territory` — false in fragmented empires such as late Han.
-- `homeland/state context => whole career polity` — false for mobile biographies.
-- `historiographic period => Polity identity` — false for New Kingdom/Old Babylonian and requires review for imperial-period labels.
-- `uncertain territory => delete Polity` — false for Yamatai and other evidence-backed but spatially disputed entities.
+The audit has explicitly rejected these shortcuts:
 
-## 5. Major correction-grade findings already established
+- `Shogunate => replace with Japan`
+- `Dynasty => not a Polity`
+- `Ethnonym => not a Polity`
+- `Rebellion origin => not a Polity`
+- `Not sovereign => not a Polity`
+- `City/region name => mere Place`
+- `A ends when B begins => automatic state succession`
+- `valid Polity => entire Activity chronology is valid`
+- `later successful state name => back-project over founder's rise`
+- `formal allegiance => person's actual map territory`
+- `homeland => person's whole-career polity`
+- `historiographic period => polity identity`
+- `uncertain territory => delete polity`
 
-- Japan/bakufu/domain hierarchy requires layered modeling.
-- Ngawang Lobsang Gyatso: Ganden Phodrang is government context; target Polity requires reconciliation.
-- Roman/Byzantine continuity after 395.
-- Tsardom of Russia/Russian Empire 1721 likely one underlying polity with state-form/name change.
-- RSFSR/USSR is parent-child overlap, not simple rename.
-- Bismarck's Prussia and German Empire roles overlap after 1871.
-- Yuan/Northern Yuan continuity requires identity review.
-- Liu Bei/Guan Yu/Zhuge Liang cannot be labeled Shu-Han from 211.
-- Cao Cao cannot be labeled imperial Cao Wei from 196.
-- Late-Han formal sovereignty and effective regional authority require separate layers.
-- Lakshmibai/Jhansi requires chronology split around annexation/revolt.
-- Long careers such as Ibn Battuta/Leonardo/Lafayette need multiple activity contexts.
-- Azad Hind requires claimed vs effective/administrative territory separation.
-- Hatshepsut's `Egyptian New Kingdom`, Christina's `Swedish Empire`, Hammurabi's `Old Babylonian Empire` require temporal-label/identity normalization.
-- Rurik's 862–879 activity must not be back-projected to Kyiv-centered Kievan Rus'.
-- Yamatai remains a valid research polity with unresolved geography.
-- Meng Huo's `Nanzhong` is a macro-region, not his polity.
-- Solomon's polity can be retained as research data while chronology/territorial extent remain disputed.
+## 5. Confirmed correction-grade themes
 
-## 6. Remaining 94-row plan
+Stage 2 must resolve, among others:
 
-### Pass G — ordinary residual rows
-Apply calibrated rules to remaining rulers, generals, ministers and statespeople. Obvious valid polity relations can close quickly; chronology or identity anomalies move to individual research.
+- Japan / bakufu / daimyo-domain layered authority
+- Ganden Phodrang vs Tibet for Ngawang Lobsang Gyatso
+- Roman / Byzantine continuity around 395
+- Tsardom of Russia / Russian Empire 1721 continuity
+- RSFSR / USSR constituent-parent overlap
+- Prussia / German Empire simultaneous Bismarck offices
+- Yuan / Northern Yuan continuity
+- Shu-Han back-projection before 221
+- Cao Wei back-projection over Cao Cao's Han-era career
+- late-Han imperial legality vs regional effective control
+- Rurik / Kievan Rus' back-projection
+- Egyptian New Kingdom / Old Babylonian / Swedish Empire temporal-label identity
+- long mobile careers such as Ibn Battuta / Leonardo / Lafayette
+- claimant government claimed-vs-effective territory such as Azad Hind
+- exact duplicate and competing current Activity rows discovered in Wave 13
 
-### Pass H — residual relation/chronology anomalies
-Any row whose polity is valid but whose period, office, regime or movement across polities is too coarse receives `SPLIT/RELATION_FIX/RESEARCH`, not automatic KEEP.
+## 6. Current duplicate/reconciliation debt
 
-### Final frozen-set reconciliation
-Extract all UUIDs from the frozen source and all Wave documents; compute the exact set difference. Every residual UUID is individually assigned a verdict until frozen coverage reaches **309/309**.
+The final current snapshot still contains **6 exact semantic surface duplicate groups / 12 rows**. Wave 13 also records non-exact competing/overlapping alternatives such as:
 
-### Current-Production reconciliation
-Only after frozen coverage is complete:
-1. obtain a fresh normalized Production snapshot;
-2. diff against 2026-08-05;
-3. audit all new/changed Activity UUIDs with the same rules;
-4. refuse correction apply on UUID/before-state drift.
+- Tokugawa Ieyasu overlapping formal/de-facto rows
+- Toyotomi Hideyoshi `Toyotomi Regime` vs `Japan`
+- Peter I overlapping Tsardom/Russian Empire alternatives
+- Benjamin Franklin pre-1776 United States back-projection
+- Haile Selassie legal reign vs effective-control overlaps
+- Hypatia competing Roman/Byzantine continuity models
+- Maria I competing Portugal state-form rows
+- Kublai overlapping Great Khan/Yuan alternatives
+- Hiawatha Haudenosaunee/Iroquois aliases
+- Yongle `Ming Dynasty` / `Ming dynasty`
+- Nzinga separate kingdoms plus aggregate row
 
-## 7. Hard completion criteria
+Public read does not expose all underlying `person_id / polity_id / role_id / period_basis_id`, so these must not be deleted from surface text alone.
 
-The frozen audit is complete only when:
-- every frozen Activity UUID has an explicit decision;
-- every non-KEEP decision has source-backed reasoning;
-- identity-continuity cases have explicit continuity categories;
-- unresolved cases are `RESEARCH/DEFER`, never guessed;
-- Production delta is subsequently reconciled;
-- no Production correction is applied before reconciliation.
+## 7. Stage 2 correction-readiness plan
 
-Until then PR #101 remains draft and audit-only.
+Before Production mutation:
+
+1. obtain a **read-only normalized UUID inventory** for flagged rows including `activity_id, person_id, polity_id, role_id, period_basis_id` without exposing the DB credential to GitHub Actions;
+2. reconcile exact duplicates and competing alternative rows first (`Reconciliation Pass 0`);
+3. convert audit verdicts into reviewed correction decisions/change sets;
+4. resolve `RESEARCH` cases with sources or explicitly `DEFER` them;
+5. create an idempotent correction-manifest path using the existing normalized transaction primitives;
+6. dry-run every change set for semantic collisions, orphan references, row-count changes and split results;
+7. apply only bounded historical change sets in transactions;
+8. verify Person semantics and map/runtime behavior after apply;
+9. perform a final live UUID/before-state drift check immediately before every mutation.
+
+## 8. Completion statement
+
+**Stage 1 is complete:** all **346/346** current Production Activity relationships have explicit semantic audit coverage.
+
+**Stage 2 is not complete:** flagged historical decisions, duplicates, continuity questions and correction manifests remain unresolved and no Production correction has been applied.
