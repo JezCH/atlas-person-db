@@ -17,6 +17,7 @@ function manifestHash(value) {
 function requireManifest(raw) {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error("AUTHORING_MANIFEST_OBJECT_REQUIRED");
   if (raw.schema !== "atlas-authoring-manifest/v1") throw new Error("UNSUPPORTED_AUTHORING_MANIFEST_SCHEMA");
+  if (normalizeExact(raw.review_status).toLowerCase() !== "approved") throw new Error("AUTHORING_MANIFEST_NOT_APPROVED");
   const requestId = normalizeExact(raw.request_id);
   if (!requestId) throw new Error("AUTHORING_REQUEST_ID_REQUIRED");
   if (!raw.person || typeof raw.person !== "object" || Array.isArray(raw.person)) throw new Error("AUTHORING_PERSON_REQUIRED");
