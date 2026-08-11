@@ -185,6 +185,15 @@ jobs:
             --out artifacts/kublai-authority-decisions.json \
             --summary artifacts/kublai-authority-decisions-summary.json
 
+      - name: Close modern dependent / union Polity decisions
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/build-modern-dependent-polity-decisions.mjs \
+            --ledger artifacts/polity-semantic-master-ledger.json \
+            --out artifacts/modern-dependent-polity-decisions.json \
+            --summary artifacts/modern-dependent-polity-decisions-summary.json
+
       - name: Audit shared temporal interval semantics
         shell: bash
         run: |
@@ -209,6 +218,7 @@ jobs:
             --continuity-summary artifacts/polity-continuity-decisions-summary.json \
             --japan-summary artifacts/japan-layered-authority-decisions-summary.json \
             --kublai-summary artifacts/kublai-authority-decisions-summary.json \
+            --modern-summary artifacts/modern-dependent-polity-decisions-summary.json \
             --temporal-summary artifacts/temporal-contract-audit-summary.json \
             --out artifacts/stage2-preflight.json \
             --summary artifacts/stage2-preflight-summary.json
@@ -240,6 +250,8 @@ jobs:
             artifacts/japan-layered-authority-decisions-summary.json
             artifacts/kublai-authority-decisions.json
             artifacts/kublai-authority-decisions-summary.json
+            artifacts/modern-dependent-polity-decisions.json
+            artifacts/modern-dependent-polity-decisions-summary.json
             artifacts/temporal-contract-audit.json
             artifacts/temporal-contract-audit-summary.json
             artifacts/stage2-preflight.json
