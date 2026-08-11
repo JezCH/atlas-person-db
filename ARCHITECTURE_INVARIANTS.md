@@ -43,7 +43,8 @@ reviewed authoring/requests/*.json
  -> one SERIALIZABLE manifest transaction
  -> existing Person/Polity/Role identity primitives
  -> existing v2 Activity writer
- -> atlas_v2 authoring audit ledger
+ -> post-write UUID binding verification
+ -> atlas_v2 authoring audit + execution-result ledger
 ```
 
 - GitHub Actions에 DB credential을 저장하지 않습니다.
@@ -53,6 +54,11 @@ reviewed authoring/requests/*.json
 - v2는 Person과 Activity에 더해 아직 없는 Polity/Role을 같은 transaction에서 선택적으로 생성할 수 있습니다.
 - 새 Polity/Role 선언이 Activity exact reference와 일치하지 않으면 자동 추론하지 않고 fail closed합니다.
 - manifest orchestration은 identity service의 non-owning domain primitive를 재사용하며 nested transaction이나 별도 writer를 만들지 않습니다.
+- Activity write 뒤 commit 전에는 normalized relationship의 실제 Person/Polity/Role UUID binding을 다시 읽어 선언/생성 결과와 대조합니다. mismatch는 전체 rollback입니다.
+- `atlas_v2.authoring_manifest_runs.result_snapshot`은 최초 성공 실행의 entity-level UUID와 `created`/`reused`/`resolved_existing`/`not_applicable` disposition을 보존합니다.
+- manifest-level replay와 entity disposition은 서로 다른 개념입니다. 동일 request replay는 최초 snapshot을 보존하고 다시 계산해 덮어쓰지 않습니다.
+- snapshot이 있는 replay는 저장된 Person/Polity/Role/Period basis/Activity UUID가 live normalized relationship과 여전히 일치해야 합니다. drift는 fail closed입니다.
+- snapshot 도입 이전 historical run의 create/reuse 상태는 추정하지 않습니다. exact replay 때 live UUID를 검증한 뒤 `provenance_complete=false` + `historical_unknown`으로만 backfill합니다.
 - 동일 `request_id` + 동일 manifest는 idempotent replay, 동일 `request_id` + 다른 manifest는 fail closed입니다.
 
 ## 6. Activity mutation boundary
@@ -115,6 +121,8 @@ UI/import/planner/DB transaction이 서로 다른 semantic key를 사용하면 �
 - `db/schema/atlas_v2.current.sql`이 clean-db current baseline입니다.
 - baseline은 기존 `atlas_v2` DB에 적용하지 않습니다.
 - future DB structure change는 reviewed migration으로 적용하고, 성공 후 current baseline을 같은 구조로 갱신합니다.
+- authoring-specific runtime migrations는 `server/atlas-authoring-migrations.js`의 ordered registry가 단일 source of truth입니다.
+- production Vercel authoring handler와 local/manual runner는 동일 migration registry를 사용해야 합니다.
 - data row count는 schema invariant가 아닙니다.
 
 ## 12. CI governance
@@ -144,5 +152,6 @@ Release 완료 조건:
 3. Vercel Production deployed SHA가 merge된 main SHA와 일치.
 4. production smoke가 read/session/protected API boundary를 확인.
 5. authoring transport 변경 시 approved manifest replay가 exact deployment SHA에서 idempotently 성공.
+6. replay 결과 snapshot이 live normalized UUID binding 검증을 통과.
 
 배포되지 않은 main 코드를 Production 기능으로 간주하지 않습니다.
