@@ -10,13 +10,14 @@ const databaseUrl = String(process.env.DATABASE_URL || '').trim();
 if (!/^postgres(?:ql)?:\/\//.test(databaseUrl)) throw new Error('DATABASE_URL is required for schema baseline verification');
 
 const expectedTables = [
-  'chronology_claims','migration_metadata','period_bases','period_basis_names','person_descriptions',
+  'authoring_manifest_runs','chronology_claims','migration_metadata','period_bases','period_basis_names','person_descriptions',
   'person_duplicate_candidates','person_duplicate_reviews','person_merge_audits','person_names',
   'person_politics_sources','person_politics_v2','person_sources','persons','polities','polity_descriptions',
   'polity_names','polity_sources','relationship_descriptions','role_names','roles','sources'
 ].sort();
 
 const expectedConstraints = [
+  'authoring_manifest_runs_pkey','authoring_manifest_runs_person_id_fkey','authoring_manifest_runs_relationship_id_fkey',
   'chronology_claims_pkey','migration_metadata_phase_check','migration_metadata_pkey','period_bases_pkey','period_bases_code_key',
   'period_basis_names_pkey','person_descriptions_pkey','person_duplicate_candidates_candidate_state_check',
   'person_duplicate_candidates_check','person_duplicate_candidates_confidence_check','person_duplicate_candidates_current_decision_check',
