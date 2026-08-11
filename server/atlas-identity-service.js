@@ -22,10 +22,16 @@ async function advisoryLock(client, kind, key) {
   await client.query("select pg_advisory_xact_lock(hashtext($1))", [`atlas-identity:${kind}:${key}`]);
 }
 
-async function exactPreferredNameCollision(client, table, ownerColumn, locale, name, excludeId = null) {
+async function exactNameCollision(client, table, ownerColumn, name, excludeId = null) {
   const result = await client.query(
-    `select ${ownerColumn} as owner_id from atlas_v2.${table} where locale=$1 and is_preferred=true and name=$2 and ($3::uuid is null or ${ownerColumn}<>$3::uuid) order by ${ownerColumn} limit 1`,
-    [locale, name, excludeId]
+    `select ${ownerColumn} as owner_id
+       from atlas_v2.${table}
+      where name=$1
+        and ($2::uuid is null or ${ownerColumn}<>$2::uuid)
+      group by ${ownerColumn}
+      order by ${ownerColumn}
+      limit 1`,
+    [name, excludeId]
   );
   return result.rows[0]?.owner_id || null;
 }
@@ -59,10 +65,10 @@ async function createPerson(client, raw) {
     throw new Error("PERSON_CANONICAL_KEY_CONFLICT");
   }
 
-  if (await exactPreferredNameCollision(client, "person_names", "person_id", "en", canonicalName)) {
+  if (await exactNameCollision(client, "person_names", "person_id", canonicalName)) {
     throw new Error("PERSON_CANONICAL_NAME_COLLISION");
   }
-  if (!allowDisplayCollision && await exactPreferredNameCollision(client, "person_names", "person_id", "ko", displayName)) {
+  if (!allowDisplayCollision && await exactNameCollision(client, "person_names", "person_id", displayName)) {
     throw new Error("PERSON_DISPLAY_NAME_COLLISION_REVIEW_REQUIRED");
   }
 
@@ -110,10 +116,10 @@ async function createPolity(client, raw) {
     throw new Error("POLITY_CANONICAL_KEY_CONFLICT");
   }
 
-  if (await exactPreferredNameCollision(client, "polity_names", "polity_id", "en", canonicalName)) {
+  if (await exactNameCollision(client, "polity_names", "polity_id", canonicalName)) {
     throw new Error("POLITY_CANONICAL_NAME_COLLISION");
   }
-  if (!allowDisplayCollision && await exactPreferredNameCollision(client, "polity_names", "polity_id", "ko", displayName)) {
+  if (!allowDisplayCollision && await exactNameCollision(client, "polity_names", "polity_id", displayName)) {
     throw new Error("POLITY_DISPLAY_NAME_COLLISION_REVIEW_REQUIRED");
   }
 

@@ -23,8 +23,8 @@ test('person identity is created atomically with canonical EN and preferred KO n
     { rows: [] }, // begin
     { rows: [] }, // advisory lock
     { rows: [] }, // existing canonical key
-    { rows: [] }, // EN collision
-    { rows: [] }, // KO collision
+    { rows: [] }, // EN collision across all aliases
+    { rows: [] }, // KO collision across all aliases
     { rows: [{ id: 'person-1' }] },
     { rows: [] }, // names
     { rows: [] } // commit
@@ -42,6 +42,9 @@ test('person identity is created atomically with canonical EN and preferred KO n
   assert.equal(outcome.canonical_key, 'Belisarius');
   assert.equal(outcome.replay, false);
   assert.match(client.calls[0].sql, /serializable/i);
+  assert.match(client.calls[3].sql, /from atlas_v2\.person_names/);
+  assert.match(client.calls[3].sql, /where name=\$1/);
+  assert.doesNotMatch(client.calls[3].sql, /locale=|is_preferred/);
   assert.match(client.calls[5].sql, /insert into atlas_v2\.persons/i);
   assert.match(client.calls[6].sql, /insert into atlas_v2\.person_names/i);
   assert.deepEqual(client.calls[6].params, ['person-1', 'Belisarius', '벨리사리우스']);
@@ -68,7 +71,7 @@ test('exact same person canonical request is idempotent replay', async () => {
   assert.match(client.calls.at(-1).sql, /^commit$/i);
 });
 
-test('canonical EN collision fails closed and rolls back', async () => {
+test('canonical EN collision with any existing alias fails closed and rolls back', async () => {
   const client = scriptedClient([
     { rows: [] },
     { rows: [] },
@@ -84,6 +87,8 @@ test('canonical EN collision fails closed and rolls back', async () => {
     }),
     /PERSON_CANONICAL_NAME_COLLISION/
   );
+  assert.match(client.calls[3].sql, /where name=\$1/);
+  assert.doesNotMatch(client.calls[3].sql, /locale=|is_preferred/);
   assert.match(client.calls.at(-1).sql, /^rollback$/i);
 });
 
@@ -99,6 +104,7 @@ test('KO display collision requires explicit review override', async () => {
     }),
     /PERSON_DISPLAY_NAME_COLLISION_REVIEW_REQUIRED/
   );
+  assert.match(client.calls[4].sql, /where name=\$1/);
   assert.match(client.calls.at(-1).sql, /^rollback$/i);
 });
 
@@ -112,6 +118,8 @@ test('polity identity preserves historical compiler defaults', async () => {
   });
   assert.equal(outcome.entity, 'polity');
   assert.deepEqual(client.calls[5].params, ['Byzantine Empire', 'historical_polity', 'historical']);
+  assert.match(client.calls[3].sql, /from atlas_v2\.polity_names/);
+  assert.doesNotMatch(client.calls[3].sql, /locale=|is_preferred/);
 });
 
 test('role identity creates exact vocabulary with explicit category', async () => {
