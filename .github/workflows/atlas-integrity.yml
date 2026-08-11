@@ -176,6 +176,15 @@ jobs:
             --out artifacts/japan-layered-authority-decisions.json \
             --summary artifacts/japan-layered-authority-decisions-summary.json
 
+      - name: Close Kublai authority decisions
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/build-kublai-authority-decisions.mjs \
+            --ledger artifacts/polity-semantic-master-ledger.json \
+            --out artifacts/kublai-authority-decisions.json \
+            --summary artifacts/kublai-authority-decisions-summary.json
+
       - name: Audit shared temporal interval semantics
         shell: bash
         run: |
@@ -199,6 +208,7 @@ jobs:
             --polity-identity-summary artifacts/polity-identity-audit-summary.json \
             --continuity-summary artifacts/polity-continuity-decisions-summary.json \
             --japan-summary artifacts/japan-layered-authority-decisions-summary.json \
+            --kublai-summary artifacts/kublai-authority-decisions-summary.json \
             --temporal-summary artifacts/temporal-contract-audit-summary.json \
             --out artifacts/stage2-preflight.json \
             --summary artifacts/stage2-preflight-summary.json
@@ -228,6 +238,8 @@ jobs:
             artifacts/polity-continuity-decisions-summary.json
             artifacts/japan-layered-authority-decisions.json
             artifacts/japan-layered-authority-decisions-summary.json
+            artifacts/kublai-authority-decisions.json
+            artifacts/kublai-authority-decisions-summary.json
             artifacts/temporal-contract-audit.json
             artifacts/temporal-contract-audit-summary.json
             artifacts/stage2-preflight.json
