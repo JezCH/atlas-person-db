@@ -55,3 +55,12 @@ test('GitHub apply workflow uses short-lived OIDC and never receives the databas
   assert.doesNotMatch(workflowSource, /secrets\.SUPABASE_DB_URL|SUPABASE_DB_URL/);
   assert.doesNotMatch(workflowSource, /scripts\/apply-authoring-manifest\.mjs/);
 });
+
+test('GitHub apply workflow treats Vercel route propagation as transient but fails closed on other responses', () => {
+  assert.match(workflowSource, /\[\[ "\$status" == "404" \]\]/);
+  assert.match(workflowSource, /Production route for \$\{GITHUB_SHA\} is not live yet/);
+  assert.match(workflowSource, /\$status" == "409" && "\$code" == "DEPLOYMENT_SHA_MISMATCH"/);
+  assert.match(workflowSource, /for attempt in \$\(seq 1 60\)/);
+  assert.match(workflowSource, /sleep 10/);
+  assert.match(workflowSource, /Authoring apply failed: HTTP \$\{status\}, code \$\{code\}/);
+});
