@@ -1,0 +1,145 @@
+name: ATLAS Correction Apply
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'corrections/requests/*.json'
+  workflow_dispatch:
+    inputs:
+      manifest:
+        description: 'Path under corrections/requests/'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: atlas-correction-production
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: production
+    env:
+      ATLAS_CORRECTION_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-correction-apply
+      ATLAS_CORRECTION_AUDIENCE: atlas-person-db-correction-apply
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Resolve approved correction manifests
+        shell: bash
+        run: |
+          set -euo pipefail
+          : > /tmp/atlas-correction-candidates.txt
+          : > /tmp/atlas-correction-manifests.txt
+
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            printf '%s\n' "${{ inputs.manifest }}" > /tmp/atlas-correction-candidates.txt
+          else
+            git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}" -- 'corrections/requests/*.json' > /tmp/atlas-correction-candidates.txt
+          fi
+
+          while IFS= read -r manifest; do
+            [[ -n "$manifest" ]] || continue
+            [[ "$manifest" =~ ^corrections/requests/[A-Za-z0-9._-]+\.json$ ]] || { echo "Rejected correction manifest path: $manifest"; exit 1; }
+            jq -e '.schema == "atlas-correction-manifest/v1" and .review_status == "approved"' "$manifest" >/dev/null || {
+              echo "Correction manifest is not approved v1: $manifest" >&2
+              exit 1
+            }
+            printf '%s\n' "$manifest" >> /tmp/atlas-correction-manifests.txt
+          done < /tmp/atlas-correction-candidates.txt
+
+          sort -u -o /tmp/atlas-correction-manifests.txt /tmp/atlas-correction-manifests.txt
+          [[ -s /tmp/atlas-correction-manifests.txt ]] || { echo 'No approved correction manifests selected.'; exit 0; }
+          cat /tmp/atlas-correction-manifests.txt
+
+      - name: Dry-run then apply through exact Production SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          : > /tmp/atlas-correction-results.jsonl
+
+          request_oidc() {
+            curl --fail-with-body --silent --show-error \
+              -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+              "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_CORRECTION_AUDIENCE}" | jq -er '.value'
+          }
+
+          call_correction() {
+            local manifest="$1"
+            local mode="$2"
+            local response="/tmp/atlas-correction-${mode}-response.json"
+            local payload
+            payload="$(jq -cn \
+              --arg deployment_sha "${GITHUB_SHA}" \
+              --arg manifest_path "$manifest" \
+              --arg mode "$mode" \
+              --slurpfile manifest "$manifest" \
+              '{deployment_sha:$deployment_sha,manifest_path:$manifest_path,mode:$mode,manifest:$manifest[0]}')"
+
+            for attempt in $(seq 1 60); do
+              local oidc_token status code
+              oidc_token="$(request_oidc)"
+              status="$(curl --silent --show-error \
+                --output "$response" \
+                --write-out '%{http_code}' \
+                --request POST \
+                -H 'content-type: application/json' \
+                -H "authorization: Bearer ${oidc_token}" \
+                --data "$payload" \
+                "$ATLAS_CORRECTION_ENDPOINT")"
+
+              if [[ "$status" == "200" ]]; then
+                if [[ "$mode" == "dry_run" ]]; then
+                  jq -e '.ok == true and .marker == "ATLAS_CORRECTION_MANIFEST_V1" and .dry_run == true and .committed == false' "$response" >/dev/null
+                else
+                  jq -e '.ok == true and .marker == "ATLAS_CORRECTION_MANIFEST_V1" and .dry_run == false and .committed == true' "$response" >/dev/null
+                fi
+                jq -c --arg manifest "$manifest" --arg mode "$mode" '. + {workflow_manifest:$manifest,workflow_mode:$mode}' "$response" >> /tmp/atlas-correction-results.jsonl
+                return 0
+              fi
+
+              code="$(jq -r '.code // "UNKNOWN"' "$response" 2>/dev/null || printf 'UNKNOWN')"
+              if [[ "$status" == "404" ]]; then
+                echo "Production correction route for ${GITHUB_SHA} is not live yet (attempt ${attempt}/60); retrying."
+                sleep 10
+                continue
+              fi
+              if [[ "$status" == "409" && "$code" == "DEPLOYMENT_SHA_MISMATCH" ]]; then
+                echo "Production deployment has not reached ${GITHUB_SHA} yet (attempt ${attempt}/60); retrying."
+                sleep 10
+                continue
+              fi
+
+              cat "$response" >&2 || true
+              echo "Correction ${mode} failed: HTTP ${status}, code ${code}" >&2
+              return 1
+            done
+            echo "Production deployment did not reach ${GITHUB_SHA} within retry window" >&2
+            return 1
+          }
+
+          while IFS= read -r manifest; do
+            [[ -n "$manifest" ]] || continue
+            call_correction "$manifest" dry_run
+            call_correction "$manifest" apply
+          done < /tmp/atlas-correction-manifests.txt
+
+          jq -s '{deployment_sha:env.GITHUB_SHA,results:.}' /tmp/atlas-correction-results.jsonl > /tmp/atlas-correction-results.json
+          jq . /tmp/atlas-correction-results.json
+
+      - name: Upload correction evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-correction-results-${{ github.sha }}
+          path: /tmp/atlas-correction-results.json
+          if-no-files-found: error
+          retention-days: 90
