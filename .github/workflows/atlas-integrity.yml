@@ -45,7 +45,20 @@ jobs:
           for f in atlas-*.js admin.js app.js asset-loader.js; do test -f "$f" && node --check "$f"; done
 
       - name: Run complete test suite
-        run: npm test
+        id: complete-tests
+        shell: bash
+        run: |
+          set -o pipefail
+          node --test --test-reporter=tap tests/*.test.mjs 2>&1 | tee atlas-test-results.tap
+
+      - name: Upload test failure diagnostics
+        if: failure() && steps.complete-tests.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-test-failure-${{ github.sha }}
+          path: atlas-test-results.tap
+          if-no-files-found: error
+          retention-days: 7
 
       - name: Verify runtime architecture
         run: npm run test:runtime
