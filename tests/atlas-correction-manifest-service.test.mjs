@@ -129,7 +129,7 @@ class FakeClient {
     }
     if (text.includes("where id=any($1::uuid[])") && text.includes("from atlas_v2.person_politics_v2")) {
       const ids = params[0].map(String);
-      const rows = ids.map((id) => this.relationships.get(id)).filter(Boolean).map(structuredClone);
+      const rows = ids.map((id) => this.relationships.get(id)).filter(Boolean).map((row) => structuredClone(row));
       return { rows, rowCount: rows.length };
     }
     if (text.includes("from atlas_v2.person_politics_v2") && text.includes("where id=$1")) {
