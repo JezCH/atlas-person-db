@@ -30,7 +30,23 @@ try {
      order by column_name`);
   if (stage2Columns.rowCount !== 5) throw new Error('Stage 2 semantic schema rehearsal must run before Activity semantic-key rehearsal');
 
+  const legacyIndexBefore = await client.query(`
+    select indexdef
+      from pg_indexes
+     where schemaname='atlas_v2'
+       and indexname='person_politics_v2_null_role_semantic_uidx'`);
+  if (legacyIndexBefore.rowCount !== 1) {
+    throw new Error('reviewed v1 null-role semantic index must exist before Stage 2 replacement rehearsal');
+  }
+
   await client.query(ddl);
+
+  const legacyIndexAfter = await client.query(`
+    select indexname
+      from pg_indexes
+     where schemaname='atlas_v2'
+       and indexname='person_politics_v2_null_role_semantic_uidx'`);
+  if (legacyIndexAfter.rowCount !== 0) throw new Error('legacy v1 null-role semantic index survived Stage 2 replacement rehearsal');
 
   const indexResult = await client.query(`
     select indexdef
@@ -110,6 +126,8 @@ try {
     }
     if (!evidenceDuplicateRejected) throw new Error('same semantic identity with different evidence/content was not rejected');
 
+    // This is the key transition case the v1 null-role index could not represent:
+    // same Person/Polity/year span/Period Basis/null Role, but a distinct reviewed Relation Type.
     await insert({ id: '00000000-0000-4000-8000-000000000713', relationTypeId: servesId });
 
     await insert({
@@ -124,6 +142,7 @@ try {
       endMonth: 12, endDay: 10, endGranularity: 'day', endCalendar: 'julian'
     });
 
+    // Pre-cutover/unresolved rows remain representable because the v2 index is partial.
     await insert({ id: '00000000-0000-4000-8000-000000000716', relationTypeId: null, notes: 'legacy/unready row A' });
     await insert({ id: '00000000-0000-4000-8000-000000000717', relationTypeId: null, notes: 'legacy/unready row B' });
 
@@ -156,8 +175,11 @@ try {
     status: 'PASS',
     production_migration_registered: false,
     production_active_path_changed: false,
+    legacy_null_role_index_replacement_required: true,
+    legacy_null_role_index_replaced_in_rehearsal: true,
     semantic_unique_index: true,
     relation_type_in_identity: true,
+    relation_variants_with_null_role_supported: true,
     full_temporal_boundary_in_identity: true,
     calendar_in_identity: true,
     null_role_semantic: true,
