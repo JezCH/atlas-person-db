@@ -10,27 +10,20 @@ const {
   normalizeActivityIds,
   queryInventory
 } = require("../server/atlas-audit-inventory-handler.js");
-const {
-  EXPECTED_AUDIENCE,
-  EXPECTED_WORKFLOW_REF,
-  ISSUER,
-  EXPECTED_REPOSITORY,
-  EXPECTED_REPOSITORY_ID,
-  EXPECTED_REF,
-  verifyTrustClaims
-} = require("../server/atlas-github-oidc.js");
+const authoringOidc = require("../server/atlas-github-oidc.js");
+const auditOidc = require("../server/atlas-audit-github-oidc.js");
 
 const ACTIVITY_A = "75a124e8-df55-5247-aa48-dc9d7934c10e";
 const ACTIVITY_B = "da809f25-40ff-5c27-b10b-88d4acc4070d";
 const SHA = "a".repeat(40);
 
-function trustPayload({ audience = EXPECTED_AUDIENCE, workflowRef = EXPECTED_WORKFLOW_REF } = {}) {
+function trustPayload({ audience, workflowRef } = {}) {
   return {
-    iss: ISSUER,
+    iss: authoringOidc.ISSUER,
     aud: audience,
-    repository: EXPECTED_REPOSITORY,
-    repository_id: EXPECTED_REPOSITORY_ID,
-    ref: EXPECTED_REF,
+    repository: authoringOidc.EXPECTED_REPOSITORY,
+    repository_id: authoringOidc.EXPECTED_REPOSITORY_ID,
+    ref: authoringOidc.EXPECTED_REF,
     workflow_ref: workflowRef,
     environment: "production",
     event_name: "push",
@@ -105,24 +98,25 @@ test("audit inventory fails closed when any reviewed Activity UUID is missing", 
   assert.equal(client.statements.at(-1).sql.trim().toLowerCase(), "rollback");
 });
 
-test("OIDC authoring defaults remain unchanged while audit workflow can be explicitly pinned", () => {
-  assert.doesNotThrow(() => verifyTrustClaims(trustPayload(), SHA));
-  assert.doesNotThrow(() => verifyTrustClaims(
-    trustPayload({ audience: AUDIT_OIDC_AUDIENCE, workflowRef: AUDIT_WORKFLOW_REF }),
-    SHA,
-    { expectedAudience: AUDIT_OIDC_AUDIENCE, expectedWorkflowRef: AUDIT_WORKFLOW_REF }
-  ));
-  assert.throws(
-    () => verifyTrustClaims(trustPayload({ audience: AUDIT_OIDC_AUDIENCE, workflowRef: AUDIT_WORKFLOW_REF }), SHA),
-    /GITHUB_OIDC_AUDIENCE_MISMATCH/
-  );
-  assert.throws(
-    () => verifyTrustClaims(trustPayload(), SHA, { expectedAudience: AUDIT_OIDC_AUDIENCE, expectedWorkflowRef: AUDIT_WORKFLOW_REF }),
-    /GITHUB_OIDC_AUDIENCE_MISMATCH/
-  );
+test("authoring and audit OIDC trust boundaries are separate and mutually reject each other", () => {
+  const authoringPayload = trustPayload({
+    audience: authoringOidc.EXPECTED_AUDIENCE,
+    workflowRef: authoringOidc.EXPECTED_WORKFLOW_REF
+  });
+  const auditPayload = trustPayload({
+    audience: auditOidc.EXPECTED_AUDIENCE,
+    workflowRef: auditOidc.EXPECTED_WORKFLOW_REF
+  });
+
+  assert.equal(auditOidc.EXPECTED_AUDIENCE, AUDIT_OIDC_AUDIENCE);
+  assert.equal(auditOidc.EXPECTED_WORKFLOW_REF, AUDIT_WORKFLOW_REF);
+  assert.doesNotThrow(() => authoringOidc.verifyTrustClaims(authoringPayload, SHA));
+  assert.doesNotThrow(() => auditOidc.verifyTrustClaims(auditPayload, SHA));
+  assert.throws(() => authoringOidc.verifyTrustClaims(auditPayload, SHA), /GITHUB_OIDC_AUDIENCE_MISMATCH/);
+  assert.throws(() => auditOidc.verifyTrustClaims(authoringPayload, SHA), /GITHUB_OIDC_AUDIENCE_MISMATCH/);
 });
 
-test("audit handler pins exact Production SHA and dedicated audit OIDC contract before DB access", async () => {
+test("audit handler pins exact Production SHA before its isolated audit OIDC verifier and DB access", async () => {
   const calls = [];
   const client = fakeInventoryClient([ACTIVITY_A]);
   const handler = createAuditInventoryHandler({
@@ -137,8 +131,7 @@ test("audit handler pins exact Production SHA and dedicated audit OIDC contract 
     async verifyOidc(token, options) {
       calls.push({ token, options });
       assert.equal(options.expectedSha, SHA);
-      assert.equal(options.expectedAudience, AUDIT_OIDC_AUDIENCE);
-      assert.equal(options.expectedWorkflowRef, AUDIT_WORKFLOW_REF);
+      assert.deepEqual(Object.keys(options), ["expectedSha"]);
     },
     async createClient(connectionString) {
       calls.push({ connectionString });
