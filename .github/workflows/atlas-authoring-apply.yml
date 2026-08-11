@@ -112,6 +112,11 @@ jobs:
               fi
 
               code="$(jq -r '.code // "UNKNOWN"' /tmp/atlas-authoring-response.json 2>/dev/null || printf 'UNKNOWN')"
+              if [[ "$status" == "404" ]]; then
+                echo "Production route for ${GITHUB_SHA} is not live yet (attempt ${attempt}/60); retrying."
+                sleep 10
+                continue
+              fi
               if [[ "$status" == "409" && "$code" == "DEPLOYMENT_SHA_MISMATCH" ]]; then
                 echo "Production deployment has not reached ${GITHUB_SHA} yet (attempt ${attempt}/60); retrying."
                 sleep 10
