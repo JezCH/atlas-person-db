@@ -1,6 +1,7 @@
 {
   "schema": "atlas-authoring-manifest/v1",
   "request_id": "person:liliuokalani:1891-1893:kingdom-of-hawaii:queen:reign:v1",
+  "review_status": "approved",
   "person": {
     "canonical_name_en": "Liliʻuokalani",
     "display_name_ko": "릴리우오칼라니",
