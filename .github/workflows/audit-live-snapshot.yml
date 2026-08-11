@@ -1,5 +1,6 @@
 name: ATLAS Audit Live Snapshot
 
+# Temporary audit-only workflow. Remove before PR #101 is made merge-ready.
 on:
   push:
     branches:
