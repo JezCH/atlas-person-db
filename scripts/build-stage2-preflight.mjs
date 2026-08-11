@@ -54,7 +54,6 @@ const requireEq = (actual, expected, label) => {
   if (actual !== expected) throw new Error(`${label} drift: expected ${expected}, got ${actual}`);
 };
 
-// Reviewed current baseline invariants.
 requireEq(master.baseline?.relationship_count, 346, 'Production relationship baseline');
 requireEq(master.ledger_rows, 346, 'master ledger rows');
 requireEq(master.unique_activity_ids, 346, 'master unique Activity UUIDs');
@@ -137,17 +136,16 @@ const blockerFamilies = [
     code: 'NEW_ASSERTION_PROVENANCE_BACKFILL_PENDING',
     severity: 'HARD',
     count: 4,
-    basis: 'Normalized provenance joins are now designed and rehearsed, but every future Governance/Polity-relation/Designation/Identity-transition assertion must still be inserted with reviewed Source links during historical backfill.'
+    basis: 'Normalized provenance joins are designed and rehearsed, but every future Governance/Polity-relation/Designation/Identity-transition assertion must still be inserted with reviewed Source links during historical backfill.'
   },
   {
-    code: 'ACTIVITY_SEMANTIC_KEY_CUTOVER_DEFERRED',
+    code: 'ACTIVITY_SEMANTIC_BACKFILL_AND_ACTIVE_PATH_CUTOVER_PENDING',
     severity: 'HARD',
     count: 1,
-    basis: 'Relation Type and full temporal boundaries are not yet part of authoritative Activity semantic identity/hash/replay/merge behavior.'
+    basis: 'Stage 2 Activity semantic identity and database uniqueness are rehearsed, but Production rows are not yet Relation/sub-year complete and planner/transaction/authoring replay/Phase 9 merge paths intentionally remain on the current v1 contract until one coherent cutover is reviewed.'
   }
 ];
 
-// Counts overlap across historical rows. Never sum them into a fake unique blocker total.
 const hardBlockerFamilies = blockerFamilies.filter((b) => b.severity === 'HARD' && b.count > 0);
 const productionMigrationReady = hardBlockerFamilies.length === 0;
 if (productionMigrationReady) {
@@ -165,6 +163,8 @@ const validated = {
   domain_contract_verified_by_prior_ci_step: true,
   fresh_postgresql_schema_rehearsal_verified_by_prior_ci_step: true,
   normalized_provenance_schema_rehearsal_verified_by_prior_ci_step: true,
+  stage2_activity_semantic_identity_rehearsed_by_prior_ci_step: true,
+  production_active_semantic_path_cutover_performed: false,
   production_mutation_performed: false,
   production_migration_registered: false
 };
@@ -174,13 +174,14 @@ const canContinueWithoutVercel = [
   'finish Japan/bakufu/domain and regional-authority research',
   'prepare exact UUID-bound structural correction/backfill manifests without applying them',
   'prepare normalized Source links alongside every reviewed new assertion backfill',
-  'design Activity semantic-key/hash/replay/merge cutover and test on fresh PostgreSQL',
+  'prepare the versioned Activity planner/transaction/authoring-replay/merge cutover without activating it',
   'continue shared Polity UUID integration design with civilization-map-project'
 ];
 
 const requiresProductionDeployment = [
   'register/apply additive Production schema migration',
   'execute Production structural corrections or backfills',
+  'activate Stage 2 Activity semantic identity across Production write/replay/merge paths',
   'execute R0/R1 correction manifests against Production',
   'perform exact deployed-SHA Production verification'
 ];
@@ -199,6 +200,8 @@ const summary = {
   polity_relation_model_relevant_rows: polityRelation.model_relevant_rows,
   sub_year_blockers: temporal.explicit_sub_year_blockers,
   provenance_schema_rehearsed: true,
+  stage2_activity_semantic_identity_rehearsed: true,
+  production_active_semantic_path_cutover_performed: false,
   hard_blocker_family_count: hardBlockerFamilies.length,
   blocker_counts_overlap: true,
   production_mutation_performed: false,
