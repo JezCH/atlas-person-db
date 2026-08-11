@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { polityRelationCandidateCodes } from './stage2-domain-contract.mjs';
 
 const args = process.argv.slice(2);
 const arg = (name, fallback = null) => {
@@ -104,15 +105,7 @@ const payload = {
   status: 'AUDIT_ONLY_NO_PRODUCTION_MUTATION',
   contract: {
     relation_type_storage: 'VOCABULARY_TABLE_NOT_HARD_ENUM',
-    initial_candidate_codes: [
-      'constituent_of',
-      'dominion_of',
-      'colonial_dependency_of',
-      'vassal_of',
-      'tributary_to',
-      'protectorate_of',
-      'member_of_confederation'
-    ],
+    initial_candidate_codes: polityRelationCandidateCodes,
     excluded_from_this_model: [
       'polity_identity_successor_or_state_form',
       'territory_control_or_occupation',
