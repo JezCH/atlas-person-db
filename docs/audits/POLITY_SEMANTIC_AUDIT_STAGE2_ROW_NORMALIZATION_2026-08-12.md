@@ -2,9 +2,9 @@
 
 > Status: AUDIT NORMALIZATION ONLY — NO PRODUCTION DB MUTATION
 >
-> Purpose: convert already-reviewed Wave 13 narrative findings into explicit current-Activity row verdicts so the machine-readable master ledger can cover every current Production UUID without inventing default decisions.
+> Purpose: convert already-reviewed Stage 2 narrative findings into explicit current-Activity row verdicts so the machine-readable master ledger can cover every current Production UUID without inventing default decisions.
 >
-> This document does **not** introduce new historical conclusions. The basis for every row below is `POLITY_SEMANTIC_AUDIT_WAVE13_LIVE_RECONCILIATION_2026-08-11.md`, together with the earlier continuity/layered-authority Waves cited there.
+> This document does **not** introduce new historical conclusions. The basis for every row below is the cited Stage 2/Wave 13 review material and earlier continuity/layered-authority Waves referenced there.
 
 | Current Activity UUID | Person | Current Polity | Period | Decision | Normalized basis |
 |---|---|---|---:|---|---|
@@ -18,6 +18,8 @@
 | `57cdefa5-9a5d-533c-b229-47e398f1d07a` | Peter I | Tsardom of Russia | 1682–1721 | `KEEP_POLITY+CONTINUITY_REVIEW` | This captures the pre-1721 state-form/title phase; Wave 13 treats 1721 primarily as a continuity/state-form question, not automatic polity death. |
 | `eda26b64-2f59-5f15-954a-73404ceed064` | Peter I | Russian Empire | 1682–1725 | `BACK_PROJECTION+COMPETING_ROW+CONTINUITY_REVIEW` | Wave 13 explicitly identifies this as the later Russian Empire label back-projected over the whole reign and competing with the 1682–1721 / 1721–1725 split. |
 | `9ec53325-3a97-58a8-a7e7-81a496a47e57` | Peter I | Russian Empire | 1721–1725 | `KEEP_POLITY+CONTINUITY_REVIEW` | This is the defensible post-1721 state-form/title phase while polity identity continuity remains a separate R2 decision. |
+| `5f8351b5-6a9e-56f4-b2d8-afbe83d42ef5` | Benjamin Franklin | Province of Pennsylvania | 1757–1776 | `KEEP_POLITY_CONTEXT+RELATION_REVIEW` | R1 explicitly retains this pre-independence political context while removing only the back-projected 1757–1790 United States alternative; Franklin's exact service/diplomatic relation is a later relation-semantic concern. |
+| `8bcf4f15-65a5-5ce6-8ba3-e538fd0dca49` | Benjamin Franklin | United States | 1776–1790 | `KEEP_POLITY_CONTEXT+RELATION_REVIEW` | R1 explicitly retains the United States relation from 1776 onward; only the overlapping U.S. 1757–1790 row is the correction target. |
 | `a5be2a19-2c82-519f-9a3c-6dcc5a1bf3b7` | Maria I of Portugal | Kingdom of Portugal | 1777–1815 | `KEEP_POLITY+CONTINUITY_REVIEW` | This row matches the 1815 state-form transition boundary used by the competing model. |
 | `fefe572f-95f7-5913-86ed-304c7c2ca679` | Maria I of Portugal | Kingdom of Portugal | 1777–1816 | `COMPETING_CONTINUITY_ALTERNATIVE` | Wave 13 identifies this as the overlapping alternative that ignores the 1815 United Kingdom state-form transition. |
 | `25fcca0f-9ca3-5bdd-a9c8-e11bf8e22b89` | Maria I of Portugal | United Kingdom of Portugal, Brazil and the Algarves | 1815–1816 | `KEEP_POLITY+CONTINUITY_REVIEW` | The 1815–1816 state-form is historically real; whether it is a new Polity UUID or temporal state form belongs to R2 continuity policy. |
@@ -25,7 +27,7 @@
 | `62963919-b3d1-5f25-a399-24a33d5e8779` | Haile Selassie I | Ethiopian Empire | 1930–1974 | `SPLIT_CONTROL_VS_LEGAL_REIGN_RESEARCH` | This may encode the legal/international reign through exile, but current period semantics do not yet prove that interpretation. |
 | `5045bbb3-a494-5d94-893b-28ee8b98c0d0` | Haile Selassie I | Ethiopian Empire | 1941–1974 | `SPLIT_CONTROL_VS_LEGAL_REIGN_RESEARCH` | This may encode restored effective rule after occupation; the legal-reign/effective-control distinction must be represented explicitly before reconciliation. |
 
-Explicitly normalized current UUIDs: **16**.
+Explicitly normalized current UUIDs: **18**.
 
 ## Safety rule
 
