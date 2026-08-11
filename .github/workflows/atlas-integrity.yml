@@ -69,6 +69,9 @@ jobs:
       - name: Rebuild current v2 schema on fresh PostgreSQL
         run: npm run test:schema
 
+      - name: Rehearse Stage 2 semantic schema
+        run: node scripts/verify-stage2-schema-blueprint.mjs
+
       - name: Build current polity semantic master ledger
         shell: bash
         run: |
