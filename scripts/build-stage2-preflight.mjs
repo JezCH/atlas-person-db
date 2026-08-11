@@ -134,10 +134,10 @@ const blockerFamilies = [
     basis: 'The shared schema can represent Yoshida accurately, but the current Production row remains uncorrected.'
   },
   {
-    code: 'NEW_ASSERTION_PROVENANCE_SCHEMA_DEFERRED',
+    code: 'NEW_ASSERTION_PROVENANCE_BACKFILL_PENDING',
     severity: 'HARD',
     count: 4,
-    basis: 'Governance periods, Polity structural relations, Polity designations and Polity identity relations still need normalized source/provenance joins before Production assertions are stored.'
+    basis: 'Normalized provenance joins are now designed and rehearsed, but every future Governance/Polity-relation/Designation/Identity-transition assertion must still be inserted with reviewed Source links during historical backfill.'
   },
   {
     code: 'ACTIVITY_SEMANTIC_KEY_CUTOVER_DEFERRED',
@@ -164,6 +164,7 @@ const validated = {
   temporal_contract_acceptance_case_proven: true,
   domain_contract_verified_by_prior_ci_step: true,
   fresh_postgresql_schema_rehearsal_verified_by_prior_ci_step: true,
+  normalized_provenance_schema_rehearsal_verified_by_prior_ci_step: true,
   production_mutation_performed: false,
   production_migration_registered: false
 };
@@ -171,8 +172,8 @@ const validated = {
 const canContinueWithoutVercel = [
   'finish source-backed Polity continuity decisions',
   'finish Japan/bakufu/domain and regional-authority research',
-  'design and rehearse normalized provenance/source joins for new assertion families',
   'prepare exact UUID-bound structural correction/backfill manifests without applying them',
+  'prepare normalized Source links alongside every reviewed new assertion backfill',
   'design Activity semantic-key/hash/replay/merge cutover and test on fresh PostgreSQL',
   'continue shared Polity UUID integration design with civilization-map-project'
 ];
@@ -197,6 +198,7 @@ const summary = {
   continuity_review_rows: polityIdentity.continuity_review_rows,
   polity_relation_model_relevant_rows: polityRelation.model_relevant_rows,
   sub_year_blockers: temporal.explicit_sub_year_blockers,
+  provenance_schema_rehearsed: true,
   hard_blocker_family_count: hardBlockerFamilies.length,
   blocker_counts_overlap: true,
   production_mutation_performed: false,
