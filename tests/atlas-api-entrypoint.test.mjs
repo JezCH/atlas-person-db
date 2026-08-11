@@ -4,6 +4,7 @@ import fs from 'node:fs';
 
 const apiDir = new URL('../api/', import.meta.url);
 const apiFiles = fs.readdirSync(apiDir).filter((name) => name.endsWith('.js')).sort();
+const auditInventoryApi = fs.readFileSync(new URL('../api/atlas-audit-inventory.js', import.meta.url), 'utf8');
 const authoringApplyApi = fs.readFileSync(new URL('../api/atlas-authoring-apply.js', import.meta.url), 'utf8');
 const duplicateReviewApi = fs.readFileSync(new URL('../api/atlas-duplicate-review.js', import.meta.url), 'utf8');
 const identityApi = fs.readFileSync(new URL('../api/atlas-identity.js', import.meta.url), 'utf8');
@@ -17,6 +18,7 @@ const admin = fs.readFileSync(new URL('../admin.html', import.meta.url), 'utf8')
 
 test('Vercel exposes exactly the current ATLAS API entrypoints', () => {
   assert.deepEqual(apiFiles, [
+    'atlas-audit-inventory.js',
     'atlas-authoring-apply.js',
     'atlas-duplicate-review.js',
     'atlas-identity.js',
@@ -45,6 +47,13 @@ test('server-only authoring apply endpoint delegates to its isolated handler', (
   assert.doesNotMatch(authoringApplyApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
 });
 
+test('server-only audit inventory endpoint delegates to its isolated read-only handler', () => {
+  assert.match(auditInventoryApi, /atlas-audit-inventory-handler\.js/);
+  assert.match(auditInventoryApi, /createAuditInventoryHandler/);
+  assert.doesNotMatch(auditInventoryApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
+  assert.doesNotMatch(auditInventoryApi, /insert\s+into|\bupdate\b|\bdelete\s+from|\btruncate\b/i);
+});
+
 test('session entrypoint is the only browser authentication endpoint', () => {
   assert.match(sessionApi, /atlas-session-auth|createSessionHandler/);
   assert.doesNotMatch(sessionApi, /person_politics|atlas_v2\./);
@@ -59,7 +68,7 @@ test('server runtime dependency is explicit and lock-backed', () => {
 
 test('browser pages do not load server entrypoints or pg', () => {
   for (const html of [index, admin]) {
-    assert.doesNotMatch(html, /api\/atlas-(?:authoring-apply|duplicate-review|identity|mutate|read|session)\.js/);
+    assert.doesNotMatch(html, /api\/atlas-(?:audit-inventory|authoring-apply|duplicate-review|identity|mutate|read|session)\.js/);
     assert.doesNotMatch(html, /node_modules\/pg|require\("pg"\)/);
   }
 });

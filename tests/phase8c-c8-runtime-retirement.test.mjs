@@ -36,7 +36,11 @@ test('historical C8 workflow manifest remains audit evidence while current workf
   const workflows = fs.readdirSync(new URL('../.github/workflows/', import.meta.url))
     .filter((name) => name.endsWith('.yml') || name.endsWith('.yaml'))
     .sort();
-  assert.deepEqual(workflows, ['atlas-authoring-apply.yml', 'atlas-integrity.yml']);
+  assert.deepEqual(workflows, [
+    'atlas-audit-inventory.yml',
+    'atlas-authoring-apply.yml',
+    'atlas-integrity.yml'
+  ]);
 });
 
 test('C8 historical manifest records the DB objects that were deferred to C9', () => {
