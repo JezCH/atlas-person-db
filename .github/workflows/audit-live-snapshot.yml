@@ -27,112 +27,84 @@ jobs:
             -o audit-live-snapshot.json
           jq -e '.ok == true and .source == "v2-direct" and (.data | type == "array")' audit-live-snapshot.json >/dev/null
 
-      - name: Reconcile audit documents to current Production rows
+      - name: Compute exact current UUID coverage
         shell: bash
         run: |
           python - <<'PY'
-          import json, pathlib, re
+          import json, pathlib, re, collections
 
-          live = json.loads(pathlib.Path('audit-live-snapshot.json').read_text())['data']
+          live = json.loads(pathlib.Path('audit-live-snapshot.json').read_text(encoding='utf-8'))['data']
+          live_by_id = {str(row['id']).lower(): row for row in live}
+          live_ids = set(live_by_id)
+
           audit_dir = pathlib.Path('docs/audits')
           files = sorted(audit_dir.glob('POLITY_SEMANTIC_AUDIT*.md'))
-          files = [p for p in files if 'COVERAGE' not in p.name]
+          uuid_re = re.compile(r'(?i)\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b')
 
-          def clean(s):
-              return re.sub(r'[`*_]', '', s).strip()
-
-          def period_pair(s):
-              s = clean(s).replace('—', '–')
-              m = re.fullmatch(r'(-?\d+)\s*[–-]\s*(-?\d+)', s)
-              if not m:
-                  return None
-              return int(m.group(1)), int(m.group(2))
-
-          audited = []
+          mentions = collections.defaultdict(list)
           for path in files:
-              for lineno, line in enumerate(path.read_text(encoding='utf-8').splitlines(), 1):
-                  if not line.startswith('| `'):
-                      continue
-                  cells = [c.strip() for c in line.strip().strip('|').split('|')]
-                  if len(cells) < 4:
-                      continue
-                  m = re.fullmatch(r'`([0-9a-fA-F-]{36})`', cells[0])
-                  if not m:
-                      continue
-                  pair = period_pair(cells[3])
-                  if not pair:
-                      continue
-                  audited.append({
-                      'old_activity_id': m.group(1).lower(),
-                      'person_name': clean(cells[1]),
-                      'politic_name': clean(cells[2]),
-                      'activity_start': pair[0],
-                      'activity_end': pair[1],
-                      'source_file': path.name,
-                      'source_line': lineno,
-                      'source_row': line,
-                  })
+              text = path.read_text(encoding='utf-8')
+              for lineno, line in enumerate(text.splitlines(), 1):
+                  for match in uuid_re.finditer(line):
+                      uid = match.group(0).lower()
+                      mentions[uid].append({'file': path.name, 'line': lineno})
 
-          exact = {}
-          person_polity = {}
-          person_only = {}
-          for a in audited:
-              key = (a['person_name'], a['politic_name'], a['activity_start'], a['activity_end'])
-              exact.setdefault(key, []).append(a)
-              person_polity.setdefault((a['person_name'], a['politic_name']), []).append(a)
-              person_only.setdefault(a['person_name'], []).append(a)
+          mentioned_ids = set(mentions)
+          covered_ids = live_ids & mentioned_ids
+          uncovered_ids = live_ids - mentioned_ids
+          stale_audit_ids = mentioned_ids - live_ids
 
-          results = []
-          counts = {'exact':0, 'person_polity_period_drift':0, 'person_only_semantic_drift':0, 'unmapped':0}
-          for r in live:
-              key = (r['person_name'], r['politic_name'], int(r['activity_start']), int(r['activity_end']))
-              if key in exact:
-                  status='exact'
-                  refs=exact[key]
-              elif (r['person_name'], r['politic_name']) in person_polity:
-                  status='person_polity_period_drift'
-                  refs=person_polity[(r['person_name'], r['politic_name'])]
-              elif r['person_name'] in person_only:
-                  status='person_only_semantic_drift'
-                  refs=person_only[r['person_name']]
-              else:
-                  status='unmapped'
-                  refs=[]
-              counts[status] += 1
-              results.append({
-                  'status': status,
-                  'current': r,
-                  'audit_refs': refs,
-              })
+          uncovered_rows = [live_by_id[uid] for uid in uncovered_ids]
+          uncovered_rows.sort(key=lambda r: (int(r['activity_start']), str(r['person_name']), str(r['politic_name']), str(r['id'])))
 
-          out = {
+          exact_surface = collections.defaultdict(list)
+          for row in live:
+              key = (
+                  row.get('person_name'), row.get('politic_name'),
+                  int(row.get('activity_start')), int(row.get('activity_end')),
+                  row.get('role'), row.get('period_basis')
+              )
+              exact_surface[key].append(row)
+          duplicate_groups = [rows for rows in exact_surface.values() if len(rows) > 1]
+          duplicate_groups.sort(key=lambda rows: (str(rows[0].get('person_name')), str(rows[0].get('politic_name')), int(rows[0].get('activity_start'))))
+
+          summary = {
               'snapshot_source': 'https://atlas-person-db.vercel.app/api/atlas-read',
               'current_relationship_count': len(live),
-              'audit_table_rows_parsed': len(audited),
-              'audit_unique_old_activity_ids': len({a['old_activity_id'] for a in audited}),
-              'mapping_counts': counts,
-              'rows': results,
+              'current_distinct_person_names': len({r.get('person_name') for r in live}),
+              'current_distinct_polity_names': len({r.get('politic_name') for r in live}),
+              'audit_document_count': len(files),
+              'audit_uuid_mentions_unique': len(mentioned_ids),
+              'covered_current_relationships': len(covered_ids),
+              'uncovered_current_relationships': len(uncovered_ids),
+              'stale_or_historical_audit_uuids': len(stale_audit_ids),
+              'exact_surface_duplicate_groups': len(duplicate_groups),
+              'exact_surface_duplicate_rows': sum(len(g) for g in duplicate_groups),
           }
-          pathlib.Path('audit-live-reconciliation.json').write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding='utf-8')
-          pathlib.Path('audit-live-unmapped.json').write_text(json.dumps([x for x in results if x['status']!='exact'], ensure_ascii=False, indent=2), encoding='utf-8')
-          summary = {
-              'current_relationship_count': len(live),
-              'parsed_audit_rows': len(audited),
-              'unique_old_activity_ids': len({a['old_activity_id'] for a in audited}),
-              **counts,
+
+          output = {
+              'summary': summary,
+              'covered_current_ids': sorted(covered_ids),
+              'uncovered_current_ids': sorted(uncovered_ids),
+              'stale_or_historical_audit_ids': sorted(stale_audit_ids),
+              'mentions': {uid: mentions[uid] for uid in sorted(mentions)},
+              'exact_surface_duplicate_groups': duplicate_groups,
           }
-          pathlib.Path('audit-live-summary.json').write_text(json.dumps(summary, indent=2), encoding='utf-8')
+
+          pathlib.Path('audit-live-coverage.json').write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding='utf-8')
+          pathlib.Path('audit-current-uncovered.json').write_text(json.dumps(uncovered_rows, ensure_ascii=False, indent=2), encoding='utf-8')
+          pathlib.Path('audit-live-summary.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding='utf-8')
           print(json.dumps(summary, indent=2))
           PY
 
-      - name: Upload read-only reconciliation
+      - name: Upload read-only current coverage
         uses: actions/upload-artifact@v4
         with:
-          name: atlas-audit-live-reconciliation
+          name: atlas-audit-current-coverage
           path: |
             audit-live-snapshot.json
             audit-live-summary.json
-            audit-live-reconciliation.json
-            audit-live-unmapped.json
+            audit-live-coverage.json
+            audit-current-uncovered.json
           if-no-files-found: error
           retention-days: 7
