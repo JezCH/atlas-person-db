@@ -1,0 +1,164 @@
+{
+  "schema": "atlas-correction-manifest/v1",
+  "request_id": "stage2-r0:true-activity-duplicates:2026-08-11:v1",
+  "review_status": "approved",
+  "evidence": {
+    "production_sha": "768eb8a25182beb81fb92198608d711d87aa0e22",
+    "audit_inventory_run": "31499183625",
+    "artifact_id": "9104264546",
+    "artifact_digest": "sha256:ac1d91800412c2d79921b6ed791e6c82f94d125fc4203568f2cad4ddf5db3eb3",
+    "decision_doc": "docs/audits/STAGE2_R0_NORMALIZED_INVENTORY_EVIDENCE_2026-08-11.md"
+  },
+  "operations": [
+    {
+      "type": "coalesce_relationship",
+      "keep_relationship_id": "da809f25-40ff-5c27-b10b-88d4acc4070d",
+      "drop_relationship_id": "75a124e8-df55-5247-aa48-dc9d7934c10e",
+      "expected_keep": {
+        "person_id": "492b042f-ff7f-5ca9-85aa-521d64c94fbb",
+        "polity_id": "79812485-7daa-5311-bb10-f47fe9be7106",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 690,
+        "activity_end": 705,
+        "notes": "Founded the Wu Zhou dynasty and ruled China as emperor from 690 until her abdication in 705. She had exercised substantial political authority before formally taking the throne, but this timeline record uses her sovereign reign as the map-display period.",
+        "legacy_source_key": "pending-records.json:12:8ffececf89d45e37"
+      },
+      "expected_drop": {
+        "person_id": "492b042f-ff7f-5ca9-85aa-521d64c94fbb",
+        "polity_id": "79812485-7daa-5311-bb10-f47fe9be7106",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 690,
+        "activity_end": 705,
+        "notes": "Wu Zetian founded the Wu Zhou dynasty in 690 and ruled as emperor until her abdication in 705.",
+        "legacy_source_key": "pending-records-supplement-6.json:6:6592fa4a564b5662"
+      }
+    },
+    {
+      "type": "coalesce_relationship",
+      "keep_relationship_id": "4263e4d0-a0a0-5803-a61b-85a57322db7e",
+      "drop_relationship_id": "d1e0a5a6-31a1-5691-8d05-570dccdcad18",
+      "expected_keep": {
+        "person_id": "e51ad0be-e92b-5b2b-a8f4-9a81f35e57c9",
+        "polity_id": "5fb816f2-2d44-55f9-a9c4-35e31625df38",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1418,
+        "activity_end": 1450,
+        "notes": "Sejong the Great was the fourth ruler of Joseon. His reign is noted for the creation of Hangul, advances in science and technology, and the strengthening of royal administration.",
+        "legacy_source_key": "pending-records-supplement-10.json:1:f886134fef96b443"
+      },
+      "expected_drop": {
+        "person_id": "e51ad0be-e92b-5b2b-a8f4-9a81f35e57c9",
+        "polity_id": "5fb816f2-2d44-55f9-a9c4-35e31625df38",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1418,
+        "activity_end": 1450,
+        "notes": "Reigned as the fourth king of Joseon from 1418 until his death in 1450.",
+        "legacy_source_key": "pending-records-supplement-2.json:6:2d52706fb325763b"
+      }
+    },
+    {
+      "type": "coalesce_relationship",
+      "keep_relationship_id": "b0d35acc-9705-5b80-96bb-02616df72bcc",
+      "drop_relationship_id": "25ce2112-9b21-55dd-88d1-029153fc1a5a",
+      "expected_keep": {
+        "person_id": "25f65f14-f78c-5f9b-a176-eedb1056d5d2",
+        "polity_id": "6d1520e2-0aff-5063-b2b7-95eb86daf372",
+        "role_id": "1a91542a-fc8f-5c4c-b4d2-f533d1af7fb8",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1451,
+        "activity_end": 1481,
+        "notes": "Mehmed II, known as Mehmed the Conqueror, captured Constantinople in 1453, ended the Byzantine Empire, and transformed the Ottoman state into a major imperial power.",
+        "legacy_source_key": "pending-records-supplement-8.json:1:86282be8d3206049"
+      },
+      "expected_drop": {
+        "person_id": "25f65f14-f78c-5f9b-a176-eedb1056d5d2",
+        "polity_id": "6d1520e2-0aff-5063-b2b7-95eb86daf372",
+        "role_id": "1a91542a-fc8f-5c4c-b4d2-f533d1af7fb8",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1451,
+        "activity_end": 1481,
+        "notes": "Second reign as Ottoman sultan from 1451 until his death in 1481.",
+        "legacy_source_key": "pending-records-supplement.json:49:b406e51f5c9f7e60"
+      }
+    },
+    {
+      "type": "coalesce_relationship",
+      "keep_relationship_id": "16ebebde-e4e4-553d-a520-00da68a276d2",
+      "drop_relationship_id": "d641eec9-2770-5099-8017-8ec3bcc9244e",
+      "expected_keep": {
+        "person_id": "449b224b-2b5d-5c6c-aa9d-b3a63de00192",
+        "polity_id": "aefaece0-759c-5bde-b653-6eed173f98f8",
+        "role_id": "3557a0e6-70a3-59fa-9df9-372eb79b943e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1519,
+        "activity_end": 1556,
+        "notes": "Served as Holy Roman Emperor from 1519 until his abdication in 1556.",
+        "legacy_source_key": "pending-records-corrections.json:18:b30814dfd27040d8"
+      },
+      "expected_drop": {
+        "person_id": "449b224b-2b5d-5c6c-aa9d-b3a63de00192",
+        "polity_id": "aefaece0-759c-5bde-b653-6eed173f98f8",
+        "role_id": "3557a0e6-70a3-59fa-9df9-372eb79b943e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1519,
+        "activity_end": 1556,
+        "notes": "Served as Holy Roman Emperor from 1519 until his abdication in 1556.",
+        "legacy_source_key": "pending-records-supplement.json:32:b30814dfd27040d8"
+      }
+    },
+    {
+      "type": "coalesce_relationship",
+      "keep_relationship_id": "05d7091a-5cfc-5ec0-9aa3-32461925e7c7",
+      "drop_relationship_id": "caa526f9-220d-540c-93ea-d889f6d9b8cb",
+      "expected_keep": {
+        "person_id": "4c5ed768-0d28-5e13-aa3d-976760d7e4ce",
+        "polity_id": "1aaee35e-844d-5ba3-807d-7b105d43305c",
+        "role_id": "ccb47923-2134-5868-92f6-29785847e79c",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1819,
+        "activity_end": 1830,
+        "notes": "Led and governed Gran Colombia from 1819 until 1830.",
+        "legacy_source_key": "pending-records-corrections.json:21:4e3921c68de6ed79"
+      },
+      "expected_drop": {
+        "person_id": "4c5ed768-0d28-5e13-aa3d-976760d7e4ce",
+        "polity_id": "1aaee35e-844d-5ba3-807d-7b105d43305c",
+        "role_id": "ccb47923-2134-5868-92f6-29785847e79c",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1819,
+        "activity_end": 1830,
+        "notes": "Led and governed Gran Colombia from 1819 until 1830.",
+        "legacy_source_key": "pending-records-supplement-3.json:26:4e3921c68de6ed79"
+      }
+    },
+    {
+      "type": "coalesce_relationship",
+      "keep_relationship_id": "1ff585a7-c481-5d38-98ff-38381c81d961",
+      "drop_relationship_id": "a8946a02-9235-5985-b882-0c7d60b555dd",
+      "expected_keep": {
+        "person_id": "5401a194-c4e1-57e9-97da-49538d756182",
+        "polity_id": "4203b03f-524f-5466-b718-37b72ae61e38",
+        "role_id": "6d5c65cd-baee-5cb0-b272-a9b9cb1ac355",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1871,
+        "activity_end": 1890,
+        "notes": "Served as the first chancellor of the German Empire from 1871 until his dismissal in 1890.",
+        "legacy_source_key": "pending-records-supplement.json:20:6f76ab2c9f5b8e5c"
+      },
+      "expected_drop": {
+        "person_id": "5401a194-c4e1-57e9-97da-49538d756182",
+        "polity_id": "4203b03f-524f-5466-b718-37b72ae61e38",
+        "role_id": "6d5c65cd-baee-5cb0-b272-a9b9cb1ac355",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1871,
+        "activity_end": 1890,
+        "notes": "Otto von Bismarck served as the first Chancellor of the German Empire from 1871 to 1890.",
+        "legacy_source_key": "pending-records-supplement-10.json:5:63f873105d81e0b8"
+      }
+    }
+  ]
+}
