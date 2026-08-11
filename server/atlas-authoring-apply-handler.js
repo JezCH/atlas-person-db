@@ -101,12 +101,14 @@ function createAuthoringApplyHandler({
         replay: outcome.replay,
         person_id: outcome.person_id,
         relationship_id: outcome.relationship_id,
+        ...(outcome.polity_id ? { polity_id: outcome.polity_id } : {}),
+        ...(outcome.role_id ? { role_id: outcome.role_id } : {}),
         deployment_sha: payload.deploymentSha,
         manifest_path: payload.manifestPath
       });
     } catch (error) {
       const code = String(error?.message || "AUTHORING_APPLY_FAILED");
-      const conflict = /COLLISION|AMBIGUOUS|DUPLICATE|UNRESOLVED|REVIEW|APPROVED|UNSUPPORTED|REQUIRED|NOT_FOUND|FAILED/.test(code);
+      const conflict = /COLLISION|AMBIGUOUS|DUPLICATE|UNRESOLVED|REVIEW|APPROVED|UNSUPPORTED|REQUIRED|NOT_FOUND|FAILED|MISMATCH/.test(code);
       return json(res, conflict ? 409 : 500, { ok: false, code });
     } finally {
       if (client && typeof client.end === "function") {
