@@ -6,20 +6,20 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const { createPostgresClient } = require('../server/atlas-postgres-client.js');
 const { createAuthoringManifestService } = require('../server/atlas-authoring-manifest-service.js');
+const { applyAuthoringMigrations } = require('../server/atlas-authoring-migrations.js');
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-export async function applyManifest({ manifestPath, databaseUrl, migrationPath = path.join(root, 'db/migrations/20260811_authoring_manifest_runs.sql') } = {}) {
+export async function applyManifest({ manifestPath, databaseUrl, applyMigrations = applyAuthoringMigrations } = {}) {
   const resolvedManifest = path.resolve(root, String(manifestPath || ''));
   const allowedRoot = path.resolve(root, 'authoring/requests') + path.sep;
   if (!resolvedManifest.startsWith(allowedRoot) || path.extname(resolvedManifest) !== '.json') throw new Error('AUTHORING_MANIFEST_PATH_NOT_ALLOWED');
   if (!/^postgres(?:ql)?:\/\//.test(String(databaseUrl || ''))) throw new Error('SUPABASE_DB_URL is required');
 
   const manifest = JSON.parse(fs.readFileSync(resolvedManifest, 'utf8'));
-  const migrationSql = fs.readFileSync(migrationPath, 'utf8');
   const client = await createPostgresClient(databaseUrl);
   try {
-    await client.query(migrationSql);
+    await applyMigrations(client);
     const outcome = await createAuthoringManifestService({ client }).apply(manifest);
     if (outcome?.committed !== true) throw new Error('AUTHORING_MANIFEST_NOT_COMMITTED');
     return outcome;
