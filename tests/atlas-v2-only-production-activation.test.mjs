@@ -30,12 +30,14 @@ test("browser mutation contract is explicitly v2-only and never fakes legacy com
   assert.doesNotMatch(app, /outcome\.legacy\.record_ids/);
 });
 
-test("admin exact lookup uses direct normalized projection and normalized ids after C6", () => {
+test("admin exact lookup uses direct normalized projection, shared semantic identity and normalized ids", () => {
   assert.match(adminService, /\/api\/atlas-read/);
+  assert.match(adminService, /atlas-activity-semantics\.js/);
   assert.doesNotMatch(adminService, /\.from\(/);
-  assert.match(adminService, /normalized activity lookup is ambiguous/);
+  assert.match(adminService, /normalized semantic activity lookup is ambiguous/);
   assert.match(adminService, /result\?\.v2\?\.committed === true/);
-  assert.match(adminHtml, /normalized v2 direct API/);
+  assert.match(adminHtml, /\.\/atlas-activity-semantics\.js/);
+  assert.match(adminHtml, /normalized v2 identity/);
   assert.doesNotMatch(adminHtml, /legacy \+ normalized v2/);
 });
 
@@ -43,5 +45,5 @@ test("C6 successor removes compatibility and fallback without regressing C5 writ
   assert.match(reader, /ATLAS_READER_V2_DIRECT/);
   assert.match(app, /AtlasReader\.loadPersonPolitics\(\)/);
   assert.doesNotMatch(app, /fallbackToLegacy|ATLAS_DATA_SOURCE/);
-  assert.doesNotMatch(adminService, /atlas_person_politics_compat_v1|person_politics/);
+  assert.doesNotMatch(adminService, /atlas_person_politics_compat_v1|public\.person_politics/);
 });
