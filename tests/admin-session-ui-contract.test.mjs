@@ -30,7 +30,7 @@ test('session gate uses the existing server session API without persisting crede
   assert.match(gate, /sessionRequest\("POST", \{ password \}\)/);
   assert.match(gate, /sessionRequest\("DELETE"\)/);
   assert.match(gate, /passwordInput\.value = ""/);
-  assert.doesNotMatch(gate, /localStorage|sessionStorage|ATLAS_ADMIN_PASSWORD|ATLAS_MUTATION_TOKEN/);
+  assert.doesNotMatch(gate, /localStorage|sessionStorage|ATLAS_ADMIN_PASSWORD|ATLAS_MUTATION_TOKEN|ATLAS_SESSION_SECRET/);
 });
 
 test('protected admin surfaces lock on missing or expired authentication', () => {
@@ -42,9 +42,10 @@ test('protected admin surfaces lock on missing or expired authentication', () =>
   assert.match(gate, /setAuthenticated\(true/);
 });
 
-test('server session endpoint remains password-to-HttpOnly-cookie boundary', () => {
+test('server session endpoint remains password-to-HttpOnly-cookie boundary with a dedicated signing-secret abstraction', () => {
   assert.match(sessionApi, /requireEnv\(env, "ATLAS_ADMIN_PASSWORD"\)/);
-  assert.match(sessionApi, /requireEnv\(env, "ATLAS_MUTATION_TOKEN"\)/);
+  assert.match(sessionApi, /sessionSecret\(env\)/);
+  assert.doesNotMatch(sessionApi, /requireEnv\(env, "ATLAS_MUTATION_TOKEN"\)/);
   assert.match(sessionApi, /issueSessionToken/);
   assert.match(sessionApi, /sessionCookie/);
   assert.match(sessionApi, /clearSessionCookie/);
