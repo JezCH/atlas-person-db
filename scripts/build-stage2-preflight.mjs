@@ -17,6 +17,7 @@ const inputs = {
   polityRelation: arg('--polity-relation-summary'),
   polityIdentity: arg('--polity-identity-summary'),
   continuity: arg('--continuity-summary'),
+  japan: arg('--japan-summary'),
   temporal: arg('--temporal-summary')
 };
 const outPath = arg('--out', 'artifacts/stage2-preflight.json');
@@ -35,9 +36,10 @@ const governance = readJson(inputs.governance);
 const polityRelation = readJson(inputs.polityRelation);
 const polityIdentity = readJson(inputs.polityIdentity);
 const continuity = readJson(inputs.continuity);
+const japan = readJson(inputs.japan);
 const temporal = readJson(inputs.temporal);
 
-const allInputs = { master, relation, readiness, direct, governance, polityRelation, polityIdentity, continuity, temporal };
+const allInputs = { master, relation, readiness, direct, governance, polityRelation, polityIdentity, continuity, japan, temporal };
 const expectedSchemas = {
   master: 'atlas-polity-semantic-master-ledger-summary/v1',
   relation: 'atlas-relation-semantics-audit-summary/v1',
@@ -47,6 +49,7 @@ const expectedSchemas = {
   polityRelation: 'atlas-polity-relation-audit-summary/v1',
   polityIdentity: 'atlas-polity-identity-audit-summary/v1',
   continuity: 'atlas-polity-continuity-decisions-summary/v1',
+  japan: 'atlas-japan-layered-authority-decisions-summary/v1',
   temporal: 'atlas-temporal-contract-audit-summary/v1'
 };
 for (const [name, schema] of Object.entries(expectedSchemas)) {
@@ -90,6 +93,11 @@ requireEq(continuity.reviewed_continuity_rows, 13, 'source-backed continuity dec
 requireEq(continuity.reviewed_continuity_groups, 4, 'source-backed continuity groups');
 requireEq(continuity.unresolved_continuity_model_rows, 0, 'unresolved continuity model rows');
 requireEq(continuity.newly_identified_exact_transition_cases, 2, 'new exact temporal transition cases');
+requireEq(japan.reviewed_japan_rows, 8, 'reviewed Japan authority rows');
+requireEq(japan.old_polity_relation_model_rows, 4, 'old Japan layered-authority relation rows');
+requireEq(japan.resolved_old_polity_relation_model_rows, 4, 'resolved Japan layered-authority relation rows');
+requireEq(japan.unresolved_old_polity_relation_model_rows, 0, 'unresolved Japan layered-authority relation rows');
+requireEq(japan.remaining_sengoku_territorial_or_split_research_rows, 4, 'remaining Sengoku territorial/split research rows');
 requireEq(temporal.explicit_sub_year_blockers, 1, 'legacy explicit sub-year blockers');
 requireEq(temporal.reviewed_split_intervals, 2, 'reviewed Yoshida replacement intervals');
 
@@ -98,6 +106,10 @@ if (stage2DomainContract.production_migration_authorized !== false) {
 }
 
 const temporalCorrectionCases = temporal.explicit_sub_year_blockers + continuity.newly_identified_exact_transition_cases;
+const remainingPolityRelationResearchRows = polityRelation.model_relevant_rows - japan.resolved_old_polity_relation_model_rows;
+if (remainingPolityRelationResearchRows !== 14) {
+  throw new Error(`remaining Polity relation research drift: ${remainingPolityRelationResearchRows}`);
+}
 
 const blockerFamilies = [
   {
@@ -128,19 +140,31 @@ const blockerFamilies = [
     code: 'POLITY_CONTINUITY_CORRECTIONS_PENDING',
     severity: 'HARD',
     count: continuity.reviewed_continuity_rows,
-    basis: 'The Roman/East-Roman, Yuan/Northern-Yuan, Russia-1721 and Portugal-1815 continuity models are now source-backed and machine-checked, but their exact UUID relink/retire/coalesce/designation/relation corrections are intentionally not applied to Production.'
+    basis: 'The Roman/East-Roman, Yuan/Northern-Yuan, Russia-1721 and Portugal-1815 continuity models are source-backed and machine-checked, but exact UUID relink/retire/coalesce/designation/relation corrections are intentionally not applied to Production.'
+  },
+  {
+    code: 'JAPAN_LAYERED_AUTHORITY_CORRECTIONS_PENDING',
+    severity: 'HARD',
+    count: japan.resolved_old_polity_relation_model_rows,
+    basis: 'Kamakura/Tokugawa layered-authority semantics are source-backed and resolved, but Hōjō/Tokugawa exact Activity relinks, Governance Context creation/reuse, and compressed-row retirement are intentionally not applied to Production.'
+  },
+  {
+    code: 'SENGOKU_TERRITORIAL_AUTHORITY_RESEARCH_PENDING',
+    severity: 'HARD',
+    count: japan.remaining_sengoku_territorial_or_split_research_rows,
+    basis: 'Oda, Uesugi and pre-1590 Hideyoshi authority still require source-backed territorial Polity/interval reconstruction. Clan labels are not accepted as automatic Polities and Japan-wide direct control is not back-projected.'
   },
   {
     code: 'POLITY_STRUCTURAL_RELATION_BACKFILL_RESEARCH',
     severity: 'HARD',
-    count: polityRelation.model_relevant_rows,
-    basis: 'The structural relation table is justified, but target identities/relation rows remain source-reviewed and research-gated.'
+    count: remainingPolityRelationResearchRows,
+    basis: 'Four Japan layered-authority model rows are now historically resolved; the remaining model-relevant structural-relation rows still require source-reviewed target/relation work.'
   },
   {
     code: 'TEMPORAL_SUB_YEAR_DATA_CORRECTION_PENDING',
     severity: 'HARD',
     count: temporalCorrectionCases,
-    basis: 'The shared temporal schema can represent the reviewed cases, but Production still has Yoshida plus newly source-fixed Russia-1721 and Portugal-1815 transition cases in year-level form.'
+    basis: 'The shared temporal schema can represent the reviewed cases, but Production still has Yoshida plus source-fixed Russia-1721 and Portugal-1815 transition cases in year-level form.'
   },
   {
     code: 'NEW_ASSERTION_PROVENANCE_BACKFILL_PENDING',
@@ -170,6 +194,8 @@ const validated = {
   polity_identity_signal_reconciled: true,
   polity_continuity_model_decisions_closed: true,
   unresolved_polity_continuity_model_rows: 0,
+  japan_layered_authority_model_decisions_closed: true,
+  unresolved_old_japan_layered_authority_model_rows: 0,
   temporal_contract_acceptance_case_proven: true,
   domain_contract_verified_by_prior_ci_step: true,
   fresh_postgresql_schema_rehearsal_verified_by_prior_ci_step: true,
@@ -182,8 +208,10 @@ const validated = {
 
 const canContinueWithoutVercel = [
   'prepare exact UUID-bound Roman/East-Roman, Yuan/Northern-Yuan, Russia-1721 and Portugal-1815 correction manifests without applying them',
-  'finish Japan/bakufu/domain and regional-authority research',
+  'prepare exact Hōjō/Tokugawa Japan + Governance Context correction manifests without applying them',
+  'finish Oda/Uesugi/pre-1590 Hideyoshi territorial-authority research',
   'finish Kublai 1260–1271 Great-Khan authority target research',
+  'finish remaining non-Japan Polity structural-relation research',
   'prepare normalized Source links alongside every reviewed new assertion backfill',
   'prepare the versioned Activity planner/transaction/authoring-replay/merge cutover without activating it',
   'continue shared Polity UUID integration design with civilization-map-project'
@@ -210,7 +238,11 @@ const summary = {
   continuity_review_rows: 0,
   continuity_correction_rows: continuity.reviewed_continuity_rows,
   continuity_groups_closed: continuity.reviewed_continuity_groups,
-  polity_relation_model_relevant_rows: polityRelation.model_relevant_rows,
+  japan_layered_authority_old_relation_rows_resolved: japan.resolved_old_polity_relation_model_rows,
+  japan_layered_authority_old_relation_rows_unresolved: 0,
+  remaining_sengoku_territorial_or_split_research_rows: japan.remaining_sengoku_territorial_or_split_research_rows,
+  polity_relation_model_relevant_rows_raw: polityRelation.model_relevant_rows,
+  polity_relation_model_research_rows_remaining: remainingPolityRelationResearchRows,
   sub_year_correction_cases: temporalCorrectionCases,
   provenance_schema_rehearsed: true,
   stage2_activity_semantic_identity_rehearsed: true,
