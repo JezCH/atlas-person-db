@@ -1,5 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import {
+  stage2DomainContract,
+  temporalGranularities,
+  temporalCertainties,
+  temporalCalendars
+} from './stage2-domain-contract.mjs';
 
 const args = process.argv.slice(2);
 const arg = (name, fallback = null) => {
@@ -31,6 +37,10 @@ if (row.person?.canonical !== 'Shigeru Yoshida' || row.polity?.canonical !== 'Ja
 if (row.activity?.start_year !== 1946 || row.activity?.end_year !== 1954) {
   throw new Error(`Yoshida chronology baseline drift: ${row.activity?.start_year}-${row.activity?.end_year}`);
 }
+
+for (const required of ['day']) if (!temporalGranularities.includes(required)) throw new Error(`temporal contract missing granularity ${required}`);
+for (const required of ['exact']) if (!temporalCertainties.includes(required)) throw new Error(`temporal contract missing certainty ${required}`);
+for (const required of ['gregorian']) if (!temporalCalendars.includes(required)) throw new Error(`temporal contract missing calendar ${required}`);
 
 const boundary = (year, month, day) => ({
   year,
@@ -80,11 +90,13 @@ const summary = {
   explicit_sub_year_blockers: oldSubYear.length,
   acceptance_activity_id: YOSHIDA_ID,
   reviewed_split_intervals: proposedIntervals.length,
-  historical_year_zero_allowed: false,
+  historical_year_zero_allowed: stage2DomainContract.temporal.historical_year_zero_allowed,
   canonical_timestamp_model: false,
   existing_rows_backfill_granularity: 'year',
   conclusion: 'SHARED_TEMPORAL_BOUNDARY_CONTRACT_REQUIRED_BEFORE_YOSHIDA_CORRECTION'
 };
+
+if (summary.historical_year_zero_allowed !== false) throw new Error('Stage 2 temporal contract must continue to reject historical year zero');
 
 const payload = {
   schema: 'atlas-temporal-contract-audit/v1',
@@ -92,10 +104,10 @@ const payload = {
   contract: {
     historical_year: 'SIGNED_NONZERO_INTEGER',
     boundary_fields: ['year', 'month', 'day', 'granularity', 'certainty', 'calendar'],
-    granularities: ['year', 'month', 'day'],
-    certainties: ['exact', 'approximate', 'uncertain'],
-    calendars: ['gregorian', 'julian', 'unspecified_historical', 'source_calendar'],
-    interval_semantics: 'INCLUSIVE_WITHOUT_FABRICATED_MONTH_DAY',
+    granularities: temporalGranularities,
+    certainties: temporalCertainties,
+    calendars: temporalCalendars,
+    interval_semantics: stage2DomainContract.temporal.interval_semantics,
     shared_column_contract: true,
     global_temporal_intervals_table: false,
     js_date_as_canonical_history: false
