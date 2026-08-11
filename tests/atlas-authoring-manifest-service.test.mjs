@@ -5,15 +5,17 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const { requireManifest, manifestHash, activityFromManifest } = require('../server/atlas-authoring-manifest-service.js');
 
-test('authoring manifest v1 requires stable request id, person and activity', () => {
+test('authoring manifest v1 requires approval, stable request id, person and activity', () => {
   const parsed = requireManifest({
     schema: 'atlas-authoring-manifest/v1',
+    review_status: 'approved',
     request_id: ' person:test:v1 ',
     person: { canonical_name_en: 'Test', display_name_ko: '테스트' },
     activity: { politic_name: 'Test Polity', activity_start: 1, activity_end: 2, period_basis: 'reign' }
   });
   assert.equal(parsed.requestId, 'person:test:v1');
   assert.throws(() => requireManifest({}), /UNSUPPORTED_AUTHORING_MANIFEST_SCHEMA/);
+  assert.throws(() => requireManifest({ schema: 'atlas-authoring-manifest/v1', request_id: 'x', person: {}, activity: {} }), /AUTHORING_MANIFEST_NOT_APPROVED/);
 });
 
 test('manifest hash is stable across object key order', () => {
