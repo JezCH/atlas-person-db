@@ -204,6 +204,14 @@ CREATE TABLE atlas_v2.sources (
   bytes integer NOT NULL
 );
 
+CREATE TABLE atlas_v2.authoring_manifest_runs (
+  request_id text NOT NULL,
+  manifest_hash text NOT NULL,
+  person_id uuid,
+  relationship_id uuid,
+  applied_at timestamptz DEFAULT now() NOT NULL
+);
+
 ALTER TABLE atlas_v2.chronology_claims ADD CONSTRAINT chronology_claims_pkey PRIMARY KEY (id);
 ALTER TABLE atlas_v2.migration_metadata ADD CONSTRAINT migration_metadata_phase_check CHECK (phase = 5);
 ALTER TABLE atlas_v2.migration_metadata ADD CONSTRAINT migration_metadata_pkey PRIMARY KEY (phase);
@@ -248,6 +256,7 @@ ALTER TABLE atlas_v2.roles ADD CONSTRAINT roles_code_key UNIQUE (code);
 ALTER TABLE atlas_v2.sources ADD CONSTRAINT sources_bytes_check CHECK (bytes >= 0);
 ALTER TABLE atlas_v2.sources ADD CONSTRAINT sources_pkey PRIMARY KEY (id);
 ALTER TABLE atlas_v2.sources ADD CONSTRAINT sources_source_key_key UNIQUE (source_key);
+ALTER TABLE atlas_v2.authoring_manifest_runs ADD CONSTRAINT authoring_manifest_runs_pkey PRIMARY KEY (request_id);
 
 ALTER TABLE atlas_v2.chronology_claims ADD CONSTRAINT chronology_claims_person_politics_id_fkey FOREIGN KEY (person_politics_id) REFERENCES atlas_v2.person_politics_v2(id) ON DELETE CASCADE;
 ALTER TABLE atlas_v2.period_basis_names ADD CONSTRAINT period_basis_names_period_basis_id_fkey FOREIGN KEY (period_basis_id) REFERENCES atlas_v2.period_bases(id) ON DELETE CASCADE;
@@ -268,6 +277,8 @@ ALTER TABLE atlas_v2.polity_sources ADD CONSTRAINT polity_sources_polity_id_fkey
 ALTER TABLE atlas_v2.polity_sources ADD CONSTRAINT polity_sources_source_id_fkey FOREIGN KEY (source_id) REFERENCES atlas_v2.sources(id) ON DELETE RESTRICT;
 ALTER TABLE atlas_v2.relationship_descriptions ADD CONSTRAINT relationship_descriptions_person_politics_id_fkey FOREIGN KEY (person_politics_id) REFERENCES atlas_v2.person_politics_v2(id) ON DELETE CASCADE;
 ALTER TABLE atlas_v2.role_names ADD CONSTRAINT role_names_role_id_fkey FOREIGN KEY (role_id) REFERENCES atlas_v2.roles(id) ON DELETE CASCADE;
+ALTER TABLE atlas_v2.authoring_manifest_runs ADD CONSTRAINT authoring_manifest_runs_person_id_fkey FOREIGN KEY (person_id) REFERENCES atlas_v2.persons(id) ON DELETE RESTRICT;
+ALTER TABLE atlas_v2.authoring_manifest_runs ADD CONSTRAINT authoring_manifest_runs_relationship_id_fkey FOREIGN KEY (relationship_id) REFERENCES atlas_v2.person_politics_v2(id) ON DELETE RESTRICT;
 
 CREATE INDEX person_duplicate_candidates_queue_idx ON atlas_v2.person_duplicate_candidates USING btree (candidate_state, current_decision, confidence DESC, last_detected_at DESC);
 CREATE INDEX person_duplicate_reviews_candidate_idx ON atlas_v2.person_duplicate_reviews USING btree (candidate_id, reviewed_at DESC);

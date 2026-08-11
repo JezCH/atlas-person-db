@@ -1,0 +1,20 @@
+{
+  "schema": "atlas-authoring-manifest/v1",
+  "request_id": "person:liliuokalani:1891-1893:kingdom-of-hawaii:queen:reign:v1",
+  "person": {
+    "canonical_name_en": "Liliʻuokalani",
+    "display_name_ko": "릴리우오칼라니",
+    "canonical_key": "Liliʻuokalani",
+    "person_type": "historical",
+    "historicity": "historical",
+    "allow_display_name_collision": false
+  },
+  "activity": {
+    "politic_name": "Kingdom of Hawaii",
+    "activity_start": 1891,
+    "activity_end": 1893,
+    "role": "Queen",
+    "period_basis": "reign",
+    "notes": "Last sovereign monarch of the Kingdom of Hawaii; reigned from 1891 until the overthrow of the Hawaiian monarchy in 1893."
+  }
+}
