@@ -151,7 +151,39 @@ Person create/reuse
 
 새 Polity를 선언하면 `polity_identity.canonical_name_en`과 `activity.politic_name`이 정확히 일치해야 합니다. 새 Role을 선언하면 `activity.role`은 선언된 role의 code/source label/KO display token 중 하나와 정확히 일치해야 합니다. 불일치 시 자동 추론하지 않고 manifest 전체를 rollback합니다.
 
+Activity insert 후 commit 전에는 실제 `person_politics_v2` row의 `person_id`, `polity_id`, `role_id`를 다시 읽어 선언/생성한 identity UUID와 대조합니다. 선언된 identity와 normalized relationship binding이 다르면 `AUTHORING_POSTWRITE_*_MISMATCH`로 전체 transaction을 rollback합니다.
+
 기존 `atlas-authoring-manifest/v1`은 backward-compatible하며 Person + existing Polity/Role Activity authoring에 계속 사용할 수 있습니다.
+
+### Authoring execution ledger
+
+`atlas_v2.authoring_manifest_runs`는 manifest의 idempotency ledger이자 실행 provenance surface입니다.
+
+현재 저장 필드:
+
+- `request_id` — stable whole-manifest idempotency key
+- `manifest_hash` — exact reviewed payload hash
+- `manifest_schema` — v1/v2 contract version
+- `person_id`
+- `relationship_id`
+- `result_snapshot` — 최초 성공 실행의 entity-level outcome snapshot
+- `applied_at`
+
+`result_snapshot` version 1은 다음 normalized binding을 보존합니다.
+
+```text
+Person UUID + disposition
+Polity UUID + disposition
+Role UUID/null + disposition
+Period basis UUID + disposition
+Activity UUID + disposition
+```
+
+신규 실행의 disposition은 `created`, `reused`, `resolved_existing`, `not_applicable` 중 하나입니다. Manifest-level `replay=true`와 entity disposition은 별개입니다. 즉 동일 request를 재실행해도 최초 실행에서 Person이 생성됐는지 기존 identity를 재사용했는지에 대한 snapshot은 바뀌지 않습니다.
+
+Snapshot 도입 이전의 기존 ledger row는 original create/reuse 사실을 추정하지 않습니다. 동일 manifest가 다시 실행될 때 live UUID binding을 검증한 뒤 `provenance_complete=false`와 `historical_unknown` disposition으로 1회 backfill합니다.
+
+Snapshot이 이미 존재하는 replay에서는 저장된 Person/Polity/Role/Period basis/Activity UUID와 live normalized relationship을 다시 비교합니다. drift가 있으면 replay를 성공 처리하지 않고 fail closed합니다.
 
 ## 8. Duplicate candidate/review domain
 
