@@ -6,6 +6,7 @@ import pg from 'pg';
 
 const require = createRequire(import.meta.url);
 const { applyAuthoringMigrations } = require('../server/atlas-authoring-migrations.js');
+const { applyCorrectionMigrations } = require('../server/atlas-correction-migrations.js');
 const { Client } = pg;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const baselinePath = path.join(root, 'db/schema/atlas_v2.current.sql');
@@ -13,7 +14,7 @@ const databaseUrl = String(process.env.DATABASE_URL || '').trim();
 if (!/^postgres(?:ql)?:\/\//.test(databaseUrl)) throw new Error('DATABASE_URL is required for schema baseline verification');
 
 const expectedTables = [
-  'authoring_manifest_runs','chronology_claims','migration_metadata','period_bases','period_basis_names','person_descriptions',
+  'authoring_manifest_runs','chronology_claims','correction_manifest_runs','migration_metadata','period_bases','period_basis_names','person_descriptions',
   'person_duplicate_candidates','person_duplicate_reviews','person_merge_audits','person_names',
   'person_politics_sources','person_politics_v2','person_sources','persons','polities','polity_descriptions',
   'polity_names','polity_sources','relationship_descriptions','role_names','roles','sources'
@@ -22,7 +23,9 @@ const expectedTables = [
 const expectedConstraints = [
   'authoring_manifest_runs_pkey','authoring_manifest_runs_person_id_fkey','authoring_manifest_runs_relationship_id_fkey',
   'authoring_manifest_runs_manifest_schema_check','authoring_manifest_runs_result_snapshot_check',
-  'chronology_claims_pkey','migration_metadata_phase_check','migration_metadata_pkey','period_bases_pkey','period_bases_code_key',
+  'chronology_claims_pkey',
+  'correction_manifest_runs_pkey','correction_manifest_runs_manifest_schema_check','correction_manifest_runs_result_snapshot_check',
+  'migration_metadata_phase_check','migration_metadata_pkey','period_bases_pkey','period_bases_code_key',
   'period_basis_names_pkey','person_descriptions_pkey','person_duplicate_candidates_candidate_state_check',
   'person_duplicate_candidates_check','person_duplicate_candidates_confidence_check','person_duplicate_candidates_current_decision_check',
   'person_duplicate_candidates_review_count_check','person_duplicate_candidates_pkey',
@@ -68,6 +71,9 @@ await client.connect();
 try {
   await client.query(source);
 
+  const initialCorrectionMigration = await applyCorrectionMigrations(client);
+  if (initialCorrectionMigration.applied.length !== 1) throw new Error('correction migration registry is incomplete');
+
   const tables = await client.query(`
     select table_name
       from information_schema.tables
@@ -108,10 +114,24 @@ try {
      order by column_name`);
   same(authoringColumns.rows.map((row) => row.column_name), ['manifest_schema','result_snapshot'], 'authoring provenance columns');
 
-  const firstMigrationReplay = await applyAuthoringMigrations(client);
-  const secondMigrationReplay = await applyAuthoringMigrations(client);
-  if (firstMigrationReplay.applied.length !== 2 || secondMigrationReplay.applied.length !== 2) {
+  const correctionColumns = await client.query(`
+    select column_name
+      from information_schema.columns
+     where table_schema='atlas_v2'
+       and table_name='correction_manifest_runs'
+     order by column_name`);
+  same(correctionColumns.rows.map((row) => row.column_name), ['applied_at','manifest_hash','manifest_schema','request_id','result_snapshot'], 'correction ledger columns');
+
+  const firstAuthoringReplay = await applyAuthoringMigrations(client);
+  const secondAuthoringReplay = await applyAuthoringMigrations(client);
+  if (firstAuthoringReplay.applied.length !== 2 || secondAuthoringReplay.applied.length !== 2) {
     throw new Error('authoring migration registry did not apply the complete ordered set');
+  }
+
+  const firstCorrectionReplay = await applyCorrectionMigrations(client);
+  const secondCorrectionReplay = await applyCorrectionMigrations(client);
+  if (firstCorrectionReplay.applied.length !== 1 || secondCorrectionReplay.applied.length !== 1) {
+    throw new Error('correction migration registry did not apply the complete ordered set');
   }
 
   const legacy = await client.query(`
@@ -136,8 +156,10 @@ try {
     tables: expectedTables.length,
     constraints: expectedConstraints.length,
     maintenance_indexes: expectedIndexes.length,
-    authoring_migrations: firstMigrationReplay.applied.length,
+    authoring_migrations: firstAuthoringReplay.applied.length,
     authoring_migration_replay: true,
+    correction_migrations: firstCorrectionReplay.applied.length,
+    correction_migration_replay: true,
     clean_target_guard: true,
     legacy_objects: 0
   }, null, 2));
