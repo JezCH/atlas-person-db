@@ -110,6 +110,15 @@ jobs:
             --out artifacts/governance-context-audit.json \
             --summary artifacts/governance-context-audit-summary.json
 
+      - name: Audit Polity-to-Polity relation semantics
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/build-polity-relation-audit.mjs \
+            --ledger artifacts/polity-semantic-master-ledger.json \
+            --out artifacts/polity-relation-audit.json \
+            --summary artifacts/polity-relation-audit-summary.json
+
       - name: Upload polity semantic master ledger evidence
         uses: actions/upload-artifact@v4
         with:
@@ -123,5 +132,7 @@ jobs:
             artifacts/relation-semantics-audit-summary.json
             artifacts/governance-context-audit.json
             artifacts/governance-context-audit-summary.json
+            artifacts/polity-relation-audit.json
+            artifacts/polity-relation-audit-summary.json
           if-no-files-found: error
           retention-days: 7
