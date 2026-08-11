@@ -4,6 +4,7 @@ const {
   SESSION_COOKIE,
   DEFAULT_SESSION_TTL_MS,
   requireEnv,
+  sessionSecret,
   safeTokenEqual,
   parseCookies,
   issueSessionToken,
@@ -42,11 +43,11 @@ function createSessionHandler({
     const method = String(req?.method || "GET").toUpperCase();
 
     try {
-      const sessionSecret = requireEnv(env, "ATLAS_MUTATION_TOKEN");
+      const signingSecret = sessionSecret(env);
       const cookies = parseCookies(req?.headers || {});
 
       if (method === "GET") {
-        const authenticated = verifySessionToken(cookies[SESSION_COOKIE], sessionSecret, { now: now() });
+        const authenticated = verifySessionToken(cookies[SESSION_COOKIE], signingSecret, { now: now() });
         sendJson(res, 200, { ok: true, authenticated });
         return;
       }
@@ -70,7 +71,7 @@ function createSessionHandler({
       }
 
       const issuedAt = now();
-      const token = issueSessionToken(sessionSecret, {
+      const token = issueSessionToken(signingSecret, {
         now: issuedAt,
         ttlMs,
         ...(typeof nonceFactory === "function" ? { nonce: nonceFactory() } : {})

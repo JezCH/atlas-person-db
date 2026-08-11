@@ -1,59 +1,111 @@
-# ATLAS Person × Polity Database
+# ATLAS Person × Polity Authoring System
 
-ATLAS의 인물–정치체 활동 관계를 관리하는 authoring application입니다.
+ATLAS의 normalized 역사 identity와 인물–정치체 활동 관계를 저작·검토하는 관리 시스템입니다.
 
-## Current production architecture
+## Current architecture
 
-Production runtime is normalized-v2 only.
+Production runtime은 `atlas_v2` only입니다.
 
-- Read: browser → `GET /api/atlas-read` → server-side direct query of `atlas_v2.*`
-- Write: browser/admin → authenticated same-origin session → `POST /api/atlas-mutate` → v2-authoritative transaction → `atlas_v2.*`
-- Admin login: `POST /api/atlas-session` issues a signed HttpOnly session cookie
-- Browser code does not connect to Supabase directly and does not contain database credentials.
-- The retired MVP table `public.person_politics` and compatibility view are not valid application dependencies.
+```text
+Browser / Admin
+  ├─ GET  /api/atlas-read
+  ├─ POST /api/atlas-session
+  ├─ POST /api/atlas-identity
+  ├─ POST /api/atlas-mutate
+  └─ GET|POST /api/atlas-duplicate-review
+          ↓
+Authenticated same-origin server boundary
+          ↓
+PostgreSQL transaction services
+          ↓
+      atlas_v2.*
+```
 
-The public API surface is intentionally limited to:
+브라우저는 Supabase/PostgreSQL에 직접 접속하지 않으며 DB credential을 포함하지 않습니다. 퇴역한 `public.person_politics`와 compatibility view는 runtime·bootstrap 의존성이 아닙니다.
 
-- `api/atlas-read.js`
-- `api/atlas-mutate.js`
-- `api/atlas-session.js`
+## Authoring domains
+
+### Identity authoring
+
+새로운 Person / Polity / Role은 먼저 normalized identity로 생성합니다.
+
+- Person: EN canonical preferred name + KO preferred display name을 한 SERIALIZABLE transaction에서 생성
+- Polity: 동일
+- Role: 명시적 code/category/source label + EN/KO 이름 생성
+- canonical 이름이 기존 alias와 충돌하면 fail closed
+- 한국어 동명이인은 관리자 검토 후 명시적으로 허용 가능
+- 이름은 identity가 아니며 UUID가 authoritative identity입니다.
+
+### Activity authoring
+
+Identity가 존재한 뒤 `person_politics_v2` 활동 관계를 생성·수정·삭제합니다.
+
+Semantic activity identity는 다음 6개 차원 전체입니다.
+
+```text
+Person + Polity + activity_start + activity_end + Role(nullable) + Period basis
+```
+
+update/delete는 normalized relationship UUID를 사용합니다.
+
+### Duplicate review / merge
+
+Phase 9 evidence-based duplicate system은 현재 기능입니다.
+
+- deterministic candidate detection
+- evidence fingerprint
+- `MERGE` / `KEEP_SEPARATE` / `REVIEW`
+- MERGE approval과 실제 merge 분리
+- explicit survivor selection
+- explicit relationship reconciliation
+- SERIALIZABLE merge transaction
+- live evidence revalidation
+- full merge audit
+
+자동 fuzzy merge/delete는 없습니다.
+
+## Database reconstruction
+
+현재 normalized schema의 clean-database 기준본은:
+
+`db/schema/atlas_v2.current.sql`
+
+입니다. 이 파일은 **새 PostgreSQL에서 현재 schema를 재구축하기 위한 baseline**이며 기존 DB에 덮어쓰는 migration이 아닙니다. 자세한 계약은 `db/README.md`를 따릅니다.
+
+## Verification
+
+```bash
+npm ci
+npm test
+npm run test:runtime
+npm run test:schema   # fresh PostgreSQL DATABASE_URL 필요
+```
+
+GitHub의 current CI gate는 `.github/workflows/atlas-integrity.yml` 하나입니다. 모든 `tests/*.test.mjs`, runtime legacy reachability, fresh PostgreSQL schema rebuild를 검증합니다.
 
 ## Server environment
 
-Production requires server-side environment variables. Do not expose these in browser JavaScript.
+필수:
 
-- `SUPABASE_DB_URL` — PostgreSQL connection string used only by server functions / protected workflows
-- `ATLAS_MUTATION_TOKEN` — server mutation credential and session signing secret
-- `ATLAS_ADMIN_PASSWORD` — human administrator login credential; keep separate from `ATLAS_MUTATION_TOKEN`
+- `SUPABASE_DB_URL`
+- `ATLAS_MUTATION_TOKEN`
+- `ATLAS_ADMIN_PASSWORD`
 
-Environment changes on Vercel require a new Production deployment.
+권장 hardening:
 
-## Database schema policy
+- `ATLAS_SESSION_SECRET` — browser session signing 전용 secret. 설정되면 mutation bearer token과 분리됩니다. 미설정 환경은 배포 호환성을 위해 `ATLAS_MUTATION_TOKEN`으로 fallback합니다.
+- `SUPABASE_DB_CA` — Supabase database CA PEM. 설정되면 PostgreSQL client가 certificate verification을 강제합니다.
 
-The old root `schema.sql` MVP bootstrap has been retired and must not be recreated or executed. It created `public.person_politics`, which is no longer part of the production architecture.
+브라우저 JavaScript에 이 값을 넣지 마십시오.
 
-All current schema evolution must target the normalized `atlas_v2` model through reviewed migrations and protected database workflows. Historical migration/audit evidence is retained under `migration/`, but historical scripts are not production runtime entrypoints.
+## Documentation source of truth
 
-A fresh database must never be initialized by restoring the retired `public.person_politics` schema as an intermediate application dependency.
+- `ARCHITECTURE_INVARIANTS.md` — runtime/보안/transaction 불변조건
+- `DATA_MODEL.md` — normalized entity·relationship·duplicate semantics
+- `OPERATIONS.md` — 환경변수·배포·검증·복구 절차
+- `db/README.md` — schema baseline 정책
+- `migration/` — 과거 migration/audit evidence. 현재 runtime 설계 문서가 아님
 
-## Authoring behavior
+## Historical evidence
 
-The current UI supports:
-
-- create/update/delete person–polity activity relationships
-- desktop table and mobile presentation
-- search and polity filtering
-- Excel import/export
-- BCE years as signed integers (`-44` = 44 BCE)
-- nullable role semantics
-- normalized relationship UUIDs as authoritative update/delete identifiers
-
-Writes fail closed on unresolved/ambiguous exact identities and on new semantic duplicates. No fuzzy automatic merge/delete is performed by the runtime.
-
-## Administration
-
-`admin.html` currently exposes only the minimum authenticated normalized-v2 input path. The old string-based duplicate/audit panel has been retired. A new evidence-based duplicate review system is a separate future feature.
-
-## Migration evidence
-
-Phase 6–8 migration, cutover, observation and retirement evidence is retained under `migration/`. Runtime retirement is guarded by the C7/C8 zero-dependency contract, and final legacy database-object retirement is guarded by C9.
+Phase 6–9의 migration, cutover, retirement, duplicate-review 증거는 `migration/`에 남아 있습니다. 역사적 스크립트나 보고서가 현재 runtime entrypoint라는 의미는 아닙니다.

@@ -9,6 +9,7 @@ const identityApi = fs.readFileSync(new URL('../api/atlas-identity.js', import.m
 const mutateApi = fs.readFileSync(new URL('../api/atlas-mutate.js', import.meta.url), 'utf8');
 const readApi = fs.readFileSync(new URL('../api/atlas-read.js', import.meta.url), 'utf8');
 const sessionApi = fs.readFileSync(new URL('../api/atlas-session.js', import.meta.url), 'utf8');
+const postgresClient = fs.readFileSync(new URL('../server/atlas-postgres-client.js', import.meta.url), 'utf8');
 const pkg = JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
 const index = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const admin = fs.readFileSync(new URL('../admin.html', import.meta.url), 'utf8');
@@ -23,29 +24,29 @@ test('Vercel exposes exactly the current ATLAS API entrypoints', () => {
   ]);
 });
 
-test('database-backed entrypoints use server handlers and pg clients only', () => {
-  assert.match(duplicateReviewApi, /require\("pg"\)/);
-  assert.match(duplicateReviewApi, /createDuplicateReviewHandler/);
-  assert.match(identityApi, /require\("pg"\)/);
-  assert.match(identityApi, /createIdentityHandler/);
-  assert.match(mutateApi, /require\("pg"\)/);
-  assert.match(mutateApi, /createVercelMutationHandler/);
-  assert.match(readApi, /require\("pg"\)/);
-  assert.match(readApi, /createNormalizedReadHandler/);
-  for (const source of [duplicateReviewApi, identityApi, mutateApi, readApi]) {
-    assert.match(source, /await client\.connect\(\)/);
+test('database-backed entrypoints share one server PostgreSQL client boundary', () => {
+  const sources = [duplicateReviewApi, identityApi, mutateApi, readApi];
+  for (const source of sources) {
+    assert.match(source, /atlas-postgres-client\.js/);
+    assert.match(source, /createPostgresClient/);
+    assert.doesNotMatch(source, /require\("pg"\)|new Client\(/);
     assert.doesNotMatch(source, /service_role|postgres:\/\/|postgresql:\/\//);
   }
+  assert.match(postgresClient, /require\("pg"\)/);
+  assert.match(postgresClient, /new Client\(/);
+  assert.match(postgresClient, /SUPABASE_DB_CA/);
 });
 
 test('session entrypoint is the only browser authentication endpoint', () => {
-  assert.match(sessionApi, /atlas-session-auth|createSessionApi|createSession/);
+  assert.match(sessionApi, /atlas-session-auth|createSessionHandler/);
   assert.doesNotMatch(sessionApi, /person_politics|atlas_v2\./);
 });
 
-test('server runtime dependency is explicit', () => {
+test('server runtime dependency is explicit and lock-backed', () => {
   assert.equal(pkg.private, true);
   assert.equal(typeof pkg.dependencies?.pg, 'string');
+  assert.equal(typeof pkg.scripts?.test, 'string');
+  assert.equal(fs.existsSync(new URL('../package-lock.json', import.meta.url)), true);
 });
 
 test('browser pages do not load server entrypoints or pg', () => {

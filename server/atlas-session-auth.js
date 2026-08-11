@@ -12,6 +12,15 @@ function requireEnv(env, name) {
   return value;
 }
 
+function optionalEnv(env, name) {
+  const value = String(env?.[name] || "").trim();
+  return value || null;
+}
+
+function sessionSecret(env = process.env) {
+  return optionalEnv(env, "ATLAS_SESSION_SECRET") || requireEnv(env, "ATLAS_MUTATION_TOKEN");
+}
+
 function safeTokenEqual(provided, expected) {
   if (!provided || !expected) return false;
   const left = Buffer.from(String(provided));
@@ -106,14 +115,15 @@ function createHeaderAuthorizer({ env = process.env } = {}) {
 }
 
 function createMutationAuthorizer({ env = process.env, now = () => Date.now() } = {}) {
-  const secret = requireEnv(env, "ATLAS_MUTATION_TOKEN");
+  const mutationSecret = requireEnv(env, "ATLAS_MUTATION_TOKEN");
+  const browserSessionSecret = sessionSecret(env);
   return async function authorize(request = {}) {
     const headers = request.headers || {};
     const provided = bearerToken(headers);
-    if (safeTokenEqual(provided, secret)) return { authorized: true, method: "bearer" };
+    if (safeTokenEqual(provided, mutationSecret)) return { authorized: true, method: "bearer" };
 
     const cookies = parseCookies(headers);
-    if (verifySessionToken(cookies[SESSION_COOKIE], secret, { now: now() })) {
+    if (verifySessionToken(cookies[SESSION_COOKIE], browserSessionSecret, { now: now() })) {
       return { authorized: true, method: "session" };
     }
     return { authorized: false, reason: "unauthorized" };
@@ -125,6 +135,8 @@ module.exports = Object.freeze({
   SESSION_VERSION,
   DEFAULT_SESSION_TTL_MS,
   requireEnv,
+  optionalEnv,
+  sessionSecret,
   safeTokenEqual,
   bearerToken,
   parseCookies,

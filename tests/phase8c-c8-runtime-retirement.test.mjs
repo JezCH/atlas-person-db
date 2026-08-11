@@ -31,14 +31,12 @@ test('v2-authoritative service uses extracted request helpers, not legacy mutati
   assert.doesNotMatch(utils, /executeLegacy|public\.person_politics|atlas_person_politics_compat_v1/);
 });
 
-test('historical C8 anchor workflows remain recorded without constraining future successor workflow names', () => {
+test('historical C8 workflow manifest remains audit evidence while ATLAS Integrity is the sole current gate', () => {
+  assert.ok(Array.isArray(workflowManifest.active_after_c8));
   const workflows = fs.readdirSync(new URL('../.github/workflows/', import.meta.url))
     .filter((name) => name.endsWith('.yml') || name.endsWith('.yaml'))
     .sort();
-  for (const required of workflowManifest.active_after_c8) {
-    assert.equal(workflows.includes(required), true, `${required} must remain active until a later maintenance stage explicitly retires it`);
-  }
-  assert.equal(workflows.some((name) => /dualwrite|dual-write|shadow-validate|legacy-reconciliation/.test(name)), false);
+  assert.deepEqual(workflows, ['atlas-integrity.yml']);
 });
 
 test('C8 historical manifest records the DB objects that were deferred to C9', () => {

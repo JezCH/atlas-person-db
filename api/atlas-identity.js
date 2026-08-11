@@ -1,12 +1,6 @@
 "use strict";
 
-const { Client } = require("pg");
+const { createPostgresClient } = require("../server/atlas-postgres-client.js");
 const { createIdentityHandler } = require("../server/atlas-identity-handler.js");
 
-async function clientFactory(connectionString) {
-  const client = new Client({ connectionString, ssl: { rejectUnauthorized: false } });
-  await client.connect();
-  return client;
-}
-
-module.exports = createIdentityHandler({ clientFactory });
+module.exports = createIdentityHandler({ clientFactory: createPostgresClient });

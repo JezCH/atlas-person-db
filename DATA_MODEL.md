@@ -1,84 +1,188 @@
-# ATLAS Person Activity Model
+# ATLAS Person Activity Data Model
 
-## Current authoritative model
+## 1. Authority
 
-The production relationship model is normalized and lives under the `atlas_v2` schema.
+현재 application model은 normalized `atlas_v2` schema입니다. 핵심 identity/relationship tables:
 
-Core runtime entities include:
+- `persons`, `person_names`
+- `polities`, `polity_names`
+- `roles`, `role_names`
+- `period_bases`, `period_basis_names`
+- `person_politics_v2`
 
-- `atlas_v2.persons`
-- `atlas_v2.person_names`
-- `atlas_v2.polities`
-- `atlas_v2.polity_names`
-- `atlas_v2.roles`
-- `atlas_v2.role_names`
-- `atlas_v2.period_bases`
-- `atlas_v2.person_politics_v2`
+`public.person_politics`와 compatibility view는 퇴역했습니다.
 
-`atlas_v2.person_politics_v2` is the authoritative person–polity activity relationship table. Each row has its own normalized UUID and links normalized person/polity identities plus chronology, optional role, period basis, notes, confidence/chronology metadata and provenance.
+## 2. Person identity
 
-## Identity
+`persons.id` UUID가 Person identity입니다.
 
-Person and polity identity is UUID-based. Human-readable names are resolved through normalized name tables; names are not primary identity keys.
+`persons.canonical_key`는 사람이 읽는 primary key가 아니라 stable unique key입니다. 신규 authoring 시 별도 값을 지정하지 않으면 EN canonical name을 기본값으로 사용합니다. 동명이인처럼 분리가 필요한 경우 explicit key를 지정할 수 있습니다.
 
-The runtime uses exact resolution and fails closed when an identity is unresolved or ambiguous. Fuzzy similarity is not an automatic write/merge rule.
+`person_names`는 locale/name/name_type/preferred metadata를 보존합니다.
 
-## Activity relationship semantics
+신규 historical Person 기본 계약:
 
-A person may have multiple activity rows. Multiple rows are valid when they represent distinct reigns, terms, political entities, military periods, intellectual periods, or other historically separate activity intervals.
+```text
+person_type = historical
+historicity = historical
+EN preferred name_type = canonical
+KO preferred name_type = display
+```
 
-The relationship identity used for new semantic-duplicate prevention is based on the resolved normalized person, polity, chronology, nullable role and period basis. Existing historical duplicate cases are not silently merged by runtime code.
+EN canonical과 KO preferred display는 한 transaction에서 같이 생성되어야 합니다.
 
-`role_id` is nullable. A missing role is stored as SQL `NULL`; no synthetic `unspecified` role is created.
+## 3. Polity identity
 
-## Read projection
+`polities.id` UUID가 Polity identity입니다.
 
-Production reads are assembled directly from normalized tables by the server read service:
+신규 historical Polity 기본 계약:
 
-`person_politics_v2 + person_names + polity_names + roles/role_names + period_bases`
+```text
+polity_type = historical_polity
+historicity = historical
+EN preferred name_type = canonical
+KO preferred name_type = display
+```
 
-Canonical English identity values and Korean display values are separate. The browser receives normalized relationship UUIDs and Korean display fields while canonical values remain available for stable internal identity/search/export behavior.
+Person과 마찬가지로 이름 자체가 identity는 아닙니다.
 
-## Write model
+## 4. Role vocabulary
 
-Production create/update/delete/import operations use the v2-authoritative PostgreSQL transaction path only.
+`roles.id` UUID와 unique `roles.code`가 vocabulary identity입니다.
 
-- create/import records receive normalized UUIDs and runtime provenance
-- update/delete address the normalized relationship UUID directly
-- duplicate introduction fails closed
-- exact request/provenance semantics are retained for replay/idempotency where supported
+Role authoring은 다음을 명시합니다.
 
-## Phase 9 duplicate-review and merge domain
+- code
+- category
+- source_label
+- EN preferred role name
+- KO preferred role name
 
-The administrator duplicate domain contains:
+현재 relationship exact resolver가 code/source label/name을 사용하므로 Role vocabulary ambiguity를 자동 허용하지 않습니다.
 
-- `atlas_v2.person_duplicate_candidates`
-- `atlas_v2.person_duplicate_reviews`
-- `atlas_v2.person_merge_audits`
+## 5. Activity relationship
 
-Candidates are deterministic evidence-bearing suggestions between two normalized person UUIDs. They are never identity keys or automatic merge instructions. Administrator decisions are `MERGE`, `KEEP_SEPARATE`, or `REVIEW`; each decision is appended to the review audit table.
+`person_politics_v2.id` UUID가 authoritative relationship identity입니다.
 
-The candidate evidence fingerprint covers the complete canonical evidence set, including name evidence and chronology/polity context. If the live person state changes after approval, the merge executor recomputes the detector evidence inside the merge transaction and rejects stale approval.
+한 row는:
 
-A `MERGE` decision is approval only. Actual person merge requires a second explicit action that selects the survivor UUID. Execution uses a single PostgreSQL `SERIALIZABLE` transaction with candidate/person locks, request idempotency, live evidence verification and runtime FK-drift checks.
+- person UUID
+- polity UUID
+- optional role UUID
+- period basis UUID
+- activity start/end
+- confidence
+- chronology status
+- notes
+- provenance locator/hash
 
-### Relationship reconciliation during person merge
+를 연결합니다.
 
-When the two persons contain activity rows with the same polity, period basis, start year and end year, those rows form an explicit relationship-reconciliation group. No default resolution is chosen.
+### Semantic duplicate identity
 
-The administrator must choose one of:
+신규 relationship semantic identity는 다음 전체 차원입니다.
 
-- `KEEP_DISTINCT_ROLES`: retain the distinct role rows. If the group contains multiple rows with the same role, the administrator must explicitly select exactly one representative for each duplicated role.
-- `KEEP_ONE_RELATIONSHIP`: explicitly select one relationship UUID to retain and coalesce the other rows in that context into it.
+```text
+person_id
++ polity_id
++ activity_start
++ activity_end
++ role_id (nullable)
++ period_basis_id
+```
 
-Before a redundant relationship UUID is removed, its dependent provenance and descriptive records are preserved:
+Admin import, planner, PostgreSQL transaction이 동일 의미를 사용합니다. 같은 사람/정치체/기간이라도 Role 또는 Period basis가 다르면 별개 relationship일 수 있습니다.
 
-- `person_politics_sources` links are transferred; identical source+locator links collapse deterministically, while the same source with different locator keys fails closed.
-- `chronology_claims` are repointed to the retained relationship.
-- `relationship_descriptions` are repointed to the retained relationship.
+`role_id`가 없으면 SQL `NULL`을 사용합니다. synthetic `unspecified` role은 만들지 않습니다.
 
-The full pre-merge state of both persons and the requested/applied relationship-resolution plan are stored in `person_merge_audits`. Remaining relationship UUIDs are preserved and only their `person_id` is remapped. The source person is deleted last.
+## 6. Read projection
 
-## Retired legacy model
+Server read projection은 normalized tables를 직접 조인합니다.
 
-`public.person_politics` and `public.atlas_person_politics_compat_v1` were retired after the completed Phase 8C migration. Neither object is a valid runtime or bootstrap dependency. Historical migration evidence may still mention them as audit history only.
+```text
+person_politics_v2
+ + person_names
+ + polity_names
+ + roles/role_names
+ + period_bases
+```
+
+EN canonical은 stable internal/search/export 값으로, KO preferred는 UI display 값으로 사용합니다. Browser에는 relationship UUID가 함께 전달됩니다.
+
+## 7. Write model
+
+### Identity writes
+
+`/api/atlas-identity` → `server/atlas-identity-service.js` → SERIALIZABLE transaction.
+
+- canonical key replay는 exact same metadata일 때만 idempotent reuse.
+- canonical key가 다른 entity와 충돌하면 fail closed.
+- Person/Polity canonical EN이 기존 alias와 충돌하면 fail closed.
+- KO 동명이인은 검토 없이 자동 통합하지 않음.
+
+### Relationship writes
+
+`/api/atlas-mutate` → transport → v2-authoritative mutation service → deterministic planner → transaction.
+
+Active operations:
+
+- create
+- update
+- delete
+- import
+
+update/delete는 normalized relationship UUID를 사용합니다.
+
+## 8. Duplicate candidate/review domain
+
+현재 tables:
+
+- `person_duplicate_candidates`
+- `person_duplicate_reviews`
+- `person_merge_audits`
+
+Candidate는 deterministic evidence-bearing suggestion입니다. identity 결론이 아닙니다.
+
+Decision:
+
+- `MERGE`
+- `KEEP_SEPARATE`
+- `REVIEW`
+
+Evidence fingerprint는 name과 polity/chronology context를 포함한 canonical evidence 전체에 묶입니다.
+
+## 9. Person merge
+
+`MERGE` decision은 실행 승인이며 실제 merge와 분리됩니다.
+
+실제 merge는:
+
+1. survivor UUID를 명시.
+2. candidate/person/activity를 lock.
+3. live detector evidence 재계산.
+4. stale approval 거부.
+5. 필요한 relationship reconciliation을 명시적으로 적용.
+6. dependent provenance/claims/descriptions 보존.
+7. survivor에 relationship remap.
+8. source person을 마지막에 삭제.
+9. full before-state/audit summary 기록.
+
+전체 실행은 하나의 PostgreSQL SERIALIZABLE transaction입니다.
+
+### Relationship reconciliation
+
+같은 polity + period basis + start/end context의 rows는 conflict group이 될 수 있습니다.
+
+허용 action:
+
+- `KEEP_DISTINCT_ROLES`
+  - 다른 Role은 유지.
+  - 동일 Role duplicate는 representative relationship UUID를 명시.
+- `KEEP_ONE_RELATIONSHIP`
+  - context 전체에서 유지할 relationship UUID 하나를 명시.
+
+`person_politics_sources`, `chronology_claims`, `relationship_descriptions`는 redundant relationship 삭제 전에 보존/이동됩니다.
+
+## 10. Schema baseline
+
+현재 DB structure의 clean reconstruction source는 `db/schema/atlas_v2.current.sql`입니다. Live row counts는 data state이며 schema contract가 아닙니다.
