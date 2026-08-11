@@ -1,6 +1,7 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "ignoreCommand": "test \"$VERCEL_ENV\" != \"production\"",
   "headers": [
     {
       "source": "/(.*)\\.html",
