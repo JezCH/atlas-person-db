@@ -45,7 +45,7 @@ const SOURCES = Object.freeze({
   },
   regionalTokugawa: {
     title: 'Regional Authority during the Tokugawa Period',
-    author: 'Luke S. Roberts',
+    author: 'David L. Howell',
     institution: 'Cambridge University Press / The New Cambridge History of Japan',
     year: 2023,
     url: 'https://www.cambridge.org/core/books/abs/new-cambridge-history-of-japan/regional-authority-during-the-tokugawa-period/1D7EDF841214814E9769E4392A31C392',
@@ -77,7 +77,7 @@ const SOURCES = Object.freeze({
   },
   sengokuLocalAuthority: {
     title: 'Muromachi local government: shugo and kokujin',
-    author: 'Yamamura Kozo volume / chapter authors',
+    author: 'Imatani Akira / Suzanne Gay',
     institution: 'Cambridge University Press / The Cambridge History of Japan',
     year: 1990,
     url: 'https://www.cambridge.org/core/books/cambridge-history-of-japan/muromachi-local-government-shugo-and-kokujin/2C7AE60F634305049BE5683C5155B229',
@@ -85,7 +85,7 @@ const SOURCES = Object.freeze({
   },
   hideyoshiState: {
     title: 'Foreign faith and rising state: An examination of state-building dynamics in late 16th-century Japan',
-    author: 'peer-reviewed article',
+    author: 'Minzhao Wang / Austin Michael Mitchell / Weiwen Yin',
     institution: 'Cambridge University Press / Political Science Research and Methods',
     year: 2025,
     url: 'https://www.cambridge.org/core/journals/political-science-research-and-methods/article/foreign-faith-and-rising-state-an-examination-of-statebuilding-dynamics-in-late-16thcentury-japan/566C0575FE9C7FAE53079ED1BB302C17',
