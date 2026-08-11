@@ -1,0 +1,35 @@
+{
+  "schema": "atlas-authoring-manifest/v2",
+  "request_id": "person:ngawang-lobsang-gyatso:1642-1682:ganden-phodrang:dalai-lama:reign:v2",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Ngawang Lobsang Gyatso",
+    "display_name_ko": "아왕 롭상 갸초",
+    "canonical_key": null,
+    "person_type": "historical",
+    "historicity": "historical",
+    "allow_display_name_collision": false
+  },
+  "polity_identity": {
+    "canonical_name_en": "Ganden Phodrang",
+    "display_name_ko": "간덴 포당",
+    "canonical_key": null,
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "allow_display_name_collision": false
+  },
+  "role_identity": {
+    "code": "dalai-lama",
+    "category": "ruler",
+    "source_label": "Dalai Lama",
+    "display_name_ko": "달라이 라마"
+  },
+  "activity": {
+    "politic_name": "Ganden Phodrang",
+    "activity_start": 1642,
+    "activity_end": 1682,
+    "role": "Dalai Lama",
+    "period_basis": "reign",
+    "notes": "Fifth Dalai Lama. Tibetan name: ངག་དབང་བློ་བཟང་རྒྱ་མཚོ. Wylie: ngag dbang blo bzang rgya mtsho. Established the Ganden Phodrang government in 1642 and became the spiritual and political head of Tibet."
+  }
+}
