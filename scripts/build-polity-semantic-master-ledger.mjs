@@ -119,8 +119,8 @@ function classifyDependencies(decision, relationHint, contextText = '') {
   if (/RELATION|SERVES|ACTIVE_IN|ACTIVE IN|OPPOSES|GOVERNS|CONTROLS_GOVERNMENT|CONTROLS GOVERNMENT/.test(s)) deps.add('relation_type');
   if (/REGIME|GOVERNMENT_LAYER|GOVERNANCE_CONTEXT|FIFTH REPUBLIC|GANDEN PHODRANG/.test(s)) deps.add('governance_context');
   if (/CONTINUITY|PARENT_CHILD|PARENT-CHILD|STATE_FORM|STATE FORM|TEMPORAL_LABEL|IDENTITY_RECONCILIATION|POLITY_ALIAS|POLITY_NAME/.test(s)) deps.add('polity_identity_model');
-  if (/SPLIT|CHRONOLOGY|BACK_PROJECT|BACK-PROJECT|BACK PROJECTION|UPDATE_ACTIVITY_END/.test(s)) deps.add('chronology_correction');
-  if (/SUB_YEAR|SUB-YEAR|MONTH|DAY PRECISION/.test(s)) deps.add('sub_year_precision');
+  if (/SPLIT|CHRONOLOGY|BACK_PROJECT|BACKPROJECT|BACK-PROJECT|BACK PROJECTION|UPDATE_ACTIVITY_END/.test(s)) deps.add('chronology_correction');
+  if (/SUB_YEAR|SUBYEAR|SUB-YEAR|MONTH|DAY PRECISION/.test(s)) deps.add('sub_year_precision');
   if (/RESEARCH|REVIEW|DEFER|UNCERTAIN/.test(s)) deps.add('historical_research');
   if (/LAYERED_AUTHORITY|REGIONAL_AUTHORITY|OVERLORD|TRIBUTARY|DEPENDENT|CONSTITUENT/.test(s)) deps.add('polity_relation_model');
   return [...deps].sort();
@@ -213,26 +213,41 @@ for (const row of tableRows) {
   }
 }
 
-// Narrative Stage-2 sections: associate UUIDs and `Decision:` within the same markdown heading section.
+// Stage-2 R1 prose contains both retained and target rows in several sections.
+// Therefore only UUIDs explicitly reviewed as correction targets receive the R1 override.
+const r1TargetDecisions = new Map(Object.entries({
+  '2a749964-c057-5671-bdaa-8388099b871d': 'R1_READY_REMOVE_BACKPROJECTED_ALTERNATIVE',
+  '6bac2b6f-ebf0-5131-bbf2-7fa524bcfae8': 'R1_READY_UPDATE_ACTIVITY_END',
+  'e4b374f5-ee25-5c12-80bf-5b7b1d2d149c': 'R1_READY_REMOVE_BACKPROJECTED_ALTERNATIVE',
+  '4ac4c38c-6d8b-55ce-b999-b0639e67eb22': 'R1_BLOCKED_REGIME_LAYER',
+  '7a89364b-dacf-5798-9a6d-dd312cbbee4d': 'R1_BLOCKED_RELATION_SEMANTICS',
+  'e5337054-ff56-58fd-a105-ea6d71d4ef33': 'R1_BLOCKED_RELATION_AND_ROLE_SPLIT',
+  '0c084a88-58be-52e8-81bb-b73bf0a11bb1': 'R1_BLOCKED_SUBYEAR_PRECISION',
+  'b651ff3e-0df1-552a-9134-56ca95e9f3be': 'R1_DEFER_TARGET_POLITY',
+  '7eefdc4d-8aec-5689-b4d8-6b1745240581': 'R1_DEFER_LAYERED_HAN_WEI_TARGET',
+  'f64072c1-a665-5e09-9581-ab5d8cf766a9': 'R1_DEFER_PRE221_SHU_TARGET',
+  'df6cc626-135e-5abc-ae54-6dc1f64ac2aa': 'R1_DEFER_PRE221_SHU_TARGET',
+  'b16e2fb0-7515-5bd6-8aa0-0f921f55b63f': 'R1_DEFER_PRE221_SHU_TARGET',
+}));
+
 for (const [file, text] of fileTexts.entries()) {
   if (!/STAGE2_R1_CORRECTION_DECISION_LEDGER/.test(file)) continue;
-  const sections = text.split(/(?=^###\s+)/m);
-  for (const section of sections) {
-    const decision = section.match(/Decision:\s*`([^`]+)`/i)?.[1] ?? null;
-    if (!decision) continue;
-    const uuids = section.match(UUID_RE) ?? [];
-    for (const uuid of uuids) {
-      addCandidate(uuid, {
-        kind: 'stage2_narrative',
-        file,
-        line: text.slice(0, text.indexOf(section)).split(/\r?\n/).length,
-        decision,
-        relation_hint: null,
-        prior_source: null,
-        context_text: section.slice(0, 1800),
-        priority: filePriority(file),
-      });
-    }
+  const lines = text.split(/\r?\n/);
+  for (const [uuid, decision] of r1TargetDecisions) {
+    const lineIndex = lines.findIndex((line) => line.toLowerCase().includes(uuid));
+    if (lineIndex < 0) throw new Error(`R1 target UUID ${uuid} missing from ${file}`);
+    const from = Math.max(0, lineIndex - 8);
+    const to = Math.min(lines.length, lineIndex + 24);
+    addCandidate(uuid, {
+      kind: 'stage2_r1_target',
+      file,
+      line: lineIndex + 1,
+      decision,
+      relation_hint: null,
+      prior_source: null,
+      context_text: lines.slice(from, to).join('\n'),
+      priority: filePriority(file),
+    });
   }
 }
 
@@ -393,6 +408,9 @@ const summary = {
 
 if (summary.r0_drop_count !== 6 || summary.r0_keep_count !== 6) {
   throw new Error(`expected R0 exact duplicate keep/drop 6/6; got ${summary.r0_keep_count}/${summary.r0_drop_count}`);
+}
+if (summary.r1_ready_count !== 3) {
+  throw new Error(`expected exactly 3 reviewed R1-ready targets; got ${summary.r1_ready_count}`);
 }
 
 const master = {
