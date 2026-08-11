@@ -1,7 +1,7 @@
 "use strict";
 
 const crypto = require("node:crypto");
-const { createIdentityService, normalizeExact } = require("./atlas-identity-service.js");
+const { createPerson, normalizeExact } = require("./atlas-identity-service.js");
 const { createV2AuthoritativeTx, comparablePayload } = require("./atlas-postgres-v2-authoritative-transaction.js");
 
 function stable(value) {
@@ -88,7 +88,7 @@ function createAuthoringManifestService({ client } = {}) {
           });
         }
 
-        const identity = await createIdentityService({ client }).mutate("create_person", person);
+        const identity = await createPerson(client, person);
         const activityPayload = activityFromManifest(person.canonical_name_en, activity);
         const activityTx = createV2AuthoritativeTx(client);
         const created = await activityTx.executeV2Authoritative({
