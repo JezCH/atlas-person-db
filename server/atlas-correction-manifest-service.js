@@ -200,8 +200,9 @@ async function verifyAppliedState(client, manifest) {
   }
 }
 
-function createCorrectionManifestService({ client } = {}) {
+function createCorrectionManifestService({ client, coalesce = coalesceRelationship } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
+  if (typeof coalesce !== "function") throw new Error("Relationship coalesce primitive is required");
 
   async function execute(rawManifest, { dryRun = false } = {}) {
     const manifest = requireManifest(rawManifest);
@@ -257,7 +258,7 @@ function createCorrectionManifestService({ client } = {}) {
       const outcomes = [];
       let collapsedSourceLinks = 0;
       for (const item of prepared) {
-        const outcome = await coalesceRelationship(
+        const outcome = await coalesce(
           client,
           item.operation.keep_relationship_id,
           item.operation.drop_relationship_id
