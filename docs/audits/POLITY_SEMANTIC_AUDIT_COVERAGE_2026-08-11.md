@@ -12,19 +12,20 @@ The audit must be provably exhaustive rather than a sequence of memorable exampl
 
 No claim of `full audit complete` is allowed until every frozen Activity UUID is covered and the post-2026-08-05 Production delta is reconciled with the same rules.
 
-## 2. Current exact coverage — after Wave 10
+## 2. Current exact coverage — after Wave 11
 
 - frozen baseline Activity rows: **309**
 - unique Activity UUIDs individually researched/reviewed in Waves 1–7: **71**
 - additional low-risk Activity UUIDs rule-closed in Wave 8: **96**
 - additional city/local-authority + Shu-Han/Jiaozhou Activity UUIDs audited in Wave 9: **13**
 - additional late-Han fragmented-authority Activity UUIDs audited in Wave 10: **14**
-- total frozen Activity UUIDs covered: **194 / 309 = 62.78%**
-- frozen Activity UUIDs still not covered: **115**
+- additional non-ruler/mobile-activity Activity UUIDs audited in Wave 11: **13**
+- total frozen Activity UUIDs covered: **207 / 309 = 66.99%**
+- frozen Activity UUIDs still not covered: **102**
 - current Production delta after 2026-08-05: **not reconciled yet**
 - Production data mutations performed by this audit: **0**
 
-The first 71 rows were deliberately concentrated in high-risk semantic clusters. Wave 8 used those calibrated rules to close low-risk state-polity rows. Wave 9 established consistent treatment for city/local polities and exposed Shu-Han back-projection. Wave 10 established the required distinction between late-Han formal sovereignty and de facto regional territorial authority, including the high-priority `Cao Cao -> Cao Wei 196–220` anachronism.
+The first 71 rows were deliberately concentrated in high-risk semantic clusters. Wave 8 used those calibrated rules to close low-risk state-polity rows. Wave 9 established consistent treatment for city/local polities and exposed Shu-Han back-projection. Wave 10 separated late-Han formal sovereignty from de facto regional territorial authority. Wave 11 proved that Person–Polity is not a substitute for biography: long-distance travelers, activists and intellectuals often require `active_in/opposes/serves` plus Person–Place/Event relations rather than one Polity stretched across an entire career.
 
 ## 3. Coverage sources
 
@@ -40,6 +41,7 @@ The first 71 rows were deliberately concentrated in high-risk semantic clusters.
 | 8 | obvious low-risk recognized political entities | rule-based UUID closure |
 | 9 | city-polity/local authority + Shu-Han chronology + Jiaozhou defer | individually researched |
 | 10 | late-Han formal-vs-effective authority + Cao Cao anachronism | individually researched |
+| 11 | non-ruler / intellectual / religious / activist / traveler relations | individually researched |
 
 Authoritative files:
 
@@ -53,6 +55,7 @@ Authoritative files:
 - `POLITY_SEMANTIC_AUDIT_WAVE8_2026-08-11.md`
 - `POLITY_SEMANTIC_AUDIT_WAVE9_2026-08-11.md`
 - `POLITY_SEMANTIC_AUDIT_WAVE10_2026-08-11.md`
+- `POLITY_SEMANTIC_AUDIT_WAVE11_2026-08-11.md`
 
 ## 4. Rules now considered unsafe
 
@@ -68,6 +71,8 @@ The completed waves have falsified several tempting bulk rules:
 - `recognized Polity => whole Activity automatically correct` — false; valid Polity identity can coexist with wrong chronology or wrong relation semantics.
 - `later successful state label can be projected backward over its founder's whole rise` — false; Shu-Han 211 and Cao Wei 196 are direct counterexamples.
 - `formal allegiance => actual map territory` — false; late-Han governors/warlords prove that nominal imperial membership and effective regional control must be modeled separately.
+- `homeland/state context => person's whole career polity` — false for Ibn Battuta, Leonardo, Lafayette, Confucius and similar mobile biographies.
+- `opposes => foreign enemy` — false; a person may live under/belong to a polity while opposing its regime, laws or colonial order.
 
 ## 5. Important unresolved or correction-grade clusters already found
 
@@ -83,21 +88,14 @@ The completed waves have falsified several tempting bulk rules:
 - late-Han regional powers require formal-parent vs effective-control layering.
 - Lakshmibai/Jhansi requires split around 1854 annexation and 1857 revolt administration.
 - Shi Xie/Jiaozhou remains explicit `RESEARCH`, not guessed.
+- long mobile careers such as Ibn Battuta/Leonardo/Lafayette require multiple temporal contexts rather than a single homeland Polity Activity.
+- claimant governments such as Azad Hind require claimed vs effective/administrative control separation.
 - Sun Yat-sen/ROC continuous 1912–1925 Activity likely conflates distinct offices/revolutionary phases.
 - historiographic-period labels such as Egyptian New Kingdom, Swedish Empire and Old Babylonian Empire still need identity/name review.
 
-## 6. Remaining 115-row plan
+## 6. Remaining 102-row plan
 
-### Pass B — remaining non-ruler relation audit
-
-Generals, ministers, philosophers, diplomats, scientists, religious figures and rebels.
-
-Goal:
-- preserve valid Polity identity;
-- distinguish `rules / serves / active_in / opposes / claims_rule / other`;
-- do not convert mere activity context into personal territorial rule.
-
-### Pass E — remaining temporal-name / period-label audit
+### Pass E — temporal-name / period-label audit
 
 Examples:
 - `Egyptian New Kingdom`
@@ -108,15 +106,21 @@ Examples:
 Goal:
 - decide whether each is a true separate Polity identity, a temporal preferred name/state form, or a historiographic label attached to a continuing polity.
 
-### Pass F — remaining unusual regional/traditional cases
+### Pass F — unusual regional/traditional cases
 
 Examples:
 - `Nanzhong / Meng Huo`
 - `Yamatai / Himiko`
+- `Kievan Rus' / Rurik`
 - other macro-region, tradition-heavy, or uncertain-polity rows
 
 Goal:
-- avoid converting geographic/traditional labels into a polity merely because they currently occupy the Polity column.
+- avoid converting geographic/traditional labels into a polity merely because they currently occupy the Polity column;
+- preserve historically meaningful but disputed political entities with explicit confidence rather than deleting them.
+
+### Pass G — remaining ordinary but unclosed rows
+
+Apply the now-calibrated rules to rulers, generals, ministers and statespeople that were not included in Wave 8, while reserving any chronology/identity anomaly for individual research.
 
 ### Final residual pass
 
