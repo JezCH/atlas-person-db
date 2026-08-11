@@ -83,6 +83,15 @@ jobs:
             --out artifacts/polity-semantic-master-ledger.json \
             --summary artifacts/polity-semantic-master-ledger-summary.json
 
+      - name: Derive Stage 2 work queues
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/build-stage2-work-queues.mjs \
+            --ledger artifacts/polity-semantic-master-ledger.json \
+            --out artifacts/stage2-work-queues.json \
+            --summary artifacts/stage2-work-queues-summary.json
+
       - name: Upload polity semantic master ledger evidence
         uses: actions/upload-artifact@v4
         with:
@@ -90,5 +99,7 @@ jobs:
           path: |
             artifacts/polity-semantic-master-ledger.json
             artifacts/polity-semantic-master-ledger-summary.json
+            artifacts/stage2-work-queues.json
+            artifacts/stage2-work-queues-summary.json
           if-no-files-found: error
           retention-days: 7
