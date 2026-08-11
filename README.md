@@ -13,10 +13,13 @@ Browser / Admin
   ├─ POST /api/atlas-identity
   ├─ POST /api/atlas-mutate
   └─ GET|POST /api/atlas-duplicate-review
+
+GitHub authoring request
+  └─ authoring/requests/*.json
           ↓
-Authenticated same-origin server boundary
+reviewed manifest orchestration
           ↓
-PostgreSQL transaction services
+existing identity/activity transaction services
           ↓
       atlas_v2.*
 ```
@@ -47,6 +50,24 @@ Person + Polity + activity_start + activity_end + Role(nullable) + Period basis
 ```
 
 update/delete는 normalized relationship UUID를 사용합니다.
+
+### GitHub authoring manifests
+
+`authoring/requests/*.json`은 ChatGPT/GitHub 작업에서 검토 가능한 신규 등록 요청을 남기는 표준 진입점입니다.
+
+이 파일 자체가 runtime DB가 되는 것은 아닙니다. `server/atlas-authoring-manifest-service.js`가 manifest를 검증하고 기존 identity/activity transaction primitives를 재사용하여 `atlas_v2`에 반영합니다.
+
+핵심 원칙:
+
+- GitHub manifest는 audit/review surface
+- `atlas_v2`만 authoritative runtime data
+- raw SQL 직접 등록 금지
+- legacy table write 금지
+- 동일 `request_id`는 idempotent replay
+- 동일 `request_id`에 다른 payload가 들어오면 fail closed
+- Polity/Role은 기존 normalized vocabulary를 exact resolve하며, 미해결/모호하면 중단
+
+세부 형식은 `authoring/README.md`를 따릅니다.
 
 ### Duplicate review / merge
 
@@ -104,6 +125,7 @@ GitHub의 current CI gate는 `.github/workflows/atlas-integrity.yml` 하나입�
 - `DATA_MODEL.md` — normalized entity·relationship·duplicate semantics
 - `OPERATIONS.md` — 환경변수·배포·검증·복구 절차
 - `db/README.md` — schema baseline 정책
+- `authoring/README.md` — GitHub authoring manifest contract
 - `migration/` — 과거 migration/audit evidence. 현재 runtime 설계 문서가 아님
 
 ## Historical evidence
