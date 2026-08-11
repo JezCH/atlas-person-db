@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { governanceTypes } from './stage2-domain-contract.mjs';
 
 const args = process.argv.slice(2);
 const arg = (name, fallback = null) => {
@@ -12,6 +13,7 @@ const outPath = arg('--out', 'artifacts/governance-context-audit.json');
 const summaryPath = arg('--summary', 'artifacts/governance-context-audit-summary.json');
 if (!ledgerPath) throw new Error('--ledger is required');
 
+const GOVERNANCE_TYPES = new Set(governanceTypes);
 const ledger = JSON.parse(fs.readFileSync(ledgerPath, 'utf8'));
 if (ledger.schema !== 'atlas-polity-semantic-master-ledger/v1') {
   throw new Error(`unexpected ledger schema: ${ledger.schema}`);
@@ -119,6 +121,12 @@ const ADDITIONAL_REVIEWED_CASES = Object.freeze({
   }
 });
 
+for (const decision of [...Object.values(OLD_SIGNAL_RECONCILIATION), ...Object.values(ADDITIONAL_REVIEWED_CASES)]) {
+  if (decision.proposed_governance_type && !GOVERNANCE_TYPES.has(decision.proposed_governance_type)) {
+    throw new Error(`reviewed governance decision uses type outside Stage 2 contract: ${decision.proposed_governance_type}`);
+  }
+}
+
 const oldSignalRows = ledger.rows.filter((r) => r.audit?.dependencies?.includes('governance_context'));
 const oldSignalIds = new Set(oldSignalRows.map((r) => r.activity_id));
 const expectedOldIds = new Set(Object.keys(OLD_SIGNAL_RECONCILIATION));
@@ -191,7 +199,7 @@ fs.writeFileSync(outPath, `${JSON.stringify({
     entity: 'GovernanceContext',
     primary_link: 'Polity + temporal interval -> GovernanceContext',
     activity_direct_link: 'DEFERRED_OPTIONAL_ONLY_IF_LAYERED_AUTHORITY_REQUIRES',
-    initial_types: ['government', 'constitutional_regime', 'governing_regime']
+    initial_types: governanceTypes
   },
   summary,
   old_signal_reconciliation: oldReconciliation,
