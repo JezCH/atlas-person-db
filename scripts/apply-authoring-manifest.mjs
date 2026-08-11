@@ -28,7 +28,7 @@ export async function applyManifest({ manifestPath, databaseUrl, migrationPath =
   }
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const manifestPath = process.argv[2] || process.env.ATLAS_AUTHORING_MANIFEST;
   const outcome = await applyManifest({ manifestPath, databaseUrl: process.env.SUPABASE_DB_URL });
   process.stdout.write(`${JSON.stringify(outcome, null, 2)}\n`);
