@@ -161,6 +161,22 @@ jobs:
             --out artifacts/temporal-contract-audit.json \
             --summary artifacts/temporal-contract-audit-summary.json
 
+      - name: Build Stage 2 Production migration preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/build-stage2-preflight.mjs \
+            --master-summary artifacts/polity-semantic-master-ledger-summary.json \
+            --relation-summary artifacts/relation-semantics-audit-summary.json \
+            --readiness-summary artifacts/relation-backfill-readiness-summary.json \
+            --direct-summary artifacts/direct-relation-review-summary.json \
+            --governance-summary artifacts/governance-context-audit-summary.json \
+            --polity-relation-summary artifacts/polity-relation-audit-summary.json \
+            --polity-identity-summary artifacts/polity-identity-audit-summary.json \
+            --temporal-summary artifacts/temporal-contract-audit-summary.json \
+            --out artifacts/stage2-preflight.json \
+            --summary artifacts/stage2-preflight-summary.json
+
       - name: Upload polity semantic master ledger evidence
         uses: actions/upload-artifact@v4
         with:
@@ -184,5 +200,7 @@ jobs:
             artifacts/polity-identity-audit-summary.json
             artifacts/temporal-contract-audit.json
             artifacts/temporal-contract-audit-summary.json
+            artifacts/stage2-preflight.json
+            artifacts/stage2-preflight-summary.json
           if-no-files-found: error
           retention-days: 7
