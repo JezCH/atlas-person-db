@@ -113,6 +113,15 @@ jobs:
             --out artifacts/relation-backfill-readiness.json \
             --summary artifacts/relation-backfill-readiness-summary.json
 
+      - name: Close source-backed direct Relation review
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/build-direct-relation-review.mjs \
+            --readiness artifacts/relation-backfill-readiness.json \
+            --out artifacts/direct-relation-review.json \
+            --summary artifacts/direct-relation-review-summary.json
+
       - name: Audit Governance Context semantics
         shell: bash
         run: |
@@ -162,6 +171,8 @@ jobs:
             artifacts/relation-semantics-audit-summary.json
             artifacts/relation-backfill-readiness.json
             artifacts/relation-backfill-readiness-summary.json
+            artifacts/direct-relation-review.json
+            artifacts/direct-relation-review-summary.json
             artifacts/governance-context-audit.json
             artifacts/governance-context-audit-summary.json
             artifacts/polity-relation-audit.json
