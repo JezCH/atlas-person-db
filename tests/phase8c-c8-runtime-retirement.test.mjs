@@ -31,12 +31,12 @@ test('v2-authoritative service uses extracted request helpers, not legacy mutati
   assert.doesNotMatch(utils, /executeLegacy|public\.person_politics|atlas_person_politics_compat_v1/);
 });
 
-test('historical C8 workflow manifest remains audit evidence while ATLAS Integrity is the sole current gate', () => {
+test('historical C8 workflow manifest remains audit evidence while current workflows stay explicitly bounded', () => {
   assert.ok(Array.isArray(workflowManifest.active_after_c8));
   const workflows = fs.readdirSync(new URL('../.github/workflows/', import.meta.url))
     .filter((name) => name.endsWith('.yml') || name.endsWith('.yaml'))
     .sort();
-  assert.deepEqual(workflows, ['atlas-integrity.yml']);
+  assert.deepEqual(workflows, ['atlas-authoring-apply.yml', 'atlas-integrity.yml']);
 });
 
 test('C8 historical manifest records the DB objects that were deferred to C9', () => {
