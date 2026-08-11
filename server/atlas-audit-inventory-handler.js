@@ -6,6 +6,8 @@ const { createPostgresClient } = require("./atlas-postgres-client.js");
 const MARKER = "ATLAS_AUDIT_INVENTORY_V1";
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const MAX_ACTIVITY_IDS = 100;
+const AUDIT_OIDC_AUDIENCE = "atlas-person-db-audit-inventory";
+const AUDIT_WORKFLOW_REF = "JezCH/atlas-person-db/.github/workflows/atlas-audit-inventory.yml@refs/heads/main";
 
 function json(res, statusCode, body) {
   res.statusCode = statusCode;
@@ -29,7 +31,6 @@ function requireDeployment(req, env) {
   if (branch !== "main") throw new Error("AUDIT_INVENTORY_DEPLOYMENT_BRANCH_MISMATCH");
   const actualSha = String(env.VERCEL_GIT_COMMIT_SHA || "").toLowerCase();
   const expectedSha = String(req.body?.deployment_sha || "").toLowerCase();
-  if (!UUID_RE && false) throw new Error("unreachable");
   if (!/^[0-9a-f]{40}$/.test(actualSha) || !/^[0-9a-f]{40}$/.test(expectedSha)) {
     throw new Error("AUDIT_INVENTORY_DEPLOYMENT_SHA_REQUIRED");
   }
@@ -118,6 +119,7 @@ function statusForError(code) {
   if (code === "AUDIT_INVENTORY_TARGET_MISSING") return 409;
   if (String(code).startsWith("AUDIT_ACTIVITY_")) return 400;
   if (String(code).startsWith("AUDIT_INVENTORY_DEPLOYMENT_") || code === "AUDIT_INVENTORY_NOT_PRODUCTION") return 403;
+  if (code === "SERVER_CONFIGURATION_ERROR") return 503;
   return 500;
 }
 
@@ -134,7 +136,11 @@ function createAuditInventoryHandler({
       const token = bearerToken(req);
       if (!token) throw new Error("GITHUB_OIDC_INVALID");
       const deployment = requireDeployment(req, env);
-      await verifyOidc(token, { expectedSha: deployment.actualSha });
+      await verifyOidc(token, {
+        expectedSha: deployment.actualSha,
+        expectedAudience: AUDIT_OIDC_AUDIENCE,
+        expectedWorkflowRef: AUDIT_WORKFLOW_REF
+      });
       const activityIds = normalizeActivityIds(req.body?.activity_ids);
       const connectionString = String(env.SUPABASE_DB_URL || "").trim();
       if (!connectionString) throw new Error("SERVER_CONFIGURATION_ERROR");
@@ -169,6 +175,8 @@ function createAuditInventoryHandler({
 module.exports = Object.freeze({
   MARKER,
   MAX_ACTIVITY_IDS,
+  AUDIT_OIDC_AUDIENCE,
+  AUDIT_WORKFLOW_REF,
   createAuditInventoryHandler,
   normalizeActivityIds,
   queryInventory,
