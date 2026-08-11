@@ -1,0 +1,29 @@
+{
+  "schema": "atlas-authoring-manifest/v2",
+  "request_id": "person:khri-srong-lde-btsan:756-797:tibetan-empire:emperor:reign:v2",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Khri-sRong lDe-bTsan",
+    "display_name_ko": "티송 데첸",
+    "canonical_key": null,
+    "person_type": "historical",
+    "historicity": "historical",
+    "allow_display_name_collision": false
+  },
+  "polity_identity": {
+    "canonical_name_en": "Tibetan Empire",
+    "display_name_ko": "티베트 제국",
+    "canonical_key": null,
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "allow_display_name_collision": false
+  },
+  "activity": {
+    "politic_name": "Tibetan Empire",
+    "activity_start": 756,
+    "activity_end": 797,
+    "role": "Emperor",
+    "period_basis": "reign",
+    "notes": "Khri Srong lde btsan (Trisong Detsen), ruler of the Tibetan Empire; chronology uses 756-797 for the reign boundary amid source variation around accession and succession."
+  }
+}
