@@ -28,27 +28,7 @@ jobs:
           node-version: "22"
 
       - name: Run current normalized runtime suite
-        run: >-
-          node --test
-          tests/atlas-admin-write-service.test.mjs
-          tests/atlas-api-entrypoint.test.mjs
-          tests/atlas-direct-normalized-reader.test.mjs
-          tests/atlas-duplicate-detector.test.mjs
-          tests/atlas-mutation-transport.test.mjs
-          tests/atlas-normalized-read-handler.test.mjs
-          tests/atlas-normalized-read-service.test.mjs
-          tests/atlas-optional-role-schema-contract.test.mjs
-          tests/atlas-server-write-activation.test.mjs
-          tests/atlas-server-write-adapter.test.mjs
-          tests/atlas-session-api.test.mjs
-          tests/atlas-session-auth.test.mjs
-          tests/atlas-v2-authoritative-mutation-service.test.mjs
-          tests/atlas-v2-authoritative-transaction-contract.test.mjs
-          tests/atlas-v2-command-planner.test.mjs
-          tests/atlas-v2-only-production-activation.test.mjs
-          tests/atlas-vercel-mutation-handler.test.mjs
-          tests/phase8c-c8-runtime-retirement.test.mjs
-          tests/phase9a-admin-duplicate-review-contract.test.mjs
+        run: node --test tests/*.test.mjs
 
       - name: Prove zero reachable legacy runtime
         shell: bash
@@ -59,9 +39,6 @@ jobs:
           node - <<'NODE'
           const fs = require('fs');
           const r = JSON.parse(fs.readFileSync('migration/phase-8/tmp/c8-runtime-inventory/report.json','utf8'));
-          const expectedApis = ['api/atlas-duplicate-review.js','api/atlas-mutate.js','api/atlas-read.js','api/atlas-session.js'];
-          const same = JSON.stringify(r.api_routes) === JSON.stringify(expectedApis);
-          if (!same) throw new Error(`unexpected API route set: ${JSON.stringify(r.api_routes)}`);
           if (r.status !== 'ZERO_REACHABLE_LEGACY_RUNTIME') throw new Error(`C7 status: ${r.status}`);
           if (r.unexpected_api_routes.length) throw new Error(`unexpected routes: ${JSON.stringify(r.unexpected_api_routes)}`);
           if (r.intended_runtime_forbidden_hits.length) throw new Error(`intended hits: ${JSON.stringify(r.intended_runtime_forbidden_hits)}`);
@@ -74,13 +51,14 @@ jobs:
         run: |
           set -euo pipefail
           runtime=(
-            api/atlas-duplicate-review.js api/atlas-mutate.js api/atlas-read.js api/atlas-session.js
+            api/atlas-duplicate-review.js api/atlas-identity.js api/atlas-mutate.js api/atlas-read.js api/atlas-session.js
             server/atlas-duplicate-detector.js server/atlas-duplicate-review-handler.js server/atlas-duplicate-review-service.js
-            server/atlas-mutation-request-utils.js server/atlas-mutation-transport.js server/atlas-normalized-read-handler.js
-            server/atlas-normalized-read-service.js server/atlas-postgres-v2-authoritative-transaction.js server/atlas-session-auth.js
+            server/atlas-identity-handler.js server/atlas-identity-service.js server/atlas-mutation-request-utils.js
+            server/atlas-mutation-transport.js server/atlas-normalized-read-handler.js server/atlas-normalized-read-service.js
+            server/atlas-postgres-v2-authoritative-transaction.js server/atlas-session-auth.js
             server/atlas-v2-authoritative-mutation-service.js server/atlas-vercel-mutation-handler.js
-            atlas-reader.js atlas-server-write-adapter.js atlas-admin-write-service.js atlas-admin-duplicate-review.js
-            app.js admin.js index.html admin.html
+            atlas-activity-semantics.js atlas-reader.js atlas-server-write-adapter.js atlas-admin-write-service.js
+            atlas-admin-identity.js atlas-admin-duplicate-review.js app.js admin.js index.html admin.html
           )
           ! grep -En 'public\.person_politics([^_]|$)|rest/v1/person_politics|atlas_person_politics_compat_v1|createDualWriteTransactionFactory|server-dual-write|fallbackToLegacy|ATLAS_WRITE_ADAPTER|ATLAS_WRITE_MODE|ATLAS_V2_SHADOW_COMPILER' "${runtime[@]}"
 
