@@ -92,6 +92,15 @@ jobs:
             --out artifacts/stage2-work-queues.json \
             --summary artifacts/stage2-work-queues-summary.json
 
+      - name: Audit Person-Polity relation semantics
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/build-relation-semantics-audit.mjs \
+            --ledger artifacts/polity-semantic-master-ledger.json \
+            --out artifacts/relation-semantics-audit.json \
+            --summary artifacts/relation-semantics-audit-summary.json
+
       - name: Upload polity semantic master ledger evidence
         uses: actions/upload-artifact@v4
         with:
@@ -101,5 +110,7 @@ jobs:
             artifacts/polity-semantic-master-ledger-summary.json
             artifacts/stage2-work-queues.json
             artifacts/stage2-work-queues-summary.json
+            artifacts/relation-semantics-audit.json
+            artifacts/relation-semantics-audit-summary.json
           if-no-files-found: error
           retention-days: 7
