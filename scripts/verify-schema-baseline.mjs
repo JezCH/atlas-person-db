@@ -1,8 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
 import pg from 'pg';
 
+const require = createRequire(import.meta.url);
+const { applyAuthoringMigrations } = require('../server/atlas-authoring-migrations.js');
 const { Client } = pg;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const baselinePath = path.join(root, 'db/schema/atlas_v2.current.sql');
@@ -18,6 +21,7 @@ const expectedTables = [
 
 const expectedConstraints = [
   'authoring_manifest_runs_pkey','authoring_manifest_runs_person_id_fkey','authoring_manifest_runs_relationship_id_fkey',
+  'authoring_manifest_runs_manifest_schema_check','authoring_manifest_runs_result_snapshot_check',
   'chronology_claims_pkey','migration_metadata_phase_check','migration_metadata_pkey','period_bases_pkey','period_bases_code_key',
   'period_basis_names_pkey','person_descriptions_pkey','person_duplicate_candidates_candidate_state_check',
   'person_duplicate_candidates_check','person_duplicate_candidates_confidence_check','person_duplicate_candidates_current_decision_check',
@@ -95,6 +99,21 @@ try {
     throw new Error(`null-role semantic index definition drift: ${nullRoleDef}`);
   }
 
+  const authoringColumns = await client.query(`
+    select column_name
+      from information_schema.columns
+     where table_schema='atlas_v2'
+       and table_name='authoring_manifest_runs'
+       and column_name in ('manifest_schema','result_snapshot')
+     order by column_name`);
+  same(authoringColumns.rows.map((row) => row.column_name), ['manifest_schema','result_snapshot'], 'authoring provenance columns');
+
+  const firstMigrationReplay = await applyAuthoringMigrations(client);
+  const secondMigrationReplay = await applyAuthoringMigrations(client);
+  if (firstMigrationReplay.applied.length !== 2 || secondMigrationReplay.applied.length !== 2) {
+    throw new Error('authoring migration registry did not apply the complete ordered set');
+  }
+
   const legacy = await client.query(`
     select to_regclass('public.person_politics') as legacy_table,
            to_regclass('public.atlas_person_politics_compat_v1') as legacy_compat`);
@@ -117,6 +136,8 @@ try {
     tables: expectedTables.length,
     constraints: expectedConstraints.length,
     maintenance_indexes: expectedIndexes.length,
+    authoring_migrations: firstMigrationReplay.applied.length,
+    authoring_migration_replay: true,
     clean_target_guard: true,
     legacy_objects: 0
   }, null, 2));
