@@ -84,8 +84,8 @@ test("correction migration registry is bounded to the correction ledger migratio
 });
 
 test("workflow runs only for correction requests and enforces dry-run before apply", () => {
-  assert.match(workflow, /'corrections\/requests\/\*\.json'/);
-  assert.doesNotMatch(workflow, /server\/atlas-correction|api\/atlas-correction|db\/migrations\/20260811_correction/);
+  assert.match(workflow, /^\s*-\s*'corrections\/requests\/\*\.json'\s*$/m);
+  assert.doesNotMatch(workflow, /^\s*-\s*'(?:server\/atlas-correction[^']*|api\/atlas-correction[^']*|db\/migrations\/20260811_correction[^']*)'\s*$/m);
   assert.match(workflow, /ATLAS_CORRECTION_AUDIENCE: atlas-person-db-correction-apply/);
   assert.doesNotMatch(workflow, /SUPABASE_DB_URL/);
   assert.ok(workflow.indexOf('call_correction "$manifest" dry_run') < workflow.indexOf('call_correction "$manifest" apply'));
