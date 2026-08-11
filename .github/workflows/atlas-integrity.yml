@@ -68,3 +68,27 @@ jobs:
 
       - name: Rebuild current v2 schema on fresh PostgreSQL
         run: npm run test:schema
+
+      - name: Build current polity semantic master ledger
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts
+          curl --fail --silent --show-error --location \
+            --retry 3 --retry-all-errors \
+            https://atlas-person-db.vercel.app/api/atlas-read \
+            --output artifacts/atlas-audit-live-input.json
+          node scripts/build-polity-semantic-master-ledger.mjs \
+            --snapshot artifacts/atlas-audit-live-input.json \
+            --out artifacts/polity-semantic-master-ledger.json \
+            --summary artifacts/polity-semantic-master-ledger-summary.json
+
+      - name: Upload polity semantic master ledger evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-polity-semantic-master-ledger-${{ github.sha }}
+          path: |
+            artifacts/polity-semantic-master-ledger.json
+            artifacts/polity-semantic-master-ledger-summary.json
+          if-no-files-found: error
+          retention-days: 7
