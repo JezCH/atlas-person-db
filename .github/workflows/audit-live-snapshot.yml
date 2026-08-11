@@ -15,6 +15,8 @@ jobs:
   snapshot:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - name: Fetch current public normalized read
         shell: bash
         run: |
@@ -24,15 +26,113 @@ jobs:
             'https://atlas-person-db.vercel.app/api/atlas-read' \
             -o audit-live-snapshot.json
           jq -e '.ok == true and .source == "v2-direct" and (.data | type == "array")' audit-live-snapshot.json >/dev/null
-          jq '{ok, source, relationship_count:(.data|length)}' audit-live-snapshot.json > audit-live-summary.json
-          cat audit-live-summary.json
 
-      - name: Upload read-only snapshot
+      - name: Reconcile audit documents to current Production rows
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, pathlib, re
+
+          live = json.loads(pathlib.Path('audit-live-snapshot.json').read_text())['data']
+          audit_dir = pathlib.Path('docs/audits')
+          files = sorted(audit_dir.glob('POLITY_SEMANTIC_AUDIT*.md'))
+          files = [p for p in files if 'COVERAGE' not in p.name]
+
+          def clean(s):
+              return re.sub(r'[`*_]', '', s).strip()
+
+          def period_pair(s):
+              s = clean(s).replace('—', '–')
+              m = re.fullmatch(r'(-?\d+)\s*[–-]\s*(-?\d+)', s)
+              if not m:
+                  return None
+              return int(m.group(1)), int(m.group(2))
+
+          audited = []
+          for path in files:
+              for lineno, line in enumerate(path.read_text(encoding='utf-8').splitlines(), 1):
+                  if not line.startswith('| `'):
+                      continue
+                  cells = [c.strip() for c in line.strip().strip('|').split('|')]
+                  if len(cells) < 4:
+                      continue
+                  m = re.fullmatch(r'`([0-9a-fA-F-]{36})`', cells[0])
+                  if not m:
+                      continue
+                  pair = period_pair(cells[3])
+                  if not pair:
+                      continue
+                  audited.append({
+                      'old_activity_id': m.group(1).lower(),
+                      'person_name': clean(cells[1]),
+                      'politic_name': clean(cells[2]),
+                      'activity_start': pair[0],
+                      'activity_end': pair[1],
+                      'source_file': path.name,
+                      'source_line': lineno,
+                      'source_row': line,
+                  })
+
+          exact = {}
+          person_polity = {}
+          person_only = {}
+          for a in audited:
+              key = (a['person_name'], a['politic_name'], a['activity_start'], a['activity_end'])
+              exact.setdefault(key, []).append(a)
+              person_polity.setdefault((a['person_name'], a['politic_name']), []).append(a)
+              person_only.setdefault(a['person_name'], []).append(a)
+
+          results = []
+          counts = {'exact':0, 'person_polity_period_drift':0, 'person_only_semantic_drift':0, 'unmapped':0}
+          for r in live:
+              key = (r['person_name'], r['politic_name'], int(r['activity_start']), int(r['activity_end']))
+              if key in exact:
+                  status='exact'
+                  refs=exact[key]
+              elif (r['person_name'], r['politic_name']) in person_polity:
+                  status='person_polity_period_drift'
+                  refs=person_polity[(r['person_name'], r['politic_name'])]
+              elif r['person_name'] in person_only:
+                  status='person_only_semantic_drift'
+                  refs=person_only[r['person_name']]
+              else:
+                  status='unmapped'
+                  refs=[]
+              counts[status] += 1
+              results.append({
+                  'status': status,
+                  'current': r,
+                  'audit_refs': refs,
+              })
+
+          out = {
+              'snapshot_source': 'https://atlas-person-db.vercel.app/api/atlas-read',
+              'current_relationship_count': len(live),
+              'audit_table_rows_parsed': len(audited),
+              'audit_unique_old_activity_ids': len({a['old_activity_id'] for a in audited}),
+              'mapping_counts': counts,
+              'rows': results,
+          }
+          pathlib.Path('audit-live-reconciliation.json').write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding='utf-8')
+          pathlib.Path('audit-live-unmapped.json').write_text(json.dumps([x for x in results if x['status']!='exact'], ensure_ascii=False, indent=2), encoding='utf-8')
+          summary = {
+              'current_relationship_count': len(live),
+              'parsed_audit_rows': len(audited),
+              'unique_old_activity_ids': len({a['old_activity_id'] for a in audited}),
+              **counts,
+          }
+          pathlib.Path('audit-live-summary.json').write_text(json.dumps(summary, indent=2), encoding='utf-8')
+          print(json.dumps(summary, indent=2))
+          PY
+
+      - name: Upload read-only reconciliation
         uses: actions/upload-artifact@v4
         with:
-          name: atlas-audit-live-snapshot
+          name: atlas-audit-live-reconciliation
           path: |
             audit-live-snapshot.json
             audit-live-summary.json
+            audit-live-reconciliation.json
+            audit-live-unmapped.json
           if-no-files-found: error
           retention-days: 7
