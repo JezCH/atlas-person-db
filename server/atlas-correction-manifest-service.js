@@ -103,7 +103,13 @@ function requireManifest(raw) {
   return Object.freeze({ schema: MANIFEST_V1, requestId, operations });
 }
 
+async function correctionLedgerExists(client) {
+  const result = await client.query(`select to_regclass('atlas_v2.correction_manifest_runs')::text as correction_manifest_runs`);
+  return Boolean(result.rows[0]?.correction_manifest_runs);
+}
+
 async function readLedger(client, requestId) {
+  if (!await correctionLedgerExists(client)) return null;
   const result = await client.query(`
     select request_id,manifest_hash,manifest_schema,result_snapshot,applied_at
       from atlas_v2.correction_manifest_runs
@@ -121,14 +127,27 @@ async function loadRelationship(client, id, forUpdate = true) {
   return result.rows[0] || null;
 }
 
+async function lockRelationships(client, ids) {
+  const uniqueIds = [...new Set(ids.map((id) => String(id).toLowerCase()))].sort();
+  if (!uniqueIds.length) return new Map();
+  const result = await client.query(`
+    select id,person_id,polity_id,role_id,period_basis_id,activity_start,activity_end,
+           confidence,chronology_status,legacy_source_key,notes,source_locator,content_hash
+      from atlas_v2.person_politics_v2
+     where id=any($1::uuid[])
+     order by id
+     for update`, [uniqueIds]);
+  return new Map(result.rows.map((row) => [String(row.id).toLowerCase(), row]));
+}
+
 function assertExpectedRelationship(row, expected, relationshipId, label) {
   if (!row) throw new Error(`CORRECTION_${label}_RELATIONSHIP_NOT_FOUND`);
   const checks = [
-    [String(row.id), relationshipId, "ID"],
-    [String(row.person_id), expected.person_id, "PERSON"],
-    [String(row.polity_id), expected.polity_id, "POLITY"],
-    [row.role_id == null ? null : String(row.role_id), expected.role_id, "ROLE"],
-    [String(row.period_basis_id), expected.period_basis_id, "PERIOD_BASIS"],
+    [String(row.id).toLowerCase(), relationshipId, "ID"],
+    [String(row.person_id).toLowerCase(), expected.person_id, "PERSON"],
+    [String(row.polity_id).toLowerCase(), expected.polity_id, "POLITY"],
+    [row.role_id == null ? null : String(row.role_id).toLowerCase(), expected.role_id, "ROLE"],
+    [String(row.period_basis_id).toLowerCase(), expected.period_basis_id, "PERIOD_BASIS"],
     [Number(row.activity_start), expected.activity_start, "START"],
     [Number(row.activity_end), expected.activity_end, "END"],
     [row.notes == null ? null : String(row.notes), expected.notes, "NOTES"],
@@ -172,11 +191,12 @@ function assertReplaySnapshot(snapshot, manifest) {
 }
 
 async function verifyAppliedState(client, manifest) {
+  const ids = manifest.operations.flatMap((operation) => [operation.keep_relationship_id, operation.drop_relationship_id]);
+  const locked = await lockRelationships(client, ids);
   for (const operation of manifest.operations) {
-    const keep = await loadRelationship(client, operation.keep_relationship_id, true);
+    const keep = locked.get(operation.keep_relationship_id) || null;
     assertExpectedRelationship(keep, operation.expected_keep, operation.keep_relationship_id, "REPLAY_KEEP");
-    const drop = await loadRelationship(client, operation.drop_relationship_id, true);
-    if (drop) throw new Error("CORRECTION_REPLAY_DROP_RELATIONSHIP_REAPPEARED");
+    if (locked.has(operation.drop_relationship_id)) throw new Error("CORRECTION_REPLAY_DROP_RELATIONSHIP_REAPPEARED");
   }
 }
 
@@ -207,20 +227,24 @@ function createCorrectionManifestService({ client } = {}) {
         });
       }
 
+      const targetIds = manifest.operations.flatMap((operation) => [operation.keep_relationship_id, operation.drop_relationship_id]);
+      const locked = await lockRelationships(client, targetIds);
+      if (locked.size !== targetIds.length) throw new Error("CORRECTION_TARGET_RELATIONSHIP_SET_DRIFT");
+
       const beforeCounts = await globalCounts(client);
       const prepared = [];
       for (const operation of manifest.operations) {
-        const keep = await loadRelationship(client, operation.keep_relationship_id, true);
-        const drop = await loadRelationship(client, operation.drop_relationship_id, true);
+        const keep = locked.get(operation.keep_relationship_id) || null;
+        const drop = locked.get(operation.drop_relationship_id) || null;
         assertExpectedRelationship(keep, operation.expected_keep, operation.keep_relationship_id, "KEEP");
         assertExpectedRelationship(drop, operation.expected_drop, operation.drop_relationship_id, "DROP");
         const liveKeepSemantic = semanticIdentity({
-          person_id: String(keep.person_id), polity_id: String(keep.polity_id), role_id: keep.role_id == null ? null : String(keep.role_id),
-          period_basis_id: String(keep.period_basis_id), activity_start: Number(keep.activity_start), activity_end: Number(keep.activity_end)
+          person_id: String(keep.person_id).toLowerCase(), polity_id: String(keep.polity_id).toLowerCase(), role_id: keep.role_id == null ? null : String(keep.role_id).toLowerCase(),
+          period_basis_id: String(keep.period_basis_id).toLowerCase(), activity_start: Number(keep.activity_start), activity_end: Number(keep.activity_end)
         });
         const liveDropSemantic = semanticIdentity({
-          person_id: String(drop.person_id), polity_id: String(drop.polity_id), role_id: drop.role_id == null ? null : String(drop.role_id),
-          period_basis_id: String(drop.period_basis_id), activity_start: Number(drop.activity_start), activity_end: Number(drop.activity_end)
+          person_id: String(drop.person_id).toLowerCase(), polity_id: String(drop.polity_id).toLowerCase(), role_id: drop.role_id == null ? null : String(drop.role_id).toLowerCase(),
+          period_basis_id: String(drop.period_basis_id).toLowerCase(), activity_start: Number(drop.activity_start), activity_end: Number(drop.activity_end)
         });
         if (liveKeepSemantic !== liveDropSemantic) throw new Error("CORRECTION_LIVE_SEMANTIC_IDENTITY_MISMATCH");
         prepared.push({
@@ -293,6 +317,7 @@ function createCorrectionManifestService({ client } = {}) {
         });
       }
 
+      if (!await correctionLedgerExists(client)) throw new Error("CORRECTION_LEDGER_SCHEMA_REQUIRED");
       await client.query(`insert into atlas_v2.correction_manifest_runs(
         request_id,manifest_hash,manifest_schema,result_snapshot
       ) values($1,$2,$3,$4::jsonb)`, [manifest.requestId, hash, MANIFEST_V1, JSON.stringify(snapshot)]);
@@ -327,6 +352,8 @@ module.exports = Object.freeze({
   assertExpectedRelationship,
   snapshotRelationship,
   globalCounts,
+  correctionLedgerExists,
   readLedger,
+  lockRelationships,
   verifyAppliedState
 });
