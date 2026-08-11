@@ -133,6 +133,26 @@ Active operations:
 
 update/delete는 normalized relationship UUID를 사용합니다.
 
+### GitHub reviewed authoring writes
+
+`authoring/requests/*.json` → OIDC-protected production apply → `server/atlas-authoring-manifest-service.js`.
+
+`atlas-authoring-manifest/v2`는 한 authoring intent 안에서 다음을 원자적으로 수행할 수 있습니다.
+
+```text
+Person create/reuse
++ optional Polity create/reuse
++ optional Role create/reuse
++ Activity create
++ authoring manifest audit/idempotency ledger
+```
+
+전체 manifest는 하나의 PostgreSQL `SERIALIZABLE` transaction입니다. Identity helper는 transaction을 새로 열지 않는 domain primitive를 재사용하며, Activity는 기존 v2-authoritative transaction primitive를 같은 client/transaction 안에서 실행합니다.
+
+새 Polity를 선언하면 `polity_identity.canonical_name_en`과 `activity.politic_name`이 정확히 일치해야 합니다. 새 Role을 선언하면 `activity.role`은 선언된 role의 code/source label/KO display token 중 하나와 정확히 일치해야 합니다. 불일치 시 자동 추론하지 않고 manifest 전체를 rollback합니다.
+
+기존 `atlas-authoring-manifest/v1`은 backward-compatible하며 Person + existing Polity/Role Activity authoring에 계속 사용할 수 있습니다.
+
 ## 8. Duplicate candidate/review domain
 
 현재 tables:

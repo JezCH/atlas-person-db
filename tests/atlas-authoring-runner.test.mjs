@@ -11,8 +11,18 @@ const workflowSource = fs.readFileSync(new URL('../.github/workflows/atlas-autho
 test('manifest orchestration owns one serializable transaction and reuses non-owning domain executors', () => {
   assert.match(serviceSource, /begin isolation level serializable/i);
   assert.match(serviceSource, /createPerson\(client, person\)/);
+  assert.match(serviceSource, /createPolity\(client, polityIdentity\)/);
+  assert.match(serviceSource, /createRole\(client, roleIdentity\)/);
   assert.doesNotMatch(serviceSource, /createIdentityService/);
   assert.match(serviceSource, /createV2AuthoritativeTx\(client\)/);
+});
+
+test('v2 identity declarations are exact-reference gated before any authoring transaction', () => {
+  assert.match(serviceSource, /AUTHORING_POLITY_ACTIVITY_REFERENCE_MISMATCH/);
+  assert.match(serviceSource, /AUTHORING_ROLE_ACTIVITY_REFERENCE_REQUIRED/);
+  assert.match(serviceSource, /AUTHORING_ROLE_ACTIVITY_REFERENCE_MISMATCH/);
+  assert.match(serviceSource, /AUTHORING_MANIFEST_V2_REQUIRED_FOR_IDENTITY_DECLARATIONS/);
+  assert.match(serviceSource, /validateDeclaredIdentityReferences/);
 });
 
 test('local/manual runner remains normalized and path-confined', () => {
@@ -44,9 +54,11 @@ test('GitHub OIDC verifier pins repository identity, main workflow, audience, pr
   assert.match(oidcSource, /crypto\.verify/);
 });
 
-test('GitHub apply workflow uses short-lived OIDC and never receives the database URL', () => {
+test('GitHub apply workflow accepts reviewed v1/v2 manifests, uses short-lived OIDC and never receives the database URL', () => {
   assert.match(workflowSource, /branches:\s*\n\s*- main/);
   assert.match(workflowSource, /authoring\/requests\/\*\.json/);
+  assert.match(workflowSource, /atlas-authoring-manifest\/v1/);
+  assert.match(workflowSource, /atlas-authoring-manifest\/v2/);
   assert.match(workflowSource, /group: atlas-authoring-production/);
   assert.match(workflowSource, /id-token: write/);
   assert.match(workflowSource, /ACTIONS_ID_TOKEN_REQUEST_URL/);
