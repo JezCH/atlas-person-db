@@ -158,6 +158,15 @@ jobs:
             --out artifacts/polity-identity-audit.json \
             --summary artifacts/polity-identity-audit-summary.json
 
+      - name: Close source-backed Polity continuity decisions
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/build-polity-continuity-decisions.mjs \
+            --ledger artifacts/polity-semantic-master-ledger.json \
+            --out artifacts/polity-continuity-decisions.json \
+            --summary artifacts/polity-continuity-decisions-summary.json
+
       - name: Audit shared temporal interval semantics
         shell: bash
         run: |
@@ -179,6 +188,7 @@ jobs:
             --governance-summary artifacts/governance-context-audit-summary.json \
             --polity-relation-summary artifacts/polity-relation-audit-summary.json \
             --polity-identity-summary artifacts/polity-identity-audit-summary.json \
+            --continuity-summary artifacts/polity-continuity-decisions-summary.json \
             --temporal-summary artifacts/temporal-contract-audit-summary.json \
             --out artifacts/stage2-preflight.json \
             --summary artifacts/stage2-preflight-summary.json
@@ -204,6 +214,8 @@ jobs:
             artifacts/polity-relation-audit-summary.json
             artifacts/polity-identity-audit.json
             artifacts/polity-identity-audit-summary.json
+            artifacts/polity-continuity-decisions.json
+            artifacts/polity-continuity-decisions-summary.json
             artifacts/temporal-contract-audit.json
             artifacts/temporal-contract-audit-summary.json
             artifacts/stage2-preflight.json
