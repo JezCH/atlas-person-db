@@ -20,8 +20,6 @@ function sendResponse(res, response) {
 
 function createVercelMutationHandler({ clientFactory, env = process.env, transactionOptions = {}, now } = {}) {
   if (typeof clientFactory !== "function") throw new Error("clientFactory is required");
-  const databaseUrl = requireEnv(env, "SUPABASE_DB_URL");
-  const authorize = createMutationAuthorizer({ env, ...(typeof now === "function" ? { now } : {}) });
 
   return async function handler(req, res) {
     const request = {
@@ -35,19 +33,42 @@ function createVercelMutationHandler({ clientFactory, env = process.env, transac
       return;
     }
 
+    let databaseUrl;
+    let authorize;
+    try {
+      databaseUrl = requireEnv(env, "SUPABASE_DB_URL");
+      authorize = createMutationAuthorizer({ env, ...(typeof now === "function" ? { now } : {}) });
+    } catch (error) {
+      console.error("ATLAS mutation configuration error", error);
+      sendResponse(res, jsonResponse(503, {
+        ok: false,
+        code: "SERVER_CONFIGURATION_ERROR",
+        error: "mutation service is not configured"
+      }));
+      return;
+    }
+
     const auth = await authorize(request);
     if (!auth?.authorized) {
       sendResponse(res, jsonResponse(401, { ok: false, error: auth?.reason || "unauthorized" }));
       return;
     }
 
-    const client = await clientFactory(databaseUrl);
+    let client = null;
     try {
+      client = await clientFactory(databaseUrl);
       const { transactionFactory, verificationVerifier } = createV2AuthoritativeTransactionFactory({ client, ...transactionOptions });
       const mutationService = createV2AuthoritativeMutationService({ planner, transactionFactory, verificationVerifier });
       const transport = createMutationTransport({ mutationService });
       const response = await transport.handle(request);
       sendResponse(res, response);
+    } catch (error) {
+      console.error("ATLAS mutation runtime failed", error);
+      sendResponse(res, jsonResponse(client ? 500 : 503, {
+        ok: false,
+        code: client ? "MUTATION_RUNTIME_FAILED" : "DATABASE_UNAVAILABLE",
+        error: client ? "mutation runtime failed" : "database unavailable"
+      }));
     } finally {
       if (client && typeof client.end === "function") await client.end();
     }

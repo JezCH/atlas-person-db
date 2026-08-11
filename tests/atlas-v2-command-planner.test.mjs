@@ -30,24 +30,27 @@ test('create plans exact normalized resolutions and relationship upsert without 
     'UPSERT_PERSON_POLITICS_V2'
   ]);
   assert.equal(result.commands.at(-1).table, 'atlas_v2.person_politics_v2');
+  assert.equal(result.commands.at(-1).semantic_key, planner.activityKey(row));
 });
 
-test('update carries deterministic legacy lineage and normalized value', () => {
-  const result = planner.plan('update', { id: 17, value: row });
+test('update carries normalized relationship id and normalized value', () => {
+  const result = planner.plan('update', { id: 'normalized-17', value: row });
   assert.equal(result.blockers.length, 0);
-  assert.equal(result.commands.at(-1).legacy_record_id, 17);
-  assert.equal(result.commands.at(-1).legacy_source_key, planner.activityKey(row));
-  assert.deepEqual(result.normalized_payload, {id:17,value:row});
+  assert.equal(result.commands.at(-1).relationship_id, 'normalized-17');
+  assert.equal(result.commands.at(-1).semantic_key, planner.activityKey(row));
+  assert.deepEqual(result.normalized_payload, {id:'normalized-17',value:row});
 });
 
-test('delete resolves only by lineage/preimage and never fuzzy identity', () => {
-  const result = planner.plan('delete', { id: 17 });
+test('delete targets only normalized relationship id', () => {
+  const result = planner.plan('delete', { id: 'normalized-17' });
   assert.equal(result.blockers.length, 0);
-  assert.deepEqual(result.commands.map((x) => x.type), [
-    'RESOLVE_RELATIONSHIP_BY_LEGACY_LINEAGE',
-    'RETIRE_OR_DELETE_PERSON_POLITICS_V2'
-  ]);
-  assert.equal(JSON.stringify(result).includes('similar'), false);
+  assert.deepEqual(result.commands, [{
+    type: 'DELETE_PERSON_POLITICS_V2_BY_ID',
+    table: 'atlas_v2.person_politics_v2',
+    relationship_id: 'normalized-17'
+  }]);
+  assert.equal(JSON.stringify(result).includes('legacy'), false);
+  assert.equal(JSON.stringify(result).includes('fuzzy'), false);
 });
 
 test('unresolved required identity fails closed with blockers', () => {
@@ -92,6 +95,13 @@ test('normalization produces one canonical payload for retry identity', () => {
   });
 });
 
+test('semantic activity key includes role and period basis', () => {
+  const base = planner.activityKey(row);
+  assert.notEqual(planner.activityKey({...row,role:'Programmer'}), base);
+  assert.notEqual(planner.activityKey({...row,period_basis:'general_activity'}), base);
+  assert.equal(planner.activityKey({...row,notes:'different note'}), base);
+});
+
 test('import creates isolated normalized row command groups and permits mixed role presence', () => {
   const result = planner.plan('import', [row, { ...row, person_name: 'Grace Hopper', activity_start: 1944, activity_end: 1986, role:null }]);
   assert.equal(result.commands.filter((x) => x.type === 'BEGIN_IMPORT_ROW').length, 2);
@@ -100,6 +110,12 @@ test('import creates isolated normalized row command groups and permits mixed ro
   assert.equal(result.normalized_payload[1].role,null);
   assert.equal(result.normalized_payload.length,2);
   assert.equal(result.writes_performed, 0);
+});
+
+test('retired reconciliation operation is blocked', () => {
+  const result = planner.plan('reconcile', {});
+  assert.deepEqual(result.blockers, [{ code: 'UNSUPPORTED_OPERATION', operation: 'reconcile' }]);
+  assert.equal(result.commands.length, 0);
 });
 
 test('unsupported operation is blocked', () => {

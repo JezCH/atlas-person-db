@@ -2,7 +2,7 @@
   "use strict";
 
   const SESSION_ENDPOINT = "/api/atlas-session";
-  const PROTECTED_API_PATHS = new Set(["/api/atlas-duplicate-review", "/api/atlas-mutate"]);
+  const PROTECTED_API_PATHS = new Set(["/api/atlas-duplicate-review", "/api/atlas-mutate", "/api/atlas-identity"]);
   const authPanel = document.getElementById("adminAuthPanel");
   const authMessage = document.getElementById("adminAuthMessage");
   const authBadge = document.getElementById("adminAuthBadge");

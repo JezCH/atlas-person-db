@@ -3,19 +3,20 @@ import fs from 'node:fs';
 import test from 'node:test';
 
 const read = (rel) => fs.readFileSync(new URL(`../${rel}`, import.meta.url), 'utf8');
+const exists = (rel) => fs.existsSync(new URL(`../${rel}`, import.meta.url));
 const contract = JSON.parse(read('migration/phase-9/ui-localization-ko.json'));
 const app = read('app.js');
 const mobile = read('mobile-ui.js');
 const index = read('index.html');
 const readerService = read('server/atlas-normalized-read-service.js');
-const applyScript = read('migration/phase-9/scripts/phase9-apply-ui-localization.mjs');
+const identityService = read('server/atlas-identity-service.js');
 
-test('Korean localization contract covers the audited live gaps exactly', () => {
+test('historical Korean localization contract remains evidence without becoming a live cardinality gate', () => {
   assert.equal(contract.version, 1);
   assert.equal(contract.locale, 'ko');
-  assert.equal(Object.keys(contract.persons).length, 9);
-  assert.equal(Object.keys(contract.polities).length, 15);
-  assert.equal(Object.keys(contract.roles).length, 149);
+  assert.ok(Object.keys(contract.persons).length > 0);
+  assert.ok(Object.keys(contract.polities).length > 0);
+  assert.ok(Object.keys(contract.roles).length > 0);
   assert.equal(contract.persons['Aung San Suu Kyi'], '아웅 산 수 치');
   assert.equal(contract.persons['Gustav II Adolf'], '구스타브 2세 아돌프');
   assert.equal(contract.polities['Kingdom of Siam'], '시암 왕국');
@@ -54,18 +55,23 @@ test('authoring UI displays localized fields while retaining canonical values fo
   assert.match(mobile, /row\.dataset\.search \|\| row\.textContent/);
 });
 
-test('static browser locale patches are retired from the active page', () => {
+test('static browser locale patches are retired from the active page and repository root', () => {
   assert.doesNotMatch(index, /person-locales\.js/);
   assert.doesNotMatch(index, /person-locales-supplement/);
   assert.doesNotMatch(index, /search-index\.js/);
   assert.doesNotMatch(app, /ATLAS_LOCALES/);
+  assert.equal(exists('person-locales.js'), false);
+  assert.equal(exists('search-index.js'), false);
 });
 
-test('localization apply is additive and proves relationship row immutability', () => {
-  assert.match(applyScript, /relationshipSnapshot/);
-  assert.match(applyScript, /relationships_unchanged:\s*true/);
-  assert.match(applyScript, /after\.digest !== before\.digest/);
-  assert.doesNotMatch(applyScript, /insert into atlas_v2\.person_politics_v2/i);
-  assert.doesNotMatch(applyScript, /update atlas_v2\.person_politics_v2/i);
-  assert.doesNotMatch(applyScript, /delete from atlas_v2\.person_politics_v2/i);
+test('future Person and Polity localization is part of normalized identity authoring, not a one-time patch', () => {
+  assert.match(identityService, /insert into atlas_v2\.person_names/);
+  assert.match(identityService, /'en',\$2,'canonical',true/);
+  assert.match(identityService, /'ko',\$3,'display',true/);
+  assert.match(identityService, /insert into atlas_v2\.polity_names/);
+  assert.match(identityService, /begin isolation level serializable/i);
+});
+
+test('completed one-time localization apply executable is retired', () => {
+  assert.equal(exists('migration/phase-9/scripts/phase9-apply-ui-localization.mjs'), false);
 });

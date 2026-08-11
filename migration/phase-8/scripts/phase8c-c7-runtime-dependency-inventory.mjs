@@ -25,6 +25,7 @@ const jsFiles = new Set(allFiles.filter((p) => /\.(?:js|mjs|cjs)$/.test(p)));
 const apiRoutes = [...jsFiles].filter((p) => /^api\/[^/]+\.js$/.test(p)).sort();
 const intendedApiRoutes = [
   'api/atlas-duplicate-review.js',
+  'api/atlas-identity.js',
   'api/atlas-mutate.js',
   'api/atlas-read.js',
   'api/atlas-session.js'

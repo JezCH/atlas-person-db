@@ -150,7 +150,6 @@
       updateActivity: (id, value) => mutate("update", { id, value }),
       deleteActivity: (id) => mutate("delete", { id }),
       importActivities: (rows) => mutate("import", rows),
-      reconcileCanonical: (plan) => mutate("reconcile", plan),
       ensureSession,
       sessionStatus,
       logout

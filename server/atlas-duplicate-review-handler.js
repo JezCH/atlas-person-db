@@ -19,19 +19,11 @@ function bodyObject(body) {
 
 function createDuplicateReviewHandler({ clientFactory, env = process.env, now } = {}) {
   if (typeof clientFactory !== "function") throw new Error("clientFactory is required");
-  const databaseUrl = requireEnv(env, "SUPABASE_DB_URL");
-  const authorize = createMutationAuthorizer({ env, ...(typeof now === "function" ? { now } : {}) });
 
   return async function handler(req, res) {
     const method = String(req?.method || "GET").toUpperCase();
     if (!new Set(["GET", "POST"]).has(method)) {
       sendJson(res, 405, { ok: false, error: "method not allowed" });
-      return;
-    }
-
-    const auth = await authorize({ method, headers: req?.headers || {}, body: req?.body });
-    if (!auth?.authorized) {
-      sendJson(res, 401, { ok: false, error: auth?.reason || "unauthorized" });
       return;
     }
 
@@ -49,8 +41,26 @@ function createDuplicateReviewHandler({ clientFactory, env = process.env, now } 
       }
     }
 
-    const client = await clientFactory(databaseUrl);
+    let databaseUrl;
+    let authorize;
     try {
+      databaseUrl = requireEnv(env, "SUPABASE_DB_URL");
+      authorize = createMutationAuthorizer({ env, ...(typeof now === "function" ? { now } : {}) });
+    } catch (error) {
+      console.error("ATLAS duplicate review configuration error", error);
+      sendJson(res, 503, { ok: false, code: "SERVER_CONFIGURATION_ERROR", error: "duplicate review service is not configured" });
+      return;
+    }
+
+    const auth = await authorize({ method, headers: req?.headers || {}, body: req?.body });
+    if (!auth?.authorized) {
+      sendJson(res, 401, { ok: false, error: auth?.reason || "unauthorized" });
+      return;
+    }
+
+    let client = null;
+    try {
+      client = await clientFactory(databaseUrl);
       if (method === "GET") {
         const queue = await listCandidates({ client, includeStale: String(req?.query?.include_stale || "") === "1" });
         sendJson(res, 200, { ok: true, source: "v2-duplicate-review", ...queue });
@@ -88,6 +98,10 @@ function createDuplicateReviewHandler({ clientFactory, env = process.env, now } 
       sendJson(res, 200, { ok: true, source: "v2-duplicate-review", operation, ...outcome });
     } catch (error) {
       console.error("ATLAS duplicate review failed", error);
+      if (!client) {
+        sendJson(res, 503, { ok: false, code: "DATABASE_UNAVAILABLE", error: "database unavailable" });
+        return;
+      }
       const message = String(error?.message || "");
       if (schemaUnavailable(error)) {
         sendJson(res, 503, { ok: false, code: "PHASE9A_SCHEMA_REQUIRED", error: "duplicate review schema is not applied" });

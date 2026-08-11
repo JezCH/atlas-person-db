@@ -7,6 +7,7 @@ const app = fs.readFileSync(new URL('../app.js', import.meta.url), 'utf8');
 const adminHtml = fs.readFileSync(new URL('../admin.html', import.meta.url), 'utf8');
 const admin = fs.readFileSync(new URL('../admin.js', import.meta.url), 'utf8');
 const adminService = fs.readFileSync(new URL('../atlas-admin-write-service.js', import.meta.url), 'utf8');
+const semantics = fs.readFileSync(new URL('../atlas-activity-semantics.js', import.meta.url), 'utf8');
 const cleanup = JSON.parse(fs.readFileSync(new URL('../migration/phase-8/reports/phase8c-c9-final-repository-cleanup.json', import.meta.url), 'utf8'));
 const lockdown = fs.readFileSync(new URL('../migration/phase-8/phase8c-c4c-lockdown-public-writes.sql', import.meta.url), 'utf8');
 const rollback = fs.readFileSync(new URL('../migration/phase-8/phase8c-c4c-rollback-public-writes.sql', import.meta.url), 'utf8');
@@ -28,7 +29,8 @@ test('authoring app selects only the authenticated server write adapter', () => 
   assert.equal(app.includes('outcome.v2.normalized_relationship_ids'), true);
 });
 
-test('admin uses direct normalized lookup and never client-writes either store', () => {
+test('admin uses direct normalized lookup, shared semantic identity, and never client-writes either store', () => {
+  assert.equal(adminHtml.includes('./atlas-activity-semantics.js'), true);
   assert.equal(adminHtml.includes('./atlas-server-write-adapter.js'), true);
   assert.equal(adminHtml.includes('./atlas-write-adapter.js'), false);
   assert.equal(adminHtml.includes('./atlas-write-mode.js'), false);
@@ -38,8 +40,10 @@ test('admin uses direct normalized lookup and never client-writes either store',
   assert.equal(admin.includes('window.ATLAS_WRITE_MODE'), false);
   assert.equal(admin.includes('window.ATLAS_V2_SHADOW_COMPILER'), false);
   assert.equal(adminService.includes('/api/atlas-read'), true);
+  assert.equal(adminService.includes('atlas-activity-semantics.js'), true);
+  assert.equal(adminService.includes('normalized semantic activity lookup is ambiguous'), true);
+  assert.match(semantics, /person.*polity.*start.*end.*role.*basis/s);
   assert.equal(adminService.includes('.from('), false);
-  assert.equal(adminService.includes('normalized activity lookup is ambiguous'), true);
   assert.equal(adminService.includes('.insert('), false);
   assert.equal(adminService.includes('.update('), false);
   assert.equal(adminService.includes('.delete('), false);

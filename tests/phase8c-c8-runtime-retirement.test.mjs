@@ -31,19 +31,12 @@ test('v2-authoritative service uses extracted request helpers, not legacy mutati
   assert.doesNotMatch(utils, /executeLegacy|public\.person_politics|atlas_person_politics_compat_v1/);
 });
 
-test('completed migration workflows stay retired while post-migration successor workflows may be added', () => {
+test('historical C8 workflow manifest remains audit evidence while ATLAS Integrity is the sole current gate', () => {
+  assert.ok(Array.isArray(workflowManifest.active_after_c8));
   const workflows = fs.readdirSync(new URL('../.github/workflows/', import.meta.url))
     .filter((name) => name.endsWith('.yml') || name.endsWith('.yaml'))
     .sort();
-  for (const required of workflowManifest.active_after_c8) {
-    assert.equal(workflows.includes(required), true, `${required} must remain active`);
-  }
-  const allowedSuccessors = workflows.filter((name) => !workflowManifest.active_after_c8.includes(name));
-  assert.equal(
-    allowedSuccessors.every((name) => name.startsWith('phase-8c-c9-') || name.startsWith('phase-9')),
-    true,
-    `unexpected post-C8 workflow: ${allowedSuccessors.join(', ')}`
-  );
+  assert.deepEqual(workflows, ['atlas-integrity.yml']);
 });
 
 test('C8 historical manifest records the DB objects that were deferred to C9', () => {

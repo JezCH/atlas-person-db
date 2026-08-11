@@ -1,15 +1,6 @@
 "use strict";
 
-const { Client } = require("pg");
+const { createPostgresClient } = require("../server/atlas-postgres-client.js");
 const { createNormalizedReadHandler } = require("../server/atlas-normalized-read-handler.js");
 
-async function clientFactory(connectionString) {
-  const client = new Client({
-    connectionString,
-    ssl: { rejectUnauthorized: false }
-  });
-  await client.connect();
-  return client;
-}
-
-module.exports = createNormalizedReadHandler({ clientFactory });
+module.exports = createNormalizedReadHandler({ clientFactory: createPostgresClient });
