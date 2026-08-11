@@ -1,6 +1,7 @@
 {
   "schema": "atlas-audit-inventory/v1",
-  "purpose": "Stage 2 R0 normalized identity/reference inventory for exact duplicates and competing current Activity rows",
+  "request_revision": 2,
+  "purpose": "Stage 2 R0 normalized identity/reference inventory for exact duplicates and competing current Activity rows; reissued after the latest main Production deployment became healthy so the exact-SHA read-only inventory can run against the current deployment.",
   "activity_ids": [
     "75a124e8-df55-5247-aa48-dc9d7934c10e",
     "da809f25-40ff-5c27-b10b-88d4acc4070d",
