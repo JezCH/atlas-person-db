@@ -103,13 +103,14 @@ try {
 
   const boundaryProbe = await client.query(`
     select
-      atlas_v2.temporal_boundary_detail_valid(null,null,'year','exact','gregorian') as year_ok,
-      atlas_v2.temporal_boundary_detail_valid(5,null,'month','approximate','julian') as month_ok,
-      atlas_v2.temporal_boundary_detail_valid(10,15,'day','exact','gregorian') as day_ok,
-      atlas_v2.temporal_boundary_detail_valid(5,null,'year','exact','gregorian') as invalid_year_shape,
-      atlas_v2.temporal_boundary_detail_valid(null,15,'day','exact','gregorian') as invalid_day_shape`);
+      atlas_v2.temporal_boundary_detail_valid(null::smallint,null::smallint,'year','exact','gregorian') as year_ok,
+      atlas_v2.temporal_boundary_detail_valid(5::smallint,null::smallint,'month','approximate','julian') as month_ok,
+      atlas_v2.temporal_boundary_detail_valid(10::smallint,15::smallint,'day','exact','gregorian') as day_ok,
+      atlas_v2.temporal_boundary_detail_valid(5::smallint,null::smallint,'year','exact','gregorian') as invalid_year_shape,
+      atlas_v2.temporal_boundary_detail_valid(null::smallint,15::smallint,'day','exact','gregorian') as invalid_day_shape,
+      atlas_v2.temporal_boundary_detail_valid(5::smallint,null::smallint,null,'exact','gregorian') as partial_null_metadata`);
   const bp = boundaryProbe.rows[0];
-  if (!bp?.year_ok || !bp?.month_ok || !bp?.day_ok || bp?.invalid_year_shape || bp?.invalid_day_shape) {
+  if (!bp?.year_ok || !bp?.month_ok || !bp?.day_ok || bp?.invalid_year_shape || bp?.invalid_day_shape || bp?.partial_null_metadata) {
     throw new Error(`shared temporal boundary behavior invalid: ${JSON.stringify(bp)}`);
   }
 
@@ -151,7 +152,6 @@ try {
     await client.query(`insert into atlas_v2.polity_relation_types(id,code,category,is_active) values ($1,'probe_constituent_of','constituent',true)`, [rt]);
     await client.query(`insert into atlas_v2.governance_contexts(id,canonical_key,governance_type,historicity) values ($1,'stage2-probe-government','government','historical')`, [gc]);
 
-    // Prove a day-precise structural Polity relation is representable.
     await client.query(`
       insert into atlas_v2.polity_relations(
         id,subject_polity_id,object_polity_id,relation_type_id,
@@ -165,7 +165,6 @@ try {
         'well_established'
       )`, [p1, p2, rt]);
 
-    // Prove a month-precise designation is representable using the same contract.
     await client.query(`
       insert into atlas_v2.polity_designations(
         id,polity_id,designation_type,
@@ -244,6 +243,7 @@ try {
     new_tables: expectedNewTables.length,
     activity_extension_columns: expectedActivityColumns.length,
     shared_temporal_boundary_validator: true,
+    temporal_validator_fail_closed: true,
     governance_full_temporal_precision: true,
     polity_relation_full_temporal_precision: true,
     polity_designation_full_temporal_precision: true,
