@@ -53,8 +53,9 @@ function same(actual, expected, label) {
 }
 
 const source = fs.readFileSync(baselinePath, 'utf8');
-if (/public\.person_politics|atlas_person_politics_compat_v1/i.test(source)) {
-  throw new Error('current baseline must not recreate legacy person-politics objects');
+const ddlWithoutLineComments = source.replace(/^\s*--.*$/gm, '');
+if (/public\.person_politics|atlas_person_politics_compat_v1/i.test(ddlWithoutLineComments)) {
+  throw new Error('current baseline DDL must not recreate legacy person-politics objects');
 }
 
 const client = new Client({ connectionString: databaseUrl });
