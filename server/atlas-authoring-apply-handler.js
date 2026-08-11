@@ -1,12 +1,10 @@
 "use strict";
 
-const fs = require("node:fs");
-const path = require("node:path");
 const { createPostgresClient } = require("./atlas-postgres-client.js");
 const { createAuthoringManifestService } = require("./atlas-authoring-manifest-service.js");
+const { applyAuthoringMigrations } = require("./atlas-authoring-migrations.js");
 const { verifyGitHubActionsOidc } = require("./atlas-github-oidc.js");
 
-const MIGRATION_PATH = path.resolve(__dirname, "../db/migrations/20260811_authoring_manifest_runs.sql");
 const MANIFEST_PATH_RE = /^authoring\/requests\/[A-Za-z0-9._-]+\.json$/;
 
 function json(res, status, body) {
@@ -56,7 +54,7 @@ function createAuthoringApplyHandler({
   env = process.env,
   verifyOidc = verifyGitHubActionsOidc,
   createClient = createPostgresClient,
-  readMigration = () => fs.readFileSync(MIGRATION_PATH, "utf8")
+  applyMigrations = applyAuthoringMigrations
 } = {}) {
   return async function handler(req, res) {
     if (req?.method !== "POST") return json(res, 405, { ok: false, code: "METHOD_NOT_ALLOWED" });
@@ -91,7 +89,7 @@ function createAuthoringApplyHandler({
     let client;
     try {
       client = await createClient(databaseUrl, { env });
-      await client.query(readMigration());
+      await applyMigrations(client);
       const outcome = await createAuthoringManifestService({ client }).apply(payload.manifest);
       return json(res, 200, {
         ok: true,
@@ -103,12 +101,13 @@ function createAuthoringApplyHandler({
         relationship_id: outcome.relationship_id,
         ...(outcome.polity_id ? { polity_id: outcome.polity_id } : {}),
         ...(outcome.role_id ? { role_id: outcome.role_id } : {}),
+        result: outcome.result,
         deployment_sha: payload.deploymentSha,
         manifest_path: payload.manifestPath
       });
     } catch (error) {
       const code = String(error?.message || "AUTHORING_APPLY_FAILED");
-      const conflict = /COLLISION|AMBIGUOUS|DUPLICATE|UNRESOLVED|REVIEW|APPROVED|UNSUPPORTED|REQUIRED|NOT_FOUND|FAILED|MISMATCH/.test(code);
+      const conflict = /COLLISION|AMBIGUOUS|DUPLICATE|UNRESOLVED|REVIEW|APPROVED|UNSUPPORTED|REQUIRED|NOT_FOUND|FAILED|MISMATCH|DRIFT|INVALID/.test(code);
       return json(res, conflict ? 409 : 500, { ok: false, code });
     } finally {
       if (client && typeof client.end === "function") {
@@ -123,6 +122,5 @@ module.exports = Object.freeze({
   requireApplyPayload,
   requireDeployment,
   bearerToken,
-  MANIFEST_PATH_RE,
-  MIGRATION_PATH
+  MANIFEST_PATH_RE
 });
