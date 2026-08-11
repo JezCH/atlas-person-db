@@ -18,6 +18,7 @@ const inputs = {
   polityIdentity: arg('--polity-identity-summary'),
   continuity: arg('--continuity-summary'),
   japan: arg('--japan-summary'),
+  kublai: arg('--kublai-summary'),
   temporal: arg('--temporal-summary')
 };
 const outPath = arg('--out', 'artifacts/stage2-preflight.json');
@@ -37,9 +38,10 @@ const polityRelation = readJson(inputs.polityRelation);
 const polityIdentity = readJson(inputs.polityIdentity);
 const continuity = readJson(inputs.continuity);
 const japan = readJson(inputs.japan);
+const kublai = readJson(inputs.kublai);
 const temporal = readJson(inputs.temporal);
 
-const allInputs = { master, relation, readiness, direct, governance, polityRelation, polityIdentity, continuity, japan, temporal };
+const allInputs = { master, relation, readiness, direct, governance, polityRelation, polityIdentity, continuity, japan, kublai, temporal };
 const expectedSchemas = {
   master: 'atlas-polity-semantic-master-ledger-summary/v1',
   relation: 'atlas-relation-semantics-audit-summary/v1',
@@ -50,6 +52,7 @@ const expectedSchemas = {
   polityIdentity: 'atlas-polity-identity-audit-summary/v1',
   continuity: 'atlas-polity-continuity-decisions-summary/v1',
   japan: 'atlas-japan-layered-authority-decisions-summary/v1',
+  kublai: 'atlas-kublai-authority-decisions-summary/v1',
   temporal: 'atlas-temporal-contract-audit-summary/v1'
 };
 for (const [name, schema] of Object.entries(expectedSchemas)) {
@@ -98,6 +101,13 @@ requireEq(japan.old_polity_relation_model_rows, 4, 'old Japan layered-authority 
 requireEq(japan.resolved_old_polity_relation_model_rows, 4, 'resolved Japan layered-authority relation rows');
 requireEq(japan.unresolved_old_polity_relation_model_rows, 0, 'unresolved Japan layered-authority relation rows');
 requireEq(japan.remaining_sengoku_territorial_or_split_research_rows, 4, 'remaining Sengoku territorial/split research rows');
+requireEq(kublai.reviewed_kublai_rows, 3, 'reviewed Kublai authority rows');
+requireEq(kublai.retained_rows, 2, 'retained Kublai rows');
+requireEq(kublai.retire_competing_rows, 1, 'retired competing Kublai rows');
+requireEq(kublai.unresolved_person_polity_authority_semantics_rows, 0, 'unresolved Kublai Person-Polity authority rows');
+requireEq(kublai.mongol_empire_relation, 'claims_rule', 'Kublai Mongol Empire relation');
+requireEq(kublai.yuan_1271_relation, 'rules', 'Kublai Yuan relation');
+requireEq(kublai.fabricated_pre_yuan_polity_created, false, 'fabricated pre-Yuan Polity');
 requireEq(temporal.explicit_sub_year_blockers, 1, 'legacy explicit sub-year blockers');
 requireEq(temporal.reviewed_split_intervals, 2, 'reviewed Yoshida replacement intervals');
 
@@ -146,7 +156,13 @@ const blockerFamilies = [
     code: 'JAPAN_LAYERED_AUTHORITY_CORRECTIONS_PENDING',
     severity: 'HARD',
     count: japan.resolved_old_polity_relation_model_rows,
-    basis: 'Kamakura/Tokugawa layered-authority semantics are source-backed and resolved, but Hōjō/Tokugawa exact Activity relinks, Governance Context creation/reuse, and compressed-row retirement are intentionally not applied to Production.'
+    basis: 'Kamakura/Tokugawa layered-authority semantics are source-backed and resolved, but exact Activity relinks, Governance Context creation/reuse, and compressed-row retirement are intentionally not applied to Production.'
+  },
+  {
+    code: 'KUBLAI_ACTIVITY_CORRECTIONS_PENDING',
+    severity: 'HARD',
+    count: kublai.reviewed_kublai_rows,
+    basis: 'Kublai Person-Polity authority semantics are now source-backed: Mongol Empire is claims_rule context, the 1260–1294 Yuan back-projection retires, and the 1271–1294 Yuan row is rules. Exact Production correction/backfill remains deferred.'
   },
   {
     code: 'SENGOKU_TERRITORIAL_AUTHORITY_RESEARCH_PENDING',
@@ -196,6 +212,9 @@ const validated = {
   unresolved_polity_continuity_model_rows: 0,
   japan_layered_authority_model_decisions_closed: true,
   unresolved_old_japan_layered_authority_model_rows: 0,
+  kublai_person_polity_authority_semantics_closed: true,
+  unresolved_kublai_person_polity_authority_semantics_rows: 0,
+  kublai_pre_1271_direct_territory_research_still_required: kublai.pre_1271_direct_territory_reconstruction_still_required,
   temporal_contract_acceptance_case_proven: true,
   domain_contract_verified_by_prior_ci_step: true,
   fresh_postgresql_schema_rehearsal_verified_by_prior_ci_step: true,
@@ -209,8 +228,9 @@ const validated = {
 const canContinueWithoutVercel = [
   'prepare exact UUID-bound Roman/East-Roman, Yuan/Northern-Yuan, Russia-1721 and Portugal-1815 correction manifests without applying them',
   'prepare exact Hōjō/Tokugawa Japan + Governance Context correction manifests without applying them',
+  'prepare exact Kublai claims_rule / retire / Yuan-rules correction manifest without applying it',
+  'research Qubilai pre-1271 direct territorial extent separately without fabricating a Person-owned polygon',
   'finish Oda/Uesugi/pre-1590 Hideyoshi territorial-authority research',
-  'finish Kublai 1260–1271 Great-Khan authority target research',
   'finish remaining non-Japan Polity structural-relation research',
   'prepare normalized Source links alongside every reviewed new assertion backfill',
   'prepare the versioned Activity planner/transaction/authoring-replay/merge cutover without activating it',
@@ -241,6 +261,9 @@ const summary = {
   japan_layered_authority_old_relation_rows_resolved: japan.resolved_old_polity_relation_model_rows,
   japan_layered_authority_old_relation_rows_unresolved: 0,
   remaining_sengoku_territorial_or_split_research_rows: japan.remaining_sengoku_territorial_or_split_research_rows,
+  kublai_authority_rows_reviewed: kublai.reviewed_kublai_rows,
+  kublai_authority_semantics_unresolved_rows: 0,
+  kublai_pre_1271_direct_territory_research_pending: kublai.pre_1271_direct_territory_reconstruction_still_required,
   polity_relation_model_relevant_rows_raw: polityRelation.model_relevant_rows,
   polity_relation_model_research_rows_remaining: remainingPolityRelationResearchRows,
   sub_year_correction_cases: temporalCorrectionCases,
