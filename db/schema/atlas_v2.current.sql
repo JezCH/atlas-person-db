@@ -207,8 +207,10 @@ CREATE TABLE atlas_v2.sources (
 CREATE TABLE atlas_v2.authoring_manifest_runs (
   request_id text NOT NULL,
   manifest_hash text NOT NULL,
+  manifest_schema text,
   person_id uuid,
   relationship_id uuid,
+  result_snapshot jsonb,
   applied_at timestamptz DEFAULT now() NOT NULL
 );
 
@@ -257,6 +259,8 @@ ALTER TABLE atlas_v2.sources ADD CONSTRAINT sources_bytes_check CHECK (bytes >= 
 ALTER TABLE atlas_v2.sources ADD CONSTRAINT sources_pkey PRIMARY KEY (id);
 ALTER TABLE atlas_v2.sources ADD CONSTRAINT sources_source_key_key UNIQUE (source_key);
 ALTER TABLE atlas_v2.authoring_manifest_runs ADD CONSTRAINT authoring_manifest_runs_pkey PRIMARY KEY (request_id);
+ALTER TABLE atlas_v2.authoring_manifest_runs ADD CONSTRAINT authoring_manifest_runs_manifest_schema_check CHECK (manifest_schema IS NULL OR manifest_schema IN ('atlas-authoring-manifest/v1', 'atlas-authoring-manifest/v2'));
+ALTER TABLE atlas_v2.authoring_manifest_runs ADD CONSTRAINT authoring_manifest_runs_result_snapshot_check CHECK (result_snapshot IS NULL OR jsonb_typeof(result_snapshot) = 'object');
 
 ALTER TABLE atlas_v2.chronology_claims ADD CONSTRAINT chronology_claims_person_politics_id_fkey FOREIGN KEY (person_politics_id) REFERENCES atlas_v2.person_politics_v2(id) ON DELETE CASCADE;
 ALTER TABLE atlas_v2.period_basis_names ADD CONSTRAINT period_basis_names_period_basis_id_fkey FOREIGN KEY (period_basis_id) REFERENCES atlas_v2.period_bases(id) ON DELETE CASCADE;
