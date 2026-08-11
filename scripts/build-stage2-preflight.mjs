@@ -19,6 +19,7 @@ const inputs = {
   continuity: arg('--continuity-summary'),
   japan: arg('--japan-summary'),
   kublai: arg('--kublai-summary'),
+  modern: arg('--modern-summary'),
   temporal: arg('--temporal-summary')
 };
 const outPath = arg('--out', 'artifacts/stage2-preflight.json');
@@ -39,9 +40,10 @@ const polityIdentity = readJson(inputs.polityIdentity);
 const continuity = readJson(inputs.continuity);
 const japan = readJson(inputs.japan);
 const kublai = readJson(inputs.kublai);
+const modern = readJson(inputs.modern);
 const temporal = readJson(inputs.temporal);
 
-const allInputs = { master, relation, readiness, direct, governance, polityRelation, polityIdentity, continuity, japan, kublai, temporal };
+const allInputs = { master, relation, readiness, direct, governance, polityRelation, polityIdentity, continuity, japan, kublai, modern, temporal };
 const expectedSchemas = {
   master: 'atlas-polity-semantic-master-ledger-summary/v1',
   relation: 'atlas-relation-semantics-audit-summary/v1',
@@ -53,6 +55,7 @@ const expectedSchemas = {
   continuity: 'atlas-polity-continuity-decisions-summary/v1',
   japan: 'atlas-japan-layered-authority-decisions-summary/v1',
   kublai: 'atlas-kublai-authority-decisions-summary/v1',
+  modern: 'atlas-modern-dependent-polity-decisions-summary/v1',
   temporal: 'atlas-temporal-contract-audit-summary/v1'
 };
 for (const [name, schema] of Object.entries(expectedSchemas)) {
@@ -108,6 +111,14 @@ requireEq(kublai.unresolved_person_polity_authority_semantics_rows, 0, 'unresolv
 requireEq(kublai.mongol_empire_relation, 'claims_rule', 'Kublai Mongol Empire relation');
 requireEq(kublai.yuan_1271_relation, 'rules', 'Kublai Yuan relation');
 requireEq(kublai.fabricated_pre_yuan_polity_created, false, 'fabricated pre-Yuan Polity');
+requireEq(modern.reviewed_current_activity_rows, 4, 'reviewed modern dependent/union Activity rows');
+requireEq(modern.reviewed_structural_relation_signal_rows, 4, 'modern structural-relation signal rows');
+requireEq(modern.resolved_structural_relation_model_rows, 4, 'resolved modern structural-relation rows');
+requireEq(modern.unresolved_structural_relation_model_rows_in_this_cluster, 0, 'unresolved modern structural-relation rows');
+requireEq(modern.gandhi_replacement_phase_count, 3, 'Gandhi replacement phases');
+requireEq(modern.lenin_simultaneous_constituent_and_union_offices_supported, true, 'Lenin simultaneous constituent/union offices');
+requireEq(modern.newly_identified_exact_temporal_correction_groups, 2, 'modern exact temporal correction groups');
+requireEq(modern.new_polity_identity_required, false, 'modern new Polity identity requirement');
 requireEq(temporal.explicit_sub_year_blockers, 1, 'legacy explicit sub-year blockers');
 requireEq(temporal.reviewed_split_intervals, 2, 'reviewed Yoshida replacement intervals');
 
@@ -115,10 +126,16 @@ if (stage2DomainContract.production_migration_authorized !== false) {
   throw new Error('Stage 2 domain contract unexpectedly authorizes Production migration');
 }
 
-const temporalCorrectionCases = temporal.explicit_sub_year_blockers + continuity.newly_identified_exact_transition_cases;
-const remainingPolityRelationResearchRows = polityRelation.model_relevant_rows - japan.resolved_old_polity_relation_model_rows;
-if (remainingPolityRelationResearchRows !== 14) {
+const temporalCorrectionCases = temporal.explicit_sub_year_blockers
+  + continuity.newly_identified_exact_transition_cases
+  + modern.newly_identified_exact_temporal_correction_groups;
+const resolvedStructuralRelationRows = japan.resolved_old_polity_relation_model_rows + modern.resolved_structural_relation_model_rows;
+const remainingPolityRelationResearchRows = polityRelation.model_relevant_rows - resolvedStructuralRelationRows;
+if (remainingPolityRelationResearchRows !== 10) {
   throw new Error(`remaining Polity relation research drift: ${remainingPolityRelationResearchRows}`);
+}
+if (temporalCorrectionCases !== 5) {
+  throw new Error(`exact/sub-year correction-group drift: ${temporalCorrectionCases}`);
 }
 
 const blockerFamilies = [
@@ -162,7 +179,13 @@ const blockerFamilies = [
     code: 'KUBLAI_ACTIVITY_CORRECTIONS_PENDING',
     severity: 'HARD',
     count: kublai.reviewed_kublai_rows,
-    basis: 'Kublai Person-Polity authority semantics are now source-backed: Mongol Empire is claims_rule context, the 1260–1294 Yuan back-projection retires, and the 1271–1294 Yuan row is rules. Exact Production correction/backfill remains deferred.'
+    basis: 'Kublai Person-Polity authority semantics are source-backed: Mongol Empire is claims_rule context, the 1260–1294 Yuan back-projection retires, and the 1271–1294 Yuan row is rules. Exact Production correction/backfill remains deferred.'
+  },
+  {
+    code: 'MODERN_DEPENDENT_POLITY_CORRECTIONS_PENDING',
+    severity: 'HARD',
+    count: modern.reviewed_current_activity_rows,
+    basis: 'Canada/United Kingdom, British Raj/United Kingdom, and Soviet Russia/Soviet Union structural models plus Laurier/Gandhi/Lenin Activity corrections are source-backed, but exact UUID-bound corrections and full structural-relation interval backfill remain non-Production.'
   },
   {
     code: 'SENGOKU_TERRITORIAL_AUTHORITY_RESEARCH_PENDING',
@@ -174,13 +197,13 @@ const blockerFamilies = [
     code: 'POLITY_STRUCTURAL_RELATION_BACKFILL_RESEARCH',
     severity: 'HARD',
     count: remainingPolityRelationResearchRows,
-    basis: 'Four Japan layered-authority model rows are now historically resolved; the remaining model-relevant structural-relation rows still require source-reviewed target/relation work.'
+    basis: 'Japan resolved four raw structural-relation signals and the modern dependent/union cluster resolved four more. The remaining ten model-relevant rows still require source-reviewed target/relation work.'
   },
   {
     code: 'TEMPORAL_SUB_YEAR_DATA_CORRECTION_PENDING',
     severity: 'HARD',
     count: temporalCorrectionCases,
-    basis: 'The shared temporal schema can represent the reviewed cases, but Production still has Yoshida plus source-fixed Russia-1721 and Portugal-1815 transition cases in year-level form.'
+    basis: 'The shared temporal schema can represent the reviewed cases, but Production still has exact/sub-year correction groups for Yoshida, Russia-1721, Portugal-1815, Gandhi, and Lenin.'
   },
   {
     code: 'NEW_ASSERTION_PROVENANCE_BACKFILL_PENDING',
@@ -215,6 +238,8 @@ const validated = {
   kublai_person_polity_authority_semantics_closed: true,
   unresolved_kublai_person_polity_authority_semantics_rows: 0,
   kublai_pre_1271_direct_territory_research_still_required: kublai.pre_1271_direct_territory_reconstruction_still_required,
+  modern_dependent_union_polity_models_closed: true,
+  unresolved_modern_structural_relation_model_rows: 0,
   temporal_contract_acceptance_case_proven: true,
   domain_contract_verified_by_prior_ci_step: true,
   fresh_postgresql_schema_rehearsal_verified_by_prior_ci_step: true,
@@ -229,9 +254,10 @@ const canContinueWithoutVercel = [
   'prepare exact UUID-bound Roman/East-Roman, Yuan/Northern-Yuan, Russia-1721 and Portugal-1815 correction manifests without applying them',
   'prepare exact Hōjō/Tokugawa Japan + Governance Context correction manifests without applying them',
   'prepare exact Kublai claims_rule / retire / Yuan-rules correction manifest without applying it',
+  'prepare exact Laurier/Gandhi/Lenin and Canada/British-Raj/Soviet-Russia structural correction manifests without applying them',
   'research Qubilai pre-1271 direct territorial extent separately without fabricating a Person-owned polygon',
   'finish Oda/Uesugi/pre-1590 Hideyoshi territorial-authority research',
-  'finish remaining non-Japan Polity structural-relation research',
+  'finish the remaining ten Polity structural-relation rows',
   'prepare normalized Source links alongside every reviewed new assertion backfill',
   'prepare the versioned Activity planner/transaction/authoring-replay/merge cutover without activating it',
   'continue shared Polity UUID integration design with civilization-map-project'
@@ -264,6 +290,10 @@ const summary = {
   kublai_authority_rows_reviewed: kublai.reviewed_kublai_rows,
   kublai_authority_semantics_unresolved_rows: 0,
   kublai_pre_1271_direct_territory_research_pending: kublai.pre_1271_direct_territory_reconstruction_still_required,
+  modern_structural_relation_rows_resolved: modern.resolved_structural_relation_model_rows,
+  modern_structural_relation_rows_unresolved: modern.unresolved_structural_relation_model_rows_in_this_cluster,
+  gandhi_replacement_phases: modern.gandhi_replacement_phase_count,
+  lenin_simultaneous_constituent_union_offices_supported: modern.lenin_simultaneous_constituent_and_union_offices_supported,
   polity_relation_model_relevant_rows_raw: polityRelation.model_relevant_rows,
   polity_relation_model_research_rows_remaining: remainingPolityRelationResearchRows,
   sub_year_correction_cases: temporalCorrectionCases,
