@@ -94,6 +94,8 @@ Minimum smoke expectations after a current deployment:
 - protected endpoint without auth → 401, not 500.
 - admin page exposes authentication gate before protected tools.
 
+Authoring transport 변경이 포함된 release에서는 `.github/workflows/atlas-authoring-apply.yml`이 exact Production SHA를 기다린 뒤 기존 approved manifest를 idempotent replay하는 것도 확인합니다. replay는 새 historical row를 만들면 안 됩니다.
+
 Do not run candidate rebuild, identity creation, or other writes against a stale Production deployment.
 
 ## 5. Vercel deployment quota
@@ -122,18 +124,38 @@ Never rebuild the retired MVP schema as an intermediate compatibility step.
 
 ## 7. Data authoring sequence
 
-For a genuinely new historical object:
+### Preferred GitHub/ChatGPT route
+
+For a reviewed new Person × Polity Activity request, create one `authoring/requests/*.json` manifest.
+
+Use `atlas-authoring-manifest/v2` for new work:
 
 ```text
-Create/verify Person identity
-Create/verify Polity identity
-Create/verify Role vocabulary if needed
-→ create activity relationship
-→ inspect read projection
-→ rebuild duplicate candidates when review is desired
+reviewed manifest
+→ create/reuse Person
+→ optional create/reuse Polity
+→ optional create/reuse Role
+→ create Activity
+→ write authoring audit ledger
+→ commit all or rollback all
 ```
 
+- If the Polity already exists, omit `polity_identity` and reference its exact normalized name in `activity.politic_name`.
+- If the Role already exists, omit `role_identity` and reference an exact resolver token in `activity.role`.
+- If either vocabulary item is genuinely new, declare it in the same v2 manifest.
+- Declared Polity/Role identity and Activity reference must match exactly; do not use fuzzy inference to connect them.
+- `review_status` must be `approved` before the Production workflow will select the manifest.
+- Stable `request_id` makes exact replay idempotent; never recycle a request id for changed content.
+
+Existing v1 manifests remain valid but cannot declare new Polity/Role identities.
+
+### Admin route
+
+Interactive administrators may still create Person/Polity/Role through `/api/atlas-identity` and then create the Activity through `/api/atlas-mutate`.
+
 If a Person/Polity name collision is reported, review the existing identity instead of bypassing it with direct SQL.
+
+After authoring, inspect the normalized read projection and rebuild duplicate candidates when review is desired.
 
 ## 8. Duplicate merge operations
 
@@ -159,6 +181,11 @@ If Production behavior disagrees with GitHub `main`:
 
 - identify the deployed SHA first;
 - do not debug as though the undeployed source were live.
+
+If authoring returns an identity/reference `MISMATCH`, `COLLISION`, `AMBIGUOUS`, or `UNRESOLVED` error:
+
+- correct or review the manifest/vocabulary;
+- do not bypass the normalized identity resolver with raw SQL.
 
 ## 10. Historical files
 
