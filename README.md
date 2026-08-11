@@ -30,7 +30,7 @@ existing identity/activity transaction services
 
 ### Identity authoring
 
-새로운 Person / Polity / Role은 먼저 normalized identity로 생성합니다.
+새로운 Person / Polity / Role은 normalized identity로 생성합니다.
 
 - Person: EN canonical preferred name + KO preferred display name을 한 SERIALIZABLE transaction에서 생성
 - Polity: 동일
@@ -57,6 +57,16 @@ update/delete는 normalized relationship UUID를 사용합니다.
 
 이 파일 자체가 runtime DB가 되는 것은 아닙니다. `server/atlas-authoring-manifest-service.js`가 manifest를 검증하고 기존 identity/activity transaction primitives를 재사용하여 `atlas_v2`에 반영합니다.
 
+새 작업의 권장 contract는 `atlas-authoring-manifest/v2`입니다.
+
+- Person은 항상 manifest 안에서 생성 또는 idempotent reuse
+- 기존 Polity/Role을 정확히 참조할 수 있음
+- 아직 없는 Polity는 `polity_identity`로 같은 transaction 안에서 생성 가능
+- 아직 없는 Role은 `role_identity`로 같은 transaction 안에서 생성 가능
+- 새 Polity/Role 선언과 Activity 참조가 정확히 일치하지 않으면 fail closed
+- Person + optional Polity + optional Role + Activity + audit ledger가 하나의 SERIALIZABLE transaction으로 commit/rollback
+- 기존 `atlas-authoring-manifest/v1` manifest는 계속 호환됨
+
 핵심 원칙:
 
 - GitHub manifest는 audit/review surface
@@ -65,7 +75,7 @@ update/delete는 normalized relationship UUID를 사용합니다.
 - legacy table write 금지
 - 동일 `request_id`는 idempotent replay
 - 동일 `request_id`에 다른 payload가 들어오면 fail closed
-- Polity/Role은 기존 normalized vocabulary를 exact resolve하며, 미해결/모호하면 중단
+- 모든 기존 Polity/Role 참조는 exact resolve하며, 미해결/모호하면 중단
 
 세부 형식은 `authoring/README.md`를 따릅니다.
 
@@ -102,7 +112,9 @@ npm run test:runtime
 npm run test:schema   # fresh PostgreSQL DATABASE_URL 필요
 ```
 
-GitHub의 current CI gate는 `.github/workflows/atlas-integrity.yml` 하나입니다. 모든 `tests/*.test.mjs`, runtime legacy reachability, fresh PostgreSQL schema rebuild를 검증합니다.
+GitHub의 current integrity gate는 `.github/workflows/atlas-integrity.yml`입니다. 모든 `tests/*.test.mjs`, runtime legacy reachability, fresh PostgreSQL schema rebuild를 검증합니다.
+
+`.github/workflows/atlas-authoring-apply.yml`은 integrity gate와 별개의 production authoring operation workflow이며, approved manifest가 `main`에 들어온 경우에만 OIDC를 통해 정확한 Production deployment에 적용합니다.
 
 ## Server environment
 
