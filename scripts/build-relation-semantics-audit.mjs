@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { stage2DomainContract, personPolityRelationCodes } from './stage2-domain-contract.mjs';
 
 const args = process.argv.slice(2);
 const arg = (name, fallback = null) => {
@@ -12,38 +13,17 @@ const outPath = arg('--out', 'artifacts/relation-semantics-audit.json');
 const summaryPath = arg('--summary', 'artifacts/relation-semantics-audit-summary.json');
 if (!ledgerPath) throw new Error('--ledger is required');
 
-const TAXONOMY = Object.freeze({
-  rules: {
-    meaning: 'Sovereign/head-of-polity or supreme de facto political authority.',
-    runtime: 'May highlight the polity territory for the activity interval as ruling authority, subject to territory/control data.'
-  },
-  governs: {
-    meaning: 'Top-level executive, regency, or governmental authority without treating the person as the polity sovereign identity.',
-    runtime: 'May highlight polity context as governmental authority, visually distinct from sovereign rule where useful.'
-  },
-  serves: {
-    meaning: 'Official, military, diplomatic, or institutional service to the polity without top-level governing authority.',
-    runtime: 'Do not present polity territory as the person’s territory; polity is service context only.'
-  },
-  active_in: {
-    meaning: 'Biographical, intellectual, religious, court, scientific, social, or other activity associated with the polity without state service or rule.',
-    runtime: 'Context only. Do not imply political authority or personal territory.'
-  },
-  opposes: {
-    meaning: 'Political or military resistance directed against the polity.',
-    runtime: 'Opponent/context relation only. Never render the polity territory as controlled by the person.'
-  },
-  claims_rule: {
-    meaning: 'A claim to sovereign rule that is not equivalent to accepted/effective control for the whole interval.',
-    runtime: 'Claim semantics only; direct-control display requires separate territorial evidence.'
-  }
-});
+const TAXONOMY = Object.freeze(Object.fromEntries(
+  stage2DomainContract.person_polity_relation_types.map(({ code, meaning, runtime }) => [code, { meaning, runtime }])
+));
+const VALID_RELATION_TYPES = new Set(personPolityRelationCodes);
 
 // Audit-only exact-role policy for the reviewed 346-row baseline.
 // This is deliberately NOT a future production classifier. Unknown or overloaded
 // role labels remain REVIEW_REQUIRED instead of being guessed from keywords.
 const ROLE_POLICY = new Map();
 const assign = (relationType, roles) => {
+  if (!VALID_RELATION_TYPES.has(relationType)) throw new Error(`role policy uses relation outside Stage 2 contract: ${relationType}`);
   for (const role of roles) {
     if (ROLE_POLICY.has(role)) throw new Error(`duplicate relation role policy: ${role}`);
     ROLE_POLICY.set(role, relationType);
@@ -100,7 +80,7 @@ assign('opposes', [
   'Religious leader and rebel commander', 'Nationalist, writer and reformist', 'Pirate leader'
 ]);
 
-const VALID_HINTS = new Set(Object.keys(TAXONOMY));
+const VALID_HINTS = VALID_RELATION_TYPES;
 const ledger = JSON.parse(fs.readFileSync(ledgerPath, 'utf8'));
 if (ledger.schema !== 'atlas-polity-semantic-master-ledger/v1') {
   throw new Error(`unexpected ledger schema: ${ledger.schema}`);
@@ -146,7 +126,7 @@ const summary = {
   schema: 'atlas-relation-semantics-audit-summary/v1',
   baseline_relationships: rows.length,
   unique_activity_ids: new Set(rows.map((r) => r.activity_id)).size,
-  taxonomy: Object.keys(TAXONOMY),
+  taxonomy: personPolityRelationCodes,
   candidate_rows: rows.filter((r) => r.status === 'CANDIDATE').length,
   review_required_rows: reviewRequired.length,
   candidate_counts: countBy(rows.filter((r) => r.status === 'CANDIDATE'), (r) => r.proposed_relation_type),
