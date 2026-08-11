@@ -48,22 +48,33 @@ function verifyTemporalClaims(payload, nowSeconds) {
   if (Number.isFinite(payload?.iat) && payload.iat > nowSeconds + skew) throw new Error("GITHUB_OIDC_IAT_IN_FUTURE");
 }
 
-function verifyTrustClaims(payload, expectedSha) {
+function verifyTrustClaims(payload, expectedSha, {
+  expectedAudience = EXPECTED_AUDIENCE,
+  expectedWorkflowRef = EXPECTED_WORKFLOW_REF
+} = {}) {
   if (payload?.iss !== ISSUER) throw new Error("GITHUB_OIDC_ISSUER_MISMATCH");
   const audiences = Array.isArray(payload?.aud) ? payload.aud : [payload?.aud];
-  if (!audiences.includes(EXPECTED_AUDIENCE)) throw new Error("GITHUB_OIDC_AUDIENCE_MISMATCH");
+  if (!audiences.includes(expectedAudience)) throw new Error("GITHUB_OIDC_AUDIENCE_MISMATCH");
   if (payload?.repository !== EXPECTED_REPOSITORY) throw new Error("GITHUB_OIDC_REPOSITORY_MISMATCH");
   if (String(payload?.repository_id || "") !== EXPECTED_REPOSITORY_ID) throw new Error("GITHUB_OIDC_REPOSITORY_ID_MISMATCH");
   if (payload?.ref !== EXPECTED_REF) throw new Error("GITHUB_OIDC_REF_MISMATCH");
-  if (payload?.workflow_ref !== EXPECTED_WORKFLOW_REF) throw new Error("GITHUB_OIDC_WORKFLOW_MISMATCH");
+  if (payload?.workflow_ref !== expectedWorkflowRef) throw new Error("GITHUB_OIDC_WORKFLOW_MISMATCH");
   if (payload?.environment !== "production") throw new Error("GITHUB_OIDC_ENVIRONMENT_MISMATCH");
   if (!ALLOWED_EVENTS.has(payload?.event_name)) throw new Error("GITHUB_OIDC_EVENT_MISMATCH");
   if (payload?.sha !== expectedSha) throw new Error("GITHUB_OIDC_SHA_MISMATCH");
 }
 
-async function verifyGitHubActionsOidc(token, { expectedSha, fetchImpl = globalThis.fetch, now = Date.now } = {}) {
+async function verifyGitHubActionsOidc(token, {
+  expectedSha,
+  expectedAudience = EXPECTED_AUDIENCE,
+  expectedWorkflowRef = EXPECTED_WORKFLOW_REF,
+  fetchImpl = globalThis.fetch,
+  now = Date.now
+} = {}) {
   const jwt = requireString(token, "GITHUB_OIDC_TOKEN_REQUIRED");
   const sha = requireString(expectedSha, "GITHUB_OIDC_EXPECTED_SHA_REQUIRED");
+  const audience = requireString(expectedAudience, "GITHUB_OIDC_EXPECTED_AUDIENCE_REQUIRED");
+  const workflowRef = requireString(expectedWorkflowRef, "GITHUB_OIDC_EXPECTED_WORKFLOW_REQUIRED");
   const parts = jwt.split(".");
   if (parts.length !== 3) throw new Error("GITHUB_OIDC_MALFORMED_TOKEN");
 
@@ -88,7 +99,7 @@ async function verifyGitHubActionsOidc(token, { expectedSha, fetchImpl = globalT
 
   const nowSeconds = Math.floor(now() / 1000);
   verifyTemporalClaims(payload, nowSeconds);
-  verifyTrustClaims(payload, sha);
+  verifyTrustClaims(payload, sha, { expectedAudience: audience, expectedWorkflowRef: workflowRef });
   return Object.freeze(payload);
 }
 
