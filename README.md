@@ -1,6 +1,6 @@
 # ATLAS Person × Polity Authoring System
 
-ATLAS의 normalized 역사 identity와 인물–정치체 활동 관계를 저작·검토하는 관리 시스템입니다.
+ATLAS의 normalized 역사 identity와 인물–정치체 활동 관계를 저작·검토·교정하는 관리 시스템입니다.
 
 ## Current architecture
 
@@ -17,9 +17,18 @@ Browser / Admin
 GitHub authoring request
   └─ authoring/requests/*.json
           ↓
-reviewed manifest orchestration
+reviewed authoring orchestration
           ↓
 existing identity/activity transaction services
+          ↓
+      atlas_v2.*
+
+GitHub correction request
+  └─ corrections/requests/*.json
+          ↓
+exact-SHA dry-run → reviewed apply
+          ↓
+source-preserving correction transaction
           ↓
       atlas_v2.*
 ```
@@ -79,6 +88,24 @@ update/delete는 normalized relationship UUID를 사용합니다.
 
 세부 형식은 `authoring/README.md`를 따릅니다.
 
+### Reviewed corrections
+
+기존 authoritative 관계를 역사 감사 결과에 따라 교정할 때는 신규 authoring 경로를 재사용하지 않고 별도의 `corrections/requests/*.json` contract를 사용합니다.
+
+현재 `atlas-correction-manifest/v1`은 Stage 2 R0에서 UUID 수준으로 입증된 exact Activity duplicate의 `coalesce_relationship`만 허용합니다.
+
+- exact reviewed before-state 필수
+- SERIALIZABLE transaction
+- relationship source / chronology claim / relationship description 보존
+- 동일 source의 locator 충돌은 fail closed
+- 실제 mutation transaction을 수행한 뒤 rollback하는 dry-run 필수
+- dry-run 성공 후에만 exact-SHA apply
+- dedicated correction OIDC audience/workflow
+- idempotent correction ledger
+- correction engine 코드 변경만으로는 Production write workflow가 실행되지 않음
+
+향후 relink/split/Polity identity correction은 별도 검토를 거쳐 contract를 확장합니다. 세부 형식은 `corrections/README.md`를 따릅니다.
+
 ### Duplicate review / merge
 
 Phase 9 evidence-based duplicate system은 현재 기능입니다.
@@ -101,7 +128,7 @@ Phase 9 evidence-based duplicate system은 현재 기능입니다.
 
 `db/schema/atlas_v2.current.sql`
 
-입니다. 이 파일은 **새 PostgreSQL에서 현재 schema를 재구축하기 위한 baseline**이며 기존 DB에 덮어쓰는 migration이 아닙니다. 자세한 계약은 `db/README.md`를 따릅니다.
+입니다. 완전한 현재 schema는 이 clean baseline에 reviewed ordered migration registries를 순서대로 적용하여 재구성합니다. 이 파일은 기존 DB에 덮어쓰는 migration이 아닙니다. 자세한 계약은 `db/README.md`를 따릅니다.
 
 ## Verification
 
@@ -114,7 +141,9 @@ npm run test:schema   # fresh PostgreSQL DATABASE_URL 필요
 
 GitHub의 current integrity gate는 `.github/workflows/atlas-integrity.yml`입니다. 모든 `tests/*.test.mjs`, runtime legacy reachability, fresh PostgreSQL schema rebuild를 검증합니다.
 
-`.github/workflows/atlas-authoring-apply.yml`은 integrity gate와 별개의 production authoring operation workflow이며, approved manifest가 `main`에 들어온 경우에만 OIDC를 통해 정확한 Production deployment에 적용합니다.
+`.github/workflows/atlas-authoring-apply.yml`은 approved 신규 authoring manifest용 Production workflow입니다.
+
+`.github/workflows/atlas-correction-apply.yml`은 approved correction manifest만 대상으로 하며, 별도 OIDC 경계에서 dry-run을 먼저 통과한 뒤 정확한 Production SHA에 apply합니다.
 
 ## Server environment
 
@@ -136,8 +165,10 @@ GitHub의 current integrity gate는 `.github/workflows/atlas-integrity.yml`입�
 - `ARCHITECTURE_INVARIANTS.md` — runtime/보안/transaction 불변조건
 - `DATA_MODEL.md` — normalized entity·relationship·duplicate semantics
 - `OPERATIONS.md` — 환경변수·배포·검증·복구 절차
-- `db/README.md` — schema baseline 정책
+- `db/README.md` — schema baseline + ordered migration 정책
 - `authoring/README.md` — GitHub authoring manifest contract
+- `corrections/README.md` — reviewed correction manifest contract
+- `docs/audits/` — 현재 semantic audit 및 correction decision evidence
 - `migration/` — 과거 migration/audit evidence. 현재 runtime 설계 문서가 아님
 
 ## Historical evidence

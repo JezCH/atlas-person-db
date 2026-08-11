@@ -1,6 +1,6 @@
 # ATLAS Architecture Invariants
 
-이 문서는 현재 ATLAS runtime의 강제 불변조건을 정의합니다. 과거 Phase 문서와 충돌하면 이 문서와 현재 코드/DB baseline이 우선합니다.
+이 문서는 현재 ATLAS runtime의 강제 불변조건을 정의합니다. 과거 Phase 문서와 충돌하면 이 문서와 현재 코드/DB reconstruction contract가 우선합니다.
 
 ## 1. Authority
 
@@ -13,6 +13,7 @@
 - Browser는 same-origin API만 호출합니다.
 - Browser는 PostgreSQL/Supabase DB credential, mutation bearer token, session signing secret을 알 수 없습니다.
 - Browser direct DB writes는 금지합니다.
+- GitHub OIDC 전용 authoring/audit/correction endpoints는 browser authoring surface가 아닙니다.
 
 ## 3. Read boundary
 
@@ -61,7 +62,35 @@ reviewed authoring/requests/*.json
 - snapshot 도입 이전 historical run의 create/reuse 상태는 추정하지 않습니다. exact replay 때 live UUID를 검증한 뒤 `provenance_complete=false` + `historical_unknown`으로만 backfill합니다.
 - 동일 `request_id` + 동일 manifest는 idempotent replay, 동일 `request_id` + 다른 manifest는 fail closed입니다.
 
-## 6. Activity mutation boundary
+## 6. GitHub reviewed correction boundary
+
+```text
+reviewed corrections/requests/*.json
+ -> dedicated GitHub Actions short-lived OIDC
+ -> exact main SHA Vercel Production endpoint
+ -> dry-run of the real SERIALIZABLE mutation transaction
+ -> ROLLBACK
+ -> only after successful dry-run: reviewed apply
+ -> source-preserving normalized correction primitive
+ -> correction result ledger
+```
+
+- Correction은 신규 authoring과 별도 trust/workflow/audience를 사용합니다.
+- 현재 `atlas-correction-manifest/v1`은 `coalesce_relationship` 하나만 허용합니다.
+- v1 대상은 normalized UUID inventory로 exact Activity duplicate임이 입증된 관계에 한정합니다.
+- keep/drop UUID와 exact reviewed before-state(Person/Polity/Role/Period basis/Start/End/notes/legacy source key)가 live row와 일치해야 합니다.
+- target relationship locks는 deterministic UUID order로 획득합니다.
+- coalesce는 기존 Person merge의 검증된 source-preserving primitive를 재사용합니다.
+- relationship source links, chronology claims, relationship descriptions는 drop 전에 보존/이동합니다.
+- 동일 source에 서로 다른 locator가 발견되면 fail closed합니다.
+- dry-run은 실제 mutation primitive와 postcondition을 실행하고 transaction 전체를 rollback해야 하며 Production data/schema를 바꾸지 않습니다.
+- apply는 dry-run 성공 후 별도 exact-SHA 요청으로만 실행합니다. apply 시 필요한 reviewed correction ledger migration을 server-side에서 적용할 수 있습니다.
+- correction ledger는 dropped relationship UUID가 사라진 뒤에도 감사증거를 보존해야 하므로 dropped Activity에 FK를 걸지 않습니다.
+- 동일 `request_id` + 동일 manifest는 idempotent replay, 동일 request id + 다른 payload는 fail closed입니다.
+- correction engine/workflow/API 코드 변경 자체는 Production correction workflow의 push trigger가 아닙니다. approved `corrections/requests/*.json`이 main에 들어오지 않는 한 자동 data mutation이 발생하지 않습니다.
+- relink/split/polity-identity merge는 v1에서 지원하지 않습니다. 해당 기능은 별도 역사결정과 contract 확장 후에만 허용합니다.
+
+## 7. Activity mutation boundary
 
 ```text
 Browser/Admin/Import
@@ -78,8 +107,9 @@ Browser/Admin/Import
 - retired `reconcile` mutation surface를 다시 추가하지 않습니다.
 - update/delete는 normalized relationship UUID를 사용합니다.
 - Role은 nullable이며 synthetic unspecified role을 만들지 않습니다.
+- 일반 delete surface는 provenance-preserving duplicate coalesce의 대체 수단이 아닙니다.
 
-## 7. Semantic activity identity
+## 8. Semantic activity identity
 
 Activity semantic identity는 항상 다음 6차원입니다.
 
@@ -89,7 +119,7 @@ Person + Polity + Start + End + Role(nullable) + Period basis
 
 UI/import/planner/DB transaction이 서로 다른 semantic key를 사용하면 안 됩니다.
 
-## 8. Duplicate review and merge
+## 9. Duplicate review and merge
 
 - fuzzy similarity는 candidate evidence일 수 있으나 자동 identity 결정이 아닙니다.
 - candidate decision: `MERGE`, `KEEP_SEPARATE`, `REVIEW`.
@@ -100,7 +130,7 @@ UI/import/planner/DB transaction이 서로 다른 semantic key를 사용하면 �
 - source person은 dependent data 보존/이동 후 마지막에 삭제합니다.
 - merge audit는 before-state와 applied mutation summary를 보존합니다.
 
-## 9. Authentication and secrets
+## 10. Authentication and secrets
 
 - Human admin login과 server bearer credential은 별개입니다.
 - `ATLAS_ADMIN_PASSWORD`: human login credential.
@@ -108,24 +138,28 @@ UI/import/planner/DB transaction이 서로 다른 semantic key를 사용하면 �
 - `ATLAS_SESSION_SECRET`: browser session signing 전용 secret. 설정 시 mutation token과 cryptographic role을 분리합니다.
 - migration compatibility 때문에 session secret 미설정 시 mutation token fallback을 현재 허용하지만, 운영 목표는 dedicated secret 설정입니다.
 - Session cookie는 HttpOnly + Secure + SameSite=Strict입니다.
+- GitHub reviewed authoring/audit/correction은 각자의 dedicated OIDC audience + exact workflow identity를 사용하며 서로의 token을 수용하지 않습니다.
 
-## 10. PostgreSQL client
+## 11. PostgreSQL client
 
 - 모든 runtime DB API는 `server/atlas-postgres-client.js` 하나를 사용합니다.
 - client setup을 API entrypoint마다 복제하지 않습니다.
 - `SUPABASE_DB_CA`가 설정되면 certificate verification을 강제합니다.
 - DB 연결 실패는 deterministic JSON 503으로 처리합니다.
 
-## 11. Schema governance
+## 12. Schema governance
 
-- `db/schema/atlas_v2.current.sql`이 clean-db current baseline입니다.
+- `db/schema/atlas_v2.current.sql`이 clean-db baseline입니다.
+- 완전한 현재 구조의 재구성 contract는 `clean baseline + ordered reviewed migration registries`입니다.
 - baseline은 기존 `atlas_v2` DB에 적용하지 않습니다.
-- future DB structure change는 reviewed migration으로 적용하고, 성공 후 current baseline을 같은 구조로 갱신합니다.
-- authoring-specific runtime migrations는 `server/atlas-authoring-migrations.js`의 ordered registry가 단일 source of truth입니다.
-- production Vercel authoring handler와 local/manual runner는 동일 migration registry를 사용해야 합니다.
+- structural DB change는 reviewed migration으로 적용하고 ordered registry에 포함합니다.
+- authoring migration source of truth: `server/atlas-authoring-migrations.js`.
+- correction migration source of truth: `server/atlas-correction-migrations.js`.
+- fresh-schema CI는 baseline과 모든 current ordered migrations를 적용한 뒤 exact final table/constraint surface와 migration replay를 검증해야 합니다.
+- reviewed migrations는 운영 이력을 보존합니다. maintenance 시점에 current baseline을 새 구조로 refresh할 수 있으나 migration evidence를 임의 삭제하지 않습니다.
 - data row count는 schema invariant가 아닙니다.
 
-## 12. CI governance
+## 13. CI governance
 
 현재 repository integrity CI source of truth는 `.github/workflows/atlas-integrity.yml`입니다.
 
@@ -135,13 +169,13 @@ UI/import/planner/DB transaction이 서로 다른 semantic key를 사용하면 �
 - all `tests/*.test.mjs`
 - active JS syntax
 - zero reachable legacy runtime
-- fresh PostgreSQL baseline rebuild
+- fresh PostgreSQL baseline + current ordered migrations rebuild
 
-Production authoring operation은 `.github/workflows/atlas-authoring-apply.yml`이며 integrity CI를 대체하거나 병렬 architecture gate로 취급하지 않습니다.
+Production authoring operation은 `.github/workflows/atlas-authoring-apply.yml`, Production correction operation은 `.github/workflows/atlas-correction-apply.yml`이며 integrity CI를 대체하거나 병렬 architecture gate로 취급하지 않습니다.
 
 과거 Phase workflow를 현재 gate로 병렬 유지하지 않습니다.
 
-## 13. Release governance
+## 14. Release governance
 
 `main` commit과 Production deployment는 동일하다고 추정하지 않습니다.
 
@@ -152,6 +186,8 @@ Release 완료 조건:
 3. Vercel Production deployed SHA가 merge된 main SHA와 일치.
 4. production smoke가 read/session/protected API boundary를 확인.
 5. authoring transport 변경 시 approved manifest replay가 exact deployment SHA에서 idempotently 성공.
-6. replay 결과 snapshot이 live normalized UUID binding 검증을 통과.
+6. authoring replay 결과 snapshot이 live normalized UUID binding 검증을 통과.
+7. correction request가 있는 경우 같은 main SHA에서 correction dry-run이 먼저 성공하고 `committed=false`임을 확인.
+8. correction apply가 `committed=true`로 성공한 뒤 result artifact와 live post-state를 검증.
 
 배포되지 않은 main 코드를 Production 기능으로 간주하지 않습니다.
