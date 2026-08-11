@@ -100,6 +100,10 @@
     {
       "code": "member_of_confederation",
       "category": "confederation"
+    },
+    {
+      "code": "nominally_subordinate_to",
+      "category": "de_jure_or_nominal_subordination"
     }
   ],
   "polity_identity_relation_candidate_types": [
