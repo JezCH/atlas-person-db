@@ -8,7 +8,7 @@ on:
       - '.github/workflows/atlas-audit-inventory.yml'
       - 'api/atlas-audit-inventory.js'
       - 'server/atlas-audit-inventory-handler.js'
-      - 'server/atlas-github-oidc.js'
+      - 'server/atlas-audit-github-oidc.js'
       - 'docs/audits/STAGE2_R0_NORMALIZED_INVENTORY_REQUEST.json'
   workflow_dispatch:
 
