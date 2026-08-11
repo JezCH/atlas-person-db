@@ -18,8 +18,11 @@ function sameText(left, right) {
   return String(left ?? "") === String(right ?? "");
 }
 
-async function advisoryLock(client, kind, key) {
-  await client.query("select pg_advisory_xact_lock(hashtext($1))", [`atlas-identity:${kind}:${key}`]);
+async function advisoryLocks(client, keys) {
+  const ordered = [...new Set(keys.map((key) => normalizeExact(key)).filter(Boolean))].sort();
+  for (const key of ordered) {
+    await client.query("select pg_advisory_xact_lock(hashtext($1))", [key]);
+  }
 }
 
 async function exactNameCollision(client, table, ownerColumn, name, excludeId = null) {
@@ -44,7 +47,12 @@ async function createPerson(client, raw) {
   const historicity = normalizeExact(raw?.historicity) || "historical";
   const allowDisplayCollision = boolean(raw?.allow_display_name_collision);
 
-  await advisoryLock(client, "person", canonicalKey);
+  await advisoryLocks(client, [
+    `atlas-identity:person:key:${canonicalKey}`,
+    `atlas-identity:person:name:${canonicalName}`,
+    `atlas-identity:person:name:${displayName}`
+  ]);
+
   const existing = await client.query(`
     select p.id,p.person_type,p.historicity,
            en.name as canonical_name_en,ko.name as display_name_ko
@@ -95,7 +103,12 @@ async function createPolity(client, raw) {
   const historicity = normalizeExact(raw?.historicity) || "historical";
   const allowDisplayCollision = boolean(raw?.allow_display_name_collision);
 
-  await advisoryLock(client, "polity", canonicalKey);
+  await advisoryLocks(client, [
+    `atlas-identity:polity:key:${canonicalKey}`,
+    `atlas-identity:polity:name:${canonicalName}`,
+    `atlas-identity:polity:name:${displayName}`
+  ]);
+
   const existing = await client.query(`
     select p.id,p.polity_type,p.historicity,
            en.name as canonical_name_en,ko.name as display_name_ko
@@ -157,7 +170,12 @@ async function createRole(client, raw) {
   const displayName = required(raw?.display_name_ko, "display_name_ko");
   const category = required(raw?.category, "category");
 
-  await advisoryLock(client, "role", code);
+  await advisoryLocks(client, [
+    `atlas-identity:role:token:${code}`,
+    `atlas-identity:role:token:${sourceLabel}`,
+    `atlas-identity:role:token:${displayName}`
+  ]);
+
   const existing = await client.query(`
     select r.id,r.category,r.source_label,r.is_active,
            en.name as canonical_name_en,ko.name as display_name_ko
@@ -178,6 +196,7 @@ async function createRole(client, raw) {
     throw new Error("ROLE_CODE_CONFLICT");
   }
 
+  if (await roleCollision(client, code)) throw new Error("ROLE_CODE_COLLIDES_WITH_EXISTING_VOCABULARY");
   if (await roleCollision(client, sourceLabel)) throw new Error("ROLE_SOURCE_LABEL_COLLISION");
   if (await roleCollision(client, displayName)) throw new Error("ROLE_DISPLAY_NAME_COLLISION");
 
@@ -226,6 +245,7 @@ function createIdentityService({ client } = {}) {
 module.exports = Object.freeze({
   createIdentityService,
   normalizeExact,
+  advisoryLocks,
   createPerson,
   createPolity,
   createRole
