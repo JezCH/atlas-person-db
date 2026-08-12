@@ -1,7 +1,7 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "ignoreCommand": "test \"$VERCEL_ENV\" != \"production\"",
+  "ignoreCommand": "node scripts/vercel-ignore-build.mjs",
   "headers": [
     {
       "source": "/(.*)\\.html",
