@@ -72,7 +72,7 @@ try {
   await client.query(source);
 
   const initialCorrectionMigration = await applyCorrectionMigrations(client);
-  if (initialCorrectionMigration.applied.length !== 1) throw new Error('correction migration registry is incomplete');
+  if (initialCorrectionMigration.applied.length !== 2) throw new Error('correction migration registry is incomplete');
 
   const tables = await client.query(`
     select table_name
@@ -122,6 +122,17 @@ try {
      order by column_name`);
   same(correctionColumns.rows.map((row) => row.column_name), ['applied_at','manifest_hash','manifest_schema','request_id','result_snapshot'], 'correction ledger columns');
 
+  const correctionSchemaConstraint = await client.query(`
+    select pg_get_constraintdef(con.oid) as definition
+      from pg_constraint con
+      join pg_namespace n on n.oid=con.connamespace
+     where n.nspname='atlas_v2'
+       and con.conname='correction_manifest_runs_manifest_schema_check'`);
+  const correctionSchemaDefinition = String(correctionSchemaConstraint.rows[0]?.definition || '');
+  if (!/atlas-correction-manifest\/v1/.test(correctionSchemaDefinition) || !/atlas-correction-manifest\/v1\.1/.test(correctionSchemaDefinition)) {
+    throw new Error(`correction manifest schema constraint drift: ${correctionSchemaDefinition}`);
+  }
+
   const firstAuthoringReplay = await applyAuthoringMigrations(client);
   const secondAuthoringReplay = await applyAuthoringMigrations(client);
   if (firstAuthoringReplay.applied.length !== 2 || secondAuthoringReplay.applied.length !== 2) {
@@ -130,7 +141,7 @@ try {
 
   const firstCorrectionReplay = await applyCorrectionMigrations(client);
   const secondCorrectionReplay = await applyCorrectionMigrations(client);
-  if (firstCorrectionReplay.applied.length !== 1 || secondCorrectionReplay.applied.length !== 1) {
+  if (firstCorrectionReplay.applied.length !== 2 || secondCorrectionReplay.applied.length !== 2) {
     throw new Error('correction migration registry did not apply the complete ordered set');
   }
 
@@ -160,6 +171,7 @@ try {
     authoring_migration_replay: true,
     correction_migrations: firstCorrectionReplay.applied.length,
     correction_migration_replay: true,
+    correction_manifest_schemas: ['atlas-correction-manifest/v1','atlas-correction-manifest/v1.1'],
     clean_target_guard: true,
     legacy_objects: 0
   }, null, 2));
