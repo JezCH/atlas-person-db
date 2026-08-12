@@ -25,6 +25,16 @@ if (decisions.baseline?.deployment_sha !== intake.deployment_sha || decisions.ba
 if (Number(decisions.baseline?.polity_identity_dependency_total) !== 49) throw new Error('P4 Polity identity dependency total drift');
 if (!Array.isArray(decisions.decisions) || decisions.decisions.length !== Number(decisions.result?.decisions_recorded)) throw new Error('P4 Polity identity decision count drift');
 
+const priorApplied = Number(ledger.summary?.p4_polity_identity_decisions_applied || 0);
+const priorPending = Number(ledger.summary?.p4_polity_identity_decided_execution_pending || 0);
+if (priorPending !== priorApplied) throw new Error(`P4 prior execution handoff drift ${priorPending} != ${priorApplied}`);
+if (decisions.batch) {
+  if (Number(decisions.batch.applied_before_batch) !== priorApplied) throw new Error(`P4 batch order drift: ledger applied=${priorApplied}, batch expects=${decisions.batch.applied_before_batch}`);
+  if (Number(decisions.batch.expected_applied_after_batch) !== priorApplied + decisions.decisions.length) throw new Error('P4 batch expected-applied counter drift');
+} else if (priorApplied !== 0) {
+  throw new Error('unsequenced first P4 Polity identity batch may only run on a fresh P4 ledger');
+}
+
 const activities = intake.activity_rows || [];
 const polities = intake.identity_catalogs?.polities || [];
 const activityById = new Map(activities.map((row) => [row.activity_id, row]));
@@ -53,10 +63,13 @@ function executionKind(decision) {
   return 'POLITY_SEMANTIC_CORRECTION_PENDING';
 }
 
+const alreadyAppliedDecisionIds = new Set(
+  ledger.rows.map((row) => row.audit?.polity_identity_decision?.id).filter(Boolean)
+);
 const seen = new Set();
-let applied = 0;
+let appliedThisBatch = 0;
 for (const decision of decisions.decisions) {
-  if (!decision?.id || seen.has(decision.id)) throw new Error(`invalid or duplicate P4 Polity identity decision id ${decision?.id}`);
+  if (!decision?.id || seen.has(decision.id) || alreadyAppliedDecisionIds.has(decision.id)) throw new Error(`invalid, duplicate, or already-applied P4 Polity identity decision id ${decision?.id}`);
   seen.add(decision.id);
   if (!allowedDispositions.has(decision.target_disposition)) throw new Error(`unsupported P4 target disposition ${decision.target_disposition}`);
 
@@ -89,6 +102,8 @@ for (const decision of decisions.decisions) {
   ledgerRow.audit.pre_polity_identity_decision = previous;
   ledgerRow.audit.polity_identity_decision = {
     id: decision.id,
+    batch_id: decisions.batch?.id ?? 'p4_polity_identity_batch_1',
+    batch_sequence: Number(decisions.batch?.sequence || 1),
     status: 'P4_IDENTITY_DECIDED_IMPLEMENTATION_PENDING',
     reviewed_decision: decision.reviewed_decision,
     target_disposition: decision.target_disposition,
@@ -101,34 +116,41 @@ for (const decision of decisions.decisions) {
     production_mutation_authorized: false
   };
   if (Array.isArray(decision.split_targets)) ledgerRow.audit.polity_identity_decision.split_targets = decision.split_targets;
-  applied += 1;
+  appliedThisBatch += 1;
 }
 
 const dependencyCounts = {};
 for (const row of ledger.rows) {
   for (const dep of row.audit?.dependencies || []) dependencyCounts[dep] = (dependencyCounts[dep] || 0) + 1;
 }
-const unresolved = Number(decisions.baseline.polity_identity_dependency_total) - applied;
+const totalApplied = priorApplied + appliedThisBatch;
+const unresolved = Number(decisions.baseline.polity_identity_dependency_total) - totalApplied;
 if (unresolved < 0) throw new Error('P4 Polity identity decisions exceed dependency total');
 if (Number(dependencyCounts.polity_identity_model || 0) !== unresolved) throw new Error(`P4 Polity identity unresolved count mismatch: dependencies=${dependencyCounts.polity_identity_model || 0}, expected=${unresolved}`);
 const executionPending = ledger.rows.filter((row) => row.audit?.polity_identity_decision?.status === 'P4_IDENTITY_DECIDED_IMPLEMENTATION_PENDING').length;
-if (executionPending !== applied) throw new Error(`P4 Polity identity execution handoff count drift: ${executionPending} != ${applied}`);
+if (executionPending !== totalApplied) throw new Error(`P4 Polity identity execution handoff count drift: ${executionPending} != ${totalApplied}`);
 
 ledger.summary.execution_class_counts = countBy((row) => row.audit.execution_class);
 ledger.summary.dependency_counts = Object.fromEntries(Object.entries(dependencyCounts).sort((a, b) => a[0].localeCompare(b[0])));
 ledger.summary.p4_polity_identity_dependency_total = Number(decisions.baseline.polity_identity_dependency_total);
-ledger.summary.p4_polity_identity_decisions_applied = applied;
+ledger.summary.p4_polity_identity_decisions_applied = totalApplied;
 ledger.summary.p4_polity_identity_decisions_unresolved = unresolved;
 ledger.summary.p4_polity_identity_decided_execution_pending = executionPending;
-ledger.generated_from.polity_identity_decisions = decisionsPath;
+const generated = ledger.generated_from.polity_identity_decisions;
+ledger.generated_from.polity_identity_decisions = Array.isArray(generated)
+  ? [...generated, decisionsPath]
+  : generated ? [generated, decisionsPath] : [decisionsPath];
 
 fs.writeFileSync(ledgerPath, `${JSON.stringify(ledger, null, 2)}\n`);
 console.log(JSON.stringify({
   marker: 'ATLAS_BASELINE_A_POLITY_IDENTITY_DECISIONS_APPLIED',
   baseline_digest: ledger.baseline.baseline_digest,
   ledger_rows: ledger.rows.length,
+  batch_id: decisions.batch?.id ?? 'p4_polity_identity_batch_1',
+  batch_sequence: Number(decisions.batch?.sequence || 1),
   p4_polity_identity_dependency_total: Number(decisions.baseline.polity_identity_dependency_total),
-  decisions_applied: applied,
+  decisions_applied_this_batch: appliedThisBatch,
+  decisions_applied_total: totalApplied,
   decisions_unresolved: unresolved,
   decided_execution_pending: executionPending,
   production_mutation_authorized: false
