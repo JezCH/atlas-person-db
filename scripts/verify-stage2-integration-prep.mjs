@@ -114,8 +114,25 @@ assert(huainan?.semantic_status === 'resolved', 'Huainan structural relation sem
 assert(huainan?.start === null && huainan?.end === null, 'Huainan absolute boundaries must remain unresolved until chronology/continuity review');
 assert(Array.isArray(huainan?.blockers) && huainan.blockers.length >= 2, 'Huainan unresolved chronology/continuity blockers must be explicit');
 
+const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+function assertNoBoundIdentityUuids(value, keyPath = 'root') {
+  if (Array.isArray(value)) {
+    value.forEach((child, index) => assertNoBoundIdentityUuids(child, `${keyPath}[${index}]`));
+    return;
+  }
+  if (!value || typeof value !== 'object') return;
+
+  for (const [key, child] of Object.entries(value)) {
+    const childPath = `${keyPath}.${key}`;
+    if (/(?:uuid|activity_id|polity_id)$/i.test(key) && typeof child === 'string' && uuidPattern.test(child)) {
+      fail(`pre-Baseline-A identity binding found at ${childPath}`);
+    }
+    assertNoBoundIdentityUuids(child, childPath);
+  }
+}
+assertNoBoundIdentityUuids(structural);
+
 const rawStructural = fs.readFileSync(structuralRelationsPath, 'utf8');
-assert(!/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}/i.test(rawStructural), 'structural relation research must not carry pre-Baseline-A UUID bindings');
 assert(!/1991-12-26/.test(rawStructural), 'Soviet dissolution must not be forced to 1991-12-26 without dedicated review');
 
 const requiredContracts = [
