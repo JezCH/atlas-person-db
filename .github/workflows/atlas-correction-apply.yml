@@ -52,10 +52,12 @@ jobs:
           while IFS= read -r source_path; do
             [[ -n "$source_path" ]] || continue
             if [[ "$source_path" =~ ^corrections/requests/[A-Za-z0-9._-]+\.json$ ]]; then
-              jq -e '(.schema == "atlas-correction-manifest/v1" or .schema == "atlas-correction-manifest/v1.1") and .review_status == "approved" and ((.release_order // 500) | type == "number") and ((.release_order // 500) | floor == .)' "$source_path" >/dev/null || {
-                echo "Correction request is not approved/bounded: $source_path" >&2
-                exit 1
-              }
+              jq -e '
+                (.schema == "atlas-correction-manifest/v1" or .schema == "atlas-correction-manifest/v1.1") and
+                .review_status == "approved" and
+                ((.release_order // 500) | type == "number") and
+                ((.release_order // 500) | floor == .)
+              ' "$source_path" >/dev/null
               order="$(jq -er '.release_order // 500' "$source_path")"
               kind="request"
             elif [[ "$source_path" =~ ^corrections/intents/[A-Za-z0-9._-]+\.json$ ]]; then
@@ -75,10 +77,7 @@ jobs:
                    (.operation.after.activity_end | floor == .) and
                    (.operation.after.activity_end >= .operation.after.activity_start)
                  else true end)
-              ' "$source_path" >/dev/null || {
-                echo "Correction intent is not an approved bounded v1 intent: $source_path" >&2
-                exit 1
-              }
+              ' "$source_path" >/dev/null
               order="$(jq -er '.release_order // 500' "$source_path")"
               kind="intent"
             else
@@ -92,11 +91,13 @@ jobs:
           [[ -s /tmp/atlas-correction-plan.tsv ]] || { echo 'No reviewed correction inputs selected.'; exit 0; }
           cat /tmp/atlas-correction-plan.tsv
 
-      - name: Snapshot exact targets, dry-run, then apply on the same Production SHA
+      - name: Snapshot exact targets, dry-run, apply, then capture Baseline A on the same Production SHA
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p /tmp/atlas-correction-evidence/snapshots /tmp/atlas-correction-evidence/generated-manifests /tmp/atlas-correction-evidence/responses
+          mkdir -p /tmp/atlas-correction-evidence/snapshots \
+                   /tmp/atlas-correction-evidence/generated-manifests \
+                   /tmp/atlas-correction-evidence/responses
           : > /tmp/atlas-correction-results.jsonl
 
           request_oidc() {
@@ -261,10 +262,29 @@ jobs:
             call_correction "$manifest" "$source_path" apply
           done < /tmp/atlas-correction-plan.tsv
 
-          jq -s '{deployment_sha:env.GITHUB_SHA,results:.}' /tmp/atlas-correction-results.jsonl > /tmp/atlas-correction-results.json
+          baseline_response="/tmp/atlas-correction-evidence/baseline-a.json"
+          baseline_payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" '{deployment_sha:$deployment_sha,mode:"full_activity_baseline"}')"
+          post_with_deployment_retry "$baseline_payload" "$baseline_response" "Baseline A capture"
+          jq -e '
+            .ok == true and
+            .marker == "ATLAS_CORRECTION_BASELINE_A_V1" and
+            .mode == "full_activity_baseline" and
+            .read_only == true and
+            .committed == false and
+            (.row_count == .counts.activities) and
+            (.baseline_digest | test("^sha256:[0-9a-f]{64}$"))
+          ' "$baseline_response" >/dev/null
+          jq '{marker,mode,read_only,committed,deployment_sha,row_count,counts,baseline_digest}' "$baseline_response" \
+            > /tmp/atlas-correction-evidence/baseline-a-summary.json
+          jq '.rows | map(.activity_id) | sort' "$baseline_response" \
+            > /tmp/atlas-correction-evidence/baseline-a-activity-uuids.json
+
+          jq -s --slurpfile baseline "$baseline_response" \
+            '{deployment_sha:env.GITHUB_SHA,results:.,baseline_a:{row_count:$baseline[0].row_count,counts:$baseline[0].counts,baseline_digest:$baseline[0].baseline_digest}}' \
+            /tmp/atlas-correction-results.jsonl > /tmp/atlas-correction-results.json
           jq . /tmp/atlas-correction-results.json
 
-      - name: Upload correction evidence
+      - name: Upload correction and Baseline A evidence
         uses: actions/upload-artifact@v4
         with:
           name: atlas-correction-results-${{ github.sha }}
