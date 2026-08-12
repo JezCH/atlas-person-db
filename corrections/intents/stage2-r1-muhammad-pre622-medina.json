@@ -30,6 +30,11 @@
     "decision_branch": "agent/stage2-r1-decision-ledger",
     "decision_head": "dc0b3479c57cb001049db94c597e9e6b04f2ff62",
     "decision_document": "docs/audits/STAGE2_R1_CORRECTION_DECISION_LEDGER_2026-08-12.md",
-    "exact_before_state_policy": "The reviewed intent binds the exact Activity UUID and historical action. Production Person/Polity/Role/Period UUIDs, notes and legacy source key are filled only from the correction endpoint's same-SHA REPEATABLE READ READ ONLY target snapshot, then revalidated under the real SERIALIZABLE dry-run/apply transaction. No name-based inference is permitted."
+    "exact_before_state_policy": "The reviewed intent binds the exact Activity UUID and historical action. Production Person/Polity/Role/Period UUIDs, notes and legacy source key are filled only from the correction endpoint's same-SHA REPEATABLE READ READ ONLY target snapshot, then revalidated under the real SERIALIZABLE dry-run/apply transaction. No name-based inference is permitted.",
+    "release_trigger": {
+      "batch": "production-train-1-2026-08-12",
+      "reason": "Connected GitHub control surface does not expose workflow_dispatch; reviewed correction paths are deliberately changed so the existing exact-SHA push workflow executes the approved batch.",
+      "prepared_from_main_sha": "ff0e0cd0402d77dabf0a518384ab4c01fe5094d4"
+    }
   }
 }

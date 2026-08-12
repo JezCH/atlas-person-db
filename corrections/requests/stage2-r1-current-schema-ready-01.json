@@ -7,7 +7,12 @@
     "decision_registry": "corrections/evidence/stage2-r1-current-schema-ready.json",
     "normalized_inventory_run": "31499183625",
     "normalized_inventory_artifact_id": "9104264546",
-    "normalized_inventory_digest": "sha256:ac1d91800412c2d79921b6ed791e6c82f94d125fc4203568f2cad4ddf5db3eb3"
+    "normalized_inventory_digest": "sha256:ac1d91800412c2d79921b6ed791e6c82f94d125fc4203568f2cad4ddf5db3eb3",
+    "release_trigger": {
+      "batch": "production-train-1-2026-08-12",
+      "reason": "Connected GitHub control surface does not expose workflow_dispatch; reviewed correction paths are deliberately changed so the existing exact-SHA push workflow executes the approved batch.",
+      "prepared_from_main_sha": "ff0e0cd0402d77dabf0a518384ab4c01fe5094d4"
+    }
   },
   "operations": [
     {
