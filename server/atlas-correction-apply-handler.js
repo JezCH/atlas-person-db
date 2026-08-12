@@ -10,15 +10,15 @@ const {
   normalizeSnapshotActivityIds,
   createCorrectionTargetSnapshot
 } = require("./atlas-correction-snapshot-service.js");
-const { queryFullActivityBaseline } = require("./atlas-audit-inventory-handler.js");
+const { queryFullStage2Baseline } = require("./atlas-audit-inventory-handler.js");
 const { applyCorrectionMigrations } = require("./atlas-correction-migrations.js");
 const { verifyGitHubActionsOidc } = require("./atlas-correction-github-oidc.js");
 
 const CORRECTION_PATH_RE = /^corrections\/(?:requests|intents)\/[A-Za-z0-9._-]+\.json$/;
-const MODES = new Set(["snapshot", "dry_run", "apply", "full_activity_baseline"]);
+const MODES = new Set(["snapshot", "dry_run", "apply", "full_stage2_baseline"]);
 const MANIFEST_SCHEMAS = new Set([MANIFEST_V1, MANIFEST_V1_1]);
 const SNAPSHOT_MARKER = "ATLAS_CORRECTION_SNAPSHOT_V1";
-const BASELINE_MARKER = "ATLAS_CORRECTION_BASELINE_A_V1";
+const BASELINE_MARKER = "ATLAS_CORRECTION_BASELINE_A_V2";
 
 function json(res, status, body) {
   res.statusCode = status;
@@ -60,32 +60,18 @@ function requirePayload(body) {
   const mode = String(body?.mode || "").trim().toLowerCase();
   if (!MODES.has(mode)) throw new Error("CORRECTION_MODE_REQUIRED");
 
-  if (mode === "full_activity_baseline") {
+  if (mode === "full_stage2_baseline") {
     if (body?.manifest_path != null || body?.intent_path != null || body?.manifest != null || body?.activity_ids != null) {
       throw new Error("CORRECTION_BASELINE_INPUTS_FORBIDDEN");
     }
-    return {
-      deploymentSha,
-      sourcePath: null,
-      mode,
-      activityIds: null,
-      manifest: null,
-      schema: null
-    };
+    return { deploymentSha, sourcePath: null, mode, activityIds: null, manifest: null, schema: null };
   }
 
   const sourcePath = String(body?.manifest_path || body?.intent_path || "").trim();
   if (!CORRECTION_PATH_RE.test(sourcePath)) throw new Error("CORRECTION_SOURCE_PATH_NOT_ALLOWED");
 
   if (mode === "snapshot") {
-    return {
-      deploymentSha,
-      sourcePath,
-      mode,
-      activityIds: normalizeSnapshotActivityIds(body?.activity_ids),
-      manifest: null,
-      schema: null
-    };
+    return { deploymentSha, sourcePath, mode, activityIds: normalizeSnapshotActivityIds(body?.activity_ids), manifest: null, schema: null };
   }
 
   if (!body?.manifest || typeof body.manifest !== "object" || Array.isArray(body.manifest)) throw new Error("CORRECTION_MANIFEST_OBJECT_REQUIRED");
@@ -100,7 +86,7 @@ function createCorrectionApplyHandler({
   createClient = createPostgresClient,
   applyMigrations = applyCorrectionMigrations,
   createSnapshot = createCorrectionTargetSnapshot,
-  queryBaseline = queryFullActivityBaseline
+  queryBaseline = queryFullStage2Baseline
 } = {}) {
   return async function handler(req, res) {
     if (req?.method !== "POST") return json(res, 405, { ok: false, code: "METHOD_NOT_ALLOWED" });
@@ -135,7 +121,7 @@ function createCorrectionApplyHandler({
     try {
       client = await createClient(databaseUrl, { env });
 
-      if (payload.mode === "full_activity_baseline") {
+      if (payload.mode === "full_stage2_baseline") {
         const baseline = await queryBaseline(client);
         return json(res, 200, {
           ok: true,
@@ -147,7 +133,8 @@ function createCorrectionApplyHandler({
           row_count: baseline.rows.length,
           counts: baseline.counts,
           baseline_digest: baseline.baseline_digest,
-          rows: baseline.rows
+          rows: baseline.rows,
+          catalogs: baseline.catalogs
         });
       }
 
@@ -169,9 +156,7 @@ function createCorrectionApplyHandler({
 
       if (payload.mode === "apply") await applyMigrations(client);
       const service = createCorrectionManifestServiceForSchema({ client, schema: payload.schema });
-      const outcome = await service.execute(payload.manifest, {
-        dryRun: payload.mode === "dry_run"
-      });
+      const outcome = await service.execute(payload.manifest, { dryRun: payload.mode === "dry_run" });
       return json(res, 200, {
         ok: true,
         marker: outcome.marker,
@@ -188,27 +173,13 @@ function createCorrectionApplyHandler({
     } catch (error) {
       const code = String(error?.message || "CORRECTION_APPLY_FAILED");
       const conflict = /COLLISION|DRIFT|MISMATCH|CONFLICT|REQUIRED|UNSUPPORTED|NOT_FOUND|REAPPEARED|INVALID|LIMIT|APPROVED|TARGET|NO_CHANGE|SNAPSHOT|BASELINE/.test(code);
-      return json(res, conflict ? 409 : 500, {
-        ok: false,
-        code,
-        ...(Array.isArray(error?.missing_activity_ids) ? { missing_activity_ids: error.missing_activity_ids } : {})
-      });
+      return json(res, conflict ? 409 : 500, { ok: false, code,
+        ...(Array.isArray(error?.missing_activity_ids) ? { missing_activity_ids: error.missing_activity_ids } : {}) });
     } finally {
-      if (client && typeof client.end === "function") {
-        try { await client.end(); } catch {}
-      }
+      if (client && typeof client.end === "function") { try { await client.end(); } catch {} }
     }
   };
 }
 
-module.exports = Object.freeze({
-  createCorrectionApplyHandler,
-  requirePayload,
-  requireDeployment,
-  bearerToken,
-  CORRECTION_PATH_RE,
-  MODES,
-  MANIFEST_SCHEMAS,
-  SNAPSHOT_MARKER,
-  BASELINE_MARKER
-});
+module.exports = Object.freeze({ createCorrectionApplyHandler, requirePayload, requireDeployment, bearerToken,
+  CORRECTION_PATH_RE, MODES, MANIFEST_SCHEMAS, SNAPSHOT_MARKER, BASELINE_MARKER });

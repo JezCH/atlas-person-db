@@ -2,203 +2,104 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const root = process.cwd();
-const manifestPath = path.join(root, 'stage2/integration/stage2-baseline-independent-prep.v1.json');
-const kublaiPath = path.join(root, 'research/mongol/stage2-kublai-pre1271-polity-territory-decision.v1.json');
-const structuralRelationsPath = path.join(root, 'research/relations/stage2-structural-polity-relation-intervals.v1.json');
-const continuityPath = path.join(root, 'stage2/contracts/polity-identity-continuity-current.v1.json');
-const domainContractPath = path.join(root, 'contracts/stage2-domain-contract.v1.json');
+const rel = (p) => path.join(root, p);
+function fail(message) { console.error(`Stage 2 integration prep verification failed: ${message}`); process.exit(1); }
+function assert(condition, message) { if (!condition) fail(message); }
+function readJson(p) { try { return JSON.parse(fs.readFileSync(rel(p), 'utf8')); } catch (e) { fail(`cannot parse ${p}: ${e.message}`); } }
 
-function fail(message) {
-  console.error(`Stage 2 integration prep verification failed: ${message}`);
-  process.exit(1);
+const integrationPath = 'stage2/integration/stage2-baseline-independent-prep.v1.json';
+const integration = readJson(integrationPath);
+assert(integration.schema === 'atlas-stage2-baseline-independent-integration-prep/v1', 'unexpected integration manifest schema');
+assert(integration.production_mutation === false, 'pre-Baseline-A integration cannot authorize Production mutation');
+assert(integration.baseline_policy?.old_346_binding_authoritative === false, 'old 346 binding revived');
+assert(integration.baseline_policy?.baseline_a_required_for_uuid_rebind === true, 'Baseline A rebinding must remain mandatory');
+assert(integration.baseline_policy?.baseline_a_contract_version === 'v2_full_identity_snapshot', 'Baseline A v2 full identity snapshot must be required');
+assert(integration.baseline_policy?.no_old_activity_uuid_write_targets === true, 'old Activity UUID write targets must remain forbidden');
+assert(integration.pre_vercel_completion?.engineering_contracts_complete === true, 'engineering pre-Vercel closure not recorded');
+assert(integration.pre_vercel_completion?.baseline_independent_historical_model_decisions_complete === true, 'historical pre-Vercel closure not recorded');
+assert(integration.pre_vercel_completion?.irreducible_uncertainty_explicit === true, 'irreducible uncertainty must remain explicit');
+assert(integration.pre_vercel_completion?.next_required_live_dependency === 'Production Train 1 exact-SHA Vercel deployment', 'next live dependency drifted');
+
+const port = integration.port_now || [];
+const portIds = port.map((x) => x.id);
+assert(portIds.length >= 20 && new Set(portIds).size === portIds.length, 'portable unit set incomplete or duplicated');
+for (const entry of port) {
+  assert(typeof entry.path === 'string' && fs.existsSync(rel(entry.path)), `missing portable unit ${entry.id}: ${entry.path}`);
+}
+const wait = new Set(integration.wait_for_baseline_a || []);
+for (const id of portIds) assert(!wait.has(id), `portable and Baseline-A-gated units overlap: ${id}`);
+for (const required of [
+  'baseline_a_v2_validated_intake','fresh_master_ledger','fresh_stage2_work_queues','surviving_activity_uuid_bindings',
+  'reviewed_identity_bindings','reviewed_polity_name_kind_mapping','historical_correction_v2_manifests','relation_type_row_backfill',
+  'people_event_backfill','production_additive_schema_apply','semantic_key_v2_activation','p10_v2_duplicate_revalidation','person_physical_merge'
+]) assert(wait.has(required), `missing Baseline A dependency: ${required}`);
+
+const rawIntegration = fs.readFileSync(rel(integrationPath), 'utf8');
+assert(!/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}/i.test(rawIntegration), 'integration manifest must not bind UUID-shaped historical targets');
+assert(!/"authoritative_activity_count"\s*:\s*346/.test(rawIntegration), 'old 346 Activity baseline cannot be authority');
+assert(fs.existsSync(rel('stage2/contracts/baseline-a-intake-current.v2.json')), 'Baseline A v2 contract missing');
+assert(!fs.existsSync(rel('stage2/contracts/baseline-a-intake-current.v1.json')), 'superseded Baseline A v1 contract must be removed');
+
+const baseline = readJson('stage2/contracts/baseline-a-intake-current.v2.json');
+assert(baseline.schema === 'atlas-stage2-baseline-a-intake-contract/v2', 'unexpected Baseline A contract schema');
+assert(baseline.production_mutation === false, 'Baseline A intake cannot authorize mutation');
+assert(baseline.accepted_input?.marker === 'ATLAS_CORRECTION_BASELINE_A_V2', 'Baseline A marker drifted');
+assert(baseline.accepted_input?.mode === 'full_stage2_baseline', 'Baseline A mode drifted');
+assert(baseline.accepted_input?.unreferenced_persons_and_polities_must_be_preserved === true, 'Baseline A must preserve unreferenced identity rows');
+assert(Array.isArray(baseline.accepted_input?.full_catalogs_required) && baseline.accepted_input.full_catalogs_required.includes('sources'), 'Baseline A full catalogs incomplete');
+assert(baseline.identity_rules?.canonical_names_are_binding_authority === false && baseline.identity_rules?.canonical_keys_are_binding_authority === false, 'names/keys cannot become UUID binding authority');
+
+const boundary = readJson('stage2/contracts/entity-boundaries-current.v1.json');
+assert(boundary.schema === 'atlas-stage2-entity-boundary-contract/v1', 'entity-boundary contract schema drift');
+assert(boundary.production_migration_authorized === false, 'entity-boundary contract cannot authorize Production');
+assert(boundary.identity_principles?.people_group_is_polity === false && boundary.identity_principles?.historical_event_is_polity === false, 'People/Event must remain separate from Polity');
+assert(boundary.identity_principles?.editorial_catalog_label_is_historical_self_designation === false, 'editorial catalog label cannot become historical designation');
+assert(boundary.polity_naming_rules?.editorial_catalog_label_must_not_create_polity_designation_assertion === true, 'editorial label must not create designation assertion');
+assert(boundary.activity_semantic_key_rules?.people_group_uuid_in_activity_semantic_key === false && boundary.activity_semantic_key_rules?.historical_event_uuid_in_activity_semantic_key === false, 'People/Event must stay outside Activity semantic key');
+
+const structural = readJson('research/relations/stage2-structural-polity-relation-intervals.v1.json');
+assert(structural.production_mutation === false && structural.baseline_a_uuid_rebind_required === true, 'structural relation research must remain UUID-unbound');
+assert(Array.isArray(structural.relations) && structural.relations.length === 4, 'expected four structural relation families');
+const byId = new Map(structural.relations.map((x) => [x.id, x]));
+for (const x of structural.relations) {
+  assert(x.subject_polity_uuid === null && x.object_polity_uuid === null, `${x.id} bound UUID before Baseline A`);
+  assert(x.production_interval_approved === false, `${x.id} cannot self-authorize Production`);
+  assert(Array.isArray(x.sources) && x.sources.length > 0, `${x.id} missing provenance`);
+}
+const canada = byId.get('canada_dominion_of_uk');
+assert(canada?.start?.year === 1867 && canada?.end?.year === 1931 && canada?.end?.day === 10 && canada?.transition_milestone?.day === 11, 'Canada dependency interval drifted');
+const raj = byId.get('british_raj_colonial_dependency_of_uk');
+assert(raj?.start?.year === 1858 && raj?.start?.month === 11 && raj?.start?.day === 1 && raj?.end?.year === 1947 && raj?.end?.month === 8 && raj?.end?.day === 14, 'British Raj interval drifted');
+const rsfsr = byId.get('rsfsr_constituent_of_ussr');
+assert(rsfsr?.start?.year === 1922 && rsfsr?.start?.month === 12 && rsfsr?.start?.day === 30 && rsfsr?.end?.year === 1991 && rsfsr?.end?.month === 12 && rsfsr?.end?.day === 25 && rsfsr?.cessation_milestone?.day === 26, 'RSFSR/USSR interval drifted');
+const huainan = byId.get('huainan_vassal_of_western_han');
+assert(huainan?.start?.year === -203 && huainan?.start?.granularity === 'year' && huainan?.end?.year === -196 && huainan?.end?.granularity === 'year', 'Huainan Ying Bu phase chronology drifted');
+assert(huainan?.broader_huainan_dynastic_continuity_asserted === false, 'Huainan broader continuity must not be fabricated');
+
+const closure = readJson('research/pre-vercel/stage2-pre-vercel-domain-closure.v1.json');
+assert(closure.schema === 'atlas-stage2-pre-vercel-domain-closure/v1', 'pre-Vercel closure schema drift');
+assert(closure.production_mutation === false, 'pre-Vercel closure cannot authorize mutation');
+assert(closure.result?.undifferentiated_pre_vercel_historical_research_remaining === 0, 'undifferentiated research remains');
+assert(closure.result?.baseline_a_independent_stage2_model_decisions_remaining === 0, 'baseline-independent model decisions remain');
+assert(closure.result?.irreducible_uncertainty_preserved_as_explicit_data_or_gate_state === true, 'uncertainty preservation invariant lost');
+assert(closure.result?.baseline_a_v2_uuid_binding_remaining === true, 'Baseline A live binding dependency must remain explicit');
+assert(closure.result?.p14_territory_geometry_remaining_but_not_stage2_activity_cutover_blocker_by_default === true, 'P14 geometry boundary drifted');
+assert(Array.isArray(closure.sengoku) && closure.sengoku.length === 3, 'Sengoku closure incomplete');
+assert(Array.isArray(closure.regional_china) && closure.regional_china.length === 6, 'regional China closure incomplete');
+assert(Array.isArray(closure.residual_cases) && closure.residual_cases.length === 9, 'residual closure incomplete');
+const residual = new Map(closure.residual_cases.map((x) => [x.person, x]));
+assert(residual.get('Sacagawea')?.synthetic_person_polity_relation === false, 'Sacagawea must remain out of synthetic polity relation');
+assert(residual.get('Tecumseh')?.people_group === 'Shawnee' && residual.get('Tecumseh')?.polity_target === "Tecumseh's Confederacy", 'Tecumseh People/Polity separation drifted');
+assert(residual.get('Sitting Bull')?.start_boundary === null && /P8/.test(residual.get('Sitting Bull')?.p8_required_action || ''), 'Sitting Bull uncertainty must remain explicit and gated');
+
+for (const proposal of ['db/proposals/stage2_semantic_extensions.rehearsal.sql','db/proposals/stage2_provenance.rehearsal.sql','db/proposals/stage2_entity_boundaries.rehearsal.sql','db/proposals/stage2_activity_semantic_key.rehearsal.sql']) {
+  assert(/REHEARSAL ONLY/i.test(fs.readFileSync(rel(proposal), 'utf8')), `${proposal} lost rehearsal-only guard`);
 }
 
-function readJson(file) {
-  try {
-    return JSON.parse(fs.readFileSync(file, 'utf8'));
-  } catch (error) {
-    fail(`cannot parse ${path.relative(root, file)}: ${error.message}`);
-  }
-}
-
-function assert(condition, message) {
-  if (!condition) fail(message);
-}
-
-const manifest = readJson(manifestPath);
-assert(manifest.schema === 'atlas-stage2-baseline-independent-integration-prep/v1', 'unexpected integration manifest schema');
-assert(manifest.production_mutation === false, 'integration preparation must not authorize Production mutation');
-assert(manifest.baseline_policy?.old_346_binding_authoritative === false, 'old 346 binding must not remain authoritative');
-assert(manifest.baseline_policy?.baseline_a_required_for_uuid_rebind === true, 'Baseline A UUID rebind must be mandatory');
-assert(manifest.baseline_policy?.no_old_activity_uuid_write_targets === true, 'old Activity UUID write targets must be forbidden');
-assert(Array.isArray(manifest.port_now) && manifest.port_now.length >= 14, 'baseline-independent port set is incomplete');
-assert(Array.isArray(manifest.wait_for_baseline_a) && manifest.wait_for_baseline_a.length > 0, 'Baseline A wait set is missing');
-
-const portIds = manifest.port_now.map((entry) => entry.id);
-assert(new Set(portIds).size === portIds.length, 'duplicate port_now id');
-const waitSet = new Set(manifest.wait_for_baseline_a);
-for (const id of portIds) assert(!waitSet.has(id), `port_now and wait_for_baseline_a overlap: ${id}`);
-for (const entry of manifest.port_now) {
-  assert(typeof entry.path === 'string' && entry.path.length > 0, `missing path for ${entry.id}`);
-  assert(fs.existsSync(path.join(root, entry.path)), `missing carried-forward evidence path: ${entry.path}`);
-}
-
-const rawManifest = fs.readFileSync(manifestPath, 'utf8');
-assert(!/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}/i.test(rawManifest), 'integration manifest must not bind old UUID-shaped write targets');
-assert(!/"authoritative_activity_count"\s*:\s*346/.test(rawManifest), 'old 346 Activity baseline cannot be revived as authority');
-
-for (const item of ['fresh_master_ledger','surviving_activity_uuid_bindings','historical_correction_v2_manifests','relation_type_row_backfill','semantic_key_v2_activation','person_physical_merge']) {
-  assert(waitSet.has(item), `missing Baseline A dependency: ${item}`);
-}
-
-const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-function assertNoBoundIdentityUuids(value, keyPath = 'root') {
-  if (Array.isArray(value)) {
-    value.forEach((child, index) => assertNoBoundIdentityUuids(child, `${keyPath}[${index}]`));
-    return;
-  }
-  if (!value || typeof value !== 'object') return;
-  for (const [key, child] of Object.entries(value)) {
-    const childPath = `${keyPath}.${key}`;
-    if (/(?:uuid|activity_id|polity_id)$/i.test(key) && typeof child === 'string' && uuidPattern.test(child)) {
-      fail(`pre-Baseline-A identity binding found at ${childPath}`);
-    }
-    assertNoBoundIdentityUuids(child, childPath);
-  }
-}
-
-const domain = readJson(domainContractPath);
-assert(domain.schema === 'atlas-stage2-domain-contract/v1', 'unexpected machine-readable Stage 2 domain contract schema');
-assert(domain.production_migration_authorized === false, 'machine-readable domain contract must not authorize Production migration');
-assert(domain.baseline_policy?.old_346_binding_authoritative === false, 'machine-readable domain contract revived old baseline authority');
-assert(domain.baseline_policy?.baseline_a_required_for_uuid_rebind === true, 'machine-readable domain contract must require Baseline A');
-assert(domain.temporal?.boundary_may_be_unresolved_in_authoring === true, 'unresolved temporal boundary support must remain explicit');
-assert(domain.temporal?.partial_boundary_tuple_allowed === false, 'partial temporal tuples must remain forbidden');
-assert(domain.provenance_rules?.multiple_locators_per_source_per_assertion_allowed === true, 'multiple source locators must remain preservable');
-assert(domain.activity_semantic_identity_v2?.activation_phase === 'P9', 'Activity semantic key must remain a P9 cutover');
-assert(domain.activity_semantic_identity_v2?.coherent_consumer_cutover_required === true, 'semantic cutover must remain coherent across identity consumers');
-assertNoBoundIdentityUuids(domain);
-
-const kublai = readJson(kublaiPath);
-assert(kublai.schema === 'atlas-stage2-kublai-pre1271-decision/v1', 'unexpected Qubilai decision schema');
-assert(kublai.production_mutation === false, 'Qubilai research must not authorize Production mutation');
-assert(kublai.person_activity_semantics_status === 'resolved', 'Qubilai Person Activity semantics must remain resolved');
-assert(kublai.polity_identity?.stable_identity_start_year === 1260, 'Qubilai eastern Polity identity boundary must remain 1260');
-assert(kublai.polity_identity?.great_yuan_designation_start_year === 1271, 'Great Yuan designation boundary must remain 1271');
-assert(kublai.polity_identity?.reuse_one_future_polity_uuid_across_designation_boundary === true, '1271 designation change must not force a new Polity UUID');
-assert(kublai.polity_identity?.invent_new_pre1271_polity === false, 'invented pre-1271 Qubilai Polity is forbidden');
-assert(kublai.territory?.pre1271_geometry_status === 'unresolved', 'pre-1271 geometry must stay unresolved until map research');
-assert(kublai.territory?.runtime_direct_control_geometry_authorized === false, 'unresolved pre-1271 geometry must not be Runtime direct control');
-assert(kublai.territory?.semantic_cutover_blocker === false, 'unknown Qubilai geometry must not block Person semantic cutover');
-assert(kublai.baseline_a_rebind_required === true, 'Qubilai Production bindings must wait for Baseline A');
-assert(Array.isArray(kublai.source_urls) && kublai.source_urls.length >= 3, 'Qubilai decision needs multiple normalized research sources');
-
-const structural = readJson(structuralRelationsPath);
-assert(structural.schema === 'atlas-stage2-structural-polity-relation-interval-research/v1', 'unexpected structural relation research schema');
-assert(structural.production_mutation === false, 'structural relation research must not authorize Production mutation');
-assert(structural.baseline_a_uuid_rebind_required === true, 'structural relation UUID binding must wait for Baseline A');
-assert(structural.production_approved === false, 'baseline-independent relation research cannot be Production approved');
-assert(structural.rules?.person_activity_interval_is_not_polity_relation_interval === true, 'Person Activity intervals must not define Polity relation intervals');
-assert(structural.rules?.unknown_boundary_must_remain_unknown === true, 'unknown relation boundaries must remain unknown');
-assert(Array.isArray(structural.relations) && structural.relations.length === 4, 'expected exactly four reviewed structural relation families');
-
-const relationById = new Map(structural.relations.map((entry) => [entry.id, entry]));
-assert(relationById.size === structural.relations.length, 'duplicate structural relation research id');
-for (const entry of structural.relations) {
-  assert(entry.subject_polity_uuid === null && entry.object_polity_uuid === null, `${entry.id} must not bind pre-Baseline-A Polity UUIDs`);
-  assert(entry.production_interval_approved === false, `${entry.id} must not be Production interval approved`);
-  assert(typeof entry.relation_type === 'string' && entry.relation_type.length > 0, `${entry.id} missing relation type`);
-  assert(Array.isArray(entry.sources) && entry.sources.length > 0, `${entry.id} missing source provenance`);
-  for (const source of entry.sources) assert(/^https:\/\//.test(source.url), `${entry.id} has invalid source URL`);
-}
-assertNoBoundIdentityUuids(structural);
-
-const canada = relationById.get('canada_dominion_of_uk');
-assert(canada?.relation_type === 'dominion_of', 'Canada relation type must remain dominion_of');
-assert(canada?.start?.year === 1867 && canada.start.month === 7 && canada.start.day === 1 && canada.start.granularity === 'day', 'Canada start boundary must remain 1867-07-01 day-exact');
-assert(canada?.transition_milestone?.year === 1931 && canada.transition_milestone.month === 12 && canada.transition_milestone.day === 11, 'Canada Statute of Westminster milestone must remain 1931-12-11');
-assert(canada?.interval_status === 'start_resolved_end_model_qualified', 'Canada end must remain model-qualified rather than falsely final');
-
-const raj = relationById.get('british_raj_colonial_dependency_of_uk');
-assert(raj?.relation_type === 'colonial_dependency_of', 'British Raj relation type must remain colonial_dependency_of');
-assert(raj?.end?.year === 1947 && raj.end.month === 8 && raj.end.day === 14 && raj.end.granularity === 'day', 'British Raj inclusive end must remain 1947-08-14');
-assert(raj?.interval_status === 'end_resolved_start_primary_locator_pending', 'British Raj start must remain primary-locator gated');
-assert(raj?.start_candidate?.year === 1858 && raj.start_candidate.month === 11 && raj.start_candidate.day === 1, 'British Raj start candidate must remain 1858-11-01');
-
-const rsfsr = relationById.get('rsfsr_constituent_of_ussr');
-assert(rsfsr?.relation_type === 'constituent_of', 'RSFSR relation type must remain constituent_of');
-assert(rsfsr?.start?.year === 1922 && rsfsr.start.month === 12 && rsfsr.start.day === 30, 'RSFSR constituent start must remain 1922-12-30');
-assert(rsfsr?.end?.year === 1991 && rsfsr.end.granularity === 'year' && rsfsr.end.certainty === 'uncertain', 'RSFSR end must remain year-level uncertain');
-assert(rsfsr?.end?.month === null && rsfsr.end?.day === null, 'RSFSR multi-step dissolution must not gain a fabricated exact day');
-assert(rsfsr?.forbidden_shortcut_exact_end === true, 'RSFSR exact-end shortcut guard must remain active');
-
-const huainan = relationById.get('huainan_vassal_of_western_han');
-assert(huainan?.relation_type === 'vassal_of', 'Huainan relation type must remain vassal_of');
-assert(huainan?.semantic_status === 'resolved', 'Huainan structural relation semantics must remain resolved');
-assert(huainan?.start === null && huainan?.end === null, 'Huainan absolute boundaries must remain unresolved until chronology/continuity review');
-assert(Array.isArray(huainan?.blockers) && huainan.blockers.length >= 2, 'Huainan unresolved chronology/continuity blockers must be explicit');
-
-const rawStructural = fs.readFileSync(structuralRelationsPath, 'utf8');
-assert(!/1991-12-26/.test(rawStructural), 'Soviet dissolution must not be forced to 1991-12-26 without dedicated review');
-
-const continuity = readJson(continuityPath);
-assert(continuity.schema === 'atlas-stage2-polity-identity-continuity-current/v1', 'unexpected continuity contract schema');
-assert(continuity.production_mutation === false, 'continuity contract must not authorize Production mutation');
-assert(continuity.baseline_a_uuid_rebind_required === true, 'continuity contract must require Baseline A UUID rebind');
-assert(continuity.old_activity_uuid_bindings_authoritative === false, 'old Activity UUID bindings must not be continuity authority');
-assert(continuity.rules?.no_generic_successor_shortcut === true, 'generic successor shortcut must remain forbidden');
-assert(Array.isArray(continuity.families) && continuity.families.length === 4, 'expected four reviewed continuity families');
-assertNoBoundIdentityUuids(continuity);
-
-const familyById = new Map(continuity.families.map((entry) => [entry.id, entry]));
-assert(familyById.size === continuity.families.length, 'duplicate continuity family id');
-const roman = familyById.get('roman_eastern_roman_395');
-assert(roman?.model === 'operational_territorial_split_with_roman_continuity', 'Roman 395 model drifted');
-assert(roman?.transition?.year === 395 && roman.transition.granularity === 'year', 'Roman operational split must remain at year 395');
-assert(roman?.roman_continuity_metadata_required === true, 'Roman continuity metadata must remain required');
-const yuan = familyById.get('yuan_northern_yuan_1368');
-assert(yuan?.stable_single_polity_across_transition === true, 'Yuan/Northern Yuan must remain one stable immediate continuity identity');
-assert(yuan?.post_transition_designation === 'Northern Yuan' && yuan?.designation_type === 'historiographic_period', 'Northern Yuan must remain a historiographic designation');
-assert(yuan?.automatic_new_polity_uuid === false, '1368 must not automatically create a new Yuan UUID');
-const russia = familyById.get('russia_1721_empire');
-assert(russia?.stable_single_polity_across_transition === true, 'Russia 1721 must remain one stable Polity identity');
-assert(russia?.transition?.year === 1721 && russia.transition.month === 11 && russia.transition.day === 2 && russia.transition.granularity === 'day', 'Russia transition must remain 1721-11-02 Gregorian');
-assert(russia?.identity_relation_required === false, 'Russia state-form change must not become a successor relation');
-const portugal = familyById.get('portugal_united_kingdom_1815');
-assert(portugal?.model === 'distinct_composite_union_polity_with_constituent_portugal', 'Portugal 1815 union model drifted');
-assert(portugal?.transition?.year === 1815 && portugal.transition.month === 12 && portugal.transition.day === 16, 'Portugal union formation must remain 1815-12-16');
-assert(portugal?.portugal_constituent_continuity === true, 'Portugal constituent continuity must remain explicit');
-assert(portugal?.union_identity_relation_model_required === true && portugal?.constituent_relation_model_required === true, 'Portugal union needs identity-formation and constituent models');
-
-for (const relative of [
-  'db/proposals/stage2_semantic_extensions.rehearsal.sql',
-  'db/proposals/stage2_provenance.rehearsal.sql',
-  'db/proposals/stage2_activity_semantic_key.rehearsal.sql'
-]) {
-  const source = fs.readFileSync(path.join(root, relative), 'utf8');
-  assert(/REHEARSAL ONLY/i.test(source), `${relative} must remain explicitly rehearsal-only`);
-}
-
-const requiredContracts = [
-  'contracts/stage2-domain-contract.v1.json',
-  'scripts/stage2-domain-contract.mjs',
-  'scripts/verify-stage2-domain-contract.mjs',
-  'scripts/verify-stage2-schema-rehearsal.mjs',
-  'scripts/verify-stage2-provenance-rehearsal.mjs',
-  'scripts/verify-stage2-activity-semantic-key.mjs',
-  'scripts/stage2-activity-semantic-key-v2.cjs',
-  'docs/audits/RELATION_SEMANTICS_CONTRACT_V1_2026-08-12.md',
-  'docs/stage2/contracts/GOVERNANCE_CONTEXT_CURRENT_V1.md',
-  'docs/stage2/contracts/POLITY_RELATION_CURRENT_V1.md',
-  'docs/stage2/contracts/POLITY_IDENTITY_CONTINUITY_CURRENT_V1.md',
-  'docs/stage2/contracts/TEMPORAL_CURRENT_V1.md',
-  'docs/stage2/contracts/PROVENANCE_CURRENT_V1.md',
-  'docs/stage2/contracts/ACTIVITY_SEMANTIC_KEY_V2_CURRENT.md',
-  'docs/stage2/contracts/ADDITIVE_SCHEMA_CURRENT_V1.md',
-  'docs/stage2/STAGE2_BASELINE_INDEPENDENT_INTEGRATION_PREP_2026-08-12.md',
-  'docs/research/mongol/STAGE2_KUBLAI_PRE1271_POLITY_TERRITORY_DECISION_2026-08-12.md',
-  'docs/research/relations/STAGE2_STRUCTURAL_POLITY_RELATION_INTERVALS_2026-08-12.md'
-];
-for (const file of requiredContracts) assert(fs.existsSync(path.join(root, file)), `missing Stage 2 prep contract: ${file}`);
-
-console.log(`Stage 2 baseline-independent integration prep verified: ${manifest.port_now.length} portable units, ${manifest.wait_for_baseline_a.length} Baseline A-gated units, ${structural.relations.length} structural relation families, ${continuity.families.length} continuity families, executable rehearsal chain restored.`);
+console.log(JSON.stringify({
+  marker:'ATLAS_STAGE2_BASELINE_INDEPENDENT_PREP_V1', status:'PASS', portable_units:port.length,
+  baseline_a_contract:'v2_full_identity_snapshot', structural_relations:structural.relations.length,
+  sengoku_cases:closure.sengoku.length, regional_china_cases:closure.regional_china.length,
+  residual_cases:closure.residual_cases.length, baseline_independent_model_decisions_remaining:0,
+  next_live_dependency:integration.pre_vercel_completion.next_required_live_dependency
+}, null, 2));

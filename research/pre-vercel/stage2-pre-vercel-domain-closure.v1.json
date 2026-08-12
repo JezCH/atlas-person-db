@@ -1,0 +1,147 @@
+{
+  "schema": "atlas-stage2-pre-vercel-domain-closure/v1",
+  "as_of": "2026-08-12",
+  "production_mutation": false,
+  "scope": "Close every remaining Baseline-A-independent Stage 2 model decision. Remaining uncertainty is preserved as data/review state rather than fabricated into history.",
+  "authoritative_contracts": {
+    "domain": "contracts/stage2-domain-contract.v1.json",
+    "entity_boundaries": "stage2/contracts/entity-boundaries-current.v1.json",
+    "baseline_a": "stage2/contracts/baseline-a-intake-current.v2.json"
+  },
+  "closure_rules": {
+    "historical_accuracy_over_completion": true,
+    "editorial_catalog_label_may_close_naming_without_claiming_historical_name": true,
+    "people_or_event_context_must_not_be_forced_into_polity_activity": true,
+    "irreducible_source_uncertainty_is_a_valid_closed_research_result": true,
+    "territory_or_geometry_work_is_p14_unless_activity_semantics_depend_on_it": true,
+    "baseline_a_v2_uuid_binding_is_not_historical_research": true,
+    "no_old_activity_uuid_is_write_authority": true,
+    "generic_relation_default_forbidden": true
+  },
+  "sengoku": [
+    {
+      "person": "Oda Nobunaga",
+      "model_status": "resolved",
+      "polity_identity": "source-backed territorial political actor centered on Nobunaga's expanding authority; clan lineage is not the Polity identity",
+      "catalog_label_kind": "editorial_catalog_label",
+      "catalog_label": "Oda Nobunaga territorial authority",
+      "relation": "rules",
+      "activity_interval": {"start_year":1568,"end_year":1582,"granularity":"year"},
+      "territory_geometry": "P14_DEFERRED",
+      "remaining_stage2_dependency": "BASELINE_A_V2_UUID_BINDING"
+    },
+    {
+      "person": "Uesugi Kenshin",
+      "model_status": "resolved",
+      "polity_identity": "Echigo-centered territorial political actor ruled by Kenshin; Nagao/Uesugi lineage and Kanto Kanrei office are evidence/context, not the Polity itself",
+      "catalog_label_kind": "editorial_catalog_label",
+      "catalog_label": "Uesugi Kenshin Echigo authority",
+      "relation": "rules",
+      "activity_interval": {"start_year":1548,"end_year":1578,"granularity":"year"},
+      "territory_geometry": "P14_DEFERRED",
+      "remaining_stage2_dependency": "BASELINE_A_V2_UUID_BINDING"
+    },
+    {
+      "person": "Toyotomi Hideyoshi",
+      "model_status": "resolved_with_year_precision",
+      "governance_context": "Toyotomi Regime",
+      "governance_context_is_polity": false,
+      "pre_1590": {
+        "polity_identity": "Hideyoshi's expanding territorial political authority before completion of Japan-wide hegemony",
+        "catalog_label_kind": "editorial_catalog_label",
+        "catalog_label": "Toyotomi Hideyoshi expanding authority",
+        "relation": "rules"
+      },
+      "post_1590": {"target":"Japan","relation":"governs","direct_control_over_all_daimyo_domains":false},
+      "split_boundary": {"year":1590,"granularity":"year","certainty":"exact","month":null,"day":null},
+      "subyear_boundary_status": "UNRESOLVED_AND_NOT_FABRICATED",
+      "territory_geometry": "P14_DEFERRED",
+      "remaining_stage2_dependency": "BASELINE_A_V2_UUID_BINDING_AND_CORRECTION_V2"
+    }
+  ],
+  "regional_china": [
+    {
+      "person":"Liu Yan","model_status":"resolved_with_year_precision",
+      "phases":[
+        {"start_year":188,"end_year":190,"target":"Eastern Han","relation":"serves"},
+        {"start_year":191,"end_year":194,"target_class":"Yi-centered Liu Yan political authority","catalog_label":"Liu Yan Yi authority","catalog_label_kind":"editorial_catalog_label","relation":"rules","structural_relation":{"type":"nominally_subordinate_to","target":"Eastern Han","assert_only_when_source_interval_supported":true}}
+      ],
+      "remaining_stage2_dependency":"BASELINE_A_V2_UUID_BINDING_AND_CORRECTION_V2","territory_geometry":"P14_DEFERRED"
+    },
+    {
+      "person":"Yuan Shao","model_status":"resolved_with_explicit_early_context",
+      "phases":[
+        {"start_year":189,"end_year":190,"target":"Eastern Han","relation":"serves","note":"Bohai commandery appointment remains Han office context while anti-Dong-Zhuo coalition activity is represented separately rather than inventing a regional polity"},
+        {"start_year":191,"end_year":202,"target_class":"Ji-centered Yuan Shao political authority","catalog_label":"Yuan Shao northern authority","catalog_label_kind":"editorial_catalog_label","relation":"rules","structural_relation":{"type":"nominally_subordinate_to","target":"Eastern Han","assert_only_when_source_interval_supported":true}}
+      ],
+      "remaining_stage2_dependency":"BASELINE_A_V2_UUID_BINDING_AND_CORRECTION_V2","territory_geometry":"P14_DEFERRED"
+    },
+    {
+      "person":"Ma Teng","model_status":"resolved_structure_with_irreducible_subphase_uncertainty",
+      "pre_208":{"target_class":"western regional political actor","catalog_label":"Ma Teng western regional authority","catalog_label_kind":"editorial_catalog_label","relation":"rules","single_continuous_nominal_han_subordination_forbidden":true},
+      "central_service":{"start_year":208,"end_year":212,"target":"Eastern Han","relation":"serves","role_context":"Weiwei"},
+      "superior_relation_subintervals":"ONLY_ASSERT_WHEN_SOURCE_BOUNDARIES_ARE_REVIEWED; NO DEFAULT",
+      "remaining_stage2_dependency":"BASELINE_A_V2_UUID_BINDING_AND_CORRECTION_V2","territory_geometry":"P14_DEFERRED"
+    },
+    {
+      "person":"Liu Biao","model_status":"resolved",
+      "target_class":"Jing-centered Liu Biao political authority","catalog_label":"Liu Biao Jing authority","catalog_label_kind":"editorial_catalog_label","relation":"rules",
+      "activity_interval":{"start_year":190,"end_year":208,"granularity":"year"},
+      "structural_relation":{"type":"nominally_subordinate_to","target":"Eastern Han","relation_interval_independent_of_person_activity":true},
+      "remaining_stage2_dependency":"BASELINE_A_V2_UUID_BINDING_AND_CORRECTION_V2","territory_geometry":"P14_DEFERRED"
+    },
+    {
+      "person":"Lü Bu","model_status":"resolved_as_multiple_political_contexts",
+      "phases":[
+        {"period":"192","target":"Eastern Han","relation":"serves"},
+        {"period":"192-194","model":"mobile dependency/service contexts; no own Polity asserted"},
+        {"period":"194-195","target_class":"Yan territorial political actor","catalog_label":"Lü Bu Yan authority","catalog_label_kind":"editorial_catalog_label","relation":"rules"},
+        {"period":"195-196","model":"displaced/refuge; no own territorial Polity asserted"},
+        {"period":"196-198","target_class":"Xu territorial political actor","catalog_label":"Lü Bu Xu authority","catalog_label_kind":"editorial_catalog_label","relation":"rules"}
+      ],
+      "yan_xu_same_polity_identity": false,
+      "reason":"loss of territorial authority and an intervening displaced phase break political-actor continuity; follower/person continuity alone is not Polity continuity",
+      "remaining_stage2_dependency":"BASELINE_A_V2_UUID_BINDING_AND_CORRECTION_V2","territory_geometry":"P14_DEFERRED"
+    },
+    {
+      "person":"Fang Guozhen","model_status":"resolved_identity_with_independent_superior_relations",
+      "polity_identity":"continuous Fang Guozhen regional political actor from maritime insurgency into eastern-Zhejiang territorial rule; changing Yuan/rebel/other superior alignments do not create a new Polity UUID",
+      "catalog_label":"Fang Guozhen eastern Zhejiang authority","catalog_label_kind":"editorial_catalog_label","relation":"rules",
+      "activity_interval":{"start_year":1348,"end_year":1367,"granularity":"year"},
+      "structural_relation_policy":"superior relations are independently time-bounded and may overlap/change; no exclusive single-superior default",
+      "remaining_stage2_dependency":"BASELINE_A_V2_UUID_BINDING_AND_CORRECTION_V2","territory_geometry":"P14_DEFERRED"
+    }
+  ],
+  "residual_cases": [
+    {"person":"Brennus (Senones)","model_status":"resolved_traditional_assertion","target":"Senones","relation":"rules","historicity":"traditional_late_literary_evidence","chronology":"approximate_or_traditional","remaining_stage2_dependency":"BASELINE_A_V2_BINDING_AND_PROVENANCE_BACKFILL","territory_geometry":"P14_DEFERRED"},
+    {"person":"Shi Xie","model_status":"resolved_structure","pre_210":{"target":"Eastern Han","relation":"serves"},"post_210":{"target_identity":"continuous Sun-family/Wu political actor; later imperial Wu designation does not require a new Polity UUID","relation":"serves"},"regional_autonomy":"represented in role/governance/territory evidence, not by inventing a Shi Xie state","remaining_stage2_dependency":"BASELINE_A_V2_UUID_BINDING_AND_CORRECTION_V2","territory_geometry":"P14_DEFERRED"},
+    {"person":"Leftraru","model_status":"resolved_entity_boundaries_with_year_precision","people_group":"Reche/Mapuche","event":"Arauco War","political_context":{"target_class":"source-backed wartime coalition or political aggregation","catalog_label":"Leftraru wartime coalition","catalog_label_kind":"editorial_catalog_label","relation":"serves","role_context":"toqui","start_year":1553,"end_year":1557},"blanket_mapuche_polity_forbidden":true,"remaining_stage2_dependency":"BASELINE_A_V2_BINDING_AND_PEOPLE_EVENT_BACKFILL","territory_geometry":"P14_DEFERRED"},
+    {"person":"Sacagawea","model_status":"resolved_out_of_polity_model","people_group":"Lemhi Shoshone / Agaidika","event":"Corps of Discovery","event_participation":"participant","role_label":"interpreter / cultural intermediary","synthetic_person_polity_relation":false,"remaining_stage2_dependency":"BASELINE_A_V2_BINDING_AND_PEOPLE_EVENT_BACKFILL"},
+    {"person":"Sitting Bull","model_status":"resolved_identity_with_irreducible_start_uncertainty","target_class":"autonomous non-treaty Hunkpapa/Lakota political following","catalog_label":"Sitting Bull non-treaty Hunkpapa authority","catalog_label_kind":"editorial_catalog_label","relation":"rules","start_boundary":null,"start_boundary_reason":"sources establish leadership in the 1850s but do not justify fabricating a single exact start year in the current reviewed evidence","end":{"year":1881,"granularity":"year","certainty":"exact"},"post_1881_rules_forbidden":true,"p8_required_action":"after Baseline A, either obtain a source-backed interpreted start boundary or keep the row out of Runtime-ready semantic cutover; do not invent one","territory_geometry":"P14_DEFERRED"},
+    {"person":"Poundmaker","model_status":"resolved_with_year_precision","pre_1878":{"target_class":"Red Pheasant band/community","catalog_label":"Red Pheasant community","catalog_label_kind":"historiographic_conventional","relation":"serves","documented_1876_status":"councillor/minor chief"},"from_1878":{"target_class":"Poundmaker own band/community","catalog_label":"Poundmaker band","catalog_label_kind":"historiographic_conventional","relation":"rules","start_year":1878},"reserve_settlement_year":1879,"remaining_stage2_dependency":"BASELINE_A_V2_UUID_BINDING_AND_CORRECTION_V2","territory_geometry":"P14_DEFERRED"},
+    {"person":"Dido","model_status":"resolved_legendary_assertion","target":"Carthage","relation":"rules","historicity":"legendary_traditional","ordinary_high_confidence_historical_presentation_forbidden":true,"remaining_stage2_dependency":"BASELINE_A_V2_BINDING_AND_HISTORICITY_PROVENANCE_BACKFILL"},
+    {"person":"Tecumseh","model_status":"resolved_entity_boundaries","people_group":"Shawnee","polity_target":"Tecumseh's Confederacy","relation":"rules","polity_start":{"year":1808,"granularity":"year","certainty":"approximate"},"polity_end":{"year":1813,"granularity":"year","certainty":"exact"},"duplicate_shawnee_rules_forbidden":true,"remaining_stage2_dependency":"BASELINE_A_V2_BINDING_AND_PEOPLE_EVENT_BACKFILL","territory_geometry":"P14_DEFERRED"},
+    {"person":"Boudica","model_status":"resolved_with_chronology_uncertainty","primary_target":"Iceni","primary_relation":"rules","opposition_target":"Roman authority in Britain","opposition_relation":"opposes","chronology":"60/61 CE remains source-qualified; no fabricated exact day","britain_wide_boudica_polity_forbidden":true,"remaining_stage2_dependency":"BASELINE_A_V2_BINDING_AND_RELATION_BACKFILL","territory_geometry":"P14_DEFERRED"}
+  ],
+  "structural_relation_registry": "research/relations/stage2-structural-polity-relation-intervals.v1.json",
+  "result": {
+    "undifferentiated_pre_vercel_historical_research_remaining": 0,
+    "baseline_a_independent_stage2_model_decisions_remaining": 0,
+    "irreducible_uncertainty_preserved_as_explicit_data_or_gate_state": true,
+    "baseline_a_v2_uuid_binding_remaining": true,
+    "production_schema_or_data_mutation_remaining": true,
+    "p14_territory_geometry_remaining_but_not_stage2_activity_cutover_blocker_by_default": true,
+    "safe_to_advance_to_train_1_when_production_release_controls_are_ready": true
+  },
+  "source_additions": [
+    {"case":"Huainan/Ying Bu","url":"https://ctext.org/shiji/huai-nan-heng-shan-lie-zhuan/ens"},
+    {"case":"Uesugi Kenshin","url":"https://jpsearch.go.jp/en/gallery/ndl-1Aoq44nvM7g"},
+    {"case":"Liu Yan","url":"https://cir.nii.ac.jp/crid/1390864713568147968?lang=en"},
+    {"case":"Yuan Shao","url":"https://ctext.org/datawiki.pl?if=en&res=927384"},
+    {"case":"Liu Biao","url":"https://www.chinaknowledge.de/History/Han/personsliubiao.html"},
+    {"case":"Sitting Bull","url":"https://www.nps.gov/people/sitting-bull.htm"},
+    {"case":"Poundmaker","url":"https://www.biographi.ca/en/bio/poundmaker_11E.html"},
+    {"case":"Sacagawea","url":"https://www.nps.gov/people/sacagawea.htm"},
+    {"case":"Tecumseh","url":"https://www.nps.gov/people/tecumseh.htm"}
+  ]
+}

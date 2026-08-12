@@ -13,6 +13,7 @@
     "test:schema": "node scripts/verify-schema-baseline.mjs",
     "test:stage2-schema-rehearsal": "node scripts/verify-stage2-schema-rehearsal.mjs",
     "test:stage2-provenance-rehearsal": "node scripts/verify-stage2-provenance-rehearsal.mjs",
+    "test:stage2-entity-boundaries": "node scripts/verify-stage2-entity-boundaries-rehearsal.mjs",
     "test:stage2-semantic-key-rehearsal": "node scripts/verify-stage2-activity-semantic-key.mjs"
   },
   "dependencies": {

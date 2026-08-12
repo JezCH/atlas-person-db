@@ -11,7 +11,7 @@ const { createPostgresClient } = require("./atlas-postgres-client.js");
 const MARKER = "ATLAS_AUDIT_INVENTORY_V1";
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const MAX_ACTIVITY_IDS = 100;
-const MODES = new Set(["targeted", "full_activity_baseline"]);
+const MODES = new Set(["targeted", "full_stage2_baseline"]);
 
 const INVENTORY_SELECT = `
       select pp.id as activity_id,
@@ -107,8 +107,8 @@ function stable(value) {
   return value;
 }
 
-function digestBaseline(rows, counts) {
-  return `sha256:${crypto.createHash("sha256").update(JSON.stringify(stable({ rows, counts }))).digest("hex")}`;
+function digestBaseline(rows, counts, catalogs) {
+  return `sha256:${crypto.createHash("sha256").update(JSON.stringify(stable({ rows, counts, catalogs }))).digest("hex")}`;
 }
 
 async function beginReadOnly(client) {
@@ -122,6 +122,50 @@ async function queryRows(client, activityIds = null) {
   const sql = `${INVENTORY_SELECT}\n       ${targeted ? "where pp.id = any($1::uuid[])" : ""}\n       order by pp.id`;
   const result = await client.query(sql, targeted ? [activityIds] : []);
   return result.rows;
+}
+
+async function queryIdentityCatalogs(client) {
+  const persons = await client.query(`
+      select p.id, p.canonical_key, p.person_type, p.historicity,
+             coalesce((select jsonb_agg(jsonb_build_object('id',pn.id,'locale',pn.locale,'name',pn.name,'name_type',pn.name_type,'is_preferred',pn.is_preferred) order by pn.id)
+                       from atlas_v2.person_names pn where pn.person_id=p.id), '[]'::jsonb) as names
+        from atlas_v2.persons p order by p.id`);
+  const polities = await client.query(`
+      select p.id, p.canonical_key, p.polity_type, p.historicity,
+             coalesce((select jsonb_agg(jsonb_build_object('id',pn.id,'locale',pn.locale,'name',pn.name,'name_type',pn.name_type,'is_preferred',pn.is_preferred) order by pn.id)
+                       from atlas_v2.polity_names pn where pn.polity_id=p.id), '[]'::jsonb) as names
+        from atlas_v2.polities p order by p.id`);
+  const roles = await client.query(`
+      select r.id, r.code, r.category, r.source_label, r.is_active,
+             coalesce((select jsonb_agg(jsonb_build_object('id',rn.id,'locale',rn.locale,'name',rn.name,'is_preferred',rn.is_preferred) order by rn.id)
+                       from atlas_v2.role_names rn where rn.role_id=r.id), '[]'::jsonb) as names
+        from atlas_v2.roles r order by r.id`);
+  const periodBases = await client.query(`
+      select p.id, p.code, p.is_active,
+             coalesce((select jsonb_agg(jsonb_build_object('id',pn.id,'locale',pn.locale,'name',pn.name,'is_preferred',pn.is_preferred) order by pn.id)
+                       from atlas_v2.period_basis_names pn where pn.period_basis_id=p.id), '[]'::jsonb) as names
+        from atlas_v2.period_bases p order by p.id`);
+  const sources = await client.query(`
+      select s.id, s.source_key, s.source_type, s.title, s.sha256, s.bytes
+        from atlas_v2.sources s order by s.id`);
+  return Object.freeze({ persons: persons.rows, polities: polities.rows, roles: roles.rows, period_bases: periodBases.rows, sources: sources.rows });
+}
+
+function nestedNameCount(rows) {
+  return rows.reduce((sum, row) => sum + (Array.isArray(row.names) ? row.names.length : 0), 0);
+}
+
+function assertCatalogCounts(catalogs, counts) {
+  const checks = [
+    ["persons", catalogs.persons.length], ["polities", catalogs.polities.length],
+    ["roles", catalogs.roles.length], ["period_bases", catalogs.period_bases.length],
+    ["sources", catalogs.sources.length], ["person_names", nestedNameCount(catalogs.persons)],
+    ["polity_names", nestedNameCount(catalogs.polities)], ["role_names", nestedNameCount(catalogs.roles)],
+    ["period_basis_names", nestedNameCount(catalogs.period_bases)]
+  ];
+  for (const [key, actual] of checks) {
+    if (Number(counts[key]) !== actual) throw new Error(`AUDIT_BASELINE_${key.toUpperCase()}_COUNT_DRIFT`);
+  }
 }
 
 async function queryInventory(client, activityIds) {
@@ -143,15 +187,21 @@ async function queryInventory(client, activityIds) {
   }
 }
 
-async function queryFullActivityBaseline(client) {
+async function queryFullStage2Baseline(client) {
   await beginReadOnly(client);
   try {
     const rows = await queryRows(client, null);
+    const catalogs = await queryIdentityCatalogs(client);
     const countsResult = await client.query(`
       select (select count(*)::int from atlas_v2.persons) as persons,
+             (select count(*)::int from atlas_v2.person_names) as person_names,
              (select count(*)::int from atlas_v2.polities) as polities,
+             (select count(*)::int from atlas_v2.polity_names) as polity_names,
              (select count(*)::int from atlas_v2.roles) as roles,
+             (select count(*)::int from atlas_v2.role_names) as role_names,
              (select count(*)::int from atlas_v2.period_bases) as period_bases,
+             (select count(*)::int from atlas_v2.period_basis_names) as period_basis_names,
+             (select count(*)::int from atlas_v2.sources) as sources,
              (select count(*)::int from atlas_v2.person_politics_v2) as activities,
              (select count(*)::int from atlas_v2.person_politics_sources) as activity_source_links,
              (select count(*)::int from atlas_v2.chronology_claims) as chronology_claims,
@@ -160,12 +210,9 @@ async function queryFullActivityBaseline(client) {
     if (Number(counts.activities) !== rows.length) throw new Error("AUDIT_BASELINE_ACTIVITY_COUNT_DRIFT");
     const activityIds = rows.map((row) => String(row.activity_id).toLowerCase());
     if (new Set(activityIds).size !== activityIds.length) throw new Error("AUDIT_BASELINE_DUPLICATE_ACTIVITY_UUID");
+    assertCatalogCounts(catalogs, counts);
     await client.query("commit");
-    return Object.freeze({
-      rows,
-      counts,
-      baseline_digest: digestBaseline(rows, counts)
-    });
+    return Object.freeze({ rows, counts, catalogs, baseline_digest: digestBaseline(rows, counts, catalogs) });
   } catch (error) {
     try { await client.query("rollback"); } catch {}
     throw error;
@@ -182,14 +229,9 @@ function statusForError(code) {
   return 500;
 }
 
-function createAuditInventoryHandler({
-  env = process.env,
-  verifyOidc = verifyGitHubActionsOidc,
-  createClient = createPostgresClient
-} = {}) {
+function createAuditInventoryHandler({ env = process.env, verifyOidc = verifyGitHubActionsOidc, createClient = createPostgresClient } = {}) {
   return async function handler(req, res) {
     if (req.method !== "POST") return json(res, 405, { ok: false, marker: MARKER, code: "METHOD_NOT_ALLOWED" });
-
     let client = null;
     try {
       const token = bearerToken(req);
@@ -199,66 +241,26 @@ function createAuditInventoryHandler({
       const mode = normalizeMode(req.body?.mode);
       const connectionString = String(env.SUPABASE_DB_URL || "").trim();
       if (!connectionString) throw new Error("SERVER_CONFIGURATION_ERROR");
-
       client = await createClient(connectionString, { env });
-      if (mode === "full_activity_baseline") {
+      if (mode === "full_stage2_baseline") {
         if (req.body?.activity_ids != null) throw new Error("AUDIT_BASELINE_ACTIVITY_IDS_FORBIDDEN");
-        const baseline = await queryFullActivityBaseline(client);
-        return json(res, 200, {
-          ok: true,
-          marker: MARKER,
-          mode,
-          read_only: true,
-          committed: false,
-          deployment_sha: deployment.actualSha,
-          row_count: baseline.rows.length,
-          counts: baseline.counts,
-          baseline_digest: baseline.baseline_digest,
-          rows: baseline.rows
-        });
+        const baseline = await queryFullStage2Baseline(client);
+        return json(res, 200, { ok: true, marker: MARKER, mode, read_only: true, committed: false, deployment_sha: deployment.actualSha,
+          row_count: baseline.rows.length, counts: baseline.counts, baseline_digest: baseline.baseline_digest, rows: baseline.rows, catalogs: baseline.catalogs });
       }
-
       const activityIds = normalizeActivityIds(req.body?.activity_ids);
       const rows = await queryInventory(client, activityIds);
-      return json(res, 200, {
-        ok: true,
-        marker: MARKER,
-        mode,
-        read_only: true,
-        committed: false,
-        deployment_sha: deployment.actualSha,
-        requested_count: activityIds.length,
-        row_count: rows.length,
-        rows
-      });
+      return json(res, 200, { ok: true, marker: MARKER, mode, read_only: true, committed: false, deployment_sha: deployment.actualSha,
+        requested_count: activityIds.length, row_count: rows.length, rows });
     } catch (error) {
-      return json(res, statusForError(error?.message), {
-        ok: false,
-        marker: MARKER,
-        code: error?.message || "AUDIT_INVENTORY_FAILED",
-        ...(Array.isArray(error?.missing_activity_ids) ? { missing_activity_ids: error.missing_activity_ids } : {})
-      });
+      return json(res, statusForError(error?.message), { ok: false, marker: MARKER, code: error?.message || "AUDIT_INVENTORY_FAILED",
+        ...(Array.isArray(error?.missing_activity_ids) ? { missing_activity_ids: error.missing_activity_ids } : {}) });
     } finally {
-      if (client) {
-        try { await client.end(); } catch {}
-      }
+      if (client) { try { await client.end(); } catch {} }
     }
   };
 }
 
-module.exports = Object.freeze({
-  MARKER,
-  MAX_ACTIVITY_IDS,
-  MODES,
-  AUDIT_OIDC_AUDIENCE,
-  AUDIT_WORKFLOW_REF,
-  createAuditInventoryHandler,
-  normalizeActivityIds,
-  normalizeMode,
-  queryInventory,
-  queryFullActivityBaseline,
-  digestBaseline,
-  requireDeployment,
-  bearerToken,
-  statusForError
-});
+module.exports = Object.freeze({ MARKER, MAX_ACTIVITY_IDS, MODES, AUDIT_OIDC_AUDIENCE, AUDIT_WORKFLOW_REF,
+  createAuditInventoryHandler, normalizeActivityIds, normalizeMode, queryInventory, queryIdentityCatalogs, queryFullStage2Baseline,
+  digestBaseline, requireDeployment, bearerToken, statusForError });

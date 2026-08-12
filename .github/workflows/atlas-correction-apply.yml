@@ -91,7 +91,7 @@ jobs:
           [[ -s /tmp/atlas-correction-plan.tsv ]] || { echo 'No reviewed correction inputs selected.'; exit 0; }
           cat /tmp/atlas-correction-plan.tsv
 
-      - name: Snapshot exact targets, dry-run, apply, then capture Baseline A on the same Production SHA
+      - name: Snapshot exact targets, dry-run, apply, then capture Baseline A v2 on the same Production SHA
         shell: bash
         run: |
           set -euo pipefail
@@ -106,25 +106,15 @@ jobs:
               "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_CORRECTION_AUDIENCE}" | jq -er '.value'
           }
 
-          safe_name() {
-            basename "$1" .json | tr -c 'A-Za-z0-9._-' '_'
-          }
+          safe_name() { basename "$1" .json | tr -c 'A-Za-z0-9._-' '_'; }
 
           post_with_deployment_retry() {
-            local payload="$1"
-            local response="$2"
-            local label="$3"
+            local payload="$1" response="$2" label="$3"
             for attempt in $(seq 1 60); do
               local oidc_token status code
               oidc_token="$(request_oidc)"
-              status="$(curl --silent --show-error \
-                --output "$response" \
-                --write-out '%{http_code}' \
-                --request POST \
-                -H 'content-type: application/json' \
-                -H "authorization: Bearer ${oidc_token}" \
-                --data "$payload" \
-                "$ATLAS_CORRECTION_ENDPOINT")"
+              status="$(curl --silent --show-error --output "$response" --write-out '%{http_code}' --request POST \
+                -H 'content-type: application/json' -H "authorization: Bearer ${oidc_token}" --data "$payload" "$ATLAS_CORRECTION_ENDPOINT")"
               if [[ "$status" == "200" ]]; then return 0; fi
               code="$(jq -r '.code // "UNKNOWN"' "$response" 2>/dev/null || printf 'UNKNOWN')"
               if [[ "$status" == "404" || ( "$status" == "409" && "$code" == "DEPLOYMENT_SHA_MISMATCH" ) ]]; then
@@ -141,103 +131,44 @@ jobs:
           }
 
           expected_marker() {
-            local manifest="$1"
-            case "$(jq -r '.schema' "$manifest")" in
+            case "$(jq -r '.schema' "$1")" in
               atlas-correction-manifest/v1) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V1' ;;
               atlas-correction-manifest/v1.1) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V1_1' ;;
-              *) echo "Unsupported correction manifest schema in $manifest" >&2; return 1 ;;
+              *) echo "Unsupported correction manifest schema in $1" >&2; return 1 ;;
             esac
           }
 
           snapshot_intent_target() {
-            local intent="$1"
-            local output="$2"
-            local relationship_id payload
+            local intent="$1" output="$2" relationship_id payload
             relationship_id="$(jq -er '.operation.relationship_id' "$intent")"
-            payload="$(jq -cn \
-              --arg deployment_sha "${GITHUB_SHA}" \
-              --arg intent_path "$intent" \
-              --arg relationship_id "$relationship_id" \
+            payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" --arg intent_path "$intent" --arg relationship_id "$relationship_id" \
               '{deployment_sha:$deployment_sha,intent_path:$intent_path,mode:"snapshot",activity_ids:[$relationship_id]}')"
             post_with_deployment_retry "$payload" "$output" "correction snapshot"
             jq -e --arg relationship_id "$relationship_id" '
-              .ok == true and
-              .marker == "ATLAS_CORRECTION_SNAPSHOT_V1" and
-              .mode == "snapshot" and
-              .read_only == true and
-              .committed == false and
-              .requested_count == 1 and .row_count == 1 and
+              .ok == true and .marker == "ATLAS_CORRECTION_SNAPSHOT_V1" and .mode == "snapshot" and
+              .read_only == true and .committed == false and .requested_count == 1 and .row_count == 1 and
               (.snapshots[0].relationship.id | ascii_downcase) == ($relationship_id | ascii_downcase)
             ' "$output" >/dev/null
           }
 
           synthesize_intent_manifest() {
-            local intent="$1"
-            local snapshot="$2"
-            local output="$3"
-            jq -n \
-              --slurpfile intent "$intent" \
-              --slurpfile snapshot "$snapshot" '
-                $intent[0] as $i |
-                $snapshot[0].snapshots[0].relationship as $r |
-                def before:
-                  {
-                    person_id: ($r.person_id | ascii_downcase),
-                    polity_id: ($r.polity_id | ascii_downcase),
-                    role_id: (if $r.role_id == null then null else ($r.role_id | ascii_downcase) end),
-                    period_basis_id: ($r.period_basis_id | ascii_downcase),
-                    activity_start: $r.activity_start,
-                    activity_end: $r.activity_end,
-                    notes: $r.notes,
-                    legacy_source_key: $r.legacy_source_key
-                  };
-                {
-                  schema: "atlas-correction-manifest/v1.1",
-                  request_id: $i.request_id,
-                  review_status: "approved",
-                  release_order: ($i.release_order // 500),
-                  evidence: {
-                    reviewed_intent: $i,
-                    exact_snapshot_deployment_sha: $snapshot[0].deployment_sha,
-                    exact_snapshot_source_path: $snapshot[0].source_path
-                  },
-                  operations: [
-                    if $i.operation.type == "retire_activity" then
-                      {
-                        type: "retire_activity",
-                        relationship_id: ($i.operation.relationship_id | ascii_downcase),
-                        expected: before
-                      }
-                    elif $i.operation.type == "update_activity_interval" then
-                      {
-                        type: "update_activity_interval",
-                        relationship_id: ($i.operation.relationship_id | ascii_downcase),
-                        expected_before: before,
-                        expected_after: (before + {
-                          activity_start: $i.operation.after.activity_start,
-                          activity_end: $i.operation.after.activity_end
-                        })
-                      }
-                    else error("unsupported intent operation") end
-                  ]
-                }
-              ' > "$output"
+            local intent="$1" snapshot="$2" output="$3"
+            jq -n --slurpfile intent "$intent" --slurpfile snapshot "$snapshot" '
+              $intent[0] as $i | $snapshot[0].snapshots[0].relationship as $r |
+              def before: {person_id:($r.person_id|ascii_downcase),polity_id:($r.polity_id|ascii_downcase),role_id:(if $r.role_id==null then null else ($r.role_id|ascii_downcase) end),period_basis_id:($r.period_basis_id|ascii_downcase),activity_start:$r.activity_start,activity_end:$r.activity_end,notes:$r.notes,legacy_source_key:$r.legacy_source_key};
+              {schema:"atlas-correction-manifest/v1.1",request_id:$i.request_id,review_status:"approved",release_order:($i.release_order//500),evidence:{reviewed_intent:$i,exact_snapshot_deployment_sha:$snapshot[0].deployment_sha,exact_snapshot_source_path:$snapshot[0].source_path},operations:[
+                if $i.operation.type=="retire_activity" then {type:"retire_activity",relationship_id:($i.operation.relationship_id|ascii_downcase),expected:before}
+                elif $i.operation.type=="update_activity_interval" then {type:"update_activity_interval",relationship_id:($i.operation.relationship_id|ascii_downcase),expected_before:before,expected_after:(before+{activity_start:$i.operation.after.activity_start,activity_end:$i.operation.after.activity_end})}
+                else error("unsupported intent operation") end]}
+            ' > "$output"
             jq -e '.schema == "atlas-correction-manifest/v1.1" and .review_status == "approved" and (.operations | length == 1)' "$output" >/dev/null
           }
 
           call_correction() {
-            local manifest="$1"
-            local source_path="$2"
-            local mode="$3"
-            local safe marker response payload
-            safe="$(safe_name "$source_path")"
-            marker="$(expected_marker "$manifest")"
+            local manifest="$1" source_path="$2" mode="$3" safe marker response payload
+            safe="$(safe_name "$source_path")"; marker="$(expected_marker "$manifest")"
             response="/tmp/atlas-correction-evidence/responses/${safe}-${mode}.json"
-            payload="$(jq -cn \
-              --arg deployment_sha "${GITHUB_SHA}" \
-              --arg manifest_path "$source_path" \
-              --arg mode "$mode" \
-              --slurpfile manifest "$manifest" \
+            payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" --arg manifest_path "$source_path" --arg mode "$mode" --slurpfile manifest "$manifest" \
               '{deployment_sha:$deployment_sha,manifest_path:$manifest_path,mode:$mode,manifest:$manifest[0]}')"
             post_with_deployment_retry "$payload" "$response" "correction ${mode}"
             if [[ "$mode" == "dry_run" ]]; then
@@ -252,9 +183,7 @@ jobs:
             [[ -n "$source_path" ]] || continue
             manifest="$source_path"
             if [[ "$kind" == "intent" ]]; then
-              safe="$(safe_name "$source_path")"
-              snapshot="/tmp/atlas-correction-evidence/snapshots/${safe}.json"
-              manifest="/tmp/atlas-correction-evidence/generated-manifests/${safe}.manifest.json"
+              safe="$(safe_name "$source_path")"; snapshot="/tmp/atlas-correction-evidence/snapshots/${safe}.json"; manifest="/tmp/atlas-correction-evidence/generated-manifests/${safe}.manifest.json"
               snapshot_intent_target "$source_path" "$snapshot"
               synthesize_intent_manifest "$source_path" "$snapshot" "$manifest"
             fi
@@ -263,24 +192,23 @@ jobs:
           done < /tmp/atlas-correction-plan.tsv
 
           baseline_response="/tmp/atlas-correction-evidence/baseline-a.json"
-          baseline_payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" '{deployment_sha:$deployment_sha,mode:"full_activity_baseline"}')"
-          post_with_deployment_retry "$baseline_payload" "$baseline_response" "Baseline A capture"
+          baseline_payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" '{deployment_sha:$deployment_sha,mode:"full_stage2_baseline"}')"
+          post_with_deployment_retry "$baseline_payload" "$baseline_response" "Baseline A v2 capture"
           jq -e '
-            .ok == true and
-            .marker == "ATLAS_CORRECTION_BASELINE_A_V1" and
-            .mode == "full_activity_baseline" and
-            .read_only == true and
-            .committed == false and
-            (.row_count == .counts.activities) and
-            (.baseline_digest | test("^sha256:[0-9a-f]{64}$"))
+            .ok == true and .marker == "ATLAS_CORRECTION_BASELINE_A_V2" and .mode == "full_stage2_baseline" and
+            .read_only == true and .committed == false and (.row_count == .counts.activities) and
+            (.catalogs.persons|length) == .counts.persons and (.catalogs.polities|length) == .counts.polities and
+            (.catalogs.roles|length) == .counts.roles and (.catalogs.period_bases|length) == .counts.period_bases and
+            (.catalogs.sources|length) == .counts.sources and (.baseline_digest | test("^sha256:[0-9a-f]{64}$"))
           ' "$baseline_response" >/dev/null
-          jq '{marker,mode,read_only,committed,deployment_sha,row_count,counts,baseline_digest}' "$baseline_response" \
+          jq '{marker,mode,read_only,committed,deployment_sha,row_count,counts,baseline_digest,catalog_cardinality:{persons:(.catalogs.persons|length),polities:(.catalogs.polities|length),roles:(.catalogs.roles|length),period_bases:(.catalogs.period_bases|length),sources:(.catalogs.sources|length)}}' "$baseline_response" \
             > /tmp/atlas-correction-evidence/baseline-a-summary.json
-          jq '.rows | map(.activity_id) | sort' "$baseline_response" \
-            > /tmp/atlas-correction-evidence/baseline-a-activity-uuids.json
+          jq '.rows | map(.activity_id)' "$baseline_response" > /tmp/atlas-correction-evidence/baseline-a-activity-uuids.json
+          jq '{persons:.catalogs.persons,polities:.catalogs.polities,roles:.catalogs.roles,period_bases:.catalogs.period_bases,sources:.catalogs.sources}' "$baseline_response" \
+            > /tmp/atlas-correction-evidence/baseline-a-identity-catalogs.json
 
           jq -s --slurpfile baseline "$baseline_response" \
-            '{deployment_sha:env.GITHUB_SHA,results:.,baseline_a:{row_count:$baseline[0].row_count,counts:$baseline[0].counts,baseline_digest:$baseline[0].baseline_digest}}' \
+            '{deployment_sha:env.GITHUB_SHA,results:.,baseline_a:{marker:$baseline[0].marker,row_count:$baseline[0].row_count,counts:$baseline[0].counts,baseline_digest:$baseline[0].baseline_digest}}' \
             /tmp/atlas-correction-results.jsonl > /tmp/atlas-correction-results.json
           jq . /tmp/atlas-correction-results.json
 

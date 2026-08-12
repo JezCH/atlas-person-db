@@ -7,6 +7,7 @@
   "baseline_policy": {
     "old_346_binding_authoritative": false,
     "baseline_a_required_for_uuid_rebind": true,
+    "baseline_a_contract_version": "v2_full_identity_snapshot",
     "no_old_activity_uuid_write_targets": true
   },
   "port_now": [
@@ -19,25 +20,30 @@
     {"id":"activity_semantic_key_v2","path":"docs/stage2/contracts/ACTIVITY_SEMANTIC_KEY_V2_CURRENT.md"},
     {"id":"additive_schema","path":"docs/stage2/contracts/ADDITIVE_SCHEMA_CURRENT_V1.md"},
     {"id":"stage2_domain_contract_machine","path":"contracts/stage2-domain-contract.v1.json"},
+    {"id":"entity_boundary_contract","path":"stage2/contracts/entity-boundaries-current.v1.json"},
     {"id":"stage2_schema_rehearsal","path":"db/proposals/stage2_semantic_extensions.rehearsal.sql"},
     {"id":"stage2_provenance_rehearsal","path":"db/proposals/stage2_provenance.rehearsal.sql"},
+    {"id":"stage2_entity_boundary_rehearsal","path":"db/proposals/stage2_entity_boundaries.rehearsal.sql"},
     {"id":"stage2_semantic_key_rehearsal","path":"db/proposals/stage2_activity_semantic_key.rehearsal.sql"},
     {"id":"kublai_pre1271_identity_policy","path":"research/mongol/stage2-kublai-pre1271-polity-territory-decision.v1.json"},
     {"id":"structural_relation_interval_research","path":"research/relations/stage2-structural-polity-relation-intervals.v1.json"},
-    {"id":"baseline_a_intake_contract","path":"stage2/contracts/baseline-a-intake-current.v1.json"},
-    {"id":"baseline_a_intake_tool","path":"scripts/stage2-baseline-a-intake.mjs"},
+    {"id":"baseline_a_v2_intake_contract","path":"stage2/contracts/baseline-a-intake-current.v2.json"},
+    {"id":"baseline_a_v2_intake_tool","path":"scripts/stage2-baseline-a-intake.mjs"},
     {"id":"baseline_a_identity_handoff","path":"docs/stage2/BASELINE_A_INTAKE_AND_IDENTITY_HANDOFF_2026-08-12.md"},
-    {"id":"person_merge_interlock","path":"docs/stage2/PERSON_MERGE_INTERLOCK_CURRENT_2026-08-12.md"}
+    {"id":"person_merge_interlock","path":"docs/stage2/PERSON_MERGE_INTERLOCK_CURRENT_2026-08-12.md"},
+    {"id":"pre_vercel_domain_closure","path":"research/pre-vercel/stage2-pre-vercel-domain-closure.v1.json"}
   ],
   "wait_for_baseline_a": [
-    "baseline_a_validated_intake",
+    "baseline_a_v2_validated_intake",
     "fresh_master_ledger",
     "fresh_stage2_work_queues",
     "surviving_activity_uuid_bindings",
     "reviewed_identity_bindings",
+    "reviewed_polity_name_kind_mapping",
     "exact_polity_uuid_assertions",
     "historical_correction_v2_manifests",
     "relation_type_row_backfill",
+    "people_event_backfill",
     "production_additive_schema_apply",
     "semantic_key_v2_activation",
     "p10_v2_duplicate_revalidation",
@@ -46,9 +52,18 @@
   "production_train_2_intent": [
     "additive_schema",
     "correction_v2_and_historical_backfill",
+    "people_event_and_name_kind_backfill",
     "global_semantic_gate",
     "semantic_key_v2_cutover",
     "v2_person_merge",
     "baseline_b_and_end_state_constraints"
-  ]
+  ],
+  "pre_vercel_completion": {
+    "engineering_contracts_complete": true,
+    "baseline_a_v2_single_train_handoff_complete": true,
+    "baseline_independent_historical_model_decisions_complete": true,
+    "irreducible_uncertainty_explicit": true,
+    "territory_geometry_is_p14_and_not_a_default_person_cutover_blocker": true,
+    "next_required_live_dependency": "Production Train 1 exact-SHA Vercel deployment"
+  }
 }

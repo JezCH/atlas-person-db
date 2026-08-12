@@ -8,32 +8,11 @@
 
 A merge to `main` is treated as a scarce Production-deployment event.
 
-ATLAS must not merge branches merely to:
+Branch-only documentation, research, PostgreSQL rehearsal, tests, evidence preparation and non-live historical modeling stay on the active release branch until a live-state barrier requires Production. Preview/non-Production builds are skipped when safely classifiable. Runtime/API/server/schema/package/Vercel/correction-operation changes remain deployment-relevant. Any unknown path, missing previous successful deployment SHA, unavailable shallow-clone commit, or failed diff **builds rather than skips**.
 
-- land documentation;
-- run GitHub-only CI;
-- rehearse PostgreSQL migrations;
-- prepare non-executable historical evidence;
-- perform historical research;
-- generate code that does not yet need live Production state.
+Mixed commits build if even one changed path is deployment-relevant.
 
-Those tasks remain on a reviewed release branch until the next live-state dependency requires a Production deployment whenever practical.
-
-Vercel build admission is additionally fail-closed around deployment relevance through `scripts/vercel-ignore-build.mjs`:
-
-- Preview/non-Production deployments are skipped.
-- Production changes that are provably documentation, tests, requirements, research, reviewed evidence, or `ATLAS Integrity`-only are skipped.
-- Runtime/API/server/schema/package/Vercel changes are built.
-- Correction request/intent manifests and Production-operation workflows are built because their exact-SHA operations require the current `main` commit to become the deployed Production SHA.
-- Any unknown path, missing previous successful deployment SHA, unavailable shallow-clone commit, or failed diff **builds rather than skips**.
-
-The script compares the current Production commit with Vercel's previous successful deployment SHA. This means several safely skipped documentation/research commits may accumulate; the next deployment-relevant commit is compared across the whole undeployed range rather than only against its immediate parent.
-
-Therefore GitHub-only iteration is allowed without treating every `main` commit as a Vercel build, while Production mutation still retains exact-SHA discipline.
-
-## 2. Release-train states
-
-Every Production-affecting train progresses through:
+## 2. Release-train state machine
 
 ```text
 PREPARE_BRANCH_ONLY
@@ -47,55 +26,58 @@ PREPARE_BRANCH_ONLY
 → CLOSED
 ```
 
-No state may be skipped when the next state depends on live data produced by the previous state.
+No state is skipped when the next state depends on live data produced by the previous state.
 
-## 3. Hard dependency barrier: Baseline A
+## 3. Hard live dependency: Baseline A v2
 
-The Stage 2 integration baseline cannot be finalized before R0/R1 current-schema corrections actually run in Production.
+Stage 2 live UUID binding cannot be finalized before R0/R1 actually run in Production. Therefore **at least two Production deployments are structurally unavoidable** when Stage 2 code must bind to the real post-cleanup UUID state.
 
-Therefore, from the present state, **at least two Production deployments are structurally unavoidable** if Stage 2 code must be rebound to the real post-cleanup UUID baseline:
+### Production Train 1 — Current-schema cleanup
 
-1. **Production Train 1 — Current-schema cleanup**
-   - requirements/release governance;
-   - correction v1.1 transport and tests;
-   - R0 future-semantic equivalence proof;
-   - R0 + R1 current-schema correction package;
-   - Baseline A capture tooling.
+One exact deployed `main` SHA carries:
 
-   After the single deployment, execute correction dry-run/apply and capture Baseline A from the same deployed SHA. No extra deployment is needed for the live operations themselves.
+- requirements/release governance;
+- correction v1.1 transport;
+- R0 future-semantic equivalence;
+- reviewed R0/R1 current-schema package;
+- Baseline A v2 capture tooling.
 
-2. **Production Train 2 — Stage 2 transition**
-   - built only after Baseline A exists;
-   - rebind reviewed Stage 2 decisions to Baseline A;
-   - additive Stage 2 schema;
-   - correction v2;
-   - historical corrections/backfills;
-   - semantic-key v2 cutover;
-   - v2-aware Person physical merge;
-   - Baseline B capture/end-state constraints where safe.
+After deployment, the same SHA runs dry-run/apply operations and then captures **Baseline A v2** in one `REPEATABLE READ READ ONLY` snapshot. The snapshot contains all Activity rows plus complete Person/name, Polity/name including raw `name_type`, Role/name, Period Basis/name and Source catalogs. Its digest covers `{rows, counts, catalogs}`. This prevents a second Vercel deployment or ad-hoc live query merely to recover unreferenced identity/name/source rows.
 
-   The target is one coherent deployed SHA with ordered, gated Production operations. Additive migration, correction, gate and cutover are operational stages of the same release, not reasons for repeated code deployments unless the code itself must change.
+### Production Train 2 — Stage 2 transition
 
-A third Production deployment is allowed only when post-cutover runtime/legacy-cleanup/map code genuinely cannot be included safely in Train 2. It is not the default.
+Only after validated Baseline A v2:
+
+- fresh Stage 2 integration branch from updated `main`;
+- reviewed surviving UUID and Polity name-kind bindings;
+- additive Stage 2 schema, including People/Event and semantic name-kind capabilities;
+- correction v2;
+- historical/People/Event/provenance backfill;
+- P8 semantic gate;
+- P9 semantic-key v2 cutover;
+- P10 v2-aware Person merge;
+- Baseline B/end-state constraints where safe.
+
+The target is one coherent deployed SHA with ordered operations. A third Production deployment is permitted only if post-cutover code genuinely cannot be safely included in Train 2; it is not the default.
 
 ## 4. Train 1 batching contract
 
-Until Vercel Production is available, continue branch-only work and batch the following before merging:
+Before Train 1 merge, branch-only work should include every Baseline-A-independent item that can be reviewed and tested:
 
-- `ATLAS_REQUIREMENTS.md` + machine-readable registry;
-- this release governance contract and CI verifier;
-- correction v1.1 implementation (`coalesce`, `retire_activity`, bounded interval update only);
-- R0 future-semantic equivalence gate;
-- exact reviewed R0/R1 manifests when sufficient UUID-bound evidence exists;
-- same-SHA exact-target snapshot support for reviewed intents whose normalized before-state must be read live;
-- Baseline A read-only inventory/generation tooling;
-- all unit/integration/schema tests that can run without Production.
+- requirements and release governance;
+- correction v1.1 and R0/R1 evidence;
+- Baseline A v2 exact-SHA full-identity snapshot/intake;
+- Stage 2 domain, temporal, provenance, Relation, Governance and semantic-key contracts;
+- Polity naming semantic boundary and People/Event model;
+- disposable PostgreSQL rehearsals;
+- all Baseline-A-independent historical model decisions, with irreducible uncertainty explicit;
+- Person physical-merge interlock until P10.
 
 Do not merge an incomplete subset merely because one item is finished.
 
-## 5. Production operation ordering inside one deployed SHA
+## 5. Ordered operations on one deployed SHA
 
-A single Production deployment may support multiple ordered operations without another Vercel build:
+Train 1:
 
 ```text
 exact SHA verification
@@ -105,67 +87,52 @@ exact SHA verification
 → Muhammad exact same-SHA read-only target snapshot
 → synthesized exact v1.1 dry-run + apply
 → post-state verification
-→ Baseline A full read-only inventory + digest
+→ Baseline A v2 full identity snapshot + digest
 → one evidence artifact
 ```
 
-For Stage 2 Train 2 the same principle applies:
+Train 2:
 
 ```text
 exact SHA verification
 → additive migration
-→ structural corrections/backfills
-→ semantic cutover gate
-→ cutover
-→ Person merge
+→ reviewed identity/name-kind binding
+→ structural + People/Event + historical backfill
+→ P8 semantic cutover gate
+→ P9 cutover
+→ P10 candidate revalidation + Person merge
 → Baseline B / final constraints
 ```
 
-If an operation fails, stop the train. Do not patch Production ad hoc. Return to branch work, fix/revalidate, and consume another Production deployment only when the code change truly requires it.
+On failure, stop the train. Never patch Production ad hoc.
 
-## 6. Branch and PR policy
+## 6. Branch / PR policy
 
 - Prefer one active release-candidate branch per live dependency barrier.
-- Draft PRs are allowed to accumulate multiple reviewed commits because Preview deployment is skipped.
-- Do not split one coherent release merely to create many small deployable PRs.
-- Historical research may remain in dedicated evidence branches, but its reviewed conclusions are ported into the release train before Production mutation.
-- Stale 346-row Stage 2 stacked PRs are evidence sources, not a deployment sequence.
-- Documentation/research-only changes that reach `main` may remain intentionally undeployed until a deployment-relevant commit arrives; Production operations must never target such an undeployed `main` SHA.
+- Draft PRs may accumulate many reviewed commits because Preview deployment is skipped.
+- Do not split one coherent release merely to create small deployable PRs.
+- Old 346-row Stage 2 stacked PRs are evidence sources, never a deployment sequence or UUID authority.
+- Documentation/research-only commits may remain intentionally undeployed until the next deployment-relevant commit.
 
-## 7. Main protection and exact-SHA discipline
+## 7. Exact-SHA / protection policy
 
 Before Production mutation:
 
 - `main` must be protected;
 - `ATLAS Integrity` must be required;
-- the SHA supplied to an authoring/correction/audit operation must equal the Vercel Production deployment SHA;
-- any release commit that carries an executable Production operation must itself be deployment-relevant and become the exact deployed SHA before the operation executes;
-- authoring/correction workflows must reject SHA mismatch;
-- no Production capability is considered live merely because code exists on `main`.
+- operation SHA must equal Vercel Production SHA;
+- executable Production-operation commits must become the exact deployed SHA;
+- authoring/correction/audit transports reject SHA mismatch;
+- code existing on `main` is not considered live until the matching Production deployment exists.
 
-Branch protection itself does not require a Vercel deployment and should be enabled as soon as the GitHub control surface permits it.
+Branch protection itself does not need Vercel and should be enabled as soon as the GitHub control surface permits it.
 
 ## 8. Vercel budget invariant
 
-The optimization objective is not “zero deployments.” It is:
+The objective is **minimum deployments consistent with correct live-data dependency ordering**.
 
-> **minimum deployments consistent with correct live-data dependency ordering.**
-
-ATLAS must never reduce deployment count by guessing a future Production baseline, bypassing exact-SHA proof, merging destructive Person identities early, or combining operations whose correctness depends on a live result that does not yet exist.
-
-Conversely, if several operations can run against one already-deployed SHA, they must be batched into that release rather than forcing separate deployments.
+Never reduce deployment count by guessing a future Production baseline, bypassing SHA proof, merging Persons early, inventing historical data, or combining stages whose correctness depends on a live result that does not yet exist. Conversely, multiple operations that can safely run against one exact deployed SHA belong to the same train.
 
 ## 9. Build-skip safety invariant
 
-The ignored-build classifier is an optimization boundary, not a correctness boundary.
-
-Its default for uncertainty is always **BUILD**. A path is skipped only when it belongs to an explicit non-deployable class. Tests must prove at least the following classes remain deployment-relevant:
-
-- `api/**` and `server/**`;
-- database schema/migration paths;
-- root runtime HTML/JS/CSS/data and package manifests;
-- `vercel.json`;
-- correction `requests` / `intents`;
-- Production authoring/correction/audit workflows.
-
-Mixed commits build if even one changed path is deployment-relevant. Deletions and renames are included in the diff. If Vercel cannot expose or resolve the previous successful Production SHA in its shallow clone, the build proceeds rather than risking a false skip.
+The ignored-build classifier is optimization, not correctness. Uncertainty defaults to BUILD. Deployment-relevant classes include API/server, DB schema/migration, runtime assets/package, `vercel.json`, correction requests/intents, and Production authoring/correction/audit workflows. Deletions and renames count in the diff.
