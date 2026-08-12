@@ -6,10 +6,11 @@ on:
       - main
     paths:
       - 'corrections/requests/*.json'
+      - 'corrections/intents/*.json'
   workflow_dispatch:
     inputs:
       manifest:
-        description: 'Path under corrections/requests/'
+        description: 'Path under corrections/requests/ or corrections/intents/'
         required: true
         type: string
 
@@ -34,37 +35,68 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Resolve approved correction manifests
+      - name: Resolve reviewed correction release plan
         shell: bash
         run: |
           set -euo pipefail
           : > /tmp/atlas-correction-candidates.txt
-          : > /tmp/atlas-correction-manifests.txt
+          : > /tmp/atlas-correction-plan.tsv
 
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             printf '%s\n' "${{ inputs.manifest }}" > /tmp/atlas-correction-candidates.txt
           else
-            git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}" -- 'corrections/requests/*.json' > /tmp/atlas-correction-candidates.txt
+            git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}" -- \
+              'corrections/requests/*.json' 'corrections/intents/*.json' > /tmp/atlas-correction-candidates.txt
           fi
 
-          while IFS= read -r manifest; do
-            [[ -n "$manifest" ]] || continue
-            [[ "$manifest" =~ ^corrections/requests/[A-Za-z0-9._-]+\.json$ ]] || { echo "Rejected correction manifest path: $manifest"; exit 1; }
-            jq -e '(.schema == "atlas-correction-manifest/v1" or .schema == "atlas-correction-manifest/v1.1") and .review_status == "approved"' "$manifest" >/dev/null || {
-              echo "Correction manifest is not approved v1/v1.1: $manifest" >&2
+          while IFS= read -r source_path; do
+            [[ -n "$source_path" ]] || continue
+            if [[ "$source_path" =~ ^corrections/requests/[A-Za-z0-9._-]+\.json$ ]]; then
+              jq -e '(.schema == "atlas-correction-manifest/v1" or .schema == "atlas-correction-manifest/v1.1") and .review_status == "approved" and ((.release_order // 500) | type == "number") and ((.release_order // 500) | floor == .)' "$source_path" >/dev/null || {
+                echo "Correction request is not approved/bounded: $source_path" >&2
+                exit 1
+              }
+              order="$(jq -er '.release_order // 500' "$source_path")"
+              kind="request"
+            elif [[ "$source_path" =~ ^corrections/intents/[A-Za-z0-9._-]+\.json$ ]]; then
+              jq -e '
+                .schema == "atlas-correction-intent/v1" and
+                .review_status == "approved" and
+                (.request_id | type == "string" and length > 0) and
+                ((.release_order // 500) | type == "number") and
+                ((.release_order // 500) | floor == .) and
+                (.operation | type == "object") and
+                (.operation.type == "retire_activity" or .operation.type == "update_activity_interval") and
+                (.operation.relationship_id | test("^[0-9a-fA-F-]{36}$")) and
+                (if .operation.type == "update_activity_interval" then
+                   (.operation.after.activity_start | type == "number") and
+                   (.operation.after.activity_end | type == "number") and
+                   (.operation.after.activity_start | floor == .) and
+                   (.operation.after.activity_end | floor == .) and
+                   (.operation.after.activity_end >= .operation.after.activity_start)
+                 else true end)
+              ' "$source_path" >/dev/null || {
+                echo "Correction intent is not an approved bounded v1 intent: $source_path" >&2
+                exit 1
+              }
+              order="$(jq -er '.release_order // 500' "$source_path")"
+              kind="intent"
+            else
+              echo "Rejected correction source path: $source_path" >&2
               exit 1
-            }
-            printf '%s\n' "$manifest" >> /tmp/atlas-correction-manifests.txt
+            fi
+            printf '%09d\t%s\t%s\n' "$order" "$kind" "$source_path" >> /tmp/atlas-correction-plan.tsv
           done < /tmp/atlas-correction-candidates.txt
 
-          sort -u -o /tmp/atlas-correction-manifests.txt /tmp/atlas-correction-manifests.txt
-          [[ -s /tmp/atlas-correction-manifests.txt ]] || { echo 'No approved correction manifests selected.'; exit 0; }
-          cat /tmp/atlas-correction-manifests.txt
+          sort -n -k1,1 -k3,3 -o /tmp/atlas-correction-plan.tsv /tmp/atlas-correction-plan.tsv
+          [[ -s /tmp/atlas-correction-plan.tsv ]] || { echo 'No reviewed correction inputs selected.'; exit 0; }
+          cat /tmp/atlas-correction-plan.tsv
 
-      - name: Dry-run then apply through exact Production SHA
+      - name: Snapshot exact targets, dry-run, then apply on the same Production SHA
         shell: bash
         run: |
           set -euo pipefail
+          mkdir -p /tmp/atlas-correction-evidence/snapshots /tmp/atlas-correction-evidence/generated-manifests /tmp/atlas-correction-evidence/responses
           : > /tmp/atlas-correction-results.jsonl
 
           request_oidc() {
@@ -73,31 +105,14 @@ jobs:
               "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_CORRECTION_AUDIENCE}" | jq -er '.value'
           }
 
-          expected_marker() {
-            local manifest="$1"
-            local schema
-            schema="$(jq -r '.schema' "$manifest")"
-            case "$schema" in
-              atlas-correction-manifest/v1) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V1' ;;
-              atlas-correction-manifest/v1.1) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V1_1' ;;
-              *) echo "Unsupported correction manifest schema: $schema" >&2; return 1 ;;
-            esac
+          safe_name() {
+            basename "$1" .json | tr -c 'A-Za-z0-9._-' '_'
           }
 
-          call_correction() {
-            local manifest="$1"
-            local mode="$2"
-            local marker
-            marker="$(expected_marker "$manifest")"
-            local response="/tmp/atlas-correction-${mode}-response.json"
-            local payload
-            payload="$(jq -cn \
-              --arg deployment_sha "${GITHUB_SHA}" \
-              --arg manifest_path "$manifest" \
-              --arg mode "$mode" \
-              --slurpfile manifest "$manifest" \
-              '{deployment_sha:$deployment_sha,manifest_path:$manifest_path,mode:$mode,manifest:$manifest[0]}')"
-
+          post_with_deployment_retry() {
+            local payload="$1"
+            local response="$2"
+            local label="$3"
             for attempt in $(seq 1 60); do
               local oidc_token status code
               oidc_token="$(request_oidc)"
@@ -109,42 +124,142 @@ jobs:
                 -H "authorization: Bearer ${oidc_token}" \
                 --data "$payload" \
                 "$ATLAS_CORRECTION_ENDPOINT")"
-
-              if [[ "$status" == "200" ]]; then
-                if [[ "$mode" == "dry_run" ]]; then
-                  jq -e --arg marker "$marker" '.ok == true and .marker == $marker and .dry_run == true and .committed == false' "$response" >/dev/null
-                else
-                  jq -e --arg marker "$marker" '.ok == true and .marker == $marker and .dry_run == false and .committed == true' "$response" >/dev/null
-                fi
-                jq -c --arg manifest "$manifest" --arg mode "$mode" '. + {workflow_manifest:$manifest,workflow_mode:$mode}' "$response" >> /tmp/atlas-correction-results.jsonl
-                return 0
-              fi
-
+              if [[ "$status" == "200" ]]; then return 0; fi
               code="$(jq -r '.code // "UNKNOWN"' "$response" 2>/dev/null || printf 'UNKNOWN')"
-              if [[ "$status" == "404" ]]; then
-                echo "Production correction route for ${GITHUB_SHA} is not live yet (attempt ${attempt}/60); retrying."
+              if [[ "$status" == "404" || ( "$status" == "409" && "$code" == "DEPLOYMENT_SHA_MISMATCH" ) ]]; then
+                echo "Production ${label} route has not reached ${GITHUB_SHA} (attempt ${attempt}/60); retrying."
                 sleep 10
                 continue
               fi
-              if [[ "$status" == "409" && "$code" == "DEPLOYMENT_SHA_MISMATCH" ]]; then
-                echo "Production deployment has not reached ${GITHUB_SHA} yet (attempt ${attempt}/60); retrying."
-                sleep 10
-                continue
-              fi
-
               cat "$response" >&2 || true
-              echo "Correction ${mode} failed: HTTP ${status}, code ${code}" >&2
+              echo "${label} failed: HTTP ${status}, code ${code}" >&2
               return 1
             done
-            echo "Production deployment did not reach ${GITHUB_SHA} within retry window" >&2
+            echo "Production deployment did not reach ${GITHUB_SHA} for ${label} within retry window" >&2
             return 1
           }
 
-          while IFS= read -r manifest; do
-            [[ -n "$manifest" ]] || continue
-            call_correction "$manifest" dry_run
-            call_correction "$manifest" apply
-          done < /tmp/atlas-correction-manifests.txt
+          expected_marker() {
+            local manifest="$1"
+            case "$(jq -r '.schema' "$manifest")" in
+              atlas-correction-manifest/v1) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V1' ;;
+              atlas-correction-manifest/v1.1) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V1_1' ;;
+              *) echo "Unsupported correction manifest schema in $manifest" >&2; return 1 ;;
+            esac
+          }
+
+          snapshot_intent_target() {
+            local intent="$1"
+            local output="$2"
+            local relationship_id payload
+            relationship_id="$(jq -er '.operation.relationship_id' "$intent")"
+            payload="$(jq -cn \
+              --arg deployment_sha "${GITHUB_SHA}" \
+              --arg intent_path "$intent" \
+              --arg relationship_id "$relationship_id" \
+              '{deployment_sha:$deployment_sha,intent_path:$intent_path,mode:"snapshot",activity_ids:[$relationship_id]}')"
+            post_with_deployment_retry "$payload" "$output" "correction snapshot"
+            jq -e --arg relationship_id "$relationship_id" '
+              .ok == true and
+              .marker == "ATLAS_CORRECTION_SNAPSHOT_V1" and
+              .mode == "snapshot" and
+              .read_only == true and
+              .committed == false and
+              .requested_count == 1 and .row_count == 1 and
+              (.snapshots[0].relationship.id | ascii_downcase) == ($relationship_id | ascii_downcase)
+            ' "$output" >/dev/null
+          }
+
+          synthesize_intent_manifest() {
+            local intent="$1"
+            local snapshot="$2"
+            local output="$3"
+            jq -n \
+              --slurpfile intent "$intent" \
+              --slurpfile snapshot "$snapshot" '
+                $intent[0] as $i |
+                $snapshot[0].snapshots[0].relationship as $r |
+                def before:
+                  {
+                    person_id: ($r.person_id | ascii_downcase),
+                    polity_id: ($r.polity_id | ascii_downcase),
+                    role_id: (if $r.role_id == null then null else ($r.role_id | ascii_downcase) end),
+                    period_basis_id: ($r.period_basis_id | ascii_downcase),
+                    activity_start: $r.activity_start,
+                    activity_end: $r.activity_end,
+                    notes: $r.notes,
+                    legacy_source_key: $r.legacy_source_key
+                  };
+                {
+                  schema: "atlas-correction-manifest/v1.1",
+                  request_id: $i.request_id,
+                  review_status: "approved",
+                  release_order: ($i.release_order // 500),
+                  evidence: {
+                    reviewed_intent: $i,
+                    exact_snapshot_deployment_sha: $snapshot[0].deployment_sha,
+                    exact_snapshot_source_path: $snapshot[0].source_path
+                  },
+                  operations: [
+                    if $i.operation.type == "retire_activity" then
+                      {
+                        type: "retire_activity",
+                        relationship_id: ($i.operation.relationship_id | ascii_downcase),
+                        expected: before
+                      }
+                    elif $i.operation.type == "update_activity_interval" then
+                      {
+                        type: "update_activity_interval",
+                        relationship_id: ($i.operation.relationship_id | ascii_downcase),
+                        expected_before: before,
+                        expected_after: (before + {
+                          activity_start: $i.operation.after.activity_start,
+                          activity_end: $i.operation.after.activity_end
+                        })
+                      }
+                    else error("unsupported intent operation") end
+                  ]
+                }
+              ' > "$output"
+            jq -e '.schema == "atlas-correction-manifest/v1.1" and .review_status == "approved" and (.operations | length == 1)' "$output" >/dev/null
+          }
+
+          call_correction() {
+            local manifest="$1"
+            local source_path="$2"
+            local mode="$3"
+            local safe marker response payload
+            safe="$(safe_name "$source_path")"
+            marker="$(expected_marker "$manifest")"
+            response="/tmp/atlas-correction-evidence/responses/${safe}-${mode}.json"
+            payload="$(jq -cn \
+              --arg deployment_sha "${GITHUB_SHA}" \
+              --arg manifest_path "$source_path" \
+              --arg mode "$mode" \
+              --slurpfile manifest "$manifest" \
+              '{deployment_sha:$deployment_sha,manifest_path:$manifest_path,mode:$mode,manifest:$manifest[0]}')"
+            post_with_deployment_retry "$payload" "$response" "correction ${mode}"
+            if [[ "$mode" == "dry_run" ]]; then
+              jq -e --arg marker "$marker" '.ok == true and .marker == $marker and .dry_run == true and .committed == false' "$response" >/dev/null
+            else
+              jq -e --arg marker "$marker" '.ok == true and .marker == $marker and .dry_run == false and .committed == true' "$response" >/dev/null
+            fi
+            jq -c --arg source_path "$source_path" --arg mode "$mode" '. + {workflow_source:$source_path,workflow_mode:$mode}' "$response" >> /tmp/atlas-correction-results.jsonl
+          }
+
+          while IFS=$'\t' read -r order kind source_path; do
+            [[ -n "$source_path" ]] || continue
+            manifest="$source_path"
+            if [[ "$kind" == "intent" ]]; then
+              safe="$(safe_name "$source_path")"
+              snapshot="/tmp/atlas-correction-evidence/snapshots/${safe}.json"
+              manifest="/tmp/atlas-correction-evidence/generated-manifests/${safe}.manifest.json"
+              snapshot_intent_target "$source_path" "$snapshot"
+              synthesize_intent_manifest "$source_path" "$snapshot" "$manifest"
+            fi
+            call_correction "$manifest" "$source_path" dry_run
+            call_correction "$manifest" "$source_path" apply
+          done < /tmp/atlas-correction-plan.tsv
 
           jq -s '{deployment_sha:env.GITHUB_SHA,results:.}' /tmp/atlas-correction-results.jsonl > /tmp/atlas-correction-results.json
           jq . /tmp/atlas-correction-results.json
@@ -153,6 +268,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: atlas-correction-results-${{ github.sha }}
-          path: /tmp/atlas-correction-results.json
+          path: |
+            /tmp/atlas-correction-results.json
+            /tmp/atlas-correction-plan.tsv
+            /tmp/atlas-correction-evidence/
           if-no-files-found: error
           retention-days: 90
