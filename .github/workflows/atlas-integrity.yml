@@ -101,7 +101,21 @@ jobs:
         run: npm run test:stage2-baseline-a
 
       - name: Generate fresh Baseline A Stage 2 ledger and work queues
-        run: npm run test:stage2-baseline-a-ledger
+        id: baseline-ledger
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p artifacts
+          npm run test:stage2-baseline-a-ledger 2>&1 | tee artifacts/stage2-baseline-a-ledger.log
+
+      - name: Upload Baseline A ledger failure diagnostics
+        if: failure() && steps.baseline-ledger.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-stage2-baseline-a-ledger-failure-${{ github.sha }}
+          path: artifacts/stage2-baseline-a-ledger.log
+          if-no-files-found: error
+          retention-days: 7
 
       - name: Upload Baseline A Stage 2 integration evidence
         uses: actions/upload-artifact@v4
