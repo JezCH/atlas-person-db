@@ -12,6 +12,8 @@
 
 `public.person_politics`와 compatibility view는 퇴역했습니다.
 
+이 문서는 **현재 구현 모델**을 설명합니다. 최종 제품 범위는 `ATLAS_REQUIREMENTS.md`가 우선하며, 현재 Activity-row projection을 최종 Person 객체/Runtime 모델로 오해해서는 안 됩니다.
+
 ## 2. Person identity
 
 `persons.id` UUID가 Person identity입니다.
@@ -30,6 +32,8 @@ KO preferred name_type = display
 ```
 
 EN canonical과 KO preferred display는 한 transaction에서 같이 생성되어야 합니다.
+
+최종 Authoring System에서 Person은 Activity row의 이름 칸이 아니라 first-class object입니다. 현재 schema가 아직 표현하지 않는 birth/death date/place, representative media, 추가 typed biographical facts 등은 `ATLAS-RQ-0226`의 후속 제품 범위이며, unknown을 채우기 위한 강제 column/default를 만들지 않습니다. 기존 `person_descriptions`, `person_sources`, `person_names`는 이 확장의 재사용 가능한 기반입니다.
 
 ## 3. Polity identity
 
@@ -78,9 +82,9 @@ Role authoring은 다음을 명시합니다.
 
 를 연결합니다.
 
-### Semantic duplicate identity
+### Current semantic duplicate identity
 
-신규 relationship semantic identity는 다음 전체 차원입니다.
+현재 Production relationship semantic identity는 다음 전체 차원입니다.
 
 ```text
 person_id
@@ -95,9 +99,15 @@ Admin import, planner, PostgreSQL transaction이 동일 의미를 사용합니�
 
 `role_id`가 없으면 SQL `NULL`을 사용합니다. synthetic `unspecified` role은 만들지 않습니다.
 
+### Stage 2 semantic identity
+
+P9에서 최종 identity는 Relation Type과 interpreted full temporal boundaries까지 포함하도록 **한 번에** 교체됩니다. 현재 v1 semantic identity와 Stage 2 identity를 동시에 authoritative하게 유지하지 않습니다.
+
+Unknown historical boundary는 fake year로 채우지 않습니다. 현재 `person_politics_v2`의 required integer endpoints는 transitional current-schema constraint이며, 최종 P13 Authoring model은 unresolved Activity assertion을 표현하면서 Compile이 Runtime-ready 여부를 판정해야 합니다.
+
 ## 6. Read projection
 
-Server read projection은 normalized tables를 직접 조인합니다.
+현재 Server read projection은 normalized Authoring tables를 직접 조인합니다.
 
 ```text
 person_politics_v2
@@ -109,7 +119,26 @@ person_politics_v2
 
 EN canonical은 stable internal/search/export 값으로, KO preferred는 UI display 값으로 사용합니다. Browser에는 relationship UUID가 함께 전달됩니다.
 
-## 7. Write model
+이 direct projection은 **현재 transition runtime**입니다. `ATLAS-RQ-0006`과 `ATLAS-RQ-0228`의 최종형은:
+
+```text
+Authoring assertions
+→ Compile / readiness validation
+→ Runtime projection
+→ list / search / detail / map
+```
+
+입니다. 따라서 final Runtime은 unresolved Authoring assertion을 단순히 raw table에 존재한다는 이유로 publish해서는 안 됩니다.
+
+## 7. Place / Source boundary
+
+Place는 Polity나 Territory의 별명이 아닙니다. Person life fact, activity/event location, map navigation이 같은 Place UUID를 재사용할 수 있어야 하며 Polity political authority는 별도 관계로 남습니다.
+
+Source 역시 Activity의 `source_locator` 문자열이 아닙니다. `atlas_v2.sources` UUID가 normalized evidence identity이며, 최종 Source Authoring은 파일 artifact의 hash/bytes뿐 아니라 citation에 필요한 title/author-or-institution/publication date or year/URL or reference/source type을 보존할 수 있어야 합니다. Locator는 assertion-specific evidence location입니다.
+
+현재 Stage 2 provenance join rehearsal은 source identity와 assertion locator를 분리하는 방향으로 이미 정렬되어 있습니다. Product-level Place/Source editors는 P13에서 완성합니다.
+
+## 8. Write model
 
 ### Identity writes
 
@@ -185,7 +214,7 @@ Snapshot 도입 이전의 기존 ledger row는 original create/reuse 사실을 �
 
 Snapshot이 이미 존재하는 replay에서는 저장된 Person/Polity/Role/Period basis/Activity UUID와 live normalized relationship을 다시 비교합니다. drift가 있으면 replay를 성공 처리하지 않고 fail closed합니다.
 
-## 8. Duplicate candidate/review domain
+## 9. Duplicate candidate/review domain
 
 현재 tables:
 
@@ -203,11 +232,23 @@ Decision:
 
 Evidence fingerprint는 name과 polity/chronology context를 포함한 canonical evidence 전체에 묶입니다.
 
-## 9. Person merge
+## 10. Person merge lifecycle
 
-`MERGE` decision은 실행 승인이며 실제 merge와 분리됩니다.
+`MERGE` decision은 **identity review decision**이며 현재 physical execution과 분리됩니다.
 
-실제 merge는:
+현재 상태:
+
+```text
+reconciliation = v1-polity-period-year-role
+required = v2-relation-full-temporal
+lifecycle = pre-p10-blocked
+required lifecycle = p10-v2-revalidated
+physical merge allowed = false
+```
+
+따라서 현재는 candidate rebuild와 MERGE / KEEP_SEPARATE / REVIEW 판정만 계속할 수 있습니다. 실제 Person 삭제/이관은 server interlock과 Admin UI 모두에서 P10까지 차단됩니다.
+
+P10에서 v2-aware revalidation이 완료된 뒤 허용되는 실제 merge 절차는:
 
 1. survivor UUID를 명시.
 2. candidate/person/activity를 lock.
@@ -223,18 +264,17 @@ Evidence fingerprint는 name과 polity/chronology context를 포함한 canonical
 
 ### Relationship reconciliation
 
-같은 polity + period basis + start/end context의 rows는 conflict group이 될 수 있습니다.
+현재 v1 reconciliation의 context group은 같은 polity + period basis + start/end를 기반으로 Role conflicts를 분리합니다. 이 구현은 P10 execution authority가 아닙니다.
 
-허용 action:
+P9/P10은 final Relation Type + full temporal boundary semantics로 reconciliation을 다시 만들고 후보를 재검증해야 합니다. 그 후에만 다음 action이 physical merge에 사용될 수 있습니다.
 
 - `KEEP_DISTINCT_ROLES`
-  - 다른 Role은 유지.
-  - 동일 Role duplicate는 representative relationship UUID를 명시.
 - `KEEP_ONE_RELATIONSHIP`
-  - context 전체에서 유지할 relationship UUID 하나를 명시.
 
 `person_politics_sources`, `chronology_claims`, `relationship_descriptions`는 redundant relationship 삭제 전에 보존/이동됩니다.
 
-## 10. Schema baseline
+## 11. Schema baseline
 
 현재 DB structure의 clean reconstruction source는 `db/schema/atlas_v2.current.sql`입니다. Live row counts는 data state이며 schema contract가 아닙니다.
+
+최종 Product model은 현재 schema baseline과 동일한 개념이 아닙니다. Stage 2/P13 migration이 끝나면 clean baseline도 그 최종 구조로 갱신되고, P12에서 transition-only schema/runtime residue를 제거해야 합니다.

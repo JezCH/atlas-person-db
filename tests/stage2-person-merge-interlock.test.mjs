@@ -8,6 +8,9 @@ const reconciliation = require('../server/atlas-relationship-reconciliation.js')
 const interlock = require('../server/atlas-person-merge-interlock.js');
 const { createDuplicateReviewHandler } = require('../server/atlas-duplicate-review-handler.js');
 const handlerSource = fs.readFileSync('server/atlas-duplicate-review-handler.js', 'utf8');
+const adminSource = fs.readFileSync('admin.js', 'utf8');
+const adminHtml = fs.readFileSync('admin.html', 'utf8');
+const authoringReadme = fs.readFileSync('authoring/README.md', 'utf8');
 
 function responseCapture() {
   return {
@@ -73,4 +76,24 @@ test('candidate rebuild and identity review operations remain active while destr
   const gate = handlerSource.indexOf('assertPersonMergeExecutionAllowed()');
   const databaseOpen = handlerSource.indexOf('client = await clientFactory(databaseUrl)');
   assert.ok(gate > 0 && databaseOpen > gate, 'physical merge interlock must run before database connection');
+});
+
+test('duplicate review GET exposes the same merge lifecycle state that the server enforces', () => {
+  assert.match(handlerSource, /merge_execution_state:\s*personMergeExecutionState\(\)/);
+  assert.match(handlerSource, /personMergeExecutionState/);
+});
+
+test('admin UI consumes merge lifecycle state and does not offer physical execution while P10 is blocked', () => {
+  assert.match(adminSource, /payload\.merge_execution_state/);
+  assert.match(adminSource, /if \(!mergeExecutionState\.allowed\)/);
+  assert.match(adminSource, /실제 병합 실행 대기/);
+  assert.match(adminSource, /P10 후보 재검증/);
+  assert.match(adminHtml, /지금은 판정만 가능하며 physical Person 병합/);
+});
+
+test('current authoring surfaces reject historical year zero instead of documenting a fake unknown value', () => {
+  assert.match(adminSource, /start === 0 \|\| end === 0/);
+  assert.match(authoringReadme, /Historical year 0 is forbidden/);
+  assert.doesNotMatch(authoringReadme, /"activity_start": 0/);
+  assert.doesNotMatch(authoringReadme, /"activity_end": 0/);
 });

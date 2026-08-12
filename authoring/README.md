@@ -1,12 +1,14 @@
 # ATLAS GitHub Authoring Manifests
 
-This directory is the reviewed GitHub entry point for new ATLAS Person × Polity authoring requests.
+This directory is the reviewed GitHub entry point for the **current Person × Polity authoring workflow**.
 
 It does **not** define a second database write model. Every manifest is declarative input that must resolve through the existing normalized identity and activity services before anything reaches `atlas_v2`.
 
+The final ATLAS Authoring product is broader than this current manifest contract: first-class Person / Place / Source objects, unresolved-safe authoring, Compile → Runtime projection and the source-backed AI candidate review flow are preserved in `ATLAS_REQUIREMENTS.md` for P13. Do not silently stretch v2 manifests into those domains before their reviewed contracts exist.
+
 ## Recommended contract — v2
 
-Use `atlas-authoring-manifest/v2` for new work.
+Use `atlas-authoring-manifest/v2` for new current-schema work.
 
 A v2 manifest always declares the Person and Activity. It may also declare a Polity and/or Role identity when that vocabulary does not already exist.
 
@@ -16,37 +18,39 @@ A v2 manifest always declares the Person and Activity. It may also declare a Pol
   "request_id": "stable-idempotency-key",
   "review_status": "approved",
   "person": {
-    "canonical_name_en": "...",
-    "display_name_ko": "...",
+    "canonical_name_en": "Example Person",
+    "display_name_ko": "예시 인물",
     "canonical_key": null,
     "person_type": "historical",
     "historicity": "historical",
     "allow_display_name_collision": false
   },
   "polity_identity": {
-    "canonical_name_en": "...",
-    "display_name_ko": "...",
+    "canonical_name_en": "Example Polity",
+    "display_name_ko": "예시 정치체",
     "canonical_key": null,
     "polity_type": "historical_polity",
     "historicity": "historical",
     "allow_display_name_collision": false
   },
   "role_identity": {
-    "code": "...",
-    "category": "...",
-    "source_label": "...",
-    "display_name_ko": "..."
+    "code": "example_role",
+    "category": "example_category",
+    "source_label": "Example Role",
+    "display_name_ko": "예시 역할"
   },
   "activity": {
-    "politic_name": "...",
-    "activity_start": 0,
-    "activity_end": 0,
-    "role": "...",
-    "period_basis": "reign",
+    "politic_name": "Example Polity",
+    "activity_start": 1900,
+    "activity_end": 1901,
+    "role": "example_role",
+    "period_basis": "general_activity",
     "notes": null
   }
 }
 ```
+
+The numbers above are syntactically valid example years only. **Historical year 0 is forbidden.** A genuinely unknown Activity boundary must never be encoded as `0`, `1`, the Person birth year, or another convenient placeholder. The current v2 manifest requires known integer endpoints; unresolved-boundary authoring is a separate P13 requirement rather than a fake current-schema value.
 
 `polity_identity` and `role_identity` are optional. Omit them when existing normalized vocabulary should be reused.
 
@@ -138,12 +142,12 @@ Authoring-specific runtime migrations are registered centrally in `server/atlas-
 - the Vercel production authoring handler
 - the local/manual authoring runner
 
-Do not add a migration to only one execution path. Any structural change must also update `db/schema/atlas_v2.current.sql` so a clean database rebuild produces the same current schema.
+Do not add a migration to only one execution path. Any Production-authorized structural change must also update `db/schema/atlas_v2.current.sql` so a clean database rebuild produces the same current schema.
 
 ## Invariants
 
 - The manifest is reviewable Git history, not authoritative runtime data.
-- `atlas_v2` is the only authoritative runtime database.
+- `atlas_v2` is the only authoritative current authoring database.
 - Person/Polity/Role creation uses the same normalized identity semantics as `/api/atlas-identity`.
 - Activity creation uses the same normalized v2 transaction semantics as `/api/atlas-mutate`.
 - Existing vocabulary is resolved exactly; unresolved or ambiguous references fail closed.
@@ -153,6 +157,8 @@ Do not add a migration to only one execution path. Any structural change must al
 - `request_id` is the stable idempotency key for the whole manifest.
 - Re-applying an identical manifest is safe; a non-identical reuse of the same request id fails closed.
 - Stored result snapshots are checked against live normalized UUID bindings on replay.
+- Historical year 0 is invalid.
+- Unknown history is never encoded through placeholder current-schema values merely to make a manifest pass validation.
 
 ## Production execution
 

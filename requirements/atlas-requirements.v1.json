@@ -18,6 +18,10 @@
     {"id":"ATLAS-RQ-0011","status":"ACTIVE","title":"Final Activity identity includes relation and full temporal boundaries"},
     {"id":"ATLAS-RQ-0012","status":"ACTIVE","title":"Source provenance survives correction and merge"},
     {"id":"ATLAS-RQ-0013","status":"ACTIVE","title":"Use Vercel-minimized release trains","evidence_paths":["RELEASE_GOVERNANCE.md","vercel.json"]},
+    {"id":"ATLAS-RQ-0014","status":"ACTIVE","title":"Person is a first-class Authoring object, not an Activity-row label"},
+    {"id":"ATLAS-RQ-0015","status":"ACTIVE","title":"Place and Source are first-class Authoring entities"},
+    {"id":"ATLAS-RQ-0016","status":"ACTIVE","title":"Compile emits Runtime-ready state and unresolved Authoring never masquerades as Runtime truth"},
+    {"id":"ATLAS-RQ-0017","status":"ACTIVE","title":"Unknown Person Activity boundaries must remain representable without fabricated years"},
 
     {"id":"ATLAS-RQ-0101","status":"COMPLETED","title":"Normalized atlas_v2 is authoritative","evidence_paths":["ARCHITECTURE_INVARIANTS.md","DATA_MODEL.md"]},
     {"id":"ATLAS-RQ-0102","status":"COMPLETED","title":"Normalized identity authoring exists","evidence_paths":["api/atlas-identity.js","server/atlas-identity-service.js","atlas-admin-identity.js"]},
@@ -56,6 +60,11 @@
     {"id":"ATLAS-RQ-0223","status":"PENDING","title":"Pass full Production product lifecycle acceptance","phase":"P13"},
     {"id":"ATLAS-RQ-0224","status":"PENDING","title":"Integrate the historical map contract","phase":"P14"},
     {"id":"ATLAS-RQ-0225","status":"PENDING","title":"Preserve the ATLAS map research standard","phase":"P14"},
+    {"id":"ATLAS-RQ-0226","status":"PENDING","title":"Complete first-class Person object authoring without forcing unknown profile facts","phase":"P13"},
+    {"id":"ATLAS-RQ-0227","status":"PENDING","title":"Complete Place and bibliographic Source authoring as independent objects","phase":"P13"},
+    {"id":"ATLAS-RQ-0228","status":"PENDING","title":"Implement explicit Compile to Runtime projection and readiness filtering","phase":"P13"},
+    {"id":"ATLAS-RQ-0229","status":"PENDING","title":"Represent unresolved Person Activity boundaries in Authoring without fake endpoint years","phase":"P13"},
+    {"id":"ATLAS-RQ-0230","status":"PENDING","title":"Complete source-backed AI candidate to human review to authoring workflow","phase":"P13"},
 
     {"id":"ATLAS-RQ-0301","status":"SUPERSEDED","title":"Merge duplicate Persons before Stage 2","superseded_by":["ATLAS-RQ-0212","ATLAS-RQ-0219","ATLAS-RQ-0220"]},
     {"id":"ATLAS-RQ-0302","status":"SUPERSEDED","title":"Use one post-cleanup baseline only","superseded_by":["ATLAS-RQ-0206","ATLAS-RQ-0221"]},

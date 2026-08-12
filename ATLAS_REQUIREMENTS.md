@@ -25,8 +25,25 @@ ATLAS의 기준은 **100% traceable**, **0 known contradictions**, **0 silently 
 | `ATLAS-RQ-0011` | Final Activity identity = Person + Polity + Relation + Role/NULL + Period Basis + interpreted full start/end boundaries. |
 | `ATLAS-RQ-0012` | Source provenance/locator/claims/descriptions/before-state survive correction and merge. |
 | `ATLAS-RQ-0013` | Use Vercel-minimized release trains; exhaust branch/research/CI work before unavoidable live dependency barriers. |
+| `ATLAS-RQ-0014` | Person is a first-class Authoring object, not merely the name column of an Activity row. |
+| `ATLAS-RQ-0015` | Place and Source are first-class Authoring entities. Place identity is not Polity identity; Source identity is not merely an Activity locator. |
+| `ATLAS-RQ-0016` | Compile emits Runtime-ready state. Unresolved Authoring assertions must never appear as valid Runtime truth merely because they exist in the authoring database. |
+| `ATLAS-RQ-0017` | A known Person–Polity assertion with an unknown start/end boundary must remain representable without inventing an endpoint year. |
 
 Polity naming follows `stage2/contracts/entity-boundaries-current.v1.json`: historical names, historiographic names and explicitly tagged editorial catalog labels are semantically distinct. Editorial labels never become historical self-designations or UUID identity.
+
+### Product-scope boundary
+
+The current row-oriented Persons screen and Stage 2 political model are **not** the final product definition. The final Authoring System keeps the established historical core small and composable:
+
+- Person object: identity/names, descriptions, source-backed life facts such as birth/death date/place, representative media reference, optional typed biographical facts, and related Activities.
+- Polity / Government / PeopleGroup / HistoricalEvent remain semantically separate objects.
+- Place is reusable by life facts, events and later map/runtime navigation; it does not become a Polity merely because an event or Person is associated with it.
+- Source is a reusable evidence object capable of bibliographic/web metadata (for example title, author/institution, publication date/year, URL/reference and source type) plus artifact/hash metadata when an ingested file exists. File hash/bytes are not a substitute for citation metadata.
+- AI research follows `candidate → evidence/source/confidence → human review → authoritative authoring`; it never bypasses the normalized writer.
+- Game-specific or presentation-only fields must be extensions/crosswalks, not Person/Polity identity. They are not added merely because a UI could display them.
+
+Unknown optional profile facts remain absent/unresolved. The system must not require religion, dynasty, gender, media, place or any other optional field merely to make a Person row “complete”.
 
 ## 2. Completed foundations — do not rebuild
 
@@ -77,6 +94,8 @@ The current pre-Vercel closure authority is `research/pre-vercel/stage2-pre-verc
 ### P5 — Additive Stage 2 schema
 - `ATLAS-RQ-0215` — add nullable Relation Type, Governance Context, Polity relations/designations/identity transitions, full temporal boundaries, normalized provenance, Polity semantic name kind, PeopleGroup/PersonPeopleAffiliation, HistoricalEvent/PersonEventParticipation. Existing Runtime/write behavior remains valid until P9.
 
+P5 is the Stage 2 political-semantic migration, **not** a license to force the whole future Person/Place/Source product model into the live database before the final authoring/runtime boundary is ready.
+
 ### P6 — Correction engine v2
 - `ATLAS-RQ-0216` — exact UUID + exact before-state + reviewed after-state + provenance + postconditions + immutable audit for relink/split/semantic/governance/Polity relation/designation/identity/source operations.
 
@@ -90,20 +109,44 @@ The current pre-Vercel closure authority is `research/pre-vercel/stage2-pre-verc
 - `ATLAS-RQ-0219` — DB index, planner, transactions, admin/import, replay, correction and duplicate reconciliation switch coherently; no v1/v2 split brain.
 
 ### P10 — Person physical merge
-- `ATLAS-RQ-0220` — only after v2-aware reconciliation + P10 candidate revalidation. Current runtime interlock rejects physical merge before that lifecycle state.
+- `ATLAS-RQ-0220` — only after v2-aware reconciliation + P10 candidate revalidation. Current runtime interlock rejects physical merge before that lifecycle state. Until then MERGE/KEEP_SEPARATE/REVIEW decisions remain available but destructive execution must also appear disabled in the UI.
 
 ### P11 — Baseline B / end-state constraints
-- `ATLAS-RQ-0221` — capture final live Baseline B, then enforce final required fields/uniqueness/checks.
+- `ATLAS-RQ-0221` — capture final live Baseline B, then enforce final required fields/uniqueness/checks for Runtime-ready semantic state. Do not turn optional/unknown historical facts into mandatory fake values.
 
 ### P12 — Legacy retirement
 - `ATLAS-RQ-0222` — remove reachable v1 semantic identity, obsolete adapters/reconciliation, transitional writers, superseded rehearsals/CI/runtime paths.
 
-### P13 — Production acceptance
-- `ATLAS-RQ-0223` — pass new Person → Polity reuse/create → Activity/Relation/period → search/edit → duplicate decision → v2 merge → reconciliation/audit → delete/reread.
+### P13 — Full Authoring product + Compile/Runtime acceptance
+- `ATLAS-RQ-0223` — pass complete Production product lifecycle acceptance.
+- `ATLAS-RQ-0226` — finish first-class Person object authoring. Minimum scope is identity/names + description + source-backed life-event date/place + representative media reference + related Activity; optional biographical attributes are typed/source-backed and never forced when unknown.
+- `ATLAS-RQ-0227` — finish reusable Place and bibliographic Source authoring as independent objects. Existing file/hash provenance remains valid but is not the whole Source model.
+- `ATLAS-RQ-0228` — implement explicit `Authoring → Compile → Runtime` projection/materialization. Runtime search/list/detail consumes compiled readiness state rather than treating every Authoring row as publishable historical truth.
+- `ATLAS-RQ-0229` — represent unresolved Person Activity boundary assertions without fake endpoint years. Such assertions remain authoring/review state until both boundaries are interpretable enough for the Runtime contract.
+- `ATLAS-RQ-0230` — implement the already-established source-backed AI research candidate flow: candidate/evidence/confidence → human review → normalized authoring. No AI direct-to-truth write path.
+
+P13 acceptance therefore includes, at minimum:
+
+```text
+Person object create/edit
+→ Place/Source reuse or create where needed
+→ Polity reuse/create
+→ Activity + Relation + full/unknown-aware period authoring
+→ provenance and review state
+→ Compile
+→ Runtime list/search/detail
+→ duplicate decision
+→ v2 merge/reconciliation/audit
+→ delete/reread/recompile
+```
+
+The present Activity-row table may remain a transition/editor surface until this phase, but it cannot be declared the final Person object UI merely because the underlying Stage 2 relation model is complete.
 
 ### P14 — Historical map
 - `ATLAS-RQ-0224` — Person → Activity → shared Polity UUID → Territory Record → Geometry.
 - `ATLAS-RQ-0225` — preserve source hierarchy, control/influence/contested separation, uncertainty/confidence and no invented GeoJSON.
+
+P14 consumes shared UUIDs and compiled Runtime-ready historical state. Place and Territory remain different concepts: a Place is a location/entity reference; Territory is a time-varying Polity spatial assertion.
 
 ## 4. Superseded plans — never revive
 
@@ -137,10 +180,14 @@ branch-only contracts/research/CI
 → Production Train 1: R0/R1 + Baseline A v2 on one exact SHA
 → fresh branch-only Stage 2 live rebinding/build/test
 → Production Train 2: additive migration + correction/backfill + P8 + P9 + P10 + Baseline B
-→ P12 legacy retirement + P13 acceptance
+→ P12 legacy retirement
+→ P13 full Authoring + Compile/Runtime acceptance
+→ P14 historical map integration
 ```
 
 Train 1 and Train 2 cannot be safely precombined by guessing future UUID state. Conversely, no additional Vercel deployment is justified merely to gather information already captured by Baseline A v2.
+
+The P13 product requirements above are intentionally preserved now but do **not** expand Train 1. Their live implementation belongs after the Stage 2 semantic state is stable; otherwise we would couple a current-schema cleanup deployment to unrelated product-surface migration.
 
 ## 7. Completion definition
 
@@ -149,10 +196,14 @@ ATLAS development is complete only when:
 - every binding requirement is ACTIVE or COMPLETED;
 - `PENDING = 0`;
 - known conflict = 0;
+- silently omitted agreed core scope = 0;
 - unverified release state = 0;
 - reviewed semantic cutover blocker = 0;
 - reachable legacy runtime/writer = 0;
 - duplicate semantic identity implementation = 0;
+- unresolved Authoring assertions are representable without fabricated values and excluded from Runtime until ready;
+- Person, Place and Source exist as first-class Authoring objects at the product layer;
+- Runtime consumes an explicit Compile output/readiness projection rather than raw unresolved Authoring semantics;
 - final Baseline B exists;
 - full Production lifecycle acceptance passes;
 - historical map integration retains Polity-owned territory;

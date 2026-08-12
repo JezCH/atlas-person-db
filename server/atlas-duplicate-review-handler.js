@@ -5,6 +5,7 @@ const { rebuildCandidates, listCandidates, reviewCandidate, schemaUnavailable } 
 const { executeApprovedPersonMerge } = require("./atlas-person-merge-service.js");
 const {
   PERSON_MERGE_BLOCK_CODE,
+  personMergeExecutionState,
   assertPersonMergeExecutionAllowed
 } = require("./atlas-person-merge-interlock.js");
 
@@ -88,7 +89,12 @@ function createDuplicateReviewHandler({ clientFactory, env = process.env, now } 
       client = await clientFactory(databaseUrl);
       if (method === "GET") {
         const queue = await listCandidates({ client, includeStale: String(req?.query?.include_stale || "") === "1" });
-        sendJson(res, 200, { ok: true, source: "v2-duplicate-review", ...queue });
+        sendJson(res, 200, {
+          ok: true,
+          source: "v2-duplicate-review",
+          merge_execution_state: personMergeExecutionState(),
+          ...queue
+        });
         return;
       }
 

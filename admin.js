@@ -32,6 +32,13 @@
   let candidateClient = null;
   let candidates = [];
   let activeFilter = "ALL";
+  let mergeExecutionState = Object.freeze({
+    allowed: false,
+    reconciliation_semantic_version: null,
+    required_reconciliation_semantic_version: "v2-relation-full-temporal",
+    person_merge_lifecycle_version: "pre-p10-blocked",
+    required_person_merge_lifecycle_version: "p10-v2-revalidated"
+  });
 
   function setResult(message, type = "info") {
     result.textContent = message;
@@ -63,6 +70,7 @@
       if (!personName) throw new Error(`${index + 1}번째 항목에 person_name이 없습니다.`);
       if (!politicName) throw new Error(`${index + 1}번째 항목에 politic_name이 없습니다.`);
       if (!Number.isInteger(start) || !Number.isInteger(end)) throw new Error(`${index + 1}번째 연도는 정수여야 합니다.`);
+      if (start === 0 || end === 0) throw new Error(`${index + 1}번째 연도에 역사 연도 0을 사용할 수 없습니다.`);
       if (end < start) throw new Error(`${index + 1}번째 종료연도가 시작연도보다 빠릅니다.`);
       if (!allowedBasis.has(basis)) throw new Error(`${index + 1}번째 period_basis 값이 허용 목록에 없습니다: ${basis}`);
       return {
@@ -207,6 +215,12 @@
 
   function mergeExecutionBlock(candidate) {
     if (candidate.current_decision !== "MERGE") return "";
+    if (!mergeExecutionState.allowed) {
+      return `<div class="merge-execution is-blocked">
+        <strong>실제 병합 실행 대기</strong>
+        <p>병합 판정은 저장되어 있습니다. 실제 Person 삭제/이관은 semantic-key v2 reconciliation과 P10 후보 재검증이 모두 완료될 때까지 서버와 이 화면에서 차단됩니다.</p>
+      </div>`;
+    }
     return `<div class="merge-execution">
       <strong>승인된 실제 병합</strong>
       <p>유지할 인물을 직접 선택하세요. 선택하지 않은 인물 UUID는 모든 참조를 안전하게 이관한 뒤 삭제됩니다.</p>
@@ -227,6 +241,9 @@
     queue.innerHTML = visible.map((candidate) => {
       const evidence = candidate.evidence.map((item) => `<li>${escapeHtml(evidenceLabel(item))}</li>`).join("");
       const decision = decisionLabel(candidate.current_decision);
+      const mergeWarning = mergeExecutionState.allowed
+        ? "병합 승인은 판정 기록입니다. 실제 병합은 승인 후 유지할 인물과 관계 정리 방식을 별도로 선택해야 실행됩니다."
+        : "병합 승인은 판정 기록입니다. 실제 병합 실행은 semantic-key v2와 P10 후보 재검증 전까지 차단되어 있습니다.";
       return `<article class="candidate-card" data-candidate-id="${escapeHtml(candidate.id)}">
         <div class="candidate-top">
           <div><span class="confidence">${Math.round(candidate.confidence * 100)}%</span><span class="decision decision-${escapeHtml(candidate.current_decision || "OPEN")}">${escapeHtml(decision)}</span></div>
@@ -241,7 +258,7 @@
           <button class="button review-action keep" data-decision="KEEP_SEPARATE" type="button">별개 인물</button>
           <button class="button review-action secondary" data-decision="REVIEW" type="button">추가 검토</button>
         </div>
-        <p class="merge-warning">병합 승인은 판정 기록입니다. 실제 병합은 승인 후 유지할 인물과 관계 정리 방식을 별도로 선택해야 실행됩니다.</p>
+        <p class="merge-warning">${escapeHtml(mergeWarning)}</p>
         ${mergeExecutionBlock(candidate)}
       </article>`;
     }).join("");
@@ -259,12 +276,14 @@
     try {
       const payload = await candidateClient.listCandidates();
       candidates = payload.candidates || [];
+      mergeExecutionState = Object.freeze({ ...mergeExecutionState, ...(payload.merge_execution_state || {}) });
       renderSummary(payload.summary || {});
       renderQueue();
       statusBadge.textContent = "검토 가능";
       statusBadge.dataset.state = "ready";
     } catch (error) {
       candidates = [];
+      mergeExecutionState = Object.freeze({ ...mergeExecutionState, allowed: false });
       renderSummary({ total: 0, open: 0, merge: 0, keep_separate: 0, review: 0 });
       if (error.code === "PHASE9A_SCHEMA_REQUIRED") {
         queue.innerHTML = `<p class="empty-state">Phase 9A DB schema 적용 대기 중입니다.</p>`;
@@ -344,6 +363,10 @@
   }
 
   async function handleApprovedMerge(button) {
+    if (!mergeExecutionState.allowed) {
+      alert("실제 Person 병합은 semantic-key v2 reconciliation과 P10 후보 재검증이 완료될 때까지 차단됩니다. 병합 판정 자체는 저장할 수 있습니다.");
+      return;
+    }
     const card = button.closest(".candidate-card");
     const candidateId = card?.dataset.candidateId;
     const survivorId = button.dataset.survivorId;
@@ -375,7 +398,9 @@
       await loadCandidates();
     } catch (error) {
       alert(`실제 병합 실패: ${error.message}`);
-      statusBadge.textContent = error.code === "PHASE9B_SCHEMA_REQUIRED" ? "Merge Schema 대기" : "병합 실패";
+      statusBadge.textContent = error.code === "PERSON_MERGE_BLOCKED_UNTIL_P10_V2_REVALIDATION"
+        ? "P10 대기"
+        : error.code === "PHASE9B_SCHEMA_REQUIRED" ? "Merge Schema 대기" : "병합 실패";
       [...card.querySelectorAll("button")].forEach((node) => { node.disabled = false; });
     }
   }

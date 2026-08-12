@@ -60,12 +60,26 @@ for (const requirement of registry.requirements) {
 
 const mandatoryIds = [
   "ATLAS-RQ-0001", "ATLAS-RQ-0002", "ATLAS-RQ-0003", "ATLAS-RQ-0004", "ATLAS-RQ-0005", "ATLAS-RQ-0006",
-  "ATLAS-RQ-0010", "ATLAS-RQ-0011", "ATLAS-RQ-0013", "ATLAS-RQ-0201", "ATLAS-RQ-0202", "ATLAS-RQ-0203", "ATLAS-RQ-0206",
+  "ATLAS-RQ-0009", "ATLAS-RQ-0010", "ATLAS-RQ-0011", "ATLAS-RQ-0013", "ATLAS-RQ-0014", "ATLAS-RQ-0015",
+  "ATLAS-RQ-0016", "ATLAS-RQ-0017", "ATLAS-RQ-0201", "ATLAS-RQ-0202", "ATLAS-RQ-0203", "ATLAS-RQ-0206",
   "ATLAS-RQ-0207", "ATLAS-RQ-0215", "ATLAS-RQ-0218", "ATLAS-RQ-0219", "ATLAS-RQ-0220", "ATLAS-RQ-0221",
-  "ATLAS-RQ-0222", "ATLAS-RQ-0223", "ATLAS-RQ-0224", "ATLAS-NO-0001", "ATLAS-NO-0002", "ATLAS-NO-0004",
-  "ATLAS-NO-0005", "ATLAS-NO-0006", "ATLAS-NO-0007", "ATLAS-NO-0011", "ATLAS-NO-0013"
+  "ATLAS-RQ-0222", "ATLAS-RQ-0223", "ATLAS-RQ-0224", "ATLAS-RQ-0226", "ATLAS-RQ-0227", "ATLAS-RQ-0228",
+  "ATLAS-RQ-0229", "ATLAS-RQ-0230", "ATLAS-NO-0001", "ATLAS-NO-0002", "ATLAS-NO-0004", "ATLAS-NO-0005",
+  "ATLAS-NO-0006", "ATLAS-NO-0007", "ATLAS-NO-0011", "ATLAS-NO-0013"
 ];
 for (const id of mandatoryIds) if (!byId.has(id)) fail(`mandatory requirement missing: ${id}`);
+
+const requiredProductPhrases = [
+  "Person is a first-class Authoring object",
+  "Place and Source are first-class Authoring entities",
+  "Compile emits Runtime-ready state",
+  "unknown start/end boundary",
+  "candidate → evidence/source/confidence → human review → authoritative authoring",
+  "Person, Place and Source exist as first-class Authoring objects"
+];
+for (const phrase of requiredProductPhrases) {
+  if (!document.includes(phrase)) fail(`agreed product scope missing from human requirements: ${phrase}`);
+}
 
 if (!document.includes("100% traceable") || !document.includes("0 known contradictions") || !document.includes("unknown stays unknown")) {
   fail("human-readable completion principles drifted");
