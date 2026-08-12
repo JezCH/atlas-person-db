@@ -1,5 +1,6 @@
 "use strict";
 
+const crypto = require("node:crypto");
 const {
   verifyGitHubActionsOidc,
   EXPECTED_AUDIENCE: AUDIT_OIDC_AUDIENCE,
@@ -10,51 +11,9 @@ const { createPostgresClient } = require("./atlas-postgres-client.js");
 const MARKER = "ATLAS_AUDIT_INVENTORY_V1";
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const MAX_ACTIVITY_IDS = 100;
+const MODES = new Set(["targeted", "full_activity_baseline"]);
 
-function json(res, statusCode, body) {
-  res.statusCode = statusCode;
-  res.setHeader("content-type", "application/json; charset=utf-8");
-  res.setHeader("cache-control", "no-store");
-  res.end(JSON.stringify(body));
-}
-
-function bearerToken(req) {
-  const value = String(req.headers?.authorization || "");
-  const match = value.match(/^Bearer\s+(.+)$/i);
-  return match ? match[1].trim() : "";
-}
-
-function requireDeployment(req, env) {
-  if (env.VERCEL_ENV !== "production") throw new Error("AUDIT_INVENTORY_NOT_PRODUCTION");
-  if (env.VERCEL_GIT_REPO_OWNER !== "JezCH" || env.VERCEL_GIT_REPO_SLUG !== "atlas-person-db") {
-    throw new Error("AUDIT_INVENTORY_DEPLOYMENT_REPOSITORY_MISMATCH");
-  }
-  const branch = String(env.VERCEL_GIT_COMMIT_REF || "");
-  if (branch !== "main") throw new Error("AUDIT_INVENTORY_DEPLOYMENT_BRANCH_MISMATCH");
-  const actualSha = String(env.VERCEL_GIT_COMMIT_SHA || "").toLowerCase();
-  const expectedSha = String(req.body?.deployment_sha || "").toLowerCase();
-  if (!/^[0-9a-f]{40}$/.test(actualSha) || !/^[0-9a-f]{40}$/.test(expectedSha)) {
-    throw new Error("AUDIT_INVENTORY_DEPLOYMENT_SHA_REQUIRED");
-  }
-  if (actualSha !== expectedSha) throw new Error("DEPLOYMENT_SHA_MISMATCH");
-  return { actualSha, expectedSha, branch };
-}
-
-function normalizeActivityIds(value) {
-  if (!Array.isArray(value) || value.length === 0) throw new Error("AUDIT_ACTIVITY_IDS_REQUIRED");
-  if (value.length > MAX_ACTIVITY_IDS) throw new Error("AUDIT_ACTIVITY_IDS_LIMIT_EXCEEDED");
-  const ids = [...new Set(value.map((id) => String(id || "").trim().toLowerCase()))];
-  if (ids.length === 0 || ids.some((id) => !UUID_RE.test(id))) throw new Error("AUDIT_ACTIVITY_ID_INVALID");
-  return ids.sort();
-}
-
-async function queryInventory(client, activityIds) {
-  await client.query("begin isolation level repeatable read read only");
-  try {
-    const readOnly = await client.query("select current_setting('transaction_read_only') as read_only");
-    if (readOnly.rows[0]?.read_only !== "on") throw new Error("AUDIT_TRANSACTION_NOT_READ_ONLY");
-
-    const result = await client.query(`
+const INVENTORY_SELECT = `
       select pp.id as activity_id,
              pp.person_id,
              pp.polity_id,
@@ -95,20 +54,118 @@ async function queryInventory(client, activityIds) {
         join atlas_v2.persons p on p.id=pp.person_id
         join atlas_v2.polities po on po.id=pp.polity_id
         left join atlas_v2.roles r on r.id=pp.role_id
-        join atlas_v2.period_bases pb on pb.id=pp.period_basis_id
-       where pp.id = any($1::uuid[])
-       order by pp.id`, [activityIds]);
+        join atlas_v2.period_bases pb on pb.id=pp.period_basis_id`;
 
-    if (result.rows.length !== activityIds.length) {
-      const found = new Set(result.rows.map((row) => String(row.activity_id).toLowerCase()));
+function json(res, statusCode, body) {
+  res.statusCode = statusCode;
+  res.setHeader("content-type", "application/json; charset=utf-8");
+  res.setHeader("cache-control", "no-store");
+  res.end(JSON.stringify(body));
+}
+
+function bearerToken(req) {
+  const value = String(req.headers?.authorization || "");
+  const match = value.match(/^Bearer\s+(.+)$/i);
+  return match ? match[1].trim() : "";
+}
+
+function requireDeployment(req, env) {
+  if (env.VERCEL_ENV !== "production") throw new Error("AUDIT_INVENTORY_NOT_PRODUCTION");
+  if (env.VERCEL_GIT_REPO_OWNER !== "JezCH" || env.VERCEL_GIT_REPO_SLUG !== "atlas-person-db") {
+    throw new Error("AUDIT_INVENTORY_DEPLOYMENT_REPOSITORY_MISMATCH");
+  }
+  const branch = String(env.VERCEL_GIT_COMMIT_REF || "");
+  if (branch !== "main") throw new Error("AUDIT_INVENTORY_DEPLOYMENT_BRANCH_MISMATCH");
+  const actualSha = String(env.VERCEL_GIT_COMMIT_SHA || "").toLowerCase();
+  const expectedSha = String(req.body?.deployment_sha || "").toLowerCase();
+  if (!/^[0-9a-f]{40}$/.test(actualSha) || !/^[0-9a-f]{40}$/.test(expectedSha)) {
+    throw new Error("AUDIT_INVENTORY_DEPLOYMENT_SHA_REQUIRED");
+  }
+  if (actualSha !== expectedSha) throw new Error("DEPLOYMENT_SHA_MISMATCH");
+  return { actualSha, expectedSha, branch };
+}
+
+function normalizeActivityIds(value) {
+  if (!Array.isArray(value) || value.length === 0) throw new Error("AUDIT_ACTIVITY_IDS_REQUIRED");
+  if (value.length > MAX_ACTIVITY_IDS) throw new Error("AUDIT_ACTIVITY_IDS_LIMIT_EXCEEDED");
+  const ids = [...new Set(value.map((id) => String(id || "").trim().toLowerCase()))];
+  if (ids.length === 0 || ids.some((id) => !UUID_RE.test(id))) throw new Error("AUDIT_ACTIVITY_ID_INVALID");
+  return ids.sort();
+}
+
+function normalizeMode(value) {
+  const mode = value == null || String(value).trim() === "" ? "targeted" : String(value).trim().toLowerCase();
+  if (!MODES.has(mode)) throw new Error("AUDIT_MODE_INVALID");
+  return mode;
+}
+
+function stable(value) {
+  if (Array.isArray(value)) return value.map(stable);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.keys(value).sort().map((key) => [key, stable(value[key])]));
+  }
+  return value;
+}
+
+function digestBaseline(rows, counts) {
+  return `sha256:${crypto.createHash("sha256").update(JSON.stringify(stable({ rows, counts }))).digest("hex")}`;
+}
+
+async function beginReadOnly(client) {
+  await client.query("begin isolation level repeatable read read only");
+  const readOnly = await client.query("select current_setting('transaction_read_only') as read_only");
+  if (readOnly.rows[0]?.read_only !== "on") throw new Error("AUDIT_TRANSACTION_NOT_READ_ONLY");
+}
+
+async function queryRows(client, activityIds = null) {
+  const targeted = Array.isArray(activityIds);
+  const sql = `${INVENTORY_SELECT}\n       ${targeted ? "where pp.id = any($1::uuid[])" : ""}\n       order by pp.id`;
+  const result = await client.query(sql, targeted ? [activityIds] : []);
+  return result.rows;
+}
+
+async function queryInventory(client, activityIds) {
+  await beginReadOnly(client);
+  try {
+    const rows = await queryRows(client, activityIds);
+    if (rows.length !== activityIds.length) {
+      const found = new Set(rows.map((row) => String(row.activity_id).toLowerCase()));
       const missing = activityIds.filter((id) => !found.has(id));
       const error = new Error("AUDIT_INVENTORY_TARGET_MISSING");
       error.missing_activity_ids = missing;
       throw error;
     }
-
     await client.query("commit");
-    return result.rows;
+    return rows;
+  } catch (error) {
+    try { await client.query("rollback"); } catch {}
+    throw error;
+  }
+}
+
+async function queryFullActivityBaseline(client) {
+  await beginReadOnly(client);
+  try {
+    const rows = await queryRows(client, null);
+    const countsResult = await client.query(`
+      select (select count(*)::int from atlas_v2.persons) as persons,
+             (select count(*)::int from atlas_v2.polities) as polities,
+             (select count(*)::int from atlas_v2.roles) as roles,
+             (select count(*)::int from atlas_v2.period_bases) as period_bases,
+             (select count(*)::int from atlas_v2.person_politics_v2) as activities,
+             (select count(*)::int from atlas_v2.person_politics_sources) as activity_source_links,
+             (select count(*)::int from atlas_v2.chronology_claims) as chronology_claims,
+             (select count(*)::int from atlas_v2.relationship_descriptions) as relationship_descriptions`);
+    const counts = countsResult.rows[0] || {};
+    if (Number(counts.activities) !== rows.length) throw new Error("AUDIT_BASELINE_ACTIVITY_COUNT_DRIFT");
+    const activityIds = rows.map((row) => String(row.activity_id).toLowerCase());
+    if (new Set(activityIds).size !== activityIds.length) throw new Error("AUDIT_BASELINE_DUPLICATE_ACTIVITY_UUID");
+    await client.query("commit");
+    return Object.freeze({
+      rows,
+      counts,
+      baseline_digest: digestBaseline(rows, counts)
+    });
   } catch (error) {
     try { await client.query("rollback"); } catch {}
     throw error;
@@ -118,8 +175,8 @@ async function queryInventory(client, activityIds) {
 function statusForError(code) {
   if (code === "DEPLOYMENT_SHA_MISMATCH") return 409;
   if (code === "GITHUB_OIDC_INVALID" || String(code).startsWith("GITHUB_OIDC_")) return 401;
-  if (code === "AUDIT_INVENTORY_TARGET_MISSING") return 409;
-  if (String(code).startsWith("AUDIT_ACTIVITY_")) return 400;
+  if (code === "AUDIT_INVENTORY_TARGET_MISSING" || String(code).startsWith("AUDIT_BASELINE_")) return 409;
+  if (String(code).startsWith("AUDIT_ACTIVITY_") || code === "AUDIT_MODE_INVALID") return 400;
   if (String(code).startsWith("AUDIT_INVENTORY_DEPLOYMENT_") || code === "AUDIT_INVENTORY_NOT_PRODUCTION") return 403;
   if (code === "SERVER_CONFIGURATION_ERROR") return 503;
   return 500;
@@ -139,15 +196,34 @@ function createAuditInventoryHandler({
       if (!token) throw new Error("GITHUB_OIDC_INVALID");
       const deployment = requireDeployment(req, env);
       await verifyOidc(token, { expectedSha: deployment.actualSha });
-      const activityIds = normalizeActivityIds(req.body?.activity_ids);
+      const mode = normalizeMode(req.body?.mode);
       const connectionString = String(env.SUPABASE_DB_URL || "").trim();
       if (!connectionString) throw new Error("SERVER_CONFIGURATION_ERROR");
 
       client = await createClient(connectionString, { env });
+      if (mode === "full_activity_baseline") {
+        if (req.body?.activity_ids != null) throw new Error("AUDIT_BASELINE_ACTIVITY_IDS_FORBIDDEN");
+        const baseline = await queryFullActivityBaseline(client);
+        return json(res, 200, {
+          ok: true,
+          marker: MARKER,
+          mode,
+          read_only: true,
+          committed: false,
+          deployment_sha: deployment.actualSha,
+          row_count: baseline.rows.length,
+          counts: baseline.counts,
+          baseline_digest: baseline.baseline_digest,
+          rows: baseline.rows
+        });
+      }
+
+      const activityIds = normalizeActivityIds(req.body?.activity_ids);
       const rows = await queryInventory(client, activityIds);
       return json(res, 200, {
         ok: true,
         marker: MARKER,
+        mode,
         read_only: true,
         committed: false,
         deployment_sha: deployment.actualSha,
@@ -173,11 +249,15 @@ function createAuditInventoryHandler({
 module.exports = Object.freeze({
   MARKER,
   MAX_ACTIVITY_IDS,
+  MODES,
   AUDIT_OIDC_AUDIENCE,
   AUDIT_WORKFLOW_REF,
   createAuditInventoryHandler,
   normalizeActivityIds,
+  normalizeMode,
   queryInventory,
+  queryFullActivityBaseline,
+  digestBaseline,
   requireDeployment,
   bearerToken,
   statusForError
