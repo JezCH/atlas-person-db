@@ -1,0 +1,164 @@
+{
+  "schema": "atlas-stage2-r1-layered-authority-research/v1",
+  "status": "RESEARCH_REVIEWED_NO_PRODUCTION_WRITE",
+  "as_of": "2026-08-12",
+  "source_document": "docs/research/layered/STAGE2_R1_LAYERED_AUTHORITY_RESEARCH_2026-08-12.md",
+  "baseline_binding": {
+    "required_baseline": "Baseline A",
+    "stale_346_activity_uuids_are_evidence_only": true,
+    "canonical_polity_uuid_binding_deferred": true,
+    "territory_geometry_deferred": true
+  },
+  "decisions": [
+    {
+      "cluster": "RURIK",
+      "person": "Rurik",
+      "current_activity_uuid_evidence_only": "b651ff3e-0df1-552a-9134-56ca95e9f3be",
+      "current_target": "Kievan Rus'",
+      "current_interval": {"start_year": 862, "end_year": 879},
+      "current_target_disposition": "REJECT_BACKPROJECTED_KIEVAN_RUS",
+      "replacement_target_class": "EARLY_NORTHERN_RUS_AUTHORITY",
+      "production_canonical_name": null,
+      "production_polity_uuid": null,
+      "person_relation": "rules",
+      "chronology": {
+        "start_year": 862,
+        "end_year": 879,
+        "status": "TRADITIONAL_RETROSPECTIVE_UNCERTAIN",
+        "subyear_precision": null
+      },
+      "kiev_direct_control_allowed": false,
+      "precise_northern_polygon_supported": false,
+      "remaining_blockers": [
+        "BASELINE_A_BINDING",
+        "UNCERTAIN_POLITY_IDENTITY_AUTHORING",
+        "CHRONOLOGY_PROVENANCE_BACKFILL",
+        "TERRITORY_INTERVAL_RECONSTRUCTION",
+        "GEOMETRY_RECONSTRUCTION"
+      ]
+    },
+    {
+      "cluster": "CAO_CAO",
+      "person": "Cao Cao",
+      "current_activity_uuid_evidence_only": "7eefdc4d-8aec-5689-b4d8-6b1745240581",
+      "current_target": "Cao Wei",
+      "current_interval": {"start_year": 196, "end_year": 220},
+      "current_row_disposition": "LAYERED_SPLIT_REQUIRED",
+      "layers": [
+        {
+          "target": "Eastern Han",
+          "start_year": 196,
+          "end_year": 220,
+          "person_relation": "governs",
+          "sovereign_rule_claimed": false
+        },
+        {
+          "target_class": "CONTINUOUS_WEI_POLITY",
+          "production_canonical_name": null,
+          "production_polity_uuid": null,
+          "start_year": 213,
+          "end_year": 220,
+          "person_relation": "rules",
+          "state_form_transitions": [
+            {"year":213,"state_form":"DUCAL_WEI"},
+            {"year":216,"state_form":"ROYAL_WEI"},
+            {"year":220,"state_form":"IMPERIAL_WEI","transition_person":"Cao Pi"}
+          ],
+          "single_polity_uuid_across_state_form_transitions": true
+        }
+      ],
+      "cao_cao_rules_imperial_wei": false,
+      "structural_relation_to_eastern_han": null,
+      "structural_relation_status": "PENDING_STAGE2_POLITY_RELATION_INTEGRATION",
+      "remaining_blockers": [
+        "BASELINE_A_BINDING",
+        "WEI_POLITY_UUID_AUTHORING_OR_REUSE",
+        "STRUCTURAL_RELATION_CODE_AND_INTERVAL",
+        "SUBYEAR_TRANSITION_NORMALIZATION_IF_REQUIRED",
+        "TERRITORY_INTERVAL_RECONSTRUCTION",
+        "GEOMETRY_RECONSTRUCTION"
+      ]
+    },
+    {
+      "cluster": "LIU_BEI_POLITY",
+      "person": "Liu Bei",
+      "current_activity_uuid_evidence_only": "f64072c1-a665-5e09-9581-ab5d8cf766a9",
+      "current_target": "Shu Han",
+      "current_interval": {"start_year": 211, "end_year": 223},
+      "current_target_disposition": "RELINK_TO_CONTINUOUS_POLITY",
+      "replacement_target_class": "LIU_BEI_CONTINUOUS_REGIONAL_TO_IMPERIAL_HAN_POLITY",
+      "production_canonical_name": null,
+      "production_polity_uuid": null,
+      "person_relation": "rules",
+      "single_polity_uuid": true,
+      "year_level_transitions": [
+        {"year":211,"event_class":"ENTER_OR_CONTEST_YI_WHILE_EXISTING_POLITICAL_AUTHORITY_CONTINUES"},
+        {"year":214,"event_class":"YI_CENTERED_CONSOLIDATION_AFTER_CHENGDU_SURRENDER"},
+        {"year":219,"event_class":"KING_OF_HANZHONG_STATE_FORM_OR_DESIGNATION"},
+        {"year":221,"event_class":"IMPERIAL_HAN_STATE_FORM_CONVENTIONALLY_SHU_HAN"}
+      ],
+      "pre_221_shu_han_display_backprojection_allowed": false,
+      "pre_220_structural_relation_to_eastern_han": null,
+      "pre_220_structural_relation_status": "PENDING_PHASE_SPECIFIC_SOURCE_NORMALIZATION",
+      "territory_polygon_constant_across_211_223": false,
+      "remaining_blockers": [
+        "BASELINE_A_BINDING",
+        "CANONICAL_CONTINUOUS_POLITY_IDENTITY_AUTHORING",
+        "PRE_220_STRUCTURAL_RELATION_NORMALIZATION",
+        "TERRITORY_INTERVAL_RECONSTRUCTION",
+        "GEOMETRY_RECONSTRUCTION"
+      ]
+    },
+    {
+      "cluster": "LIU_BEI_POLITY",
+      "person": "Guan Yu",
+      "current_activity_uuid_evidence_only": "df6cc626-135e-5abc-ae54-6dc1f64ac2aa",
+      "current_target": "Shu Han",
+      "current_interval": {"start_year": 211, "end_year": 220},
+      "current_target_disposition": "RELINK_TO_SAME_CONTINUOUS_LIU_BEI_POLITY",
+      "person_relation": "serves",
+      "delegated_jing_command_creates_separate_polity": false,
+      "person_owns_jing_geometry": false,
+      "remaining_blockers": [
+        "BASELINE_A_BINDING",
+        "CONTINUOUS_POLITY_UUID_BINDING",
+        "EXACT_END_BOUNDARY_TEMPORAL_NORMALIZATION"
+      ]
+    },
+    {
+      "cluster": "LIU_BEI_POLITY",
+      "person": "Zhuge Liang",
+      "current_activity_uuid_evidence_only": "b16e2fb0-7515-5bd6-8aa0-0f921f55b63f",
+      "current_target": "Shu Han",
+      "current_interval": {"start_year": 211, "end_year": 234},
+      "current_target_disposition": "RELINK_TO_SAME_CONTINUOUS_LIU_BEI_POLITY",
+      "person_relation": "serves",
+      "role_transition_221_required": true,
+      "post_223_relation_candidate": "governs",
+      "post_223_relation_status": "PENDING_DEDICATED_RELATION_REVIEW",
+      "state_form_transition_requires_new_polity_uuid": false,
+      "remaining_blockers": [
+        "BASELINE_A_BINDING",
+        "CONTINUOUS_POLITY_UUID_BINDING",
+        "ROLE_PHASE_BACKFILL",
+        "POST_223_RELATION_REVIEW"
+      ]
+    }
+  ],
+  "invariants": {
+    "kiev_backprojected_to_rurik": false,
+    "cao_cao_rules_imperial_cao_wei": false,
+    "pre_221_imperial_shu_han_backprojected": false,
+    "wei_state_form_change_creates_new_polity_uuid": false,
+    "liu_bei_state_form_change_creates_new_polity_uuid": false,
+    "guan_yu_personal_jing_territory_created": false,
+    "person_activity_used_as_direct_geometry": false,
+    "uncertain_subyear_boundary_fabricated": false
+  },
+  "research_result": {
+    "current_activity_rows_reviewed": 5,
+    "model_classification_resolved_rows": 5,
+    "production_canonical_polity_bindings_completed": 0,
+    "production_writes_authorized": false
+  }
+}
