@@ -26,7 +26,8 @@
     {"id":"structural_relation_interval_research","path":"research/relations/stage2-structural-polity-relation-intervals.v1.json"},
     {"id":"baseline_a_intake_contract","path":"stage2/contracts/baseline-a-intake-current.v1.json"},
     {"id":"baseline_a_intake_tool","path":"scripts/stage2-baseline-a-intake.mjs"},
-    {"id":"baseline_a_identity_handoff","path":"docs/stage2/BASELINE_A_INTAKE_AND_IDENTITY_HANDOFF_2026-08-12.md"}
+    {"id":"baseline_a_identity_handoff","path":"docs/stage2/BASELINE_A_INTAKE_AND_IDENTITY_HANDOFF_2026-08-12.md"},
+    {"id":"person_merge_interlock","path":"docs/stage2/PERSON_MERGE_INTERLOCK_CURRENT_2026-08-12.md"}
   ],
   "wait_for_baseline_a": [
     "baseline_a_validated_intake",
@@ -39,6 +40,7 @@
     "relation_type_row_backfill",
     "production_additive_schema_apply",
     "semantic_key_v2_activation",
+    "p10_v2_duplicate_revalidation",
     "person_physical_merge"
   ],
   "production_train_2_intent": [

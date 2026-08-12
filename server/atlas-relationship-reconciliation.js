@@ -3,6 +3,7 @@
 const crypto = require("node:crypto");
 
 const ACTIONS = new Set(["KEEP_DISTINCT_ROLES", "KEEP_ONE_RELATIONSHIP"]);
+const RECONCILIATION_SEMANTIC_VERSION = "v1-polity-period-year-role";
 
 function id(value) {
   return value == null ? null : String(value);
@@ -162,6 +163,7 @@ function buildReconciliationPlan({ groups = [], resolutions = [] } = {}) {
 
 module.exports = Object.freeze({
   ACTIONS,
+  RECONCILIATION_SEMANTIC_VERSION,
   contextKey,
   roleKey,
   groupFingerprint,
