@@ -69,8 +69,11 @@ try {
     if (row.confdeltype !== expectedDelete) throw new Error(`${row.conname} delete behavior drift: expected ${expectedDelete}, got ${row.confdeltype}`);
   }
 
+  // json_agg is intentional here. information_schema array_agg may be returned as a
+  // PostgreSQL array literal string depending on the driver's domain type mapping,
+  // which would make this structural check depend on client parsing rather than DB shape.
   const primaryKeys = await client.query(`
-    select tc.table_name, array_agg(kcu.column_name order by kcu.ordinal_position) as columns
+    select tc.table_name, json_agg(kcu.column_name order by kcu.ordinal_position) as columns
       from information_schema.table_constraints tc
       join information_schema.key_column_usage kcu
         on tc.constraint_name=kcu.constraint_name and tc.constraint_schema=kcu.constraint_schema
