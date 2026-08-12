@@ -20,6 +20,7 @@ Current canonical units in this release train:
 - Person–Polity Relation semantics;
 - Governance Context;
 - Polity-to-Polity structural relations, including reviewed `nominally_subordinate_to`;
+- Polity identity/continuity contract for Roman 395, Yuan 1368, Russia 1721 and Portugal 1815;
 - shared BCE-safe temporal boundary contract;
 - normalized provenance contract;
 - Activity semantic-key v2;
@@ -27,7 +28,20 @@ Current canonical units in this release train:
 - Qubilai pre-1271 identity/designation policy;
 - baseline-independent structural Polity-relation interval research for Canada/UK, British Raj/UK, RSFSR/USSR and Huainan/Western Han.
 
-The last item is deliberately not a Production backfill manifest. It records which parts of the relation semantics and chronology are actually resolved and which must remain uncertain.
+These are portable historical/domain decisions, not Production backfill manifests.
+
+## Polity identity must be fixed before Activity semantic cutover
+
+`polity_id` is part of final Activity identity. Therefore Polity continuity/canonicalization is not cosmetic naming work and cannot be deferred until after semantic-key v2 activation.
+
+The current portable continuity decisions are:
+
+- **Roman 395** — operational eastern territorial split for GIS while preserving explicit Roman continuity metadata;
+- **Yuan 1368** — stable Yuan identity through the reviewed immediate post-1368 phase; `Northern Yuan` as historiographic designation plus Territory contraction;
+- **Russia 1721** — one stable Russian Polity; Tsardom/Russian Empire as temporal state-form/designation, exact transition 1721-11-02 Gregorian;
+- **Portugal 1815** — distinct composite United Kingdom created 1815-12-16; Portugal remains a constituent rather than becoming a mere alias.
+
+None of these decisions selects a Production UUID before Baseline A.
 
 ## Structural relation interval rule
 
@@ -96,7 +110,7 @@ This is consistent with the project constitution: unknown Territory may remain u
 
 ## Structural relation research result
 
-The new interval research closes the relation **meaning** for four families while refusing false precision:
+The interval research closes the relation **meaning** for four families while refusing false precision:
 
 - Canada `dominion_of` UK: 1867-07-01 start is exact; 1931-12-11 is an exact legal-autonomy milestone, but the final relation end remains model-qualified because residual constitutional dependence survived;
 - British Raj `colonial_dependency_of` UK: 1947-08-14 inclusive end is exact; 1858-11-01 remains primary-locator gated before Production approval;
@@ -114,6 +128,7 @@ This is the intended ATLAS behavior: **incomplete evidence reduces precision; it
 - the integration manifest does not contain UUID-shaped Activity write targets or revive the old 346 baseline as authority;
 - the Qubilai decision preserves 1260 identity / 1271 Great Yuan designation and unresolved geometry;
 - all four structural-relation research entries remain UUID-unbound and non-Production;
+- all four continuity families preserve their reviewed identity model without Production UUID bindings;
 - Canada/Raj/RSFSR/Huainan precision guards cannot silently regress into false exactness;
 - Production mutation remains false.
 

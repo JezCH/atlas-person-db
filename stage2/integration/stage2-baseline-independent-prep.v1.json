@@ -13,6 +13,7 @@
     {"id":"relation_semantics","path":"docs/audits/RELATION_SEMANTICS_CONTRACT_V1_2026-08-12.md"},
     {"id":"governance_context","path":"docs/stage2/contracts/GOVERNANCE_CONTEXT_CURRENT_V1.md"},
     {"id":"polity_relations","path":"docs/stage2/contracts/POLITY_RELATION_CURRENT_V1.md"},
+    {"id":"polity_identity_continuity","path":"stage2/contracts/polity-identity-continuity-current.v1.json"},
     {"id":"temporal_interval","path":"docs/stage2/contracts/TEMPORAL_CURRENT_V1.md"},
     {"id":"provenance","path":"docs/stage2/contracts/PROVENANCE_CURRENT_V1.md"},
     {"id":"activity_semantic_key_v2","path":"docs/stage2/contracts/ACTIVITY_SEMANTIC_KEY_V2_CURRENT.md"},

@@ -5,6 +5,7 @@ const root = process.cwd();
 const manifestPath = path.join(root, 'stage2/integration/stage2-baseline-independent-prep.v1.json');
 const kublaiPath = path.join(root, 'research/mongol/stage2-kublai-pre1271-polity-territory-decision.v1.json');
 const structuralRelationsPath = path.join(root, 'research/relations/stage2-structural-polity-relation-intervals.v1.json');
+const continuityPath = path.join(root, 'stage2/contracts/polity-identity-continuity-current.v1.json');
 
 function fail(message) {
   console.error(`Stage 2 integration prep verification failed: ${message}`);
@@ -29,7 +30,7 @@ assert(manifest.production_mutation === false, 'integration preparation must not
 assert(manifest.baseline_policy?.old_346_binding_authoritative === false, 'old 346 binding must not remain authoritative');
 assert(manifest.baseline_policy?.baseline_a_required_for_uuid_rebind === true, 'Baseline A UUID rebind must be mandatory');
 assert(manifest.baseline_policy?.no_old_activity_uuid_write_targets === true, 'old Activity UUID write targets must be forbidden');
-assert(Array.isArray(manifest.port_now) && manifest.port_now.length >= 9, 'baseline-independent port set is incomplete');
+assert(Array.isArray(manifest.port_now) && manifest.port_now.length >= 10, 'baseline-independent port set is incomplete');
 assert(Array.isArray(manifest.wait_for_baseline_a) && manifest.wait_for_baseline_a.length > 0, 'Baseline A wait set is missing');
 
 const portIds = manifest.port_now.map((entry) => entry.id);
@@ -135,10 +136,43 @@ assertNoBoundIdentityUuids(structural);
 const rawStructural = fs.readFileSync(structuralRelationsPath, 'utf8');
 assert(!/1991-12-26/.test(rawStructural), 'Soviet dissolution must not be forced to 1991-12-26 without dedicated review');
 
+const continuity = readJson(continuityPath);
+assert(continuity.schema === 'atlas-stage2-polity-identity-continuity-current/v1', 'unexpected continuity contract schema');
+assert(continuity.production_mutation === false, 'continuity contract must not authorize Production mutation');
+assert(continuity.baseline_a_uuid_rebind_required === true, 'continuity contract must require Baseline A UUID rebind');
+assert(continuity.old_activity_uuid_bindings_authoritative === false, 'old Activity UUID bindings must not be continuity authority');
+assert(continuity.rules?.no_generic_successor_shortcut === true, 'generic successor shortcut must remain forbidden');
+assert(Array.isArray(continuity.families) && continuity.families.length === 4, 'expected four reviewed continuity families');
+
+const familyById = new Map(continuity.families.map((entry) => [entry.id, entry]));
+assert(familyById.size === continuity.families.length, 'duplicate continuity family id');
+const roman = familyById.get('roman_eastern_roman_395');
+assert(roman?.model === 'operational_territorial_split_with_roman_continuity', 'Roman 395 model drifted');
+assert(roman?.transition?.year === 395 && roman.transition.granularity === 'year', 'Roman operational split must remain at year 395');
+assert(roman?.roman_continuity_metadata_required === true, 'Roman continuity metadata must remain required');
+
+const yuan = familyById.get('yuan_northern_yuan_1368');
+assert(yuan?.stable_single_polity_across_transition === true, 'Yuan/Northern Yuan must remain one stable immediate continuity identity');
+assert(yuan?.post_transition_designation === 'Northern Yuan' && yuan?.designation_type === 'historiographic_period', 'Northern Yuan must remain a historiographic designation');
+assert(yuan?.automatic_new_polity_uuid === false, '1368 must not automatically create a new Yuan UUID');
+
+const russia = familyById.get('russia_1721_empire');
+assert(russia?.stable_single_polity_across_transition === true, 'Russia 1721 must remain one stable Polity identity');
+assert(russia?.transition?.year === 1721 && russia.transition.month === 11 && russia.transition.day === 2 && russia.transition.granularity === 'day', 'Russia transition must remain 1721-11-02 Gregorian');
+assert(russia?.identity_relation_required === false, 'Russia state-form change must not become a successor relation');
+
+const portugal = familyById.get('portugal_united_kingdom_1815');
+assert(portugal?.model === 'distinct_composite_union_polity_with_constituent_portugal', 'Portugal 1815 union model drifted');
+assert(portugal?.transition?.year === 1815 && portugal.transition.month === 12 && portugal.transition.day === 16, 'Portugal union formation must remain 1815-12-16');
+assert(portugal?.portugal_constituent_continuity === true, 'Portugal constituent continuity must remain explicit');
+assert(portugal?.union_identity_relation_model_required === true && portugal?.constituent_relation_model_required === true, 'Portugal union needs identity-formation and constituent models');
+assertNoBoundIdentityUuids(continuity);
+
 const requiredContracts = [
   'docs/audits/RELATION_SEMANTICS_CONTRACT_V1_2026-08-12.md',
   'docs/stage2/contracts/GOVERNANCE_CONTEXT_CURRENT_V1.md',
   'docs/stage2/contracts/POLITY_RELATION_CURRENT_V1.md',
+  'docs/stage2/contracts/POLITY_IDENTITY_CONTINUITY_CURRENT_V1.md',
   'docs/stage2/contracts/TEMPORAL_CURRENT_V1.md',
   'docs/stage2/contracts/PROVENANCE_CURRENT_V1.md',
   'docs/stage2/contracts/ACTIVITY_SEMANTIC_KEY_V2_CURRENT.md',
@@ -149,4 +183,4 @@ const requiredContracts = [
 ];
 for (const file of requiredContracts) assert(fs.existsSync(path.join(root, file)), `missing Stage 2 prep contract: ${file}`);
 
-console.log(`Stage 2 baseline-independent integration prep verified: ${manifest.port_now.length} portable units, ${manifest.wait_for_baseline_a.length} Baseline A-gated units, ${structural.relations.length} structural relation families researched.`);
+console.log(`Stage 2 baseline-independent integration prep verified: ${manifest.port_now.length} portable units, ${manifest.wait_for_baseline_a.length} Baseline A-gated units, ${structural.relations.length} structural relation families researched, ${continuity.families.length} continuity families fixed.`);
