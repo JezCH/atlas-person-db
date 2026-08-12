@@ -117,7 +117,7 @@ function addCandidate(uuid, candidate) { const id = uuid.toLowerCase(); if (!dir
 
 for (const row of tableRows) {
   const v = row.values; const uuidField = firstField(v, ['current_activity_uuid','activity_uuid','current_uuid','uuid','id']);
-  const person = firstField(v, ['person','current_person']); const polity = firstField(v, ['current_polity','polity','politic']); const role = firstField(v, ['role']);
+  const person = firstField(v, ['person','current_person']); const polity = firstField(v, ['current_polity','polity','politic']); const role = firstField(v, ['role','current_role']);
   const [start,end] = parsePeriod(firstField(v,['period'])); const decision = firstField(v,['decision','verdict','status','classification']); const relationHint = firstField(v,['relation_hint','relation']);
   const priorSource = firstField(v,['prior_audit_source']); const contextText = Object.values(v).join(' | ');
   for (const uuid of uuidField?.match(UUID_RE) ?? []) {
@@ -157,7 +157,7 @@ for (const c of carryRows) {
     const priorFile=path.join(auditDir,priorMatch[1]); const targetLine=Number(priorMatch[2]);
     const exactRow=tableRows.find((r)=>r.file===priorFile&&r.line===targetLine)??null;
     if(exactRow){
-      const priorPerson=firstField(exactRow.values,['person','current_person']); const priorPolity=firstField(exactRow.values,['current_polity','polity','politic']); const priorRole=firstField(exactRow.values,['role']);
+      const priorPerson=firstField(exactRow.values,['person','current_person']); const priorPolity=firstField(exactRow.values,['current_polity','polity','politic']); const priorRole=firstField(exactRow.values,['role','current_role']);
       const [priorStart,priorEnd]=parsePeriod(firstField(exactRow.values,['period']));
       const currentKey=semanticKey({person:c.person,polity:c.polity,start:c.start,end:c.end,role:c.role}); const priorKey=semanticKey({person:priorPerson,polity:priorPolity,start:priorStart,end:priorEnd,role:priorRole});
       if(priorKey!==currentKey) throw new Error(`carry-forward source semantic mismatch for ${c.uuid}: ${path.basename(priorFile)}:${targetLine}`);
