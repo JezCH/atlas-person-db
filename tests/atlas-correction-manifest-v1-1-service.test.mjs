@@ -175,26 +175,33 @@ class FakeClient {
       const rows = structuredClone(this.descriptions.get(String(params[0])) || []);
       return { rows, rowCount: rows.length };
     }
-    if (text.startsWith("delete from atlas_v2.person_politics_v2 where id=$1 returning id")) {
-      const id = String(params[0]);
-      const existed = this.relationships.delete(id);
-      if (existed) {
-        this.sources.delete(id);
-        this.claims.delete(id);
-        this.descriptions.delete(id);
-      }
-      return { rows: existed ? [{ id }] : [], rowCount: existed ? 1 : 0 };
-    }
-    if (text.startsWith("update atlas_v2.person_politics_v2 set activity_start=$2, activity_end=$3")) {
-      const id = String(params[0]);
-      const row = this.relationships.get(id);
-      if (!row) return { rows: [], rowCount: 0 };
-      row.activity_start = Number(params[1]);
-      row.activity_end = Number(params[2]);
-      return { rows: [{ id }], rowCount: 1 };
-    }
     throw new Error(`unexpected SQL: ${source}`);
   }
+}
+
+function createService(client) {
+  return createCorrectionManifestV11Service({
+    client,
+    retire: async (_client, relationshipId) => {
+      const existed = client.relationships.delete(relationshipId);
+      if (!existed) throw new Error("CORRECTION_RETIRE_DID_NOT_DELETE_EXACTLY_ONE_RELATIONSHIP");
+      client.sources.delete(relationshipId);
+      client.claims.delete(relationshipId);
+      client.descriptions.delete(relationshipId);
+      return { relationship_id: relationshipId, retired: true };
+    },
+    updateInterval: async (_client, relationshipId, expectedAfter) => {
+      const row = client.relationships.get(relationshipId);
+      if (!row) throw new Error("CORRECTION_UPDATE_DID_NOT_CHANGE_EXACTLY_ONE_RELATIONSHIP");
+      row.activity_start = expectedAfter.activity_start;
+      row.activity_end = expectedAfter.activity_end;
+      return {
+        relationship_id: relationshipId,
+        activity_start: expectedAfter.activity_start,
+        activity_end: expectedAfter.activity_end
+      };
+    }
+  });
 }
 
 test("v1.1 is deliberately bounded to coalesce, retire and interval update", () => {
@@ -212,7 +219,7 @@ test("v1.1 is deliberately bounded to coalesce, retire and interval update", () 
 
 test("v1.1 dry-run performs retirement and interval update then fully rolls back", async () => {
   const client = new FakeClient();
-  const result = await createCorrectionManifestV11Service({ client }).execute(manifest(), { dryRun: true });
+  const result = await createService(client).execute(manifest(), { dryRun: true });
 
   assert.equal(result.marker, MARKER_V1_1);
   assert.equal(result.committed, false);
@@ -228,7 +235,7 @@ test("v1.1 dry-run performs retirement and interval update then fully rolls back
 
 test("v1.1 apply preserves retired evidence in immutable result snapshot and replay is idempotent", async () => {
   const client = new FakeClient();
-  const service = createCorrectionManifestV11Service({ client });
+  const service = createService(client);
   const first = await service.execute(manifest(), { dryRun: false });
 
   assert.equal(first.committed, true);
