@@ -1,0 +1,128 @@
+{
+  "schema": "atlas-stage2-baseline-a-live-polity-bindings/v1",
+  "as_of": "2026-08-12",
+  "status": "P3_REVIEWED_BINDING_NO_PRODUCTION_MUTATION",
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27",
+    "activity_count": 338
+  },
+  "rules": {
+    "uuid_is_identity": true,
+    "name_only_binding_forbidden": true,
+    "binding_requires_uuid_plus_exact_baseline_catalog_identity": true,
+    "stable_polity_survivor_policy": "Among live Baseline A Polity UUIDs already proven by historical review to be one stable Polity, retain the UUID with the greatest surviving Baseline A Activity reference count; lexical UUID is the deterministic tie-breaker. This is a technical survivor rule, not a historical-name rule.",
+    "distinct_source_defined_union_must_not_be_collapsed": true,
+    "missing_required_polity_stays_missing_until_reviewed_authoring": true,
+    "web_research_source_url_is_not_an_existing_normalized_source_uuid": true,
+    "production_mutation_authorized": false
+  },
+  "continuity_families": [
+    {
+      "id": "roman_eastern_roman_395",
+      "reviewed_model": "operational_territorial_split_with_roman_continuity",
+      "source_contract": "stage2/contracts/polity-identity-continuity-current.v1.json",
+      "binding_status": "BOUND_DISTINCT_WITH_CONTINUITY_METADATA",
+      "members": [
+        {"role":"pre_395_roman","polity_uuid":"5d9a6186-bbe6-5d1a-ba93-02190ae4c417","canonical_key":"Roman Empire","baseline_activity_references":8},
+        {"role":"post_395_eastern_roman","polity_uuid":"074510f4-f2e7-5795-8cfb-2a4206fa7254","canonical_key":"Byzantine Empire","baseline_activity_references":6}
+      ],
+      "canonical_survivor_uuid": null,
+      "required_stage2_action": "preserve separate operational territorial Polities and assert Roman continuity metadata; do not merge UUIDs"
+    },
+    {
+      "id": "yuan_northern_yuan_1368",
+      "reviewed_model": "stable_polity_with_historiographic_designation_and_territorial_contraction",
+      "source_contract": "stage2/contracts/polity-identity-continuity-current.v1.json",
+      "binding_status": "BOUND_SINGLE_STABLE_POLITY_SURVIVOR",
+      "members": [
+        {"role":"yuan_current","polity_uuid":"d035cbd8-e7b1-5947-8542-c7dd356d52bb","canonical_key":"Yuan Dynasty","baseline_activity_references":6},
+        {"role":"northern_yuan_current","polity_uuid":"986380c3-cc31-50d5-bb0d-6cae5fae0660","canonical_key":"Northern Yuan","baseline_activity_references":2}
+      ],
+      "canonical_survivor_uuid": "d035cbd8-e7b1-5947-8542-c7dd356d52bb",
+      "required_stage2_action": "relink surviving Northern Yuan Activities to the survivor, preserve Northern Yuan as historiographic designation from 1368, then retire the duplicate Polity identity after references/provenance are reconciled"
+    },
+    {
+      "id": "russia_1721_empire",
+      "reviewed_model": "stable_polity_with_state_form_designation_change",
+      "source_contract": "stage2/contracts/polity-identity-continuity-current.v1.json",
+      "binding_status": "BOUND_SINGLE_STABLE_POLITY_SURVIVOR",
+      "members": [
+        {"role":"tsardom_current","polity_uuid":"8e0c3472-867d-5165-89c2-cb7866f6a5ed","canonical_key":"Tsardom of Russia","baseline_activity_references":1},
+        {"role":"empire_current","polity_uuid":"dd07fc4c-b3ac-59ac-bdf2-9cc190893327","canonical_key":"Russian Empire","baseline_activity_references":3}
+      ],
+      "canonical_survivor_uuid": "dd07fc4c-b3ac-59ac-bdf2-9cc190893327",
+      "required_stage2_action": "normalize survivor to stable Russia identity; preserve Tsardom of Russia and Russian Empire as temporal state-form/designation history; relink pre-1721 references and retire duplicate Polity identity only after provenance reconciliation"
+    },
+    {
+      "id": "portugal_united_kingdom_1815",
+      "reviewed_model": "distinct_composite_union_polity_with_constituent_portugal",
+      "source_contract": "stage2/contracts/polity-identity-continuity-current.v1.json",
+      "binding_status": "BOUND_DISTINCT_POLITIES",
+      "members": [
+        {"role":"portugal_constituent","polity_uuid":"356c77d1-f2e1-5ad8-8716-e06d9fb3cdcc","canonical_key":"Kingdom of Portugal","baseline_activity_references":6},
+        {"role":"composite_union","polity_uuid":"3b8f7efc-40ae-5a33-8956-e9e852fbede4","canonical_key":"United Kingdom of Portugal, Brazil and the Algarves","baseline_activity_references":1}
+      ],
+      "canonical_survivor_uuid": null,
+      "required_stage2_action": "keep both UUIDs; assert the reviewed constituent/union identity structure and exact 1815-12-16 transition without collapsing the union into Portugal"
+    }
+  ],
+  "structural_relations": [
+    {
+      "id": "canada_dominion_of_uk",
+      "source_contract": "research/relations/stage2-structural-polity-relation-intervals.v1.json",
+      "binding_status": "POLITY_UUIDS_BOUND_SOURCE_NORMALIZATION_PENDING",
+      "subject":{"polity_uuid":"06c93d4f-be9b-571d-83ea-92c4ec63d7f5","canonical_key":"Dominion of Canada"},
+      "relation_type":"dominion_of",
+      "object":{"polity_uuid":"08c06b79-58de-508a-9ace-2948baa9e9e6","canonical_key":"United Kingdom"},
+      "normalized_source_uuids":[],
+      "remaining_blockers":["P5_POLITY_RELATION_SCHEMA","NORMALIZED_WEB_SOURCE_AUTHORING"]
+    },
+    {
+      "id": "british_raj_colonial_dependency_of_uk",
+      "source_contract": "research/relations/stage2-structural-polity-relation-intervals.v1.json",
+      "binding_status": "POLITY_UUIDS_BOUND_SOURCE_NORMALIZATION_PENDING",
+      "subject":{"polity_uuid":"82203ec1-60b7-5f5c-bab2-9b8df1fd8040","canonical_key":"British Raj"},
+      "relation_type":"colonial_dependency_of",
+      "object":{"polity_uuid":"08c06b79-58de-508a-9ace-2948baa9e9e6","canonical_key":"United Kingdom"},
+      "normalized_source_uuids":[],
+      "remaining_blockers":["P5_POLITY_RELATION_SCHEMA","NORMALIZED_WEB_SOURCE_AUTHORING"]
+    },
+    {
+      "id": "rsfsr_constituent_of_ussr",
+      "source_contract": "research/relations/stage2-structural-polity-relation-intervals.v1.json",
+      "binding_status": "POLITY_UUIDS_BOUND_SOURCE_NORMALIZATION_PENDING",
+      "subject":{"polity_uuid":"09528a4d-4b32-5ca5-8a10-fbe9687679df","canonical_key":"Soviet Russia","reviewed_identity_equivalence":"Soviet Russia / RSFSR / Russian SFSR"},
+      "relation_type":"constituent_of",
+      "object":{"polity_uuid":"c7ddf754-0faa-576f-af97-9d322cf64f01","canonical_key":"Soviet Union"},
+      "normalized_source_uuids":[],
+      "remaining_blockers":["P5_POLITY_RELATION_SCHEMA","NORMALIZED_WEB_SOURCE_AUTHORING"]
+    },
+    {
+      "id": "huainan_vassal_of_western_han",
+      "source_contract": "research/relations/stage2-structural-polity-relation-intervals.v1.json",
+      "binding_status": "OBJECT_BOUND_SUBJECT_ABSENT_FROM_BASELINE_A",
+      "subject":{"polity_uuid":null,"canonical_key":null,"reviewed_target_class":"Huainan political actor under Ying Bu","verified_absent_from_baseline_a":true},
+      "relation_type":"vassal_of",
+      "object":{"polity_uuid":"34fac2d0-ba70-53e6-8e5a-47a9cd6ddfec","canonical_key":"Western Han"},
+      "normalized_source_uuids":[],
+      "remaining_blockers":["REVIEWED_HUAINAN_POLITY_AUTHORING","P5_POLITY_RELATION_SCHEMA","NORMALIZED_WEB_SOURCE_AUTHORING"]
+    }
+  ],
+  "source_normalization": {
+    "baseline_a_source_count": 20,
+    "baseline_a_source_model": "repository_dataset_artifacts_only_for_current_inventory",
+    "reviewed_structural_relation_web_sources_already_normalized": false,
+    "policy": "P3 binds live entity UUIDs only. P5/P6 must create/reuse normalized bibliographic/web Source objects before relation assertions are Production-authorized; URLs are never treated as UUIDs."
+  },
+  "result": {
+    "continuity_families_total": 4,
+    "continuity_live_uuid_binding_complete": 4,
+    "stable_single_polity_survivors_selected": 2,
+    "structural_relation_families_total": 4,
+    "structural_relation_object_uuid_binding_complete": 4,
+    "structural_relation_subject_uuid_binding_complete": 3,
+    "verified_missing_subject_polities": 1,
+    "production_mutation_authorized": false
+  }
+}
