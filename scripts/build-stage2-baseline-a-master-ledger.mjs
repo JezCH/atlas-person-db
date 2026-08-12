@@ -153,7 +153,18 @@ for (const row of tableRows.filter((r)=>/STAGE2_R0_NORMALIZED_INVENTORY_EVIDENCE
 for (const c of carryRows) {
   const carry=(directCandidatesByUuid.get(c.uuid)??[]).find((x)=>x.kind==='carry_forward'&&x.line===c.line); if(!carry||carry.decision) continue;
   const priorMatch=c.priorSource.match(/([^`:\s]+\.md):(\d+)/); let inherited=null;
-  if(priorMatch){const priorFile=path.join(auditDir,priorMatch[1]);const targetLine=Number(priorMatch[2]); inherited=tableRows.filter((r)=>r.file===priorFile&&Math.abs(r.line-targetLine)<=3).map((r)=>({decision:firstField(r.values,['decision','verdict','status','classification']),relation_hint:firstField(r.values,['relation_hint','relation']),file:r.file,line:r.line,context_text:Object.values(r.values).join(' | ')})).find((r)=>r.decision);}
+  if(priorMatch){
+    const priorFile=path.join(auditDir,priorMatch[1]); const targetLine=Number(priorMatch[2]);
+    const exactRow=tableRows.find((r)=>r.file===priorFile&&r.line===targetLine)??null;
+    if(exactRow){
+      const priorPerson=firstField(exactRow.values,['person','current_person']); const priorPolity=firstField(exactRow.values,['current_polity','polity','politic']); const priorRole=firstField(exactRow.values,['role']);
+      const [priorStart,priorEnd]=parsePeriod(firstField(exactRow.values,['period']));
+      const currentKey=semanticKey({person:c.person,polity:c.polity,start:c.start,end:c.end,role:c.role}); const priorKey=semanticKey({person:priorPerson,polity:priorPolity,start:priorStart,end:priorEnd,role:priorRole});
+      if(priorKey!==currentKey) throw new Error(`carry-forward source semantic mismatch for ${c.uuid}: ${path.basename(priorFile)}:${targetLine}`);
+      const exactDecision=firstField(exactRow.values,['decision','verdict','status','classification']);
+      if(exactDecision) inherited={decision:exactDecision,relation_hint:firstField(exactRow.values,['relation_hint','relation']),file:exactRow.file,line:exactRow.line,context_text:Object.values(exactRow.values).join(' | ')};
+    }
+  }
   if(!inherited&&c.person&&c.polity){const key=semanticKey({person:c.person,polity:c.polity,start:c.start,end:c.end,role:c.role}); inherited=(historicalByKey.get(key)??[]).sort((a,b)=>b.priority-a.priority)[0]??null;}
   if(inherited){carry.decision=inherited.decision;carry.relation_hint=inherited.relation_hint;carry.inherited_from=`${path.basename(inherited.file)}:${inherited.line}`;carry.context_text=`${carry.context_text} | inherited: ${inherited.context_text}`;}
 }
