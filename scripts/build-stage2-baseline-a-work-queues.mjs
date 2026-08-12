@@ -12,14 +12,15 @@ if (!Array.isArray(ledger.rows) || ledger.rows.length !== 338) throw new Error(`
 const uniqueIds = new Set(ledger.rows.map((row) => row.activity_id));
 if (uniqueIds.size !== ledger.rows.length) throw new Error('master ledger contains duplicate Activity UUIDs');
 
-const dependencyNames = ['relation_type','historical_research','chronology_correction','polity_identity_model','polity_relation_model','governance_context','sub_year_precision'];
-const compact=(row)=>({activity_id:row.activity_id,person_id:row.person?.uuid??null,person:row.person?.canonical??null,polity_id:row.polity?.uuid??null,polity:row.polity?.canonical??null,start_year:row.activity?.start_year??null,end_year:row.activity?.end_year??null,role:row.activity?.role??null,decision:row.audit?.decision??null,execution_class:row.audit?.execution_class??null,dependencies:row.audit?.dependencies??[],decision_source:row.audit?.primary_source??null});
+const dependencyNames = ['relation_type','historical_research','chronology_correction','polity_identity_model','person_identity_review','polity_relation_model','governance_context','sub_year_precision'];
+const compact=(row)=>({activity_id:row.activity_id,person_id:row.person?.uuid??null,person:row.person?.canonical??null,polity_id:row.polity?.uuid??null,polity:row.polity?.canonical??null,start_year:row.activity?.start_year??null,end_year:row.activity?.end_year??null,role:row.activity?.role??null,decision:row.audit?.decision??null,relation_hint:row.audit?.relation_hint??null,execution_class:row.audit?.execution_class??null,dependencies:row.audit?.dependencies??[],decision_source:row.audit?.primary_source??null});
 const sortRows=(rows)=>[...rows].sort((a,b)=>(a.start_year??0)-(b.start_year??0)||(a.end_year??0)-(b.end_year??0)||String(a.person).localeCompare(String(b.person))||String(a.activity_id).localeCompare(String(b.activity_id)));
 const byDependency=Object.fromEntries(dependencyNames.map((dep)=>[dep,sortRows(ledger.rows.filter((row)=>row.audit.dependencies.includes(dep)).map(compact))]));
 const executionClasses=[...new Set(ledger.rows.map((row)=>row.audit.execution_class))].sort();
 const byExecutionClass=Object.fromEntries(executionClasses.map((cls)=>[cls,sortRows(ledger.rows.filter((row)=>row.audit.execution_class===cls).map(compact))]));
 const remaining={
   r1_blocked_schema:byExecutionClass.R1_BLOCKED_SCHEMA??[],
+  person_identity:byDependency.person_identity_review,
   polity_identity:byDependency.polity_identity_model,
   polity_relations:byDependency.polity_relation_model,
   governance:byDependency.governance_context,
