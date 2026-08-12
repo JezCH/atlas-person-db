@@ -63,6 +63,9 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
+      - name: Verify requirements source of truth
+        run: npm run test:requirements
+
       - name: Verify runtime architecture
         run: npm run test:runtime
 
