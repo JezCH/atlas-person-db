@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-correction-manifest/v1.1",
+  "request_id": "stage2-r1:muhammad-pre622-medina-retire:2026-08-12:v1",
+  "review_status": "approved",
+  "release_order": 700,
+  "evidence": {
+    "reviewed_intent": {
+      "schema": "atlas-correction-intent/v1",
+      "request_id": "stage2-r1:muhammad-pre622-medina-retire:2026-08-12:v1",
+      "review_status": "approved",
+      "release_order": 700,
+      "operation": {
+        "type": "retire_activity",
+        "relationship_id": "e4b374f5-ee25-5c12-80bf-5b7b1d2d149c"
+      },
+      "decision": {
+        "person": "Muhammad",
+        "current_projection": {
+          "polity": "Medina",
+          "period_basis": "religious_activity",
+          "activity_start": 610,
+          "activity_end": 632,
+          "notes": "Activity period begins with the first revelation in AD 610 and ends with his death in AD 632."
+        },
+        "retained_projection": {
+          "activity_id": "fc68a326-f59f-5780-a6f0-c5206d9ceba3",
+          "polity": "Medinan Polity",
+          "period_basis": "de_facto_rule",
+          "activity_start": 622,
+          "activity_end": 632,
+          "notes": "Represents Muhammad's leadership of the Medinan polity from the Hijra until his death."
+        },
+        "reviewed_action": "Retire the 610–632 Medina back-projection; retain the 622–632 Medinan Polity assertion. Do not infer or relink the retired row."
+      },
+      "evidence": {
+        "decision_branch": "agent/stage2-r1-decision-ledger",
+        "decision_head": "dc0b3479c57cb001049db94c597e9e6b04f2ff62",
+        "decision_document": "docs/audits/STAGE2_R1_CORRECTION_DECISION_LEDGER_2026-08-12.md",
+        "exact_before_state_policy": "The reviewed intent binds the exact Activity UUID and historical action. Production Person/Polity/Role/Period UUIDs, notes and legacy source key are filled only from the correction endpoint's same-SHA REPEATABLE READ READ ONLY target snapshot, then revalidated under the real SERIALIZABLE dry-run/apply transaction. No name-based inference is permitted."
+      }
+    },
+    "exact_snapshot_deployment_sha": "ff0e0cd0402d77dabf0a518384ab4c01fe5094d4",
+    "exact_snapshot_source_path": "corrections/intents/stage2-r1-muhammad-pre622-medina.json"
+  },
+  "operations": [
+    {
+      "type": "retire_activity",
+      "relationship_id": "e4b374f5-ee25-5c12-80bf-5b7b1d2d149c",
+      "expected": {
+        "person_id": "94e6f898-9c65-596e-9576-772e42335e1e",
+        "polity_id": "b82ec632-5365-5f62-8aec-550548d63f83",
+        "role_id": "f424e1f4-3cb2-580e-bb52-5af4f70c0353",
+        "period_basis_id": "71d6a7c6-2bbe-53b6-b898-067623ab27dc",
+        "activity_start": 610,
+        "activity_end": 632,
+        "notes": "Activity period begins with the first revelation in AD 610 and ends with his death in AD 632.",
+        "legacy_source_key": "pending-records-supplement-4.json:3:f00caba2b11ea413"
+      }
+    }
+  ]
+}
