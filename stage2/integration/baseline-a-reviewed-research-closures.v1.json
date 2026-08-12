@@ -7,6 +7,7 @@
     "activity_uuid_exact_match_required": true,
     "name_only_override_forbidden": true,
     "generic_old_research_label_may_be_closed_only_by_later_reviewed_contract": true,
+    "later_reviewed_contract_may_refine_an_already_specific_old_verdict": true,
     "remaining_specific_work_must_be_preserved": true,
     "production_mutation_authorized": false
   },
@@ -136,10 +137,65 @@
       "relation_hint": "governs",
       "execution_class": "BLOCKED_GOVERNANCE_CONTEXT",
       "dependencies": ["chronology_correction", "governance_context", "relation_type"]
+    },
+    {
+      "activity_id": "5e503b05-371c-5dcb-91ec-68b6d0eef95c",
+      "person": "Solomon",
+      "source": "research/residual/stage2-baseline-a-parser-residual-6-resolution.v1.json",
+      "decision": "KEEP_TRADITIONAL_DISPUTED_SOLOMONIC_RULE_ASSERTION",
+      "relation_hint": "rules",
+      "execution_class": "STAGE2_CHRONOLOGY_CORRECTION",
+      "dependencies": ["chronology_correction", "provenance_backfill", "relation_type"]
+    },
+    {
+      "activity_id": "11969191-7ede-5c61-b911-5290d3b95f29",
+      "person": "Gautama Buddha",
+      "source": "research/residual/stage2-baseline-a-parser-residual-6-resolution.v1.json",
+      "decision": "KEEP_SHAKYA_POLITY_REBUILD_ORIGIN_AND_MULTI_POLITY_ACTIVITY_CONTEXTS",
+      "relation_hint": "active_in",
+      "execution_class": "BLOCKED_POLITY_IDENTITY",
+      "dependencies": ["chronology_correction", "polity_identity_model", "provenance_backfill", "relation_type"]
+    },
+    {
+      "activity_id": "814f1293-3566-5f7f-a699-acb6249d420e",
+      "person": "Brennus (Galatia)",
+      "source": "research/residual/stage2-baseline-a-parser-residual-6-resolution.v1.json",
+      "decision": "MIGRATE_GALATIAN_INVASION_TO_EVENT_AND_MOBILE_COALITION_CONTEXT",
+      "relation_hint": null,
+      "execution_class": "STAGE2_ENTITY_MODEL_MIGRATION",
+      "dependencies": ["chronology_correction", "entity_model_migration", "provenance_backfill"]
+    },
+    {
+      "activity_id": "df6cc626-135e-5abc-ae54-6dc1f64ac2aa",
+      "person": "Guan Yu",
+      "source": "research/layered/stage2-r1-layered-authority-decisions.v1.json",
+      "decision": "RELINK_TO_CONTINUOUS_LIU_BEI_POLITY",
+      "relation_hint": "serves",
+      "execution_class": "BLOCKED_POLITY_IDENTITY",
+      "dependencies": ["chronology_correction", "polity_identity_model", "relation_type"]
+    },
+    {
+      "activity_id": "eed067d9-43f3-52dc-9ecc-d5ed540fe65b",
+      "person": "Amina",
+      "source": "research/residual/stage2-baseline-a-parser-residual-6-resolution.v1.json",
+      "decision": "KEEP_ZAZZAU_TRADITIONAL_AMINA_RULE_ASSERTION_WITH_UNRESOLVED_CHRONOLOGY",
+      "relation_hint": "rules",
+      "execution_class": "STAGE2_CHRONOLOGY_CORRECTION",
+      "dependencies": ["chronology_correction", "provenance_backfill", "relation_type"]
+    },
+    {
+      "activity_id": "5be7f060-46d1-58f9-ad7c-3b03458c198a",
+      "person": "Tecumseh",
+      "source": "research/pre-vercel/stage2-pre-vercel-domain-closure.v1.json",
+      "decision": "KEEP_TECUMSEH_CONFEDERACY_RULE_RETIME_START_APPROX_1808",
+      "relation_hint": "rules",
+      "execution_class": "STAGE2_CHRONOLOGY_CORRECTION",
+      "dependencies": ["chronology_correction", "entity_model_migration", "provenance_backfill", "relation_type"]
     }
   ],
   "result": {
-    "reviewed_generic_research_labels_closed": 14,
+    "reviewed_cases_total": 20,
+    "historical_research_dependency_closure_count_is_computed_against_exact_baseline_ledger": true,
     "historical_fabrication_added": false,
     "production_mutation_authorized": false
   }
