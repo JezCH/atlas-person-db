@@ -2,6 +2,7 @@
   "schema": "atlas-correction-manifest/v1.1",
   "request_id": "stage2-r1:current-schema-ready:franklin-bismarck:2026-08-12:v1",
   "review_status": "approved",
+  "release_order": 600,
   "evidence": {
     "decision_registry": "corrections/evidence/stage2-r1-current-schema-ready.json",
     "normalized_inventory_run": "31499183625",
