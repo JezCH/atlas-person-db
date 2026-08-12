@@ -69,6 +69,9 @@ jobs:
       - name: Verify Vercel-minimized release governance
         run: npm run test:release
 
+      - name: Verify R0 future semantic equivalence
+        run: npm run test:r0-gate
+
       - name: Verify runtime architecture
         run: npm run test:runtime
 
