@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const contractPath = path.join(root, 'contracts/stage2-domain-contract.v1.json');
+export const contractPath = path.join(root, 'contracts/stage2-domain-contract.v1.json');
 const raw = JSON.parse(fs.readFileSync(contractPath, 'utf8'));
 
 if (raw.schema !== 'atlas-stage2-domain-contract/v1') {
@@ -29,7 +29,6 @@ function uniqueCodes(items, label) {
 }
 
 export const stage2DomainContract = Object.freeze(raw);
-export const contractPath = path.join(root, 'contracts/stage2-domain-contract.v1.json');
 export const personPolityRelationCodes = uniqueCodes(raw.person_polity_relation_types, 'person_polity_relation_types');
 export const governanceTypes = uniqueCodes(raw.governance_types, 'governance_types');
 export const temporalGranularities = uniqueCodes(raw.temporal?.granularities, 'temporal.granularities');
