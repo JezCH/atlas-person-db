@@ -79,6 +79,17 @@ for (const row of ledger.rows) {
   applied += 1;
 }
 if (applied !== byActivity.size) throw new Error(`expected ${byActivity.size} reviewed cases, applied ${applied}`);
+
+const remainingResearchRows = ledger.rows.filter((row) => (row.audit?.dependencies || []).includes('historical_research')).map((row) => ({
+  activity_id: row.activity_id,
+  person: row.person?.canonical ?? null,
+  polity: row.polity?.canonical ?? null,
+  decision: row.audit?.decision ?? null,
+  primary_source: row.audit?.primary_source ?? null
+}));
+if (remainingResearchRows.length) {
+  throw new Error(`reviewed overlay incomplete: closures=${genericResearchClosures}, refinements=${reviewedRefinements}, remaining=${JSON.stringify(remainingResearchRows)}`);
+}
 if (genericResearchClosures !== 33 || reviewedRefinements !== 3) throw new Error(`reviewed overlay classification drift: closures=${genericResearchClosures}, refinements=${reviewedRefinements}`);
 
 function countBy(getter) { return Object.fromEntries([...ledger.rows.reduce((map, row) => { const key = getter(row); map.set(key, (map.get(key) || 0) + 1); return map; }, new Map()).entries()].sort((a, b) => String(a[0]).localeCompare(String(b[0])))); }
