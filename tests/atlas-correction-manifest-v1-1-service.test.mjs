@@ -141,7 +141,11 @@ class FakeClient {
       return { rows: [], rowCount: 1 };
     }
     if (text.includes("where id=any($1::uuid[])") && text.includes("from atlas_v2.person_politics_v2")) {
-      const rows = params[0].map(String).map((id) => this.relationships.get(id)).filter(Boolean).map(structuredClone);
+      const rows = params[0]
+        .map(String)
+        .map((id) => this.relationships.get(id))
+        .filter(Boolean)
+        .map((row) => structuredClone(row));
       return { rows, rowCount: rows.length };
     }
     if (text.includes("from atlas_v2.person_politics_v2") && text.includes("where id=$1")) {
