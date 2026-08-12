@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import path from "node:path";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
@@ -55,10 +56,19 @@ test("correction handler accepts only exact Production SHA, reviewed path and ex
     deploymentSha: SHA,
     manifestPath: "corrections/requests/r0.json",
     mode: "dry_run",
-    manifest
+    manifest,
+    schema: "atlas-correction-manifest/v1"
   });
+  const manifestV11 = { schema: "atlas-correction-manifest/v1.1" };
+  assert.deepEqual(correctionHandler.requirePayload({
+    deployment_sha: SHA,
+    manifest_path: "corrections/requests/r1.json",
+    mode: "apply",
+    manifest: manifestV11
+  }).schema, "atlas-correction-manifest/v1.1");
   assert.throws(() => correctionHandler.requirePayload({ deployment_sha: SHA, manifest_path: "authoring/requests/x.json", mode: "apply", manifest }), /CORRECTION_MANIFEST_PATH_NOT_ALLOWED/);
   assert.throws(() => correctionHandler.requirePayload({ deployment_sha: SHA, manifest_path: "corrections/requests/x.json", mode: "delete", manifest }), /CORRECTION_MODE_REQUIRED/);
+  assert.throws(() => correctionHandler.requirePayload({ deployment_sha: SHA, manifest_path: "corrections/requests/x.json", mode: "apply", manifest: { schema: "atlas-correction-manifest/v2" } }), /UNSUPPORTED_CORRECTION_MANIFEST_SCHEMA/);
   assert.equal(correctionHandler.requireDeployment({
     VERCEL_ENV: "production",
     VERCEL_GIT_COMMIT_REF: "main",
@@ -75,18 +85,26 @@ test("dry-run path does not apply schema migration; apply path does", () => {
   assert.doesNotMatch(api, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
 });
 
-test("correction migration registry is bounded to the correction ledger migration", () => {
-  assert.equal(correctionMigrations.CORRECTION_MIGRATION_PATHS.length, 1);
+test("correction migration registry is ordered and bounded to correction-ledger contract changes", () => {
+  assert.equal(correctionMigrations.CORRECTION_MIGRATION_PATHS.length, 2);
+  assert.deepEqual(correctionMigrations.CORRECTION_MIGRATION_PATHS.map((item) => path.basename(item)), [
+    "20260811_correction_manifest_runs.sql",
+    "20260812_correction_manifest_v1_1.sql"
+  ]);
   const migrations = correctionMigrations.readCorrectionMigrations();
-  assert.equal(migrations.length, 1);
+  assert.equal(migrations.length, 2);
   assert.match(migrations[0].sql, /create table if not exists atlas_v2\.correction_manifest_runs/i);
-  assert.doesNotMatch(migrations[0].sql, /person_politics_v2\s+set|delete\s+from\s+atlas_v2\.person_politics_v2/i);
+  assert.match(migrations[1].sql, /atlas-correction-manifest\/v1\.1/i);
+  for (const migration of migrations) {
+    assert.doesNotMatch(migration.sql, /person_politics_v2\s+set|delete\s+from\s+atlas_v2\.person_politics_v2/i);
+  }
 });
 
 test("workflow runs only for correction requests and enforces dry-run before apply", () => {
   assert.match(workflow, /^\s*-\s*'corrections\/requests\/\*\.json'\s*$/m);
-  assert.doesNotMatch(workflow, /^\s*-\s*'(?:server\/atlas-correction[^']*|api\/atlas-correction[^']*|db\/migrations\/20260811_correction[^']*)'\s*$/m);
+  assert.doesNotMatch(workflow, /^\s*-\s*'(?:server\/atlas-correction[^']*|api\/atlas-correction[^']*|db\/migrations\/2026081[12]_correction[^']*)'\s*$/m);
   assert.match(workflow, /ATLAS_CORRECTION_AUDIENCE: atlas-person-db-correction-apply/);
+  assert.match(workflow, /atlas-correction-manifest\/v1\.1/);
   assert.doesNotMatch(workflow, /SUPABASE_DB_URL/);
   assert.ok(workflow.indexOf('call_correction "$manifest" dry_run') < workflow.indexOf('call_correction "$manifest" apply'));
   assert.match(workflow, /\.dry_run == true and \.committed == false/);
