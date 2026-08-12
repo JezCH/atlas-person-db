@@ -33,6 +33,7 @@
     {"id":"ATLAS-RQ-0010","status":"ACTIVE","title":"Final Person-Polity relation is explicit"},
     {"id":"ATLAS-RQ-0011","status":"ACTIVE","title":"Final Activity identity includes relation and full temporal boundaries"},
     {"id":"ATLAS-RQ-0012","status":"ACTIVE","title":"Source provenance survives correction and merge"},
+    {"id":"ATLAS-RQ-0013","status":"ACTIVE","title":"Use Vercel-minimized release trains","evidence_paths":["RELEASE_GOVERNANCE.md","vercel.json"]},
     {"id":"ATLAS-RQ-0101","status":"COMPLETED","title":"Normalized atlas_v2 is authoritative","evidence_paths":["ARCHITECTURE_INVARIANTS.md","DATA_MODEL.md"]},
     {"id":"ATLAS-RQ-0102","status":"COMPLETED","title":"Normalized identity authoring exists","evidence_paths":["api/atlas-identity.js","server/atlas-identity-service.js","atlas-admin-identity.js"]},
     {"id":"ATLAS-RQ-0103","status":"COMPLETED","title":"Current schema is reconstructible","evidence_paths":["db/schema/atlas_v2.current.sql","scripts/verify-schema-baseline.mjs","ARCHITECTURE_INVARIANTS.md"]},
@@ -82,6 +83,7 @@
     {"id":"ATLAS-NO-0009","status":"ACTIVE","title":"No placeholder geometry for missing evidence"},
     {"id":"ATLAS-NO-0010","status":"ACTIVE","title":"No Runtime-driven historical distortion"},
     {"id":"ATLAS-NO-0011","status":"ACTIVE","title":"No legacy runtime resurrection"},
-    {"id":"ATLAS-NO-0012","status":"ACTIVE","title":"No unnecessary deployment churn"}
+    {"id":"ATLAS-NO-0012","status":"ACTIVE","title":"No unnecessary deployment churn"},
+    {"id":"ATLAS-NO-0013","status":"ACTIVE","title":"No merge-to-main or deploy for branch-only work"}
   ]
 }
