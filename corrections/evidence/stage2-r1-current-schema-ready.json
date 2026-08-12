@@ -4,7 +4,7 @@
   "as_of": "2026-08-12",
   "decision_source": {
     "branch": "agent/stage2-r1-decision-ledger",
-    "reviewed_head": "de7d2e0a5e27af29ac2f0a99670c048a49769985",
+    "reviewed_head": "dc0b3479c57cb001049db94c597e9e6b04f2ff62",
     "document": "docs/audits/STAGE2_R1_CORRECTION_DECISION_LEDGER_2026-08-12.md"
   },
   "normalized_inventory": {
