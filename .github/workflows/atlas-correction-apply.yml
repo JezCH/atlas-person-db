@@ -50,8 +50,8 @@ jobs:
           while IFS= read -r manifest; do
             [[ -n "$manifest" ]] || continue
             [[ "$manifest" =~ ^corrections/requests/[A-Za-z0-9._-]+\.json$ ]] || { echo "Rejected correction manifest path: $manifest"; exit 1; }
-            jq -e '.schema == "atlas-correction-manifest/v1" and .review_status == "approved"' "$manifest" >/dev/null || {
-              echo "Correction manifest is not approved v1: $manifest" >&2
+            jq -e '(.schema == "atlas-correction-manifest/v1" or .schema == "atlas-correction-manifest/v1.1") and .review_status == "approved"' "$manifest" >/dev/null || {
+              echo "Correction manifest is not approved v1/v1.1: $manifest" >&2
               exit 1
             }
             printf '%s\n' "$manifest" >> /tmp/atlas-correction-manifests.txt
@@ -73,9 +73,22 @@ jobs:
               "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_CORRECTION_AUDIENCE}" | jq -er '.value'
           }
 
+          expected_marker() {
+            local manifest="$1"
+            local schema
+            schema="$(jq -r '.schema' "$manifest")"
+            case "$schema" in
+              atlas-correction-manifest/v1) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V1' ;;
+              atlas-correction-manifest/v1.1) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V1_1' ;;
+              *) echo "Unsupported correction manifest schema: $schema" >&2; return 1 ;;
+            esac
+          }
+
           call_correction() {
             local manifest="$1"
             local mode="$2"
+            local marker
+            marker="$(expected_marker "$manifest")"
             local response="/tmp/atlas-correction-${mode}-response.json"
             local payload
             payload="$(jq -cn \
@@ -99,9 +112,9 @@ jobs:
 
               if [[ "$status" == "200" ]]; then
                 if [[ "$mode" == "dry_run" ]]; then
-                  jq -e '.ok == true and .marker == "ATLAS_CORRECTION_MANIFEST_V1" and .dry_run == true and .committed == false' "$response" >/dev/null
+                  jq -e --arg marker "$marker" '.ok == true and .marker == $marker and .dry_run == true and .committed == false' "$response" >/dev/null
                 else
-                  jq -e '.ok == true and .marker == "ATLAS_CORRECTION_MANIFEST_V1" and .dry_run == false and .committed == true' "$response" >/dev/null
+                  jq -e --arg marker "$marker" '.ok == true and .marker == $marker and .dry_run == false and .committed == true' "$response" >/dev/null
                 fi
                 jq -c --arg manifest "$manifest" --arg mode "$mode" '. + {workflow_manifest:$manifest,workflow_mode:$mode}' "$response" >> /tmp/atlas-correction-results.jsonl
                 return 0
