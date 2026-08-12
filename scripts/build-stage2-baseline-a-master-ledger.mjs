@@ -22,6 +22,7 @@ const APPLIED_REMOVED = new Set([
   'e4b374f5-ee25-5c12-80bf-5b7b1d2d149c'
 ]);
 const BISMARCK_PRUSSIA = '6bac2b6f-ebf0-5131-bbf2-7fa524bcfae8';
+const RELATION_CODES = new Set(['rules','governs','serves','active_in','opposes','claims_rule']);
 
 function arg(name, fallback = null) { const i = process.argv.indexOf(name); return i >= 0 ? process.argv[i + 1] : fallback; }
 const intakePath = arg('--intake');
@@ -65,6 +66,7 @@ function filePriority(file) {
   const b = path.basename(file);
   if (b.includes('STAGE2_R1_CORRECTION_DECISION_LEDGER')) return 100;
   if (b.includes('STAGE2_R0_NORMALIZED_INVENTORY_EVIDENCE')) return 95;
+  if (b.includes('BASELINE_A_EXPLICIT_CARRY_FORWARD')) return 92;
   if (b.includes('STAGE2_R0_RECONCILIATION_DECISIONS')) return 90;
   if (b.includes('WAVE14_CURRENT_HIGH_RISK')) return 85;
   if (b.includes('WAVE15')) return 80;
@@ -76,20 +78,24 @@ function filePriority(file) {
   return 20;
 }
 function classifyDependencies(decision, relationHint, contextText = '') {
+  const decisionText = String(decision ?? '').toUpperCase();
+  const relation = String(relationHint ?? '').trim().toLowerCase();
   const s = `${decision ?? ''} ${relationHint ?? ''} ${contextText}`.toUpperCase(); const deps = new Set();
-  if (/RELATION|SERVES|ACTIVE_IN|ACTIVE IN|OPPOSES|GOVERNS|CONTROLS_GOVERNMENT|CONTROLS GOVERNMENT/.test(s)) deps.add('relation_type');
+  if (RELATION_CODES.has(relation) || /RELATION|SERVES|ACTIVE_IN|ACTIVE IN|OPPOSES|GOVERNS|CLAIMS_RULE|CLAIMS RULE|CONTROLS_GOVERNMENT|CONTROLS GOVERNMENT/.test(decisionText)) deps.add('relation_type');
   if (/REGIME|GOVERNMENT_LAYER|GOVERNANCE_CONTEXT|FIFTH REPUBLIC|GANDEN PHODRANG/.test(s)) deps.add('governance_context');
-  if (/CONTINUITY|PARENT_CHILD|PARENT-CHILD|STATE_FORM|STATE FORM|TEMPORAL_LABEL|IDENTITY_RECONCILIATION|POLITY_ALIAS|POLITY_NAME/.test(s)) deps.add('polity_identity_model');
-  if (/SPLIT|CHRONOLOGY|BACK_PROJECT|BACKPROJECT|BACK-PROJECT|BACK PROJECTION|UPDATE_ACTIVITY_END/.test(s)) deps.add('chronology_correction');
+  if (/CONTINUITY|PARENT_CHILD|PARENT-CHILD|STATE_FORM|STATE FORM|TEMPORAL_LABEL|IDENTITY_RECONCILIATION|POLITY_ALIAS|POLITY_NAME|CANONICAL_NAME|STABLE_RUSSIA_IDENTITY/.test(s)) deps.add('polity_identity_model');
+  if (/SPLIT|CHRONOLOGY|BACK_PROJECT|BACKPROJECT|BACK-PROJECT|BACK PROJECTION|UPDATE_ACTIVITY_END/.test(decisionText)) deps.add('chronology_correction');
   if (/SUB_YEAR|SUBYEAR|SUB-YEAR|MONTH|DAY PRECISION/.test(s)) deps.add('sub_year_precision');
-  if (/RESEARCH|REVIEW|DEFER|UNCERTAIN/.test(s)) deps.add('historical_research');
-  if (/LAYERED_AUTHORITY|REGIONAL_AUTHORITY|OVERLORD|TRIBUTARY|DEPENDENT|CONSTITUENT/.test(s)) deps.add('polity_relation_model');
+  if (/DUPLICATE_PERSON/.test(decisionText)) deps.add('person_identity_review');
+  if (/RESEARCH|DEFER|UNCERTAIN|HISTORICITY_REVIEW|PERSON_HISTORICITY_REVIEW/.test(decisionText)) deps.add('historical_research');
+  if (/LAYERED_AUTHORITY|REGIONAL_AUTHORITY|OVERLORD|TRIBUTARY|DEPENDENT|CONSTITUENT/.test(decisionText)) deps.add('polity_relation_model');
   return [...deps].sort();
 }
 function executionClass(decision, deps, relationHint = null) {
   const s = String(decision ?? '').toUpperCase();
   if (s.startsWith('R1_BLOCKED_')) return 'R1_BLOCKED_SCHEMA';
   if (/OUT_OF_POLITY_MODEL/.test(s)) return 'DEFER_MODEL_EXTENSION';
+  if (deps.includes('person_identity_review')) return 'BLOCKED_PERSON_IDENTITY';
   if (deps.includes('polity_identity_model')) return 'BLOCKED_POLITY_IDENTITY';
   if (deps.includes('polity_relation_model')) return 'BLOCKED_LAYERED_AUTHORITY';
   if (deps.includes('governance_context')) return 'BLOCKED_GOVERNANCE_CONTEXT';
