@@ -66,6 +66,9 @@ jobs:
       - name: Verify requirements source of truth
         run: npm run test:requirements
 
+      - name: Verify Vercel-minimized release governance
+        run: npm run test:release
+
       - name: Verify runtime architecture
         run: npm run test:runtime
 
