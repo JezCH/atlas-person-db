@@ -17,7 +17,8 @@
     {"id":"provenance","path":"docs/stage2/contracts/PROVENANCE_CURRENT_V1.md"},
     {"id":"activity_semantic_key_v2","path":"docs/stage2/contracts/ACTIVITY_SEMANTIC_KEY_V2_CURRENT.md"},
     {"id":"additive_schema","path":"docs/stage2/contracts/ADDITIVE_SCHEMA_CURRENT_V1.md"},
-    {"id":"kublai_pre1271_identity_policy","path":"research/mongol/stage2-kublai-pre1271-polity-territory-decision.v1.json"}
+    {"id":"kublai_pre1271_identity_policy","path":"research/mongol/stage2-kublai-pre1271-polity-territory-decision.v1.json"},
+    {"id":"structural_relation_interval_research","path":"research/relations/stage2-structural-polity-relation-intervals.v1.json"}
   ],
   "wait_for_baseline_a": [
     "fresh_master_ledger",

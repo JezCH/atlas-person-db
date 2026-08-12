@@ -1,0 +1,149 @@
+{
+  "schema": "atlas-stage2-structural-polity-relation-interval-research/v1",
+  "as_of": "2026-08-12",
+  "production_mutation": false,
+  "baseline_a_uuid_rebind_required": true,
+  "production_approved": false,
+  "rules": {
+    "person_activity_interval_is_not_polity_relation_interval": true,
+    "unknown_boundary_must_remain_unknown": true,
+    "no_name_only_production_binding": true,
+    "no_old_activity_uuid_write_targets": true
+  },
+  "relations": [
+    {
+      "id": "canada_dominion_of_uk",
+      "subject_identity": "Dominion of Canada",
+      "subject_polity_uuid": null,
+      "relation_type": "dominion_of",
+      "object_identity": "United Kingdom",
+      "object_polity_uuid": null,
+      "semantic_status": "resolved",
+      "interval_status": "start_resolved_end_model_qualified",
+      "start": {
+        "year": 1867,
+        "month": 7,
+        "day": 1,
+        "granularity": "day",
+        "certainty": "exact",
+        "calendar": "gregorian"
+      },
+      "transition_milestone": {
+        "year": 1931,
+        "month": 12,
+        "day": 11,
+        "granularity": "day",
+        "certainty": "exact",
+        "calendar": "gregorian",
+        "meaning": "Statute of Westminster legal-autonomy transition"
+      },
+      "candidate_inclusive_end_if_dependency_semantics_confirmed": {
+        "year": 1931,
+        "month": 12,
+        "day": 10,
+        "granularity": "day",
+        "certainty": "exact",
+        "calendar": "gregorian"
+      },
+      "production_interval_approved": false,
+      "blocker": "confirm dominion_of denotes pre-1931 dependency rather than generic Dominion status; do not overload residual constitutional-amendment dependence",
+      "sources": [
+        {"url":"https://laws-lois.justice.gc.ca/eng/Const/page-1.html","grade":"official_primary_or_statutory"},
+        {"url":"https://justice.canada.ca/eng/rp-pr/csj-sjc/constitution/lawreg-loireg/p1t171.html","grade":"official_primary_or_statutory"},
+        {"url":"https://www.canada.ca/en/intergovernmental-affairs/services/federation/statute-westminster.html","grade":"official_interpretive"}
+      ]
+    },
+    {
+      "id": "british_raj_colonial_dependency_of_uk",
+      "subject_identity": "British Raj",
+      "subject_polity_uuid": null,
+      "relation_type": "colonial_dependency_of",
+      "object_identity": "United Kingdom",
+      "object_polity_uuid": null,
+      "semantic_status": "resolved",
+      "interval_status": "end_resolved_start_primary_locator_pending",
+      "start_candidate": {
+        "year": 1858,
+        "month": 11,
+        "day": 1,
+        "granularity": "day",
+        "certainty": "exact",
+        "calendar": "gregorian"
+      },
+      "end": {
+        "year": 1947,
+        "month": 8,
+        "day": 14,
+        "granularity": "day",
+        "certainty": "exact",
+        "calendar": "gregorian"
+      },
+      "production_interval_approved": false,
+      "blocker": "normalize exact primary statutory or proclamation locator for 1858-11-01 Crown-government commencement",
+      "sources": [
+        {"url":"https://hansard.parliament.uk/Commons/1858-06-17/debates/37564106-0039-4b5f-9af3-805464f7a721/GovernmentOfIndia","grade":"official_parliamentary_primary_context"},
+        {"url":"https://hansard.parliament.uk/commons/1876-03-14/debates/de81705a-fc01-40b2-826f-cdfcab9af31e/TheRoyalStyleAndTitle","grade":"official_parliamentary_reference_to_1858_proclamation"},
+        {"url":"https://eparlib.sansad.in/handle/123456789/760007","grade":"official_parliamentary"},
+        {"url":"https://www.rashtraparv.mod.gov.in/about-rashtraparv","grade":"official_government"}
+      ]
+    },
+    {
+      "id": "rsfsr_constituent_of_ussr",
+      "subject_identity": "Soviet Russia / RSFSR",
+      "subject_polity_uuid": null,
+      "relation_type": "constituent_of",
+      "object_identity": "Soviet Union",
+      "object_polity_uuid": null,
+      "semantic_status": "resolved",
+      "interval_status": "start_resolved_end_multistep",
+      "start": {
+        "year": 1922,
+        "month": 12,
+        "day": 30,
+        "granularity": "day",
+        "certainty": "exact",
+        "calendar": "gregorian"
+      },
+      "end": {
+        "year": 1991,
+        "month": null,
+        "day": null,
+        "granularity": "year",
+        "certainty": "uncertain",
+        "calendar": "gregorian"
+      },
+      "production_interval_approved": false,
+      "blocker": "multi-step Soviet dissolution chronology; dedicated review required before increasing final-boundary precision",
+      "forbidden_shortcut_exact_end": true,
+      "sources": [
+        {"url":"https://docs.historyrussia.org/ru/nodes/106963-i-sezd-sovetov-soyuza-ssr-prinyal-deklaratsiyu-i-dogovor-ob-obrazovanii-sssr-30-dekabrya-1922-g","grade":"official_historical_document_portal"},
+        {"url":"https://www.prlib.ru/item/1417130","grade":"presidential_library_primary_document"},
+        {"url":"https://www.prlib.ru/node/619792","grade":"presidential_library"},
+        {"url":"https://www.prlib.ru/history/619829","grade":"presidential_library"},
+        {"url":"https://www.prlib.ru/history/619842","grade":"presidential_library"}
+      ]
+    },
+    {
+      "id": "huainan_vassal_of_western_han",
+      "subject_identity": "Kingdom of Huainan",
+      "subject_polity_uuid": null,
+      "relation_type": "vassal_of",
+      "object_identity": "Western Han",
+      "object_polity_uuid": null,
+      "semantic_status": "resolved",
+      "interval_status": "chronology_and_continuity_pending",
+      "primary_source_boundary_expression": "Han year 4, month 7: Ying Bu enfeoffed King of Huainan",
+      "start": null,
+      "end": null,
+      "production_interval_approved": false,
+      "blockers": [
+        "normalize absolute chronology for the regnal-year/month expression rather than choosing 203 or 202 BCE for convenience",
+        "resolve Huainan Polity continuity across subsequent Han kings before assigning a full polity-relation interval",
+        "reuse or create exact Huainan identity only after Baseline A lookup"
+      ],
+      "sources": [
+        {"url":"https://ctext.org/shiji/qing-bu-lie-zhuan/zh","grade":"primary_text_digital_edition"}
+      ]
+    }
+  ]
+}
