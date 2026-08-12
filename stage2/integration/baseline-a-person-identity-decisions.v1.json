@@ -9,7 +9,7 @@
     "exact_person_uuid_binding_required": true,
     "exact_activity_uuid_binding_required_when_activity_blocker_is_cleared": true,
     "name_only_merge_forbidden": true,
-    "orphan_duplicate_person_must_not_be_lost_because_detector_requires_activity_context": true,
+    "heuristic_detector_non_candidate_does_not_overrule_reviewed_identity_evidence": true,
     "production_mutation_authorized": false
   },
   "decisions": [
@@ -24,6 +24,7 @@
       "canonical_survivor_person_id": "5136407a-9792-5103-be6f-54c947b255a5",
       "canonical_survivor_name": "Gorgo of Sparta",
       "duplicate_current_activity_count_expected": 0,
+      "detector_note": "The current heuristic detector does not emit this pair because `Gorgo` and `Gorgo of Sparta` do not share its exact/folded/token-set name key. Historical review, not detector absence, decides identity.",
       "p10_physical_merge_required": true,
       "physical_merge_authorized_now": false,
       "activity_after_identity_decision": {
