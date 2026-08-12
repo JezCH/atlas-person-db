@@ -5,6 +5,8 @@
 > Machine-readable registry: `requirements/atlas-requirements.v1.json`
 >
 > Validator: `scripts/verify-atlas-requirements.mjs`
+>
+> Release governance: `RELEASE_GOVERNANCE.md`
 
 이 문서는 ATLAS Person DB, Authoring System, Stage 2 semantic migration, duplicate/identity work, historical GIS/map integration에 흩어진 요구사항을 하나의 기준으로 통합한다.
 
@@ -50,6 +52,7 @@ reviewed primary / academic sources
 | `ATLAS-RQ-0010` | Final Person-Polity relation is explicit — `rules / governs / serves / active_in / opposes / claims_rule`, generic default 금지. |
 | `ATLAS-RQ-0011` | Final Activity identity includes relation and full temporal boundaries. |
 | `ATLAS-RQ-0012` | Source provenance survives correction and merge — source/locator/claim/description/before-state 보존. |
+| `ATLAS-RQ-0013` | Vercel-minimized release trains — branch/CI/research 작업은 Production 배포와 분리하고, live dependency barrier마다 최소 횟수의 coherent Production merge/deploy만 사용한다. |
 
 ## 3. 이미 완료된 기반 — 다시 개발하지 않는다
 
@@ -74,6 +77,8 @@ reviewed primary / academic sources
 - `ATLAS-RQ-0201` — **Protect main with ATLAS Integrity.** `main` branch protection과 required integrity gate를 실제로 강제한다.
 - `ATLAS-RQ-0202` — **Restore exact Production SHA deployment proof.** GitHub main과 Vercel Production SHA가 같음을 검증하기 전 Production mutation을 진행하지 않는다.
 
+P0/P1은 Vercel 제한 때문에 직렬로 main에 합치는 것이 아니라 `RELEASE_GOVERNANCE.md`의 **Production Train 1**로 준비한다. branch-only 작업을 먼저 최대한 완료하고, Vercel Production이 가능해진 뒤 하나의 coherent main merge/deployment에서 current-schema cleanup을 수행한다.
+
 ### P1 — Current-schema cleanup
 
 - `ATLAS-RQ-0203` — **Apply R0 only after future-semantic equivalence gate.** 현재 6 Activity duplicate pair가 final Relation/full temporal semantics에서도 동일함을 확인한 뒤 dry-run/apply한다.
@@ -83,6 +88,8 @@ reviewed primary / academic sources
 ### P2 — Baseline A
 
 - `ATLAS-RQ-0206` — **Create Baseline A from live Production.** R0/R1 뒤 실제 DB를 다시 읽어 row count를 추측하지 않고 authoritative Activity UUID set을 만든다.
+
+Baseline A는 Production Train 1의 live result이므로 미리 추측해서 Stage 2를 rebind하지 않는다. 이것이 현재 상태에서 Stage 2까지 한 번의 Vercel 배포로 합칠 수 없는 구조적 경계다.
 
 ### P3 — Historical research + Stage 2 integration
 
@@ -138,6 +145,8 @@ Person
 
 - `ATLAS-RQ-0221` — **Create Baseline B and enforce end-state constraints.** final live inventory 뒤에만 final unique/FK/required-field constraints를 강제한다.
 
+P3~P11의 Production-facing code/operations는 가능하면 `RELEASE_GOVERNANCE.md`의 **Production Train 2** 하나로 묶는다. additive migration, correction/backfill, cutover gate, semantic cutover, Person merge는 같은 exact deployed SHA에서 순서대로 실행할 수 있으면 별도 Vercel 배포 이유로 취급하지 않는다.
+
 ### P12 — Legacy/transitional cleanup
 
 - `ATLAS-RQ-0222` — **Remove all reachable legacy and transitional paths.** v1 semantic key/index/reconciliation, obsolete compatibility path, superseded rehearsal/CI/runtime writer를 dependency 확인 후 제거한다.
@@ -174,6 +183,7 @@ Person
 | `ATLAS-NO-0010` | No Runtime-driven historical distortion. |
 | `ATLAS-NO-0011` | No legacy runtime resurrection. |
 | `ATLAS-NO-0012` | No unnecessary deployment churn; coherent reviewed change units를 사용한다. |
+| `ATLAS-NO-0013` | No merge-to-main/deploy for work that can remain branch-only; logically batchable Production operations must share one release train whenever live-state dependencies allow it. |
 
 ## 7. 핵심 의존성
 
@@ -216,6 +226,19 @@ v2
   normalized source linkage
 ```
 
+### Vercel 배포는 live dependency barrier 기준으로만 소비한다
+
+```text
+branch-only prepare + GitHub CI
+→ Production Train 1 (one deploy)
+→ R0/R1 + Baseline A
+→ branch-only Stage 2 rebind/build/test
+→ Production Train 2 (target: one deploy)
+→ migration/backfill/cutover/merge/Baseline B
+```
+
+Baseline A가 Production Train 1의 결과이므로 현재 상태에서 Train 1과 Train 2를 하나의 사전 빌드로 합치기 위해 미래 UUID 상태를 추측해서는 안 된다.
+
 ## 8. 완료 정의
 
 ATLAS Person DB / Authoring 개발 완료는 다음을 모두 만족하는 상태다.
@@ -230,10 +253,11 @@ ATLAS Person DB / Authoring 개발 완료는 다음을 모두 만족하는 상�
 - final Baseline B captured
 - full Production authoring lifecycle acceptance PASS
 - Person-owned geometry 없이 historical map contract 성립
+- avoidable Vercel Production deployment churn = 0
 
 ## 9. CI contract
 
-`npm run test:requirements`는 다음을 fail closed로 검증한다.
+`npm run test:requirements`와 release-governance verification은 다음을 fail closed로 검증한다.
 
 - registry schema/version/finalized flag
 - `P0..P14` roadmap order
@@ -244,5 +268,7 @@ ATLAS Person DB / Authoring 개발 완료는 다음을 모두 만족하는 상�
 - SUPERSEDED replacement target 유효성
 - mandatory core requirement 누락 금지
 - 이 문서와 machine-readable registry 간 ID drift 금지
+- Vercel non-Production build skip contract
+- `RELEASE_GOVERNANCE.md` 존재와 release-train invariants
 
-앞으로 요구사항이나 실행 순서를 바꾸려면 **이 문서와 `requirements/atlas-requirements.v1.json`을 같은 PR에서 함께 변경**한다.
+앞으로 요구사항이나 실행 순서, Vercel deployment policy를 바꾸려면 **이 문서, `requirements/atlas-requirements.v1.json`, `RELEASE_GOVERNANCE.md`를 같은 PR에서 함께 검토**한다.
