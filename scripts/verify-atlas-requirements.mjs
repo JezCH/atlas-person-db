@@ -41,9 +41,9 @@ for (const requirement of registry.requirements) {
     if (!Array.isArray(requirement.evidence_paths) || requirement.evidence_paths.length === 0) {
       fail(`${id} completed requirement requires evidence_paths`);
     }
-    for (const evidencePath of requirement.evidence_paths) {
-      if (!fs.existsSync(path.join(root, evidencePath))) fail(`${id} evidence path missing: ${evidencePath}`);
-    }
+  }
+  for (const evidencePath of requirement.evidence_paths || []) {
+    if (!fs.existsSync(path.join(root, evidencePath))) fail(`${id} evidence path missing: ${evidencePath}`);
   }
   if (requirement.status === "SUPERSEDED" && (!Array.isArray(requirement.superseded_by) || requirement.superseded_by.length === 0)) {
     fail(`${id} superseded requirement requires superseded_by`);
@@ -60,10 +60,10 @@ for (const requirement of registry.requirements) {
 
 const mandatoryIds = [
   "ATLAS-RQ-0001", "ATLAS-RQ-0002", "ATLAS-RQ-0003", "ATLAS-RQ-0004", "ATLAS-RQ-0005", "ATLAS-RQ-0006",
-  "ATLAS-RQ-0010", "ATLAS-RQ-0011", "ATLAS-RQ-0201", "ATLAS-RQ-0202", "ATLAS-RQ-0203", "ATLAS-RQ-0206",
+  "ATLAS-RQ-0010", "ATLAS-RQ-0011", "ATLAS-RQ-0013", "ATLAS-RQ-0201", "ATLAS-RQ-0202", "ATLAS-RQ-0203", "ATLAS-RQ-0206",
   "ATLAS-RQ-0207", "ATLAS-RQ-0215", "ATLAS-RQ-0218", "ATLAS-RQ-0219", "ATLAS-RQ-0220", "ATLAS-RQ-0221",
   "ATLAS-RQ-0222", "ATLAS-RQ-0223", "ATLAS-RQ-0224", "ATLAS-NO-0001", "ATLAS-NO-0002", "ATLAS-NO-0004",
-  "ATLAS-NO-0005", "ATLAS-NO-0006", "ATLAS-NO-0007", "ATLAS-NO-0011"
+  "ATLAS-NO-0005", "ATLAS-NO-0006", "ATLAS-NO-0007", "ATLAS-NO-0011", "ATLAS-NO-0013"
 ];
 for (const id of mandatoryIds) if (!byId.has(id)) fail(`mandatory requirement missing: ${id}`);
 
