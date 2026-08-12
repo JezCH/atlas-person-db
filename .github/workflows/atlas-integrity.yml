@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   test:
@@ -72,13 +73,31 @@ jobs:
       - name: Verify R0 future semantic equivalence
         run: npm run test:r0-gate
 
-      - name: Verify baseline-independent Stage 2 integration prep
+      - name: Verify Stage 2 Baseline A integration prep
         run: npm run test:stage2-prep
 
       - name: Verify current Stage 2 machine-readable domain contract
         run: npm run test:stage2-contract
 
-      - name: Validate durable Baseline A v2 capture
+      - name: Download exact Train 1 Baseline A artifact
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/baseline-a-source
+          curl --fail --silent --show-error --location \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/artifacts/9135783402/zip" \
+            -o artifacts/baseline-a-source.zip
+          echo "9f345256859f1605942e36402b135721b631afcaf5863928f1347aa7ea2848dd  artifacts/baseline-a-source.zip" | sha256sum --check --strict
+          unzip -q artifacts/baseline-a-source.zip -d artifacts/baseline-a-source
+          test -f artifacts/baseline-a-source/atlas-correction-evidence/baseline-a.json
+          cp artifacts/baseline-a-source/atlas-correction-evidence/baseline-a.json artifacts/baseline-a-source.json
+
+      - name: Validate Baseline A v2 capture
         run: npm run test:stage2-baseline-a
 
       - name: Generate fresh Baseline A Stage 2 ledger and work queues

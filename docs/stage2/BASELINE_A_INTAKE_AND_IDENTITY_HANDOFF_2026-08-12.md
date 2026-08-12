@@ -32,27 +32,24 @@ Relationship descriptions    0
 
 The old exact-346 Activity baseline is superseded. **338 is measured live state, not a predicted target.**
 
-## 2. Durable capture
+## 2. Exact P3 handoff source
 
-GitHub Actions artifacts expire, so the artifact alone is not an acceptable long-term Stage 2 rebinding authority.
+The reviewed source for fresh P3 generation is the successful Train 1 ledger-replay artifact:
 
-The exact full read-only JSON capture is therefore preserved in-repository as gzip:
+- workflow run: `31582629661`
+- artifact id: `9135783402`
+- artifact ZIP digest: `sha256:9f345256859f1605942e36402b135721b631afcaf5863928f1347aa7ea2848dd`
+- inner file: `atlas-correction-evidence/baseline-a.json`
 
-`stage2/baselines/baseline-a-ad9a0ed0398b.json.gz`
+CI downloads that exact GitHub Actions artifact, verifies the ZIP digest, then validates the inner Baseline digest/counts before generating any Stage 2 ledger. It does **not** contact Vercel or Production.
 
-Descriptor:
+A direct binary gzip copy was briefly attempted through the connected GitHub blob interface, but that transport did not preserve the binary bytes. The corrupt connector-created copy is therefore removed rather than normalized into project architecture. We do not add chunking/base64 workarounds to the repository merely to compensate for the connector transport.
 
-`stage2/baselines/baseline-a-current.v2.json`
-
-Compressed file SHA-256:
-
-`sha256:d9aeea92d73ebd0dbb4dfa0b2fa3770da49886a137c8d2f497c35425a686fc77`
-
-The durable capture preserves **all 338 Activity rows plus the complete Person/name, Polity/name/raw-name-type, Role/name, Period Basis/name and Source catalogs**. This makes the fresh master ledger reproducible without another live DB read and without relying on an expiring Actions artifact.
+If the Actions artifact expires before P3 derivative artifacts are finalized, the process must stop or recapture Baseline A using the existing exact read-only audit contract while Production remains frozen. It must never invent UUID state or mutate Production to recreate a baseline.
 
 ## 3. Intake authority
 
-`scripts/stage2-baseline-a-intake.mjs` validates the stored snapshot and produces `atlas-stage2-baseline-a-intake/v2`.
+`scripts/stage2-baseline-a-intake.mjs` validates the snapshot and produces `atlas-stage2-baseline-a-intake/v2`.
 
 The intake is authoritative for live UUID inventory only.
 
@@ -94,7 +91,7 @@ Fresh Stage 2 work queues must therefore contain **zero pending R0 actions and z
 
 The old 346-row master ledger generator is not current authority because it hard-coded the old snapshot and old cleanup actions.
 
-The P3 generator instead consumes the validated durable Baseline A intake and:
+The P3 generator consumes the verified Baseline A intake and:
 
 1. requires exactly the measured 338 surviving Activity rows;
 2. verifies removed R0/R1 UUIDs do not reappear;
@@ -103,6 +100,8 @@ The P3 generator instead consumes the validated durable Baseline A intake and:
 5. treats applied R0/R1 operations as historical provenance, not pending work;
 6. emits a fresh master ledger and fresh dependency/work queues;
 7. authorizes no Production mutation.
+
+The generated P3 ledger/work queues are uploaded as CI evidence on every Draft-branch run. Reviewed identity/relation/correction outputs derived from them are committed as repository source-of-truth artifacts before Train 2.
 
 ## 6. Polity naming handoff
 
@@ -133,7 +132,7 @@ P5 additive Production schema is not authorized merely because Baseline A exists
 Before P5, P3/P4 must close the live handoff artifacts needed for exact correction generation:
 
 ```text
-validated durable Baseline A
+verified Baseline A artifact + digest
 → fresh 338-row master ledger
 → fresh work queues
 → surviving Activity UUID bindings

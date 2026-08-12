@@ -17,7 +17,9 @@ assert(integration.baseline_policy?.baseline_a_required_for_uuid_rebind === true
 assert(integration.baseline_policy?.baseline_a_contract_version === "v2_full_identity_snapshot", "Baseline A v2 full identity snapshot must be required");
 assert(integration.baseline_policy?.baseline_a_captured_and_validated === true, "completed Baseline A capture not recorded");
 assert(integration.baseline_policy?.baseline_a_activity_count === 338, "measured Baseline A Activity count must be 338");
-assert(integration.baseline_policy?.baseline_a_descriptor === "stage2/baselines/baseline-a-current.v2.json", "durable Baseline A descriptor drifted");
+assert(integration.baseline_policy?.baseline_a_descriptor === "stage2/baselines/baseline-a-current.v2.json", "Baseline A descriptor drifted");
+assert(integration.baseline_policy?.baseline_a_artifact_id === 9135783402, "reviewed Baseline A artifact id drifted");
+assert(integration.baseline_policy?.baseline_a_artifact_digest === "sha256:9f345256859f1605942e36402b135721b631afcaf5863928f1347aa7ea2848dd", "reviewed Baseline A artifact digest drifted");
 assert(integration.baseline_policy?.no_old_activity_uuid_write_targets === true, "old Activity UUID write targets must remain forbidden");
 assert(integration.baseline_policy?.production_mutation_authorized === false, "P3 manifest cannot authorize Production mutation");
 assert(integration.pre_vercel_completion?.engineering_contracts_complete === true, "engineering pre-Vercel closure not recorded");
@@ -35,7 +37,7 @@ for (const entry of port) {
 }
 const completed = new Set(integration.completed_after_baseline_a || []);
 for (const required of [
-  "baseline_a_v2_validated_intake", "durable_baseline_a_capture", "fresh_master_ledger_generator",
+  "baseline_a_v2_validated_intake", "exact_baseline_a_artifact_binding", "fresh_master_ledger_generator",
   "fresh_stage2_work_queue_generator", "current_schema_cleanup_r0_r1"
 ]) assert(completed.has(required), `missing completed Baseline A unit: ${required}`);
 const remaining = new Set(integration.remaining_after_baseline_a || []);
@@ -55,8 +57,18 @@ assert(!/"authoritative_activity_count"\s*:\s*346/.test(rawIntegration), "old 34
 assert(!/"baseline_a_activity_count"\s*:\s*346/.test(rawIntegration), "old 346 Activity count revived");
 assert(fs.existsSync(rel("stage2/contracts/baseline-a-intake-current.v2.json")), "Baseline A v2 contract missing");
 assert(!fs.existsSync(rel("stage2/contracts/baseline-a-intake-current.v1.json")), "superseded Baseline A v1 contract must be removed");
-assert(fs.existsSync(rel("stage2/baselines/baseline-a-current.v2.json")), "durable Baseline A descriptor missing");
-assert(fs.existsSync(rel("stage2/baselines/baseline-a-ad9a0ed0398b.json.gz")), "durable Baseline A capture missing");
+assert(fs.existsSync(rel("stage2/baselines/baseline-a-current.v2.json")), "Baseline A descriptor missing");
+assert(!fs.existsSync(rel("stage2/baselines/baseline-a-ad9a0ed0398b.json.gz")), "connector-corrupted binary Baseline A copy must not remain in repository");
+
+const baselineDescriptor = readJson("stage2/baselines/baseline-a-current.v2.json");
+assert(baselineDescriptor.schema === "atlas-stage2-baseline-a-capture/v2", "unexpected Baseline A descriptor schema");
+assert(baselineDescriptor.production_mutation === false, "Baseline A descriptor cannot authorize mutation");
+assert(baselineDescriptor.source?.kind === "github_actions_artifact", "Baseline A source must be exact reviewed Actions artifact");
+assert(baselineDescriptor.source?.artifact_id === 9135783402, "Baseline A artifact id drifted");
+assert(baselineDescriptor.source?.artifact_digest === "sha256:9f345256859f1605942e36402b135721b631afcaf5863928f1347aa7ea2848dd", "Baseline A artifact digest drifted");
+assert(baselineDescriptor.source?.deployment_sha === "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79", "Baseline A deployment SHA drifted");
+assert(baselineDescriptor.baseline_digest === "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27", "Baseline A data digest drifted");
+assert(baselineDescriptor.row_count === 338, "Baseline A row count drifted");
 
 const baseline = readJson("stage2/contracts/baseline-a-intake-current.v2.json");
 assert(baseline.schema === "atlas-stage2-baseline-a-intake-contract/v2", "unexpected Baseline A contract schema");
@@ -67,8 +79,9 @@ assert(baseline.accepted_input?.unreferenced_persons_and_polities_must_be_preser
 assert(Array.isArray(baseline.accepted_input?.full_catalogs_required) && baseline.accepted_input.full_catalogs_required.includes("sources"), "Baseline A full catalogs incomplete");
 assert(baseline.identity_rules?.canonical_names_are_binding_authority === false && baseline.identity_rules?.canonical_keys_are_binding_authority === false, "names/keys cannot become UUID binding authority");
 assert(baseline.identity_rules?.raw_legacy_name_type_auto_maps_to_historical_semantic_kind === false, "legacy name_type cannot auto-author historical semantics");
-assert(baseline.durable_handoff?.exact_full_baseline_capture_must_be_preserved_in_repository_before_artifact_expiry === true, "durable Baseline A capture requirement missing");
-assert(baseline.durable_handoff?.validated_intake_must_preserve_full_activity_rows === true, "full Activity preservation requirement missing");
+assert(baseline.baseline_handoff?.artifact_id === 9135783402, "Baseline A handoff artifact id drifted");
+assert(baseline.baseline_handoff?.artifact_zip_digest_must_be_verified_before_use === true, "artifact digest gate missing");
+assert(baseline.baseline_handoff?.validated_intake_must_preserve_full_activity_rows === true, "full Activity preservation requirement missing");
 assert(baseline.measured_current_baseline?.activity_count === 338, "measured Baseline A contract count drifted");
 assert(baseline.measured_current_baseline?.baseline_digest === "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27", "measured Baseline A digest drifted");
 

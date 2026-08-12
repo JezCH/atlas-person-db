@@ -12,6 +12,8 @@
     "baseline_a_captured_and_validated": true,
     "baseline_a_activity_count": 338,
     "baseline_a_descriptor": "stage2/baselines/baseline-a-current.v2.json",
+    "baseline_a_artifact_id": 9135783402,
+    "baseline_a_artifact_digest": "sha256:9f345256859f1605942e36402b135721b631afcaf5863928f1347aa7ea2848dd",
     "no_old_activity_uuid_write_targets": true,
     "production_mutation_authorized": false
   },
@@ -40,7 +42,7 @@
   ],
   "completed_after_baseline_a": [
     "baseline_a_v2_validated_intake",
-    "durable_baseline_a_capture",
+    "exact_baseline_a_artifact_binding",
     "fresh_master_ledger_generator",
     "fresh_stage2_work_queue_generator",
     "current_schema_cleanup_r0_r1"

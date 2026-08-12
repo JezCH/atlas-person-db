@@ -2,7 +2,7 @@
   "schema": "atlas-stage2-baseline-a-intake-contract/v2",
   "as_of": "2026-08-12",
   "production_mutation": false,
-  "purpose": "Deterministic handoff from completed Production Train 1 into fresh Stage 2 integration using the complete live Activity inventory plus complete identity/name/source catalogs from the same repeatable-read snapshot, preserved durably so downstream P3 work does not depend on an expiring Actions artifact or another live DB read.",
+  "purpose": "Deterministic handoff from completed Production Train 1 into fresh Stage 2 integration using the complete live Activity inventory plus complete identity/name/source catalogs from the same repeatable-read snapshot.",
   "accepted_input": {
     "marker": "ATLAS_CORRECTION_BASELINE_A_V2",
     "mode": "full_stage2_baseline",
@@ -18,13 +18,18 @@
     "polity_name_type_preserved_verbatim": true,
     "unreferenced_persons_and_polities_must_be_preserved": true
   },
-  "durable_handoff": {
-    "actions_artifact_alone_is_not_sufficient_long_term_authority": true,
-    "exact_full_baseline_capture_must_be_preserved_in_repository_before_artifact_expiry": true,
-    "gzip_json_capture_allowed": true,
+  "baseline_handoff": {
+    "exact_source_is_reviewed_train1_actions_artifact": true,
+    "artifact_id": 9135783402,
+    "artifact_digest": "sha256:9f345256859f1605942e36402b135721b631afcaf5863928f1347aa7ea2848dd",
+    "artifact_inner_path": "atlas-correction-evidence/baseline-a.json",
+    "artifact_zip_digest_must_be_verified_before_use": true,
+    "inner_baseline_digest_must_be_verified_before_use": true,
     "validated_intake_must_preserve_full_activity_rows": true,
     "validated_intake_must_preserve_full_identity_catalogs": true,
-    "downstream_master_ledger_must_be_rebuildable_without_live_database_or_expired_actions_artifact": true
+    "p3_derivatives_must_be_reproducible_from_the_verified_artifact": true,
+    "if_source_artifact_expires_before_p3_finishes_stop_or_recapture_read_only": true,
+    "recapture_cannot_authorize_or_perform_production_mutation": true
   },
   "identity_rules": {
     "baseline_a_is_live_uuid_inventory_source_of_truth": true,
@@ -65,14 +70,12 @@
     "person_count": 302,
     "polity_count": 212,
     "source_count": 20,
-    "descriptor": "stage2/baselines/baseline-a-current.v2.json",
-    "durable_capture": "stage2/baselines/baseline-a-ad9a0ed0398b.json.gz"
+    "descriptor": "stage2/baselines/baseline-a-current.v2.json"
   },
   "required_handoff_order": [
     "production_train_1_r0_r1",
     "baseline_a_v2_capture_same_exact_sha",
-    "baseline_a_v2_digest_and_catalog_validation",
-    "durable_baseline_a_capture",
+    "baseline_a_artifact_digest_and_inner_digest_validation",
     "baseline_a_v2_intake_generation",
     "fresh_stage2_integration_branch_from_updated_main",
     "fresh_master_ledger_and_work_queues",

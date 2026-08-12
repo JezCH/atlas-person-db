@@ -2,10 +2,14 @@
   "schema": "atlas-stage2-baseline-a-capture/v2",
   "as_of": "2026-08-12",
   "production_mutation": false,
-  "capture_path": "stage2/baselines/baseline-a-ad9a0ed0398b.json.gz",
-  "capture_encoding": "gzip+utf8-json",
-  "compressed_sha256": "sha256:d9aeea92d73ebd0dbb4dfa0b2fa3770da49886a137c8d2f497c35425a686fc77",
-  "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+  "source": {
+    "kind": "github_actions_artifact",
+    "workflow_run_id": 31582629661,
+    "artifact_id": 9135783402,
+    "artifact_digest": "sha256:9f345256859f1605942e36402b135721b631afcaf5863928f1347aa7ea2848dd",
+    "inner_path": "atlas-correction-evidence/baseline-a.json",
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79"
+  },
   "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27",
   "row_count": 338,
   "counts": {
@@ -23,26 +27,20 @@
     "chronology_claims": 0,
     "relationship_descriptions": 0
   },
-  "source_runs": {
-    "production_train_1": {
-      "workflow_run_id": 31581018285,
-      "deployment_sha": "ff0e0cd0402d77dabf0a518384ab4c01fe5094d4",
-      "artifact_id": 9135171793,
-      "artifact_digest": "sha256:e705932d199c4f87afdabcd6e4cfeca779c98e2a2a4a5a3b064f9dfc29ea750d"
-    },
-    "ledger_replay_recapture": {
-      "workflow_run_id": 31582629661,
-      "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
-      "artifact_id": 9135783402,
-      "artifact_digest": "sha256:9f345256859f1605942e36402b135721b631afcaf5863928f1347aa7ea2848dd"
-    }
-  },
   "authority": {
-    "durable_repository_copy_of_exact_read_only_baseline": true,
     "live_uuid_inventory_authoritative": true,
     "historical_interpretation_authoritative": false,
     "old_346_baseline_authoritative": false,
     "old_stage2_uuid_bindings_authoritative": false,
     "production_mutation_authorized": false
+  },
+  "handoff_policy": {
+    "artifact_is_exact_train1_evidence": true,
+    "artifact_zip_digest_must_be_verified_before_use": true,
+    "inner_baseline_digest_must_be_verified_before_use": true,
+    "p3_derivatives_are_committed_as_reviewed_repository_authority": true,
+    "if_artifact_expires_before_p3_derivatives_are_finalized_stop_or_recapture_read_only": true,
+    "recapture_must_not_mutate_production": true,
+    "do_not_invent_future_uuid_state": true
   }
 }
