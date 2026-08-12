@@ -75,8 +75,20 @@ jobs:
       - name: Verify baseline-independent Stage 2 integration prep
         run: npm run test:stage2-prep
 
+      - name: Verify current Stage 2 machine-readable domain contract
+        run: npm run test:stage2-contract
+
       - name: Verify runtime architecture
         run: npm run test:runtime
 
       - name: Rebuild current v2 schema on fresh PostgreSQL
         run: npm run test:schema
+
+      - name: Rehearse additive Stage 2 schema on current v2 baseline
+        run: npm run test:stage2-schema-rehearsal
+
+      - name: Rehearse normalized Stage 2 provenance
+        run: npm run test:stage2-provenance-rehearsal
+
+      - name: Rehearse Activity semantic-key v2 replacement
+        run: npm run test:stage2-semantic-key-rehearsal

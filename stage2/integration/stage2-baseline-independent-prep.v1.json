@@ -18,6 +18,10 @@
     {"id":"provenance","path":"docs/stage2/contracts/PROVENANCE_CURRENT_V1.md"},
     {"id":"activity_semantic_key_v2","path":"docs/stage2/contracts/ACTIVITY_SEMANTIC_KEY_V2_CURRENT.md"},
     {"id":"additive_schema","path":"docs/stage2/contracts/ADDITIVE_SCHEMA_CURRENT_V1.md"},
+    {"id":"stage2_domain_contract_machine","path":"contracts/stage2-domain-contract.v1.json"},
+    {"id":"stage2_schema_rehearsal","path":"db/proposals/stage2_semantic_extensions.rehearsal.sql"},
+    {"id":"stage2_provenance_rehearsal","path":"db/proposals/stage2_provenance.rehearsal.sql"},
+    {"id":"stage2_semantic_key_rehearsal","path":"db/proposals/stage2_activity_semantic_key.rehearsal.sql"},
     {"id":"kublai_pre1271_identity_policy","path":"research/mongol/stage2-kublai-pre1271-polity-territory-decision.v1.json"},
     {"id":"structural_relation_interval_research","path":"research/relations/stage2-structural-polity-relation-intervals.v1.json"}
   ],

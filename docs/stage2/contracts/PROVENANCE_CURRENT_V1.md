@@ -20,14 +20,22 @@ polity_designation_sources
 polity_identity_relation_sources
 ```
 
-Each join identifies the assertion, normalized `source_id`, and a non-blank `source_locator_key`. Source identity remains centralized in `atlas_v2.sources`; do not create per-feature source silos.
+Each join identifies:
+
+```text
+assertion_id + source_id + source_locator_key
+```
+
+`source_locator_key` is mandatory and non-blank. The same normalized Source may support one assertion at **multiple distinct locators** (for example several pages, clauses, sections, inscriptions, or archival folios), so locator is part of the join identity rather than disposable annotation.
+
+Source identity remains centralized in `atlas_v2.sources`; do not create per-feature source silos.
 
 Deletion policy:
 
-- assertion FK -> cascade its join rows;
+- assertion FK -> cascade all of that assertion's source joins;
 - source FK -> restrict while cited.
 
-Correction/merge operations must inventory and preserve relevant source joins before retiring/coalescing assertions.
+Correction/merge operations must inventory and preserve all relevant source joins before retiring/coalescing assertions. Coalescing two assertions may deduplicate exact identical `(source_id, source_locator_key)` pairs, but it must not collapse distinct locator evidence from the same Source.
 
 `relation_type` is a semantic dimension of Activity, so Activity provenance continues through `person_politics_sources`; no field-level Relation source table is introduced without a demonstrated need.
 

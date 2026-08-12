@@ -6,6 +6,7 @@ const manifestPath = path.join(root, 'stage2/integration/stage2-baseline-indepen
 const kublaiPath = path.join(root, 'research/mongol/stage2-kublai-pre1271-polity-territory-decision.v1.json');
 const structuralRelationsPath = path.join(root, 'research/relations/stage2-structural-polity-relation-intervals.v1.json');
 const continuityPath = path.join(root, 'stage2/contracts/polity-identity-continuity-current.v1.json');
+const domainContractPath = path.join(root, 'contracts/stage2-domain-contract.v1.json');
 
 function fail(message) {
   console.error(`Stage 2 integration prep verification failed: ${message}`);
@@ -30,14 +31,13 @@ assert(manifest.production_mutation === false, 'integration preparation must not
 assert(manifest.baseline_policy?.old_346_binding_authoritative === false, 'old 346 binding must not remain authoritative');
 assert(manifest.baseline_policy?.baseline_a_required_for_uuid_rebind === true, 'Baseline A UUID rebind must be mandatory');
 assert(manifest.baseline_policy?.no_old_activity_uuid_write_targets === true, 'old Activity UUID write targets must be forbidden');
-assert(Array.isArray(manifest.port_now) && manifest.port_now.length >= 10, 'baseline-independent port set is incomplete');
+assert(Array.isArray(manifest.port_now) && manifest.port_now.length >= 14, 'baseline-independent port set is incomplete');
 assert(Array.isArray(manifest.wait_for_baseline_a) && manifest.wait_for_baseline_a.length > 0, 'Baseline A wait set is missing');
 
 const portIds = manifest.port_now.map((entry) => entry.id);
 assert(new Set(portIds).size === portIds.length, 'duplicate port_now id');
 const waitSet = new Set(manifest.wait_for_baseline_a);
 for (const id of portIds) assert(!waitSet.has(id), `port_now and wait_for_baseline_a overlap: ${id}`);
-
 for (const entry of manifest.port_now) {
   assert(typeof entry.path === 'string' && entry.path.length > 0, `missing path for ${entry.id}`);
   assert(fs.existsSync(path.join(root, entry.path)), `missing carried-forward evidence path: ${entry.path}`);
@@ -47,15 +47,37 @@ const rawManifest = fs.readFileSync(manifestPath, 'utf8');
 assert(!/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}/i.test(rawManifest), 'integration manifest must not bind old UUID-shaped write targets');
 assert(!/"authoritative_activity_count"\s*:\s*346/.test(rawManifest), 'old 346 Activity baseline cannot be revived as authority');
 
-const requiredWait = [
-  'fresh_master_ledger',
-  'surviving_activity_uuid_bindings',
-  'historical_correction_v2_manifests',
-  'relation_type_row_backfill',
-  'semantic_key_v2_activation',
-  'person_physical_merge'
-];
-for (const item of requiredWait) assert(waitSet.has(item), `missing Baseline A dependency: ${item}`);
+for (const item of ['fresh_master_ledger','surviving_activity_uuid_bindings','historical_correction_v2_manifests','relation_type_row_backfill','semantic_key_v2_activation','person_physical_merge']) {
+  assert(waitSet.has(item), `missing Baseline A dependency: ${item}`);
+}
+
+const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+function assertNoBoundIdentityUuids(value, keyPath = 'root') {
+  if (Array.isArray(value)) {
+    value.forEach((child, index) => assertNoBoundIdentityUuids(child, `${keyPath}[${index}]`));
+    return;
+  }
+  if (!value || typeof value !== 'object') return;
+  for (const [key, child] of Object.entries(value)) {
+    const childPath = `${keyPath}.${key}`;
+    if (/(?:uuid|activity_id|polity_id)$/i.test(key) && typeof child === 'string' && uuidPattern.test(child)) {
+      fail(`pre-Baseline-A identity binding found at ${childPath}`);
+    }
+    assertNoBoundIdentityUuids(child, childPath);
+  }
+}
+
+const domain = readJson(domainContractPath);
+assert(domain.schema === 'atlas-stage2-domain-contract/v1', 'unexpected machine-readable Stage 2 domain contract schema');
+assert(domain.production_migration_authorized === false, 'machine-readable domain contract must not authorize Production migration');
+assert(domain.baseline_policy?.old_346_binding_authoritative === false, 'machine-readable domain contract revived old baseline authority');
+assert(domain.baseline_policy?.baseline_a_required_for_uuid_rebind === true, 'machine-readable domain contract must require Baseline A');
+assert(domain.temporal?.boundary_may_be_unresolved_in_authoring === true, 'unresolved temporal boundary support must remain explicit');
+assert(domain.temporal?.partial_boundary_tuple_allowed === false, 'partial temporal tuples must remain forbidden');
+assert(domain.provenance_rules?.multiple_locators_per_source_per_assertion_allowed === true, 'multiple source locators must remain preservable');
+assert(domain.activity_semantic_identity_v2?.activation_phase === 'P9', 'Activity semantic key must remain a P9 cutover');
+assert(domain.activity_semantic_identity_v2?.coherent_consumer_cutover_required === true, 'semantic cutover must remain coherent across identity consumers');
+assertNoBoundIdentityUuids(domain);
 
 const kublai = readJson(kublaiPath);
 assert(kublai.schema === 'atlas-stage2-kublai-pre1271-decision/v1', 'unexpected Qubilai decision schema');
@@ -89,6 +111,7 @@ for (const entry of structural.relations) {
   assert(Array.isArray(entry.sources) && entry.sources.length > 0, `${entry.id} missing source provenance`);
   for (const source of entry.sources) assert(/^https:\/\//.test(source.url), `${entry.id} has invalid source URL`);
 }
+assertNoBoundIdentityUuids(structural);
 
 const canada = relationById.get('canada_dominion_of_uk');
 assert(canada?.relation_type === 'dominion_of', 'Canada relation type must remain dominion_of');
@@ -115,24 +138,6 @@ assert(huainan?.semantic_status === 'resolved', 'Huainan structural relation sem
 assert(huainan?.start === null && huainan?.end === null, 'Huainan absolute boundaries must remain unresolved until chronology/continuity review');
 assert(Array.isArray(huainan?.blockers) && huainan.blockers.length >= 2, 'Huainan unresolved chronology/continuity blockers must be explicit');
 
-const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-function assertNoBoundIdentityUuids(value, keyPath = 'root') {
-  if (Array.isArray(value)) {
-    value.forEach((child, index) => assertNoBoundIdentityUuids(child, `${keyPath}[${index}]`));
-    return;
-  }
-  if (!value || typeof value !== 'object') return;
-
-  for (const [key, child] of Object.entries(value)) {
-    const childPath = `${keyPath}.${key}`;
-    if (/(?:uuid|activity_id|polity_id)$/i.test(key) && typeof child === 'string' && uuidPattern.test(child)) {
-      fail(`pre-Baseline-A identity binding found at ${childPath}`);
-    }
-    assertNoBoundIdentityUuids(child, childPath);
-  }
-}
-assertNoBoundIdentityUuids(structural);
-
 const rawStructural = fs.readFileSync(structuralRelationsPath, 'utf8');
 assert(!/1991-12-26/.test(rawStructural), 'Soviet dissolution must not be forced to 1991-12-26 without dedicated review');
 
@@ -143,6 +148,7 @@ assert(continuity.baseline_a_uuid_rebind_required === true, 'continuity contract
 assert(continuity.old_activity_uuid_bindings_authoritative === false, 'old Activity UUID bindings must not be continuity authority');
 assert(continuity.rules?.no_generic_successor_shortcut === true, 'generic successor shortcut must remain forbidden');
 assert(Array.isArray(continuity.families) && continuity.families.length === 4, 'expected four reviewed continuity families');
+assertNoBoundIdentityUuids(continuity);
 
 const familyById = new Map(continuity.families.map((entry) => [entry.id, entry]));
 assert(familyById.size === continuity.families.length, 'duplicate continuity family id');
@@ -150,25 +156,37 @@ const roman = familyById.get('roman_eastern_roman_395');
 assert(roman?.model === 'operational_territorial_split_with_roman_continuity', 'Roman 395 model drifted');
 assert(roman?.transition?.year === 395 && roman.transition.granularity === 'year', 'Roman operational split must remain at year 395');
 assert(roman?.roman_continuity_metadata_required === true, 'Roman continuity metadata must remain required');
-
 const yuan = familyById.get('yuan_northern_yuan_1368');
 assert(yuan?.stable_single_polity_across_transition === true, 'Yuan/Northern Yuan must remain one stable immediate continuity identity');
 assert(yuan?.post_transition_designation === 'Northern Yuan' && yuan?.designation_type === 'historiographic_period', 'Northern Yuan must remain a historiographic designation');
 assert(yuan?.automatic_new_polity_uuid === false, '1368 must not automatically create a new Yuan UUID');
-
 const russia = familyById.get('russia_1721_empire');
 assert(russia?.stable_single_polity_across_transition === true, 'Russia 1721 must remain one stable Polity identity');
 assert(russia?.transition?.year === 1721 && russia.transition.month === 11 && russia.transition.day === 2 && russia.transition.granularity === 'day', 'Russia transition must remain 1721-11-02 Gregorian');
 assert(russia?.identity_relation_required === false, 'Russia state-form change must not become a successor relation');
-
 const portugal = familyById.get('portugal_united_kingdom_1815');
 assert(portugal?.model === 'distinct_composite_union_polity_with_constituent_portugal', 'Portugal 1815 union model drifted');
 assert(portugal?.transition?.year === 1815 && portugal.transition.month === 12 && portugal.transition.day === 16, 'Portugal union formation must remain 1815-12-16');
 assert(portugal?.portugal_constituent_continuity === true, 'Portugal constituent continuity must remain explicit');
 assert(portugal?.union_identity_relation_model_required === true && portugal?.constituent_relation_model_required === true, 'Portugal union needs identity-formation and constituent models');
-assertNoBoundIdentityUuids(continuity);
+
+for (const relative of [
+  'db/proposals/stage2_semantic_extensions.rehearsal.sql',
+  'db/proposals/stage2_provenance.rehearsal.sql',
+  'db/proposals/stage2_activity_semantic_key.rehearsal.sql'
+]) {
+  const source = fs.readFileSync(path.join(root, relative), 'utf8');
+  assert(/REHEARSAL ONLY/i.test(source), `${relative} must remain explicitly rehearsal-only`);
+}
 
 const requiredContracts = [
+  'contracts/stage2-domain-contract.v1.json',
+  'scripts/stage2-domain-contract.mjs',
+  'scripts/verify-stage2-domain-contract.mjs',
+  'scripts/verify-stage2-schema-rehearsal.mjs',
+  'scripts/verify-stage2-provenance-rehearsal.mjs',
+  'scripts/verify-stage2-activity-semantic-key.mjs',
+  'scripts/stage2-activity-semantic-key-v2.cjs',
   'docs/audits/RELATION_SEMANTICS_CONTRACT_V1_2026-08-12.md',
   'docs/stage2/contracts/GOVERNANCE_CONTEXT_CURRENT_V1.md',
   'docs/stage2/contracts/POLITY_RELATION_CURRENT_V1.md',
@@ -183,4 +201,4 @@ const requiredContracts = [
 ];
 for (const file of requiredContracts) assert(fs.existsSync(path.join(root, file)), `missing Stage 2 prep contract: ${file}`);
 
-console.log(`Stage 2 baseline-independent integration prep verified: ${manifest.port_now.length} portable units, ${manifest.wait_for_baseline_a.length} Baseline A-gated units, ${structural.relations.length} structural relation families researched, ${continuity.families.length} continuity families fixed.`);
+console.log(`Stage 2 baseline-independent integration prep verified: ${manifest.port_now.length} portable units, ${manifest.wait_for_baseline_a.length} Baseline A-gated units, ${structural.relations.length} structural relation families, ${continuity.families.length} continuity families, executable rehearsal chain restored.`);
