@@ -1,24 +1,22 @@
 {
-  "schema": "atlas-stage2-baseline-a-intake-current/v2",
+  "schema": "atlas-stage2-baseline-a-intake-contract/v2",
   "as_of": "2026-08-12",
-  "status": "BASELINE_A_V2_LIVE_IDENTITY_HANDOFF_CONTRACT",
   "production_mutation": false,
-  "source_marker": "ATLAS_CORRECTION_BASELINE_A_V2",
-  "source_mode": "full_stage2_baseline",
-  "required_snapshot_properties": {
-    "repeatable_read": true,
+  "purpose": "Deterministic handoff from completed Production Train 1 into fresh Stage 2 integration using the complete live Activity inventory plus complete identity/name/source catalogs from the same repeatable-read snapshot, preserved durably so downstream P3 work does not depend on an expiring Actions artifact or another live DB read.",
+  "accepted_input": {
+    "marker": "ATLAS_CORRECTION_BASELINE_A_V2",
+    "mode": "full_stage2_baseline",
     "read_only": true,
-    "same_exact_deployed_sha_as_train1": true,
-    "rows_include_all_activities": true,
-    "catalogs_include_all_persons": true,
-    "catalogs_include_all_person_names": true,
-    "catalogs_include_all_polities": true,
-    "catalogs_include_all_polity_names_with_raw_name_type": true,
-    "catalogs_include_all_roles_and_names": true,
-    "catalogs_include_all_period_bases_and_names": true,
-    "catalogs_include_all_sources": true,
-    "unreferenced_person_and_polity_rows_included": true,
-    "digest_covers_rows_counts_and_catalogs": true
+    "committed": false,
+    "deployment_sha": "exact 40-hex Production main SHA",
+    "digest": "sha256 of recursively key-sorted JSON {rows,counts,catalogs}; array order preserved",
+    "activity_rows_must_be_sorted_by_uuid": true,
+    "activity_uuid_must_be_unique": true,
+    "row_count_must_equal_counts_activities": true,
+    "full_catalogs_required": ["persons", "polities", "roles", "period_bases", "sources"],
+    "nested_name_catalogs_required": ["person_names", "polity_names", "role_names", "period_basis_names"],
+    "polity_name_type_preserved_verbatim": true,
+    "unreferenced_persons_and_polities_must_be_preserved": true
   },
   "durable_handoff": {
     "actions_artifact_alone_is_not_sufficient_long_term_authority": true,
@@ -28,44 +26,62 @@
     "validated_intake_must_preserve_full_identity_catalogs": true,
     "downstream_master_ledger_must_be_rebuildable_without_live_database_or_expired_actions_artifact": true
   },
-  "identity_authority": {
-    "uuid_is_binding_identity": true,
-    "canonical_key_is_binding_identity": false,
-    "name_is_binding_identity": false,
-    "raw_polity_name_type_is_final_semantic_name_kind": false,
-    "name_and_key_may_nominate_review_candidate": true,
-    "historical_identity_decision_still_requires_reviewed_model": true,
-    "new_polity_identity_may_be_required_when_reviewed_target_has_no_live_uuid": true
-  },
-  "stale_baseline_policy": {
+  "identity_rules": {
+    "baseline_a_is_live_uuid_inventory_source_of_truth": true,
+    "baseline_a_does_not_auto_approve_historical_identity_decisions": true,
     "old_346_activity_baseline_authoritative": false,
     "old_stage2_activity_uuid_bindings_authoritative": false,
-    "old_stack_may_supply_reviewed_contracts_and_historical_decisions": true,
-    "old_stack_must_not_supply_production_uuid_authority": true
+    "canonical_names_are_binding_authority": false,
+    "localized_names_are_binding_authority": false,
+    "canonical_keys_are_binding_authority": false,
+    "names_and_keys_may_nominate_review_candidates": true,
+    "person_identity_polity_identity_activity_identity_are_distinct": true,
+    "polity_identity_resolution_precedes_activity_semantic_cutover": true,
+    "generic_relation_default_allowed": false,
+    "existing_polity_name_type_is_raw_inventory_until_reviewed_stage2_name_kind_mapping": true,
+    "raw_legacy_name_type_auto_maps_to_historical_semantic_kind": false
   },
-  "person_duplicate_policy": {
-    "merge_decision_may_be_prepared_after_baseline_a": true,
-    "physical_merge_before_semantic_key_v2": false,
-    "physical_merge_phase": "P10",
-    "candidate_revalidation_required_at_p10": true
+  "duplicate_lifecycle": {
+    "identity_review_before_semantic_cutover_allowed": true,
+    "physical_person_merge_before_semantic_key_v2_allowed": false,
+    "physical_person_merge_phase": "P10",
+    "v2_aware_relationship_reconciliation_required": true
   },
-  "required_outputs_before_p5": [
-    "validated Baseline A v2 intake",
-    "fresh 338-row master ledger measured from Baseline A",
-    "fresh Stage 2 work queues with R0/R1 current-schema cleanup pending = 0",
-    "surviving Activity UUID bindings",
-    "reviewed Person identity decisions without physical merge",
-    "reviewed canonical Polity identity bindings or explicit requires-new-identity blockers",
-    "reviewed raw polity name_type mapping policy",
-    "reviewed structural Polity relation UUID/source bindings where representable",
-    "correction v2 exact-before manifests generated only from Baseline A"
-  ],
-  "prohibited_outputs": [
-    "automatic Person merge from duplicate name",
-    "automatic Polity identity merge from canonical key or name",
-    "automatic historical name-kind inference from legacy canonical/display name_type",
-    "reuse of removed R0/R1 Activity UUIDs",
-    "reuse of old exact-346 ledger as current authority",
-    "production mutation during Baseline A intake/rebind"
+  "downstream_authority": {
+    "fresh_master_ledger_seed_may_be_generated_after_validation": true,
+    "fresh_stage2_work_queue_seed_may_be_generated_after_validation": true,
+    "reviewed_identity_binding_required_before_correction_v2_targets": true,
+    "reviewed_polity_name_kind_mapping_required_before_final_name_constraints": true,
+    "source_uuid_rebinding_may_use_same_baseline_snapshot": true,
+    "intake_alone_authorizes_correction_v2": false,
+    "intake_alone_authorizes_semantic_key_v2_activation": false,
+    "intake_alone_authorizes_person_merge": false,
+    "intake_alone_authorizes_production_mutation": false
+  },
+  "measured_current_baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27",
+    "activity_count": 338,
+    "person_count": 302,
+    "polity_count": 212,
+    "source_count": 20,
+    "descriptor": "stage2/baselines/baseline-a-current.v2.json",
+    "durable_capture": "stage2/baselines/baseline-a-ad9a0ed0398b.json.gz"
+  },
+  "required_handoff_order": [
+    "production_train_1_r0_r1",
+    "baseline_a_v2_capture_same_exact_sha",
+    "baseline_a_v2_digest_and_catalog_validation",
+    "durable_baseline_a_capture",
+    "baseline_a_v2_intake_generation",
+    "fresh_stage2_integration_branch_from_updated_main",
+    "fresh_master_ledger_and_work_queues",
+    "reviewed_person_and_polity_identity_bindings",
+    "reviewed_polity_name_kind_mapping",
+    "correction_v2_target_generation",
+    "historical_structural_backfill",
+    "global_semantic_cutover_gate",
+    "semantic_key_v2_cutover",
+    "physical_person_merge"
   ]
 }
