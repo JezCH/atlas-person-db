@@ -6,12 +6,17 @@ const {
   MANIFEST_V1_1,
   createCorrectionManifestServiceForSchema
 } = require("./atlas-correction-manifest-v1-1-service.js");
+const {
+  normalizeSnapshotActivityIds,
+  createCorrectionTargetSnapshot
+} = require("./atlas-correction-snapshot-service.js");
 const { applyCorrectionMigrations } = require("./atlas-correction-migrations.js");
 const { verifyGitHubActionsOidc } = require("./atlas-correction-github-oidc.js");
 
-const MANIFEST_PATH_RE = /^corrections\/requests\/[A-Za-z0-9._-]+\.json$/;
-const MODES = new Set(["dry_run", "apply"]);
+const CORRECTION_PATH_RE = /^corrections\/(?:requests|intents)\/[A-Za-z0-9._-]+\.json$/;
+const MODES = new Set(["snapshot", "dry_run", "apply"]);
 const MANIFEST_SCHEMAS = new Set([MANIFEST_V1, MANIFEST_V1_1]);
+const SNAPSHOT_MARKER = "ATLAS_CORRECTION_SNAPSHOT_V1";
 
 function json(res, status, body) {
   res.statusCode = status;
@@ -50,21 +55,34 @@ function requireDeployment(env, requestedSha) {
 function requirePayload(body) {
   const deploymentSha = String(body?.deployment_sha || "").trim();
   if (!/^[0-9a-f]{40}$/i.test(deploymentSha)) throw new Error("CORRECTION_APPLY_SHA_REQUIRED");
-  const manifestPath = String(body?.manifest_path || "").trim();
-  if (!MANIFEST_PATH_RE.test(manifestPath)) throw new Error("CORRECTION_MANIFEST_PATH_NOT_ALLOWED");
+  const sourcePath = String(body?.manifest_path || body?.intent_path || "").trim();
+  if (!CORRECTION_PATH_RE.test(sourcePath)) throw new Error("CORRECTION_SOURCE_PATH_NOT_ALLOWED");
   const mode = String(body?.mode || "").trim().toLowerCase();
   if (!MODES.has(mode)) throw new Error("CORRECTION_MODE_REQUIRED");
+
+  if (mode === "snapshot") {
+    return {
+      deploymentSha,
+      sourcePath,
+      mode,
+      activityIds: normalizeSnapshotActivityIds(body?.activity_ids),
+      manifest: null,
+      schema: null
+    };
+  }
+
   if (!body?.manifest || typeof body.manifest !== "object" || Array.isArray(body.manifest)) throw new Error("CORRECTION_MANIFEST_OBJECT_REQUIRED");
   const schema = String(body.manifest.schema || "").trim();
   if (!MANIFEST_SCHEMAS.has(schema)) throw new Error("UNSUPPORTED_CORRECTION_MANIFEST_SCHEMA");
-  return { deploymentSha, manifestPath, mode, manifest: body.manifest, schema };
+  return { deploymentSha, sourcePath, mode, manifest: body.manifest, schema, activityIds: null };
 }
 
 function createCorrectionApplyHandler({
   env = process.env,
   verifyOidc = verifyGitHubActionsOidc,
   createClient = createPostgresClient,
-  applyMigrations = applyCorrectionMigrations
+  applyMigrations = applyCorrectionMigrations,
+  createSnapshot = createCorrectionTargetSnapshot
 } = {}) {
   return async function handler(req, res) {
     if (req?.method !== "POST") return json(res, 405, { ok: false, code: "METHOD_NOT_ALLOWED" });
@@ -98,6 +116,23 @@ function createCorrectionApplyHandler({
     let client;
     try {
       client = await createClient(databaseUrl, { env });
+
+      if (payload.mode === "snapshot") {
+        const snapshot = await createSnapshot(client, payload.activityIds);
+        return json(res, 200, {
+          ok: true,
+          marker: SNAPSHOT_MARKER,
+          mode: "snapshot",
+          read_only: snapshot.read_only,
+          committed: snapshot.committed,
+          deployment_sha: payload.deploymentSha,
+          source_path: payload.sourcePath,
+          requested_count: payload.activityIds.length,
+          row_count: snapshot.snapshots.length,
+          snapshots: snapshot.snapshots
+        });
+      }
+
       if (payload.mode === "apply") await applyMigrations(client);
       const service = createCorrectionManifestServiceForSchema({ client, schema: payload.schema });
       const outcome = await service.execute(payload.manifest, {
@@ -114,12 +149,16 @@ function createCorrectionApplyHandler({
         replay: outcome.replay,
         result: outcome.result,
         deployment_sha: payload.deploymentSha,
-        manifest_path: payload.manifestPath
+        source_path: payload.sourcePath
       });
     } catch (error) {
       const code = String(error?.message || "CORRECTION_APPLY_FAILED");
-      const conflict = /COLLISION|DRIFT|MISMATCH|CONFLICT|REQUIRED|UNSUPPORTED|NOT_FOUND|REAPPEARED|INVALID|LIMIT|APPROVED|TARGET|NO_CHANGE/.test(code);
-      return json(res, conflict ? 409 : 500, { ok: false, code });
+      const conflict = /COLLISION|DRIFT|MISMATCH|CONFLICT|REQUIRED|UNSUPPORTED|NOT_FOUND|REAPPEARED|INVALID|LIMIT|APPROVED|TARGET|NO_CHANGE|SNAPSHOT/.test(code);
+      return json(res, conflict ? 409 : 500, {
+        ok: false,
+        code,
+        ...(Array.isArray(error?.missing_activity_ids) ? { missing_activity_ids: error.missing_activity_ids } : {})
+      });
     } finally {
       if (client && typeof client.end === "function") {
         try { await client.end(); } catch {}
@@ -133,7 +172,8 @@ module.exports = Object.freeze({
   requirePayload,
   requireDeployment,
   bearerToken,
-  MANIFEST_PATH_RE,
+  CORRECTION_PATH_RE,
   MODES,
-  MANIFEST_SCHEMAS
+  MANIFEST_SCHEMAS,
+  SNAPSHOT_MARKER
 });
