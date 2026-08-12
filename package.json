@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "test": "node --test tests/*.test.mjs",
+    "test:requirements": "node scripts/verify-atlas-requirements.mjs",
     "test:runtime": "node scripts/verify-runtime-integrity.mjs",
     "test:schema": "node scripts/verify-schema-baseline.mjs"
   },
