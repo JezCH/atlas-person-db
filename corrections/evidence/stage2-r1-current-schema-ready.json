@@ -29,7 +29,8 @@
         "legacy_source_key": "pending-records-supplement-4.json:9:094e107ffe4e73ac"
       },
       "child_counts": {"sources":1,"chronology_claims":0,"relationship_descriptions":0},
-      "manifest_ready": true
+      "manifest_ready": true,
+      "execution_source": "corrections/requests/stage2-r1-current-schema-ready-01.json"
     },
     {
       "person": "Otto von Bismarck",
@@ -57,15 +58,18 @@
         "legacy_source_key": "pending-records-supplement-10.json:4:045f6c9d25844129"
       },
       "child_counts": {"sources":1,"chronology_claims":0,"relationship_descriptions":0},
-      "manifest_ready": true
+      "manifest_ready": true,
+      "execution_source": "corrections/requests/stage2-r1-current-schema-ready-01.json"
     },
     {
       "person": "Muhammad",
       "activity_id": "e4b374f5-ee25-5c12-80bf-5b7b1d2d149c",
       "decision": "RETIRE_INVALID_PRE_622_MEDINA_BACKPROJECTION",
-      "reason": "The reviewed R1 decision retires the Medina 610–632 alternative and retains the post-Hijra Medinan Polity 622–632 assertion. Exact normalized Person/Polity/Role/Period UUIDs for the retire target have not yet been captured in a durable reviewed artifact available to this branch.",
-      "manifest_ready": false,
-      "blocker": "EXACT_NORMALIZED_BEFORE_STATE_REQUIRED"
+      "reason": "The reviewed R1 decision retires the Medina 610–632 alternative and retains the post-Hijra Medinan Polity 622–632 assertion. The exact normalized before-state is deliberately not guessed or copied from a name projection: it is captured read-only from the exact reviewed Activity UUID on the same deployed Production SHA immediately before dry-run/apply, then revalidated under row locks by correction v1.1.",
+      "manifest_ready": true,
+      "execution_source": "corrections/intents/stage2-r1-muhammad-pre622-medina.json",
+      "exact_before_state_resolution": "SAME_SHA_CORRECTION_SNAPSHOT",
+      "retained_activity_id": "fc68a326-f59f-5780-a6f0-c5206d9ceba3"
     }
   ]
 }
