@@ -72,6 +72,9 @@ jobs:
       - name: Verify R0 future semantic equivalence
         run: npm run test:r0-gate
 
+      - name: Verify baseline-independent Stage 2 integration prep
+        run: npm run test:stage2-prep
+
       - name: Verify runtime architecture
         run: npm run test:runtime
 

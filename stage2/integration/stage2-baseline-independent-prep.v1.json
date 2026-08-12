@@ -1,0 +1,41 @@
+{
+  "schema": "atlas-stage2-baseline-independent-integration-prep/v1",
+  "as_of": "2026-08-12",
+  "source_stack_sha": "ff85c2511249096dfb6c5c6e21f29c3913957f18",
+  "current_release_train_branch": "agent/atlas-requirements-source-of-truth",
+  "production_mutation": false,
+  "baseline_policy": {
+    "old_346_binding_authoritative": false,
+    "baseline_a_required_for_uuid_rebind": true,
+    "no_old_activity_uuid_write_targets": true
+  },
+  "port_now": [
+    {"id":"relation_semantics","path":"docs/audits/RELATION_SEMANTICS_CONTRACT_V1_2026-08-12.md"},
+    {"id":"governance_context","path":"docs/stage2/contracts/GOVERNANCE_CONTEXT_CURRENT_V1.md"},
+    {"id":"polity_relations","path":"docs/stage2/contracts/POLITY_RELATION_CURRENT_V1.md"},
+    {"id":"temporal_interval","path":"docs/stage2/contracts/TEMPORAL_CURRENT_V1.md"},
+    {"id":"provenance","path":"docs/stage2/contracts/PROVENANCE_CURRENT_V1.md"},
+    {"id":"activity_semantic_key_v2","path":"docs/stage2/contracts/ACTIVITY_SEMANTIC_KEY_V2_CURRENT.md"},
+    {"id":"additive_schema","path":"docs/stage2/contracts/ADDITIVE_SCHEMA_CURRENT_V1.md"},
+    {"id":"kublai_pre1271_identity_policy","path":"research/mongol/stage2-kublai-pre1271-polity-territory-decision.v1.json"}
+  ],
+  "wait_for_baseline_a": [
+    "fresh_master_ledger",
+    "fresh_stage2_work_queues",
+    "surviving_activity_uuid_bindings",
+    "exact_polity_uuid_assertions",
+    "historical_correction_v2_manifests",
+    "relation_type_row_backfill",
+    "production_additive_schema_apply",
+    "semantic_key_v2_activation",
+    "person_physical_merge"
+  ],
+  "production_train_2_intent": [
+    "additive_schema",
+    "correction_v2_and_historical_backfill",
+    "global_semantic_gate",
+    "semantic_key_v2_cutover",
+    "v2_person_merge",
+    "baseline_b_and_end_state_constraints"
+  ]
+}
