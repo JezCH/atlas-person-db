@@ -1,12 +1,17 @@
 "use strict";
 
 const { createPostgresClient } = require("./atlas-postgres-client.js");
-const { createCorrectionManifestService } = require("./atlas-correction-manifest-service.js");
+const { MANIFEST_V1 } = require("./atlas-correction-manifest-service.js");
+const {
+  MANIFEST_V1_1,
+  createCorrectionManifestServiceForSchema
+} = require("./atlas-correction-manifest-v1-1-service.js");
 const { applyCorrectionMigrations } = require("./atlas-correction-migrations.js");
 const { verifyGitHubActionsOidc } = require("./atlas-correction-github-oidc.js");
 
 const MANIFEST_PATH_RE = /^corrections\/requests\/[A-Za-z0-9._-]+\.json$/;
 const MODES = new Set(["dry_run", "apply"]);
+const MANIFEST_SCHEMAS = new Set([MANIFEST_V1, MANIFEST_V1_1]);
 
 function json(res, status, body) {
   res.statusCode = status;
@@ -50,7 +55,9 @@ function requirePayload(body) {
   const mode = String(body?.mode || "").trim().toLowerCase();
   if (!MODES.has(mode)) throw new Error("CORRECTION_MODE_REQUIRED");
   if (!body?.manifest || typeof body.manifest !== "object" || Array.isArray(body.manifest)) throw new Error("CORRECTION_MANIFEST_OBJECT_REQUIRED");
-  return { deploymentSha, manifestPath, mode, manifest: body.manifest };
+  const schema = String(body.manifest.schema || "").trim();
+  if (!MANIFEST_SCHEMAS.has(schema)) throw new Error("UNSUPPORTED_CORRECTION_MANIFEST_SCHEMA");
+  return { deploymentSha, manifestPath, mode, manifest: body.manifest, schema };
 }
 
 function createCorrectionApplyHandler({
@@ -92,12 +99,14 @@ function createCorrectionApplyHandler({
     try {
       client = await createClient(databaseUrl, { env });
       if (payload.mode === "apply") await applyMigrations(client);
-      const outcome = await createCorrectionManifestService({ client }).execute(payload.manifest, {
+      const service = createCorrectionManifestServiceForSchema({ client, schema: payload.schema });
+      const outcome = await service.execute(payload.manifest, {
         dryRun: payload.mode === "dry_run"
       });
       return json(res, 200, {
         ok: true,
         marker: outcome.marker,
+        schema: payload.schema,
         request_id: outcome.request_id,
         mode: payload.mode,
         dry_run: outcome.dry_run,
@@ -109,7 +118,7 @@ function createCorrectionApplyHandler({
       });
     } catch (error) {
       const code = String(error?.message || "CORRECTION_APPLY_FAILED");
-      const conflict = /COLLISION|DRIFT|MISMATCH|CONFLICT|REQUIRED|UNSUPPORTED|NOT_FOUND|REAPPEARED|INVALID|LIMIT|APPROVED|TARGET/.test(code);
+      const conflict = /COLLISION|DRIFT|MISMATCH|CONFLICT|REQUIRED|UNSUPPORTED|NOT_FOUND|REAPPEARED|INVALID|LIMIT|APPROVED|TARGET|NO_CHANGE/.test(code);
       return json(res, conflict ? 409 : 500, { ok: false, code });
     } finally {
       if (client && typeof client.end === "function") {
@@ -125,5 +134,6 @@ module.exports = Object.freeze({
   requireDeployment,
   bearerToken,
   MANIFEST_PATH_RE,
-  MODES
+  MODES,
+  MANIFEST_SCHEMAS
 });
