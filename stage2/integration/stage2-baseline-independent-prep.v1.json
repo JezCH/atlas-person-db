@@ -23,12 +23,17 @@
     {"id":"stage2_provenance_rehearsal","path":"db/proposals/stage2_provenance.rehearsal.sql"},
     {"id":"stage2_semantic_key_rehearsal","path":"db/proposals/stage2_activity_semantic_key.rehearsal.sql"},
     {"id":"kublai_pre1271_identity_policy","path":"research/mongol/stage2-kublai-pre1271-polity-territory-decision.v1.json"},
-    {"id":"structural_relation_interval_research","path":"research/relations/stage2-structural-polity-relation-intervals.v1.json"}
+    {"id":"structural_relation_interval_research","path":"research/relations/stage2-structural-polity-relation-intervals.v1.json"},
+    {"id":"baseline_a_intake_contract","path":"stage2/contracts/baseline-a-intake-current.v1.json"},
+    {"id":"baseline_a_intake_tool","path":"scripts/stage2-baseline-a-intake.mjs"},
+    {"id":"baseline_a_identity_handoff","path":"docs/stage2/BASELINE_A_INTAKE_AND_IDENTITY_HANDOFF_2026-08-12.md"}
   ],
   "wait_for_baseline_a": [
+    "baseline_a_validated_intake",
     "fresh_master_ledger",
     "fresh_stage2_work_queues",
     "surviving_activity_uuid_bindings",
+    "reviewed_identity_bindings",
     "exact_polity_uuid_assertions",
     "historical_correction_v2_manifests",
     "relation_type_row_backfill",

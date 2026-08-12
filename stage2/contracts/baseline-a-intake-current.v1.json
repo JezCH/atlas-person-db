@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-stage2-baseline-a-intake-contract/v1",
+  "as_of": "2026-08-12",
+  "production_mutation": false,
+  "purpose": "Deterministic handoff from Production Train 1 Baseline A evidence into fresh Stage 2 integration and reviewed identity binding work.",
+  "accepted_input": {
+    "marker": "ATLAS_CORRECTION_BASELINE_A_V1",
+    "mode": "full_activity_baseline",
+    "read_only": true,
+    "committed": false,
+    "deployment_sha": "exact 40-hex Production main SHA",
+    "digest": "sha256 of recursively key-sorted JSON {rows,counts}; array order preserved",
+    "rows_must_be_sorted_by_activity_uuid": true,
+    "activity_uuid_must_be_unique": true,
+    "row_count_must_equal_counts_activities": true
+  },
+  "identity_rules": {
+    "baseline_a_is_execution_uuid_source_of_truth": true,
+    "old_346_activity_baseline_authoritative": false,
+    "old_stage2_activity_uuid_bindings_authoritative": false,
+    "canonical_names_are_binding_authority": false,
+    "localized_names_are_binding_authority": false,
+    "canonical_keys_are_binding_authority": false,
+    "names_and_keys_may_nominate_review_candidates": true,
+    "person_identity_polity_identity_activity_identity_are_distinct": true,
+    "polity_identity_resolution_precedes_activity_semantic_cutover": true,
+    "generic_relation_default_allowed": false
+  },
+  "duplicate_lifecycle": {
+    "identity_review_before_semantic_cutover_allowed": true,
+    "physical_person_merge_before_semantic_key_v2_allowed": false,
+    "physical_person_merge_phase": "P10",
+    "v2_aware_relationship_reconciliation_required": true
+  },
+  "downstream_authority": {
+    "fresh_master_ledger_seed_may_be_generated_after_validation": true,
+    "fresh_stage2_work_queue_seed_may_be_generated_after_validation": true,
+    "reviewed_identity_binding_required_before_correction_v2_targets": true,
+    "intake_alone_authorizes_correction_v2": false,
+    "intake_alone_authorizes_semantic_key_v2_activation": false,
+    "intake_alone_authorizes_person_merge": false,
+    "intake_alone_authorizes_production_mutation": false
+  },
+  "required_handoff_order": [
+    "production_train_1_r0_r1",
+    "baseline_a_capture_same_exact_sha",
+    "baseline_a_digest_validation",
+    "baseline_a_intake_generation",
+    "fresh_stage2_integration_branch_from_updated_main",
+    "fresh_master_ledger_and_work_queues",
+    "reviewed_person_and_polity_identity_bindings",
+    "correction_v2_target_generation",
+    "historical_structural_backfill",
+    "global_semantic_cutover_gate",
+    "semantic_key_v2_cutover",
+    "physical_person_merge"
+  ]
+}
