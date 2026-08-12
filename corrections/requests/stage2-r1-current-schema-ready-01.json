@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-correction-manifest/v1.1",
+  "request_id": "stage2-r1:current-schema-ready:franklin-bismarck:2026-08-12:v1",
+  "review_status": "approved",
+  "evidence": {
+    "decision_registry": "corrections/evidence/stage2-r1-current-schema-ready.json",
+    "normalized_inventory_run": "31499183625",
+    "normalized_inventory_artifact_id": "9104264546",
+    "normalized_inventory_digest": "sha256:ac1d91800412c2d79921b6ed791e6c82f94d125fc4203568f2cad4ddf5db3eb3"
+  },
+  "operations": [
+    {
+      "type": "retire_activity",
+      "relationship_id": "2a749964-c057-5671-bdaa-8388099b871d",
+      "expected": {
+        "person_id": "4ac78579-a8ce-56b9-a901-89f0b34317b9",
+        "polity_id": "7d09bc56-1ea0-515e-a3e7-9863361b6f15",
+        "role_id": "fde0aaed-efb2-551e-a210-122d6da24345",
+        "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
+        "activity_start": 1757,
+        "activity_end": 1790,
+        "notes": "Activity period begins with his first diplomatic mission to London and continues through his public service until his death.",
+        "legacy_source_key": "pending-records-supplement-4.json:9:094e107ffe4e73ac"
+      }
+    },
+    {
+      "type": "update_activity_interval",
+      "relationship_id": "6bac2b6f-ebf0-5131-bbf2-7fa524bcfae8",
+      "expected_before": {
+        "person_id": "5401a194-c4e1-57e9-97da-49538d756182",
+        "polity_id": "a5982b52-4f13-53c3-93f6-3cfe5075d630",
+        "role_id": "9266f289-65d4-530f-a1ae-5f55278c9e45",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1862,
+        "activity_end": 1871,
+        "notes": "Otto von Bismarck served as Minister President of Prussia and led the wars and diplomacy that culminated in German unification.",
+        "legacy_source_key": "pending-records-supplement-10.json:4:045f6c9d25844129"
+      },
+      "expected_after": {
+        "person_id": "5401a194-c4e1-57e9-97da-49538d756182",
+        "polity_id": "a5982b52-4f13-53c3-93f6-3cfe5075d630",
+        "role_id": "9266f289-65d4-530f-a1ae-5f55278c9e45",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1862,
+        "activity_end": 1890,
+        "notes": "Otto von Bismarck served as Minister President of Prussia and led the wars and diplomacy that culminated in German unification.",
+        "legacy_source_key": "pending-records-supplement-10.json:4:045f6c9d25844129"
+      }
+    }
+  ]
+}
