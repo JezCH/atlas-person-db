@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildBaselineAIntake, digest, BASELINE_MARKER, INTAKE_SCHEMA } from '../scripts/stage2-baseline-a-intake.mjs';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import zlib from 'node:zlib';
+import { buildBaselineAIntake, readBaselineFile, digest, BASELINE_MARKER, INTAKE_SCHEMA } from '../scripts/stage2-baseline-a-intake.mjs';
 
 const SHA = 'a'.repeat(40);
 const A = '11111111-1111-4111-8111-111111111111';
@@ -43,18 +47,35 @@ function fixture() {
     row_count: rows.length, counts, rows, catalogs, baseline_digest: digest(rows, counts, catalogs) };
 }
 
-test('Baseline A v2 intake preserves complete live identity catalogs including unreferenced entities and raw polity name_type', () => {
-  const intake = buildBaselineAIntake(fixture());
+test('Baseline A v2 intake preserves complete identity catalogs, raw name_type and full Activity rows', () => {
+  const baseline = fixture();
+  const intake = buildBaselineAIntake(baseline);
   assert.equal(intake.schema, INTAKE_SCHEMA);
   assert.equal(intake.identity_catalogs.persons.length, 2);
   assert.equal(intake.identity_catalogs.polities.length, 2);
   assert.equal(intake.identity_catalogs.polities[1].names[0].name_type, 'legacy-alias-kind');
+  assert.deepEqual(intake.activity_rows, baseline.rows);
+  assert.equal(intake.durability.full_activity_rows_preserved, true);
+  assert.equal(intake.durability.full_identity_catalogs_preserved, true);
   assert.equal(intake.catalog_cardinality.sources, 1);
   assert.equal(intake.authority.live_uuid_inventory_authoritative, true);
   assert.equal(intake.authority.historical_identity_decisions_automatically_approved, false);
   assert.equal(intake.authority.names_binding_authority, false);
   assert.equal(intake.authority.correction_v2_authorized, false);
   assert.equal(intake.authority.production_mutation_authorized, false);
+});
+
+test('Baseline A v2 intake can read a durable gzip capture without changing semantics', () => {
+  const baseline = fixture();
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'atlas-baseline-a-'));
+  const file = path.join(dir, 'baseline-a.json.gz');
+  fs.writeFileSync(file, zlib.gzipSync(Buffer.from(JSON.stringify(baseline), 'utf8')));
+  try {
+    assert.deepEqual(readBaselineFile(file), baseline);
+    assert.equal(buildBaselineAIntake(readBaselineFile(file)).baseline_digest, baseline.baseline_digest);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
 });
 
 test('Baseline A v2 digest covers catalogs, not only Activity rows', () => {
@@ -70,7 +91,7 @@ test('Baseline A v2 rejects Activity metadata drift from the same snapshot catal
   assert.throws(() => buildBaselineAIntake(baseline), /polity canonical metadata drift/);
 });
 
-test('Baseline A v2 rejects missing full catalog rows and unsorted Activity UUIDs', () => {
+test('Baseline A v2 rejects missing full catalog rows', () => {
   const baseline = fixture();
   baseline.catalogs.polities = baseline.catalogs.polities.slice(1);
   baseline.counts.polities = 1;

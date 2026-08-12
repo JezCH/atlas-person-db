@@ -78,6 +78,25 @@ jobs:
       - name: Verify current Stage 2 machine-readable domain contract
         run: npm run test:stage2-contract
 
+      - name: Validate durable Baseline A v2 capture
+        run: npm run test:stage2-baseline-a
+
+      - name: Generate fresh Baseline A Stage 2 ledger and work queues
+        run: npm run test:stage2-baseline-a-ledger
+
+      - name: Upload Baseline A Stage 2 integration evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-stage2-baseline-a-integration-${{ github.sha }}
+          path: |
+            artifacts/stage2-baseline-a-intake.json
+            artifacts/stage2-baseline-a-master-ledger.json
+            artifacts/stage2-baseline-a-master-ledger-summary.json
+            artifacts/stage2-baseline-a-work-queues.json
+            artifacts/stage2-baseline-a-work-queues-summary.json
+          if-no-files-found: error
+          retention-days: 30
+
       - name: Verify runtime architecture
         run: npm run test:runtime
 
