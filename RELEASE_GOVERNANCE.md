@@ -116,16 +116,34 @@ On failure, stop the train. Never patch Production ad hoc.
 
 ## 7. Exact-SHA / protection policy
 
-Before Production mutation:
+GitHub-enforced branch protection is preferred **only when the repository/account can actually enforce it**. A visible but non-enforced ruleset is not a safety control and must not be treated as one.
 
-- `main` must be protected;
-- `ATLAS Integrity` must be required;
-- operation SHA must equal Vercel Production SHA;
-- executable Production-operation commits must become the exact deployed SHA;
+Current repository decision is recorded in `docs/release/P0_MAIN_PROTECTION_AVAILABILITY_2026-08-12.md`.
+
+Before any Production mutation, one of the following release-control modes must be true:
+
+### Mode A — platform-enforced protection available
+
+- `main` protection/ruleset is actually enforced;
+- `ATLAS Integrity` is a required check;
+- ordinary release flow still uses exact-head and exact-Production-SHA verification.
+
+### Mode B — protection unavailable under current repository/account configuration
+
+The release must fail closed unless **all** conditions are proven:
+
+- release occurs through the reviewed release PR;
+- `ATLAS Integrity` succeeded on the exact PR head SHA;
+- unresolved review threads are zero;
+- merge is executed with that exact expected head SHA;
+- resulting `main` SHA is read after merge;
+- operation SHA equals Vercel Production SHA;
 - authoring/correction/audit transports reject SHA mismatch;
-- code existing on `main` is not considered live until the matching Production deployment exists.
+- code existing on `main` is not considered live until matching Production deployment exists.
 
-Branch protection itself does not need Vercel and should be enabled as soon as the GitHub control surface permits it.
+If any proof is missing, the train stops. No Production mutation is authorized.
+
+When GitHub protection becomes enforceable later, enable it and require `ATLAS Integrity`; this is future hardening, not a reason to create a decorative non-enforced ruleset now.
 
 ## 8. Vercel budget invariant
 

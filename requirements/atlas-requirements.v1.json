@@ -33,7 +33,7 @@
     {"id":"ATLAS-RQ-0108","status":"COMPLETED","title":"Person duplicate review is evidence based","evidence_paths":["server/atlas-duplicate-detector.js","server/atlas-duplicate-review-service.js","server/atlas-person-merge-service.js","DATA_MODEL.md"]},
     {"id":"ATLAS-RQ-0109","status":"COMPLETED","title":"Correction v1 is isolated and dry-run first","evidence_paths":["server/atlas-correction-manifest-service.js",".github/workflows/atlas-correction-apply.yml","ARCHITECTURE_INVARIANTS.md"]},
 
-    {"id":"ATLAS-RQ-0201","status":"PENDING","title":"Protect main with ATLAS Integrity","phase":"P0"},
+    {"id":"ATLAS-RQ-0201","status":"COMPLETED","title":"Establish fail-closed main release control when GitHub protection is unavailable","evidence_paths":["docs/release/P0_MAIN_PROTECTION_AVAILABILITY_2026-08-12.md","RELEASE_GOVERNANCE.md","OPERATIONS.md"]},
     {"id":"ATLAS-RQ-0202","status":"PENDING","title":"Restore exact Production SHA deployment proof","phase":"P0"},
     {"id":"ATLAS-RQ-0203","status":"PENDING","title":"Apply R0 only after future-semantic equivalence gate","phase":"P1"},
     {"id":"ATLAS-RQ-0204","status":"PENDING","title":"Add bounded correction v1.1 operations","phase":"P1"},

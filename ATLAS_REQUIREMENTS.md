@@ -64,8 +64,10 @@ Unknown optional profile facts remain absent/unresolved. The system must not req
 ## 3. Current P0–P14 execution order
 
 ### P0 — Production control
-- `ATLAS-RQ-0201` — protect `main` with ATLAS Integrity.
+- `ATLAS-RQ-0201` — **COMPLETED:** use GitHub-enforced `ATLAS Integrity` protection whenever the repository/account can actually enforce it; while it cannot, use the documented fail-closed release gate: exact green PR head, zero unresolved review threads, expected-head merge, then exact `main` SHA = Vercel Production SHA before any Production mutation. A decorative non-enforced ruleset does not count as protection.
 - `ATLAS-RQ-0202` — prove exact GitHub `main` SHA = Vercel Production SHA before mutation.
+
+Current platform decision: `docs/release/P0_MAIN_PROTECTION_AVAILABILITY_2026-08-12.md`.
 
 ### P1 — Current-schema Train 1 cleanup
 - `ATLAS-RQ-0203` — R0 only after future-semantic equivalence.
@@ -177,6 +179,7 @@ P14 consumes shared UUIDs and compiled Runtime-ready historical state. Place and
 
 ```text
 branch-only contracts/research/CI
+→ P0 release control (GitHub enforcement when available; fail-closed exact-head gate otherwise)
 → Production Train 1: R0/R1 + Baseline A v2 on one exact SHA
 → fresh branch-only Stage 2 live rebinding/build/test
 → Production Train 2: additive migration + correction/backfill + P8 + P9 + P10 + Baseline B

@@ -71,9 +71,23 @@ Before merge:
 3. No unresolved review thread blocks the change.
 4. DB structure changes include both a reviewed migration strategy and an updated `db/schema/atlas_v2.current.sql` when they become Production-authorized.
 5. No data-destructive live DB action is hidden inside ordinary CI.
-6. `main` branch protection requires ATLAS Integrity before a Production release is authorized.
+6. If GitHub branch/ruleset protection is actually enforceable, it must require `ATLAS Integrity`.
+7. If protection is unavailable for the current private-repository/account configuration, do not create a decorative non-enforced ruleset. Instead use the fail-closed release procedure below.
 
-The connected automation surface may not be able to configure GitHub branch protection. In that case the protection state is an explicit P0 prerequisite, not something to infer from green CI.
+Current protection availability decision: `docs/release/P0_MAIN_PROTECTION_AVAILABILITY_2026-08-12.md`.
+
+### Fail-closed release procedure when GitHub protection is unavailable
+
+All of the following are mandatory:
+
+- exact PR head SHA has green `ATLAS Integrity`;
+- unresolved review threads are zero;
+- merge uses the exact expected head SHA so a moved PR cannot be merged accidentally;
+- resulting `main` SHA is read after merge;
+- no Production mutation occurs until Vercel Production proves that exact `main` SHA;
+- authoring/correction/audit transports continue to reject SHA mismatch.
+
+If any proof is missing, stop. Green CI on some other SHA is not sufficient.
 
 ## 4. Production deployment
 
@@ -83,7 +97,7 @@ Release sequence:
 
 ```text
 PR exact head PASS
-→ merge to main
+→ exact-head merge to main
 → determine exact main SHA
 → Vercel Production deploy that SHA
 → verify deployed SHA/status
