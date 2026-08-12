@@ -128,6 +128,7 @@ jobs:
             artifacts/stage2-baseline-a-work-queues.json
             artifacts/stage2-baseline-a-work-queues-summary.json
             artifacts/stage2-baseline-a-person-duplicate-candidates.json
+            artifacts/stage2-baseline-a-p5p6-execution-manifest.json
           if-no-files-found: error
           retention-days: 30
 

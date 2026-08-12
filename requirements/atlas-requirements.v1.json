@@ -2,7 +2,7 @@
   "schema": "atlas-requirements/v1",
   "version": 1,
   "finalized": true,
-  "as_of": "2026-08-12",
+  "as_of": "2026-08-13",
   "roadmap": ["P0","P1","P2","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P13","P14"],
   "requirements": [
     {"id":"ATLAS-RQ-0001","status":"ACTIVE","title":"Historical accuracy over completeness"},
@@ -46,8 +46,8 @@
     {"id":"ATLAS-RQ-0210","status":"COMPLETED","title":"Close layered-authority R1 cases","evidence_paths":["research/layered/stage2-r1-layered-authority-decisions.v1.json","research/pre-vercel/stage2-pre-vercel-domain-closure.v1.json"]},
     {"id":"ATLAS-RQ-0211","status":"COMPLETED","title":"Close remaining Baseline-A-independent historical model blockers","evidence_paths":["research/residual/stage2-historical-research-first-resolution.v1.json","research/mongol/stage2-kublai-pre1271-polity-territory-decision.v1.json","research/pre-vercel/stage2-pre-vercel-domain-closure.v1.json"]},
 
-    {"id":"ATLAS-RQ-0212","status":"PENDING","title":"Complete Person duplicate decisions without early destructive merge","phase":"P4"},
-    {"id":"ATLAS-RQ-0213","status":"PENDING","title":"Bind reviewed canonical Polity identities to surviving Baseline A UUIDs","phase":"P4"},
+    {"id":"ATLAS-RQ-0212","status":"COMPLETED","title":"Complete Person duplicate decisions without early destructive merge","evidence_paths":["stage2/integration/baseline-a-person-identity-decisions.v1.json","scripts/apply-stage2-baseline-a-person-identity-decisions.mjs","docs/stage2/P4_IDENTITY_CLOSURE_2026-08-13.md"]},
+    {"id":"ATLAS-RQ-0213","status":"COMPLETED","title":"Bind reviewed canonical Polity identities to surviving Baseline A UUIDs","evidence_paths":["stage2/integration/baseline-a-polity-identity-decisions.v1.json","stage2/integration/baseline-a-polity-identity-decisions-batch6.v1.json","stage2/integration/baseline-a-polity-identity-corrections.v1.json","scripts/verify-stage2-baseline-a-polity-identity-closure.mjs","docs/stage2/P4_IDENTITY_CLOSURE_2026-08-13.md"]},
     {"id":"ATLAS-RQ-0214","status":"PENDING","title":"Bind reviewed structural Polity relations to live UUIDs and normalized Sources","phase":"P3"},
     {"id":"ATLAS-RQ-0215","status":"PENDING","title":"Apply additive Stage 2 schema including Relation, Governance, People/Event and semantic name kinds","phase":"P5"},
     {"id":"ATLAS-RQ-0216","status":"PENDING","title":"Implement correction engine v2 on the final schema","phase":"P6"},
