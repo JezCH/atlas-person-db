@@ -1,0 +1,177 @@
+{
+  "schema": "atlas-stage2-regional-authority-target-phase-research/v1",
+  "status": "RESEARCH_REVIEWED_NO_PRODUCTION_WRITE",
+  "as_of": "2026-08-12",
+  "source_document": "docs/research/china/STAGE2_REGIONAL_AUTHORITY_TARGET_PHASE_RESEARCH_2026-08-12.md",
+  "baseline_binding": {
+    "required_baseline": "Baseline A",
+    "stale_346_activity_uuids_are_evidence_only": true,
+    "canonical_polity_uuid_binding_deferred": true,
+    "territory_geometry_deferred": true
+  },
+  "decisions": [
+    {
+      "person": "Liu Yan",
+      "current_activity_uuid_evidence_only": "15777776-b739-5988-9a04-472b2d6629c7",
+      "current_target": "Eastern Han",
+      "current_interval": {"start_year": 188, "end_year": 194},
+      "current_row_disposition": "SPLIT_REQUIRED",
+      "phases": [
+        {
+          "start_year": 188,
+          "end_year": 190,
+          "target_class": "EASTERN_HAN",
+          "person_relation": "serves",
+          "regional_polity_required": false
+        },
+        {
+          "start_year": 191,
+          "end_year": 194,
+          "target_class": "SOURCE_BACKED_YI_REGIONAL_POLITY",
+          "production_canonical_name": null,
+          "production_polity_uuid": null,
+          "person_relation": "rules",
+          "structural_relation": {
+            "type": "nominally_subordinate_to",
+            "target": "Eastern Han",
+            "status": "SOURCE_BACKED_IN_PRINCIPLE"
+          }
+        }
+      ],
+      "year_level_transition": 191,
+      "subyear_transition": null,
+      "remaining_blockers": ["BASELINE_A_BINDING","CANONICAL_POLITY_IDENTITY_AUTHORING","TERRITORY_INTERVAL_RECONSTRUCTION","GEOMETRY_RECONSTRUCTION"]
+    },
+    {
+      "person": "Yuan Shao",
+      "current_activity_uuid_evidence_only": "36a3ade9-b108-5358-8732-be7b3f6637f9",
+      "current_target": "Eastern Han",
+      "current_interval": {"start_year": 189, "end_year": 202},
+      "current_row_disposition": "SPLIT_REQUIRED",
+      "phases": [
+        {
+          "start_year": 189,
+          "end_year": 190,
+          "target_class": "EASTERN_HAN_CONTEXT",
+          "person_relation": null,
+          "relation_status": "PENDING_ROLE_RELATION_INTEGRATION"
+        },
+        {
+          "start_year": 191,
+          "end_year": 202,
+          "target_class": "SOURCE_BACKED_JI_CENTERED_YUAN_SHAO_REGIONAL_POLITY",
+          "production_canonical_name": null,
+          "production_polity_uuid": null,
+          "person_relation": "rules",
+          "structural_relation": {
+            "type": "nominally_subordinate_to",
+            "target": "Eastern Han",
+            "status": "SOURCE_BACKED_IN_PRINCIPLE"
+          }
+        }
+      ],
+      "four_province_geometry_from_191_forbidden": true,
+      "you_full_control_before_199_forbidden": true,
+      "remaining_blockers": ["BASELINE_A_BINDING","EARLY_PHASE_RELATION_INTEGRATION","CANONICAL_POLITY_IDENTITY_AUTHORING","TERRITORY_INTERVAL_RECONSTRUCTION","GEOMETRY_RECONSTRUCTION"]
+    },
+    {
+      "person": "Ma Teng",
+      "current_activity_uuid_evidence_only": "42274e4c-af35-503f-a14f-e7460489b252",
+      "current_target": "Eastern Han",
+      "current_interval": {"start_year": 189, "end_year": 212},
+      "current_row_disposition": "MULTIPHASE_REBUILD_REQUIRED",
+      "pre_208": {
+        "regional_political_authority_supported": true,
+        "target_class": "SOURCE_BACKED_WESTERN_REGIONAL_POLITY",
+        "production_canonical_name": null,
+        "production_polity_uuid": null,
+        "person_relation_for_territorial_phases": "rules",
+        "continuous_nominal_subordination_assertion_allowed": false,
+        "reason": "rebellion, Han-granted command, renewed attack, autonomy and cooperation must not be collapsed"
+      },
+      "central_service_phase": {
+        "start_year": 208,
+        "end_year": 212,
+        "target": "Eastern Han",
+        "person_relation": "serves",
+        "role_evidence": "Weiwei",
+        "direct_regional_geometry_after_transfer": false
+      },
+      "remaining_blockers": ["BASELINE_A_BINDING","EARLY_SUBPHASE_CHRONOLOGY","NOMINAL_SUBORDINATION_INTERVALS","CANONICAL_POLITY_IDENTITY_AUTHORING","TERRITORY_INTERVAL_RECONSTRUCTION","GEOMETRY_RECONSTRUCTION"]
+    },
+    {
+      "person": "Liu Biao",
+      "current_activity_uuid_evidence_only": "583d7e8d-ed63-5a7e-947a-2a3c43f8dfad",
+      "current_target": "Eastern Han",
+      "current_interval": {"start_year": 190, "end_year": 208},
+      "current_row_disposition": "RELINK_REQUIRED",
+      "target_class": "SOURCE_BACKED_JING_REGIONAL_POLITY",
+      "production_canonical_name": null,
+      "production_polity_uuid": null,
+      "person_relation": "rules",
+      "outer_activity_interval_retainable": true,
+      "structural_relation": {
+        "type": "nominally_subordinate_to",
+        "target": "Eastern Han",
+        "status": "SOURCE_BACKED_IN_PRINCIPLE"
+      },
+      "administrative_jing_name_auto_promoted_to_polity": false,
+      "territory_expansion_encoded_in_activity": false,
+      "remaining_blockers": ["BASELINE_A_BINDING","CANONICAL_POLITY_IDENTITY_AUTHORING","TERRITORY_INTERVAL_RECONSTRUCTION","GEOMETRY_RECONSTRUCTION"]
+    },
+    {
+      "person": "Lü Bu",
+      "current_activity_uuid_evidence_only": "5b4fa9a3-ca6f-5e6b-a417-874f31b10650",
+      "current_target": "Eastern Han",
+      "current_interval": {"start_year": 192, "end_year": 198},
+      "current_row_disposition": "MULTIPHASE_REBUILD_REQUIRED",
+      "minimum_phase_classes": [
+        {"period":"192","class":"CENTRAL_HAN_WANG_YUN_SERVICE","own_territorial_polity":false},
+        {"period":"192-194","class":"MOBILE_DEPENDENCY_OR_SERVICE","own_territorial_polity":false},
+        {"period":"194-195","class":"YAN_TERRITORIAL_AUTHORITY","own_territorial_polity":true,"person_relation":"rules"},
+        {"period":"195-196","class":"DISPLACED_OR_REFUGE","own_territorial_polity":false},
+        {"period":"196-198","class":"XU_TERRITORIAL_AUTHORITY","own_territorial_polity":true,"person_relation":"rules"}
+      ],
+      "yan_xu_same_polity_identity": null,
+      "fabricated_lu_bu_state_name_allowed": false,
+      "continuous_nominal_han_relation_allowed": false,
+      "remaining_blockers": ["BASELINE_A_BINDING","YAN_XU_POLITY_IDENTITY_REVIEW","EXACT_PHASE_BOUNDARIES","NOMINAL_HAN_INTERVALS","CANONICAL_POLITY_IDENTITY_AUTHORING","TERRITORY_INTERVAL_RECONSTRUCTION","GEOMETRY_RECONSTRUCTION"]
+    },
+    {
+      "person": "Fang Guozhen",
+      "current_activity_uuid_evidence_only": "8198cad1-dc14-5c1e-9b01-ddbddc447da7",
+      "current_target": "Yuan Dynasty",
+      "current_interval": {"start_year": 1348, "end_year": 1367},
+      "current_row_disposition": "MULTIPHASE_REBUILD_REQUIRED",
+      "regional_polity": {
+        "target_class": "SOURCE_BACKED_EASTERN_ZHEJIANG_REGIONAL_POLITY",
+        "production_canonical_name": null,
+        "production_polity_uuid": null,
+        "person_relation": "rules"
+      },
+      "minimum_phase_classes": [
+        {"start_year":1348,"end_year":1352,"class":"INSURGENT_MARITIME_PHASE","mature_land_polity_geometry_assumed":false},
+        {"start_year":1353,"end_year":1354,"class":"UNSTABLE_YUAN_SUBMISSION_AND_REBELLION","exact_subintervals_pending":true},
+        {"start_year":1355,"end_year":1358,"class":"AUTONOMOUS_EASTERN_ZHEJIANG_UNDER_YUAN_TITLES","structural_relation":{"type":"nominally_subordinate_to","target":"Yuan Dynasty"}},
+        {"start_year":1359,"end_year":1367,"class":"MULTI_ALLEGIANCE_AUTONOMOUS_RULE","multiple_time_bounded_superior_relations_required":true,"exclusive_single_superior_forced":false}
+      ],
+      "autonomous_polity_end_year": 1367,
+      "remaining_blockers": ["BASELINE_A_BINDING","EXACT_1353_1367_SUPERIOR_RELATION_CHRONOLOGY","CANONICAL_POLITY_IDENTITY_AUTHORING","TERRITORY_INTERVAL_RECONSTRUCTION","GEOMETRY_RECONSTRUCTION"]
+    }
+  ],
+  "invariants": {
+    "fabricated_polity_names_created": false,
+    "fabricated_geometry_created": false,
+    "province_name_auto_promoted_to_polity": false,
+    "family_name_auto_promoted_to_polity": false,
+    "parent_empire_geometry_inherited_from_nominal_relation": false,
+    "unknown_subyear_boundaries_fabricated": false
+  },
+  "research_result": {
+    "original_rows": 6,
+    "regional_authority_existence_or_phase_classified_rows": 6,
+    "canonical_polity_bindings_completed": 0,
+    "territory_geometry_completed": 0,
+    "remaining_research_is_residual_not_wholly_unclassified": true
+  }
+}
