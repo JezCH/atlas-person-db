@@ -3,6 +3,11 @@
 const { createMutationAuthorizer, requireEnv } = require("./atlas-session-auth.js");
 const { rebuildCandidates, listCandidates, reviewCandidate, schemaUnavailable } = require("./atlas-duplicate-review-service.js");
 const { executeApprovedPersonMerge } = require("./atlas-person-merge-service.js");
+const {
+  PERSON_MERGE_BLOCK_CODE,
+  personMergeExecutionState,
+  assertPersonMergeExecutionAllowed
+} = require("./atlas-person-merge-interlock.js");
 
 function sendJson(res, status, body) {
   res.statusCode = status;
@@ -58,16 +63,41 @@ function createDuplicateReviewHandler({ clientFactory, env = process.env, now } 
       return;
     }
 
+    const operation = method === "POST" ? String(body.operation).trim().toUpperCase() : null;
+    if (operation === "EXECUTE_APPROVED_MERGE") {
+      try {
+        assertPersonMergeExecutionAllowed();
+      } catch (error) {
+        const state = error?.state || {};
+        sendJson(res, 409, {
+          ok: false,
+          source: "v2-duplicate-review",
+          operation,
+          code: error?.code || PERSON_MERGE_BLOCK_CODE,
+          error: "Physical Person merge is disabled until semantic-key v2 reconciliation and P10 candidate revalidation are both active.",
+          reconciliation_semantic_version: state.reconciliation_semantic_version || null,
+          required_reconciliation_semantic_version: state.required_reconciliation_semantic_version || null,
+          person_merge_lifecycle_version: state.person_merge_lifecycle_version || null,
+          required_person_merge_lifecycle_version: state.required_person_merge_lifecycle_version || null
+        });
+        return;
+      }
+    }
+
     let client = null;
     try {
       client = await clientFactory(databaseUrl);
       if (method === "GET") {
         const queue = await listCandidates({ client, includeStale: String(req?.query?.include_stale || "") === "1" });
-        sendJson(res, 200, { ok: true, source: "v2-duplicate-review", ...queue });
+        sendJson(res, 200, {
+          ok: true,
+          source: "v2-duplicate-review",
+          merge_execution_state: personMergeExecutionState(),
+          ...queue
+        });
         return;
       }
 
-      const operation = String(body.operation).trim().toUpperCase();
       if (operation === "REBUILD_CANDIDATES") {
         const outcome = await rebuildCandidates({ client });
         sendJson(res, 200, { ok: true, source: "v2-duplicate-review", operation, ...outcome });

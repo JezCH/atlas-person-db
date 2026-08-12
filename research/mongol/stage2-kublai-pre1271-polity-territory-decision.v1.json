@@ -1,0 +1,31 @@
+{
+  "schema": "atlas-stage2-kublai-pre1271-decision/v1",
+  "as_of": "2026-08-12",
+  "status": "reviewed_model_decision",
+  "production_mutation": false,
+  "person_activity_semantics_status": "resolved",
+  "polity_identity": {
+    "stable_identity_start_year": 1260,
+    "great_yuan_designation_start_year": 1271,
+    "reuse_one_future_polity_uuid_across_designation_boundary": true,
+    "invent_new_pre1271_polity": false,
+    "pre1271_display_designation": "unresolved_source_grounded_name_required"
+  },
+  "territory": {
+    "pre1271_geometry_status": "unresolved",
+    "runtime_direct_control_geometry_authorized": false,
+    "authoring_unknown_allowed": true,
+    "semantic_cutover_blocker": false,
+    "forbidden_inferences": [
+      "whole_mongol_empire_from_khagan_title",
+      "back_project_later_yuan_extent",
+      "invent_placeholder_geometry"
+    ]
+  },
+  "source_urls": [
+    "https://www.cambridge.org/core/books/abs/cambridge-history-of-the-mongol-empire/empire-of-the-great-khan/41EEE744E9D3545E7111DC25B77C33F2",
+    "https://www.cambridge.org/core/books/abs/culture-and-conquest-in-mongol-eurasia/grand-qans-and-il-qans-12651295/2EB9EC01543A034A159265DE731C432B",
+    "https://www.cambridge.org/core/books/abs/cambridge-history-of-china/chinese-society-under-mongol-rule-12151368/9A6883E723707B5FA65850F9AD9AA402"
+  ],
+  "baseline_a_rebind_required": true
+}

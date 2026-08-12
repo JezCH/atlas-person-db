@@ -1,6 +1,6 @@
 # ATLAS Person × Polity Authoring System
 
-ATLAS의 normalized 역사 identity와 인물–정치체 활동 관계를 저작·검토·교정하는 관리 시스템입니다.
+ATLAS의 normalized 역사 identity와 인물–정치체 활동 관계를 저작·검토·교정하는 현재 시스템입니다. 이 repository의 **현재 Production surface는 Stage 2 이전의 Person × Polity authoring runtime**이며, 최종 제품 범위는 `ATLAS_REQUIREMENTS.md`의 first-class Person / Place / Source + Compile / Runtime 요구사항까지 포함합니다.
 
 ## Current architecture
 
@@ -35,6 +35,8 @@ source-preserving correction transaction
 
 브라우저는 Supabase/PostgreSQL에 직접 접속하지 않으며 DB credential을 포함하지 않습니다. 퇴역한 `public.person_politics`와 compatibility view는 runtime·bootstrap 의존성이 아닙니다.
 
+현재 `/api/atlas-read`가 normalized Authoring tables를 직접 projection하는 것은 **transition runtime**입니다. 최종 구조는 `Authoring → Compile → Runtime projection`이며 unresolved Authoring assertion은 Runtime-ready 역사 사실로 자동 노출되지 않습니다.
+
 ## Authoring domains
 
 ### Identity authoring
@@ -48,17 +50,21 @@ source-preserving correction transaction
 - 한국어 동명이인은 관리자 검토 후 명시적으로 허용 가능
 - 이름은 identity가 아니며 UUID가 authoritative identity입니다.
 
+현재 identity form은 first-class Person object authoring의 기반이지 최종 Person profile editor가 아닙니다. P13에서는 기존 identity/names/descriptions/sources를 유지하면서 source-backed life facts, Place links, media reference와 관련 Activity를 하나의 Person object surface로 완성합니다. Optional historical fact는 모르면 비워 두며 fake default를 만들지 않습니다.
+
 ### Activity authoring
 
 Identity가 존재한 뒤 `person_politics_v2` 활동 관계를 생성·수정·삭제합니다.
 
-Semantic activity identity는 다음 6개 차원 전체입니다.
+현재 Production semantic activity identity는 다음 6개 차원입니다.
 
 ```text
 Person + Polity + activity_start + activity_end + Role(nullable) + Period basis
 ```
 
-update/delete는 normalized relationship UUID를 사용합니다.
+P9 final semantic identity는 Relation Type + full interpreted temporal boundaries를 포함하도록 coherent cutover합니다. update/delete는 normalized relationship UUID를 사용합니다.
+
+현재 Activity endpoint year는 required integer이지만 역사적으로 모르는 boundary를 year `0`이나 임의 연도로 채우는 것은 금지됩니다. 최종 P13 Authoring은 unresolved Activity assertion을 represent하고 Compile이 Runtime readiness를 판정합니다.
 
 ### GitHub authoring manifests
 
@@ -79,7 +85,7 @@ update/delete는 normalized relationship UUID를 사용합니다.
 핵심 원칙:
 
 - GitHub manifest는 audit/review surface
-- `atlas_v2`만 authoritative runtime data
+- `atlas_v2`만 authoritative authoring data
 - raw SQL 직접 등록 금지
 - legacy table write 금지
 - 동일 `request_id`는 idempotent replay
@@ -88,11 +94,21 @@ update/delete는 normalized relationship UUID를 사용합니다.
 
 세부 형식은 `authoring/README.md`를 따릅니다.
 
+### Place / Source / AI product scope
+
+Place와 Source는 이미 확정된 최종 Authoring 범위이며 임시 UI 장식이 아닙니다.
+
+- Place는 Polity/Territory와 별개의 reusable historical location identity입니다.
+- Source는 reusable evidence identity이며 citation metadata와 assertion-specific locator를 분리합니다.
+- AI research는 source-backed candidate/evidence/confidence를 만들고 human review 후 normalized writer를 통과합니다. AI direct-to-truth write는 없습니다.
+
+이 범위는 P13에서 구현하며 Production Train 1에는 끼워 넣지 않습니다.
+
 ### Reviewed corrections
 
 기존 authoritative 관계를 역사 감사 결과에 따라 교정할 때는 신규 authoring 경로를 재사용하지 않고 별도의 `corrections/requests/*.json` contract를 사용합니다.
 
-현재 `atlas-correction-manifest/v1`은 Stage 2 R0에서 UUID 수준으로 입증된 exact Activity duplicate의 `coalesce_relationship`만 허용합니다.
+현재 `atlas-correction-manifest/v1`과 v1.1은 Stage 2 Train 1에서 검증된 current-schema correction만 수행합니다.
 
 - exact reviewed before-state 필수
 - SERIALIZABLE transaction
@@ -104,23 +120,29 @@ update/delete는 normalized relationship UUID를 사용합니다.
 - idempotent correction ledger
 - correction engine 코드 변경만으로는 Production write workflow가 실행되지 않음
 
-향후 relink/split/Polity identity correction은 별도 검토를 거쳐 contract를 확장합니다. 세부 형식은 `corrections/README.md`를 따릅니다.
+v1.1은 `coalesce_relationship`, `retire_activity`, `update_activity_interval`만 허용합니다. relink/split/semantic migration은 correction v2까지 기다립니다. 세부 형식은 `corrections/README.md`를 따릅니다.
 
 ### Duplicate review / merge
 
-Phase 9 evidence-based duplicate system은 현재 기능입니다.
+Phase 9 evidence-based duplicate **review** system은 현재 기능입니다.
 
 - deterministic candidate detection
 - evidence fingerprint
 - `MERGE` / `KEEP_SEPARATE` / `REVIEW`
-- MERGE approval과 실제 merge 분리
-- explicit survivor selection
-- explicit relationship reconciliation
-- SERIALIZABLE merge transaction
-- live evidence revalidation
-- full merge audit
+- MERGE identity decision과 실제 physical merge 분리
 
-자동 fuzzy merge/delete는 없습니다.
+현재 physical Person merge는 **의도적으로 비활성화**되어 있습니다.
+
+```text
+current reconciliation = v1-polity-period-year-role
+required reconciliation = v2-relation-full-temporal
+current lifecycle = pre-p10-blocked
+required lifecycle = p10-v2-revalidated
+```
+
+서버는 `EXECUTE_APPROVED_MERGE`를 DB connection 전에 `PERSON_MERGE_BLOCKED_UNTIL_P10_V2_REVALIDATION`으로 거부하고, Admin UI도 실제 survivor/relationship 실행 controls를 P10 전에는 보여주지 않습니다. Candidate rebuild와 MERGE / KEEP_SEPARATE / REVIEW 판정은 계속 가능합니다.
+
+P10 이후 physical merge가 다시 열릴 때는 explicit survivor selection, v2 relationship reconciliation, live evidence revalidation, SERIALIZABLE merge transaction, full merge audit가 모두 필요합니다. 자동 fuzzy merge/delete는 없습니다.
 
 ## Database reconstruction
 
@@ -139,7 +161,7 @@ npm run test:runtime
 npm run test:schema   # fresh PostgreSQL DATABASE_URL 필요
 ```
 
-GitHub의 current integrity gate는 `.github/workflows/atlas-integrity.yml`입니다. 모든 `tests/*.test.mjs`, runtime legacy reachability, fresh PostgreSQL schema rebuild를 검증합니다.
+GitHub의 current integrity gate는 `.github/workflows/atlas-integrity.yml`입니다. 모든 `tests/*.test.mjs`, runtime legacy reachability, fresh PostgreSQL schema rebuild와 Stage 2 rehearsals를 검증합니다.
 
 `.github/workflows/atlas-authoring-apply.yml`은 approved 신규 authoring manifest용 Production workflow입니다.
 
@@ -162,13 +184,14 @@ GitHub의 current integrity gate는 `.github/workflows/atlas-integrity.yml`입�
 
 ## Documentation source of truth
 
-- `ARCHITECTURE_INVARIANTS.md` — runtime/보안/transaction 불변조건
-- `DATA_MODEL.md` — normalized entity·relationship·duplicate semantics
+- `ATLAS_REQUIREMENTS.md` — 전체 제품/도메인/roadmap source of truth
+- `ARCHITECTURE_INVARIANTS.md` — current runtime/보안/transaction 불변조건
+- `DATA_MODEL.md` — current normalized entity·relationship·duplicate semantics + final boundary notes
 - `OPERATIONS.md` — 환경변수·배포·검증·복구 절차
 - `db/README.md` — schema baseline + ordered migration 정책
 - `authoring/README.md` — GitHub authoring manifest contract
 - `corrections/README.md` — reviewed correction manifest contract
-- `docs/audits/` — 현재 semantic audit 및 correction decision evidence
+- `docs/audits/` — current semantic/system audits
 - `migration/` — 과거 migration/audit evidence. 현재 runtime 설계 문서가 아님
 
 ## Historical evidence

@@ -1,0 +1,87 @@
+{
+  "schema": "atlas-stage2-domain-contract/v1",
+  "status": "BASELINE_INDEPENDENT_CURRENT_DOMAIN_CONTRACT",
+  "as_of": "2026-08-12",
+  "production_migration_authorized": false,
+  "baseline_policy": {
+    "old_346_binding_authoritative": false,
+    "baseline_a_required_for_uuid_rebind": true,
+    "baseline_a_contract_version": "v2_full_identity_snapshot",
+    "production_uuid_bindings_allowed": false
+  },
+  "principles": {
+    "historical_accuracy_over_completeness": true,
+    "uuid_is_identity": true,
+    "person_owns_territory": false,
+    "territory_owner": "polity",
+    "government_or_regime_is_separate_from_polity": true,
+    "people_group_is_separate_from_polity": true,
+    "historical_event_is_separate_from_polity": true,
+    "people_affiliation_does_not_imply_polity_activity": true,
+    "event_participation_does_not_imply_polity_activity": true,
+    "editorial_catalog_label_is_not_identity_or_historical_designation": true,
+    "unknown_values_may_remain_unresolved": true,
+    "generic_relation_default_forbidden": true,
+    "name_change_does_not_imply_new_polity": true,
+    "production_split_brain_forbidden": true
+  },
+  "entity_boundary_contract": "stage2/contracts/entity-boundaries-current.v1.json",
+  "polity_name_semantic_kinds": [
+    "historical_official",
+    "historical_attested",
+    "historiographic_conventional",
+    "editorial_catalog_label"
+  ],
+  "person_polity_relation_types": [
+    {"code":"rules","meaning":"Sovereign/head-of-polity or supreme de facto political authority.","runtime":"Ruling-authority context may be shown, but geometry always resolves from Polity Territory history."},
+    {"code":"governs","meaning":"Top-level executive, regency, or governmental authority without treating the person as the polity sovereign identity.","runtime":"Governmental-authority context may be shown without implying personal territorial ownership."},
+    {"code":"serves","meaning":"Official, military, diplomatic, administrative, or institutional service without top-level governmental authority.","runtime":"Context only; never infer personal territorial ownership."},
+    {"code":"active_in","meaning":"Biographical, intellectual, religious, scientific, court, social, or other activity associated with the polity without asserting state service, government, or rule.","runtime":"Context only; no political-authority or personal-territory implication."},
+    {"code":"opposes","meaning":"Political or military resistance directed against the polity.","runtime":"Opponent/context relation only; never render the target polity as controlled by the person."},
+    {"code":"claims_rule","meaning":"Claim to sovereign rule that is not equivalent to accepted or effective control for the whole interval.","runtime":"Claim semantics only; direct control requires separate Territory evidence."}
+  ],
+  "governance_types": ["government","constitutional_regime","governing_regime"],
+  "people_group_types": ["ethnic_group","ethnolinguistic_group","cultural_people","tribal_people","other_people_group"],
+  "person_people_affiliation_types": ["member_of","born_into","identified_with","associated_with"],
+  "historical_event_types": ["military_conflict","expedition","political_event","migration","other_historical_event"],
+  "person_event_participation_types": ["participant","commander","interpreter","envoy","organizer","witness","subject"],
+  "temporal": {
+    "historical_year_zero_allowed": false,
+    "granularities": ["year","month","day"],
+    "certainties": ["exact","approximate","uncertain"],
+    "calendars": ["gregorian","julian","unspecified_historical","source_calendar"],
+    "interval_semantics": "inclusive_without_fabricated_lower_precision_components",
+    "boundary_may_be_unresolved_in_authoring": true,
+    "partial_boundary_tuple_allowed": false
+  },
+  "polity_designation_types": ["official_name","state_form","historiographic_period","conventional_temporal_label"],
+  "polity_relation_candidate_types": [
+    {"code":"constituent_of","category":"constituent"},
+    {"code":"dominion_of","category":"dependency"},
+    {"code":"colonial_dependency_of","category":"dependency"},
+    {"code":"vassal_of","category":"suzerainty"},
+    {"code":"tributary_to","category":"suzerainty"},
+    {"code":"protectorate_of","category":"dependency"},
+    {"code":"member_of_confederation","category":"confederation"},
+    {"code":"nominally_subordinate_to","category":"de_jure_or_nominal_subordination"}
+  ],
+  "polity_identity_relation_candidate_types": ["succeeds","secedes_from","formed_by_union_of","splits_from","annexed_into"],
+  "provenance_source_join_tables": ["polity_governance_period_sources","polity_relation_sources","polity_designation_sources","polity_identity_relation_sources"],
+  "entity_boundary_provenance_source_join_tables": ["people_group_sources","historical_event_sources","person_people_affiliation_sources","person_event_participation_sources"],
+  "provenance_rules": {
+    "shared_source_identity_table": "atlas_v2.sources",
+    "source_locator_required": true,
+    "multiple_locators_per_source_per_assertion_allowed": true,
+    "assertion_delete_cascades_source_join": true,
+    "cited_source_delete_restricted": true
+  },
+  "activity_semantic_identity_v2": {
+    "activation_phase": "P9",
+    "dimensions": ["person_id","polity_id","relation_type_id","role_id_nullable","period_basis_id","interpreted_start_boundary","interpreted_end_boundary"],
+    "boundary_identity_fields": ["year","month","day","granularity","calendar"],
+    "excluded_fields": ["certainty","confidence","chronology_status","notes","source_links","source_locators","display_names","canonical_names","people_group_affiliations","historical_event_participations","content_hash"],
+    "relation_type_required_for_ready_row": true,
+    "legacy_null_role_index_replacement_required": true,
+    "coherent_consumer_cutover_required": true
+  }
+}

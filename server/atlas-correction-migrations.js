@@ -4,7 +4,8 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const CORRECTION_MIGRATION_PATHS = Object.freeze([
-  path.resolve(__dirname, "../db/migrations/20260811_correction_manifest_runs.sql")
+  path.resolve(__dirname, "../db/migrations/20260811_correction_manifest_runs.sql"),
+  path.resolve(__dirname, "../db/migrations/20260812_correction_manifest_v1_1.sql")
 ]);
 
 function readCorrectionMigrations({ readFile = fs.readFileSync } = {}) {

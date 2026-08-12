@@ -11,6 +11,15 @@ on:
       - 'server/atlas-audit-github-oidc.js'
       - 'docs/audits/STAGE2_R0_NORMALIZED_INVENTORY_REQUEST.json'
   workflow_dispatch:
+    inputs:
+      mode:
+        description: 'targeted = reviewed UUID inventory; full_stage2_baseline = full Activity + identity/name/source snapshot from this exact deployed SHA'
+        required: true
+        default: targeted
+        type: choice
+        options:
+          - targeted
+          - full_stage2_baseline
 
 permissions:
   contents: read
@@ -29,78 +38,89 @@ jobs:
       ATLAS_AUDIT_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-audit-inventory
       ATLAS_AUDIT_AUDIENCE: atlas-person-db-audit-inventory
       ATLAS_AUDIT_REQUEST: docs/audits/STAGE2_R0_NORMALIZED_INVENTORY_REQUEST.json
+      ATLAS_AUDIT_MODE: ${{ inputs.mode || 'targeted' }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate reviewed inventory request
+      - name: Validate bounded read-only audit mode
         shell: bash
         run: |
           set -euo pipefail
-          jq -e '.schema == "atlas-audit-inventory/v1" and (.activity_ids | type == "array") and (.activity_ids | length > 0) and (.activity_ids | length <= 100)' "$ATLAS_AUDIT_REQUEST" >/dev/null
-          jq -e '([.activity_ids[] | select(test("^[0-9a-fA-F-]{36}$") | not)] | length) == 0' "$ATLAS_AUDIT_REQUEST" >/dev/null
-          echo "Reviewed Activity IDs: $(jq '.activity_ids | unique | length' "$ATLAS_AUDIT_REQUEST")"
+          case "$ATLAS_AUDIT_MODE" in
+            targeted)
+              jq -e '.schema == "atlas-audit-inventory/v1" and (.activity_ids | type == "array") and (.activity_ids | length > 0) and (.activity_ids | length <= 100)' "$ATLAS_AUDIT_REQUEST" >/dev/null
+              jq -e '([.activity_ids[] | select(test("^[0-9a-fA-F-]{36}$") | not)] | length) == 0' "$ATLAS_AUDIT_REQUEST" >/dev/null
+              echo "Reviewed Activity IDs: $(jq '.activity_ids | unique | length' "$ATLAS_AUDIT_REQUEST")"
+              ;;
+            full_stage2_baseline)
+              echo 'Full Stage 2 Baseline A v2 capture selected; no target UUID list is accepted in this mode.'
+              ;;
+            *)
+              echo "Unsupported audit mode: $ATLAS_AUDIT_MODE" >&2
+              exit 1
+              ;;
+          esac
 
       - name: Fetch normalized read-only inventory through exact Production SHA
         shell: bash
         run: |
           set -euo pipefail
-
           request_oidc() {
             curl --fail-with-body --silent --show-error \
               -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
               "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_AUDIT_AUDIENCE}" | jq -er '.value'
           }
 
-          payload="$(jq -cn \
-            --arg deployment_sha "${GITHUB_SHA}" \
-            --slurpfile request "$ATLAS_AUDIT_REQUEST" \
-            '{deployment_sha:$deployment_sha,activity_ids:$request[0].activity_ids}')"
+          if [[ "$ATLAS_AUDIT_MODE" == "targeted" ]]; then
+            payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" --arg mode "$ATLAS_AUDIT_MODE" --slurpfile request "$ATLAS_AUDIT_REQUEST" \
+              '{deployment_sha:$deployment_sha,mode:$mode,activity_ids:$request[0].activity_ids}')"
+          else
+            payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" --arg mode "$ATLAS_AUDIT_MODE" '{deployment_sha:$deployment_sha,mode:$mode}')"
+          fi
 
           fetched=false
           for attempt in $(seq 1 60); do
             oidc_token="$(request_oidc)"
-            status="$(curl --silent --show-error \
-              --output audit-inventory-response.json \
-              --write-out '%{http_code}' \
-              --request POST \
-              -H 'content-type: application/json' \
-              -H "authorization: Bearer ${oidc_token}" \
-              --data "$payload" \
-              "$ATLAS_AUDIT_ENDPOINT")"
-
+            status="$(curl --silent --show-error --output audit-inventory-response.json --write-out '%{http_code}' --request POST \
+              -H 'content-type: application/json' -H "authorization: Bearer ${oidc_token}" --data "$payload" "$ATLAS_AUDIT_ENDPOINT")"
             if [[ "$status" == "200" ]]; then
-              jq -e '.ok == true and .marker == "ATLAS_AUDIT_INVENTORY_V1" and .read_only == true and .committed == false and (.row_count == .requested_count)' audit-inventory-response.json >/dev/null
+              if [[ "$ATLAS_AUDIT_MODE" == "targeted" ]]; then
+                jq -e '.ok == true and .marker == "ATLAS_AUDIT_INVENTORY_V1" and .mode == "targeted" and .read_only == true and .committed == false and (.row_count == .requested_count)' audit-inventory-response.json >/dev/null
+              else
+                jq -e '.ok == true and .marker == "ATLAS_AUDIT_INVENTORY_V1" and .mode == "full_stage2_baseline" and .read_only == true and .committed == false and (.row_count == .counts.activities) and (.catalogs.persons|length)==.counts.persons and (.catalogs.polities|length)==.counts.polities and (.catalogs.sources|length)==.counts.sources and (.baseline_digest | test("^sha256:[0-9a-f]{64}$"))' audit-inventory-response.json >/dev/null
+              fi
               fetched=true
               break
             fi
-
             code="$(jq -r '.code // "UNKNOWN"' audit-inventory-response.json 2>/dev/null || printf 'UNKNOWN')"
-            if [[ "$status" == "404" ]]; then
+            if [[ "$status" == "404" || ( "$status" == "409" && "$code" == "DEPLOYMENT_SHA_MISMATCH" ) ]]; then
               echo "Production audit route for ${GITHUB_SHA} is not live yet (attempt ${attempt}/60); retrying."
               sleep 10
               continue
             fi
-            if [[ "$status" == "409" && "$code" == "DEPLOYMENT_SHA_MISMATCH" ]]; then
-              echo "Production deployment has not reached ${GITHUB_SHA} yet (attempt ${attempt}/60); retrying."
-              sleep 10
-              continue
-            fi
-
             cat audit-inventory-response.json >&2 || true
             echo "Audit inventory failed: HTTP ${status}, code ${code}" >&2
             exit 1
           done
-
           [[ "$fetched" == "true" ]] || { echo "Production deployment did not reach ${GITHUB_SHA} within retry window" >&2; exit 1; }
-          jq '{marker,read_only,committed,deployment_sha,requested_count,row_count}' audit-inventory-response.json | tee audit-inventory-summary.json
+
+          if [[ "$ATLAS_AUDIT_MODE" == "targeted" ]]; then
+            jq '{marker,mode,read_only,committed,deployment_sha,requested_count,row_count}' audit-inventory-response.json | tee audit-inventory-summary.json
+          else
+            jq '{marker,mode,read_only,committed,deployment_sha,row_count,counts,baseline_digest,catalog_cardinality:{persons:(.catalogs.persons|length),polities:(.catalogs.polities|length),roles:(.catalogs.roles|length),period_bases:(.catalogs.period_bases|length),sources:(.catalogs.sources|length)}}' audit-inventory-response.json | tee audit-inventory-summary.json
+            jq '.rows | map(.activity_id)' audit-inventory-response.json > baseline-activity-uuids.json
+            jq '.catalogs' audit-inventory-response.json > baseline-identity-catalogs.json
+          fi
 
       - name: Upload read-only inventory evidence
         uses: actions/upload-artifact@v4
         with:
-          name: atlas-stage2-r0-normalized-inventory
+          name: atlas-audit-${{ env.ATLAS_AUDIT_MODE }}-${{ github.sha }}
           path: |
             audit-inventory-response.json
             audit-inventory-summary.json
+            baseline-activity-uuids.json
+            baseline-identity-catalogs.json
             docs/audits/STAGE2_R0_NORMALIZED_INVENTORY_REQUEST.json
-          if-no-files-found: error
-          retention-days: 14
+          if-no-files-found: warn
+          retention-days: 90

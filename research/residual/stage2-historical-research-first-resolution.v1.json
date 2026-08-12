@@ -1,0 +1,166 @@
+{
+  "schema": "atlas-stage2-historical-research-first-resolution/v1",
+  "status": "RESEARCH_REVIEWED_NO_PRODUCTION_WRITE",
+  "as_of": "2026-08-12",
+  "relation_contract": "docs/audits/RELATION_SEMANTICS_CONTRACT_V1_2026-08-12.md",
+  "source_document": "docs/research/residual/STAGE2_HISTORICAL_RESEARCH_FIRST_RESOLUTION_2026-08-12.md",
+  "baseline_binding": {
+    "required_baseline": "Baseline A",
+    "stale_activity_uuids_are_evidence_only": true,
+    "production_uuid_rebinding_required": true
+  },
+  "cases": [
+    {
+      "person": "Brennus (Senones)",
+      "activity_uuid_evidence_only": "164635b5-0930-5601-94d1-c9dd86bffa4d",
+      "current_target": "Senones",
+      "polity_disposition": "KEEP",
+      "relation": "rules",
+      "relation_status": "REVIEWED_TRADITIONAL_ASSERTION",
+      "historicity": "TRADITIONAL_LATE_LITERARY_EVIDENCE",
+      "chronology_precision": "APPROXIMATE_OR_TRADITIONAL",
+      "geometry_from_campaign_forbidden": true,
+      "remaining_blockers": ["BASELINE_A_BINDING","HISTORICITY_PROVENANCE_BACKFILL","TERRITORY_RECONSTRUCTION"]
+    },
+    {
+      "person": "Shi Xie",
+      "activity_uuid_evidence_only": "4d543d48-a041-5f07-a900-560a50abaeee",
+      "current_target": "Jiaozhou_or_existing_imperial_context",
+      "current_row_disposition": "SPLIT_REQUIRED",
+      "administrative_region_auto_promoted_to_polity": false,
+      "pre_210": {
+        "target_class": "EASTERN_HAN_POLITICAL_CONTEXT",
+        "relation": "serves",
+        "regional_office_in_role_or_governance": true
+      },
+      "transition_year": 210,
+      "post_210": {
+        "target_class": "SUN_QUAN_WU_POLITICAL_CONTEXT_PENDING_CONTINUITY_BINDING",
+        "relation": "serves",
+        "production_polity_uuid": null
+      },
+      "fabricated_shi_xie_state_forbidden": true,
+      "remaining_blockers": ["BASELINE_A_BINDING","SUN_QUAN_WU_CONTINUITY_BINDING","REGIONAL_AUTONOMY_REPRESENTATION","TERRITORY_RECONSTRUCTION"]
+    },
+    {
+      "person": "Leftraru",
+      "activity_uuid_evidence_only": "c0987b73-203c-5b49-9d84-8d96ce0e44e9",
+      "current_target": "Mapuche",
+      "current_row_disposition": "RELINK_AND_RETIME_REQUIRED",
+      "broad_people_as_unitary_polity_rejected": true,
+      "replacement_target_class": "SOURCE_BACKED_MAPUCHE_WARTIME_COALITION_OR_AGGREGATION",
+      "production_canonical_name": null,
+      "production_polity_uuid": null,
+      "role": "toqui",
+      "relation": "serves",
+      "relation_reason": "wartime command alone does not prove sovereign head-of-polity status under the six-type contract",
+      "current_1541_start_retainable": false,
+      "blanket_mapuche_geometry_forbidden": true,
+      "remaining_blockers": ["BASELINE_A_BINDING","COALITION_IDENTITY_AUTHORING","LEADERSHIP_CHRONOLOGY_NORMALIZATION","TERRITORY_RECONSTRUCTION"]
+    },
+    {
+      "person": "Sacagawea",
+      "activity_uuid_evidence_only": "c73146d6-0558-502f-8e81-11343e41f963",
+      "current_target": "Lemhi Shoshone",
+      "current_row_disposition": "OUT_OF_POLITY_MODEL",
+      "person_polity_relation": null,
+      "people_affiliation": "Lemhi Shoshone / Agaidika",
+      "event_context": "Corps of Discovery",
+      "migration_target": "PERSON_PEOPLE_AND_EVENT_PARTICIPATION",
+      "fake_political_relation_forbidden": true,
+      "remaining_blockers": ["PERSON_PEOPLE_EVENT_AUTHORING_MODEL","BASELINE_A_BINDING_FOR_RETIREMENT"]
+    },
+    {
+      "person": "Sitting Bull",
+      "activity_uuid_evidence_only": "b4a6b048-9465-539a-bc4b-ec50a057b594",
+      "current_target": "Lakota",
+      "current_row_disposition": "RELINK_AND_RETIME_REQUIRED",
+      "broad_lakota_target_rejected": true,
+      "replacement_target_class": "AUTONOMOUS_NON_TREATY_HUNKPAPA_LAKOTA_POLITICAL_FOLLOWING",
+      "production_canonical_name": null,
+      "production_polity_uuid": null,
+      "relation": "rules",
+      "relation_scope": "ONLY_SOURCE_PROVEN_AUTONOMOUS_LEADERSHIP_INTERVAL",
+      "start_year": null,
+      "autonomous_relation_end_year": 1881,
+      "post_1881_autonomous_rules_forbidden": true,
+      "remaining_blockers": ["BASELINE_A_BINDING","LEADERSHIP_START_CHRONOLOGY","CANONICAL_POLITICAL_ACTOR_IDENTITY","TERRITORY_RECONSTRUCTION"]
+    },
+    {
+      "person": "Poundmaker",
+      "activity_uuid_evidence_only": "062c9186-2981-5745-9b60-ae733a2fc86d",
+      "current_target": "Cree",
+      "current_row_disposition": "SPLIT_AND_RELINK_REQUIRED",
+      "broad_cree_target_rejected": true,
+      "pre_own_band": {
+        "documented_1876_status": "MINOR_CHIEF_OR_COUNCILLOR_UNDER_RED_PHEASANT",
+        "target_class": "RED_PHEASANT_BAND_OR_COMMUNITY",
+        "relation": "serves",
+        "production_polity_uuid": null
+      },
+      "own_band": {
+        "formation_year_approx": 1878,
+        "reserve_settlement_year": 1879,
+        "target_class": "POUNDMAKER_OWN_BAND_OR_COMMUNITY",
+        "relation": "rules",
+        "production_polity_uuid": null
+      },
+      "own_band_rules_from_1873_forbidden": true,
+      "all_cree_geometry_forbidden": true,
+      "remaining_blockers": ["BASELINE_A_BINDING","RED_PHEASANT_COMMUNITY_IDENTITY","POUNDMAKER_COMMUNITY_IDENTITY","INTERVAL_PRECISION","TERRITORY_RECONSTRUCTION"]
+    },
+    {
+      "person": "Dido",
+      "activity_uuid_evidence_only": "76fe49de-1cda-5a22-8629-657c85433b0c",
+      "current_target": "Carthage",
+      "current_row_disposition": "KEEP_AS_LEGENDARY_ASSERTION",
+      "polity_disposition": "KEEP",
+      "relation": "rules",
+      "historicity": "LEGENDARY_TRADITIONAL",
+      "ordinary_historical_ruler_presentation_forbidden": true,
+      "traditional_chronology_must_be_qualified": true,
+      "remaining_blockers": ["BASELINE_A_BINDING","LEGENDARY_HISTORICITY_PROVENANCE_BINDING"]
+    },
+    {
+      "person": "Tecumseh",
+      "activity_uuid_evidence_only": "932998e2-839b-5818-99bb-37221498cadd",
+      "current_target": "Shawnee",
+      "current_row_disposition": "OUT_OF_POLITY_MODEL_UNLESS_SPECIFIC_COMMUNITY_IS_SOURCED",
+      "authority_bearing_parallel_target": "Tecumseh's Confederacy",
+      "duplicate_shawnee_rules_forbidden": true,
+      "people_affiliation": "Shawnee",
+      "person_polity_relation": null,
+      "migration_target": "PERSON_PEOPLE_AFFILIATION",
+      "remaining_blockers": ["BASELINE_A_BINDING","PERSON_PEOPLE_MODEL_OR_SPECIFIC_SHAWNEE_POLITY_EVIDENCE"]
+    },
+    {
+      "person": "Boudica",
+      "activity_uuid_evidence_only": "2f18a41d-6f4e-541d-b549-32ec505e8c53",
+      "current_target": "Iceni",
+      "current_row_disposition": "KEEP",
+      "polity_disposition": "KEEP",
+      "relation": "rules",
+      "separate_directional_relation": {
+        "target_class": "ROMAN_AUTHORITY",
+        "relation": "opposes",
+        "status": "REQUIRED_WHEN_TARGET_MODEL_IS_NORMALIZED"
+      },
+      "britain_wide_boudica_polity_forbidden": true,
+      "remaining_blockers": ["BASELINE_A_BINDING","EXACT_CHRONOLOGY_NORMALIZATION","ROMAN_OPPOSITION_TARGET_NORMALIZATION"]
+    }
+  ],
+  "queue_result": {
+    "residual_cases_reviewed": 9,
+    "undifferentiated_historical_research_first_remaining": 0,
+    "all_remaining_work_is_specific_identity_chronology_migration_or_territory_work": true,
+    "generic_relation_default_allowed": false
+  },
+  "invariants": {
+    "new_relation_type_added": false,
+    "fabricated_polity_name_created": false,
+    "fabricated_geometry_created": false,
+    "people_affiliation_forced_into_polity_relation": false,
+    "legendary_assertion_presented_as_high_confidence_history": false,
+    "broad_ethnic_people_auto_promoted_to_unitary_polity": false
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "schema": "atlas-r0-future-semantic-equivalence/v1",
+  "review_status": "approved",
+  "as_of": "2026-08-12",
+  "basis": {
+    "normalized_inventory_run": "31499183625",
+    "normalized_inventory_artifact_id": "9104264546",
+    "normalized_inventory_digest": "sha256:ac1d91800412c2d79921b6ed791e6c82f94d125fc4203568f2cad4ddf5db3eb3",
+    "stage2_relation_audit_run": "31544564663",
+    "stage2_relation_audit_artifact_id": "9121986912",
+    "stage2_relation_audit_digest": "sha256:10469efe8d82900348de8c95a3b58286374303714a798708841c824ffb1322e7",
+    "stage2_relation_audit_head": "ff85c2511249096dfb6c5c6e21f29c3913957f18"
+  },
+  "policy": "Each pair is one historical Activity assertion duplicated at the storage layer. Future Relation Type and any later sub-year boundary enrichment must attach to the surviving assertion, not differentiate the duplicate UUIDs. A relation label may still be historically refined later; pairwise equivalence is what this R0 destructive gate proves.",
+  "pairs": [
+    {
+      "person": "Wu Zetian",
+      "keep_relationship_id": "da809f25-40ff-5c27-b10b-88d4acc4070d",
+      "drop_relationship_id": "75a124e8-df55-5247-aa48-dc9d7934c10e",
+      "relation_audit_keep": "rules",
+      "relation_audit_drop": "rules",
+      "relation_hint_conflict": false,
+      "full_temporal_boundary_equivalent": true,
+      "governance_context_equivalent": true,
+      "future_semantic_equivalent": true
+    },
+    {
+      "person": "Sejong the Great",
+      "keep_relationship_id": "4263e4d0-a0a0-5803-a61b-85a57322db7e",
+      "drop_relationship_id": "d1e0a5a6-31a1-5691-8d05-570dccdcad18",
+      "relation_audit_keep": "rules",
+      "relation_audit_drop": "rules",
+      "relation_hint_conflict": false,
+      "full_temporal_boundary_equivalent": true,
+      "governance_context_equivalent": true,
+      "future_semantic_equivalent": true
+    },
+    {
+      "person": "Mehmed II",
+      "keep_relationship_id": "b0d35acc-9705-5b80-96bb-02616df72bcc",
+      "drop_relationship_id": "25ce2112-9b21-55dd-88d1-029153fc1a5a",
+      "relation_audit_keep": "rules",
+      "relation_audit_drop": "rules",
+      "relation_hint_conflict": false,
+      "full_temporal_boundary_equivalent": true,
+      "governance_context_equivalent": true,
+      "future_semantic_equivalent": true
+    },
+    {
+      "person": "Charles V",
+      "keep_relationship_id": "16ebebde-e4e4-553d-a520-00da68a276d2",
+      "drop_relationship_id": "d641eec9-2770-5099-8017-8ec3bcc9244e",
+      "relation_audit_keep": "rules",
+      "relation_audit_drop": "rules",
+      "relation_hint_conflict": false,
+      "full_temporal_boundary_equivalent": true,
+      "governance_context_equivalent": true,
+      "future_semantic_equivalent": true,
+      "relation_label_status": "candidate_pending_broader_historical_research_but_pairwise_equivalence_closed"
+    },
+    {
+      "person": "Simon Bolivar",
+      "keep_relationship_id": "05d7091a-5cfc-5ec0-9aa3-32461925e7c7",
+      "drop_relationship_id": "caa526f9-220d-540c-93ea-d889f6d9b8cb",
+      "relation_audit_keep": "rules",
+      "relation_audit_drop": "rules",
+      "relation_hint_conflict": false,
+      "full_temporal_boundary_equivalent": true,
+      "governance_context_equivalent": true,
+      "future_semantic_equivalent": true,
+      "relation_label_status": "candidate_pending_broader_historical_research_but_pairwise_equivalence_closed"
+    },
+    {
+      "person": "Otto von Bismarck",
+      "keep_relationship_id": "1ff585a7-c481-5d38-98ff-38381c81d961",
+      "drop_relationship_id": "a8946a02-9235-5985-b882-0c7d60b555dd",
+      "relation_audit_keep": "governs",
+      "relation_audit_drop": "governs",
+      "relation_hint_conflict": false,
+      "full_temporal_boundary_equivalent": true,
+      "governance_context_equivalent": true,
+      "future_semantic_equivalent": true
+    }
+  ]
+}

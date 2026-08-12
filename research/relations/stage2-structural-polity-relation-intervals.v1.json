@@ -1,0 +1,99 @@
+{
+  "schema": "atlas-stage2-structural-polity-relation-interval-research/v1",
+  "as_of": "2026-08-12",
+  "production_mutation": false,
+  "baseline_a_uuid_rebind_required": true,
+  "production_approved": false,
+  "rules": {
+    "person_activity_interval_is_not_polity_relation_interval": true,
+    "unknown_boundary_must_remain_unknown": true,
+    "inclusive_end_is_last_day_relation_is_asserted": true,
+    "no_name_only_production_binding": true,
+    "no_old_activity_uuid_write_targets": true
+  },
+  "relations": [
+    {
+      "id": "canada_dominion_of_uk",
+      "subject_identity": "Dominion of Canada",
+      "subject_polity_uuid": null,
+      "relation_type": "dominion_of",
+      "object_identity": "United Kingdom",
+      "object_polity_uuid": null,
+      "semantic_status": "resolved",
+      "interval_status": "resolved_for_dominion_dependency_semantics",
+      "start": {"year":1867,"month":7,"day":1,"granularity":"day","certainty":"exact","calendar":"gregorian"},
+      "end": {"year":1931,"month":12,"day":10,"granularity":"day","certainty":"exact","calendar":"gregorian"},
+      "transition_milestone": {"year":1931,"month":12,"day":11,"granularity":"day","certainty":"exact","calendar":"gregorian","meaning":"Statute of Westminster legal-autonomy transition"},
+      "model_scope": "dominion_of is the pre-Statute subordinate Dominion relationship; the later Canada-specific constitutional-amendment reservation is not overloaded into this relation",
+      "production_interval_approved": false,
+      "remaining_blocker": "BASELINE_A_V2_POLITY_UUID_BINDING_ONLY",
+      "sources": [
+        {"url":"https://laws-lois.justice.gc.ca/eng/Const/page-1.html","grade":"official_primary_or_statutory"},
+        {"url":"https://justice.canada.ca/eng/rp-pr/csj-sjc/constitution/lawreg-loireg/p1t171.html","grade":"official_primary_or_statutory"},
+        {"url":"https://www.canada.ca/en/intergovernmental-affairs/services/federation/statute-westminster.html","grade":"official_interpretive"}
+      ]
+    },
+    {
+      "id": "british_raj_colonial_dependency_of_uk",
+      "subject_identity": "British Raj",
+      "subject_polity_uuid": null,
+      "relation_type": "colonial_dependency_of",
+      "object_identity": "United Kingdom",
+      "object_polity_uuid": null,
+      "semantic_status": "resolved",
+      "interval_status": "resolved",
+      "start": {"year":1858,"month":11,"day":1,"granularity":"day","certainty":"exact","calendar":"gregorian"},
+      "end": {"year":1947,"month":8,"day":14,"granularity":"day","certainty":"exact","calendar":"gregorian"},
+      "transition_milestone": {"year":1947,"month":8,"day":15,"granularity":"day","certainty":"exact","calendar":"gregorian","meaning":"India and Pakistan become independent states"},
+      "production_interval_approved": false,
+      "remaining_blocker": "BASELINE_A_V2_POLITY_UUID_BINDING_ONLY",
+      "sources": [
+        {"url":"https://searcharchives.bl.uk/catalog/032-002273023","grade":"british_library_primary_archive_catalog"},
+        {"url":"https://www.parliament.uk/about/living-heritage/evolutionofparliament/legislativescrutiny/parliament-and-empire/parliament-and-the-american-colonies-before-1765/the-raj-and-independence-1914-47/","grade":"official_parliamentary_history"}
+      ]
+    },
+    {
+      "id": "rsfsr_constituent_of_ussr",
+      "subject_identity": "Soviet Russia / RSFSR / Russian SFSR",
+      "subject_polity_uuid": null,
+      "relation_type": "constituent_of",
+      "object_identity": "Soviet Union",
+      "object_polity_uuid": null,
+      "semantic_status": "resolved",
+      "interval_status": "resolved_against_union_cessation",
+      "start": {"year":1922,"month":12,"day":30,"granularity":"day","certainty":"exact","calendar":"gregorian"},
+      "end": {"year":1991,"month":12,"day":25,"granularity":"day","certainty":"exact","calendar":"gregorian"},
+      "cessation_milestone": {"year":1991,"month":12,"day":26,"granularity":"day","certainty":"exact","calendar":"gregorian","meaning":"USSR declared ceased to exist as a state and subject of international law"},
+      "russian_federation_name_change_does_not_force_new_polity_uuid": true,
+      "production_interval_approved": false,
+      "remaining_blocker": "BASELINE_A_V2_POLITY_UUID_BINDING_ONLY",
+      "sources": [
+        {"url":"https://docs.historyrussia.org/ru/nodes/106963-i-sezd-sovetov-soyuza-ssr-prinyal-deklaratsiyu-i-dogovor-ob-obrazovanii-sssr-30-dekabrya-1922-g","grade":"official_historical_document_portal"},
+        {"url":"https://www.prlib.ru/item/1417130","grade":"presidential_library_primary_document"},
+        {"url":"https://www.consultant.ru/law/podborki/deklaraciya_o_prekraschenii_suschestvovaniya_sssr/","grade":"legal_document_database"}
+      ]
+    },
+    {
+      "id": "huainan_vassal_of_western_han",
+      "subject_identity": "Huainan political actor under Ying Bu",
+      "subject_polity_uuid": null,
+      "relation_type": "vassal_of",
+      "object_identity": "Western Han",
+      "object_polity_uuid": null,
+      "semantic_status": "resolved",
+      "interval_status": "resolved_at_year_precision_for_ying_bu_phase",
+      "start": {"year":-203,"month":null,"day":null,"granularity":"year","certainty":"exact","calendar":"unspecified_historical"},
+      "end": {"year":-196,"month":null,"day":null,"granularity":"year","certainty":"exact","calendar":"unspecified_historical"},
+      "start_evidence": "Han fourth year, seventh month: Ying Bu was enfeoffed King of Huainan; normalized chronology places the enfeoffment in 203 BCE",
+      "end_evidence": "Ying Bu rebelled against Han in 196 BCE and was defeated; the vassal relation is therefore bounded within that year without fabricating month/day",
+      "broader_huainan_dynastic_continuity_asserted": false,
+      "production_interval_approved": false,
+      "remaining_blocker": "BASELINE_A_V2_POLITY_UUID_BINDING_AND_REVIEWED_HUAINAN_IDENTITY_ONLY",
+      "sources": [
+        {"url":"https://ctext.org/shiji/qing-bu-lie-zhuan/zh","grade":"primary_text_digital_edition"},
+        {"url":"https://ctext.org/shiji/huai-nan-heng-shan-lie-zhuan/ens","grade":"primary_text_digital_edition_translation"},
+        {"url":"https://ctext.org/dictionary.pl?char=%E8%8B%B1%E5%B8%83&if=en&remap=gb","grade":"chronology_reference_with_text_links"}
+      ]
+    }
+  ]
+}

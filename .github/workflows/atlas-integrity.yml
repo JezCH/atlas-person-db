@@ -63,8 +63,35 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
+      - name: Verify requirements source of truth
+        run: npm run test:requirements
+
+      - name: Verify Vercel-minimized release governance
+        run: npm run test:release
+
+      - name: Verify R0 future semantic equivalence
+        run: npm run test:r0-gate
+
+      - name: Verify baseline-independent Stage 2 integration prep
+        run: npm run test:stage2-prep
+
+      - name: Verify current Stage 2 machine-readable domain contract
+        run: npm run test:stage2-contract
+
       - name: Verify runtime architecture
         run: npm run test:runtime
 
       - name: Rebuild current v2 schema on fresh PostgreSQL
         run: npm run test:schema
+
+      - name: Rehearse additive Stage 2 schema on current v2 baseline
+        run: npm run test:stage2-schema-rehearsal
+
+      - name: Rehearse normalized Stage 2 provenance
+        run: npm run test:stage2-provenance-rehearsal
+
+      - name: Rehearse Stage 2 entity boundaries and naming
+        run: npm run test:stage2-entity-boundaries
+
+      - name: Rehearse Activity semantic-key v2 replacement
+        run: npm run test:stage2-semantic-key-rehearsal

@@ -1,0 +1,119 @@
+{
+  "schema": "atlas-stage2-sengoku-authority-research/v1",
+  "status": "RESEARCH_REVIEWED_NO_PRODUCTION_WRITE",
+  "as_of": "2026-08-12",
+  "source_document": "docs/research/japan/STAGE2_SENGOKU_AUTHORITY_RESEARCH_2026-08-12.md",
+  "baseline_binding": {
+    "required_baseline": "Baseline A",
+    "stale_346_uuid_binding_for_production_forbidden": true,
+    "canonical_polity_uuid_binding_deferred": true
+  },
+  "decisions": [
+    {
+      "person": "Oda Nobunaga",
+      "current_activity_uuid_evidence_only": "2b566bc6-600a-5a75-bf32-60fe3e558bcd",
+      "current_target": "Oda Clan",
+      "current_interval": {"start_year": 1568, "end_year": 1582},
+      "current_target_classification": "LINEAGE_NOT_VALID_POLITY_TARGET",
+      "territorial_political_authority_supported": true,
+      "replacement_target_class": "SOURCE_BACKED_TERRITORIAL_POLITY",
+      "production_canonical_name": null,
+      "production_polity_uuid": null,
+      "person_relation": "rules",
+      "activity_interval_disposition": "RETAIN_CURRENT_ACTIVITY_PHASE",
+      "blanket_japan_direct_control": false,
+      "territory_history_required": true,
+      "territory_geometry_status": "UNRESOLVED",
+      "remaining_blockers": [
+        "BASELINE_A_BINDING",
+        "CANONICAL_POLITY_IDENTITY_AUTHORING",
+        "TERRITORY_INTERVAL_RECONSTRUCTION",
+        "GEOMETRY_RECONSTRUCTION"
+      ]
+    },
+    {
+      "person": "Uesugi Kenshin",
+      "current_activity_uuid_evidence_only": "110c080c-b891-50a7-950c-1c80d3ef75b8",
+      "current_target": "Uesugi Clan",
+      "current_interval": {"start_year": 1548, "end_year": 1578},
+      "current_target_classification": "LINEAGE_NOT_VALID_POLITY_TARGET",
+      "territorial_political_authority_supported": true,
+      "replacement_target_class": "SOURCE_BACKED_TERRITORIAL_POLITY",
+      "production_canonical_name": null,
+      "production_polity_uuid": null,
+      "person_relation": "rules",
+      "activity_interval_disposition": "RETAIN_CURRENT_ACTIVITY_PHASE",
+      "kanto_office_or_campaign_implies_direct_control": false,
+      "designation_transition_1561_is_new_polity_birth": false,
+      "territory_history_required": true,
+      "territory_geometry_status": "UNRESOLVED",
+      "remaining_blockers": [
+        "BASELINE_A_BINDING",
+        "CANONICAL_POLITY_IDENTITY_AUTHORING",
+        "TERRITORY_INTERVAL_RECONSTRUCTION",
+        "GEOMETRY_RECONSTRUCTION"
+      ]
+    },
+    {
+      "person": "Toyotomi Hideyoshi",
+      "current_activity_uuid_evidence_only": "61bf1687-9815-5844-9f98-02a558470b51",
+      "current_target": "Toyotomi Regime",
+      "current_interval": {"start_year": 1582, "end_year": 1598},
+      "current_target_classification": "REGIME_NOT_POLITY",
+      "polity_target_survives": false,
+      "governance_context_required": true,
+      "governance_context_label_evidence": "Toyotomi Regime",
+      "production_governance_uuid": null,
+      "activity_disposition": "RETIRE_OR_RELINK_DURING_AUTHORITY_SPLIT",
+      "remaining_blockers": [
+        "BASELINE_A_BINDING",
+        "CORRECTION_V2",
+        "FINAL_AUTHORITY_SPLIT_BINDING"
+      ]
+    },
+    {
+      "person": "Toyotomi Hideyoshi",
+      "current_activity_uuid_evidence_only": "7bd5741a-6b37-5b33-9512-40741e01b179",
+      "current_target": "Japan",
+      "current_interval": {"start_year": 1582, "end_year": 1598},
+      "current_row_disposition": "SPLIT_REQUIRED",
+      "year_level_split": 1590,
+      "subyear_split": null,
+      "pre_1590": {
+        "completed_japan_wide_authority": false,
+        "own_territorial_political_authority_supported": true,
+        "replacement_target_class": "SOURCE_BACKED_TERRITORIAL_POLITY",
+        "production_canonical_name": null,
+        "production_polity_uuid": null,
+        "person_relation": "rules",
+        "governance_context_required": true
+      },
+      "post_1590": {
+        "higher_order_japan_authority_supported": true,
+        "target": "Japan",
+        "person_relation_status": "CANDIDATE_PENDING_STAGE2_INTEGRATION",
+        "person_relation_candidate": "governs",
+        "governance_context_required": true,
+        "direct_control_over_all_subordinate_daimyo_domains": false
+      },
+      "territory_history_required": true,
+      "territory_geometry_status": "UNRESOLVED",
+      "remaining_blockers": [
+        "BASELINE_A_BINDING",
+        "PRE_1590_CANONICAL_POLITY_IDENTITY_AUTHORING",
+        "EXACT_1590_SUBYEAR_BOUNDARY_REVIEW",
+        "POST_1590_RELATION_INTEGRATION",
+        "TERRITORY_INTERVAL_RECONSTRUCTION",
+        "GEOMETRY_RECONSTRUCTION"
+      ]
+    }
+  ],
+  "invariants": {
+    "fabricated_polity_names_created": false,
+    "fabricated_geometry_created": false,
+    "clan_name_auto_promoted_to_polity": false,
+    "regime_name_auto_promoted_to_polity": false,
+    "person_activity_used_as_direct_geometry": false,
+    "unknown_subyear_boundary_fabricated": false
+  }
+}

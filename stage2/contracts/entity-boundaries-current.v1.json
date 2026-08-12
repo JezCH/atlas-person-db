@@ -1,0 +1,70 @@
+{
+  "schema": "atlas-stage2-entity-boundary-contract/v1",
+  "as_of": "2026-08-12",
+  "production_migration_authorized": false,
+  "identity_principles": {
+    "uuid_is_identity": true,
+    "polity_name_is_identity": false,
+    "people_group_is_polity": false,
+    "historical_event_is_polity": false,
+    "person_people_affiliation_implies_polity_activity": false,
+    "person_event_participation_implies_polity_activity": false,
+    "people_group_implies_territory": false,
+    "historical_event_implies_territory": false,
+    "editorial_catalog_label_is_historical_self_designation": false,
+    "editorial_catalog_label_proves_polity_existence": false
+  },
+  "polity_name_semantic_kinds": [
+    "historical_official",
+    "historical_attested",
+    "historiographic_conventional",
+    "editorial_catalog_label"
+  ],
+  "polity_naming_rules": {
+    "existing_name_type_preserved_as_raw_live_inventory_until_baseline_a_v2_mapping": true,
+    "stage2_storage_column": "atlas_v2.polity_names.semantic_name_kind",
+    "semantic_name_kind_additive_and_nullable_during_p5": true,
+    "final_name_kind_constraints_only_after_reviewed_mapping": true,
+    "editorial_catalog_label_allowed_only_when_nonmisleading_historical_or_conventional_label_unavailable": true,
+    "editorial_catalog_label_must_be_explicitly_tagged": true,
+    "editorial_catalog_label_may_be_preferred_display_name": true,
+    "editorial_catalog_label_must_not_create_polity_designation_assertion": true,
+    "label_change_never_requires_new_polity_uuid": true,
+    "historical_designation_and_state_form_remain_temporal_assertions": true
+  },
+  "people_group": {
+    "entity": "PeopleGroup",
+    "types": ["ethnic_group", "ethnolinguistic_group", "cultural_people", "tribal_people", "other_people_group"],
+    "person_affiliation_types": ["member_of", "born_into", "identified_with", "associated_with"],
+    "political_actor_promotion_rule": "A PeopleGroup may correspond to a Polity only through a separate source-backed Polity identity decision; no automatic promotion is allowed."
+  },
+  "historical_event": {
+    "entity": "HistoricalEvent",
+    "types": ["military_conflict", "expedition", "political_event", "migration", "other_historical_event"],
+    "person_participation_types": ["participant", "commander", "interpreter", "envoy", "organizer", "witness", "subject"],
+    "role_label_separate_from_person_polity_role_uuid": true
+  },
+  "temporal_rules": {
+    "reuse_stage2_temporal_boundary_contract": true,
+    "whole_boundary_may_be_unresolved_in_authoring": true,
+    "year_zero_forbidden": true,
+    "uncertainty_must_not_be_fabricated_away": true
+  },
+  "provenance_rules": {
+    "normalized_sources_required": true,
+    "multiple_locators_per_source_per_assertion_allowed": true,
+    "source_delete_restricted": true,
+    "assertion_delete_cascades_source_links": true
+  },
+  "activity_semantic_key_rules": {
+    "people_group_uuid_in_activity_semantic_key": false,
+    "historical_event_uuid_in_activity_semantic_key": false,
+    "people_affiliation_uuid_in_activity_semantic_key": false,
+    "event_participation_uuid_in_activity_semantic_key": false
+  },
+  "case_migrations": {
+    "Sacagawea": "PeopleGroup affiliation to Lemhi Shoshone plus HistoricalEvent participation in Corps of Discovery; no synthetic Person-Polity relation.",
+    "Tecumseh": "Shawnee PeopleGroup affiliation remains separate from source-backed Person-Polity Activity to Tecumseh's Confederacy.",
+    "Leftraru": "Reche/Mapuche PeopleGroup affiliation and Arauco War participation remain separate from any source-backed wartime political coalition/command Activity."
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "schema": "atlas-stage2-polity-identity-continuity-current/v1",
+  "as_of": "2026-08-12",
+  "production_mutation": false,
+  "baseline_a_uuid_rebind_required": true,
+  "old_activity_uuid_bindings_authoritative": false,
+  "rules": {
+    "name_change_does_not_imply_new_polity": true,
+    "state_form_change_does_not_imply_new_polity": true,
+    "territorial_change_does_not_imply_new_polity": true,
+    "distinct_source_defined_union_must_not_be_collapsed": true,
+    "no_generic_successor_shortcut": true,
+    "no_name_only_production_binding": true
+  },
+  "families": [
+    {
+      "id": "roman_eastern_roman_395",
+      "model": "operational_territorial_split_with_roman_continuity",
+      "transition": {
+        "year": 395,
+        "month": null,
+        "day": null,
+        "granularity": "year",
+        "certainty": "exact",
+        "calendar": "unspecified_historical"
+      },
+      "stable_single_polity_across_transition": false,
+      "roman_continuity_metadata_required": true,
+      "conventional_eastern_label": "Byzantine Empire",
+      "production_polity_uuids": null,
+      "production_assertions_approved": false
+    },
+    {
+      "id": "yuan_northern_yuan_1368",
+      "model": "stable_polity_with_historiographic_designation_and_territorial_contraction",
+      "transition": {
+        "year": 1368,
+        "month": null,
+        "day": null,
+        "granularity": "year",
+        "certainty": "exact",
+        "calendar": "unspecified_historical"
+      },
+      "stable_single_polity_across_transition": true,
+      "post_transition_designation": "Northern Yuan",
+      "designation_type": "historiographic_period",
+      "automatic_new_polity_uuid": false,
+      "production_polity_uuid": null,
+      "production_assertions_approved": false
+    },
+    {
+      "id": "russia_1721_empire",
+      "model": "stable_polity_with_state_form_designation_change",
+      "transition": {
+        "year": 1721,
+        "month": 11,
+        "day": 2,
+        "granularity": "day",
+        "certainty": "exact",
+        "calendar": "gregorian",
+        "source_calendar_equivalent": "1721-10-22 Julian"
+      },
+      "stable_single_polity_across_transition": true,
+      "before_designation": "Tsardom of Russia",
+      "after_designation": "Russian Empire",
+      "identity_relation_required": false,
+      "production_polity_uuid": null,
+      "production_assertions_approved": false
+    },
+    {
+      "id": "portugal_united_kingdom_1815",
+      "model": "distinct_composite_union_polity_with_constituent_portugal",
+      "transition": {
+        "year": 1815,
+        "month": 12,
+        "day": 16,
+        "granularity": "day",
+        "certainty": "exact",
+        "calendar": "gregorian"
+      },
+      "stable_single_polity_across_transition": false,
+      "pre_union_identity": "Kingdom of Portugal",
+      "union_identity": "United Kingdom of Portugal, Brazil and the Algarves",
+      "portugal_constituent_continuity": true,
+      "union_identity_relation_model_required": true,
+      "constituent_relation_model_required": true,
+      "production_polity_uuids": null,
+      "production_assertions_approved": false
+    }
+  ],
+  "production_gates": [
+    "Baseline A surviving Polity identity lookup",
+    "exact UUID survivor decisions",
+    "correction v2 relink/retire/designation/identity-relation manifests",
+    "normalized source provenance",
+    "semantic-key v2 cutover after canonical Polity identity is fixed"
+  ]
+}

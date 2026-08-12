@@ -71,24 +71,26 @@ reviewed corrections/requests/*.json
  -> dry-run of the real SERIALIZABLE mutation transaction
  -> ROLLBACK
  -> only after successful dry-run: reviewed apply
- -> source-preserving normalized correction primitive
+ -> source/provenance-preserving normalized correction primitive
  -> correction result ledger
 ```
 
 - Correction은 신규 authoring과 별도 trust/workflow/audience를 사용합니다.
-- 현재 `atlas-correction-manifest/v1`은 `coalesce_relationship` 하나만 허용합니다.
-- v1 대상은 normalized UUID inventory로 exact Activity duplicate임이 입증된 관계에 한정합니다.
-- keep/drop UUID와 exact reviewed before-state(Person/Polity/Role/Period basis/Start/End/notes/legacy source key)가 live row와 일치해야 합니다.
+- `atlas-correction-manifest/v1`은 `coalesce_relationship` 하나만 허용하는 R0 compatibility contract입니다.
+- `atlas-correction-manifest/v1.1`은 **Stage 2 이전 current-schema cleanup 전용**이며 `coalesce_relationship`, `retire_activity`, `update_activity_interval`만 허용합니다.
+- v1.1은 `relink`, `split`, Polity identity mutation, Relation/Governance mutation을 절대 허용하지 않습니다. 이들은 Stage 2 schema 이후 correction v2 대상입니다.
+- v1/v1.1의 모든 target은 normalized UUID와 exact reviewed before-state(Person/Polity/Role/Period basis/Start/End/notes/legacy source key)에 묶입니다.
+- `update_activity_interval`은 start/end만 바꿀 수 있고 다른 semantic field가 변하면 fail closed입니다.
+- `retire_activity`는 삭제 전 relationship row와 source links, chronology claims, relationship descriptions를 immutable correction result snapshot에 보존합니다. 퇴역한 잘못된 assertion의 child rows는 live semantic graph에 잔존시키지 않습니다.
 - target relationship locks는 deterministic UUID order로 획득합니다.
 - coalesce는 기존 Person merge의 검증된 source-preserving primitive를 재사용합니다.
-- relationship source links, chronology claims, relationship descriptions는 drop 전에 보존/이동합니다.
+- coalesce 시 relationship source links, chronology claims, relationship descriptions는 drop 전에 보존/이동합니다.
 - 동일 source에 서로 다른 locator가 발견되면 fail closed합니다.
 - dry-run은 실제 mutation primitive와 postcondition을 실행하고 transaction 전체를 rollback해야 하며 Production data/schema를 바꾸지 않습니다.
-- apply는 dry-run 성공 후 별도 exact-SHA 요청으로만 실행합니다. apply 시 필요한 reviewed correction ledger migration을 server-side에서 적용할 수 있습니다.
-- correction ledger는 dropped relationship UUID가 사라진 뒤에도 감사증거를 보존해야 하므로 dropped Activity에 FK를 걸지 않습니다.
+- apply는 dry-run 성공 후 동일 exact deployed SHA에서 실행합니다. 필요한 ordered correction-ledger migration은 apply handler가 실행할 수 있습니다.
+- correction ledger는 삭제된 relationship UUID가 사라진 뒤에도 감사증거를 보존해야 하므로 dropped/retired Activity에 FK를 걸지 않습니다.
 - 동일 `request_id` + 동일 manifest는 idempotent replay, 동일 request id + 다른 payload는 fail closed입니다.
 - correction engine/workflow/API 코드 변경 자체는 Production correction workflow의 push trigger가 아닙니다. approved `corrections/requests/*.json`이 main에 들어오지 않는 한 자동 data mutation이 발생하지 않습니다.
-- relink/split/polity-identity merge는 v1에서 지원하지 않습니다. 해당 기능은 별도 역사결정과 contract 확장 후에만 허용합니다.
 
 ## 7. Activity mutation boundary
 
@@ -107,24 +109,39 @@ Browser/Admin/Import
 - retired `reconcile` mutation surface를 다시 추가하지 않습니다.
 - update/delete는 normalized relationship UUID를 사용합니다.
 - Role은 nullable이며 synthetic unspecified role을 만들지 않습니다.
-- 일반 delete surface는 provenance-preserving duplicate coalesce의 대체 수단이 아닙니다.
+- 일반 delete surface는 provenance-preserving reviewed correction/coalesce의 대체 수단이 아닙니다.
 
 ## 8. Semantic activity identity
 
-Activity semantic identity는 항상 다음 6차원입니다.
+현재 Production pre-Stage-2 Activity semantic identity는 다음 6차원입니다.
 
 ```text
 Person + Polity + Start + End + Role(nullable) + Period basis
 ```
 
-UI/import/planner/DB transaction이 서로 다른 semantic key를 사용하면 안 됩니다.
+UI/import/planner/DB transaction이 이 현재 identity를 서로 다르게 구현하면 안 됩니다.
+
+Stage 2 최종 cutover identity는 다음으로 확장됩니다.
+
+```text
+Person
++ Polity
++ Relation Type
++ Role(nullable)
++ Period Basis
++ interpreted start boundary
++ interpreted end boundary
+```
+
+full boundary에는 year/month/day/granularity/calendar interpretation이 포함됩니다. DB index, planner, transaction, authoring/replay, correction collision check, duplicate reconciliation, Person merge가 **같은 release cutover에서 동시에** 이 identity로 전환되어야 하며 v1/v2 split-brain은 금지합니다.
 
 ## 9. Duplicate review and merge
 
 - fuzzy similarity는 candidate evidence일 수 있으나 자동 identity 결정이 아닙니다.
 - candidate decision: `MERGE`, `KEEP_SEPARATE`, `REVIEW`.
 - `MERGE`는 승인일 뿐 실행이 아닙니다.
-- 실제 merge는 survivor UUID와 필요한 relationship reconciliation을 명시해야 합니다.
+- Stage 2 이전에는 duplicate Person의 identity decision까지 할 수 있으나 destructive Person merge는 금지합니다.
+- 실제 physical merge는 Stage 2 semantic identity cutover 이후 survivor UUID와 필요한 v2-aware relationship reconciliation을 명시해야 합니다.
 - merge는 SERIALIZABLE transaction 안에서 live evidence를 다시 계산합니다.
 - stale evidence, metadata conflict, unexpected FK drift, ambiguous relationship reconciliation은 fail closed입니다.
 - source person은 dependent data 보존/이동 후 마지막에 삭제합니다.
@@ -168,6 +185,9 @@ UI/import/planner/DB transaction이 서로 다른 semantic key를 사용하면 �
 - exact locked dependencies (`npm ci`)
 - all `tests/*.test.mjs`
 - active JS syntax
+- requirements source of truth
+- Vercel-minimized release governance
+- R0 future-semantic equivalence while the R0 request is staged
 - zero reachable legacy runtime
 - fresh PostgreSQL baseline + current ordered migrations rebuild
 
@@ -179,6 +199,14 @@ Production authoring operation은 `.github/workflows/atlas-authoring-apply.yml`,
 
 `main` commit과 Production deployment는 동일하다고 추정하지 않습니다.
 
+상세 release-train 정책은 `RELEASE_GOVERNANCE.md`가 source of truth입니다.
+
+- branch/PR research, docs, code, disposable PostgreSQL rehearsal, manifest preparation은 Vercel Production build를 이유로 main에 조기 merge하지 않습니다.
+- `vercel.json`은 non-Production build를 skip해야 합니다.
+- main merge/deployment는 live-state dependency barrier마다 하나의 coherent Production train으로 묶습니다.
+- 현재 Baseline A가 R0/R1 live result에 의존하므로 Train 1(current-schema cleanup)과 Train 2(Stage 2 transition)는 구조적으로 분리합니다. 미래 Baseline A를 추측해서 배포 횟수를 줄이지 않습니다.
+- 한 exact deployed SHA에서 migration/correction/backfill/cutover 등 여러 operation을 순서대로 실행할 수 있으면 별도 배포로 쪼개지 않습니다.
+
 Release 완료 조건:
 
 1. PR exact head ATLAS Integrity PASS.
@@ -189,5 +217,6 @@ Release 완료 조건:
 6. authoring replay 결과 snapshot이 live normalized UUID binding 검증을 통과.
 7. correction request가 있는 경우 같은 main SHA에서 correction dry-run이 먼저 성공하고 `committed=false`임을 확인.
 8. correction apply가 `committed=true`로 성공한 뒤 result artifact와 live post-state를 검증.
+9. 해당 train의 live-state 결과(Baseline A/B 등)가 후속 branch work의 authoritative input으로 capture된다.
 
 배포되지 않은 main 코드를 Production 기능으로 간주하지 않습니다.
