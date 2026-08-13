@@ -15,7 +15,7 @@
   },
   "components": [
     {"sequence":1,"id":"semantic_extensions","path":"db/proposals/stage2_semantic_extensions.rehearsal.sql","git_blob_sha":"44a5e7f2b33a3661afdd0ff63d5d6b3cb7ef7b51"},
-    {"sequence":2,"id":"relation_type_catalog","path":"db/proposals/stage2_relation_type_catalog.rehearsal.sql","git_blob_sha":"041200692b5b4e9e586f3168be74d47b88a41cd0"},
+    {"sequence":2,"id":"relation_type_catalog","path":"db/proposals/stage2_relation_type_catalog.rehearsal.sql","git_blob_sha":"574bdc2f8c508f40195135659032889664cb8944"},
     {"sequence":3,"id":"source_model","path":"db/proposals/stage2_source_model.rehearsal.sql","git_blob_sha":"85fbe5facfafb954e94e5d38a4cc8a090addf82a"},
     {"sequence":4,"id":"normalized_provenance","path":"db/proposals/stage2_provenance.rehearsal.sql","git_blob_sha":"a0d95231b57f4e9abf11271b12fb5cab6e2d2ecf"},
     {"sequence":5,"id":"entity_boundaries","path":"db/proposals/stage2_entity_boundaries.rehearsal.sql","git_blob_sha":"abd369c2388c6b6478871d6cbd31b52e95855443"},
