@@ -12,7 +12,7 @@
       "survivor_fragment_id":"ma_teng_189_207_western_context",
       "fragments":[
         {"id":"ma_teng_189_207_western_context","activity_uuid":"42274e4c-af35-503f-a14f-e7460489b252","polity_uuid":"de6dd298-a220-4531-b44e-3f3edb1b5eae","relation_type_uuid":"f33d2789-2e65-50c1-af3e-91335bcbd3ca","role_uuid":"a33083bd-9e14-5381-ab33-2d75738f262c","period_basis_uuid":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","start_year":189,"end_year":207,"certainty":"uncertain","copy_legacy_source_links":true,"source_locator_key":"Sanguozhi 36 / Dianlue: Ma Teng western career before Jian'an 13 court summons"},
-        {"id":"ma_teng_208_212_eastern_han_service","activity_uuid":"7fd8007d-18dd-5953-b9fb-2f94b50a384a","polity_uuid":"3a29a08a-d111-50d5-916f-f5c11b5eabaf","relation_type_uuid":"0fc4827f-8543-52f7-9e9a-3173b0c698a7","role_uuid":"c48b2b1b-ff24-54ec-ba48-d2e00db0872d","period_basis_uuid":"e78bcf72-c195-53ca-bf05-e909460301ee","start_year":208,"end_year":212,"certainty":"exact","copy_legacy_source_links":false,"source_locator_key":"Sanguozhi 36 / Dianlue: Jian'an 13 Weiwei court service"}
+        {"id":"ma_teng_208_212_eastern_han_service","activity_uuid":"7fd8007d-18dd-5953-b9fb-2f94b50a384a","polity_uuid":"3a29a08a-d111-50d5-916f-f5c11b5eabaf","relation_type_uuid":"0fc4827f-8543-52f7-9e9a-3173b0c698a7","role_uuid":"c48b2b1b-ff24-54ec-ba48-d2e00db0872d","period_basis_uuid":"e78bcf72-81e3-5db8-a76a-8c2ca9c6d745","start_year":208,"end_year":212,"certainty":"exact","copy_legacy_source_links":false,"source_locator_key":"Sanguozhi 36 / Dianlue: Jian'an 13 Weiwei court service"}
       ],
       "gap_overlap_policy":"NO_YEAR_GAP_OR_OVERLAP_NO_SUBYEAR_CLAIM"
     },
