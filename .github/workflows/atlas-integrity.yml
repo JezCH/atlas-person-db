@@ -162,4 +162,18 @@ jobs:
         run: npm run test:stage2-semantic-key-rehearsal
 
       - name: Rehearse P5 additive schema release candidate and exact replay
-        run: node scripts/rehearse-stage2-p5-additive-schema-release.mjs
+        id: p5-schema-release
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p artifacts
+          node scripts/rehearse-stage2-p5-additive-schema-release.mjs 2>&1 | tee artifacts/stage2-p5-schema-release.log
+
+      - name: Upload P5 schema release failure diagnostics
+        if: failure() && steps.p5-schema-release.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-stage2-p5-schema-release-failure-${{ github.sha }}
+          path: artifacts/stage2-p5-schema-release.log
+          if-no-files-found: error
+          retention-days: 7
