@@ -45,8 +45,9 @@ E(P.source_candidates?.length===2&&P.source_candidates.every(s=>s.source_uuid===
 E(x.normalized_source_candidate_keys?.length===2&&x.normalized_source_candidate_keys.every(k=>P.source_candidates.some(s=>s.candidate_key===k)),'source links');
 E(String(x.geometry_policy).includes('NO_TERRITORY_OR_GEOMETRY')&&String(x.geometry_policy).includes('PERSONAL RULE'),'geometry');
 const r=P.result;
-E(G.schema==='atlas-stage2-p6-effective-prebinding-progress/v1'&&G.completed_prebinding_activities===49&&G.remaining_prebinding_activities===5&&G.latest_completed_batch===13&&G.latest_completed_activity_id===id&&G.production_mutation_authorized===false,'progress');
-E(G.remaining_activity_ids?.length===5&&!G.remaining_activity_ids.includes(id),'progress remaining');
+E(G.schema==='atlas-stage2-p6-effective-prebinding-progress/v1'&&G.effective_correction_v2_activities===54&&G.completed_prebinding_activities>=49&&G.completed_prebinding_activities<=54&&G.remaining_prebinding_activities<=5&&G.remaining_prebinding_activities>=0&&G.completed_prebinding_activities+G.remaining_prebinding_activities===54&&G.latest_completed_batch>=13&&G.production_mutation_authorized===false,'progress monotonic');
+E(Array.isArray(G.remaining_activity_ids)&&G.remaining_activity_ids.length===G.remaining_prebinding_activities&&!G.remaining_activity_ids.includes(id),'progress remaining');
+if(G.latest_completed_batch===13) E(G.completed_prebinding_activities===49&&G.remaining_prebinding_activities===5&&G.latest_completed_activity_id===id,'batch13 latest snapshot');
 E(r.cumulative_effective_prebinding_activities===49&&r.effective_correction_v2_activities===54&&r.remaining_effective_correction_v2_frontier===5&&r.new_polity_uuid_bindings===0&&r.new_activity_uuid_assignments===0&&r.production_executable===false&&r.production_mutation_authorized===false,'result');
 for(const b of ['P5_PRODUCTION_SCHEMA_NOT_APPLIED','FULL_TEMPORAL_BOUNDARY_STORAGE_NOT_APPLIED','NEW_POST210_ACTIVITY_UUID_NOT_ASSIGNED','PRE_FORMAL_WU_TEMPORAL_DISPLAY_DESIGNATION_NOT_AUTHORED','NORMALIZED_REVIEWED_SHI_XIE_SOURCE_UUID_BINDINGS_NOT_COMPLETE','PRODUCTION_RELEASE_NOT_AUTHORIZED']) E(P.common_execution_blockers.includes(b),b);
 console.log(JSON.stringify({marker:'ATLAS_STAGE2_CORRECTION_V2_PREBINDING_BATCH13_OK',cumulative:49,effective_total:54,remaining:5,production:false}));
