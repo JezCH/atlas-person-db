@@ -25,7 +25,7 @@ E(live&&x&&x.type==='rewrite_activity'&&x.mode==='same_uuid_same_polity_coarse_r
 F.forEach((f,i)=>E(x.expected_before[i]===live[f],`before ${f}`));
 const y=x.proposed_after;
 E(y.activity_uuid===id&&y.person_id===live.person_id&&y.polity_id===live.polity_id&&y.role_id===live.role_id&&y.period_basis_id===live.period_basis_id,'identity preservation');
-E(y.activity_start===1876&&y.activity_end===1885&&y.start_boundary?.year===1876&&y.start_boundary?.granularity==='approximate'&&y.end_boundary?.year===1885&&y.end_boundary?.granularity==='uncertain','temporal correction');
+E(y.activity_start===1876&&y.activity_end===1885&&y.start_boundary?.year===1876&&y.start_boundary?.granularity==='year'&&y.start_boundary?.certainty==='approximate'&&y.end_boundary?.year===1885&&y.end_boundary?.granularity==='year'&&y.end_boundary?.certainty==='uncertain','temporal correction');
 E(JSON.stringify(y.relation)===JSON.stringify(['active_in',activeIn]),'relation');
 E(String(y.start_boundary.interpretation).includes('DO NOT INVENT')&&String(y.end_boundary.interpretation).includes('DO NOT CLAIM 1885')&&String(y.role_interpretation).includes('COARSE ROLE LABEL'),'uncertainty');
 E(x.optional_auxiliary_metadata?.every(v=>v.required_for_correction===false),'optional metadata');
