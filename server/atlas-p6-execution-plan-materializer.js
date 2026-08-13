@@ -11,6 +11,12 @@ function requiredUuid(value, code) {
   return id;
 }
 
+function nonblank(value, code) {
+  const text = String(value || "").trim();
+  if (!text) throw new Error(code);
+  return text;
+}
+
 function tupleObject(batch, item) {
   if (!Array.isArray(batch.before_tuple_fields) || !Array.isArray(item.expected_before) || batch.before_tuple_fields.length !== item.expected_before.length) {
     throw new Error(`P6_MATERIALIZER_BEFORE_TUPLE_INVALID:${item.id}`);
@@ -18,11 +24,33 @@ function tupleObject(batch, item) {
   return Object.fromEntries(batch.before_tuple_fields.map((field, index) => [field, item.expected_before[index]]));
 }
 
-function buildMaps({ allocations, reviewedSources, rolePrerequisites }) {
+function buildMaps({ allocations, reviewedSources, rolePrerequisites, relationCatalog, relationDecisions, relationSourcePackage }) {
+  const relationSourceByDecision = new Map();
+  for (const link of relationSourcePackage?.links || []) {
+    const decisionId = nonblank(link.relation_decision_id, "P6_MATERIALIZER_RELATION_SOURCE_DECISION_REQUIRED");
+    const sourceKey = nonblank(link.source_candidate_key, `P6_MATERIALIZER_RELATION_SOURCE_CANDIDATE_REQUIRED:${decisionId}`);
+    const locator = nonblank(link.source_locator_key, `P6_MATERIALIZER_RELATION_SOURCE_LOCATOR_REQUIRED:${decisionId}:${sourceKey}`);
+    const list = relationSourceByDecision.get(decisionId) || [];
+    list.push(Object.freeze({ source_candidate_key: sourceKey, source_locator_key: locator, relation_type: link.relation_type || null }));
+    relationSourceByDecision.set(decisionId, list);
+  }
+
+  const relationDecisionByActivity = new Map();
+  for (const decision of relationDecisions?.decisions || []) {
+    if (!decision?.activity_id || !Array.isArray(decision.relation_assertions) || decision.relation_assertions.length === 0) continue;
+    const activityId = requiredUuid(decision.activity_id, `P6_MATERIALIZER_RELATION_DECISION_ACTIVITY_INVALID:${decision.id}`);
+    const list = relationDecisionByActivity.get(activityId) || [];
+    list.push(decision);
+    relationDecisionByActivity.set(activityId, list);
+  }
+
   return Object.freeze({
     polity: new Map((allocations?.polities || []).map((row) => [row.identity_class, requiredUuid(row.polity_uuid, `P6_MATERIALIZER_POLITY_UUID_INVALID:${row.identity_class}`)])),
     source: new Map((reviewedSources || []).map((row) => [row.candidate_key, requiredUuid(row.source_uuid, `P6_MATERIALIZER_SOURCE_UUID_INVALID:${row.candidate_key}`)])),
-    role: new Map((rolePrerequisites?.roles || []).map((row) => [row.identity_class, requiredUuid(row?.role?.id, `P6_MATERIALIZER_ROLE_UUID_INVALID:${row.identity_class}`)]))
+    role: new Map((rolePrerequisites?.roles || []).map((row) => [row.identity_class, requiredUuid(row?.role?.id, `P6_MATERIALIZER_ROLE_UUID_INVALID:${row.identity_class}`)])),
+    polityRelationType: new Map((relationCatalog?.polity_relation_types || []).map((row) => [row.code, requiredUuid(row.id, `P6_MATERIALIZER_POLITY_RELATION_UUID_INVALID:${row.code}`)])),
+    relationDecisionByActivity,
+    relationSourceByDecision
   });
 }
 
@@ -32,6 +60,12 @@ function resolvePolity(node, maps, caseId) {
   const identityClass = node?.polity_identity_class ?? node?.target_identity_class ?? node?.subject_identity_class ?? node?.object_identity_class;
   if (identityClass && maps.polity.has(identityClass)) return maps.polity.get(identityClass);
   throw new Error(`P6_MATERIALIZER_POLITY_UNRESOLVED:${caseId}:${identityClass || "<none>"}`);
+}
+
+function resolveRelationEndpoint(endpoint, maps, label) {
+  if (endpoint?.polity_uuid != null) return requiredUuid(endpoint.polity_uuid, `P6_MATERIALIZER_ASSERTION_POLITY_UUID_INVALID:${label}`);
+  if (endpoint?.identity_class && maps.polity.has(endpoint.identity_class)) return maps.polity.get(endpoint.identity_class);
+  throw new Error(`P6_MATERIALIZER_ASSERTION_POLITY_UNRESOLVED:${label}:${endpoint?.identity_class || "<none>"}`);
 }
 
 function relationUuid(node) {
@@ -44,16 +78,20 @@ function boundaryDetail(boundary, fallbackYear) {
   if (!boundary) return null;
   const year = Number(boundary.year ?? fallbackYear);
   if (!Number.isInteger(year) || year === 0) throw new Error("P6_MATERIALIZER_BOUNDARY_YEAR_INVALID");
-  const token = String(boundary.granularity || "year").toLowerCase();
-  const certainty = String(boundary.certainty || (token === "approximate" || token === "uncertain" ? token : "exact")).toLowerCase();
-  return Object.freeze({
-    year,
-    month: null,
-    day: null,
-    granularity: "year",
-    certainty,
-    calendar: "unspecified_historical"
-  });
+
+  const month = boundary.month == null ? null : Number(boundary.month);
+  const day = boundary.day == null ? null : Number(boundary.day);
+  if (month != null && (!Number.isInteger(month) || month < 1 || month > 12)) throw new Error("P6_MATERIALIZER_BOUNDARY_MONTH_INVALID");
+  if (day != null && (!Number.isInteger(day) || day < 1 || day > 31 || month == null)) throw new Error("P6_MATERIALIZER_BOUNDARY_DAY_INVALID");
+
+  const granularity = String(boundary.granularity || (day != null ? "day" : month != null ? "month" : "year")).toLowerCase();
+  const certainty = String(boundary.certainty || "exact").toLowerCase();
+  const calendar = String(boundary.calendar || "unspecified_historical").toLowerCase();
+  if (granularity === "year" && (month != null || day != null)) throw new Error("P6_MATERIALIZER_BOUNDARY_GRANULARITY_MISMATCH");
+  if (granularity === "month" && (month == null || day != null)) throw new Error("P6_MATERIALIZER_BOUNDARY_GRANULARITY_MISMATCH");
+  if (granularity === "day" && (month == null || day == null)) throw new Error("P6_MATERIALIZER_BOUNDARY_GRANULARITY_MISMATCH");
+
+  return Object.freeze({ year, month, day, granularity, certainty, calendar });
 }
 
 function sourceIdsForCase(item, maps) {
@@ -175,33 +213,38 @@ function compileRetire(batch, item) {
 }
 
 function compileAssertions(item, maps) {
-  const nodes = [];
-  if (item.structural_relation_handoff) nodes.push(item.structural_relation_handoff);
-  if (item.polity_relation_handoff && item.polity_relation_handoff.relation_type_uuid) nodes.push(item.polity_relation_handoff);
-  const proposed = item.proposed_after?.planned_polity_relation_assertions;
-  if (Array.isArray(proposed)) nodes.push(...proposed);
-  return nodes.flatMap((node, index) => {
-    const sourceKey = node.source_candidate_key;
-    if (!sourceKey) return [];
-    const sourceId = maps.source.get(sourceKey);
-    if (!sourceId) throw new Error(`P6_MATERIALIZER_ASSERTION_SOURCE_UNRESOLVED:${item.id}:${sourceKey}`);
-    const relationId = node.relation_decision_id || node.research_relation_id || `${item.id}:${index}`;
-    const subject = resolvePolity({ subject_polity_id:node.subject_polity_id || node.subject_polity_uuid, subject_identity_class:node.subject_identity_class }, maps, `${item.id}:assertion:subject`);
-    const object = resolvePolity({ object_polity_id:node.object_polity_id || node.object_polity_uuid, object_identity_class:node.object_identity_class }, maps, `${item.id}:assertion:object`);
-    const relationType = relationUuid(node);
-    if (!relationType) throw new Error(`P6_MATERIALIZER_ASSERTION_RELATION_REQUIRED:${item.id}`);
-    return [Object.freeze({
-      type: "assert_polity_relation",
-      assertion_id: deterministicAssertionId(item.id, relationId),
-      subject_polity_id: subject,
-      object_polity_id: object,
-      relation_type_id: relationType,
-      start_year: node.start_boundary?.year ?? null,
-      end_year: node.end_boundary?.year ?? null,
-      start_detail: boundaryDetail(node.start_boundary, node.start_boundary?.year),
-      end_detail: boundaryDetail(node.end_boundary, node.end_boundary?.year),
-      source_links: [Object.freeze({ source_id: sourceId, source_locator_key: node.source_locator_key || null })]
-    })];
+  const activityId = requiredUuid(item.activity_id, `P6_MATERIALIZER_ACTIVITY_UUID_INVALID:${item.id}`);
+  const decisions = maps.relationDecisionByActivity.get(activityId) || [];
+  return decisions.flatMap((decision) => {
+    const sourceAuthority = maps.relationSourceByDecision.get(decision.id) || [];
+    if (sourceAuthority.length === 0) throw new Error(`P6_MATERIALIZER_ASSERTION_SOURCE_LINKS_REQUIRED:${decision.id}`);
+    return decision.relation_assertions.map((assertion, index) => {
+      const relationType = maps.polityRelationType.get(assertion.relation_type);
+      if (!relationType) throw new Error(`P6_MATERIALIZER_ASSERTION_RELATION_UNRESOLVED:${decision.id}:${assertion.relation_type}`);
+      const subject = resolveRelationEndpoint(assertion.subject, maps, `${decision.id}:subject`);
+      const object = resolveRelationEndpoint(assertion.object, maps, `${decision.id}:object`);
+      const sourceLinks = sourceAuthority
+        .filter((link) => !link.relation_type || link.relation_type === assertion.relation_type)
+        .map((link) => {
+          const sourceId = maps.source.get(link.source_candidate_key);
+          if (!sourceId) throw new Error(`P6_MATERIALIZER_ASSERTION_SOURCE_UNRESOLVED:${decision.id}:${link.source_candidate_key}`);
+          return Object.freeze({ source_id: sourceId, source_locator_key: link.source_locator_key });
+        });
+      if (sourceLinks.length === 0) throw new Error(`P6_MATERIALIZER_ASSERTION_SOURCE_LINKS_REQUIRED:${decision.id}:${assertion.relation_type}`);
+      return Object.freeze({
+        type: "assert_polity_relation",
+        assertion_id: deterministicAssertionId(item.id, `${decision.id}:${index}`),
+        relation_decision_id: decision.id,
+        subject_polity_id: subject,
+        object_polity_id: object,
+        relation_type_id: relationType,
+        start_year: assertion.start?.year ?? null,
+        end_year: assertion.end?.year ?? null,
+        start_detail: boundaryDetail(assertion.start, assertion.start?.year),
+        end_detail: boundaryDetail(assertion.end, assertion.end?.year),
+        source_links: sourceLinks
+      });
+    });
   });
 }
 
@@ -232,6 +275,7 @@ function materializeBatch({ batch, maps, adapterByCase }) {
       existing_legacy_relation_may_remain_null_only_when_review_explicitly_deferred: true,
       new_fragment_relation_required: true,
       silent_source_drop_forbidden: true,
+      reviewed_assertion_locator_required: true,
       production_executable: false,
       production_mutation_authorized: false
     }),
@@ -240,8 +284,8 @@ function materializeBatch({ batch, maps, adapterByCase }) {
   });
 }
 
-function materializePackage({ prebindingBatches, allocations, reviewedSources, rolePrerequisites, resolutionAdapters }) {
-  const maps = buildMaps({ allocations, reviewedSources, rolePrerequisites });
+function materializePackage({ prebindingBatches, allocations, reviewedSources, rolePrerequisites, resolutionAdapters, relationCatalog, relationDecisions, relationSourcePackage }) {
+  const maps = buildMaps({ allocations, reviewedSources, rolePrerequisites, relationCatalog, relationDecisions, relationSourcePackage });
   const adapterByCase = new Map((resolutionAdapters?.adapters || []).map((row) => [row.case_id, row]));
   const plans = prebindingBatches.map((batch) => materializeBatch({ batch, maps, adapterByCase }));
   const operations = plans.flatMap((plan) => plan.operations);
