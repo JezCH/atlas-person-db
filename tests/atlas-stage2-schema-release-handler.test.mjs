@@ -49,14 +49,17 @@ function bundle() {
         remaining_activity_count: 0
       },
       safety: {
-        additive_schema_only: true,
+        non_destructive_schema_only: true,
+        additive_objects_and_backward_compatible_relaxations_only: true,
+        legacy_source_key_nullability_relaxation: true,
+        fake_legacy_source_key_for_stage2_native_activity_forbidden: true,
         person_activity_data_mutation: false,
         physical_person_merge: false,
         territory_geometry_mutation: false,
         production_apply_authorized: false
       }
     },
-    components: Array.from({ length: 5 }, (_, index) => ({
+    components: Array.from({ length: 6 }, (_, index) => ({
       id: `component_${index + 1}`,
       git_blob_sha: String(index + 1).repeat(40)
     }))
@@ -91,6 +94,9 @@ test('release envelope cannot self-authorize Production and requires P6 54/54 cl
   const incomplete = bundle();
   incomplete.release.prerequisites.remaining_activity_count = 1;
   assert.throws(() => assertReleaseEnvelope(incomplete, RELEASE_ID), /P6_CLOSURE_REQUIRED/);
+  const fakeLegacy = bundle();
+  fakeLegacy.release.safety.fake_legacy_source_key_for_stage2_native_activity_forbidden = false;
+  assert.throws(() => assertReleaseEnvelope(fakeLegacy, RELEASE_ID), /SAFETY_CONTRACT_INVALID/);
 });
 
 test('baseline gate pins exact digest and authoritative cardinalities', () => {
@@ -165,7 +171,7 @@ test('handler requires the dedicated OIDC before database access', async () => {
   assert.equal(dbCalls, 0);
 });
 
-test('preflight is read-only and proves exact baseline plus ledger state', async () => {
+test('preflight is read-only and proves exact baseline plus six-component ledger state', async () => {
   let applyCalls = 0;
   let ended = 0;
   const handler = createStage2SchemaReleaseHandler({
@@ -184,12 +190,12 @@ test('preflight is read-only and proves exact baseline plus ledger state', async
   assert.equal(res.state.body.read_only, true);
   assert.equal(res.state.body.committed, false);
   assert.equal(res.state.body.baseline_digest, DIGEST);
-  assert.equal(res.state.body.ledger.pending.length, 5);
+  assert.equal(res.state.body.ledger.pending.length, 6);
   assert.equal(applyCalls, 0);
   assert.equal(ended, 1);
 });
 
-test('apply rechecks baseline, completes exact ledger and preserves Baseline A digest', async () => {
+test('apply rechecks baseline, completes exact six-component ledger and preserves Baseline A digest', async () => {
   let baselineCalls = 0;
   let ledgerCalls = 0;
   const handler = createStage2SchemaReleaseHandler({
@@ -211,7 +217,7 @@ test('apply rechecks baseline, completes exact ledger and preserves Baseline A d
   assert.equal(res.state.body.mode, 'apply');
   assert.equal(res.state.body.committed, true);
   assert.equal(res.state.body.replay, false);
-  assert.equal(res.state.body.applied.length, 5);
+  assert.equal(res.state.body.applied.length, 6);
   assert.equal(res.state.body.ledger.complete, true);
   assert.equal(res.state.body.baseline_digest_before, DIGEST);
   assert.equal(res.state.body.baseline_digest_after, DIGEST);
