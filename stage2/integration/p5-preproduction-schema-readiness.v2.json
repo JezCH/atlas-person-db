@@ -1,0 +1,103 @@
+{
+  "schema": "atlas-stage2-p5-preproduction-schema-readiness/v2",
+  "as_of": "2026-08-13",
+  "status": "P5_CURRENT_EXECUTION_READINESS_BRANCH_ONLY_NO_PRODUCTION_MUTATION",
+  "supersedes_for_current_execution": "stage2/integration/p5-preproduction-schema-readiness.v1.json",
+  "historical_v1_preserved_as_audit_evidence": true,
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27",
+    "activities": 338,
+    "persons": 302,
+    "polities": 212,
+    "sources": 20
+  },
+  "current_frontier": {
+    "effective_new_polity_targets": 17,
+    "literal_new_polity_uuid_assignments": 17,
+    "literal_preferred_polity_name_uuid_assignments": 17,
+    "reviewed_polity_relation_assertions": 10,
+    "relation_source_candidates": 9,
+    "literal_relation_source_uuid_assignments": 9,
+    "relation_source_links": 11,
+    "effective_correction_v2_activities": 54,
+    "completed_prebinding_activities": 54,
+    "remaining_prebinding_activities": 0,
+    "superseded_overgranular_polity_targets": 8,
+    "mandatory_people_event_governance_migrations_for_person_corrections": 0,
+    "physical_person_merges": 0
+  },
+  "authorities": {
+    "politic_contract": "stage2/contracts/politic-resolution-current.v1.json",
+    "politic_amendments": "stage2/integration/baseline-a-politic-resolution-amendments.v1.json",
+    "p6_closure": "stage2/integration/p6-effective-prebinding-closure.v1.json",
+    "literal_identity_allocations": "stage2/execution/p6-execution-identity-allocations.v1.json",
+    "exact_entity_source_authoring": "stage2/execution/p5-reviewed-identity-source-authoring.v1.json",
+    "schema_release": "stage2/releases/p5-additive-schema-release.v1.json",
+    "correction_v2_contract": "stage2/contracts/correction-v2-current.v1.json"
+  },
+  "schema_release": {
+    "release_id": "p5_stage2_additive_schema_20260813_v1",
+    "component_count": 6,
+    "components": [
+      "semantic_extensions",
+      "relation_type_catalog",
+      "source_model",
+      "normalized_provenance",
+      "entity_boundaries",
+      "native_activity_provenance"
+    ],
+    "native_activity_legacy_source_key_nullable": true,
+    "fake_legacy_source_key_for_stage2_native_activity_forbidden": true,
+    "first_apply_rehearsed": true,
+    "exact_replay_rehearsed": true,
+    "exact_component_sha_ledger_rehearsed": true,
+    "manual_production_transport_prepared": true,
+    "manual_production_transport_executed": false
+  },
+  "exact_entity_source_authoring": {
+    "new_polity_rows": 17,
+    "new_preferred_polity_name_rows": 17,
+    "new_bibliographic_source_rows": 9,
+    "literal_uuid_only": true,
+    "runtime_name_identity_class_or_url_resolution_forbidden": true,
+    "dry_run_rehearsed": true,
+    "first_apply_rehearsed": true,
+    "exact_replay_rehearsed": true,
+    "drift_rejection_rehearsed": true,
+    "activity_rows_mutated": 0,
+    "fake_source_hash_or_bytes_rows": 0
+  },
+  "correction_v2_execution_boundary": {
+    "prebinding_complete": true,
+    "literal_new_entity_uuids_complete": true,
+    "new_activity_fragment_uuids_must_be_literal_in_operation_manifests": true,
+    "exact_live_before_state_required_after_p5_authoring": true,
+    "same_sha_live_snapshot_then_manifest_synthesis_required": true,
+    "name_only_binding_forbidden": true,
+    "source_key_as_identity_forbidden": true,
+    "dry_run_before_apply_required": true,
+    "source_link_preservation_required": true,
+    "production_execution_manifest_complete": false
+  },
+  "safety": {
+    "historical_accuracy_over_completeness": true,
+    "uuid_is_identity": true,
+    "clear_state_preferred_over_unnecessary_micro_polity": true,
+    "no_generic_person_relation_default": true,
+    "unknown_temporal_precision_must_not_be_fabricated": true,
+    "fake_legacy_provenance_forbidden": true,
+    "fake_bibliographic_hash_or_bytes_forbidden": true,
+    "person_never_owns_geometry": true,
+    "territory_geometry_remains_p14_deferred": true,
+    "physical_person_merge_forbidden_before_p10": true,
+    "production_mutation_authorized": false
+  },
+  "completion_boundary": {
+    "this_gate_means": "the current 17/54 reviewed P5/P6 frontier, six-component non-destructive schema release, literal new entity UUID allocations, and exact P5 entity/source authoring are branch-rehearsed and ready to feed Correction v2 execution-manifest authoring",
+    "this_gate_does_not_mean": "the Stage 2 schema, reviewed entities, Sources, or historical corrections have been applied to Production",
+    "next_branch_only_gate": "P6_CORRECTION_V2_EXECUTABLE_MANIFEST_PACKAGE_COMPLETE",
+    "atlas_rq_0215_remains_pending_until_production_apply": true,
+    "atlas_rq_0216_remains_pending_until_correction_v2_execution_package_and_engine_are_complete": true
+  }
+}
