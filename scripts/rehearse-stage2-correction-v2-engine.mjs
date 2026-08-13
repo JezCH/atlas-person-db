@@ -17,7 +17,7 @@ const {
   loadPolityRelationBundle,
   createCorrectionManifestV2Service
 } = require('../server/atlas-correction-manifest-v2-service.js');
-const { sha256 } = require('../server/atlas-correction-v2-manifest-synthesizer.js');
+const { sha256, RETIRE_SOURCE_TRANSFER_POLICY } = require('../server/atlas-correction-v2-manifest-synthesizer.js');
 
 const { Client } = pg;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -38,7 +38,9 @@ const ID = Object.freeze({
   relation: 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb',
   atomicActivity: 'cccccccc-cccc-4ccc-8ccc-cccccccccccc',
   atomicRelation: 'dddddddd-dddd-4ddd-8ddd-dddddddddddd',
-  missingSource: 'eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee'
+  missingSource: 'eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee',
+  sourceB: '12121212-1212-4212-8212-121212121212',
+  retireSurvivor: '13131313-1313-4313-8313-131313131313'
 });
 
 const PERSON_RELATION = Object.freeze({
@@ -76,7 +78,17 @@ function newFragmentFrom(bundle, { id, polityId, relationTypeId, start, end }) {
   fragment.normalized_source_links = fragment.normalized_source_links.map((link) => ({ ...link, person_politics_id: id }));
   fragment.chronology_claims = [];
   fragment.relationship_descriptions = [];
+  fragment.source_copy_policy = 'COPY_EXISTING';
   return fragment;
+}
+
+function retireSurvivorAfter(survivorBefore, retiredBefore) {
+  const next = clone(survivorBefore);
+  for (const link of retiredBefore.normalized_source_links) {
+    next.normalized_source_links.push({ ...link, person_politics_id: survivorBefore.activity.id });
+  }
+  next.normalized_source_links.sort((a, b) => a.source_id.localeCompare(b.source_id));
+  return next;
 }
 
 async function exactCounts(client) {
@@ -107,10 +119,11 @@ try {
     ($2,'fixture-polity-b','historical_polity','historical')`, [ID.polityA, ID.polityB]);
   await client.query(`insert into atlas_v2.roles(id,code,category,source_label,is_active) values($1,'fixture_role','political','Fixture Role',true)`, [ID.role]);
   await client.query(`insert into atlas_v2.period_bases(id,code,is_active) values($1,'fixture_period',true)`, [ID.period]);
-  await client.query(`insert into atlas_v2.sources(id,source_key,source_type,title,sha256,bytes,canonical_url,citation_text)
-    values($1,'fixture-source','bibliographic','Fixture Source',null,null,'https://example.invalid/fixture','Fixture citation')`, [ID.source]);
+  await client.query(`insert into atlas_v2.sources(id,source_key,source_type,title,sha256,bytes,canonical_url,citation_text) values
+    ($1,'fixture-source','bibliographic','Fixture Source',null,null,'https://example.invalid/fixture','Fixture citation'),
+    ($2,'fixture-source-b','bibliographic','Fixture Source B',null,null,'https://example.invalid/fixture-b','Fixture citation B')`, [ID.source, ID.sourceB]);
 
-  const seedActivity = async (id, start, end, key) => {
+  const seedActivity = async (id, start, end, key, sourceId = ID.source) => {
     await client.query(`insert into atlas_v2.person_politics_v2(
       id,person_id,polity_id,relation_type_id,role_id,period_basis_id,
       activity_start,activity_start_month,activity_start_day,activity_start_granularity,activity_start_certainty,activity_start_calendar,
@@ -118,17 +131,19 @@ try {
       confidence,chronology_status,legacy_source_key,notes,source_locator,content_hash
     ) values($1,$2,$3,null,$4,$5,$6,null,null,null,null,null,$7,null,null,null,null,null,'reviewed','exact_as_recorded',$8,$9,$10::jsonb,$11)`,
     [id, ID.person, ID.polityA, ID.role, ID.period, start, end, key, `fixture ${key}`, JSON.stringify({ fixture: key }), `hash:${key}`]);
-    await client.query(`insert into atlas_v2.person_politics_sources(person_politics_id,source_id,source_locator_key) values($1,$2,$3)`, [id, ID.source, `${key}:locator`]);
+    await client.query(`insert into atlas_v2.person_politics_sources(person_politics_id,source_id,source_locator_key) values($1,$2,$3)`, [id, sourceId, `${key}:locator`]);
   };
 
   await seedActivity(ID.rewrite, 100, 110, 'legacy:rewrite');
   await seedActivity(ID.split, 200, 220, 'legacy:split');
   await seedActivity(ID.retire, 300, 310, 'legacy:retire');
+  await seedActivity(ID.retireSurvivor, 290, 320, 'legacy:retire-survivor', ID.sourceB);
 
   const rewriteBefore = await loadActivityBundle(client, ID.rewrite);
   const splitBefore = await loadActivityBundle(client, ID.split);
   const retireBefore = await loadActivityBundle(client, ID.retire);
-  assert.ok(rewriteBefore && splitBefore && retireBefore, 'fixture activities must exist');
+  const retireSurvivorBefore = await loadActivityBundle(client, ID.retireSurvivor);
+  assert.ok(rewriteBefore && splitBefore && retireBefore && retireSurvivorBefore, 'fixture activities must exist');
 
   const rewriteAfter = afterActivity(rewriteBefore, {
     polity_id: ID.polityB,
@@ -145,6 +160,7 @@ try {
     start: 210,
     end: 220
   });
+  const retireSurvivorExpected = retireSurvivorAfter(retireSurvivorBefore, retireBefore);
 
   const relationBundle = {
     relation: {
@@ -176,13 +192,21 @@ try {
 
   const core = {
     schema: MANIFEST_V2,
-    request_id: 'p6-correction-v2-postgres-rehearsal-v1',
+    request_id: 'p6-correction-v2-postgres-rehearsal-v2',
     review_status: 'approved',
     exact_live_snapshot_digest: `sha256:${'1'.repeat(64)}`,
     operations: [
       { type: 'rewrite_activity', case_id: 'fixture_rewrite', activity_id: ID.rewrite, exact_before: rewriteBefore, exact_after: rewriteAfter },
       { type: 'split_activity', case_id: 'fixture_split', activity_id: ID.split, exact_before: splitBefore, survivor_fragment: splitSurvivor, new_fragments: [splitNew], gap_overlap_policy: 'CONTIGUOUS_REVIEWED_BOUNDARY' },
-      { type: 'retire_activity', case_id: 'fixture_retire', activity_id: ID.retire, exact_before: retireBefore },
+      {
+        type: 'retire_activity',
+        case_id: 'fixture_retire',
+        activity_id: ID.retire,
+        exact_before: retireBefore,
+        replacement_survivors: [{ activity_id: ID.retireSurvivor, exact_before: retireSurvivorBefore, exact_after: retireSurvivorExpected }],
+        source_transfer_policy: RETIRE_SOURCE_TRANSFER_POLICY,
+        silent_source_drop_forbidden: true
+      },
       { type: 'assert_polity_relation', decision_id: 'fixture_relation', exact_before: { relation_absent_id: ID.relation }, exact_after: relationBundle }
     ]
   };
@@ -190,7 +214,7 @@ try {
   const service = createCorrectionManifestV2Service({ client });
 
   const beforeCounts = await exactCounts(client);
-  assert.deepEqual(beforeCounts, { activities: 3, activity_sources: 3, polity_relations: 0, polity_relation_sources: 0, correction_runs: 0 });
+  assert.deepEqual(beforeCounts, { activities: 4, activity_sources: 4, polity_relations: 0, polity_relation_sources: 0, correction_runs: 0 });
 
   const dryRun = await service.execute(manifest, { dryRun: true });
   assert.equal(dryRun.marker, MARKER_V2);
@@ -199,6 +223,7 @@ try {
   assert.equal(dryRun.replay, false);
   assert.deepEqual(await exactCounts(client), beforeCounts, 'dry-run must roll back all v2 writes and ledger writes');
   assert.ok(exactEqual(await loadActivityBundle(client, ID.rewrite), rewriteBefore), 'dry-run rewrite changed live row');
+  assert.ok(exactEqual(await loadActivityBundle(client, ID.retireSurvivor), retireSurvivorBefore), 'dry-run changed retire survivor');
   assert.equal(await loadActivityBundle(client, ID.splitNew), null, 'dry-run created split fragment');
   assert.equal(await loadPolityRelationBundle(client, ID.relation), null, 'dry-run created polity relation');
 
@@ -211,13 +236,15 @@ try {
   assert.ok(exactEqual(await loadActivityBundle(client, ID.split), splitSurvivor), 'split survivor post-state drift');
   assert.ok(exactEqual(await loadActivityBundle(client, ID.splitNew), splitNew), 'split new fragment post-state drift');
   assert.equal(await loadActivityBundle(client, ID.retire), null, 'retired activity still exists');
+  assert.ok(exactEqual(await loadActivityBundle(client, ID.retireSurvivor), retireSurvivorExpected), 'retired Source was not preserved on reviewed survivor');
   assert.ok(exactEqual(await loadPolityRelationBundle(client, ID.relation), relationBundle), 'polity relation post-state drift');
-  assert.deepEqual(await exactCounts(client), { activities: 3, activity_sources: 3, polity_relations: 1, polity_relation_sources: 1, correction_runs: 1 });
+  assert.deepEqual(await exactCounts(client), { activities: 4, activity_sources: 5, polity_relations: 1, polity_relation_sources: 1, correction_runs: 1 });
 
   const replay = await service.execute(manifest);
   assert.equal(replay.committed, true);
   assert.equal(replay.replay, true);
-  assert.deepEqual(await exactCounts(client), { activities: 3, activity_sources: 3, polity_relations: 1, polity_relation_sources: 1, correction_runs: 1 }, 'exact replay must be idempotent');
+  assert.deepEqual(await exactCounts(client), { activities: 4, activity_sources: 5, polity_relations: 1, polity_relation_sources: 1, correction_runs: 1 }, 'exact replay must be idempotent');
+  assert.ok(exactEqual(await loadActivityBundle(client, ID.retireSurvivor), retireSurvivorExpected), 'replay changed retire survivor provenance');
 
   const collisionCore = clone(core);
   collisionCore.operations[0].exact_after.activity.notes = 'different reviewed payload under the same request id';
@@ -268,6 +295,7 @@ try {
     p5_schema_components: 6,
     operations_rehearsed: ['rewrite_activity','split_activity','retire_activity','assert_polity_relation'],
     dry_run_rollback: true,
+    retire_source_transfer_before_delete: true,
     apply_atomic: true,
     exact_postconditions: true,
     exact_replay_idempotent: true,
