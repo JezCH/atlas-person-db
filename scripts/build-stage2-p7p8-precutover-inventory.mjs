@@ -10,7 +10,10 @@ const arg = (name, fallback) => {
 const workQueuesPath = path.resolve(root, arg('--work-queues', 'artifacts/stage2-baseline-a-work-queues.json'));
 const frontierPath = path.resolve(root, arg('--frontier', 'artifacts/stage2-baseline-a-effective-p5p6-frontier.json'));
 const relationCatalogPath = path.resolve(root, arg('--relation-catalog', 'stage2/catalogs/relation-types.v1.json'));
-const explicitDecisionPath = path.resolve(root, arg('--explicit-decisions', 'stage2/integration/p7-explicit-person-relation-decisions-batch1.v1.json'));
+const explicitDecisionPaths = [
+  path.resolve(root, 'stage2/integration/p7-explicit-person-relation-decisions-batch1.v1.json'),
+  path.resolve(root, 'stage2/integration/p7-explicit-person-relation-decisions-batch2.v1.json')
+];
 const outPath = path.resolve(root, arg('--out', 'artifacts/stage2-p7p8-precutover-inventory.json'));
 const relationOutPath = path.resolve(root, arg('--relation-out', 'artifacts/stage2-p7a-reviewed-relation-backfill.json'));
 
@@ -19,14 +22,16 @@ const writeJson = (p, value) => { fs.mkdirSync(path.dirname(p), { recursive: tru
 const work = readJson(workQueuesPath);
 const frontier = readJson(frontierPath);
 const catalog = readJson(relationCatalogPath);
-const explicitDecisionPackage = readJson(explicitDecisionPath);
+const explicitDecisionPackages = explicitDecisionPaths.map(readJson);
 
 const BASELINE_SHA = 'ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79';
 const BASELINE_DIGEST = 'sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27';
 if (work?.summary?.baseline?.deployment_sha !== BASELINE_SHA || frontier?.baseline?.deployment_sha !== BASELINE_SHA) throw new Error('P7P8_BASELINE_SHA_DRIFT');
 if (work?.summary?.baseline?.baseline_digest !== BASELINE_DIGEST || frontier?.baseline?.baseline_digest !== BASELINE_DIGEST) throw new Error('P7P8_BASELINE_DIGEST_DRIFT');
-if (explicitDecisionPackage?.baseline?.deployment_sha !== BASELINE_SHA || explicitDecisionPackage?.baseline?.baseline_digest !== BASELINE_DIGEST) throw new Error('P7P8_EXPLICIT_DECISION_BASELINE_DRIFT');
-if (explicitDecisionPackage?.status !== 'REVIEWED_BRANCH_ONLY_NO_PRODUCTION_MUTATION' || explicitDecisionPackage?.rules?.production_mutation_authorized !== false) throw new Error('P7P8_EXPLICIT_DECISION_STATUS_INVALID');
+for (const packageJson of explicitDecisionPackages) {
+  if (packageJson?.baseline?.deployment_sha !== BASELINE_SHA || packageJson?.baseline?.baseline_digest !== BASELINE_DIGEST) throw new Error(`P7P8_EXPLICIT_DECISION_BASELINE_DRIFT:${packageJson?.batch_id}`);
+  if (packageJson?.status !== 'REVIEWED_BRANCH_ONLY_NO_PRODUCTION_MUTATION' || packageJson?.rules?.production_mutation_authorized !== false) throw new Error(`P7P8_EXPLICIT_DECISION_STATUS_INVALID:${packageJson?.batch_id}`);
+}
 
 const p6Ids = new Set((frontier.effective_correction_activities || []).map((row) => String(row.activity_id).toLowerCase()));
 if (p6Ids.size !== 54) throw new Error(`P7P8_P6_TARGET_COUNT_DRIFT:${p6Ids.size}`);
@@ -43,16 +48,20 @@ for (const dependency of dependencyNames) {
 const relationByCode = new Map((catalog.person_polity_relation_types || []).map((row) => [row.code, String(row.id).toLowerCase()]));
 const allowedCodes = new Set(['rules','governs','serves','active_in','opposes','claims_rule']);
 const explicitByActivity = new Map();
-for (const decision of explicitDecisionPackage.decisions || []) {
-  const activityId = String(decision.activity_id || '').toLowerCase();
-  const code = String(decision.relation_code || '');
-  const relationTypeId = String(decision.relation_type_id || '').toLowerCase();
-  if (!activityId || explicitByActivity.has(activityId)) throw new Error(`P7P8_EXPLICIT_DECISION_DUPLICATE:${activityId}`);
-  if (!allowedCodes.has(code)) throw new Error(`P7P8_EXPLICIT_DECISION_CODE_INVALID:${activityId}:${code}`);
-  if (relationByCode.get(code) !== relationTypeId) throw new Error(`P7P8_EXPLICIT_DECISION_UUID_DRIFT:${activityId}`);
-  explicitByActivity.set(activityId, decision);
+const explicitBatchByActivity = new Map();
+for (const packageJson of explicitDecisionPackages) {
+  for (const decision of packageJson.decisions || []) {
+    const activityId = String(decision.activity_id || '').toLowerCase();
+    const code = String(decision.relation_code || '');
+    const relationTypeId = String(decision.relation_type_id || '').toLowerCase();
+    if (!activityId || explicitByActivity.has(activityId)) throw new Error(`P7P8_EXPLICIT_DECISION_DUPLICATE:${activityId}`);
+    if (!allowedCodes.has(code)) throw new Error(`P7P8_EXPLICIT_DECISION_CODE_INVALID:${activityId}:${code}`);
+    if (relationByCode.get(code) !== relationTypeId) throw new Error(`P7P8_EXPLICIT_DECISION_UUID_DRIFT:${activityId}`);
+    explicitByActivity.set(activityId, decision);
+    explicitBatchByActivity.set(activityId, packageJson.batch_id);
+  }
 }
-if (explicitByActivity.size !== 14) throw new Error(`P7P8_EXPLICIT_DECISION_COUNT_DRIFT:${explicitByActivity.size}`);
+if (explicitByActivity.size !== 30) throw new Error(`P7P8_EXPLICIT_DECISION_COUNT_DRIFT:${explicitByActivity.size}`);
 
 const relationResidual = residualByDependency.relation_type;
 const relationResidualIds = new Set(relationResidual.map((row) => String(row.activity_id).toLowerCase()));
@@ -72,17 +81,17 @@ for (const row of relationResidual) {
   let relationTypeId = null;
   let authority = null;
   let resolutionMode = null;
+  let explicitBatch = null;
   if (hint && allowedCodes.has(hint)) {
     code = hint;
     relationTypeId = relationByCode.get(hint);
     resolutionMode = 'EXISTING_REVIEWED_RELATION_HINT';
-    if (explicit && (explicit.relation_code !== code || String(explicit.relation_type_id).toLowerCase() !== relationTypeId)) {
-      throw new Error(`P7P8_EXPLICIT_DECISION_CONFLICTS_HINT:${activityId}`);
-    }
+    if (explicit && (explicit.relation_code !== code || String(explicit.relation_type_id).toLowerCase() !== relationTypeId)) throw new Error(`P7P8_EXPLICIT_DECISION_CONFLICTS_HINT:${activityId}`);
   } else if (explicit) {
     code = explicit.relation_code;
     relationTypeId = String(explicit.relation_type_id).toLowerCase();
     authority = explicit.authority;
+    explicitBatch = explicitBatchByActivity.get(activityId);
     resolutionMode = 'EXPLICIT_REVIEWED_AUDIT_DECISION';
     explicitOverlayCount += 1;
   }
@@ -100,6 +109,7 @@ for (const row of relationResidual) {
       reviewed_relation_code: code,
       relation_type_id: relationTypeId,
       resolution_mode: resolutionMode,
+      explicit_decision_batch: explicitBatch,
       authority,
       decision: row.decision,
       decision_source: row.decision_source,
@@ -125,7 +135,7 @@ for (const row of relationResidual) {
 }
 relationReady.sort((a,b) => a.activity_id.localeCompare(b.activity_id));
 relationReviewRequired.sort((a,b) => a.activity_id.localeCompare(b.activity_id));
-if (explicitOverlayCount !== 14) throw new Error(`P7P8_EXPLICIT_OVERLAY_NOT_CONSUMED:${explicitOverlayCount}`);
+if (explicitOverlayCount !== 30) throw new Error(`P7P8_EXPLICIT_OVERLAY_NOT_CONSUMED:${explicitOverlayCount}`);
 
 const relationPackage = {
   schema: 'atlas-stage2-p7a-reviewed-relation-backfill/v1',
@@ -136,7 +146,7 @@ const relationPackage = {
     work_queues: path.relative(root, workQueuesPath),
     p6_effective_frontier: path.relative(root, frontierPath),
     relation_catalog: path.relative(root, relationCatalogPath),
-    explicit_relation_decisions: path.relative(root, explicitDecisionPath)
+    explicit_relation_decisions: explicitDecisionPaths.map((p) => path.relative(root, p))
   },
   rules: {
     p6_activity_targets_excluded: true,
