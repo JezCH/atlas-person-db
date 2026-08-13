@@ -17,7 +17,7 @@ if(intake?.schema!=='atlas-stage2-baseline-a-intake/v2'||intake.baseline_digest!
 if(ledger?.schema!=='atlas-stage2-baseline-a-master-ledger/v2'||ledger.baseline?.baseline_digest!==digest) throw new Error('Baseline A ledger drift');
 if(manifest?.schema!=='atlas-stage2-baseline-a-p5p6-execution-manifest/v2'||Number(manifest.summary?.correction_v2_activity_count)!==57) throw new Error('Correction v2 frontier drift');
 if(contract?.schema!=='atlas-stage2-correction-v2-contract/v1'||contract.status!=='P6_BRANCH_ONLY_CONTRACT_NO_PRODUCTION_MUTATION'||contract.release_boundary?.production_mutation_authorized!==false) throw new Error('Correction v2 contract drift');
-if(contract.operation_types?.rewrite_activity?.same_activity_uuid_preserved!==true||contract.operation_types?.rewrite_activity?.exact_before_required!==true) throw new Error('Correction v2 rewrite contract drift');
+if(contract.manifest_layers?.prebinding_plan?.exact_baseline_before_state_required!==true||contract.operation_types?.rewrite_activity?.same_activity_uuid_preserved!==true||contract.operation_types?.rewrite_activity?.exact_before_and_after_required!==true) throw new Error('Correction v2 rewrite contract drift');
 if(plan?.schema!=='atlas-stage2-correction-v2-prebinding-plan/v1'||plan.batch_id!=='p6_correction_v2_prebinding_batch4_existing_uuid_semantic_normalization'||plan.status!=='PREBINDING_ONLY_NOT_PRODUCTION_EXECUTABLE') throw new Error('P6 Batch 4 plan drift');
 if(plan.contract!=='stage2/contracts/correction-v2-current.v1.json'||plan.catalog!=='stage2/catalogs/relation-types.v1.json'||plan.baseline?.deployment_sha!==deployment||plan.baseline?.baseline_digest!==digest) throw new Error('P6 Batch 4 contract/Baseline linkage drift');
 
