@@ -348,11 +348,9 @@ async function loadActivityBundle(client, id, { forUpdate = false } = {}) {
            confidence,chronology_status,legacy_source_key,notes,source_locator,content_hash
       from atlas_v2.person_politics_v2 where id=$1::uuid${forUpdate ? " for update" : ""}`, [id]);
   if (!activityResult.rowCount) return null;
-  const [sources, claims, descriptions] = await Promise.all([
-    client.query(`select person_politics_id::text,source_id::text,source_locator_key from atlas_v2.person_politics_sources where person_politics_id=$1::uuid order by source_id::text,source_locator_key`, [id]),
-    client.query(`select id::text,person_politics_id::text,claim_type,start_year,end_year from atlas_v2.chronology_claims where person_politics_id=$1::uuid order by id::text`, [id]),
-    client.query(`select id::text,person_politics_id::text,locale,content from atlas_v2.relationship_descriptions where person_politics_id=$1::uuid order by locale,id::text`, [id])
-  ]);
+  const sources = await client.query(`select person_politics_id::text,source_id::text,source_locator_key from atlas_v2.person_politics_sources where person_politics_id=$1::uuid order by source_id::text,source_locator_key`, [id]);
+  const claims = await client.query(`select id::text,person_politics_id::text,claim_type,start_year,end_year from atlas_v2.chronology_claims where person_politics_id=$1::uuid order by id::text`, [id]);
+  const descriptions = await client.query(`select id::text,person_politics_id::text,locale,content from atlas_v2.relationship_descriptions where person_politics_id=$1::uuid order by locale,id::text`, [id]);
   return {
     activity: normalizeDbActivity(activityResult.rows[0]),
     normalized_source_links: sources.rows.map((row) => ({
@@ -376,8 +374,18 @@ async function loadActivityBundle(client, id, { forUpdate = false } = {}) {
   };
 }
 
+function stripNonPersistentExecutionMetadata(value) {
+  if (Array.isArray(value)) return value.map(stripNonPersistentExecutionMetadata);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value)
+      .filter(([key]) => key !== "source_copy_policy")
+      .map(([key, child]) => [key, stripNonPersistentExecutionMetadata(child)]));
+  }
+  return value;
+}
+
 function assertExactBundle(actual, expected, code) {
-  if (!actual || !exactEqual(actual, expected)) throw new Error(code);
+  if (!actual || !exactEqual(stripNonPersistentExecutionMetadata(actual), stripNonPersistentExecutionMetadata(expected))) throw new Error(code);
 }
 
 async function updateActivityRow(client, activity) {
@@ -732,6 +740,7 @@ module.exports = Object.freeze({
   manifestCore,
   requireV2Manifest,
   loadActivityBundle,
+  stripNonPersistentExecutionMetadata,
   assertExactBundle,
   updateActivityRow,
   reconcileActivitySourceLinks,
