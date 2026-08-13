@@ -1,0 +1,70 @@
+{
+  "schema": "atlas-stage2-p6-execution-identity-allocations/v1",
+  "as_of": "2026-08-13",
+  "status": "REVIEWED_LITERAL_UUID_ALLOCATION_BRANCH_ONLY_NO_PRODUCTION_MUTATION",
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27"
+  },
+  "authority": {
+    "politic_resolution_amendment": "stage2/integration/baseline-a-politic-resolution-amendments.v1.json",
+    "p6_closure": "stage2/integration/p6-effective-prebinding-closure.v1.json",
+    "p5_polity_packages": [
+      "stage2/authoring/p5-polity-authoring-batch1-late-han.v1.json",
+      "stage2/authoring/p5-polity-authoring-batch2-reviewed-polities.v1.json",
+      "stage2/authoring/p5-polity-authoring-batch3-community-boundaries.v1.json"
+    ],
+    "p5_relation_source_package": "stage2/authoring/p5-polity-relation-sources.v1.json"
+  },
+  "rules": {
+    "uuid_is_identity": true,
+    "literal_uuid_only_after_review": true,
+    "runtime_name_or_identity_class_resolution_forbidden": true,
+    "superseded_polity_targets_must_not_receive_uuid": true,
+    "one_preferred_name_row_uuid_per_new_polity": true,
+    "source_candidate_key_is_metadata_not_identity": true,
+    "canonical_url_is_metadata_not_identity": true,
+    "new_activity_fragment_uuids_are_allocated_in_the_operation_manifest_layer": true,
+    "territory_geometry_mutation_forbidden": true,
+    "production_mutation_authorized": false
+  },
+  "polities": [
+    {"identity_class":"GONGSUN_ZAN_REGIONAL_POLITICAL_ACTOR","polity_uuid":"fafc65e0-d69c-4ade-9f6f-8d45469e7f22","preferred_name_uuid":"1cc80b11-7457-4098-bfd0-05c3dfc017d6","canonical_key":"stage2:gongsun-zan-regional-political-actor","label":"Gongsun Zan northeastern authority","locale":"en","semantic_name_kind":"editorial_catalog_label","historical_name_claim":false},
+    {"identity_class":"SOURCE_BACKED_YI_REGIONAL_POLITY","polity_uuid":"9817bb46-bcc4-4867-a01d-91f7f0eb6de2","preferred_name_uuid":"ec861a97-7ac1-41b3-810d-be74079806d3","canonical_key":"stage2:liu-yan-yi-regional-polity","label":"Liu Yan Yi authority","locale":"en","semantic_name_kind":"editorial_catalog_label","historical_name_claim":false},
+    {"identity_class":"SOURCE_BACKED_XU_TAO_QIAN_REGIONAL_POLITY","polity_uuid":"85b68af9-df7f-4bfe-80f7-231d1361b503","preferred_name_uuid":"6429fc39-ff76-4b89-a6ac-c89630d8a284","canonical_key":"stage2:tao-qian-xu-regional-polity","label":"Tao Qian Xu authority","locale":"en","semantic_name_kind":"editorial_catalog_label","historical_name_claim":false},
+    {"identity_class":"SOURCE_BACKED_YOU_LIU_YU_REGIONAL_POLITY","polity_uuid":"2c2a2e9c-ddf6-471c-bc96-6157be68d877","preferred_name_uuid":"72cfb041-1e13-43aa-aa14-b2f2136cf509","canonical_key":"stage2:liu-yu-you-regional-polity","label":"Liu Yu You authority","locale":"en","semantic_name_kind":"editorial_catalog_label","historical_name_claim":false},
+    {"identity_class":"SOURCE_BACKED_JI_CENTERED_YUAN_SHAO_REGIONAL_POLITY","polity_uuid":"66b5f130-1b80-43a7-8117-4c1863352b17","preferred_name_uuid":"b7448d09-b9b0-4b66-bc79-5d4175fd965a","canonical_key":"stage2:yuan-shao-ji-regional-polity","label":"Yuan Shao Ji authority","locale":"en","semantic_name_kind":"editorial_catalog_label","historical_name_claim":false},
+    {"identity_class":"SOURCE_BACKED_WESTERN_REGIONAL_POLITY","polity_uuid":"de6dd298-a220-4531-b44e-3f3edb1b5eae","preferred_name_uuid":"fe1f00d6-0169-4540-a63c-2a7d47c28ffb","canonical_key":"stage2:ma-teng-western-regional-polity","label":"Ma Teng western regional authority","locale":"en","semantic_name_kind":"editorial_catalog_label","historical_name_claim":false},
+    {"identity_class":"SOURCE_BACKED_JING_REGIONAL_POLITY","polity_uuid":"a0cc4495-782a-4d17-b93c-6eb90c253ef1","preferred_name_uuid":"5dee0ded-9cb7-4e57-aa9a-77b66a922bab","canonical_key":"stage2:liu-biao-jing-regional-polity","label":"Liu Biao Jing authority","locale":"en","semantic_name_kind":"editorial_catalog_label","historical_name_claim":false},
+    {"identity_class":"YAN_TERRITORIAL_AUTHORITY","polity_uuid":"18eb14e9-a2ea-4ead-80e2-6261f672333d","preferred_name_uuid":"9cf9f5c7-890c-4393-94fe-c82eddadc13c","canonical_key":"stage2:lu-bu-yan-territorial-authority","label":"Lü Bu Yan authority","locale":"en","semantic_name_kind":"editorial_catalog_label","historical_name_claim":false},
+    {"identity_class":"XU_TERRITORIAL_AUTHORITY","polity_uuid":"63e805eb-a7b5-4747-b980-d52333c741d9","preferred_name_uuid":"7c45efe0-2f1d-4a29-bc78-5b87933defc0","canonical_key":"stage2:lu-bu-xu-territorial-authority","label":"Lü Bu Xu authority","locale":"en","semantic_name_kind":"editorial_catalog_label","historical_name_claim":false},
+    {"identity_class":"ARVERNI_POLITICAL_ACTOR","polity_uuid":"29b37078-345c-4070-be7d-647fc394f368","preferred_name_uuid":"9dbf413d-8c5f-4090-9eaa-7fdb11a7cc8e","canonical_key":"stage2:arverni-political-actor","label":"Arverni","locale":"en","semantic_name_kind":"historical_attested","historical_name_claim":true},
+    {"identity_class":"HUAINAN_POLITICAL_ACTOR_UNDER_YING_BU","polity_uuid":"5f739f09-84c0-42ad-ac3f-8c531f468d5d","preferred_name_uuid":"c1d40fc6-8c77-40f9-bad7-9c66e53ea7e1","canonical_key":"stage2:huainan-under-ying-bu","label":"Kingdom of Huainan under Ying Bu","locale":"en","semantic_name_kind":"historiographic_conventional","historical_name_claim":false},
+    {"identity_class":"LI_KEYONG_POST907_JIN_POLITICAL_ACTOR","polity_uuid":"fe3ec27b-1ba3-4dc0-9758-b144320d6dc4","preferred_name_uuid":"c4eede06-4259-4646-b4ca-eff7368e2aea","canonical_key":"stage2:li-keyong-post907-jin","label":"Jin under Li Keyong","locale":"en","semantic_name_kind":"historiographic_conventional","historical_name_claim":false},
+    {"identity_class":"EARLY_NORTHERN_RUS_AUTHORITY","polity_uuid":"554f9015-a8fe-4002-b95e-1718f2f59f0f","preferred_name_uuid":"28031475-6968-41c4-b9e6-950728c950c2","canonical_key":"stage2:rurik-early-northern-rus-authority","label":"Rurik's early northern Rus authority","locale":"en","semantic_name_kind":"editorial_catalog_label","historical_name_claim":false},
+    {"identity_class":"ODA_NOBUNAGA_SOURCE_BACKED_TERRITORIAL_POLITICAL_ACTOR","polity_uuid":"9e3016cb-fd21-456f-8919-75f850b8b121","preferred_name_uuid":"c4face6f-9814-4c7f-807b-a0bb94d71dbc","canonical_key":"stage2:oda-nobunaga-territorial-authority","label":"Oda Nobunaga territorial authority","locale":"en","semantic_name_kind":"editorial_catalog_label","historical_name_claim":false},
+    {"identity_class":"UESUGI_KENSHIN_SOURCE_BACKED_TERRITORIAL_POLITICAL_ACTOR","polity_uuid":"230212ab-9461-4fcd-b46c-24a0aea7c841","preferred_name_uuid":"2761ad30-919b-48d6-8439-1c49276c2d3b","canonical_key":"stage2:uesugi-kenshin-territorial-authority","label":"Uesugi Kenshin territorial authority","locale":"en","semantic_name_kind":"editorial_catalog_label","historical_name_claim":false},
+    {"identity_class":"SOURCE_BACKED_EASTERN_ZHEJIANG_REGIONAL_POLITY","polity_uuid":"0da28687-c1c8-46ef-aa00-ddc340edcc09","preferred_name_uuid":"2fb61470-2642-4aa5-b657-9263e38c4c57","canonical_key":"stage2:fang-guozhen-eastern-zhejiang-authority","label":"Fang Guozhen eastern Zhejiang authority","locale":"en","semantic_name_kind":"editorial_catalog_label","historical_name_claim":false},
+    {"identity_class":"DUTCH_REBEL_PROVINCES_POLITICAL_ACTOR","polity_uuid":"588babdd-2ce9-42a9-a9f3-2019c0bd2653","preferred_name_uuid":"11e84360-66f0-42aa-ac53-2d25cc54b962","canonical_key":"stage2:dutch-rebel-provinces-political-actor","label":"Dutch rebel provinces political actor","locale":"en","semantic_name_kind":"editorial_catalog_label","historical_name_claim":false}
+  ],
+  "sources": [
+    {"candidate_key":"bibliographic:ctext:shiji-qing-bu-liezhuan","source_uuid":"85e538f3-4753-4678-bb66-2014c9a2f3d3"},
+    {"candidate_key":"bibliographic:ctext:hou-hanshu-liu-yan-yuan-shu-lu-bu","source_uuid":"41cb0494-17f0-4196-bdae-4ca0c1eeb4e6"},
+    {"candidate_key":"bibliographic:ctext:hou-hanshu-liu-yu-gongsun-zan-tao-qian","source_uuid":"0915a5b8-c5d9-46e1-bf55-e678b0df1f30"},
+    {"candidate_key":"bibliographic:ctext:hou-hanshu-yuan-shao","source_uuid":"28cf937d-6d04-4da4-bb3c-8289f7e44065"},
+    {"candidate_key":"bibliographic:ctext:hou-hanshu-liu-biao","source_uuid":"bab341a3-45df-4be4-adf4-d58916af73b8"},
+    {"candidate_key":"bibliographic:ctext:zhang-lu-primary-passage","source_uuid":"38ea1d58-51d5-4780-ae01-96d3ed5b5c9d"},
+    {"candidate_key":"bibliographic:ctext:ming-shi-jishi-benmo-fang-guozhen","source_uuid":"cdb1ed51-0e6d-453c-8428-242c5b018959"},
+    {"candidate_key":"bibliographic:canada:constitution-acts-1867-1982","source_uuid":"db61d5b2-869f-4664-8f09-1187fac65648"},
+    {"candidate_key":"bibliographic:canada:statute-of-westminster-1931","source_uuid":"f867be44-92d3-4364-956e-23553f90278f"}
+  ],
+  "result": {
+    "effective_new_polity_uuid_count": 17,
+    "preferred_polity_name_uuid_count": 17,
+    "new_bibliographic_source_uuid_count": 9,
+    "superseded_polity_uuid_allocations": 0,
+    "new_activity_fragment_uuid_count": 0,
+    "production_mutation_authorized": false
+  }
+}
