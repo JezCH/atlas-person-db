@@ -1,0 +1,141 @@
+{
+  "schema": "atlas-stage2-correction-v2-prebinding-plan/v1",
+  "batch_id": "p6_correction_v2_prebinding_batch10_ma_teng_multiphase_scaffold",
+  "as_of": "2026-08-13",
+  "status": "PREBINDING_ONLY_NOT_PRODUCTION_EXECUTABLE",
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "catalog": "stage2/catalogs/relation-types.v1.json",
+  "p5_polity_authoring": "stage2/authoring/p5-polity-authoring-batch1-late-han.v1.json",
+  "source_research": "research/china/stage2-regional-authority-target-phase-decisions.v1.json",
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27"
+  },
+  "before_tuple_fields": [
+    "person_id",
+    "polity_id",
+    "role_id",
+    "period_basis_id",
+    "activity_start",
+    "activity_end",
+    "confidence",
+    "chronology_status",
+    "legacy_source_key",
+    "source_count"
+  ],
+  "scope_rules": {
+    "existing_eastern_han_uuid_survivor_required": true,
+    "reviewed_central_service_phase_208_212_required": true,
+    "pre208_regional_authority_outer_envelope_may_reference_prepared_null_uuid_polity": true,
+    "pre208_person_relation_must_remain_unbound_until_subphase_chronology_resolved": true,
+    "new_polity_uuid_assignment_forbidden_in_this_batch": true,
+    "survivor_fragment_preserves_original_activity_uuid": true,
+    "new_split_fragment_activity_uuid_must_remain_null": true,
+    "reviewed_central_service_relation_uuid_required": true,
+    "continuous_nominal_han_relation_for_pre208_forbidden": true,
+    "central_service_role_normalization_must_remain_explicitly_blocked": true,
+    "production_mutation_authorized": false
+  },
+  "common_execution_blockers": [
+    "P5_PRODUCTION_SCHEMA_NOT_APPLIED",
+    "P5_MA_TENG_WESTERN_POLITY_UUID_NOT_ASSIGNED",
+    "NEW_SPLIT_FRAGMENT_ACTIVITY_UUID_NOT_ASSIGNED",
+    "EARLY_SUBPHASE_CHRONOLOGY_UNRESOLVED",
+    "EARLY_PERSON_RELATION_SUBPHASES_UNRESOLVED",
+    "CENTRAL_SERVICE_ROLE_UUID_NOT_NORMALIZED",
+    "NORMALIZED_ACTIVITY_SOURCE_UUID_BINDINGS_NOT_COMPLETE",
+    "PRODUCTION_RELEASE_NOT_AUTHORIZED"
+  ],
+  "source_preservation_policy": {
+    "split_activity": "COPY_ALL_EXISTING_ACTIVITY_SOURCE_LINKS_TO_SURVIVOR_AND_DEFERRED_EARLY_FRAGMENT; ADD_PHASE_SPECIFIC_NORMALIZED_EVIDENCE_BEFORE_EXECUTION",
+    "silent_source_drop_forbidden": true
+  },
+  "cases": [
+    {
+      "id": "p6b10_ma_teng_multiphase_scaffold",
+      "activity_id": "42274e4c-af35-503f-a14f-e7460489b252",
+      "person": "Ma Teng",
+      "expected_before": [
+        "23c49394-3596-533e-9217-7bc3d1f1ea3b",
+        "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+        "a33083bd-9e14-5381-ab33-2d75738f262c",
+        "19bbe662-2a30-5a7e-8073-8d19e1e2299c",
+        189,
+        212,
+        "legacy_asserted",
+        "exact_as_recorded",
+        "pending-records-supplement-7.json:18:7f2219d499d9af39",
+        1
+      ],
+      "type": "split_activity",
+      "mode": "reviewed_central_service_survivor_plus_deferred_pre208_multiphase_envelope",
+      "p4_decision_id": null,
+      "p3_relation_decision_id": "ma_teng_western_relation_policy",
+      "source_contract": "research/china/stage2-regional-authority-target-phase-decisions.v1.json",
+      "p3_companion_actions": [
+        "AUTHOR_MA_TENG_WESTERN_REGIONAL_POLITY",
+        "REBUILD_MULTIPHASE_ACTIVITY",
+        "DO_NOT_DEFAULT_POLITY_RELATION",
+        "RELATION_SET",
+        "NORMALIZE_AND_LINK_SOURCES"
+      ],
+      "survivor_fragment_id": "ma_teng_208_212_eastern_han_central_service",
+      "fragments": [
+        {
+          "id": "ma_teng_189_207_western_multiphase_reconstruction_envelope",
+          "activity_uuid": null,
+          "target_polity_uuid": null,
+          "target_identity_class": "SOURCE_BACKED_WESTERN_REGIONAL_POLITY",
+          "relation": null,
+          "start_year": 189,
+          "end_year": 207,
+          "fragment_status": "DEFERRED_MULTIPHASE_RECONSTRUCTION_NOT_EXECUTION_READY",
+          "temporal_policy": "OUTER_ENVELOPE_ONLY_189_207; INTERNAL_REBELLION_COMMAND_RENEWED_ATTACK_AUTONOMY_AND_COOPERATION_SUBPHASES_MUST_BE_SOURCE_RESOLVED_BEFORE_EXECUTION",
+          "person_relation_policy": "RULES_ONLY_ON_SOURCE_RESOLVED_TERRITORIAL_SUBPHASES; DO_NOT_BIND_RULES_TO_THE_WHOLE_189_207_ENVELOPE",
+          "polity_relation_policy": "ASSERT_ONLY_SOURCE_SUPPORTED_SUBINTERVALS_AFTER_MULTIPHASE_CHRONOLOGY; NO_CONTINUOUS_DEFAULT"
+        },
+        {
+          "id": "ma_teng_208_212_eastern_han_central_service",
+          "activity_uuid": "42274e4c-af35-503f-a14f-e7460489b252",
+          "target_polity_uuid": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+          "target_identity_class": "EASTERN_HAN_POLITICAL_CONTEXT",
+          "relation": [
+            "serves",
+            "0fc4827f-8543-52f7-9e9a-3173b0c698a7"
+          ],
+          "start_year": 208,
+          "end_year": 212,
+          "temporal_policy": "REVIEWED_CENTRAL_SERVICE_PHASE_208_212_YEAR_LEVEL",
+          "role_evidence": "Weiwei",
+          "normalized_role_uuid": null,
+          "role_policy": "DO_NOT_RETAIN_LEGACY_WARLORD_ROLE_AS_THE_FINAL_CENTRAL_SERVICE_ROLE",
+          "direct_regional_geometry_after_transfer": false
+        }
+      ],
+      "overlap_gap_policy": "NO_OUTER_YEAR_GAP_OR_OVERLAP: DEFERRED_189_207_ENVELOPE_PLUS_REVIEWED_208_212_SERVICE; INTERNAL_189_207_SUBPHASE_BOUNDARIES_REMAIN_UNRESOLVED",
+      "polity_relation_handoff": {
+        "relation_decision_id": "ma_teng_western_relation_policy",
+        "status": "NO_ASSERTION_PREBOUND_UNTIL_SOURCE_SUPPORTED_SUBINTERVALS_EXIST",
+        "reviewed_assertion_count": 0,
+        "continuous_nominal_han_relation_allowed": false,
+        "policy": "ASSERT_ONLY_SOURCE_SUPPORTED_SUBINTERVALS_AFTER_MULTIPHASE_CHRONOLOGY; NO_CONTINUOUS_DEFAULT"
+      }
+    }
+  ],
+  "result": {
+    "case_count": 1,
+    "split_activity_count": 1,
+    "existing_eastern_han_survivor_fragments": 1,
+    "deferred_pre208_multiphase_envelopes": 1,
+    "prepared_null_uuid_polity_targets": 1,
+    "reviewed_exact_person_relation_bindings": 1,
+    "intentionally_unbound_early_person_relations": 1,
+    "polity_relation_assertions_prebound": 0,
+    "new_polity_uuid_bindings": 0,
+    "new_activity_uuid_assignments": 0,
+    "cumulative_prebinding_activities": 46,
+    "remaining_correction_v2_frontier": 11,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  }
+}
