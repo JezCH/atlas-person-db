@@ -117,6 +117,9 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
+      - name: Verify Correction v2 prebinding Batch 2
+        run: node scripts/verify-stage2-correction-v2-prebinding-batch2.mjs
+
       - name: Upload Baseline A Stage 2 integration evidence
         uses: actions/upload-artifact@v4
         with:
