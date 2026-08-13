@@ -65,12 +65,17 @@ test("dry-run does not apply schema migration; apply does; Baseline A v2 remains
 });
 
 test("correction migration registry is ordered and bounded to correction-ledger contract changes", () => {
-  assert.equal(correctionMigrations.CORRECTION_MIGRATION_PATHS.length, 2);
-  assert.deepEqual(correctionMigrations.CORRECTION_MIGRATION_PATHS.map((item) => path.basename(item)), ["20260811_correction_manifest_runs.sql", "20260812_correction_manifest_v1_1.sql"]);
+  assert.equal(correctionMigrations.CORRECTION_MIGRATION_PATHS.length, 3);
+  assert.deepEqual(correctionMigrations.CORRECTION_MIGRATION_PATHS.map((item) => path.basename(item)), [
+    "20260811_correction_manifest_runs.sql",
+    "20260812_correction_manifest_v1_1.sql",
+    "20260813_correction_manifest_v2.sql"
+  ]);
   const migrations = correctionMigrations.readCorrectionMigrations();
-  assert.equal(migrations.length, 2);
+  assert.equal(migrations.length, 3);
   assert.match(migrations[0].sql, /create table if not exists atlas_v2\.correction_manifest_runs/i);
   assert.match(migrations[1].sql, /atlas-correction-manifest\/v1\.1/i);
+  assert.match(migrations[2].sql, /atlas-correction-manifest\/v2/i);
   for (const migration of migrations) assert.doesNotMatch(migration.sql, /person_politics_v2\s+set|delete\s+from\s+atlas_v2\.person_politics_v2/i);
 });
 
