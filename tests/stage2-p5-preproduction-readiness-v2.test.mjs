@@ -10,6 +10,7 @@ const allocation = read('stage2/execution/p6-execution-identity-allocations.v1.j
 const authoring = read('stage2/execution/p5-reviewed-identity-source-authoring.v1.json');
 const release = read('stage2/releases/p5-additive-schema-release.v1.json');
 const sourcePackage = read('stage2/authoring/p5-polity-relation-sources.v1.json');
+const sourceSupplement = read('stage2/authoring/p5-source-authoring-supplement.v1.json');
 
 const expectedDigest = 'sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27';
 const expectedSha = 'ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79';
@@ -21,10 +22,7 @@ test('P5 readiness v2 is current execution authority while v1 remains historical
   assert.equal(readiness.historical_v1_preserved_as_audit_evidence, true);
   assert.equal(readiness.baseline.deployment_sha, expectedSha);
   assert.equal(readiness.baseline.baseline_digest, expectedDigest);
-  assert.deepEqual(
-    [readiness.baseline.activities, readiness.baseline.persons, readiness.baseline.polities, readiness.baseline.sources],
-    [338, 302, 212, 20]
-  );
+  assert.deepEqual([readiness.baseline.activities, readiness.baseline.persons, readiness.baseline.polities, readiness.baseline.sources], [338, 302, 212, 20]);
 });
 
 test('current P5 frontier is exactly the corrected 17 Polity / 54 Activity authority', () => {
@@ -32,6 +30,8 @@ test('current P5 frontier is exactly the corrected 17 Polity / 54 Activity autho
   assert.equal(readiness.current_frontier.literal_new_polity_uuid_assignments, allocation.polities.length);
   assert.equal(readiness.current_frontier.literal_preferred_polity_name_uuid_assignments, allocation.polities.length);
   assert.equal(readiness.current_frontier.literal_relation_source_uuid_assignments, allocation.sources.length);
+  assert.equal(readiness.current_frontier.supplemental_reviewed_source_uuid_assignments, sourceSupplement.sources.length);
+  assert.equal(readiness.current_frontier.total_reviewed_new_source_uuid_assignments, allocation.sources.length + sourceSupplement.sources.length);
   assert.equal(readiness.current_frontier.effective_correction_v2_activities, closure.closure.effective_correction_v2_activity_count);
   assert.equal(readiness.current_frontier.completed_prebinding_activities, closure.closure.completed_effective_prebinding_activity_count);
   assert.equal(readiness.current_frontier.remaining_prebinding_activities, closure.closure.remaining_effective_prebinding_activity_count);
@@ -58,12 +58,14 @@ test('six-component schema release includes native Activity provenance compatibi
   assert.equal(readiness.schema_release.manual_production_transport_executed, false);
 });
 
-test('literal entity and Source authoring exactly matches allocated rows', () => {
+test('literal entity and Source authoring exactly matches base plus supplemental allocated rows', () => {
   assert.equal(authoring.polities.length, 17);
-  assert.equal(authoring.sources.length, 9);
+  assert.equal(authoring.sources.length, sourcePackage.sources.length + sourceSupplement.sources.length);
   assert.equal(readiness.exact_entity_source_authoring.new_polity_rows, authoring.polities.length);
   assert.equal(readiness.exact_entity_source_authoring.new_preferred_polity_name_rows, authoring.polities.length);
   assert.equal(readiness.exact_entity_source_authoring.new_bibliographic_source_rows, authoring.sources.length);
+  assert.equal(readiness.exact_entity_source_authoring.base_relation_source_rows, sourcePackage.sources.length);
+  assert.equal(readiness.exact_entity_source_authoring.supplemental_reviewed_source_rows, sourceSupplement.sources.length);
   assert.equal(readiness.exact_entity_source_authoring.literal_uuid_only, true);
   assert.equal(readiness.exact_entity_source_authoring.runtime_name_identity_class_or_url_resolution_forbidden, true);
   assert.equal(readiness.exact_entity_source_authoring.activity_rows_mutated, 0);
@@ -71,10 +73,14 @@ test('literal entity and Source authoring exactly matches allocated rows', () =>
 
   const allocatedPolities = new Set(allocation.polities.map((row) => row.polity_uuid));
   const allocatedNames = new Set(allocation.polities.map((row) => row.preferred_name_uuid));
-  const allocatedSources = new Set(allocation.sources.map((row) => row.source_uuid));
+  const baseSourceIds = new Set(allocation.sources.map((row) => row.source_uuid));
+  const supplementalSourceIds = new Set(sourceSupplement.sources.map((row) => row.source_uuid));
   assert.deepEqual(new Set(authoring.polities.map((row) => row.polity.id)), allocatedPolities);
   assert.deepEqual(new Set(authoring.polities.map((row) => row.preferred_name.id)), allocatedNames);
-  assert.deepEqual(new Set(authoring.sources.map((row) => row.row.id)), allocatedSources);
+  const authoredSourceIds = new Set(authoring.sources.map((row) => row.row.id));
+  assert.equal(authoredSourceIds.size, baseSourceIds.size + supplementalSourceIds.size);
+  for (const id of baseSourceIds) assert.equal(authoredSourceIds.has(id), true);
+  for (const id of supplementalSourceIds) assert.equal(authoredSourceIds.has(id), true);
 });
 
 test('Correction v2 execution boundary remains branch-only and exact-live-before-state dependent', () => {
