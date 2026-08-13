@@ -56,3 +56,4 @@ console.log(JSON.stringify({marker:'ATLAS_P5_POLITY_AUTHORING_BATCH3_OK',batch3_
 await import('./verify-stage2-p5-preproduction-schema-readiness.mjs');
 await import('./verify-stage2-relation-type-catalog.mjs');
 await import('./verify-stage2-correction-v2-prebinding-batch1.mjs');
+await import('./verify-stage2-correction-v2-prebinding-batch2.mjs');
