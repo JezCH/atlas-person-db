@@ -57,3 +57,4 @@ await import('./verify-stage2-p5-preproduction-schema-readiness.mjs');
 await import('./verify-stage2-relation-type-catalog.mjs');
 await import('./verify-stage2-correction-v2-prebinding-batch1.mjs');
 await import('./verify-stage2-correction-v2-prebinding-batch2.mjs');
+await import('./verify-stage2-correction-v2-prebinding-batch3.mjs');
