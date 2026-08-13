@@ -1,0 +1,90 @@
+{
+  "schema": "atlas-stage2-p5-source-authoring-supplement/v1",
+  "as_of": "2026-08-13",
+  "status": "REVIEWED_SOURCE_PREP_LITERAL_UUID_NO_PRODUCTION_MUTATION",
+  "rules": {
+    "uuid_is_identity": true,
+    "source_key_and_url_are_metadata_not_identity": true,
+    "fake_sha256_for_web_or_bibliographic_reference_forbidden": true,
+    "fake_bytes_for_web_or_bibliographic_reference_forbidden": true,
+    "production_mutation_authorized": false
+  },
+  "sources": [
+    {
+      "candidate_key": "poundmaker_dictionary_of_canadian_biography_5783",
+      "source_uuid": "5cb0576c-6bad-44e9-8b1f-c2a8943d769e",
+      "source_type": "web_bibliographic_reference",
+      "title": "PĪTIKWAHANAPIWĪYIN (Poundmaker)",
+      "canonical_url": "https://www.biographi.ca/en/bio/5783?revision_id=30402",
+      "citation_text": "Dictionary of Canadian Biography, PĪTIKWAHANAPIWĪYIN (Poundmaker)."
+    },
+    {
+      "candidate_key": "poundmaker_indigenous_saskatchewan_encyclopedia",
+      "source_uuid": "21d5b988-3622-444e-ad61-3fc3212711e5",
+      "source_type": "web_bibliographic_reference",
+      "title": "Poundmaker (c. 1842–86)",
+      "canonical_url": "https://teaching.usask.ca/indigenoussk/import/poundmaker_c_1842-86.php",
+      "citation_text": "University of Saskatchewan, Indigenous Saskatchewan Encyclopedia, Poundmaker (c. 1842–86)."
+    },
+    {
+      "candidate_key": "shi_xie_sanguozhi_wu_shu_4",
+      "source_uuid": "7ac4efc8-06b9-42a9-aea9-017e10813641",
+      "source_type": "primary_text_digital_edition",
+      "title": "Sanguozhi, Wu Shu 4, Shi Xie biography",
+      "canonical_url": "https://ctext.org/text.pl?if=en&node=604033",
+      "citation_text": "Sanguozhi, Wu Shu 4, Shi Xie biography, Chinese Text Project digital edition."
+    },
+    {
+      "candidate_key": "sun_ce_sun_quan_wu_cambridge_de_crespigny",
+      "source_uuid": "05faa94e-ce99-4fd8-85a9-2d8f742e2ea3",
+      "source_type": "scholarly_bibliographic_reference",
+      "title": "Wu — The Cambridge History of China",
+      "canonical_url": "https://www.cambridge.org/core/books/cambridge-history-of-china/wu/092AA11F450B8AA602F262FFDBE219B6",
+      "citation_text": "The Cambridge History of China, chapter on Wu; reviewed for Sun Ce/Sun Quan/Wu political continuity and temporal designation."
+    },
+    {
+      "candidate_key": "william_orange_1572_holland_nationaal_archief",
+      "source_uuid": "0864d81e-e79b-4793-91e3-a7d2d0482580",
+      "source_type": "official_historical_reference",
+      "title": "Nationaal Archief evidence for the July 1572 States of Holland assembly",
+      "canonical_url": "https://www.nationaalarchief.nl/beleven/nieuws/eerste-vrije-vergadering-staten-van-holland-juli-1572",
+      "citation_text": "Nationaal Archief, Eerste Vrije Vergadering Staten van Holland, July 1572."
+    },
+    {
+      "candidate_key": "primary:perseus:caesar-gallic-war-book7",
+      "source_uuid": "46ebfcba-b688-458e-90be-bef530a62b99",
+      "source_type": "primary_text_digital_edition",
+      "title": "Caesar, Gallic War, Book 7",
+      "canonical_url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0001%3Abook%3D7",
+      "citation_text": "Caesar, Bellum Gallicum Book 7, Perseus Digital Library edition."
+    },
+    {
+      "candidate_key": "bibliographic:memoria-chilena:lautaro-721",
+      "source_uuid": "b201c819-22df-4211-b691-167000a3d5e4",
+      "source_type": "official_cultural_institution_reference",
+      "title": "El toqui Lautaro (ca.1534-1557)",
+      "canonical_url": "https://www.memoriachilena.gob.cl/602/w3-article-721.html",
+      "citation_text": "Biblioteca Nacional de Chile / Memoria Chilena, El toqui Lautaro (ca.1534-1557)."
+    },
+    {
+      "candidate_key": "bibliographic:russia:ussr-formation-treaty-1922",
+      "source_uuid": "75fbabbc-0401-4108-bfa5-181898995518",
+      "source_type": "official_historical_document_reference",
+      "title": "Declaration and Treaty on the Formation of the USSR, 30 December 1922",
+      "canonical_url": "https://docs.historyrussia.org/ru/nodes/106963-i-sezd-sovetov-soyuza-ssr-prinyal-deklaratsiyu-i-dogovor-ob-obrazovanii-sssr-30-dekabrya-1922-g",
+      "citation_text": "History of Russia official historical-document portal, Declaration and Treaty on the Formation of the USSR, 30 December 1922."
+    },
+    {
+      "candidate_key": "bibliographic:uk-parliament:raj-independence",
+      "source_uuid": "cf70e379-8a5d-4c6c-8128-0d900151a863",
+      "source_type": "official_parliamentary_history",
+      "title": "The Raj and Independence 1914–47",
+      "canonical_url": "https://www.parliament.uk/about/living-heritage/evolutionofparliament/legislativescrutiny/parliament-and-empire/parliament-and-the-american-colonies-before-1765/the-raj-and-independence-1914-47/",
+      "citation_text": "UK Parliament, Living Heritage, The Raj and Independence 1914–47."
+    }
+  ],
+  "result": {
+    "new_source_rows": 9,
+    "production_mutation_authorized": false
+  }
+}
