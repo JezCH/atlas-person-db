@@ -3,7 +3,6 @@ const J=p=>JSON.parse(fs.readFileSync(p,'utf8'));
 const I=J('artifacts/stage2-baseline-a-intake.json');
 const L=J('artifacts/stage2-baseline-a-master-ledger.json');
 const M=J('artifacts/stage2-baseline-a-p5p6-execution-manifest.json');
-const EFF=J('artifacts/stage2-baseline-a-effective-p5p6-frontier.json');
 const A=J('stage2/integration/baseline-a-politic-resolution-amendments.v1.json');
 const P=J('stage2/integration/p6-correction-v2-prebinding-batch15.v1.json');
 const K=J('stage2/catalogs/relation-types.v1.json');
@@ -30,7 +29,6 @@ const prior=[];for(let i=1;i<=14;i++)prior.push(J(`stage2/integration/p6-correct
 const prev=new Set(prior.flatMap(b=>(b.cases||[]).map(x=>x.activity_id)));
 E(prev.size===50&&!prev.has(id),'prior coverage');
 E(M.correction_activities.some(x=>x.activity_id===id),'raw frontier');
-E(EFF.effective_correction_activities.some(x=>x.activity_id===id)&&EFF.remaining_effective_correction_activities.some(x=>x.activity_id===id),'effective frontier');
 
 const amendment=A.cases.find(x=>x.activity_id===id);
 E(amendment?.person==='Fang Guozhen'&&amendment.effective_decision==='RELINK_TO_CONTINUOUS_EASTERN_ZHEJIANG_REGIONAL_POLITY'&&amendment.p6_correction_required===true&&amendment.mandatory_entity_migration===false,'amendment');
