@@ -16,6 +16,7 @@ const requirements=JSON.parse(fs.readFileSync('requirements/atlas-requirements.v
 
 const digest='sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27';
 const deployment='ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79';
+const constituentUuid='49d96667-4c87-522e-8321-a76561bd0a22';
 if(intake?.schema!=='atlas-stage2-baseline-a-intake/v2'||intake.baseline_digest!==digest||intake.deployment_sha!==deployment) throw new Error('Baseline A intake drift');
 if(ledger?.schema!=='atlas-stage2-baseline-a-master-ledger/v2'||ledger.baseline?.baseline_digest!==digest) throw new Error('Baseline A ledger drift');
 if(manifest?.schema!=='atlas-stage2-baseline-a-p5p6-execution-manifest/v2'||Number(manifest.summary?.correction_v2_activity_count)!==57) throw new Error('Correction v2 frontier drift');
@@ -28,7 +29,7 @@ const scope=plan.scope_rules||{};
 if(scope.existing_current_polity_uuid_only!==true||scope.merge_retire_split_new_polity_forbidden_in_this_batch!==true||scope.activity_uuid_preserved!==true||scope.activity_year_interval_preserved!==true||scope.unreviewed_person_relation_default_forbidden!==true||scope.structural_relation_uuid_fabrication_forbidden!==true||scope.production_mutation_authorized!==false) throw new Error('P6 Batch 5 scope safety drift');
 const blockers=['P5_PRODUCTION_SCHEMA_NOT_APPLIED','REVIEWED_RELATION_BACKFILL_NOT_COMPLETE_WHERE_DEFERRED','NORMALIZED_REVIEWED_EVIDENCE_FOR_COMPANION_SEMANTICS_NOT_COMPLETE','PRODUCTION_RELEASE_NOT_AUTHORIZED'];
 if(!blockers.every((b)=>(plan.common_execution_blockers||[]).includes(b))) throw new Error('P6 Batch 5 execution blockers incomplete');
-if(plan.source_preservation_policy?.silent_source_drop_forbidden!==true||!String(plan.source_preservation_policy?.rewrite_activity||'').includes('PRESERVE_ALL_EXISTING_ACTIVITY_SOURCE_LINKS')||!String(plan.source_preservation_policy?.structural_relation_assertion||'').includes('EXACT_RELATION_TYPE_UUID')) throw new Error('P6 Batch 5 source/structural safety drift');
+if(plan.source_preservation_policy?.silent_source_drop_forbidden!==true||!String(plan.source_preservation_policy?.rewrite_activity||'').includes('PRESERVE_ALL_EXISTING_ACTIVITY_SOURCE_LINKS')||!String(plan.source_preservation_policy?.structural_relation_assertion||'').includes('EXACT_RELATION_ASSERTION_UUID')) throw new Error('P6 Batch 5 source/structural safety drift');
 
 const reqById=new Map((requirements.requirements||[]).map((r)=>[r.id,r]));
 if(reqById.get('ATLAS-RQ-0215')?.status!=='PENDING'||reqById.get('ATLAS-RQ-0216')?.status!=='PENDING') throw new Error('P5/P6 Production requirements must remain pending');
@@ -54,8 +55,8 @@ const expected=new Map([
  ['e05c0337-8048-5695-901f-36c8fe2c6c1c',['Vladimir Lenin','lenin_soviet_union_keep_distinct_union','KEEP_DISTINCT','c7ddf754-0faa-576f-af97-9d322cf64f01','rsfsr_constituent_of_ussr']]
 ]);
 
-const currentPolityRelationCodes=new Set((catalog.polity_relation_types||[]).map((r)=>r.code));
-if(currentPolityRelationCodes.has('constituent_of')) throw new Error('Batch 5 assumption drift: constituent_of now has a current exact UUID catalog entry and handoff must be upgraded');
+const currentPolityRelationTypes=new Map((catalog.polity_relation_types||[]).map((r)=>[r.code,r.id]));
+if(currentPolityRelationTypes.get('constituent_of')!==constituentUuid) throw new Error('Batch 5 constituent_of exact UUID catalog binding drift');
 if(!polityRelationCandidateCodes.includes('constituent_of')) throw new Error('domain contract lost constituent_of candidate semantics');
 
 const reviewedStructural=(structural.relations||[]).find((r)=>r.id==='rsfsr_constituent_of_ussr');
@@ -65,7 +66,7 @@ const start=reviewedStructural.start||{},end=reviewedStructural.end||{};
 if(start.year!==1922||start.month!==12||start.day!==30||start.granularity!=='day'||start.certainty!=='exact'||start.calendar!=='gregorian'||end.year!==1991||end.month!==12||end.day!==25||end.granularity!=='day'||end.certainty!=='exact'||end.calendar!=='gregorian') throw new Error('RSFSR constituent relation interval drift');
 
 if(!Array.isArray(plan.cases)||plan.cases.length!==4) throw new Error('P6 Batch 5 case count drift');
-const seen=new Set();let deferred=0,structuralHandoffs=0,reuse=0,keepDistinct=0;
+const seen=new Set();let deferred=0,structuralHandoffs=0,reuse=0,keepDistinct=0,exactConstituentBindings=0;
 for(const item of plan.cases){
   const exp=expected.get(item.activity_id);
   if(!exp||seen.has(item.activity_id)||earlierIds.has(item.activity_id)) throw new Error(`unexpected/duplicate/overlap P6 Batch 5 Activity ${item.activity_id}`);
@@ -94,17 +95,19 @@ for(const item of plan.cases){
   }else{
     structuralHandoffs++;
     const handoff=item.structural_relation_handoff;
-    if(!handoff||handoff.research_relation_id!==structuralId||handoff.relation_type_code!=='constituent_of'||handoff.relation_type_uuid!==null||handoff.status!=='REVIEWED_SEMANTICS_PENDING_EXACT_UUID_CATALOG_BINDING') throw new Error(`${item.activity_id}: constituent relation handoff drift`);
+    if(!handoff||handoff.research_relation_id!==structuralId||handoff.relation_type_code!=='constituent_of'||handoff.relation_type_uuid!==constituentUuid||handoff.status!=='REVIEWED_SEMANTICS_EXACT_RELATION_TYPE_UUID_BOUND_SOURCE_ASSERTION_PENDING') throw new Error(`${item.activity_id}: constituent relation handoff drift`);
+    exactConstituentBindings++;
     if(handoff.subject_polity_uuid!=='09528a4d-4b32-5ca5-8a10-fbe9687679df'||handoff.object_polity_uuid!=='c7ddf754-0faa-576f-af97-9d322cf64f01') throw new Error(`${item.activity_id}: constituent subject/object UUID rebind drift`);
-    const needed=['CONSTITUENT_OF_RELATION_TYPE_UUID_CATALOG_EXTENSION_REQUIRED','NORMALIZED_SOURCE_UUID_LINKS_REQUIRED_BEFORE_ASSERTION'];
+    const needed=['EXACT_RELATION_ASSERTION_UUID_REQUIRED','NORMALIZED_SOURCE_UUID_LINKS_REQUIRED_BEFORE_ASSERTION'];
     if(!needed.every((b)=>(handoff.execution_blockers||[]).includes(b))) throw new Error(`${item.activity_id}: constituent handoff blockers incomplete`);
+    if((handoff.execution_blockers||[]).includes('CONSTITUENT_OF_RELATION_TYPE_UUID_CATALOG_EXTENSION_REQUIRED')) throw new Error(`${item.activity_id}: stale constituent_of catalog blocker survived exact UUID binding`);
   }
 }
-if(seen.size!==4||deferred!==4||structuralHandoffs!==2||reuse!==2||keepDistinct!==2) throw new Error(`P6 Batch 5 aggregate drift cases=${seen.size} deferred=${deferred} structural=${structuralHandoffs} reuse=${reuse} keep_distinct=${keepDistinct}`);
+if(seen.size!==4||deferred!==4||structuralHandoffs!==2||reuse!==2||keepDistinct!==2||exactConstituentBindings!==2) throw new Error(`P6 Batch 5 aggregate drift cases=${seen.size} deferred=${deferred} structural=${structuralHandoffs} reuse=${reuse} keep_distinct=${keepDistinct} exact=${exactConstituentBindings}`);
 
 const combined=new Set([...earlierIds,...seen]);
 if(combined.size!==41||57-combined.size!==16) throw new Error(`P6 cumulative prebinding coverage drift total=${combined.size} remaining=${57-combined.size}`);
 const result=plan.result||{};
-if(Number(result.case_count)!==4||Number(result.rewrite_activity_count)!==4||Number(result.existing_polity_uuid_reuses_or_keeps)!==4||Number(result.deferred_person_relation_bindings)!==4||Number(result.structural_relation_handoff_cases)!==2||Number(result.constituent_of_uuid_assignments)!==0||Number(result.new_polity_uuid_bindings)!==0||Number(result.new_activity_uuid_assignments)!==0||Number(result.merge_operations)!==0||Number(result.retire_operations)!==0||Number(result.split_operations)!==0||Number(result.cumulative_prebinding_activities)!==41||Number(result.remaining_correction_v2_frontier)!==16||result.production_executable!==false||result.production_mutation_authorized!==false) throw new Error('P6 Batch 5 result summary drift');
+if(Number(result.case_count)!==4||Number(result.rewrite_activity_count)!==4||Number(result.existing_polity_uuid_reuses_or_keeps)!==4||Number(result.deferred_person_relation_bindings)!==4||Number(result.structural_relation_handoff_cases)!==2||Number(result.constituent_of_uuid_assignments)!==2||Number(result.new_polity_uuid_bindings)!==0||Number(result.new_activity_uuid_assignments)!==0||Number(result.merge_operations)!==0||Number(result.retire_operations)!==0||Number(result.split_operations)!==0||Number(result.cumulative_prebinding_activities)!==41||Number(result.remaining_correction_v2_frontier)!==16||result.production_executable!==false||result.production_mutation_authorized!==false) throw new Error('P6 Batch 5 result summary drift');
 
-console.log(JSON.stringify({marker:'ATLAS_STAGE2_CORRECTION_V2_PREBINDING_BATCH5_OK',batch5_cases:4,batch5_rewrites:4,existing_polity_uuid_reuses_or_keeps:4,deferred_person_relations:4,structural_relation_handoffs:2,constituent_of_uuid_assignments:0,cumulative_prebinding_activities:41,remaining_correction_v2_frontier:16,new_uuid_assignments:0,production_executable:false,production_mutation_authorized:false},null,2));
+console.log(JSON.stringify({marker:'ATLAS_STAGE2_CORRECTION_V2_PREBINDING_BATCH5_OK',batch5_cases:4,batch5_rewrites:4,existing_polity_uuid_reuses_or_keeps:4,deferred_person_relations:4,structural_relation_handoffs:2,constituent_of_uuid_assignments:2,cumulative_prebinding_activities:41,remaining_correction_v2_frontier:16,new_activity_uuid_assignments:0,production_executable:false,production_mutation_authorized:false},null,2));
