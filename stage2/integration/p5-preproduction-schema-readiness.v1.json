@@ -18,7 +18,9 @@
     "relation_source_uuid_assignments": 0,
     "correction_v2_activities": 57,
     "people_group_boundary_polity_targets": 5,
-    "entity_migrations": 3
+    "entity_migrations": 3,
+    "person_polity_relation_type_uuid_count": 6,
+    "current_polity_relation_type_uuid_count": 3
   },
   "schema_components": [
     {
@@ -33,6 +35,17 @@
         "polity_relations",
         "polity_designations",
         "polity_identity_relations"
+      ]
+    },
+    {
+      "id": "relation_type_catalog",
+      "proposal": "db/proposals/stage2_relation_type_catalog.rehearsal.sql",
+      "contract": "stage2/catalogs/relation-types.v1.json",
+      "required_capabilities": [
+        "exact_person_relation_type_uuids",
+        "exact_reviewed_polity_relation_type_uuids",
+        "code_is_not_identity",
+        "no_generic_person_relation_default"
       ]
     },
     {
@@ -83,6 +96,14 @@
     "historiographic_conventional",
     "editorial_catalog_label"
   ],
+  "person_relation_types": [
+    "rules",
+    "governs",
+    "serves",
+    "active_in",
+    "opposes",
+    "claims_rule"
+  ],
   "relation_types_required_by_reviewed_assertions": [
     "dominion_of",
     "nominally_subordinate_to",
@@ -90,6 +111,7 @@
   ],
   "safety": {
     "uuid_is_identity": true,
+    "relation_code_is_identity": false,
     "name_only_polity_binding_forbidden": true,
     "people_group_auto_polity_forbidden": true,
     "fake_bibliographic_hash_or_bytes_forbidden": true,
@@ -100,7 +122,7 @@
     "production_mutation_authorized": false
   },
   "completion_boundary": {
-    "this_gate_means": "all currently reviewed P5 data structures can be represented and rehearsed branch-only",
+    "this_gate_means": "all currently reviewed P5 data structures and exact relation-type catalogs can be represented and rehearsed branch-only",
     "this_gate_does_not_mean": "P5 additive schema has been applied to Production",
     "atlas_rq_0215_remains_pending_until_production_apply": true
   }

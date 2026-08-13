@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-stage2-relation-type-catalog/v1",
+  "as_of": "2026-08-13",
+  "status": "P5_REVIEWED_UUID_CATALOG_NO_PRODUCTION_MUTATION",
+  "uuid_derivation": {
+    "algorithm": "uuid5",
+    "namespace_uuid": "bea62e8a-cf08-58c6-80bf-3dbd09505a87",
+    "namespace_basis": "https://github.com/JezCH/atlas-person-db/stage2/catalog/v1",
+    "name_format": "<catalog>:<code>",
+    "codes_are_identity": false,
+    "uuids_are_identity": true
+  },
+  "person_polity_relation_types": [
+    {"id":"7ca4de8f-01d4-542c-acc1-a06848c6742c","code":"rules","category":"authority","is_active":true},
+    {"id":"67a57b37-1853-5f2a-b7ab-e6b2d32b56b6","code":"governs","category":"authority","is_active":true},
+    {"id":"0fc4827f-8543-52f7-9e9a-3173b0c698a7","code":"serves","category":"service","is_active":true},
+    {"id":"f33d2789-2e65-50c1-af3e-91335bcbd3ca","code":"active_in","category":"activity","is_active":true},
+    {"id":"5d2d3af6-6e53-5af1-8423-f76c2263afe4","code":"opposes","category":"conflict","is_active":true},
+    {"id":"fcc652d6-8cf5-5348-9375-60b35f6e0b8c","code":"claims_rule","category":"claim","is_active":true}
+  ],
+  "polity_relation_types": [
+    {"id":"b4982965-848a-5a2b-b690-daba1d092d02","code":"vassal_of","category":"dependency","is_active":true,"scope":"CURRENT_REVIEWED_FRONTIER"},
+    {"id":"375da950-65bc-5b81-a338-6c705f515120","code":"nominally_subordinate_to","category":"dependency","is_active":true,"scope":"CURRENT_REVIEWED_FRONTIER"},
+    {"id":"c56b821b-8b21-580b-b40d-c5c87e5b26d9","code":"dominion_of","category":"dependency","is_active":true,"scope":"CURRENT_REVIEWED_FRONTIER"}
+  ],
+  "rules": {
+    "person_relation_catalog_is_closed_six_for_current_domain_contract": true,
+    "generic_person_relation_default_forbidden": true,
+    "polity_relation_catalog_is_extensible_by_reviewed_domain_decision": true,
+    "runtime_code_lookup_must_not_substitute_for_exact_uuid_binding": true,
+    "prebinding_plans_may_carry_code_only_for_human_readability_but_must_also_carry_catalog_uuid": true,
+    "production_mutation_authorized": false
+  },
+  "result": {
+    "person_polity_relation_type_count": 6,
+    "current_polity_relation_type_count": 3,
+    "exact_uuid_count": 9,
+    "production_mutation_authorized": false
+  }
+}
