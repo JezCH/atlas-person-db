@@ -20,6 +20,10 @@ if (!/^postgres(?:ql)?:\/\//.test(databaseUrl)) throw new Error('DATABASE_URL is
 
 const PERIOD_ID = '11111111-1111-4111-8111-111111111111';
 const ACTIVE_IN = 'f33d2789-2e65-50c1-af3e-91335bcbd3ca';
+const LEDGER_FKS = [
+  'authoring_manifest_runs_person_id_fkey',
+  'authoring_manifest_runs_relationship_id_fkey'
+];
 
 function manifest(requestId, endYear = 120) {
   return {
@@ -73,13 +77,32 @@ function manifest(requestId, endYear = 120) {
   };
 }
 
+async function ledgerFkState(client) {
+  return (await client.query(`select conname, oid::text as oid, confdeltype
+    from pg_constraint
+    where conrelid='atlas_v2.authoring_manifest_runs'::regclass
+      and conname = any($1::text[])
+    order by conname`, [LEDGER_FKS])).rows;
+}
+
 const baselineSchema = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 const client = new Client({ connectionString: databaseUrl });
 await client.connect();
 try {
   await client.query('DROP SCHEMA IF EXISTS atlas_v2 CASCADE');
   await client.query(baselineSchema);
+  const authoringMigrations = await applyAuthoringMigrations(client);
+  assert.deepEqual(authoringMigrations.applied, [
+    '20260811_authoring_manifest_runs.sql',
+    '20260811_authoring_result_snapshot.sql',
+    '20260814_authoring_ledger_live_reference_lifecycle.sql'
+  ]);
+  const firstFkState = await ledgerFkState(client);
+  assert.equal(firstFkState.length, 2);
+  assert.ok(firstFkState.every((row) => row.confdeltype === 'n'), 'authoring ledger live references must use ON DELETE SET NULL');
   await applyAuthoringMigrations(client);
+  assert.deepEqual(await ledgerFkState(client), firstFkState, 'steady-state authoring migration replay must not rebuild lifecycle FKs');
+
   await applyCorrectionMigrations(client);
   const schemaRelease = await applyStage2SchemaRelease(client);
   assert.equal(schemaRelease.applied.length, 6, 'new authoring gate requires complete additive Stage 2 schema');
@@ -163,11 +186,20 @@ try {
   await client.query('commit');
   assert.equal(updated.row.activity_end, 121);
   assert.equal((await loadStage2NativeActivity(client, first.relationship_id)).activity_end, 121);
+  await assert.rejects(() => dispatcher.apply(firstManifest), /AUTHORING_V2_REPLAY_SEMANTIC_DRIFT/);
 
   await client.query('begin isolation level serializable');
   await createStage2NativeActivityTx(client).remove(first.relationship_id);
   await client.query('commit');
   assert.equal(await loadStage2NativeActivity(client, first.relationship_id), null);
+
+  const ledger = await client.query(`select person_id::text as person_id, relationship_id::text as relationship_id, result_snapshot
+    from atlas_v2.authoring_manifest_runs where request_id=$1`, [firstManifest.request_id]);
+  assert.equal(ledger.rows.length, 1);
+  assert.equal(ledger.rows[0].person_id, first.person_id);
+  assert.equal(ledger.rows[0].relationship_id, null);
+  assert.equal(ledger.rows[0].result_snapshot.entities.activity.id, first.relationship_id);
+  await assert.rejects(() => dispatcher.apply(firstManifest), /AUTHORING_V2_REPLAY_ACTIVITY_NOT_FOUND/);
 
   const identitiesRemain = await client.query(`select
     exists(select 1 from atlas_v2.persons where id=$1::uuid) as person_exists,
@@ -177,6 +209,8 @@ try {
 
   console.log(JSON.stringify({
     marker:'ATLAS_STAGE2_NATIVE_NEW_PERSON_AUTHORING_GATE_OK',
+    authoring_migrations:3,
+    lifecycle_fk_replay_noop:true,
     schema_components:6,
     identity_authoring:true,
     english_and_korean_names:true,
@@ -189,8 +223,11 @@ try {
     exact_manifest_replay:true,
     semantic_duplicate_rejected:true,
     legacy_v1_new_write_rejected:true,
+    replay_after_semantic_update_fails_closed:true,
     strict_update:true,
     strict_delete:true,
+    immutable_snapshot_survives_delete:true,
+    replay_after_delete_fails_closed:true,
     production_mutation_authorized:false
   }, null, 2));
 } catch (error) {
