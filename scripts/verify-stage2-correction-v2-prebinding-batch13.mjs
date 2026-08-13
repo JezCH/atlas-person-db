@@ -37,7 +37,7 @@ E(pre.activity_uuid===id&&post.activity_uuid===null,'activity uuids');
 E(pre.polity_id===han&&post.polity_id===sunWu&&pre.activity_start===187&&pre.activity_end===209&&post.activity_start===210&&post.activity_end===226,'phase targets/time');
 E(pre.role_id===live.role_id&&post.role_id===live.role_id&&pre.period_basis_id===term&&post.period_basis_id===term&&pre.period_basis==='term'&&post.period_basis==='term','role/term');
 E(JSON.stringify(pre.relation)===JSON.stringify(['serves',serves])&&JSON.stringify(post.relation)===JSON.stringify(['serves',serves]),'relations');
-E(pre.start_boundary?.granularity==='uncertain'&&String(pre.start_boundary.interpretation).includes('DOES NOT JUSTIFY INVENTING')&&String(x.split_boundary_policy).includes('NO SUBYEAR CUTOVER DATE IS FABRICATED'),'temporal uncertainty');
+E(pre.start_boundary?.granularity==='year'&&pre.start_boundary?.certainty==='uncertain'&&pre.end_boundary?.granularity==='year'&&pre.end_boundary?.certainty==='approximate'&&String(pre.start_boundary.interpretation).includes('DOES NOT JUSTIFY INVENTING')&&String(x.split_boundary_policy).includes('NO SUBYEAR CUTOVER DATE IS FABRICATED'),'temporal uncertainty');
 E(String(post.display_policy).includes("DO NOT DISPLAY THE LATER 'EASTERN WU'")&&String(post.display_policy).includes('TEMPORALLY CORRECT PRE-FORMAL-WU DESIGNATION'),'display backprojection');
 E(String(x.period_basis_policy).includes('DE_FACTO_RULE')&&String(x.period_basis_policy).includes('SERVES'),'period basis rationale');
 E(x.optional_auxiliary_metadata?.every(v=>v.required_for_correction===false),'optional governance');
