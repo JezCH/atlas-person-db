@@ -5,13 +5,19 @@ import { createRequire } from 'node:module';
 import pg from 'pg';
 
 const require = createRequire(import.meta.url);
-const { applyAuthoringMigrations } = require('../server/atlas-authoring-migrations.js');
+const { AUTHORING_MIGRATION_PATHS, applyAuthoringMigrations } = require('../server/atlas-authoring-migrations.js');
 const { CORRECTION_MIGRATION_PATHS, applyCorrectionMigrations } = require('../server/atlas-correction-migrations.js');
 const { Client } = pg;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const baselinePath = path.join(root, 'db/schema/atlas_v2.current.sql');
 const databaseUrl = String(process.env.DATABASE_URL || '').trim();
 if (!/^postgres(?:ql)?:\/\//.test(databaseUrl)) throw new Error('DATABASE_URL is required for schema baseline verification');
+
+const expectedAuthoringMigrations = [
+  '20260811_authoring_manifest_runs.sql',
+  '20260811_authoring_result_snapshot.sql',
+  '20260814_authoring_ledger_live_reference_lifecycle.sql'
+];
 
 const expectedCorrectionMigrations = [
   '20260811_correction_manifest_runs.sql',
@@ -63,6 +69,16 @@ function same(actual, expected, label) {
   const right = [...expected].sort();
   if (JSON.stringify(left) !== JSON.stringify(right)) {
     throw new Error(`${label} mismatch\nactual=${JSON.stringify(left)}\nexpected=${JSON.stringify(right)}`);
+  }
+}
+
+function assertAuthoringMigrationRegistry(result, label) {
+  const registered = AUTHORING_MIGRATION_PATHS.map((item) => path.basename(item));
+  if (JSON.stringify(registered) !== JSON.stringify(expectedAuthoringMigrations)) {
+    throw new Error(`${label} registry drift\nactual=${JSON.stringify(registered)}\nexpected=${JSON.stringify(expectedAuthoringMigrations)}`);
+  }
+  if (JSON.stringify(result.applied) !== JSON.stringify(expectedAuthoringMigrations)) {
+    throw new Error(`${label} apply drift\nactual=${JSON.stringify(result.applied)}\nexpected=${JSON.stringify(expectedAuthoringMigrations)}`);
   }
 }
 
@@ -153,9 +169,8 @@ try {
 
   const firstAuthoringReplay = await applyAuthoringMigrations(client);
   const secondAuthoringReplay = await applyAuthoringMigrations(client);
-  if (firstAuthoringReplay.applied.length !== 2 || secondAuthoringReplay.applied.length !== 2) {
-    throw new Error('authoring migration registry did not apply the complete ordered set');
-  }
+  assertAuthoringMigrationRegistry(firstAuthoringReplay, 'first authoring replay');
+  assertAuthoringMigrationRegistry(secondAuthoringReplay, 'second authoring replay');
 
   const firstCorrectionReplay = await applyCorrectionMigrations(client);
   const secondCorrectionReplay = await applyCorrectionMigrations(client);
