@@ -22,8 +22,8 @@
     {"id":"b4982965-848a-5a2b-b690-daba1d092d02","code":"vassal_of","category":"dependency","is_active":true,"scope":"CURRENT_REVIEWED_FRONTIER"},
     {"id":"375da950-65bc-5b81-a338-6c705f515120","code":"nominally_subordinate_to","category":"dependency","is_active":true,"scope":"CURRENT_REVIEWED_FRONTIER"},
     {"id":"c56b821b-8b21-580b-b40d-c5c87e5b26d9","code":"dominion_of","category":"dependency","is_active":true,"scope":"CURRENT_REVIEWED_FRONTIER"},
-    {"id":"def2c060-302b-5dc7-be8c-28e8bbe3ebfb","code":"constituent_of","category":"constitutional_membership","is_active":true,"scope":"REVIEWED_STRUCTURAL_RELATION_FRONTIER"},
-    {"id":"4b67c9db-aafb-50e1-ae05-141e4d4e8e30","code":"colonial_dependency_of","category":"dependency","is_active":true,"scope":"REVIEWED_STRUCTURAL_RELATION_FRONTIER"}
+    {"id":"49d96667-4c87-522e-8321-a76561bd0a22","code":"constituent_of","category":"constituent","is_active":true,"scope":"REVIEWED_STRUCTURAL_RELATION_FRONTIER"},
+    {"id":"d9d8b7a5-fbb0-5bdc-ad7f-24a01ac31ca8","code":"colonial_dependency_of","category":"dependency","is_active":true,"scope":"REVIEWED_STRUCTURAL_RELATION_FRONTIER"}
   ],
   "rules": {
     "person_relation_catalog_is_closed_six_for_current_domain_contract": true,
