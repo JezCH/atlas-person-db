@@ -37,7 +37,7 @@ try {
   await applyAuthoringMigrations(client);
   await applyCorrectionMigrations(client);
   const schemaRelease = await applyStage2SchemaRelease(client);
-  if (schemaRelease.applied.length !== 5 || schemaRelease.skipped.length !== 0) throw new Error(`P5 schema release prerequisite drift ${JSON.stringify(schemaRelease)}`);
+  if (schemaRelease.applied.length !== 6 || schemaRelease.skipped.length !== 0) throw new Error(`P5 schema release prerequisite drift ${JSON.stringify(schemaRelease)}`);
 
   const before = await client.query(`
     select
@@ -108,7 +108,7 @@ try {
     marker: 'ATLAS_STAGE2_P5_REVIEWED_ENTITY_AUTHORING_REHEARSAL_OK',
     generated_manifest_matches_committed_semantically: true,
     array_order_is_not_identity: true,
-    schema_release_components: 5,
+    schema_release_components: 6,
     dry_run_rolled_back: true,
     first_apply: { polities: 17, polity_names: 17, sources: 9 },
     exact_replay: true,
