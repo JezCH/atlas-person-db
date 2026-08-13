@@ -41,8 +41,11 @@ function commonInputs() {
   const p5Reviewed = readJson('stage2/execution/p5-reviewed-identity-source-authoring.v1.json');
   const rolePrerequisites = readJson('stage2/execution/p6-reviewed-role-prerequisites.v1.json');
   const resolutionAdapters = readJson('stage2/integration/p6-execution-resolution-adapters.v1.json');
+  const relationCatalog = readJson('stage2/catalogs/relation-types.v1.json');
+  const relationDecisions = readJson('stage2/integration/baseline-a-polity-relation-decisions.v1.json');
+  const relationSourcePackage = readJson('stage2/authoring/p5-polity-relation-sources.v1.json');
   const reviewedSources = (p5Reviewed.sources || []).map((row) => ({ candidate_key: row.candidate_key, source_uuid: row.row.id }));
-  return { allocations, reviewedSources, rolePrerequisites, resolutionAdapters };
+  return { allocations, reviewedSources, rolePrerequisites, resolutionAdapters, relationCatalog, relationDecisions, relationSourcePackage };
 }
 
 export function buildStage2P6ExecutionPackage() {
@@ -54,7 +57,16 @@ export function buildStage2P6ExecutionPackage() {
 export function buildStage2P6LiteralExecutionPackage() {
   const prebindingBatches = Array.from({ length: 17 }, (_, index) => readJson(`stage2/integration/p6-correction-v2-prebinding-batch${index + 2}.v1.json`));
   const common = commonInputs();
-  return materializePackage({ prebindingBatches, allocations: common.allocations, reviewedSources: common.reviewedSources, rolePrerequisites: common.rolePrerequisites, resolutionAdapters: normalizeAdapters(common.resolutionAdapters) });
+  return materializePackage({
+    prebindingBatches,
+    allocations: common.allocations,
+    reviewedSources: common.reviewedSources,
+    rolePrerequisites: common.rolePrerequisites,
+    resolutionAdapters: normalizeAdapters(common.resolutionAdapters),
+    relationCatalog: common.relationCatalog,
+    relationDecisions: common.relationDecisions,
+    relationSourcePackage: common.relationSourcePackage
+  });
 }
 
 const isCli = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
