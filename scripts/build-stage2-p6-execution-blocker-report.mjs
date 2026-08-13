@@ -29,11 +29,15 @@ function extractCases(doc) {
   return [];
 }
 
-function activityIds(doc) {
+function targetActivityIds(cases) {
   const ids = new Set();
-  walk(doc, (value, pointer) => {
-    if (/activity_id$/.test(pointer) && typeof value === 'string' && /^[0-9a-f-]{36}$/i.test(value)) ids.add(value.toLowerCase());
-  });
+  for (const item of cases) {
+    const value = item?.activity_id;
+    if (typeof value !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value)) {
+      throw new Error(`P6_PRIMARY_TARGET_ACTIVITY_ID_INVALID:${item?.id || item?.case_id || 'unknown-case'}`);
+    }
+    ids.add(value.toLowerCase());
+  }
   return [...ids];
 }
 
@@ -77,7 +81,7 @@ for (let index = 1; index <= 18; index += 1) {
     batch_id: doc.batch_id || null,
     status: doc.status || null,
     case_count: cases.length,
-    activity_ids: activityIds({ cases }),
+    activity_ids: targetActivityIds(cases),
     branch_blockers: [...dedup.values()]
   });
 }
@@ -96,6 +100,7 @@ const report = {
   status: 'BRANCH_ONLY_EXECUTION_PACKAGE_BLOCKER_INVENTORY',
   rules: {
     production_authorization_and_unapplied_p5_are_not_branch_compilation_blockers: true,
+    primary_target_count_excludes_survivor_or_new_fragment_activity_references: true,
     null_literal_uuid_is_a_blocker_when_it_identifies_a_source_target_relation_or_activity_operand: true,
     explicit_not_execution_ready_or_unresolved_markers_are_fail_closed: true,
     report_does_not_invent_missing_uuid_or_chronology: true
