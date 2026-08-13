@@ -24,13 +24,13 @@ test('P6 literal materializer closes the exact 45-target remainder behind the 9-
 
 test('P6 literal execution operands contain UUIDs rather than runtime identity names/classes/keys', () => {
   const literal = buildStage2P6LiteralExecutionPackage();
-  const text = JSON.stringify(literal);
-  assert.doesNotMatch(text, /identity_class/i);
-  assert.doesNotMatch(text, /candidate_key/i);
-  assert.doesNotMatch(text, /polity_label|person_name|polity_name/i);
   for (const plan of literal.plans) {
     assert.equal(plan.execution_rules.uuid_only_runtime_operands, true);
     assert.equal(plan.execution_rules.runtime_name_identity_class_and_source_key_resolution_forbidden, true);
+    const runtimeOperands = JSON.stringify({ operations: plan.operations, companion_assertions: plan.companion_assertions });
+    assert.doesNotMatch(runtimeOperands, /identity_class/i);
+    assert.doesNotMatch(runtimeOperands, /candidate_key/i);
+    assert.doesNotMatch(runtimeOperands, /polity_label|person_name|polity_name/i);
     for (const op of plan.operations) {
       assertUuid(op.activity_id, `${op.case_id} activity`);
       if (op.type === 'rewrite_activity') {
