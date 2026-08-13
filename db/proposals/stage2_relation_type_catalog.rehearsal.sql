@@ -16,6 +16,8 @@ INSERT INTO atlas_v2.person_polity_relation_types(id,code,category,is_active) VA
 INSERT INTO atlas_v2.polity_relation_types(id,code,category,is_active) VALUES
   ('b4982965-848a-5a2b-b690-daba1d092d02','vassal_of','dependency',true),
   ('375da950-65bc-5b81-a338-6c705f515120','nominally_subordinate_to','dependency',true),
-  ('c56b821b-8b21-580b-b40d-c5c87e5b26d9','dominion_of','dependency',true);
+  ('c56b821b-8b21-580b-b40d-c5c87e5b26d9','dominion_of','dependency',true),
+  ('def2c060-302b-5dc7-be8c-28e8bbe3ebfb','constituent_of','constitutional_membership',true),
+  ('4b67c9db-aafb-50e1-ae05-141e4d4e8e30','colonial_dependency_of','dependency',true);
 
 COMMIT;
