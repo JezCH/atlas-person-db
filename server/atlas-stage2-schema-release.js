@@ -29,7 +29,7 @@ function readStage2SchemaRelease({ readFile = fs.readFileSync } = {}) {
   if (release?.status !== "RELEASE_CANDIDATE_BRANCH_ONLY_NO_PRODUCTION_MUTATION") throw new Error("STAGE2_SCHEMA_RELEASE_STATUS_INVALID");
   if (release?.safety?.production_apply_authorized !== false) throw new Error("STAGE2_SCHEMA_RELEASE_PRODUCTION_AUTHORIZATION_INVALID");
   const components = Array.isArray(release.components) ? release.components : [];
-  if (components.length !== 5) throw new Error("STAGE2_SCHEMA_RELEASE_COMPONENT_COUNT_INVALID");
+  if (components.length !== 6) throw new Error("STAGE2_SCHEMA_RELEASE_COMPONENT_COUNT_INVALID");
   const seen = new Set();
   const materialized = components.map((component, index) => {
     if (component.sequence !== index + 1 || !component.id || seen.has(component.id)) throw new Error("STAGE2_SCHEMA_RELEASE_COMPONENT_ORDER_INVALID");
