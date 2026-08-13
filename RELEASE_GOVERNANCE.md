@@ -42,7 +42,7 @@ One exact deployed `main` SHA carries:
 - reviewed R0/R1 current-schema package;
 - Baseline A v2 capture tooling.
 
-After deployment, the same SHA runs dry-run/apply operations and then captures **Baseline A v2** in one `REPEATABLE READ READ ONLY` snapshot. The snapshot contains all Activity rows plus complete Person/name, Polity/name including raw `name_type`, Role/name, Period Basis/name and Source catalogs. Its digest covers `{rows, counts, catalogs}`. This prevents a second Vercel deployment or ad-hoc live query merely to recover unreferenced identity/name/source rows.
+After deployment, the same SHA runs dry-run/apply operations and then captures **Baseline A v2** in one `REPEATABLE READ READ ONLY` snapshot. The snapshot contains all Activity rows plus complete Person/name, Polity/name including raw `name_type`, Role/name, Period Basis/name and Source catalogs. Its digest covers `{rows, counts,catalogs}`. This prevents a second Vercel deployment or ad-hoc live query merely to recover unreferenced identity/name/source rows.
 
 ### Production Train 2 — Stage 2 transition
 
@@ -154,3 +154,22 @@ Never reduce deployment count by guessing a future Production baseline, bypassin
 ## 9. Build-skip safety invariant
 
 The ignored-build classifier is optimization, not correctness. Uncertainty defaults to BUILD. Deployment-relevant classes include API/server, DB schema/migration, runtime assets/package, `vercel.json`, correction requests/intents, and Production authoring/correction/audit workflows. Deletions and renames count in the diff.
+
+## 10. Stage 2 additive schema release authorization
+
+Stage 2 additive schema release is never triggered automatically by `push` or `pull_request`.
+
+The Production migration path is intentionally separate from ordinary authoring and correction transports. It may run only through `.github/workflows/atlas-stage2-schema-release.yml` by explicit `workflow_dispatch` on `main`, with the GitHub `production` environment and a dedicated OIDC audience. The operator must provide the exact reviewed `release_id` and type `APPLY:<release_id>` exactly.
+
+The server endpoint then independently requires all of the following before opening a write path:
+
+- Vercel Production is the same exact `main` SHA as the workflow run;
+- the OIDC token belongs to the dedicated Stage 2 schema workflow, repository, environment and SHA;
+- the local release package still has exact reviewed component Git blob SHAs;
+- P6 effective prebinding is closed at 54/54 with zero remaining Activities;
+- the live Baseline A v2 digest and authoritative 338 Activity / 302 Person / 212 Polity / 20 Source cardinalities still match the release baseline;
+- any existing release-ledger rows match the exact component SHA and contain no unknown component.
+
+The workflow performs a read-only live preflight first. Only after that preflight succeeds may it call `apply`. Each schema component is atomic and restart-safe; a retry skips only an already-recorded component with the exact same blob SHA. After apply, the Baseline A digest must remain unchanged and all five release components must be present in the release ledger.
+
+The release JSON intentionally keeps `production_apply_authorized: false`: a checked-in data file cannot authorize its own Production execution. Authorization comes only from the exact-SHA manual workflow + typed approval + dedicated OIDC + live preflight combination.

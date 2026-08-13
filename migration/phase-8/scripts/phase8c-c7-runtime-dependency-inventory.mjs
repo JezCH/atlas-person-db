@@ -31,7 +31,8 @@ const intendedApiRoutes = [
   'api/atlas-identity.js',
   'api/atlas-mutate.js',
   'api/atlas-read.js',
-  'api/atlas-session.js'
+  'api/atlas-session.js',
+  'api/atlas-stage2-schema-release.js'
 ].filter(exists);
 const unexpectedApiRoutes = apiRoutes.filter((p) => !intendedApiRoutes.includes(p));
 
