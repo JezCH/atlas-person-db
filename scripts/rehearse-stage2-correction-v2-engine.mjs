@@ -82,6 +82,12 @@ function newFragmentFrom(bundle, { id, polityId, relationTypeId, start, end }) {
   return fragment;
 }
 
+function persistedFragmentExpectation(fragment) {
+  const persisted = clone(fragment);
+  delete persisted.source_copy_policy;
+  return persisted;
+}
+
 function retireSurvivorAfter(survivorBefore, retiredBefore) {
   const next = clone(survivorBefore);
   for (const link of retiredBefore.normalized_source_links) {
@@ -160,6 +166,8 @@ try {
     start: 210,
     end: 220
   });
+  assert.equal(splitNew.source_copy_policy, 'COPY_EXISTING', 'split fixture must exercise the reviewed Source-copy policy');
+  const splitNewPersisted = persistedFragmentExpectation(splitNew);
   const retireSurvivorExpected = retireSurvivorAfter(retireSurvivorBefore, retireBefore);
 
   const relationBundle = {
@@ -234,7 +242,7 @@ try {
   assert.equal(applied.replay, false);
   assert.ok(exactEqual(await loadActivityBundle(client, ID.rewrite), rewriteAfter), 'rewrite post-state drift');
   assert.ok(exactEqual(await loadActivityBundle(client, ID.split), splitSurvivor), 'split survivor post-state drift');
-  assert.ok(exactEqual(await loadActivityBundle(client, ID.splitNew), splitNew), 'split new fragment post-state drift');
+  assert.ok(exactEqual(await loadActivityBundle(client, ID.splitNew), splitNewPersisted), 'split new fragment persisted post-state drift');
   assert.equal(await loadActivityBundle(client, ID.retire), null, 'retired activity still exists');
   assert.ok(exactEqual(await loadActivityBundle(client, ID.retireSurvivor), retireSurvivorExpected), 'retired Source was not preserved on reviewed survivor');
   assert.ok(exactEqual(await loadPolityRelationBundle(client, ID.relation), relationBundle), 'polity relation post-state drift');
