@@ -2,7 +2,7 @@
 
 const { createPerson, createPolity, createRole } = require("./atlas-identity-service.js");
 const { createStage2NativeActivityTx, loadStage2NativeActivity } = require("./atlas-stage2-native-activity-service.js");
-const { requiredUuid } = require("./atlas-activity-semantic-key-v2.js");
+const { requiredUuid, semanticKey, semanticHash } = require("./atlas-activity-semantic-key-v2.js");
 const { manifestHash, readLedger } = require("./atlas-authoring-manifest-service.js");
 
 const MANIFEST_V2 = "atlas-authoring-manifest/v2";
@@ -71,11 +71,14 @@ async function verifyReplay(client, ledger) {
   const snapshot = ledger?.result_snapshot;
   if (Number(snapshot?.version) !== SNAPSHOT_VERSION || snapshot?.semantic_version !== SEMANTIC_VERSION) throw new Error("AUTHORING_V2_LEDGER_SNAPSHOT_INVALID");
   const activityId = requiredUuid(snapshot?.entities?.activity?.id, "ledger.activity.id");
+  const snapshotSemanticKey = String(snapshot?.entities?.activity?.semantic_key || "");
+  const snapshotSemanticHash = String(snapshot?.entities?.activity?.semantic_hash || "").trim().toLowerCase();
+  if (!snapshotSemanticKey || !/^[0-9a-f]{64}$/.test(snapshotSemanticHash)) throw new Error("AUTHORING_V2_LEDGER_SNAPSHOT_INVALID");
   const activity = await loadStage2NativeActivity(client, activityId, { forUpdate:true });
   if (!activity) throw new Error("AUTHORING_V2_REPLAY_ACTIVITY_NOT_FOUND");
   if (String(activity.person_id) !== String(ledger.person_id) || String(activityId) !== String(ledger.relationship_id)) throw new Error("AUTHORING_V2_REPLAY_LEDGER_DRIFT");
   if (activity.legacy_source_key != null) throw new Error("AUTHORING_V2_REPLAY_LEGACY_ACTIVITY_DRIFT");
-  if (String(activity.relation_type_id) !== String(snapshot.entities.activity.relation_type_id) || String(activity.period_basis_id) !== String(snapshot.entities.activity.period_basis_id)) throw new Error("AUTHORING_V2_REPLAY_SEMANTIC_DRIFT");
+  if (semanticKey(activity) !== snapshotSemanticKey || semanticHash(activity) !== snapshotSemanticHash) throw new Error("AUTHORING_V2_REPLAY_SEMANTIC_DRIFT");
   return snapshot;
 }
 

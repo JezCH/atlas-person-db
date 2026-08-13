@@ -7,6 +7,7 @@ const dispatchSource = fs.readFileSync(new URL('../server/atlas-authoring-manife
 const nativeV2Source = fs.readFileSync(new URL('../server/atlas-authoring-manifest-v2-native-service.js', import.meta.url), 'utf8');
 const nativeActivitySource = fs.readFileSync(new URL('../server/atlas-stage2-native-activity-service.js', import.meta.url), 'utf8');
 const migrationsSource = fs.readFileSync(new URL('../server/atlas-authoring-migrations.js', import.meta.url), 'utf8');
+const lifecycleMigrationSource = fs.readFileSync(new URL('../db/migrations/20260814_authoring_ledger_live_reference_lifecycle.sql', import.meta.url), 'utf8');
 const runnerSource = fs.readFileSync(new URL('../scripts/apply-authoring-manifest.mjs', import.meta.url), 'utf8');
 const handlerSource = fs.readFileSync(new URL('../server/atlas-authoring-apply-handler.js', import.meta.url), 'utf8');
 const oidcSource = fs.readFileSync(new URL('../server/atlas-github-oidc.js', import.meta.url), 'utf8');
@@ -29,6 +30,9 @@ test('new manifest v2 owns one transaction and binds created identities directly
   assert.match(nativeV2Source, /createStage2NativeActivityTx\(client\)\.create/);
   assert.match(nativeV2Source, /v2-relation-full-temporal/);
   assert.match(nativeV2Source, /AUTHORING_V2_ACTIVITY_NAME_OR_PERSON_ID_BINDING_FORBIDDEN/);
+  assert.match(nativeV2Source, /semanticKey\(activity\)/);
+  assert.match(nativeV2Source, /semanticHash\(activity\)/);
+  assert.match(nativeV2Source, /AUTHORING_V2_REPLAY_SEMANTIC_DRIFT/);
   assert.doesNotMatch(nativeV2Source, /createV2AuthoritativeTx/);
 });
 
@@ -49,9 +53,13 @@ test('authoring migrations have one ordered registry shared by production and lo
   assert.match(migrationsSource, /AUTHORING_MIGRATION_PATHS/);
   assert.match(migrationsSource, /20260811_authoring_manifest_runs\.sql/);
   assert.match(migrationsSource, /20260811_authoring_result_snapshot\.sql/);
+  assert.match(migrationsSource, /20260814_authoring_ledger_live_reference_lifecycle\.sql/);
   assert.match(migrationsSource, /applyAuthoringMigrations/);
   assert.match(runnerSource, /applyAuthoringMigrations/);
   assert.match(handlerSource, /applyAuthoringMigrations/);
+  assert.match(lifecycleMigrationSource, /pg_advisory_xact_lock/i);
+  assert.match(lifecycleMigrationSource, /confdeltype/i);
+  assert.equal((lifecycleMigrationSource.match(/ON DELETE SET NULL/gi) || []).length, 2);
 });
 
 test('local/manual legacy runner remains normalized and path-confined', () => {
