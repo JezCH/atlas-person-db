@@ -177,3 +177,20 @@ jobs:
           path: artifacts/stage2-p5-schema-release.log
           if-no-files-found: error
           retention-days: 7
+
+      - name: Rehearse exact reviewed P5 identity and Source authoring
+        id: p5-entity-authoring
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p artifacts
+          node scripts/rehearse-stage2-p5-reviewed-entity-authoring.mjs 2>&1 | tee artifacts/stage2-p5-entity-authoring.log
+
+      - name: Upload P5 entity authoring failure diagnostics
+        if: failure() && steps.p5-entity-authoring.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-stage2-p5-entity-authoring-failure-${{ github.sha }}
+          path: artifacts/stage2-p5-entity-authoring.log
+          if-no-files-found: error
+          retention-days: 7
