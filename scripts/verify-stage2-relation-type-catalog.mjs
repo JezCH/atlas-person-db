@@ -1,9 +1,17 @@
 import fs from 'node:fs';
 import crypto from 'node:crypto';
 
-const catalogPath = process.argv[2] || 'stage2/catalogs/relation-types.v1.json';
-const readinessPath = process.argv[3] || 'stage2/integration/p5-preproduction-schema-readiness.v1.json';
-const proposalPath = process.argv[4] || 'db/proposals/stage2_relation_type_catalog.rehearsal.sql';
+function arg(name, fallback) {
+  const index = process.argv.indexOf(name);
+  return index >= 0 ? process.argv[index + 1] : fallback;
+}
+
+// This verifier is imported by the composed P5 gate. Positional argv belongs
+// to the parent verifier in that mode, so only explicit named flags may
+// override the canonical repository paths here.
+const catalogPath = arg('--relation-catalog', 'stage2/catalogs/relation-types.v1.json');
+const readinessPath = arg('--p5-readiness', 'stage2/integration/p5-preproduction-schema-readiness.v1.json');
+const proposalPath = arg('--relation-catalog-sql', 'db/proposals/stage2_relation_type_catalog.rehearsal.sql');
 
 const catalog = JSON.parse(fs.readFileSync(catalogPath, 'utf8'));
 const readiness = JSON.parse(fs.readFileSync(readinessPath, 'utf8'));
@@ -60,7 +68,7 @@ verifyRows(catalog.polity_relation_types, expectedPolity, 'polity_relation_type'
 if (Number(catalog.result?.person_polity_relation_type_count) !== 6 || Number(catalog.result?.current_polity_relation_type_count) !== 3 || Number(catalog.result?.exact_uuid_count) !== 9 || catalog.result?.production_mutation_authorized !== false) throw new Error('relation-type catalog summary drift');
 if (Number(readiness.prepared_frontier?.person_polity_relation_type_uuid_count) !== 6 || Number(readiness.prepared_frontier?.current_polity_relation_type_uuid_count) !== 3 || readiness.safety?.relation_code_is_identity !== false) throw new Error('P5 readiness relation-type frontier drift');
 const component = (readiness.schema_components || []).find((item) => item.id === 'relation_type_catalog');
-if (!component || component.contract !== catalogPath || component.proposal !== proposalPath) throw new Error('P5 readiness relation-type component linkage drift');
+if (!component || component.contract !== 'stage2/catalogs/relation-types.v1.json' || component.proposal !== 'db/proposals/stage2_relation_type_catalog.rehearsal.sql') throw new Error('P5 readiness relation-type component linkage drift');
 const readinessPersonCodes = new Set(readiness.person_relation_types || []);
 if (readinessPersonCodes.size !== 6 || [...expectedPerson.keys()].some((code) => !readinessPersonCodes.has(code))) throw new Error('P5 readiness Person relation code domain drift');
 const readinessPolityCodes = new Set(readiness.relation_types_required_by_reviewed_assertions || []);
