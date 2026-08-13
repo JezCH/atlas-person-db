@@ -14,6 +14,7 @@ export function buildReviewedIdentitySourceAuthoring() {
     readJson('stage2/authoring/p5-polity-authoring-batch3-community-boundaries.v1.json')
   ];
   const sourcePackage = readJson('stage2/authoring/p5-polity-relation-sources.v1.json');
+  const sourceSupplement = readJson('stage2/authoring/p5-source-authoring-supplement.v1.json');
   const superseded = new Set(amendment.superseded_new_polity_identity_classes || []);
   const active = [
     ...batches.flatMap((batch) => batch.targets || []).filter((target) => !superseded.has(target.identity_class)),
@@ -23,9 +24,14 @@ export function buildReviewedIdentitySourceAuthoring() {
   const allocationByClass = new Map((allocation.polities || []).map((row) => [row.identity_class, row]));
   const sourceByKey = new Map((sourcePackage.sources || []).map((row) => [row.candidate_key, row]));
   const sourceAllocationByKey = new Map((allocation.sources || []).map((row) => [row.candidate_key, row]));
+  const supplementalSourceByKey = new Map((sourceSupplement.sources || []).map((row) => [row.candidate_key, row]));
 
   if (targetByClass.size !== 17 || allocationByClass.size !== 17) throw new Error('P5_EFFECTIVE_POLITY_TARGET_COUNT_DRIFT');
-  if (sourceByKey.size !== 9 || sourceAllocationByKey.size !== 9) throw new Error('P5_SOURCE_TARGET_COUNT_DRIFT');
+  if (sourceByKey.size !== 9 || sourceAllocationByKey.size !== 9) throw new Error('P5_BASE_SOURCE_TARGET_COUNT_DRIFT');
+  if (supplementalSourceByKey.size !== sourceSupplement.result?.new_source_rows) throw new Error('P5_SUPPLEMENTAL_SOURCE_TARGET_COUNT_DRIFT');
+  for (const key of supplementalSourceByKey.keys()) {
+    if (sourceByKey.has(key)) throw new Error(`P5_SUPPLEMENTAL_SOURCE_DUPLICATES_BASE:${key}`);
+  }
 
   const polities = [...targetByClass.keys()].sort().map((identityClass) => {
     const target = targetByClass.get(identityClass);
@@ -60,7 +66,7 @@ export function buildReviewedIdentitySourceAuthoring() {
     };
   });
 
-  const sources = [...sourceByKey.keys()].sort().map((candidateKey) => {
+  const baseSources = [...sourceByKey.keys()].sort().map((candidateKey) => {
     const source = sourceByKey.get(candidateKey);
     const assigned = sourceAllocationByKey.get(candidateKey);
     if (!assigned) throw new Error(`P5_SOURCE_UUID_MISSING:${candidateKey}`);
@@ -79,12 +85,34 @@ export function buildReviewedIdentitySourceAuthoring() {
     };
   });
 
+  const supplementalSources = [...supplementalSourceByKey.keys()].sort().map((candidateKey) => {
+    const source = supplementalSourceByKey.get(candidateKey);
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(source.source_uuid || ''))) {
+      throw new Error(`P5_SUPPLEMENTAL_SOURCE_UUID_INVALID:${candidateKey}`);
+    }
+    return {
+      candidate_key: candidateKey,
+      row: {
+        id: source.source_uuid.toLowerCase(),
+        source_key: candidateKey,
+        source_type: source.source_type,
+        title: source.title,
+        sha256: null,
+        bytes: null,
+        canonical_url: source.canonical_url,
+        citation_text: source.citation_text
+      }
+    };
+  });
+  const sources = [...baseSources, ...supplementalSources].sort((a, b) => a.candidate_key.localeCompare(b.candidate_key));
+
   return {
     schema: 'atlas-stage2-p5-reviewed-identity-source-authoring/v1',
     as_of: '2026-08-13',
     status: 'REVIEWED_EXACT_ROWS_BRANCH_ONLY_NO_PRODUCTION_MUTATION',
     baseline: allocation.baseline,
     allocation: 'stage2/execution/p6-execution-identity-allocations.v1.json',
+    supplemental_source_authority: 'stage2/authoring/p5-source-authoring-supplement.v1.json',
     rules: {
       literal_uuid_insert_only: true,
       name_or_url_identity_resolution_forbidden: true,
@@ -103,6 +131,8 @@ export function buildReviewedIdentitySourceAuthoring() {
       new_polity_rows: polities.length,
       new_polity_name_rows: polities.length,
       new_source_rows: sources.length,
+      base_source_rows: baseSources.length,
+      supplemental_source_rows: supplementalSources.length,
       activity_rows_mutated: 0,
       production_mutation_authorized: false
     }
