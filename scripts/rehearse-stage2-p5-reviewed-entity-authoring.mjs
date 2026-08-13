@@ -27,6 +27,9 @@ function normalizeManifestRows(value) {
 const committed = JSON.parse(fs.readFileSync(path.join(root, 'stage2/execution/p5-reviewed-identity-source-authoring.v1.json'), 'utf8'));
 const generated = buildReviewedIdentitySourceAuthoring();
 assert.deepEqual(normalizeManifestRows(committed), normalizeManifestRows(generated), 'committed exact authoring manifest drifted from reviewed packages + UUID allocation');
+const sourceCount = committed.result.new_source_rows;
+const exactUuidRows = committed.polities.length * 2 + sourceCount;
+assert.equal(sourceCount, committed.sources.length, 'declared Source count must equal manifest rows');
 
 const baselineSchema = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 const client = new Client({ connectionString: databaseUrl });
@@ -48,7 +51,7 @@ try {
 
   const dryRun = await applyReviewedEntityAuthoring(client, { dryRun: true });
   if (!dryRun.dry_run || dryRun.committed || dryRun.replay) throw new Error(`entity authoring dry-run contract drift ${JSON.stringify(dryRun)}`);
-  if (dryRun.inserted.polities !== 17 || dryRun.inserted.polity_names !== 17 || dryRun.inserted.sources !== 9) throw new Error(`entity authoring dry-run cardinality drift ${JSON.stringify(dryRun.inserted)}`);
+  if (dryRun.inserted.polities !== 17 || dryRun.inserted.polity_names !== 17 || dryRun.inserted.sources !== sourceCount) throw new Error(`entity authoring dry-run cardinality drift ${JSON.stringify(dryRun.inserted)}`);
 
   const afterDryRun = await client.query(`
     select
@@ -60,7 +63,7 @@ try {
 
   const first = await applyReviewedEntityAuthoring(client);
   if (first.dry_run || !first.committed || first.replay) throw new Error(`entity authoring first apply contract drift ${JSON.stringify(first)}`);
-  if (first.inserted.polities !== 17 || first.inserted.polity_names !== 17 || first.inserted.sources !== 9) throw new Error(`entity authoring first apply cardinality drift ${JSON.stringify(first.inserted)}`);
+  if (first.inserted.polities !== 17 || first.inserted.polity_names !== 17 || first.inserted.sources !== sourceCount) throw new Error(`entity authoring first apply cardinality drift ${JSON.stringify(first.inserted)}`);
 
   const after = await client.query(`
     select
@@ -70,7 +73,7 @@ try {
       (select count(*)::int from atlas_v2.person_politics_v2) as activities`);
   const b = before.rows[0];
   const a = after.rows[0];
-  if (a.polities !== b.polities + 17 || a.polity_names !== b.polity_names + 17 || a.sources !== b.sources + 9 || a.activities !== b.activities) {
+  if (a.polities !== b.polities + 17 || a.polity_names !== b.polity_names + 17 || a.sources !== b.sources + sourceCount || a.activities !== b.activities) {
     throw new Error(`entity authoring post-count drift before=${JSON.stringify(b)} after=${JSON.stringify(a)}`);
   }
   if (first.activity_fingerprint_before.fingerprint !== first.activity_fingerprint_after.fingerprint || first.activity_fingerprint_before.row_count !== first.activity_fingerprint_after.row_count) {
@@ -85,7 +88,7 @@ try {
   const exactPolities = await client.query(`select count(*)::int as n from atlas_v2.polities where id = any($1::uuid[])`, [committed.polities.map((row) => row.polity.id)]);
   const exactNames = await client.query(`select count(*)::int as n from atlas_v2.polity_names where id = any($1::uuid[])`, [committed.polities.map((row) => row.preferred_name.id)]);
   const exactSources = await client.query(`select count(*)::int as n from atlas_v2.sources where id = any($1::uuid[])`, [committed.sources.map((row) => row.row.id)]);
-  if (exactPolities.rows[0].n !== 17 || exactNames.rows[0].n !== 17 || exactSources.rows[0].n !== 9) throw new Error('literal UUID materialization incomplete');
+  if (exactPolities.rows[0].n !== 17 || exactNames.rows[0].n !== 17 || exactSources.rows[0].n !== sourceCount) throw new Error('literal UUID materialization incomplete');
 
   const semanticKinds = await client.query(`select semantic_name_kind,count(*)::int as n from atlas_v2.polity_names where id = any($1::uuid[]) group by semantic_name_kind order by semantic_name_kind`, [committed.polities.map((row) => row.preferred_name.id)]);
   const semanticCounts = Object.fromEntries(semanticKinds.rows.map((row) => [row.semantic_name_kind, row.n]));
@@ -110,9 +113,9 @@ try {
     array_order_is_not_identity: true,
     schema_release_components: 6,
     dry_run_rolled_back: true,
-    first_apply: { polities: 17, polity_names: 17, sources: 9 },
+    first_apply: { polities: 17, polity_names: 17, sources: sourceCount },
     exact_replay: true,
-    exact_uuid_rows: 43,
+    exact_uuid_rows: exactUuidRows,
     activity_rows_changed: 0,
     fake_source_materialization_rows: 0,
     drift_rejected: true,
