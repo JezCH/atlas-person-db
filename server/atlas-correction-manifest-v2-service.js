@@ -1,13 +1,14 @@
 "use strict";
 
 const { manifestHash, correctionLedgerExists, readLedger } = require("./atlas-correction-manifest-service.js");
-const { sha256 } = require("./atlas-correction-v2-manifest-synthesizer.js");
+const { sha256, RETIRE_SOURCE_TRANSFER_POLICY } = require("./atlas-correction-v2-manifest-synthesizer.js");
 
 const MANIFEST_V2 = "atlas-correction-manifest/v2";
 const MARKER_V2 = "ATLAS_CORRECTION_MANIFEST_V2";
 const MAX_OPERATIONS_V2 = 200;
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const OPERATION_TYPES = new Set(["rewrite_activity", "split_activity", "retire_activity", "assert_polity_relation"]);
+const SPLIT_SOURCE_POLICIES = new Set(["COPY_EXISTING", "DO_NOT_COPY_EXISTING"]);
 
 const ACTIVITY_FIELDS = Object.freeze([
   "id","person_id","polity_id","relation_type_id","role_id","period_basis_id",
@@ -96,12 +97,27 @@ function normalizeDescription(raw, expectedActivityId, label) {
   return { id, person_politics_id: activityId, locale, content };
 }
 
+function assertUniqueBy(rows, keyFn, code) {
+  const seen = new Set();
+  for (const row of rows) {
+    const key = keyFn(row);
+    if (seen.has(key)) throw new Error(code);
+    seen.add(key);
+  }
+}
+
 function normalizeActivityBundle(raw, label) {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error(`CORRECTION_V2_${label}_BUNDLE_REQUIRED`);
   const activity = normalizeActivity(raw.activity, label);
   const sourceLinks = (raw.normalized_source_links || []).map((row, index) => normalizeActivitySourceLink(row, activity.id, `${label}_SOURCE_${index + 1}`));
   const claims = (raw.chronology_claims || []).map((row, index) => normalizeChronologyClaim(row, activity.id, `${label}_CLAIM_${index + 1}`));
   const descriptions = (raw.relationship_descriptions || []).map((row, index) => normalizeDescription(row, activity.id, `${label}_DESCRIPTION_${index + 1}`));
+  assertUniqueBy(sourceLinks, (row) => row.source_id, `CORRECTION_V2_${label}_SOURCE_ID_REUSED`);
+  assertUniqueBy(claims, (row) => row.id, `CORRECTION_V2_${label}_CLAIM_ID_REUSED`);
+  assertUniqueBy(descriptions, (row) => row.id, `CORRECTION_V2_${label}_DESCRIPTION_ID_REUSED`);
+  sourceLinks.sort((a,b) => a.source_id.localeCompare(b.source_id));
+  claims.sort((a,b) => a.id.localeCompare(b.id));
+  descriptions.sort((a,b) => a.id.localeCompare(b.id));
   return {
     activity,
     normalized_source_links: sourceLinks,
@@ -145,14 +161,35 @@ function normalizeRelationSourceLink(raw, relationId, label) {
 }
 
 function sourceSemanticSet(bundle) {
-  return bundle.normalized_source_links
-    .map((row) => `${row.source_id}|${row.source_locator_key}`)
-    .sort();
+  return bundle.normalized_source_links.map((row) => `${row.source_id}|${row.source_locator_key}`).sort();
+}
+
+function containsAllSourceSemantics(containerBundle, requiredBundle) {
+  const actual = new Set(sourceSemanticSet(containerBundle));
+  return sourceSemanticSet(requiredBundle).every((key) => actual.has(key));
 }
 
 function manifestCore(raw) {
   const { manifest_sha256, production_executable, ...core } = raw;
   return core;
+}
+
+function allowLegacyNullRelation(before, after, code) {
+  if (before.activity.relation_type_id != null && after.activity.relation_type_id == null) throw new Error(code);
+}
+
+function normalizeRetireReplacement(raw, targetBefore, label) {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error(`CORRECTION_V2_${label}_REPLACEMENT_REQUIRED`);
+  const activityId = requireUuid(raw.activity_id, `CORRECTION_V2_${label}_REPLACEMENT_ACTIVITY_ID_INVALID`);
+  if (activityId === targetBefore.activity.id) throw new Error(`CORRECTION_V2_${label}_REPLACEMENT_TARGET_SELF_REFERENCE`);
+  const before = normalizeActivityBundle(raw.exact_before, `${label}_REPLACEMENT_BEFORE`);
+  const after = normalizeActivityBundle(raw.exact_after, `${label}_REPLACEMENT_AFTER`);
+  if (before.activity.id !== activityId || after.activity.id !== activityId) throw new Error(`CORRECTION_V2_${label}_REPLACEMENT_ACTIVITY_ID_MISMATCH`);
+  if (!exactEqual(before.activity, after.activity)) throw new Error(`CORRECTION_V2_${label}_REPLACEMENT_ACTIVITY_DRIFT`);
+  if (!exactEqual(before.chronology_claims, after.chronology_claims)) throw new Error(`CORRECTION_V2_${label}_REPLACEMENT_CLAIM_DRIFT`);
+  if (!exactEqual(before.relationship_descriptions, after.relationship_descriptions)) throw new Error(`CORRECTION_V2_${label}_REPLACEMENT_DESCRIPTION_DRIFT`);
+  if (!containsAllSourceSemantics(after, targetBefore)) throw new Error(`CORRECTION_V2_${label}_RETIRED_SOURCE_NOT_TRANSFERRED`);
+  return { activity_id: activityId, exact_before: before, exact_after: after };
 }
 
 function normalizeOperation(raw, index) {
@@ -169,6 +206,7 @@ function normalizeOperation(raw, index) {
     if (absentId !== relation.id) throw new Error(`CORRECTION_V2_${label}_RELATION_ID_MISMATCH`);
     const rawLinks = exactAfterRaw.source_links || relationRaw.source_links || [];
     const links = rawLinks.map((row, linkIndex) => normalizeRelationSourceLink(row, relation.id, `${label}_RELATION_SOURCE_${linkIndex + 1}`));
+    assertUniqueBy(links, (row) => `${row.source_id}|${row.source_locator_key}`, `CORRECTION_V2_${label}_RELATION_SOURCE_LINK_REUSED`);
     return {
       type,
       decision_id: String(raw.decision_id || ""),
@@ -182,14 +220,28 @@ function normalizeOperation(raw, index) {
   if (exactBefore.activity.id !== activityId) throw new Error(`CORRECTION_V2_${label}_ACTIVITY_ID_MISMATCH`);
 
   if (type === "retire_activity") {
-    return { type, case_id: String(raw.case_id || ""), activity_id: activityId, exact_before: exactBefore };
+    if (String(raw.source_transfer_policy || "") !== RETIRE_SOURCE_TRANSFER_POLICY || raw.silent_source_drop_forbidden !== true) {
+      throw new Error(`CORRECTION_V2_${label}_RETIRE_SOURCE_TRANSFER_POLICY_INVALID`);
+    }
+    if (exactBefore.chronology_claims.length || exactBefore.relationship_descriptions.length) throw new Error(`CORRECTION_V2_${label}_RETIRE_CHILD_POLICY_REQUIRED`);
+    const replacements = (raw.replacement_survivors || []).map((row, replacementIndex) => normalizeRetireReplacement(row, exactBefore, `${label}_R${replacementIndex + 1}`));
+    if (!replacements.length) throw new Error(`CORRECTION_V2_${label}_RETIRE_REPLACEMENT_REQUIRED`);
+    assertUniqueBy(replacements, (row) => row.activity_id, `CORRECTION_V2_${label}_RETIRE_REPLACEMENT_REUSED`);
+    return {
+      type,
+      case_id: String(raw.case_id || ""),
+      activity_id: activityId,
+      exact_before: exactBefore,
+      replacement_survivors: replacements,
+      source_transfer_policy: RETIRE_SOURCE_TRANSFER_POLICY,
+      silent_source_drop_forbidden: true
+    };
   }
 
   if (type === "rewrite_activity") {
     const exactAfter = normalizeActivityBundle(raw.exact_after, `${label}_AFTER`);
     if (exactAfter.activity.id !== activityId) throw new Error(`CORRECTION_V2_${label}_REWRITE_ID_CHANGED`);
-    if (exactAfter.activity.relation_type_id == null) throw new Error(`CORRECTION_V2_${label}_REWRITE_RELATION_REQUIRED`);
-    if (!exactEqual(exactBefore.normalized_source_links, exactAfter.normalized_source_links)) throw new Error(`CORRECTION_V2_${label}_REWRITE_SOURCE_LINK_DRIFT`);
+    allowLegacyNullRelation(exactBefore, exactAfter, `CORRECTION_V2_${label}_REWRITE_RELATION_REMOVAL_FORBIDDEN`);
     if (!exactEqual(exactBefore.chronology_claims, exactAfter.chronology_claims)) throw new Error(`CORRECTION_V2_${label}_REWRITE_CLAIM_DRIFT`);
     if (!exactEqual(exactBefore.relationship_descriptions, exactAfter.relationship_descriptions)) throw new Error(`CORRECTION_V2_${label}_REWRITE_DESCRIPTION_DRIFT`);
     return { type, case_id: String(raw.case_id || ""), activity_id: activityId, exact_before: exactBefore, exact_after: exactAfter };
@@ -197,16 +249,20 @@ function normalizeOperation(raw, index) {
 
   const survivor = normalizeActivityBundle(raw.survivor_fragment, `${label}_SURVIVOR`);
   if (survivor.activity.id !== activityId) throw new Error(`CORRECTION_V2_${label}_SPLIT_SURVIVOR_ID_CHANGED`);
-  if (survivor.activity.relation_type_id == null) throw new Error(`CORRECTION_V2_${label}_SPLIT_SURVIVOR_RELATION_REQUIRED`);
-  if (!exactEqual(exactBefore.normalized_source_links, survivor.normalized_source_links)) throw new Error(`CORRECTION_V2_${label}_SPLIT_SURVIVOR_SOURCE_DRIFT`);
+  allowLegacyNullRelation(exactBefore, survivor, `CORRECTION_V2_${label}_SPLIT_SURVIVOR_RELATION_REMOVAL_FORBIDDEN`);
   if (exactBefore.chronology_claims.length || exactBefore.relationship_descriptions.length) throw new Error(`CORRECTION_V2_${label}_SPLIT_CHILD_POLICY_REQUIRED`);
-  const newFragments = (raw.new_fragments || []).map((fragment, fragmentIndex) => normalizeActivityBundle(fragment, `${label}_NEW_${fragmentIndex + 1}`));
+  if (survivor.chronology_claims.length || survivor.relationship_descriptions.length) throw new Error(`CORRECTION_V2_${label}_SPLIT_SURVIVOR_CHILDREN_UNREVIEWED`);
+  const newFragments = (raw.new_fragments || []).map((fragment, fragmentIndex) => {
+    const normalized = normalizeActivityBundle(fragment, `${label}_NEW_${fragmentIndex + 1}`);
+    const sourceCopyPolicy = String(fragment?.source_copy_policy || "COPY_EXISTING").trim();
+    if (!SPLIT_SOURCE_POLICIES.has(sourceCopyPolicy)) throw new Error(`CORRECTION_V2_${label}_SPLIT_SOURCE_COPY_POLICY_INVALID`);
+    return { ...normalized, source_copy_policy: sourceCopyPolicy };
+  });
   if (!newFragments.length) throw new Error(`CORRECTION_V2_${label}_SPLIT_NEW_FRAGMENT_REQUIRED`);
-  const sourceSet = sourceSemanticSet(exactBefore);
   for (const fragment of newFragments) {
     if (fragment.activity.relation_type_id == null) throw new Error(`CORRECTION_V2_${label}_SPLIT_NEW_RELATION_REQUIRED`);
     if (fragment.activity.legacy_source_key !== null) throw new Error(`CORRECTION_V2_${label}_SPLIT_FAKE_LEGACY_KEY_FORBIDDEN`);
-    if (!exactEqual(sourceSet, sourceSemanticSet(fragment))) throw new Error(`CORRECTION_V2_${label}_SPLIT_SOURCE_COPY_DRIFT`);
+    if (fragment.source_copy_policy === "COPY_EXISTING" && !containsAllSourceSemantics(fragment, exactBefore)) throw new Error(`CORRECTION_V2_${label}_SPLIT_SOURCE_COPY_DRIFT`);
     if (fragment.chronology_claims.length || fragment.relationship_descriptions.length) throw new Error(`CORRECTION_V2_${label}_SPLIT_NEW_CHILDREN_UNREVIEWED`);
   }
   const gapOverlapPolicy = String(raw.gap_overlap_policy || "").trim();
@@ -238,6 +294,7 @@ function requireV2Manifest(raw) {
 
   const existingActivityTargets = new Set();
   const newActivityIds = new Set();
+  const replacementIds = new Set();
   const relationIds = new Set();
   const relationSourceKeys = new Set();
   for (const operation of operations) {
@@ -259,6 +316,15 @@ function requireV2Manifest(raw) {
         newActivityIds.add(fragment.activity.id);
       }
     }
+    if (operation.type === "retire_activity") {
+      for (const replacement of operation.replacement_survivors) {
+        if (replacementIds.has(replacement.activity_id)) throw new Error("CORRECTION_V2_RETIRE_REPLACEMENT_REUSED_ACROSS_OPERATIONS");
+        replacementIds.add(replacement.activity_id);
+      }
+    }
+  }
+  for (const id of replacementIds) {
+    if (existingActivityTargets.has(id) || newActivityIds.has(id)) throw new Error("CORRECTION_V2_RETIRE_REPLACEMENT_MUTATION_COLLISION");
   }
   return { schema: MANIFEST_V2, requestId, declaredHash, operations, raw };
 }
@@ -293,20 +359,20 @@ async function loadActivityBundle(client, id, { forUpdate = false } = {}) {
       person_politics_id: String(row.person_politics_id).toLowerCase(),
       source_id: String(row.source_id).toLowerCase(),
       source_locator_key: row.source_locator_key
-    })),
+    })).sort((a,b) => a.source_id.localeCompare(b.source_id)),
     chronology_claims: claims.rows.map((row) => ({
       id: String(row.id).toLowerCase(),
       person_politics_id: String(row.person_politics_id).toLowerCase(),
       claim_type: row.claim_type,
       start_year: row.start_year,
       end_year: row.end_year
-    })),
+    })).sort((a,b) => a.id.localeCompare(b.id)),
     relationship_descriptions: descriptions.rows.map((row) => ({
       id: String(row.id).toLowerCase(),
       person_politics_id: String(row.person_politics_id).toLowerCase(),
       locale: row.locale,
       content: row.content
-    }))
+    })).sort((a,b) => a.id.localeCompare(b.id))
   };
 }
 
@@ -324,6 +390,32 @@ async function updateActivityRow(client, activity) {
       confidence=$19,chronology_status=$20,legacy_source_key=$21,notes=$22,source_locator=$23::jsonb,content_hash=$24
     where id=$1::uuid returning id`, values);
   if (updated.rowCount !== 1) throw new Error("CORRECTION_V2_UPDATE_ACTIVITY_COUNT_DRIFT");
+}
+
+async function reconcileActivitySourceLinks(client, activityId, expectedLinks) {
+  const normalized = expectedLinks.map((row, index) => normalizeActivitySourceLink(row, activityId, `RECONCILE_SOURCE_${index + 1}`));
+  assertUniqueBy(normalized, (row) => row.source_id, "CORRECTION_V2_RECONCILE_SOURCE_ID_REUSED");
+  const current = await client.query(`
+    select source_id::text,source_locator_key
+      from atlas_v2.person_politics_sources
+     where person_politics_id=$1::uuid
+     order by source_id::text
+     for update`, [activityId]);
+  const currentBySource = new Map(current.rows.map((row) => [String(row.source_id).toLowerCase(), String(row.source_locator_key)]));
+  const expectedBySource = new Map(normalized.map((row) => [row.source_id, row.source_locator_key]));
+
+  for (const [sourceId] of currentBySource) {
+    if (!expectedBySource.has(sourceId)) {
+      await client.query(`delete from atlas_v2.person_politics_sources where person_politics_id=$1::uuid and source_id=$2::uuid`, [activityId, sourceId]);
+    }
+  }
+  for (const [sourceId, locator] of expectedBySource) {
+    if (!currentBySource.has(sourceId)) {
+      await client.query(`insert into atlas_v2.person_politics_sources(person_politics_id,source_id,source_locator_key) values($1::uuid,$2::uuid,$3)`, [activityId, sourceId, locator]);
+    } else if (currentBySource.get(sourceId) !== locator) {
+      await client.query(`update atlas_v2.person_politics_sources set source_locator_key=$3 where person_politics_id=$1::uuid and source_id=$2::uuid`, [activityId, sourceId, locator]);
+    }
+  }
 }
 
 async function insertActivityBundle(client, bundle) {
@@ -437,12 +529,18 @@ function expectedCountDeltas(operations) {
     polity_relation_sources: 0
   };
   for (const operation of operations) {
-    if (operation.type === "retire_activity") {
+    if (operation.type === "rewrite_activity") {
+      delta.activity_sources += operation.exact_after.normalized_source_links.length - operation.exact_before.normalized_source_links.length;
+    } else if (operation.type === "retire_activity") {
       delta.activities -= 1;
       delta.activity_sources -= operation.exact_before.normalized_source_links.length;
       delta.chronology_claims -= operation.exact_before.chronology_claims.length;
       delta.relationship_descriptions -= operation.exact_before.relationship_descriptions.length;
+      for (const replacement of operation.replacement_survivors) {
+        delta.activity_sources += replacement.exact_after.normalized_source_links.length - replacement.exact_before.normalized_source_links.length;
+      }
     } else if (operation.type === "split_activity") {
+      delta.activity_sources += operation.survivor_fragment.normalized_source_links.length - operation.exact_before.normalized_source_links.length;
       delta.activities += operation.new_fragments.length;
       for (const fragment of operation.new_fragments) {
         delta.activity_sources += fragment.normalized_source_links.length;
@@ -469,6 +567,9 @@ async function verifyAppliedState(client, manifest) {
       assertExactBundle(await loadActivityBundle(client, operation.activity_id, { forUpdate: true }), operation.exact_after, `CORRECTION_V2_REPLAY_REWRITE_DRIFT:${operation.case_id}`);
     } else if (operation.type === "retire_activity") {
       if (await loadActivityBundle(client, operation.activity_id, { forUpdate: true })) throw new Error(`CORRECTION_V2_REPLAY_RETIRED_ACTIVITY_REAPPEARED:${operation.case_id}`);
+      for (const replacement of operation.replacement_survivors) {
+        assertExactBundle(await loadActivityBundle(client, replacement.activity_id, { forUpdate: true }), replacement.exact_after, `CORRECTION_V2_REPLAY_RETIRE_SURVIVOR_DRIFT:${operation.case_id}:${replacement.activity_id}`);
+      }
     } else if (operation.type === "split_activity") {
       assertExactBundle(await loadActivityBundle(client, operation.activity_id, { forUpdate: true }), operation.survivor_fragment, `CORRECTION_V2_REPLAY_SURVIVOR_DRIFT:${operation.case_id}`);
       for (const fragment of operation.new_fragments) {
@@ -478,6 +579,18 @@ async function verifyAppliedState(client, manifest) {
       assertExactBundle(await loadPolityRelationBundle(client, operation.exact_after.relation.id, { forUpdate: true }), operation.exact_after, `CORRECTION_V2_REPLAY_RELATION_DRIFT:${operation.decision_id}`);
     }
   }
+}
+
+function existingActivityLockIds(operations) {
+  const ids = new Set();
+  for (const operation of operations) {
+    if (operation.type === "assert_polity_relation") continue;
+    ids.add(operation.activity_id);
+    if (operation.type === "retire_activity") {
+      for (const replacement of operation.replacement_survivors) ids.add(replacement.activity_id);
+    }
+  }
+  return [...ids].sort();
 }
 
 function createCorrectionManifestV2Service({ client } = {}) {
@@ -506,16 +619,25 @@ function createCorrectionManifestV2Service({ client } = {}) {
         });
       }
 
+      const lockedActivities = new Map();
+      for (const id of existingActivityLockIds(manifest.operations)) {
+        lockedActivities.set(id, await loadActivityBundle(client, id, { forUpdate: true }));
+      }
+
       for (const operation of manifest.operations) {
         if (operation.type === "assert_polity_relation") {
           await assertRelationAbsent(client, operation);
-        } else {
-          const actual = await loadActivityBundle(client, operation.activity_id, { forUpdate: true });
-          assertExactBundle(actual, operation.exact_before, `CORRECTION_V2_EXACT_BEFORE_DRIFT:${operation.case_id}`);
-          if (operation.type === "split_activity") {
-            for (const fragment of operation.new_fragments) {
-              if (await loadActivityBundle(client, fragment.activity.id, { forUpdate: true })) throw new Error(`CORRECTION_V2_NEW_FRAGMENT_ALREADY_EXISTS:${operation.case_id}`);
-            }
+          continue;
+        }
+        assertExactBundle(lockedActivities.get(operation.activity_id), operation.exact_before, `CORRECTION_V2_EXACT_BEFORE_DRIFT:${operation.case_id}`);
+        if (operation.type === "retire_activity") {
+          for (const replacement of operation.replacement_survivors) {
+            assertExactBundle(lockedActivities.get(replacement.activity_id), replacement.exact_before, `CORRECTION_V2_RETIRE_SURVIVOR_BEFORE_DRIFT:${operation.case_id}:${replacement.activity_id}`);
+          }
+        }
+        if (operation.type === "split_activity") {
+          for (const fragment of operation.new_fragments) {
+            if (await loadActivityBundle(client, fragment.activity.id, { forUpdate: true })) throw new Error(`CORRECTION_V2_NEW_FRAGMENT_ALREADY_EXISTS:${operation.case_id}`);
           }
         }
       }
@@ -525,10 +647,15 @@ function createCorrectionManifestV2Service({ client } = {}) {
       for (const operation of manifest.operations) {
         if (operation.type === "rewrite_activity") {
           await updateActivityRow(client, operation.exact_after.activity);
+          await reconcileActivitySourceLinks(client, operation.activity_id, operation.exact_after.normalized_source_links);
         } else if (operation.type === "retire_activity") {
+          for (const replacement of operation.replacement_survivors) {
+            await reconcileActivitySourceLinks(client, replacement.activity_id, replacement.exact_after.normalized_source_links);
+          }
           await deleteActivity(client, operation.activity_id);
         } else if (operation.type === "split_activity") {
           await updateActivityRow(client, operation.survivor_fragment.activity);
+          await reconcileActivitySourceLinks(client, operation.activity_id, operation.survivor_fragment.normalized_source_links);
           for (const fragment of operation.new_fragments) await insertActivityBundle(client, fragment);
         } else {
           await insertPolityRelationBundle(client, operation.exact_after);
@@ -591,6 +718,7 @@ module.exports = Object.freeze({
   MARKER_V2,
   MAX_OPERATIONS_V2,
   OPERATION_TYPES,
+  SPLIT_SOURCE_POLICIES,
   ACTIVITY_FIELDS,
   RELATION_FIELDS,
   requireUuid,
@@ -606,6 +734,7 @@ module.exports = Object.freeze({
   loadActivityBundle,
   assertExactBundle,
   updateActivityRow,
+  reconcileActivitySourceLinks,
   insertActivityBundle,
   deleteActivity,
   loadPolityRelationBundle,
@@ -615,5 +744,6 @@ module.exports = Object.freeze({
   expectedCountDeltas,
   assertCounts,
   verifyAppliedState,
+  existingActivityLockIds,
   createCorrectionManifestV2Service
 });
