@@ -18,7 +18,8 @@
     {"sequence":2,"id":"relation_type_catalog","path":"db/proposals/stage2_relation_type_catalog.rehearsal.sql","git_blob_sha":"6021c2178c1a2f6cd11e8e1d0da9982a5d2e0e4c"},
     {"sequence":3,"id":"source_model","path":"db/proposals/stage2_source_model.rehearsal.sql","git_blob_sha":"85fbe5facfafb954e94e5d38a4cc8a090addf82a"},
     {"sequence":4,"id":"normalized_provenance","path":"db/proposals/stage2_provenance.rehearsal.sql","git_blob_sha":"a0d95231b57f4e9abf11271b12fb5cab6e2d2ecf"},
-    {"sequence":5,"id":"entity_boundaries","path":"db/proposals/stage2_entity_boundaries.rehearsal.sql","git_blob_sha":"abd369c2388c6b6478871d6cbd31b52e95855443"}
+    {"sequence":5,"id":"entity_boundaries","path":"db/proposals/stage2_entity_boundaries.rehearsal.sql","git_blob_sha":"abd369c2388c6b6478871d6cbd31b52e95855443"},
+    {"sequence":6,"id":"native_activity_provenance","path":"db/proposals/stage2_activity_native_provenance.rehearsal.sql","git_blob_sha":"21981403934ad491038e4dd6b1465b03e34bbe5e"}
   ],
   "application_contract": {
     "exact_git_blob_sha_required": true,
@@ -31,7 +32,10 @@
     "partial_component_commit_forbidden": true
   },
   "safety": {
-    "additive_schema_only": true,
+    "non_destructive_schema_only": true,
+    "additive_objects_and_backward_compatible_relaxations_only": true,
+    "legacy_source_key_nullability_relaxation": true,
+    "fake_legacy_source_key_for_stage2_native_activity_forbidden": true,
     "person_activity_data_mutation": false,
     "physical_person_merge": false,
     "territory_geometry_mutation": false,
