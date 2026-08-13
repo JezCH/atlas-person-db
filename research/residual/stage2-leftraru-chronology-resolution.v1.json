@@ -1,0 +1,11 @@
+{
+  "schema": "atlas-stage2-leftraru-chronology-resolution/v1",
+  "as_of": "2026-08-13",
+  "status": "REVIEWED_BRANCH_ONLY_NO_PRODUCTION_MUTATION",
+  "activity_id": "c0987b73-203c-5b49-9d84-8d96ce0e44e9",
+  "person": "Leftraru",
+  "decision": "NORMALIZE_TOQUI_LEADERSHIP_TO_1553_1557_KEEP_COARSE_MAPUCHE_POLITIC",
+  "source": {"institution":"Biblioteca Nacional de Chile / Memoria Chilena","title":"El toqui Lautaro (ca.1534-1557)","canonical_url":"https://www.memoriachilena.gob.cl/602/w3-article-721.html"},
+  "reviewed_facts": {"1541_leadership_start_rejected":true,"principal_leadership_attested_from":1553,"death_year":1557,"toqui_context":true,"mapuche_coarse_politic_preserved":true,"synthetic_wartime_coalition_polity_required":false},
+  "production_mutation_authorized": false
+}
