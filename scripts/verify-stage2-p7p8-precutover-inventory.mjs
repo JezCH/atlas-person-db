@@ -20,22 +20,22 @@ assert.deepEqual(inventory.residual_dependency_counts_after_p6_targets, {
 });
 assert.equal(inventory.relation_backfill.residual_rows, 127);
 assert.equal(inventory.relation_backfill.existing_reviewed_hint_rows, 88);
-assert.equal(inventory.relation_backfill.explicit_reviewed_overlay_rows, 30);
-assert.equal(inventory.relation_backfill.reviewed_relation_literalizable_rows, 118);
-assert.equal(inventory.relation_backfill.explicit_relation_review_required_rows, 9);
-assert.equal(inventory.relation_backfill.review_required.length, 9);
+assert.equal(inventory.relation_backfill.explicit_reviewed_overlay_rows, 35);
+assert.equal(inventory.relation_backfill.reviewed_relation_literalizable_rows, 123);
+assert.equal(inventory.relation_backfill.explicit_relation_review_required_rows, 4);
+assert.equal(inventory.relation_backfill.review_required.length, 4);
 assert.equal(inventory.p8_zero_known_blocker_gate.status, 'NOT_READY');
-assert.equal(inventory.p8_zero_known_blocker_gate.known_runtime_semantic_blocker_floor, 9);
+assert.equal(inventory.p8_zero_known_blocker_gate.known_runtime_semantic_blocker_floor, 4);
 assert.equal(inventory.rules.production_mutation_authorized, false);
 
 assert.equal(relations.schema, 'atlas-stage2-p7a-reviewed-relation-backfill/v1');
 assert.equal(relations.status, 'BRANCH_ONLY_REVIEWED_RELATION_LITERALIZATION_NO_PRODUCTION_MUTATION');
-assert.equal(relations.rows.length, 118);
-assert.equal(new Set(relations.rows.map((row) => row.activity_id)).size, 118);
+assert.equal(relations.rows.length, 123);
+assert.equal(new Set(relations.rows.map((row) => row.activity_id)).size, 123);
 assert.equal(relations.result.residual_relation_dependency_rows, 127);
 assert.equal(relations.result.existing_reviewed_hint_rows, 88);
-assert.equal(relations.result.explicit_reviewed_overlay_rows, 30);
-assert.equal(relations.result.explicit_relation_review_rows_remaining, 9);
+assert.equal(relations.result.explicit_reviewed_overlay_rows, 35);
+assert.equal(relations.result.explicit_relation_review_rows_remaining, 4);
 assert.equal(relations.result.production_mutation_authorized, false);
 
 const allowedRelationIds = new Set([
@@ -57,8 +57,8 @@ console.log(JSON.stringify({
   marker: 'ATLAS_STAGE2_P7P8_PRECUTOVER_INVENTORY_OK',
   residual_unique_activities: 156,
   relation_rows: 127,
-  relation_literalizable: 118,
-  relation_review_remaining: 9,
+  relation_literalizable: 123,
+  relation_review_remaining: 4,
   p8_status: 'NOT_READY',
   production_mutation_authorized: false
 }, null, 2));
