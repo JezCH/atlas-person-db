@@ -32,7 +32,7 @@ test('current P5 frontier is exactly the corrected 17 Polity / 54 Activity autho
   assert.equal(readiness.current_frontier.literal_new_polity_uuid_assignments, allocation.polities.length);
   assert.equal(readiness.current_frontier.literal_preferred_polity_name_uuid_assignments, allocation.polities.length);
   assert.equal(readiness.current_frontier.literal_relation_source_uuid_assignments, allocation.sources.length);
-  assert.equal(readiness.current_frontier.effective_correction_v2_activities, closure.closure.effective_activity_count);
+  assert.equal(readiness.current_frontier.effective_correction_v2_activities, closure.closure.effective_correction_v2_activity_count);
   assert.equal(readiness.current_frontier.completed_prebinding_activities, closure.closure.completed_effective_prebinding_activity_count);
   assert.equal(readiness.current_frontier.remaining_prebinding_activities, closure.closure.remaining_effective_prebinding_activity_count);
   assert.equal(readiness.current_frontier.superseded_overgranular_polity_targets, amendment.superseded_new_polity_identity_classes.length);
