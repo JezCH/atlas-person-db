@@ -102,7 +102,7 @@ function compileRewrite(batch, item, maps) {
   });
 }
 
-function fragmentNode(fragment, item, before, maps, adapter) {
+function fragmentNode(fragment, item, before, maps, adapter, batch) {
   const id = fragment.id || "fragment";
   const activityId = fragment.activity_uuid || fragment.activity_id || deterministicActivityId(item.id, id);
   const survivor = activityId === item.activity_id || id === item.survivor_fragment_id || id === adapter?.survivor_fragment_id;
@@ -116,7 +116,7 @@ function fragmentNode(fragment, item, before, maps, adapter) {
   const end = Number(fragment.activity_end ?? fragment.end_year);
   if (!Number.isInteger(start) || start === 0 || !Number.isInteger(end) || end === 0 || start > end) throw new Error(`P6_MATERIALIZER_FRAGMENT_INTERVAL_INVALID:${item.id}:${id}`);
   const explicitCopy = fragment.copy_legacy_source_links;
-  const policyText = JSON.stringify(batch.source_preservation_policy || {});
+  const policyText = JSON.stringify(batch?.source_preservation_policy || {});
   const copyExisting = explicitCopy != null ? Boolean(explicitCopy) : survivor || /COPY_ALL_EXISTING.*ALL_FRAGMENTS/i.test(policyText);
   const added = sourceIdsForCase(item, maps);
   if (adapter?.source_uuid) added.push(Object.freeze({ source_id: requiredUuid(adapter.source_uuid, `P6_MATERIALIZER_ADAPTER_SOURCE_INVALID:${item.id}`), source_locator_key: fragment.source_locator_key || null }));
@@ -145,7 +145,7 @@ function compileSplit(batch, item, maps, adapter) {
   const before = tupleObject(batch, item);
   const sourceFragments = adapter?.fragments || item.fragments || item.phase_envelopes;
   if (!Array.isArray(sourceFragments) || sourceFragments.length < 2) throw new Error(`P6_MATERIALIZER_SPLIT_FRAGMENTS_INVALID:${item.id}`);
-  const fragments = sourceFragments.map((fragment) => fragmentNode(fragment, item, before, maps, adapter));
+  const fragments = sourceFragments.map((fragment) => fragmentNode(fragment, item, before, maps, adapter, batch));
   if (fragments.filter((row) => row.survivor).length !== 1) throw new Error(`P6_MATERIALIZER_SPLIT_SURVIVOR_INVALID:${item.id}`);
   return Object.freeze({
     case_id: item.id,
