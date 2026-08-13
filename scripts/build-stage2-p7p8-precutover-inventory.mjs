@@ -10,6 +10,7 @@ const arg = (name, fallback) => {
 const workQueuesPath = path.resolve(root, arg('--work-queues', 'artifacts/stage2-baseline-a-work-queues.json'));
 const frontierPath = path.resolve(root, arg('--frontier', 'artifacts/stage2-baseline-a-effective-p5p6-frontier.json'));
 const relationCatalogPath = path.resolve(root, arg('--relation-catalog', 'stage2/catalogs/relation-types.v1.json'));
+const explicitDecisionPath = path.resolve(root, arg('--explicit-decisions', 'stage2/integration/p7-explicit-person-relation-decisions-batch1.v1.json'));
 const outPath = path.resolve(root, arg('--out', 'artifacts/stage2-p7p8-precutover-inventory.json'));
 const relationOutPath = path.resolve(root, arg('--relation-out', 'artifacts/stage2-p7a-reviewed-relation-backfill.json'));
 
@@ -18,11 +19,14 @@ const writeJson = (p, value) => { fs.mkdirSync(path.dirname(p), { recursive: tru
 const work = readJson(workQueuesPath);
 const frontier = readJson(frontierPath);
 const catalog = readJson(relationCatalogPath);
+const explicitDecisionPackage = readJson(explicitDecisionPath);
 
 const BASELINE_SHA = 'ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79';
 const BASELINE_DIGEST = 'sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27';
 if (work?.summary?.baseline?.deployment_sha !== BASELINE_SHA || frontier?.baseline?.deployment_sha !== BASELINE_SHA) throw new Error('P7P8_BASELINE_SHA_DRIFT');
 if (work?.summary?.baseline?.baseline_digest !== BASELINE_DIGEST || frontier?.baseline?.baseline_digest !== BASELINE_DIGEST) throw new Error('P7P8_BASELINE_DIGEST_DRIFT');
+if (explicitDecisionPackage?.baseline?.deployment_sha !== BASELINE_SHA || explicitDecisionPackage?.baseline?.baseline_digest !== BASELINE_DIGEST) throw new Error('P7P8_EXPLICIT_DECISION_BASELINE_DRIFT');
+if (explicitDecisionPackage?.status !== 'REVIEWED_BRANCH_ONLY_NO_PRODUCTION_MUTATION' || explicitDecisionPackage?.rules?.production_mutation_authorized !== false) throw new Error('P7P8_EXPLICIT_DECISION_STATUS_INVALID');
 
 const p6Ids = new Set((frontier.effective_correction_activities || []).map((row) => String(row.activity_id).toLowerCase()));
 if (p6Ids.size !== 54) throw new Error(`P7P8_P6_TARGET_COUNT_DRIFT:${p6Ids.size}`);
@@ -36,18 +40,56 @@ for (const dependency of dependencyNames) {
   rows.forEach((row) => residualActivityIds.add(String(row.activity_id).toLowerCase()));
 }
 
-const relationByCode = new Map((catalog.person_polity_relation_types || []).map((row) => [row.code, row.id]));
+const relationByCode = new Map((catalog.person_polity_relation_types || []).map((row) => [row.code, String(row.id).toLowerCase()]));
 const allowedCodes = new Set(['rules','governs','serves','active_in','opposes','claims_rule']);
+const explicitByActivity = new Map();
+for (const decision of explicitDecisionPackage.decisions || []) {
+  const activityId = String(decision.activity_id || '').toLowerCase();
+  const code = String(decision.relation_code || '');
+  const relationTypeId = String(decision.relation_type_id || '').toLowerCase();
+  if (!activityId || explicitByActivity.has(activityId)) throw new Error(`P7P8_EXPLICIT_DECISION_DUPLICATE:${activityId}`);
+  if (!allowedCodes.has(code)) throw new Error(`P7P8_EXPLICIT_DECISION_CODE_INVALID:${activityId}:${code}`);
+  if (relationByCode.get(code) !== relationTypeId) throw new Error(`P7P8_EXPLICIT_DECISION_UUID_DRIFT:${activityId}`);
+  explicitByActivity.set(activityId, decision);
+}
+if (explicitByActivity.size !== 14) throw new Error(`P7P8_EXPLICIT_DECISION_COUNT_DRIFT:${explicitByActivity.size}`);
+
 const relationResidual = residualByDependency.relation_type;
+const relationResidualIds = new Set(relationResidual.map((row) => String(row.activity_id).toLowerCase()));
+for (const activityId of explicitByActivity.keys()) {
+  if (!relationResidualIds.has(activityId)) throw new Error(`P7P8_EXPLICIT_DECISION_NOT_IN_RESIDUAL:${activityId}`);
+  if (p6Ids.has(activityId)) throw new Error(`P7P8_EXPLICIT_DECISION_COLLIDES_P6:${activityId}`);
+}
+
 const relationReady = [];
 const relationReviewRequired = [];
+let explicitOverlayCount = 0;
 for (const row of relationResidual) {
+  const activityId = String(row.activity_id).toLowerCase();
   const hint = row.relation_hint == null ? null : String(row.relation_hint).trim();
+  const explicit = explicitByActivity.get(activityId) || null;
+  let code = null;
+  let relationTypeId = null;
+  let authority = null;
+  let resolutionMode = null;
   if (hint && allowedCodes.has(hint)) {
-    const relationTypeId = relationByCode.get(hint);
-    if (!relationTypeId) throw new Error(`P7A_RELATION_UUID_MISSING:${hint}`);
+    code = hint;
+    relationTypeId = relationByCode.get(hint);
+    resolutionMode = 'EXISTING_REVIEWED_RELATION_HINT';
+    if (explicit && (explicit.relation_code !== code || String(explicit.relation_type_id).toLowerCase() !== relationTypeId)) {
+      throw new Error(`P7P8_EXPLICIT_DECISION_CONFLICTS_HINT:${activityId}`);
+    }
+  } else if (explicit) {
+    code = explicit.relation_code;
+    relationTypeId = String(explicit.relation_type_id).toLowerCase();
+    authority = explicit.authority;
+    resolutionMode = 'EXPLICIT_REVIEWED_AUDIT_DECISION';
+    explicitOverlayCount += 1;
+  }
+
+  if (code) {
     relationReady.push({
-      activity_id: String(row.activity_id).toLowerCase(),
+      activity_id: activityId,
       person_id: String(row.person_id).toLowerCase(),
       person: row.person,
       polity_id: String(row.polity_id).toLowerCase(),
@@ -55,15 +97,17 @@ for (const row of relationResidual) {
       start_year: row.start_year,
       end_year: row.end_year,
       role: row.role,
-      reviewed_relation_code: hint,
+      reviewed_relation_code: code,
       relation_type_id: relationTypeId,
+      resolution_mode: resolutionMode,
+      authority,
       decision: row.decision,
       decision_source: row.decision_source,
       execution_class: row.execution_class
     });
   } else {
     relationReviewRequired.push({
-      activity_id: String(row.activity_id).toLowerCase(),
+      activity_id: activityId,
       person_id: String(row.person_id).toLowerCase(),
       person: row.person,
       polity_id: String(row.polity_id).toLowerCase(),
@@ -81,16 +125,23 @@ for (const row of relationResidual) {
 }
 relationReady.sort((a,b) => a.activity_id.localeCompare(b.activity_id));
 relationReviewRequired.sort((a,b) => a.activity_id.localeCompare(b.activity_id));
+if (explicitOverlayCount !== 14) throw new Error(`P7P8_EXPLICIT_OVERLAY_NOT_CONSUMED:${explicitOverlayCount}`);
 
 const relationPackage = {
   schema: 'atlas-stage2-p7a-reviewed-relation-backfill/v1',
   as_of: '2026-08-14',
-  status: 'BRANCH_ONLY_REVIEWED_HINT_LITERALIZATION_NO_PRODUCTION_MUTATION',
+  status: 'BRANCH_ONLY_REVIEWED_RELATION_LITERALIZATION_NO_PRODUCTION_MUTATION',
   baseline: { deployment_sha: BASELINE_SHA, baseline_digest: BASELINE_DIGEST },
+  authority: {
+    work_queues: path.relative(root, workQueuesPath),
+    p6_effective_frontier: path.relative(root, frontierPath),
+    relation_catalog: path.relative(root, relationCatalogPath),
+    explicit_relation_decisions: path.relative(root, explicitDecisionPath)
+  },
   rules: {
     p6_activity_targets_excluded: true,
     generic_relation_default_forbidden: true,
-    only_existing_reviewed_relation_hint_may_be_literalized: true,
+    only_existing_reviewed_hint_or_explicit_reviewed_audit_decision_may_be_literalized: true,
     runtime_relation_code_lookup_forbidden: true,
     literal_relation_type_uuid_required: true,
     production_mutation_authorized: false
@@ -99,7 +150,9 @@ const relationPackage = {
   result: {
     residual_relation_dependency_rows: relationResidual.length,
     directly_literalizable_reviewed_relation_rows: relationReady.length,
-    explicit_relation_review_rows: relationReviewRequired.length,
+    existing_reviewed_hint_rows: relationReady.length - explicitOverlayCount,
+    explicit_reviewed_overlay_rows: explicitOverlayCount,
+    explicit_relation_review_rows_remaining: relationReviewRequired.length,
     production_mutation_authorized: false
   }
 };
@@ -114,7 +167,9 @@ const inventory = {
   residual_unique_activity_count: residualActivityIds.size,
   relation_backfill: {
     residual_rows: relationResidual.length,
-    reviewed_hint_literalizable_rows: relationReady.length,
+    reviewed_relation_literalizable_rows: relationReady.length,
+    existing_reviewed_hint_rows: relationReady.length - explicitOverlayCount,
+    explicit_reviewed_overlay_rows: explicitOverlayCount,
     explicit_relation_review_required_rows: relationReviewRequired.length,
     review_required: relationReviewRequired
   },
@@ -138,8 +193,9 @@ console.log(JSON.stringify({
   p6_closed_targets: p6Ids.size,
   residual_unique_activities: residualActivityIds.size,
   residual_relation_rows: relationResidual.length,
-  p7a_reviewed_relation_literalizable: relationReady.length,
-  p7b_explicit_relation_review_required: relationReviewRequired.length,
+  p7_reviewed_relation_literalizable: relationReady.length,
+  p7_explicit_reviewed_overlay: explicitOverlayCount,
+  p7_explicit_relation_review_required: relationReviewRequired.length,
   p8_status: inventory.p8_zero_known_blocker_gate.status,
   production_mutation_authorized: false
 }, null, 2));
