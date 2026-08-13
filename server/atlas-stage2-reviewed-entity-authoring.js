@@ -21,7 +21,20 @@ function readReviewedEntityAuthoringManifest(manifestPath = MANIFEST_PATH) {
     throw new Error("P5_ENTITY_AUTHORING_MANIFEST_SAFETY_INVALID");
   }
   if (!Array.isArray(manifest.polities) || manifest.polities.length !== 17) throw new Error("P5_ENTITY_AUTHORING_POLITY_COUNT_INVALID");
-  if (!Array.isArray(manifest.sources) || manifest.sources.length !== 9) throw new Error("P5_ENTITY_AUTHORING_SOURCE_COUNT_INVALID");
+  const declaredSourceCount = Number(manifest?.result?.new_source_rows);
+  if (!Number.isInteger(declaredSourceCount) || declaredSourceCount < 9 || !Array.isArray(manifest.sources) || manifest.sources.length !== declaredSourceCount) {
+    throw new Error("P5_ENTITY_AUTHORING_SOURCE_COUNT_INVALID");
+  }
+  const sourceIds = new Set();
+  const sourceKeys = new Set();
+  for (const item of manifest.sources) {
+    const id = String(item?.row?.id || "").toLowerCase();
+    const key = String(item?.candidate_key || "");
+    if (sourceIds.has(id)) throw new Error("P5_ENTITY_AUTHORING_SOURCE_UUID_REUSED");
+    if (sourceKeys.has(key)) throw new Error("P5_ENTITY_AUTHORING_SOURCE_KEY_REUSED");
+    sourceIds.add(id);
+    sourceKeys.add(key);
+  }
   return Object.freeze({
     manifest,
     manifest_sha256: crypto.createHash("sha256").update(bytes).digest("hex")
