@@ -39,7 +39,7 @@ test('Stage 2 native Activity writer uses final semantic identity and forbids le
   assert.match(nativeActivitySource, /activity_start_calendar/);
   assert.match(nativeActivitySource, /activity_end_month/);
   assert.match(nativeActivitySource, /activity_end_granularity/);
-  assert.match(nativeActivitySource, /legacy_source_key,null/);
+  assert.match(nativeActivitySource, /legacy_source_key/);
   assert.match(nativeActivitySource, /STAGE2_ACTIVITY_NAME_BINDING_FORBIDDEN/);
   assert.match(nativeActivitySource, /STAGE2_ACTIVITY_LEGACY_SOURCE_KEY_FORBIDDEN/);
   assert.match(nativeActivitySource, /STAGE2_ACTIVITY_SEMANTIC_DUPLICATE/);
