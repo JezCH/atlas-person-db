@@ -1,0 +1,193 @@
+{
+  "schema": "atlas-stage2-p5-polity-relation-source-authoring-package/v1",
+  "as_of": "2026-08-13",
+  "status": "REVIEWED_SOURCE_PREP_NO_UUID_NO_PRODUCTION_MUTATION",
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27",
+    "existing_source_count": 20,
+    "existing_sources_are_repository_datasets": true,
+    "reusable_bibliographic_source_uuid_count": 0
+  },
+  "source_contract": "stage2/contracts/source-current.v1.json",
+  "rules": {
+    "source_uuid_must_remain_null_until_authoring": true,
+    "source_key_is_not_identity": true,
+    "canonical_url_is_not_identity": true,
+    "fake_sha256_for_web_reference_forbidden": true,
+    "fake_bytes_for_web_reference_forbidden": true,
+    "canonical_url_or_citation_text_required": true,
+    "nonblank_assertion_locator_required": true,
+    "production_mutation_authorized": false
+  },
+  "sources": [
+    {
+      "candidate_key": "bibliographic:ctext:shiji-qing-bu-liezhuan",
+      "source_uuid": null,
+      "source_type": "primary_text_digital_edition",
+      "title": "Shiji — Biography of Qing Bu",
+      "canonical_url": "https://ctext.org/shiji/qing-bu-lie-zhuan/zh",
+      "citation_text": "Shiji, Qing Bu liezhuan, Chinese Text Project digital edition.",
+      "sha256": null,
+      "bytes": null
+    },
+    {
+      "candidate_key": "bibliographic:ctext:hou-hanshu-liu-yan-yuan-shu-lu-bu",
+      "source_uuid": null,
+      "source_type": "primary_text_digital_edition",
+      "title": "Hou Hanshu — Liu Yan, Yuan Shu and Lü Bu biographies",
+      "canonical_url": "https://ctext.org/hou-han-shu/liu-yan-yuan-shu-lv-bu/zh",
+      "citation_text": "Hou Hanshu, Liu Yan/Yuan Shu/Lü Bu biographies, Chinese Text Project digital edition.",
+      "sha256": null,
+      "bytes": null
+    },
+    {
+      "candidate_key": "bibliographic:ctext:hou-hanshu-liu-yu-gongsun-zan-tao-qian",
+      "source_uuid": null,
+      "source_type": "primary_text_digital_edition",
+      "title": "Hou Hanshu — Liu Yu, Gongsun Zan and Tao Qian biographies",
+      "canonical_url": "https://ctext.org/hou-han-shu/liu-yu-gong-sun-zan-tao/zhs",
+      "citation_text": "Hou Hanshu, Liu Yu/Gongsun Zan/Tao Qian biographies, Chinese Text Project digital edition.",
+      "sha256": null,
+      "bytes": null
+    },
+    {
+      "candidate_key": "bibliographic:ctext:hou-hanshu-yuan-shao",
+      "source_uuid": null,
+      "source_type": "primary_text_digital_edition",
+      "title": "Hou Hanshu — Yuan Shao biography",
+      "canonical_url": "https://ctext.org/hou-han-shu/yuan-shao-liu-biao-lie-zhuan-shang/zh",
+      "citation_text": "Hou Hanshu, Yuan Shao biography, Chinese Text Project digital edition.",
+      "sha256": null,
+      "bytes": null
+    },
+    {
+      "candidate_key": "bibliographic:ctext:hou-hanshu-liu-biao",
+      "source_uuid": null,
+      "source_type": "primary_text_digital_edition",
+      "title": "Hou Hanshu — Liu Biao biography",
+      "canonical_url": "https://ctext.org/hou-han-shu/yuan-shao-liu-biao-lie-zhuan-xia/zh",
+      "citation_text": "Hou Hanshu, Liu Biao biography, Chinese Text Project digital edition.",
+      "sha256": null,
+      "bytes": null
+    },
+    {
+      "candidate_key": "bibliographic:ctext:zhang-lu-primary-passage",
+      "source_uuid": null,
+      "source_type": "primary_text_digital_edition",
+      "title": "Chinese Text Project — reviewed primary-text passage on Zhang Lu",
+      "canonical_url": "https://ctext.org/text.pl?if=gb&node=602325&show=parallel",
+      "citation_text": "Reviewed primary-text passage used by the Stage 2 Zhang Lu/Hanzhong decision; Chinese Text Project node 602325.",
+      "sha256": null,
+      "bytes": null
+    },
+    {
+      "candidate_key": "bibliographic:ctext:ming-shi-jishi-benmo-fang-guozhen",
+      "source_uuid": null,
+      "source_type": "primary_text_digital_edition",
+      "title": "Ming Shi Jishi Benmo — Fang Guozhen's Surrender",
+      "canonical_url": "https://ctext.org/wiki.pl?chapter=292789&if=gb",
+      "citation_text": "Ming Shi Jishi Benmo, Fang Guozhen's Surrender, Chinese Text Project digital edition.",
+      "sha256": null,
+      "bytes": null
+    },
+    {
+      "candidate_key": "bibliographic:canada:constitution-acts-1867-1982",
+      "source_uuid": null,
+      "source_type": "official_legal_source",
+      "title": "Constitution Acts, 1867 to 1982",
+      "canonical_url": "https://laws-lois.justice.gc.ca/eng/Const/page-1.html",
+      "citation_text": "Government of Canada, Justice Laws Website, Constitution Acts, 1867 to 1982.",
+      "sha256": null,
+      "bytes": null
+    },
+    {
+      "candidate_key": "bibliographic:canada:statute-of-westminster-1931",
+      "source_uuid": null,
+      "source_type": "official_interpretive_source",
+      "title": "Statute of Westminster, 1931",
+      "canonical_url": "https://www.canada.ca/en/intergovernmental-affairs/services/federation/statute-westminster.html",
+      "citation_text": "Government of Canada, Intergovernmental Affairs, Statute of Westminster overview.",
+      "sha256": null,
+      "bytes": null
+    }
+  ],
+  "links": [
+    {
+      "relation_decision_id": "ying_bu_huainan_vassal_relation",
+      "relation_type": "vassal_of",
+      "source_candidate_key": "bibliographic:ctext:shiji-qing-bu-liezhuan",
+      "source_locator_key": "Qing Bu liezhuan: enfeoffment as King of Huainan and 196 BCE rebellion passages"
+    },
+    {
+      "relation_decision_id": "liu_yan_yi_nominal_han_relation",
+      "relation_type": "nominally_subordinate_to",
+      "source_candidate_key": "bibliographic:ctext:hou-hanshu-liu-yan-yuan-shu-lu-bu",
+      "source_locator_key": "Liu Yan biography: 188 Yi appointment and 191 Hanzhong break"
+    },
+    {
+      "relation_decision_id": "tao_qian_xu_nominal_han_relation",
+      "relation_type": "nominally_subordinate_to",
+      "source_candidate_key": "bibliographic:ctext:hou-hanshu-liu-yu-gongsun-zan-tao-qian",
+      "source_locator_key": "Tao Qian biography: Xu regional command and autonomous military-administrative authority"
+    },
+    {
+      "relation_decision_id": "liu_yu_you_nominal_han_relation",
+      "relation_type": "nominally_subordinate_to",
+      "source_candidate_key": "bibliographic:ctext:hou-hanshu-liu-yu-gongsun-zan-tao-qian",
+      "source_locator_key": "Liu Yu biography: Youzhou command, Han loyalty and regional authority"
+    },
+    {
+      "relation_decision_id": "yuan_shao_ji_nominal_han_relation",
+      "relation_type": "nominally_subordinate_to",
+      "source_candidate_key": "bibliographic:ctext:hou-hanshu-yuan-shao",
+      "source_locator_key": "Yuan Shao biography: 191 Ji takeover and Han-derived northern offices through 202"
+    },
+    {
+      "relation_decision_id": "liu_biao_jing_nominal_han_relation",
+      "relation_type": "nominally_subordinate_to",
+      "source_candidate_key": "bibliographic:ctext:hou-hanshu-liu-biao",
+      "source_locator_key": "Liu Biao biography: Jing appointment, tribute, Han titles and regional administration 190–208"
+    },
+    {
+      "relation_decision_id": "gongsun_zan_nominal_han_relation",
+      "relation_type": "nominally_subordinate_to",
+      "source_candidate_key": "bibliographic:ctext:hou-hanshu-liu-yu-gongsun-zan-tao-qian",
+      "source_locator_key": "Gongsun Zan biography: 193 court commission and autonomous northeastern authority through 199"
+    },
+    {
+      "relation_decision_id": "zhang_lu_initial_yi_subordination_policy",
+      "relation_type": "nominally_subordinate_to",
+      "source_candidate_key": "bibliographic:ctext:zhang-lu-primary-passage",
+      "source_locator_key": "Reviewed Zhang Lu passage: Liu Yan commission into Hanzhong and subsequent independent rule"
+    },
+    {
+      "relation_decision_id": "fang_guozhen_multi_superior_relation_policy",
+      "relation_type": "nominally_subordinate_to",
+      "source_candidate_key": "bibliographic:ctext:ming-shi-jishi-benmo-fang-guozhen",
+      "source_locator_key": "Fang Guozhen: 1355–1358 Yuan appointments while retaining autonomous eastern Zhejiang power"
+    },
+    {
+      "relation_decision_id": "laurier_canada_dominion_relation",
+      "relation_type": "dominion_of",
+      "source_candidate_key": "bibliographic:canada:constitution-acts-1867-1982",
+      "source_locator_key": "Constitution Act, 1867: union effective 1 July 1867"
+    },
+    {
+      "relation_decision_id": "laurier_canada_dominion_relation",
+      "relation_type": "dominion_of",
+      "source_candidate_key": "bibliographic:canada:statute-of-westminster-1931",
+      "source_locator_key": "Statute of Westminster transition effective 11 December 1931; dominion_of ends 10 December 1931"
+    }
+  ],
+  "result": {
+    "reviewed_relation_assertions": 10,
+    "new_source_candidates": 9,
+    "existing_source_uuid_reuses": 0,
+    "source_links": 11,
+    "assertions_without_source_link": 0,
+    "source_uuid_assignments": 0,
+    "fake_content_materialization_fields": 0,
+    "production_mutation_authorized": false
+  }
+}
