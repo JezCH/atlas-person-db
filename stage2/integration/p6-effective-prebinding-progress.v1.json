@@ -8,12 +8,11 @@
   },
   "effective_frontier_source": "stage2/integration/baseline-a-politic-resolution-amendments.v1.json",
   "effective_correction_v2_activities": 54,
-  "completed_prebinding_activities": 51,
-  "remaining_prebinding_activities": 3,
-  "latest_completed_batch": 15,
-  "latest_completed_activity_id": "8198cad1-dc14-5c1e-9b01-ddbddc447da7",
+  "completed_prebinding_activities": 52,
+  "remaining_prebinding_activities": 2,
+  "latest_completed_batch": 16,
+  "latest_completed_activity_id": "943ebf94-4a0c-53aa-a535-969e8fb60b2c",
   "remaining_activity_ids": [
-    "943ebf94-4a0c-53aa-a535-969e8fb60b2c",
     "c0987b73-203c-5b49-9d84-8d96ce0e44e9",
     "d071f96f-9efe-575b-8ede-d536238bd319"
   ],
