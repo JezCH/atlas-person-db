@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath, createRequire } from 'node:url';
+import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
 import pg from 'pg';
 
 const require=createRequire(import.meta.url);
