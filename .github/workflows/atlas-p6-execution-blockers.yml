@@ -1,0 +1,35 @@
+name: ATLAS P6 Execution Blockers
+
+on:
+  pull_request:
+    paths:
+      - 'stage2/integration/p6-correction-v2-prebinding-batch*.v1.json'
+      - 'stage2/execution/**'
+      - 'scripts/build-stage2-p6-execution-blocker-report.mjs'
+      - 'tests/stage2-p6-execution-blocker-report.test.mjs'
+      - '.github/workflows/atlas-p6-execution-blockers.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Build exact P6 execution blocker inventory
+        run: node scripts/build-stage2-p6-execution-blocker-report.mjs
+      - name: Upload P6 execution blocker inventory
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-p6-execution-blockers-${{ github.sha }}
+          path: artifacts/stage2-p6-execution-blockers.json
+          if-no-files-found: error
+          retention-days: 30
