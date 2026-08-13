@@ -1,0 +1,157 @@
+{
+  "schema": "atlas-stage2-p7-explicit-person-relation-decisions/v1",
+  "batch_id": "p7_relation_decisions_batch1_direct_audit_semantics",
+  "as_of": "2026-08-14",
+  "status": "REVIEWED_BRANCH_ONLY_NO_PRODUCTION_MUTATION",
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27"
+  },
+  "relation_catalog": "stage2/catalogs/relation-types.v1.json",
+  "rules": {
+    "current_activity_uuid_is_identity": true,
+    "decision_must_be_explicit_in_existing_reviewed_audit": true,
+    "generic_relation_default_forbidden": true,
+    "multi_phase_or_ambiguous_rows_excluded": true,
+    "runtime_name_resolution_forbidden": true,
+    "production_mutation_authorized": false
+  },
+  "decisions": [
+    {
+      "activity_id": "984b9ae6-e4ac-5a82-ae8e-433aa147eff5",
+      "person": "Plato",
+      "relation_code": "active_in",
+      "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+      "authority": [
+        "docs/audits/POLITY_SEMANTIC_AUDIT_CURRENT_UUID_CARRY_FORWARD_2026-08-11.md",
+        "docs/audits/POLITY_SEMANTIC_AUDIT_WAVE9_2026-08-11.md"
+      ],
+      "review_basis": "Athens is valid; reviewed audit explicitly says Plato did not rule or serve as territorial executive and should use active_in or equivalent civic/intellectual relation. Closed catalog contains active_in."
+    },
+    {
+      "activity_id": "f4f5f19f-1800-5ca0-9e00-9ba812245a05",
+      "person": "Jesus",
+      "relation_code": "active_in",
+      "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+      "authority": [
+        "docs/audits/POLITY_SEMANTIC_AUDIT_CURRENT_UUID_CARRY_FORWARD_2026-08-11.md",
+        "docs/audits/POLITY_SEMANTIC_AUDIT_WAVE11_2026-08-11.md"
+      ],
+      "review_basis": "Reviewed audit explicitly states Roman Empire is valid high-level political context and relation is active_in, not rule/service."
+    },
+    {
+      "activity_id": "675de4b2-9dd3-505c-b1c8-db475659c5a5",
+      "person": "Zhang Jue",
+      "relation_code": "opposes",
+      "relation_type_id": "5d2d3af6-6e53-5af1-8423-f76c2263afe4",
+      "authority": ["docs/audits/POLITY_SEMANTIC_AUDIT_WAVE14_CURRENT_HIGH_RISK_2026-08-11.md"],
+      "review_basis": "Reviewed audit explicitly identifies Eastern Han as the polity opposed by Zhang Jue and says relation is rebel/opposes, not service or rule."
+    },
+    {
+      "activity_id": "42b31007-4727-5a37-a033-4beaa1835bca",
+      "person": "Belisarius",
+      "relation_code": "serves",
+      "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+      "authority": ["docs/audits/POLITY_SEMANTIC_AUDIT_WAVE15B_CURRENT_RESIDUAL_2026-08-11.md"],
+      "review_basis": "Reviewed audit explicitly says Belisarius serves the Byzantine Empire as general and does not own imperial territory."
+    },
+    {
+      "activity_id": "fc68a326-f59f-5780-a6f0-c5206d9ceba3",
+      "person": "Muhammad",
+      "relation_code": "rules",
+      "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+      "authority": [
+        "docs/audits/POLITY_SEMANTIC_AUDIT_CURRENT_UUID_CARRY_FORWARD_2026-08-11.md",
+        "docs/audits/POLITY_SEMANTIC_AUDIT_WAVE11_2026-08-11.md"
+      ],
+      "review_basis": "Reviewed audit marks the post-Hijra Medinan polity KEEP + RELATION_RULES and describes Muhammad's political/judicial authority over the polity."
+    },
+    {
+      "activity_id": "d31a2079-fd3f-5454-8523-3cc252f36213",
+      "person": "Gajah Mada",
+      "relation_code": "serves",
+      "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+      "authority": ["docs/audits/POLITY_SEMANTIC_AUDIT_WAVE15C_CURRENT_RESIDUAL_2026-08-11.md"],
+      "review_basis": "Reviewed audit explicitly says Gajah Mada serves Majapahit as Mahapatih rather than ruling the empire as monarch."
+    },
+    {
+      "activity_id": "e45b2f8c-0d7c-546b-9eca-4bd1f404ed28",
+      "person": "Koke Temur",
+      "relation_code": "serves",
+      "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+      "authority": ["docs/audits/POLITY_SEMANTIC_AUDIT_WAVE15C_CURRENT_RESIDUAL_2026-08-11.md"],
+      "review_basis": "Reviewed audit explicitly says Koke Temur serves Yuan as general rather than ruling it."
+    },
+    {
+      "activity_id": "e85a6e36-40a7-51a1-b9dd-e0879131e044",
+      "person": "Zheng He",
+      "relation_code": "serves",
+      "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+      "authority": ["docs/audits/POLITY_SEMANTIC_AUDIT_WAVE15C_CURRENT_RESIDUAL_2026-08-11.md"],
+      "review_basis": "Reviewed audit explicitly says Zheng He serves Ming as admiral/diplomat."
+    },
+    {
+      "activity_id": "71c77bb1-6585-58f0-bc5d-73db102b9e8f",
+      "person": "Joan of Arc",
+      "relation_code": "serves",
+      "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+      "authority": ["docs/audits/POLITY_SEMANTIC_AUDIT_WAVE15C_CURRENT_RESIDUAL_2026-08-11.md"],
+      "review_basis": "Reviewed audit explicitly says Joan serves the French royal cause militarily."
+    },
+    {
+      "activity_id": "9e704010-6deb-5700-bdc1-6db4af397462",
+      "person": "Tun Perak",
+      "relation_code": "serves",
+      "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+      "authority": ["docs/audits/POLITY_SEMANTIC_AUDIT_WAVE15C_CURRENT_RESIDUAL_2026-08-11.md"],
+      "review_basis": "Reviewed audit explicitly says Tun Perak serves Malacca as Bendahara."
+    },
+    {
+      "activity_id": "6648b1b5-5858-5ff7-a3d7-7b14dfeef51e",
+      "person": "Yi Sun-sin",
+      "relation_code": "serves",
+      "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+      "authority": ["docs/audits/POLITY_SEMANTIC_AUDIT_WAVE15D_CURRENT_RESIDUAL_2026-08-11.md"],
+      "review_basis": "Reviewed audit explicitly says Yi Sun-sin serves Joseon as military/naval commander."
+    },
+    {
+      "activity_id": "0720fd23-154c-5570-8d8a-78a45c2957c1",
+      "person": "Ada Lovelace",
+      "relation_code": "active_in",
+      "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+      "authority": [
+        "docs/audits/POLITY_SEMANTIC_AUDIT_CURRENT_UUID_CARRY_FORWARD_2026-08-11.md",
+        "docs/audits/POLITY_SEMANTIC_AUDIT_WAVE11_2026-08-11.md"
+      ],
+      "review_basis": "Reviewed audit explicitly says United Kingdom is valid context but Lovelace did not govern or serve it in territorial-state sense; relation should be active_in."
+    },
+    {
+      "activity_id": "ca30481f-9e6a-5482-bf88-5b7b594f2f55",
+      "person": "Jose Rizal",
+      "relation_code": "opposes",
+      "relation_type_id": "5d2d3af6-6e53-5af1-8423-f76c2263afe4",
+      "authority": [
+        "docs/audits/POLITY_SEMANTIC_AUDIT_CURRENT_UUID_CARRY_FORWARD_2026-08-11.md",
+        "docs/audits/POLITY_SEMANTIC_AUDIT_WAVE11_2026-08-11.md"
+      ],
+      "review_basis": "Reviewed audit identifies Rizal as reformist/opponent of colonial abuses and recommends opposes/reformist; closed catalog provides opposes."
+    },
+    {
+      "activity_id": "aa3dee6c-2a11-5e98-ba2b-1b256844c7dc",
+      "person": "Sophia Duleep Singh",
+      "relation_code": "active_in",
+      "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+      "authority": [
+        "docs/audits/POLITY_SEMANTIC_AUDIT_CURRENT_UUID_CARRY_FORWARD_2026-08-11.md",
+        "docs/audits/POLITY_SEMANTIC_AUDIT_WAVE11_2026-08-11.md"
+      ],
+      "review_basis": "Reviewed audit explicitly states United Kingdom is her political/civic context and relation is active_in, with opposition to particular policies represented separately."
+    }
+  ],
+  "result": {
+    "decision_count": 14,
+    "single_relation_rows_resolved_without_new_historical_research": 14,
+    "multi_phase_or_ambiguous_rows_intentionally_excluded": true,
+    "production_mutation_authorized": false
+  }
+}
