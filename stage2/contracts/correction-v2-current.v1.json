@@ -1,0 +1,69 @@
+{
+  "schema": "atlas-stage2-correction-v2-contract/v1",
+  "as_of": "2026-08-13",
+  "status": "P6_BRANCH_ONLY_CONTRACT_NO_PRODUCTION_MUTATION",
+  "identity": {
+    "activity_uuid_is_record_identity": true,
+    "polity_uuid_is_identity": true,
+    "person_uuid_is_identity": true,
+    "relation_type_uuid_is_identity": true,
+    "source_uuid_is_identity": true,
+    "names_codes_urls_are_not_identity": true
+  },
+  "manifest_layers": {
+    "prebinding_plan": {
+      "production_executable": false,
+      "new_polity_identity_class_reference_allowed": true,
+      "new_polity_uuid_must_be_null": true,
+      "new_source_candidate_key_reference_allowed": true,
+      "new_source_uuid_must_be_null": true,
+      "new_activity_uuid_may_be_null": true,
+      "relation_type_uuid_required": true,
+      "exact_baseline_before_state_required": true
+    },
+    "execution_manifest": {
+      "production_executable_only_after_explicit_release_authorization": true,
+      "all_person_polity_relation_source_and_new_activity_uuids_required": true,
+      "identity_class_or_source_key_resolution_at_execution_forbidden": true,
+      "exact_live_before_state_required": true,
+      "same_production_sha_or_explicit_rebase_proof_required": true
+    }
+  },
+  "operation_types": {
+    "rewrite_activity": {"same_activity_uuid_preserved":true,"exact_before_and_after_required":true,"source_links_preserved_by_default":true},
+    "split_activity": {"one_existing_activity_to_multiple_fragments":true,"survivor_fragment_must_be_declared":true,"survivor_fragment_preserves_original_activity_uuid":true,"new_fragment_activity_uuids_required_in_execution_manifest":true,"existing_source_links_copy_policy_required":true,"overlap_or_gap_requires_explicit_reviewed_policy":true},
+    "retire_activity": {"exact_before_required":true,"dependent_source_and_description_handling_required":true},
+    "assert_polity_relation": {"subject_and_object_polity_uuids_required_in_execution_manifest":true,"relation_type_uuid_required":true,"normalized_source_links_required":true},
+    "assert_governance_period": {"polity_and_governance_uuids_required_in_execution_manifest":true,"normalized_source_links_required":true},
+    "assert_polity_designation": {"polity_uuid_required":true,"normalized_source_links_required":true},
+    "assert_polity_identity_relation": {"predecessor_and_successor_polity_uuids_required":true,"normalized_source_links_required":true},
+    "migrate_entity_context": {"target_entity_type_must_be_reviewed":true,"people_event_governance_must_not_be_implemented_as_fake_polity":true}
+  },
+  "transaction": {
+    "isolation": "serializable",
+    "request_id_advisory_lock_required": true,
+    "manifest_hash_idempotency_required": true,
+    "immutable_audit_snapshot_required": true,
+    "all_operations_atomic": true,
+    "dry_run_required_before_real_apply": true,
+    "read_only_postcondition_verification_required": true,
+    "partial_commit_forbidden": true
+  },
+  "semantic_safety": {
+    "final_activity_identity_uses_person_polity_relation_role_period_and_full_temporal_boundaries": true,
+    "no_generic_relation_default": true,
+    "unknown_temporal_precision_not_fabricated": true,
+    "new_polity_not_resolved_by_name": true,
+    "source_not_resolved_by_url_or_title": true,
+    "split_fragment_sources_must_not_be_silently_dropped": true,
+    "physical_person_merge_before_p10_forbidden": true,
+    "territory_geometry_mutation_out_of_scope": true
+  },
+  "release_boundary": {
+    "p5_production_schema_required_before_execution_manifest_apply": true,
+    "p5_new_polity_uuid_authoring_required_before_relink_or_split_to_new_polity": true,
+    "normalized_source_uuid_authoring_required_before_new_assertion_apply": true,
+    "relation_type_catalog_must_match_exact_uuids": true,
+    "production_mutation_authorized": false
+  }
+}

@@ -53,8 +53,6 @@ if (Number(batch3.result?.batch_target_count) !== 5 || Number(batch3.result?.pre
 
 console.log(JSON.stringify({marker:'ATLAS_P5_POLITY_AUTHORING_BATCH3_OK',batch3_prepared:5,prepared_total:24,remaining:0,people_group_boundaries_separated:5,uuid_assignments:0,production_mutation_authorized:false}, null, 2));
 
-// Final branch-only P5 composed gates. These validators reuse the current
-// authoring frontier and ensure schema/readiness plus exact Relation Type UUID
-// catalog identity are locked before any Correction v2 plan may be produced.
 await import('./verify-stage2-p5-preproduction-schema-readiness.mjs');
 await import('./verify-stage2-relation-type-catalog.mjs');
+await import('./verify-stage2-correction-v2-prebinding-batch1.mjs');
