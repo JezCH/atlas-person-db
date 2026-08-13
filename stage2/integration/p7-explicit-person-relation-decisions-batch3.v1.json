@@ -1,0 +1,33 @@
+{
+  "schema": "atlas-stage2-p7-explicit-person-relation-decisions/v1",
+  "batch_id": "p7_relation_decisions_batch3_focused_historical_review",
+  "as_of": "2026-08-14",
+  "status": "REVIEWED_BRANCH_ONLY_NO_PRODUCTION_MUTATION",
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27"
+  },
+  "relation_catalog": "stage2/catalogs/relation-types.v1.json",
+  "relation_semantics_contract": "docs/audits/RELATION_SEMANTICS_CONTRACT_V1_2026-08-12.md",
+  "rules": {
+    "current_activity_uuid_is_identity": true,
+    "closed_six_relation_taxonomy_only": true,
+    "focused_historical_review_required": true,
+    "generic_relation_default_forbidden": true,
+    "multi_phase_rows_requiring_split_excluded": true,
+    "production_mutation_authorized": false
+  },
+  "decisions": [
+    {"activity_id":"85896e61-c810-590e-bf3c-9240168d2953","person":"Pericles","relation_code":"serves","relation_type_id":"0fc4827f-8543-52f7-9e9a-3173b0c698a7","authority":["docs/audits/POLITY_SEMANTIC_AUDIT_WAVE9_2026-08-11.md","Oxford Classical Dictionary, strategoi (2016)"],"review_basis":"Athens is correct, while strategos was an annually elected office within a board of ten equal-status generals. Pericles was a major political leader, but this office was not sovereign rule over Athens; the closed catalog therefore uses serves."},
+    {"activity_id":"9b371976-8c65-5ec2-85d6-23adc716254d","person":"Gongsun Du","relation_code":"rules","relation_type_id":"7ca4de8f-01d4-542c-acc1-a06848c6742c","authority":["docs/audits/POLITY_SEMANTIC_AUDIT_WAVE10_2026-08-11.md","Sanguozhi, Weishu 82, Biography of Gongsun Du","권오중, 요동 공손씨정권의 대방군 설치와 그 의미, 대구사학 105 (2011)"],"review_basis":"The reviewed polity is the durable de facto Liaodong regime. Sanguozhi records royal and imperial-style prerogatives and Gongsun Du calling himself king of Liaodong; modern scholarship describes a separatist Liaodong polity. This is supreme de facto authority, hence rules."},
+    {"activity_id":"226e8667-d437-5ae7-8284-77a365371260","person":"Eleanor of Aquitaine","relation_code":"rules","relation_type_id":"7ca4de8f-01d4-542c-acc1-a06848c6742c","authority":["docs/audits/POLITY_SEMANTIC_AUDIT_WAVE15B_CURRENT_RESIDUAL_2026-08-11.md","Oxford Academic, Eleanor of Aquitaine: Queen and Rebel","ODNB reference via Online Froissart"],"review_basis":"Eleanor was suo jure Duchess of Aquitaine, hereditary head of the modeled duchy rather than an officer serving it. The project audit already requires ducal governance or rule rather than mere service. Rules does not assert sole day-to-day control in every subperiod."},
+    {"activity_id":"250ee5a9-4227-52c7-915a-233b5bdb3ddf","person":"Liu Futong","relation_code":"governs","relation_type_id":"67a57b37-1853-5f2a-b7ab-e6b2d32b56b6","authority":["docs/audits/POLITY_SEMANTIC_AUDIT_WAVE15C_CURRENT_RESIDUAL_2026-08-11.md","Xin Yuanshi 225 / Chinese Text Project"],"review_basis":"Liu Futong installed Han Lin'er as emperor of the Red Turban Song and himself became chancellor. Sovereign identity remained Han Lin'er while Liu exercised top-level governmental and military authority, matching governs."},
+    {"activity_id":"1104b065-58f9-5d5f-9d0e-037c34b33216","person":"Ching Shih","relation_code":"opposes","relation_type_id":"5d2d3af6-6e53-5af1-8423-f76c2263afe4","authority":["docs/audits/POLITY_SEMANTIC_AUDIT_WAVE15D_CURRENT_RESIDUAL_2026-08-11.md","Hong Kong Maritime Museum, Pacifying the South China Sea (1810)","Robert J. Antony, State, Community, and Pirate Suppression in Guangdong Province, 1809-1810"],"review_basis":"Qing is retained as the surrounding and opposed state, not a polity Ching Shih served or ruled. Her pirate confederation fought Qing suppression forces and accepted Qing amnesty in 1810, so the closed relation is opposes."}
+  ],
+  "result": {
+    "decision_count": 5,
+    "single_relation_rows_resolved_by_focused_historical_review": 5,
+    "multi_phase_rows_intentionally_excluded": true,
+    "production_mutation_authorized": false
+  }
+}
