@@ -5,6 +5,7 @@ const crypto = require("node:crypto");
 const FINAL_SCHEMA = "atlas-correction-manifest/v2";
 const PLAN_SCHEMA = "atlas-stage2-correction-v2-execution-plan/v1";
 const SNAPSHOT_SCHEMA = "atlas-correction-v2-target-snapshot/v1";
+const RETIRE_SOURCE_TRANSFER_POLICY = "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE";
 const BASELINE_FIELDS = Object.freeze([
   "person_id","polity_id","role_id","period_basis_id","activity_start","activity_end",
   "confidence","chronology_status","legacy_source_key"
@@ -42,7 +43,20 @@ function assertBaselineTuple(planOperation, live) {
   if (Number(planOperation.baseline_before.source_count) < 0) throw new Error(`CORRECTION_V2_BASELINE_SOURCE_COUNT_INVALID:${planOperation.case_id}`);
 }
 
+function boundaryColumns(detail) {
+  if (detail == null) return Object.freeze({ month:null, day:null, granularity:null, certainty:null, calendar:null });
+  return Object.freeze({
+    month: detail.month ?? null,
+    day: detail.day ?? null,
+    granularity: detail.granularity ?? null,
+    certainty: detail.certainty ?? null,
+    calendar: detail.calendar ?? null
+  });
+}
+
 function applyActivityTemplate(live, template, { newFragment = false } = {}) {
+  const start = boundaryColumns(template.activity_start_detail);
+  const end = boundaryColumns(template.activity_end_detail);
   const out = {
     ...live,
     id: template.activity_id,
@@ -52,17 +66,17 @@ function applyActivityTemplate(live, template, { newFragment = false } = {}) {
     role_id: template.role_id,
     period_basis_id: template.period_basis_id,
     activity_start: template.activity_start,
-    activity_start_month: null,
-    activity_start_day: null,
-    activity_start_granularity: null,
-    activity_start_certainty: null,
-    activity_start_calendar: null,
+    activity_start_month: start.month,
+    activity_start_day: start.day,
+    activity_start_granularity: start.granularity,
+    activity_start_certainty: start.certainty,
+    activity_start_calendar: start.calendar,
     activity_end: template.activity_end,
-    activity_end_month: null,
-    activity_end_day: null,
-    activity_end_granularity: null,
-    activity_end_certainty: null,
-    activity_end_calendar: null,
+    activity_end_month: end.month,
+    activity_end_day: end.day,
+    activity_end_granularity: end.granularity,
+    activity_end_certainty: end.certainty,
+    activity_end_calendar: end.calendar,
     confidence: template.confidence,
     chronology_status: template.chronology_status,
     legacy_source_key: newFragment ? null : template.legacy_source_key,
@@ -72,6 +86,61 @@ function applyActivityTemplate(live, template, { newFragment = false } = {}) {
   };
   if (newFragment && out.legacy_source_key !== null) throw new Error("CORRECTION_V2_NEW_FRAGMENT_FAKE_LEGACY_KEY_FORBIDDEN");
   return out;
+}
+
+function sourceLinkForActivity(activityId, raw) {
+  return {
+    person_politics_id: activityId,
+    source_id: String(raw.source_id || "").trim().toLowerCase(),
+    source_locator_key: String(raw.source_locator_key || "").trim()
+  };
+}
+
+function mergeReviewedSourceLinks(activityId, baseLinks, additions, label) {
+  const bySource = new Map();
+  for (const raw of baseLinks || []) {
+    const link = sourceLinkForActivity(activityId, raw);
+    if (!link.source_id || !link.source_locator_key) throw new Error(`CORRECTION_V2_${label}_LIVE_SOURCE_LINK_INVALID`);
+    const existing = bySource.get(link.source_id);
+    if (existing && existing.source_locator_key !== link.source_locator_key) throw new Error(`CORRECTION_V2_${label}_SOURCE_LOCATOR_CONFLICT:${link.source_id}`);
+    bySource.set(link.source_id, link);
+  }
+  for (const raw of additions || []) {
+    const locator = String(raw?.source_locator_key || "").trim();
+    if (!locator) continue;
+    const link = sourceLinkForActivity(activityId, raw);
+    if (!link.source_id) throw new Error(`CORRECTION_V2_${label}_SOURCE_ID_REQUIRED`);
+    const existing = bySource.get(link.source_id);
+    if (existing && existing.source_locator_key !== link.source_locator_key) throw new Error(`CORRECTION_V2_${label}_SOURCE_LOCATOR_CONFLICT:${link.source_id}`);
+    bySource.set(link.source_id, link);
+  }
+  return [...bySource.values()].sort((a,b)=>a.source_id.localeCompare(b.source_id) || a.source_locator_key.localeCompare(b.source_locator_key));
+}
+
+function exactBundleForActivity(id, liveById, sourceLinksByActivity, claimsByActivity, descriptionsByActivity, label) {
+  const live = liveById.get(id);
+  if (!live) throw new Error(`CORRECTION_V2_LIVE_ACTIVITY_MISSING:${label}`);
+  return {
+    activity: live,
+    normalized_source_links: sourceLinksByActivity.get(id) || [],
+    chronology_claims: claimsByActivity.get(id) || [],
+    relationship_descriptions: descriptionsByActivity.get(id) || []
+  };
+}
+
+function requiredSnapshotActivityIds(plan) {
+  const mutationIds = new Set();
+  const dependencyIds = new Set();
+  for (const operation of plan?.operations || []) {
+    mutationIds.add(String(operation.activity_id || "").toLowerCase());
+    if (operation.type === "retire_activity") {
+      for (const replacementId of operation.replacement_activity_ids || []) dependencyIds.add(String(replacementId || "").toLowerCase());
+    }
+  }
+  for (const id of dependencyIds) {
+    if (mutationIds.has(id)) throw new Error(`CORRECTION_V2_RETIRE_REPLACEMENT_IS_MUTATION_TARGET:${id}`);
+  }
+  return [...new Set([...mutationIds, ...dependencyIds])].sort();
 }
 
 function normalizePolityRelationSourceLinkForExecution(relationId, raw) {
@@ -86,6 +155,53 @@ function normalizePolityRelationSourceLinkForExecution(relationId, raw) {
   };
 }
 
+function relationOperationFromLegacy(relation) {
+  const relationId = String(relation.id || "").toLowerCase();
+  const { source_links: rawLinks = [], ...relationRow } = relation;
+  const sourceLinks = rawLinks.map((link) => normalizePolityRelationSourceLinkForExecution(relationId, link));
+  return {
+    decision_id: relation.decision_id,
+    type: "assert_polity_relation",
+    exact_before: { relation_absent_id: relationId },
+    exact_after: { relation: relationRow, source_links: sourceLinks }
+  };
+}
+
+function relationOperationFromCompanion(assertion) {
+  const relationId = String(assertion.assertion_id || "").toLowerCase();
+  const start = assertion.start_detail || null;
+  const end = assertion.end_detail || null;
+  const sourceLinks = (assertion.source_links || []).map((link) => normalizePolityRelationSourceLinkForExecution(relationId, link));
+  return {
+    decision_id: assertion.relation_decision_id,
+    type: "assert_polity_relation",
+    exact_before: { relation_absent_id: relationId },
+    exact_after: {
+      relation: {
+        id: relationId,
+        subject_polity_id: assertion.subject_polity_id,
+        object_polity_id: assertion.object_polity_id,
+        relation_type_id: assertion.relation_type_id,
+        valid_from_year: start?.year ?? assertion.start_year ?? null,
+        valid_from_month: start?.month ?? null,
+        valid_from_day: start?.day ?? null,
+        valid_from_granularity: start?.granularity ?? null,
+        valid_from_certainty: start?.certainty ?? null,
+        valid_from_calendar: start?.calendar ?? null,
+        valid_to_year: end?.year ?? assertion.end_year ?? null,
+        valid_to_month: end?.month ?? null,
+        valid_to_day: end?.day ?? null,
+        valid_to_granularity: end?.granularity ?? null,
+        valid_to_certainty: end?.certainty ?? null,
+        valid_to_calendar: end?.calendar ?? null,
+        confidence: assertion.confidence || "unknown",
+        notes: assertion.notes || `Reviewed structural polity relation decision ${assertion.relation_decision_id}; confidence intentionally not upgraded beyond reviewed interval semantics.`
+      },
+      source_links: sourceLinks
+    }
+  };
+}
+
 function synthesizeCorrectionV2Manifest(plan, snapshot) {
   if (plan?.schema !== PLAN_SCHEMA) throw new Error("CORRECTION_V2_EXECUTION_PLAN_SCHEMA_INVALID");
   if (snapshot?.schema !== SNAPSHOT_SCHEMA) throw new Error("CORRECTION_V2_SNAPSHOT_SCHEMA_INVALID");
@@ -94,11 +210,11 @@ function synthesizeCorrectionV2Manifest(plan, snapshot) {
   }
   if (!/^sha256:[0-9a-f]{64}$/.test(String(snapshot.snapshot_digest || ""))) throw new Error("CORRECTION_V2_SNAPSHOT_DIGEST_REQUIRED");
 
-  const expectedActivityIds = [...plan.operations.map((row) => row.activity_id)].sort();
-  const actualActivityIds = [...snapshot.activity_ids].sort();
+  const expectedActivityIds = requiredSnapshotActivityIds(plan);
+  const actualActivityIds = [...snapshot.activity_ids].map((id)=>String(id).toLowerCase()).sort();
   if (JSON.stringify(expectedActivityIds) !== JSON.stringify(actualActivityIds)) throw new Error("CORRECTION_V2_SNAPSHOT_TARGET_SET_MISMATCH");
 
-  const liveById = new Map(snapshot.activities.map((row) => [row.id, row]));
+  const liveById = new Map(snapshot.activities.map((row) => [String(row.id).toLowerCase(), row]));
   const sourceLinksByActivity = groupBy(snapshot.normalized_activity_source_links, "person_politics_id");
   const claimsByActivity = groupBy(snapshot.chronology_claims, "person_politics_id");
   const descriptionsByActivity = groupBy(snapshot.relationship_descriptions, "person_politics_id");
@@ -113,14 +229,11 @@ function synthesizeCorrectionV2Manifest(plan, snapshot) {
       throw new Error(`CORRECTION_V2_LIVE_SOURCE_COUNT_DRIFT:${item.case_id}`);
     }
 
-    const exactBefore = {
-      activity: live,
-      normalized_source_links: exactSourceLinks,
-      chronology_claims: claimsByActivity.get(item.activity_id) || [],
-      relationship_descriptions: descriptionsByActivity.get(item.activity_id) || []
-    };
+    const exactBefore = exactBundleForActivity(item.activity_id, liveById, sourceLinksByActivity, claimsByActivity, descriptionsByActivity, item.case_id);
 
     if (item.type === "rewrite_activity") {
+      const afterSources = mergeReviewedSourceLinks(item.activity_id, exactSourceLinks, item.after.add_source_links, `${item.case_id}_REWRITE`);
+      const preservesSources = JSON.stringify(afterSources) === JSON.stringify(exactSourceLinks);
       operations.push({
         case_id: item.case_id,
         type: "rewrite_activity",
@@ -128,12 +241,12 @@ function synthesizeCorrectionV2Manifest(plan, snapshot) {
         exact_before: exactBefore,
         exact_after: {
           activity: applyActivityTemplate(live, item.after),
-          normalized_source_links: exactSourceLinks,
+          normalized_source_links: afterSources,
           chronology_claims: exactBefore.chronology_claims,
           relationship_descriptions: exactBefore.relationship_descriptions
         },
         same_activity_uuid_preserved: true,
-        source_links_preserved_by_default: true
+        source_links_preserved_by_default: preservesSources
       });
       continue;
     }
@@ -147,6 +260,21 @@ function synthesizeCorrectionV2Manifest(plan, snapshot) {
       if (!survivor || survivor.activity_id !== item.activity_id || created.length === 0) {
         throw new Error(`CORRECTION_V2_SPLIT_SURVIVOR_INVALID:${item.case_id}`);
       }
+      const survivorSources = mergeReviewedSourceLinks(item.activity_id, exactSourceLinks, survivor.add_source_links, `${item.case_id}_SURVIVOR`);
+      const newFragments = created.map((fragment) => {
+        const copyPolicy = fragment.source_copy_policy || "COPY_EXISTING";
+        if (!new Set(["COPY_EXISTING","DO_NOT_COPY_EXISTING"]).has(copyPolicy)) throw new Error(`CORRECTION_V2_SPLIT_SOURCE_COPY_POLICY_INVALID:${item.case_id}`);
+        const base = copyPolicy === "COPY_EXISTING"
+          ? exactSourceLinks.map((link) => ({ ...link, person_politics_id: fragment.activity_id }))
+          : [];
+        return {
+          activity: applyActivityTemplate(live, fragment, { newFragment: true }),
+          normalized_source_links: mergeReviewedSourceLinks(fragment.activity_id, base, fragment.add_source_links, `${item.case_id}_${fragment.activity_id}`),
+          chronology_claims: [],
+          relationship_descriptions: [],
+          source_copy_policy: copyPolicy
+        };
+      });
       operations.push({
         case_id: item.case_id,
         type: "split_activity",
@@ -154,19 +282,43 @@ function synthesizeCorrectionV2Manifest(plan, snapshot) {
         exact_before: exactBefore,
         survivor_fragment: {
           activity: applyActivityTemplate(live, survivor),
-          normalized_source_links: exactSourceLinks,
+          normalized_source_links: survivorSources,
           chronology_claims: [],
           relationship_descriptions: []
         },
-        new_fragments: created.map((fragment) => ({
-          activity: applyActivityTemplate(live, fragment, { newFragment: true }),
-          normalized_source_links: exactSourceLinks.map((link) => ({ ...link, person_politics_id: fragment.activity_id })),
-          chronology_claims: [],
-          relationship_descriptions: []
-        })),
+        new_fragments: newFragments,
         survivor_fragment_preserves_original_activity_uuid: true,
-        existing_source_link_copy_policy: "COPY_ALL_EXISTING_NORMALIZED_ACTIVITY_SOURCE_LINKS_AND_LOCATORS",
+        survivor_source_links_preserved_by_default: JSON.stringify(survivorSources) === JSON.stringify(exactSourceLinks),
         gap_overlap_policy: item.gap_overlap_policy
+      });
+      continue;
+    }
+
+    if (item.type === "retire_activity") {
+      if (item.source_transfer_policy !== RETIRE_SOURCE_TRANSFER_POLICY || item.silent_source_drop_forbidden !== true) {
+        throw new Error(`CORRECTION_V2_RETIRE_SOURCE_TRANSFER_POLICY_INVALID:${item.case_id}`);
+      }
+      if (exactBefore.chronology_claims.length !== 0 || exactBefore.relationship_descriptions.length !== 0) {
+        throw new Error(`CORRECTION_V2_RETIRE_CHILD_POLICY_REQUIRED:${item.case_id}`);
+      }
+      const replacements = (item.replacement_activity_ids || []).map((replacementId) => {
+        const before = exactBundleForActivity(replacementId, liveById, sourceLinksByActivity, claimsByActivity, descriptionsByActivity, `${item.case_id}:${replacementId}`);
+        const transferred = mergeReviewedSourceLinks(replacementId, before.normalized_source_links, exactSourceLinks, `${item.case_id}_RETIRE_TRANSFER_${replacementId}`);
+        return {
+          activity_id: replacementId,
+          exact_before: before,
+          exact_after: { ...before, normalized_source_links: transferred }
+        };
+      });
+      if (replacements.length === 0) throw new Error(`CORRECTION_V2_RETIRE_SURVIVOR_REQUIRED:${item.case_id}`);
+      operations.push({
+        case_id: item.case_id,
+        type: "retire_activity",
+        activity_id: item.activity_id,
+        exact_before: exactBefore,
+        replacement_survivors: replacements,
+        source_transfer_policy: RETIRE_SOURCE_TRANSFER_POLICY,
+        silent_source_drop_forbidden: true
       });
       continue;
     }
@@ -174,20 +326,8 @@ function synthesizeCorrectionV2Manifest(plan, snapshot) {
     throw new Error(`CORRECTION_V2_PLAN_OPERATION_UNSUPPORTED:${item.type}`);
   }
 
-  for (const relation of plan.polity_relation_assertions || []) {
-    const relationId = String(relation.id || "").toLowerCase();
-    const { source_links: rawLinks = [], ...relationRow } = relation;
-    const sourceLinks = rawLinks.map((link) => normalizePolityRelationSourceLinkForExecution(relationId, link));
-    operations.push({
-      decision_id: relation.decision_id,
-      type: "assert_polity_relation",
-      exact_before: { relation_absent_id: relationId },
-      exact_after: {
-        relation: relationRow,
-        source_links: sourceLinks
-      }
-    });
-  }
+  for (const relation of plan.polity_relation_assertions || []) operations.push(relationOperationFromLegacy(relation));
+  for (const assertion of plan.companion_assertions || []) operations.push(relationOperationFromCompanion(assertion));
 
   const manifestCore = {
     schema: FINAL_SCHEMA,
@@ -209,6 +349,7 @@ function synthesizeCorrectionV2Manifest(plan, snapshot) {
       no_fake_legacy_source_key: true,
       provenance_link_identity_is_composite: true,
       synthetic_provenance_link_uuid_forbidden: true,
+      retire_source_transfer_before_delete_required: true,
       territory_geometry_mutation_forbidden: true,
       physical_person_merge_forbidden: true
     },
@@ -226,12 +367,20 @@ module.exports = Object.freeze({
   FINAL_SCHEMA,
   PLAN_SCHEMA,
   SNAPSHOT_SCHEMA,
+  RETIRE_SOURCE_TRANSFER_POLICY,
   BASELINE_FIELDS,
   canonicalize,
   sha256,
   groupBy,
   assertBaselineTuple,
+  boundaryColumns,
   applyActivityTemplate,
+  sourceLinkForActivity,
+  mergeReviewedSourceLinks,
+  exactBundleForActivity,
+  requiredSnapshotActivityIds,
   normalizePolityRelationSourceLinkForExecution,
+  relationOperationFromLegacy,
+  relationOperationFromCompanion,
   synthesizeCorrectionV2Manifest
 });
