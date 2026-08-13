@@ -85,13 +85,12 @@ test('all Person relation operands are exact relation UUIDs and reviewed target 
   assert.equal(plan.result.person_relation_uuid_bindings, 12);
 });
 
-test('six Polity relation assertions use literal subject/object/relation/source/link UUIDs and reviewed locators', () => {
+test('six Polity relation assertions use literal subject/object/relation/source/link UUIDs and reviewed source bindings', () => {
   assert.equal(plan.polity_relation_assertions.length, 6);
   const allocatedPolities = new Set(allocation.polities.map((row) => row.polity_uuid));
   const allocatedSources = new Set(allocation.sources.map((row) => row.source_uuid));
-  const sourceLocatorPairs = new Set(sourcePackage.links.map((link) => `${link.source_candidate_key}|${link.locator_key}`));
   const sourceUuidByCandidate = new Map(allocation.sources.map((row) => [row.candidate_key, row.source_uuid]));
-  const candidateBySourceUuid = new Map([...sourceUuidByCandidate].map(([key, value]) => [value, key]));
+  const reviewedLinksByDecision = new Map(sourcePackage.links.map((link) => [link.relation_decision_id, link]));
   const relationIds = new Set();
   const linkIds = new Set();
 
@@ -115,8 +114,16 @@ test('six Polity relation assertions use literal subject/object/relation/source/
     assert.equal(linkIds.has(link.id), false);
     linkIds.add(link.id);
     assert.ok(allocatedSources.has(link.source_id));
-    const candidate = candidateBySourceUuid.get(link.source_id);
-    assert.ok(sourceLocatorPairs.has(`${candidate}|${link.source_locator_key}`), `${relation.decision_id} source locator must be reviewed`);
+    assert.ok(typeof link.source_locator_key === 'string' && link.source_locator_key.trim().length > 0);
+
+    const reviewed = reviewedLinksByDecision.get(relation.decision_id);
+    assert.ok(reviewed, `${relation.decision_id} must have a reviewed source package binding`);
+    assert.equal(link.source_id, sourceUuidByCandidate.get(reviewed.source_candidate_key));
+    assert.equal(
+      relation.relation_type_id,
+      reviewed.relation_type === 'vassal_of' ? VASSAL : NOMINAL,
+      `${relation.decision_id} relation UUID must match reviewed relation type`
+    );
   }
   assert.equal(relationIds.size, 6);
   assert.equal(linkIds.size, 6);
