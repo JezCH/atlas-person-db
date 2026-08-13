@@ -63,7 +63,11 @@ function assertReleaseEnvelope(bundle, requestedReleaseId) {
   if (release.release_id !== requestedReleaseId) throw new Error("STAGE2_SCHEMA_RELEASE_ID_MISMATCH");
   if (release.status !== "RELEASE_CANDIDATE_BRANCH_ONLY_NO_PRODUCTION_MUTATION") throw new Error("STAGE2_SCHEMA_RELEASE_STATUS_INVALID");
   if (release.safety?.production_apply_authorized !== false) throw new Error("STAGE2_SCHEMA_RELEASE_SELF_AUTHORIZATION_FORBIDDEN");
-  if (release.safety?.additive_schema_only !== true || release.safety?.person_activity_data_mutation !== false ||
+  if (release.safety?.non_destructive_schema_only !== true ||
+      release.safety?.additive_objects_and_backward_compatible_relaxations_only !== true ||
+      release.safety?.legacy_source_key_nullability_relaxation !== true ||
+      release.safety?.fake_legacy_source_key_for_stage2_native_activity_forbidden !== true ||
+      release.safety?.person_activity_data_mutation !== false ||
       release.safety?.physical_person_merge !== false || release.safety?.territory_geometry_mutation !== false) {
     throw new Error("STAGE2_SCHEMA_RELEASE_SAFETY_CONTRACT_INVALID");
   }
@@ -75,7 +79,7 @@ function assertReleaseEnvelope(bundle, requestedReleaseId) {
   if (!/^sha256:[0-9a-f]{64}$/.test(String(release.baseline?.baseline_digest || ""))) {
     throw new Error("STAGE2_SCHEMA_RELEASE_BASELINE_DIGEST_INVALID");
   }
-  if (bundle.components.length !== 5) throw new Error("STAGE2_SCHEMA_RELEASE_COMPONENT_COUNT_INVALID");
+  if (bundle.components.length !== 6) throw new Error("STAGE2_SCHEMA_RELEASE_COMPONENT_COUNT_INVALID");
   return release;
 }
 
