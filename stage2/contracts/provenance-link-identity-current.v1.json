@@ -3,7 +3,9 @@
   "as_of": "2026-08-13",
   "status": "CURRENT_EXECUTION_AUTHORITY",
   "principle": "provenance join rows are assertion-specific evidence links, not independent UUID entities",
-  "activity_source_link_identity": ["person_politics_id", "source_id", "source_locator_key"],
+  "activity_source_link_identity": ["person_politics_id", "source_id"],
+  "activity_source_locator_policy": "one reviewed locator per Activity-Source pair in the current relationship schema; differing locators for the same Source across coalesced Activities are a conflict, not silently collapsed",
+  "new_stage2_assertion_source_link_policy": "new Stage 2 assertion families permit multiple locator rows per assertion/source pair and therefore include source_locator_key in the composite primary key",
   "polity_relation_source_link_identity": ["polity_relation_id", "source_id", "source_locator_key"],
   "governance_source_link_identity": ["polity_governance_period_id", "source_id", "source_locator_key"],
   "designation_source_link_identity": ["polity_designation_id", "source_id", "source_locator_key"],
@@ -14,7 +16,8 @@
     "locator_is_assertion_specific_evidence_location": true,
     "synthetic_source_link_uuid_forbidden": true,
     "runtime_source_lookup_by_title_or_url_forbidden": true,
-    "silent_locator_drop_forbidden": true
+    "silent_locator_drop_forbidden": true,
+    "activity_locator_conflict_must_fail_closed": true
   },
   "batch1_reconciliation": {
     "historical_plan": "stage2/execution/p6-correction-v2-execution-batch1.v1.json",
