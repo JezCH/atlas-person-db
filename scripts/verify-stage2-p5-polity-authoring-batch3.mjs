@@ -52,3 +52,9 @@ if (allPrepared.size !== 24 || [...manifestTargets].some((identityClass)=>!allPr
 if (Number(batch3.result?.batch_target_count) !== 5 || Number(batch3.result?.prepared_total_after_batch) !== 24 || Number(batch3.result?.combined_manifest_new_polity_target_count) !== 24 || Number(batch3.result?.remaining_new_polity_targets_after_batch) !== 0 || Number(batch3.result?.uuid_assignments) !== 0 || Number(batch3.result?.editorial_catalog_labels) !== 5 || Number(batch3.result?.people_group_contexts_separated) !== 5 || batch3.result?.production_mutation_authorized !== false) throw new Error('Batch 3 summary drift');
 
 console.log(JSON.stringify({marker:'ATLAS_P5_POLITY_AUTHORING_BATCH3_OK',batch3_prepared:5,prepared_total:24,remaining:0,people_group_boundaries_separated:5,uuid_assignments:0,production_mutation_authorized:false}, null, 2));
+
+// The final Polity-authoring batch is the natural branch-only boundary for the
+// composed P5 schema-readiness gate. The imported verifier reuses these four
+// positional arguments and resolves the reviewed Source/readiness packages by
+// their canonical repository paths.
+await import('./verify-stage2-p5-preproduction-schema-readiness.mjs');
