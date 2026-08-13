@@ -56,12 +56,18 @@ try{
     ['rules','7ca4de8f-01d4-542c-acc1-a06848c6742c'],['governs','67a57b37-1853-5f2a-b7ab-e6b2d32b56b6'],['serves','0fc4827f-8543-52f7-9e9a-3173b0c698a7'],['active_in','f33d2789-2e65-50c1-af3e-91335bcbd3ca'],['opposes','5d2d3af6-6e53-5af1-8423-f76c2263afe4'],['claims_rule','fcc652d6-8cf5-5348-9375-60b35f6e0b8c']]);
   if(personRelations.rowCount!==6||personRelations.rows.some(r=>expectedPerson.get(r.code)!==r.id)) throw new Error('Person relation catalog drift');
   const polityRelations=await client.query(`select id::text,code from atlas_v2.polity_relation_types order by code`);
-  const expectedPolity=new Map([['vassal_of','b4982965-848a-5a2b-b690-daba1d092d02'],['nominally_subordinate_to','375da950-65bc-5b81-a338-6c705f515120'],['dominion_of','c56b821b-8b21-580b-b40d-c5c87e5b26d9']]);
-  if(polityRelations.rowCount!==3||polityRelations.rows.some(r=>expectedPolity.get(r.code)!==r.id)) throw new Error('Polity relation catalog drift');
+  const expectedPolity=new Map([
+    ['vassal_of','b4982965-848a-5a2b-b690-daba1d092d02'],
+    ['nominally_subordinate_to','375da950-65bc-5b81-a338-6c705f515120'],
+    ['dominion_of','c56b821b-8b21-580b-b40d-c5c87e5b26d9'],
+    ['constituent_of','49d96667-4c87-522e-8321-a76561bd0a22'],
+    ['colonial_dependency_of','d9d8b7a5-fbb0-5bdc-ad7f-24a01ac31ca8']
+  ]);
+  if(polityRelations.rowCount!==5||polityRelations.rows.some(r=>expectedPolity.get(r.code)!==r.id)) throw new Error('Polity relation catalog drift');
 
   const ledger=await client.query(`select component_id,git_blob_sha from atlas_v2.stage2_schema_release_components where release_id=$1 order by component_id`,[release.release.release_id]);
   if(ledger.rowCount!==6) throw new Error('Stage2 release ledger incomplete');
   for(const row of ledger.rows){const expected=release.release.components.find(c=>c.id===row.component_id);if(!expected||expected.git_blob_sha!==row.git_blob_sha) throw new Error(`Stage2 release ledger SHA drift ${row.component_id}`);}
 
-  console.log(JSON.stringify({marker:'ATLAS_STAGE2_P5_ADDITIVE_SCHEMA_RELEASE_REHEARSAL_OK',release_id:release.release.release_id,components:6,first_apply:6,replay_skipped:6,person_relation_types:6,polity_relation_types:3,stage2_native_activity_legacy_key_nullable:true,fake_legacy_source_key_forbidden:true,production_mutation_authorized:false}));
+  console.log(JSON.stringify({marker:'ATLAS_STAGE2_P5_ADDITIVE_SCHEMA_RELEASE_REHEARSAL_OK',release_id:release.release.release_id,components:6,first_apply:6,replay_skipped:6,person_relation_types:6,polity_relation_types:5,stage2_native_activity_legacy_key_nullable:true,fake_legacy_source_key_forbidden:true,production_mutation_authorized:false}));
 }finally{await client.end();}
