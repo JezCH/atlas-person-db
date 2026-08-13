@@ -74,6 +74,18 @@ function applyActivityTemplate(live, template, { newFragment = false } = {}) {
   return out;
 }
 
+function normalizePolityRelationSourceLinkForExecution(relationId, raw) {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error("CORRECTION_V2_RELATION_SOURCE_LINK_REQUIRED");
+  const sourceId = String(raw.source_id || "").trim().toLowerCase();
+  const locator = String(raw.source_locator_key || "").trim();
+  if (!sourceId || !locator) throw new Error("CORRECTION_V2_RELATION_SOURCE_LINK_INVALID");
+  return {
+    polity_relation_id: relationId,
+    source_id: sourceId,
+    source_locator_key: locator
+  };
+}
+
 function synthesizeCorrectionV2Manifest(plan, snapshot) {
   if (plan?.schema !== PLAN_SCHEMA) throw new Error("CORRECTION_V2_EXECUTION_PLAN_SCHEMA_INVALID");
   if (snapshot?.schema !== SNAPSHOT_SCHEMA) throw new Error("CORRECTION_V2_SNAPSHOT_SCHEMA_INVALID");
@@ -163,11 +175,17 @@ function synthesizeCorrectionV2Manifest(plan, snapshot) {
   }
 
   for (const relation of plan.polity_relation_assertions || []) {
+    const relationId = String(relation.id || "").toLowerCase();
+    const { source_links: rawLinks = [], ...relationRow } = relation;
+    const sourceLinks = rawLinks.map((link) => normalizePolityRelationSourceLinkForExecution(relationId, link));
     operations.push({
       decision_id: relation.decision_id,
       type: "assert_polity_relation",
-      exact_before: { relation_absent_id: relation.id, source_link_ids_absent: relation.source_links.map((row) => row.id) },
-      exact_after: relation
+      exact_before: { relation_absent_id: relationId },
+      exact_after: {
+        relation: relationRow,
+        source_links: sourceLinks
+      }
     });
   }
 
@@ -189,6 +207,8 @@ function synthesizeCorrectionV2Manifest(plan, snapshot) {
       no_runtime_name_or_semantic_identity_resolution: true,
       no_silent_source_loss: true,
       no_fake_legacy_source_key: true,
+      provenance_link_identity_is_composite: true,
+      synthetic_provenance_link_uuid_forbidden: true,
       territory_geometry_mutation_forbidden: true,
       physical_person_merge_forbidden: true
     },
@@ -212,5 +232,6 @@ module.exports = Object.freeze({
   groupBy,
   assertBaselineTuple,
   applyActivityTemplate,
+  normalizePolityRelationSourceLinkForExecution,
   synthesizeCorrectionV2Manifest
 });
