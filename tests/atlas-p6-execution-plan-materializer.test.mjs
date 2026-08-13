@@ -1,7 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createRequire } from 'node:module';
 import { buildStage2P6ExecutionPackage, buildStage2P6LiteralExecutionPackage } from '../scripts/build-stage2-p6-execution-package.mjs';
 
+const require = createRequire(import.meta.url);
+const { boundaryDetail } = require('../server/atlas-p6-execution-plan-materializer.js');
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function assertUuid(value, label) {
@@ -27,6 +30,7 @@ test('P6 literal execution operands contain UUIDs rather than runtime identity n
   for (const plan of literal.plans) {
     assert.equal(plan.execution_rules.uuid_only_runtime_operands, true);
     assert.equal(plan.execution_rules.runtime_name_identity_class_and_source_key_resolution_forbidden, true);
+    assert.equal(plan.execution_rules.reviewed_assertion_locator_required, true);
     const runtimeOperands = JSON.stringify({ operations: plan.operations, companion_assertions: plan.companion_assertions });
     assert.doesNotMatch(runtimeOperands, /identity_class/i);
     assert.doesNotMatch(runtimeOperands, /candidate_key/i);
@@ -68,9 +72,32 @@ test('P6 literal execution operands contain UUIDs rather than runtime identity n
       assertUuid(assertion.subject_polity_id, 'assertion subject');
       assertUuid(assertion.object_polity_id, 'assertion object');
       assertUuid(assertion.relation_type_id, 'assertion relation');
-      assertion.source_links.forEach((source) => assertUuid(source.source_id, 'assertion source'));
+      assert.ok(assertion.source_links.length > 0, `${assertion.relation_decision_id} source links`);
+      for (const source of assertion.source_links) {
+        assertUuid(source.source_id, 'assertion source');
+        assert.ok(String(source.source_locator_key || '').trim().length > 0, `${assertion.relation_decision_id} reviewed locator`);
+      }
     }
   }
+});
+
+test('reviewed temporal boundaries retain explicit subyear precision without inventing it', () => {
+  assert.deepEqual(boundaryDetail({ year: 1867, month: 7, day: 1, granularity: 'day', certainty: 'exact', calendar: 'gregorian' }, 1867), {
+    year: 1867,
+    month: 7,
+    day: 1,
+    granularity: 'day',
+    certainty: 'exact',
+    calendar: 'gregorian'
+  });
+  assert.deepEqual(boundaryDetail({ year: 191, month: null, day: null, granularity: 'year', certainty: 'exact', calendar: 'unspecified_historical' }, 191), {
+    year: 191,
+    month: null,
+    day: null,
+    granularity: 'year',
+    certainty: 'exact',
+    calendar: 'unspecified_historical'
+  });
 });
 
 test('reviewed Ma Teng and Lu Bu adapters are literalized without fabricated subyear precision', () => {
