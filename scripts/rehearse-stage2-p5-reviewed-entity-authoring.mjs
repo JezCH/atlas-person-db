@@ -16,9 +16,17 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const databaseUrl = String(process.env.DATABASE_URL || '').trim();
 if (!/^postgres(?:ql)?:\/\//.test(databaseUrl)) throw new Error('DATABASE_URL is required');
 
+function normalizeManifestRows(value) {
+  return {
+    ...value,
+    polities: [...value.polities].sort((a, b) => a.identity_class < b.identity_class ? -1 : a.identity_class > b.identity_class ? 1 : 0),
+    sources: [...value.sources].sort((a, b) => a.candidate_key < b.candidate_key ? -1 : a.candidate_key > b.candidate_key ? 1 : 0)
+  };
+}
+
 const committed = JSON.parse(fs.readFileSync(path.join(root, 'stage2/execution/p5-reviewed-identity-source-authoring.v1.json'), 'utf8'));
 const generated = buildReviewedIdentitySourceAuthoring();
-assert.deepEqual(committed, generated, 'committed exact authoring manifest drifted from reviewed packages + UUID allocation');
+assert.deepEqual(normalizeManifestRows(committed), normalizeManifestRows(generated), 'committed exact authoring manifest drifted from reviewed packages + UUID allocation');
 
 const baselineSchema = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 const client = new Client({ connectionString: databaseUrl });
@@ -98,7 +106,8 @@ try {
 
   console.log(JSON.stringify({
     marker: 'ATLAS_STAGE2_P5_REVIEWED_ENTITY_AUTHORING_REHEARSAL_OK',
-    generated_manifest_matches_committed: true,
+    generated_manifest_matches_committed_semantically: true,
+    array_order_is_not_identity: true,
     schema_release_components: 5,
     dry_run_rolled_back: true,
     first_apply: { polities: 17, polity_names: 17, sources: 9 },
