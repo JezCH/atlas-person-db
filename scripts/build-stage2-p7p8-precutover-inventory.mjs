@@ -12,7 +12,8 @@ const frontierPath = path.resolve(root, arg('--frontier', 'artifacts/stage2-base
 const relationCatalogPath = path.resolve(root, arg('--relation-catalog', 'stage2/catalogs/relation-types.v1.json'));
 const explicitDecisionPaths = [
   path.resolve(root, 'stage2/integration/p7-explicit-person-relation-decisions-batch1.v1.json'),
-  path.resolve(root, 'stage2/integration/p7-explicit-person-relation-decisions-batch2.v1.json')
+  path.resolve(root, 'stage2/integration/p7-explicit-person-relation-decisions-batch2.v1.json'),
+  path.resolve(root, 'stage2/integration/p7-explicit-person-relation-decisions-batch3.v1.json')
 ];
 const outPath = path.resolve(root, arg('--out', 'artifacts/stage2-p7p8-precutover-inventory.json'));
 const relationOutPath = path.resolve(root, arg('--relation-out', 'artifacts/stage2-p7a-reviewed-relation-backfill.json'));
@@ -61,7 +62,7 @@ for (const packageJson of explicitDecisionPackages) {
     explicitBatchByActivity.set(activityId, packageJson.batch_id);
   }
 }
-if (explicitByActivity.size !== 30) throw new Error(`P7P8_EXPLICIT_DECISION_COUNT_DRIFT:${explicitByActivity.size}`);
+if (explicitByActivity.size !== 35) throw new Error(`P7P8_EXPLICIT_DECISION_COUNT_DRIFT:${explicitByActivity.size}`);
 
 const relationResidual = residualByDependency.relation_type;
 const relationResidualIds = new Set(relationResidual.map((row) => String(row.activity_id).toLowerCase()));
@@ -135,7 +136,7 @@ for (const row of relationResidual) {
 }
 relationReady.sort((a,b) => a.activity_id.localeCompare(b.activity_id));
 relationReviewRequired.sort((a,b) => a.activity_id.localeCompare(b.activity_id));
-if (explicitOverlayCount !== 30) throw new Error(`P7P8_EXPLICIT_OVERLAY_NOT_CONSUMED:${explicitOverlayCount}`);
+if (explicitOverlayCount !== 35) throw new Error(`P7P8_EXPLICIT_OVERLAY_NOT_CONSUMED:${explicitOverlayCount}`);
 
 const relationPackage = {
   schema: 'atlas-stage2-p7a-reviewed-relation-backfill/v1',
