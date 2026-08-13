@@ -108,6 +108,13 @@ jobs:
           mkdir -p artifacts
           npm run test:stage2-baseline-a-ledger 2>&1 | tee artifacts/stage2-baseline-a-ledger.log
 
+      - name: Build effective politic-resolution frontier
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/build-stage2-baseline-a-effective-p5p6-frontier.mjs
+          node scripts/verify-stage2-baseline-a-effective-p5p6-frontier.mjs
+
       - name: Upload Baseline A ledger failure diagnostics
         if: failure() && steps.baseline-ledger.outcome == 'failure'
         uses: actions/upload-artifact@v4
@@ -132,6 +139,7 @@ jobs:
             artifacts/stage2-baseline-a-work-queues-summary.json
             artifacts/stage2-baseline-a-person-duplicate-candidates.json
             artifacts/stage2-baseline-a-p5p6-execution-manifest.json
+            artifacts/stage2-baseline-a-effective-p5p6-frontier.json
           if-no-files-found: error
           retention-days: 30
 
