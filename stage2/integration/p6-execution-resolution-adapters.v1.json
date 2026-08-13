@@ -1,0 +1,34 @@
+{
+  "schema":"atlas-stage2-p6-execution-resolution-adapters/v1",
+  "as_of":"2026-08-14",
+  "status":"REVIEWED_BRANCH_ONLY_NO_PRODUCTION_MUTATION",
+  "baseline":{"deployment_sha":"ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79","baseline_digest":"sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27"},
+  "rules":{"historical_accuracy_over_completion":true,"subyear_precision_fabrication_forbidden":true,"new_fragment_relation_required":true,"uncertain_authority_uses_non_authority_relation":true,"production_mutation_authorized":false},
+  "adapters":[
+    {
+      "case_id":"p6b10_ma_teng_multiphase_scaffold",
+      "source_contract":"stage2/authoring/p5-source-authoring-supplement.v1.json",
+      "source_uuid":"e40dff1b-3b9d-49ed-b928-f5608152ac5d",
+      "survivor_fragment_id":"ma_teng_189_207_western_context",
+      "fragments":[
+        {"id":"ma_teng_189_207_western_context","activity_uuid":"42274e4c-af35-503f-a14f-e7460489b252","polity_uuid":"de6dd298-a220-4531-b44e-3f3edb1b5eae","relation_type_uuid":"f33d2789-2e65-50c1-af3e-91335bcbd3ca","role_uuid":"a33083bd-9e14-5381-ab33-2d75738f262c","period_basis_uuid":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","start_year":189,"end_year":207,"certainty":"uncertain","copy_legacy_source_links":true,"source_locator_key":"Sanguozhi 36 / Dianlue: Ma Teng western career before Jian'an 13 court summons"},
+        {"id":"ma_teng_208_212_eastern_han_service","activity_uuid":"7fd8007d-18dd-5953-b9fb-2f94b50a384a","polity_uuid":"3a29a08a-d111-50d5-916f-f5c11b5eabaf","relation_type_uuid":"0fc4827f-8543-52f7-9e9a-3173b0c698a7","role_uuid":"c48b2b1b-ff24-54ec-ba48-d2e00db0872d","period_basis_uuid":"e78bcf72-c195-53ca-bf05-e909460301ee","start_year":208,"end_year":212,"certainty":"exact","copy_legacy_source_links":false,"source_locator_key":"Sanguozhi 36 / Dianlue: Jian'an 13 Weiwei court service"}
+      ],
+      "gap_overlap_policy":"NO_YEAR_GAP_OR_OVERLAP_NO_SUBYEAR_CLAIM"
+    },
+    {
+      "case_id":"p6b11_lu_bu_five_phase_scaffold",
+      "source_contract":"stage2/execution/p5-reviewed-identity-source-authoring.v1.json",
+      "source_uuid":"41cb0494-17f0-4196-bdae-4ca0c1eeb4e6",
+      "survivor_fragment_id":"lu_bu_196_198_xu_authority",
+      "fragments":[
+        {"id":"lu_bu_192_han_service","activity_uuid":"6332bef2-7f0c-5dfd-b4bb-b896bf279651","polity_uuid":"3a29a08a-d111-50d5-916f-f5c11b5eabaf","relation_type_uuid":"0fc4827f-8543-52f7-9e9a-3173b0c698a7","role_uuid":"a33083bd-9e14-5381-ab33-2d75738f262c","period_basis_uuid":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","start_year":192,"end_year":192,"certainty":"exact","copy_legacy_source_links":false,"source_locator_key":"Hou Hanshu Lu Bu biography: 192 Wang Yun service"},
+        {"id":"lu_bu_193_mobile_context","activity_uuid":"0c66f0f1-1bdb-5cf8-baed-88cb5ed14bf1","polity_uuid":"3a29a08a-d111-50d5-916f-f5c11b5eabaf","relation_type_uuid":"f33d2789-2e65-50c1-af3e-91335bcbd3ca","role_uuid":"a33083bd-9e14-5381-ab33-2d75738f262c","period_basis_uuid":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","start_year":193,"end_year":193,"certainty":"uncertain","copy_legacy_source_links":false,"source_locator_key":"Hou Hanshu Lu Bu biography: itinerant phase before Yan takeover"},
+        {"id":"lu_bu_194_195_yan_authority","activity_uuid":"889f5fa8-49e2-5445-95aa-0e3d38805279","polity_uuid":"18eb14e9-a2ea-4ead-80e2-6261f672333d","relation_type_uuid":"7ca4de8f-01d4-542c-acc1-a06848c6742c","role_uuid":"a33083bd-9e14-5381-ab33-2d75738f262c","period_basis_uuid":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","start_year":194,"end_year":195,"certainty":"exact","copy_legacy_source_links":false,"source_locator_key":"Hou Hanshu Lu Bu biography: Yan authority from 194 through defeat"},
+        {"id":"lu_bu_196_198_xu_authority","activity_uuid":"5b4fa9a3-ca6f-5e6b-a417-874f31b10650","polity_uuid":"63e805eb-a7b5-4747-b980-d52333c741d9","relation_type_uuid":"7ca4de8f-01d4-542c-acc1-a06848c6742c","role_uuid":"a33083bd-9e14-5381-ab33-2d75738f262c","period_basis_uuid":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","start_year":196,"end_year":198,"certainty":"exact","copy_legacy_source_links":true,"source_locator_key":"Hou Hanshu Lu Bu biography: Xu authority and 198 destruction"}
+      ],
+      "gap_overlap_policy":"NO_YEAR_GAP_OR_OVERLAP_NO_SUBYEAR_CLAIM"
+    }
+  ],
+  "result":{"adapter_count":2,"historical_execution_blockers_remaining":0,"new_activity_uuid_assignments":4,"new_role_prerequisites":1,"production_mutation_authorized":false}
+}
