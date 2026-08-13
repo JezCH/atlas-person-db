@@ -228,3 +228,20 @@ jobs:
           path: artifacts/stage2-p6-correction-v2-assertions.log
           if-no-files-found: error
           retention-days: 7
+
+      - name: Rehearse Stage 2 native new Person authoring lifecycle
+        id: new-person-authoring-gate
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p artifacts
+          node scripts/rehearse-stage2-native-new-person-authoring.mjs 2>&1 | tee artifacts/stage2-native-new-person-authoring.log
+
+      - name: Upload new Person authoring gate failure diagnostics
+        if: failure() && steps.new-person-authoring-gate.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-stage2-new-person-authoring-failure-${{ github.sha }}
+          path: artifacts/stage2-native-new-person-authoring.log
+          if-no-files-found: error
+          retention-days: 7
