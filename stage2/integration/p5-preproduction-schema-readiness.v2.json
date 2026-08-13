@@ -19,6 +19,8 @@
     "reviewed_polity_relation_assertions": 10,
     "relation_source_candidates": 9,
     "literal_relation_source_uuid_assignments": 9,
+    "supplemental_reviewed_source_uuid_assignments": 10,
+    "total_reviewed_new_source_uuid_assignments": 19,
     "relation_source_links": 11,
     "effective_correction_v2_activities": 54,
     "completed_prebinding_activities": 54,
@@ -32,6 +34,7 @@
     "politic_amendments": "stage2/integration/baseline-a-politic-resolution-amendments.v1.json",
     "p6_closure": "stage2/integration/p6-effective-prebinding-closure.v1.json",
     "literal_identity_allocations": "stage2/execution/p6-execution-identity-allocations.v1.json",
+    "supplemental_reviewed_sources": "stage2/authoring/p5-source-authoring-supplement.v1.json",
     "exact_entity_source_authoring": "stage2/execution/p5-reviewed-identity-source-authoring.v1.json",
     "schema_release": "stage2/releases/p5-additive-schema-release.v1.json",
     "correction_v2_contract": "stage2/contracts/correction-v2-current.v1.json"
@@ -58,7 +61,9 @@
   "exact_entity_source_authoring": {
     "new_polity_rows": 17,
     "new_preferred_polity_name_rows": 17,
-    "new_bibliographic_source_rows": 9,
+    "new_bibliographic_source_rows": 19,
+    "base_relation_source_rows": 9,
+    "supplemental_reviewed_source_rows": 10,
     "literal_uuid_only": true,
     "runtime_name_identity_class_or_url_resolution_forbidden": true,
     "dry_run_rehearsed": true,
