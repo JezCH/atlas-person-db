@@ -50,7 +50,7 @@ Only after validated Baseline A v2:
 
 - fresh Stage 2 integration branch from updated `main`;
 - reviewed surviving UUID and Polity name-kind bindings;
-- additive Stage 2 schema, including People/Event and semantic name-kind capabilities;
+- non-destructive Stage 2 schema transition: additive objects plus reviewed backward-compatible constraint relaxation for Stage 2-native Activity provenance;
 - correction v2;
 - historical/People/Event/provenance backfill;
 - P8 semantic gate;
@@ -95,7 +95,7 @@ Train 2:
 
 ```text
 exact SHA verification
-→ additive migration
+→ non-destructive schema transition
 → reviewed identity/name-kind binding
 → structural + People/Event + historical backfill
 → P8 semantic cutover gate
@@ -159,6 +159,8 @@ The ignored-build classifier is optimization, not correctness. Uncertainty defau
 
 Stage 2 additive schema release is never triggered automatically by `push` or `pull_request`.
 
+The release currently contains six ordered non-destructive components: five additive Stage 2 capability components plus one backward-compatible provenance constraint relaxation. The sixth component makes `person_politics_v2.legacy_source_key` nullable for genuinely Stage 2-native Activity fragments while keeping existing imported keys unique and forbidding blank non-null values. New fragments must use normalized Source links and Correction v2 audit evidence; **inventing a fake legacy import key is forbidden**.
+
 The Production migration path is intentionally separate from ordinary authoring and correction transports. It may run only through `.github/workflows/atlas-stage2-schema-release.yml` by explicit `workflow_dispatch` on `main`, with the GitHub `production` environment and a dedicated OIDC audience. The operator must provide the exact reviewed `release_id` and type `APPLY:<release_id>` exactly.
 
 The server endpoint then independently requires all of the following before opening a write path:
@@ -170,6 +172,6 @@ The server endpoint then independently requires all of the following before open
 - the live Baseline A v2 digest and authoritative 338 Activity / 302 Person / 212 Polity / 20 Source cardinalities still match the release baseline;
 - any existing release-ledger rows match the exact component SHA and contain no unknown component.
 
-The workflow performs a read-only live preflight first. Only after that preflight succeeds may it call `apply`. Each schema component is atomic and restart-safe; a retry skips only an already-recorded component with the exact same blob SHA. After apply, the Baseline A digest must remain unchanged and all five release components must be present in the release ledger.
+The workflow performs a read-only live preflight first. Only after that preflight succeeds may it call `apply`. Each schema component is atomic and restart-safe; a retry skips only an already-recorded component with the exact same blob SHA. After apply, the Baseline A digest must remain unchanged and all six release components must be present in the release ledger.
 
 The release JSON intentionally keeps `production_apply_authorized: false`: a checked-in data file cannot authorize its own Production execution. Authorization comes only from the exact-SHA manual workflow + typed approval + dedicated OIDC + live preflight combination.
