@@ -194,3 +194,20 @@ jobs:
           path: artifacts/stage2-p5-entity-authoring.log
           if-no-files-found: error
           retention-days: 7
+
+      - name: Rehearse Correction v2 engine on final P5 schema
+        id: p6-correction-v2-engine
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p artifacts
+          node scripts/rehearse-stage2-correction-v2-engine.mjs 2>&1 | tee artifacts/stage2-p6-correction-v2-engine.log
+
+      - name: Upload Correction v2 engine failure diagnostics
+        if: failure() && steps.p6-correction-v2-engine.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-stage2-p6-correction-v2-engine-failure-${{ github.sha }}
+          path: artifacts/stage2-p6-correction-v2-engine.log
+          if-no-files-found: error
+          retention-days: 7
