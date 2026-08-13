@@ -6,6 +6,7 @@ import { buildStage2P6ExecutionPackage, buildStage2P6LiteralExecutionPackage } f
 const require = createRequire(import.meta.url);
 const { boundaryDetail } = require('../server/atlas-p6-execution-plan-materializer.js');
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const BASELINE_TERM_PERIOD_BASIS_ID = 'e78bcf72-81e3-5db8-a76a-8c2ca9c6d745';
 
 function assertUuid(value, label) {
   assert.match(String(value || ''), UUID_RE, label);
@@ -112,6 +113,7 @@ test('reviewed Ma Teng and Lu Bu adapters are literalized without fabricated sub
   const central = maTeng.fragments.find((row) => row.activity_start === 208);
   assert.equal(central.activity_id, '7fd8007d-18dd-5953-b9fb-2f94b50a384a');
   assert.equal(central.role_id, 'c48b2b1b-ff24-54ec-ba48-d2e00db0872d');
+  assert.equal(central.period_basis_id, BASELINE_TERM_PERIOD_BASIS_ID, 'Weiwei central service reuses the existing reviewed term PeriodBasis');
   for (const fragment of [...maTeng.fragments, ...luBu.fragments]) {
     assert.equal(fragment.activity_start_detail?.month ?? null, null);
     assert.equal(fragment.activity_start_detail?.day ?? null, null);
