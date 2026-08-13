@@ -61,3 +61,4 @@ await import('./verify-stage2-correction-v2-prebinding-batch3.mjs');
 await import('./verify-stage2-correction-v2-prebinding-batch4.mjs');
 await import('./verify-stage2-correction-v2-prebinding-batch5.mjs');
 await import('./verify-stage2-correction-v2-prebinding-batch6.mjs');
+await import('./verify-stage2-correction-v2-prebinding-batch7.mjs');
