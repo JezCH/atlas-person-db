@@ -5,7 +5,8 @@ const path = require("node:path");
 
 const AUTHORING_MIGRATION_PATHS = Object.freeze([
   path.resolve(__dirname, "../db/migrations/20260811_authoring_manifest_runs.sql"),
-  path.resolve(__dirname, "../db/migrations/20260811_authoring_result_snapshot.sql")
+  path.resolve(__dirname, "../db/migrations/20260811_authoring_result_snapshot.sql"),
+  path.resolve(__dirname, "../db/migrations/20260814_authoring_ledger_live_reference_lifecycle.sql")
 ]);
 
 function readAuthoringMigrations({ readFile = fs.readFileSync } = {}) {
