@@ -1,0 +1,30 @@
+{
+  "schema": "atlas-stage2-provenance-link-identity/v1",
+  "as_of": "2026-08-13",
+  "status": "CURRENT_EXECUTION_AUTHORITY",
+  "principle": "provenance join rows are assertion-specific evidence links, not independent UUID entities",
+  "activity_source_link_identity": ["person_politics_id", "source_id", "source_locator_key"],
+  "polity_relation_source_link_identity": ["polity_relation_id", "source_id", "source_locator_key"],
+  "governance_source_link_identity": ["polity_governance_period_id", "source_id", "source_locator_key"],
+  "designation_source_link_identity": ["polity_designation_id", "source_id", "source_locator_key"],
+  "polity_identity_relation_source_link_identity": ["polity_identity_relation_id", "source_id", "source_locator_key"],
+  "rules": {
+    "assertion_uuid_is_identity": true,
+    "source_uuid_is_identity": true,
+    "locator_is_assertion_specific_evidence_location": true,
+    "synthetic_source_link_uuid_forbidden": true,
+    "runtime_source_lookup_by_title_or_url_forbidden": true,
+    "silent_locator_drop_forbidden": true
+  },
+  "batch1_reconciliation": {
+    "historical_plan": "stage2/execution/p6-correction-v2-execution-batch1.v1.json",
+    "superseded_field": "polity_relation_assertions[*].source_links[*].id",
+    "superseded_declared_uuid_count": 6,
+    "current_executable_source_link_uuid_count": 0,
+    "required_transform": "strip historical source-link id fields before final Correction v2 manifest hashing and execution",
+    "relation_uuid_allocations_remain_valid": true,
+    "source_uuid_allocations_remain_valid": true,
+    "source_locator_keys_remain_valid": true
+  },
+  "production_mutation_authorized": false
+}
