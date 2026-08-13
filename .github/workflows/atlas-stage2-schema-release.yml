@@ -50,12 +50,15 @@ jobs:
             .prerequisites.effective_prebinding_complete == true and
             .prerequisites.effective_activity_count == 54 and
             .prerequisites.remaining_activity_count == 0 and
-            .safety.additive_schema_only == true and
+            .safety.non_destructive_schema_only == true and
+            .safety.additive_objects_and_backward_compatible_relaxations_only == true and
+            .safety.legacy_source_key_nullability_relaxation == true and
+            .safety.fake_legacy_source_key_for_stage2_native_activity_forbidden == true and
             .safety.person_activity_data_mutation == false and
             .safety.physical_person_merge == false and
             .safety.territory_geometry_mutation == false and
             .safety.production_apply_authorized == false and
-            (.components | length) == 5
+            (.components | length) == 6
           ' "${release_path}" >/dev/null
 
       - name: Preflight exact live Baseline A and release ledger, then apply
@@ -127,8 +130,8 @@ jobs:
             .release_id == $release_id and
             .baseline_digest_before == .baseline_digest_after and
             .ledger.complete == true and
-            (.ledger.applied | length) == 5 and
-            ((.applied | length) + (.skipped | length)) == 5
+            (.ledger.applied | length) == 6 and
+            ((.applied | length) + (.skipped | length)) == 6
           ' "${apply}" >/dev/null
           jq -n --slurpfile preflight "${preflight}" --slurpfile apply "${apply}" \
             '{deployment_sha:env.GITHUB_SHA,release_id:env.REQUESTED_RELEASE_ID,preflight:$preflight[0],apply:$apply[0]}' \
