@@ -10,6 +10,7 @@
   "relation_semantics_contract": "docs/audits/RELATION_SEMANTICS_CONTRACT_V1_2026-08-12.md",
   "politic_resolution_contract": "stage2/contracts/politic-resolution-current.v1.json",
   "source_authoring": "stage2/authoring/p7-reviewed-relation-sources.v1.json",
+  "execution_plan": "stage2/execution/p7-relation-resolution-execution.v1.json",
   "rules": {
     "single_relation_flattening_forbidden": true,
     "only_source_backed_phase_boundaries_may_execute": true,
@@ -39,7 +40,7 @@
         {"start_year":1560,"end_year":1563,"relation_code":"governs","relation_type_id":"67a57b37-1853-5f2a-b7ab-e6b2d32b56b6","basis":"Reviewed regency during Charles IX's minority; British Museum dates the regency 1560-63."},
         {"start_year":1564,"end_year":1589,"relation_code":"active_in","relation_type_id":"f33d2789-2e65-50c1-af3e-91335bcbd3ca","basis":"Continued influential queen-mother/court role after the formal regency; do not stretch governs across the remainder of life."}
       ],
-      "execution_status": "REVIEWED_PHASE_MODEL_AWAITING_LITERAL_FRAGMENT_UUIDS"
+      "execution_status": "LITERAL_EXECUTION_PLAN_READY_BRANCH_ONLY"
     },
     {
       "activity_id": "7981dd26-4200-57d9-b4d4-bbd97f13e28f",
@@ -63,7 +64,7 @@
         {"start_year":1861,"end_year":1865,"relation_code":"serves","relation_type_id":"0fc4827f-8543-52f7-9e9a-3173b0c698a7","basis":"NPS records volunteering shortly after Civil War outbreak and subsequent Union Army nurse/scout/spy/cook service; year-level phase preserves the reviewed Civil War service interval without inventing a false exact enlistment date."},
         {"start_year":1866,"end_year":1913,"relation_code":"active_in","relation_type_id":"f33d2789-2e65-50c1-af3e-91335bcbd3ca","basis":"Postwar humanitarian and suffrage activism belongs to U.S. civic context without state service or rule."}
       ],
-      "execution_status": "REVIEWED_PHASE_MODEL_AWAITING_LITERAL_FRAGMENT_UUIDS"
+      "execution_status": "LITERAL_EXECUTION_PLAN_READY_BRANCH_ONLY"
     },
     {
       "activity_id": "dee419da-a75b-5624-8048-c4fbc422a056",
@@ -89,14 +90,16 @@
       ],
       "known_absent_from_lu_relation": {"start_year":-496,"end_year":-485,"reason":"Confucius traveled among Wei, Song, Chen, Cai, Chu and other states; do not stretch the Lu Activity across this exile."},
       "unresolved_authoring_followup": "Interstate travel contexts may be authored later as source-backed Activities; omission is preferable to inventing exact state-by-state intervals.",
-      "execution_status": "REVIEWED_PHASE_MODEL_AWAITING_LITERAL_FRAGMENT_UUIDS"
+      "execution_status": "LITERAL_EXECUTION_PLAN_READY_BRANCH_ONLY"
     }
   ],
   "result": {
     "case_count": 3,
     "phase_count": 9,
     "unresolved_relation_decision_count": 0,
-    "literal_fragment_uuid_allocations_complete": false,
+    "literal_fragment_uuid_allocations_complete": true,
+    "literal_new_activity_uuid_count": 6,
+    "execution_plan_ready": true,
     "production_mutation_authorized": false
   }
 }
