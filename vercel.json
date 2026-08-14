@@ -2,6 +2,14 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "ignoreCommand": "node scripts/vercel-ignore-build.mjs",
+  "functions": {
+    "api/atlas-stage2-schema-release.js": {
+      "includeFiles": "{stage2/**,db/proposals/**}"
+    },
+    "api/atlas-stage2-train2-release.js": {
+      "includeFiles": "{stage2/**,db/proposals/**}"
+    }
+  },
   "headers": [
     {
       "source": "/(.*)\\.html",
