@@ -26,6 +26,7 @@ const apiRoutes = [...jsFiles].filter((p) => /^api\/[^/]+\.js$/.test(p)).sort();
 const intendedApiRoutes = [
   'api/atlas-audit-inventory.js',
   'api/atlas-authoring-apply.js',
+  'api/atlas-authoring.js',
   'api/atlas-correction-apply.js',
   'api/atlas-duplicate-review.js',
   'api/atlas-identity.js',
