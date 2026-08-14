@@ -98,10 +98,11 @@ async function inspectAuthoringReadiness(client) {
     else throw error;
   }
 
-  const [core, p9] = await Promise.all([
-    inspectCoreAuthoringSchema(client),
-    inspectP9Cutover(client)
-  ]);
+  // pg.Client serializes work internally today, but concurrent client.query()
+  // calls are deprecated and will become unsafe in pg@9. This readiness path
+  // does not need parallelism, so keep one client strictly sequential.
+  const core = await inspectCoreAuthoringSchema(client);
+  const p9 = await inspectP9Cutover(client);
   const merge = personMergeExecutionState();
   const p9Ready = p9.old_index_present === false
     && p9.new_index_present === true
