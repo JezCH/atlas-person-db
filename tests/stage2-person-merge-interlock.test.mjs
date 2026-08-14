@@ -94,7 +94,7 @@ test('admin UI consumes merge lifecycle state and does not offer physical execut
 
 test('current authoring surfaces reject historical year zero instead of documenting a fake unknown value', () => {
   assert.match(adminSource, /start === 0 \|\| end === 0/);
-  assert.match(authoringReadme, /Historical year 0 is forbidden/);
+  assert.match(authoringReadme, /Historical year `?0`? is forbidden/);
   assert.doesNotMatch(authoringReadme, /"activity_start": 0/);
   assert.doesNotMatch(authoringReadme, /"activity_end": 0/);
 });

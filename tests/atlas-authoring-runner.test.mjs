@@ -101,22 +101,23 @@ test('GitHub apply workflow accepts only newly changed reviewed Stage 2 native v
   assert.match(workflowSource, /activity\.period_basis_id/);
   assert.match(workflowSource, /activity\.polity_binding\.mode/);
   assert.match(workflowSource, /activity\.role_binding\.mode/);
-  assert.match(workflowSource, /Skipping legacy\/non-native authoring manifest/);
+  assert.match(workflowSource, /Rejected non-native authoring manifest/);
   assert.doesNotMatch(workflowSource, /replaying all approved manifests idempotently/i);
   assert.match(workflowSource, /group: atlas-authoring-production/);
   assert.match(workflowSource, /id-token: write/);
   assert.match(workflowSource, /ACTIONS_ID_TOKEN_REQUEST_URL/);
   assert.match(workflowSource, /atlas-person-db\.vercel\.app\/api\/atlas-authoring-apply/);
-  assert.match(workflowSource, /DEPLOYMENT_SHA_MISMATCH/);
+  assert.match(handlerSource, /AUTHORING_RUNTIME_SHA_MISMATCH/);
   assert.doesNotMatch(workflowSource, /secrets\.SUPABASE_DB_URL|SUPABASE_DB_URL/);
   assert.doesNotMatch(workflowSource, /scripts\/apply-authoring-manifest\.mjs/);
 });
 
-test('GitHub apply workflow treats Vercel route propagation as transient but fails closed on other responses', () => {
-  assert.match(workflowSource, /\[\[ "\$status" == "404" \]\]/);
-  assert.match(workflowSource, /Production route for \$\{GITHUB_SHA\} is not live yet/);
-  assert.match(workflowSource, /\$status" == "409" && "\$code" == "DEPLOYMENT_SHA_MISMATCH"/);
+test('GitHub apply workflow retries only transient Vercel readiness 404 and fails closed on apply errors', () => {
   assert.match(workflowSource, /for attempt in \$\(seq 1 60\)/);
+  assert.match(workflowSource, /\[\[ "\$status" == "404" \]\]/);
+  assert.match(workflowSource, /Production authoring readiness route is not live yet/);
   assert.match(workflowSource, /sleep 10/);
+  assert.match(workflowSource, /Authoring readiness failed: HTTP \$\{status\}/);
   assert.match(workflowSource, /Authoring apply failed: HTTP \$\{status\}, code \$\{code\}/);
+  assert.match(handlerSource, /AUTHORING_RUNTIME_SHA_MISMATCH/);
 });

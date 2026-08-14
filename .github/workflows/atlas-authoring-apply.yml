@@ -94,15 +94,30 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          status="$(curl --silent --show-error \
-            --output /tmp/atlas-authoring-evidence/readiness.json \
-            --write-out '%{http_code}' \
-            "$ATLAS_AUTHORING_ENDPOINT")"
-          if [[ "$status" != "200" ]]; then
+          status=""
+          for attempt in $(seq 1 60); do
+            status="$(curl --silent --show-error \
+              --output /tmp/atlas-authoring-evidence/readiness.json \
+              --write-out '%{http_code}' \
+              "$ATLAS_AUTHORING_ENDPOINT")"
+            if [[ "$status" == "200" ]]; then
+              break
+            fi
+            if [[ "$status" == "404" ]]; then
+              if [[ "$attempt" == "60" ]]; then
+                cat /tmp/atlas-authoring-evidence/readiness.json >&2 || true
+                echo "Production authoring readiness route is not live yet after 60 attempts." >&2
+                exit 1
+              fi
+              echo "Production authoring readiness route is not live yet (attempt ${attempt}/60); retrying in 10s."
+              sleep 10
+              continue
+            fi
             cat /tmp/atlas-authoring-evidence/readiness.json >&2 || true
             echo "Authoring readiness failed: HTTP ${status}" >&2
             exit 1
-          fi
+          done
+
           jq -e --argjson version "$ATLAS_AUTHORING_TRANSPORT_VERSION" '
             .ok==true
             and .marker=="ATLAS_AUTHORING_TRANSPORT_V2"
