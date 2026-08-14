@@ -8,6 +8,7 @@ const ledgerPath = path.resolve(root, arg('--ledger', 'artifacts/stage2-baseline
 const p6Path = path.resolve(root, arg('--p6', 'artifacts/stage2-baseline-a-effective-p5p6-frontier.json'));
 const p7Path = path.resolve(root, arg('--p7', 'artifacts/stage2-p7a-reviewed-relation-backfill.json'));
 const batch4Path = path.resolve(root, 'stage2/integration/p7-explicit-person-relation-decisions-batch4.v1.json');
+const batch5Path = path.resolve(root, 'stage2/integration/p7-explicit-person-relation-decisions-batch5.v1.json');
 const multiphasePath = path.resolve(root, 'stage2/integration/p7-multiphase-person-relation-decisions.v1.json');
 const outPath = path.resolve(root, arg('--out', 'artifacts/stage2-full-relation-coverage.json'));
 
@@ -29,17 +30,24 @@ assign('active_in', ['Great Royal Wife','Philosopher, educator and political thi
 assign('opposes', ['Religious leader and rebel commander','Nationalist, writer and reformist','Pirate leader']);
 
 export function buildStage2FullRelationCoverage({ writeOutput = true } = {}) {
-  const ledger = readJson(ledgerPath), p6 = readJson(p6Path), p7 = readJson(p7Path), batch4 = readJson(batch4Path), multiphase = readJson(multiphasePath);
+  const ledger = readJson(ledgerPath), p6 = readJson(p6Path), p7 = readJson(p7Path), batch4 = readJson(batch4Path), batch5 = readJson(batch5Path), multiphase = readJson(multiphasePath);
   if (ledger?.schema !== 'atlas-stage2-baseline-a-master-ledger/v2' || ledger?.baseline?.deployment_sha !== BASELINE_SHA || ledger?.baseline?.baseline_digest !== BASELINE_DIGEST) throw new Error('FULL_RELATION_LEDGER_BASELINE_DRIFT');
   if (p6?.baseline?.deployment_sha !== BASELINE_SHA || p6?.baseline?.baseline_digest !== BASELINE_DIGEST) throw new Error('FULL_RELATION_P6_BASELINE_DRIFT');
   if (p7?.baseline?.deployment_sha !== BASELINE_SHA || p7?.baseline?.baseline_digest !== BASELINE_DIGEST) throw new Error('FULL_RELATION_P7_BASELINE_DRIFT');
+  if (batch5?.baseline?.deployment_sha !== BASELINE_SHA || batch5?.baseline?.baseline_digest !== BASELINE_DIGEST) throw new Error('FULL_RELATION_BATCH5_BASELINE_DRIFT');
 
   const p6Ids = new Set((p6.effective_correction_activities || []).map((row) => String(row.activity_id).toLowerCase()));
   const p7ById = new Map((p7.rows || []).map((row) => [String(row.activity_id).toLowerCase(), row]));
   const specialById = new Map();
-  for (const row of batch4.decisions || []) specialById.set(String(row.activity_id).toLowerCase(), { kind:'P7_DIRECT_REVIEW', relation_code:row.relation_code, relation_type_id:row.relation_type_id, authority:row.authority });
-  for (const row of multiphase.cases || []) specialById.set(String(row.activity_id).toLowerCase(), { kind:'P7_MULTIPHASE_REVIEW', phases:row.phases, authority:row.authority });
-  if (p6Ids.size !== 54 || p7ById.size !== 123 || specialById.size !== 4) throw new Error(`FULL_RELATION_AUTHORITY_COUNT_DRIFT:${p6Ids.size}:${p7ById.size}:${specialById.size}`);
+  const addSpecial = (row, payload) => {
+    const id = String(row.activity_id).toLowerCase();
+    if (specialById.has(id)) throw new Error(`FULL_RELATION_SPECIAL_DUPLICATE:${id}`);
+    specialById.set(id, payload);
+  };
+  for (const row of batch4.decisions || []) addSpecial(row, { kind:'P7_DIRECT_REVIEW', relation_code:row.relation_code, relation_type_id:row.relation_type_id, authority:row.authority });
+  for (const row of batch5.decisions || []) addSpecial(row, { kind:'P7_DIRECT_REVIEW', relation_code:row.relation_code, relation_type_id:row.relation_type_id, authority:row.authority });
+  for (const row of multiphase.cases || []) addSpecial(row, { kind:'P7_MULTIPHASE_REVIEW', phases:row.phases, authority:row.authority });
+  if (p6Ids.size !== 54 || p7ById.size !== 123 || specialById.size !== 12) throw new Error(`FULL_RELATION_AUTHORITY_COUNT_DRIFT:${p6Ids.size}:${p7ById.size}:${specialById.size}`);
   for (const id of p6Ids) if (p7ById.has(id) || specialById.has(id)) throw new Error(`FULL_RELATION_P6_P7_OVERLAP:${id}`);
   for (const id of p7ById.keys()) if (specialById.has(id)) throw new Error(`FULL_RELATION_P7_SPECIAL_OVERLAP:${id}`);
 
@@ -70,35 +78,19 @@ export function buildStage2FullRelationCoverage({ writeOutput = true } = {}) {
         resolution = { status:'EXPLICIT_REVIEW_REQUIRED', relation_code:null, authority:item.audit?.primary_source ?? null, runtime_relation_ready_after_execution:false };
       }
     }
-    rows.push({
-      activity_id:id,
-      person:item.person?.canonical ?? null,
-      polity:item.polity?.canonical ?? null,
-      start_year:item.activity?.start_year ?? null,
-      end_year:item.activity?.end_year ?? null,
-      role,
-      current_relation_hint:hint,
-      audit_decision:item.audit?.decision ?? null,
-      dependencies:item.audit?.dependencies ?? [],
-      ...resolution
-    });
+    rows.push({ activity_id:id, person:item.person?.canonical ?? null, polity:item.polity?.canonical ?? null, start_year:item.activity?.start_year ?? null, end_year:item.activity?.end_year ?? null, role, current_relation_hint:hint, audit_decision:item.audit?.decision ?? null, dependencies:item.audit?.dependencies ?? [], ...resolution });
   }
   rows.sort((a,b)=>a.activity_id.localeCompare(b.activity_id));
   const counts = Object.fromEntries([...new Set(rows.map((row)=>row.status))].sort().map((status)=>[status,rows.filter((row)=>row.status===status).length]));
   const review = rows.filter((row)=>row.status==='EXPLICIT_REVIEW_REQUIRED');
   const result = {
-    schema:'atlas-stage2-full-relation-coverage/v1',
-    as_of:'2026-08-14',
-    status:'BRANCH_ONLY_FULL_BASELINE_RELATION_COVERAGE_AUDIT',
-    baseline:{deployment_sha:BASELINE_SHA,baseline_digest:BASELINE_DIGEST,activities:338},
-    policy_authority:{source_pr:107,source_script:'scripts/build-relation-semantics-audit.mjs',policy_scope:'REVIEWED_BASELINE_EXACT_ROLE_POLICY_NOT_FUTURE_RUNTIME_CLASSIFIER'},
-    counts,
+    schema:'atlas-stage2-full-relation-coverage/v1', as_of:'2026-08-14', status:'BRANCH_ONLY_FULL_BASELINE_RELATION_COVERAGE_AUDIT', baseline:{deployment_sha:BASELINE_SHA,baseline_digest:BASELINE_DIGEST,activities:338},
+    policy_authority:{source_pr:107,source_script:'scripts/build-relation-semantics-audit.mjs',policy_scope:'REVIEWED_BASELINE_EXACT_ROLE_POLICY_NOT_FUTURE_RUNTIME_CLASSIFIER'}, counts,
     summary:{baseline_activities:rows.length,p6_delegated:p6Ids.size,p7_reviewed:p7ById.size+specialById.size,exact_role_policy_candidates:rows.filter((row)=>row.status==='REVIEWED_EXACT_ROLE_POLICY_CANDIDATE').length,explicit_review_required:review.length,classified_total:rows.length,production_mutation_authorized:false},
-    explicit_review_required:review,
-    rows,
+    explicit_review_required:review, rows,
     rules:{generic_relation_default_forbidden:true,role_substring_inference_forbidden:true,p6_and_p7_reviewed_authority_precedes_exact_role_policy:true,unresolved_rows_must_not_be_runtime_ready:true,production_mutation_authorized:false}
   };
-  if (result.summary.baseline_activities !== 338 || result.summary.p6_delegated !== 54 || result.summary.p7_reviewed !== 127 || result.summary.exact_role_policy_candidates !== 134 || result.summary.explicit_review_required !== 23) throw new Error(`FULL_RELATION_COVERAGE_DRIFT:${JSON.stringify(result.summary)}`);
+  if (result.summary.baseline_activities !== 338 || result.summary.p6_delegated !== 54 || result.summary.p7_reviewed !== 135 || result.summary.exact_role_policy_candidates !== 134 || result.summary.explicit_review_required !== 15) throw new Error(`FULL_RELATION_COVERAGE_DRIFT:${JSON.stringify(result.summary)}`);
   if (writeOutput) { fs.mkdirSync(path.dirname(outPath),{recursive:true}); fs.writeFileSync(outPath,`${JSON.stringify(result,null,2)}\n`); }
   return result;
 }
