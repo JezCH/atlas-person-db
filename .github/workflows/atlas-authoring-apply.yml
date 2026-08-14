@@ -13,7 +13,7 @@ on:
         required: false
         type: string
       bootstrap_only:
-        description: 'Apply only the bounded authoring schema migrations; do not author Person/Activity data'
+        description: 'Apply only bounded authoring ledger migrations; do not author Person/Activity data'
         required: true
         default: false
         type: boolean
@@ -33,6 +33,7 @@ jobs:
     environment: production
     env:
       ATLAS_AUTHORING_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply
+      ATLAS_HUMAN_AUTHORING_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring
       ATLAS_AUTHORING_AUDIENCE: atlas-person-db-authoring
       ATLAS_AUTHORING_TRANSPORT_VERSION: '2'
     steps:
@@ -40,7 +41,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Resolve approved Stage 2 native manifests
+      - name: Resolve approved Stage 2 authoring requests
         shell: bash
         run: |
           set -euo pipefail
@@ -48,7 +49,6 @@ jobs:
           : > /tmp/atlas-candidates.txt
           : > /tmp/atlas-manifests.txt
           bootstrap_only=false
-
           if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.bootstrap_only }}" == "true" ]]; then
             bootstrap_only=true
           elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
@@ -57,50 +57,59 @@ jobs:
           else
             git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}" -- 'authoring/requests/*.json' > /tmp/atlas-candidates.txt
           fi
-
           while IFS= read -r manifest; do
             [[ -n "$manifest" ]] || continue
-            [[ "$manifest" =~ ^authoring/requests/[A-Za-z0-9._-]+\.json$ ]] || { echo "Rejected manifest path: $manifest"; exit 1; }
-            if jq -e '
-              .schema == "atlas-authoring-manifest/v2"
-              and .review_status == "approved"
-              and (.activity.relation_type_id | type == "string")
-              and (.activity.period_basis_id | type == "string")
-              and (.activity.polity_binding.mode | IN("declared","existing"))
-              and (.activity.role_binding.mode | IN("declared","existing","none"))
-              and (.activity.activity_start_granularity | type == "string")
-              and (.activity.activity_start_certainty | type == "string")
-              and (.activity.activity_start_calendar | type == "string")
-              and (.activity.activity_end_granularity | type == "string")
-              and (.activity.activity_end_certainty | type == "string")
-              and (.activity.activity_end_calendar | type == "string")
-              and (.activity.person_name == null)
-              and (.activity.politic_name == null)
-              and (.activity.polity_name == null)
-              and (.activity.role == null)
-              and (.activity.period_basis == null)
-              and (.activity.relation_type == null)
-            ' "$manifest" >/dev/null; then
-              printf '%s\n' "$manifest" >> /tmp/atlas-manifests.txt
+            [[ "$manifest" =~ ^authoring/requests/[A-Za-z0-9._-]+\.json$ ]] || { echo "Rejected manifest path: $manifest" >&2; exit 1; }
+            schema="$(jq -r '.schema // ""' "$manifest")"
+            if [[ "$schema" == "atlas-authoring-manifest/v2" ]]; then
+              jq -e '
+                .review_status == "approved"
+                and (.activity.relation_type_id | type == "string")
+                and (.activity.period_basis_id | type == "string")
+                and (.activity.polity_binding.mode | IN("declared","existing"))
+                and (.activity.role_binding.mode | IN("declared","existing","none"))
+                and (.activity.activity_start_granularity | type == "string")
+                and (.activity.activity_start_certainty | type == "string")
+                and (.activity.activity_start_calendar | type == "string")
+                and (.activity.activity_end_granularity | type == "string")
+                and (.activity.activity_end_certainty | type == "string")
+                and (.activity.activity_end_calendar | type == "string")
+                and (.activity.person_name == null)
+                and (.activity.politic_name == null)
+                and (.activity.polity_name == null)
+                and (.activity.role == null)
+                and (.activity.period_basis == null)
+                and (.activity.relation_type == null)
+              ' "$manifest" >/dev/null || { echo "Rejected non-native authoring manifest: $manifest" >&2; exit 1; }
+            elif [[ "$schema" == "atlas-human-authoring/v1" ]]; then
+              jq -e '
+                .review_status == "approved"
+                and (.request_id | type == "string" and length > 0)
+                and (.person.canonical_name_en | type == "string" and length > 0)
+                and (.polity.canonical_name_en | type == "string" and length > 0)
+                and (.activity.relation_type | IN("rules","governs","serves","active_in","opposes","claims_rule"))
+                and (.activity.period_basis | type == "string" and length > 0)
+                and (.activity.start_year | type == "number")
+                and (.activity.end_year | type == "number")
+                and (.activity.start_certainty | IN("exact","approximate","uncertain"))
+                and (.activity.end_certainty | IN("exact","approximate","uncertain"))
+                and (.activity.confidence | IN("well_established","likely","speculative","disputed","unknown"))
+                and (.sources | type == "array" and length > 0)
+              ' "$manifest" >/dev/null || { echo "Rejected human authoring request: $manifest" >&2; exit 1; }
             else
-              echo "Rejected non-native authoring manifest: $manifest" >&2
+              echo "Rejected unsupported authoring schema in $manifest: $schema" >&2
               exit 1
             fi
+            printf '%s\n' "$manifest" >> /tmp/atlas-manifests.txt
           done < /tmp/atlas-candidates.txt
-
           sort -u -o /tmp/atlas-manifests.txt /tmp/atlas-manifests.txt
           cp /tmp/atlas-manifests.txt /tmp/atlas-authoring-evidence/manifests.txt
           echo "ATLAS_AUTHORING_BOOTSTRAP_ONLY=${bootstrap_only}" >> "$GITHUB_ENV"
           if [[ "$bootstrap_only" == "true" || -s /tmp/atlas-manifests.txt ]]; then
             echo 'ATLAS_AUTHORING_SELECTED=true' >> "$GITHUB_ENV"
-            if [[ "$bootstrap_only" == "true" ]]; then
-              echo 'Authoring schema bootstrap-only run selected.'
-            else
-              cat /tmp/atlas-manifests.txt
-            fi
           else
             echo 'ATLAS_AUTHORING_SELECTED=false' >> "$GITHUB_ENV"
-            echo 'No approved Stage 2 native authoring manifests selected.'
+            echo 'No approved authoring requests selected.'
           fi
 
       - name: Verify deployed authoring runtime readiness
@@ -108,30 +117,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          status=""
-          for attempt in $(seq 1 60); do
-            status="$(curl --silent --show-error \
-              --output /tmp/atlas-authoring-evidence/readiness.json \
-              --write-out '%{http_code}' \
-              "$ATLAS_AUTHORING_ENDPOINT")"
-            if [[ "$status" == "200" ]]; then
-              break
-            fi
-            if [[ "$status" == "404" ]]; then
-              if [[ "$attempt" == "60" ]]; then
-                cat /tmp/atlas-authoring-evidence/readiness.json >&2 || true
-                echo "Production authoring readiness route is not live yet after 60 attempts." >&2
-                exit 1
-              fi
-              echo "Production authoring readiness route is not live yet (attempt ${attempt}/60); retrying in 10s."
-              sleep 10
-              continue
-            fi
-            cat /tmp/atlas-authoring-evidence/readiness.json >&2 || true
-            echo "Authoring readiness failed: HTTP ${status}" >&2
-            exit 1
-          done
-
+          status="$(curl --silent --show-error --output /tmp/atlas-authoring-evidence/readiness.json --write-out '%{http_code}' "$ATLAS_AUTHORING_ENDPOINT")"
+          [[ "$status" == "200" ]] || { cat /tmp/atlas-authoring-evidence/readiness.json >&2 || true; echo "Authoring readiness failed: HTTP $status" >&2; exit 1; }
           jq -e --argjson version "$ATLAS_AUTHORING_TRANSPORT_VERSION" '
             .ok==true
             and .marker=="ATLAS_AUTHORING_TRANSPORT_V2"
@@ -147,75 +134,35 @@ jobs:
             and .readiness.person_merge.person_merge_lifecycle_version=="pre-p10-blocked"
             and (.ready==true or .bootstrap_ready==true)
           ' /tmp/atlas-authoring-evidence/readiness.json >/dev/null
-
           runtime_sha="$(jq -er '.runtime_sha' /tmp/atlas-authoring-evidence/readiness.json)"
           bootstrap_required="$(jq -er 'if .ready==true then "false" elif .bootstrap_ready==true then "true" else error("AUTHORING_NOT_BOOTSTRAPPABLE") end' /tmp/atlas-authoring-evidence/readiness.json)"
-          git cat-file -e "${runtime_sha}^{commit}" || { echo "Deployed runtime commit is unavailable in checkout: ${runtime_sha}" >&2; exit 1; }
-          git merge-base --is-ancestor "$runtime_sha" "$GITHUB_SHA" || { echo "Deployed runtime is not an ancestor of authoring commit" >&2; exit 1; }
+          git cat-file -e "${runtime_sha}^{commit}"
+          git merge-base --is-ancestor "$runtime_sha" "$GITHUB_SHA" || { echo 'Deployed runtime is not an ancestor of authoring commit' >&2; exit 1; }
           git diff --name-only --diff-filter=ACDMRTUXB "$runtime_sha" "$GITHUB_SHA" -- > /tmp/atlas-authoring-evidence/runtime-diff.txt
-
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
           import { shouldBuildForChangedPaths } from './scripts/vercel-ignore-build.mjs';
-          const text = fs.readFileSync('/tmp/atlas-authoring-evidence/runtime-diff.txt', 'utf8').trim();
-          const paths = text ? text.split(/\r?\n/).filter(Boolean) : [];
+          const text=fs.readFileSync('/tmp/atlas-authoring-evidence/runtime-diff.txt','utf8').trim();
+          const paths=text ? text.split(/\r?\n/).filter(Boolean) : [];
           if (shouldBuildForChangedPaths(paths)) {
             console.error('AUTHORING_RUNTIME_CODE_DRIFT: deployment-relevant changes exist after the deployed runtime SHA');
             for (const path of paths) console.error(`  ${path}`);
             process.exit(1);
           }
-          console.log(`Authoring delta is deployment-safe (${paths.length} path${paths.length === 1 ? '' : 's'}).`);
           NODE
-
           echo "ATLAS_RUNTIME_SHA=${runtime_sha}" >> "$GITHUB_ENV"
           echo "ATLAS_AUTHORING_BOOTSTRAP_REQUIRED=${bootstrap_required}" >> "$GITHUB_ENV"
-          echo "Authoring runtime ${runtime_sha} is safe for GitHub authoring commit ${GITHUB_SHA}; bootstrap_required=${bootstrap_required}."
 
       - name: Bootstrap bounded authoring schema migrations
         if: env.ATLAS_AUTHORING_SELECTED == 'true' && env.ATLAS_AUTHORING_BOOTSTRAP_REQUIRED == 'true'
         shell: bash
         run: |
           set -euo pipefail
-          oidc_token="$(curl --fail-with-body --silent --show-error \
-            -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
-            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_AUTHORING_AUDIENCE}" | jq -er '.value')"
-          payload="$(jq -cn \
-            --argjson transport_version "$ATLAS_AUTHORING_TRANSPORT_VERSION" \
-            --arg runtime_sha "$ATLAS_RUNTIME_SHA" \
-            --arg authoring_sha "$GITHUB_SHA" \
-            '{operation:"bootstrap",transport_version:$transport_version,runtime_sha:$runtime_sha,authoring_sha:$authoring_sha}')"
-          response="/tmp/atlas-authoring-evidence/responses/bootstrap.json"
-          status="$(curl --silent --show-error \
-            --output "$response" \
-            --write-out '%{http_code}' \
-            --request POST \
-            -H 'content-type: application/json' \
-            -H "authorization: Bearer ${oidc_token}" \
-            --data "$payload" \
-            "$ATLAS_AUTHORING_ENDPOINT")"
-          if [[ "$status" != "200" ]]; then
-            cat "$response" >&2 || true
-            code="$(jq -r '.code // "UNKNOWN"' "$response" 2>/dev/null || printf 'UNKNOWN')"
-            echo "Authoring bootstrap failed: HTTP ${status}, code ${code}" >&2
-            exit 1
-          fi
-          jq -e \
-            --arg runtime "$ATLAS_RUNTIME_SHA" \
-            --arg authoring "$GITHUB_SHA" \
-            --argjson version "$ATLAS_AUTHORING_TRANSPORT_VERSION" '
-              .ok==true
-              and .marker=="ATLAS_AUTHORING_TRANSPORT_V2"
-              and .transport_version==$version
-              and .operation=="bootstrap"
-              and .runtime_sha==$runtime
-              and .authoring_sha==$authoring
-              and .bootstrap_complete==true
-              and .ready==true
-              and .readiness.ready==true
-              and .readiness.core.ledger_table_ready==true
-              and .readiness.core.ledger_columns_ready==true
-            ' "$response" >/dev/null
-          jq . "$response"
+          oidc_token="$(curl --fail-with-body --silent --show-error -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_AUTHORING_AUDIENCE}" | jq -er '.value')"
+          payload="$(jq -cn --argjson transport_version "$ATLAS_AUTHORING_TRANSPORT_VERSION" --arg runtime_sha "$ATLAS_RUNTIME_SHA" --arg authoring_sha "$GITHUB_SHA" '{operation:"bootstrap",transport_version:$transport_version,runtime_sha:$runtime_sha,authoring_sha:$authoring_sha}')"
+          status="$(curl --silent --show-error --output /tmp/atlas-authoring-evidence/responses/bootstrap.json --write-out '%{http_code}' --request POST -H 'content-type: application/json' -H "authorization: Bearer ${oidc_token}" --data "$payload" "$ATLAS_AUTHORING_ENDPOINT")"
+          [[ "$status" == "200" ]] || { cat /tmp/atlas-authoring-evidence/responses/bootstrap.json >&2 || true; exit 1; }
+          jq -e '.ok==true and .marker=="ATLAS_AUTHORING_TRANSPORT_V2" and .operation=="bootstrap" and .bootstrap_complete==true and .ready==true and .readiness.core.ledger_columns_ready==true' /tmp/atlas-authoring-evidence/responses/bootstrap.json >/dev/null
 
       - name: Apply manifests through deployed Vercel server
         if: env.ATLAS_AUTHORING_SELECTED == 'true'
@@ -226,57 +173,25 @@ jobs:
             echo 'Bootstrap-only run complete; no Person or Activity manifest will be applied.'
             exit 0
           fi
-
           request_oidc() {
-            curl --fail-with-body --silent --show-error \
-              -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
-              "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_AUTHORING_AUDIENCE}" | jq -er '.value'
+            curl --fail-with-body --silent --show-error -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_AUTHORING_AUDIENCE}" | jq -er '.value'
           }
-
           while IFS= read -r manifest; do
             [[ -n "$manifest" ]] || continue
-            payload="$(jq -cn \
-              --argjson transport_version "$ATLAS_AUTHORING_TRANSPORT_VERSION" \
-              --arg runtime_sha "$ATLAS_RUNTIME_SHA" \
-              --arg authoring_sha "$GITHUB_SHA" \
-              --arg manifest_path "$manifest" \
-              --slurpfile manifest "$manifest" \
-              '{operation:"apply_manifest",transport_version:$transport_version,runtime_sha:$runtime_sha,authoring_sha:$authoring_sha,manifest_path:$manifest_path,manifest:$manifest[0]}')"
-
+            schema="$(jq -r '.schema' "$manifest")"
             oidc_token="$(request_oidc)"
             response="/tmp/atlas-authoring-evidence/responses/$(basename "$manifest" .json).json"
-            status="$(curl --silent --show-error \
-              --output "$response" \
-              --write-out '%{http_code}' \
-              --request POST \
-              -H 'content-type: application/json' \
-              -H "authorization: Bearer ${oidc_token}" \
-              --data "$payload" \
-              "$ATLAS_AUTHORING_ENDPOINT")"
-
-            if [[ "$status" != "200" ]]; then
-              cat "$response" >&2 || true
-              code="$(jq -r '.code // "UNKNOWN"' "$response" 2>/dev/null || printf 'UNKNOWN')"
-              echo "Authoring apply failed: HTTP ${status}, code ${code}" >&2
-              exit 1
+            if [[ "$schema" == "atlas-human-authoring/v1" ]]; then
+              payload="$(jq -cn --argjson transport_version "$ATLAS_AUTHORING_TRANSPORT_VERSION" --arg runtime_sha "$ATLAS_RUNTIME_SHA" --arg authoring_sha "$GITHUB_SHA" --arg manifest_path "$manifest" --slurpfile request "$manifest" '{transport_version:$transport_version,runtime_sha:$runtime_sha,authoring_sha:$authoring_sha,manifest_path:$manifest_path,request:$request[0]}')"
+              status="$(curl --silent --show-error --output "$response" --write-out '%{http_code}' --request POST -H 'content-type: application/json' -H "authorization: Bearer ${oidc_token}" --data "$payload" "$ATLAS_HUMAN_AUTHORING_ENDPOINT")"
+              [[ "$status" == "200" ]] || { cat "$response" >&2 || true; exit 1; }
+              jq -e '.ok==true and .auth_method=="github_oidc" and .marker=="ATLAS_HUMAN_AUTHORING_V1" and .schema=="atlas-human-authoring/v1" and .committed==true and .result.semantic_version=="v2-relation-full-temporal"' "$response" >/dev/null
+            else
+              payload="$(jq -cn --argjson transport_version "$ATLAS_AUTHORING_TRANSPORT_VERSION" --arg runtime_sha "$ATLAS_RUNTIME_SHA" --arg authoring_sha "$GITHUB_SHA" --arg manifest_path "$manifest" --slurpfile manifest "$manifest" '{operation:"apply_manifest",transport_version:$transport_version,runtime_sha:$runtime_sha,authoring_sha:$authoring_sha,manifest_path:$manifest_path,manifest:$manifest[0]}')"
+              status="$(curl --silent --show-error --output "$response" --write-out '%{http_code}' --request POST -H 'content-type: application/json' -H "authorization: Bearer ${oidc_token}" --data "$payload" "$ATLAS_AUTHORING_ENDPOINT")"
+              [[ "$status" == "200" ]] || { cat "$response" >&2 || true; exit 1; }
+              jq -e --arg runtime "$ATLAS_RUNTIME_SHA" --arg authoring "$GITHUB_SHA" --arg path "$manifest" --argjson version "$ATLAS_AUTHORING_TRANSPORT_VERSION" '.ok==true and .transport_marker=="ATLAS_AUTHORING_TRANSPORT_V2" and .transport_version==$version and .runtime_sha==$runtime and .authoring_sha==$authoring and .manifest_path==$path and .committed==true and .marker=="ATLAS_AUTHORING_MANIFEST_V2_STAGE2_NATIVE" and .result.version==2 and .result.semantic_version=="v2-relation-full-temporal"' "$response" >/dev/null
             fi
-
-            jq -e \
-              --arg runtime "$ATLAS_RUNTIME_SHA" \
-              --arg authoring "$GITHUB_SHA" \
-              --arg path "$manifest" \
-              --argjson version "$ATLAS_AUTHORING_TRANSPORT_VERSION" '
-                .ok==true
-                and .transport_marker=="ATLAS_AUTHORING_TRANSPORT_V2"
-                and .transport_version==$version
-                and .runtime_sha==$runtime
-                and .authoring_sha==$authoring
-                and .manifest_path==$path
-                and .committed==true
-                and .marker=="ATLAS_AUTHORING_MANIFEST_V2_STAGE2_NATIVE"
-                and .result.version==2
-                and .result.semantic_version=="v2-relation-full-temporal"
-              ' "$response" >/dev/null
             jq . "$response"
           done < /tmp/atlas-manifests.txt
 
