@@ -277,6 +277,23 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
+      - name: Rehearse Charles de Gaulle French Republic/Fifth Republic governance correction
+        id: p7-charles-de-gaulle-governance
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p artifacts
+          node scripts/rehearse-stage2-p7-charles-de-gaulle-governance.mjs 2>&1 | tee artifacts/stage2-p7-charles-de-gaulle-governance.log
+
+      - name: Upload Charles de Gaulle governance rehearsal failure diagnostics
+        if: failure() && steps.p7-charles-de-gaulle-governance.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-stage2-p7-charles-de-gaulle-governance-failure-${{ github.sha }}
+          path: artifacts/stage2-p7-charles-de-gaulle-governance.log
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Rehearse full P6 54-target artifact-reconstructed package
         id: p6-full-54-rehearsal
         shell: bash
