@@ -8,3 +8,4 @@ await import('./rehearse-stage2-p7-tecumseh-chronology.mjs');
 await import('./rehearse-stage2-p7-cunobeline-chronology.mjs');
 await import('./rehearse-stage2-p7-yoshida-term-split.mjs');
 await import('./rehearse-stage2-p7-himiko-chronology.mjs');
+await import('./rehearse-stage2-p7-solomon-chronology.mjs');
