@@ -21,8 +21,18 @@
       "relation_type_id",
       "role_id_nullable",
       "period_basis_id",
-      "activity_start_full_temporal_boundary",
-      "activity_end_full_temporal_boundary"
+      "activity_start_full_temporal_boundary_without_certainty",
+      "activity_end_full_temporal_boundary_without_certainty"
+    ],
+    "explicitly_non_identity": [
+      "activity_start_certainty",
+      "activity_end_certainty",
+      "confidence",
+      "chronology_status",
+      "notes",
+      "sources_and_provenance",
+      "display_names",
+      "content_hash"
     ]
   },
   "consumers": {
@@ -31,6 +41,7 @@
     "authoring_manifest_historical_replay": "legacy_replay_only",
     "legacy_name_based_mutation_create_update_import": "disabled_fail_closed",
     "immutable_activity_id_delete": "allowed",
+    "duplicate_review_relationship_projection": "v2_relation_full_temporal",
     "relationship_reconciliation": "v2_relation_full_temporal",
     "correction_engine": "immutable_activity_uuid_targeted",
     "database_uniqueness": "v2_rehearsal_ready",
@@ -43,8 +54,8 @@
   },
   "database_rehearsal": {
     "path": "db/proposals/stage2_activity_semantic_key.rehearsal.sql",
-    "retired_index": "person_politics_v2_null_role_semantic_uidx",
-    "replacement_index": "person_politics_v2_semantic_v2_uidx",
+    "retired_index": "atlas_v2.person_politics_v2_null_role_semantic_uidx",
+    "replacement_index": "person_politics_v2_stage2_semantic_identity_uq",
     "production_applied": false
   },
   "rules": {

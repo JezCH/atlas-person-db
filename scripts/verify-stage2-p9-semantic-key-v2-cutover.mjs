@@ -15,6 +15,7 @@ if(fs.existsSync('artifacts/stage2-p7p8-effective-cutover-gate.json')){
   assert.equal(p8.p8_zero_known_blocker_gate.cutover_allowed,true);
 }
 const mutationHandler=fs.readFileSync('server/atlas-vercel-mutation-handler.js','utf8');
+const duplicateService=fs.readFileSync('server/atlas-duplicate-review-service.js','utf8');
 const dispatch=fs.readFileSync('server/atlas-authoring-manifest-dispatch-service.js','utf8');
 const nativeAuthoring=fs.readFileSync('server/atlas-authoring-manifest-v2-native-service.js','utf8');
 const nativeActivity=fs.readFileSync('server/atlas-stage2-native-activity-service.js','utf8');
@@ -26,6 +27,7 @@ assert.equal(manifest.prerequisite.p8_status,'ZERO_KNOWN_BLOCKERS');
 assert.equal(manifest.prerequisite.p8_verified_integrity_run,606);
 assert.equal(manifest.prerequisite.p8_effective_blockers,0);
 assert.equal(manifest.canonical_activity_identity.version,sem.SEMANTIC_KEY_VERSION);
+assert.deepEqual(manifest.canonical_activity_identity.explicitly_non_identity.sort(),['activity_end_certainty','activity_start_certainty','chronology_status','confidence','content_hash','display_names','notes','sources_and_provenance'].sort());
 assert.equal(manifest.rules.production_mutation_authorized,false);
 
 for(const op of ['create','update','import','reconcile']){
@@ -42,6 +44,8 @@ assert.match(dispatch,/return nativeV2\.apply\(rawManifest\)/);
 assert.match(nativeAuthoring,/atlas-activity-semantic-key-v2\.js/);
 assert.match(nativeActivity,/atlas-activity-semantic-key-v2\.js/);
 
+for(const token of ['relation_type_id','activity_start_month','activity_start_day','activity_start_granularity','activity_start_calendar','activity_end_month','activity_end_day','activity_end_granularity','activity_end_calendar']) assert.match(duplicateService,new RegExp(token));
+assert.match(duplicateService,/semantic_version:\s*"v2-relation-full-temporal"/);
 assert.equal(reconciliation.RECONCILIATION_SEMANTIC_VERSION,'v2-relation-full-temporal');
 assert.equal(interlock.REQUIRED_RECONCILIATION_SEMANTIC_VERSION,'v2-relation-full-temporal');
 assert.equal(interlock.personMergeExecutionState().allowed,false);
@@ -53,18 +57,21 @@ assert.equal(reconciliation.reconciliationReadiness(base).ready,true);
 assert.equal(reconciliation.buildRelationshipReconciliationGroups({rows:[base,other],lowPersonId:base.person_id,highPersonId:other.person_id}).length,1);
 assert.equal(reconciliation.buildRelationshipReconciliationGroups({rows:[base,{...other,relation_type_id:'77777777-7777-4777-8777-777777777777'}],lowPersonId:base.person_id,highPersonId:other.person_id}).length,0);
 assert.equal(reconciliation.buildRelationshipReconciliationGroups({rows:[base,{...other,activity_start_month:1,activity_start_granularity:'month',activity_end_month:1,activity_end_granularity:'month'}],lowPersonId:base.person_id,highPersonId:other.person_id}).length,0);
+assert.equal(reconciliation.buildRelationshipReconciliationGroups({rows:[base,{...other,activity_start_certainty:'approximate',activity_end_certainty:'approximate'}],lowPersonId:base.person_id,highPersonId:other.person_id}).length,1);
 const legacyProjection={id:other.id,person_id:other.person_id,polity_id:other.polity_id,role_id:other.role_id,period_basis_id:other.period_basis_id,activity_start:1912,activity_end:1912};
 assert.equal(reconciliation.reconciliationReadiness(legacyProjection).ready,false);
 assert.equal(reconciliation.buildRelationshipReconciliationGroups({rows:[base,legacyProjection],lowPersonId:base.person_id,highPersonId:other.person_id}).length,0);
 
-assert.match(sql,/drop index if exists atlas_v2\.person_politics_v2_null_role_semantic_uidx/i);
-assert.match(sql,/person_politics_v2_semantic_v2_uidx/i);
+assert.match(sql,/DROP INDEX atlas_v2\.person_politics_v2_null_role_semantic_uidx;/i);
+assert.match(sql,/CREATE UNIQUE INDEX person_politics_v2_stage2_semantic_identity_uq/i);
 assert.match(sql,/relation_type_id/i);
 assert.match(sql,/activity_start_month/i);
 assert.match(sql,/activity_end_granularity/i);
+assert.doesNotMatch(sql,/activity_start_certainty[\s,)]/i);
+assert.doesNotMatch(sql,/activity_end_certainty[\s,)]/i);
 
 fs.mkdirSync('artifacts',{recursive:true});
-const result={schema:'atlas-stage2-p9-semantic-key-v2-cutover-result/v1',as_of:'2026-08-14',status:'P9_COMPLETE_BRANCH_ONLY',semantic_key_version:sem.SEMANTIC_KEY_VERSION,p8_effective_blockers:0,legacy_name_based_mutation_writes:'DISABLED_FAIL_CLOSED',new_authoring_writes:'STAGE2_NATIVE_V2',relationship_reconciliation:reconciliation.RECONCILIATION_SEMANTIC_VERSION,person_physical_merge:'BLOCKED_UNTIL_P10',production_mutation_authorized:false};
+const result={schema:'atlas-stage2-p9-semantic-key-v2-cutover-result/v1',as_of:'2026-08-14',status:'P9_COMPLETE_BRANCH_ONLY',semantic_key_version:sem.SEMANTIC_KEY_VERSION,p8_effective_blockers:0,legacy_name_based_mutation_writes:'DISABLED_FAIL_CLOSED',new_authoring_writes:'STAGE2_NATIVE_V2',duplicate_review_relationship_projection:'V2_RELATION_FULL_TEMPORAL',relationship_reconciliation:reconciliation.RECONCILIATION_SEMANTIC_VERSION,person_physical_merge:'BLOCKED_UNTIL_P10',production_mutation_authorized:false};
 fs.writeFileSync('artifacts/stage2-p9-semantic-key-v2-cutover.json',JSON.stringify(result,null,2)+'\n');
 console.log(JSON.stringify({marker:'ATLAS_STAGE2_P9_SEMANTIC_KEY_V2_GLOBAL_CUTOVER_OK',...result},null,2));
 export { result };
