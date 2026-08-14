@@ -9,6 +9,7 @@
   "relation_catalog": "stage2/catalogs/relation-types.v1.json",
   "relation_semantics_contract": "docs/audits/RELATION_SEMANTICS_CONTRACT_V1_2026-08-12.md",
   "politic_resolution_contract": "stage2/contracts/politic-resolution-current.v1.json",
+  "source_authoring": "stage2/authoring/p7-reviewed-relation-sources.v1.json",
   "rules": {
     "single_relation_flattening_forbidden": true,
     "only_source_backed_phase_boundaries_may_execute": true,
@@ -32,6 +33,7 @@
         "British Museum Collections: Catherine de' Medici, Queen and Regent of France",
         "Charles IX majority proclaimed 17 August 1563"
       ],
+      "normalized_source_candidate_keys": ["bibliographic:british-museum:catherine-de-medici"],
       "phases": [
         {"start_year":1547,"end_year":1559,"relation_code":"active_in","relation_type_id":"f33d2789-2e65-50c1-af3e-91335bcbd3ca","basis":"Queen consort phase; no independent sovereign or top-level regency relation."},
         {"start_year":1560,"end_year":1563,"relation_code":"governs","relation_type_id":"67a57b37-1853-5f2a-b7ab-e6b2d32b56b6","basis":"Reviewed regency during Charles IX's minority; British Museum dates the regency 1560-63."},
@@ -52,6 +54,10 @@
         "U.S. National Park Service: Harriet Tubman Underground Railroad National Historical Park",
         "U.S. National Park Service: Harriet Tubman and the 54th Massachusetts"
       ],
+      "normalized_source_candidate_keys": [
+        "bibliographic:nps:harriet-tubman-underground-railroad",
+        "bibliographic:nps:harriet-tubman-54th-massachusetts"
+      ],
       "phases": [
         {"start_year":1849,"end_year":1860,"relation_code":"opposes","relation_type_id":"5d2d3af6-6e53-5af1-8423-f76c2263afe4","basis":"Escape and Underground Railroad abolition activity resisted the slave/fugitive-slave legal order; project audit explicitly requires an opposition phase."},
         {"start_year":1861,"end_year":1865,"relation_code":"serves","relation_type_id":"0fc4827f-8543-52f7-9e9a-3173b0c698a7","basis":"NPS records volunteering shortly after Civil War outbreak and subsequent Union Army nurse/scout/spy/cook service; year-level phase preserves the reviewed Civil War service interval without inventing a false exact enlistment date."},
@@ -71,6 +77,10 @@
         "docs/audits/POLITY_SEMANTIC_AUDIT_WAVE11_2026-08-11.md",
         "Stanford Encyclopedia of Philosophy: Confucius",
         "Records of the Grand Historian 47 / Chinese Text Project"
+      ],
+      "normalized_source_candidate_keys": [
+        "bibliographic:stanford-encyclopedia:confucius",
+        "bibliographic:ctext:shiji-confucius"
       ],
       "phases": [
         {"start_year":-522,"end_year":-502,"relation_code":"active_in","relation_type_id":"f33d2789-2e65-50c1-af3e-91335bcbd3ca","basis":"Preserve the Baseline A outer start only as Lu civic/intellectual context before the source-backed high-office phase; do not claim rule."},
