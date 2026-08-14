@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-stage2-p7p8-effective-nonrelation-closures/v1",
+  "batch_id": "p7p8_effective_nonrelation_closures_batch10",
+  "as_of": "2026-08-14",
+  "status": "REVIEWED_BRANCH_ONLY_EFFECTIVE_DEPENDENCY_CLOSURES_NO_PRODUCTION_MUTATION",
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27"
+  },
+  "rules": {
+    "raw_work_queue_is_audit_input_not_current_execution_truth": true,
+    "closure_pair_must_exist_in_raw_post_p6_queue": true,
+    "closure_requires_explicit_reviewed_authority": true,
+    "historical_uncertainty_must_not_be_fabricated_to_close_a_dependency": true,
+    "production_mutation_authorized": false
+  },
+  "closures": [
+    {
+      "activity_id": "7c315e1c-90c3-5199-a292-8f68ba69d4b2",
+      "person": "Tokugawa Ieyasu",
+      "dependencies": ["governance_context"],
+      "closure_class": "JAPAN_TOKUGAWA_BAKUFU_GOVERNANCE_SURVIVOR_REHEARSED",
+      "authority": [
+        "docs/stage2/P7_TOKUGAWA_IEYASU_GOVERNANCE_DECISION_2026-08-14.md",
+        "stage2/execution/p7-tokugawa-ieyasu-governance-survivors-execution.v1.json",
+        "stage2/authoring/p7-tokugawa-governance-contexts.v1.json",
+        "stage2/authoring/p7-tokugawa-governance-sources.v1.json"
+      ],
+      "reason": "The reviewed 1603–1605 formal-shogun survivor is relinked to the higher-order Japan Polity with relation governs while Tokugawa bakufu is represented as Governance Context. Existing provenance, the compressed-row provenance, and reviewed institutional provenance are preserved. The two-stage package passed PostgreSQL dry-run/apply/replay, including replay of this survivor manifest after compressed-row retirement, in Integrity #589."
+    },
+    {
+      "activity_id": "400c78d5-a7e1-5ddb-83ef-91e0193db0f8",
+      "person": "Tokugawa Ieyasu",
+      "dependencies": ["governance_context"],
+      "closure_class": "JAPAN_TOKUGAWA_BAKUFU_GOVERNANCE_SURVIVOR_REHEARSED",
+      "authority": [
+        "docs/stage2/P7_TOKUGAWA_IEYASU_GOVERNANCE_DECISION_2026-08-14.md",
+        "stage2/execution/p7-tokugawa-ieyasu-governance-survivors-execution.v1.json",
+        "stage2/authoring/p7-tokugawa-governance-contexts.v1.json",
+        "stage2/authoring/p7-tokugawa-governance-sources.v1.json"
+      ],
+      "reason": "The reviewed 1605–1616 retired/de-facto survivor is relinked to the higher-order Japan Polity with relation governs while Tokugawa bakufu is represented as Governance Context. Existing provenance, the compressed-row provenance, and reviewed institutional provenance are preserved. The two-stage package passed PostgreSQL dry-run/apply/replay, including replay of this survivor manifest after compressed-row retirement, in Integrity #589."
+    },
+    {
+      "activity_id": "79dc9310-cd56-5bed-9a35-fe5361bdf0b6",
+      "person": "Tokugawa Ieyasu",
+      "dependencies": ["governance_context"],
+      "closure_class": "TOKUGAWA_COMPRESSED_OVERLAP_RETIRED_WITH_PROVENANCE_TRANSFER_REHEARSED",
+      "authority": [
+        "docs/stage2/P7_TOKUGAWA_IEYASU_GOVERNANCE_DECISION_2026-08-14.md",
+        "stage2/execution/p7-tokugawa-ieyasu-compressed-retire-execution.v1.json",
+        "stage2/execution/p7-tokugawa-ieyasu-governance-survivors-execution.v1.json"
+      ],
+      "reason": "The 1603–1616 compressed overlap is not preserved as a third competing governance Activity. Its exact normalized Source semantics are prebound to both reviewed survivors and then transferred with deduplication before retirement. PostgreSQL rehearsal verified deletion of only the compressed row, preservation of both survivor states and the old Tokugawa government-as-Polity identity, exact Stage B replay, and exact Stage A replay after Stage B in Integrity #589."
+    }
+  ],
+  "result": {
+    "closure_activity_count": 3,
+    "closed_dependency_pair_count": 3,
+    "production_mutation_authorized": false
+  }
+}
