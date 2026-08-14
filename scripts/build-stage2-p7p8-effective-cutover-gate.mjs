@@ -55,7 +55,7 @@ for (const closure of closures.closures || []) {
     closedPairs.set(key, closure);
   }
 }
-if (closureActivityIds.size !== 15 || closedPairs.size !== 19 || closures?.result?.closure_activity_count !== 15 || closures?.result?.closed_dependency_pair_count !== 19) throw new Error('P7P8_EFFECTIVE_CLOSURE_COUNT_DRIFT');
+if (closureActivityIds.size !== 15 || closedPairs.size !== 21 || closures?.result?.closure_activity_count !== 15 || closures?.result?.closed_dependency_pair_count !== 21) throw new Error('P7P8_EFFECTIVE_CLOSURE_COUNT_DRIFT');
 
 const pendingPairs = [...rawPairByKey.entries()].filter(([key]) => !closedPairs.has(key));
 const pendingByDependency = Object.fromEntries(NONRELATION_DEPENDENCIES.map((dependency) => [dependency, pendingPairs.filter(([key]) => key.endsWith(`|${dependency}`)).length]));
@@ -73,9 +73,10 @@ const pendingRows = [...pendingIds].sort().map((activityId) => {
     pending_dependencies: NONRELATION_DEPENDENCIES.filter((dependency) => rawPairByKey.has(`${activityId}|${dependency}`) && !closedPairs.has(`${activityId}|${dependency}`))
   };
 });
-if (pendingIds.size !== 37) throw new Error(`P7P8_EFFECTIVE_PENDING_NONRELATION_ACTIVITY_DRIFT:${pendingIds.size}`);
-const expectedPendingCounts = {chronology_correction:28,governance_context:7,sub_year_precision:1,provenance_backfill:11,entity_model_migration:8};
+if (pendingIds.size !== 36) throw new Error(`P7P8_EFFECTIVE_PENDING_NONRELATION_ACTIVITY_DRIFT:${pendingIds.size}`);
+const expectedPendingCounts = {chronology_correction:27,governance_context:7,sub_year_precision:1,provenance_backfill:10,entity_model_migration:8};
 if (JSON.stringify(pendingByDependency) !== JSON.stringify(expectedPendingCounts)) throw new Error(`P7P8_EFFECTIVE_PENDING_DEP_COUNT_DRIFT:${JSON.stringify(pendingByDependency)}`);
+if (pendingPairs.length !== 53) throw new Error(`P7P8_EFFECTIVE_PENDING_PAIR_COUNT_DRIFT:${pendingPairs.length}`);
 
 const relationCoverage = buildStage2FullRelationCoverageV2({ writeOutput:true });
 if (relationCoverage?.summary?.relation_semantic_decision_unresolved !== 0 || relationCoverage?.relation_review_remaining?.length !== 0) throw new Error('P7P8_EFFECTIVE_RELATION_SEMANTIC_DECISION_NOT_CLOSED');
@@ -85,7 +86,7 @@ const relationOnlyBlockerIds = [...relationBlockerIds].filter((id) => !pendingId
 if (relationOnlyBlockerIds.length !== 1) throw new Error(`P7P8_EFFECTIVE_RELATION_ONLY_BLOCKER_DRIFT:${relationOnlyBlockerIds.length}`);
 
 const effectiveBlockerIds = new Set([...pendingIds, ...relationBlockerIds]);
-if (effectiveBlockerIds.size !== 38) throw new Error(`P7P8_EFFECTIVE_BLOCKER_COUNT_DRIFT:${effectiveBlockerIds.size}`);
+if (effectiveBlockerIds.size !== 37) throw new Error(`P7P8_EFFECTIVE_BLOCKER_COUNT_DRIFT:${effectiveBlockerIds.size}`);
 const relationBlockerById = new Map((relationCoverage.correction_blockers || []).map((row) => [String(row.activity_id).toLowerCase(), row]));
 const blockers = [...effectiveBlockerIds].sort().map((activityId) => {
   const raw = rawActivityById.get(activityId) || null;
@@ -114,4 +115,4 @@ const result = {
 };
 fs.mkdirSync(path.dirname(outPath),{recursive:true});
 fs.writeFileSync(outPath,`${JSON.stringify(result,null,2)}\n`);
-console.log(JSON.stringify({marker:'ATLAS_STAGE2_P7P8_EFFECTIVE_CUTOVER_GATE_BUILT',raw_nonrelation_activities:51,closed_dependency_pairs:19,effective_nonrelation_activities:37,relation_correction_blockers:13,effective_known_blockers:38,p8_status:'NOT_READY',production_mutation_authorized:false},null,2));
+console.log(JSON.stringify({marker:'ATLAS_STAGE2_P7P8_EFFECTIVE_CUTOVER_GATE_BUILT',raw_nonrelation_activities:51,closed_dependency_pairs:21,effective_nonrelation_activities:36,relation_correction_blockers:13,effective_known_blockers:37,p8_status:'NOT_READY',production_mutation_authorized:false},null,2));
