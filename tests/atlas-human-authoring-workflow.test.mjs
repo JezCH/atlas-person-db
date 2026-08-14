@@ -23,3 +23,9 @@ test('human fallback uses the same GitHub OIDC token and separate runtime/author
   assert.match(workflow, /\.marker=="ATLAS_HUMAN_AUTHORING_V1"/);
   assert.match(workflow, /\.result\.semantic_version=="v2-relation-full-temporal"/);
 });
+
+test('authoring readiness preserves bounded route-propagation retry instead of failing on transient 404', () => {
+  assert.match(workflow, /for attempt in \$\(seq 1 60\)/);
+  assert.match(workflow, /if \[\[ "\$status" == "404" \]\]/);
+  assert.match(workflow, /retrying in 10s/);
+});

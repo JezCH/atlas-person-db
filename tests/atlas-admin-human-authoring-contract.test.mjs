@@ -15,16 +15,16 @@ test('normal admin registration is human-readable and does not ask the operator 
   assert.match(ui,/출처 제목/);
   assert.match(ui,/출처 URL/);
   assert.match(ui,/crypto\.randomUUID\(\)/);
-  assert.match(ui,/schema: "atlas-human-authoring\/v1"/);
+  assert.match(ui,/schema\s*:\s*"atlas-human-authoring\/v1"/);
   assert.doesNotMatch(ui,/id="human[^\"]*Uuid/i);
 });
 
 test('normal registration submits one request containing Person, Polity, Activity and Source provenance',()=>{
-  assert.match(ui,/person: \{ canonical_name_en:/);
-  assert.match(ui,/polity: \{ canonical_name_en:/);
-  assert.match(ui,/relation_type:value\("humanRelation"\)/);
-  assert.match(ui,/period_basis:value\("humanPeriodBasis"\)/);
-  assert.match(ui,/sources: \[\{/);
+  assert.match(ui,/person\s*:\s*\{\s*canonical_name_en\s*:/);
+  assert.match(ui,/polity\s*:\s*\{\s*canonical_name_en\s*:/);
+  assert.match(ui,/relation_type\s*:\s*value\("humanRelation"\)/);
+  assert.match(ui,/period_basis\s*:\s*value\("humanPeriodBasis"\)/);
+  assert.match(ui,/sources\s*:\s*\[\s*\{/);
   assert.match(ui,/Person \+ Activity \+ Source 한 번에 등록/);
 });
 
