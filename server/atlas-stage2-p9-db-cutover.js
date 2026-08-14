@@ -48,7 +48,11 @@ function verifyNewIndex(row) {
 }
 
 async function inspectP9Cutover(client) {
-  const [oldIndex,newIndex,duplicates] = await Promise.all([inspectIndex(client,OLD_INDEX),inspectIndex(client,NEW_INDEX),duplicateCount(client)]);
+  // One pg.Client must not receive overlapping query() calls. These inspection
+  // queries are tiny and the authoring readiness path does not need parallelism.
+  const oldIndex = await inspectIndex(client, OLD_INDEX);
+  const newIndex = await inspectIndex(client, NEW_INDEX);
+  const duplicates = await duplicateCount(client);
   if (newIndex) verifyNewIndex(newIndex);
   return Object.freeze({ old_index_present:Boolean(oldIndex), new_index_present:Boolean(newIndex), duplicate_groups:duplicates, ready:duplicates===0 && (Boolean(oldIndex) !== Boolean(newIndex) || Boolean(newIndex)) });
 }
