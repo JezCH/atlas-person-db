@@ -1,0 +1,60 @@
+{
+  "schema": "atlas-stage2-p7-reviewed-relation-sources/v1",
+  "as_of": "2026-08-14",
+  "status": "REVIEWED_LITERAL_UUID_ROWS_BRANCH_ONLY_NO_PRODUCTION_MUTATION",
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27"
+  },
+  "uuid_allocation": {
+    "algorithm": "uuid5",
+    "repository_namespace": "672fd6c6-f921-5ce9-86dc-c90a8796c53a",
+    "name_format": "p7:source:<source_key>",
+    "allocation_is_offline_only": true,
+    "source_key_is_not_runtime_identity": true,
+    "uuid_is_identity": true
+  },
+  "rules": {
+    "literal_uuid_insert_only": true,
+    "runtime_title_or_url_resolution_forbidden": true,
+    "bibliographic_hash_and_bytes_must_be_null": true,
+    "source_locator_required_when_linked_to_activity_fragment": true,
+    "official_source_disagreement_must_reduce_precision_not_be_silently_reconciled": true,
+    "no_fabricated_month_or_day": true,
+    "production_mutation_authorized": false
+  },
+  "sources": [
+    {
+      "candidate_key": "official:jhansi-district:about-lakshmibai-rule",
+      "row": {
+        "id": "5cc21ee9-642c-5fac-92d1-500e65cfb67c",
+        "source_key": "official:jhansi-district:about-lakshmibai-rule",
+        "source_type": "government_reference_page",
+        "title": "About District — Jhansi",
+        "sha256": null,
+        "bytes": null,
+        "canonical_url": "https://jhansi.nic.in/about-district/",
+        "citation_text": "District Jhansi, Government of Uttar Pradesh; states that Jhansi was annexed in 1854 and that Rani Lakshmibai ruled Jhansi again from June 1857 into 1858."
+      }
+    },
+    {
+      "candidate_key": "official:up-nri:jhansi-lakshmibai-history",
+      "row": {
+        "id": "8f333846-f0d9-596e-9a27-58df8a31c63f",
+        "source_key": "official:up-nri:jhansi-lakshmibai-history",
+        "source_type": "government_reference_page",
+        "title": "Jhansi — Rani Lakshmi Bai history",
+        "sha256": null,
+        "bytes": null,
+        "canonical_url": "https://nri.up.gov.in/en/article/jhansi2?brd=1",
+        "citation_text": "NRI Department, Government of Uttar Pradesh; records Gangadhar Rao's death on 21 November 1853, the March 1854 pension/order to leave the fort, the March 1858 British attack and subsequent fall/departure from Jhansi, and Lakshmibai's death on 18 June 1858."
+      }
+    }
+  ],
+  "result": {
+    "source_count": 2,
+    "literal_uuid_count": 2,
+    "fake_materialized_hash_count": 0,
+    "production_mutation_authorized": false
+  }
+}

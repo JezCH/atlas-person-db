@@ -1,0 +1,121 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "p7_lakshmibai_jhansi_discontinuous_rule_split_v1",
+  "as_of": "2026-08-14",
+  "status": "LITERAL_OPERANDS_COMPLETE_LIVE_BEFORE_SNAPSHOT_REQUIRED",
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "docs/stage2/P7_CHRONOLOGY_LAKSHMIBAI_JHANSI_2026-08-14.md",
+  "source_authoring": "stage2/authoring/p7-lakshmibai-jhansi-sources.v1.json",
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27"
+  },
+  "uuid_allocation": {
+    "algorithm": "uuid5",
+    "repository_namespace": "672fd6c6-f921-5ce9-86dc-c90a8796c53a",
+    "name_format": "p7:activity:<original_activity_uuid>:<fragment_id>",
+    "runtime_allocation_forbidden": true,
+    "uuid_is_identity": true
+  },
+  "execution_rules": {
+    "keep_jhansi_polity": true,
+    "split_discontinuous_rule_period": true,
+    "one_split_survivor_preserves_original_activity_uuid": true,
+    "new_fragment_legacy_source_key_must_be_null": true,
+    "existing_normalized_source_links_and_locators_copied_to_all_split_fragments": true,
+    "reviewed_official_sources_added_to_all_fragments": true,
+    "official_source_disagreement_reduces_precision": true,
+    "no_fabricated_annexation_or_recapture_day": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "new_activity_uuid_allocations": [
+    {
+      "case_id": "p7_lakshmibai_jhansi_discontinuous_rule",
+      "fragment_id": "restored_jhansi_1857_1858",
+      "activity_uuid": "2335619a-fe8a-59b7-b6c5-47d7a2c2f41b"
+    }
+  ],
+  "operations": [
+    {
+      "case_id": "p7_lakshmibai_jhansi_discontinuous_rule",
+      "type": "split_activity",
+      "activity_id": "b37993f9-df6c-52a6-b27a-ad931e3aa99e",
+      "baseline_before": {
+        "person_id": "e10fcad7-6e2f-5567-bfc7-fca4855101c7",
+        "polity_id": "77b59677-592e-5bf1-9876-2f218c97bfd3",
+        "role_id": "998e94ee-6812-58d5-b02f-abaa424bd4b7",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": 1853,
+        "activity_end": 1858,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-4.json:7:08a0b2bfa4a1fde3",
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "source_copy_policy": "COPY_ALL_EXISTING_NORMALIZED_ACTIVITY_SOURCE_LINKS_AND_LOCATORS_TO_ALL_FRAGMENTS",
+      "fragments": [
+        {
+          "survivor": true,
+          "activity_id": "b37993f9-df6c-52a6-b27a-ad931e3aa99e",
+          "person_id": "e10fcad7-6e2f-5567-bfc7-fca4855101c7",
+          "polity_id": "77b59677-592e-5bf1-9876-2f218c97bfd3",
+          "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+          "role_id": "998e94ee-6812-58d5-b02f-abaa424bd4b7",
+          "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+          "activity_start": 1853,
+          "activity_end": 1854,
+          "activity_start_detail": {"year":1853,"month":null,"day":null,"granularity":"year","certainty":"approximate","calendar":"gregorian"},
+          "activity_end_detail": {"year":1854,"month":null,"day":null,"granularity":"year","certainty":"exact","calendar":"gregorian"},
+          "confidence": "legacy_asserted",
+          "chronology_status": "reviewed_stage2_discontinuous_jhansi_rule",
+          "legacy_source_key": "pending-records-supplement-4.json:7:08a0b2bfa4a1fde3",
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "This survivor represents Lakshmibai's succession-crisis and pre-annexation authority in Jhansi after 1853. The exact day on which a distinct rules Activity begins is not inferred from Gangadhar Rao's death; the phase ends at year granularity in the documented 1854 annexation year.",
+          "add_source_links": [
+            {"source_id":"5cc21ee9-642c-5fac-92d1-500e65cfb67c","source_locator_key":"District Jhansi, Government of Uttar Pradesh: Jhansi annexed in 1854; Lakshmibai later ruled Jhansi again from June 1857"},
+            {"source_id":"8f333846-f0d9-596e-9a27-58df8a31c63f","source_locator_key":"NRI Department, Government of Uttar Pradesh: Gangadhar Rao died 21 November 1853; March 1854 pension/order to leave Jhansi Fort"}
+          ]
+        },
+        {
+          "survivor": false,
+          "activity_id": "2335619a-fe8a-59b7-b6c5-47d7a2c2f41b",
+          "person_id": "e10fcad7-6e2f-5567-bfc7-fca4855101c7",
+          "polity_id": "77b59677-592e-5bf1-9876-2f218c97bfd3",
+          "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+          "role_id": "998e94ee-6812-58d5-b02f-abaa424bd4b7",
+          "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+          "activity_start": 1857,
+          "activity_end": 1858,
+          "activity_start_detail": {"year":1857,"month":6,"day":null,"granularity":"month","certainty":"exact","calendar":"gregorian"},
+          "activity_end_detail": {"year":1858,"month":null,"day":null,"granularity":"year","certainty":"exact","calendar":"gregorian"},
+          "confidence": "legacy_asserted",
+          "chronology_status": "reviewed_stage2_discontinuous_jhansi_rule",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "This Stage-2-native fragment represents Lakshmibai's restored authority in Jhansi beginning in June 1857. The Jhansi rules relation ends in 1858 when British forces recaptured the city and she departed for Kalpi; the exact recapture day is deliberately not fabricated, and her later Kalpi/Gwalior military activity is not projected back onto Jhansi.",
+          "source_copy_policy": "COPY_EXISTING",
+          "add_source_links": [
+            {"source_id":"5cc21ee9-642c-5fac-92d1-500e65cfb67c","source_locator_key":"District Jhansi, Government of Uttar Pradesh: Lakshmibai ruled Jhansi again from June 1857 into 1858"},
+            {"source_id":"8f333846-f0d9-596e-9a27-58df8a31c63f","source_locator_key":"NRI Department, Government of Uttar Pradesh: March 1858 attack, fall of Jhansi, departure to Kalpi, death later at Gwalior"}
+          ]
+        }
+      ],
+      "gap_overlap_policy": "INTENTIONAL_ANNEXATION_GAP_1854_TO_JUNE_1857; YEAR_GRANULARITY_DOES_NOT_INVENT_WITHIN_YEAR_BOUNDARIES"
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 1,
+    "split_operations": 1,
+    "survivor_fragments": 1,
+    "new_activity_fragments": 1,
+    "relation_corrections": 2,
+    "reviewed_source_links_added_per_fragment": 2,
+    "discontinuous_rule_gap_preserved": true,
+    "production_mutation_authorized": false
+  }
+}
