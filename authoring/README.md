@@ -1,16 +1,18 @@
 # ATLAS GitHub Authoring Manifests
 
-This directory is the reviewed GitHub entry point for the **current Person × Polity authoring workflow**.
+This directory is the reviewed GitHub entry point for current **Person → Activity → Polity** authoring.
 
-It does **not** define a second database write model. Every manifest is declarative input that must resolve through the existing normalized identity and activity services before anything reaches `atlas_v2`.
+It does **not** define a second database write model. A reviewed manifest is declarative input. Production resolves it through normalized identity services and the Stage 2-native Activity service before anything reaches `atlas_v2`.
 
-The final ATLAS Authoring product is broader than this current manifest contract: first-class Person / Place / Source objects, unresolved-safe authoring, Compile → Runtime projection and the source-backed AI candidate review flow are preserved in `ATLAS_REQUIREMENTS.md` for P13. Do not silently stretch v2 manifests into those domains before their reviewed contracts exist.
+The broader final Authoring product — first-class Person / Place / Source objects, unresolved-safe research candidates, human review, Compile → Runtime projection and map integration — remains governed by `ATLAS_REQUIREMENTS.md` and later P13/P14 work.
 
-## Recommended contract — v2
+## Current new-write contract — Stage 2-native v2
 
-Use `atlas-authoring-manifest/v2` for new current-schema work.
+All **new** authoring requests must use `atlas-authoring-manifest/v2` with UUID-bound Activity semantics.
 
-A v2 manifest always declares the Person and Activity. It may also declare a Polity and/or Role identity when that vocabulary does not already exist.
+A v2 manifest always declares the Person and Activity. It may declare a new Polity and/or Role identity, or bind existing normalized UUIDs.
+
+Example shape:
 
 ```json
 {
@@ -34,145 +36,215 @@ A v2 manifest always declares the Person and Activity. It may also declare a Pol
     "allow_display_name_collision": false
   },
   "role_identity": {
-    "code": "example_role",
-    "category": "example_category",
-    "source_label": "Example Role",
-    "display_name_ko": "예시 역할"
+    "code": "example-ruler",
+    "category": "ruler",
+    "source_label": "Example Ruler",
+    "display_name_ko": "예시 통치자"
   },
   "activity": {
-    "politic_name": "Example Polity",
+    "polity_binding": { "mode": "declared" },
+    "role_binding": { "mode": "declared" },
+    "relation_type_id": "00000000-0000-4000-8000-000000000001",
+    "period_basis_id": "00000000-0000-4000-8000-000000000002",
     "activity_start": 1900,
+    "activity_start_month": null,
+    "activity_start_day": null,
+    "activity_start_granularity": "year",
+    "activity_start_certainty": "exact",
+    "activity_start_calendar": "proleptic_gregorian",
     "activity_end": 1901,
-    "role": "example_role",
-    "period_basis": "general_activity",
+    "activity_end_month": null,
+    "activity_end_day": null,
+    "activity_end_granularity": "year",
+    "activity_end_certainty": "exact",
+    "activity_end_calendar": "proleptic_gregorian",
+    "confidence": "high",
+    "chronology_status": "reviewed",
+    "source_links": [],
     "notes": null
   }
 }
 ```
 
-The numbers above are syntactically valid example years only. **Historical year 0 is forbidden.** A genuinely unknown Activity boundary must never be encoded as `0`, `1`, the Person birth year, or another convenient placeholder. The current v2 manifest requires known integer endpoints; unresolved-boundary authoring is a separate P13 requirement rather than a fake current-schema value.
+The UUIDs above are shape examples only. A real manifest must use reviewed normalized IDs that actually exist, unless the corresponding identity is declared in the same manifest.
 
-`polity_identity` and `role_identity` are optional. Omit them when existing normalized vocabulary should be reused.
+### Binding rules
 
-When `polity_identity` is supplied, its `canonical_name_en` must exactly equal `activity.politic_name`. When `role_identity` is supplied, `activity.role` must exactly equal its code, source label, or Korean display name. The authoring layer never guesses which newly declared identity an activity intended to reference.
+`activity.polity_binding`:
 
-## Legacy-compatible contract — v1
+- `{ "mode": "declared" }` — use the `polity_identity` declared by this manifest.
+- `{ "mode": "existing", "id": "<uuid>" }` — bind an existing normalized Polity UUID.
+- `none` is forbidden for Polity.
 
-Existing reviewed manifests such as `liliuokalani.json` remain valid as `atlas-authoring-manifest/v1`.
+`activity.role_binding`:
 
-v1 creates/reuses the Person and requires the referenced Polity/Role vocabulary to already exist. New manifests that declare `polity_identity` or `role_identity` must use v2.
+- `{ "mode": "declared" }` — use the `role_identity` declared by this manifest.
+- `{ "mode": "existing", "id": "<uuid>" }` — bind an existing normalized Role UUID.
+- `{ "mode": "none" }` — no Role applies.
 
-## Atomic execution
+New Stage 2-native Activity writes **forbid** name-based binding fields such as:
 
-`server/atlas-authoring-manifest-service.js` owns one PostgreSQL `SERIALIZABLE` transaction for the entire manifest.
+- `person_name`
+- `politic_name` / `polity_name`
+- `role`
+- `period_basis`
+- `relation_type`
+- a manifest-supplied `person_id`
 
-Within that one transaction it reuses the existing domain primitives:
+The Person UUID comes from the Person identity result inside the same SERIALIZABLE transaction.
 
-1. `createPerson`
-2. optional `createPolity`
-3. optional `createRole`
-4. normalized v2 activity creation
-5. post-write normalized UUID binding verification
-6. `authoring_manifest_runs` audit/idempotency + result snapshot write
+### Temporal rules
 
-There is no nested identity transaction, raw Person/Polity/Role INSERT path in the manifest runner, browser database credential, or legacy table write.
+The Activity identity uses full temporal semantics. Both boundaries carry:
 
-If any identity collision, vocabulary ambiguity, activity duplicate, reference mismatch, post-write binding mismatch, or activity creation failure occurs, the whole manifest rolls back.
+- year
+- optional month/day
+- granularity
+- certainty
+- calendar
 
-### Post-write binding gate
+Historical year `0` is forbidden. Unknown history must never be encoded as `0`, `1`, a birth year, or another placeholder merely to make a manifest pass. Unresolved-boundary authoring remains a separate later contract.
 
-After the Activity row is written but before commit, authoring reloads the normalized relationship row and checks its UUID bindings.
+Certainty is recorded but is **not** part of the P9 semantic identity key. Granularity and calendar are part of identity.
 
-- relationship `person_id` must equal the Person identity result
-- if a Polity was declared in the manifest, relationship `polity_id` must equal that exact Polity result
-- if a Role was declared, relationship `role_id` must equal that exact Role result
+### Source links
 
-A mismatch is a transaction failure, not a warning.
-
-## Durable execution result
-
-`atlas_v2.authoring_manifest_runs` stores not only request id/hash and the primary IDs, but also:
-
-- `manifest_schema`
-- `result_snapshot` JSONB
-
-A new successful execution writes `result_snapshot.version = 1` with entity-level normalized outcomes:
+`source_links` is an array of normalized Source UUID bindings:
 
 ```json
 {
-  "version": 1,
+  "source_id": "<uuid>",
+  "source_locator_key": "reviewed locator"
+}
+```
+
+Synthetic source-link UUIDs and legacy source keys are forbidden. An empty list is allowed when the reviewed manifest has no normalized Source link yet, but provenance must never be fabricated.
+
+## Legacy manifests
+
+Historical manifests remain in `authoring/requests/` as audit history.
+
+- New `atlas-authoring-manifest/v1` writes are retired.
+- Older v1/v2 ledger requests may still replay through the compatibility path when an exact historical request already exists.
+- The Production workflow selects **only current Stage 2-native v2 manifests** for new execution.
+
+Examples such as `liliuokalani.json`, `khri-srong-lde-btsan.json`, and `ngawang-lobsang-gyatso.json` predate the final Stage 2-native manifest shape and are not templates for new requests.
+
+## Atomic execution
+
+A new current manifest executes inside one PostgreSQL `SERIALIZABLE` transaction:
+
+1. create/reuse Person through normalized identity semantics;
+2. create/reuse or bind Polity;
+3. create/reuse or bind Role;
+4. verify relation type / period basis / Source UUID references;
+5. create Stage 2-native Activity;
+6. enforce the P9 semantic-key v2 duplicate rule;
+7. persist immutable authoring ledger evidence;
+8. commit only if every step succeeds.
+
+No browser database credential, raw legacy-table write, name-only Activity binding, nested identity transaction, Person geometry, or physical Person merge is involved.
+
+`request_id` is the stable idempotency key. Reusing a request id with different manifest content fails closed.
+
+## Durable result snapshot
+
+New Stage 2-native runs write `result_snapshot.version = 2` and:
+
+```json
+{
+  "version": 2,
   "schema": "atlas-authoring-manifest/v2",
-  "marker": "ATLAS_AUTHORING_MANIFEST_V2",
-  "provenance_complete": true,
+  "semantic_version": "v2-relation-full-temporal",
+  "transport": {
+    "version": 2,
+    "runtime_sha": "<deployed Production code SHA>",
+    "authoring_sha": "<reviewed GitHub manifest commit SHA>",
+    "manifest_path": "authoring/requests/example.json"
+  },
   "entities": {
     "person": { "id": "...", "disposition": "created" },
-    "polity": { "id": "...", "disposition": "reused" },
-    "role": { "id": "...", "disposition": "resolved_existing" },
-    "period_basis": { "id": "...", "disposition": "resolved_existing" },
-    "activity": { "id": "...", "disposition": "created" }
+    "polity": { "id": "...", "disposition": "existing_uuid" },
+    "role": { "id": null, "disposition": "none" },
+    "activity": {
+      "id": "...",
+      "disposition": "created",
+      "semantic_key": "...",
+      "semantic_hash": "...",
+      "relation_type_id": "...",
+      "period_basis_id": "..."
+    }
   }
 }
 ```
 
-Disposition semantics:
+The stored `transport` object records the **original successful write**, not whichever runtime later replays the same request. The HTTP response also reports the runtime SHA and authoring SHA used for the current invocation.
 
-- `created` — this manifest execution created the normalized object
-- `reused` — the declared object already existed and exact identity authoring reused it
-- `resolved_existing` — the manifest did not declare a new identity; the Activity resolver bound an existing vocabulary object
-- `not_applicable` — nullable Role was intentionally absent
-- `historical_unknown` — the run predates durable result snapshots; original create/reuse state cannot be proven
+Historical ledger snapshots without transport metadata remain valid historical evidence; they are not rewritten to invent provenance that was never recorded.
 
-Manifest-level `replay: true` is separate from these entity dispositions. Replaying a request returns the original stored result snapshot rather than rewriting every entity as “reused”.
+## Production transport v2
 
-### Historical ledger compatibility
+Production authoring deliberately separates two trust anchors:
 
-Runs that completed before result snapshots existed are not reverse-engineered into a fake created/reused history. On exact manifest replay:
+1. **Runtime SHA** — the exact Vercel Production `main` commit currently executing the server code.
+2. **Authoring SHA** — the exact GitHub `main` commit containing the reviewed manifest.
 
-1. the stored manifest hash must still match;
-2. the ledger Person/Activity UUIDs are checked against the live normalized relationship;
-3. a one-time snapshot is backfilled with `provenance_complete: false` and `historical_unknown` dispositions;
-4. future replays verify that stored snapshot UUIDs still match the live normalized relationship.
+They do not need to be equal.
 
-This preserves honest historical provenance while upgrading old ledger rows to the current response shape.
+`GET /api/atlas-authoring-apply` is a read-only readiness handshake. It returns:
 
-## Migration governance
+- transport marker/version;
+- current deployed runtime SHA;
+- P5/core schema readiness;
+- P9 old/new index state and duplicate count;
+- Person-merge interlock state.
 
-Authoring-specific runtime migrations are registered centrally in `server/atlas-authoring-migrations.js` and applied in order by both:
+It does not run migrations or author data.
 
-- the Vercel production authoring handler
-- the local/manual authoring runner
+For a POST apply:
 
-Do not add a migration to only one execution path. Any Production-authorized structural change must also update `db/schema/atlas_v2.current.sql` so a clean database rebuild produces the same current schema.
+- Vercel verifies it is Production, branch `main`, repository `JezCH/atlas-person-db`, and that the supplied `runtime_sha` exactly equals `VERCEL_GIT_COMMIT_SHA`.
+- GitHub Actions OIDC separately verifies repository, immutable repository id, `refs/heads/main`, workflow identity, production environment, audience, event type, and that token `sha` exactly equals `authoring_sha`.
+- The server applies authoring migrations, re-checks readiness, then executes the manifest.
+
+This keeps exact-SHA security without coupling every data commit to a new Vercel deployment.
+
+## Vercel build policy
+
+`authoring/requests/*.json` is reviewed **data**, not runtime code. Data-only authoring commits are therefore safe for `scripts/vercel-ignore-build.mjs` to skip.
+
+Changes to any of the following remain deployment-relevant and must build normally:
+
+- authoring API/server code;
+- authoring workflow contract;
+- migrations/schema;
+- Vercel configuration;
+- application/runtime code.
+
+The authoring workflow first queries the deployed runtime readiness marker. A future incompatible transport change must bump the transport version, so a newer workflow cannot silently talk to an older incompatible runtime.
+
+## P9/P10 invariants for ordinary registration
+
+Ordinary new authoring is allowed only when:
+
+- P5 additive schema is ready;
+- P9 old Activity unique index is absent;
+- P9 semantic-key v2 index is present;
+- P9 duplicate groups are zero;
+- Person reconciliation semantics are `v2-relation-full-temporal`;
+- physical Person merge remains blocked under `pre-p10-blocked` until P10 is separately authorized.
+
+P10 physical Person merge is **not** a prerequisite for ordinary new Person registration.
 
 ## Invariants
 
-- The manifest is reviewable Git history, not authoritative runtime data.
-- `atlas_v2` is the only authoritative current authoring database.
-- Person/Polity/Role creation uses the same normalized identity semantics as `/api/atlas-identity`.
-- Activity creation uses the same normalized v2 transaction semantics as `/api/atlas-mutate`.
-- Existing vocabulary is resolved exactly; unresolved or ambiguous references fail closed.
-- New Polity/Role declarations must exactly match the Activity reference they are intended to satisfy.
-- Post-write declared-identity bindings must match the normalized relationship UUIDs before commit.
-- A manifest must never create raw SQL, bypass duplicate rules, or write legacy tables.
-- `request_id` is the stable idempotency key for the whole manifest.
-- Re-applying an identical manifest is safe; a non-identical reuse of the same request id fails closed.
-- Stored result snapshots are checked against live normalized UUID bindings on replay.
-- Historical year 0 is invalid.
-- Unknown history is never encoded through placeholder current-schema values merely to make a manifest pass validation.
-
-## Production execution
-
-`.github/workflows/atlas-authoring-apply.yml` applies approved v1/v2 manifests only after the corresponding `main` commit reaches the exact Vercel Production deployment.
-
-GitHub Actions obtains a short-lived GitHub OIDC token. Vercel verifies repository, immutable repository id, `main`, workflow identity, production environment, audience, and exact commit SHA before opening the database. `SUPABASE_DB_URL` remains inside Vercel and is never stored in the GitHub Actions job.
-
-The workflow treats only deployment propagation (`404` or exact `DEPLOYMENT_SHA_MISMATCH`) as retryable. All other authoring failures fail closed.
-
-The production response includes backward-compatible top-level IDs plus the durable `result` snapshot, so workflow logs show both the committed UUIDs and how each entity was obtained.
-
-## Current proven production examples
-
-- `authoring/requests/liliuokalani.json` — first completed production request, v1 compatibility path.
-- `authoring/requests/khri-srong-lde-btsan.json` — first production test of v2 with a declared Polity identity.
-
-Both predate durable entity-disposition snapshots. Their next exact replay must therefore preserve the live UUID bindings while reporting historical create/reuse disposition as unknown rather than guessing.
+- Authoring → normalized DB; manifests are reviewed inputs, not runtime authority.
+- Person → Activity → Polity; Person never owns geometry.
+- UUID binding replaces name-only identity binding for new Activity writes.
+- Unknown dates are never fabricated.
+- Provenance is never silently lost.
+- No generic relation default.
+- No physical Person merge before P10 v2 revalidation.
+- No runtime name-only identity binding.
+- Legacy projections fail closed when they lack relation/full-temporal identity.
+- Re-applying an identical request is safe; changing content under the same request id fails closed.
