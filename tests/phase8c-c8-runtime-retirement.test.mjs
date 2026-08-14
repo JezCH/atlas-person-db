@@ -42,6 +42,7 @@ test('historical C8 workflow manifest remains audit evidence while current workf
     'atlas-correction-apply.yml',
     'atlas-integrity.yml',
     'atlas-stage2-schema-release.yml',
+    'atlas-stage2-train2-live-parity.yml',
     'atlas-stage2-train2-release.yml'
   ]);
 
@@ -65,6 +66,14 @@ test('historical C8 workflow manifest remains audit evidence while current workf
   assert.match(train2Workflow, /id-token:\s*write/);
   assert.match(train2Workflow, /APPLY:\$\{RELEASE_ID\}/);
   assert.doesNotMatch(train2Workflow, /SUPABASE_DB_URL/);
+
+  const parityWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-stage2-train2-live-parity.yml', import.meta.url), 'utf8');
+  assert.match(parityWorkflow, /\bpull_request\s*:/m);
+  assert.match(parityWorkflow, /^\s*push\s*:/m);
+  assert.match(parityWorkflow, /branches:\s*\n\s*- main/);
+  assert.doesNotMatch(parityWorkflow, /workflow_dispatch\s*:/);
+  assert.doesNotMatch(parityWorkflow, /environment:\s*production/);
+  assert.doesNotMatch(parityWorkflow, /SUPABASE_DB_URL/);
 });
 
 test('C8 historical manifest records the DB objects that were deferred to C9', () => {
