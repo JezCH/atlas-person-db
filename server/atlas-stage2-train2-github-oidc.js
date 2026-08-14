@@ -1,0 +1,43 @@
+"use strict";
+
+const crypto = require("node:crypto");
+const ISSUER = "https://token.actions.githubusercontent.com";
+const JWKS_URL = `${ISSUER}/.well-known/jwks`;
+const EXPECTED_AUDIENCE = "atlas-person-db-stage2-train2-release";
+const EXPECTED_REPOSITORY = "JezCH/atlas-person-db";
+const EXPECTED_REPOSITORY_ID = "1319427399";
+const EXPECTED_REF = "refs/heads/main";
+const EXPECTED_WORKFLOW_REF = "JezCH/atlas-person-db/.github/workflows/atlas-stage2-train2-release.yml@refs/heads/main";
+let cache = null, cachedAt = 0;
+
+function decode(value) { try { return JSON.parse(Buffer.from(String(value||""),"base64url").toString("utf8")); } catch { throw new Error("TRAIN2_OIDC_MALFORMED_TOKEN"); } }
+async function keys(fetchImpl=globalThis.fetch, now=Date.now) {
+  if (cache && now()-cachedAt < 300000) return cache;
+  const response = await fetchImpl(JWKS_URL,{headers:{accept:"application/json"}});
+  if (!response.ok) throw new Error(`TRAIN2_OIDC_JWKS_HTTP_${response.status}`);
+  const body = await response.json();
+  if (!Array.isArray(body?.keys) || !body.keys.length) throw new Error("TRAIN2_OIDC_JWKS_INVALID");
+  cache=body.keys; cachedAt=now(); return cache;
+}
+function verifyClaims(payload, expectedSha, nowSeconds) {
+  if (payload?.iss!==ISSUER) throw new Error("TRAIN2_OIDC_ISSUER_MISMATCH");
+  const aud=Array.isArray(payload?.aud)?payload.aud:[payload?.aud];
+  if (!aud.includes(EXPECTED_AUDIENCE)) throw new Error("TRAIN2_OIDC_AUDIENCE_MISMATCH");
+  if (payload?.repository!==EXPECTED_REPOSITORY || String(payload?.repository_id||"")!==EXPECTED_REPOSITORY_ID) throw new Error("TRAIN2_OIDC_REPOSITORY_MISMATCH");
+  if (payload?.ref!==EXPECTED_REF || payload?.workflow_ref!==EXPECTED_WORKFLOW_REF) throw new Error("TRAIN2_OIDC_WORKFLOW_MISMATCH");
+  if (payload?.environment!=="production" || payload?.event_name!=="workflow_dispatch") throw new Error("TRAIN2_OIDC_CONTEXT_MISMATCH");
+  if (payload?.sha!==expectedSha) throw new Error("TRAIN2_OIDC_SHA_MISMATCH");
+  if (!Number.isFinite(payload?.exp) || payload.exp < nowSeconds-30) throw new Error("TRAIN2_OIDC_EXPIRED");
+  if (Number.isFinite(payload?.nbf) && payload.nbf > nowSeconds+30) throw new Error("TRAIN2_OIDC_NOT_ACTIVE");
+}
+async function verifyGitHubActionsOidc(token,{expectedSha,fetchImpl=globalThis.fetch,now=Date.now}={}) {
+  const parts=String(token||"").split("."); if(parts.length!==3) throw new Error("TRAIN2_OIDC_MALFORMED_TOKEN");
+  const header=decode(parts[0]), payload=decode(parts[1]);
+  if(header?.alg!=="RS256" || !header?.kid) throw new Error("TRAIN2_OIDC_UNSUPPORTED_HEADER");
+  const jwk=(await keys(fetchImpl,now)).find(k=>k?.kid===header.kid&&k?.kty==="RSA"); if(!jwk) throw new Error("TRAIN2_OIDC_SIGNING_KEY_NOT_FOUND");
+  const publicKey=crypto.createPublicKey({key:jwk,format:"jwk"});
+  if(!crypto.verify("RSA-SHA256",Buffer.from(`${parts[0]}.${parts[1]}`),publicKey,Buffer.from(parts[2],"base64url"))) throw new Error("TRAIN2_OIDC_SIGNATURE_INVALID");
+  verifyClaims(payload,String(expectedSha||"").toLowerCase(),Math.floor(now()/1000)); return Object.freeze(payload);
+}
+function resetForTests(){cache=null;cachedAt=0;}
+module.exports=Object.freeze({verifyGitHubActionsOidc,verifyClaims,resetForTests,ISSUER,JWKS_URL,EXPECTED_AUDIENCE,EXPECTED_WORKFLOW_REF});

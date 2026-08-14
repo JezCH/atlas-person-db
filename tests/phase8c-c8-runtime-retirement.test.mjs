@@ -41,7 +41,8 @@ test('historical C8 workflow manifest remains audit evidence while current workf
     'atlas-authoring-apply.yml',
     'atlas-correction-apply.yml',
     'atlas-integrity.yml',
-    'atlas-stage2-schema-release.yml'
+    'atlas-stage2-schema-release.yml',
+    'atlas-stage2-train2-release.yml'
   ]);
 
   const correctionWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-correction-apply.yml', import.meta.url), 'utf8');
@@ -55,6 +56,15 @@ test('historical C8 workflow manifest remains audit evidence while current workf
   assert.doesNotMatch(stage2SchemaWorkflow, /\bpull_request\s*:/m);
   assert.match(stage2SchemaWorkflow, /environment:\s*production/);
   assert.doesNotMatch(stage2SchemaWorkflow, /SUPABASE_DB_URL/);
+
+  const train2Workflow = fs.readFileSync(new URL('../.github/workflows/atlas-stage2-train2-release.yml', import.meta.url), 'utf8');
+  assert.match(train2Workflow, /workflow_dispatch\s*:/);
+  assert.doesNotMatch(train2Workflow, /^\s*push\s*:/m);
+  assert.doesNotMatch(train2Workflow, /\bpull_request\s*:/m);
+  assert.match(train2Workflow, /environment:\s*production/);
+  assert.match(train2Workflow, /id-token:\s*write/);
+  assert.match(train2Workflow, /APPLY:\$\{RELEASE_ID\}/);
+  assert.doesNotMatch(train2Workflow, /SUPABASE_DB_URL/);
 });
 
 test('C8 historical manifest records the DB objects that were deferred to C9', () => {
