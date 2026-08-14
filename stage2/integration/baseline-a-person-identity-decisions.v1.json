@@ -1,0 +1,70 @@
+{
+  "schema": "atlas-stage2-baseline-a-person-identity-decisions/v1",
+  "as_of": "2026-08-12",
+  "status": "P4_PERSON_IDENTITY_DECISIONS_ONLY_NO_PHYSICAL_MERGE",
+  "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27",
+  "rules": {
+    "person_identity_decision_may_precede_physical_merge": true,
+    "physical_person_merge_before_semantic_key_v2_forbidden": true,
+    "exact_person_uuid_binding_required": true,
+    "exact_activity_uuid_binding_required_when_activity_blocker_is_cleared": true,
+    "name_only_merge_forbidden": true,
+    "heuristic_detector_non_candidate_does_not_overrule_reviewed_identity_evidence": true,
+    "production_mutation_authorized": false
+  },
+  "decisions": [
+    {
+      "id": "gorgo_sparta_same_person",
+      "activity_id": "01af9900-a817-5c40-9109-cd521009dbfd",
+      "current_person_id": "5136407a-9792-5103-be6f-54c947b255a5",
+      "current_person": "Gorgo of Sparta",
+      "duplicate_person_id": "a3367f19-e901-5213-aba6-76c4aef1b730",
+      "duplicate_person": "Gorgo",
+      "decision": "MERGE_SAME_HISTORICAL_PERSON_AT_P10",
+      "canonical_survivor_person_id": "5136407a-9792-5103-be6f-54c947b255a5",
+      "canonical_survivor_name": "Gorgo of Sparta",
+      "duplicate_current_activity_count_expected": 0,
+      "detector_note": "The current heuristic detector does not emit this pair because `Gorgo` and `Gorgo of Sparta` do not share its exact/folded/token-set name key. Historical review, not detector absence, decides identity.",
+      "p10_physical_merge_required": true,
+      "physical_merge_authorized_now": false,
+      "activity_after_identity_decision": {
+        "decision": "KEEP_SPARTA_ACTIVITY_PERSON_IDENTITY_RESOLVED",
+        "relation_hint": "active_in",
+        "execution_class": "KEEP_POLITY_RELATION_LAYER_PENDING",
+        "dependencies": ["relation_type"]
+      },
+      "evidence_urls": [
+        "https://academic.oup.com/edited-volume/61673/chapter-abstract/549657234?login=false",
+        "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.04.0104%3Aentry%3Dcleomenes-i-bio-1"
+      ]
+    },
+    {
+      "id": "catherine_great_alias_already_canonicalized",
+      "activity_id": "1fc5aa5e-29c1-51c7-8721-80d810f7084e",
+      "current_person_id": "ed32430e-504d-5eb5-89bf-7f58ca43209d",
+      "current_person": "Catherine the Great",
+      "decision": "CURRENT_SINGLE_PERSON_IDENTITY_ALREADY_CONTAINS_CATHERINE_II_ALIAS",
+      "required_alias": {
+        "name": "Catherine II",
+        "locale": "en",
+        "is_preferred": false
+      },
+      "separate_catherine_ii_person_expected": false,
+      "p10_physical_merge_required": false,
+      "physical_merge_authorized_now": false,
+      "activity_after_identity_decision": {
+        "decision": "KEEP_RUSSIAN_EMPIRE_RULE_PERSON_IDENTITY_RESOLVED",
+        "relation_hint": "rules",
+        "execution_class": "KEEP_POLITY_RELATION_LAYER_PENDING",
+        "dependencies": ["relation_type"]
+      }
+    }
+  ],
+  "result": {
+    "person_identity_blockers_reviewed": 2,
+    "person_identity_decisions_unresolved": 0,
+    "p10_physical_person_merges_required": 1,
+    "physical_person_merges_performed": 0,
+    "production_mutation_authorized": false
+  }
+}

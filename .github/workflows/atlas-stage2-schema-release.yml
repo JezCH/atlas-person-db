@@ -1,0 +1,147 @@
+name: ATLAS Stage 2 Schema Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_id:
+        description: 'Exact reviewed Stage 2 schema release id'
+        required: true
+        type: string
+      approval:
+        description: 'Type APPLY:<release_id> exactly to authorize the Production schema release'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: atlas-stage2-schema-production
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: production
+    env:
+      ATLAS_STAGE2_SCHEMA_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-stage2-schema-release
+      ATLAS_STAGE2_SCHEMA_AUDIENCE: atlas-person-db-stage2-schema-release
+      REQUESTED_RELEASE_ID: ${{ inputs.release_id }}
+      REQUESTED_APPROVAL: ${{ inputs.approval }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Fail closed unless dispatch targets exact main SHA and reviewed release
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "${GITHUB_REF}" == "refs/heads/main" ]] || { echo "Stage 2 schema release is main-only" >&2; exit 1; }
+          [[ "$(git rev-parse HEAD)" == "${GITHUB_SHA}" ]] || { echo "checkout SHA mismatch" >&2; exit 1; }
+          [[ "${REQUESTED_APPROVAL}" == "APPLY:${REQUESTED_RELEASE_ID}" ]] || { echo "explicit approval phrase mismatch" >&2; exit 1; }
+          release_path="stage2/releases/p5-additive-schema-release.v1.json"
+          jq -e --arg release_id "${REQUESTED_RELEASE_ID}" '
+            .schema == "atlas-stage2-p5-additive-schema-release/v1" and
+            .release_id == $release_id and
+            .status == "RELEASE_CANDIDATE_BRANCH_ONLY_NO_PRODUCTION_MUTATION" and
+            .prerequisites.effective_prebinding_complete == true and
+            .prerequisites.effective_activity_count == 54 and
+            .prerequisites.remaining_activity_count == 0 and
+            .safety.non_destructive_schema_only == true and
+            .safety.additive_objects_and_backward_compatible_relaxations_only == true and
+            .safety.legacy_source_key_nullability_relaxation == true and
+            .safety.fake_legacy_source_key_for_stage2_native_activity_forbidden == true and
+            .safety.person_activity_data_mutation == false and
+            .safety.physical_person_merge == false and
+            .safety.territory_geometry_mutation == false and
+            .safety.production_apply_authorized == false and
+            (.components | length) == 6
+          ' "${release_path}" >/dev/null
+
+      - name: Preflight exact live Baseline A and release ledger, then apply
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/atlas-stage2-schema-release
+
+          request_oidc() {
+            curl --fail-with-body --silent --show-error \
+              -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+              "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_STAGE2_SCHEMA_AUDIENCE}" | jq -er '.value'
+          }
+
+          call_release() {
+            local mode="$1" output="$2"
+            local payload status code oidc_token
+            payload="$(jq -cn \
+              --arg deployment_sha "${GITHUB_SHA}" \
+              --arg release_id "${REQUESTED_RELEASE_ID}" \
+              --arg approval "${REQUESTED_APPROVAL}" \
+              --arg mode "${mode}" \
+              '{deployment_sha:$deployment_sha,release_id:$release_id,approval:$approval,mode:$mode}')"
+
+            for attempt in $(seq 1 60); do
+              oidc_token="$(request_oidc)"
+              status="$(curl --silent --show-error --output "${output}" --write-out '%{http_code}' --request POST \
+                -H 'content-type: application/json' \
+                -H "authorization: Bearer ${oidc_token}" \
+                --data "${payload}" \
+                "${ATLAS_STAGE2_SCHEMA_ENDPOINT}")"
+              if [[ "${status}" == "200" ]]; then return 0; fi
+              code="$(jq -r '.code // "UNKNOWN"' "${output}" 2>/dev/null || printf 'UNKNOWN')"
+              if [[ "${status}" == "404" || ( "${status}" == "409" && "${code}" == "DEPLOYMENT_SHA_MISMATCH" ) ]]; then
+                echo "Production endpoint has not reached ${GITHUB_SHA} (${mode}, attempt ${attempt}/60); retrying."
+                sleep 10
+                continue
+              fi
+              cat "${output}" >&2 || true
+              echo "Stage 2 schema ${mode} failed: HTTP ${status}, code ${code}" >&2
+              return 1
+            done
+            echo "Production deployment did not reach ${GITHUB_SHA} for Stage 2 schema ${mode}" >&2
+            return 1
+          }
+
+          preflight="/tmp/atlas-stage2-schema-release/preflight.json"
+          apply="/tmp/atlas-stage2-schema-release/apply.json"
+          call_release preflight "${preflight}"
+          jq -e --arg sha "${GITHUB_SHA}" --arg release_id "${REQUESTED_RELEASE_ID}" '
+            .ok == true and
+            .marker == "ATLAS_STAGE2_SCHEMA_RELEASE_V1" and
+            .mode == "preflight" and
+            .read_only == true and
+            .committed == false and
+            .deployment_sha == $sha and
+            .release_id == $release_id and
+            (.baseline_digest | test("^sha256:[0-9a-f]{64}$")) and
+            (.ledger.pending | type == "array")
+          ' "${preflight}" >/dev/null
+
+          call_release apply "${apply}"
+          jq -e --arg sha "${GITHUB_SHA}" --arg release_id "${REQUESTED_RELEASE_ID}" '
+            .ok == true and
+            .marker == "ATLAS_STAGE2_SCHEMA_RELEASE_V1" and
+            .mode == "apply" and
+            .committed == true and
+            .deployment_sha == $sha and
+            .release_id == $release_id and
+            .baseline_digest_before == .baseline_digest_after and
+            .ledger.complete == true and
+            (.ledger.applied | length) == 6 and
+            ((.applied | length) + (.skipped | length)) == 6
+          ' "${apply}" >/dev/null
+          jq -n --slurpfile preflight "${preflight}" --slurpfile apply "${apply}" \
+            '{deployment_sha:env.GITHUB_SHA,release_id:env.REQUESTED_RELEASE_ID,preflight:$preflight[0],apply:$apply[0]}' \
+            > /tmp/atlas-stage2-schema-release/evidence.json
+          jq . /tmp/atlas-stage2-schema-release/evidence.json
+
+      - name: Upload Stage 2 schema release evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-stage2-schema-release-${{ github.sha }}
+          path: /tmp/atlas-stage2-schema-release/
+          if-no-files-found: error
+          retention-days: 90

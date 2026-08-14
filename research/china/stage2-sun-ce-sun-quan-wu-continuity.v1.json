@@ -1,0 +1,72 @@
+{
+  "schema": "atlas-stage2-sun-ce-sun-quan-wu-continuity-research/v1",
+  "status": "RESEARCH_REVIEWED_NO_PRODUCTION_WRITE",
+  "as_of": "2026-08-13",
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27",
+    "activity_count": 338
+  },
+  "sources": [
+    {
+      "id": "cambridge_wu_de_crespigny",
+      "kind": "modern_scholarly_synthesis",
+      "title": "Wu",
+      "author": "Rafe de Crespigny",
+      "work": "The Cambridge History of China",
+      "claim": "Beginning in 195 Sun Ce created a warlord state south of the Yangzi; Sun Quan then developed that state, which became Wu.",
+      "url": "https://www.cambridge.org/core/books/cambridge-history-of-china/wu/092AA11F450B8AA602F262FFDBE219B6"
+    },
+    {
+      "id": "sanguozhi_shi_xie",
+      "kind": "primary_text",
+      "title": "Sanguozhi, Wu Shu 4, Shi Xie biography",
+      "claim": "In 210 Sun Quan sent Bu Zhi to Jiaozhou; Shi Xie and his brothers submitted to Bu Zhi's authority, and Sun Quan subsequently granted Shi Xie offices and titles.",
+      "url": "https://ctext.org/text.pl?if=en&node=604033"
+    }
+  ],
+  "identity_decision": {
+    "family_id": "sun_ce_sun_quan_wu_continuity",
+    "model": "stable_polity_across_founder_succession_and_later_state_form_designation",
+    "stable_single_polity": true,
+    "technical_survivor_uuid": "8768ce4f-26fe-5de9-a501-c19525461fdb",
+    "technical_survivor_current_canonical_key": "Eastern Wu",
+    "survivor_reason": "Baseline A already contains the later Sun Quan/Wu political actor under this UUID. The scholarly continuity model identifies Sun Ce's Jiangdong state as the same developing political enterprise inherited by Sun Quan, so creating another UUID would split one historical actor.",
+    "canonical_label_backprojection_before_formal_wu_forbidden": true,
+    "state_form_or_designation_change_does_not_create_new_identity": true,
+    "sun_ce": {
+      "activity_id": "4c91cb84-5e53-5bcf-a4d6-d82a8a0c903f",
+      "pre_rule_context": {
+        "polity_uuid": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+        "relation": "serves"
+      },
+      "regional_rule_context": {
+        "polity_uuid": "8768ce4f-26fe-5de9-a501-c19525461fdb",
+        "relation": "rules"
+      },
+      "chronology_policy": "Use the reviewed year-level split with Sun Ce's Jiangdong state emerging around 195; do not fabricate sub-year precision or display the later Eastern Wu label for the early phase."
+    },
+    "shi_xie": {
+      "activity_id": "4d543d48-a041-5f07-a900-560a50abaeee",
+      "current_jiaozhou_polity_uuid": "031bdca0-d5e8-51e8-9f59-2db5ee51c55f",
+      "jiaozhou_identity_disposition": "MIGRATE_ADMINISTRATIVE_JURISDICTION_TO_GOVERNANCE_OR_REGION_CONTEXT",
+      "pre_210": {
+        "polity_uuid": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+        "relation": "serves"
+      },
+      "transition_year": 210,
+      "post_210": {
+        "polity_uuid": "8768ce4f-26fe-5de9-a501-c19525461fdb",
+        "relation": "serves"
+      },
+      "regional_autonomy_policy": "Preserve Shi Xie's substantial local autonomy as governance/authority context; do not fabricate a separate Shi Xie sovereign state without source support."
+    }
+  },
+  "invariants": {
+    "new_polity_uuid_created": false,
+    "eastern_wu_label_backprojected_to_195_or_210": false,
+    "jiaozhou_administrative_region_auto_promoted_to_polity": false,
+    "shi_xie_sovereign_state_fabricated": false,
+    "production_mutation_authorized": false
+  }
+}

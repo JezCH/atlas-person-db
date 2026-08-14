@@ -1,7 +1,7 @@
 "use strict";
 
 const { createPostgresClient } = require("./atlas-postgres-client.js");
-const { createAuthoringManifestService } = require("./atlas-authoring-manifest-service.js");
+const { createAuthoringManifestDispatchService } = require("./atlas-authoring-manifest-dispatch-service.js");
 const { applyAuthoringMigrations } = require("./atlas-authoring-migrations.js");
 const { verifyGitHubActionsOidc } = require("./atlas-github-oidc.js");
 
@@ -90,7 +90,7 @@ function createAuthoringApplyHandler({
     try {
       client = await createClient(databaseUrl, { env });
       await applyMigrations(client);
-      const outcome = await createAuthoringManifestService({ client }).apply(payload.manifest);
+      const outcome = await createAuthoringManifestDispatchService({ client }).apply(payload.manifest);
       return json(res, 200, {
         ok: true,
         marker: outcome.marker,
@@ -107,7 +107,7 @@ function createAuthoringApplyHandler({
       });
     } catch (error) {
       const code = String(error?.message || "AUTHORING_APPLY_FAILED");
-      const conflict = /COLLISION|AMBIGUOUS|DUPLICATE|UNRESOLVED|REVIEW|APPROVED|UNSUPPORTED|REQUIRED|NOT_FOUND|FAILED|MISMATCH|DRIFT|INVALID/.test(code);
+      const conflict = /COLLISION|AMBIGUOUS|DUPLICATE|UNRESOLVED|REVIEW|APPROVED|UNSUPPORTED|REQUIRED|NOT_FOUND|FAILED|MISMATCH|DRIFT|INVALID|FORBIDDEN|RETIRED/.test(code);
       return json(res, conflict ? 409 : 500, { ok: false, code });
     } finally {
       if (client && typeof client.end === "function") {

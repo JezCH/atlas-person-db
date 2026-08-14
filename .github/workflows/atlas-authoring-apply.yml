@@ -9,8 +9,12 @@ on:
       - '.github/workflows/atlas-authoring-apply.yml'
       - 'api/atlas-authoring-apply.js'
       - 'server/atlas-authoring-apply-handler.js'
-      - 'server/atlas-github-oidc.js'
       - 'server/atlas-authoring-manifest-service.js'
+      - 'server/atlas-authoring-manifest-dispatch-service.js'
+      - 'server/atlas-authoring-manifest-v2-native-service.js'
+      - 'server/atlas-stage2-native-activity-service.js'
+      - 'server/atlas-activity-semantic-key-v2.js'
+      - 'server/atlas-github-oidc.js'
       - 'db/migrations/20260811_authoring_manifest_runs.sql'
   workflow_dispatch:
     inputs:
@@ -40,7 +44,7 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Resolve approved manifests
+      - name: Resolve approved Stage 2 native manifests
         shell: bash
         run: |
           set -euo pipefail
@@ -51,25 +55,38 @@ jobs:
             printf '%s\n' "${{ inputs.manifest }}" > /tmp/atlas-candidates.txt
           else
             git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}" -- 'authoring/requests/*.json' > /tmp/atlas-candidates.txt
-            if [[ ! -s /tmp/atlas-candidates.txt ]]; then
-              find authoring/requests -maxdepth 1 -type f -name '*.json' -print | sort > /tmp/atlas-candidates.txt
-              echo 'Authoring transport changed without a manifest delta; replaying all approved manifests idempotently.'
-            fi
           fi
 
           while IFS= read -r manifest; do
             [[ -n "$manifest" ]] || continue
             [[ "$manifest" =~ ^authoring/requests/[A-Za-z0-9._-]+\.json$ ]] || { echo "Rejected manifest path: $manifest"; exit 1; }
-            if jq -e '((.schema == "atlas-authoring-manifest/v1") or (.schema == "atlas-authoring-manifest/v2")) and .review_status == "approved"' "$manifest" >/dev/null; then
+            if jq -e '
+              .schema == "atlas-authoring-manifest/v2"
+              and .review_status == "approved"
+              and (.activity.relation_type_id | type == "string")
+              and (.activity.period_basis_id | type == "string")
+              and (.activity.polity_binding.mode | IN("declared","existing"))
+              and (.activity.role_binding.mode | IN("declared","existing","none"))
+              and (.activity.activity_start_granularity | type == "string")
+              and (.activity.activity_start_certainty | type == "string")
+              and (.activity.activity_start_calendar | type == "string")
+              and (.activity.activity_end_granularity | type == "string")
+              and (.activity.activity_end_certainty | type == "string")
+              and (.activity.activity_end_calendar | type == "string")
+              and (.activity.person_name == null)
+              and (.activity.politic_name == null)
+              and (.activity.role == null)
+              and (.activity.period_basis == null)
+            ' "$manifest" >/dev/null; then
               printf '%s\n' "$manifest" >> /tmp/atlas-manifests.txt
             else
-              echo "Skipping non-approved or unsupported manifest: $manifest"
+              echo "Skipping legacy/non-native authoring manifest: $manifest"
             fi
           done < /tmp/atlas-candidates.txt
 
           sort -u -o /tmp/atlas-manifests.txt /tmp/atlas-manifests.txt
           if [[ ! -s /tmp/atlas-manifests.txt ]]; then
-            echo 'No approved authoring manifests selected.'
+            echo 'No newly changed approved Stage 2 native authoring manifests selected.'
             exit 0
           fi
           cat /tmp/atlas-manifests.txt

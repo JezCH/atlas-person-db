@@ -1,0 +1,105 @@
+{
+  "schema": "atlas-stage2-baseline-a-polity-identity-decisions/v1",
+  "as_of": "2026-08-13",
+  "status": "P4_POLITY_IDENTITY_HANDOFF_PARTIAL_NO_PRODUCTION_MUTATION",
+  "closure_status": "P4_POLITY_IDENTITY_DECISIONS_COMPLETE_BRANCH_ONLY",
+  "batch": {
+    "id": "p4_polity_identity_batch_6_shi_xie_final_closure",
+    "sequence": 6,
+    "applied_before_batch": 48,
+    "expected_applied_after_batch": 49
+  },
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27",
+    "activity_count": 338,
+    "polity_identity_dependency_total": 49
+  },
+  "rules": {
+    "uuid_is_identity": true,
+    "exact_activity_uuid_binding_required": true,
+    "exact_current_polity_uuid_binding_required": true,
+    "name_only_binding_forbidden": true,
+    "reviewed_research_reused_without_reopening_generic_historical_research": true,
+    "new_polity_uuid_must_not_be_invented_before_authoring": true,
+    "current_invalid_polity_may_be_retired_only_after_all_references_are_relinked": true,
+    "temporal_designation_does_not_create_a_new_polity_identity": true,
+    "people_event_place_context_must_not_be_forced_into_polity_identity": true,
+    "production_mutation_authorized": false
+  },
+  "allowed_target_dispositions": [
+    "REUSE_CURRENT_UUID",
+    "MERGE_TO_EXISTING_SURVIVOR",
+    "KEEP_DISTINCT",
+    "NEW_POLITY_REQUIRED",
+    "REPLACE_WITH_GOVERNANCE",
+    "MIGRATE_TO_PEOPLE",
+    "MIGRATE_TO_EVENT",
+    "TEMPORAL_DESIGNATION_ONLY"
+  ],
+  "decisions": [
+    {
+      "id": "shi_xie_jiaozhou_governance_split_han_stable_sun_wu",
+      "activity_id": "4d543d48-a041-5f07-a900-560a50abaeee",
+      "person_id": "a80ed18e-d531-50ff-abbe-6b400d0340d4",
+      "person": "Shi Xie",
+      "current_polity": {
+        "uuid": "031bdca0-d5e8-51e8-9f59-2db5ee51c55f",
+        "canonical_key": "Jiaozhou"
+      },
+      "reviewed_decision": "SPLIT_IMPERIAL_SERVICE_CONTEXTS_AND_MIGRATE_JIAOZHOU_ADMINISTRATIVE_CONTEXT",
+      "target_disposition": "REPLACE_WITH_GOVERNANCE",
+      "target_polity_uuid": null,
+      "target_identity_class": "JIAOZHOU_ADMINISTRATIVE_JURISDICTION_GOVERNANCE_CONTEXT",
+      "split_targets": [
+        {
+          "target_disposition": "REUSE_CURRENT_UUID",
+          "polity_uuid": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+          "identity_class": "EASTERN_HAN_POLITICAL_CONTEXT",
+          "relation": "serves",
+          "interval_policy": "187_through_pre_210_year_level"
+        },
+        {
+          "target_disposition": "REUSE_CURRENT_UUID",
+          "polity_uuid": "8768ce4f-26fe-5de9-a501-c19525461fdb",
+          "identity_class": "STABLE_SUN_CE_SUN_QUAN_WU_POLITICAL_ACTOR",
+          "relation": "serves",
+          "interval_policy": "210_through_226_year_level",
+          "name_policy": "Do not display the later Eastern Wu label as if it were the polity's formal name in 210."
+        }
+      ],
+      "chronology_policy": "Split at the reviewed 210 year boundary; do not fabricate sub-year precision.",
+      "governance_policy": "Preserve Jiaozhou as an administrative jurisdiction/governance or region context and preserve Shi Xie's substantial local autonomy separately; neither requires a fabricated sovereign Shi Xie Polity.",
+      "relation_hint": "serves→serves",
+      "source_contract": "research/china/stage2-sun-ce-sun-quan-wu-continuity.v1.json",
+      "required_later_actions": [
+        "MIGRATE_JIAOZHOU_TO_ADMINISTRATIVE_GOVERNANCE_OR_REGION_CONTEXT",
+        "SPLIT_ACTIVITY_AT_210_YEAR_LEVEL",
+        "RELINK_PRE210_TO_EASTERN_HAN",
+        "RELINK_POST210_TO_STABLE_SUN_WU_UUID",
+        "AUTHOR_TEMPORALLY_CORRECT_PRE_FORMAL_WU_NAME_OR_DESIGNATION",
+        "PRESERVE_REGIONAL_AUTONOMY_CONTEXT",
+        "RELATION_SET",
+        "PROVENANCE_LINK"
+      ],
+      "p5_p6_dependencies": [
+        "GOVERNANCE_CONTEXT",
+        "POLITY_DESIGNATION_OR_STATE_FORM",
+        "CORRECTION_V2",
+        "RELATION_TYPE",
+        "NORMALIZED_PROVENANCE"
+      ]
+    }
+  ],
+  "result": {
+    "polity_identity_dependency_total": 49,
+    "decisions_recorded": 1,
+    "activity_dependencies_covered_this_batch": 1,
+    "activity_dependencies_applied_before_batch": 48,
+    "activity_dependencies_applied_after_batch": 49,
+    "activity_dependencies_remaining_after_batch": 0,
+    "replace_with_governance_decisions_in_this_batch": 1,
+    "new_polities_required_in_this_batch": 0,
+    "production_mutation_authorized": false
+  }
+}

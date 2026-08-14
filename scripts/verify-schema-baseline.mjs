@@ -5,13 +5,25 @@ import { createRequire } from 'node:module';
 import pg from 'pg';
 
 const require = createRequire(import.meta.url);
-const { applyAuthoringMigrations } = require('../server/atlas-authoring-migrations.js');
-const { applyCorrectionMigrations } = require('../server/atlas-correction-migrations.js');
+const { AUTHORING_MIGRATION_PATHS, applyAuthoringMigrations } = require('../server/atlas-authoring-migrations.js');
+const { CORRECTION_MIGRATION_PATHS, applyCorrectionMigrations } = require('../server/atlas-correction-migrations.js');
 const { Client } = pg;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const baselinePath = path.join(root, 'db/schema/atlas_v2.current.sql');
 const databaseUrl = String(process.env.DATABASE_URL || '').trim();
 if (!/^postgres(?:ql)?:\/\//.test(databaseUrl)) throw new Error('DATABASE_URL is required for schema baseline verification');
+
+const expectedAuthoringMigrations = [
+  '20260811_authoring_manifest_runs.sql',
+  '20260811_authoring_result_snapshot.sql',
+  '20260814_authoring_ledger_live_reference_lifecycle.sql'
+];
+
+const expectedCorrectionMigrations = [
+  '20260811_correction_manifest_runs.sql',
+  '20260812_correction_manifest_v1_1.sql',
+  '20260813_correction_manifest_v2.sql'
+];
 
 const expectedTables = [
   'authoring_manifest_runs','chronology_claims','correction_manifest_runs','migration_metadata','period_bases','period_basis_names','person_descriptions',
@@ -60,6 +72,26 @@ function same(actual, expected, label) {
   }
 }
 
+function assertAuthoringMigrationRegistry(result, label) {
+  const registered = AUTHORING_MIGRATION_PATHS.map((item) => path.basename(item));
+  if (JSON.stringify(registered) !== JSON.stringify(expectedAuthoringMigrations)) {
+    throw new Error(`${label} registry drift\nactual=${JSON.stringify(registered)}\nexpected=${JSON.stringify(expectedAuthoringMigrations)}`);
+  }
+  if (JSON.stringify(result.applied) !== JSON.stringify(expectedAuthoringMigrations)) {
+    throw new Error(`${label} apply drift\nactual=${JSON.stringify(result.applied)}\nexpected=${JSON.stringify(expectedAuthoringMigrations)}`);
+  }
+}
+
+function assertCorrectionMigrationRegistry(result, label) {
+  const registered = CORRECTION_MIGRATION_PATHS.map((item) => path.basename(item));
+  if (JSON.stringify(registered) !== JSON.stringify(expectedCorrectionMigrations)) {
+    throw new Error(`${label} registry drift\nactual=${JSON.stringify(registered)}\nexpected=${JSON.stringify(expectedCorrectionMigrations)}`);
+  }
+  if (JSON.stringify(result.applied) !== JSON.stringify(expectedCorrectionMigrations)) {
+    throw new Error(`${label} apply drift\nactual=${JSON.stringify(result.applied)}\nexpected=${JSON.stringify(expectedCorrectionMigrations)}`);
+  }
+}
+
 const source = fs.readFileSync(baselinePath, 'utf8');
 const ddlWithoutLineComments = source.replace(/^\s*--.*$/gm, '');
 if (/public\.person_politics|atlas_person_politics_compat_v1/i.test(ddlWithoutLineComments)) {
@@ -72,7 +104,7 @@ try {
   await client.query(source);
 
   const initialCorrectionMigration = await applyCorrectionMigrations(client);
-  if (initialCorrectionMigration.applied.length !== 2) throw new Error('correction migration registry is incomplete');
+  assertCorrectionMigrationRegistry(initialCorrectionMigration, 'initial correction migration');
 
   const tables = await client.query(`
     select table_name
@@ -129,21 +161,21 @@ try {
      where n.nspname='atlas_v2'
        and con.conname='correction_manifest_runs_manifest_schema_check'`);
   const correctionSchemaDefinition = String(correctionSchemaConstraint.rows[0]?.definition || '');
-  if (!/atlas-correction-manifest\/v1/.test(correctionSchemaDefinition) || !/atlas-correction-manifest\/v1\.1/.test(correctionSchemaDefinition)) {
-    throw new Error(`correction manifest schema constraint drift: ${correctionSchemaDefinition}`);
+  for (const schema of ['atlas-correction-manifest/v1','atlas-correction-manifest/v1.1','atlas-correction-manifest/v2']) {
+    if (!correctionSchemaDefinition.includes(schema)) {
+      throw new Error(`correction manifest schema constraint missing ${schema}: ${correctionSchemaDefinition}`);
+    }
   }
 
   const firstAuthoringReplay = await applyAuthoringMigrations(client);
   const secondAuthoringReplay = await applyAuthoringMigrations(client);
-  if (firstAuthoringReplay.applied.length !== 2 || secondAuthoringReplay.applied.length !== 2) {
-    throw new Error('authoring migration registry did not apply the complete ordered set');
-  }
+  assertAuthoringMigrationRegistry(firstAuthoringReplay, 'first authoring replay');
+  assertAuthoringMigrationRegistry(secondAuthoringReplay, 'second authoring replay');
 
   const firstCorrectionReplay = await applyCorrectionMigrations(client);
   const secondCorrectionReplay = await applyCorrectionMigrations(client);
-  if (firstCorrectionReplay.applied.length !== 2 || secondCorrectionReplay.applied.length !== 2) {
-    throw new Error('correction migration registry did not apply the complete ordered set');
-  }
+  assertCorrectionMigrationRegistry(firstCorrectionReplay, 'first correction replay');
+  assertCorrectionMigrationRegistry(secondCorrectionReplay, 'second correction replay');
 
   const legacy = await client.query(`
     select to_regclass('public.person_politics') as legacy_table,
@@ -171,7 +203,7 @@ try {
     authoring_migration_replay: true,
     correction_migrations: firstCorrectionReplay.applied.length,
     correction_migration_replay: true,
-    correction_manifest_schemas: ['atlas-correction-manifest/v1','atlas-correction-manifest/v1.1'],
+    correction_manifest_schemas: ['atlas-correction-manifest/v1','atlas-correction-manifest/v1.1','atlas-correction-manifest/v2'],
     clean_target_guard: true,
     legacy_objects: 0
   }, null, 2));

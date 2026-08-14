@@ -1,0 +1,32 @@
+{
+  "schema": "atlas-stage2-p7-reviewed-relation-sources/v1",
+  "as_of": "2026-08-14",
+  "status": "REVIEWED_LITERAL_UUID_ROWS_BRANCH_ONLY_NO_PRODUCTION_MUTATION",
+  "decision_authority": "docs/stage2/P7_HOJO_KAMAKURA_GOVERNANCE_DECISION_2026-08-14.md",
+  "rules": {
+    "literal_uuid_insert_only": true,
+    "runtime_title_or_url_resolution_forbidden": true,
+    "bibliographic_hash_and_bytes_must_be_null": true,
+    "source_locator_required_when_linked_to_activity_fragment": true,
+    "production_mutation_authorized": false
+  },
+  "sources": [
+    {
+      "candidate_key": "bibliographic:cambridge:mass-kamakura-bakufu",
+      "row": {
+        "id": "e20a8f0f-ef96-4b86-8b73-751bd3e3c207",
+        "source_key": "bibliographic:cambridge:mass-kamakura-bakufu",
+        "source_type": "scholarly_secondary_source",
+        "title": "The Kamakura bakufu",
+        "sha256": null,
+        "bytes": null,
+        "canonical_url": "https://www.cambridge.org/core/books/abs/cambridge-history-of-japan/kamakura-bakufu/BF02043614072DC18DBFF0EC11BCBAE0",
+        "citation_text": "Jeffrey P. Mass, “The Kamakura bakufu,” The Cambridge History of Japan, Cambridge University Press."
+      }
+    }
+  ],
+  "result": {
+    "source_count": 1,
+    "production_mutation_authorized": false
+  }
+}

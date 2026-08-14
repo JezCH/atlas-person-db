@@ -1,0 +1,129 @@
+{
+  "schema": "atlas-stage2-p5-preproduction-schema-readiness/v1",
+  "as_of": "2026-08-13",
+  "status": "P5_PREPRODUCTION_SCHEMA_REHEARSAL_READY_NO_PRODUCTION_MUTATION",
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27",
+    "activities": 338,
+    "existing_polities": 212,
+    "existing_sources": 20
+  },
+  "prepared_frontier": {
+    "new_polity_targets": 24,
+    "new_polity_uuid_assignments": 0,
+    "polity_relation_assertions": 10,
+    "relation_source_candidates": 9,
+    "relation_source_links": 11,
+    "relation_source_uuid_assignments": 0,
+    "correction_v2_activities": 57,
+    "people_group_boundary_polity_targets": 5,
+    "entity_migrations": 3,
+    "person_polity_relation_type_uuid_count": 6,
+    "current_polity_relation_type_uuid_count": 3
+  },
+  "schema_components": [
+    {
+      "id": "semantic_extensions",
+      "proposal": "db/proposals/stage2_semantic_extensions.rehearsal.sql",
+      "required_capabilities": [
+        "person_polity_relation_types",
+        "activity_full_temporal_details",
+        "governance_contexts",
+        "polity_governance_periods",
+        "polity_relation_types",
+        "polity_relations",
+        "polity_designations",
+        "polity_identity_relations"
+      ]
+    },
+    {
+      "id": "relation_type_catalog",
+      "proposal": "db/proposals/stage2_relation_type_catalog.rehearsal.sql",
+      "contract": "stage2/catalogs/relation-types.v1.json",
+      "required_capabilities": [
+        "exact_person_relation_type_uuids",
+        "exact_reviewed_polity_relation_type_uuids",
+        "code_is_not_identity",
+        "no_generic_person_relation_default"
+      ]
+    },
+    {
+      "id": "source_model",
+      "proposal": "db/proposals/stage2_source_model.rehearsal.sql",
+      "contract": "stage2/contracts/source-current.v1.json",
+      "required_capabilities": [
+        "bibliographic_sources_without_fake_hash_or_bytes",
+        "canonical_url",
+        "citation_text",
+        "materialized_repository_source_compatibility"
+      ]
+    },
+    {
+      "id": "normalized_provenance",
+      "proposal": "db/proposals/stage2_provenance.rehearsal.sql",
+      "required_capabilities": [
+        "polity_governance_period_sources",
+        "polity_relation_sources",
+        "polity_designation_sources",
+        "polity_identity_relation_sources",
+        "nonblank_source_locator",
+        "multiple_locators_per_assertion"
+      ]
+    },
+    {
+      "id": "entity_boundaries",
+      "proposal": "db/proposals/stage2_entity_boundaries.rehearsal.sql",
+      "contract": "stage2/contracts/entity-boundaries-current.v1.json",
+      "required_capabilities": [
+        "polity_semantic_name_kind",
+        "people_groups",
+        "person_people_affiliations",
+        "historical_events",
+        "person_event_participations",
+        "normalized_entity_provenance"
+      ]
+    }
+  ],
+  "semantic_name_kinds_required": [
+    "historical_attested",
+    "historiographic_conventional",
+    "editorial_catalog_label"
+  ],
+  "semantic_name_kind_domain": [
+    "historical_official",
+    "historical_attested",
+    "historiographic_conventional",
+    "editorial_catalog_label"
+  ],
+  "person_relation_types": [
+    "rules",
+    "governs",
+    "serves",
+    "active_in",
+    "opposes",
+    "claims_rule"
+  ],
+  "relation_types_required_by_reviewed_assertions": [
+    "dominion_of",
+    "nominally_subordinate_to",
+    "vassal_of"
+  ],
+  "safety": {
+    "uuid_is_identity": true,
+    "relation_code_is_identity": false,
+    "name_only_polity_binding_forbidden": true,
+    "people_group_auto_polity_forbidden": true,
+    "fake_bibliographic_hash_or_bytes_forbidden": true,
+    "unknown_temporal_precision_must_not_be_fabricated": true,
+    "territory_geometry_remains_p14_deferred": true,
+    "physical_person_merge_forbidden_before_p10": true,
+    "production_migration_registered": false,
+    "production_mutation_authorized": false
+  },
+  "completion_boundary": {
+    "this_gate_means": "all currently reviewed P5 data structures and exact relation-type catalogs can be represented and rehearsed branch-only",
+    "this_gate_does_not_mean": "P5 additive schema has been applied to Production",
+    "atlas_rq_0215_remains_pending_until_production_apply": true
+  }
+}

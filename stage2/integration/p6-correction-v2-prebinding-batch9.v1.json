@@ -1,0 +1,115 @@
+{
+  "schema": "atlas-stage2-correction-v2-prebinding-plan/v1",
+  "batch_id": "p6_correction_v2_prebinding_batch9_rurik_early_northern_rus_relink",
+  "as_of": "2026-08-13",
+  "status": "PREBINDING_ONLY_NOT_PRODUCTION_EXECUTABLE",
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "catalog": "stage2/catalogs/relation-types.v1.json",
+  "p5_polity_authoring": "stage2/authoring/p5-polity-authoring-batch2-reviewed-polities.v1.json",
+  "source_research": "research/layered/stage2-r1-layered-authority-decisions.v1.json",
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27"
+  },
+  "before_tuple_fields": [
+    "person_id",
+    "polity_id",
+    "role_id",
+    "period_basis_id",
+    "activity_start",
+    "activity_end",
+    "confidence",
+    "chronology_status",
+    "legacy_source_key",
+    "source_count"
+  ],
+  "scope_rules": {
+    "original_activity_uuid_preserved": true,
+    "prepared_new_polity_identity_class_may_be_referenced_with_null_uuid": true,
+    "new_polity_uuid_assignment_forbidden_in_this_batch": true,
+    "reviewed_person_relation_uuid_required": true,
+    "traditional_retrospective_chronology_must_remain_uncertain": true,
+    "subyear_precision_fabrication_forbidden": true,
+    "kiev_direct_control_backprojection_forbidden": true,
+    "precise_northern_geometry_inference_forbidden": true,
+    "backprojected_kievan_rus_activity_usage_must_be_replaced_not_preserved_as_parallel_claim": true,
+    "production_mutation_authorized": false
+  },
+  "common_execution_blockers": [
+    "P5_PRODUCTION_SCHEMA_NOT_APPLIED",
+    "P5_EARLY_NORTHERN_RUS_POLITY_UUID_NOT_ASSIGNED",
+    "NORMALIZED_ACTIVITY_SOURCE_UUID_BINDINGS_NOT_COMPLETE",
+    "CHRONOLOGY_PROVENANCE_BACKFILL_REQUIRED",
+    "PRODUCTION_RELEASE_NOT_AUTHORIZED"
+  ],
+  "source_preservation_policy": {
+    "rewrite_activity": "PRESERVE_ALL_EXISTING_ACTIVITY_SOURCE_LINKS_AND_LOCATORS_THEN_ADD_REVIEWED_NORMALIZED_CHRONOLOGY_PROVENANCE",
+    "silent_source_drop_forbidden": true
+  },
+  "cases": [
+    {
+      "id": "p6b9_rurik_early_northern_rus_relink",
+      "activity_id": "b651ff3e-0df1-552a-9134-56ca95e9f3be",
+      "person": "Rurik",
+      "expected_before": [
+        "67550a13-eb8b-5645-b2d9-e669ba1581fa",
+        "c068d786-ab71-5516-ad51-b682feba155a",
+        "0895bf90-7bb7-5a3c-a9f1-11f3c03c3aec",
+        "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        862,
+        879,
+        "legacy_asserted",
+        "exact_as_recorded",
+        "pending-records-supplement-5.json:19:367cf60ef091d63d",
+        1
+      ],
+      "type": "rewrite_activity",
+      "mode": "new_polity_uuid_pending_semantic_relink",
+      "p4_decision_id": "rurik_early_northern_rus_new_polity",
+      "source_contract": "research/layered/stage2-r1-layered-authority-decisions.v1.json",
+      "p4_companion_actions": [
+        "AUTHOR_EARLY_NORTHERN_RUS_POLITY",
+        "RELINK_RURIK_ACTIVITY",
+        "RETIRE_BACKPROJECTED_KIEVAN_RUS_USAGE",
+        "RELATION_SET",
+        "PROVENANCE_LINK"
+      ],
+      "after": {
+        "activity_uuid": "b651ff3e-0df1-552a-9134-56ca95e9f3be",
+        "target_polity_uuid": null,
+        "target_identity_class": "EARLY_NORTHERN_RUS_AUTHORITY",
+        "relation": [
+          "rules",
+          "7ca4de8f-01d4-542c-acc1-a06848c6742c"
+        ],
+        "start_year": 862,
+        "end_year": 879,
+        "chronology_status": "TRADITIONAL_RETROSPECTIVE_UNCERTAIN",
+        "subyear_precision": null,
+        "display_identity_policy": "DO_NOT_BACKPROJECT_KIEVAN_RUS_TO_RURIK",
+        "territory_policy": "NO_KIEV_DIRECT_CONTROL_OR_PRECISE_NORTHERN_POLYGON_INFERENCE_FROM_THIS_ACTIVITY"
+      },
+      "replacement_policy": {
+        "old_activity_polity_uuid": "c068d786-ab71-5516-ad51-b682feba155a",
+        "old_activity_polity_label": "Kievan Rus'",
+        "parallel_old_polity_activity_claim_allowed": false,
+        "physical_old_polity_row_retirement_in_this_batch": false,
+        "meaning": "replace the backprojected Activity-to-Polity usage only; do not delete or globally retire the Kievan Rus polity identity"
+      }
+    }
+  ],
+  "result": {
+    "case_count": 1,
+    "rewrite_activity_count": 1,
+    "existing_activity_uuid_preserved": 1,
+    "prepared_null_uuid_polity_targets": 1,
+    "reviewed_exact_person_relation_bindings": 1,
+    "new_polity_uuid_bindings": 0,
+    "new_activity_uuid_assignments": 0,
+    "physical_polity_retirements": 0,
+    "cumulative_prebinding_activities": 45,
+    "remaining_correction_v2_frontier": 12,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "atlas-stage2-p5-effective-readiness-after-politic-resolution/v1",
+  "as_of": "2026-08-13",
+  "status": "EFFECTIVE_FRONTIER_REVISED_BRANCH_ONLY_NO_PRODUCTION_MUTATION",
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27"
+  },
+  "raw_preparation_evidence": {
+    "new_polity_targets": 24,
+    "correction_v2_activities": 57,
+    "mandatory_entity_migrations": 3,
+    "p5_readiness": "stage2/integration/p5-preproduction-schema-readiness.v1.json"
+  },
+  "effective_frontier": {
+    "new_polity_targets": 17,
+    "correction_v2_activities": 54,
+    "mandatory_entity_migrations": 0,
+    "completed_prebinding_activities": 47,
+    "remaining_prebinding_activities": 7,
+    "reviewed_polity_relation_assertions": 10
+  },
+  "superseding_amendment": "stage2/integration/baseline-a-politic-resolution-amendments.v1.json",
+  "policy_contract": "stage2/contracts/politic-resolution-current.v1.json",
+  "schema_capability_policy": {
+    "people_group_event_governance_schema_remains_valid": true,
+    "those_entities_are_optional_metadata_for_the_revised_cases_unless_independently_required": true,
+    "old_prepared_micro_polity_candidates_are_evidence_not_active_authoring_targets": true,
+    "production_schema_apply_still_pending": true
+  },
+  "production_mutation_authorized": false
+}

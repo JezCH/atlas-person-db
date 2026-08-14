@@ -1,0 +1,99 @@
+{
+  "schema": "atlas-stage2-tao-qian-liu-yu-bolad-temur-layered-authority-closure/v1",
+  "as_of": "2026-08-13",
+  "status": "RESEARCH_REVIEWED_NO_PRODUCTION_MUTATION",
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27"
+  },
+  "rules": {
+    "historical_accuracy_over_completion": true,
+    "province_name_auto_promoted_to_polity": false,
+    "regional_polity_requires_quasi_independent_political_actor_evidence": true,
+    "formal_imperial_office_does_not_by_itself_create_a_new_polity": true,
+    "name_only_binding_forbidden": true,
+    "production_mutation_authorized": false
+  },
+  "cases": [
+    {
+      "id": "tao_qian_xu_regional_authority",
+      "activity_id": "d22767c7-4e64-5c59-a5d9-60e32d146a4c",
+      "person": "Tao Qian",
+      "current_polity_uuid": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+      "current_polity": "Eastern Han",
+      "decision": "SOURCE_BACKED_XU_REGIONAL_POLITICAL_ACTOR_NOMINALLY_SUBORDINATE_TO_EASTERN_HAN",
+      "target_identity_class": "SOURCE_BACKED_XU_TAO_QIAN_REGIONAL_POLITY",
+      "target_polity_uuid": null,
+      "baseline_absence_verified": true,
+      "person_relation": "rules",
+      "structural_relation": {
+        "type": "nominally_subordinate_to",
+        "target_polity_uuid": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+        "start_year": 188,
+        "end_year": 194,
+        "granularity": "year"
+      },
+      "reason": "The reviewed late-Han model treats a governor/warlord who exercised durable territorial military and administrative authority as a quasi-independent regional political actor while preserving nominal Han subordination. Xu Province itself is not auto-promoted as a Polity; the editorial identity is Tao Qian's source-backed Xu regional authority.",
+      "sources": [
+        {
+          "title": "Hou Hanshu, Biography of Liu Yu, Gongsun Zan and Tao Qian",
+          "kind": "primary_dynastic_history_digital_edition",
+          "url": "https://ctext.org/hou-han-shu/liu-yu-gong-sun-zan-tao/zhs"
+        }
+      ]
+    },
+    {
+      "id": "liu_yu_you_regional_authority",
+      "activity_id": "b449d90d-783f-598b-aaeb-67cf37ea549a",
+      "person": "Liu Yu",
+      "current_polity_uuid": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+      "current_polity": "Eastern Han",
+      "decision": "SOURCE_BACKED_YOU_REGIONAL_POLITICAL_ACTOR_NOMINALLY_SUBORDINATE_TO_EASTERN_HAN",
+      "target_identity_class": "SOURCE_BACKED_YOU_LIU_YU_REGIONAL_POLITY",
+      "target_polity_uuid": null,
+      "baseline_absence_verified": true,
+      "person_relation": "rules",
+      "structural_relation": {
+        "type": "nominally_subordinate_to",
+        "target_polity_uuid": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+        "start_year": 189,
+        "end_year": 193,
+        "granularity": "year"
+      },
+      "reason": "Liu Yu remained explicitly loyal to the Han court, but the source also depicts a durable Youzhou-centered military, fiscal and diplomatic authority with independent regional command. ATLAS therefore models the regional authority as a quasi-independent Polity with explicit nominal Han subordination rather than painting the entire Eastern Han as Liu Yu's personal rule.",
+      "sources": [
+        {
+          "title": "Hou Hanshu, Biography of Liu Yu, Gongsun Zan and Tao Qian",
+          "kind": "primary_dynastic_history_digital_edition",
+          "url": "https://ctext.org/hou-han-shu/liu-yu-gong-sun-zan-tao/zhs"
+        }
+      ]
+    },
+    {
+      "id": "bolad_temur_yuan_internal_military_authority",
+      "activity_id": "2a9029b6-3485-55a3-924f-6e9bc9adb901",
+      "person": "Bolad Temur",
+      "current_polity_uuid": "d035cbd8-e7b1-5947-8542-c7dd356d52bb",
+      "current_polity": "Yuan Dynasty",
+      "decision": "KEEP_YUAN_POLITY_NO_SEPARATE_BOLAD_TEMUR_POLITY",
+      "target_polity_uuid": "d035cbd8-e7b1-5947-8542-c7dd356d52bb",
+      "person_relation_policy": "serves_or_governs_by_reviewed_phase_and_role",
+      "structural_relation": null,
+      "reason": "Yuanshi records Bolad Temur through Yuan imperial commissions, Yuan central offices, command of Yuan forces and a later seizure of central political control. This supports an internal Yuan military/factional authority and governance context, not a separately named or source-defined territorial Polity. No new Polity UUID is invented.",
+      "sources": [
+        {
+          "title": "Yuanshi, Volume 207, Rebellious Ministers",
+          "kind": "primary_dynastic_history_digital_edition",
+          "url": "https://ctext.org/wiki.pl?chapter=3997005&if=en"
+        }
+      ]
+    }
+  ],
+  "result": {
+    "cases_reviewed": 3,
+    "new_regional_polity_targets": 2,
+    "keep_existing_polity_without_new_polity": 1,
+    "unresolved_polity_relation_model": 0,
+    "production_mutation_authorized": false
+  }
+}

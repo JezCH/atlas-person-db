@@ -22,11 +22,11 @@ function responseCapture() {
   };
 }
 
-test('current relationship reconciliation declares old year-level semantics and cannot unlock physical Person merge', () => {
-  assert.equal(reconciliation.RECONCILIATION_SEMANTIC_VERSION, 'v1-polity-period-year-role');
+test('P9 activates v2 relationship reconciliation while physical Person merge remains blocked until P10 revalidation', () => {
+  assert.equal(reconciliation.RECONCILIATION_SEMANTIC_VERSION, 'v2-relation-full-temporal');
   const state = interlock.personMergeExecutionState();
   assert.equal(state.allowed, false);
-  assert.equal(state.reconciliation_semantic_version, 'v1-polity-period-year-role');
+  assert.equal(state.reconciliation_semantic_version, 'v2-relation-full-temporal');
   assert.equal(state.required_reconciliation_semantic_version, 'v2-relation-full-temporal');
   assert.equal(state.person_merge_lifecycle_version, 'pre-p10-blocked');
   assert.equal(state.required_person_merge_lifecycle_version, 'p10-v2-revalidated');
@@ -36,7 +36,7 @@ test('current relationship reconciliation declares old year-level semantics and 
   );
 });
 
-test('authenticated legacy EXECUTE_APPROVED_MERGE requests fail before any database connection', async () => {
+test('authenticated EXECUTE_APPROVED_MERGE requests remain blocked before any database connection until P10', async () => {
   let databaseConnections = 0;
   const handler = createDuplicateReviewHandler({
     env: {
@@ -65,7 +65,8 @@ test('authenticated legacy EXECUTE_APPROVED_MERGE requests fail before any datab
   assert.equal(res.statusCode, 409);
   assert.equal(res.body?.ok, false);
   assert.equal(res.body?.code, 'PERSON_MERGE_BLOCKED_UNTIL_P10_V2_REVALIDATION');
-  assert.equal(res.body?.reconciliation_semantic_version, 'v1-polity-period-year-role');
+  assert.equal(res.body?.reconciliation_semantic_version, 'v2-relation-full-temporal');
+  assert.equal(res.body?.required_reconciliation_semantic_version, 'v2-relation-full-temporal');
   assert.equal(res.body?.person_merge_lifecycle_version, 'pre-p10-blocked');
 });
 

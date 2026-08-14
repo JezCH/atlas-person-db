@@ -2,13 +2,20 @@
   "schema": "atlas-stage2-baseline-independent-integration-prep/v1",
   "as_of": "2026-08-12",
   "source_stack_sha": "ff85c2511249096dfb6c5c6e21f29c3913957f18",
-  "current_release_train_branch": "agent/atlas-requirements-source-of-truth",
+  "current_release_train_branch": "agent/stage2-baseline-a-integration",
   "production_mutation": false,
+  "phase_status": "P3_BASELINE_A_INTEGRATION",
   "baseline_policy": {
     "old_346_binding_authoritative": false,
     "baseline_a_required_for_uuid_rebind": true,
     "baseline_a_contract_version": "v2_full_identity_snapshot",
-    "no_old_activity_uuid_write_targets": true
+    "baseline_a_captured_and_validated": true,
+    "baseline_a_activity_count": 338,
+    "baseline_a_descriptor": "stage2/baselines/baseline-a-current.v2.json",
+    "baseline_a_artifact_id": 9135783402,
+    "baseline_a_artifact_digest": "sha256:9f345256859f1605942e36402b135721b631afcaf5863928f1347aa7ea2848dd",
+    "no_old_activity_uuid_write_targets": true,
+    "production_mutation_authorized": false
   },
   "port_now": [
     {"id":"relation_semantics","path":"docs/audits/RELATION_SEMANTICS_CONTRACT_V1_2026-08-12.md"},
@@ -33,10 +40,14 @@
     {"id":"person_merge_interlock","path":"docs/stage2/PERSON_MERGE_INTERLOCK_CURRENT_2026-08-12.md"},
     {"id":"pre_vercel_domain_closure","path":"research/pre-vercel/stage2-pre-vercel-domain-closure.v1.json"}
   ],
-  "wait_for_baseline_a": [
+  "completed_after_baseline_a": [
     "baseline_a_v2_validated_intake",
-    "fresh_master_ledger",
-    "fresh_stage2_work_queues",
+    "exact_baseline_a_artifact_binding",
+    "fresh_master_ledger_generator",
+    "fresh_stage2_work_queue_generator",
+    "current_schema_cleanup_r0_r1"
+  ],
+  "remaining_after_baseline_a": [
     "surviving_activity_uuid_bindings",
     "reviewed_identity_bindings",
     "reviewed_polity_name_kind_mapping",
@@ -64,6 +75,8 @@
     "baseline_independent_historical_model_decisions_complete": true,
     "irreducible_uncertainty_explicit": true,
     "territory_geometry_is_p14_and_not_a_default_person_cutover_blocker": true,
-    "next_required_live_dependency": "Production Train 1 exact-SHA Vercel deployment"
+    "production_train_1_complete": true,
+    "baseline_a_v2_captured": true,
+    "next_required_live_dependency": "Production Train 2 after P3/P4 exact Baseline A rebinding"
   }
 }

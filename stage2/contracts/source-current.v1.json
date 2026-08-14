@@ -1,0 +1,41 @@
+{
+  "schema": "atlas-stage2-source-contract/v1",
+  "as_of": "2026-08-13",
+  "status": "BASELINE_INDEPENDENT_DOMAIN_CONTRACT_NO_PRODUCTION_MUTATION",
+  "identity": {
+    "uuid_is_identity": true,
+    "source_key_is_identity": false,
+    "canonical_url_is_identity": false,
+    "title_is_identity": false
+  },
+  "materialization": {
+    "repository_dataset": {
+      "sha256_required": true,
+      "bytes_required": true,
+      "canonical_url_optional": true,
+      "citation_text_optional": true
+    },
+    "bibliographic_reference": {
+      "sha256_may_be_null": true,
+      "bytes_may_be_null": true,
+      "canonical_url_or_citation_text_required_when_no_materialized_content": true
+    },
+    "sha256_and_bytes_must_be_both_null_or_both_present": true,
+    "fake_sha256_for_web_reference_forbidden": true,
+    "fake_bytes_for_web_reference_forbidden": true
+  },
+  "provenance": {
+    "normalized_source_uuid_required_before_production_assertion_link": true,
+    "source_locator_key_required_per_assertion_link": true,
+    "multiple_locators_per_source_assertion_allowed": true,
+    "one_source_may_support_multiple_assertions": true,
+    "assertion_delete_cascades_links": true,
+    "cited_source_delete_restricted": true
+  },
+  "authoring": {
+    "branch_only_source_candidates_may_keep_uuid_null": true,
+    "reviewed_url_is_evidence_not_a_live_source_uuid": true,
+    "baseline_repository_source_must_not_be_reused_for_unrelated_bibliographic_evidence": true,
+    "production_mutation_authorized": false
+  }
+}

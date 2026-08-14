@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import crypto from 'node:crypto';
+import zlib from 'node:zlib';
 
 const BASELINE_MARKER = 'ATLAS_CORRECTION_BASELINE_A_V2';
 const INTAKE_SCHEMA = 'atlas-stage2-baseline-a-intake/v2';
@@ -125,6 +126,12 @@ function crossCheckActivity(row, index, maps) {
   return activityId;
 }
 
+export function readBaselineFile(inputPath) {
+  const raw = fs.readFileSync(inputPath);
+  const decoded = inputPath.endsWith('.gz') ? zlib.gunzipSync(raw) : raw;
+  return JSON.parse(decoded.toString('utf8'));
+}
+
 export function buildBaselineAIntake(baseline) {
   assert(baseline && typeof baseline === 'object' && !Array.isArray(baseline), 'baseline object required');
   assert(baseline.marker === BASELINE_MARKER, `marker must be ${BASELINE_MARKER}`);
@@ -158,7 +165,12 @@ export function buildBaselineAIntake(baseline) {
     row_count: baseline.rows.length,
     counts: baseline.counts,
     activity_uuids: activityIds,
+    activity_rows: baseline.rows,
     identity_catalogs: baseline.catalogs,
+    durability: {
+      full_activity_rows_preserved: true,
+      full_identity_catalogs_preserved: true
+    },
     authority: {
       live_uuid_inventory_authoritative: true,
       historical_identity_decisions_automatically_approved: false,
@@ -182,8 +194,8 @@ export function buildBaselineAIntake(baseline) {
 function main() {
   const input = process.argv[2];
   const output = process.argv[3];
-  if (!input) throw new Error('usage: node scripts/stage2-baseline-a-intake.mjs <baseline-a.json> [output.json]');
-  const baseline = JSON.parse(fs.readFileSync(input, 'utf8'));
+  if (!input) throw new Error('usage: node scripts/stage2-baseline-a-intake.mjs <baseline-a.json|baseline-a.json.gz> [output.json]');
+  const baseline = readBaselineFile(input);
   const intake = buildBaselineAIntake(baseline);
   const encoded = `${JSON.stringify(intake, null, 2)}\n`;
   if (output) fs.writeFileSync(output, encoded); else process.stdout.write(encoded);

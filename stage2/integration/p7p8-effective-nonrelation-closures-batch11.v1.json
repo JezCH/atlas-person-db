@@ -1,0 +1,38 @@
+{
+  "schema": "atlas-stage2-p7p8-effective-nonrelation-closures/v1",
+  "batch_id": "p7p8_effective_nonrelation_closures_batch11",
+  "as_of": "2026-08-14",
+  "status": "REVIEWED_BRANCH_ONLY_EFFECTIVE_DEPENDENCY_CLOSURES_NO_PRODUCTION_MUTATION",
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27"
+  },
+  "rules": {
+    "raw_work_queue_is_audit_input_not_current_execution_truth": true,
+    "closure_pair_must_exist_in_raw_post_p6_queue": true,
+    "closure_requires_explicit_reviewed_authority": true,
+    "historical_uncertainty_must_not_be_fabricated_to_close_a_dependency": true,
+    "production_mutation_authorized": false
+  },
+  "closures": [
+    {
+      "activity_id": "4ac4c38c-6d8b-55ce-b999-b0639e67eb22",
+      "person": "Charles de Gaulle",
+      "dependencies": ["chronology_correction", "governance_context"],
+      "closure_class": "FRENCH_REPUBLIC_FIFTH_REPUBLIC_GOVERNANCE_AND_EXACT_TERM_REHEARSED",
+      "authority": [
+        "docs/stage2/P7_CHARLES_DE_GAULLE_FIFTH_REPUBLIC_GOVERNANCE_DECISION_2026-08-14.md",
+        "stage2/execution/p7-charles-de-gaulle-fifth-republic-governance-execution.v1.json",
+        "stage2/authoring/p7-charles-de-gaulle-polity.v1.json",
+        "stage2/authoring/p7-charles-de-gaulle-governance-context.v1.json",
+        "stage2/authoring/p7-charles-de-gaulle-sources.v1.json"
+      ],
+      "reason": "The branch-only executable package preserves the Activity UUID, relinks the Person Activity from the constitutional-regime-as-Polity row to a literal higher-order French Republic Polity with relation governs, refines the presidential term to the reviewed exact Gregorian dates 1959-01-08 through 1969-04-28, and represents the French Fifth Republic separately as a constitutional_regime Governance Context beginning 1958-10-04 with no fabricated end boundary. Existing repository provenance is preserved, reviewed official sources are added, the old Fifth Republic Polity identity remains physically intact, and the complete path passed PostgreSQL authoring replay, correction dry-run/apply/exact-replay, and postcondition checks in Integrity #593."
+    }
+  ],
+  "result": {
+    "closure_activity_count": 1,
+    "closed_dependency_pair_count": 2,
+    "production_mutation_authorized": false
+  }
+}

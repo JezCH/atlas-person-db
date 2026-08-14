@@ -40,13 +40,21 @@ test('historical C8 workflow manifest remains audit evidence while current workf
     'atlas-audit-inventory.yml',
     'atlas-authoring-apply.yml',
     'atlas-correction-apply.yml',
-    'atlas-integrity.yml'
+    'atlas-integrity.yml',
+    'atlas-stage2-schema-release.yml'
   ]);
 
   const correctionWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-correction-apply.yml', import.meta.url), 'utf8');
   assert.match(correctionWorkflow, /^\s*-\s*'corrections\/requests\/\*\.json'\s*$/m);
   assert.doesNotMatch(correctionWorkflow, /public\.person_politics|atlas_person_politics_compat_v1/);
   assert.doesNotMatch(correctionWorkflow, /SUPABASE_DB_URL/);
+
+  const stage2SchemaWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-stage2-schema-release.yml', import.meta.url), 'utf8');
+  assert.match(stage2SchemaWorkflow, /workflow_dispatch\s*:/);
+  assert.doesNotMatch(stage2SchemaWorkflow, /^\s*push\s*:/m);
+  assert.doesNotMatch(stage2SchemaWorkflow, /\bpull_request\s*:/m);
+  assert.match(stage2SchemaWorkflow, /environment:\s*production/);
+  assert.doesNotMatch(stage2SchemaWorkflow, /SUPABASE_DB_URL/);
 });
 
 test('C8 historical manifest records the DB objects that were deferred to C9', () => {

@@ -2,7 +2,7 @@
   "schema": "atlas-stage2-baseline-a-intake-contract/v2",
   "as_of": "2026-08-12",
   "production_mutation": false,
-  "purpose": "Deterministic one-train handoff from Production Train 1 into fresh Stage 2 integration using the complete live Activity inventory plus complete identity/name/source catalogs from the same repeatable-read snapshot.",
+  "purpose": "Deterministic handoff from completed Production Train 1 into fresh Stage 2 integration using the complete live Activity inventory plus complete identity/name/source catalogs from the same repeatable-read snapshot.",
   "accepted_input": {
     "marker": "ATLAS_CORRECTION_BASELINE_A_V2",
     "mode": "full_stage2_baseline",
@@ -18,6 +18,19 @@
     "polity_name_type_preserved_verbatim": true,
     "unreferenced_persons_and_polities_must_be_preserved": true
   },
+  "baseline_handoff": {
+    "exact_source_is_reviewed_train1_actions_artifact": true,
+    "artifact_id": 9135783402,
+    "artifact_digest": "sha256:9f345256859f1605942e36402b135721b631afcaf5863928f1347aa7ea2848dd",
+    "artifact_inner_path": "atlas-correction-evidence/baseline-a.json",
+    "artifact_zip_digest_must_be_verified_before_use": true,
+    "inner_baseline_digest_must_be_verified_before_use": true,
+    "validated_intake_must_preserve_full_activity_rows": true,
+    "validated_intake_must_preserve_full_identity_catalogs": true,
+    "p3_derivatives_must_be_reproducible_from_the_verified_artifact": true,
+    "if_source_artifact_expires_before_p3_finishes_stop_or_recapture_read_only": true,
+    "recapture_cannot_authorize_or_perform_production_mutation": true
+  },
   "identity_rules": {
     "baseline_a_is_live_uuid_inventory_source_of_truth": true,
     "baseline_a_does_not_auto_approve_historical_identity_decisions": true,
@@ -30,7 +43,8 @@
     "person_identity_polity_identity_activity_identity_are_distinct": true,
     "polity_identity_resolution_precedes_activity_semantic_cutover": true,
     "generic_relation_default_allowed": false,
-    "existing_polity_name_type_is_raw_inventory_until_reviewed_stage2_name_kind_mapping": true
+    "existing_polity_name_type_is_raw_inventory_until_reviewed_stage2_name_kind_mapping": true,
+    "raw_legacy_name_type_auto_maps_to_historical_semantic_kind": false
   },
   "duplicate_lifecycle": {
     "identity_review_before_semantic_cutover_allowed": true,
@@ -49,10 +63,19 @@
     "intake_alone_authorizes_person_merge": false,
     "intake_alone_authorizes_production_mutation": false
   },
+  "measured_current_baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27",
+    "activity_count": 338,
+    "person_count": 302,
+    "polity_count": 212,
+    "source_count": 20,
+    "descriptor": "stage2/baselines/baseline-a-current.v2.json"
+  },
   "required_handoff_order": [
     "production_train_1_r0_r1",
     "baseline_a_v2_capture_same_exact_sha",
-    "baseline_a_v2_digest_and_catalog_validation",
+    "baseline_a_artifact_digest_and_inner_digest_validation",
     "baseline_a_v2_intake_generation",
     "fresh_stage2_integration_branch_from_updated_main",
     "fresh_master_ledger_and_work_queues",

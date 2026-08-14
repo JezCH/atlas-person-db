@@ -1,0 +1,153 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "p6_correction_v2_execution_batch1_exact_relink_split",
+  "as_of": "2026-08-13",
+  "status": "LITERAL_OPERANDS_COMPLETE_LIVE_BEFORE_SNAPSHOT_REQUIRED",
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "prebinding_authority": "stage2/integration/p6-correction-v2-prebinding-batch1.v1.json",
+  "readiness_authority": "stage2/integration/p5-preproduction-schema-readiness.v2.json",
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27"
+  },
+  "execution_rules": {
+    "all_person_polity_relation_source_and_new_activity_operands_are_literal_uuid": true,
+    "identity_class_name_relation_code_or_source_key_runtime_resolution_forbidden": true,
+    "exact_live_before_snapshot_after_p5_schema_and_entity_authoring_required": true,
+    "same_sha_snapshot_then_manifest_synthesis_required": true,
+    "existing_activity_uuid_survives_declared_split_fragment": true,
+    "new_fragment_legacy_source_key_must_be_null": true,
+    "new_fragment_must_copy_all_existing_normalized_source_links_and_locators": true,
+    "rewrite_must_preserve_all_existing_normalized_source_links_and_locators": true,
+    "activity_temporal_detail_null_means_no_subyear_precision_is_claimed": true,
+    "polity_relation_year_precision_uses_unspecified_historical_calendar": true,
+    "silent_source_drop_forbidden": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "new_activity_uuid_allocations": [
+    {"case_id":"p6b1_liu_yan_split","activity_uuid":"d0c1d80e-0434-4a43-bc9c-861422870c36"},
+    {"case_id":"p6b1_gongsun_zan_split","activity_uuid":"fc251eb2-20d3-4b7a-b7ac-faaf9f2693ed"},
+    {"case_id":"p6b1_li_keyong_split","activity_uuid":"4a980d1c-889a-47cd-a70b-a1bebd802931"}
+  ],
+  "operations": [
+    {
+      "case_id":"p6b1_liu_yan_split",
+      "type":"split_activity",
+      "activity_id":"15777776-b739-5988-9a04-472b2d6629c7",
+      "baseline_before":{"person_id":"e0596736-50b6-53a1-9edc-61a5f108c3c7","polity_id":"3a29a08a-d111-50d5-916f-f5c11b5eabaf","role_id":"a33083bd-9e14-5381-ab33-2d75738f262c","period_basis_id":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","activity_start":188,"activity_end":194,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":"pending-records-supplement-7.json:14:a7ae369c2c5e1533","source_count":1},
+      "live_before":"SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "source_copy_policy":"COPY_ALL_EXISTING_NORMALIZED_ACTIVITY_SOURCE_LINKS_AND_LOCATORS_TO_ALL_FRAGMENTS",
+      "fragments":[
+        {"survivor":true,"activity_id":"15777776-b739-5988-9a04-472b2d6629c7","person_id":"e0596736-50b6-53a1-9edc-61a5f108c3c7","polity_id":"3a29a08a-d111-50d5-916f-f5c11b5eabaf","relation_type_id":"0fc4827f-8543-52f7-9e9a-3173b0c698a7","role_id":"a33083bd-9e14-5381-ab33-2d75738f262c","period_basis_id":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","activity_start":188,"activity_end":190,"activity_start_detail":null,"activity_end_detail":null,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":"pending-records-supplement-7.json:14:a7ae369c2c5e1533","notes_policy":"PRESERVE_EXACT_LIVE_NOTES"},
+        {"survivor":false,"activity_id":"d0c1d80e-0434-4a43-bc9c-861422870c36","person_id":"e0596736-50b6-53a1-9edc-61a5f108c3c7","polity_id":"9817bb46-bcc4-4867-a01d-91f7f0eb6de2","relation_type_id":"7ca4de8f-01d4-542c-acc1-a06848c6742c","role_id":"a33083bd-9e14-5381-ab33-2d75738f262c","period_basis_id":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","activity_start":191,"activity_end":194,"activity_start_detail":null,"activity_end_detail":null,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":null,"notes_policy":"COPY_EXACT_LIVE_NOTES_FROM_SOURCE_ACTIVITY"}
+      ],
+      "gap_overlap_policy":"REVIEWED_CONTIGUOUS_YEAR_PARTITION_188_190_THEN_191_194_NO_OVERLAP"
+    },
+    {
+      "case_id":"p6b1_tao_qian_relink",
+      "type":"rewrite_activity",
+      "activity_id":"d22767c7-4e64-5c59-a5d9-60e32d146a4c",
+      "baseline_before":{"person_id":"2c770996-e69b-5429-bb78-7dc3b1a503cf","polity_id":"3a29a08a-d111-50d5-916f-f5c11b5eabaf","role_id":"a33083bd-9e14-5381-ab33-2d75738f262c","period_basis_id":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","activity_start":188,"activity_end":194,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":"pending-records-supplement-7.json:23:78f25846d30d7bd6","source_count":1},
+      "live_before":"SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after":{"activity_id":"d22767c7-4e64-5c59-a5d9-60e32d146a4c","person_id":"2c770996-e69b-5429-bb78-7dc3b1a503cf","polity_id":"85b68af9-df7f-4bfe-80f7-231d1361b503","relation_type_id":"7ca4de8f-01d4-542c-acc1-a06848c6742c","role_id":"a33083bd-9e14-5381-ab33-2d75738f262c","period_basis_id":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","activity_start":188,"activity_end":194,"activity_start_detail":null,"activity_end_detail":null,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":"pending-records-supplement-7.json:23:78f25846d30d7bd6","notes_policy":"PRESERVE_EXACT_LIVE_NOTES","source_links_policy":"PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"}
+    },
+    {
+      "case_id":"p6b1_liu_yu_relink",
+      "type":"rewrite_activity",
+      "activity_id":"b449d90d-783f-598b-aaeb-67cf37ea549a",
+      "baseline_before":{"person_id":"8258820e-a1a3-5344-9a55-7f1f63e9dfab","polity_id":"3a29a08a-d111-50d5-916f-f5c11b5eabaf","role_id":"a050fd1c-b14f-5ed1-b676-98fdd20b4cb9","period_basis_id":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","activity_start":189,"activity_end":193,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":"pending-records-supplement-7.json:16:c615a01b69834b13","source_count":1},
+      "live_before":"SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after":{"activity_id":"b449d90d-783f-598b-aaeb-67cf37ea549a","person_id":"8258820e-a1a3-5344-9a55-7f1f63e9dfab","polity_id":"2c2a2e9c-ddf6-471c-bc96-6157be68d877","relation_type_id":"7ca4de8f-01d4-542c-acc1-a06848c6742c","role_id":"a050fd1c-b14f-5ed1-b676-98fdd20b4cb9","period_basis_id":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","activity_start":189,"activity_end":193,"activity_start_detail":null,"activity_end_detail":null,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":"pending-records-supplement-7.json:16:c615a01b69834b13","notes_policy":"PRESERVE_EXACT_LIVE_NOTES","source_links_policy":"PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"}
+    },
+    {
+      "case_id":"p6b1_liu_biao_relink",
+      "type":"rewrite_activity",
+      "activity_id":"583d7e8d-ed63-5a7e-947a-2a3c43f8dfad",
+      "baseline_before":{"person_id":"e35ca1a3-2f58-560c-8cf7-9f73a2c622cd","polity_id":"3a29a08a-d111-50d5-916f-f5c11b5eabaf","role_id":"a33083bd-9e14-5381-ab33-2d75738f262c","period_basis_id":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","activity_start":190,"activity_end":208,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":"pending-records-supplement-6.json:28:63f1dca39c47b9b6","source_count":1},
+      "live_before":"SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after":{"activity_id":"583d7e8d-ed63-5a7e-947a-2a3c43f8dfad","person_id":"e35ca1a3-2f58-560c-8cf7-9f73a2c622cd","polity_id":"a0cc4495-782a-4d17-b93c-6eb90c253ef1","relation_type_id":"7ca4de8f-01d4-542c-acc1-a06848c6742c","role_id":"a33083bd-9e14-5381-ab33-2d75738f262c","period_basis_id":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","activity_start":190,"activity_end":208,"activity_start_detail":null,"activity_end_detail":null,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":"pending-records-supplement-6.json:28:63f1dca39c47b9b6","notes_policy":"PRESERVE_EXACT_LIVE_NOTES","source_links_policy":"PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"}
+    },
+    {
+      "case_id":"p6b1_gongsun_zan_split",
+      "type":"split_activity",
+      "activity_id":"c5481afc-4cf2-5516-aceb-254c5c95c58b",
+      "baseline_before":{"person_id":"a42f5603-2add-5391-9b00-20467337e835","polity_id":"3a29a08a-d111-50d5-916f-f5c11b5eabaf","role_id":"a33083bd-9e14-5381-ab33-2d75738f262c","period_basis_id":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","activity_start":191,"activity_end":199,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":"pending-records-supplement-7.json:12:0abd84c839b1f135","source_count":1},
+      "live_before":"SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "source_copy_policy":"COPY_ALL_EXISTING_NORMALIZED_ACTIVITY_SOURCE_LINKS_AND_LOCATORS_TO_ALL_FRAGMENTS",
+      "fragments":[
+        {"survivor":true,"activity_id":"c5481afc-4cf2-5516-aceb-254c5c95c58b","person_id":"a42f5603-2add-5391-9b00-20467337e835","polity_id":"3a29a08a-d111-50d5-916f-f5c11b5eabaf","relation_type_id":"0fc4827f-8543-52f7-9e9a-3173b0c698a7","role_id":"a33083bd-9e14-5381-ab33-2d75738f262c","period_basis_id":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","activity_start":191,"activity_end":192,"activity_start_detail":null,"activity_end_detail":null,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":"pending-records-supplement-7.json:12:0abd84c839b1f135","notes_policy":"PRESERVE_EXACT_LIVE_NOTES"},
+        {"survivor":false,"activity_id":"fc251eb2-20d3-4b7a-b7ac-faaf9f2693ed","person_id":"a42f5603-2add-5391-9b00-20467337e835","polity_id":"fafc65e0-d69c-4ade-9f6f-8d45469e7f22","relation_type_id":"7ca4de8f-01d4-542c-acc1-a06848c6742c","role_id":"a33083bd-9e14-5381-ab33-2d75738f262c","period_basis_id":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","activity_start":193,"activity_end":199,"activity_start_detail":null,"activity_end_detail":null,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":null,"notes_policy":"COPY_EXACT_LIVE_NOTES_FROM_SOURCE_ACTIVITY"}
+      ],
+      "gap_overlap_policy":"REVIEWED_CONTIGUOUS_YEAR_PARTITION_191_192_THEN_193_199_NO_OVERLAP"
+    },
+    {
+      "case_id":"p6b1_ying_bu_relink",
+      "type":"rewrite_activity",
+      "activity_id":"a77a000e-2fec-5983-afb9-5d7dbc829223",
+      "baseline_before":{"person_id":"f22cc2f5-a7c1-5a4f-8a21-0446f4dd5398","polity_id":"34fac2d0-ba70-53e6-8e5a-47a9cd6ddfec","role_id":"8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3","period_basis_id":"b5ebe21e-4e81-5678-8e0e-7f66ff56992b","activity_start":-202,"activity_end":-196,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":"pending-records-supplement-6.json:36:ad1cd7a93c9bfe9d","source_count":1},
+      "live_before":"SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after":{"activity_id":"a77a000e-2fec-5983-afb9-5d7dbc829223","person_id":"f22cc2f5-a7c1-5a4f-8a21-0446f4dd5398","polity_id":"5f739f09-84c0-42ad-ac3f-8c531f468d5d","relation_type_id":"7ca4de8f-01d4-542c-acc1-a06848c6742c","role_id":"8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3","period_basis_id":"b5ebe21e-4e81-5678-8e0e-7f66ff56992b","activity_start":-202,"activity_end":-196,"activity_start_detail":null,"activity_end_detail":null,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":"pending-records-supplement-6.json:36:ad1cd7a93c9bfe9d","notes_policy":"PRESERVE_EXACT_LIVE_NOTES","source_links_policy":"PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"}
+    },
+    {
+      "case_id":"p6b1_li_keyong_split",
+      "type":"split_activity",
+      "activity_id":"d250fe38-6fa2-50f2-a902-0f4370022324",
+      "baseline_before":{"person_id":"46fd1ea5-29a2-5d21-98c9-63b0a31c1873","polity_id":"1e634515-5c04-5268-ae57-b4e160d6cf04","role_id":"0895bf90-7bb7-5a3c-a9f1-11f3c03c3aec","period_basis_id":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","activity_start":881,"activity_end":908,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":"pending-records-supplement-6.json:46:3a14701cbd0ffb95","source_count":1},
+      "live_before":"SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "source_copy_policy":"COPY_ALL_EXISTING_NORMALIZED_ACTIVITY_SOURCE_LINKS_AND_LOCATORS_TO_ALL_FRAGMENTS",
+      "fragments":[
+        {"survivor":true,"activity_id":"d250fe38-6fa2-50f2-a902-0f4370022324","person_id":"46fd1ea5-29a2-5d21-98c9-63b0a31c1873","polity_id":"1e634515-5c04-5268-ae57-b4e160d6cf04","relation_type_id":"0fc4827f-8543-52f7-9e9a-3173b0c698a7","role_id":"0895bf90-7bb7-5a3c-a9f1-11f3c03c3aec","period_basis_id":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","activity_start":881,"activity_end":907,"activity_start_detail":null,"activity_end_detail":null,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":"pending-records-supplement-6.json:46:3a14701cbd0ffb95","notes_policy":"PRESERVE_EXACT_LIVE_NOTES"},
+        {"survivor":false,"activity_id":"4a980d1c-889a-47cd-a70b-a1bebd802931","person_id":"46fd1ea5-29a2-5d21-98c9-63b0a31c1873","polity_id":"fe3ec27b-1ba3-4dc0-9758-b144320d6dc4","relation_type_id":"7ca4de8f-01d4-542c-acc1-a06848c6742c","role_id":"0895bf90-7bb7-5a3c-a9f1-11f3c03c3aec","period_basis_id":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","activity_start":908,"activity_end":908,"activity_start_detail":null,"activity_end_detail":null,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":null,"notes_policy":"COPY_EXACT_LIVE_NOTES_FROM_SOURCE_ACTIVITY"}
+      ],
+      "gap_overlap_policy":"REVIEWED_CONTIGUOUS_YEAR_PARTITION_881_907_THEN_908_908_NO_OVERLAP"
+    },
+    {
+      "case_id":"p6b1_oda_nobunaga_relink",
+      "type":"rewrite_activity",
+      "activity_id":"2b566bc6-600a-5a75-bf32-60fe3e558bcd",
+      "baseline_before":{"person_id":"98c57fef-32d1-551b-beb4-c562efe3e1e6","polity_id":"54433b65-1eb1-5c41-b440-6c4de8e18417","role_id":"b02df527-cab5-5e03-8a7b-f2a5c62dcff3","period_basis_id":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","activity_start":1568,"activity_end":1582,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":"pending-records-supplement-2.json:3:081a1e85f4c52cb1","source_count":1},
+      "live_before":"SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after":{"activity_id":"2b566bc6-600a-5a75-bf32-60fe3e558bcd","person_id":"98c57fef-32d1-551b-beb4-c562efe3e1e6","polity_id":"9e3016cb-fd21-456f-8919-75f850b8b121","relation_type_id":"7ca4de8f-01d4-542c-acc1-a06848c6742c","role_id":"b02df527-cab5-5e03-8a7b-f2a5c62dcff3","period_basis_id":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","activity_start":1568,"activity_end":1582,"activity_start_detail":null,"activity_end_detail":null,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":"pending-records-supplement-2.json:3:081a1e85f4c52cb1","notes_policy":"PRESERVE_EXACT_LIVE_NOTES","source_links_policy":"PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"}
+    },
+    {
+      "case_id":"p6b1_uesugi_kenshin_relink",
+      "type":"rewrite_activity",
+      "activity_id":"110c080c-b891-50a7-950c-1c80d3ef75b8",
+      "baseline_before":{"person_id":"1310c298-605b-5228-9c17-80b3b91f186d","polity_id":"e07ee32e-e126-5511-9d3d-d29e4444bd9c","role_id":"70ce28c0-ed77-5ba0-a50c-761c7eab57f7","period_basis_id":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","activity_start":1548,"activity_end":1578,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":"pending-records-supplement-5.json:39:46133b90efa609b7","source_count":1},
+      "live_before":"SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after":{"activity_id":"110c080c-b891-50a7-950c-1c80d3ef75b8","person_id":"1310c298-605b-5228-9c17-80b3b91f186d","polity_id":"230212ab-9461-4fcd-b46c-24a0aea7c841","relation_type_id":"7ca4de8f-01d4-542c-acc1-a06848c6742c","role_id":"70ce28c0-ed77-5ba0-a50c-761c7eab57f7","period_basis_id":"19bbe662-2a30-5a7e-8073-8d19e1e2299c","activity_start":1548,"activity_end":1578,"activity_start_detail":null,"activity_end_detail":null,"confidence":"legacy_asserted","chronology_status":"exact_as_recorded","legacy_source_key":"pending-records-supplement-5.json:39:46133b90efa609b7","notes_policy":"PRESERVE_EXACT_LIVE_NOTES","source_links_policy":"PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"}
+    }
+  ],
+  "polity_relation_assertions": [
+    {"decision_id":"liu_yan_yi_nominal_han_relation","id":"0cd030d8-ff0c-4105-a363-bb016eff554c","subject_polity_id":"9817bb46-bcc4-4867-a01d-91f7f0eb6de2","object_polity_id":"3a29a08a-d111-50d5-916f-f5c11b5eabaf","relation_type_id":"375da950-65bc-5b81-a338-6c705f515120","valid_from_year":191,"valid_from_month":null,"valid_from_day":null,"valid_from_granularity":"year","valid_from_certainty":"exact","valid_from_calendar":"unspecified_historical","valid_to_year":194,"valid_to_month":null,"valid_to_day":null,"valid_to_granularity":"year","valid_to_certainty":"exact","valid_to_calendar":"unspecified_historical","confidence":"unknown","notes":"Reviewed late-Han nominal subordination relation; confidence label intentionally not upgraded beyond reviewed interval semantics.","source_links":[{"id":"a480d6d1-2ca1-4a02-ac78-28d021372289","source_id":"41cb0494-17f0-4196-bdae-4ca0c1eeb4e6","source_locator_key":"Liu Yan biography: 188 Yi appointment and 191 Hanzhong break"}]},
+    {"decision_id":"tao_qian_xu_nominal_han_relation","id":"5c653851-91fc-47c8-9711-8aa26d17189a","subject_polity_id":"85b68af9-df7f-4bfe-80f7-231d1361b503","object_polity_id":"3a29a08a-d111-50d5-916f-f5c11b5eabaf","relation_type_id":"375da950-65bc-5b81-a338-6c705f515120","valid_from_year":188,"valid_from_month":null,"valid_from_day":null,"valid_from_granularity":"year","valid_from_certainty":"exact","valid_from_calendar":"unspecified_historical","valid_to_year":194,"valid_to_month":null,"valid_to_day":null,"valid_to_granularity":"year","valid_to_certainty":"exact","valid_to_calendar":"unspecified_historical","confidence":"unknown","notes":"Reviewed late-Han nominal subordination relation; confidence label intentionally not upgraded beyond reviewed interval semantics.","source_links":[{"id":"ed1add9c-d489-4cef-a4d6-88de17c46d0a","source_id":"0915a5b8-c5d9-46e1-bf55-e678b0df1f30","source_locator_key":"Tao Qian biography: governor of Xu and move to Tan"}]},
+    {"decision_id":"liu_yu_you_nominal_han_relation","id":"f46fc1f6-485b-49f2-8bf7-fd89512c942a","subject_polity_id":"2c2a2e9c-ddf6-471c-bc96-6157be68d877","object_polity_id":"3a29a08a-d111-50d5-916f-f5c11b5eabaf","relation_type_id":"375da950-65bc-5b81-a338-6c705f515120","valid_from_year":189,"valid_from_month":null,"valid_from_day":null,"valid_from_granularity":"year","valid_from_certainty":"exact","valid_from_calendar":"unspecified_historical","valid_to_year":193,"valid_to_month":null,"valid_to_day":null,"valid_to_granularity":"year","valid_to_certainty":"exact","valid_to_calendar":"unspecified_historical","confidence":"unknown","notes":"Reviewed late-Han nominal subordination relation; confidence label intentionally not upgraded beyond reviewed interval semantics.","source_links":[{"id":"6d8f3382-1344-4df5-a846-53aeaba7a0a2","source_id":"0915a5b8-c5d9-46e1-bf55-e678b0df1f30","source_locator_key":"Liu Yu biography: 189 Inspector of You and earlier You assignment"}]},
+    {"decision_id":"liu_biao_jing_nominal_han_relation","id":"7b715d5c-97c3-4c9d-94a2-1ffada948f41","subject_polity_id":"a0cc4495-782a-4d17-b93c-6eb90c253ef1","object_polity_id":"3a29a08a-d111-50d5-916f-f5c11b5eabaf","relation_type_id":"375da950-65bc-5b81-a338-6c705f515120","valid_from_year":190,"valid_from_month":null,"valid_from_day":null,"valid_from_granularity":"year","valid_from_certainty":"exact","valid_from_calendar":"unspecified_historical","valid_to_year":208,"valid_to_month":null,"valid_to_day":null,"valid_to_granularity":"year","valid_to_certainty":"exact","valid_to_calendar":"unspecified_historical","confidence":"unknown","notes":"Reviewed late-Han nominal subordination relation; confidence label intentionally not upgraded beyond reviewed interval semantics.","source_links":[{"id":"e850eca0-6284-4db3-9776-be5725aae165","source_id":"bab341a3-45df-4be4-adf4-d58916af73b8","source_locator_key":"Liu Biao biography: Governor of Jing and later court offices"}]},
+    {"decision_id":"gongsun_zan_nominal_han_relation","id":"2e4811c2-1ded-4dca-9db4-28917d351384","subject_polity_id":"fafc65e0-d69c-4ade-9f6f-8d45469e7f22","object_polity_id":"3a29a08a-d111-50d5-916f-f5c11b5eabaf","relation_type_id":"375da950-65bc-5b81-a338-6c705f515120","valid_from_year":193,"valid_from_month":null,"valid_from_day":null,"valid_from_granularity":"year","valid_from_certainty":"exact","valid_from_calendar":"unspecified_historical","valid_to_year":199,"valid_to_month":null,"valid_to_day":null,"valid_to_granularity":"year","valid_to_certainty":"exact","valid_to_calendar":"unspecified_historical","confidence":"unknown","notes":"Reviewed late-Han nominal subordination relation; confidence label intentionally not upgraded beyond reviewed interval semantics.","source_links":[{"id":"09851edc-18d7-453c-8400-a18b3a86034d","source_id":"0915a5b8-c5d9-46e1-bf55-e678b0df1f30","source_locator_key":"Gongsun Zan biography: 193 appointment and seal of General of the Vanguard"}]},
+    {"decision_id":"ying_bu_huainan_vassal_relation","id":"c08e509d-2383-412e-b704-2fcbfc517571","subject_polity_id":"5f739f09-84c0-42ad-ac3f-8c531f468d5d","object_polity_id":"34fac2d0-ba70-53e6-8e5a-47a9cd6ddfec","relation_type_id":"b4982965-848a-5a2b-b690-daba1d092d02","valid_from_year":-203,"valid_from_month":null,"valid_from_day":null,"valid_from_granularity":"year","valid_from_certainty":"exact","valid_from_calendar":"unspecified_historical","valid_to_year":-196,"valid_to_month":null,"valid_to_day":null,"valid_to_granularity":"year","valid_to_certainty":"exact","valid_to_calendar":"unspecified_historical","confidence":"unknown","notes":"Reviewed Huainan vassal relation under Ying Bu; starts with the 203 BCE enfeoffment rather than the coarser Person Activity start.","source_links":[{"id":"045c700c-abb9-4367-921f-c0205c7c9f87","source_id":"85e538f3-4753-4678-bb66-2014c9a2f3d3","source_locator_key":"Qing Bu biography: Han fourth year seventh month enfeoffment and 196 BCE rebellion chronology"}]}
+  ],
+  "result": {
+    "case_count": 9,
+    "rewrite_activity_count": 6,
+    "split_activity_count": 3,
+    "new_activity_uuid_count": 3,
+    "literal_new_polity_uuid_references": 9,
+    "person_relation_uuid_bindings": 12,
+    "polity_relation_assertion_count": 6,
+    "polity_relation_uuid_count": 6,
+    "polity_relation_source_link_uuid_count": 6,
+    "runtime_identity_class_resolution_count": 0,
+    "runtime_relation_code_resolution_count": 0,
+    "runtime_source_key_resolution_count": 0,
+    "fake_legacy_source_key_count": 0,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "next_gate": {
+    "required": "SAME_SHA_EXACT_LIVE_BEFORE_AND_NORMALIZED_ACTIVITY_SOURCE_LINK_SNAPSHOT_AFTER_P5_SCHEMA_AND_ENTITY_AUTHORING",
+    "then": "SYNTHESIZE_FINAL_CORRECTION_V2_MANIFEST_WITH_COMPLETE_EXACT_BEFORE_ROWS_AND_SOURCE_LINKS_THEN_DRY_RUN"
+  }
+}

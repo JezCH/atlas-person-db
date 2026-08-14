@@ -10,7 +10,7 @@ const {
   createHeaderAuthorizer,
   createMutationAuthorizer
 } = require("./atlas-session-auth.js");
-const planner = require("../atlas-v2-command-planner.js");
+const planner = require("./atlas-p9-mutation-planner.js");
 
 function sendResponse(res, response) {
   res.statusCode = response.status;
@@ -22,11 +22,7 @@ function createVercelMutationHandler({ clientFactory, env = process.env, transac
   if (typeof clientFactory !== "function") throw new Error("clientFactory is required");
 
   return async function handler(req, res) {
-    const request = {
-      method: req?.method,
-      headers: req?.headers || {},
-      body: req?.body
-    };
+    const request = { method: req?.method, headers: req?.headers || {}, body: req?.body };
     const method = String(request.method || "POST").toUpperCase();
     if (method !== "POST") {
       sendResponse(res, jsonResponse(405, { ok: false, error: "method not allowed" }));
@@ -40,11 +36,7 @@ function createVercelMutationHandler({ clientFactory, env = process.env, transac
       authorize = createMutationAuthorizer({ env, ...(typeof now === "function" ? { now } : {}) });
     } catch (error) {
       console.error("ATLAS mutation configuration error", error);
-      sendResponse(res, jsonResponse(503, {
-        ok: false,
-        code: "SERVER_CONFIGURATION_ERROR",
-        error: "mutation service is not configured"
-      }));
+      sendResponse(res, jsonResponse(503, { ok: false, code: "SERVER_CONFIGURATION_ERROR", error: "mutation service is not configured" }));
       return;
     }
 

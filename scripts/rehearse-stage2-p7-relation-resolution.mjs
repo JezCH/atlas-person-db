@@ -1,0 +1,14 @@
+const { buildStage2FullRelationCoverage } = await import('./build-stage2-full-relation-coverage.mjs');
+buildStage2FullRelationCoverage();
+await import('./rehearse-stage2-p7-direct-relation.mjs');
+await import('./rehearse-stage2-p7-relation-resolution-core.mjs');
+await import('./rehearse-stage2-p7-provenance-only.mjs');
+await import('./rehearse-stage2-p7-broad-politic.mjs');
+await import('./rehearse-stage2-p7-tecumseh-chronology.mjs');
+await import('./rehearse-stage2-p7-cunobeline-chronology.mjs');
+await import('./rehearse-stage2-p7-yoshida-term-split.mjs');
+await import('./rehearse-stage2-p7-himiko-chronology.mjs');
+await import('./rehearse-stage2-p7-solomon-chronology.mjs');
+await import('./rehearse-stage2-p7-sayyida-al-hurra-chronology.mjs');
+await import('./rehearse-stage2-p7-amina-chronology.mjs');
+await import('./rehearse-stage2-p7-gandhi-independence-split.mjs');

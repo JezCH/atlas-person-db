@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-stage2-politic-resolution-contract/v1",
+  "as_of": "2026-08-13",
+  "status": "CURRENT",
+  "purpose": "Define the resolution at which ATLAS binds a Person Activity to a politic/Polity without confusing political context with personal territorial rule.",
+  "principles": {
+    "historical_accuracy_over_completion": true,
+    "uuid_is_identity": true,
+    "clear_state_context_preferred_when_sufficient": true,
+    "polity_is_broader_than_modern_sovereign_state": true,
+    "pre_modern_tribal_city_confederate_and_warlord_polities_are_allowed": true,
+    "finer_subpolity_requires_independent_or_quasi_independent_authority_or_real_allegiance_change": true,
+    "micro_polity_creation_only_to_avoid_a_people_label_is_forbidden": true,
+    "government_regime_event_or_administrative_precision_alone_does_not_force_person_activity_split": true,
+    "people_group_is_not_automatically_a_polity": true,
+    "people_group_and_polity_may_share_a_conventional_label_after_explicit_review": true,
+    "shared_label_does_not_make_people_group_and_polity_the_same_identity": true,
+    "relation_semantics_control_map_interpretation": true,
+    "person_never_owns_geometry": true,
+    "territory_geometry_deferred_to_polity_territory_history": true,
+    "unknown_precision_must_not_be_fabricated": true
+  },
+  "decision_order": [
+    "If a historically clear state adequately describes the person's political context, use that state.",
+    "If no clear state adequately describes the context, use a source-backed political actor such as a city-state, tribal polity, confederacy, quasi-independent domain, warlord authority, or transitional regional polity.",
+    "Create or choose a finer political actor only when the finer unit itself exercised meaningful independent/quasi-independent political authority or the person's real allegiance/power changed in a way the broader state context would erase.",
+    "Do not create a micro-polity solely because a people-group label is broad. Relation, role, chronology, PeopleGroup, Event and Governance metadata carry the extra precision.",
+    "Do not use an event, government/regime, administrative region, dynasty/house or mere geographic macro-region as Polity by convenience."
+  ],
+  "relation_runtime_guard": {
+    "rules": "May support ruler/territory highlighting only through the Polity's own Territory History.",
+    "governs": "Represents governing authority; does not make the Person the owner of geometry.",
+    "serves": "Political service/allegiance; must not be rendered as personal rule.",
+    "active_in": "Coarse political context/activity; must never be rendered as personal rule.",
+    "opposes": "Directional opposition to a Polity; must not imply membership or territorial ownership.",
+    "claims_rule": "Claimed rule; must remain distinct from effective control."
+  },
+  "examples": {
+    "clear_state": [
+      "Jesus → Roman Empire → active_in",
+      "Machiavelli → Florence → active_in"
+    ],
+    "coarse_tribal_politic": [
+      "Pocatello → Northwestern Shoshone → active_in",
+      "Sitting Bull → Lakota → active_in",
+      "Leftraru → Mapuche → serves"
+    ],
+    "finer_actor_justified": [
+      "Vercingetorix → Arverni → rules",
+      "Fang Guozhen → eastern Zhejiang regional polity → rules",
+      "late-Han regional authorities where allegiance and effective control diverge"
+    ]
+  },
+  "production_mutation_authorized": false
+}

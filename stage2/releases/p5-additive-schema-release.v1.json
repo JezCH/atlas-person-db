@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-stage2-p5-additive-schema-release/v1",
+  "release_id": "p5_stage2_additive_schema_20260813_v1",
+  "as_of": "2026-08-13",
+  "status": "RELEASE_CANDIDATE_BRANCH_ONLY_NO_PRODUCTION_MUTATION",
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27"
+  },
+  "prerequisites": {
+    "p6_closure": "stage2/integration/p6-effective-prebinding-closure.v1.json",
+    "effective_prebinding_complete": true,
+    "effective_activity_count": 54,
+    "remaining_activity_count": 0
+  },
+  "components": [
+    {"sequence":1,"id":"semantic_extensions","path":"db/proposals/stage2_semantic_extensions.rehearsal.sql","git_blob_sha":"44a5e7f2b33a3661afdd0ff63d5d6b3cb7ef7b51"},
+    {"sequence":2,"id":"relation_type_catalog","path":"db/proposals/stage2_relation_type_catalog.rehearsal.sql","git_blob_sha":"574bdc2f8c508f40195135659032889664cb8944"},
+    {"sequence":3,"id":"source_model","path":"db/proposals/stage2_source_model.rehearsal.sql","git_blob_sha":"85fbe5facfafb954e94e5d38a4cc8a090addf82a"},
+    {"sequence":4,"id":"normalized_provenance","path":"db/proposals/stage2_provenance.rehearsal.sql","git_blob_sha":"a0d95231b57f4e9abf11271b12fb5cab6e2d2ecf"},
+    {"sequence":5,"id":"entity_boundaries","path":"db/proposals/stage2_entity_boundaries.rehearsal.sql","git_blob_sha":"abd369c2388c6b6478871d6cbd31b52e95855443"},
+    {"sequence":6,"id":"native_activity_provenance","path":"db/proposals/stage2_activity_native_provenance.rehearsal.sql","git_blob_sha":"21981403934ad491038e4dd6b1465b03e34bbe5e"}
+  ],
+  "application_contract": {
+    "exact_git_blob_sha_required": true,
+    "ordered_component_application_required": true,
+    "component_transaction_atomic": true,
+    "component_ledger_required": true,
+    "retry_skips_only_exact_same_component_sha": true,
+    "component_sha_drift_fails_closed": true,
+    "advisory_lock_required": true,
+    "partial_component_commit_forbidden": true
+  },
+  "safety": {
+    "non_destructive_schema_only": true,
+    "additive_objects_and_backward_compatible_relaxations_only": true,
+    "legacy_source_key_nullability_relaxation": true,
+    "fake_legacy_source_key_for_stage2_native_activity_forbidden": true,
+    "person_activity_data_mutation": false,
+    "physical_person_merge": false,
+    "territory_geometry_mutation": false,
+    "production_apply_authorized": false
+  }
+}

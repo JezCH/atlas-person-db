@@ -1,0 +1,59 @@
+{
+  "schema": "atlas-stage2-baseline-a-polity-identity-corrections/v1",
+  "status": "P4_IDENTITY_CORRECTION_NO_PRODUCTION_MUTATION",
+  "as_of": "2026-08-13",
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27",
+    "activity_count": 338,
+    "polity_identity_dependency_total": 49
+  },
+  "production_mutation_authorized": false,
+  "corrections": [
+    {
+      "id": "sun_ce_split_target_stable_sun_wu_correction",
+      "activity_id": "4c91cb84-5e53-5bcf-a4d6-d82a8a0c903f",
+      "person_id": "4fef4a14-911e-51a5-b9d6-80454ce6455b",
+      "person": "Sun Ce",
+      "supersedes_decision_id": "sun_ce_eastern_han_jiangdong_split",
+      "reason": "Later continuity review resolves the source-backed Sun Ce Jiangdong state as the same developing political actor inherited by Sun Quan and later conventionally labeled Eastern Wu; a new Polity UUID would incorrectly split this continuity.",
+      "source_contract": "research/china/stage2-sun-ce-sun-quan-wu-continuity.v1.json",
+      "corrected_decision": {
+        "reviewed_decision": "SPLIT_HAN_NOMINAL_SERVICE_AND_STABLE_SUN_CE_SUN_QUAN_WU_RULE",
+        "target_disposition": "KEEP_DISTINCT",
+        "target_polity_uuid": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+        "target_identity_class": "EASTERN_HAN_POLITICAL_CONTEXT",
+        "execution_kind": "POLITY_SEMANTIC_CORRECTION_PENDING",
+        "split_targets": [
+          {
+            "target_disposition": "REUSE_CURRENT_UUID",
+            "polity_uuid": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+            "identity_class": "EASTERN_HAN_POLITICAL_CONTEXT",
+            "relation": "serves"
+          },
+          {
+            "target_disposition": "REUSE_CURRENT_UUID",
+            "polity_uuid": "8768ce4f-26fe-5de9-a501-c19525461fdb",
+            "identity_class": "STABLE_SUN_CE_SUN_QUAN_WU_POLITICAL_ACTOR",
+            "relation": "rules",
+            "name_policy": "Do not back-project the later Eastern Wu label to Sun Ce's early Jiangdong phase."
+          }
+        ],
+        "required_later_actions": [
+          "SPLIT_ACTIVITY_CONTEXTS",
+          "RELINK_RULE_CONTEXT_TO_STABLE_SUN_WU_UUID",
+          "AUTHOR_TEMPORALLY_CORRECT_PRE_FORMAL_WU_NAME_OR_DESIGNATION",
+          "ASSERT_POLITY_RELATION",
+          "RELATION_SET",
+          "PROVENANCE_LINK"
+        ],
+        "p5_p6_dependencies": [
+          "POLITY_DESIGNATION_OR_STATE_FORM",
+          "POLITY_RELATION_SCHEMA",
+          "CORRECTION_V2",
+          "NORMALIZED_PROVENANCE"
+        ]
+      }
+    }
+  ]
+}

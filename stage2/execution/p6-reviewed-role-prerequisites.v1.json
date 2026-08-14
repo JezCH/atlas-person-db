@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-stage2-p6-reviewed-role-prerequisites/v1",
+  "as_of": "2026-08-14",
+  "status": "REVIEWED_EXACT_ROWS_BRANCH_ONLY_NO_PRODUCTION_MUTATION",
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27"
+  },
+  "rules": {
+    "uuid_is_identity": true,
+    "literal_uuid_insert_only": true,
+    "name_resolution_forbidden": true,
+    "activity_mutation_forbidden": true,
+    "production_mutation_authorized": false
+  },
+  "roles": [
+    {
+      "identity_class": "HAN_WEIWEI_COURT_OFFICE",
+      "role": {
+        "id": "c48b2b1b-ff24-54ec-ba48-d2e00db0872d",
+        "code": "han_weiwei",
+        "category": "historical_office",
+        "source_label": "Weiwei",
+        "is_active": true
+      },
+      "preferred_names": [
+        {
+          "id": "91f39b08-9d38-56da-a693-e5f45d55d8ff",
+          "role_id": "c48b2b1b-ff24-54ec-ba48-d2e00db0872d",
+          "locale": "en",
+          "name": "Weiwei",
+          "is_preferred": true
+        },
+        {
+          "id": "9591d5b4-54b3-5111-ae61-acc02d9a11dd",
+          "role_id": "c48b2b1b-ff24-54ec-ba48-d2e00db0872d",
+          "locale": "ko",
+          "name": "위위",
+          "is_preferred": true
+        }
+      ],
+      "historical_scope": "Ma Teng central Han court service after transfer of his forces; exact office evidence is Weiwei. Do not reuse the legacy Warlord role for this phase."
+    }
+  ],
+  "result": {
+    "new_role_rows": 1,
+    "new_role_name_rows": 2,
+    "production_mutation_authorized": false
+  }
+}

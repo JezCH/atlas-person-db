@@ -1,0 +1,202 @@
+{
+  "schema": "atlas-stage2-baseline-a-reviewed-research-closures/v1",
+  "as_of": "2026-08-12",
+  "status": "P3_REVIEWED_MODEL_CLOSURE_NO_PRODUCTION_MUTATION",
+  "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27",
+  "rules": {
+    "activity_uuid_exact_match_required": true,
+    "name_only_override_forbidden": true,
+    "generic_old_research_label_may_be_closed_only_by_later_reviewed_contract": true,
+    "later_reviewed_contract_may_refine_an_already_specific_old_verdict": true,
+    "remaining_specific_work_must_be_preserved": true,
+    "production_mutation_authorized": false
+  },
+  "closures": [
+    {
+      "activity_id": "76fe49de-1cda-5a22-8629-657c85433b0c",
+      "person": "Dido",
+      "source": "research/residual/stage2-historical-research-first-resolution.v1.json",
+      "decision": "KEEP_LEGENDARY_TRADITIONAL_ASSERTION",
+      "relation_hint": "rules",
+      "execution_class": "KEEP_POLITY_RELATION_LAYER_PENDING",
+      "dependencies": ["provenance_backfill", "relation_type"]
+    },
+    {
+      "activity_id": "164635b5-0930-5601-94d1-c9dd86bffa4d",
+      "person": "Brennus (Senones)",
+      "source": "research/residual/stage2-historical-research-first-resolution.v1.json",
+      "decision": "KEEP_TRADITIONAL_ASSERTION",
+      "relation_hint": "rules",
+      "execution_class": "KEEP_POLITY_RELATION_LAYER_PENDING",
+      "dependencies": ["provenance_backfill", "relation_type"]
+    },
+    {
+      "activity_id": "4d543d48-a041-5f07-a900-560a50abaeee",
+      "person": "Shi Xie",
+      "source": "research/residual/stage2-historical-research-first-resolution.v1.json",
+      "decision": "SPLIT_IMPERIAL_SERVICE_CONTEXTS",
+      "relation_hint": "serves",
+      "execution_class": "BLOCKED_POLITY_IDENTITY",
+      "dependencies": ["chronology_correction", "polity_identity_model", "relation_type"]
+    },
+    {
+      "activity_id": "c0987b73-203c-5b49-9d84-8d96ce0e44e9",
+      "person": "Leftraru",
+      "source": "research/residual/stage2-historical-research-first-resolution.v1.json",
+      "decision": "RELINK_RETIME_WARTIME_COALITION_AND_PEOPLE_EVENT",
+      "relation_hint": "serves",
+      "execution_class": "BLOCKED_POLITY_IDENTITY",
+      "dependencies": ["chronology_correction", "entity_model_migration", "polity_identity_model", "relation_type"]
+    },
+    {
+      "activity_id": "c73146d6-0558-502f-8e81-11343e41f963",
+      "person": "Sacagawea",
+      "source": "research/residual/stage2-historical-research-first-resolution.v1.json",
+      "decision": "MIGRATE_TO_PERSON_PEOPLE_AND_EVENT",
+      "relation_hint": null,
+      "execution_class": "STAGE2_ENTITY_MODEL_MIGRATION",
+      "dependencies": ["entity_model_migration"]
+    },
+    {
+      "activity_id": "b4a6b048-9465-539a-bc4b-ec50a057b594",
+      "person": "Sitting Bull",
+      "source": "research/residual/stage2-historical-research-first-resolution.v1.json",
+      "decision": "RELINK_RETIME_AUTONOMOUS_HUNKPAPA_AUTHORITY",
+      "relation_hint": "rules",
+      "execution_class": "BLOCKED_POLITY_IDENTITY",
+      "dependencies": ["chronology_correction", "polity_identity_model", "provenance_backfill", "relation_type"]
+    },
+    {
+      "activity_id": "062c9186-2981-5745-9b60-ae733a2fc86d",
+      "person": "Poundmaker",
+      "source": "research/residual/stage2-historical-research-first-resolution.v1.json",
+      "decision": "SPLIT_RELINK_REVIEWED_COMMUNITIES",
+      "relation_hint": null,
+      "execution_class": "BLOCKED_POLITY_IDENTITY",
+      "dependencies": ["chronology_correction", "polity_identity_model", "relation_type"]
+    },
+    {
+      "activity_id": "2b566bc6-600a-5a75-bf32-60fe3e558bcd",
+      "person": "Oda Nobunaga",
+      "source": "research/japan/stage2-sengoku-authority-decisions.v1.json",
+      "decision": "RELINK_SOURCE_BACKED_ODA_TERRITORIAL_POLITY",
+      "relation_hint": "rules",
+      "execution_class": "BLOCKED_POLITY_IDENTITY",
+      "dependencies": ["polity_identity_model", "relation_type"]
+    },
+    {
+      "activity_id": "110c080c-b891-50a7-950c-1c80d3ef75b8",
+      "person": "Uesugi Kenshin",
+      "source": "research/japan/stage2-sengoku-authority-decisions.v1.json",
+      "decision": "RELINK_SOURCE_BACKED_UESUGI_TERRITORIAL_POLITY",
+      "relation_hint": "rules",
+      "execution_class": "BLOCKED_POLITY_IDENTITY",
+      "dependencies": ["polity_identity_model", "relation_type"]
+    },
+    {
+      "activity_id": "61bf1687-9815-5844-9f98-02a558470b51",
+      "person": "Toyotomi Hideyoshi",
+      "source": "research/japan/stage2-sengoku-authority-decisions.v1.json",
+      "decision": "RETIRE_REGIME_AS_POLITY_BIND_TOYOTOMI_GOVERNANCE",
+      "relation_hint": null,
+      "execution_class": "BLOCKED_GOVERNANCE_CONTEXT",
+      "dependencies": ["chronology_correction", "governance_context"]
+    },
+    {
+      "activity_id": "b651ff3e-0df1-552a-9134-56ca95e9f3be",
+      "person": "Rurik",
+      "source": "research/layered/stage2-r1-layered-authority-decisions.v1.json",
+      "decision": "RELINK_EARLY_NORTHERN_RUS_AUTHORITY",
+      "relation_hint": "rules",
+      "execution_class": "BLOCKED_POLITY_IDENTITY",
+      "dependencies": ["polity_identity_model", "provenance_backfill", "relation_type"]
+    },
+    {
+      "activity_id": "f5ea0e7c-1886-56f8-b4cc-b1ceba9dd1dd",
+      "person": "Hojo Tokimune",
+      "source": "docs/stage2/contracts/GOVERNANCE_CONTEXT_CURRENT_V1.md",
+      "decision": "RELINK_JAPAN_KAMAKURA_GOVERNANCE",
+      "relation_hint": "governs",
+      "execution_class": "BLOCKED_GOVERNANCE_CONTEXT",
+      "dependencies": ["governance_context", "relation_type"]
+    },
+    {
+      "activity_id": "a77a000e-2fec-5983-afb9-5d7dbc829223",
+      "person": "Ying Bu",
+      "source": "research/relations/stage2-structural-polity-relation-intervals.v1.json",
+      "decision": "RELINK_HUAINAN_VASSAL_KINGDOM",
+      "relation_hint": "rules",
+      "execution_class": "BLOCKED_POLITY_IDENTITY",
+      "dependencies": ["polity_identity_model", "polity_relation_model", "provenance_backfill", "relation_type"]
+    },
+    {
+      "activity_id": "4ac4c38c-6d8b-55ce-b999-b0639e67eb22",
+      "person": "Charles de Gaulle",
+      "source": "docs/stage2/contracts/GOVERNANCE_CONTEXT_CURRENT_V1.md",
+      "decision": "RELINK_FRANCE_FIFTH_REPUBLIC_GOVERNANCE",
+      "relation_hint": "governs",
+      "execution_class": "BLOCKED_GOVERNANCE_CONTEXT",
+      "dependencies": ["chronology_correction", "governance_context", "relation_type"]
+    },
+    {
+      "activity_id": "5e503b05-371c-5dcb-91ec-68b6d0eef95c",
+      "person": "Solomon",
+      "source": "research/residual/stage2-baseline-a-parser-residual-6-resolution.v1.json",
+      "decision": "KEEP_TRADITIONAL_DISPUTED_SOLOMONIC_RULE_ASSERTION",
+      "relation_hint": "rules",
+      "execution_class": "STAGE2_CHRONOLOGY_CORRECTION",
+      "dependencies": ["chronology_correction", "provenance_backfill", "relation_type"]
+    },
+    {
+      "activity_id": "11969191-7ede-5c61-b911-5290d3b95f29",
+      "person": "Gautama Buddha",
+      "source": "research/residual/stage2-baseline-a-parser-residual-6-resolution.v1.json",
+      "decision": "KEEP_SHAKYA_POLITY_REBUILD_ORIGIN_AND_MULTI_POLITY_ACTIVITY_CONTEXTS",
+      "relation_hint": "active_in",
+      "execution_class": "BLOCKED_POLITY_IDENTITY",
+      "dependencies": ["chronology_correction", "polity_identity_model", "provenance_backfill", "relation_type"]
+    },
+    {
+      "activity_id": "814f1293-3566-5f7f-a699-acb6249d420e",
+      "person": "Brennus (Galatia)",
+      "source": "research/residual/stage2-baseline-a-parser-residual-6-resolution.v1.json",
+      "decision": "MIGRATE_GALATIAN_INVASION_TO_EVENT_AND_MOBILE_COALITION_CONTEXT",
+      "relation_hint": null,
+      "execution_class": "STAGE2_ENTITY_MODEL_MIGRATION",
+      "dependencies": ["chronology_correction", "entity_model_migration", "provenance_backfill"]
+    },
+    {
+      "activity_id": "df6cc626-135e-5abc-ae54-6dc1f64ac2aa",
+      "person": "Guan Yu",
+      "source": "research/layered/stage2-r1-layered-authority-decisions.v1.json",
+      "decision": "RELINK_TO_CONTINUOUS_LIU_BEI_POLITY",
+      "relation_hint": "serves",
+      "execution_class": "BLOCKED_POLITY_IDENTITY",
+      "dependencies": ["chronology_correction", "polity_identity_model", "relation_type"]
+    },
+    {
+      "activity_id": "eed067d9-43f3-52dc-9ecc-d5ed540fe65b",
+      "person": "Amina",
+      "source": "research/residual/stage2-baseline-a-parser-residual-6-resolution.v1.json",
+      "decision": "KEEP_ZAZZAU_TRADITIONAL_AMINA_RULE_ASSERTION_WITH_UNRESOLVED_CHRONOLOGY",
+      "relation_hint": "rules",
+      "execution_class": "STAGE2_CHRONOLOGY_CORRECTION",
+      "dependencies": ["chronology_correction", "provenance_backfill", "relation_type"]
+    },
+    {
+      "activity_id": "5be7f060-46d1-58f9-ad7c-3b03458c198a",
+      "person": "Tecumseh",
+      "source": "research/pre-vercel/stage2-pre-vercel-domain-closure.v1.json",
+      "decision": "KEEP_TECUMSEH_CONFEDERACY_RULE_RETIME_START_APPROX_1808",
+      "relation_hint": "rules",
+      "execution_class": "STAGE2_CHRONOLOGY_CORRECTION",
+      "dependencies": ["chronology_correction", "entity_model_migration", "provenance_backfill", "relation_type"]
+    }
+  ],
+  "result": {
+    "reviewed_cases_total": 20,
+    "historical_research_dependency_closure_count_is_computed_against_exact_baseline_ledger": true,
+    "historical_fabrication_added": false,
+    "production_mutation_authorized": false
+  }
+}
