@@ -68,16 +68,18 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p /tmp/atlas-train2-evidence/responses
+          cp /tmp/atlas-train2-plans/plan-list.json /tmp/atlas-train2-evidence/plan-list.json
           request_oidc() {
             curl --fail-with-body --silent --show-error -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${AUDIENCE}" | jq -er '.value'
           }
           call() {
             local mode
-            local extra
+            local extra='{}'
             local output
             local token payload status code
             mode="$1"
-            extra="${2:-{}}"
+            if (( $# >= 2 )); then extra="$2"; fi
+            jq -e 'type=="object"' <<<"$extra" >/dev/null
             output="/tmp/atlas-train2-evidence/responses/$(printf '%03d' "${CALL_NO}")-${mode}.json"
             token="$(request_oidc)"
             payload="$(jq -cn --arg sha "${GITHUB_SHA}" --arg release "${RELEASE_ID}" --arg approval "${APPROVAL}" --arg mode "$mode" --argjson extra "$extra" '{deployment_sha:$sha,release_id:$release,approval:$approval,mode:$mode}+$extra')"
@@ -89,9 +91,9 @@ jobs:
           }
           mutate_pair() {
             local base
-            local extra
+            local extra='{}'
             base="$1"
-            extra="${2:-{}}"
+            if (( $# >= 2 )); then extra="$2"; fi
             call "${base}_dry_run" "$extra"
             call "${base}_apply" "$extra"
           }
@@ -116,24 +118,25 @@ jobs:
             mutate_pair "$kind" "$extra"
           done < <(find stage2/authoring -maxdepth 1 -type f -name 'p7-*.json' | sort)
 
-          jq -c '.entries[]' /tmp/atlas-train2-plans/plan-list.json | while IFS= read -r entry; do
-            plan_file="$(jq -r '.file' <<<"$entry")"
-            plan="$(cat "$plan_file")"
-            extra="$(jq -cn --argjson p "$plan" '{plan:$p}')"
+          while IFS= read -r entry; do
+            [[ -n "$entry" ]] || continue
+            plan_file="$(jq -er '.file' <<<"$entry")"
+            [[ -f "$plan_file" ]]
+            extra="$(jq -cn --slurpfile p "$plan_file" '$p | if length==1 and (.[0]|type)=="object" then {plan:.[0]} else error("invalid correction plan") end')"
             mutate_pair correction "$extra"
             jq -e '.result.outcome.committed==true' "$LAST_RESPONSE" >/dev/null
-          done
+          done < <(jq -c '.entries[]' /tmp/atlas-train2-plans/plan-list.json)
 
           mutate_pair p9 '{}'
           call final_verify '{}'
           jq -e '.result.p9.old_index_present==false and .result.p9.new_index_present==true and .result.p9.duplicate_groups==0 and .result.person_merge.allowed==false' "$LAST_RESPONSE" >/dev/null
-          cp /tmp/atlas-train2-plans/plan-list.json /tmp/atlas-train2-evidence/plan-list.json
           jq -n --arg sha "${GITHUB_SHA}" --arg release "${RELEASE_ID}" --slurpfile final "$LAST_RESPONSE" '{deployment_sha:$sha,release_id:$release,final:$final[0]}' > /tmp/atlas-train2-evidence/final.json
 
       - name: Upload immutable Train 2 evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: atlas-stage2-train2-${{ github.sha }}
           path: /tmp/atlas-train2-evidence/
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 90
