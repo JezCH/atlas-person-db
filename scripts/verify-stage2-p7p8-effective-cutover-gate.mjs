@@ -13,19 +13,20 @@ assert.deepEqual(gate.raw_audit_input.dependency_counts,{chronology_correction:3
 assert.equal(gate.raw_audit_input.raw_dependency_pairs,74);
 assert.deepEqual(gate.reviewed_closures.closure_batches,[
   'stage2/integration/p7p8-effective-nonrelation-closures-batch2.v1.json',
+  'stage2/integration/p7p8-effective-nonrelation-closures-batch3.v1.json',
   'stage2/integration/p7p8-effective-nonrelation-closures.v1.json'
 ]);
-assert.equal(gate.reviewed_closures.closure_activities,16);
-assert.equal(gate.reviewed_closures.closed_dependency_pairs,23);
-assert.equal(gate.effective_nonrelation.pending_unique_activities,35);
-assert.deepEqual(gate.effective_nonrelation.pending_dependency_counts,{chronology_correction:26,governance_context:7,sub_year_precision:1,provenance_backfill:9,entity_model_migration:8});
-assert.equal(gate.effective_nonrelation.pending_dependency_pairs,51);
+assert.equal(gate.reviewed_closures.closure_activities,17);
+assert.equal(gate.reviewed_closures.closed_dependency_pairs,24);
+assert.equal(gate.effective_nonrelation.pending_unique_activities,34);
+assert.deepEqual(gate.effective_nonrelation.pending_dependency_counts,{chronology_correction:25,governance_context:7,sub_year_precision:1,provenance_backfill:9,entity_model_migration:8});
+assert.equal(gate.effective_nonrelation.pending_dependency_pairs,50);
 assert.equal(gate.relation_gate.semantic_decisions_unresolved,0);
 assert.equal(gate.relation_gate.correction_blocker_activities,13);
 assert.deepEqual(gate.relation_gate.relation_only_blocker_activities,['932998e2-839b-5818-99bb-37221498cadd']);
 assert.equal(gate.p8_zero_known_blocker_gate.status,'NOT_READY');
-assert.equal(gate.p8_zero_known_blocker_gate.known_runtime_semantic_blockers,36);
-assert.equal(gate.p8_zero_known_blocker_gate.blockers.length,36);
+assert.equal(gate.p8_zero_known_blocker_gate.known_runtime_semantic_blockers,35);
+assert.equal(gate.p8_zero_known_blocker_gate.blockers.length,35);
 assert.equal(gate.p8_zero_known_blocker_gate.cutover_allowed,false);
 assert.equal(gate.rules.production_mutation_authorized,false);
 
@@ -40,7 +41,8 @@ for(const id of [
   'c4e44df1-a880-55a5-8607-0c5ebf17cc87',
   '7981dd26-4200-57d9-b4d4-bbd97f13e28f',
   '5be7f060-46d1-58f9-ad7c-3b03458c198a',
-  'ab0b9158-9395-5f02-b560-c12c5671b879'
+  'ab0b9158-9395-5f02-b560-c12c5671b879',
+  '0c084a88-58be-52e8-81bb-b73bf0a11bb1'
 ]) assert.equal(blockerById.has(id),false,`reviewed closure unexpectedly remains blocker ${id}`);
 
 const shawnee=blockerById.get('932998e2-839b-5818-99bb-37221498cadd');
@@ -48,4 +50,4 @@ assert.ok(shawnee);
 assert.deepEqual(shawnee.pending_nonrelation_dependencies,[]);
 assert.equal(shawnee.relation_path_correction_blocker,'MIGRATE_SHAWNEE_ROW_TO_PEOPLEGROUP_PARALLEL_CONFEDERACY_POLITY');
 
-console.log(JSON.stringify({marker:'ATLAS_STAGE2_P7P8_EFFECTIVE_CUTOVER_GATE_OK',closure_batches:2,raw_nonrelation_activities:51,effective_nonrelation_activities:35,relation_semantic_decisions_unresolved:0,relation_correction_blockers:13,effective_known_blockers:36,p8_status:'NOT_READY',production_mutation_authorized:false},null,2));
+console.log(JSON.stringify({marker:'ATLAS_STAGE2_P7P8_EFFECTIVE_CUTOVER_GATE_OK',closure_batches:3,raw_nonrelation_activities:51,effective_nonrelation_activities:34,relation_semantic_decisions_unresolved:0,relation_correction_blockers:13,effective_known_blockers:35,p8_status:'NOT_READY',production_mutation_authorized:false},null,2));
