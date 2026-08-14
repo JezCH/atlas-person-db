@@ -54,6 +54,16 @@ function boundaryColumns(detail) {
   });
 }
 
+function resolveActivityNotes(live, template) {
+  const policy = String(template?.notes_policy || "PRESERVE_EXACT_LIVE_NOTES").trim();
+  if (policy === "REPLACE_WITH_REVIEWED_NOTES") {
+    const reviewed = typeof template?.reviewed_notes === "string" ? template.reviewed_notes.trim() : "";
+    if (!reviewed) throw new Error("CORRECTION_V2_REVIEWED_NOTES_REQUIRED");
+    return reviewed;
+  }
+  return live.notes;
+}
+
 function applyActivityTemplate(live, template, { newFragment = false } = {}) {
   const start = boundaryColumns(template.activity_start_detail);
   const end = boundaryColumns(template.activity_end_detail);
@@ -80,7 +90,7 @@ function applyActivityTemplate(live, template, { newFragment = false } = {}) {
     confidence: template.confidence,
     chronology_status: template.chronology_status,
     legacy_source_key: newFragment ? null : template.legacy_source_key,
-    notes: live.notes,
+    notes: resolveActivityNotes(live, template),
     source_locator: live.source_locator,
     content_hash: live.content_hash
   };
@@ -374,6 +384,7 @@ module.exports = Object.freeze({
   groupBy,
   assertBaselineTuple,
   boundaryColumns,
+  resolveActivityNotes,
   applyActivityTemplate,
   sourceLinkForActivity,
   mergeReviewedSourceLinks,
