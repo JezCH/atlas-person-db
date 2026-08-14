@@ -95,7 +95,8 @@ try {
   assert.deepEqual(authoringMigrations.applied, [
     '20260811_authoring_manifest_runs.sql',
     '20260811_authoring_result_snapshot.sql',
-    '20260814_authoring_ledger_live_reference_lifecycle.sql'
+    '20260814_authoring_ledger_live_reference_lifecycle.sql',
+    '20260815_human_authoring_manifest_schema.sql'
   ]);
   const firstFkState = await ledgerFkState(client);
   assert.equal(firstFkState.length, 2);
@@ -209,7 +210,7 @@ try {
 
   console.log(JSON.stringify({
     marker:'ATLAS_STAGE2_NATIVE_NEW_PERSON_AUTHORING_GATE_OK',
-    authoring_migrations:3,
+    authoring_migrations:4,
     lifecycle_fk_replay_noop:true,
     schema_components:6,
     identity_authoring:true,

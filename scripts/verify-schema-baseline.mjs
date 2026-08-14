@@ -16,7 +16,8 @@ if (!/^postgres(?:ql)?:\/\//.test(databaseUrl)) throw new Error('DATABASE_URL is
 const expectedAuthoringMigrations = [
   '20260811_authoring_manifest_runs.sql',
   '20260811_authoring_result_snapshot.sql',
-  '20260814_authoring_ledger_live_reference_lifecycle.sql'
+  '20260814_authoring_ledger_live_reference_lifecycle.sql',
+  '20260815_human_authoring_manifest_schema.sql'
 ];
 
 const expectedCorrectionMigrations = [

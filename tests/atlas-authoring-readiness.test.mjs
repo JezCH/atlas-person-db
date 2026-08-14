@@ -20,6 +20,7 @@ function clientFor({
   ledgerTableReady = true,
   activityColumnsReady = true,
   ledgerColumnsReady = true,
+  humanSchemaAllowed = true,
   p5Ready = true
 } = {}) {
   return {
@@ -45,6 +46,7 @@ function clientFor({
           authoring_ledger: ledgerTableReady ? 'atlas_v2.authoring_manifest_runs' : null,
           ledger_manifest_schema: ledgerTableReady && ledgerColumnsReady,
           ledger_result_snapshot: ledgerTableReady && ledgerColumnsReady,
+          ledger_human_authoring_schema_allowed: ledgerTableReady && ledgerColumnsReady && humanSchemaAllowed,
           relation_type_id: activityColumnsReady,
           activity_start_granularity: activityColumnsReady,
           activity_end_granularity: activityColumnsReady,
@@ -63,7 +65,7 @@ function clientFor({
   };
 }
 
-test('authoring readiness requires P5, core Stage 2 schema, completed P9 and blocked P10', async () => {
+test('authoring readiness requires P5, core Stage 2 schema, human-compatible ledger, completed P9 and blocked P10', async () => {
   const result = await inspectAuthoringReadiness(clientFor());
   assert.equal(result.ready, true);
   assert.equal(result.bootstrap_ready, true);
@@ -74,6 +76,8 @@ test('authoring readiness requires P5, core Stage 2 schema, completed P9 and blo
   assert.equal(result.core.tables_ready, true);
   assert.equal(result.core.activity_columns_ready, true);
   assert.equal(result.core.ledger_columns_ready, true);
+  assert.equal(result.core.ledger_human_authoring_schema_allowed, true);
+  assert.equal(result.core.ledger_contract_ready, true);
   assert.equal(result.core.columns_ready, true);
   assert.equal(result.p9.old_index_present, false);
   assert.equal(result.p9.new_index_present, true);
@@ -89,6 +93,7 @@ test('missing authoring ledger schema is explicitly bootstrappable without weake
   assert.equal(missingColumns.bootstrap_required, true);
   assert.equal(missingColumns.core.activity_columns_ready, true);
   assert.equal(missingColumns.core.ledger_columns_ready, false);
+  assert.equal(missingColumns.core.ledger_contract_ready, false);
   assert.equal(missingColumns.core.columns.ledger_manifest_schema, false);
   assert.equal(missingColumns.core.columns.ledger_result_snapshot, false);
 
@@ -97,6 +102,16 @@ test('missing authoring ledger schema is explicitly bootstrappable without weake
   assert.equal(missingLedger.bootstrap_ready, true);
   assert.equal(missingLedger.bootstrap_required, true);
   assert.equal(missingLedger.core.ledger_table_ready, false);
+});
+
+test('legacy authoring ledger CHECK without human schema is bootstrappable, not ready', async () => {
+  const result = await inspectAuthoringReadiness(clientFor({ humanSchemaAllowed: false }));
+  assert.equal(result.ready, false);
+  assert.equal(result.bootstrap_ready, true);
+  assert.equal(result.bootstrap_required, true);
+  assert.equal(result.core.ledger_columns_ready, true);
+  assert.equal(result.core.ledger_human_authoring_schema_allowed, false);
+  assert.equal(result.core.ledger_contract_ready, false);
 });
 
 test('authoring readiness and bootstrap both fail closed when P9 is not complete', async () => {
