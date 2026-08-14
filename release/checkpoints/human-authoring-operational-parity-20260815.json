@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-production-checkpoint/v1",
+  "checkpoint_id": "human_authoring_operational_parity_20260815",
+  "base_main_sha": "3d58ffa100cf287998b78be7aeccabddaa559096",
+  "release_scope": "human-authoring-operational-parity",
+  "reason": "Production checkpoint for merged PR #147 after Git-integrated deployment was skipped by Vercel build rate limiting. This marker intentionally forces one deployment-relevant Production build so the deployed runtime can catch up with the already-validated main branch before further authoring data commits.",
+  "expected_postcondition": "Production runtime contains PR #147 operational parity; subsequent authoring-only commits are deployment-safe and do not trigger Vercel builds.",
+  "created_date_kst": "2026-08-15"
+}
