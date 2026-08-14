@@ -72,16 +72,29 @@ jobs:
             curl --fail-with-body --silent --show-error -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${AUDIENCE}" | jq -er '.value'
           }
           call() {
-            local mode="$1" extra="${2:-{}}" output="/tmp/atlas-train2-evidence/responses/$(printf '%03d' "${CALL_NO}")-${mode}.json"
+            local mode
+            local extra
+            local output
             local token payload status code
+            mode="$1"
+            extra="${2:-{}}"
+            output="/tmp/atlas-train2-evidence/responses/$(printf '%03d' "${CALL_NO}")-${mode}.json"
             token="$(request_oidc)"
             payload="$(jq -cn --arg sha "${GITHUB_SHA}" --arg release "${RELEASE_ID}" --arg approval "${APPROVAL}" --arg mode "$mode" --argjson extra "$extra" '{deployment_sha:$sha,release_id:$release,approval:$approval,mode:$mode}+$extra')"
             status="$(curl --silent --show-error --output "$output" --write-out '%{http_code}' --request POST -H 'content-type: application/json' -H "authorization: Bearer ${token}" --data "$payload" "$ENDPOINT")"
             if [[ "$status" != "200" ]]; then cat "$output" >&2 || true; code="$(jq -r '.code//"UNKNOWN"' "$output" 2>/dev/null || true)"; echo "Train2 ${mode} failed HTTP ${status} ${code}" >&2; exit 1; fi
             jq -e --arg mode "$mode" --arg sha "${GITHUB_SHA}" '.ok==true and .marker=="ATLAS_STAGE2_TRAIN2_RELEASE_V1" and .mode==$mode and .deployment_sha==$sha' "$output" >/dev/null
-            LAST_RESPONSE="$output"; CALL_NO=$((CALL_NO+1))
+            LAST_RESPONSE="$output"
+            CALL_NO=$((CALL_NO+1))
           }
-          mutate_pair() { local base="$1" extra="${2:-{}}"; call "${base}_dry_run" "$extra"; call "${base}_apply" "$extra"; }
+          mutate_pair() {
+            local base
+            local extra
+            base="$1"
+            extra="${2:-{}}"
+            call "${base}_dry_run" "$extra"
+            call "${base}_apply" "$extra"
+          }
           CALL_NO=1
 
           call preflight '{}'
