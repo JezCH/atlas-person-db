@@ -302,7 +302,8 @@ jobs:
                 "$ATLAS_AUTHORING_ENDPOINT")"
               if [[ "$status" != "200" ]]; then
                 cat "$response" >&2 || true
-                echo "Authoring apply failed for $manifest: HTTP ${status}" >&2
+                code="$(jq -r '.code // "UNKNOWN"' "$response" 2>/dev/null || printf 'UNKNOWN')"
+                echo "Authoring apply failed: HTTP ${status}, code ${code}" >&2
                 exit 1
               fi
               jq -e \
