@@ -8,6 +8,9 @@ const { manifestHash, readLedger } = require("./atlas-authoring-manifest-service
 const MANIFEST_V2 = "atlas-authoring-manifest/v2";
 const SNAPSHOT_VERSION = 2;
 const SEMANTIC_VERSION = "v2-relation-full-temporal";
+const TRANSPORT_VERSION = 2;
+const MANIFEST_PATH_RE = /^authoring\/requests\/[A-Za-z0-9._-]+\.json$/;
+const SHA_RE = /^[0-9a-f]{40}$/;
 
 function requireBinding(raw, kind) {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error(`AUTHORING_V2_${kind}_BINDING_REQUIRED`);
@@ -39,13 +42,29 @@ function requireNativeManifest(raw) {
   return Object.freeze({ requestId, person:raw.person, polityIdentity:raw.polity_identity || null, roleIdentity:raw.role_identity || null, polityBinding, roleBinding, activity:raw.activity });
 }
 
+function normalizeTransportContext(raw, { required = false } = {}) {
+  if (raw == null) {
+    if (required) throw new Error("AUTHORING_V2_TRANSPORT_REQUIRED");
+    return null;
+  }
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error("AUTHORING_V2_TRANSPORT_INVALID");
+  if (Number(raw.version) !== TRANSPORT_VERSION) throw new Error("AUTHORING_V2_TRANSPORT_VERSION_INVALID");
+  const runtimeSha = String(raw.runtime_sha || "").trim().toLowerCase();
+  const authoringSha = String(raw.authoring_sha || "").trim().toLowerCase();
+  const manifestPath = String(raw.manifest_path || "").trim();
+  if (!SHA_RE.test(runtimeSha)) throw new Error("AUTHORING_V2_RUNTIME_SHA_INVALID");
+  if (!SHA_RE.test(authoringSha)) throw new Error("AUTHORING_V2_AUTHORING_SHA_INVALID");
+  if (!MANIFEST_PATH_RE.test(manifestPath)) throw new Error("AUTHORING_V2_MANIFEST_PATH_INVALID");
+  return Object.freeze({ version:TRANSPORT_VERSION, runtime_sha:runtimeSha, authoring_sha:authoringSha, manifest_path:manifestPath });
+}
+
 function bindActivity({ activity, personId, polityId, roleId }) {
   const { polity_binding, role_binding, ...fields } = activity;
   return Object.freeze({ ...fields, person_id:personId, polity_id:polityId, role_id:roleId });
 }
 
-function buildSnapshot({ personResult, polityId, polityDisposition, roleId, roleDisposition, activityResult }) {
-  return Object.freeze({
+function buildSnapshot({ personResult, polityId, polityDisposition, roleId, roleDisposition, activityResult, transport = null }) {
+  const snapshot = {
     version: SNAPSHOT_VERSION,
     schema: MANIFEST_V2,
     semantic_version: SEMANTIC_VERSION,
@@ -64,12 +83,15 @@ function buildSnapshot({ personResult, polityId, polityDisposition, roleId, role
         end: Object.freeze({ year:activityResult.row.activity_end, month:activityResult.row.activity_end_month, day:activityResult.row.activity_end_day, granularity:activityResult.row.activity_end_granularity, certainty:activityResult.row.activity_end_certainty, calendar:activityResult.row.activity_end_calendar })
       })
     })
-  });
+  };
+  if (transport) snapshot.transport = normalizeTransportContext(transport, { required:true });
+  return Object.freeze(snapshot);
 }
 
 async function verifyReplay(client, ledger) {
   const snapshot = ledger?.result_snapshot;
   if (Number(snapshot?.version) !== SNAPSHOT_VERSION || snapshot?.semantic_version !== SEMANTIC_VERSION) throw new Error("AUTHORING_V2_LEDGER_SNAPSHOT_INVALID");
+  if (snapshot?.transport != null) normalizeTransportContext(snapshot.transport, { required:true });
   const activityId = requiredUuid(snapshot?.entities?.activity?.id, "ledger.activity.id");
   const snapshotSemanticKey = String(snapshot?.entities?.activity?.semantic_key || "");
   const snapshotSemanticHash = String(snapshot?.entities?.activity?.semantic_hash || "").trim().toLowerCase();
@@ -99,8 +121,9 @@ function outcome(requestId, replay, snapshot) {
 function createNativeAuthoringManifestV2Service({ client } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
   return Object.freeze({
-    async apply(rawManifest) {
+    async apply(rawManifest, { transport = null } = {}) {
       const manifest = requireNativeManifest(rawManifest);
+      const normalizedTransport = normalizeTransportContext(transport);
       const hash = manifestHash(rawManifest);
       await client.query("begin isolation level serializable");
       try {
@@ -139,7 +162,7 @@ function createNativeAuthoringManifestV2Service({ client } = {}) {
 
         const activityPayload = bindActivity({ activity:manifest.activity, personId:personResult.id, polityId, roleId });
         const activityResult = await createStage2NativeActivityTx(client).create(activityPayload, { requestId:manifest.requestId });
-        const snapshot = buildSnapshot({ personResult, polityId, polityDisposition, roleId, roleDisposition, activityResult });
+        const snapshot = buildSnapshot({ personResult, polityId, polityDisposition, roleId, roleDisposition, activityResult, transport:normalizedTransport });
         await client.query(`insert into atlas_v2.authoring_manifest_runs(request_id,manifest_hash,manifest_schema,person_id,relationship_id,result_snapshot) values($1,$2,$3,$4::uuid,$5::uuid,$6::jsonb)`, [manifest.requestId,hash,MANIFEST_V2,personResult.id,activityResult.id,JSON.stringify(snapshot)]);
         await client.query("commit");
         return outcome(manifest.requestId, false, snapshot);
@@ -155,8 +178,11 @@ module.exports = Object.freeze({
   MANIFEST_V2,
   SNAPSHOT_VERSION,
   SEMANTIC_VERSION,
+  TRANSPORT_VERSION,
+  MANIFEST_PATH_RE,
   requireBinding,
   requireNativeManifest,
+  normalizeTransportContext,
   bindActivity,
   buildSnapshot,
   verifyReplay,
