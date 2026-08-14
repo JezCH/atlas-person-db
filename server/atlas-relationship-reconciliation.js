@@ -1,20 +1,49 @@
 "use strict";
 
 const crypto = require("node:crypto");
+const { readiness, SEMANTIC_KEY_VERSION } = require("./atlas-activity-semantic-key-v2.js");
 
 const ACTIONS = new Set(["KEEP_DISTINCT_ROLES", "KEEP_ONE_RELATIONSHIP"]);
-const RECONCILIATION_SEMANTIC_VERSION = "v1-polity-period-year-role";
+const RECONCILIATION_SEMANTIC_VERSION = "v2-relation-full-temporal";
 
 function id(value) {
-  return value == null ? null : String(value);
+  return value == null ? null : String(value).toLowerCase();
+}
+
+function fullTemporalToken(row, prefix) {
+  return [
+    Number(row?.[prefix]),
+    row?.[`${prefix}_month`] == null ? "_" : Number(row[`${prefix}_month`]),
+    row?.[`${prefix}_day`] == null ? "_" : Number(row[`${prefix}_day`]),
+    String(row?.[`${prefix}_granularity`] || ""),
+    String(row?.[`${prefix}_calendar`] || ""),
+    row?.[`${prefix}_certainty`] == null ? "_" : String(row[`${prefix}_certainty`])
+  ].join(":");
+}
+
+function reconciliationReadiness(row) {
+  const status = readiness(row);
+  return Object.freeze({
+    ready: status.ready,
+    semantic_key_version: SEMANTIC_KEY_VERSION,
+    reasons: status.reasons
+  });
 }
 
 function contextKey(row) {
+  const status = reconciliationReadiness(row);
+  if (!status.ready) {
+    // P9 fail-closed: an incomplete legacy projection must never be treated as
+    // equivalent during Person merge reconciliation. P10 revalidation must
+    // reload the complete v2 Activity identity before physical coalescing.
+    return `__P9_NOT_READY__|${id(row?.id) || crypto.randomUUID()}`;
+  }
   return [
     id(row.polity_id),
+    id(row.relation_type_id),
     id(row.period_basis_id),
-    Number(row.activity_start),
-    Number(row.activity_end)
+    fullTemporalToken(row, "activity_start"),
+    fullTemporalToken(row, "activity_end")
   ].join("|");
 }
 
@@ -22,24 +51,37 @@ function roleKey(row) {
   return id(row.role_id) || "__NULL_ROLE__";
 }
 
+function fingerprintProjection(row) {
+  return {
+    id: id(row.id),
+    person_id: id(row.person_id),
+    polity_id: id(row.polity_id),
+    relation_type_id: id(row.relation_type_id),
+    role_id: id(row.role_id),
+    period_basis_id: id(row.period_basis_id),
+    activity_start: Number(row.activity_start),
+    activity_start_month: row.activity_start_month == null ? null : Number(row.activity_start_month),
+    activity_start_day: row.activity_start_day == null ? null : Number(row.activity_start_day),
+    activity_start_granularity: row.activity_start_granularity == null ? null : String(row.activity_start_granularity),
+    activity_start_calendar: row.activity_start_calendar == null ? null : String(row.activity_start_calendar),
+    activity_start_certainty: row.activity_start_certainty == null ? null : String(row.activity_start_certainty),
+    activity_end: Number(row.activity_end),
+    activity_end_month: row.activity_end_month == null ? null : Number(row.activity_end_month),
+    activity_end_day: row.activity_end_day == null ? null : Number(row.activity_end_day),
+    activity_end_granularity: row.activity_end_granularity == null ? null : String(row.activity_end_granularity),
+    activity_end_calendar: row.activity_end_calendar == null ? null : String(row.activity_end_calendar),
+    activity_end_certainty: row.activity_end_certainty == null ? null : String(row.activity_end_certainty)
+  };
+}
+
 function groupFingerprint(rows) {
-  const canonical = rows
-    .map((row) => ({
-      id: id(row.id),
-      person_id: id(row.person_id),
-      polity_id: id(row.polity_id),
-      role_id: id(row.role_id),
-      period_basis_id: id(row.period_basis_id),
-      activity_start: Number(row.activity_start),
-      activity_end: Number(row.activity_end)
-    }))
-    .sort((a, b) => a.id.localeCompare(b.id));
+  const canonical = rows.map(fingerprintProjection).sort((a, b) => String(a.id).localeCompare(String(b.id)));
   return crypto.createHash("sha256").update(JSON.stringify(canonical)).digest("hex");
 }
 
 function buildRelationshipReconciliationGroups({ rows = [], lowPersonId, highPersonId } = {}) {
-  const low = String(lowPersonId || "");
-  const high = String(highPersonId || "");
+  const low = String(lowPersonId || "").toLowerCase();
+  const high = String(highPersonId || "").toLowerCase();
   const byContext = new Map();
   for (const row of rows) {
     const personId = id(row.person_id);
@@ -52,6 +94,7 @@ function buildRelationshipReconciliationGroups({ rows = [], lowPersonId, highPer
 
   const groups = [];
   for (const [context_key, list] of byContext) {
+    if (context_key.startsWith("__P9_NOT_READY__|")) continue;
     const hasLow = list.some((row) => row.person_id === low);
     const hasHigh = list.some((row) => row.person_id === high);
     if (!hasLow || !hasHigh) continue;
@@ -73,7 +116,10 @@ function buildRelationshipReconciliationGroups({ rows = [], lowPersonId, highPer
     groups.push({
       context_key,
       group_fingerprint: groupFingerprint(sorted),
+      semantic_version: RECONCILIATION_SEMANTIC_VERSION,
+      semantic_key_version: SEMANTIC_KEY_VERSION,
       polity_id: id(sorted[0].polity_id),
+      relation_type_id: id(sorted[0].relation_type_id),
       period_basis_id: id(sorted[0].period_basis_id),
       activity_start: Number(sorted[0].activity_start),
       activity_end: Number(sorted[0].activity_end),
@@ -116,41 +162,28 @@ function buildReconciliationPlan({ groups = [], resolutions = [] } = {}) {
   const coalesces = [];
   const applied = [];
   for (const group of groups) {
+    if (group.semantic_version !== RECONCILIATION_SEMANTIC_VERSION) throw new Error("relationship reconciliation group semantic version is stale");
     const resolution = resolutionByGroup.get(group.group_fingerprint);
     if (!resolution) throw new Error("relationship resolution group is stale or missing");
     const relationshipIds = new Set(group.relationships.map((row) => row.id));
 
     if (resolution.action === "KEEP_ONE_RELATIONSHIP") {
       if (!relationshipIds.has(resolution.keep_relationship_id)) throw new Error("keep_relationship_id does not belong to its relationship conflict group");
-      for (const row of group.relationships) {
-        if (row.id !== resolution.keep_relationship_id) {
-          coalesces.push({ group_fingerprint: group.group_fingerprint, keep_relationship_id: resolution.keep_relationship_id, drop_relationship_id: row.id });
-        }
-      }
+      for (const row of group.relationships) if (row.id !== resolution.keep_relationship_id) coalesces.push({ group_fingerprint: group.group_fingerprint, keep_relationship_id: resolution.keep_relationship_id, drop_relationship_id: row.id });
     } else {
       const selected = new Set(resolution.keep_relationship_ids);
       const requiredRoleGroups = group.exact_duplicate_role_groups || [];
-      if (selected.size !== requiredRoleGroups.length) {
-        throw new Error("KEEP_DISTINCT_ROLES requires exactly one explicit representative for every duplicated role");
-      }
+      if (selected.size !== requiredRoleGroups.length) throw new Error("KEEP_DISTINCT_ROLES requires exactly one explicit representative for every duplicated role");
       for (const duplicateRoleGroup of requiredRoleGroups) {
         const ids = new Set(duplicateRoleGroup.relationships.map((row) => row.id));
         const keepIds = [...selected].filter((selectedId) => ids.has(selectedId));
-        if (keepIds.length !== 1) {
-          throw new Error("KEEP_DISTINCT_ROLES representative does not match exactly one duplicated role group");
-        }
+        if (keepIds.length !== 1) throw new Error("KEEP_DISTINCT_ROLES representative does not match exactly one duplicated role group");
         const keepId = keepIds[0];
-        for (const row of duplicateRoleGroup.relationships) {
-          if (row.id !== keepId) {
-            coalesces.push({ group_fingerprint: group.group_fingerprint, keep_relationship_id: keepId, drop_relationship_id: row.id });
-          }
-        }
+        for (const row of duplicateRoleGroup.relationships) if (row.id !== keepId) coalesces.push({ group_fingerprint: group.group_fingerprint, keep_relationship_id: keepId, drop_relationship_id: row.id });
       }
-      for (const selectedId of selected) {
-        if (!relationshipIds.has(selectedId)) throw new Error("KEEP_DISTINCT_ROLES representative does not belong to its relationship conflict group");
-      }
+      for (const selectedId of selected) if (!relationshipIds.has(selectedId)) throw new Error("KEEP_DISTINCT_ROLES representative does not belong to its relationship conflict group");
     }
-    applied.push({ ...resolution, context_key: group.context_key });
+    applied.push({ ...resolution, context_key: group.context_key, semantic_version: RECONCILIATION_SEMANTIC_VERSION });
   }
 
   const dropped = new Set();
@@ -158,7 +191,7 @@ function buildReconciliationPlan({ groups = [], resolutions = [] } = {}) {
     if (dropped.has(item.drop_relationship_id)) throw new Error("relationship reconciliation plan would drop the same relationship twice");
     dropped.add(item.drop_relationship_id);
   }
-  return { resolutions: applied, coalesces };
+  return { semantic_version: RECONCILIATION_SEMANTIC_VERSION, resolutions: applied, coalesces };
 }
 
 module.exports = Object.freeze({
@@ -167,6 +200,7 @@ module.exports = Object.freeze({
   contextKey,
   roleKey,
   groupFingerprint,
+  reconciliationReadiness,
   buildRelationshipReconciliationGroups,
   normalizeResolutions,
   buildReconciliationPlan

@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-stage2-p9-semantic-key-v2-cutover/v1",
+  "as_of": "2026-08-14",
+  "status": "BRANCH_ONLY_P9_SEMANTIC_KEY_V2_GLOBAL_CUTOVER_COMPLETE_NO_PRODUCTION_MUTATION",
+  "baseline": {
+    "deployment_sha": "ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79",
+    "baseline_digest": "sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27"
+  },
+  "prerequisite": {
+    "p8_status": "ZERO_KNOWN_BLOCKERS",
+    "p8_verified_integrity_run": 606,
+    "p8_verified_integrity_run_id": 31786359574,
+    "p8_effective_blockers": 0
+  },
+  "canonical_activity_identity": {
+    "module": "server/atlas-activity-semantic-key-v2.js",
+    "version": "atlas-activity-semantic-key/v2",
+    "dimensions": [
+      "person_id",
+      "polity_id",
+      "relation_type_id",
+      "role_id_nullable",
+      "period_basis_id",
+      "activity_start_full_temporal_boundary",
+      "activity_end_full_temporal_boundary"
+    ]
+  },
+  "consumers": {
+    "stage2_native_activity_write": "v2_native",
+    "authoring_manifest_v2_new_write": "v2_native",
+    "authoring_manifest_historical_replay": "legacy_replay_only",
+    "legacy_name_based_mutation_create_update_import": "disabled_fail_closed",
+    "immutable_activity_id_delete": "allowed",
+    "relationship_reconciliation": "v2_relation_full_temporal",
+    "correction_engine": "immutable_activity_uuid_targeted",
+    "database_uniqueness": "v2_rehearsal_ready",
+    "person_physical_merge": "blocked_until_p10_v2_revalidation"
+  },
+  "active_routes": {
+    "api_atlas_authoring_apply": "dispatches_new_v2_to_stage2_native_service",
+    "api_atlas_mutate": "p9_legacy_activity_mutation_guard",
+    "api_atlas_duplicate_review": "v2_reconciliation_semantics_with_p10_merge_interlock"
+  },
+  "database_rehearsal": {
+    "path": "db/proposals/stage2_activity_semantic_key.rehearsal.sql",
+    "retired_index": "person_politics_v2_null_role_semantic_uidx",
+    "replacement_index": "person_politics_v2_semantic_v2_uidx",
+    "production_applied": false
+  },
+  "rules": {
+    "no_v1_activity_identity_for_authoritative_new_writes": true,
+    "legacy_projection_must_fail_closed": true,
+    "unknown_full_temporal_identity_must_not_reconcile": true,
+    "historical_authoring_assertions_preserved": true,
+    "physical_person_merge_deferred_to_p10": true,
+    "production_mutation_authorized": false
+  }
+}
