@@ -74,7 +74,8 @@ function createAuthoringApplyHandler({
   verifyOidc = verifyGitHubActionsOidc,
   createClient = createPostgresClient,
   applyMigrations = applyAuthoringMigrations,
-  inspectReadiness = inspectAuthoringReadiness
+  inspectReadiness = inspectAuthoringReadiness,
+  createDispatch = createAuthoringManifestDispatchService
 } = {}) {
   return async function handler(req, res) {
     if (req?.method === "GET") {
@@ -148,7 +149,7 @@ function createAuthoringApplyHandler({
         authoring_sha: payload.authoringSha,
         manifest_path: payload.manifestPath
       });
-      const outcome = await createAuthoringManifestDispatchService({ client }).apply(payload.manifest, { transport });
+      const outcome = await createDispatch({ client }).apply(payload.manifest, { transport });
       return json(res, 200, {
         ok: true,
         marker: outcome.marker,
