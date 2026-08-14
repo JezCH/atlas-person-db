@@ -118,7 +118,25 @@ jobs:
             and .readiness.person_merge.allowed==false
             and .readiness.person_merge.person_merge_lifecycle_version=="pre-p10-blocked"
           ' /tmp/atlas-authoring-evidence/readiness.json >/dev/null
+
           runtime_sha="$(jq -er '.runtime_sha' /tmp/atlas-authoring-evidence/readiness.json)"
+          git cat-file -e "${runtime_sha}^{commit}" || { echo "Deployed runtime commit is unavailable in checkout: ${runtime_sha}" >&2; exit 1; }
+          git merge-base --is-ancestor "$runtime_sha" "$GITHUB_SHA" || { echo "Deployed runtime is not an ancestor of authoring commit" >&2; exit 1; }
+          git diff --name-only --diff-filter=ACDMRTUXB "$runtime_sha" "$GITHUB_SHA" -- > /tmp/atlas-authoring-evidence/runtime-diff.txt
+
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import { shouldBuildForChangedPaths } from './scripts/vercel-ignore-build.mjs';
+          const text = fs.readFileSync('/tmp/atlas-authoring-evidence/runtime-diff.txt', 'utf8').trim();
+          const paths = text ? text.split(/\r?\n/).filter(Boolean) : [];
+          if (shouldBuildForChangedPaths(paths)) {
+            console.error('AUTHORING_RUNTIME_CODE_DRIFT: deployment-relevant changes exist after the deployed runtime SHA');
+            for (const path of paths) console.error(`  ${path}`);
+            process.exit(1);
+          }
+          console.log(`Authoring delta is deployment-safe (${paths.length} path${paths.length === 1 ? '' : 's'}).`);
+          NODE
+
           echo "ATLAS_RUNTIME_SHA=${runtime_sha}" >> "$GITHUB_ENV"
           echo "Authoring runtime ${runtime_sha} is ready for GitHub authoring commit ${GITHUB_SHA}."
 
