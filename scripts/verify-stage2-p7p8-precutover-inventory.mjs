@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 const inventory = JSON.parse(fs.readFileSync('artifacts/stage2-p7p8-precutover-inventory.json', 'utf8'));
 const relations = JSON.parse(fs.readFileSync('artifacts/stage2-p7a-reviewed-relation-backfill.json', 'utf8'));
 const batch4 = JSON.parse(fs.readFileSync('stage2/integration/p7-explicit-person-relation-decisions-batch4.v1.json', 'utf8'));
+const batch8 = JSON.parse(fs.readFileSync('stage2/integration/p7-explicit-person-relation-decisions-batch8.v1.json', 'utf8'));
 const multiphase = JSON.parse(fs.readFileSync('stage2/integration/p7-multiphase-person-relation-decisions.v1.json', 'utf8'));
 const executionPlan = JSON.parse(fs.readFileSync('stage2/execution/p7-relation-resolution-execution.v1.json', 'utf8'));
 
@@ -34,8 +35,8 @@ assert.deepEqual(inventory.residual_dependency_counts_after_p6_targets, {
   entity_model_migration: 10
 });
 assert.equal(inventory.relation_backfill.residual_rows, 127);
-assert.equal(inventory.relation_backfill.existing_reviewed_hint_rows, 88);
-assert.equal(inventory.relation_backfill.explicit_reviewed_overlay_rows, 35);
+assert.equal(inventory.relation_backfill.existing_reviewed_hint_rows, 86);
+assert.equal(inventory.relation_backfill.explicit_reviewed_overlay_rows, 37);
 assert.equal(inventory.relation_backfill.reviewed_relation_literalizable_rows, 123);
 assert.equal(inventory.relation_backfill.explicit_relation_review_required_rows, 4);
 assert.equal(inventory.relation_backfill.review_required.length, 4);
@@ -48,8 +49,8 @@ assert.equal(relations.status, 'BRANCH_ONLY_REVIEWED_RELATION_LITERALIZATION_NO_
 assert.equal(relations.rows.length, 123);
 assert.equal(new Set(relations.rows.map((row) => row.activity_id)).size, 123);
 assert.equal(relations.result.residual_relation_dependency_rows, 127);
-assert.equal(relations.result.existing_reviewed_hint_rows, 88);
-assert.equal(relations.result.explicit_reviewed_overlay_rows, 35);
+assert.equal(relations.result.existing_reviewed_hint_rows, 86);
+assert.equal(relations.result.explicit_reviewed_overlay_rows, 37);
 assert.equal(relations.result.explicit_relation_review_rows_remaining, 4);
 assert.equal(relations.result.production_mutation_authorized, false);
 for (const row of relations.rows) {
@@ -57,6 +58,31 @@ for (const row of relations.rows) {
   assert.match(row.activity_id, /^[0-9a-f-]{36}$/);
   assert.equal(typeof row.reviewed_relation_code, 'string');
   assert.notEqual(row.reviewed_relation_code, '');
+}
+
+assert.equal(batch8.schema, 'atlas-stage2-p7-explicit-person-relation-decisions/v1');
+assert.equal(batch8.status, 'REVIEWED_BRANCH_ONLY_NO_PRODUCTION_MUTATION');
+assert.equal(batch8.baseline.deployment_sha, BASELINE_SHA);
+assert.equal(batch8.baseline.baseline_digest, BASELINE_DIGEST);
+assert.equal(batch8.rules.later_explicit_user_politic_resolution_overrides_older_audit_hint, true);
+assert.equal(batch8.rules.override_requires_explicit_supersedes_stale_relation_hint_flag, true);
+assert.equal(batch8.rules.production_mutation_authorized, false);
+assert.equal(batch8.decisions.length, 2);
+const broadOverrideExpected = new Map([
+  ['592aa8f9-4eb4-527c-a72d-a78ee7769daf', 'Pocatello'],
+  ['b4a6b048-9465-539a-bc4b-ec50a057b594', 'Sitting Bull']
+]);
+for (const decision of batch8.decisions) {
+  assert.equal(decision.person, broadOverrideExpected.get(decision.activity_id));
+  assert.equal(decision.relation_code, 'active_in');
+  assert.equal(decision.relation_type_id, relationIdByCode.get('active_in'));
+  assert.equal(decision.supersedes_stale_relation_hint, true);
+  const output = relations.rows.find((row) => row.activity_id === decision.activity_id);
+  assert.ok(output, `broad-politic override missing from relation package ${decision.activity_id}`);
+  assert.equal(output.reviewed_relation_code, 'active_in');
+  assert.equal(output.relation_type_id, relationIdByCode.get('active_in'));
+  assert.equal(output.resolution_mode, 'EXPLICIT_REVIEWED_SUPERSEDING_STALE_HINT');
+  assert.equal(output.explicit_decision_batch, batch8.batch_id);
 }
 
 assert.equal(batch4.schema, 'atlas-stage2-p7-explicit-person-relation-decisions/v1');
@@ -127,6 +153,7 @@ const resolutionStatus = {
   direct_literal_backfill: {
     existing_inventory_rows: 123,
     focused_broad_politic_rows: 1,
+    stale_hint_supersession_rows: 2,
     total_rows: 124
   },
   multiphase_correction_rows: 3,
@@ -148,6 +175,7 @@ console.log(JSON.stringify({
   residual_unique_activities: 156,
   relation_rows: 127,
   direct_relation_backfill_rows: 124,
+  stale_hint_supersession_rows: 2,
   multiphase_relation_correction_rows: 3,
   unresolved_relation_decisions: 0,
   relation_execution_gate: resolutionStatus.relation_execution_gate,
