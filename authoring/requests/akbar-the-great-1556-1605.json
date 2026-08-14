@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:akbar-the-great:mughal-empire:1556-1605:v1",
+  "person": {
+    "canonical_name_en": "Akbar the Great",
+    "display_name_ko": "악바르 대제"
+  },
+  "polity": {
+    "canonical_name_en": "Mughal Empire",
+    "display_name_ko": "무굴 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1556,
+    "end_year": 1605,
+    "start_certainty": "exact",
+    "end_certainty": "exact",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Jalal-ud-Din Muhammad Akbar, commonly known as Akbar the Great, ruled the Mughal Empire from 1556 to 1605. The record represents his sovereign reign at year granularity."
+  },
+  "sources": [
+    {
+      "title": "Numismatics and Epigraphy Collection — National Museum, New Delhi",
+      "canonical_url": "https://nationalmuseumindia.gov.in/en/collections/index/12",
+      "citation_text": "The National Museum, New Delhi describes Jalal-ud-Din Akbar as popularly known as Akbar the Great and dates his reign to 1556–1605 CE.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Art of the Mughals before 1600 — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/essays/the-art-of-the-mughals-before-1600",
+      "citation_text": "The Metropolitan Museum of Art identifies Akbar's Mughal reign as 1556–1605 and credits him with consolidating and expanding the Mughal Empire.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
