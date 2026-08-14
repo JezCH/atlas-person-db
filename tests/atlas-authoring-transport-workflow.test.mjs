@@ -30,6 +30,14 @@ test('authoring workflow discovers deployed runtime readiness before applying da
   assert.match(workflow, /ATLAS_RUNTIME_SHA=/);
 });
 
+test('authoring workflow refuses undeployed runtime code drift', () => {
+  assert.match(workflow, /git merge-base --is-ancestor "\$runtime_sha" "\$GITHUB_SHA"/);
+  assert.match(workflow, /runtime-diff\.txt/);
+  assert.match(workflow, /shouldBuildForChangedPaths/);
+  assert.match(workflow, /AUTHORING_RUNTIME_CODE_DRIFT/);
+  assert.match(workflow, /scripts\/vercel-ignore-build\.mjs/);
+});
+
 test('authoring apply sends independent runtime and authoring SHAs', () => {
   const script = applyScript();
   assert.match(script, /--arg runtime_sha "\$ATLAS_RUNTIME_SHA"/);
