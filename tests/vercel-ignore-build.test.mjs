@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   isSafeToSkipPath,
+  isAuthoringDataOnly,
   shouldBuildForChangedPaths
 } from "../scripts/vercel-ignore-build.mjs";
 
@@ -59,13 +60,21 @@ test("one deployment-relevant path makes a mixed commit build", () => {
     "docs/research/sengoku.md",
     "server/atlas-authoring-apply-handler.js"
   ]), true);
+  assert.equal(isAuthoringDataOnly([
+    "authoring/requests/new-person.json",
+    "server/atlas-authoring-apply-handler.js"
+  ]), false);
 });
 
-test("authoring request commits alone never request a Production build", () => {
-  assert.equal(shouldBuildForChangedPaths([
+test("authoring request commits alone can be proven as data-only fast-skip commits", () => {
+  const paths = [
     "authoring/requests/person-a.json",
     "authoring/requests/person-b.json"
-  ]), false);
+  ];
+  assert.equal(isAuthoringDataOnly(paths), true);
+  assert.equal(shouldBuildForChangedPaths(paths), false);
+  assert.equal(isAuthoringDataOnly(["authoring/README.md"]), false);
+  assert.equal(isAuthoringDataOnly([]), false);
 });
 
 test("empty diff does not request a build", () => {
