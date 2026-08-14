@@ -10,3 +10,4 @@ await import('./rehearse-stage2-p7-yoshida-term-split.mjs');
 await import('./rehearse-stage2-p7-himiko-chronology.mjs');
 await import('./rehearse-stage2-p7-solomon-chronology.mjs');
 await import('./rehearse-stage2-p7-sayyida-al-hurra-chronology.mjs');
+await import('./rehearse-stage2-p7-amina-chronology.mjs');
