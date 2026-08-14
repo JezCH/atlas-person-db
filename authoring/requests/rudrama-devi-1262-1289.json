@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:rudrama-devi:kakatiya-kingdom:1262-1289:v1",
+  "person": {
+    "canonical_name_en": "Rudrama Devi",
+    "display_name_ko": "루드라마 데비"
+  },
+  "polity": {
+    "canonical_name_en": "Kakatiya Kingdom",
+    "display_name_ko": "카카티야 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Queen",
+    "role_display_name_ko": "여왕",
+    "start_year": 1262,
+    "end_year": 1289,
+    "start_certainty": "exact",
+    "end_certainty": "exact",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Rudrama Devi, also styled Rudradeva Maharaja in inscriptions, ruled the Kakatiya Kingdom from 1262 to 1289. The record represents her sovereign reign at year granularity."
+  },
+  "sources": [
+    {
+      "title": "Major dynasties of south India (753–1300 CE) — Outlines of Indian History",
+      "canonical_url": "https://ebooks.inflibnet.ac.in/icp01/chapter/major-dynasties-of-south-india-753-1300-ce/",
+      "citation_text": "INFLIBNET academic material identifies Rudramadevi as a Kakatiya ruler who ascended the throne in 1262 and ruled until 1289.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "ULAN Full Record Display — Rudradeva",
+      "canonical_url": "https://www.getty.edu/vow/ULANFullDisplay?find=laurens&nation=&role=&subjectid=500354798",
+      "citation_text": "Getty ULAN records Rudradeva, also called Rani Rudrama Devi, as a female Kakatiya ruler who ruled from 1262 to 1289.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
