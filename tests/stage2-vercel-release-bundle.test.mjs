@@ -30,26 +30,23 @@ test("P5 schema release runtime SQL references exist under the bundled proposal 
   assert.equal(release.components?.length, 6);
 
   for (const [index, component] of release.components.entries()) {
-    assert.match(component.sql_path, /^db\/proposals\//, `P5 component ${index + 1} SQL must remain under db/proposals/`);
-    assertExistingRepoPath(component.sql_path, `P5 component ${index + 1} SQL`);
+    assert.match(component.path, /^db\/proposals\/.*\.sql$/, `P5 component ${index + 1} SQL must remain under db/proposals/`);
+    assertExistingRepoPath(component.path, `P5 component ${index + 1} SQL`);
   }
 });
 
-test("Train 2 runtime references exist under the bundled Stage 2 path", () => {
+test("Train 2 release selection and prerequisite assets remain inside the bundled Stage 2 tree", () => {
   const releasePath = "stage2/releases/train2-data-p9.v1.json";
   assertExistingRepoPath(releasePath, "Train 2 release manifest");
   const release = readJson(releasePath);
-  const referencedPaths = [
-    [release.entity_prerequisite, "entity prerequisite"],
-    [release.role_prerequisite, "role prerequisite"],
-    ...((release.p7_authoring || []).map((value, index) => [value, `P7 authoring ${index + 1}`])),
-    ...((release.correction_plans || []).map((value, index) => [value, `correction plan ${index + 1}`])),
-    [release.p9_release_plan, "P9 release plan"]
-  ].filter(([value]) => typeof value === "string" && value.length > 0);
 
-  assert.ok(referencedPaths.length > 4);
-  for (const [relativePath, label] of referencedPaths) {
-    assert.match(relativePath, /^stage2\//, `${label} must remain under stage2/`);
-    assertExistingRepoPath(relativePath, label);
-  }
+  assert.equal(release.prerequisite_schema_release_id, "p5_stage2_additive_schema_20260813_v1");
+  assert.match(release.selection?.p7_execution_directory || "", /^stage2\//);
+  assertExistingRepoPath(release.selection.p7_execution_directory, "Train 2 P7 execution directory");
+  assert.equal(release.selection?.p7_execution_name_pattern, "p7-*-execution.v1.json");
+
+  const p6Closure = "stage2/integration/p6-effective-prebinding-closure.v1.json";
+  assertExistingRepoPath(p6Closure, "P6 closure prerequisite");
+  const p9Release = "stage2/releases/p9-semantic-key-v2-cutover.v1.json";
+  assertExistingRepoPath(p9Release, "P9 cutover release plan");
 });
