@@ -311,6 +311,23 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
+      - name: Rehearse Stalin and Bolivar chronology corrections
+        id: p7-stalin-bolivar-chronology
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p artifacts
+          node scripts/rehearse-stage2-p7-stalin-bolivar-chronology.mjs 2>&1 | tee artifacts/stage2-p7-stalin-bolivar-chronology.log
+
+      - name: Upload Stalin and Bolivar chronology rehearsal failure diagnostics
+        if: failure() && steps.p7-stalin-bolivar-chronology.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-stage2-p7-stalin-bolivar-chronology-failure-${{ github.sha }}
+          path: artifacts/stage2-p7-stalin-bolivar-chronology.log
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Rehearse full P6 54-target artifact-reconstructed package
         id: p6-full-54-rehearsal
         shell: bash
