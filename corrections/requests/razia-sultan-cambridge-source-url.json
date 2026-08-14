@@ -2,6 +2,7 @@
   "schema": "atlas-correction-manifest/v1.1",
   "request_id": "correction:razia-sultan:cambridge-source-url:v1",
   "review_status": "approved",
+  "release_order": 500,
   "operations": [
     {
       "type": "rewrite_source",
