@@ -9,6 +9,14 @@
   const endpoint = "/api/atlas-identity";
   const authoringEndpoint = "/api/atlas-authoring";
   const result = document.getElementById("identityResult");
+  const relationLabels = Object.freeze({
+    rules: "통치",
+    governs: "정부권한",
+    serves: "공직/군직 복무",
+    active_in: "해당 정치체에서 활동",
+    opposes: "해당 정치체에 저항",
+    claims_rule: "통치권 주장"
+  });
 
   function value(id) {
     return String(document.getElementById(id)?.value || "").normalize("NFC").trim().replace(/\s+/g, " ");
@@ -88,6 +96,14 @@
     }, event.submitter);
   });
 
+  function calendarOptions() {
+    return `<option value="unspecified_historical">unspecified_historical</option><option value="gregorian">gregorian</option><option value="julian">julian</option><option value="source_calendar">source_calendar</option>`;
+  }
+
+  function certaintyOptions() {
+    return `<option value="exact">exact</option><option value="approximate">approximate</option><option value="uncertain">uncertain</option>`;
+  }
+
   function insertHumanAuthoringPanel() {
     const identityTitle = document.getElementById("identity-title");
     const identityPanel = identityTitle?.closest(".panel");
@@ -98,22 +114,40 @@
     panel.innerHTML = `
       <div class="panel-head"><div><p class="status-label">NORMAL AUTHORING · STAGE 2 NATIVE</p><h2 id="human-authoring-title">일반 신규 인물 등록</h2><p>UUID나 JSON을 입력하지 않습니다. 기존 Person·Polity·Role은 정확히 재사용하고, 없으면 같은 트랜잭션 안에서 생성한 뒤 Relation·기간·Source provenance를 Stage 2 semantic-key v2로 저장합니다.</p></div></div>
       <form id="humanAuthoringForm" class="identity-form">
-        <div class="identity-two"><label>인물 영문명<input id="humanPersonEn" required /></label><label>인물 한국어명<input id="humanPersonKo" required /></label></div>
-        <div class="identity-two"><label>정치체 영문명<input id="humanPolityEn" required /></label><label>정치체 한국어명<input id="humanPolityKo" required /></label></div>
-        <div class="identity-two"><label>관계<select id="humanRelation" required><option value="">선택</option><option value="rules">rules · 통치</option><option value="governs">governs · 정부권한</option><option value="serves">serves · 공직/군직 복무</option><option value="active_in">active_in · 해당 정치체에서 활동</option><option value="opposes">opposes · 해당 정치체에 저항</option><option value="claims_rule">claims_rule · 통치권 주장</option></select></label><label>Period basis<select id="humanPeriodBasis" required><option value="">불러오는 중...</option></select></label></div>
-        <div class="identity-two"><label>Role 영문명 <small>역할이 없으면 비움</small><input id="humanRoleEn" placeholder="예: Sultan" /></label><label>Role 한국어명 <small>새 Role일 때 사용</small><input id="humanRoleKo" placeholder="예: 술탄" /></label></div>
-        <div class="identity-two"><label>시작 연도<input id="humanStartYear" type="number" required /></label><label>종료 연도<input id="humanEndYear" type="number" required /></label></div>
-        <div class="identity-two"><label>날짜 확실성<select id="humanCertainty" required><option value="exact">exact</option><option value="approximate">approximate</option><option value="uncertain">uncertain</option></select></label><label>근거 신뢰도<select id="humanConfidence" required><option value="well_established">Well established</option><option value="likely">Likely</option><option value="speculative">Speculative</option><option value="disputed">Disputed</option><option value="unknown">Unknown</option></select></label></div>
-        <label>출처 제목<input id="humanSourceTitle" required /></label><label>출처 URL<input id="humanSourceUrl" type="url" required /></label><label>인용/근거 메모 <small>비우면 출처 제목을 사용</small><input id="humanSourceCitation" /></label><label>활동 메모<textarea id="humanNotes" rows="3"></textarea></label>
+        <div class="identity-two"><label>인물 영문명<input id="humanPersonEn" required /></label><label>인물 한국어명 <small>신규 Person 생성 시 필수</small><input id="humanPersonKo" /></label></div>
+        <div class="identity-two"><label>정치체 영문명<input id="humanPolityEn" required /></label><label>정치체 한국어명 <small>신규 Polity 생성 시 필수</small><input id="humanPolityKo" /></label></div>
+        <div class="identity-two"><label>관계<select id="humanRelation" required><option value="">불러오는 중...</option></select></label><label>Period basis<select id="humanPeriodBasis" required><option value="">불러오는 중...</option></select></label></div>
+        <div class="identity-two"><label>Role 영문명 <small>역할이 없으면 비움</small><input id="humanRoleEn" placeholder="예: Sultan" /></label><label>Role 한국어명 <small>신규 Role 생성 시 필수</small><input id="humanRoleKo" placeholder="예: 술탄" /></label></div>
+        <h3>활동 시작</h3>
+        <div class="identity-two"><label>시작 연도<input id="humanStartYear" type="number" step="1" required /></label><label>시작 월 <small>선택</small><input id="humanStartMonth" type="number" min="1" max="12" step="1" /></label></div>
+        <div class="identity-two"><label>시작 일 <small>선택 · 월 입력 필요</small><input id="humanStartDay" type="number" min="1" max="31" step="1" /></label><label>시작 확실성<select id="humanStartCertainty" required>${certaintyOptions()}</select></label></div>
+        <label>시작 Calendar<select id="humanStartCalendar" required>${calendarOptions()}</select></label>
+        <h3>활동 종료</h3>
+        <div class="identity-two"><label>종료 연도<input id="humanEndYear" type="number" step="1" required /></label><label>종료 월 <small>선택</small><input id="humanEndMonth" type="number" min="1" max="12" step="1" /></label></div>
+        <div class="identity-two"><label>종료 일 <small>선택 · 월 입력 필요</small><input id="humanEndDay" type="number" min="1" max="31" step="1" /></label><label>종료 확실성<select id="humanEndCertainty" required>${certaintyOptions()}</select></label></div>
+        <label>종료 Calendar<select id="humanEndCalendar" required>${calendarOptions()}</select></label>
+        <label>근거 신뢰도<select id="humanConfidence" required><option value="well_established">Well established</option><option value="likely">Likely</option><option value="speculative">Speculative</option><option value="disputed">Disputed</option><option value="unknown">Unknown</option></select></label>
+        <label>출처 제목<input id="humanSourceTitle" required /></label><label>출처 URL <small>웹 출처일 때만 입력</small><input id="humanSourceUrl" type="url" /></label><label>인용/Reference text <small>선택 · 입력 권장</small><input id="humanSourceCitation" /></label><label>활동 메모<textarea id="humanNotes" rows="3"></textarea></label>
         <button class="button primary" type="submit">Person + Activity + Source 한 번에 등록</button>
       </form><pre id="humanAuthoringResult" class="result" aria-live="polite">카탈로그를 불러오는 중...</pre>`;
     identityPanel.parentNode.insertBefore(panel, identityPanel);
   }
 
+  function appendCatalogOptions(select, codes, labelForCode = (code) => code) {
+    select.innerHTML = '<option value="">선택</option>';
+    for (const code of codes) {
+      const option = document.createElement("option");
+      option.value = code;
+      option.textContent = labelForCode(code);
+      select.appendChild(option);
+    }
+  }
+
   async function loadHumanCatalogs() {
     const output = document.getElementById("humanAuthoringResult");
-    const select = document.getElementById("humanPeriodBasis");
-    if (!output || !select) return;
+    const relationSelect = document.getElementById("humanRelation");
+    const periodSelect = document.getElementById("humanPeriodBasis");
+    if (!output || !relationSelect || !periodSelect) return;
     try {
       const response = await fetch(authoringEndpoint, {
         method: "GET",
@@ -125,15 +159,13 @@
       if (!response.ok || body?.ok !== true || body?.ready !== true) {
         throw new Error(body?.code || `catalog load failed (${response.status})`);
       }
-      select.innerHTML = '<option value="">선택</option>';
-      for (const code of body.catalogs?.period_bases || []) {
-        const option = document.createElement("option");
-        option.value = code;
-        option.textContent = code;
-        select.appendChild(option);
-      }
-      if ([...select.options].some((option) => option.value === "reign")) select.value = "reign";
+      const relationTypes = Array.isArray(body.catalogs?.relation_types) ? body.catalogs.relation_types : [];
+      const periodBases = Array.isArray(body.catalogs?.period_bases) ? body.catalogs.period_bases : [];
+      if (relationTypes.length === 0 || periodBases.length === 0) throw new Error("활성 Relation/Period Basis 카탈로그가 비어 있습니다.");
+      appendCatalogOptions(relationSelect, relationTypes, (code) => relationLabels[code] ? `${code} · ${relationLabels[code]}` : code);
+      appendCatalogOptions(periodSelect, periodBases);
       output.textContent = "일반 신규등록 준비됨";
+      output.dataset.type = "success";
     } catch (error) {
       output.textContent = `카탈로그 로드 실패: ${error.message}`;
       output.dataset.type = "error";
@@ -147,6 +179,36 @@
     return humanRequestId;
   }
 
+  function optionalInteger(id) {
+    const raw = value(id);
+    return raw === "" ? null : Number(raw);
+  }
+
+  function boundary(prefix, label) {
+    const year = Number(value(`human${prefix}Year`));
+    const month = optionalInteger(`human${prefix}Month`);
+    const day = optionalInteger(`human${prefix}Day`);
+    if (!Number.isInteger(year) || year === 0) throw new Error(`${label} 연도는 0이 아닌 정수 역사연도여야 합니다.`);
+    if (month !== null && (!Number.isInteger(month) || month < 1 || month > 12)) throw new Error(`${label} 월은 1~12여야 합니다.`);
+    if (day !== null && (!Number.isInteger(day) || day < 1 || day > 31)) throw new Error(`${label} 일은 1~31이어야 합니다.`);
+    if (day !== null && month === null) throw new Error(`${label} 일을 입력하려면 월을 먼저 입력해야 합니다.`);
+    return {
+      [`${prefix.toLowerCase()}_year`]: year,
+      [`${prefix.toLowerCase()}_month`]: month,
+      [`${prefix.toLowerCase()}_day`]: day,
+      [`${prefix.toLowerCase()}_certainty`]: value(`human${prefix}Certainty`),
+      [`${prefix.toLowerCase()}_calendar`]: value(`human${prefix}Calendar`)
+    };
+  }
+
+  function friendlyAuthoringError(code, fallback) {
+    return ({
+      HUMAN_AUTHORING_NEW_PERSON_KO_REQUIRED: "신규 Person 생성에는 한국어명이 필요합니다. 기존 Person 재사용이면 비워둘 수 있습니다.",
+      HUMAN_AUTHORING_NEW_POLITY_KO_REQUIRED: "신규 Polity 생성에는 한국어명이 필요합니다. 기존 Polity 재사용이면 비워둘 수 있습니다.",
+      HUMAN_AUTHORING_NEW_ROLE_KO_REQUIRED: "신규 Role 생성에는 한국어명이 필요합니다. 기존 Role 재사용이면 비워둘 수 있습니다."
+    })[code] || fallback || code;
+  }
+
   async function submitHumanAuthoring(event) {
     event.preventDefault();
     const button = event.submitter;
@@ -156,36 +218,31 @@
       output.textContent = "Person · Polity · Role · Source · Activity를 하나의 트랜잭션으로 저장 중...";
       output.dataset.type = "info";
     }
-    const certainty = value("humanCertainty");
-    const payload = {
-      schema: "atlas-human-authoring/v1",
-      request_id: requestId(),
-      person: { canonical_name_en: value("humanPersonEn"), display_name_ko: value("humanPersonKo") },
-      polity: { canonical_name_en: value("humanPolityEn"), display_name_ko: value("humanPolityKo") },
-      activity: {
-        relation_type: value("humanRelation"),
-        period_basis: value("humanPeriodBasis"),
-        role: value("humanRoleEn") || null,
-        role_display_name_ko: value("humanRoleKo") || null,
-        start_year: Number(value("humanStartYear")),
-        end_year: Number(value("humanEndYear")),
-        start_certainty: certainty,
-        end_certainty: certainty,
-        confidence: value("humanConfidence"),
-        chronology_status: "reviewed",
-        notes: value("humanNotes") || null
-      },
-      sources: [{
-        title: value("humanSourceTitle"),
-        canonical_url: value("humanSourceUrl"),
-        citation_text: value("humanSourceCitation") || null,
-        source_type: "web_bibliographic_reference"
-      }]
-    };
     try {
-      if (payload.activity.start_year === 0 || payload.activity.end_year === 0) {
-        throw new Error("역사 연도 0은 사용할 수 없습니다.");
-      }
+      const sourceUrl = value("humanSourceUrl");
+      const payload = {
+        schema: "atlas-human-authoring/v1",
+        request_id: requestId(),
+        person: { canonical_name_en: value("humanPersonEn"), display_name_ko: value("humanPersonKo") || null },
+        polity: { canonical_name_en: value("humanPolityEn"), display_name_ko: value("humanPolityKo") || null },
+        activity: {
+          relation_type: value("humanRelation"),
+          period_basis: value("humanPeriodBasis"),
+          role: value("humanRoleEn") || null,
+          role_display_name_ko: value("humanRoleKo") || null,
+          ...boundary("Start", "시작"),
+          ...boundary("End", "종료"),
+          confidence: value("humanConfidence"),
+          chronology_status: "reviewed",
+          notes: value("humanNotes") || null
+        },
+        sources: [{
+          source_type: sourceUrl ? "web_bibliographic_reference" : "bibliographic_reference",
+          title: value("humanSourceTitle"),
+          canonical_url: sourceUrl || null,
+          citation_text: value("humanSourceCitation") || null
+        }]
+      };
       const response = await fetch(authoringEndpoint, {
         method: "POST",
         credentials: "same-origin",
@@ -196,7 +253,8 @@
       let body = null;
       try { body = await response.json(); } catch { body = null; }
       if (!response.ok || body?.ok !== true || body?.committed !== true) {
-        throw new Error(body?.code || `authoring failed (${response.status})`);
+        const code = body?.code || null;
+        throw new Error(friendlyAuthoringError(code, code || `authoring failed (${response.status})`));
       }
       if (output) {
         output.textContent = [
