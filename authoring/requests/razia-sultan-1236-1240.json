@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:razia-sultan:delhi-sultanate:1236-1240:v1",
+  "person": {
+    "canonical_name_en": "Razia Sultan",
+    "display_name_ko": "라지아 술탄"
+  },
+  "polity": {
+    "canonical_name_en": "Delhi Sultanate",
+    "display_name_ko": "델리 술탄국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1236,
+    "end_year": 1240,
+    "start_certainty": "exact",
+    "end_certainty": "exact",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Razia Sultan (Raziyyat al-Din) ruled the Delhi Sultanate from 1236 to 1240. The record represents her sovereign reign as Sultan of Delhi at year granularity."
+  },
+  "sources": [
+    {
+      "title": "1200-1300 — Razia Sultan",
+      "canonical_url": "https://srdc.delhi.gov.in/en/srdc/1200-1300",
+      "citation_text": "Shahjahanabad Redevelopment Corporation, Government of Delhi: Razia succeeded to the Sultanate of Delhi in 1236 and ruled from 1236 to 1240.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Razia Sultan of India: Queen of the World Bilqis-i Jihan",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/unforgettable-queens-of-islam/razia-sultan-of-india-queen-of-the-world-bilqisi-jihan/08594FB96A271F2B9E256D6046E3ECA2",
+      "citation_text": "Cambridge University Press, The Unforgettable Queens of Islam, chapter 4: Razia became the first and only female sultan of the Delhi Sultanate and ruled a little over three years.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
