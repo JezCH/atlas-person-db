@@ -5,3 +5,4 @@ await import('./rehearse-stage2-p7-relation-resolution-core.mjs');
 await import('./rehearse-stage2-p7-provenance-only.mjs');
 await import('./rehearse-stage2-p7-broad-politic.mjs');
 await import('./rehearse-stage2-p7-tecumseh-chronology.mjs');
+await import('./rehearse-stage2-p7-cunobeline-chronology.mjs');
