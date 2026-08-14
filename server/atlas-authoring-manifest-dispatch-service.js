@@ -27,19 +27,19 @@ function createAuthoringManifestDispatchService({ client } = {}) {
   const nativeV2 = createNativeAuthoringManifestV2Service({ client });
 
   return Object.freeze({
-    async apply(rawManifest) {
+    async apply(rawManifest, { transport = null } = {}) {
       if (!rawManifest || typeof rawManifest !== "object" || Array.isArray(rawManifest)) throw new Error("AUTHORING_MANIFEST_OBJECT_REQUIRED");
       const schema = String(rawManifest.schema || "").trim();
       const requestId = String(rawManifest.request_id || "").trim();
       if (!requestId) throw new Error("AUTHORING_REQUEST_ID_REQUIRED");
       const existing = await existingLedgerKind(client, requestId);
       if (existing) {
-        if (existing.strict_v2) return nativeV2.apply(rawManifest);
+        if (existing.strict_v2) return nativeV2.apply(rawManifest, { transport });
         return legacy.apply(rawManifest);
       }
       if (schema === MANIFEST_V1) throw new Error("AUTHORING_MANIFEST_V1_NEW_WRITE_RETIRED");
       if (schema !== MANIFEST_V2) throw new Error("UNSUPPORTED_AUTHORING_MANIFEST_SCHEMA");
-      return nativeV2.apply(rawManifest);
+      return nativeV2.apply(rawManifest, { transport });
     }
   });
 }
