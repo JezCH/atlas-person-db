@@ -6,7 +6,8 @@ const SAFE_SKIP_PREFIXES = Object.freeze([
   "requirements/",
   "tests/",
   "corrections/evidence/",
-  "research/"
+  "research/",
+  "authoring/requests/"
 ]);
 
 const SAFE_SKIP_EXACT = new Set([
@@ -25,6 +26,11 @@ export function isSafeToSkipPath(value) {
   if (file.endsWith(".md")) return true;
   if (/^migration\/[^/]+\/(?:reports|evidence)\//.test(file)) return true;
   return false;
+}
+
+export function isAuthoringDataOnly(paths) {
+  const normalized = [...new Set((Array.isArray(paths) ? paths : []).map(normalizePath).filter(Boolean))];
+  return normalized.length > 0 && normalized.every((file) => file.startsWith("authoring/requests/") && file.endsWith(".json"));
 }
 
 export function shouldBuildForChangedPaths(paths) {
@@ -51,6 +57,10 @@ function git(args) {
   return execFileSync("git", args, { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim();
 }
 
+function parsePaths(output) {
+  return output ? output.split(/\r?\n/).map(normalizePath).filter(Boolean) : [];
+}
+
 export function main(env = process.env) {
   const vercelEnv = String(env.VERCEL_ENV || "").trim().toLowerCase();
   if (vercelEnv !== "production") {
@@ -62,12 +72,31 @@ export function main(env = process.env) {
   const previousSha = String(env.VERCEL_GIT_PREVIOUS_SHA || "").trim().toLowerCase();
   const shaRe = /^[0-9a-f]{40}$/;
 
-  // Fail open to a real build whenever the last successfully deployed SHA cannot
-  // be proven. Skipping is an optimization; deployment correctness has priority.
   if (!shaRe.test(currentSha)) {
     exitBuild("current Production SHA unavailable or invalid");
     return;
   }
+
+  // Authoring manifests are reviewed data, not deployable runtime code. Prove the
+  // current commit itself is authoring-data-only before relying on the older
+  // successful-deployment SHA. This prevents a harmless registration commit from
+  // consuming a Vercel build merely because an older SHA is absent from a shallow
+  // clone. Any inability to prove the current commit delta falls back to the
+  // conservative build path below.
+  try {
+    const currentOutput = git(["diff-tree", "--no-commit-id", "--name-only", "-r", "-m", "--first-parent", currentSha, "--"]);
+    const currentPaths = parsePaths(currentOutput);
+    if (isAuthoringDataOnly(currentPaths)) {
+      exitSkip(`current commit contains only reviewed authoring request data (${currentPaths.length} path${currentPaths.length === 1 ? "" : "s"})`);
+      for (const file of currentPaths) console.log(`[atlas-vercel-ignore]   ${file}`);
+      return;
+    }
+  } catch {
+    logDecision("INFO", "could not prove current commit as authoring-data-only; falling back to deployment-diff gate");
+  }
+
+  // Fail open to a real build whenever the last successfully deployed SHA cannot
+  // be proven. Skipping is an optimization; deployment correctness has priority.
   if (!shaRe.test(previousSha)) {
     exitBuild("previous successful Production SHA unavailable or invalid");
     return;
@@ -87,8 +116,7 @@ export function main(env = process.env) {
 
   let changedPaths;
   try {
-    const output = git(["diff", "--name-only", "--diff-filter=ACDMRTUXB", previousSha, currentSha, "--"]);
-    changedPaths = output ? output.split(/\r?\n/).map(normalizePath).filter(Boolean) : [];
+    changedPaths = parsePaths(git(["diff", "--name-only", "--diff-filter=ACDMRTUXB", previousSha, currentSha, "--"]));
   } catch {
     exitBuild("git diff failed");
     return;

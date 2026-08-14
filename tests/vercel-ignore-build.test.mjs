@@ -2,10 +2,11 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   isSafeToSkipPath,
+  isAuthoringDataOnly,
   shouldBuildForChangedPaths
 } from "../scripts/vercel-ignore-build.mjs";
 
-test("documentation, research evidence and integrity-only changes are safe to skip", () => {
+test("documentation, research evidence, reviewed authoring data and integrity-only changes are safe to skip", () => {
   for (const file of [
     "README.md",
     "ATLAS_REQUIREMENTS.md",
@@ -15,6 +16,7 @@ test("documentation, research evidence and integrity-only changes are safe to sk
     "corrections/evidence/reviewed.json",
     "research/sengoku/notes.json",
     "migration/phase-8/reports/evidence.json",
+    "authoring/requests/new-person.json",
     ".github/workflows/atlas-integrity.yml"
   ]) {
     assert.equal(isSafeToSkipPath(file), true, file);
@@ -22,7 +24,8 @@ test("documentation, research evidence and integrity-only changes are safe to sk
   assert.equal(shouldBuildForChangedPaths([
     "README.md",
     "docs/audits/example.md",
-    "tests/atlas-correction-transport.test.mjs"
+    "tests/atlas-correction-transport.test.mjs",
+    "authoring/requests/new-person.json"
   ]), false);
 });
 
@@ -30,6 +33,8 @@ test("runtime, schema, release-operation and production-workflow changes always 
   for (const file of [
     "api/atlas-correction-apply.js",
     "server/atlas-correction-apply-handler.js",
+    "server/atlas-authoring-apply-handler.js",
+    "server/atlas-authoring-readiness.js",
     "db/migrations/20260812_correction_manifest_v1_1.sql",
     "app.js",
     "admin.html",
@@ -51,10 +56,25 @@ test("runtime, schema, release-operation and production-workflow changes always 
 
 test("one deployment-relevant path makes a mixed commit build", () => {
   assert.equal(shouldBuildForChangedPaths([
+    "authoring/requests/new-person.json",
     "docs/research/sengoku.md",
-    "requirements/atlas-requirements.v1.json",
-    "server/atlas-correction-apply-handler.js"
+    "server/atlas-authoring-apply-handler.js"
   ]), true);
+  assert.equal(isAuthoringDataOnly([
+    "authoring/requests/new-person.json",
+    "server/atlas-authoring-apply-handler.js"
+  ]), false);
+});
+
+test("authoring request commits alone can be proven as data-only fast-skip commits", () => {
+  const paths = [
+    "authoring/requests/person-a.json",
+    "authoring/requests/person-b.json"
+  ];
+  assert.equal(isAuthoringDataOnly(paths), true);
+  assert.equal(shouldBuildForChangedPaths(paths), false);
+  assert.equal(isAuthoringDataOnly(["authoring/README.md"]), false);
+  assert.equal(isAuthoringDataOnly([]), false);
 });
 
 test("empty diff does not request a build", () => {

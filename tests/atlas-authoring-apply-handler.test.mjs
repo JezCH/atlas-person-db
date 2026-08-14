@@ -3,14 +3,22 @@ import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const { createAuthoringApplyHandler, requireApplyPayload, requireDeployment } = require('../server/atlas-authoring-apply-handler.js');
+const {
+  createAuthoringApplyHandler,
+  requireApplyPayload,
+  runtimeIdentity,
+  requireRuntime,
+  TRANSPORT_MARKER,
+  TRANSPORT_VERSION
+} = require('../server/atlas-authoring-apply-handler.js');
 const { verifyTrustClaims, verifyTemporalClaims } = require('../server/atlas-github-oidc.js');
 
-const SHA = 'a'.repeat(40);
+const RUNTIME_SHA = 'a'.repeat(40);
+const AUTHORING_SHA = 'b'.repeat(40);
 const ENV = {
   VERCEL_ENV: 'production',
   VERCEL_GIT_COMMIT_REF: 'main',
-  VERCEL_GIT_COMMIT_SHA: SHA,
+  VERCEL_GIT_COMMIT_SHA: RUNTIME_SHA,
   VERCEL_GIT_REPO_OWNER: 'JezCH',
   VERCEL_GIT_REPO_SLUG: 'atlas-person-db',
   SUPABASE_DB_URL: 'postgresql://example.invalid/db'
@@ -29,29 +37,49 @@ function responseCapture() {
 
 function approvedManifest() {
   return {
-    schema: 'atlas-authoring-manifest/v1',
+    schema: 'atlas-authoring-manifest/v2',
     review_status: 'approved',
-    request_id: 'person:test:v1',
+    request_id: 'person:test:v2',
     person: { canonical_name_en: 'Test', display_name_ko: '테스트' },
-    activity: { politic_name: 'Test Polity', activity_start: 1, activity_end: 2, period_basis: 'reign' }
+    activity: {}
   };
 }
 
-test('apply payload accepts only one reviewed-request path shape and exact commit SHA', () => {
-  const payload = requireApplyPayload({ deployment_sha: SHA, manifest_path: 'authoring/requests/test.json', manifest: approvedManifest() });
-  assert.equal(payload.deploymentSha, SHA);
-  assert.throws(() => requireApplyPayload({ deployment_sha: SHA, manifest_path: '../test.json', manifest: approvedManifest() }), /AUTHORING_MANIFEST_PATH_NOT_ALLOWED/);
-  assert.throws(() => requireApplyPayload({ deployment_sha: 'main', manifest_path: 'authoring/requests/test.json', manifest: approvedManifest() }), /AUTHORING_APPLY_SHA_REQUIRED/);
+function readyState() {
+  return {
+    ready: true,
+    p5_ready: true,
+    core: { tables_ready: true, columns_ready: true },
+    p9: { old_index_present: false, new_index_present: true, duplicate_groups: 0 },
+    person_merge: { allowed: false, person_merge_lifecycle_version: 'pre-p10-blocked' }
+  };
+}
+
+test('apply payload separates exact runtime SHA from exact authoring SHA', () => {
+  const payload = requireApplyPayload({
+    transport_version: TRANSPORT_VERSION,
+    runtime_sha: RUNTIME_SHA,
+    authoring_sha: AUTHORING_SHA,
+    manifest_path: 'authoring/requests/test.json',
+    manifest: approvedManifest()
+  });
+  assert.equal(payload.runtimeSha, RUNTIME_SHA);
+  assert.equal(payload.authoringSha, AUTHORING_SHA);
+  assert.throws(() => requireApplyPayload({ transport_version: 1, runtime_sha: RUNTIME_SHA, authoring_sha: AUTHORING_SHA, manifest_path: 'authoring/requests/test.json', manifest: approvedManifest() }), /TRANSPORT_VERSION/);
+  assert.throws(() => requireApplyPayload({ transport_version: 2, runtime_sha: RUNTIME_SHA, authoring_sha: AUTHORING_SHA, manifest_path: '../test.json', manifest: approvedManifest() }), /MANIFEST_PATH_NOT_ALLOWED/);
+  assert.throws(() => requireApplyPayload({ transport_version: 2, runtime_sha: 'main', authoring_sha: AUTHORING_SHA, manifest_path: 'authoring/requests/test.json', manifest: approvedManifest() }), /RUNTIME_SHA_REQUIRED/);
 });
 
-test('deployment gate is production-main and exact deployed SHA', () => {
-  assert.equal(requireDeployment(ENV, SHA), SHA);
-  assert.throws(() => requireDeployment({ ...ENV, VERCEL_ENV: 'preview' }, SHA), /AUTHORING_APPLY_NOT_PRODUCTION/);
-  assert.throws(() => requireDeployment({ ...ENV, VERCEL_GIT_COMMIT_REF: 'feature' }, SHA), /AUTHORING_APPLY_NOT_MAIN/);
-  assert.throws(() => requireDeployment(ENV, 'b'.repeat(40)), /DEPLOYMENT_SHA_MISMATCH/);
+test('runtime gate pins deployed Production main independently from authoring commit', () => {
+  assert.equal(runtimeIdentity(ENV).runtime_sha, RUNTIME_SHA);
+  assert.equal(requireRuntime(ENV, RUNTIME_SHA).runtime_sha, RUNTIME_SHA);
+  assert.throws(() => runtimeIdentity({ ...ENV, VERCEL_ENV: 'preview' }), /NOT_PRODUCTION/);
+  assert.throws(() => runtimeIdentity({ ...ENV, VERCEL_GIT_COMMIT_REF: 'feature' }), /NOT_MAIN/);
+  assert.throws(() => runtimeIdentity({ ...ENV, VERCEL_GIT_REPO_OWNER: '' }), /REPOSITORY_MISMATCH/);
+  assert.throws(() => requireRuntime(ENV, AUTHORING_SHA), /RUNTIME_SHA_MISMATCH/);
 });
 
-test('OIDC claim policy pins GitHub repository, immutable repository id, workflow, environment and SHA', () => {
+test('OIDC claim policy pins the authoring commit SHA, not the deployed runtime SHA', () => {
   const claims = {
     iss: 'https://token.actions.githubusercontent.com',
     aud: 'atlas-person-db-authoring',
@@ -61,12 +89,11 @@ test('OIDC claim policy pins GitHub repository, immutable repository id, workflo
     workflow_ref: 'JezCH/atlas-person-db/.github/workflows/atlas-authoring-apply.yml@refs/heads/main',
     environment: 'production',
     event_name: 'push',
-    sha: SHA
+    sha: AUTHORING_SHA
   };
-  assert.doesNotThrow(() => verifyTrustClaims(claims, SHA));
-  assert.throws(() => verifyTrustClaims({ ...claims, repository_id: '1' }, SHA), /REPOSITORY_ID_MISMATCH/);
-  assert.throws(() => verifyTrustClaims({ ...claims, workflow_ref: 'other' }, SHA), /WORKFLOW_MISMATCH/);
-  assert.throws(() => verifyTrustClaims({ ...claims, sha: 'b'.repeat(40) }, SHA), /SHA_MISMATCH/);
+  assert.doesNotThrow(() => verifyTrustClaims(claims, AUTHORING_SHA));
+  assert.throws(() => verifyTrustClaims({ ...claims, sha: RUNTIME_SHA }, AUTHORING_SHA), /SHA_MISMATCH/);
+  assert.throws(() => verifyTrustClaims({ ...claims, workflow_ref: 'other' }, AUTHORING_SHA), /WORKFLOW_MISMATCH/);
 });
 
 test('OIDC temporal policy rejects expired and not-yet-active tokens', () => {
@@ -75,7 +102,29 @@ test('OIDC temporal policy rejects expired and not-yet-active tokens', () => {
   assert.throws(() => verifyTemporalClaims({ exp: 1200, nbf: 1100 }, 1000), /NOT_ACTIVE/);
 });
 
-test('handler rejects deployment skew before OIDC or database access', async () => {
+test('GET exposes read-only Production readiness and deployed runtime SHA', async () => {
+  let migrations = 0;
+  let ended = 0;
+  const client = { end: async () => { ended += 1; } };
+  const handler = createAuthoringApplyHandler({
+    env: ENV,
+    createClient: async () => client,
+    applyMigrations: async () => { migrations += 1; },
+    inspectReadiness: async (seen) => { assert.equal(seen, client); return readyState(); }
+  });
+  const res = responseCapture();
+  await handler({ method: 'GET', headers: {} }, res);
+  assert.equal(res.state.statusCode, 200);
+  assert.equal(res.state.body.ok, true);
+  assert.equal(res.state.body.marker, TRANSPORT_MARKER);
+  assert.equal(res.state.body.transport_version, TRANSPORT_VERSION);
+  assert.equal(res.state.body.runtime_sha, RUNTIME_SHA);
+  assert.equal(res.state.body.ready, true);
+  assert.equal(migrations, 0, 'readiness endpoint must not mutate schema');
+  assert.equal(ended, 1);
+});
+
+test('handler rejects runtime skew before OIDC or database access', async () => {
   let oidcCalls = 0;
   let dbCalls = 0;
   const handler = createAuthoringApplyHandler({
@@ -84,23 +133,100 @@ test('handler rejects deployment skew before OIDC or database access', async () 
     createClient: async () => { dbCalls += 1; throw new Error('should not connect'); }
   });
   const res = responseCapture();
-  await handler({ method: 'POST', headers: { authorization: 'Bearer token' }, body: { deployment_sha: 'b'.repeat(40), manifest_path: 'authoring/requests/test.json', manifest: approvedManifest() } }, res);
+  await handler({ method: 'POST', headers: { authorization: 'Bearer token' }, body: {
+    transport_version: 2,
+    runtime_sha: AUTHORING_SHA,
+    authoring_sha: AUTHORING_SHA,
+    manifest_path: 'authoring/requests/test.json',
+    manifest: approvedManifest()
+  } }, res);
   assert.equal(res.state.statusCode, 409);
-  assert.equal(res.state.body.code, 'DEPLOYMENT_SHA_MISMATCH');
+  assert.equal(res.state.body.code, 'AUTHORING_RUNTIME_SHA_MISMATCH');
   assert.equal(oidcCalls, 0);
   assert.equal(dbCalls, 0);
 });
 
-test('handler requires OIDC before opening the database', async () => {
-  let dbCalls = 0;
+test('POST accepts different runtime and authoring SHAs while binding OIDC to authoring SHA', async () => {
+  let oidcExpected = null;
+  let migrated = 0;
+  let capturedTransport = null;
+  let ended = 0;
+  const client = { end: async () => { ended += 1; } };
+  const snapshot = {
+    version: 2,
+    semantic_version: 'v2-relation-full-temporal',
+    entities: {
+      person: { id: '11111111-1111-4111-8111-111111111111' },
+      polity: { id: '22222222-2222-4222-8222-222222222222' },
+      role: { id: null },
+      activity: { id: '33333333-3333-4333-8333-333333333333' }
+    }
+  };
   const handler = createAuthoringApplyHandler({
     env: ENV,
-    verifyOidc: async () => { throw new Error('GITHUB_OIDC_SIGNATURE_INVALID'); },
-    createClient: async () => { dbCalls += 1; throw new Error('should not connect'); }
+    verifyOidc: async (_token, { expectedSha }) => { oidcExpected = expectedSha; },
+    createClient: async () => client,
+    applyMigrations: async () => { migrated += 1; },
+    inspectReadiness: async () => readyState(),
+    createDispatch: () => ({
+      apply: async (_manifest, { transport }) => {
+        capturedTransport = transport;
+        return {
+          marker: 'ATLAS_AUTHORING_MANIFEST_V2_STAGE2_NATIVE',
+          request_id: 'person:test:v2',
+          committed: true,
+          replay: false,
+          person_id: snapshot.entities.person.id,
+          relationship_id: snapshot.entities.activity.id,
+          polity_id: snapshot.entities.polity.id,
+          result: snapshot
+        };
+      }
+    })
   });
   const res = responseCapture();
-  await handler({ method: 'POST', headers: { authorization: 'Bearer token' }, body: { deployment_sha: SHA, manifest_path: 'authoring/requests/test.json', manifest: approvedManifest() } }, res);
-  assert.equal(res.state.statusCode, 403);
-  assert.equal(res.state.body.code, 'GITHUB_OIDC_SIGNATURE_INVALID');
-  assert.equal(dbCalls, 0);
+  await handler({ method: 'POST', headers: { authorization: 'Bearer token' }, body: {
+    transport_version: 2,
+    runtime_sha: RUNTIME_SHA,
+    authoring_sha: AUTHORING_SHA,
+    manifest_path: 'authoring/requests/test.json',
+    manifest: approvedManifest()
+  } }, res);
+  assert.equal(res.state.statusCode, 200);
+  assert.equal(oidcExpected, AUTHORING_SHA);
+  assert.equal(migrated, 1);
+  assert.deepEqual(capturedTransport, {
+    version: 2,
+    runtime_sha: RUNTIME_SHA,
+    authoring_sha: AUTHORING_SHA,
+    manifest_path: 'authoring/requests/test.json'
+  });
+  assert.equal(res.state.body.runtime_sha, RUNTIME_SHA);
+  assert.equal(res.state.body.authoring_sha, AUTHORING_SHA);
+  assert.equal(res.state.body.transport_marker, TRANSPORT_MARKER);
+  assert.equal(ended, 1);
+});
+
+test('POST fails closed when P9 authoring readiness is no longer satisfied', async () => {
+  let dispatchCalls = 0;
+  const client = { end: async () => {} };
+  const handler = createAuthoringApplyHandler({
+    env: ENV,
+    verifyOidc: async () => {},
+    createClient: async () => client,
+    applyMigrations: async () => {},
+    inspectReadiness: async () => ({ ...readyState(), ready: false }),
+    createDispatch: () => ({ apply: async () => { dispatchCalls += 1; } })
+  });
+  const res = responseCapture();
+  await handler({ method: 'POST', headers: { authorization: 'Bearer token' }, body: {
+    transport_version: 2,
+    runtime_sha: RUNTIME_SHA,
+    authoring_sha: AUTHORING_SHA,
+    manifest_path: 'authoring/requests/test.json',
+    manifest: approvedManifest()
+  } }, res);
+  assert.equal(res.state.statusCode, 409);
+  assert.equal(res.state.body.code, 'AUTHORING_PRODUCTION_NOT_READY');
+  assert.equal(dispatchCalls, 0);
 });

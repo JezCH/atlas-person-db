@@ -40,7 +40,7 @@ assert.equal(p9Planner.plan('delete',{id:'activity-id'}).commands[0]?.type,'DELE
 assert.match(mutationHandler,/atlas-p9-mutation-planner\.js/);
 assert.doesNotMatch(mutationHandler,/require\("\.\.\/atlas-v2-command-planner\.js"\)/);
 assert.match(dispatch,/AUTHORING_MANIFEST_V1_NEW_WRITE_RETIRED/);
-assert.match(dispatch,/return nativeV2\.apply\(rawManifest\)/);
+assert.match(dispatch,/return nativeV2\.apply\(rawManifest,\s*\{\s*transport\s*\}\)/);
 assert.match(nativeAuthoring,/atlas-activity-semantic-key-v2\.js/);
 assert.match(nativeActivity,/atlas-activity-semantic-key-v2\.js/);
 

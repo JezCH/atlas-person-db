@@ -6,16 +6,6 @@ on:
       - main
     paths:
       - 'authoring/requests/*.json'
-      - '.github/workflows/atlas-authoring-apply.yml'
-      - 'api/atlas-authoring-apply.js'
-      - 'server/atlas-authoring-apply-handler.js'
-      - 'server/atlas-authoring-manifest-service.js'
-      - 'server/atlas-authoring-manifest-dispatch-service.js'
-      - 'server/atlas-authoring-manifest-v2-native-service.js'
-      - 'server/atlas-stage2-native-activity-service.js'
-      - 'server/atlas-activity-semantic-key-v2.js'
-      - 'server/atlas-github-oidc.js'
-      - 'db/migrations/20260811_authoring_manifest_runs.sql'
   workflow_dispatch:
     inputs:
       manifest:
@@ -39,15 +29,17 @@ jobs:
     env:
       ATLAS_AUTHORING_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply
       ATLAS_AUTHORING_AUDIENCE: atlas-person-db-authoring
+      ATLAS_AUTHORING_TRANSPORT_VERSION: '2'
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
       - name: Resolve approved Stage 2 native manifests
         shell: bash
         run: |
           set -euo pipefail
+          mkdir -p /tmp/atlas-authoring-evidence/responses
           : > /tmp/atlas-candidates.txt
           : > /tmp/atlas-manifests.txt
 
@@ -75,23 +67,96 @@ jobs:
               and (.activity.activity_end_calendar | type == "string")
               and (.activity.person_name == null)
               and (.activity.politic_name == null)
+              and (.activity.polity_name == null)
               and (.activity.role == null)
               and (.activity.period_basis == null)
+              and (.activity.relation_type == null)
             ' "$manifest" >/dev/null; then
               printf '%s\n' "$manifest" >> /tmp/atlas-manifests.txt
             else
-              echo "Skipping legacy/non-native authoring manifest: $manifest"
+              echo "Rejected non-native authoring manifest: $manifest" >&2
+              exit 1
             fi
           done < /tmp/atlas-candidates.txt
 
           sort -u -o /tmp/atlas-manifests.txt /tmp/atlas-manifests.txt
-          if [[ ! -s /tmp/atlas-manifests.txt ]]; then
-            echo 'No newly changed approved Stage 2 native authoring manifests selected.'
-            exit 0
+          cp /tmp/atlas-manifests.txt /tmp/atlas-authoring-evidence/manifests.txt
+          if [[ -s /tmp/atlas-manifests.txt ]]; then
+            echo 'ATLAS_AUTHORING_SELECTED=true' >> "$GITHUB_ENV"
+            cat /tmp/atlas-manifests.txt
+          else
+            echo 'ATLAS_AUTHORING_SELECTED=false' >> "$GITHUB_ENV"
+            echo 'No approved Stage 2 native authoring manifests selected.'
           fi
-          cat /tmp/atlas-manifests.txt
+
+      - name: Verify deployed authoring runtime readiness
+        if: env.ATLAS_AUTHORING_SELECTED == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          status=""
+          for attempt in $(seq 1 60); do
+            status="$(curl --silent --show-error \
+              --output /tmp/atlas-authoring-evidence/readiness.json \
+              --write-out '%{http_code}' \
+              "$ATLAS_AUTHORING_ENDPOINT")"
+            if [[ "$status" == "200" ]]; then
+              break
+            fi
+            if [[ "$status" == "404" ]]; then
+              if [[ "$attempt" == "60" ]]; then
+                cat /tmp/atlas-authoring-evidence/readiness.json >&2 || true
+                echo "Production authoring readiness route is not live yet after 60 attempts." >&2
+                exit 1
+              fi
+              echo "Production authoring readiness route is not live yet (attempt ${attempt}/60); retrying in 10s."
+              sleep 10
+              continue
+            fi
+            cat /tmp/atlas-authoring-evidence/readiness.json >&2 || true
+            echo "Authoring readiness failed: HTTP ${status}" >&2
+            exit 1
+          done
+
+          jq -e --argjson version "$ATLAS_AUTHORING_TRANSPORT_VERSION" '
+            .ok==true
+            and .marker=="ATLAS_AUTHORING_TRANSPORT_V2"
+            and .transport_version==$version
+            and .ready==true
+            and (.runtime_sha | test("^[0-9a-f]{40}$"))
+            and .readiness.p5_ready==true
+            and .readiness.core.tables_ready==true
+            and .readiness.core.columns_ready==true
+            and .readiness.p9.old_index_present==false
+            and .readiness.p9.new_index_present==true
+            and .readiness.p9.duplicate_groups==0
+            and .readiness.person_merge.allowed==false
+            and .readiness.person_merge.person_merge_lifecycle_version=="pre-p10-blocked"
+          ' /tmp/atlas-authoring-evidence/readiness.json >/dev/null
+
+          runtime_sha="$(jq -er '.runtime_sha' /tmp/atlas-authoring-evidence/readiness.json)"
+          git cat-file -e "${runtime_sha}^{commit}" || { echo "Deployed runtime commit is unavailable in checkout: ${runtime_sha}" >&2; exit 1; }
+          git merge-base --is-ancestor "$runtime_sha" "$GITHUB_SHA" || { echo "Deployed runtime is not an ancestor of authoring commit" >&2; exit 1; }
+          git diff --name-only --diff-filter=ACDMRTUXB "$runtime_sha" "$GITHUB_SHA" -- > /tmp/atlas-authoring-evidence/runtime-diff.txt
+
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import { shouldBuildForChangedPaths } from './scripts/vercel-ignore-build.mjs';
+          const text = fs.readFileSync('/tmp/atlas-authoring-evidence/runtime-diff.txt', 'utf8').trim();
+          const paths = text ? text.split(/\r?\n/).filter(Boolean) : [];
+          if (shouldBuildForChangedPaths(paths)) {
+            console.error('AUTHORING_RUNTIME_CODE_DRIFT: deployment-relevant changes exist after the deployed runtime SHA');
+            for (const path of paths) console.error(`  ${path}`);
+            process.exit(1);
+          }
+          console.log(`Authoring delta is deployment-safe (${paths.length} path${paths.length === 1 ? '' : 's'}).`);
+          NODE
+
+          echo "ATLAS_RUNTIME_SHA=${runtime_sha}" >> "$GITHUB_ENV"
+          echo "Authoring runtime ${runtime_sha} is ready for GitHub authoring commit ${GITHUB_SHA}."
 
       - name: Apply manifests through deployed Vercel server
+        if: env.ATLAS_AUTHORING_SELECTED == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -105,45 +170,55 @@ jobs:
           while IFS= read -r manifest; do
             [[ -n "$manifest" ]] || continue
             payload="$(jq -cn \
-              --arg deployment_sha "${GITHUB_SHA}" \
+              --argjson transport_version "$ATLAS_AUTHORING_TRANSPORT_VERSION" \
+              --arg runtime_sha "$ATLAS_RUNTIME_SHA" \
+              --arg authoring_sha "$GITHUB_SHA" \
               --arg manifest_path "$manifest" \
               --slurpfile manifest "$manifest" \
-              '{deployment_sha:$deployment_sha,manifest_path:$manifest_path,manifest:$manifest[0]}')"
+              '{transport_version:$transport_version,runtime_sha:$runtime_sha,authoring_sha:$authoring_sha,manifest_path:$manifest_path,manifest:$manifest[0]}')"
 
-            applied=false
-            for attempt in $(seq 1 60); do
-              oidc_token="$(request_oidc)"
-              status="$(curl --silent --show-error \
-                --output /tmp/atlas-authoring-response.json \
-                --write-out '%{http_code}' \
-                --request POST \
-                -H 'content-type: application/json' \
-                -H "authorization: Bearer ${oidc_token}" \
-                --data "$payload" \
-                "$ATLAS_AUTHORING_ENDPOINT")"
+            oidc_token="$(request_oidc)"
+            response="/tmp/atlas-authoring-evidence/responses/$(basename "$manifest" .json).json"
+            status="$(curl --silent --show-error \
+              --output "$response" \
+              --write-out '%{http_code}' \
+              --request POST \
+              -H 'content-type: application/json' \
+              -H "authorization: Bearer ${oidc_token}" \
+              --data "$payload" \
+              "$ATLAS_AUTHORING_ENDPOINT")"
 
-              if [[ "$status" == "200" ]]; then
-                jq . /tmp/atlas-authoring-response.json
-                applied=true
-                break
-              fi
-
-              code="$(jq -r '.code // "UNKNOWN"' /tmp/atlas-authoring-response.json 2>/dev/null || printf 'UNKNOWN')"
-              if [[ "$status" == "404" ]]; then
-                echo "Production route for ${GITHUB_SHA} is not live yet (attempt ${attempt}/60); retrying."
-                sleep 10
-                continue
-              fi
-              if [[ "$status" == "409" && "$code" == "DEPLOYMENT_SHA_MISMATCH" ]]; then
-                echo "Production deployment has not reached ${GITHUB_SHA} yet (attempt ${attempt}/60); retrying."
-                sleep 10
-                continue
-              fi
-
-              cat /tmp/atlas-authoring-response.json >&2 || true
+            if [[ "$status" != "200" ]]; then
+              cat "$response" >&2 || true
+              code="$(jq -r '.code // "UNKNOWN"' "$response" 2>/dev/null || printf 'UNKNOWN')"
               echo "Authoring apply failed: HTTP ${status}, code ${code}" >&2
               exit 1
-            done
+            fi
 
-            [[ "$applied" == "true" ]] || { echo "Production deployment did not reach ${GITHUB_SHA} within retry window" >&2; exit 1; }
+            jq -e \
+              --arg runtime "$ATLAS_RUNTIME_SHA" \
+              --arg authoring "$GITHUB_SHA" \
+              --arg path "$manifest" \
+              --argjson version "$ATLAS_AUTHORING_TRANSPORT_VERSION" '
+                .ok==true
+                and .transport_marker=="ATLAS_AUTHORING_TRANSPORT_V2"
+                and .transport_version==$version
+                and .runtime_sha==$runtime
+                and .authoring_sha==$authoring
+                and .manifest_path==$path
+                and .committed==true
+                and .marker=="ATLAS_AUTHORING_MANIFEST_V2_STAGE2_NATIVE"
+                and .result.version==2
+                and .result.semantic_version=="v2-relation-full-temporal"
+              ' "$response" >/dev/null
+            jq . "$response"
           done < /tmp/atlas-manifests.txt
+
+      - name: Upload immutable authoring evidence
+        if: always() && env.ATLAS_AUTHORING_SELECTED == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-authoring-${{ github.sha }}
+          path: /tmp/atlas-authoring-evidence/
+          if-no-files-found: error
+          retention-days: 90
