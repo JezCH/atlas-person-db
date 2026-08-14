@@ -13,7 +13,8 @@ const relationCatalogPath = path.resolve(root, arg('--relation-catalog', 'stage2
 const explicitDecisionPaths = [
   path.resolve(root, 'stage2/integration/p7-explicit-person-relation-decisions-batch1.v1.json'),
   path.resolve(root, 'stage2/integration/p7-explicit-person-relation-decisions-batch2.v1.json'),
-  path.resolve(root, 'stage2/integration/p7-explicit-person-relation-decisions-batch3.v1.json')
+  path.resolve(root, 'stage2/integration/p7-explicit-person-relation-decisions-batch3.v1.json'),
+  path.resolve(root, 'stage2/integration/p7-explicit-person-relation-decisions-batch8.v1.json')
 ];
 const outPath = path.resolve(root, arg('--out', 'artifacts/stage2-p7p8-precutover-inventory.json'));
 const relationOutPath = path.resolve(root, arg('--relation-out', 'artifacts/stage2-p7a-reviewed-relation-backfill.json'));
@@ -62,7 +63,7 @@ for (const packageJson of explicitDecisionPackages) {
     explicitBatchByActivity.set(activityId, packageJson.batch_id);
   }
 }
-if (explicitByActivity.size !== 35) throw new Error(`P7P8_EXPLICIT_DECISION_COUNT_DRIFT:${explicitByActivity.size}`);
+if (explicitByActivity.size !== 37) throw new Error(`P7P8_EXPLICIT_DECISION_COUNT_DRIFT:${explicitByActivity.size}`);
 
 const relationResidual = residualByDependency.relation_type;
 const relationResidualIds = new Set(relationResidual.map((row) => String(row.activity_id).toLowerCase()));
@@ -84,11 +85,21 @@ for (const row of relationResidual) {
   let resolutionMode = null;
   let explicitBatch = null;
   if (hint && allowedCodes.has(hint)) {
-    code = hint;
-    relationTypeId = relationByCode.get(hint);
-    resolutionMode = 'EXISTING_REVIEWED_RELATION_HINT';
-    if (explicit && (explicit.relation_code !== code || String(explicit.relation_type_id).toLowerCase() !== relationTypeId)) throw new Error(`P7P8_EXPLICIT_DECISION_CONFLICTS_HINT:${activityId}`);
+    if (explicit?.supersedes_stale_relation_hint === true) {
+      code = explicit.relation_code;
+      relationTypeId = String(explicit.relation_type_id).toLowerCase();
+      authority = explicit.authority;
+      explicitBatch = explicitBatchByActivity.get(activityId);
+      resolutionMode = 'EXPLICIT_REVIEWED_SUPERSEDING_STALE_HINT';
+      explicitOverlayCount += 1;
+    } else {
+      code = hint;
+      relationTypeId = relationByCode.get(hint);
+      resolutionMode = 'EXISTING_REVIEWED_RELATION_HINT';
+      if (explicit && (explicit.relation_code !== code || String(explicit.relation_type_id).toLowerCase() !== relationTypeId)) throw new Error(`P7P8_EXPLICIT_DECISION_CONFLICTS_HINT:${activityId}`);
+    }
   } else if (explicit) {
+    if (explicit.supersedes_stale_relation_hint === true) throw new Error(`P7P8_STALE_HINT_SUPERSESSION_TARGET_MISSING:${activityId}`);
     code = explicit.relation_code;
     relationTypeId = String(explicit.relation_type_id).toLowerCase();
     authority = explicit.authority;
@@ -136,7 +147,7 @@ for (const row of relationResidual) {
 }
 relationReady.sort((a,b) => a.activity_id.localeCompare(b.activity_id));
 relationReviewRequired.sort((a,b) => a.activity_id.localeCompare(b.activity_id));
-if (explicitOverlayCount !== 35) throw new Error(`P7P8_EXPLICIT_OVERLAY_NOT_CONSUMED:${explicitOverlayCount}`);
+if (explicitOverlayCount !== 37) throw new Error(`P7P8_EXPLICIT_OVERLAY_NOT_CONSUMED:${explicitOverlayCount}`);
 
 const relationPackage = {
   schema: 'atlas-stage2-p7a-reviewed-relation-backfill/v1',
@@ -153,6 +164,7 @@ const relationPackage = {
     p6_activity_targets_excluded: true,
     generic_relation_default_forbidden: true,
     only_existing_reviewed_hint_or_explicit_reviewed_audit_decision_may_be_literalized: true,
+    stale_relation_hint_may_be_superseded_only_by_explicit_reviewed_flag: true,
     runtime_relation_code_lookup_forbidden: true,
     literal_relation_type_uuid_required: true,
     production_mutation_authorized: false
