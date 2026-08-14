@@ -115,12 +115,14 @@ jobs:
           node scripts/build-stage2-baseline-a-effective-p5p6-frontier.mjs
           node scripts/verify-stage2-baseline-a-effective-p5p6-frontier.mjs
 
-      - name: Build and verify P7/P8 precutover blocker inventory
+      - name: Build and verify P7/P8 semantic cutover gates
         shell: bash
         run: |
           set -euo pipefail
           node scripts/build-stage2-p7p8-precutover-inventory.mjs
           node scripts/verify-stage2-p7p8-precutover-inventory.mjs
+          node scripts/build-stage2-p7p8-effective-cutover-gate.mjs
+          node scripts/verify-stage2-p7p8-effective-cutover-gate.mjs
 
       - name: Upload Baseline A ledger failure diagnostics
         if: failure() && steps.baseline-ledger.outcome == 'failure'
@@ -149,6 +151,9 @@ jobs:
             artifacts/stage2-baseline-a-effective-p5p6-frontier.json
             artifacts/stage2-p7p8-precutover-inventory.json
             artifacts/stage2-p7a-reviewed-relation-backfill.json
+            artifacts/stage2-p7-relation-resolution-status.json
+            artifacts/stage2-full-relation-coverage-v2.json
+            artifacts/stage2-p7p8-effective-cutover-gate.json
           if-no-files-found: error
           retention-days: 30
 
