@@ -16,6 +16,7 @@ test('catalog GET uses protected admin authentication and exposes codes, never U
   const body=JSON.parse(res.body);
   assert.equal(body.ok,true);
   assert.equal(body.auth_method,'bearer');
+  assert.deepEqual(body.catalogs.relation_types,['rules','serves']);
   assert.deepEqual(body.catalogs.period_bases,['reign']);
 });
 
@@ -27,6 +28,20 @@ test('direct POST delegates one friendly request to the atomic human authoring s
   assert.equal(JSON.parse(res.body).committed,true);
   assert.equal(seen.request.schema,'atlas-human-authoring/v1');
   assert.equal(seen.context.transport.kind,'admin_bearer');
+});
+
+test('bad Production/P9 readiness blocks writes before the service is invoked', async () => {
+  const res=responseRecorder(); let applied=false;
+  const handler=createHumanAuthoringHandler({
+    env:env(),
+    clientFactory:async()=>fakeClient(),
+    inspectReadiness:async()=>({ready:false,p9:{old_index_present:true,new_index_present:false,duplicate_groups:0}}),
+    createService:()=>({apply:async()=>{applied=true;throw new Error('must not run');}})
+  });
+  await handler({method:'POST',headers:{authorization:'Bearer mutation-secret'},body:{schema:'atlas-human-authoring/v1'}},res);
+  assert.equal(res.statusCode,409);
+  assert.equal(JSON.parse(res.body).code,'HUMAN_AUTHORING_PRODUCTION_NOT_READY');
+  assert.equal(applied,false);
 });
 
 test('GitHub fallback transport remains exact-runtime and exact-authoring SHA bound', async () => {

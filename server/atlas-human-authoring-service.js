@@ -92,7 +92,7 @@ function normalizeHumanAuthoringRequest(raw) {
   const polity = requiredObject(request.polity, "HUMAN_AUTHORING_POLITY_REQUIRED");
   const activity = requiredObject(request.activity, "HUMAN_AUTHORING_ACTIVITY_REQUIRED");
   const relationCode = requiredText(activity.relation_type, "HUMAN_AUTHORING_RELATION_TYPE_REQUIRED");
-  if (!RELATION_CODES.has(relationCode)) throw new Error("HUMAN_AUTHORING_RELATION_TYPE_INVALID");
+  if (!/^[a-z][a-z0-9_]*$/.test(relationCode)) throw new Error("HUMAN_AUTHORING_RELATION_TYPE_INVALID");
   const periodBasis = requiredText(activity.period_basis, "HUMAN_AUTHORING_PERIOD_BASIS_REQUIRED");
   const start = normalizeBoundary(activity, "start");
   const end = normalizeBoundary(activity, "end");
@@ -321,10 +321,10 @@ function createHumanAuthoringService({ client } = {}) {
 }
 
 async function loadHumanAuthoringCatalogs(client) {
-  const [relations, periods] = await Promise.all([
-    client.query(`select code from atlas_v2.person_polity_relation_types where is_active=true order by code`),
-    client.query(`select code from atlas_v2.period_bases where is_active=true order by code`)
-  ]);
+  // Keep a single pg.Client sequential. The catalog payload is tiny and does
+  // not justify deprecated concurrent client.query() calls.
+  const relations = await client.query(`select code from atlas_v2.person_polity_relation_types where is_active=true order by code`);
+  const periods = await client.query(`select code from atlas_v2.period_bases where is_active=true order by code`);
   return Object.freeze({ relation_types:Object.freeze(relations.rows.map((row) => String(row.code))), period_bases:Object.freeze(periods.rows.map((row) => String(row.code))) });
 }
 
