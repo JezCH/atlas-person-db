@@ -40,6 +40,7 @@ test('historical C8 workflow manifest remains audit evidence while current workf
     'atlas-audit-inventory.yml',
     'atlas-authoring-apply.yml',
     'atlas-correction-apply.yml',
+    'atlas-human-authoring-operational-parity.yml',
     'atlas-integrity.yml',
     'atlas-stage2-schema-release.yml',
     'atlas-stage2-train2-live-parity.yml',
@@ -50,6 +51,15 @@ test('historical C8 workflow manifest remains audit evidence while current workf
   assert.match(correctionWorkflow, /^\s*-\s*'corrections\/requests\/\*\.json'\s*$/m);
   assert.doesNotMatch(correctionWorkflow, /public\.person_politics|atlas_person_politics_compat_v1/);
   assert.doesNotMatch(correctionWorkflow, /SUPABASE_DB_URL/);
+
+  const humanOperationalWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-human-authoring-operational-parity.yml', import.meta.url), 'utf8');
+  assert.match(humanOperationalWorkflow, /\bpull_request\s*:/m);
+  assert.match(humanOperationalWorkflow, /^\s*push\s*:/m);
+  assert.match(humanOperationalWorkflow, /branches:\s*\n\s*- main/);
+  assert.match(humanOperationalWorkflow, /postgres:17/);
+  assert.match(humanOperationalWorkflow, /rehearse-human-authoring-operational-parity\.mjs/);
+  assert.doesNotMatch(humanOperationalWorkflow, /environment:\s*production/);
+  assert.doesNotMatch(humanOperationalWorkflow, /SUPABASE_DB_URL/);
 
   const stage2SchemaWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-stage2-schema-release.yml', import.meta.url), 'utf8');
   assert.match(stage2SchemaWorkflow, /workflow_dispatch\s*:/);
