@@ -12,7 +12,16 @@ const NEW_INDEX_DEF = `CREATE UNIQUE INDEX ${NEW_INDEX} ON atlas_v2.person_polit
    activity_end, activity_end_month, activity_end_day, activity_end_granularity, activity_end_calendar)
   NULLS NOT DISTINCT WHERE relation_type_id IS NOT NULL`;
 
-function clientFor({ oldIndex = false, newIndex = true, duplicates = 0, coreReady = true, p5Ready = true } = {}) {
+function clientFor({
+  oldIndex = false,
+  newIndex = true,
+  duplicates = 0,
+  baseTablesReady = true,
+  ledgerTableReady = true,
+  activityColumnsReady = true,
+  ledgerColumnsReady = true,
+  p5Ready = true
+} = {}) {
   return {
     async query(sql, params = []) {
       const text = String(sql);
@@ -26,21 +35,21 @@ function clientFor({ oldIndex = false, newIndex = true, duplicates = 0, coreRead
       }
       if (text.includes("to_regclass('atlas_v2.persons') as persons")) {
         return { rows: [{
-          persons: coreReady ? 'atlas_v2.persons' : null,
-          polities: coreReady ? 'atlas_v2.polities' : null,
-          roles: coreReady ? 'atlas_v2.roles' : null,
-          period_bases: coreReady ? 'atlas_v2.period_bases' : null,
-          relation_types: coreReady ? 'atlas_v2.person_polity_relation_types' : null,
-          activities: coreReady ? 'atlas_v2.person_politics_v2' : null,
-          activity_sources: coreReady ? 'atlas_v2.person_politics_sources' : null,
-          authoring_ledger: coreReady ? 'atlas_v2.authoring_manifest_runs' : null,
-          ledger_manifest_schema: coreReady,
-          ledger_result_snapshot: coreReady,
-          relation_type_id: coreReady,
-          activity_start_granularity: coreReady,
-          activity_end_granularity: coreReady,
-          activity_start_calendar: coreReady,
-          activity_end_calendar: coreReady
+          persons: baseTablesReady ? 'atlas_v2.persons' : null,
+          polities: baseTablesReady ? 'atlas_v2.polities' : null,
+          roles: baseTablesReady ? 'atlas_v2.roles' : null,
+          period_bases: baseTablesReady ? 'atlas_v2.period_bases' : null,
+          relation_types: baseTablesReady ? 'atlas_v2.person_polity_relation_types' : null,
+          activities: baseTablesReady ? 'atlas_v2.person_politics_v2' : null,
+          activity_sources: baseTablesReady ? 'atlas_v2.person_politics_sources' : null,
+          authoring_ledger: ledgerTableReady ? 'atlas_v2.authoring_manifest_runs' : null,
+          ledger_manifest_schema: ledgerTableReady && ledgerColumnsReady,
+          ledger_result_snapshot: ledgerTableReady && ledgerColumnsReady,
+          relation_type_id: activityColumnsReady,
+          activity_start_granularity: activityColumnsReady,
+          activity_end_granularity: activityColumnsReady,
+          activity_start_calendar: activityColumnsReady,
+          activity_end_calendar: activityColumnsReady
         }] };
       }
       if (text.includes('from pg_indexes')) {
@@ -57,8 +66,14 @@ function clientFor({ oldIndex = false, newIndex = true, duplicates = 0, coreRead
 test('authoring readiness requires P5, core Stage 2 schema, completed P9 and blocked P10', async () => {
   const result = await inspectAuthoringReadiness(clientFor());
   assert.equal(result.ready, true);
+  assert.equal(result.bootstrap_ready, true);
+  assert.equal(result.bootstrap_required, false);
   assert.equal(result.p5_ready, true);
+  assert.equal(result.core.base_tables_ready, true);
+  assert.equal(result.core.ledger_table_ready, true);
   assert.equal(result.core.tables_ready, true);
+  assert.equal(result.core.activity_columns_ready, true);
+  assert.equal(result.core.ledger_columns_ready, true);
   assert.equal(result.core.columns_ready, true);
   assert.equal(result.p9.old_index_present, false);
   assert.equal(result.p9.new_index_present, true);
@@ -67,16 +82,39 @@ test('authoring readiness requires P5, core Stage 2 schema, completed P9 and blo
   assert.equal(result.person_merge.person_merge_lifecycle_version, 'pre-p10-blocked');
 });
 
-test('authoring readiness fails closed when P9 is not complete', async () => {
+test('missing authoring ledger schema is explicitly bootstrappable without weakening P9/P10 gates', async () => {
+  const missingColumns = await inspectAuthoringReadiness(clientFor({ ledgerColumnsReady: false }));
+  assert.equal(missingColumns.ready, false);
+  assert.equal(missingColumns.bootstrap_ready, true);
+  assert.equal(missingColumns.bootstrap_required, true);
+  assert.equal(missingColumns.core.activity_columns_ready, true);
+  assert.equal(missingColumns.core.ledger_columns_ready, false);
+  assert.equal(missingColumns.core.columns.ledger_manifest_schema, false);
+  assert.equal(missingColumns.core.columns.ledger_result_snapshot, false);
+
+  const missingLedger = await inspectAuthoringReadiness(clientFor({ ledgerTableReady: false, ledgerColumnsReady: false }));
+  assert.equal(missingLedger.ready, false);
+  assert.equal(missingLedger.bootstrap_ready, true);
+  assert.equal(missingLedger.bootstrap_required, true);
+  assert.equal(missingLedger.core.ledger_table_ready, false);
+});
+
+test('authoring readiness and bootstrap both fail closed when P9 is not complete', async () => {
   const result = await inspectAuthoringReadiness(clientFor({ oldIndex: true, newIndex: false }));
   assert.equal(result.ready, false);
+  assert.equal(result.bootstrap_ready, false);
   assert.equal(result.p9.old_index_present, true);
   assert.equal(result.p9.new_index_present, false);
 });
 
-test('authoring readiness fails closed on duplicate semantic groups or missing core schema', async () => {
-  const duplicates = await inspectAuthoringReadiness(clientFor({ duplicates: 1 }));
+test('bootstrap never masks duplicate groups, base-table gaps, or Stage 2 Activity column gaps', async () => {
+  const duplicates = await inspectAuthoringReadiness(clientFor({ duplicates: 1, ledgerColumnsReady: false }));
   assert.equal(duplicates.ready, false);
-  const missing = await inspectAuthoringReadiness(clientFor({ coreReady: false }));
-  assert.equal(missing.ready, false);
+  assert.equal(duplicates.bootstrap_ready, false);
+  const missingBase = await inspectAuthoringReadiness(clientFor({ baseTablesReady: false, ledgerColumnsReady: false }));
+  assert.equal(missingBase.ready, false);
+  assert.equal(missingBase.bootstrap_ready, false);
+  const missingActivityColumns = await inspectAuthoringReadiness(clientFor({ activityColumnsReady: false, ledgerColumnsReady: false }));
+  assert.equal(missingActivityColumns.ready, false);
+  assert.equal(missingActivityColumns.bootstrap_ready, false);
 });

@@ -8,6 +8,8 @@ const { verifyGitHubActionsOidc } = require("./atlas-github-oidc.js");
 
 const TRANSPORT_MARKER = "ATLAS_AUTHORING_TRANSPORT_V2";
 const TRANSPORT_VERSION = 2;
+const OPERATION_APPLY = "apply_manifest";
+const OPERATION_BOOTSTRAP = "bootstrap";
 const MANIFEST_PATH_RE = /^authoring\/requests\/[A-Za-z0-9._-]+\.json$/;
 const SHA_RE = /^[0-9a-f]{40}$/;
 
@@ -50,16 +52,31 @@ function requireRuntime(env, requestedRuntimeSha) {
   return runtime;
 }
 
-function requireApplyPayload(body) {
+function requireTransportEnvelope(body) {
   if (Number(body?.transport_version) !== TRANSPORT_VERSION) throw new Error("AUTHORING_TRANSPORT_VERSION_REQUIRED");
   const runtimeSha = String(body?.runtime_sha || "").trim().toLowerCase();
   const authoringSha = String(body?.authoring_sha || "").trim().toLowerCase();
   if (!SHA_RE.test(runtimeSha)) throw new Error("AUTHORING_RUNTIME_SHA_REQUIRED");
   if (!SHA_RE.test(authoringSha)) throw new Error("AUTHORING_SHA_REQUIRED");
+  return { runtimeSha, authoringSha };
+}
+
+function requireApplyPayload(body) {
+  const operation = String(body?.operation || OPERATION_APPLY).trim();
+  if (operation !== OPERATION_APPLY) throw new Error("AUTHORING_OPERATION_UNSUPPORTED");
+  const envelope = requireTransportEnvelope(body);
   const manifestPath = String(body?.manifest_path || "").trim();
   if (!MANIFEST_PATH_RE.test(manifestPath)) throw new Error("AUTHORING_MANIFEST_PATH_NOT_ALLOWED");
   if (!body?.manifest || typeof body.manifest !== "object" || Array.isArray(body.manifest)) throw new Error("AUTHORING_MANIFEST_OBJECT_REQUIRED");
-  return { runtimeSha, authoringSha, manifestPath, manifest:body.manifest };
+  return { ...envelope, operation, manifestPath, manifest:body.manifest };
+}
+
+function requireBootstrapPayload(body) {
+  const operation = String(body?.operation || "").trim();
+  if (operation !== OPERATION_BOOTSTRAP) throw new Error("AUTHORING_OPERATION_UNSUPPORTED");
+  const envelope = requireTransportEnvelope(body);
+  if (body?.manifest != null || body?.manifest_path != null) throw new Error("AUTHORING_BOOTSTRAP_MANIFEST_FORBIDDEN");
+  return { ...envelope, operation };
 }
 
 function statusForError(code) {
@@ -100,6 +117,8 @@ function createAuthoringApplyHandler({
           transport_version: TRANSPORT_VERSION,
           runtime_sha: runtime.runtime_sha,
           ready: readiness.ready,
+          bootstrap_ready: readiness.bootstrap_ready,
+          bootstrap_required: readiness.bootstrap_required,
           readiness
         });
       } catch (error) {
@@ -116,7 +135,11 @@ function createAuthoringApplyHandler({
 
     let payload;
     try {
-      payload = requireApplyPayload(parseBody(req));
+      const body = parseBody(req);
+      const operation = String(body?.operation || OPERATION_APPLY).trim();
+      if (operation === OPERATION_BOOTSTRAP) payload = requireBootstrapPayload(body);
+      else if (operation === OPERATION_APPLY) payload = requireApplyPayload(body);
+      else throw new Error("AUTHORING_OPERATION_UNSUPPORTED");
       requireRuntime(env, payload.runtimeSha);
     } catch (error) {
       const code = String(error?.message || "INVALID_REQUEST");
@@ -143,6 +166,22 @@ function createAuthoringApplyHandler({
       await applyMigrations(client);
       const readiness = await inspectReadiness(client);
       if (!readiness.ready) throw new Error("AUTHORING_PRODUCTION_NOT_READY");
+
+      if (payload.operation === OPERATION_BOOTSTRAP) {
+        return json(res, 200, {
+          ok: true,
+          marker: TRANSPORT_MARKER,
+          transport_marker: TRANSPORT_MARKER,
+          transport_version: TRANSPORT_VERSION,
+          operation: OPERATION_BOOTSTRAP,
+          runtime_sha: payload.runtimeSha,
+          authoring_sha: payload.authoringSha,
+          bootstrap_complete: true,
+          ready: true,
+          readiness
+        });
+      }
+
       const transport = Object.freeze({
         version: TRANSPORT_VERSION,
         runtime_sha: payload.runtimeSha,
@@ -169,7 +208,7 @@ function createAuthoringApplyHandler({
       });
     } catch (error) {
       const code = String(error?.message || "AUTHORING_APPLY_FAILED");
-      return json(res, statusForError(code), { ok:false, marker:TRANSPORT_MARKER, transport_version:TRANSPORT_VERSION, runtime_sha:payload.runtimeSha, authoring_sha:payload.authoringSha, code });
+      return json(res, statusForError(code), { ok:false, marker:TRANSPORT_MARKER, transport_version:TRANSPORT_VERSION, operation:payload.operation, runtime_sha:payload.runtimeSha, authoring_sha:payload.authoringSha, code });
     } finally {
       if (client && typeof client.end === "function") {
         try { await client.end(); } catch {}
@@ -180,11 +219,15 @@ function createAuthoringApplyHandler({
 
 module.exports = Object.freeze({
   createAuthoringApplyHandler,
+  requireTransportEnvelope,
   requireApplyPayload,
+  requireBootstrapPayload,
   runtimeIdentity,
   requireRuntime,
   bearerToken,
   MANIFEST_PATH_RE,
   TRANSPORT_MARKER,
-  TRANSPORT_VERSION
+  TRANSPORT_VERSION,
+  OPERATION_APPLY,
+  OPERATION_BOOTSTRAP
 });

@@ -19,18 +19,24 @@ test('authoring workflow is triggered only by reviewed request data or explicit 
   assert.match(workflow, /push:\s*\n\s*branches:\s*\n\s*- main\s*\n\s*paths:\s*\n\s*- 'authoring\/requests\/\*\.json'/);
   assert.doesNotMatch(workflow, /- 'server\/atlas-authoring-apply-handler\.js'/);
   assert.match(workflow, /workflow_dispatch:/);
+  assert.match(workflow, /bootstrap_only:/);
+  assert.match(workflow, /required: false/);
 });
 
-test('authoring workflow discovers deployed runtime readiness before applying data', () => {
+test('authoring workflow discovers exact runtime readiness and distinguishes bounded bootstrap from unsafe drift', () => {
   assert.match(workflow, /Verify deployed authoring runtime readiness/);
   assert.match(workflow, /ATLAS_AUTHORING_TRANSPORT_V2/);
+  assert.match(workflow, /\.readiness\.core\.base_tables_ready==true/);
+  assert.match(workflow, /\.readiness\.core\.activity_columns_ready==true/);
   assert.match(workflow, /\.readiness\.p9\.old_index_present==false/);
   assert.match(workflow, /\.readiness\.p9\.new_index_present==true/);
   assert.match(workflow, /\.readiness\.p9\.duplicate_groups==0/);
+  assert.match(workflow, /\.ready==true or \.bootstrap_ready==true/);
+  assert.match(workflow, /ATLAS_AUTHORING_BOOTSTRAP_REQUIRED=/);
   assert.match(workflow, /ATLAS_RUNTIME_SHA=/);
 });
 
-test('authoring workflow refuses undeployed runtime code drift', () => {
+test('authoring workflow refuses undeployed runtime code drift before bootstrap or data apply', () => {
   assert.match(workflow, /git merge-base --is-ancestor "\$runtime_sha" "\$GITHUB_SHA"/);
   assert.match(workflow, /runtime-diff\.txt/);
   assert.match(workflow, /shouldBuildForChangedPaths/);
@@ -38,15 +44,37 @@ test('authoring workflow refuses undeployed runtime code drift', () => {
   assert.match(workflow, /scripts\/vercel-ignore-build\.mjs/);
 });
 
+test('bounded bootstrap sends only exact SHAs, requires OIDC, and proves ledger readiness without a manifest', () => {
+  assert.match(workflow, /Bootstrap bounded authoring schema migrations/);
+  assert.match(workflow, /operation:"bootstrap"/);
+  assert.match(workflow, /ATLAS_AUTHORING_BOOTSTRAP_REQUIRED == 'true'/);
+  assert.match(workflow, /ACTIONS_ID_TOKEN_REQUEST_URL/);
+  assert.match(workflow, /\.bootstrap_complete==true/);
+  assert.match(workflow, /\.readiness\.core\.ledger_columns_ready==true/);
+  const bootstrapStart = workflow.indexOf('      - name: Bootstrap bounded authoring schema migrations');
+  const applyStart = workflow.indexOf('      - name: Apply manifests through deployed Vercel server');
+  const bootstrapBody = workflow.slice(bootstrapStart, applyStart);
+  assert.doesNotMatch(bootstrapBody, /--slurpfile manifest/);
+  assert.doesNotMatch(bootstrapBody, /manifest_path/);
+});
+
 test('authoring apply sends independent runtime and authoring SHAs', () => {
   const script = applyScript();
   assert.match(script, /--arg runtime_sha "\$ATLAS_RUNTIME_SHA"/);
   assert.match(script, /--arg authoring_sha "\$GITHUB_SHA"/);
+  assert.match(script, /operation:"apply_manifest"/);
   assert.match(script, /transport_version:\$transport_version/);
   assert.match(script, /runtime_sha:\$runtime_sha/);
   assert.match(script, /authoring_sha:\$authoring_sha/);
   assert.doesNotMatch(script, /deployment_sha/);
   assert.doesNotMatch(script, /DEPLOYMENT_SHA_MISMATCH/);
+});
+
+test('bootstrap-only dispatch never applies Person or Activity manifests', () => {
+  const script = applyScript();
+  assert.match(script, /ATLAS_AUTHORING_BOOTSTRAP_ONLY/);
+  assert.match(script, /Bootstrap-only run complete; no Person or Activity manifest will be applied/);
+  assert.match(script, /exit 0/);
 });
 
 test('authoring apply verifies Stage 2-native response and preserves evidence', () => {
