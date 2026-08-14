@@ -117,28 +117,30 @@ function unifiedCountDeltas(operations) {
   return delta;
 }
 
+function coreOperationsFrom(operations) {
+  return operations.filter((operation) => !assertions.STAGE2_ASSERTION_TYPES.has(operation.type));
+}
+
 async function verifyUnifiedAppliedState(client, manifest) {
+  const coreOperations = coreOperationsFrom(manifest.operations);
+  if (coreOperations.length) await core.verifyAppliedState(client, { operations: coreOperations });
   for (const operation of manifest.operations) {
     if (assertions.STAGE2_ASSERTION_TYPES.has(operation.type)) {
       await assertions.verifyStage2AssertionApplied(client, operation);
-      continue;
-    }
-    if (operation.type === "rewrite_activity") {
-      core.assertExactBundle(await core.loadActivityBundle(client, operation.activity_id, { forUpdate: true }), operation.exact_after, `CORRECTION_V2_REPLAY_REWRITE_DRIFT:${operation.case_id}`);
-    } else if (operation.type === "retire_activity") {
-      if (await core.loadActivityBundle(client, operation.activity_id, { forUpdate: true })) throw new Error(`CORRECTION_V2_REPLAY_RETIRED_ACTIVITY_REAPPEARED:${operation.case_id}`);
-    } else if (operation.type === "split_activity") {
-      core.assertExactBundle(await core.loadActivityBundle(client, operation.activity_id, { forUpdate: true }), operation.survivor_fragment, `CORRECTION_V2_REPLAY_SURVIVOR_DRIFT:${operation.case_id}`);
-      for (const fragment of operation.new_fragments) {
-        core.assertExactBundle(await core.loadActivityBundle(client, fragment.activity.id, { forUpdate: true }), fragment, `CORRECTION_V2_REPLAY_NEW_FRAGMENT_DRIFT:${operation.case_id}`);
-      }
-    } else {
-      core.assertExactBundle(await core.loadPolityRelationBundle(client, operation.exact_after.relation.id, { forUpdate: true }), operation.exact_after, `CORRECTION_V2_REPLAY_RELATION_DRIFT:${operation.decision_id}`);
     }
   }
 }
 
-async function assertUnifiedBeforeState(client, operation) {
+async function lockUnifiedActivityBundles(client, operations) {
+  const lockedActivities = new Map();
+  const coreOperations = coreOperationsFrom(operations);
+  for (const id of core.existingActivityLockIds(coreOperations)) {
+    lockedActivities.set(id, await core.loadActivityBundle(client, id, { forUpdate: true }));
+  }
+  return lockedActivities;
+}
+
+async function assertUnifiedBeforeState(client, operation, lockedActivities = new Map()) {
   if (assertions.STAGE2_ASSERTION_TYPES.has(operation.type)) {
     await assertions.assertStage2AssertionAbsent(client, operation);
     return;
@@ -147,11 +149,26 @@ async function assertUnifiedBeforeState(client, operation) {
     await core.assertRelationAbsent(client, operation);
     return;
   }
-  const actual = await core.loadActivityBundle(client, operation.activity_id, { forUpdate: true });
-  core.assertExactBundle(actual, operation.exact_before, `CORRECTION_V2_EXACT_BEFORE_DRIFT:${operation.case_id}`);
+
+  core.assertExactBundle(
+    lockedActivities.get(operation.activity_id),
+    operation.exact_before,
+    `CORRECTION_V2_EXACT_BEFORE_DRIFT:${operation.case_id}`
+  );
+  if (operation.type === "retire_activity") {
+    for (const replacement of operation.replacement_survivors) {
+      core.assertExactBundle(
+        lockedActivities.get(replacement.activity_id),
+        replacement.exact_before,
+        `CORRECTION_V2_RETIRE_SURVIVOR_BEFORE_DRIFT:${operation.case_id}:${replacement.activity_id}`
+      );
+    }
+  }
   if (operation.type === "split_activity") {
     for (const fragment of operation.new_fragments) {
-      if (await core.loadActivityBundle(client, fragment.activity.id, { forUpdate: true })) throw new Error(`CORRECTION_V2_NEW_FRAGMENT_ALREADY_EXISTS:${operation.case_id}`);
+      if (await core.loadActivityBundle(client, fragment.activity.id, { forUpdate: true })) {
+        throw new Error(`CORRECTION_V2_NEW_FRAGMENT_ALREADY_EXISTS:${operation.case_id}`);
+      }
     }
   }
 }
@@ -161,10 +178,15 @@ async function applyUnifiedOperation(client, operation) {
     await assertions.insertStage2AssertionBundle(client, operation);
   } else if (operation.type === "rewrite_activity") {
     await core.updateActivityRow(client, operation.exact_after.activity);
+    await core.reconcileActivitySourceLinks(client, operation.activity_id, operation.exact_after.normalized_source_links);
   } else if (operation.type === "retire_activity") {
+    for (const replacement of operation.replacement_survivors) {
+      await core.reconcileActivitySourceLinks(client, replacement.activity_id, replacement.exact_after.normalized_source_links);
+    }
     await core.deleteActivity(client, operation.activity_id);
   } else if (operation.type === "split_activity") {
     await core.updateActivityRow(client, operation.survivor_fragment.activity);
+    await core.reconcileActivitySourceLinks(client, operation.activity_id, operation.survivor_fragment.normalized_source_links);
     for (const fragment of operation.new_fragments) await core.insertActivityBundle(client, fragment);
   } else {
     await core.insertPolityRelationBundle(client, operation.exact_after);
@@ -190,7 +212,8 @@ function createUnifiedCorrectionManifestV2Service({ client } = {}) {
         return Object.freeze({ marker: MARKER_V2, request_id: manifest.requestId, dry_run: Boolean(dryRun), committed: !dryRun, replay: true, result: ledger.result_snapshot });
       }
 
-      for (const operation of manifest.operations) await assertUnifiedBeforeState(client, operation);
+      const lockedActivities = await lockUnifiedActivityBundles(client, manifest.operations);
+      for (const operation of manifest.operations) await assertUnifiedBeforeState(client, operation, lockedActivities);
 
       const beforeCounts = await unifiedCounts(client);
       const delta = unifiedCountDeltas(manifest.operations);
@@ -218,7 +241,11 @@ function createUnifiedCorrectionManifestV2Service({ client } = {}) {
       }
 
       if (!await correctionLedgerExists(client)) throw new Error("CORRECTION_LEDGER_SCHEMA_REQUIRED");
-      await client.query(`insert into atlas_v2.correction_manifest_runs(request_id,manifest_hash,manifest_schema,result_snapshot) values($1,$2,$3,$4::jsonb)`, [manifest.requestId, ledgerHash, MANIFEST_V2, JSON.stringify(resultSnapshot)]);
+      await client.query(
+        `insert into atlas_v2.correction_manifest_runs(request_id,manifest_hash,manifest_schema,result_snapshot)
+         values($1,$2,$3,$4::jsonb)`,
+        [manifest.requestId, ledgerHash, MANIFEST_V2, JSON.stringify(resultSnapshot)]
+      );
       await client.query("commit");
       return Object.freeze({ marker: MARKER_V2, request_id: manifest.requestId, dry_run: false, committed: true, replay: false, result: resultSnapshot });
     } catch (error) {
@@ -236,6 +263,10 @@ module.exports = Object.freeze({
   requireUnifiedV2Manifest,
   unifiedCounts,
   unifiedCountDeltas,
+  coreOperationsFrom,
   verifyUnifiedAppliedState,
+  lockUnifiedActivityBundles,
+  assertUnifiedBeforeState,
+  applyUnifiedOperation,
   createUnifiedCorrectionManifestV2Service
 });

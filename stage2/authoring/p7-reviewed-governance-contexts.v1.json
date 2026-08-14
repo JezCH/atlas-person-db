@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-stage2-p7-reviewed-governance-contexts/v1",
+  "as_of": "2026-08-14",
+  "status": "REVIEWED_LITERAL_UUID_ROWS_BRANCH_ONLY_NO_PRODUCTION_MUTATION",
+  "authority": [
+    "docs/stage2/contracts/GOVERNANCE_CONTEXT_CURRENT_V1.md",
+    "docs/stage2/P7_HOJO_KAMAKURA_GOVERNANCE_DECISION_2026-08-14.md"
+  ],
+  "rules": {
+    "literal_uuid_insert_only": true,
+    "runtime_name_resolution_forbidden": true,
+    "existing_uuid_requires_exact_row_replay": true,
+    "canonical_key_collision_with_other_uuid_fails": true,
+    "preferred_name_collision_fails": true,
+    "activity_mutation_forbidden": true,
+    "territory_geometry_mutation_forbidden": true,
+    "production_mutation_authorized": false
+  },
+  "contexts": [
+    {
+      "identity_class": "KAMAKURA_BAKUFU_GOVERNMENT",
+      "row": {
+        "id": "56c8f804-2962-4a5b-90ed-a4913043d0e7",
+        "canonical_key": "stage2:kamakura-bakufu",
+        "governance_type": "government",
+        "historicity": "historical"
+      },
+      "names": [
+        {
+          "id": "e43991ae-39ef-4ae0-9218-98b6c63d7e2b",
+          "governance_context_id": "56c8f804-2962-4a5b-90ed-a4913043d0e7",
+          "locale": "en",
+          "name": "Kamakura bakufu",
+          "name_type": "canonical",
+          "is_preferred": true
+        },
+        {
+          "id": "3ab62795-d20e-40fd-b8d5-063564fa654b",
+          "governance_context_id": "56c8f804-2962-4a5b-90ed-a4913043d0e7",
+          "locale": "en",
+          "name": "Kamakura Shogunate",
+          "name_type": "alias",
+          "is_preferred": false
+        },
+        {
+          "id": "2db90d67-9be9-42b0-8d63-e6607afcc00c",
+          "governance_context_id": "56c8f804-2962-4a5b-90ed-a4913043d0e7",
+          "locale": "ko",
+          "name": "가마쿠라 막부",
+          "name_type": "canonical",
+          "is_preferred": true
+        }
+      ]
+    }
+  ],
+  "result": {
+    "context_count": 1,
+    "name_count": 3,
+    "production_mutation_authorized": false
+  }
+}
