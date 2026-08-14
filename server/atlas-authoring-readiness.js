@@ -24,6 +24,13 @@ async function inspectCoreAuthoringSchema(client) {
          where table_schema='atlas_v2' and table_name='authoring_manifest_runs' and column_name='result_snapshot'
       ) as ledger_result_snapshot,
       exists(
+        select 1
+          from pg_constraint c
+         where c.conrelid=to_regclass('atlas_v2.authoring_manifest_runs')
+           and c.conname='authoring_manifest_runs_manifest_schema_check'
+           and strpos(pg_get_constraintdef(c.oid), 'atlas-human-authoring/v1') > 0
+      ) as ledger_human_authoring_schema_allowed,
+      exists(
         select 1 from information_schema.columns
          where table_schema='atlas_v2' and table_name='person_politics_v2' and column_name='relation_type_id'
       ) as relation_type_id,
@@ -65,12 +72,16 @@ async function inspectCoreAuthoringSchema(client) {
   const ledgerColumnsReady = ledgerTableReady
     && columns.ledger_manifest_schema === true
     && columns.ledger_result_snapshot === true;
+  const ledgerHumanAuthoringSchemaAllowed = row.ledger_human_authoring_schema_allowed === true;
+  const ledgerContractReady = ledgerColumnsReady && ledgerHumanAuthoringSchemaAllowed;
   return Object.freeze({
     base_tables_ready: baseTablesReady,
     ledger_table_ready: ledgerTableReady,
     tables_ready: baseTablesReady && ledgerTableReady,
     activity_columns_ready: activityColumnsReady,
     ledger_columns_ready: ledgerColumnsReady,
+    ledger_human_authoring_schema_allowed: ledgerHumanAuthoringSchemaAllowed,
+    ledger_contract_ready: ledgerContractReady,
     columns_ready: activityColumnsReady && ledgerColumnsReady,
     columns
   });
@@ -100,6 +111,7 @@ async function inspectAuthoringReadiness(client) {
   const ready = p5Ready
     && core.tables_ready
     && core.columns_ready
+    && core.ledger_contract_ready
     && p9Ready
     && p10Blocked;
   const bootstrapReady = p5Ready
