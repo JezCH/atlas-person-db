@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:koimala:kingdom-of-maldives:1117-1141:v1",
+  "person": {
+    "canonical_name_en": "Koimala",
+    "display_name_ko": "코이말라"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Maldives",
+    "display_name_ko": "몰디브 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1117,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "uncertain",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1141,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "uncertain",
+    "end_calendar": "unspecified_historical",
+    "confidence": "disputed",
+    "chronology_status": "reviewed",
+    "notes": "Koimala (also represented in later Maldivian royal tradition as Mahaabarana Adeettiya / Maanaabarana) is a traditional or legendary early ruler credited with extending kingship over the whole Maldives before the Islamic conversion. Later Maldivian royal lists and modern historical retellings commonly assign a reign of 1117-1141, but the foundational narrative is retrospective and variant chronologies exist. This record therefore preserves the traditional sovereign-reign interval without treating either year as independently exact."
+  },
+  "sources": [
+    {
+      "title": "Maldive Sovereigns from AD 1141 — Maldives Royal Family",
+      "canonical_url": "https://maldivesroyalfamily.com/maldives_kings_list.full.shtml",
+      "citation_text": "The Maldivian royal list identifies Koimala, regnal name Maanaabarana, as a legendary ruler and gives accession in 1117 and death or abdication in 1141.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Maldives history: From Sri Lankan Prince to first King — Daily FT",
+      "canonical_url": "https://www.ft.lk/columns/Maldives-history-From-Sri-Lankan-Prince-to-first-King/4-779528",
+      "citation_text": "The 2025 historical feature states that King Mahaabarana Adeettiya (Koimala) governed the entire Maldives from 1117 to 1141 while explicitly presenting his Sri Lankan-prince origin as legend.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
