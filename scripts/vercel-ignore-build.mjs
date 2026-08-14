@@ -6,7 +6,8 @@ const SAFE_SKIP_PREFIXES = Object.freeze([
   "requirements/",
   "tests/",
   "corrections/evidence/",
-  "research/"
+  "research/",
+  "authoring/requests/"
 ]);
 
 const SAFE_SKIP_EXACT = new Set([
