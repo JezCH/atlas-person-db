@@ -211,7 +211,7 @@ try {
     (select count(*)::int from atlas_v2.persons p join atlas_v2.person_names n on n.person_id=p.id where n.locale='en' and n.is_preferred=true and n.name='Human Authoring Fixture Person') as fixture_persons,
     (select count(*)::int from atlas_v2.polities p join atlas_v2.polity_names n on n.polity_id=p.id where n.locale='en' and n.is_preferred=true and n.name='Human Authoring Fixture Polity') as fixture_polities,
     (select count(*)::int from atlas_v2.roles where source_label='Fixture Scholar') as reused_roles,
-    (select count(*)::int from atlas_v2.roles where source_label='Fixture Archivist') as created_roles`).rows[0];
+    (select count(*)::int from atlas_v2.roles where source_label='Fixture Archivist') as created_roles`)).rows[0];
   assert.deepEqual(counts,{fixture_persons:1,fixture_polities:1,reused_roles:1,created_roles:1});
 
   console.log(JSON.stringify({
