@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const arg = (name, fallback) => { const i = process.argv.indexOf(name); return i >= 0 ? process.argv[i + 1] : fallback; };
 const relationPath = path.resolve(root, arg('--relations', 'artifacts/stage2-p7a-reviewed-relation-backfill.json'));
+const batch5Path = path.resolve(root, 'stage2/integration/p7-explicit-person-relation-decisions-batch5.v1.json');
 const workQueuesPath = path.resolve(root, arg('--work-queues', 'artifacts/stage2-baseline-a-work-queues.json'));
 const intakePath = path.resolve(root, arg('--intake', 'artifacts/stage2-baseline-a-intake.json'));
 const outPath = path.resolve(root, arg('--out', 'artifacts/stage2-p7-direct-relation-execution-package.json'));
@@ -16,11 +17,32 @@ const readJson = (p) => JSON.parse(fs.readFileSync(p, 'utf8'));
 
 export function buildStage2P7DirectRelationPlans({ writeOutput = true } = {}) {
   const relations = readJson(relationPath);
+  const batch5 = readJson(batch5Path);
   const workQueues = readJson(workQueuesPath);
   const intake = readJson(intakePath);
   if (relations?.baseline?.deployment_sha !== BASELINE_SHA || relations?.baseline?.baseline_digest !== BASELINE_DIGEST) throw new Error('P7_DIRECT_RELATION_BASELINE_DRIFT');
+  if (batch5?.baseline?.deployment_sha !== BASELINE_SHA || batch5?.baseline?.baseline_digest !== BASELINE_DIGEST) throw new Error('P7_DIRECT_RELATION_BATCH5_BASELINE_DRIFT');
   if (workQueues?.summary?.baseline?.deployment_sha !== BASELINE_SHA || workQueues?.summary?.baseline?.baseline_digest !== BASELINE_DIGEST) throw new Error('P7_DIRECT_RELATION_WORK_QUEUE_BASELINE_DRIFT');
   if (intake?.deployment_sha !== BASELINE_SHA || intake?.baseline_digest !== BASELINE_DIGEST) throw new Error('P7_DIRECT_RELATION_INTAKE_BASELINE_DRIFT');
+
+  const reviewedRows = [...(relations.rows || [])];
+  const reviewedIds = new Set(reviewedRows.map((row)=>String(row.activity_id).toLowerCase()));
+  for (const decision of batch5.decisions || []) {
+    const id = String(decision.activity_id).toLowerCase();
+    if (reviewedIds.has(id)) throw new Error(`P7_DIRECT_RELATION_BATCH5_DUPLICATE:${id}`);
+    reviewedIds.add(id);
+    reviewedRows.push({
+      activity_id:id,
+      person:decision.person,
+      polity:null,
+      reviewed_relation_code:decision.relation_code,
+      relation_type_id:decision.relation_type_id,
+      resolution_mode:'EXPLICIT_REVIEWED_FULL_COVERAGE_DECISION',
+      authority:decision.authority,
+      decision_source:decision.authority?.[0] ?? null
+    });
+  }
+  if (reviewedRows.length !== 131) throw new Error(`P7_DIRECT_RELATION_REVIEWED_INPUT_DRIFT:${reviewedRows.length}`);
 
   const overlap = new Map();
   for (const dependency of NON_RELATION_DEPENDENCIES) for (const row of workQueues?.by_dependency?.[dependency] || []) {
@@ -30,7 +52,7 @@ export function buildStage2P7DirectRelationPlans({ writeOutput = true } = {}) {
   }
   const intakeById = new Map((intake.activity_rows || []).map((row) => [String(row.activity_id).toLowerCase(), row]));
   const safe = [], deferred = [];
-  for (const relation of relations.rows || []) {
+  for (const relation of reviewedRows) {
     const id = String(relation.activity_id).toLowerCase();
     const baseline = intakeById.get(id);
     if (!baseline) throw new Error(`P7_DIRECT_RELATION_BASELINE_ACTIVITY_MISSING:${id}`);
@@ -43,7 +65,7 @@ export function buildStage2P7DirectRelationPlans({ writeOutput = true } = {}) {
   }
   safe.sort((a,b)=>a.relation.activity_id.localeCompare(b.relation.activity_id));
   deferred.sort((a,b)=>a.activity_id.localeCompare(b.activity_id));
-  if (safe.length !== 104 || deferred.length !== 19) throw new Error(`P7_DIRECT_RELATION_SCOPE_DRIFT:${safe.length}:${deferred.length}`);
+  if (safe.length !== 110 || deferred.length !== 21) throw new Error(`P7_DIRECT_RELATION_SCOPE_DRIFT:${safe.length}:${deferred.length}`);
 
   const operations = safe.map(({ relation, baseline }) => ({
     case_id:`p7_direct_relation_${relation.activity_id}`,
@@ -53,7 +75,7 @@ export function buildStage2P7DirectRelationPlans({ writeOutput = true } = {}) {
     live_before:'SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN',
     after:{ activity_id:relation.activity_id, person_id:baseline.person_id, polity_id:baseline.polity_id, relation_type_id:relation.relation_type_id, role_id:baseline.role_id, period_basis_id:baseline.period_basis_id, activity_start:baseline.activity_start, activity_end:baseline.activity_end, activity_start_detail:null, activity_end_detail:null, confidence:baseline.confidence, chronology_status:baseline.chronology_status, legacy_source_key:baseline.legacy_source_key, notes_policy:'PRESERVE_EXACT_LIVE_NOTES', source_links_policy:'PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS', add_source_links:[] },
     reviewed_relation_code:relation.reviewed_relation_code,
-    relation_decision_authority:relation.resolution_mode === 'EXPLICIT_REVIEWED_AUDIT_DECISION' ? relation.authority : relation.decision_source
+    relation_decision_authority:relation.resolution_mode?.startsWith('EXPLICIT_REVIEWED') ? relation.authority : relation.decision_source
   }));
 
   const plans = [];
@@ -61,10 +83,10 @@ export function buildStage2P7DirectRelationPlans({ writeOutput = true } = {}) {
     const wave = String(plans.length + 1).padStart(2, '0');
     plans.push({ schema:'atlas-stage2-correction-v2-execution-plan/v1', batch_id:`p7_direct_relation_backfill_wave${wave}_v1`, as_of:'2026-08-14', status:'LITERAL_OPERANDS_COMPLETE_LIVE_BEFORE_SNAPSHOT_REQUIRED', contract:'stage2/contracts/correction-v2-current.v1.json', baseline:{deployment_sha:BASELINE_SHA,baseline_digest:BASELINE_DIGEST}, execution_rules:{ relation_only_scope:true, no_chronology_governance_subyear_provenance_or_entity_migration_dependency:true, all_person_polity_relation_role_period_operands_are_literal_uuid:true, exact_live_before_snapshot_required:true, preserve_all_existing_normalized_source_links_and_locators:true, preserve_exact_live_notes:true, territory_geometry_mutation_forbidden:true, physical_person_merge_forbidden:true, production_executable:false, production_mutation_authorized:false }, operations:operations.slice(offset, offset+MAX_PLAN_TARGETS), polity_relation_assertions:[] });
   }
-  if (plans.length !== 2 || plans[0].operations.length !== 80 || plans[1].operations.length !== 24) throw new Error('P7_DIRECT_RELATION_WAVE_SHAPE_DRIFT');
+  if (plans.length !== 2 || plans[0].operations.length !== 80 || plans[1].operations.length !== 30) throw new Error('P7_DIRECT_RELATION_WAVE_SHAPE_DRIFT');
 
   const multiSource = safe.filter(({baseline})=>Number(baseline.source_count)!==1).map(({relation,baseline})=>({ activity_id:relation.activity_id, person:relation.person, polity:relation.polity, source_count:baseline.source_count, branch_exact_locator_reconstruction:false, execution_requirement:'EXACT_SAME_SHA_LIVE_SNAPSHOT_PRESERVES_ALL_EXISTING_LINKS' }));
-  const result = { schema:'atlas-stage2-p7-direct-relation-execution-package/v1', as_of:'2026-08-14', status:'BRANCH_ONLY_LITERAL_RELATION_PLANS_NO_PRODUCTION_MUTATION', baseline:{deployment_sha:BASELINE_SHA,baseline_digest:BASELINE_DIGEST}, plans, deferred_overlap_rows:deferred, multi_source_live_snapshot_rows:multiSource, result:{ reviewed_relation_rows_input:relations.rows.length, safe_relation_only_rows:safe.length, deferred_rows_with_other_dependencies:deferred.length, execution_plan_count:plans.length, exact_single_source_artifact_rehearsable_rows:safe.length-multiSource.length, multi_source_live_snapshot_rows:multiSource.length, unresolved_relation_semantic_decisions:0, production_mutation_authorized:false } };
+  const result = { schema:'atlas-stage2-p7-direct-relation-execution-package/v1', as_of:'2026-08-14', status:'BRANCH_ONLY_LITERAL_RELATION_PLANS_NO_PRODUCTION_MUTATION', baseline:{deployment_sha:BASELINE_SHA,baseline_digest:BASELINE_DIGEST}, plans, deferred_overlap_rows:deferred, multi_source_live_snapshot_rows:multiSource, result:{ reviewed_relation_rows_input:reviewedRows.length, safe_relation_only_rows:safe.length, deferred_rows_with_other_dependencies:deferred.length, execution_plan_count:plans.length, exact_single_source_artifact_rehearsable_rows:safe.length-multiSource.length, multi_source_live_snapshot_rows:multiSource.length, unresolved_relation_semantic_decisions:0, production_mutation_authorized:false } };
   if (writeOutput) { fs.mkdirSync(path.dirname(outPath), {recursive:true}); fs.writeFileSync(outPath, `${JSON.stringify(result,null,2)}\n`); }
   return result;
 }
