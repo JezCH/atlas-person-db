@@ -68,11 +68,23 @@ function normalizeTripleSourceLink(raw, parentField, parentId, label) {
   };
 }
 
+function normalizeTripleSourceLinks(rawLinks, parentField, parentId, label) {
+  const links = (rawLinks || []).map((item, index) => normalizeTripleSourceLink(item, parentField, parentId, `${label}_${index + 1}`));
+  if (!links.length) throw new Error(`CORRECTION_V2_${label}_REQUIRED`);
+  const seen = new Set();
+  for (const link of links) {
+    const key = `${link.source_id}|${link.source_locator_key}`;
+    if (seen.has(key)) throw new Error(`CORRECTION_V2_${label}_LINK_REUSED`);
+    seen.add(key);
+  }
+  links.sort((a, b) => a.source_id.localeCompare(b.source_id) || a.source_locator_key.localeCompare(b.source_locator_key));
+  return links;
+}
+
 function normalizeGovernanceBundle(raw, label) {
   const row = normalizeRow(raw?.period, GOVERNANCE_FIELDS, GOVERNANCE_UUID_FIELDS, `${label}_PERIOD`);
   validateInterval(row, "valid", `${label}_PERIOD`);
-  const links = (raw?.source_links || []).map((item, index) => normalizeTripleSourceLink(item, "polity_governance_period_id", row.id, `${label}_SOURCE_${index + 1}`));
-  if (!links.length) throw new Error(`CORRECTION_V2_${label}_SOURCE_REQUIRED`);
+  const links = normalizeTripleSourceLinks(raw?.source_links, "polity_governance_period_id", row.id, `${label}_SOURCE`);
   return { period: row, source_links: links };
 }
 
@@ -102,8 +114,8 @@ function normalizeDesignationBundle(raw, label) {
       preferredLocales.add(name.locale);
     }
   }
-  const links = (raw?.source_links || []).map((item, index) => normalizeTripleSourceLink(item, "polity_designation_id", row.id, `${label}_SOURCE_${index + 1}`));
-  if (!links.length) throw new Error(`CORRECTION_V2_${label}_SOURCE_REQUIRED`);
+  names.sort((a, b) => a.locale.localeCompare(b.locale) || a.id.localeCompare(b.id));
+  const links = normalizeTripleSourceLinks(raw?.source_links, "polity_designation_id", row.id, `${label}_SOURCE`);
   return { designation: row, names, source_links: links };
 }
 
@@ -111,8 +123,7 @@ function normalizeIdentityRelationBundle(raw, label) {
   const row = normalizeRow(raw?.relation, IDENTITY_RELATION_FIELDS, IDENTITY_RELATION_UUID_FIELDS, `${label}_RELATION`);
   if (row.predecessor_polity_id === row.successor_polity_id) throw new Error(`CORRECTION_V2_${label}_SELF_RELATION_FORBIDDEN`);
   if (row.transition_year === 0 || (row.transition_year != null && !Number.isInteger(row.transition_year))) throw new Error(`CORRECTION_V2_${label}_TRANSITION_YEAR_INVALID`);
-  const links = (raw?.source_links || []).map((item, index) => normalizeTripleSourceLink(item, "polity_identity_relation_id", row.id, `${label}_SOURCE_${index + 1}`));
-  if (!links.length) throw new Error(`CORRECTION_V2_${label}_SOURCE_REQUIRED`);
+  const links = normalizeTripleSourceLinks(raw?.source_links, "polity_identity_relation_id", row.id, `${label}_SOURCE`);
   return { relation: row, source_links: links };
 }
 
