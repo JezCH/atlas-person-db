@@ -6,6 +6,7 @@ const require = createRequire(import.meta.url);
 const {
   createAuthoringApplyHandler,
   requireApplyPayload,
+  requireBootstrapPayload,
   runtimeIdentity,
   requireRuntime,
   TRANSPORT_MARKER,
@@ -48,8 +49,17 @@ function approvedManifest() {
 function readyState() {
   return {
     ready: true,
+    bootstrap_ready: true,
+    bootstrap_required: false,
     p5_ready: true,
-    core: { tables_ready: true, columns_ready: true },
+    core: {
+      base_tables_ready: true,
+      ledger_table_ready: true,
+      tables_ready: true,
+      activity_columns_ready: true,
+      ledger_columns_ready: true,
+      columns_ready: true
+    },
     p9: { old_index_present: false, new_index_present: true, duplicate_groups: 0 },
     person_merge: { allowed: false, person_merge_lifecycle_version: 'pre-p10-blocked' }
   };
@@ -65,9 +75,26 @@ test('apply payload separates exact runtime SHA from exact authoring SHA', () =>
   });
   assert.equal(payload.runtimeSha, RUNTIME_SHA);
   assert.equal(payload.authoringSha, AUTHORING_SHA);
+  assert.equal(payload.operation, 'apply_manifest');
   assert.throws(() => requireApplyPayload({ transport_version: 1, runtime_sha: RUNTIME_SHA, authoring_sha: AUTHORING_SHA, manifest_path: 'authoring/requests/test.json', manifest: approvedManifest() }), /TRANSPORT_VERSION/);
   assert.throws(() => requireApplyPayload({ transport_version: 2, runtime_sha: RUNTIME_SHA, authoring_sha: AUTHORING_SHA, manifest_path: '../test.json', manifest: approvedManifest() }), /MANIFEST_PATH_NOT_ALLOWED/);
   assert.throws(() => requireApplyPayload({ transport_version: 2, runtime_sha: 'main', authoring_sha: AUTHORING_SHA, manifest_path: 'authoring/requests/test.json', manifest: approvedManifest() }), /RUNTIME_SHA_REQUIRED/);
+});
+
+test('bootstrap payload is exact-SHA only and cannot smuggle a manifest mutation', () => {
+  const payload = requireBootstrapPayload({
+    operation: 'bootstrap',
+    transport_version: TRANSPORT_VERSION,
+    runtime_sha: RUNTIME_SHA,
+    authoring_sha: AUTHORING_SHA
+  });
+  assert.equal(payload.operation, 'bootstrap');
+  assert.equal(payload.runtimeSha, RUNTIME_SHA);
+  assert.equal(payload.authoringSha, AUTHORING_SHA);
+  assert.throws(() => requireBootstrapPayload({
+    operation: 'bootstrap', transport_version: 2, runtime_sha: RUNTIME_SHA, authoring_sha: AUTHORING_SHA,
+    manifest_path: 'authoring/requests/test.json', manifest: approvedManifest()
+  }), /BOOTSTRAP_MANIFEST_FORBIDDEN/);
 });
 
 test('runtime gate pins deployed Production main independently from authoring commit', () => {
@@ -102,7 +129,7 @@ test('OIDC temporal policy rejects expired and not-yet-active tokens', () => {
   assert.throws(() => verifyTemporalClaims({ exp: 1200, nbf: 1100 }, 1000), /NOT_ACTIVE/);
 });
 
-test('GET exposes read-only Production readiness and deployed runtime SHA', async () => {
+test('GET exposes read-only Production readiness, bootstrap state and deployed runtime SHA', async () => {
   let migrations = 0;
   let ended = 0;
   const client = { end: async () => { ended += 1; } };
@@ -120,6 +147,8 @@ test('GET exposes read-only Production readiness and deployed runtime SHA', asyn
   assert.equal(res.state.body.transport_version, TRANSPORT_VERSION);
   assert.equal(res.state.body.runtime_sha, RUNTIME_SHA);
   assert.equal(res.state.body.ready, true);
+  assert.equal(res.state.body.bootstrap_ready, true);
+  assert.equal(res.state.body.bootstrap_required, false);
   assert.equal(migrations, 0, 'readiness endpoint must not mutate schema');
   assert.equal(ended, 1);
 });
@@ -144,6 +173,59 @@ test('handler rejects runtime skew before OIDC or database access', async () => 
   assert.equal(res.state.body.code, 'AUTHORING_RUNTIME_SHA_MISMATCH');
   assert.equal(oidcCalls, 0);
   assert.equal(dbCalls, 0);
+});
+
+test('authenticated bootstrap applies only registered migrations then requires full readiness without dispatching data', async () => {
+  let oidcExpected = null;
+  let migrated = 0;
+  let dispatchCalls = 0;
+  let ended = 0;
+  const client = { end: async () => { ended += 1; } };
+  const handler = createAuthoringApplyHandler({
+    env: ENV,
+    verifyOidc: async (_token, { expectedSha }) => { oidcExpected = expectedSha; },
+    createClient: async () => client,
+    applyMigrations: async (seen) => { assert.equal(seen, client); migrated += 1; },
+    inspectReadiness: async () => readyState(),
+    createDispatch: () => { dispatchCalls += 1; throw new Error('bootstrap must never construct authoring dispatch'); }
+  });
+  const res = responseCapture();
+  await handler({ method: 'POST', headers: { authorization: 'Bearer token' }, body: {
+    operation: 'bootstrap',
+    transport_version: 2,
+    runtime_sha: RUNTIME_SHA,
+    authoring_sha: AUTHORING_SHA
+  } }, res);
+  assert.equal(res.state.statusCode, 200);
+  assert.equal(oidcExpected, AUTHORING_SHA);
+  assert.equal(migrated, 1);
+  assert.equal(dispatchCalls, 0);
+  assert.equal(res.state.body.operation, 'bootstrap');
+  assert.equal(res.state.body.bootstrap_complete, true);
+  assert.equal(res.state.body.ready, true);
+  assert.equal(res.state.body.runtime_sha, RUNTIME_SHA);
+  assert.equal(res.state.body.authoring_sha, AUTHORING_SHA);
+  assert.equal(ended, 1);
+});
+
+test('bootstrap fails closed if registered migrations do not produce full readiness', async () => {
+  let dispatchCalls = 0;
+  const client = { end: async () => {} };
+  const handler = createAuthoringApplyHandler({
+    env: ENV,
+    verifyOidc: async () => {},
+    createClient: async () => client,
+    applyMigrations: async () => {},
+    inspectReadiness: async () => ({ ...readyState(), ready: false }),
+    createDispatch: () => { dispatchCalls += 1; return {}; }
+  });
+  const res = responseCapture();
+  await handler({ method: 'POST', headers: { authorization: 'Bearer token' }, body: {
+    operation: 'bootstrap', transport_version: 2, runtime_sha: RUNTIME_SHA, authoring_sha: AUTHORING_SHA
+  } }, res);
+  assert.equal(res.state.statusCode, 409);
+  assert.equal(res.state.body.code, 'AUTHORING_PRODUCTION_NOT_READY');
+  assert.equal(dispatchCalls, 0);
 });
 
 test('POST accepts different runtime and authoring SHAs while binding OIDC to authoring SHA', async () => {
@@ -186,6 +268,7 @@ test('POST accepts different runtime and authoring SHAs while binding OIDC to au
   });
   const res = responseCapture();
   await handler({ method: 'POST', headers: { authorization: 'Bearer token' }, body: {
+    operation: 'apply_manifest',
     transport_version: 2,
     runtime_sha: RUNTIME_SHA,
     authoring_sha: AUTHORING_SHA,
@@ -215,7 +298,7 @@ test('POST fails closed when P9 authoring readiness is no longer satisfied', asy
     verifyOidc: async () => {},
     createClient: async () => client,
     applyMigrations: async () => {},
-    inspectReadiness: async () => ({ ...readyState(), ready: false }),
+    inspectReadiness: async () => ({ ...readyState(), ready: false, bootstrap_ready: false }),
     createDispatch: () => ({ apply: async () => { dispatchCalls += 1; } })
   });
   const res = responseCapture();

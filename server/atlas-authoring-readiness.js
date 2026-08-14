@@ -45,14 +45,35 @@ async function inspectCoreAuthoringSchema(client) {
       ) as activity_end_calendar
   `);
   const row = result.rows[0] || {};
-  const tablesReady = [
-    "persons","polities","roles","period_bases","relation_types","activities","activity_sources","authoring_ledger"
+  const baseTablesReady = [
+    "persons","polities","roles","period_bases","relation_types","activities","activity_sources"
   ].every((field) => Boolean(row[field]));
-  const columnsReady = [
-    "ledger_manifest_schema","ledger_result_snapshot","relation_type_id",
-    "activity_start_granularity","activity_end_granularity","activity_start_calendar","activity_end_calendar"
-  ].every((field) => row[field] === true);
-  return Object.freeze({ tables_ready: tablesReady, columns_ready: columnsReady });
+  const ledgerTableReady = Boolean(row.authoring_ledger);
+  const columns = Object.freeze({
+    ledger_manifest_schema: row.ledger_manifest_schema === true,
+    ledger_result_snapshot: row.ledger_result_snapshot === true,
+    relation_type_id: row.relation_type_id === true,
+    activity_start_granularity: row.activity_start_granularity === true,
+    activity_end_granularity: row.activity_end_granularity === true,
+    activity_start_calendar: row.activity_start_calendar === true,
+    activity_end_calendar: row.activity_end_calendar === true
+  });
+  const activityColumnsReady = [
+    "relation_type_id","activity_start_granularity","activity_end_granularity",
+    "activity_start_calendar","activity_end_calendar"
+  ].every((field) => columns[field] === true);
+  const ledgerColumnsReady = ledgerTableReady
+    && columns.ledger_manifest_schema === true
+    && columns.ledger_result_snapshot === true;
+  return Object.freeze({
+    base_tables_ready: baseTablesReady,
+    ledger_table_ready: ledgerTableReady,
+    tables_ready: baseTablesReady && ledgerTableReady,
+    activity_columns_ready: activityColumnsReady,
+    ledger_columns_ready: ledgerColumnsReady,
+    columns_ready: activityColumnsReady && ledgerColumnsReady,
+    columns
+  });
 }
 
 async function inspectAuthoringReadiness(client) {
@@ -76,9 +97,21 @@ async function inspectAuthoringReadiness(client) {
     && p9.duplicate_groups === 0;
   const p10Blocked = merge.allowed === false
     && merge.person_merge_lifecycle_version === "pre-p10-blocked";
+  const ready = p5Ready
+    && core.tables_ready
+    && core.columns_ready
+    && p9Ready
+    && p10Blocked;
+  const bootstrapReady = p5Ready
+    && core.base_tables_ready
+    && core.activity_columns_ready
+    && p9Ready
+    && p10Blocked;
 
   return Object.freeze({
-    ready: p5Ready && core.tables_ready && core.columns_ready && p9Ready && p10Blocked,
+    ready,
+    bootstrap_ready: bootstrapReady,
+    bootstrap_required: bootstrapReady && !ready,
     p5_ready: p5Ready,
     core,
     p9,
