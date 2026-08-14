@@ -43,6 +43,19 @@ test("Train 2 correction loop preserves CALL_NO and LAST_RESPONSE in the parent 
   assert.match(script, /--slurpfile p "\$plan_file"/);
 });
 
+test("Train 2 repairs recognized stale correction-ledger schema before any v2 correction", () => {
+  const script = executionScript();
+  const compatibilityIndex = script.indexOf("mutate_pair correction_schema '{}'");
+  const entityIndex = script.indexOf("mutate_pair entities '{}'");
+  const correctionIndex = script.indexOf('mutate_pair correction "$extra"');
+  assert.ok(compatibilityIndex >= 0, "correction ledger compatibility stage must exist");
+  assert.ok(entityIndex >= 0 && compatibilityIndex < entityIndex, "compatibility must be established before replaying authoring stages");
+  assert.ok(correctionIndex >= 0 && compatibilityIndex < correctionIndex, "compatibility must be established before v2 correction execution");
+  assert.match(script, /\.result\.correction_schema\.predecessor_compatible==true/);
+  assert.match(script, /\.result\.after\.ready==true/);
+  assert.match(script, /\.result\.correction_schema\.ready==true/);
+});
+
 test("Train 2 preserves partial evidence even when execution fails", () => {
   const script = executionScript();
   const copyIndex = script.indexOf("cp /tmp/atlas-train2-plans/plan-list.json /tmp/atlas-train2-evidence/plan-list.json");

@@ -9,6 +9,7 @@
   },
   "prerequisite_schema_release_id": "p5_stage2_additive_schema_20260813_v1",
   "sequence": [
+    "correction_manifest_v2_ledger_compatibility",
     "reviewed_p5_identity_source_authoring",
     "reviewed_p6_role_prerequisites",
     "all_reviewed_p7_source_authoring_manifests",
@@ -33,6 +34,8 @@
     "explicit_apply_phrase_required": true,
     "live_v2_snapshot_before_every_correction": true,
     "dry_run_before_every_mutating_stage": true,
+    "correction_manifest_v2_ledger_compatibility_required": true,
+    "correction_ledger_constraint_widening_only": true,
     "correction_replay_idempotency_required": true,
     "p9_duplicate_groups_must_be_zero": true,
     "physical_person_merge_forbidden": true,

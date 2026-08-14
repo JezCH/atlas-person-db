@@ -1,0 +1,69 @@
+name: ATLAS Stage 2 Train 2 Live Parity
+
+on:
+  pull_request:
+    paths:
+      - 'server/atlas-stage2-correction-ledger-compat.js'
+      - 'server/atlas-stage2-train2-release-handler.js'
+      - 'server/atlas-stage2-p9-db-cutover.js'
+      - 'server/atlas-stage2-schema-release.js'
+      - 'db/migrations/20260811_correction_manifest_runs.sql'
+      - 'db/migrations/20260812_correction_manifest_v1_1.sql'
+      - 'db/migrations/20260813_correction_manifest_v2.sql'
+      - 'db/proposals/**'
+      - 'db/schema/atlas_v2.current.sql'
+      - 'stage2/releases/train2-data-p9.v1.json'
+      - 'scripts/rehearse-stage2-train2-live-schema-parity.mjs'
+      - '.github/workflows/atlas-stage2-train2-live-parity.yml'
+      - '.github/workflows/atlas-stage2-train2-release.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'server/atlas-stage2-correction-ledger-compat.js'
+      - 'server/atlas-stage2-train2-release-handler.js'
+      - 'server/atlas-stage2-p9-db-cutover.js'
+      - 'server/atlas-stage2-schema-release.js'
+      - 'db/migrations/20260811_correction_manifest_runs.sql'
+      - 'db/migrations/20260812_correction_manifest_v1_1.sql'
+      - 'db/migrations/20260813_correction_manifest_v2.sql'
+      - 'db/proposals/**'
+      - 'db/schema/atlas_v2.current.sql'
+      - 'stage2/releases/train2-data-p9.v1.json'
+      - 'scripts/rehearse-stage2-train2-live-schema-parity.mjs'
+      - '.github/workflows/atlas-stage2-train2-live-parity.yml'
+      - '.github/workflows/atlas-stage2-train2-release.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  live-parity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: atlas_train2_parity
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d atlas_train2_parity"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/atlas_train2_parity
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install exact locked dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Rehearse stale Production correction schema through P9
+        run: node scripts/rehearse-stage2-train2-live-schema-parity.mjs
