@@ -328,6 +328,23 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
+      - name: Rehearse Lakshmibai discontinuous Jhansi rule split
+        id: p7-lakshmibai-jhansi-split
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p artifacts
+          node scripts/rehearse-stage2-p7-lakshmibai-jhansi-split.mjs 2>&1 | tee artifacts/stage2-p7-lakshmibai-jhansi-split.log
+
+      - name: Upload Lakshmibai Jhansi split rehearsal failure diagnostics
+        if: failure() && steps.p7-lakshmibai-jhansi-split.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-stage2-p7-lakshmibai-jhansi-split-failure-${{ github.sha }}
+          path: artifacts/stage2-p7-lakshmibai-jhansi-split.log
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Rehearse full P6 54-target artifact-reconstructed package
         id: p6-full-54-rehearsal
         shell: bash
