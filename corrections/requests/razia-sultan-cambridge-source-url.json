@@ -1,0 +1,31 @@
+{
+  "schema": "atlas-correction-manifest/v1.1",
+  "request_id": "correction:razia-sultan:cambridge-source-url:v1",
+  "review_status": "approved",
+  "operations": [
+    {
+      "type": "rewrite_source",
+      "source_id": "b5331172-bb46-4cd9-b24d-2679803b80db",
+      "expected_before": {
+        "id": "b5331172-bb46-4cd9-b24d-2679803b80db",
+        "source_key": "human-authoring:authoring:razia-sultan:delhi-sultanate:1236-1240:v1:2",
+        "source_type": "web_bibliographic_reference",
+        "title": "Razia Sultan of India: Queen of the World Bilqis-i Jihan",
+        "sha256": null,
+        "bytes": null,
+        "canonical_url": "https://www.cambridge.org/core/books/abs/unforgettable-queens-of-islam/razia-sultan-of-india-queen-of-the-world-bilqis-i-jihan/08594FB96A271F2B9E256D6046E3ECA2",
+        "citation_text": "Cambridge University Press, The Unforgettable Queens of Islam, chapter 4: Razia became the first and only female sultan of the Delhi Sultanate and ruled a little over three years."
+      },
+      "expected_after": {
+        "id": "b5331172-bb46-4cd9-b24d-2679803b80db",
+        "source_key": "human-authoring:authoring:razia-sultan:delhi-sultanate:1236-1240:v1:2",
+        "source_type": "web_bibliographic_reference",
+        "title": "Razia Sultan of India: Queen of the World Bilqis-i Jihan",
+        "sha256": null,
+        "bytes": null,
+        "canonical_url": "https://www.cambridge.org/core/books/abs/unforgettable-queens-of-islam/razia-sultan-of-india-queen-of-the-world-bilqisi-jihan/08594FB96A271F2B9E256D6046E3ECA2",
+        "citation_text": "Cambridge University Press, The Unforgettable Queens of Islam, chapter 4: Razia became the first and only female sultan of the Delhi Sultanate and ruled a little over three years."
+      }
+    }
+  ]
+}

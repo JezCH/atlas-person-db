@@ -20,10 +20,12 @@ const MANIFEST_V1_1 = "atlas-correction-manifest/v1.1";
 const MARKER_V1_1 = "ATLAS_CORRECTION_MANIFEST_V1_1";
 const MAX_OPERATIONS_V1_1 = 20;
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const HTTPS_URL_RE = /^https:\/\/[^\s]+$/i;
 const V1_1_OPERATION_TYPES = new Set([
   "coalesce_relationship",
   "retire_activity",
-  "update_activity_interval"
+  "update_activity_interval",
+  "rewrite_source"
 ]);
 
 function requireUuid(value, code) {
@@ -43,6 +45,38 @@ function invariantIdentity(expected) {
   });
 }
 
+function normalizedNullable(value) {
+  return value == null ? null : String(value);
+}
+
+function requireExpectedSource(raw, label) {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error(`CORRECTION_${label}_SOURCE_REQUIRED`);
+  const bytes = raw.bytes == null ? null : Number(raw.bytes);
+  if (bytes != null && (!Number.isInteger(bytes) || bytes < 0)) throw new Error(`CORRECTION_${label}_SOURCE_BYTES_INVALID`);
+  return Object.freeze({
+    id: requireUuid(raw.id, `CORRECTION_${label}_SOURCE_ID_REQUIRED`),
+    source_key: String(raw.source_key || ""),
+    source_type: String(raw.source_type || ""),
+    title: String(raw.title || ""),
+    sha256: normalizedNullable(raw.sha256),
+    bytes,
+    canonical_url: normalizedNullable(raw.canonical_url),
+    citation_text: normalizedNullable(raw.citation_text)
+  });
+}
+
+function sourceInvariantIdentity(expected) {
+  return JSON.stringify({
+    id: expected.id,
+    source_key: expected.source_key,
+    source_type: expected.source_type,
+    title: expected.title,
+    sha256: expected.sha256,
+    bytes: expected.bytes,
+    citation_text: expected.citation_text
+  });
+}
+
 function requireV11Operation(raw, index) {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
     throw new Error("CORRECTION_OPERATION_OBJECT_REQUIRED");
@@ -51,6 +85,26 @@ function requireV11Operation(raw, index) {
   if (!V1_1_OPERATION_TYPES.has(type)) throw new Error("CORRECTION_OPERATION_UNSUPPORTED");
 
   if (type === "coalesce_relationship") return requireV1Operation(raw, index);
+
+  if (type === "rewrite_source") {
+    const sourceId = requireUuid(raw.source_id, `CORRECTION_OP${index}_SOURCE_ID_REQUIRED`);
+    const expectedBefore = requireExpectedSource(raw.expected_before, `OP${index}_BEFORE`);
+    const expectedAfter = requireExpectedSource(raw.expected_after, `OP${index}_AFTER`);
+    if (expectedBefore.id !== sourceId || expectedAfter.id !== sourceId) throw new Error("CORRECTION_REWRITE_SOURCE_ID_MISMATCH");
+    if (sourceInvariantIdentity(expectedBefore) !== sourceInvariantIdentity(expectedAfter)) {
+      throw new Error("CORRECTION_REWRITE_SOURCE_NON_URL_DRIFT");
+    }
+    if (expectedBefore.canonical_url === expectedAfter.canonical_url) throw new Error("CORRECTION_REWRITE_SOURCE_NO_CHANGE");
+    if (!HTTPS_URL_RE.test(String(expectedBefore.canonical_url || "")) || !HTTPS_URL_RE.test(String(expectedAfter.canonical_url || ""))) {
+      throw new Error("CORRECTION_REWRITE_SOURCE_HTTPS_URL_REQUIRED");
+    }
+    return Object.freeze({
+      type,
+      source_id: sourceId,
+      expected_before: expectedBefore,
+      expected_after: expectedAfter
+    });
+  }
 
   const relationshipId = requireUuid(raw.relationship_id, `CORRECTION_OP${index}_RELATIONSHIP_ID_REQUIRED`);
   if (type === "retire_activity") {
@@ -84,7 +138,12 @@ function operationIds(operation) {
   if (operation.type === "coalesce_relationship") {
     return [operation.keep_relationship_id, operation.drop_relationship_id];
   }
+  if (operation.type === "rewrite_source") return [];
   return [operation.relationship_id];
+}
+
+function sourceOperationIds(operation) {
+  return operation.type === "rewrite_source" ? [operation.source_id] : [];
 }
 
 function requireV11Manifest(raw) {
@@ -97,11 +156,16 @@ function requireV11Manifest(raw) {
   if (raw.operations.length > MAX_OPERATIONS_V1_1) throw new Error("CORRECTION_OPERATIONS_LIMIT_EXCEEDED");
 
   const operations = raw.operations.map((operation, index) => requireV11Operation(operation, index + 1));
-  const seen = new Set();
+  const seenRelationships = new Set();
+  const seenSources = new Set();
   for (const operation of operations) {
     for (const id of operationIds(operation)) {
-      if (seen.has(id)) throw new Error("CORRECTION_RELATIONSHIP_REUSED_ACROSS_OPERATIONS");
-      seen.add(id);
+      if (seenRelationships.has(id)) throw new Error("CORRECTION_RELATIONSHIP_REUSED_ACROSS_OPERATIONS");
+      seenRelationships.add(id);
+    }
+    for (const id of sourceOperationIds(operation)) {
+      if (seenSources.has(id)) throw new Error("CORRECTION_SOURCE_REUSED_ACROSS_OPERATIONS");
+      seenSources.add(id);
     }
   }
   return Object.freeze({ schema: MANIFEST_V1_1, requestId, operations });
@@ -116,6 +180,43 @@ async function loadRelationship(client, id, forUpdate = true) {
   return result.rows[0] || null;
 }
 
+async function loadSource(client, id, forUpdate = true) {
+  const result = await client.query(`
+    select id::text as id,source_key,source_type,title,sha256,bytes,canonical_url,citation_text
+      from atlas_v2.sources
+     where id=$1::uuid${forUpdate ? " for update" : ""}`, [id]);
+  return result.rows[0] || null;
+}
+
+async function lockSources(client, ids) {
+  const uniqueIds = [...new Set(ids.map((id) => String(id).toLowerCase()))].sort();
+  if (!uniqueIds.length) return new Map();
+  const result = await client.query(`
+    select id::text as id,source_key,source_type,title,sha256,bytes,canonical_url,citation_text
+      from atlas_v2.sources
+     where id=any($1::uuid[])
+     order by id
+     for update`, [uniqueIds]);
+  return new Map(result.rows.map((row) => [String(row.id).toLowerCase(), row]));
+}
+
+function assertExpectedSource(row, expected, sourceId, label) {
+  if (!row) throw new Error(`CORRECTION_${label}_SOURCE_NOT_FOUND`);
+  const checks = [
+    [String(row.id).toLowerCase(), sourceId, "ID"],
+    [String(row.source_key || ""), expected.source_key, "SOURCE_KEY"],
+    [String(row.source_type || ""), expected.source_type, "SOURCE_TYPE"],
+    [String(row.title || ""), expected.title, "TITLE"],
+    [normalizedNullable(row.sha256), expected.sha256, "SHA256"],
+    [row.bytes == null ? null : Number(row.bytes), expected.bytes, "BYTES"],
+    [normalizedNullable(row.canonical_url), expected.canonical_url, "CANONICAL_URL"],
+    [normalizedNullable(row.citation_text), expected.citation_text, "CITATION_TEXT"]
+  ];
+  for (const [actual, wanted, field] of checks) {
+    if (actual !== wanted) throw new Error(`CORRECTION_${label}_SOURCE_${field}_DRIFT`);
+  }
+}
+
 function assertReplaySnapshot(snapshot, manifest) {
   if (!snapshot || typeof snapshot !== "object" || Array.isArray(snapshot)) throw new Error("CORRECTION_LEDGER_RESULT_INVALID");
   if (snapshot.schema !== MANIFEST_V1_1 || snapshot.marker !== MARKER_V1_1) {
@@ -127,7 +228,11 @@ function assertReplaySnapshot(snapshot, manifest) {
 
 async function verifyAppliedState(client, manifest) {
   const ids = manifest.operations.flatMap(operationIds);
-  const locked = await lockRelationships(client, ids);
+  const sourceIds = manifest.operations.flatMap(sourceOperationIds);
+  const [locked, lockedSources] = await Promise.all([
+    lockRelationships(client, ids),
+    lockSources(client, sourceIds)
+  ]);
   for (const operation of manifest.operations) {
     if (operation.type === "coalesce_relationship") {
       const keep = locked.get(operation.keep_relationship_id) || null;
@@ -135,6 +240,9 @@ async function verifyAppliedState(client, manifest) {
       if (locked.has(operation.drop_relationship_id)) throw new Error("CORRECTION_REPLAY_DROP_RELATIONSHIP_REAPPEARED");
     } else if (operation.type === "retire_activity") {
       if (locked.has(operation.relationship_id)) throw new Error("CORRECTION_REPLAY_RETIRED_RELATIONSHIP_REAPPEARED");
+    } else if (operation.type === "rewrite_source") {
+      const source = lockedSources.get(operation.source_id) || null;
+      assertExpectedSource(source, operation.expected_after, operation.source_id, "REPLAY_REWRITTEN");
     } else {
       const row = locked.get(operation.relationship_id) || null;
       assertExpectedRelationship(row, operation.expected_after, operation.relationship_id, "REPLAY_UPDATED");
@@ -162,14 +270,30 @@ async function updateActivityInterval(client, relationshipId, expectedAfter) {
   });
 }
 
+async function rewriteSourceCanonicalUrl(client, sourceId, expectedBefore, expectedAfter) {
+  const updated = await client.query(`
+    update atlas_v2.sources
+       set canonical_url=$2
+     where id=$1::uuid
+       and canonical_url is not distinct from $3
+     returning id::text as id`, [sourceId, expectedAfter.canonical_url, expectedBefore.canonical_url]);
+  if (updated.rowCount !== 1) throw new Error("CORRECTION_REWRITE_SOURCE_DID_NOT_CHANGE_EXACTLY_ONE_SOURCE");
+  return Object.freeze({
+    source_id: sourceId,
+    canonical_url_before: expectedBefore.canonical_url,
+    canonical_url_after: expectedAfter.canonical_url
+  });
+}
+
 function createCorrectionManifestV11Service({
   client,
   coalesce = coalesceRelationship,
   retire = retireActivity,
-  updateInterval = updateActivityInterval
+  updateInterval = updateActivityInterval,
+  rewriteSource = rewriteSourceCanonicalUrl
 } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
-  if (typeof coalesce !== "function" || typeof retire !== "function" || typeof updateInterval !== "function") {
+  if (typeof coalesce !== "function" || typeof retire !== "function" || typeof updateInterval !== "function" || typeof rewriteSource !== "function") {
     throw new Error("Correction v1.1 mutation primitives are required");
   }
 
@@ -198,8 +322,13 @@ function createCorrectionManifestV11Service({
       }
 
       const targetIds = manifest.operations.flatMap(operationIds);
-      const locked = await lockRelationships(client, targetIds);
+      const sourceTargetIds = manifest.operations.flatMap(sourceOperationIds);
+      const [locked, lockedSources] = await Promise.all([
+        lockRelationships(client, targetIds),
+        lockSources(client, sourceTargetIds)
+      ]);
       if (locked.size !== targetIds.length) throw new Error("CORRECTION_TARGET_RELATIONSHIP_SET_DRIFT");
+      if (lockedSources.size !== sourceTargetIds.length) throw new Error("CORRECTION_TARGET_SOURCE_SET_DRIFT");
 
       const beforeCounts = await globalCounts(client);
       const prepared = [];
@@ -217,6 +346,10 @@ function createCorrectionManifestV11Service({
             keep_before: await snapshotRelationship(client, operation.keep_relationship_id),
             drop_before: await snapshotRelationship(client, operation.drop_relationship_id)
           });
+        } else if (operation.type === "rewrite_source") {
+          const source = lockedSources.get(operation.source_id) || null;
+          assertExpectedSource(source, operation.expected_before, operation.source_id, "REWRITE");
+          prepared.push({ operation, source_before: structuredClone(source) });
         } else {
           const row = locked.get(operation.relationship_id) || null;
           const expected = operation.type === "retire_activity" ? operation.expected : operation.expected_before;
@@ -234,6 +367,7 @@ function createCorrectionManifestV11Service({
       let retiredChronologyClaims = 0;
       let retiredDescriptions = 0;
       let relationshipsRemoved = 0;
+      let sourcesRewritten = 0;
 
       for (const item of prepared) {
         const operation = item.operation;
@@ -260,6 +394,16 @@ function createCorrectionManifestV11Service({
             type: operation.type,
             relationship_id: operation.relationship_id,
             relationship_before: before,
+            mutation
+          });
+        } else if (operation.type === "rewrite_source") {
+          const mutation = await rewriteSource(client, operation.source_id, operation.expected_before, operation.expected_after);
+          sourcesRewritten += 1;
+          outcomes.push({
+            type: operation.type,
+            source_id: operation.source_id,
+            source_before: item.source_before,
+            expected_after: operation.expected_after,
             mutation
           });
         } else {
@@ -295,6 +439,9 @@ function createCorrectionManifestV11Service({
           if (await loadRelationship(client, operation.drop_relationship_id, true)) throw new Error("CORRECTION_POSTWRITE_DROP_STILL_EXISTS");
         } else if (operation.type === "retire_activity") {
           if (await loadRelationship(client, operation.relationship_id, true)) throw new Error("CORRECTION_POSTWRITE_RETIRED_RELATIONSHIP_STILL_EXISTS");
+        } else if (operation.type === "rewrite_source") {
+          const source = await loadSource(client, operation.source_id, true);
+          assertExpectedSource(source, operation.expected_after, operation.source_id, "POSTWRITE_REWRITTEN");
         } else {
           const updated = await loadRelationship(client, operation.relationship_id, true);
           assertExpectedRelationship(updated, operation.expected_after, operation.relationship_id, "POSTWRITE_UPDATED");
@@ -312,7 +459,8 @@ function createCorrectionManifestV11Service({
         duplicate_source_links_collapsed: collapsedSourceLinks,
         retired_source_links: retiredSourceLinks,
         retired_chronology_claims: retiredChronologyClaims,
-        retired_relationship_descriptions: retiredDescriptions
+        retired_relationship_descriptions: retiredDescriptions,
+        sources_rewritten: sourcesRewritten
       });
 
       if (dryRun) {
@@ -362,8 +510,13 @@ module.exports = Object.freeze({
   V1_1_OPERATION_TYPES,
   requireV11Manifest,
   requireV11Operation,
+  requireExpectedSource,
+  assertExpectedSource,
+  loadSource,
+  lockSources,
   retireActivity,
   updateActivityInterval,
+  rewriteSourceCanonicalUrl,
   createCorrectionManifestV11Service,
   createCorrectionManifestServiceForSchema
 });
