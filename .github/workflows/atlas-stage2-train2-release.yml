@@ -1,0 +1,126 @@
+name: ATLAS Stage 2 Train 2 Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_id:
+        description: 'Exact Train 2 release id'
+        required: true
+        type: string
+      approval:
+        description: 'Type APPLY:<release_id> exactly'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: atlas-stage2-train2-production
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment: production
+    env:
+      ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-stage2-train2-release
+      AUDIENCE: atlas-person-db-stage2-train2-release
+      RELEASE_ID: ${{ inputs.release_id }}
+      APPROVAL: ${{ inputs.approval }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install exact locked dependencies
+        run: npm ci
+
+      - name: Validate exact reviewed release envelope
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "${GITHUB_REF}" == "refs/heads/main" ]]
+          [[ "${APPROVAL}" == "APPLY:${RELEASE_ID}" ]]
+          jq -e --arg id "${RELEASE_ID}" '
+            .schema=="atlas-stage2-train2-release/v1" and .release_id==$id and
+            .status=="RELEASE_CANDIDATE_NO_PRODUCTION_MUTATION" and
+            .prerequisite_schema_release_id=="p5_stage2_additive_schema_20260813_v1" and
+            .safety.exact_main_sha_required==true and .safety.github_actions_oidc_required==true and
+            .safety.live_v2_snapshot_before_every_correction==true and
+            .safety.physical_person_merge_forbidden==true and .safety.p10_interlock_must_remain_blocked==true and
+            .safety.production_mutation_authorized==false
+          ' stage2/releases/train2-data-p9.v1.json >/dev/null
+          [[ "${RELEASE_ID}" == "stage2_train2_data_p9_20260814_v1" ]]
+
+      - name: Build deterministic reviewed correction plan list
+        run: node scripts/build-stage2-train2-correction-plan-list.mjs /tmp/atlas-train2-plans > /tmp/atlas-train2-plan-build.json
+
+      - name: Execute Train 2 with dry-run before every mutation
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/atlas-train2-evidence/responses
+          request_oidc() {
+            curl --fail-with-body --silent --show-error -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${AUDIENCE}" | jq -er '.value'
+          }
+          call() {
+            local mode="$1" extra="${2:-{}}" output="/tmp/atlas-train2-evidence/responses/$(printf '%03d' "${CALL_NO}")-${mode}.json"
+            local token payload status code
+            token="$(request_oidc)"
+            payload="$(jq -cn --arg sha "${GITHUB_SHA}" --arg release "${RELEASE_ID}" --arg approval "${APPROVAL}" --arg mode "$mode" --argjson extra "$extra" '{deployment_sha:$sha,release_id:$release,approval:$approval,mode:$mode}+$extra')"
+            status="$(curl --silent --show-error --output "$output" --write-out '%{http_code}' --request POST -H 'content-type: application/json' -H "authorization: Bearer ${token}" --data "$payload" "$ENDPOINT")"
+            if [[ "$status" != "200" ]]; then cat "$output" >&2 || true; code="$(jq -r '.code//"UNKNOWN"' "$output" 2>/dev/null || true)"; echo "Train2 ${mode} failed HTTP ${status} ${code}" >&2; exit 1; fi
+            jq -e --arg mode "$mode" --arg sha "${GITHUB_SHA}" '.ok==true and .marker=="ATLAS_STAGE2_TRAIN2_RELEASE_V1" and .mode==$mode and .deployment_sha==$sha' "$output" >/dev/null
+            LAST_RESPONSE="$output"; CALL_NO=$((CALL_NO+1))
+          }
+          mutate_pair() { local base="$1" extra="${2:-{}}"; call "${base}_dry_run" "$extra"; call "${base}_apply" "$extra"; }
+          CALL_NO=1
+
+          call preflight '{}'
+          jq -e '.result.schema_ready==true and .result.person_merge.allowed==false and .result.person_merge.person_merge_lifecycle_version=="pre-p10-blocked"' "$LAST_RESPONSE" >/dev/null
+
+          mutate_pair entities '{}'
+          mutate_pair roles '{}'
+
+          while IFS= read -r f; do
+            [[ -n "$f" ]] || continue
+            schema="$(jq -r '.schema//""' "$f")"
+            case "$schema" in
+              atlas-stage2-p7-reviewed-relation-sources/v1) kind=source ;;
+              atlas-stage2-p7-reviewed-polities/v1) kind=polity ;;
+              atlas-stage2-p7-reviewed-governance-contexts/v1) kind=governance ;;
+              *) continue ;;
+            esac
+            extra="$(jq -cn --arg p "$f" '{manifest_path:$p}')"
+            mutate_pair "$kind" "$extra"
+          done < <(find stage2/authoring -maxdepth 1 -type f -name 'p7-*.json' | sort)
+
+          jq -c '.entries[]' /tmp/atlas-train2-plans/plan-list.json | while IFS= read -r entry; do
+            plan_file="$(jq -r '.file' <<<"$entry")"
+            plan="$(cat "$plan_file")"
+            extra="$(jq -cn --argjson p "$plan" '{plan:$p}')"
+            mutate_pair correction "$extra"
+            jq -e '.result.outcome.committed==true' "$LAST_RESPONSE" >/dev/null
+          done
+
+          mutate_pair p9 '{}'
+          call final_verify '{}'
+          jq -e '.result.p9.old_index_present==false and .result.p9.new_index_present==true and .result.p9.duplicate_groups==0 and .result.person_merge.allowed==false' "$LAST_RESPONSE" >/dev/null
+          cp /tmp/atlas-train2-plans/plan-list.json /tmp/atlas-train2-evidence/plan-list.json
+          jq -n --arg sha "${GITHUB_SHA}" --arg release "${RELEASE_ID}" --slurpfile final "$LAST_RESPONSE" '{deployment_sha:$sha,release_id:$release,final:$final[0]}' > /tmp/atlas-train2-evidence/final.json
+
+      - name: Upload immutable Train 2 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-stage2-train2-${{ github.sha }}
+          path: /tmp/atlas-train2-evidence/
+          if-no-files-found: error
+          retention-days: 90
