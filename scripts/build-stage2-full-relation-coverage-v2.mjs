@@ -6,6 +6,7 @@ import { buildStage2FullRelationCoverage } from './build-stage2-full-relation-co
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const outPath = path.resolve(root, 'artifacts/stage2-full-relation-coverage-v2.json');
 const batch6Path = path.resolve(root, 'stage2/integration/p7-explicit-person-relation-decisions-batch6.v1.json');
+const batch7Path = path.resolve(root, 'stage2/integration/p7-explicit-person-relation-decisions-batch7.v1.json');
 const dispositionPath = path.resolve(root, 'stage2/integration/p7-full-relation-review-dispositions.v1.json');
 const BASELINE_SHA = 'ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79';
 const BASELINE_DIGEST = 'sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27';
@@ -15,25 +16,35 @@ const readJson = (p) => JSON.parse(fs.readFileSync(p, 'utf8'));
 export function buildStage2FullRelationCoverageV2({ writeOutput = true } = {}) {
   const base = buildStage2FullRelationCoverage({ writeOutput:false });
   const batch6 = readJson(batch6Path);
+  const batch7 = readJson(batch7Path);
   const disposition = readJson(dispositionPath);
-  if (batch6?.baseline?.deployment_sha !== BASELINE_SHA || batch6?.baseline?.baseline_digest !== BASELINE_DIGEST) throw new Error('FULL_RELATION_V2_BATCH6_BASELINE_DRIFT');
+  for (const [label, packageJson] of [['batch6',batch6],['batch7',batch7]]) {
+    if (packageJson?.baseline?.deployment_sha !== BASELINE_SHA || packageJson?.baseline?.baseline_digest !== BASELINE_DIGEST) throw new Error(`FULL_RELATION_V2_${label.toUpperCase()}_BASELINE_DRIFT`);
+  }
   if (disposition?.baseline?.deployment_sha !== BASELINE_SHA || disposition?.baseline?.baseline_digest !== BASELINE_DIGEST) throw new Error('FULL_RELATION_V2_DISPOSITION_BASELINE_DRIFT');
-  if (batch6?.decisions?.length !== 1 || disposition?.result?.classified_total !== 15) throw new Error('FULL_RELATION_V2_AUTHORITY_SHAPE_INVALID');
+  if (batch6?.decisions?.length !== 1 || batch7?.decisions?.length !== 1 || disposition?.result?.classified_total !== 15) throw new Error('FULL_RELATION_V2_AUTHORITY_SHAPE_INVALID');
 
   const directById = new Map();
-  for (const decision of batch6.decisions) {
-    const id = String(decision.activity_id).toLowerCase();
-    if (!VALID_RELATIONS.has(decision.relation_code)) throw new Error(`FULL_RELATION_V2_RELATION_INVALID:${id}`);
-    directById.set(id, decision);
+  for (const packageJson of [batch6,batch7]) {
+    for (const decision of packageJson.decisions || []) {
+      const id = String(decision.activity_id).toLowerCase();
+      if (directById.has(id)) throw new Error(`FULL_RELATION_V2_DIRECT_DUPLICATE:${id}`);
+      if (!VALID_RELATIONS.has(decision.relation_code)) throw new Error(`FULL_RELATION_V2_RELATION_INVALID:${id}`);
+      directById.set(id, decision);
+    }
   }
   const retiredById = new Map((disposition.retire_or_migrate_before_relation || []).map((row) => [String(row.activity_id).toLowerCase(), row]));
   const structuralById = new Map((disposition.structural_or_multiphase_correction_before_relation || []).map((row) => [String(row.activity_id).toLowerCase(), row]));
   const remainingById = new Map((disposition.relation_review_remaining || []).map((row) => [String(row.activity_id).toLowerCase(), row]));
-  if (retiredById.size !== 8 || structuralById.size !== 5 || remainingById.size !== 1) throw new Error('FULL_RELATION_V2_DISPOSITION_COUNT_DRIFT');
+  if (directById.size !== 2 || retiredById.size !== 8 || structuralById.size !== 5 || remainingById.size !== 0) throw new Error('FULL_RELATION_V2_DISPOSITION_COUNT_DRIFT');
 
-  const resolvedDisposition = disposition.relation_review_resolved?.[0];
-  if (!resolvedDisposition || String(resolvedDisposition.activity_id).toLowerCase() !== [...directById.keys()][0] || resolvedDisposition.relation_code !== [...directById.values()][0].relation_code) {
-    throw new Error('FULL_RELATION_V2_RESOLVED_DISPOSITION_BATCH6_DRIFT');
+  const resolvedById = new Map((disposition.relation_review_resolved || []).map((row) => [String(row.activity_id).toLowerCase(), row]));
+  if (resolvedById.size !== directById.size) throw new Error('FULL_RELATION_V2_RESOLVED_DISPOSITION_COUNT_DRIFT');
+  for (const [id, decision] of directById) {
+    const resolved = resolvedById.get(id);
+    if (!resolved || resolved.relation_code !== decision.relation_code || String(resolved.relation_type_id).toLowerCase() !== String(decision.relation_type_id).toLowerCase()) {
+      throw new Error(`FULL_RELATION_V2_RESOLVED_DISPOSITION_DRIFT:${id}`);
+    }
   }
 
   const priorReviewIds = new Set(base.explicit_review_required.map((row)=>row.activity_id));
@@ -78,7 +89,7 @@ export function buildStage2FullRelationCoverageV2({ writeOutput = true } = {}) {
     classified_total:rows.length,
     production_mutation_authorized:false
   };
-  if (summary.p6_delegated !== 54 || summary.p7_reviewed_relation_rows !== 133 || summary.p7_reviewed_multiphase_rows !== 3 || summary.exact_role_policy_candidates !== 134 || summary.retire_or_migrate_before_relation !== 8 || summary.structural_correction_before_relation !== 5 || summary.explicit_relation_review_required !== 1 || summary.classified_total !== 338) {
+  if (summary.p6_delegated !== 54 || summary.p7_reviewed_relation_rows !== 134 || summary.p7_reviewed_multiphase_rows !== 3 || summary.exact_role_policy_candidates !== 134 || summary.retire_or_migrate_before_relation !== 8 || summary.structural_correction_before_relation !== 5 || summary.explicit_relation_review_required !== 0 || summary.classified_total !== 338) {
     throw new Error(`FULL_RELATION_V2_COVERAGE_DRIFT:${JSON.stringify(summary)}`);
   }
 
