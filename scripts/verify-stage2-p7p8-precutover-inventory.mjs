@@ -5,6 +5,7 @@ const inventory = JSON.parse(fs.readFileSync('artifacts/stage2-p7p8-precutover-i
 const relations = JSON.parse(fs.readFileSync('artifacts/stage2-p7a-reviewed-relation-backfill.json', 'utf8'));
 const batch4 = JSON.parse(fs.readFileSync('stage2/integration/p7-explicit-person-relation-decisions-batch4.v1.json', 'utf8'));
 const multiphase = JSON.parse(fs.readFileSync('stage2/integration/p7-multiphase-person-relation-decisions.v1.json', 'utf8'));
+const executionPlan = JSON.parse(fs.readFileSync('stage2/execution/p7-relation-resolution-execution.v1.json', 'utf8'));
 
 const BASELINE_SHA = 'ad9a0ed0398bc2d13e4c8315305b01ce1adc4b79';
 const BASELINE_DIGEST = 'sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27';
@@ -74,11 +75,14 @@ assert.equal(multiphase.status, 'REVIEWED_BRANCH_ONLY_PHASE_MODEL_NO_PRODUCTION_
 assert.equal(multiphase.baseline.deployment_sha, BASELINE_SHA);
 assert.equal(multiphase.baseline.baseline_digest, BASELINE_DIGEST);
 assert.equal(multiphase.rules.production_mutation_authorized, false);
+assert.equal(multiphase.execution_plan, 'stage2/execution/p7-relation-resolution-execution.v1.json');
 assert.equal(multiphase.cases.length, 3);
 assert.equal(multiphase.result.case_count, 3);
 assert.equal(multiphase.result.phase_count, 9);
 assert.equal(multiphase.result.unresolved_relation_decision_count, 0);
-assert.equal(multiphase.result.literal_fragment_uuid_allocations_complete, false);
+assert.equal(multiphase.result.literal_fragment_uuid_allocations_complete, true);
+assert.equal(multiphase.result.literal_new_activity_uuid_count, 6);
+assert.equal(multiphase.result.execution_plan_ready, true);
 assert.equal(multiphase.result.production_mutation_authorized, false);
 
 const reviewIds = new Set(inventory.relation_backfill.review_required.map((row) => row.activity_id));
@@ -88,7 +92,7 @@ assert.equal(resolvedIds.size, 4);
 assert.deepEqual([...resolvedIds].sort(), [...reviewIds].sort(), 'focused direct + multiphase decisions must exactly close the four relation-review rows');
 
 for (const item of multiphase.cases) {
-  assert.equal(item.execution_status, 'REVIEWED_PHASE_MODEL_AWAITING_LITERAL_FRAGMENT_UUIDS');
+  assert.equal(item.execution_status, 'LITERAL_EXECUTION_PLAN_READY_BRANCH_ONLY');
   assert.ok(Array.isArray(item.phases) && item.phases.length >= 2, `multiphase case missing phases ${item.activity_id}`);
   let previousEnd = null;
   for (const phase of item.phases) {
@@ -100,10 +104,24 @@ for (const item of multiphase.cases) {
   }
 }
 
+assert.equal(executionPlan.schema, 'atlas-stage2-correction-v2-execution-plan/v1');
+assert.equal(executionPlan.status, 'LITERAL_OPERANDS_COMPLETE_LIVE_BEFORE_SNAPSHOT_REQUIRED');
+assert.equal(executionPlan.baseline.deployment_sha, BASELINE_SHA);
+assert.equal(executionPlan.baseline.baseline_digest, BASELINE_DIGEST);
+assert.equal(executionPlan.execution_rules.production_executable, false);
+assert.equal(executionPlan.execution_rules.production_mutation_authorized, false);
+assert.equal(executionPlan.operations.length, 4);
+assert.equal(executionPlan.new_activity_uuid_allocations.length, 6);
+const executionTargetIds = new Set(executionPlan.operations.map((row) => row.activity_id));
+assert.deepEqual([...executionTargetIds].sort(), [...resolvedIds].sort(), 'P7 relation execution plan must cover the exact four closed relation-review Activities');
+const literalNewIds = new Set(executionPlan.new_activity_uuid_allocations.map((row) => row.activity_uuid));
+assert.equal(literalNewIds.size, 6);
+for (const id of literalNewIds) assert.match(id, /^[0-9a-f-]{36}$/);
+
 const resolutionStatus = {
   schema: 'atlas-stage2-p7-relation-resolution-status/v1',
   as_of: '2026-08-14',
-  status: 'BRANCH_ONLY_RELATION_DECISIONS_CLOSED_EXECUTION_PENDING',
+  status: 'BRANCH_ONLY_RELATION_DECISIONS_CLOSED_LITERAL_EXECUTION_PLAN_READY',
   baseline: { deployment_sha: BASELINE_SHA, baseline_digest: BASELINE_DIGEST },
   residual_relation_rows: 127,
   direct_literal_backfill: {
@@ -114,7 +132,13 @@ const resolutionStatus = {
   multiphase_correction_rows: 3,
   unresolved_relation_decision_rows: 0,
   relation_semantic_decision_gate: 'ZERO_UNDECIDED',
-  relation_execution_gate: 'NOT_READY_LITERAL_FRAGMENT_UUIDS',
+  relation_execution_plan: {
+    path: 'stage2/execution/p7-relation-resolution-execution.v1.json',
+    existing_activity_targets: 4,
+    literal_new_activity_uuids: 6,
+    production_executable: false
+  },
+  relation_execution_gate: 'LITERAL_EXECUTION_PLAN_READY_BRANCH_ONLY',
   production_mutation_authorized: false
 };
 fs.writeFileSync('artifacts/stage2-p7-relation-resolution-status.json', `${JSON.stringify(resolutionStatus, null, 2)}\n`);
