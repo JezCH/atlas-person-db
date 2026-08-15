@@ -2,6 +2,11 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "ignoreCommand": "node scripts/vercel-ignore-build.mjs",
+  "git": {
+    "deploymentEnabled": {
+      "agent/*": false
+    }
+  },
   "functions": {
     "api/atlas-stage2-schema-release.js": {
       "includeFiles": "{stage2/**,db/proposals/**}"
