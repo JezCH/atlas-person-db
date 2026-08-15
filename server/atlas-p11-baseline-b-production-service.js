@@ -11,6 +11,7 @@ const {
 
 const EXPECTED_DATASET_KEYS = Object.freeze(CORE_DATASET_QUERIES.map((item) => item.key).sort());
 const EXPECTED_DATASET_COUNT = EXPECTED_DATASET_KEYS.length;
+const EXPECTED_AUTHORITY_SOURCE = "live-atlas-v2-repeatable-read";
 
 function exactKeys(value) {
   return value && typeof value === "object" && !Array.isArray(value)
@@ -48,7 +49,18 @@ function assertProductionBaselineBArtifact(baseline) {
     dataset_digests: baseline.dataset_digests
   });
   if (baseline.baseline_digest !== expectedBaselineDigest) throw new Error("P11_BASELINE_B_DIGEST_DRIFT");
+
   if (baseline.readiness?.ready !== true) throw new Error("P11_BASELINE_B_READINESS_DRIFT");
+  if (baseline.readiness?.schema !== BASELINE_B_SCHEMA) throw new Error("P11_BASELINE_B_READINESS_SCHEMA_DRIFT");
+  if (baseline.readiness?.semantic_version !== BASELINE_B_SEMANTIC_VERSION) throw new Error("P11_BASELINE_B_READINESS_SEMANTIC_VERSION_DRIFT");
+  if (Number(baseline.readiness?.canonical_schema?.expected_table_count) !== EXPECTED_DATASET_COUNT
+      || Number(baseline.readiness?.canonical_schema?.present_table_count) !== EXPECTED_DATASET_COUNT
+      || !Array.isArray(baseline.readiness?.canonical_schema?.missing_tables)
+      || baseline.readiness.canonical_schema.missing_tables.length !== 0) {
+    throw new Error("P11_BASELINE_B_READINESS_CANONICAL_SCHEMA_DRIFT");
+  }
+
+  if (baseline.authority?.source !== EXPECTED_AUTHORITY_SOURCE) throw new Error("P11_BASELINE_B_AUTHORITY_SOURCE_DRIFT");
   if (baseline.authority?.production_mutation_authorized !== false) throw new Error("P11_BASELINE_B_AUTHORITY_DRIFT");
   return baseline;
 }
@@ -87,6 +99,7 @@ async function captureProductionBaselineB(client, {
 module.exports = Object.freeze({
   EXPECTED_DATASET_KEYS,
   EXPECTED_DATASET_COUNT,
+  EXPECTED_AUTHORITY_SOURCE,
   assertProductionBaselineBArtifact,
   inspectProductionBaselineBReadiness,
   captureProductionBaselineB
