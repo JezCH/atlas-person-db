@@ -180,13 +180,11 @@ try {
   assert.ok(!revalidated.evidence.some((item) => item.kind === 'P10_EXACT_ACTIVITY_SEMANTIC_CONTEXT'));
   assert.ok(revalidated.evidence.some((item) => item.kind === 'P10_ROLE_VARIANT_ACTIVITY_CONTEXT'));
 
-  const mergeReadiness = mergeInterlock.personMergeReadiness({
-    reconciliation_semantic_version: duplicateDetector.REVALIDATION_SEMANTIC_VERSION,
-    required_reconciliation_semantic_version: duplicateDetector.REVALIDATION_SEMANTIC_VERSION,
-    person_merge_lifecycle_version: mergeInterlock.PRE_P10_LIFECYCLE_VERSION,
-    required_person_merge_lifecycle_version: mergeInterlock.REQUIRED_P10_LIFECYCLE_VERSION
-  });
-  assert.equal(mergeReadiness.allowed, false, 'P10-A must not unlock physical Person merge');
+  const mergeState = mergeInterlock.personMergeExecutionState();
+  assert.equal(mergeState.reconciliation_semantic_version, duplicateDetector.REVALIDATION_SEMANTIC_VERSION);
+  assert.equal(mergeState.person_merge_lifecycle_version, 'pre-p10-blocked');
+  assert.equal(mergeState.required_person_merge_lifecycle_version, 'p10-v2-revalidated');
+  assert.equal(mergeState.allowed, false, 'P10-A must not unlock physical Person merge');
 
   console.log(JSON.stringify({
     marker: 'ATLAS_P10_PERSON_DUPLICATE_V2_REVALIDATION_OK',
