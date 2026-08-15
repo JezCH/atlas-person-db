@@ -77,7 +77,13 @@ function completeBaselineFixture() {
       ready: true,
       blockers: [],
       schema: BASELINE_B_SCHEMA,
-      semantic_version: BASELINE_B_SEMANTIC_VERSION
+      semantic_version: BASELINE_B_SEMANTIC_VERSION,
+      canonical_schema: {
+        expected_table_count: EXPECTED_DATASET_COUNT,
+        present_table_count: EXPECTED_DATASET_COUNT,
+        missing_tables: [],
+        ready: true
+      }
     }
   });
 }
@@ -171,6 +177,19 @@ test('P11 Production artifact gate requires the complete Baseline B v2 canonical
   assert.throws(
     () => assertProductionBaselineBArtifact({ ...baseline, datasets: partialDatasets }),
     /P11_BASELINE_B_DATASET_KEYS_DRIFT/
+  );
+  const firstKey = EXPECTED_DATASET_KEYS[0];
+  assert.throws(
+    () => assertProductionBaselineBArtifact({ ...baseline, counts: { ...baseline.counts, [firstKey]: 1 } }),
+    new RegExp(`P11_BASELINE_B_ROW_COUNT_DRIFT:${firstKey}`)
+  );
+  assert.throws(
+    () => assertProductionBaselineBArtifact({ ...baseline, dataset_digests: { ...baseline.dataset_digests, [firstKey]: `sha256:${'0'.repeat(64)}` } }),
+    new RegExp(`P11_BASELINE_B_DATASET_DIGEST_DRIFT:${firstKey}`)
+  );
+  assert.throws(
+    () => assertProductionBaselineBArtifact({ ...baseline, baseline_digest: `sha256:${'0'.repeat(64)}` }),
+    /P11_BASELINE_B_DIGEST_DRIFT/
   );
 });
 
