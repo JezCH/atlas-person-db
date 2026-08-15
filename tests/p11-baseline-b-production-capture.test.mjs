@@ -8,6 +8,7 @@ import baselineBModule from '../server/atlas-baseline-b.js';
 const {
   CAPTURE_ID,
   MARKER,
+  STREAM_CHUNK_BYTES,
   createP11BaselineBCaptureHandler,
   requireEnvelope,
   requireDeployment
@@ -59,18 +60,33 @@ function request(mode, overrides = {}) {
 }
 
 function responseRecorder() {
-  const record = { statusCode: null, headers: {}, body: null };
+  const record = { statusCode: null, headers: {}, body: null, writeCalls: 0, bytesWritten: 0 };
+  const chunks = [];
+  const append = (value) => {
+    if (value === undefined || value === null) return;
+    const chunk = Buffer.isBuffer(value) ? value : Buffer.from(String(value), 'utf8');
+    chunks.push(chunk);
+    record.bytesWritten += chunk.length;
+  };
   return {
     record,
     setHeader(name, value) { record.headers[String(name).toLowerCase()] = value; },
-    end(value) { record.body = JSON.parse(String(value)); },
+    write(value) { record.writeCalls += 1; append(value); return true; },
+    end(value) {
+      append(value);
+      const text = Buffer.concat(chunks).toString('utf8');
+      record.body = text ? JSON.parse(text) : null;
+    },
     get statusCode() { return record.statusCode; },
     set statusCode(value) { record.statusCode = value; }
   };
 }
 
-function completeBaselineFixture() {
+function completeBaselineFixture({ oversizedBytes = 0 } = {}) {
   const datasets = Object.fromEntries(EXPECTED_DATASET_KEYS.map((key) => [key, []]));
+  if (oversizedBytes > 0) {
+    datasets[EXPECTED_DATASET_KEYS[0]] = [{ id: 'oversized-fixture', payload: 'x'.repeat(oversizedBytes) }];
+  }
   return buildBaselineBDocument({
     datasets,
     readiness: {
@@ -143,6 +159,7 @@ test('P11 readiness handler authenticates before opening DB and returns read-onl
   assert.equal(res.record.body.marker, MARKER);
   assert.equal(res.record.body.read_only, true);
   assert.equal(res.record.body.database_write_committed, false);
+  assert.equal(res.record.writeCalls, 0);
   assert.deepEqual(calls.map((item) => item[0]), ['oidc', 'db', 'end']);
 });
 
@@ -210,6 +227,27 @@ test('P11 capture returns the exact Baseline B v2 document without enabling writ
   assert.equal(res.record.body.result.baseline.schema, BASELINE_B_SCHEMA);
   assert.equal(res.record.body.result.baseline.dataset_count, EXPECTED_DATASET_COUNT);
   assert.equal(res.record.body.result.baseline.authority.production_mutation_authorized, false);
+  assert.equal(res.record.headers['x-atlas-response-mode'], 'streamed-json');
+  assert.ok(res.record.writeCalls >= 1);
+});
+
+test('P11 capture streams an artifact larger than the normal Vercel 4.5 MB response ceiling without changing JSON bytes', async () => {
+  const baseline = completeBaselineFixture({ oversizedBytes: 5 * 1024 * 1024 });
+  const handler = createP11BaselineBCaptureHandler({
+    env: ENV,
+    verifyOidc: async () => ({}),
+    createClient: async () => ({ end: async () => {} }),
+    captureBaseline: async () => ({ read_only: true, database_write_committed: false, baseline })
+  });
+  const res = responseRecorder();
+  await handler(request('capture'), res);
+
+  assert.ok(res.record.bytesWritten > 4.5 * 1024 * 1024);
+  assert.ok(res.record.writeCalls > 1);
+  assert.ok(res.record.bytesWritten > STREAM_CHUNK_BYTES);
+  assert.equal(res.record.headers['x-atlas-response-mode'], 'streamed-json');
+  assert.equal(res.record.body.result.baseline.baseline_digest, baseline.baseline_digest);
+  assert.deepEqual(res.record.body.result.baseline.counts, baseline.counts);
 });
 
 test('P11 Production capture wrapper refuses a partial artifact even if its capture dependency returns successfully', async () => {
