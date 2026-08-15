@@ -5,6 +5,7 @@ import fs from 'node:fs';
 const apiDir = new URL('../api/', import.meta.url);
 const apiFiles = fs.readdirSync(apiDir).filter((name) => name.endsWith('.js')).sort();
 const adminInspectorApi = fs.readFileSync(new URL('../api/atlas-admin-inspector.js', import.meta.url), 'utf8');
+const adminSystemStatusApi = fs.readFileSync(new URL('../api/atlas-admin-system-status.js', import.meta.url), 'utf8');
 const auditInventoryApi = fs.readFileSync(new URL('../api/atlas-audit-inventory.js', import.meta.url), 'utf8');
 const authoringApi = fs.readFileSync(new URL('../api/atlas-authoring.js', import.meta.url), 'utf8');
 const authoringApplyApi = fs.readFileSync(new URL('../api/atlas-authoring-apply.js', import.meta.url), 'utf8');
@@ -25,6 +26,7 @@ const admin = fs.readFileSync(new URL('../admin.html', import.meta.url), 'utf8')
 test('Vercel exposes exactly the current ATLAS API entrypoints', () => {
   assert.deepEqual(apiFiles, [
     'atlas-admin-inspector.js',
+    'atlas-admin-system-status.js',
     'atlas-audit-inventory.js',
     'atlas-authoring-apply.js',
     'atlas-authoring.js',
@@ -41,7 +43,7 @@ test('Vercel exposes exactly the current ATLAS API entrypoints', () => {
 });
 
 test('database-backed browser entrypoints share one server PostgreSQL client boundary', () => {
-  const sources = [adminInspectorApi, authoringApi, duplicateReviewApi, identityApi, mutateApi, personReadApi, readApi];
+  const sources = [adminInspectorApi, adminSystemStatusApi, authoringApi, duplicateReviewApi, identityApi, mutateApi, personReadApi, readApi];
   for (const source of sources) {
     assert.match(source, /atlas-postgres-client\.js/);
     assert.match(source, /createPostgresClient/);
@@ -57,6 +59,12 @@ test('Admin inspector endpoint delegates to the isolated session-authenticated r
   assert.match(adminInspectorApi, /atlas-admin-inspector-handler\.js/);
   assert.match(adminInspectorApi, /createAdminInspectorHandler/);
   assert.doesNotMatch(adminInspectorApi, /SUPABASE_DB_URL|ATLAS_SESSION_SECRET|ATLAS_MUTATION_TOKEN|postgres:\/\/|postgresql:\/\//);
+});
+
+test('Admin system status endpoint delegates to the session-authenticated read handler', () => {
+  assert.match(adminSystemStatusApi, /atlas-admin-system-status-handler\.js/);
+  assert.match(adminSystemStatusApi, /createAdminSystemStatusHandler/);
+  assert.doesNotMatch(adminSystemStatusApi, /SUPABASE_DB_URL|ATLAS_SESSION_SECRET|ATLAS_MUTATION_TOKEN|postgres:\/\/|postgresql:\/\//);
 });
 
 test('normal human authoring endpoint delegates to the Stage 2-native direct authoring handler', () => {
@@ -116,7 +124,7 @@ test('server runtime dependency is explicit and lock-backed', () => {
 
 test('browser pages do not load server entrypoints or pg', () => {
   for (const html of [index, admin]) {
-    assert.doesNotMatch(html, /api\/atlas-(?:admin-inspector|audit-inventory|authoring|authoring-apply|correction-apply|duplicate-review|identity|mutate|person-read|read|session|stage2-schema-release|stage2-train2-release)\.js/);
+    assert.doesNotMatch(html, /api\/atlas-(?:admin-inspector|admin-system-status|audit-inventory|authoring|authoring-apply|correction-apply|duplicate-review|identity|mutate|person-read|read|session|stage2-schema-release|stage2-train2-release)\.js/);
     assert.doesNotMatch(html, /node_modules\/pg|require\("pg"\)/);
   }
 });
