@@ -7,14 +7,12 @@ const {
   buildReconciliationPlan,
   normalizeResolutions
 } = require("./atlas-relationship-reconciliation.js");
+const {
+  EXPECTED_PERSON_FKS,
+  assertPersonMergeReferenceReadiness
+} = require("./atlas-person-merge-reference-readiness.js");
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-const EXPECTED_PERSON_FKS = new Set([
-  "person_descriptions.person_id",
-  "person_names.person_id",
-  "person_politics_v2.person_id",
-  "person_sources.person_id"
-]);
 
 function validUuid(value, label) {
   const normalized = String(value || "").trim();
@@ -45,18 +43,7 @@ function resolveMergeSides(candidate, survivorPersonId) {
 async function ensureMergeSchema(client) {
   const object = await client.query(`select to_regclass('atlas_v2.person_merge_audits')::text as merge_audits`);
   if (!object.rows[0]?.merge_audits) throw new Error("PHASE9B_SCHEMA_REQUIRED: person merge audit schema is not applied");
-  const fks = await client.query(`
-    select c.relname as table_name,a.attname as column_name
-      from pg_constraint con
-      join pg_class c on c.oid=con.conrelid
-      join unnest(con.conkey) with ordinality u(attnum,ord) on true
-      join pg_attribute a on a.attrelid=con.conrelid and a.attnum=u.attnum
-     where con.contype='f' and con.confrelid='atlas_v2.persons'::regclass
-     order by c.relname,a.attname`);
-  const actual = new Set(fks.rows.map((row) => `${row.table_name}.${row.column_name}`));
-  const unexpected = [...actual].filter((key) => !EXPECTED_PERSON_FKS.has(key));
-  const missing = [...EXPECTED_PERSON_FKS].filter((key) => !actual.has(key));
-  if (unexpected.length || missing.length) throw new Error(`person reference schema drift: unexpected=[${unexpected.join(",")}], missing=[${missing.join(",")}]`);
+  return assertPersonMergeReferenceReadiness(client);
 }
 
 async function snapshotPerson(client, personId) {
@@ -65,7 +52,13 @@ async function snapshotPerson(client, personId) {
     client.query(`select id,locale,name,name_type,is_preferred from atlas_v2.person_names where person_id=$1 order by locale,is_preferred desc,name,name_type,id`, [personId]),
     client.query(`select source_id from atlas_v2.person_sources where person_id=$1 order by source_id`, [personId]),
     client.query(`select id,locale,content from atlas_v2.person_descriptions where person_id=$1 order by locale,id`, [personId]),
-    client.query(`select id,polity_id,role_id,period_basis_id,activity_start,activity_end,confidence,chronology_status,legacy_source_key,notes,source_locator,content_hash from atlas_v2.person_politics_v2 where person_id=$1 order by activity_start,activity_end,polity_id,role_id,id`, [personId]),
+    client.query(`select
+      id,person_id,polity_id,relation_type_id,role_id,period_basis_id,
+      activity_start,activity_start_month,activity_start_day,activity_start_granularity,activity_start_calendar,activity_start_certainty,
+      activity_end,activity_end_month,activity_end_day,activity_end_granularity,activity_end_calendar,activity_end_certainty,
+      confidence,chronology_status,legacy_source_key,notes,source_locator,content_hash
+      from atlas_v2.person_politics_v2 where person_id=$1
+      order by activity_start,activity_end,polity_id,relation_type_id,role_id nulls first,period_basis_id,id`, [personId]),
     client.query(`select pps.person_politics_id,pps.source_id,pps.source_locator_key from atlas_v2.person_politics_sources pps join atlas_v2.person_politics_v2 pp on pp.id=pps.person_politics_id where pp.person_id=$1 order by pps.person_politics_id,pps.source_id`, [personId]),
     client.query(`select cc.id,cc.person_politics_id,cc.claim_type,cc.start_year,cc.end_year from atlas_v2.chronology_claims cc join atlas_v2.person_politics_v2 pp on pp.id=cc.person_politics_id where pp.person_id=$1 order by cc.person_politics_id,cc.id`, [personId]),
     client.query(`select rd.id,rd.person_politics_id,rd.locale,rd.content from atlas_v2.relationship_descriptions rd join atlas_v2.person_politics_v2 pp on pp.id=rd.person_politics_id where pp.person_id=$1 order by rd.person_politics_id,rd.locale,rd.id`, [personId])
@@ -101,11 +94,14 @@ async function lockLiveMergeState(client, personIds) {
      order by person_id,is_preferred desc,locale,name
      for update`, [personIds]);
   const relationships = await client.query(`
-    select id,person_id,polity_id,role_id,period_basis_id,activity_start,activity_end,
-           confidence,chronology_status,legacy_source_key,notes,source_locator,content_hash
+    select
+      id,person_id,polity_id,relation_type_id,role_id,period_basis_id,
+      activity_start,activity_start_month,activity_start_day,activity_start_granularity,activity_start_calendar,activity_start_certainty,
+      activity_end,activity_end_month,activity_end_day,activity_end_granularity,activity_end_calendar,activity_end_certainty,
+      confidence,chronology_status,legacy_source_key,notes,source_locator,content_hash
       from atlas_v2.person_politics_v2
      where person_id=any($1::uuid[])
-     order by person_id,activity_start,activity_end,polity_id,role_id,id
+     order by person_id,activity_start,activity_end,polity_id,relation_type_id,role_id nulls first,period_basis_id,id
      for update`, [personIds]);
   return { names: names.rows || [], relationships: relationships.rows || [] };
 }
@@ -113,12 +109,7 @@ async function lockLiveMergeState(client, personIds) {
 function assertLiveCandidateEvidence(candidateRow, liveState) {
   const detected = detectPersonDuplicateCandidates({
     names: liveState.names,
-    activities: liveState.relationships.map((row) => ({
-      person_id: row.person_id,
-      polity_id: row.polity_id,
-      activity_start: row.activity_start,
-      activity_end: row.activity_end
-    }))
+    activities: liveState.relationships
   });
   const low = String(candidateRow.person_low_id);
   const high = String(candidateRow.person_high_id);
@@ -222,7 +213,7 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
   await client.query("BEGIN ISOLATION LEVEL SERIALIZABLE");
   try {
     await client.query(`select pg_advisory_xact_lock(hashtext($1))`, [`atlas-phase9b-merge:${request}`]);
-    await ensureMergeSchema(client);
+    const referenceReadiness = await ensureMergeSchema(client);
     const replay = await client.query(`select id,candidate_id,survivor_person_id,source_person_id,mutation_summary from atlas_v2.person_merge_audits where request_id=$1`, [request]);
     if (replay.rowCount === 1) {
       const previousResolutions = replay.rows[0].mutation_summary?.relationship_reconciliation?.requested_resolutions || [];
@@ -274,6 +265,7 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
     const beforeCounts = await globalCounts(client);
     const survivorBefore = await snapshotPerson(client, sides.survivor_person_id);
     const sourceBefore = await snapshotPerson(client, sides.source_person_id);
+    const authoringPersonPointersBefore = await client.query(`select count(*)::int as count from atlas_v2.authoring_manifest_runs where person_id=$1`, [sides.source_person_id]);
 
     const reconciliationMutations = [];
     let collapsedSourceLinks = 0;
@@ -296,6 +288,7 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
       (select count(*)::int from atlas_v2.person_sources where person_id=$1) as sources,
       (select count(*)::int from atlas_v2.person_descriptions where person_id=$1) as descriptions,
       (select count(*)::int from atlas_v2.person_politics_v2 where person_id=$1) as relationships,
+      (select count(*)::int from atlas_v2.authoring_manifest_runs where person_id=$1) as authoring_person_pointers,
       (select count(*)::int from atlas_v2.persons where id=$1) as person`, [sides.source_person_id]);
     if (Object.values(remainingSourceRefs.rows[0]).some((value) => Number(value) !== 0)) throw new Error("source person references remain after merge");
 
@@ -307,6 +300,10 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
     if (afterCounts.relationship_sources !== beforeCounts.relationship_sources - collapsedSourceLinks) throw new Error("relationship_sources count changed outside deterministic source-link collapse");
 
     const mutationSummary = {
+      reference_readiness: {
+        policy_version: referenceReadiness.policy_version,
+        ready: referenceReadiness.ready
+      },
       relationship_reconciliation: {
         requested_resolutions: normalizedResolutions,
         applied_resolutions: reconciliationPlan.resolutions,
@@ -318,6 +315,7 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
       sources,
       descriptions_moved: descriptions.rowCount,
       relationships_moved: relationships.rowCount,
+      authoring_person_pointers_cleared_by_lifecycle_fk: Number(authoringPersonPointersBefore.rows[0]?.count || 0),
       candidates_staled: staleCandidates.rowCount,
       before_counts: beforeCounts,
       after_counts: afterCounts
