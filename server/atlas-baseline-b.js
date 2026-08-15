@@ -5,7 +5,7 @@ const { inspectAuthoringReadiness } = require("./atlas-authoring-readiness.js");
 const { inspectPersonDuplicateRevalidationReadiness } = require("./atlas-person-duplicate-revalidation-readiness.js");
 const { personMergeExecutionState } = require("./atlas-person-merge-interlock.js");
 
-const BASELINE_B_SCHEMA = "atlas-stage2-baseline-b/v1";
+const BASELINE_B_SCHEMA = "atlas-stage2-baseline-b/v2";
 const BASELINE_B_SEMANTIC_VERSION = "v2-relation-full-temporal";
 
 function dataset(key, table, orderBy) {
@@ -95,6 +95,7 @@ function buildBaselineBDocument({ datasets, readiness }) {
   const manifest = Object.freeze({
     schema: BASELINE_B_SCHEMA,
     semantic_version: BASELINE_B_SEMANTIC_VERSION,
+    dataset_count: orderedKeys.length,
     counts: Object.freeze(counts),
     dataset_digests: Object.freeze(datasetDigests)
   });
