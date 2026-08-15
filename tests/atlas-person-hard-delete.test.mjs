@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const { createPersonDeleteService } = require('../server/atlas-person-delete-service.js');
+const { createPersonDeleteService, normalizeConfirmationName } = require('../server/atlas-person-delete-service.js');
 const { validateRequest } = require('../server/atlas-mutation-transport.js');
 
 const PERSON = '11111111-1111-4111-8111-111111111111';
@@ -12,6 +12,7 @@ const REL = '22222222-2222-4222-8222-222222222222';
 const AFFILIATION = '33333333-3333-4333-8333-333333333333';
 const PARTICIPATION = '44444444-4444-4444-8444-444444444444';
 const NAME = '삭제 대상';
+const HANGUL_NAME = '디도';
 
 function normalized(sql) {
   return String(sql).replace(/\s+/g, ' ').trim().toLowerCase();
@@ -85,6 +86,11 @@ test('delete_person is a distinct authenticated mutation transport operation', (
   assert.equal(validation.request.operation, 'delete_person');
 });
 
+test('confirmation normalization tolerates mobile IME Unicode and invisible spacing artifacts', () => {
+  const mobileInput = ` \u200B${HANGUL_NAME.normalize('NFD')}\uFEFF `;
+  assert.equal(normalizeConfirmationName(mobileInput), HANGUL_NAME);
+});
+
 test('exact-name mismatch rolls back before any destructive SQL', async () => {
   const client = createFakeClient({ confirmationName: '다른 이름' });
   const deps = dependencies();
@@ -100,6 +106,22 @@ test('exact-name mismatch rolls back before any destructive SQL', async () => {
   assert.equal(client.calls.some(({ text }) => text.startsWith('delete from ')), false);
   assert.equal(client.calls.at(-1).text, 'rollback');
   assert.equal(deps.calls.refresh, 0);
+});
+
+test('normalized Hangul confirmation reaches the authoritative delete transaction and commits', async () => {
+  const client = createFakeClient({ confirmationName: HANGUL_NAME });
+  const deps = dependencies();
+  const service = createPersonDeleteService({ client, ...deps });
+  const outcome = await service.mutate({
+    request_id: 'hard-delete-normalized-hangul',
+    operation: 'delete_person',
+    payload: { person_id: PERSON, confirmation_name: ` \u200B${HANGUL_NAME.normalize('NFD')}\uFEFF ` }
+  });
+
+  assert.equal(outcome.committed, true);
+  assert.equal(outcome.v2.deleted_person_id, PERSON);
+  assert.equal(outcome.verification.match, true);
+  assert.equal(client.calls.at(-1).text, 'commit');
 });
 
 test('successful Person hard-delete removes live references, refreshes duplicate frontier, verifies zero, then commits', async () => {
@@ -181,7 +203,7 @@ test('older schema without revalidation ledger skips its update but still verifi
   assert.equal(sql.at(-1), 'commit');
 });
 
-test('browser adapter and UI require Person UUID plus exact typed name and DB verification before reload', () => {
+test('browser adapter and UI normalize typed name and require DB verification before reload', () => {
   const adapter = fs.readFileSync(new URL('../atlas-server-write-adapter.js', import.meta.url), 'utf8');
   const ui = fs.readFileSync(new URL('../atlas-person-hard-delete.js', import.meta.url), 'utf8');
   const css = fs.readFileSync(new URL('../atlas-person-hard-delete.css', import.meta.url), 'utf8');
@@ -192,7 +214,10 @@ test('browser adapter and UI require Person UUID plus exact typed name and DB ve
   assert.match(adapter, /confirmation_name:/);
   assert.match(handler, /operation\s*===\s*"delete_person"/);
   assert.match(ui, /window\.prompt/);
-  assert.match(ui, /String\(typed\) !== personName/);
+  assert.match(ui, /normalizeConfirmationName\(typed\)/);
+  assert.match(ui, /normalizedTyped !== personName/);
+  assert.doesNotMatch(ui, /String\(typed\) !== personName/);
+  assert.match(ui, /deletePerson\(personId, normalizedTyped\)/);
   assert.match(ui, /outcome\?\.verification\?\.checked === true/);
   assert.match(ui, /outcome\?\.verification\?\.match === true/);
   assert.match(ui, /window\.location\.reload\(\)/);
