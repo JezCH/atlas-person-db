@@ -140,6 +140,36 @@ where pp.person_id = $1::uuid
 order by pp.activity_start, pp.activity_end, pp.polity_id, pp.id
 `;
 
+const PERSON_SOURCE_SQL = `
+select
+  s.source_type,
+  s.title,
+  s.canonical_url,
+  s.citation_text
+from atlas_v2.person_sources ps
+join atlas_v2.sources s
+  on s.id = ps.source_id
+where ps.person_id = $1::uuid
+order by s.title, s.source_type, s.id
+`;
+
+const ACTIVITY_SOURCE_SQL = `
+select
+  pps.person_politics_id,
+  pps.source_locator_key,
+  s.source_type,
+  s.title,
+  s.canonical_url,
+  s.citation_text
+from atlas_v2.person_politics_sources pps
+join atlas_v2.person_politics_v2 pp
+  on pp.id = pps.person_politics_id
+join atlas_v2.sources s
+  on s.id = pps.source_id
+where pp.person_id = $1::uuid
+order by pps.person_politics_id, s.title, pps.source_locator_key, s.id
+`;
+
 function normalizeNameRows(value) {
   if (!Array.isArray(value)) return [];
   return value.map((row) => Object.freeze({
@@ -232,6 +262,20 @@ function displayValue(preferredKo, canonicalEn, fallback = null) {
   return preferredKo || canonicalEn || fallback;
 }
 
+function projectSource(row, locator = null) {
+  const title = row?.title == null ? null : String(row.title);
+  const citationText = row?.citation_text == null ? null : String(row.citation_text);
+  const canonicalUrl = row?.canonical_url == null ? null : String(row.canonical_url);
+  return Object.freeze({
+    title,
+    source_type: row?.source_type == null ? null : String(row.source_type),
+    canonical_url: canonicalUrl,
+    citation_text: citationText,
+    locator: locator == null ? null : String(locator),
+    display_reference: citationText || title || canonicalUrl
+  });
+}
+
 function projectActivity(row) {
   const polityNameEn = row.polity_name_en == null ? null : String(row.polity_name_en);
   const polityNameKo = row.polity_name_ko == null ? null : String(row.polity_name_ko);
@@ -279,6 +323,20 @@ function projectActivity(row) {
   });
 }
 
+function attachActivitySources(activities, sourceRows) {
+  const byActivity = new Map();
+  for (const row of sourceRows || []) {
+    const activityId = String(row.person_politics_id);
+    const list = byActivity.get(activityId) || [];
+    list.push(projectSource(row, row.source_locator_key));
+    byActivity.set(activityId, list);
+  }
+  return Object.freeze(activities.map((activity) => Object.freeze({
+    ...activity,
+    sources: Object.freeze(byActivity.get(activity.id) || [])
+  })));
+}
+
 function summarizeActivities(activities) {
   const starts = activities.map((row) => row.start.year).filter((value) => value != null);
   const ends = activities.map((row) => row.end.year).filter((value) => value != null);
@@ -301,10 +359,15 @@ async function readPersonDetail({ client, personId } = {}) {
   const personResult = await client.query(PERSON_DETAIL_SQL, [personId]);
   if (personResult.rowCount === 0 || !(personResult.rows || []).length) return null;
   const activityResult = await client.query(ACTIVITY_DETAIL_SQL, [personId]);
-  const activities = Object.freeze((activityResult.rows || []).map(projectActivity));
+  const personSourceResult = await client.query(PERSON_SOURCE_SQL, [personId]);
+  const activitySourceResult = await client.query(ACTIVITY_SOURCE_SQL, [personId]);
+  const baseActivities = Object.freeze((activityResult.rows || []).map(projectActivity));
+  const activities = attachActivitySources(baseActivities, activitySourceResult.rows || []);
+  const sources = Object.freeze((personSourceResult.rows || []).map((row) => projectSource(row)));
   return Object.freeze({
     ...projectPersonIdentity(personResult.rows[0]),
     ...summarizeActivities(activities),
+    sources,
     activities
   });
 }
@@ -313,12 +376,16 @@ module.exports = Object.freeze({
   PERSON_READ_SQL,
   PERSON_DETAIL_SQL,
   ACTIVITY_DETAIL_SQL,
+  PERSON_SOURCE_SQL,
+  ACTIVITY_SOURCE_SQL,
   normalizeNameRows,
   normalizeDescriptionRows,
   normalizeBoundary,
   preferredName,
   projectPerson,
+  projectSource,
   projectActivity,
+  attachActivitySources,
   buildSummary,
   readPersons,
   readPersonDetail
