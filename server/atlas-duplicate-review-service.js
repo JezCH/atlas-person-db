@@ -1,9 +1,14 @@
 "use strict";
 
 const crypto = require("node:crypto");
-const { detectPersonDuplicateCandidates } = require("./atlas-duplicate-detector.js");
+const duplicateDetector = require("./atlas-duplicate-detector.js");
 const { buildRelationshipReconciliationGroups } = require("./atlas-relationship-reconciliation.js");
 
+const {
+  detectPersonDuplicateCandidates,
+  DETECTOR_VERSION,
+  REVALIDATION_SEMANTIC_VERSION
+} = duplicateDetector;
 const DECISIONS = new Set(["MERGE", "KEEP_SEPARATE", "REVIEW"]);
 
 function schemaUnavailable(error) {
@@ -11,18 +16,34 @@ function schemaUnavailable(error) {
 }
 
 async function loadDetectorInput(client) {
-  const [names, activities] = await Promise.all([
-    client.query(`
-      select person_id, name, locale, is_preferred
-      from atlas_v2.person_names
-      order by person_id, is_preferred desc, locale, name
-    `),
-    client.query(`
-      select person_id, polity_id, activity_start, activity_end
-      from atlas_v2.person_politics_v2
-      order by person_id, activity_start, activity_end, polity_id
-    `)
-  ]);
+  const names = await client.query(`
+    select person_id, name, locale, is_preferred
+    from atlas_v2.person_names
+    order by person_id, is_preferred desc, locale, name
+  `);
+  const activities = await client.query(`
+    select
+      id,
+      person_id,
+      polity_id,
+      relation_type_id,
+      role_id,
+      period_basis_id,
+      activity_start,
+      activity_start_month,
+      activity_start_day,
+      activity_start_granularity,
+      activity_start_calendar,
+      activity_start_certainty,
+      activity_end,
+      activity_end_month,
+      activity_end_day,
+      activity_end_granularity,
+      activity_end_calendar,
+      activity_end_certainty
+    from atlas_v2.person_politics_v2
+    order by person_id, activity_start, activity_end, polity_id, relation_type_id, role_id nulls first, period_basis_id, id
+  `);
   return { names: names.rows || [], activities: activities.rows || [] };
 }
 
@@ -53,7 +74,10 @@ async function rebuildCandidates({ client }) {
           last_detected_at = now(),
           current_decision = case
             when atlas_v2.person_duplicate_candidates.current_decision in ('MERGE','KEEP_SEPARATE')
-             and atlas_v2.person_duplicate_candidates.decision_evidence_fingerprint is distinct from excluded.evidence_fingerprint
+             and (
+               atlas_v2.person_duplicate_candidates.detector_version is distinct from excluded.detector_version
+               or atlas_v2.person_duplicate_candidates.decision_evidence_fingerprint is distinct from excluded.evidence_fingerprint
+             )
             then 'REVIEW'
             else atlas_v2.person_duplicate_candidates.current_decision
           end,
@@ -74,7 +98,13 @@ async function rebuildCandidates({ client }) {
     throw error;
   }
   const queue = await listCandidates({ client });
-  return { detected: detected.length, active: queue.candidates.length, summary: queue.summary };
+  return {
+    detected: detected.length,
+    active: queue.candidates.length,
+    summary: queue.summary,
+    detector_version: DETECTOR_VERSION,
+    reconciliation_semantic_version: REVALIDATION_SEMANTIC_VERSION
+  };
 }
 
 function preferredName(rows) {
@@ -232,7 +262,7 @@ async function listCandidates({ client, includeStale = false } = {}) {
       reviewed_at: row.reviewed_at,
       review_count: Number(row.review_count),
       relationship_reconciliation: {
-        semantic_version: "v2-relation-full-temporal",
+        semantic_version: REVALIDATION_SEMANTIC_VERSION,
         required: relationshipGroups.length > 0,
         groups: relationshipGroups
       },

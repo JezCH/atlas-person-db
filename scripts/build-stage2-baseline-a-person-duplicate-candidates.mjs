@@ -3,7 +3,12 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const { DETECTOR_VERSION, detectPersonDuplicateCandidates } = require('../server/atlas-duplicate-detector.js');
+const {
+  DETECTOR_VERSION,
+  DETECTOR_SCOPE,
+  FROZEN_FROM_COMMIT,
+  detectPersonDuplicateCandidates
+} = require('./lib/stage2-baseline-a-historical-duplicate-detector.cjs');
 
 function arg(name, fallback = null) { const i = process.argv.indexOf(name); return i >= 0 ? process.argv[i + 1] : fallback; }
 const intakePath = arg('--intake');
@@ -20,6 +25,7 @@ if (decisions?.schema !== 'atlas-stage2-baseline-a-person-identity-decisions/v1'
 if (decisions.baseline_digest !== intake.baseline_digest) throw new Error('Person identity decision Baseline digest mismatch');
 if (decisions.rules?.heuristic_detector_non_candidate_does_not_overrule_reviewed_identity_evidence !== true) throw new Error('detector authority boundary missing');
 if (decisions.result?.physical_person_merges_performed !== 0 || decisions.result?.production_mutation_authorized !== false) throw new Error('P4 duplicate handoff must remain non-mutating');
+if (DETECTOR_SCOPE !== 'HISTORICAL_BASELINE_A_REPLAY_ONLY') throw new Error('historical detector scope drift');
 
 const names = [];
 for (const person of intake.identity_catalogs.persons || []) {
@@ -69,7 +75,7 @@ const p10PhysicalMergeQueue = reviewedIdentityDecisions
     survivor_person_id: decision.canonical_survivor_person_id,
     duplicate_person_id: decision.duplicate_person_id,
     duplicate_current_activity_count: activities.filter((row) => row.person_id === decision.duplicate_person_id).length,
-    detected_by_current_heuristic: detectorPairs.has(orderedPairKey(decision.canonical_survivor_person_id, decision.duplicate_person_id)),
+    detected_by_historical_baseline_heuristic: detectorPairs.has(orderedPairKey(decision.canonical_survivor_person_id, decision.duplicate_person_id)),
     execution_phase: 'P10_AFTER_SEMANTIC_KEY_V2',
     physical_merge_authorized_now: false
   }));
@@ -78,7 +84,7 @@ if (p10PhysicalMergeQueue[0].duplicate_current_activity_count !== 0) throw new E
 
 const result = {
   schema: 'atlas-stage2-baseline-a-person-duplicate-candidates/v2',
-  status: 'P4_OFFLINE_REBUILD_AND_REVIEWED_HANDOFF_NO_PRODUCTION_MUTATION',
+  status: 'P4_HISTORICAL_OFFLINE_REPLAY_AND_REVIEWED_HANDOFF_NO_PRODUCTION_MUTATION',
   baseline: {
     deployment_sha: intake.deployment_sha,
     baseline_digest: intake.baseline_digest,
@@ -87,6 +93,8 @@ const result = {
   },
   detector: {
     version: DETECTOR_VERSION,
+    scope: DETECTOR_SCOPE,
+    frozen_from_commit: FROZEN_FROM_COMMIT,
     names_examined: names.length,
     candidate_count: enriched.length,
     candidates: enriched
@@ -99,7 +107,10 @@ const result = {
     p10_physical_merge_queue: p10PhysicalMergeQueue
   },
   rules: {
-    exact_current_detector_reused: true,
+    exact_current_detector_reused: false,
+    historical_baseline_detector_frozen: true,
+    historical_detector_is_not_p10_authority: true,
+    current_p10_detector_must_remain_semantic_v2_fail_closed: true,
     heuristic_detector_is_candidate_generator_not_identity_authority: true,
     reviewed_identity_evidence_may_resolve_detector_non_candidate: true,
     names_are_candidate_evidence_not_identity: true,
@@ -113,6 +124,8 @@ fs.writeFileSync(outPath, `${JSON.stringify(result, null, 2)}\n`);
 console.log(JSON.stringify({
   marker: 'ATLAS_BASELINE_A_PERSON_DUPLICATE_REBUILD_OK',
   detector_version: DETECTOR_VERSION,
+  detector_scope: DETECTOR_SCOPE,
+  detector_frozen_from_commit: FROZEN_FROM_COMMIT,
   persons: result.baseline.persons,
   names_examined: names.length,
   detector_candidate_count: enriched.length,
