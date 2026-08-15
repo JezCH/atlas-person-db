@@ -4,6 +4,7 @@ import fs from 'node:fs';
 
 const nonTimeline = fs.readFileSync(new URL('../non-timeline-list.js', import.meta.url), 'utf8');
 const mobile = fs.readFileSync(new URL('../mobile-ui.js', import.meta.url), 'utf8');
+const reader = fs.readFileSync(new URL('../atlas-person-browser-reader.js', import.meta.url), 'utf8');
 const main = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url), 'utf8');
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 
@@ -13,6 +14,17 @@ test('UI-T5 shares the authoritative Person query with the curated non-timeline 
   assert.match(nonTimeline, /window\.addEventListener\("atlas-person-main-rendered"/);
   assert.match(nonTimeline, /event\?\.detail\?\.query/);
   assert.match(nonTimeline, /applySearch\(currentQuery\)/);
+});
+
+test('UI-T5 uses normalized phrase/compact/token matching on both Person table sources', () => {
+  for (const source of [reader, nonTimeline]) {
+    assert.match(source, /function normalizeSearchText\(value\)/);
+    assert.match(source, /normalize\("NFKD"\)/);
+    assert.match(source, /toLocaleLowerCase\("ko-KR"\)/);
+    assert.match(source, /tokens\.every\(\(token\) => haystack\.includes\(token\)\)/);
+  }
+  assert.match(reader, /function compactSearchText\(value\)/);
+  assert.match(reader, /compactHaystack\.includes\(compactNeedle\)/);
 });
 
 test('UI-T5 curated search covers names, polity, historicity, chronology basis, role, reason and map policy', () => {
@@ -54,6 +66,7 @@ test('UI-T5 reports combined mobile search result count across both Person table
 });
 
 test('UI-T5 versions changed browser assets instead of relying on stale cached scripts', () => {
+  assert.match(html, /atlas-person-browser-reader\.js\?v=20260816-ui-t5/);
   assert.match(html, /mobile-ui\.js\?v=20260816-ui-t5/);
   assert.match(html, /non-timeline-list\.js\?v=20260816-ui-t5/);
   assert.match(html, /atlas-responsive-shell\.js\?v=20260816-ui-t4/);
