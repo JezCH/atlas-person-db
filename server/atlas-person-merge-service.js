@@ -11,6 +11,13 @@ const {
   EXPECTED_PERSON_FKS,
   assertPersonMergeReferenceReadiness
 } = require("./atlas-person-merge-reference-readiness.js");
+const {
+  assertPersonDuplicateRevalidationReadiness,
+  inspectPersonDuplicateRevalidationReadiness
+} = require("./atlas-person-duplicate-revalidation-readiness.js");
+const { refreshCandidateFrontier } = require("./atlas-duplicate-review-service.js");
+const { lockPersonDuplicateFrontier } = require("./atlas-person-duplicate-frontier-lock.js");
+const { assertPersonMergeExecutionAllowed } = require("./atlas-person-merge-interlock.js");
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -47,39 +54,24 @@ async function ensureMergeSchema(client) {
 }
 
 async function snapshotPerson(client, personId) {
-  const [
-    person,
-    names,
-    sources,
-    descriptions,
-    relationships,
-    relationshipSources,
-    chronologyClaims,
-    relationshipDescriptions,
-    peopleAffiliations,
-    peopleAffiliationSources,
-    eventParticipations,
-    eventParticipationSources
-  ] = await Promise.all([
-    client.query(`select id,canonical_key,person_type,historicity from atlas_v2.persons where id=$1`, [personId]),
-    client.query(`select id,locale,name,name_type,is_preferred from atlas_v2.person_names where person_id=$1 order by locale,is_preferred desc,name,name_type,id`, [personId]),
-    client.query(`select source_id from atlas_v2.person_sources where person_id=$1 order by source_id`, [personId]),
-    client.query(`select id,locale,content from atlas_v2.person_descriptions where person_id=$1 order by locale,id`, [personId]),
-    client.query(`select
+  const person = await client.query(`select id,canonical_key,person_type,historicity from atlas_v2.persons where id=$1`, [personId]);
+  const names = await client.query(`select id,locale,name,name_type,is_preferred from atlas_v2.person_names where person_id=$1 order by locale,is_preferred desc,name,name_type,id`, [personId]);
+  const sources = await client.query(`select source_id from atlas_v2.person_sources where person_id=$1 order by source_id`, [personId]);
+  const descriptions = await client.query(`select id,locale,content from atlas_v2.person_descriptions where person_id=$1 order by locale,id`, [personId]);
+  const relationships = await client.query(`select
       id,person_id,polity_id,relation_type_id,role_id,period_basis_id,
       activity_start,activity_start_month,activity_start_day,activity_start_granularity,activity_start_calendar,activity_start_certainty,
       activity_end,activity_end_month,activity_end_day,activity_end_granularity,activity_end_calendar,activity_end_certainty,
       confidence,chronology_status,legacy_source_key,notes,source_locator,content_hash
       from atlas_v2.person_politics_v2 where person_id=$1
-      order by activity_start,activity_end,polity_id,relation_type_id,role_id nulls first,period_basis_id,id`, [personId]),
-    client.query(`select pps.person_politics_id,pps.source_id,pps.source_locator_key from atlas_v2.person_politics_sources pps join atlas_v2.person_politics_v2 pp on pp.id=pps.person_politics_id where pp.person_id=$1 order by pps.person_politics_id,pps.source_id,pps.source_locator_key`, [personId]),
-    client.query(`select cc.id,cc.person_politics_id,cc.claim_type,cc.start_year,cc.end_year from atlas_v2.chronology_claims cc join atlas_v2.person_politics_v2 pp on pp.id=cc.person_politics_id where pp.person_id=$1 order by cc.person_politics_id,cc.id`, [personId]),
-    client.query(`select rd.id,rd.person_politics_id,rd.locale,rd.content from atlas_v2.relationship_descriptions rd join atlas_v2.person_politics_v2 pp on pp.id=rd.person_politics_id where pp.person_id=$1 order by rd.person_politics_id,rd.locale,rd.id`, [personId]),
-    client.query(`select id,people_group_id,affiliation_type,valid_from_year,valid_from_month,valid_from_day,valid_from_granularity,valid_from_certainty,valid_from_calendar,valid_to_year,valid_to_month,valid_to_day,valid_to_granularity,valid_to_certainty,valid_to_calendar,confidence,notes from atlas_v2.person_people_affiliations where person_id=$1 order by id`, [personId]),
-    client.query(`select s.person_people_affiliation_id,s.source_id,s.source_locator_key from atlas_v2.person_people_affiliation_sources s join atlas_v2.person_people_affiliations a on a.id=s.person_people_affiliation_id where a.person_id=$1 order by s.person_people_affiliation_id,s.source_id,s.source_locator_key`, [personId]),
-    client.query(`select id,historical_event_id,participation_type,role_label,valid_from_year,valid_from_month,valid_from_day,valid_from_granularity,valid_from_certainty,valid_from_calendar,valid_to_year,valid_to_month,valid_to_day,valid_to_granularity,valid_to_certainty,valid_to_calendar,confidence,notes from atlas_v2.person_event_participations where person_id=$1 order by id`, [personId]),
-    client.query(`select s.person_event_participation_id,s.source_id,s.source_locator_key from atlas_v2.person_event_participation_sources s join atlas_v2.person_event_participations p on p.id=s.person_event_participation_id where p.person_id=$1 order by s.person_event_participation_id,s.source_id,s.source_locator_key`, [personId])
-  ]);
+      order by activity_start,activity_end,polity_id,relation_type_id,role_id nulls first,period_basis_id,id`, [personId]);
+  const relationshipSources = await client.query(`select pps.person_politics_id,pps.source_id,pps.source_locator_key from atlas_v2.person_politics_sources pps join atlas_v2.person_politics_v2 pp on pp.id=pps.person_politics_id where pp.person_id=$1 order by pps.person_politics_id,pps.source_id,pps.source_locator_key`, [personId]);
+  const chronologyClaims = await client.query(`select cc.id,cc.person_politics_id,cc.claim_type,cc.start_year,cc.end_year from atlas_v2.chronology_claims cc join atlas_v2.person_politics_v2 pp on pp.id=cc.person_politics_id where pp.person_id=$1 order by cc.person_politics_id,cc.id`, [personId]);
+  const relationshipDescriptions = await client.query(`select rd.id,rd.person_politics_id,rd.locale,rd.content from atlas_v2.relationship_descriptions rd join atlas_v2.person_politics_v2 pp on pp.id=rd.person_politics_id where pp.person_id=$1 order by rd.person_politics_id,rd.locale,rd.id`, [personId]);
+  const peopleAffiliations = await client.query(`select id,people_group_id,affiliation_type,valid_from_year,valid_from_month,valid_from_day,valid_from_granularity,valid_from_certainty,valid_from_calendar,valid_to_year,valid_to_month,valid_to_day,valid_to_granularity,valid_to_certainty,valid_to_calendar,confidence,notes from atlas_v2.person_people_affiliations where person_id=$1 order by id`, [personId]);
+  const peopleAffiliationSources = await client.query(`select s.person_people_affiliation_id,s.source_id,s.source_locator_key from atlas_v2.person_people_affiliation_sources s join atlas_v2.person_people_affiliations a on a.id=s.person_people_affiliation_id where a.person_id=$1 order by s.person_people_affiliation_id,s.source_id,s.source_locator_key`, [personId]);
+  const eventParticipations = await client.query(`select id,historical_event_id,participation_type,role_label,valid_from_year,valid_from_month,valid_from_day,valid_from_granularity,valid_from_certainty,valid_from_calendar,valid_to_year,valid_to_month,valid_to_day,valid_to_granularity,valid_to_certainty,valid_to_calendar,confidence,notes from atlas_v2.person_event_participations where person_id=$1 order by id`, [personId]);
+  const eventParticipationSources = await client.query(`select s.person_event_participation_id,s.source_id,s.source_locator_key from atlas_v2.person_event_participation_sources s join atlas_v2.person_event_participations p on p.id=s.person_event_participation_id where p.person_id=$1 order by s.person_event_participation_id,s.source_id,s.source_locator_key`, [personId]);
   if (person.rowCount !== 1) throw new Error("merge person not found");
   return {
     person: person.rows[0],
@@ -131,8 +123,35 @@ async function lockLiveMergeState(client, personIds) {
   return { names: names.rows || [], relationships: relationships.rows || [] };
 }
 
-function assertLiveCandidateEvidence(candidateRow, liveState) {
-  const detected = detectPersonDuplicateCandidates({ names: liveState.names, activities: liveState.relationships });
+async function lockPairRevalidationRequirements(client, candidateRow) {
+  const low = String(candidateRow.person_low_id);
+  const high = String(candidateRow.person_high_id);
+  const exact = await client.query(`
+    select requirement_key,person_low_id,person_high_id,requirement_state,requirement_version,
+           prior_outcome,source_artifact,source_decision_id,evidence_snapshot
+      from atlas_v2.person_duplicate_revalidation_requirements
+     where requirement_state='ACTIVE' and person_low_id=$1 and person_high_id=$2
+     order by requirement_key
+     for update`, [low, high]);
+  const overlaps = await client.query(`
+    select requirement_key,person_low_id,person_high_id
+      from atlas_v2.person_duplicate_revalidation_requirements
+     where requirement_state='ACTIVE'
+       and (person_low_id=any($1::uuid[]) or person_high_id=any($1::uuid[]))
+       and not (person_low_id=$2 and person_high_id=$3)
+     order by requirement_key
+     for update`, [[low, high], low, high]);
+  if (overlaps.rowCount) {
+    const keys = overlaps.rows.map((row) => String(row.requirement_key)).join(",");
+    const error = new Error(`P10_OVERLAPPING_REVALIDATION_REQUIREMENT_REQUIRES_REBIND:${keys}`);
+    error.code = "P10_OVERLAPPING_REVALIDATION_REQUIREMENT_REQUIRES_REBIND";
+    throw error;
+  }
+  return exact.rows || [];
+}
+
+function assertLiveCandidateEvidence(candidateRow, liveState, requirements = []) {
+  const detected = detectPersonDuplicateCandidates({ names: liveState.names, activities: liveState.relationships, requirements });
   const low = String(candidateRow.person_low_id);
   const high = String(candidateRow.person_high_id);
   const current = detected.find((item) => item.person_low_id === low && item.person_high_id === high);
@@ -206,6 +225,7 @@ async function coalesceRelationship(client, keepId, dropId) {
 
 async function executeApprovedPersonMerge({ client, candidateId, survivorPersonId, requestId, relationshipResolutions = [], reviewerKind = "admin_session" } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client with query() is required");
+  assertPersonMergeExecutionAllowed();
   const candidate = validUuid(candidateId, "candidate_id");
   const survivorInput = validUuid(survivorPersonId, "survivor_person_id");
   const request = String(requestId || "").trim();
@@ -215,6 +235,7 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
 
   await client.query("BEGIN ISOLATION LEVEL SERIALIZABLE");
   try {
+    await lockPersonDuplicateFrontier(client);
     await client.query(`select pg_advisory_xact_lock(hashtext($1))`, [`atlas-phase9b-merge:${request}`]);
     const referenceReadiness = await ensureMergeSchema(client);
     const replay = await client.query(`select id,candidate_id,survivor_person_id,source_person_id,mutation_summary from atlas_v2.person_merge_audits where request_id=$1`, [request]);
@@ -238,6 +259,7 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
     if (latestReview.rowCount !== 1 || latestReview.rows[0].decision !== "MERGE") throw new Error("latest candidate review is not MERGE");
     if (latestReview.rows[0].evidence_fingerprint !== candidateRow.evidence_fingerprint) throw new Error("latest MERGE review evidence does not match current candidate evidence");
 
+    const revalidationReadiness = await assertPersonDuplicateRevalidationReadiness(client);
     const lockedPersons = await client.query(`select id,canonical_key,person_type,historicity from atlas_v2.persons where id=any($1::uuid[]) order by id for update`, [[sides.survivor_person_id, sides.source_person_id]]);
     if (lockedPersons.rowCount !== 2) throw new Error("candidate persons are not both live");
     const byId = new Map(lockedPersons.rows.map((row) => [String(row.id), row]));
@@ -245,8 +267,9 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
     const sourceMeta = byId.get(sides.source_person_id);
     if (survivorMeta.person_type !== sourceMeta.person_type || survivorMeta.historicity !== sourceMeta.historicity) throw new Error("person metadata conflict: person_type/historicity must be reconciled before merge");
 
+    const requirements = await lockPairRevalidationRequirements(client, candidateRow);
     const liveState = await lockLiveMergeState(client, [sides.survivor_person_id, sides.source_person_id]);
-    assertLiveCandidateEvidence(candidateRow, liveState);
+    assertLiveCandidateEvidence(candidateRow, liveState, requirements);
     const groups = buildRelationshipReconciliationGroups({ rows: liveState.relationships, lowPersonId: String(candidateRow.person_low_id), highPersonId: String(candidateRow.person_high_id) });
     const reconciliationPlan = buildReconciliationPlan({ groups, resolutions: normalizedResolutions });
 
@@ -269,7 +292,11 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
     const relationships = await client.query(`update atlas_v2.person_politics_v2 set person_id=$2 where person_id=$1 returning id`, [sides.source_person_id, sides.survivor_person_id]);
     const peopleAffiliations = await client.query(`update atlas_v2.person_people_affiliations set person_id=$2 where person_id=$1 returning id`, [sides.source_person_id, sides.survivor_person_id]);
     const eventParticipations = await client.query(`update atlas_v2.person_event_participations set person_id=$2 where person_id=$1 returning id`, [sides.source_person_id, sides.survivor_person_id]);
-    const staleCandidates = await client.query(`update atlas_v2.person_duplicate_candidates set candidate_state='STALE',updated_at=now() where candidate_state='ACTIVE' and (person_low_id=any($1::uuid[]) or person_high_id=any($1::uuid[])) returning id`, [[sides.source_person_id, sides.survivor_person_id]]);
+    const retiredRequirements = await client.query(`
+      update atlas_v2.person_duplicate_revalidation_requirements
+         set requirement_state='RETIRED',updated_at=now()
+       where requirement_state='ACTIVE' and person_low_id=$1 and person_high_id=$2
+       returning requirement_key`, [String(candidateRow.person_low_id), String(candidateRow.person_high_id)]);
 
     const deleted = await client.query(`delete from atlas_v2.persons where id=$1 returning id`, [sides.source_person_id]);
     if (deleted.rowCount !== 1) throw new Error("source person deletion did not affect exactly one row");
@@ -284,6 +311,8 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
       (select count(*)::int from atlas_v2.persons where id=$1) as person`, [sides.source_person_id]);
     if (Object.values(remainingSourceRefs.rows[0]).some((value) => Number(value) !== 0)) throw new Error("source person references remain after merge");
 
+    const frontierRefresh = await refreshCandidateFrontier(client);
+    const postMergeReadiness = await inspectPersonDuplicateRevalidationReadiness(client);
     const afterCounts = await globalCounts(client);
     if (afterCounts.persons !== beforeCounts.persons - 1) throw new Error("person count did not decrease by exactly one");
     if (afterCounts.relationships !== beforeCounts.relationships - reconciliationPlan.coalesces.length) throw new Error("relationship count changed outside the approved reconciliation plan");
@@ -297,6 +326,7 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
 
     const mutationSummary = {
       reference_readiness: { policy_version: referenceReadiness.policy_version, ready: referenceReadiness.ready },
+      pre_merge_revalidation_readiness: revalidationReadiness,
       relationship_reconciliation: { requested_resolutions: normalizedResolutions, applied_resolutions: reconciliationPlan.resolutions, coalesces: reconciliationMutations, relationships_removed: reconciliationPlan.coalesces.length, duplicate_source_links_collapsed: collapsedSourceLinks },
       names,
       sources,
@@ -305,7 +335,13 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
       people_affiliations_moved: peopleAffiliations.rowCount,
       event_participations_moved: eventParticipations.rowCount,
       authoring_person_pointers_cleared_by_lifecycle_fk: Number(authoringPersonPointersBefore.rows[0]?.count || 0),
-      candidates_staled: staleCandidates.rowCount,
+      revalidation_requirements_retired: retiredRequirements.rows.map((row) => String(row.requirement_key)),
+      candidate_frontier_refresh: {
+        previously_active_candidates_staled: frontierRefresh.staled,
+        detected_after_merge: frontierRefresh.detected.length,
+        active_requirements_after_merge: frontierRefresh.active_requirements
+      },
+      post_merge_revalidation_readiness: postMergeReadiness,
       before_counts: beforeCounts,
       after_counts: afterCounts
     };
@@ -325,7 +361,9 @@ module.exports = Object.freeze({
   stableJson,
   resolveMergeSides,
   ensureMergeSchema,
+  snapshotPerson,
   lockLiveMergeState,
+  lockPairRevalidationRequirements,
   assertLiveCandidateEvidence,
   coalesceRelationship,
   executeApprovedPersonMerge

@@ -85,9 +85,11 @@ test('completion readiness requires every requirement, current detector, termina
   assert.match(readinessSource, /REQUIREMENT_PRIOR_OUTCOME_OVERRIDE_WITHOUT_RATIONALE/);
 });
 
-test('duplicate review GET exposes revalidation readiness while physical Person merge remains blocked', () => {
+test('duplicate review GET combines current P10 lifecycle with live revalidation readiness', () => {
   assert.match(handler, /revalidation_readiness:revalidationReadiness/);
+  assert.match(handler, /mergeExecutionStateWithReadiness\(revalidationReadiness\)/);
+  assert.match(handler, /allowed:\s*lifecycle\.allowed && revalidationReady/);
   const state = interlock.personMergeExecutionState();
-  assert.equal(state.person_merge_lifecycle_version, 'pre-p10-blocked');
-  assert.equal(state.allowed, false);
+  assert.equal(state.person_merge_lifecycle_version, 'p10-v2-revalidated');
+  assert.equal(state.allowed, true);
 });

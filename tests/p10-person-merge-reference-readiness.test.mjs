@@ -50,15 +50,17 @@ test('P10-B base snapshots and optional P10-C requirement snapshots are both exp
   assert.match(readinessSource, /P10_PERSON_MERGE_REFERENCE_SURFACE_DRIFT/);
 });
 
-test('dormant merge executor requires schema-derived readiness and locks full semantic-key v2 Activity state', () => {
+test('physical merge executor requires schema-derived readiness and locks full semantic-key v2 Activity state', () => {
   assert.match(mergeSource, /assertPersonMergeReferenceReadiness/);
   assert.match(mergeSource, /const referenceReadiness = await ensureMergeSchema/);
+  assert.match(mergeSource, /assertPersonDuplicateRevalidationReadiness/);
   for (const token of [
     'relation_type_id', 'period_basis_id',
     'activity_start_month', 'activity_start_day', 'activity_start_granularity', 'activity_start_calendar', 'activity_start_certainty',
     'activity_end_month', 'activity_end_day', 'activity_end_granularity', 'activity_end_calendar', 'activity_end_certainty'
   ]) assert.match(mergeSource, new RegExp(token));
   assert.match(mergeSource, /activities: liveState\.relationships/);
+  assert.match(mergeSource, /requirements/);
   assert.match(mergeSource, /authoring_person_pointers_cleared_by_lifecycle_fk/);
 });
 
@@ -73,9 +75,10 @@ test('People affiliation and Event participation assertions are remapped without
   assert.match(mergeSource, /event_participations_moved/);
 });
 
-test('P10-C still does not unlock physical Person merge', () => {
+test('P10-D code lifecycle is active only with current semantic-v2 reconciliation', () => {
   const state = interlock.personMergeExecutionState();
-  assert.equal(state.person_merge_lifecycle_version, 'pre-p10-blocked');
+  assert.equal(state.person_merge_lifecycle_version, 'p10-v2-revalidated');
   assert.equal(state.required_person_merge_lifecycle_version, 'p10-v2-revalidated');
-  assert.equal(state.allowed, false);
+  assert.equal(state.reconciliation_semantic_version, 'v2-relation-full-temporal');
+  assert.equal(state.allowed, true);
 });

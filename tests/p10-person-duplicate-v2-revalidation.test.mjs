@@ -53,12 +53,36 @@ test('P10 rebuild invalidates reviewed decisions on detector-version drift as we
   assert.match(source, /decision_evidence_fingerprint is distinct from excluded\.evidence_fingerprint/);
   assert.match(source, /then 'REVIEW'/);
   assert.match(source, /reconciliation_semantic_version:\s*REVALIDATION_SEMANTIC_VERSION/);
+  assert.match(source, /await client\.query\("BEGIN"\);[\s\S]*lockPersonDuplicateFrontier\(client\)[\s\S]*refreshCandidateFrontier\(client\)/);
 });
 
-test('P10-A does not unlock physical Person merge', () => {
+test('P10-D code lifecycle is current only after full semantic-v2 reconciliation', () => {
   const state = personMergeExecutionState();
-  assert.equal(PERSON_MERGE_LIFECYCLE_VERSION, 'pre-p10-blocked');
+  assert.equal(PERSON_MERGE_LIFECYCLE_VERSION, 'p10-v2-revalidated');
   assert.equal(REQUIRED_PERSON_MERGE_LIFECYCLE_VERSION, 'p10-v2-revalidated');
   assert.equal(state.reconciliation_semantic_version, 'v2-relation-full-temporal');
-  assert.equal(state.allowed, false);
+  assert.equal(state.allowed, true);
+});
+
+test('physical Person merge is transactionally gated by global revalidation and refreshes the frontier after mutation', () => {
+  const source = fs.readFileSync(new URL('../server/atlas-person-merge-service.js', import.meta.url), 'utf8');
+  const readiness = source.indexOf('await assertPersonDuplicateRevalidationReadiness(client)');
+  const liveEvidence = source.indexOf('assertLiveCandidateEvidence(candidateRow, liveState, requirements)');
+  const deletePerson = source.indexOf('delete from atlas_v2.persons where id=$1 returning id');
+  const retireRequirement = source.indexOf("set requirement_state='RETIRED'");
+  const refresh = source.indexOf('await refreshCandidateFrontier(client)');
+  assert.ok(readiness >= 0 && liveEvidence > readiness && retireRequirement > liveEvidence && deletePerson > retireRequirement && refresh > deletePerson);
+  assert.match(source, /detectPersonDuplicateCandidates\(\{ names: liveState\.names, activities: liveState\.relationships, requirements \}\)/);
+  assert.match(source, /P10_OVERLAPPING_REVALIDATION_REQUIREMENT_REQUIRES_REBIND/);
+  assert.match(source, /pre_merge_revalidation_readiness/);
+  assert.match(source, /post_merge_revalidation_readiness/);
+});
+
+test('Person merge snapshotting does not issue concurrent queries on one pg Client', () => {
+  const source = fs.readFileSync(new URL('../server/atlas-person-merge-service.js', import.meta.url), 'utf8');
+  const start = source.indexOf('async function snapshotPerson');
+  const end = source.indexOf('async function globalCounts');
+  const snapshot = source.slice(start, end);
+  assert.ok(start >= 0 && end > start);
+  assert.doesNotMatch(snapshot, /Promise\.all/);
 });

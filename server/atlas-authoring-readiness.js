@@ -107,19 +107,19 @@ async function inspectAuthoringReadiness(client) {
   const p9Ready = p9.old_index_present === false
     && p9.new_index_present === true
     && p9.duplicate_groups === 0;
-  const p10Blocked = merge.allowed === false
-    && merge.person_merge_lifecycle_version === "pre-p10-blocked";
+  const mergeContractReady = merge.reconciliation_semantic_version === merge.required_reconciliation_semantic_version
+    && merge.person_merge_lifecycle_version === merge.required_person_merge_lifecycle_version;
   const ready = p5Ready
     && core.tables_ready
     && core.columns_ready
     && core.ledger_contract_ready
     && p9Ready
-    && p10Blocked;
+    && mergeContractReady;
   const bootstrapReady = p5Ready
     && core.base_tables_ready
     && core.activity_columns_ready
     && p9Ready
-    && p10Blocked;
+    && mergeContractReady;
 
   return Object.freeze({
     ready,
@@ -128,7 +128,8 @@ async function inspectAuthoringReadiness(client) {
     p5_ready: p5Ready,
     core,
     p9,
-    person_merge: merge
+    person_merge: merge,
+    person_merge_contract_ready: mergeContractReady
   });
 }
 

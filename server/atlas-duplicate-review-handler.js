@@ -17,6 +17,17 @@ function bodyObject(body) {
   if (typeof body === "string" && body.trim()) return JSON.parse(body);
   return {};
 }
+function mergeExecutionStateWithReadiness(readiness) {
+  const lifecycle = personMergeExecutionState();
+  const revalidationReady = Boolean(readiness?.ready);
+  return Object.freeze({
+    ...lifecycle,
+    lifecycle_code_ready: lifecycle.allowed,
+    revalidation_ready: revalidationReady,
+    revalidation_blockers: Object.freeze([...(readiness?.blockers || [])]),
+    allowed: lifecycle.allowed && revalidationReady
+  });
+}
 
 function createDuplicateReviewHandler({ clientFactory, env = process.env, now } = {}) {
   if (typeof clientFactory !== "function") throw new Error("clientFactory is required");
@@ -54,7 +65,7 @@ function createDuplicateReviewHandler({ clientFactory, env = process.env, now } 
         const state = error?.state || {};
         sendJson(res,409,{
           ok:false,source:"v2-duplicate-review",operation,code:error?.code || PERSON_MERGE_BLOCK_CODE,
-          error:"Physical Person merge is disabled until semantic-key v2 reconciliation and P10 candidate revalidation are both active.",
+          error:"Physical Person merge is disabled until semantic-key v2 reconciliation and the P10 lifecycle implementation are active.",
           reconciliation_semantic_version:state.reconciliation_semantic_version || null,
           required_reconciliation_semantic_version:state.required_reconciliation_semantic_version || null,
           person_merge_lifecycle_version:state.person_merge_lifecycle_version || null,
@@ -72,7 +83,7 @@ function createDuplicateReviewHandler({ clientFactory, env = process.env, now } 
         const revalidationReadiness = await inspectPersonDuplicateRevalidationReadiness(client);
         sendJson(res,200,{
           ok:true,source:"v2-duplicate-review",
-          merge_execution_state:personMergeExecutionState(),
+          merge_execution_state:mergeExecutionStateWithReadiness(revalidationReadiness),
           revalidation_readiness:revalidationReadiness,
           ...queue
         });
@@ -102,12 +113,16 @@ function createDuplicateReviewHandler({ clientFactory, env = process.env, now } 
       else if (/PHASE9B_SCHEMA_REQUIRED|person_merge_audits/i.test(message)) sendJson(res,503,{ok:false,code:"PHASE9B_SCHEMA_REQUIRED",error:"person merge schema is not applied"});
       else if (
         error?.code === "RELATIONSHIP_SOURCE_LOCATOR_CONFLICT" ||
+        error?.code === "P10_PERSON_DUPLICATE_REVALIDATION_INCOMPLETE" ||
+        error?.code === "P10_PERSON_MERGE_REFERENCE_SURFACE_DRIFT" ||
+        error?.code === "P10_OVERLAPPING_REVALIDATION_REQUIREMENT_REQUIRES_REBIND" ||
         /LIVE_EVIDENCE_CHANGED|candidate not found|candidate is stale|detector version is stale|decision must|request_id|required|too long|MERGE approval|evidence changed|latest candidate review|latest MERGE review|survivor_person_id|metadata conflict|schema drift|candidate persons are not both live|relationship resolution|relationship conflict group|keep_relationship_id|relationship reconciliation|P10_REQUIRED_REVALIDATION_PERSON_MISSING/i.test(message)
       ) {
         sendJson(res,409,{
           ok:false,
           code:error?.code || (/LIVE_EVIDENCE_CHANGED/.test(message) ? "LIVE_EVIDENCE_CHANGED" : "MERGE_PRECONDITION_FAILED"),
           error:message,
+          ...(error?.readiness ? { readiness:error.readiness } : {}),
           ...(error?.source_id ? {source_id:error.source_id} : {})
         });
       } else sendJson(res,500,{ok:false,error:"duplicate review operation failed"});
@@ -116,4 +131,4 @@ function createDuplicateReviewHandler({ clientFactory, env = process.env, now } 
     }
   };
 }
-module.exports = Object.freeze({ createDuplicateReviewHandler,sendJson,bodyObject });
+module.exports = Object.freeze({ createDuplicateReviewHandler,sendJson,bodyObject,mergeExecutionStateWithReadiness });
