@@ -1,6 +1,7 @@
 "use strict";
 
 const { readPersons, readPersonDetail } = require("./atlas-person-read-service.js");
+const { readPersonListFacets } = require("./atlas-person-list-facet-service.js");
 const { requireDatabaseUrl, sendJson } = require("./atlas-normalized-read-handler.js");
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -19,8 +20,9 @@ function personIdFromRequest(req) {
   }
 }
 
-function createPersonReadHandler({ clientFactory, env = process.env } = {}) {
+function createPersonReadHandler({ clientFactory, env = process.env, readListFacets = readPersonListFacets } = {}) {
   if (typeof clientFactory !== "function") throw new Error("clientFactory is required");
+  if (typeof readListFacets !== "function") throw new Error("readListFacets is required");
 
   return async function handler(req, res) {
     const method = String(req?.method || "GET").toUpperCase();
@@ -68,12 +70,14 @@ function createPersonReadHandler({ clientFactory, env = process.env } = {}) {
       }
 
       const data = await readPersons({ client });
+      const persons = await readListFacets({ client, persons: data.persons });
       sendJson(res, 200, {
         ok: true,
         source: "v2-person-read",
         schema: "atlas-person-read/v1",
         mode: "list",
-        ...data
+        ...data,
+        persons
       });
     } catch (error) {
       console.error("ATLAS Person read failed", error);

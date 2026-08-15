@@ -7,11 +7,15 @@ const source = fs.readFileSync(new URL('../atlas-person-browser-reader.js', impo
 
 function loadReader() {
   const window = {};
-  vm.runInNewContext(source, { window, console, URL, encodeURIComponent, Set, Object, Array, String, Number, Error });
+  vm.runInNewContext(source, { window, console, URL, encodeURIComponent, Set, Map, Object, Array, String, Number, Error });
   return window.ATLAS_PERSON_BROWSER_READER;
 }
 
-function person(id, historicity, firstActivityYear, name = id) {
+function emptyFacets() {
+  return { polities: [], relations: [], roles: [], period_bases: [] };
+}
+
+function person(id, historicity, firstActivityYear, name = id, facets = emptyFacets()) {
   return {
     id,
     person_type: 'historical',
@@ -23,7 +27,17 @@ function person(id, historicity, firstActivityYear, name = id) {
     descriptions: [],
     activity_count: firstActivityYear == null ? 0 : 1,
     first_activity_year: firstActivityYear,
-    last_activity_year: firstActivityYear
+    last_activity_year: firstActivityYear,
+    facets
+  };
+}
+
+function scythianFacets() {
+  return {
+    polities: [{ id: 'polity-scythia', display_name: '스키타이 왕국', canonical_name_en: 'Scythian Kingdom' }],
+    relations: [{ id: 'relation-rules', code: 'rules', category: 'authority' }],
+    roles: [{ id: 'role-king', display_name: '왕', canonical_name_en: 'King', code: 'king', category: 'ruler' }],
+    period_bases: [{ id: 'basis-reign', display_name: '재위', canonical_name_en: 'Reign', code: 'reign' }]
   };
 }
 
@@ -82,7 +96,41 @@ test('secondary filtering is applied inside already-separated historicity groups
   assert.deepEqual(Array.from(grouped.other_or_uncertain, (row) => row.id), ['l1']);
 });
 
-test('list reader is GET-only and returns server summary plus derived groups', async () => {
+test('semantic facet filters are ANDed after historicity partitioning without detail fetching', () => {
+  const reader = loadReader();
+  const scythian = person('h1', 'historical', -360, 'Ateas', scythianFacets());
+  const other = person('h2', 'historical', -300, 'Other', {
+    polities: [{ id: 'polity-other', display_name: '다른 정치체' }],
+    relations: [{ id: 'relation-rules', code: 'rules', category: 'authority' }],
+    roles: [{ id: 'role-general', display_name: '장군' }],
+    period_bases: [{ id: 'basis-reign', display_name: '재위' }]
+  });
+  const legendary = person('l1', 'legendary', -1200, 'Legendary', scythianFacets());
+  const grouped = reader.preparePersonGroups([scythian, other, legendary], {
+    facetFilters: { polity_id: 'polity-scythia', relation_type_id: 'relation-rules', role_id: 'role-king', period_basis_id: 'basis-reign' }
+  });
+  assert.deepEqual(Array.from(grouped.historical, (row) => row.id), ['h1']);
+  assert.deepEqual(Array.from(grouped.other_or_uncertain, (row) => row.id), ['l1']);
+});
+
+test('search includes readable semantic facets and facet catalog deduplicates by UUID', () => {
+  const reader = loadReader();
+  const rows = [
+    person('h1', 'historical', -360, 'Ateas', scythianFacets()),
+    person('h2', 'historical', -350, 'Second', scythianFacets())
+  ];
+  assert.equal(reader.personMatchesQuery(rows[0], '스키타이'), true);
+  assert.equal(reader.personMatchesQuery(rows[0], 'authority'), true);
+  assert.equal(reader.personMatchesQuery(rows[0], 'king'), true);
+  assert.equal(reader.personMatchesQuery(rows[0], '재위'), true);
+  const catalog = reader.facetCatalog(rows);
+  assert.equal(catalog.polities.length, 1);
+  assert.equal(catalog.relations.length, 1);
+  assert.equal(catalog.roles.length, 1);
+  assert.equal(catalog.period_bases.length, 1);
+});
+
+test('list reader is GET-only and returns server summary plus derived groups and facet catalog', async () => {
   const reader = loadReader();
   const calls = [];
   const fetchImpl = async (url, options) => {
@@ -95,7 +143,7 @@ test('list reader is GET-only and returns server summary plus derived groups', a
         source: 'v2-person-read',
         schema: 'atlas-person-read/v1',
         mode: 'list',
-        persons: [person('h1', 'historical', null), person('l1', 'legendary', -900)],
+        persons: [person('h1', 'historical', null, 'H', scythianFacets()), person('l1', 'legendary', -900)],
         summary: { total: 2, historicity_values: ['historical', 'legendary'] }
       })
     };
@@ -108,6 +156,7 @@ test('list reader is GET-only and returns server summary plus derived groups', a
   assert.equal(result.summary.total, 2);
   assert.equal(result.groups.historical.length, 1);
   assert.equal(result.groups.other_or_uncertain.length, 1);
+  assert.equal(result.facet_catalog.polities.length, 1);
 });
 
 test('detail reader rejects malformed UUID before fetch and uses UUID query for valid detail', async () => {

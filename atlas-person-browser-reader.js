@@ -31,10 +31,29 @@
     });
   }
 
+  function facetRows(person, key) {
+    const value = person?.facets?.[key];
+    return Array.isArray(value) ? value : [];
+  }
+
+  function facetText(item) {
+    if (!item) return [];
+    return [
+      item.display_name,
+      item.preferred_name_ko,
+      item.canonical_name_en,
+      item.source_label,
+      item.code,
+      item.category
+    ].map(text).filter(Boolean);
+  }
+
   function searchableText(person) {
     const names = Array.isArray(person?.names) ? person.names.map((row) => row?.name) : [];
     const descriptions = Array.isArray(person?.descriptions) ? person.descriptions.map((row) => row?.content) : [];
-    return [person?.display_name, person?.canonical_name_en, person?.preferred_name_ko, ...names, ...descriptions]
+    const facets = ["polities", "relations", "roles", "period_bases"]
+      .flatMap((key) => facetRows(person, key).flatMap(facetText));
+    return [person?.display_name, person?.canonical_name_en, person?.preferred_name_ko, ...names, ...descriptions, ...facets]
       .map(text)
       .join("\n")
       .toLocaleLowerCase("ko");
@@ -43,6 +62,47 @@
   function personMatchesQuery(person, query) {
     const needle = text(query).trim().toLocaleLowerCase("ko");
     return !needle || searchableText(person).includes(needle);
+  }
+
+  function hasFacetId(person, key, id) {
+    const expected = text(id).trim();
+    return !expected || facetRows(person, key).some((item) => text(item?.id) === expected);
+  }
+
+  function personMatchesFacets(person, facetFilters = {}) {
+    return hasFacetId(person, "polities", facetFilters.polity_id)
+      && hasFacetId(person, "relations", facetFilters.relation_type_id)
+      && hasFacetId(person, "roles", facetFilters.role_id)
+      && hasFacetId(person, "period_bases", facetFilters.period_basis_id);
+  }
+
+  function facetItemLabel(item) {
+    return text(item?.display_name || item?.preferred_name_ko || item?.canonical_name_en || item?.source_label || item?.code || item?.id);
+  }
+
+  function facetCatalog(persons) {
+    const dimensions = {
+      polities: new Map(),
+      relations: new Map(),
+      roles: new Map(),
+      period_bases: new Map()
+    };
+    for (const person of persons || []) {
+      for (const key of Object.keys(dimensions)) {
+        for (const item of facetRows(person, key)) {
+          const id = text(item?.id);
+          if (id && !dimensions[key].has(id)) dimensions[key].set(id, item);
+        }
+      }
+    }
+    const output = {};
+    for (const [key, map] of Object.entries(dimensions)) {
+      output[key] = Object.freeze([...map.values()].sort((left, right) => {
+        const byLabel = facetItemLabel(left).localeCompare(facetItemLabel(right), "ko");
+        return byLabel || text(left?.id).localeCompare(text(right?.id));
+      }));
+    }
+    return Object.freeze(output);
   }
 
   function comparePersons(left, right, sortOrder = "start-asc") {
@@ -60,11 +120,13 @@
   function preparePersonGroups(persons, {
     query = "",
     sortOrder = "start-asc",
+    facetFilters = {},
     secondaryPredicate = null
   } = {}) {
     const partitioned = partitionByHistoricity(persons);
     const filterAndSort = (rows) => rows
       .filter((person) => personMatchesQuery(person, query))
+      .filter((person) => personMatchesFacets(person, facetFilters))
       .filter((person) => typeof secondaryPredicate === "function" ? secondaryPredicate(person) : true)
       .slice()
       .sort((left, right) => comparePersons(left, right, sortOrder));
@@ -72,7 +134,8 @@
     return Object.freeze({
       historical: Object.freeze(filterAndSort(partitioned.historical)),
       other_or_uncertain: Object.freeze(filterAndSort(partitioned.other_or_uncertain)),
-      observed_historicity_values: partitioned.observed_historicity_values
+      observed_historicity_values: partitioned.observed_historicity_values,
+      facet_catalog: facetCatalog(persons)
     });
   }
 
@@ -103,7 +166,8 @@
       source: payload.source,
       persons: Object.freeze(payload.persons.slice()),
       summary: payload.summary || null,
-      groups: partitionByHistoricity(payload.persons)
+      groups: partitionByHistoricity(payload.persons),
+      facet_catalog: facetCatalog(payload.persons)
     });
   }
 
@@ -126,7 +190,10 @@
     historicityGroup,
     observedHistoricityValues,
     partitionByHistoricity,
+    facetRows,
+    facetCatalog,
     personMatchesQuery,
+    personMatchesFacets,
     comparePersons,
     preparePersonGroups,
     listPersons,

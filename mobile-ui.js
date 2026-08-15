@@ -29,6 +29,18 @@
 
   const compactSearchText = (value) => normalizeSearchText(value).replace(/\s+/g, "");
 
+  function personMainSearch() {
+    return document.getElementById("personMainSearch");
+  }
+
+  function personMainActive() {
+    return Boolean(document.getElementById("personMainView"));
+  }
+
+  function visiblePersonCount() {
+    return document.querySelectorAll("#personMainGroups .person-card").length;
+  }
+
   function setMenu(open) {
     if (!drawer || !backdrop || !menuButton) return;
     drawer.classList.toggle("open", open);
@@ -56,7 +68,7 @@
     const hasValue = mobileSearch.value.trim().length > 0;
     if (mobileSearchClear) mobileSearchClear.hidden = !hasValue;
     if (mobileSearchCount) {
-      const value = count ?? visibleRowCount();
+      const value = count ?? (personMainActive() ? visiblePersonCount() : visibleRowCount());
       mobileSearchCount.textContent = hasValue ? `${value}건` : "";
     }
   }
@@ -88,6 +100,13 @@
   function syncMobileSearchToMain() {
     if (!mobileSearch) return;
     const query = mobileSearch.value;
+    const personSearch = personMainSearch();
+    if (personSearch) {
+      if (personSearch.value !== query) personSearch.value = query;
+      personSearch.dispatchEvent(new Event("input", { bubbles: true }));
+      updateMobileSearchState(visiblePersonCount());
+      return;
+    }
     const count = filterRenderedRows(query);
     if (desktopSearch && desktopSearch.value !== query) desktopSearch.value = query;
     updateMobileSearchState(count);
@@ -125,7 +144,7 @@
   });
 
   desktopSearch?.addEventListener("input", () => {
-    if (!mobileSearch || document.activeElement === mobileSearch) return;
+    if (!mobileSearch || document.activeElement === mobileSearch || personMainActive()) return;
     mobileSearch.value = desktopSearch.value;
     const count = filterRenderedRows(mobileSearch.value);
     updateMobileSearchState(count);
@@ -133,12 +152,23 @@
 
   const bodyObserver = dataBody && "MutationObserver" in window
     ? new MutationObserver(() => {
+        if (personMainActive()) {
+          updateMobileSearchState(visiblePersonCount());
+          return;
+        }
         const query = mobileSearch?.value || "";
         const count = filterRenderedRows(query);
         updateMobileSearchState(count);
       })
     : null;
   bodyObserver?.observe(dataBody, { childList: true, subtree: true });
+
+  window.addEventListener("atlas-person-main-rendered", (event) => {
+    const personSearch = personMainSearch();
+    if (mobileSearch && personSearch && mobileSearch.value !== personSearch.value) mobileSearch.value = personSearch.value;
+    const count = Number(event?.detail?.visibleCount);
+    updateMobileSearchState(Number.isFinite(count) ? count : visiblePersonCount());
+  });
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
@@ -157,9 +187,10 @@
       setToolsMenu(false);
     }
     if (event.matches && mobileSearch) {
-      mobileSearch.value = desktopSearch?.value || mobileSearch.value;
-      const count = filterRenderedRows(mobileSearch.value);
-      updateMobileSearchState(count);
+      const personSearch = personMainSearch();
+      mobileSearch.value = personSearch?.value ?? desktopSearch?.value ?? mobileSearch.value;
+      if (personSearch) updateMobileSearchState(visiblePersonCount());
+      else updateMobileSearchState(filterRenderedRows(mobileSearch.value));
     }
   });
 

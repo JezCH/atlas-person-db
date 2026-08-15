@@ -6,9 +6,12 @@ const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const main = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url), 'utf8');
 const reader = fs.readFileSync(new URL('../atlas-person-browser-reader.js', import.meta.url), 'utf8');
 const css = fs.readFileSync(new URL('../atlas-person-main.css', import.meta.url), 'utf8');
+const filterCss = fs.readFileSync(new URL('../atlas-person-main-filters.css', import.meta.url), 'utf8');
+const mobile = fs.readFileSync(new URL('../mobile-ui.js', import.meta.url), 'utf8');
 
 test('Main loads the Person reader before the Person-centered screen module', () => {
   assert.match(html, /atlas-person-main\.css/);
+  assert.match(html, /atlas-person-main-filters\.css/);
   const readerIndex = html.indexOf('atlas-person-browser-reader.js');
   const mainIndex = html.indexOf('atlas-person-main.js');
   assert.ok(readerIndex >= 0);
@@ -16,13 +19,26 @@ test('Main loads the Person reader before the Person-centered screen module', ()
   assert.match(main, /ATLAS_PERSON_BROWSER_READER/);
 });
 
-test('Person-centered Main makes historicity an explicit primary grouping before secondary filtering', () => {
-  assert.match(main, /reader\.preparePersonGroups\(persons, \{ query, sortOrder \}\)/);
+test('Person-centered Main makes historicity an explicit primary grouping before semantic filtering', () => {
+  assert.match(main, /reader\.preparePersonGroups\(persons, \{ query, sortOrder, facetFilters \}\)/);
   assert.match(main, /역사 인물/);
   assert.match(main, /전설·신화·역사성 미확정 및 기타/);
   assert.match(main, /historical 이외의 authoritative historicity 값을 별도 구역에 원문 그대로 표시합니다/);
   assert.match(reader, /partitionByHistoricity/);
   assert.match(reader, /PRIMARY_HISTORICITY_VALUE = "historical"/);
+  assert.match(reader, /personMatchesFacets/);
+});
+
+test('Person Main exposes compact Polity Relation Role and Period Basis filters without detail-loop fetching', () => {
+  for (const id of ['personMainPolityFilter', 'personMainRelationFilter', 'personMainRoleFilter', 'personMainBasisFilter']) {
+    assert.match(main, new RegExp(id));
+  }
+  assert.match(main, /facetCatalog = result\.facet_catalog \|\| reader\.facetCatalog\(persons\)/);
+  assert.match(main, /semantic filter/);
+  assert.match(main, /필터 초기화/);
+  const renderGroupsBody = main.slice(main.indexOf('function renderGroups'), main.indexOf('function namesHtml'));
+  assert.doesNotMatch(renderGroupsBody, /readPerson\(/);
+  assert.match(filterCss, /\.person-main-filters/);
 });
 
 test('Person detail renders readable names, descriptions, Person sources and complete Activity meaning', () => {
@@ -51,6 +67,19 @@ test('Main renders BCE/CE and unknown chronology without changing historicity', 
   assert.match(main, /return `AD \$\{value\}`/);
   assert.match(main, /연도 미상/);
   assert.match(main, /활동연도가 미상이어도 역사성 분류는 유지됩니다/);
+});
+
+test('refresh preserves selected Person and forces authoritative detail refresh', () => {
+  assert.match(main, /selectPerson\(selectedPersonId, \{ force: true \}\)/);
+  assert.match(main, /\(!force && selectedPersonId === personId\)/);
+});
+
+test('mobile appbar search delegates to the Person Main search after Person shell installation', () => {
+  assert.match(mobile, /function personMainSearch\(\)/);
+  assert.match(mobile, /personSearch\.dispatchEvent\(new Event\("input", \{ bubbles: true \}\)\)/);
+  assert.match(mobile, /atlas-person-main-rendered/);
+  assert.match(main, /new CustomEvent\("atlas-person-main-rendered"/);
+  assert.match(mobile, /visiblePersonCount/);
 });
 
 test('existing Activity authoring DOM is moved into a separate expandable tool instead of being recreated or deleted', () => {
@@ -82,4 +111,6 @@ test('Person Main CSS isolates the new layout and keeps responsive fallbacks', (
   assert.match(css, /\.person-main-detail/);
   assert.match(css, /\.relationship-authoring-tools/);
   assert.match(css, /@media\(max-width:760px\)/);
+  assert.match(filterCss, /@media\(max-width:760px\)/);
+  assert.match(filterCss, /@media\(max-width:520px\)/);
 });
