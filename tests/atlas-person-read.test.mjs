@@ -5,9 +5,19 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const {
   PERSON_READ_SQL,
-  readPersons
+  PERSON_DETAIL_SQL,
+  ACTIVITY_DETAIL_SQL,
+  readPersons,
+  readPersonDetail
 } = require('../server/atlas-person-read-service.js');
 const { createPersonReadHandler } = require('../server/atlas-person-read-handler.js');
+
+const PERSON_ID = '00000000-0000-4000-8000-000000000001';
+const ACTIVITY_ID = '00000000-0000-4000-8000-000000000101';
+const POLITY_ID = '00000000-0000-4000-8000-000000000201';
+const RELATION_ID = '7ca4de8f-01d4-542c-acc1-a06848c6742c';
+const ROLE_ID = '00000000-0000-4000-8000-000000000301';
+const PERIOD_BASIS_ID = '00000000-0000-4000-8000-000000000401';
 
 function mockResponse() {
   return {
@@ -16,6 +26,57 @@ function mockResponse() {
     body: '',
     setHeader(name, value) { this.headers[name] = value; },
     end(value) { this.body = String(value || ''); }
+  };
+}
+
+function detailPersonRow() {
+  return {
+    id: PERSON_ID,
+    person_type: 'historical',
+    historicity: 'historical',
+    names: [
+      { locale: 'en', name: 'Ateas', name_type: 'canonical', is_preferred: true },
+      { locale: 'ko', name: '아테아스', name_type: 'display', is_preferred: true }
+    ],
+    descriptions: []
+  };
+}
+
+function detailActivityRow() {
+  return {
+    id: ACTIVITY_ID,
+    person_id: PERSON_ID,
+    polity_id: POLITY_ID,
+    relation_type_id: RELATION_ID,
+    role_id: ROLE_ID,
+    period_basis_id: PERIOD_BASIS_ID,
+    activity_start: -360,
+    activity_start_month: null,
+    activity_start_day: null,
+    activity_start_granularity: 'year',
+    activity_start_certainty: 'uncertain',
+    activity_start_calendar: 'unspecified_historical',
+    activity_end: -339,
+    activity_end_month: null,
+    activity_end_day: null,
+    activity_end_granularity: 'year',
+    activity_end_certainty: 'exact',
+    activity_end_calendar: 'unspecified_historical',
+    confidence: 'likely',
+    chronology_status: 'reviewed',
+    notes: 'Start is an activity boundary, not an asserted accession year.',
+    relation_type_code: 'rules',
+    relation_type_category: 'authority',
+    polity_name_en: 'Scythian Kingdom',
+    polity_name_ko: '스키타이 왕국',
+    role_code: 'king',
+    role_category: 'ruler',
+    role_source_label: 'King',
+    role_name_en: 'King',
+    role_name_ko: '왕',
+    period_basis_code: 'reign',
+    period_basis_name_en: 'Reign',
+    period_basis_name_ko: '재위'
   };
 }
 
@@ -55,7 +116,7 @@ test('Person Main read preserves DB historicity vocabulary instead of inventing 
       last_activity_year: -2400
     },
     {
-      id: '00000000-0000-4000-8000-000000000001',
+      id: PERSON_ID,
       person_type: 'historical',
       historicity: 'historical',
       names: [
@@ -111,28 +172,140 @@ test('Person Main read keeps chronology availability separate from historicity',
   assert.equal(result.persons[0].last_activity_year, null);
 });
 
-test('Person read handler is GET-only and returns the versioned Person envelope', async () => {
+test('Person detail exposes authoritative Activity semantics without flattening temporal certainty', async () => {
+  let queryIndex = 0;
+  const client = {
+    async query(sql, params) {
+      queryIndex += 1;
+      assert.deepEqual(params, [PERSON_ID]);
+      if (queryIndex === 1) {
+        assert.equal(sql, PERSON_DETAIL_SQL);
+        return { rowCount: 1, rows: [detailPersonRow()] };
+      }
+      assert.equal(sql, ACTIVITY_DETAIL_SQL);
+      return { rowCount: 1, rows: [detailActivityRow()] };
+    }
+  };
+
+  const person = await readPersonDetail({ client, personId: PERSON_ID });
+  assert.equal(person.display_name, '아테아스');
+  assert.equal(person.activity_count, 1);
+  assert.equal(person.first_activity_year, -360);
+  assert.equal(person.last_activity_year, -339);
+
+  const activity = person.activities[0];
+  assert.equal(activity.id, ACTIVITY_ID);
+  assert.equal(activity.polity.display_name, '스키타이 왕국');
+  assert.deepEqual(activity.relation, {
+    id: RELATION_ID,
+    code: 'rules',
+    category: 'authority'
+  });
+  assert.equal(activity.role.display_name, '왕');
+  assert.equal(activity.period_basis.display_name, '재위');
+  assert.deepEqual(activity.start, {
+    year: -360,
+    month: null,
+    day: null,
+    granularity: 'year',
+    certainty: 'uncertain',
+    calendar: 'unspecified_historical'
+  });
+  assert.deepEqual(activity.end, {
+    year: -339,
+    month: null,
+    day: null,
+    granularity: 'year',
+    certainty: 'exact',
+    calendar: 'unspecified_historical'
+  });
+  assert.equal(activity.confidence, 'likely');
+  assert.equal(activity.chronology_status, 'reviewed');
+  assert.match(activity.notes, /not an asserted accession year/);
+  assert.doesNotMatch(ACTIVITY_DETAIL_SQL, /canonical_key/);
+  for (const field of [
+    'relation_type_id',
+    'activity_start_month',
+    'activity_start_day',
+    'activity_start_granularity',
+    'activity_start_certainty',
+    'activity_start_calendar',
+    'activity_end_month',
+    'activity_end_day',
+    'activity_end_granularity',
+    'activity_end_certainty',
+    'activity_end_calendar',
+    'confidence',
+    'chronology_status',
+    'notes'
+  ]) assert.match(ACTIVITY_DETAIL_SQL, new RegExp(field));
+});
+
+test('Person read handler supports list and UUID detail modes and rejects malformed IDs before DB access', async () => {
   let ended = false;
+  let queryIndex = 0;
   const handler = createPersonReadHandler({
     env: { SUPABASE_DB_URL: 'postgresql://example.invalid/atlas' },
     clientFactory: async () => ({
-      async query() { return { rows: [] }; },
+      async query(sql) {
+        queryIndex += 1;
+        if (sql === PERSON_READ_SQL) return { rows: [] };
+        if (sql === PERSON_DETAIL_SQL) return { rowCount: 1, rows: [detailPersonRow()] };
+        if (sql === ACTIVITY_DETAIL_SQL) return { rowCount: 1, rows: [detailActivityRow()] };
+        throw new Error(`unexpected query ${queryIndex}`);
+      },
       async end() { ended = true; }
     })
   });
 
-  const getRes = mockResponse();
-  await handler({ method: 'GET' }, getRes);
-  const payload = JSON.parse(getRes.body);
-  assert.equal(getRes.statusCode, 200);
-  assert.equal(payload.ok, true);
-  assert.equal(payload.source, 'v2-person-read');
-  assert.equal(payload.schema, 'atlas-person-read/v1');
-  assert.deepEqual(payload.persons, []);
-  assert.deepEqual(payload.summary.historicity_values, []);
+  const listRes = mockResponse();
+  await handler({ method: 'GET' }, listRes);
+  const listPayload = JSON.parse(listRes.body);
+  assert.equal(listRes.statusCode, 200);
+  assert.equal(listPayload.ok, true);
+  assert.equal(listPayload.schema, 'atlas-person-read/v1');
+  assert.equal(listPayload.mode, 'list');
+  assert.deepEqual(listPayload.persons, []);
+
+  ended = false;
+  const detailRes = mockResponse();
+  await handler({ method: 'GET', query: { person_id: PERSON_ID } }, detailRes);
+  const detailPayload = JSON.parse(detailRes.body);
+  assert.equal(detailRes.statusCode, 200);
+  assert.equal(detailPayload.mode, 'detail');
+  assert.equal(detailPayload.person.id, PERSON_ID);
+  assert.equal(detailPayload.person.activities[0].relation.code, 'rules');
   assert.equal(ended, true);
+
+  let factoryCalled = false;
+  const rejectHandler = createPersonReadHandler({
+    env: { SUPABASE_DB_URL: 'postgresql://example.invalid/atlas' },
+    clientFactory: async () => { factoryCalled = true; throw new Error('must not connect'); }
+  });
+  const invalidRes = mockResponse();
+  await rejectHandler({ method: 'GET', query: { person_id: 'not-a-uuid' } }, invalidRes);
+  assert.equal(invalidRes.statusCode, 400);
+  assert.equal(JSON.parse(invalidRes.body).code, 'INVALID_PERSON_ID');
+  assert.equal(factoryCalled, false);
 
   const postRes = mockResponse();
   await handler({ method: 'POST' }, postRes);
   assert.equal(postRes.statusCode, 405);
+});
+
+test('Person detail returns 404 for a valid UUID that is not present', async () => {
+  const handler = createPersonReadHandler({
+    env: { SUPABASE_DB_URL: 'postgresql://example.invalid/atlas' },
+    clientFactory: async () => ({
+      async query(sql) {
+        assert.equal(sql, PERSON_DETAIL_SQL);
+        return { rowCount: 0, rows: [] };
+      },
+      async end() {}
+    })
+  });
+  const res = mockResponse();
+  await handler({ method: 'GET', url: `/api/atlas-person-read?person_id=${PERSON_ID}` }, res);
+  assert.equal(res.statusCode, 404);
+  assert.equal(JSON.parse(res.body).code, 'PERSON_NOT_FOUND');
 });
