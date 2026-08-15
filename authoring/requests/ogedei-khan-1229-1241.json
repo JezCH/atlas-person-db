@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ogedei-khan:mongol-empire:1229-1241:v1",
+  "person": {
+    "canonical_name_en": "Ögedei Khan",
+    "display_name_ko": "우구데이 칸"
+  },
+  "polity": {
+    "canonical_name_en": "Mongol Empire",
+    "display_name_ko": "몽골 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khagan",
+    "role_display_name_ko": "카간",
+    "start_year": 1229,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1241,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ögedei Khan, rendered in Korean historical sources as 우구데이 칸 and transcribed in Chinese as 窩闊台, succeeded Genghis Khan as the second Great Khan of the Mongol Empire. He ruled from 1229 to 1241 and presided over major imperial expansion, including campaigns that destroyed the Jin dynasty and extended Mongol power into Rus' and eastern Europe. The record represents his sovereign reign at year granularity."
+  },
+  "sources": [
+    {
+      "title": "Goryeosa — Korean History Database",
+      "canonical_url": "https://db.history.go.kr/id/kr_031r_0020_0050_0030",
+      "citation_text": "The Korean History Database text of Goryeosa explicitly annotates 窩闊台 as 우구데이 and refers to him as emperor, directly supporting identification of the user-supplied Chinese form.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Mongol invasions of Goryeo — Our History Net, National Institute of Korean History",
+      "canonical_url": "https://contents.history.go.kr/mobile/kc/view.do?code=kc_age_20&levelId=kc_i200800",
+      "citation_text": "Our History Net identifies 몽골의 대칸 우구데이칸 and gives his reign as 1229–1241, describing his succession after Genghis Khan and the Mongol campaigns of his reign.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Ögödei (1185-1241), Chinggis Khan's Third Son and Successor — Asia for Educators, Columbia University",
+      "canonical_url": "https://afe.easia.columbia.edu/mongols/pop/figures/ogodei_pop.htm",
+      "citation_text": "Columbia University's Asia for Educators identifies Ögödei as Chinggis Khan's son and successor and states that he ruled the Mongol Empire from 1229 to 1241 as Great Khan.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
