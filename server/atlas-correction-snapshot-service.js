@@ -1,7 +1,5 @@
 "use strict";
 
-const { snapshotRelationship } = require("./atlas-correction-manifest-service.js");
-
 const MAX_SNAPSHOT_ACTIVITY_IDS = 20;
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -11,6 +9,28 @@ function normalizeSnapshotActivityIds(value) {
   const ids = [...new Set(value.map((item) => String(item || "").trim().toLowerCase()))].sort();
   if (ids.length === 0 || ids.some((id) => !UUID_RE.test(id))) throw new Error("CORRECTION_SNAPSHOT_ACTIVITY_ID_INVALID");
   return ids;
+}
+
+async function snapshotRelationship(client, id) {
+  const relationship = await client.query(`
+    select id::text,person_id::text,polity_id::text,relation_type_id::text,role_id::text,period_basis_id::text,
+           activity_start,activity_start_month,activity_start_day,activity_start_granularity,activity_start_certainty,activity_start_calendar,
+           activity_end,activity_end_month,activity_end_day,activity_end_granularity,activity_end_certainty,activity_end_calendar,
+           confidence,chronology_status,legacy_source_key,notes,source_locator,content_hash
+      from atlas_v2.person_politics_v2
+     where id=$1::uuid`, [id]);
+  if (!relationship.rowCount) return null;
+  const [sources, chronologyClaims, descriptions] = await Promise.all([
+    client.query(`select source_id::text as source_id,source_locator_key from atlas_v2.person_politics_sources where person_politics_id=$1::uuid order by source_id::text`, [id]),
+    client.query(`select id::text as id,person_politics_id::text as person_politics_id,claim_type,start_year,end_year from atlas_v2.chronology_claims where person_politics_id=$1::uuid order by id::text`, [id]),
+    client.query(`select id::text as id,person_politics_id::text as person_politics_id,locale,content from atlas_v2.relationship_descriptions where person_politics_id=$1::uuid order by locale,id::text`, [id])
+  ]);
+  return Object.freeze({
+    relationship: relationship.rows[0],
+    sources: sources.rows,
+    chronology_claims: chronologyClaims.rows,
+    relationship_descriptions: descriptions.rows
+  });
 }
 
 async function createCorrectionTargetSnapshot(client, activityIds) {
@@ -56,5 +76,6 @@ async function createCorrectionTargetSnapshot(client, activityIds) {
 module.exports = Object.freeze({
   MAX_SNAPSHOT_ACTIVITY_IDS,
   normalizeSnapshotActivityIds,
+  snapshotRelationship,
   createCorrectionTargetSnapshot
 });

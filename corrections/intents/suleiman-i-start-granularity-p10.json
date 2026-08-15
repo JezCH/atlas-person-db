@@ -1,0 +1,25 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:suleiman-i:p10-temporal-boundary:20260815:v2",
+  "review_status": "approved",
+  "release_order": 100,
+  "operation": {
+    "type": "update_activity_temporal_metadata",
+    "relationship_id": "c8aaf090-cab4-50c8-8abb-b77baddffb30",
+    "after": {
+      "activity_start_granularity": "year",
+      "activity_start_certainty": "exact",
+      "activity_start_calendar": "unspecified_historical",
+      "activity_end_granularity": "year",
+      "activity_end_certainty": "exact",
+      "activity_end_calendar": "unspecified_historical"
+    }
+  },
+  "evidence": {
+    "reason": "Exact Production snapshot from Correction Apply run 31871443378 shows this existing Suleiman I Activity stores only the year-level 1520-1566 interval: both start/end month and day are null, and all six temporal detail metadata fields are null. The first bounded correction proved that setting granularity alone violates the database boundary-detail shape constraint. Preserve every historical field, year, source, role, polity, relation and note exactly as snapshotted, and complete both year-level temporal boundary tuples as year + exact + unspecified_historical without inventing month/day precision.",
+    "p10_failed_run_id": 31860809561,
+    "p10_failed_job_id": 94953747417,
+    "correction_evidence_run_id": 31871443378,
+    "correction_evidence_artifact_id": 9243530042
+  }
+}
