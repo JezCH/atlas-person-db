@@ -5,7 +5,11 @@ import reviewService from '../server/atlas-duplicate-review-service.js';
 import mergeInterlock from '../server/atlas-person-merge-interlock.js';
 
 const { loadDetectorInput } = reviewService;
-const { personMergeReadiness, PRE_P10_LIFECYCLE_VERSION } = mergeInterlock;
+const {
+  PERSON_MERGE_LIFECYCLE_VERSION,
+  REQUIRED_PERSON_MERGE_LIFECYCLE_VERSION,
+  personMergeExecutionState
+} = mergeInterlock;
 
 function tick() {
   return new Promise((resolve) => setImmediate(resolve));
@@ -47,12 +51,9 @@ test('P10 rebuild invalidates reviewed decisions on detector-version drift as we
 });
 
 test('P10-A does not unlock physical Person merge', () => {
-  const readiness = personMergeReadiness({
-    reconciliation_semantic_version: 'v2-relation-full-temporal',
-    required_reconciliation_semantic_version: 'v2-relation-full-temporal',
-    person_merge_lifecycle_version: PRE_P10_LIFECYCLE_VERSION,
-    required_person_merge_lifecycle_version: 'p10-v2-revalidated'
-  });
-  assert.equal(readiness.allowed, false);
-  assert.match(readiness.reasons.join(' '), /P10 v2 Person-merge lifecycle has not been revalidated/);
+  const state = personMergeExecutionState();
+  assert.equal(PERSON_MERGE_LIFECYCLE_VERSION, 'pre-p10-blocked');
+  assert.equal(REQUIRED_PERSON_MERGE_LIFECYCLE_VERSION, 'p10-v2-revalidated');
+  assert.equal(state.reconciliation_semantic_version, 'v2-relation-full-temporal');
+  assert.equal(state.allowed, false);
 });
