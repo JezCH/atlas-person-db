@@ -111,6 +111,22 @@ function buildBaselineBDocument({ datasets, readiness }) {
   });
 }
 
+async function inspectCanonicalSchemaCoverage(client) {
+  const result = await client.query(`
+    select expected.table_name,
+           to_regclass(format('atlas_v2.%I', expected.table_name))::text as relation_name
+      from unnest($1::text[]) with ordinality as expected(table_name, ordinal_position)
+     order by expected.ordinal_position`, [BASELINE_B_CANONICAL_TABLES]);
+  const relationByTable = new Map((result.rows || []).map((row) => [String(row.table_name), row.relation_name]));
+  const missing = BASELINE_B_CANONICAL_TABLES.filter((table) => !relationByTable.get(table)).sort();
+  return Object.freeze({
+    expected_table_count: BASELINE_B_CANONICAL_TABLES.length,
+    present_table_count: BASELINE_B_CANONICAL_TABLES.length - missing.length,
+    missing_tables: Object.freeze(missing),
+    ready: missing.length === 0
+  });
+}
+
 async function inspectBaselineBReadiness(client, {
   inspectAuthoring = inspectAuthoringReadiness,
   inspectRevalidation = inspectPersonDuplicateRevalidationReadiness,
@@ -118,6 +134,7 @@ async function inspectBaselineBReadiness(client, {
 } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client with query() is required");
 
+  const canonicalSchema = await inspectCanonicalSchemaCoverage(client);
   const authoring = await inspectAuthoring(client);
   const revalidation = await inspectRevalidation(client);
   const merge = mergeExecutionState();
@@ -159,6 +176,7 @@ async function inspectBaselineBReadiness(client, {
   }
 
   const blockers = [];
+  if (!canonicalSchema.ready) blockers.push(`BASELINE_B_CANONICAL_SCHEMA_MISSING:${canonicalSchema.missing_tables.join(",")}`);
   if (!authoring?.ready) blockers.push("AUTHORING_NOT_READY");
   if (!revalidation?.ready) blockers.push("P10_REVALIDATION_NOT_READY");
   if (!merge?.allowed) blockers.push("P10_PERSON_MERGE_LIFECYCLE_NOT_READY");
@@ -177,6 +195,7 @@ async function inspectBaselineBReadiness(client, {
     schema: BASELINE_B_SCHEMA,
     semantic_version: BASELINE_B_SEMANTIC_VERSION,
     blockers: uniqueBlockers,
+    canonical_schema: canonicalSchema,
     authoring,
     p10_revalidation: revalidation,
     person_merge: merge,
@@ -246,6 +265,7 @@ module.exports = Object.freeze({
   canonicalize,
   digest,
   buildBaselineBDocument,
+  inspectCanonicalSchemaCoverage,
   inspectBaselineBReadiness,
   assertBaselineBReadiness,
   captureBaselineB
