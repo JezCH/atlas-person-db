@@ -23,26 +23,41 @@
   }
 
   function wrapIdentity(row) {
-    if (row.querySelector(":scope > .person-table-identity")) return;
+    const existing = row.querySelector(":scope > .person-table-identity");
+    if (existing) return existing;
     const name = row.querySelector(":scope > strong");
-    if (!name) return;
+    if (!name) return null;
     const canonical = row.querySelector(":scope > .person-card-canonical");
     const identity = document.createElement("span");
     identity.className = "person-table-identity";
     row.insertBefore(identity, name);
     identity.append(name);
     if (canonical) identity.append(canonical);
+    return identity;
   }
 
   function decorateRow(row) {
     if (!row || row.dataset.personTableDecorated === "true") return;
     row.dataset.personTableDecorated = "true";
     row.classList.add("person-table-row");
-    wrapIdentity(row);
-    row.querySelector(":scope > .person-card-range")?.classList.add("person-table-range");
-    row.querySelector(":scope > .person-card-activities")?.classList.add("person-table-activities");
-    row.querySelector(":scope > .person-card-count")?.classList.add("person-table-count");
-    row.querySelector(":scope > .person-card-top")?.classList.add("person-table-status");
+
+    const identity = wrapIdentity(row);
+    const range = row.querySelector(":scope > .person-card-range");
+    const activities = row.querySelector(":scope > .person-card-activities");
+    const count = row.querySelector(":scope > .person-card-count");
+    const status = row.querySelector(":scope > .person-card-top");
+
+    range?.classList.add("person-table-range");
+    activities?.classList.add("person-table-activities");
+    count?.classList.add("person-table-count");
+    status?.classList.add("person-table-status");
+
+    // Keep the body DOM in the exact same semantic order as HEADER_CELLS.
+    // This prevents CSS grid auto-placement from shifting cells when the
+    // source Person card DOM uses a different order.
+    for (const cell of [identity, range, activities, count, status]) {
+      if (cell) row.append(cell);
+    }
   }
 
   function decorateGrid(grid) {
