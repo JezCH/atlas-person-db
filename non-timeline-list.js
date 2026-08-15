@@ -31,34 +31,54 @@
     "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;"
   }[c]));
 
+  let items = [];
+  let currentQuery = "";
+  let loaded = false;
+
   function rawValue(value, fallback = "미상") {
     const text = value == null ? "" : String(value).trim();
     return text || fallback;
   }
 
+  function numericYear(value) {
+    if (value == null || String(value).trim() === "") return null;
+    const number = Number(value);
+    return Number.isFinite(number) ? number : null;
+  }
+
   function yearLabel(value) {
-    if (!Number.isFinite(value)) return "미상";
-    if (value < 0) return `기원전 ${Math.abs(value)}`;
-    if (value > 0) return `서기 ${value}`;
+    const year = numericYear(value);
+    if (year == null) return "미상";
+    if (year < 0) return `기원전 ${Math.abs(year)}`;
+    if (year > 0) return `서기 ${year}`;
     return "연도 0";
   }
 
+  function yearSearchTokens(value) {
+    const year = numericYear(value);
+    if (year == null) return [];
+    if (year < 0) {
+      const absolute = Math.abs(year);
+      return [String(year), `BC ${absolute}`, `BCE ${absolute}`, `기원전 ${absolute}`];
+    }
+    if (year > 0) return [String(year), `AD ${year}`, `CE ${year}`, `서기 ${year}`];
+    return ["0", "year 0", "연도 0"];
+  }
+
   function formatTraditionalDate(row) {
-    const year = Number(row.traditional_year);
-    const alt = Number(row.traditional_year_alternative);
-    if (!Number.isFinite(year)) return "미상";
+    const year = numericYear(row.traditional_year);
+    const alt = numericYear(row.traditional_year_alternative);
+    if (year == null) return "미상";
     const primary = yearLabel(year);
-    if (Number.isFinite(alt) && alt !== year) return `전승상 ${primary}/${yearLabel(alt)}`;
+    if (alt != null && alt !== year) return `전승상 ${primary}/${yearLabel(alt)}`;
     return `전승상 ${primary}년경`;
   }
 
   function formatActivityRange(row) {
-    const start = Number(row.activity_start);
-    const end = Number(row.activity_end);
-    const hasStart = Number.isFinite(start);
-    const hasEnd = Number.isFinite(end);
-    if (!hasStart && !hasEnd) return "시작·종료 모두 미상";
-    return `${hasStart ? yearLabel(start) : "시작 미상"} – ${hasEnd ? yearLabel(end) : "종료 미상"}`;
+    const start = numericYear(row.activity_start);
+    const end = numericYear(row.activity_end);
+    if (start == null && end == null) return "시작·종료 모두 미상";
+    return `${start != null ? yearLabel(start) : "시작 미상"} – ${end != null ? yearLabel(end) : "종료 미상"}`;
   }
 
   function historicityLabel(value) {
@@ -75,6 +95,51 @@
     const raw = rawValue(value);
     if (raw === "excluded") return "연표 제외";
     return raw.replaceAll("_", " ");
+  }
+
+  function normalizeSearchText(value) {
+    return String(value ?? "")
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[’‘`´]/g, "'")
+      .replace(/[‐‑‒–—―]/g, "-")
+      .replace(/[^\p{L}\p{N}]+/gu, " ")
+      .trim()
+      .toLocaleLowerCase("ko-KR");
+  }
+
+  function searchableText(row) {
+    const rawPolitic = rawValue(row.politic_name, "");
+    const values = [
+      row.display_name_ko,
+      row.person_name,
+      rawPolitic,
+      koPolities[rawPolitic],
+      row.historicity,
+      historicityLabel(row.historicity),
+      row.date_basis,
+      dateBasisLabel(row.date_basis),
+      row.role_ko,
+      row.timeline_status,
+      timelineLabel(row.timeline_status),
+      row.reason,
+      row.map_policy,
+      formatTraditionalDate(row),
+      formatActivityRange(row),
+      ...yearSearchTokens(row.traditional_year),
+      ...yearSearchTokens(row.traditional_year_alternative),
+      ...yearSearchTokens(row.activity_start),
+      ...yearSearchTokens(row.activity_end)
+    ].filter((value) => value != null && String(value).trim());
+    return normalizeSearchText(values.join("\n"));
+  }
+
+  function matchesQuery(row, query) {
+    const needle = normalizeSearchText(query);
+    if (!needle) return true;
+    const haystack = searchableText(row);
+    const tokens = needle.split(/\s+/).filter(Boolean);
+    return haystack.includes(needle) || tokens.every((token) => haystack.includes(token));
   }
 
   function hideEmptyAuthoritativeOtherGroup() {
@@ -95,7 +160,7 @@
         <div>
           <p class="eyebrow">LEGENDARY / MYTHICAL / NON-TIMELINE PERSONS</p>
           <h2>전설·신화·연대 미확정 인물</h2>
-          <p>역사성 또는 개인 연대가 확정되지 않아 현재 연도 기반 지도에서 제외된 curated 기록입니다. 행을 선택하면 판정 근거와 지도 정책을 확인할 수 있습니다.</p>
+          <p>역사성 또는 개인 연대가 확정되지 않아 현재 연도 기반 지도에서 제외된 curated 기록입니다. 같은 인물 검색을 공유하며, 연대·Activity 의미 필터와 정렬은 authoritative Person 표에만 적용됩니다. 행을 선택하면 판정 근거와 지도 정책을 확인할 수 있습니다.</p>
         </div>
         <strong id="nonTimelineCount">0명</strong>
       </div>
@@ -153,14 +218,38 @@
     </tr>`;
   }
 
-  function renderRows(body, items) {
-    body.innerHTML = items.map((row, index) => `${dataRowHtml(row, index)}${detailRowHtml(row, index)}`).join("");
+  function renderRows(body, rows) {
+    body.innerHTML = rows.map((row, index) => `${dataRowHtml(row, index)}${detailRowHtml(row, index)}`).join("");
+  }
+
+  function dispatchRenderState(visibleCount) {
+    window.dispatchEvent(new CustomEvent("atlas-non-timeline-rendered", {
+      detail: { visibleCount, totalCount: items.length, query: currentQuery }
+    }));
+  }
+
+  function applySearch(query = currentQuery) {
+    currentQuery = String(query ?? "");
+    if (!loaded) return 0;
+    const body = document.getElementById("nonTimelineBody");
+    const count = document.getElementById("nonTimelineCount");
+    const empty = document.getElementById("nonTimelineEmpty");
+    if (!body || !count || !empty) return 0;
+    const visible = items.filter((row) => matchesQuery(row, currentQuery));
+    renderRows(body, visible);
+    count.textContent = currentQuery.trim() ? `${visible.length}/${items.length}명` : `${items.length}명`;
+    empty.hidden = visible.length !== 0;
+    empty.textContent = items.length === 0
+      ? "등록된 전설·신화·연대 미확정 인물이 없습니다."
+      : "현재 검색에 해당하는 전설·신화·연대 미확정 인물이 없습니다.";
+    dispatchRenderState(visible.length);
+    return visible.length;
   }
 
   function setExpanded(row, expanded) {
     const index = row?.dataset.nonTimelineIndex;
     if (index == null) return;
-    const detail = document.querySelector(`[data-non-timeline-detail="${CSS.escape(index)}"]`);
+    const detail = document.getElementById(`nonTimelineDetail-${index}`);
     if (!detail) return;
     row.setAttribute("aria-expanded", String(expanded));
     row.classList.toggle("is-selected", expanded);
@@ -197,27 +286,41 @@
     const count = document.getElementById("nonTimelineCount");
     const empty = document.getElementById("nonTimelineEmpty");
     installInteractions(body);
+    currentQuery = document.getElementById("personMainSearch")?.value || "";
 
     try {
       const response = await fetch(`./non-timeline-persons.json?v=${Date.now()}`, { cache: "no-store" });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const rows = await response.json();
-      const items = Array.isArray(rows) ? rows : [];
-
-      renderRows(body, items);
-      count.textContent = `${items.length}명`;
-      empty.hidden = items.length !== 0;
+      items = Array.isArray(rows) ? rows : [];
+      loaded = true;
+      applySearch(currentQuery);
       hideEmptyAuthoritativeOtherGroup();
     } catch (error) {
       console.error("ATLAS non-timeline list failed", error);
+      loaded = true;
+      items = [];
       count.textContent = "확인 실패";
       body.innerHTML = "";
       empty.hidden = false;
       empty.textContent = "전설·신화·연대 미확정 인물 데이터를 불러오지 못했습니다.";
+      dispatchRenderState(0);
     }
   }
 
-  window.addEventListener("atlas-person-main-rendered", hideEmptyAuthoritativeOtherGroup);
+  window.addEventListener("atlas-person-main-rendered", (event) => {
+    hideEmptyAuthoritativeOtherGroup();
+    currentQuery = String(event?.detail?.query ?? document.getElementById("personMainSearch")?.value ?? "");
+    if (loaded) applySearch(currentQuery);
+  });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", load, { once: true });
   else load();
+
+  window.ATLAS_NON_TIMELINE_LIST = Object.freeze({
+    applySearch,
+    matchesQuery,
+    yearLabel,
+    formatTraditionalDate,
+    formatActivityRange
+  });
 })();
