@@ -50,7 +50,7 @@ test('protected merge schema apply preserves all authoritative data cardinality'
   assert.doesNotMatch(applyScript, /update\s+atlas_v2\.person_politics_v2\s+set\s+person_id/i);
 });
 
-test('merge executor is serializable, approval-gated, full-evidence-pinned and drift-guarded', () => {
+test('merge executor is serializable, approval-gated, full-evidence-pinned and reference-drift-guarded', () => {
   assert.match(mergeService, /BEGIN ISOLATION LEVEL SERIALIZABLE/);
   assert.match(mergeService, /pg_advisory_xact_lock/);
   assert.match(mergeService, /candidate_state !== "ACTIVE"/);
@@ -72,17 +72,41 @@ test('relationship coalescing is explicit and normal relationship UUIDs are othe
   assert.match(mergeService, /relationship count changed outside the approved reconciliation plan/);
 });
 
-test('source person deletion occurs only after relationship reconciliation and all person-level remaps', () => {
+test('source person deletion occurs only after every authoritative Person reference remap', () => {
   const reconciliation = mergeService.indexOf('for (const item of reconciliationPlan.coalesces)');
   const nameMove = mergeService.indexOf('const names = await moveNames');
   const sourceMove = mergeService.indexOf('const sources = await moveSources');
   const descriptionMove = mergeService.indexOf('update atlas_v2.person_descriptions set person_id=$2');
   const relationshipMove = mergeService.indexOf('update atlas_v2.person_politics_v2 set person_id=$2');
+  const peopleMove = mergeService.indexOf('update atlas_v2.person_people_affiliations set person_id=$2');
+  const eventMove = mergeService.indexOf('update atlas_v2.person_event_participations set person_id=$2');
   const deleteSource = mergeService.indexOf('delete from atlas_v2.persons where id=$1 returning id');
-  assert.ok(reconciliation >= 0 && nameMove > reconciliation && sourceMove > nameMove && descriptionMove > sourceMove && relationshipMove > descriptionMove && deleteSource > relationshipMove);
+  assert.ok(
+    reconciliation >= 0
+      && nameMove > reconciliation
+      && sourceMove > nameMove
+      && descriptionMove > sourceMove
+      && relationshipMove > descriptionMove
+      && peopleMove > relationshipMove
+      && eventMove > peopleMove
+      && deleteSource > eventMove
+  );
   assert.match(mergeService, /source person references remain after merge/);
   assert.match(mergeService, /authoring_person_pointers/);
+  assert.match(mergeService, /people_affiliations/);
+  assert.match(mergeService, /event_participations/);
   assert.match(mergeService, /person count did not decrease by exactly one/);
+});
+
+test('People/Event assertion UUIDs and provenance cardinality are preserved across the dormant merge plan', () => {
+  assert.match(mergeService, /people affiliation count changed during person merge/);
+  assert.match(mergeService, /people affiliation provenance count changed during person merge/);
+  assert.match(mergeService, /event participation count changed during person merge/);
+  assert.match(mergeService, /event participation provenance count changed during person merge/);
+  assert.match(mergeService, /people_affiliations_moved/);
+  assert.match(mergeService, /event_participations_moved/);
+  assert.doesNotMatch(mergeService, /delete from atlas_v2\.person_people_affiliations/i);
+  assert.doesNotMatch(mergeService, /delete from atlas_v2\.person_event_participations/i);
 });
 
 test('merge creates immutable before-state audit and keeps idempotent request replay', () => {
@@ -91,6 +115,10 @@ test('merge creates immutable before-state audit and keeps idempotent request re
   assert.match(mergeService, /survivorBefore = await snapshotPerson/);
   assert.match(mergeService, /sourceBefore = await snapshotPerson/);
   assert.match(mergeService, /insert into atlas_v2\.person_merge_audits/);
+  assert.match(mergeService, /people_affiliations/);
+  assert.match(mergeService, /people_affiliation_sources/);
+  assert.match(mergeService, /event_participations/);
+  assert.match(mergeService, /event_participation_sources/);
   assert.match(mergeService, /reference_readiness/);
   assert.match(mergeService, /relationship_reconciliation/);
   assert.match(mergeService, /mutationSummary/);
