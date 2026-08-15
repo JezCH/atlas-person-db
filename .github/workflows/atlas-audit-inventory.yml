@@ -38,7 +38,7 @@ jobs:
       ATLAS_AUDIT_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-audit-inventory
       ATLAS_AUDIT_AUDIENCE: atlas-person-db-audit-inventory
       ATLAS_AUDIT_REQUEST: docs/audits/STAGE2_R0_NORMALIZED_INVENTORY_REQUEST.json
-      ATLAS_AUDIT_MODE: ${{ inputs.mode || 'targeted' }}
+      ATLAS_AUDIT_MODE: ${{ inputs.mode || 'full_stage2_baseline' }}
     steps:
       - uses: actions/checkout@v4
 
