@@ -212,7 +212,7 @@ try {
     client,
     candidateId: candidate.id,
     decision: 'MERGE',
-    rationale: 'Disposable rehearsal decision; physical merge remains blocked.',
+    rationale: 'Disposable semantic lifecycle rehearsal decision; destructive execution is exercised only by the dedicated P10-D merge rehearsal.',
     requestId: 'fixture:p10-duplicate-v2:review-1'
   });
   assert.equal(review.decision, 'MERGE');
@@ -241,9 +241,9 @@ try {
 
   const mergeState = mergeInterlock.personMergeExecutionState();
   assert.equal(mergeState.reconciliation_semantic_version, duplicateDetector.REVALIDATION_SEMANTIC_VERSION);
-  assert.equal(mergeState.person_merge_lifecycle_version, 'pre-p10-blocked');
+  assert.equal(mergeState.person_merge_lifecycle_version, 'p10-v2-revalidated');
   assert.equal(mergeState.required_person_merge_lifecycle_version, 'p10-v2-revalidated');
-  assert.equal(mergeState.allowed, false, 'P10-B must not unlock physical Person merge');
+  assert.equal(mergeState.allowed, true, 'P10-D code lifecycle must match semantic-v2 reconciliation');
 
   console.log(JSON.stringify({
     marker: 'ATLAS_P10_PERSON_DUPLICATE_V2_REVALIDATION_OK',
@@ -259,7 +259,8 @@ try {
     reviewed_merge_reverted_on_semantic_change: true,
     role_variant_context_detected: true,
     evidence_fingerprint_changed: true,
-    physical_person_merge_allowed: false,
+    merge_lifecycle_code_ready: true,
+    physical_person_merge_executed: false,
     production_mutation_authorized: false
   }, null, 2));
 } catch (error) {
