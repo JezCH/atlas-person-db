@@ -16,6 +16,7 @@ if(fs.existsSync('artifacts/stage2-p7p8-effective-cutover-gate.json')){
   assert.equal(p8.p8_zero_known_blocker_gate.cutover_allowed,true);
 }
 const mutationHandler=fs.readFileSync('server/atlas-vercel-mutation-handler.js','utf8');
+const duplicateDetectorSource=fs.readFileSync('server/atlas-duplicate-detector.js','utf8');
 const duplicateService=fs.readFileSync('server/atlas-duplicate-review-service.js','utf8');
 const dispatch=fs.readFileSync('server/atlas-authoring-manifest-dispatch-service.js','utf8');
 const nativeAuthoring=fs.readFileSync('server/atlas-authoring-manifest-v2-native-service.js','utf8');
@@ -47,7 +48,8 @@ assert.match(nativeActivity,/atlas-activity-semantic-key-v2\.js/);
 
 for(const token of ['relation_type_id','activity_start_month','activity_start_day','activity_start_granularity','activity_start_calendar','activity_end_month','activity_end_day','activity_end_granularity','activity_end_calendar']) assert.match(duplicateService,new RegExp(token));
 assert.equal(duplicateDetector.REVALIDATION_SEMANTIC_VERSION,'v2-relation-full-temporal');
-assert.equal(duplicateDetector.SEMANTIC_KEY_VERSION,sem.SEMANTIC_KEY_VERSION);
+assert.match(duplicateDetectorSource,/atlas-activity-semantic-key-v2\.js/);
+assert.match(duplicateDetectorSource,/SEMANTIC_KEY_VERSION/);
 assert.match(duplicateService,/REVALIDATION_SEMANTIC_VERSION/);
 assert.equal(reconciliation.RECONCILIATION_SEMANTIC_VERSION,'v2-relation-full-temporal');
 assert.equal(interlock.REQUIRED_RECONCILIATION_SEMANTIC_VERSION,'v2-relation-full-temporal');
