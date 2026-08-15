@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sennacherib:neo-assyrian-empire:705-681-bce:v1",
+  "person": {
+    "canonical_name_en": "Sennacherib",
+    "display_name_ko": "산헤립"
+  },
+  "polity": {
+    "canonical_name_en": "Neo-Assyrian Empire",
+    "display_name_ko": "신아시리아 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -705,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -681,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sennacherib, son and successor of Sargon II, was king of Assyria from his accession in 705 BCE until his death in 681 BCE. The Assyrian Eponym Chronicle explicitly records his accession to the throne on the twelfth day of Abu in 705 BCE. Some museum and modern regnal chronologies use 704-681 BCE because 704 was his first full regnal year; ATLAS records 705 as the start of the actual reign rather than shifting the accession into the following regnal year. Sennacherib transformed Nineveh into the monumental imperial capital associated with the later Neo-Assyrian Empire, constructed the 'Palace Without Rival' and major waterworks, campaigned extensively in Babylonia and the Levant, and captured Lachish in 701 BCE. The user label 'Assyria' is normalized to Neo-Assyrian Empire. The Korean display name follows Korean historical scholarship using 산헤립; 센나케리브 is a common transliteration variant. His historical importance strongly satisfies the project's mod-leader representativeness rule."
+  },
+  "sources": [
+    {
+      "title": "Assyrian Eponym Chronicle — Sennacherib ascends the throne in 705 BCE — ORACC",
+      "canonical_url": "https://oracc.museum.upenn.edu/saao/Q007771.131/",
+      "citation_text": "The Assyrian eponym chronicle records Sargon II's death and states that on the twelfth day of Abu in 705 BCE Sennacherib ascended the throne, providing a direct chronological anchor for the beginning of his reign.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Assyria: Nineveh — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/galleries/assyria-nineveh",
+      "citation_text": "The British Museum identifies Sennacherib as king of Assyria in 704-681 BCE regnal-year chronology and highlights his major building program and Southwest Palace at Nineveh.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Introducing the Assyrians — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/blog/introducing-assyrians",
+      "citation_text": "The British Museum describes Sennacherib's transformation of Nineveh into a vast metropolis with monumental palaces, temples, canals, aqueducts, gardens, and the Palace Without Rival, supporting his high representativeness for the Neo-Assyrian Empire.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "기원전 7세기 아시리아와 바빌로니아의 관계 - 산헤립과 에사르하돈의 바빌로니아 정책에 대한 재고찰 — KCI",
+      "canonical_url": "https://www.kci.go.kr/kciportal/landing/article.kci?arti_id=ART002522117",
+      "citation_text": "Korean historical scholarship uses the Korean form 산헤립 and analyzes his aggressive policy toward Babylonia within the hegemonic structure of the Assyrian Empire.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
