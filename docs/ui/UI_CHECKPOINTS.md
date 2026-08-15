@@ -12,7 +12,7 @@
   - UUID detail lookup with fail-closed validation
 - UI-2C — Main provenance/source read: COMPLETE
 - UI-2D — Admin object inspector read: COMPLETE
-- UI-2E — Admin System/status read: IMPLEMENTED — CI REQUESTED
+- UI-2E — Admin System/status read: COMPLETE
   - session-authenticated and GET-only
   - deployed/runtime identity when supplied by the runtime
   - secret-free configuration-presence status
@@ -23,7 +23,17 @@
   - duplicate queue/review/merge/revalidation aggregate lifecycle
   - optional P10 revalidation readiness integration when that backend module is present
   - GitHub Actions status intentionally not fabricated inside runtime
-  - implementation was first assembled as one atomic Git tree update; because that low-level ref update did not emit the normal PR synchronize workflows, this checkpoint contents commit intentionally triggers GitHub CI for the exact UI-2E tree
+  - current main was merged structurally at `c4f73d27fde9637ccbe5acffeb59cf0dc47695a1`; PR #149 became mergeable again
+  - post-merge checkpoint passed ATLAS Integrity #747, Human Authoring Operational Parity #95 and P10 Person Duplicate V2 Revalidation #86
+- UI-2F — Admin observability screen wiring: IMPLEMENTED — CI REQUESTED
+  - add authenticated read-only System Status panel backed only by `/api/atlas-admin-system-status`
+  - render runtime identity, secret-presence booleans, database identity, migration identity, semantic versions, authoring/P10 readiness, duplicate lifecycle and dynamically discovered atlas_v2 exact table counts
+  - add UUID Object Inspector backed only by `/api/atlas-admin-inspector`
+  - derive supported Inspector object kinds from the server capabilities response rather than a frontend authority list
+  - clear displayed Admin read state on logout or session expiry
+  - register both new read endpoints in the existing session-gate protected-path handling
+  - isolate screen logic and styles in `atlas-admin-observability.js` / `atlas-admin-observability.css`; existing authoring and duplicate-review write logic remains separate
+  - no Vercel deployment or runtime mutation required for this checkpoint
 - UI-3 — Main Persons information-complete redesign
 - UI-4 — Admin interface consolidation
 - UI-5 — navigation / future-authority shells
@@ -33,4 +43,4 @@
 - UI-9 — backend-lifecycle-aware main integration
 - UI-10 — Production verification
 
-Vercel rule: routine `agent/ui-information-completeness` commits must create zero deployments. Preview/Production are reserved for intentional checkpoints. UI-2E and subsequent static/contract work can be completed with GitHub + CI only; runtime deployment verification waits for an intentional checkpoint.
+Vercel rule: routine `agent/ui-information-completeness` commits must create zero deployments. Preview/Production are reserved for intentional checkpoints. UI-2E/UI-2F and subsequent static/contract work can be completed with GitHub + CI only; runtime deployment verification waits for an intentional checkpoint.

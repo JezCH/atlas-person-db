@@ -8,6 +8,7 @@
   <meta http-equiv="Expires" content="0" />
   <title>ATLAS Admin</title>
   <link rel="stylesheet" href="./admin.css?v=20260811-maintenance-m1" />
+  <link rel="stylesheet" href="./atlas-admin-observability.css?v=20260815-ui2f" />
 </head>
 <body>
   <main class="admin-shell">
@@ -89,6 +90,51 @@
     </section>
 
     <section id="dataProtectedArea" class="admin-protected-area is-locked" inert aria-disabled="true">
+      <div class="observability-stack">
+        <section class="panel" aria-labelledby="system-status-title">
+          <div class="panel-head">
+            <div>
+              <p class="status-label">SYSTEM / STATUS · READ ONLY</p>
+              <h2 id="system-status-title">시스템 현황</h2>
+              <p>현재 런타임이 직접 확인할 수 있는 배포 식별자, 설정 존재 여부, DB 구조·row count, authoring/P10 readiness와 중복 lifecycle을 표시합니다. 비밀번호·토큰·DB URL 같은 secret 값은 표시하지 않습니다.</p>
+            </div>
+            <div class="panel-actions">
+              <span id="systemStatusBadge" class="status-badge">인증 대기</span>
+              <button id="refreshSystemStatusButton" class="button secondary" type="button">현황 새로고침</button>
+            </div>
+          </div>
+          <div id="systemStatusBody" aria-live="polite">
+            <p class="empty-state">관리자 인증 후 System Status를 불러옵니다.</p>
+          </div>
+          <p class="obs-boundary-note">GitHub Actions 결과는 런타임 내부 값이 아니므로 이 API가 임의로 정상 판정을 만들지 않습니다.</p>
+        </section>
+
+        <section class="panel" aria-labelledby="inspector-title">
+          <div class="panel-head">
+            <div>
+              <p class="status-label">OBJECT INSPECTOR · READ ONLY</p>
+              <h2 id="inspector-title">UUID Object Inspector</h2>
+              <p>Person, Activity, Polity, Role, Period Basis, Relation Type, Source의 authoritative UUID를 직접 조회합니다. 지원 object 종류는 서버 capabilities에서 읽습니다.</p>
+            </div>
+            <span id="inspectorStatusBadge" class="status-badge">인증 대기</span>
+          </div>
+          <form id="adminInspectorForm" class="obs-form">
+            <label>Object kind
+              <select id="inspectorKind" required>
+                <option value="">관리자 인증 필요</option>
+              </select>
+            </label>
+            <label>UUID
+              <input id="inspectorId" inputmode="text" autocomplete="off" placeholder="00000000-0000-0000-0000-000000000000" required />
+            </label>
+            <button class="button primary" type="submit">조회</button>
+            <button id="clearInspectorButton" class="button secondary" type="button">초기화</button>
+          </form>
+          <pre id="inspectorResult" class="result obs-inspector-result" aria-live="polite">관리자 인증 후 UUID 기반 Object Inspector를 사용할 수 있습니다.</pre>
+          <p class="obs-boundary-note">Inspector는 source UUID/key/hash/bytes와 provenance locator 같은 Admin-safe 원본 정보를 보여주지만, audit OIDC ledger나 환경변수 값·인증 secret은 조회하지 않습니다.</p>
+        </section>
+      </div>
+
       <section class="panel" aria-labelledby="identity-title">
         <div class="panel-head">
           <div>
@@ -167,10 +213,13 @@
         const loadAdminAssets = async () => {
           if (adminLoaded) {
             document.getElementById("refreshCandidatesButton")?.click();
+            window.ATLAS_ADMIN_OBSERVABILITY?.loadSystemStatus?.();
+            window.ATLAS_ADMIN_OBSERVABILITY?.loadInspectorCapabilities?.();
             return;
           }
           adminLoaded = true;
           await window.ATLAS_ASSETS.loadSeries([
+            "./atlas-admin-observability.js",
             "./atlas-activity-semantics.js",
             "./atlas-server-write-adapter.js",
             "./atlas-admin-write-service.js",
