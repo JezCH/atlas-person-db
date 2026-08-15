@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="./mobile-compact.css?v=20260804-mobile-compact-shell" />
   <link rel="stylesheet" href="./atlas-person-main.css?v=20260815-ui3b2" />
   <link rel="stylesheet" href="./atlas-person-main-filters.css?v=20260815-ui3b2" />
+  <link rel="stylesheet" href="./atlas-main-authority-nav.css?v=20260815-ui5" />
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
@@ -26,11 +27,11 @@
   <div id="mobileDrawerBackdrop" class="mobile-drawer-backdrop" hidden></div>
   <aside id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
     <div class="mobile-drawer-head"><div class="mobile-brand"><span class="mobile-brand-mark">A</span><div><strong>ATLAS</strong><small>Authoring System</small></div></div><button id="mobileMenuClose" class="icon-button" type="button" aria-label="닫기">×</button></div>
-    <nav class="mobile-nav" aria-label="모바일 주요 메뉴"><button disabled>▦ <span>Dashboard</span><small>예정</small></button><button class="active">● <span>Persons</span></button><button disabled>◆ <span>Polities</span><small>예정</small></button><button disabled>⌖ <span>Places</span><small>예정</small></button><button disabled>◇ <span>Events</span><small>예정</small></button><button disabled>▤ <span>Sources</span><small>예정</small></button><button disabled>▱ <span>Geometry</span><small>예정</small></button></nav>
-    <p class="mobile-drawer-version">ATLAS Authoring v0.4</p>
+    <nav class="mobile-nav" aria-label="모바일 주요 메뉴"><button data-atlas-domain="dashboard">▦ <span>Dashboard</span><small>상태</small></button><button class="active" data-atlas-domain="persons">● <span>Persons</span><small>사용 가능</small></button><button data-atlas-domain="polities">◆ <span>Polities</span><small>부분</small></button><button data-atlas-domain="places">⌖ <span>Places</span><small>준비 전</small></button><button data-atlas-domain="events">◇ <span>Events</span><small>준비 전</small></button><button data-atlas-domain="sources">▤ <span>Sources</span><small>부분</small></button><button data-atlas-domain="geometry">▱ <span>Geometry</span><small>P14</small></button></nav>
+    <p class="mobile-drawer-version">ATLAS Authoring v0.5</p>
   </aside>
   <div class="workspace-shell">
-    <aside class="sidebar"><div class="brand"><div class="brand-mark">A</div><div><strong>ATLAS</strong><span>Authoring System</span></div></div><nav class="nav-list" aria-label="주요 메뉴"><button class="nav-item" disabled><span>▦</span>Dashboard<small>예정</small></button><button class="nav-item active"><span>●</span>Persons</button><button class="nav-item" disabled><span>◆</span>Polities<small>예정</small></button><button class="nav-item" disabled><span>⌖</span>Places<small>예정</small></button><button class="nav-item" disabled><span>◇</span>Events<small>예정</small></button><button class="nav-item" disabled><span>▤</span>Sources<small>예정</small></button><button class="nav-item" disabled><span>▱</span>Geometry<small>예정</small></button></nav><div class="sidebar-foot">ATLAS Authoring v0.4</div></aside>
+    <aside class="sidebar"><div class="brand"><div class="brand-mark">A</div><div><strong>ATLAS</strong><span>Authoring System</span></div></div><nav class="nav-list" aria-label="주요 메뉴"><button class="nav-item" data-atlas-domain="dashboard"><span>▦</span>Dashboard<small>상태</small></button><button class="nav-item active" data-atlas-domain="persons"><span>●</span>Persons<small>사용 가능</small></button><button class="nav-item" data-atlas-domain="polities"><span>◆</span>Polities<small>부분</small></button><button class="nav-item" data-atlas-domain="places"><span>⌖</span>Places<small>준비 전</small></button><button class="nav-item" data-atlas-domain="events"><span>◇</span>Events<small>준비 전</small></button><button class="nav-item" data-atlas-domain="sources"><span>▤</span>Sources<small>부분</small></button><button class="nav-item" data-atlas-domain="geometry"><span>▱</span>Geometry<small>P14</small></button></nav><div class="sidebar-foot">ATLAS Authoring v0.5</div></aside>
     <main class="main-area">
       <header class="topbar"><div><p class="eyebrow">PERSON DATASET</p><h1>Persons</h1><p class="subtitle">기본 정렬: 활동 시작연도 과거 → 현재</p></div><span id="connectionStatus" class="status status-warn">연결 확인 중</span></header>
       <section class="toolbar card">
@@ -66,5 +67,6 @@
   <script src="./status-summary.js?v=20260810-phase9-ui-localized"></script>
   <script src="./mobile-ui.js?v=20260815-ui3b2"></script>
   <script src="./atlas-person-main.js?v=20260815-ui3b2"></script>
+  <script src="./atlas-main-authority-nav.js?v=20260815-ui5"></script>
 </body>
 </html>
