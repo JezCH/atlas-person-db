@@ -65,7 +65,7 @@ function clientFor({
   };
 }
 
-test('authoring readiness requires P5, core Stage 2 schema, human-compatible ledger, completed P9 and blocked P10', async () => {
+test('authoring readiness requires P5, core Stage 2 schema, human-compatible ledger, completed P9 and current P10 merge contract', async () => {
   const result = await inspectAuthoringReadiness(clientFor());
   assert.equal(result.ready, true);
   assert.equal(result.bootstrap_ready, true);
@@ -82,11 +82,12 @@ test('authoring readiness requires P5, core Stage 2 schema, human-compatible led
   assert.equal(result.p9.old_index_present, false);
   assert.equal(result.p9.new_index_present, true);
   assert.equal(result.p9.duplicate_groups, 0);
-  assert.equal(result.person_merge.allowed, false);
-  assert.equal(result.person_merge.person_merge_lifecycle_version, 'pre-p10-blocked');
+  assert.equal(result.person_merge_contract_ready, true);
+  assert.equal(result.person_merge.allowed, true);
+  assert.equal(result.person_merge.person_merge_lifecycle_version, 'p10-v2-revalidated');
 });
 
-test('missing authoring ledger schema is explicitly bootstrappable without weakening P9/P10 gates', async () => {
+test('missing authoring ledger schema is explicitly bootstrappable without weakening P9/P10 contracts', async () => {
   const missingColumns = await inspectAuthoringReadiness(clientFor({ ledgerColumnsReady: false }));
   assert.equal(missingColumns.ready, false);
   assert.equal(missingColumns.bootstrap_ready, true);
