@@ -6,6 +6,7 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const mergeModule = require('../server/atlas-person-merge-service.js');
 const mergeService = fs.readFileSync(new URL('../server/atlas-person-merge-service.js', import.meta.url),'utf8');
+const mergeReadiness = fs.readFileSync(new URL('../server/atlas-person-merge-reference-readiness.js', import.meta.url),'utf8');
 const mergeSchema = fs.readFileSync(new URL('../migration/phase-9/phase9b-person-merge-schema.sql', import.meta.url),'utf8');
 const applyScript = fs.readFileSync(new URL('../migration/phase-9/scripts/phase9b-apply-person-merge-schema.mjs', import.meta.url),'utf8');
 const handler = fs.readFileSync(new URL('../server/atlas-duplicate-review-handler.js', import.meta.url),'utf8');
@@ -59,7 +60,8 @@ test('merge executor is serializable, approval-gated, full-evidence-pinned and d
   assert.match(mergeService, /stableFingerprint\(candidateRow\.evidence/);
   assert.match(mergeService, /LIVE_EVIDENCE_CHANGED/);
   assert.match(mergeService, /person metadata conflict/);
-  assert.match(mergeService, /person reference schema drift/);
+  assert.match(mergeService, /assertPersonMergeReferenceReadiness/);
+  assert.match(mergeReadiness, /P10_PERSON_MERGE_REFERENCE_SURFACE_DRIFT/);
 });
 
 test('relationship coalescing is explicit and normal relationship UUIDs are otherwise remapped in place', () => {
@@ -79,6 +81,7 @@ test('source person deletion occurs only after relationship reconciliation and a
   const deleteSource = mergeService.indexOf('delete from atlas_v2.persons where id=$1 returning id');
   assert.ok(reconciliation >= 0 && nameMove > reconciliation && sourceMove > nameMove && descriptionMove > sourceMove && relationshipMove > descriptionMove && deleteSource > relationshipMove);
   assert.match(mergeService, /source person references remain after merge/);
+  assert.match(mergeService, /authoring_person_pointers/);
   assert.match(mergeService, /person count did not decrease by exactly one/);
 });
 
@@ -88,6 +91,7 @@ test('merge creates immutable before-state audit and keeps idempotent request re
   assert.match(mergeService, /survivorBefore = await snapshotPerson/);
   assert.match(mergeService, /sourceBefore = await snapshotPerson/);
   assert.match(mergeService, /insert into atlas_v2\.person_merge_audits/);
+  assert.match(mergeService, /reference_readiness/);
   assert.match(mergeService, /relationship_reconciliation/);
   assert.match(mergeService, /mutationSummary/);
   assert.doesNotMatch(mergeService, /public\.person_politics|atlas_person_politics_compat_v1/);
