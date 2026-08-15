@@ -15,9 +15,11 @@ function moveChild(parent, child, index = parent.children.length) {
   parent.children.splice(Math.min(index, parent.children.length), 0, child);
 }
 
-function node(className) {
+function node(className, textContent = '') {
   const element = {
     className,
+    textContent,
+    hidden: false,
     children: [],
     dataset: {},
     attributes: {},
@@ -27,6 +29,12 @@ function node(className) {
     insertBefore(child, before) {
       const index = this.children.indexOf(before);
       moveChild(this, child, index < 0 ? this.children.length : index);
+    },
+    remove() {
+      if (!this.parent) return;
+      const index = this.parent.children.indexOf(this);
+      if (index >= 0) this.parent.children.splice(index, 1);
+      this.parent = null;
     },
     setAttribute(name, value) { this.attributes[name] = value; },
     querySelector(selector) {
@@ -53,40 +61,59 @@ function node(className) {
   return element;
 }
 
-test('UI7 decorator aligns Person row DOM with the visible table header order', () => {
+function personRow(historicity, personType) {
   const strong = node(''); strong.tagName = 'STRONG';
   const canonical = node('person-card-canonical');
   const range = node('person-card-range');
   const activities = node('person-card-activities');
   const count = node('person-card-count');
   const status = node('person-card-top');
+  status.append(node('person-historicity', historicity), node('', personType));
   const row = node('person-card');
-  // Source Person card order intentionally differs from table header order.
   row.append(status, strong, canonical, range, count, activities);
+  return { row, strong, canonical, status };
+}
+
+test('UI7 table removes redundant historical status column and keeps only exceptional status inline', () => {
+  const historical = personRow('historical', 'historical');
+  const legendary = personRow('legendary', 'historical');
   const grid = node('person-card-grid');
-  grid.append(row);
+  grid.append(historical.row, legendary.row);
   const document = {
     readyState: 'complete',
-    createElement(tag) { const created = node(''); created.tagName = tag.toUpperCase(); created.textContent = ''; return created; },
+    createElement(tag) { const created = node(''); created.tagName = tag.toUpperCase(); return created; },
     querySelectorAll(selector) { return selector === '.person-card-grid' ? [grid] : []; },
     addEventListener() {}
   };
   const window = { addEventListener() {} };
-  vm.runInNewContext(source, { window, document, Object, Set, queueMicrotask: (fn) => fn() });
+  vm.runInNewContext(source, { window, document, Object, Set, String, queueMicrotask: (fn) => fn() });
 
-  assert.ok(grid.children[0].className.includes('person-table-head'));
-  assert.ok(row.className.includes('person-table-row'));
-  assert.equal(row.dataset.personTableDecorated, 'true');
+  const header = grid.children[0];
+  assert.ok(header.className.includes('person-table-head'));
+  assert.equal(header.children.length, 4);
+
   assert.deepEqual(
-    row.children.map((child) => child.className),
+    historical.row.children.map((child) => child.className),
     [
       'person-table-identity',
       'person-card-range person-table-range',
       'person-card-activities person-table-activities',
-      'person-card-count person-table-count',
-      'person-card-top person-table-status'
+      'person-card-count person-table-count'
     ]
   );
-  assert.equal(row.children[0].children[0], strong);
-  assert.equal(row.children[0].children[1], canonical);
+  assert.equal(historical.status.parent, null);
+
+  assert.deepEqual(
+    legendary.row.children.map((child) => child.className),
+    [
+      'person-table-identity',
+      'person-card-range person-table-range',
+      'person-card-activities person-table-activities',
+      'person-card-count person-table-count'
+    ]
+  );
+  assert.equal(legendary.status.parent, legendary.row.children[0]);
+  assert.ok(legendary.status.className.includes('person-table-status-inline'));
+  assert.equal(legendary.status.children[0].hidden, false);
+  assert.equal(legendary.status.children[1].hidden, true);
 });

@@ -27,6 +27,14 @@ test('UI7 keeps the UI-6R4 authoritative compact Activity tuple intact', () => {
   assert.match(mainSource, /activity\?\.confidence/);
 });
 
+test('UI7 uses four visible columns and folds non-historical status into Person identity', () => {
+  assert.doesNotMatch(tableView, /역사성 · 유형/);
+  assert.match(tableView, /person-table-status-inline/);
+  assert.match(tableView, /value\.toLowerCase\(\) === "historical"/);
+  assert.match(tableCss, /person-table-status-inline/);
+  assert.match(tableCss, /grid-template-columns:minmax\(200px,1\.1fr\) minmax\(165px,\.85fr\) minmax\(460px,3\.2fr\) 82px/);
+});
+
 test('UI7 uses one table model on desktop and mobile with horizontal overflow and a sticky Person column', () => {
   assert.match(tableCss, /overflow-x:auto/);
   assert.match(tableCss, /grid-template-columns/);
@@ -37,7 +45,7 @@ test('UI7 uses one table model on desktop and mobile with horizontal overflow an
 });
 
 test('UI7 assets load as a presentation layer before Person Main initializes', () => {
-  assert.match(html, /atlas-person-table-view\.css\?v=20260815-ui7-table/);
-  assert.match(html, /atlas-person-table-view\.js\?v=20260815-ui7-table/);
-  assert.ok(html.indexOf('atlas-person-table-view.js?v=20260815-ui7-table') < html.indexOf('atlas-person-main.js?v=20260815-ui6r4'));
+  assert.match(html, /atlas-person-table-view\.css\?v=20260815-ui7-table-r2/);
+  assert.match(html, /atlas-person-table-view\.js\?v=20260815-ui7-table-r2/);
+  assert.ok(html.indexOf('atlas-person-table-view.js?v=20260815-ui7-table-r2') < html.indexOf('atlas-person-main.js?v=20260815-ui6r4'));
 });
