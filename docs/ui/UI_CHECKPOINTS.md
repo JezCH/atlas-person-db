@@ -12,7 +12,7 @@
   - UUID detail lookup with fail-closed validation
 - UI-2C — Main provenance/source read: COMPLETE
 - UI-2D — Admin object inspector read: COMPLETE
-- UI-2E — Admin System/status read: IMPLEMENTED — CI PENDING
+- UI-2E — Admin System/status read: IMPLEMENTED — CI REQUESTED
   - session-authenticated and GET-only
   - deployed/runtime identity when supplied by the runtime
   - secret-free configuration-presence status
@@ -23,6 +23,7 @@
   - duplicate queue/review/merge/revalidation aggregate lifecycle
   - optional P10 revalidation readiness integration when that backend module is present
   - GitHub Actions status intentionally not fabricated inside runtime
+  - implementation was first assembled as one atomic Git tree update; because that low-level ref update did not emit the normal PR synchronize workflows, this checkpoint contents commit intentionally triggers GitHub CI for the exact UI-2E tree
 - UI-3 — Main Persons information-complete redesign
 - UI-4 — Admin interface consolidation
 - UI-5 — navigation / future-authority shells
