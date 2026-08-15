@@ -71,6 +71,8 @@ test('R4 search finds notes, raw chronology, era labels and all compact Activity
   ]) {
     assert.equal(reader.personMatchesQuery(person, query), true, `expected query to match: ${query}`);
   }
+  assert.equal(reader.personMatchesQuery(person, 'Scythian King'), true);
+  assert.equal(reader.personMatchesQuery(person, '스키타이 왕'), true);
   const cePerson = personWithActivity();
   cePerson.activity_summaries = [activitySummary({ start: 120, end: 130 })];
   assert.equal(reader.personMatchesQuery(cePerson, 'AD 120'), true);
@@ -98,9 +100,11 @@ test('R4 Person rows render the authoritative compact Activity tuple without det
   assert.match(css, /\.person-card-activity-period/);
 });
 
-test('R4 advertises the restored search scope and current Person renderer cache key', () => {
+test('R4/T5 advertises the restored search scope and normalized reader cache key', () => {
   assert.match(mainSource, /인물·정치체·관계·역할·기간·비고 검색/);
-  assert.match(html, /atlas-person-browser-reader\.js\?v=20260815-ui6r4/);
+  assert.match(readerSource, /function normalizeSearchText\(value\)/);
+  assert.match(readerSource, /tokens\.every\(\(token\) => haystack\.includes\(token\)\)/);
+  assert.match(html, /atlas-person-browser-reader\.js\?v=20260816-ui-t5/);
   assert.match(html, /atlas-person-main\.js\?v=20260816-ui-t01/);
   assert.match(html, /atlas-person-main\.css\?v=20260815-ui6r4/);
   assert.match(html, /aria-label="인물·정치체·관계·역할·기간·비고 검색"/);
