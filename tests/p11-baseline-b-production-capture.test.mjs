@@ -3,6 +3,7 @@ import test from 'node:test';
 import captureHandlerModule from '../server/atlas-p11-baseline-b-capture-handler.js';
 import oidcModule from '../server/atlas-p11-baseline-b-github-oidc.js';
 import productionService from '../server/atlas-p11-baseline-b-production-service.js';
+import baselineBModule from '../server/atlas-baseline-b.js';
 
 const {
   CAPTURE_ID,
@@ -20,7 +21,18 @@ const {
   ISSUER,
   verifyTrustClaims
 } = oidcModule;
-const { inspectProductionBaselineBReadiness } = productionService;
+const {
+  EXPECTED_DATASET_KEYS,
+  EXPECTED_DATASET_COUNT,
+  assertProductionBaselineBArtifact,
+  inspectProductionBaselineBReadiness,
+  captureProductionBaselineB
+} = productionService;
+const {
+  BASELINE_B_SCHEMA,
+  BASELINE_B_SEMANTIC_VERSION,
+  buildBaselineBDocument
+} = baselineBModule;
 
 const SHA = 'a'.repeat(40);
 const ENV = Object.freeze({
@@ -57,7 +69,22 @@ function responseRecorder() {
   };
 }
 
+function completeBaselineFixture() {
+  const datasets = Object.fromEntries(EXPECTED_DATASET_KEYS.map((key) => [key, []]));
+  return buildBaselineBDocument({
+    datasets,
+    readiness: {
+      ready: true,
+      blockers: [],
+      schema: BASELINE_B_SCHEMA,
+      semantic_version: BASELINE_B_SEMANTIC_VERSION
+    }
+  });
+}
+
 test('P11 capture envelope is exact and rejects any undeclared input surface', () => {
+  assert.match(MARKER, /_V2$/);
+  assert.match(CAPTURE_ID, /_v2$/);
   assert.deepEqual(requireEnvelope(request('capture').body), {
     deploymentSha: SHA,
     captureId: CAPTURE_ID,
@@ -128,15 +155,27 @@ test('P11 invalid OIDC fails before any database client is created', async () =>
   assert.equal(dbOpened, false);
 });
 
-test('P11 capture returns the exact Baseline B document without enabling writes', async () => {
-  const baseline = {
-    schema: 'atlas-stage2-baseline-b/v1',
-    semantic_version: 'v2-relation-full-temporal',
-    baseline_digest: `sha256:${'1'.repeat(64)}`,
-    readiness: { ready: true, blockers: [] },
-    authority: { production_mutation_authorized: false },
-    datasets: { persons: [] }
-  };
+test('P11 Production artifact gate requires the complete Baseline B v2 canonical dataset surface', () => {
+  const baseline = completeBaselineFixture();
+  assert.equal(EXPECTED_DATASET_COUNT, 41);
+  assert.equal(baseline.schema, 'atlas-stage2-baseline-b/v2');
+  assert.equal(baseline.dataset_count, 41);
+  assert.doesNotThrow(() => assertProductionBaselineBArtifact(baseline));
+
+  assert.throws(
+    () => assertProductionBaselineBArtifact({ ...baseline, dataset_count: 40 }),
+    /P11_BASELINE_B_DATASET_COUNT_DRIFT/
+  );
+  const partialDatasets = { ...baseline.datasets };
+  delete partialDatasets[EXPECTED_DATASET_KEYS[0]];
+  assert.throws(
+    () => assertProductionBaselineBArtifact({ ...baseline, datasets: partialDatasets }),
+    /P11_BASELINE_B_DATASET_KEYS_DRIFT/
+  );
+});
+
+test('P11 capture returns the exact Baseline B v2 document without enabling writes', async () => {
+  const baseline = completeBaselineFixture();
   const handler = createP11BaselineBCaptureHandler({
     env: ENV,
     verifyOidc: async () => ({}),
@@ -149,7 +188,18 @@ test('P11 capture returns the exact Baseline B document without enabling writes'
   assert.equal(res.record.statusCode, 200);
   assert.equal(res.record.body.mode, 'capture');
   assert.deepEqual(res.record.body.result.baseline, baseline);
+  assert.equal(res.record.body.result.baseline.schema, BASELINE_B_SCHEMA);
+  assert.equal(res.record.body.result.baseline.dataset_count, EXPECTED_DATASET_COUNT);
   assert.equal(res.record.body.result.baseline.authority.production_mutation_authorized, false);
+});
+
+test('P11 Production capture wrapper refuses a partial artifact even if its capture dependency returns successfully', async () => {
+  const baseline = completeBaselineFixture();
+  const partial = { ...baseline, dataset_count: baseline.dataset_count - 1 };
+  await assert.rejects(
+    captureProductionBaselineB({ query: async () => ({ rows: [] }) }, { capture: async () => partial }),
+    /P11_BASELINE_B_DATASET_COUNT_DRIFT/
+  );
 });
 
 test('P11 Production readiness service asks PostgreSQL for a repeatable-read read-only transaction', async () => {
