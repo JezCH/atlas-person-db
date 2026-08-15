@@ -4,6 +4,7 @@ const crypto = require("node:crypto");
 const duplicateDetector = require("./atlas-duplicate-detector.js");
 const { buildRelationshipReconciliationGroups } = require("./atlas-relationship-reconciliation.js");
 const { inspectPersonDuplicateRevalidationReadiness } = require("./atlas-person-duplicate-revalidation-readiness.js");
+const { lockPersonDuplicateFrontier } = require("./atlas-person-duplicate-frontier-lock.js");
 
 const { detectPersonDuplicateCandidates, DETECTOR_VERSION, REVALIDATION_SEMANTIC_VERSION } = duplicateDetector;
 const DECISIONS = new Set(["MERGE", "KEEP_SEPARATE", "REVIEW"]);
@@ -46,36 +47,48 @@ async function loadDetectorInput(client) {
   };
 }
 
-async function rebuildCandidates({ client }) {
+async function refreshCandidateFrontier(client) {
   const input = await loadDetectorInput(client);
   const detected = detectPersonDuplicateCandidates(input);
+  const staled = await client.query(`update atlas_v2.person_duplicate_candidates set candidate_state='STALE',updated_at=now() where candidate_state='ACTIVE' returning id`);
+  for (const candidate of detected) {
+    await client.query(`
+      insert into atlas_v2.person_duplicate_candidates (
+        id,person_low_id,person_high_id,candidate_state,confidence,evidence,evidence_fingerprint,detector_version,
+        first_detected_at,last_detected_at,updated_at
+      ) values ($1,$2,$3,'ACTIVE',$4,$5::jsonb,$6,$7,now(),now(),now())
+      on conflict (person_low_id,person_high_id) do update set
+        candidate_state='ACTIVE',
+        confidence=excluded.confidence,
+        evidence=excluded.evidence,
+        evidence_fingerprint=excluded.evidence_fingerprint,
+        detector_version=excluded.detector_version,
+        last_detected_at=now(),
+        current_decision=case
+          when atlas_v2.person_duplicate_candidates.current_decision in ('MERGE','KEEP_SEPARATE')
+           and (
+             atlas_v2.person_duplicate_candidates.detector_version is distinct from excluded.detector_version
+             or atlas_v2.person_duplicate_candidates.decision_evidence_fingerprint is distinct from excluded.evidence_fingerprint
+           ) then 'REVIEW'
+          else atlas_v2.person_duplicate_candidates.current_decision
+        end,
+        updated_at=now()
+    `, [crypto.randomUUID(),candidate.person_low_id,candidate.person_high_id,candidate.confidence,JSON.stringify(candidate.evidence),candidate.evidence_fingerprint,candidate.detector_version]);
+  }
+  return {
+    detected,
+    staled: staled.rowCount,
+    requirements_schema_ready: input.requirements_schema_ready,
+    active_requirements: input.requirements.length
+  };
+}
+
+async function rebuildCandidates({ client }) {
   await client.query("BEGIN");
+  let refreshed;
   try {
-    await client.query(`update atlas_v2.person_duplicate_candidates set candidate_state='STALE',updated_at=now() where candidate_state='ACTIVE'`);
-    for (const candidate of detected) {
-      await client.query(`
-        insert into atlas_v2.person_duplicate_candidates (
-          id,person_low_id,person_high_id,candidate_state,confidence,evidence,evidence_fingerprint,detector_version,
-          first_detected_at,last_detected_at,updated_at
-        ) values ($1,$2,$3,'ACTIVE',$4,$5::jsonb,$6,$7,now(),now(),now())
-        on conflict (person_low_id,person_high_id) do update set
-          candidate_state='ACTIVE',
-          confidence=excluded.confidence,
-          evidence=excluded.evidence,
-          evidence_fingerprint=excluded.evidence_fingerprint,
-          detector_version=excluded.detector_version,
-          last_detected_at=now(),
-          current_decision=case
-            when atlas_v2.person_duplicate_candidates.current_decision in ('MERGE','KEEP_SEPARATE')
-             and (
-               atlas_v2.person_duplicate_candidates.detector_version is distinct from excluded.detector_version
-               or atlas_v2.person_duplicate_candidates.decision_evidence_fingerprint is distinct from excluded.evidence_fingerprint
-             ) then 'REVIEW'
-            else atlas_v2.person_duplicate_candidates.current_decision
-          end,
-          updated_at=now()
-      `, [crypto.randomUUID(),candidate.person_low_id,candidate.person_high_id,candidate.confidence,JSON.stringify(candidate.evidence),candidate.evidence_fingerprint,candidate.detector_version]);
-    }
+    await lockPersonDuplicateFrontier(client);
+    refreshed = await refreshCandidateFrontier(client);
     await client.query("COMMIT");
   } catch (error) {
     await client.query("ROLLBACK");
@@ -84,13 +97,13 @@ async function rebuildCandidates({ client }) {
   const queue = await listCandidates({ client });
   const readiness = await inspectPersonDuplicateRevalidationReadiness(client);
   return {
-    detected: detected.length,
+    detected: refreshed.detected.length,
     active: queue.candidates.length,
     summary: queue.summary,
     detector_version: DETECTOR_VERSION,
     reconciliation_semantic_version: REVALIDATION_SEMANTIC_VERSION,
-    requirements_schema_ready: input.requirements_schema_ready,
-    active_requirements: input.requirements.length,
+    requirements_schema_ready: refreshed.requirements_schema_ready,
+    active_requirements: refreshed.active_requirements,
     revalidation_readiness: readiness
   };
 }
@@ -230,6 +243,7 @@ async function reviewCandidate({ client,candidateId,decision,rationale=null,requ
 
   await client.query("BEGIN");
   try {
+    await lockPersonDuplicateFrontier(client);
     const replay = await client.query(`select candidate_id,decision from atlas_v2.person_duplicate_reviews where request_id=$1`, [normalizedRequestId]);
     if (replay.rowCount === 1) {
       await client.query("COMMIT");
@@ -267,6 +281,7 @@ module.exports = Object.freeze({
   schemaUnavailable,
   loadRevalidationRequirements,
   loadDetectorInput,
+  refreshCandidateFrontier,
   rebuildCandidates,
   listCandidates,
   reviewCandidate
