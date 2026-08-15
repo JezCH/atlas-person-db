@@ -1,6 +1,7 @@
 "use strict";
 
 const { createV2AuthoritativeMutationService } = require("./atlas-v2-authoritative-mutation-service.js");
+const { createPersonDeleteService } = require("./atlas-person-delete-service.js");
 const { createMutationTransport, jsonResponse } = require("./atlas-mutation-transport.js");
 const { createV2AuthoritativeTransactionFactory } = require("./atlas-postgres-v2-authoritative-transaction.js");
 const {
@@ -50,7 +51,13 @@ function createVercelMutationHandler({ clientFactory, env = process.env, transac
     try {
       client = await clientFactory(databaseUrl);
       const { transactionFactory, verificationVerifier } = createV2AuthoritativeTransactionFactory({ client, ...transactionOptions });
-      const mutationService = createV2AuthoritativeMutationService({ planner, transactionFactory, verificationVerifier });
+      const activityMutationService = createV2AuthoritativeMutationService({ planner, transactionFactory, verificationVerifier });
+      const personDeleteService = createPersonDeleteService({ client });
+      const mutationService = Object.freeze({
+        mutate: (mutationRequest) => mutationRequest?.operation === "delete_person"
+          ? personDeleteService.mutate(mutationRequest)
+          : activityMutationService.mutate(mutationRequest)
+      });
       const transport = createMutationTransport({ mutationService });
       const response = await transport.handle(request);
       sendResponse(res, response);
