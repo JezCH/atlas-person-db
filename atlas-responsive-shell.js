@@ -65,6 +65,14 @@
   const detailPanel = document.getElementById("personMainDetail");
   const personGroups = document.getElementById("personMainGroups");
   if (detailPanel && personGroups) {
+    const DETAIL_FOCUSABLE_SELECTOR = [
+      "a[href]",
+      "button:not([disabled])",
+      "input:not([disabled])",
+      "select:not([disabled])",
+      "textarea:not([disabled])",
+      "[tabindex]:not([tabindex=\"-1\"])"
+    ].join(",");
     const backdrop = document.createElement("div");
     backdrop.id = "personMainDetailBackdrop";
     backdrop.hidden = true;
@@ -81,19 +89,110 @@
     function ensureCloseButton() {
       let closeButton = detailPanel.querySelector(":scope > .person-detail-overlay-close");
       if (closeButton) return closeButton;
-      closeButton = document.createElement("button"); closeButton.type = "button"; closeButton.className = "person-detail-overlay-close"; closeButton.setAttribute("aria-label", "상세 닫기"); closeButton.textContent = "×"; detailPanel.prepend(closeButton); return closeButton;
+      closeButton = document.createElement("button");
+      closeButton.type = "button";
+      closeButton.className = "person-detail-overlay-close";
+      closeButton.setAttribute("aria-label", "상세 닫기");
+      closeButton.textContent = "×";
+      detailPanel.prepend(closeButton);
+      return closeButton;
     }
+
+    function detailFocusableElements() {
+      return [...detailPanel.querySelectorAll(DETAIL_FOCUSABLE_SELECTOR)].filter((element) => {
+        if (element.hidden || element.getAttribute("aria-hidden") === "true") return false;
+        return !element.closest("[hidden]");
+      });
+    }
+
+    function focusDetail() {
+      const target = ensureCloseButton() || detailPanel;
+      window.requestAnimationFrame(() => {
+        if (!requestedOpen || detailPanel.hidden) return;
+        try { target.focus({ preventScroll: true }); }
+        catch { target.focus(); }
+      });
+    }
+
+    function restoreTriggerFocus() {
+      if (!(lastTrigger instanceof HTMLElement) || !document.contains(lastTrigger)) return;
+      try { lastTrigger.focus({ preventScroll: true }); }
+      catch { lastTrigger.focus(); }
+    }
+
     function setDetailOpen(open, { restoreFocus = false } = {}) {
-      requestedOpen = Boolean(open); detailPanel.hidden = !requestedOpen; backdrop.hidden = !requestedOpen; document.body.classList.toggle("person-detail-overlay-open", requestedOpen);
-      if (requestedOpen) ensureCloseButton();
-      else if (restoreFocus && lastTrigger instanceof HTMLElement) { try { lastTrigger.focus({ preventScroll: true }); } catch { lastTrigger.focus(); } }
+      requestedOpen = Boolean(open);
+      detailPanel.hidden = !requestedOpen;
+      backdrop.hidden = !requestedOpen;
+      backdrop.setAttribute("aria-hidden", String(!requestedOpen));
+      document.body.classList.toggle("person-detail-overlay-open", requestedOpen);
+      if (requestedOpen) {
+        ensureCloseButton();
+        focusDetail();
+      } else if (restoreFocus) {
+        restoreTriggerFocus();
+      }
     }
-    personGroups.addEventListener("click", (event) => { const row = event.target.closest("[data-person-id]"); if (!row) return; lastTrigger = row; setDetailOpen(true); }, true);
-    detailPanel.addEventListener("click", (event) => { if (event.target.closest(".person-detail-overlay-close")) setDetailOpen(false, { restoreFocus: true }); });
+
+    function trapDetailFocus(event) {
+      if (event.key !== "Tab" || detailPanel.hidden) return;
+      const focusable = detailFocusableElements();
+      if (!focusable.length) {
+        event.preventDefault();
+        detailPanel.focus();
+        return;
+      }
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+      if (!detailPanel.contains(active)) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus();
+        return;
+      }
+      if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    personGroups.addEventListener("click", (event) => {
+      const row = event.target.closest("[data-person-id]");
+      if (!row) return;
+      lastTrigger = row;
+      setDetailOpen(true);
+    }, true);
+    detailPanel.addEventListener("click", (event) => {
+      if (event.target.closest(".person-detail-overlay-close")) setDetailOpen(false, { restoreFocus: true });
+    });
     backdrop.addEventListener("click", () => setDetailOpen(false, { restoreFocus: true }));
-    document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !detailPanel.hidden) setDetailOpen(false, { restoreFocus: true }); });
-    window.addEventListener("atlas-authority-domain-changed", (event) => { if (event.detail?.domain !== "persons") setDetailOpen(false); });
-    const observer = new MutationObserver(() => { if (!requestedOpen) { detailPanel.hidden = true; backdrop.hidden = true; return; } ensureCloseButton(); detailPanel.hidden = false; backdrop.hidden = false; });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !detailPanel.hidden) {
+        event.preventDefault();
+        setDetailOpen(false, { restoreFocus: true });
+        return;
+      }
+      trapDetailFocus(event);
+    });
+    window.addEventListener("atlas-authority-domain-changed", (event) => {
+      if (event.detail?.domain !== "persons") setDetailOpen(false);
+    });
+    const observer = new MutationObserver(() => {
+      if (!requestedOpen) {
+        detailPanel.hidden = true;
+        backdrop.hidden = true;
+        backdrop.setAttribute("aria-hidden", "true");
+        return;
+      }
+      ensureCloseButton();
+      detailPanel.hidden = false;
+      backdrop.hidden = false;
+      backdrop.setAttribute("aria-hidden", "false");
+      if (!detailPanel.contains(document.activeElement)) focusDetail();
+    });
     observer.observe(detailPanel, { childList: true });
   }
 
