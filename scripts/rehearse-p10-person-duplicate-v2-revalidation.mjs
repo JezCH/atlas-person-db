@@ -119,7 +119,7 @@ try {
 
   const initialReferenceReadiness = await mergeReadiness.inspectPersonMergeReferenceReadiness(client);
   assert.equal(initialReferenceReadiness.ready, true, initialReferenceReadiness.blockers.join(';'));
-  assert.equal(initialReferenceReadiness.person_fks.length, 5);
+  assert.equal(initialReferenceReadiness.person_fks.length, 7);
   assert.equal(initialReferenceReadiness.relationship_fks.length, 4);
   assert.deepEqual(initialReferenceReadiness.non_fk_person_uuid_columns, mergeReadiness.EXPECTED_NON_FK_PERSON_UUID_COLUMNS);
   assert.deepEqual(initialReferenceReadiness.non_fk_relationship_uuid_columns, []);
