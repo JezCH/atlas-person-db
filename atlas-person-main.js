@@ -12,6 +12,41 @@
     return;
   }
 
+  const RELATION_LABELS = Object.freeze({
+    rules: "통치",
+    governs: "통치",
+    serves: "복무",
+    active_in: "활동",
+    opposes: "대립",
+    claims_rule: "통치권 주장",
+    "relation 미상": "관계 미확정"
+  });
+  const BASIS_LABELS = Object.freeze({
+    reign: "재위",
+    term: "임기",
+    de_facto_rule: "실권 장악",
+    military_activity: "군사 활동",
+    religious_activity: "종교 활동",
+    intellectual_activity: "학술 활동",
+    artistic_activity: "예술 활동",
+    general_activity: "주요 활동"
+  });
+  const CHRONOLOGY_LABELS = Object.freeze({
+    exact_as_recorded: null,
+    reviewed_stage2_traditional_disputed: "연대 논쟁 있음",
+    disputed: "연대 논쟁 있음",
+    approximate: "연대 근사",
+    inferred: "연대 추정",
+    unknown: "연대 미확정"
+  });
+  const CONFIDENCE_LABELS = Object.freeze({
+    legacy_asserted: null,
+    high: "신뢰도 높음",
+    medium: "신뢰도 보통",
+    low: "신뢰도 낮음",
+    uncertain: "신뢰도 미확정"
+  });
+
   let persons = [];
   let facetCatalog = Object.freeze({ polities: [], relations: [], roles: [], period_bases: [] });
   let selectedPersonId = null;
@@ -27,6 +62,10 @@
       .replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;");
+  }
+
+  function cleanCode(value) {
+    return String(value || "").trim().replaceAll("_", " ");
   }
 
   function safeHttpUrl(value) {
@@ -65,7 +104,12 @@
 
   function boundaryMeta(boundary) {
     if (!boundary) return [];
-    return [boundary.granularity, boundary.certainty, boundary.calendar].filter((value) => value != null && String(value).trim());
+    return [boundary.granularity, boundary.certainty, boundary.calendar]
+      .filter((value) => value != null && String(value).trim());
+  }
+
+  function normalizedRange(value) {
+    return String(value || "").toUpperCase().replace(/[‐‑‒–—―]/g, "-").replace(/\s+/g, "").trim();
   }
 
   function sourceHtml(source) {
@@ -81,47 +125,83 @@
     return `<ul class="person-source-list">${sources.map(sourceHtml).join("")}</ul>`;
   }
 
-  function compactActivityHtml(activity) {
+  function exceptionalMetaHtml(activity) {
+    const labels = [];
+    const chronology = String(activity?.chronology_status || "").trim();
+    const confidence = activity?.confidence == null ? "" : String(activity.confidence).trim();
+    if (chronology) {
+      const mapped = Object.prototype.hasOwnProperty.call(CHRONOLOGY_LABELS, chronology)
+        ? CHRONOLOGY_LABELS[chronology]
+        : `연대 상태: ${cleanCode(chronology)}`;
+      if (mapped) labels.push(mapped);
+    }
+    if (confidence) {
+      const mapped = Object.prototype.hasOwnProperty.call(CONFIDENCE_LABELS, confidence)
+        ? CONFIDENCE_LABELS[confidence]
+        : `신뢰도: ${cleanCode(confidence)}`;
+      if (mapped) labels.push(mapped);
+    }
+    return labels.length ? `<small class="person-table-exception">${labels.map(escapeHtml).join(" · ")}</small>` : "";
+  }
+
+  function compactActivityHtml(activity, personRange, singleActivity) {
     const polity = activity?.polity?.display_name || activity?.polity?.canonical_name_en || "정치체 미상";
-    const relation = activity?.relation?.code || "relation 미상";
+    const relationRaw = activity?.relation?.code || "relation 미상";
+    const relation = RELATION_LABELS[relationRaw] ?? cleanCode(relationRaw);
     const role = activity?.role?.display_name || activity?.role?.source_label || "역할 미지정";
-    const basis = activity?.period_basis?.display_name || activity?.period_basis?.code || "기간 기준 미상";
-    const semantic = [
-      activity?.chronology_status ? `chronology: ${activity.chronology_status}` : null,
-      activity?.confidence != null ? `confidence: ${activity.confidence}` : null
-    ].filter(Boolean);
+    const basisRaw = activity?.period_basis?.display_name || activity?.period_basis?.code || "기간 기준 미상";
+    const basis = BASIS_LABELS[basisRaw] ?? cleanCode(basisRaw);
+    const period = `${boundaryLabel(activity?.start)} – ${boundaryLabel(activity?.end)}`;
+    const redundant = singleActivity && normalizedRange(period) === normalizedRange(personRange);
     return `<span class="person-card-activity" data-activity-id="${escapeHtml(activity?.id || "")}">
       <span class="person-card-activity-head"><b>${escapeHtml(polity)}</b><span class="person-relation-badge">${escapeHtml(relation)}</span></span>
       <span class="person-card-activity-role">${escapeHtml(role)} · ${escapeHtml(basis)}</span>
-      <span class="person-card-activity-period">${escapeHtml(boundaryLabel(activity?.start))} – ${escapeHtml(boundaryLabel(activity?.end))}</span>
-      ${semantic.length ? `<small>${semantic.map(escapeHtml).join(" · ")}</small>` : ""}
+      <span class="person-card-activity-period${redundant ? " is-redundant" : ""}"${redundant ? ' aria-hidden="true"' : ""}>${redundant ? "" : escapeHtml(period)}</span>
+      ${exceptionalMetaHtml(activity)}
     </span>`;
   }
 
   function compactActivitiesHtml(person) {
     const activities = Array.isArray(person?.activity_summaries) ? person.activity_summaries : [];
-    if (!activities.length) return '<span class="person-card-activities is-empty">등록된 Activity 없음</span>';
-    return `<span class="person-card-activities">${activities.map(compactActivityHtml).join("")}</span>`;
+    if (!activities.length) return '<span class="person-card-activities person-table-activities is-empty">등록된 Activity 없음</span>';
+    const personRange = rangeLabel(person);
+    return `<span class="person-card-activities person-table-activities">${activities.map((activity) => compactActivityHtml(activity, personRange, activities.length === 1)).join("")}</span>`;
   }
 
-  function personCard(person) {
-    const rawHistoricity = person?.historicity == null || String(person.historicity) === "" ? "historicity 미상" : String(person.historicity);
+  function exceptionalPersonStatusHtml(person) {
+    const values = [];
+    const historicity = person?.historicity == null || String(person.historicity).trim() === "" ? "historicity 미상" : String(person.historicity).trim();
+    const personType = person?.person_type == null || String(person.person_type).trim() === "" ? "type 미상" : String(person.person_type).trim();
+    if (historicity.toLowerCase() !== "historical") values.push(`<span class="person-historicity">${escapeHtml(historicity)}</span>`);
+    if (personType.toLowerCase() !== "historical") values.push(`<span>${escapeHtml(personType)}</span>`);
+    return values.length ? `<span class="person-card-top person-table-status-inline">${values.join("")}</span>` : "";
+  }
+
+  function personTableHeaderHtml() {
+    return `<div class="person-table-head" aria-hidden="true">
+      <span class="person-table-head-cell person-table-col-identity">인물</span>
+      <span class="person-table-head-cell person-table-col-range">주요 활동기간</span>
+      <span class="person-table-head-cell person-table-col-activities"><span class="person-table-head-title">활동 관계</span><span class="person-table-activity-subhead"><span>정치체 · 관계</span><span>역할 · 기간 기준</span><span>활동 기간</span></span></span>
+      <span class="person-table-head-cell person-table-col-count">활동 수</span>
+    </div>`;
+  }
+
+  function personTableRow(person) {
     const canonical = person?.canonical_name_en && person.canonical_name_en !== person.display_name
       ? `<small class="person-card-canonical">${escapeHtml(person.canonical_name_en)}</small>` : "";
-    return `<button class="person-card${selectedPersonId === person.id ? " is-selected" : ""}" type="button" data-person-id="${escapeHtml(person.id)}">
-      <span class="person-card-top"><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span>${escapeHtml(person.person_type || "type 미상")}</span></span>
-      <strong>${escapeHtml(person.display_name || person.canonical_name_en || "이름 미상")}</strong>
-      ${canonical}
-      <span class="person-card-range">${escapeHtml(rangeLabel(person))}</span>
-      <span class="person-card-count">Activity ${Number(person.activity_count || 0)}건</span>
+    return `<button class="person-card person-table-row${selectedPersonId === person.id ? " is-selected" : ""}" type="button" data-person-id="${escapeHtml(person.id)}">
+      <span class="person-table-identity"><strong>${escapeHtml(person.display_name || person.canonical_name_en || "이름 미상")}</strong>${canonical}${exceptionalPersonStatusHtml(person)}</span>
+      <span class="person-card-range person-table-range">${escapeHtml(rangeLabel(person))}</span>
       ${compactActivitiesHtml(person)}
+      <span class="person-card-count person-table-count">${Number(person.activity_count || 0)}건</span>
     </button>`;
   }
 
   function groupSection({ title, description, rows, kind }) {
+    const body = rows.length ? rows.map(personTableRow).join("") : '<p class="person-empty-state">현재 조건에 해당하는 인물이 없습니다.</p>';
     return `<section class="person-group person-group-${escapeHtml(kind)}" aria-labelledby="person-group-${escapeHtml(kind)}-title">
       <header class="person-group-head"><div><p class="eyebrow">${kind === "historical" ? "HISTORICAL PERSONS" : "OTHER / UNCERTAIN HISTORICITY"}</p><h2 id="person-group-${escapeHtml(kind)}-title">${escapeHtml(title)}</h2><p>${escapeHtml(description)}</p></div><strong>${rows.length}명</strong></header>
-      <div class="person-card-grid">${rows.length ? rows.map(personCard).join("") : '<p class="person-empty-state">현재 조건에 해당하는 인물이 없습니다.</p>'}</div>
+      <div class="person-card-grid person-table-grid">${personTableHeaderHtml()}${body}</div>
     </section>`;
   }
 
@@ -150,17 +230,17 @@
     const groups = reader.preparePersonGroups(persons, { query, sortOrder, facetFilters });
     const shown = groups.historical.length + groups.other_or_uncertain.length;
     const active = activeFacetCount();
-    summary.innerHTML = `<strong>${shown}명 표시</strong><span>전체 ${persons.length}명 · historicity 값 ${groups.observed_historicity_values.length}종${active ? ` · semantic filter ${active}개` : ""}</span>`;
+    summary.innerHTML = `<strong>${shown}명 표시</strong><span>전체 ${persons.length}명 · 역사성 분류 ${groups.observed_historicity_values.length}종${active ? ` · 적용된 필터 ${active}개` : ""}</span>`;
     list.innerHTML = [
       groupSection({
         title: "역사 인물",
-        description: "Person.historicity가 historical로 기록된 인물입니다. 활동연도가 미상이어도 역사성 분류는 유지됩니다.",
+        description: "역사 자료에서 실재 인물로 분류된 인물입니다. 활동연도가 미상이어도 역사성 분류는 유지됩니다.",
         rows: groups.historical,
         kind: "historical"
       }),
       groupSection({
         title: "전설·신화·역사성 미확정 및 기타",
-        description: "historical 이외의 authoritative historicity 값을 별도 구역에 원문 그대로 표시합니다.",
+        description: "전설·신화 또는 역사성 판정이 확정되지 않은 인물을 원래 분류값에 따라 별도로 표시합니다.",
         rows: groups.other_or_uncertain,
         kind: "other"
       })
@@ -195,10 +275,7 @@
     const activityId = escapeHtml(activity.id || "");
     return `<article class="person-activity-card" data-activity-id="${activityId}">
       <header><div><span class="person-relation-badge">${escapeHtml(relation)}</span><h4>${escapeHtml(polity)}</h4><p>${escapeHtml(role)} · ${escapeHtml(basis)}</p></div><div class="person-activity-actions"><button class="mini-btn edit" type="button" data-authoring-action="edit" data-activity-id="${activityId}">수정</button><button class="mini-btn danger delete" type="button" data-authoring-action="delete" data-activity-id="${activityId}">삭제</button></div></header>
-      <dl class="person-activity-dates">
-        <div><dt>시작</dt><dd>${escapeHtml(boundaryLabel(activity.start))}${startMeta.length ? `<small>${startMeta.map(escapeHtml).join(" · ")}</small>` : ""}</dd></div>
-        <div><dt>종료</dt><dd>${escapeHtml(boundaryLabel(activity.end))}${endMeta.length ? `<small>${endMeta.map(escapeHtml).join(" · ")}</small>` : ""}</dd></div>
-      </dl>
+      <dl class="person-activity-dates"><div><dt>시작</dt><dd>${escapeHtml(boundaryLabel(activity.start))}${startMeta.length ? `<small>${startMeta.map(escapeHtml).join(" · ")}</small>` : ""}</dd></div><div><dt>종료</dt><dd>${escapeHtml(boundaryLabel(activity.end))}${endMeta.length ? `<small>${endMeta.map(escapeHtml).join(" · ")}</small>` : ""}</dd></div></dl>
       ${semanticMeta.length ? `<p class="person-activity-meta">${semanticMeta.map(escapeHtml).join(" · ")}</p>` : ""}
       ${activity.notes ? `<p class="person-activity-notes">${escapeHtml(activity.notes)}</p>` : ""}
       <div class="person-activity-sources"><strong>Activity 출처</strong>${sourceListHtml(activity.sources)}</div>
@@ -430,8 +507,7 @@
     authoringTools.id = "relationshipAuthoringTools";
     authoringTools.className = "relationship-authoring-tools";
     authoringTools.innerHTML = `<summary><span><b>전체 관계 편집표</b><small>기존 Activity 행 등록·수정·엑셀 도구의 전체 표</small></span><span aria-hidden="true">＋</span></summary><div class="relationship-authoring-body"></div>`;
-    const body = authoringTools.querySelector(".relationship-authoring-body");
-    body.append(toolbar, legacyContent);
+    authoringTools.querySelector(".relationship-authoring-body").append(toolbar, legacyContent);
 
     topbar.insertAdjacentElement("afterend", personView);
     personView.insertAdjacentElement("afterend", authoringTools);
@@ -493,8 +569,8 @@
       if (action === "legacy-tools") openLegacyTools();
     });
     groups?.addEventListener("click", (event) => {
-      const card = event.target.closest("[data-person-id]");
-      if (card) selectPerson(card.dataset.personId);
+      const row = event.target.closest("[data-person-id]");
+      if (row) selectPerson(row.dataset.personId);
     });
     detail?.addEventListener("click", (event) => {
       const actionButton = event.target.closest("[data-authoring-action][data-activity-id]");
