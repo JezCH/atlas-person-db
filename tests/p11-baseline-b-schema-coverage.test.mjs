@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import baselineB from '../server/atlas-baseline-b.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const { BASELINE_B_CANONICAL_TABLES, CORE_DATASET_QUERIES } = baselineB;
+const { BASELINE_B_SCHEMA, BASELINE_B_CANONICAL_TABLES, CORE_DATASET_QUERIES } = baselineB;
 const BASE_OPERATIONAL_TABLES = new Set([
   'migration_metadata',
   'person_duplicate_candidates',
@@ -16,10 +16,12 @@ const BASE_OPERATIONAL_TABLES = new Set([
 ]);
 
 function createdAtlasTables(sql) {
-  return [...String(sql).matchAll(/\bCREATE\s+TABLE\s+atlas_v2\.([a-z0-9_]+)/gi)].map((match) => match[1]);
+  return [...String(sql).matchAll(/\bCREATE\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?atlas_v2\.([a-z0-9_]+)/gi)]
+    .map((match) => match[1]);
 }
 
-test('Baseline B canonical dataset registry is unique and contains exactly 41 Stage 2 domain tables', () => {
+test('Baseline B v2 canonical dataset registry is unique and contains exactly 41 Stage 2 domain tables', () => {
+  assert.equal(BASELINE_B_SCHEMA, 'atlas-stage2-baseline-b/v2');
   assert.equal(CORE_DATASET_QUERIES.length, 41);
   assert.equal(new Set(CORE_DATASET_QUERIES.map((item) => item.key)).size, 41);
   assert.equal(new Set(BASELINE_B_CANONICAL_TABLES).size, 41);
