@@ -35,7 +35,7 @@ test("correction transport uses a third isolated OIDC audience/workflow boundary
   assert.throws(() => auditOidc.verifyTrustClaims(correction, SHA), /GITHUB_OIDC_AUDIENCE_MISMATCH/);
 });
 
-test("correction handler accepts exact Production SHA, bounded sources, explicit mode, and pathless Baseline A v2 capture", () => {
+test("correction handler accepts exact Production SHA, bounded sources, explicit mode, reviewed manifest schemas, and pathless Baseline A v2 capture", () => {
   const manifest = { schema: "atlas-correction-manifest/v1" };
   assert.deepEqual(correctionHandler.requirePayload({ deployment_sha: SHA, manifest_path: "corrections/requests/r0.json", mode: "dry_run", manifest }),
     { deploymentSha: SHA, sourcePath: "corrections/requests/r0.json", mode: "dry_run", manifest, schema: "atlas-correction-manifest/v1", activityIds: null });
@@ -43,12 +43,15 @@ test("correction handler accepts exact Production SHA, bounded sources, explicit
   assert.equal(correctionHandler.requirePayload({ deployment_sha: SHA, intent_path: "corrections/intents/r1.json", mode: "apply", manifest: manifestV11 }).schema, "atlas-correction-manifest/v1.1");
   const manifestV12 = { schema: "atlas-correction-manifest/v1.2" };
   assert.equal(correctionHandler.requirePayload({ deployment_sha: SHA, intent_path: "corrections/intents/r2.json", mode: "apply", manifest: manifestV12 }).schema, "atlas-correction-manifest/v1.2");
+  const manifestV2 = { schema: "atlas-correction-manifest/v2" };
+  assert.equal(correctionHandler.requirePayload({ deployment_sha: SHA, manifest_path: "corrections/requests/r3.json", mode: "dry_run", manifest: manifestV2 }).schema, "atlas-correction-manifest/v2");
+  assert.equal(typeof correctionHandler.createService({ query() {} }, "atlas-correction-manifest/v2").execute, "function");
   assert.deepEqual(correctionHandler.requirePayload({ deployment_sha: SHA, mode: "full_stage2_baseline" }),
     { deploymentSha: SHA, sourcePath: null, mode: "full_stage2_baseline", activityIds: null, manifest: null, schema: null });
   assert.throws(() => correctionHandler.requirePayload({ deployment_sha: SHA, mode: "full_activity_baseline" }), /CORRECTION_MODE_REQUIRED/);
   assert.throws(() => correctionHandler.requirePayload({ deployment_sha: SHA, manifest_path: "authoring/requests/x.json", mode: "apply", manifest }), /CORRECTION_SOURCE_PATH_NOT_ALLOWED/);
   assert.throws(() => correctionHandler.requirePayload({ deployment_sha: SHA, manifest_path: "corrections/requests/x.json", mode: "delete", manifest }), /CORRECTION_MODE_REQUIRED/);
-  assert.throws(() => correctionHandler.requirePayload({ deployment_sha: SHA, manifest_path: "corrections/requests/x.json", mode: "apply", manifest: { schema: "atlas-correction-manifest/v2" } }), /UNSUPPORTED_CORRECTION_MANIFEST_SCHEMA/);
+  assert.throws(() => correctionHandler.requirePayload({ deployment_sha: SHA, manifest_path: "corrections/requests/x.json", mode: "apply", manifest: { schema: "atlas-correction-manifest/v3" } }), /UNSUPPORTED_CORRECTION_MANIFEST_SCHEMA/);
   assert.throws(() => correctionHandler.requirePayload({ deployment_sha: SHA, mode: "full_stage2_baseline", activity_ids: [] }), /CORRECTION_BASELINE_INPUTS_FORBIDDEN/);
   assert.equal(correctionHandler.requireDeployment({ VERCEL_ENV: "production", VERCEL_GIT_COMMIT_REF: "main", VERCEL_GIT_COMMIT_SHA: SHA,
     VERCEL_GIT_REPO_OWNER: "JezCH", VERCEL_GIT_REPO_SLUG: "atlas-person-db" }, SHA), SHA);
@@ -83,13 +86,15 @@ test("correction migration registry is ordered and bounded to correction-ledger 
   for (const migration of migrations) assert.doesNotMatch(migration.sql, /person_politics_v2\s+set|delete\s+from\s+atlas_v2\.person_politics_v2/i);
 });
 
-test("workflow runs reviewed corrections, dry-runs before apply, then captures Baseline A v2 identity snapshot", () => {
+test("workflow runs reviewed corrections including v2, dry-runs before apply, then captures Baseline A v2 identity snapshot", () => {
   assert.match(workflow, /^\s*-\s*'corrections\/requests\/\*\.json'\s*$/m);
   assert.match(workflow, /^\s*-\s*'corrections\/intents\/\*\.json'\s*$/m);
   assert.doesNotMatch(workflow, /^\s*-\s*'(?:server\/atlas-correction[^']*|api\/atlas-correction[^']*|db\/migrations\/2026081[12]_correction[^']*)'\s*$/m);
   assert.match(workflow, /ATLAS_CORRECTION_AUDIENCE: atlas-person-db-correction-apply/);
   assert.match(workflow, /atlas-correction-manifest\/v1\.1/);
   assert.match(workflow, /atlas-correction-manifest\/v1\.2/);
+  assert.match(workflow, /atlas-correction-manifest\/v2/);
+  assert.match(workflow, /ATLAS_CORRECTION_MANIFEST_V2/);
   assert.match(workflow, /update_activity_temporal_metadata/);
   assert.doesNotMatch(workflow, /SUPABASE_DB_URL/);
   const dryRunCall = workflow.indexOf('call_correction "$manifest" "$source_path" dry_run');
