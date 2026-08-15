@@ -1,6 +1,6 @@
 "use strict";
 
-const ALLOWED_OPERATIONS = new Set(["create", "update", "delete", "import", "reconcile"]);
+const ALLOWED_OPERATIONS = new Set(["create", "update", "delete", "delete_person", "import", "reconcile"]);
 
 function jsonResponse(status, body) {
   return {
