@@ -69,7 +69,7 @@ test("dry-run does not apply schema migration; apply does; Baseline A v2 remains
   assert.doesNotMatch(api, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
 });
 
-test("correction migration registry is ordered and bounded to correction-ledger contract changes", () => {
+test("correction migration registry is ordered, replay-monotonic, and bounded to correction-ledger contract changes", () => {
   assert.equal(correctionMigrations.CORRECTION_MIGRATION_PATHS.length, 4);
   assert.deepEqual(correctionMigrations.CORRECTION_MIGRATION_PATHS.map((item) => path.basename(item)), [
     "20260811_correction_manifest_runs.sql",
@@ -82,6 +82,7 @@ test("correction migration registry is ordered and bounded to correction-ledger 
   assert.match(migrations[0].sql, /create table if not exists atlas_v2\.correction_manifest_runs/i);
   assert.match(migrations[1].sql, /atlas-correction-manifest\/v1\.1/i);
   assert.match(migrations[2].sql, /atlas-correction-manifest\/v2/i);
+  assert.match(migrations[2].sql, /atlas-correction-manifest\/v1\.2/i);
   assert.match(migrations[3].sql, /atlas-correction-manifest\/v1\.2/i);
   for (const migration of migrations) assert.doesNotMatch(migration.sql, /person_politics_v2\s+set|delete\s+from\s+atlas_v2\.person_politics_v2/i);
 });
