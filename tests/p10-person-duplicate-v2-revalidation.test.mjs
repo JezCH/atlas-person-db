@@ -31,14 +31,19 @@ test('detector input serializes queries on one pg client and loads the full sema
   };
 
   const input = await loadDetectorInput(client);
-  assert.equal(calls.length, 2);
+  const activityQuery = calls.find((sql) => /from atlas_v2\.person_politics_v2/i.test(sql));
+  assert.ok(activityQuery, 'detector must load authoritative Activity rows');
+  assert.ok(calls.some((sql) => /from atlas_v2\.person_names/i.test(sql)), 'detector must load Person names');
+  assert.ok(calls.some((sql) => /person_duplicate_revalidation_requirements/i.test(sql)), 'detector must inspect the durable revalidation requirement ledger');
   assert.equal(input.names.length, 1);
+  assert.deepEqual(input.requirements, []);
+  assert.equal(input.requirements_schema_ready, false);
   for (const field of [
     'relation_type_id', 'role_id', 'period_basis_id',
     'activity_start_month', 'activity_start_day', 'activity_start_granularity', 'activity_start_calendar', 'activity_start_certainty',
     'activity_end_month', 'activity_end_day', 'activity_end_granularity', 'activity_end_calendar', 'activity_end_certainty'
   ]) {
-    assert.match(calls[1], new RegExp(`\\b${field}\\b`));
+    assert.match(activityQuery, new RegExp(`\\b${field}\\b`));
   }
 });
 
