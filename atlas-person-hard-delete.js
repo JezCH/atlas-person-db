@@ -10,8 +10,17 @@
   const writeAdapter = api.createAdapter();
   const STYLE_ID = "atlasPersonHardDeleteStyles";
   const STYLE_HREF = "./atlas-person-hard-delete.css?v=20260816-person-hard-delete-v1";
+  const ZERO_WIDTH_RE = /[\u200B-\u200D\u2060\uFEFF]/g;
   let lastSelected = null;
   let scheduled = false;
+
+  function normalizeConfirmationName(value) {
+    return String(value ?? "")
+      .normalize("NFC")
+      .replace(ZERO_WIDTH_RE, "")
+      .trim()
+      .replace(/\s+/g, " ");
+  }
 
   function ensureStyles() {
     if (document.getElementById(STYLE_ID)) return;
@@ -27,7 +36,7 @@
     const row = groups?.querySelector("[data-person-id].is-selected") || null;
     if (!row) return lastSelected;
     const id = String(row.dataset.personId || "").trim();
-    const name = String(row.querySelector(".person-table-identity strong, strong")?.textContent || "").trim();
+    const name = normalizeConfirmationName(row.querySelector(".person-table-identity strong, strong")?.textContent || "");
     return id && name ? { id, name } : lastSelected;
   }
 
@@ -65,7 +74,7 @@
 
     const existing = detail.querySelector(":scope > .person-hard-delete-zone");
     if (existing) {
-      if (existing.dataset.personId === person.id && existing.dataset.personName === person.name) return;
+      if (existing.dataset.personId === person.id && normalizeConfirmationName(existing.dataset.personName) === person.name) return;
       existing.remove();
     }
     detail.insertAdjacentHTML("beforeend", dangerZoneHtml(person));
@@ -80,7 +89,7 @@
   async function deleteSelectedPerson(button) {
     const zone = button.closest(".person-hard-delete-zone");
     const personId = String(zone?.dataset.personId || "").trim();
-    const personName = String(zone?.dataset.personName || "").trim();
+    const personName = normalizeConfirmationName(zone?.dataset.personName || "");
     if (!personId || !personName) {
       window.alert("삭제할 Person UUID 또는 인물명을 확인할 수 없습니다.");
       return;
@@ -97,7 +106,8 @@
       ""
     );
     if (typed == null) return;
-    if (String(typed) !== personName) {
+    const normalizedTyped = normalizeConfirmationName(typed);
+    if (normalizedTyped !== personName) {
       window.alert("인물명이 정확히 일치하지 않아 삭제하지 않았습니다.");
       return;
     }
@@ -106,7 +116,7 @@
     const originalText = button.textContent;
     button.textContent = "삭제 중…";
     try {
-      const outcome = await writeAdapter.deletePerson(personId, typed);
+      const outcome = await writeAdapter.deletePerson(personId, normalizedTyped);
       const committed = outcome?.committed === true
         && outcome?.v2?.committed === true
         && String(outcome?.v2?.deleted_person_id || "") === personId
@@ -145,7 +155,7 @@
     const groups = document.getElementById("personMainGroups");
     if (!row || !groups?.contains(row)) return;
     const id = String(row.dataset.personId || "").trim();
-    const name = String(row.querySelector(".person-table-identity strong, strong")?.textContent || "").trim();
+    const name = normalizeConfirmationName(row.querySelector(".person-table-identity strong, strong")?.textContent || "");
     if (id && name) lastSelected = { id, name };
     scheduleDangerZone();
   }, true);
@@ -158,6 +168,7 @@
 
   window.ATLAS_PERSON_HARD_DELETE = Object.freeze({
     ensureDangerZone,
-    selectedFromDom
+    selectedFromDom,
+    normalizeConfirmationName
   });
 })();
