@@ -1,10 +1,10 @@
 "use strict";
 
 const { readPersons, readPersonDetail } = require("./atlas-person-read-service.js");
-const { readPersonListFacets } = require("./atlas-person-list-facet-service.js");
+const { readPersonListSemantics } = require("./atlas-person-list-semantic-service.js");
 const { requireDatabaseUrl, sendJson } = require("./atlas-normalized-read-handler.js");
 
-const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{12}$/i;
 
 function personIdFromRequest(req) {
   const direct = req?.query?.person_id;
@@ -20,9 +20,9 @@ function personIdFromRequest(req) {
   }
 }
 
-function createPersonReadHandler({ clientFactory, env = process.env, readListFacets = readPersonListFacets } = {}) {
+function createPersonReadHandler({ clientFactory, env = process.env, readListSemantics = readPersonListSemantics } = {}) {
   if (typeof clientFactory !== "function") throw new Error("clientFactory is required");
-  if (typeof readListFacets !== "function") throw new Error("readListFacets is required");
+  if (typeof readListSemantics !== "function") throw new Error("readListSemantics is required");
 
   return async function handler(req, res) {
     const method = String(req?.method || "GET").toUpperCase();
@@ -70,7 +70,7 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListFac
       }
 
       const data = await readPersons({ client });
-      const persons = await readListFacets({ client, persons: data.persons });
+      const persons = await readListSemantics({ client, persons: data.persons });
       sendJson(res, 200, {
         ok: true,
         source: "v2-person-read",
