@@ -148,7 +148,7 @@ test('P11 capture returns the exact Baseline B document without enabling writes'
 
   assert.equal(res.record.statusCode, 200);
   assert.equal(res.record.body.mode, 'capture');
-  assert.equal(res.record.body.result.baseline, baseline);
+  assert.deepEqual(res.record.body.result.baseline, baseline);
   assert.equal(res.record.body.result.baseline.authority.production_mutation_authorized, false);
 });
 
