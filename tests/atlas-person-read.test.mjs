@@ -264,8 +264,10 @@ test('Person detail exposes authoritative Activity semantics and readable proven
     assert.equal('sha256' in source, false);
     assert.equal('bytes' in source, false);
   }
-  assert.doesNotMatch(PERSON_SOURCE_SQL, /select\s+s\.id/i);
-  assert.doesNotMatch(ACTIVITY_SOURCE_SQL, /select\s+[\s\S]*s\.id[\s,]/i);
+  const personSourceProjection = PERSON_SOURCE_SQL.split(/\nfrom\s+/i)[0];
+  const activitySourceProjection = ACTIVITY_SOURCE_SQL.split(/\nfrom\s+/i)[0];
+  assert.doesNotMatch(personSourceProjection, /\bs\.id\b/i);
+  assert.doesNotMatch(activitySourceProjection, /\bs\.id\b/i);
   assert.doesNotMatch(ACTIVITY_DETAIL_SQL, /canonical_key/);
   for (const field of [
     'relation_type_id',
