@@ -14,6 +14,28 @@ const SAFE_SKIP_EXACT = new Set([
   ".github/workflows/atlas-integrity.yml"
 ]);
 
+// The deployed Human Authoring endpoints do not import the P10 duplicate
+// detector/review subsystem. GitHub Authoring therefore uses a narrower,
+// fail-closed runtime-compatibility boundary than Vercel's general build gate.
+// This does NOT make these files deployment-safe for Vercel itself; it only
+// proves that changing them cannot alter /api/atlas-authoring or
+// /api/atlas-authoring-apply in the already deployed runtime.
+const AUTHORING_RUNTIME_SAFE_PREFIXES = Object.freeze([
+  ".github/",
+  "authoring/requests/",
+  "docs/",
+  "requirements/",
+  "research/",
+  "tests/",
+  "scripts/",
+  "corrections/evidence/"
+]);
+
+const AUTHORING_RUNTIME_SAFE_EXACT = new Set([
+  "server/atlas-duplicate-detector.js",
+  "server/atlas-duplicate-review-service.js"
+]);
+
 function normalizePath(value) {
   return String(value || "").trim().replaceAll("\\", "/").replace(/^\.\//, "");
 }
@@ -33,9 +55,33 @@ export function isAuthoringDataOnly(paths) {
   return normalized.length > 0 && normalized.every((file) => file.startsWith("authoring/requests/") && file.endsWith(".json"));
 }
 
+export function isSafeForDeployedAuthoringRuntimePath(value) {
+  const file = normalizePath(value);
+  if (!file) return true;
+  if (AUTHORING_RUNTIME_SAFE_EXACT.has(file)) return true;
+  if (AUTHORING_RUNTIME_SAFE_PREFIXES.some((prefix) => file.startsWith(prefix))) return true;
+  if (file.endsWith(".md")) return true;
+  return false;
+}
+
+export function requiresAuthoringRuntimeDeployment(paths) {
+  const normalized = [...new Set((Array.isArray(paths) ? paths : []).map(normalizePath).filter(Boolean))];
+  if (normalized.length === 0) return false;
+  return normalized.some((file) => !isSafeForDeployedAuthoringRuntimePath(file));
+}
+
 export function shouldBuildForChangedPaths(paths) {
   const normalized = [...new Set((Array.isArray(paths) ? paths : []).map(normalizePath).filter(Boolean))];
   if (normalized.length === 0) return false;
+
+  // atlas-authoring-apply.yml historically imports this function. Preserve that
+  // interface while making its compatibility decision specific to the deployed
+  // Authoring dependency surface. Other workflows and Vercel retain the normal
+  // deployment classifier below.
+  if (String(process.env.GITHUB_WORKFLOW || "").trim() === "ATLAS Authoring Apply") {
+    return requiresAuthoringRuntimeDeployment(normalized);
+  }
+
   return normalized.some((file) => !isSafeToSkipPath(file));
 }
 
