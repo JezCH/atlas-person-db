@@ -78,7 +78,7 @@ test('R4 search finds notes, raw chronology, era labels and all compact Activity
   assert.equal(reader.personMatchesQuery(cePerson, '서기 120'), true);
 });
 
-test('R4 Person cards render the authoritative compact Activity tuple without detail-loop fetching', () => {
+test('R4 Person rows render the authoritative compact Activity tuple without detail-loop fetching', () => {
   for (const token of [
     'person?.activity_summaries',
     'activity?.polity?.display_name',
@@ -92,16 +92,16 @@ test('R4 Person cards render the authoritative compact Activity tuple without de
   ]) assert.match(mainSource, new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   assert.match(mainSource, /person-card-activities/);
   assert.match(mainSource, /역할 미지정/);
-  const cardBody = mainSource.slice(mainSource.indexOf('function compactActivityHtml'), mainSource.indexOf('function groupSection'));
-  assert.doesNotMatch(cardBody, /readPerson\(/);
+  const rowBody = mainSource.slice(mainSource.indexOf('function compactActivityHtml'), mainSource.indexOf('function groupSection'));
+  assert.doesNotMatch(rowBody, /readPerson\(/);
   assert.match(css, /\.person-card-activities/);
   assert.match(css, /\.person-card-activity-period/);
 });
 
-test('R4 advertises the restored search scope and busts changed Person assets only', () => {
+test('R4 advertises the restored search scope and current Person renderer cache key', () => {
   assert.match(mainSource, /인물·정치체·관계·역할·기간·비고 검색/);
   assert.match(html, /atlas-person-browser-reader\.js\?v=20260815-ui6r4/);
-  assert.match(html, /atlas-person-main\.js\?v=20260815-ui6r4/);
+  assert.match(html, /atlas-person-main\.js\?v=20260816-ui-t01/);
   assert.match(html, /atlas-person-main\.css\?v=20260815-ui6r4/);
   assert.match(html, /aria-label="인물·정치체·관계·역할·기간·비고 검색"/);
 });
