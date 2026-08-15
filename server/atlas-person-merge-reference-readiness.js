@@ -5,7 +5,9 @@ const PERSON_REFERENCE_POLICY_VERSION = "p10-person-reference-surface/v1";
 const EXPECTED_PERSON_FKS = Object.freeze([
   Object.freeze({ key: "atlas_v2.authoring_manifest_runs.person_id", delete_action: "SET NULL" }),
   Object.freeze({ key: "atlas_v2.person_descriptions.person_id", delete_action: "CASCADE" }),
+  Object.freeze({ key: "atlas_v2.person_event_participations.person_id", delete_action: "RESTRICT" }),
   Object.freeze({ key: "atlas_v2.person_names.person_id", delete_action: "CASCADE" }),
+  Object.freeze({ key: "atlas_v2.person_people_affiliations.person_id", delete_action: "RESTRICT" }),
   Object.freeze({ key: "atlas_v2.person_politics_v2.person_id", delete_action: "RESTRICT" }),
   Object.freeze({ key: "atlas_v2.person_sources.person_id", delete_action: "CASCADE" })
 ]);
@@ -56,7 +58,7 @@ async function foreignKeysTo(client, regclass) {
     select ns.nspname as table_schema,
            cls.relname as table_name,
            con.conname as constraint_name,
-           array_agg(att.attname order by u.ord) as columns,
+           array_agg(att.attname::text order by u.ord) as columns,
            con.confdeltype as delete_action_code
       from pg_constraint con
       join pg_class cls on cls.oid=con.conrelid
@@ -135,6 +137,10 @@ async function inspectPersonMergeReferenceReadiness(client) {
        "person_politics_sources",
        "chronology_claims",
        "relationship_descriptions",
+       "person_people_affiliations",
+       "person_people_affiliation_sources",
+       "person_event_participations",
+       "person_event_participation_sources",
        "authoring_manifest_runs"
      ]]);
   const userTriggers = (triggerResult.rows || []).map((row) => `${row.table_schema}.${row.table_name}.${row.trigger_name}`);
