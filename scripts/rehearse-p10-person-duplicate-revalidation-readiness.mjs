@@ -81,7 +81,7 @@ try {
     client,
     candidateId: candidate.id,
     decision: 'MERGE',
-    rationale: 'Revalidated P4 reviewed identity evidence under the P10 v2 frontier; physical merge remains disabled.',
+    rationale: 'Revalidated P4 reviewed identity evidence under the P10 v2 frontier.',
     requestId: 'fixture:p10c:gorgo-revalidation:merge'
   });
 
@@ -109,8 +109,9 @@ try {
   assert.ok(readiness.blockers.includes(`CANDIDATE_REVIEW_PENDING:${candidate.id}`));
 
   const mergeState = mergeInterlock.personMergeExecutionState();
-  assert.equal(mergeState.person_merge_lifecycle_version, 'pre-p10-blocked');
-  assert.equal(mergeState.allowed, false);
+  assert.equal(mergeState.person_merge_lifecycle_version, 'p10-v2-revalidated');
+  assert.equal(mergeState.allowed, true);
+  assert.equal(readiness.ready, false);
 
   console.log(JSON.stringify({
     marker: 'ATLAS_P10_PERSON_DUPLICATE_REVALIDATION_COMPLETION_OK',
@@ -120,7 +121,9 @@ try {
     heuristic_name_overlap_required: false,
     completion_ready_after_terminal_review: true,
     evidence_drift_demotes_to_review: true,
-    physical_person_merge_allowed: false,
+    merge_lifecycle_code_ready: true,
+    merge_still_requires_database_revalidation_readiness: true,
+    physical_person_merge_executed: false,
     production_mutation_authorized: false
   }, null, 2));
 } catch (error) {
