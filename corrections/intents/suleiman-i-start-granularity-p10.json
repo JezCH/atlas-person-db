@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:suleiman-i:p10-start-granularity:20260815:v1",
+  "review_status": "approved",
+  "release_order": 100,
+  "operation": {
+    "type": "update_activity_temporal_metadata",
+    "relationship_id": "c8aaf090-cab4-50c8-8abb-b77baddffb30",
+    "after": {
+      "activity_start_granularity": "year"
+    }
+  },
+  "evidence": {
+    "reason": "Controlled P10 candidate rebuild stopped because this exact existing Suleiman I Activity has activity_start_granularity outside the Stage 2 temporal contract. Preserve every other live Activity field from the exact Production snapshot and correct only the rejected start granularity to year.",
+    "p10_failed_run_id": 31860809561,
+    "p10_failed_job_id": 94953747417
+  }
+}

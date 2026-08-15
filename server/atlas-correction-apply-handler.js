@@ -1,11 +1,9 @@
 "use strict";
 
 const { createPostgresClient } = require("./atlas-postgres-client.js");
-const { MANIFEST_V1 } = require("./atlas-correction-manifest-service.js");
-const {
-  MANIFEST_V1_1,
-  createCorrectionManifestServiceForSchema
-} = require("./atlas-correction-manifest-v1-1-service.js");
+const { MANIFEST_V1, createCorrectionManifestService: createV1Service } = require("./atlas-correction-manifest-service.js");
+const { MANIFEST_V1_1, createCorrectionManifestV11Service } = require("./atlas-correction-manifest-v1-1-service.js");
+const { MANIFEST_V1_2, createCorrectionManifestV12Service } = require("./atlas-correction-manifest-v1-2-service.js");
 const {
   normalizeSnapshotActivityIds,
   createCorrectionTargetSnapshot
@@ -16,7 +14,7 @@ const { verifyGitHubActionsOidc } = require("./atlas-correction-github-oidc.js")
 
 const CORRECTION_PATH_RE = /^corrections\/(?:requests|intents)\/[A-Za-z0-9._-]+\.json$/;
 const MODES = new Set(["snapshot", "dry_run", "apply", "full_stage2_baseline"]);
-const MANIFEST_SCHEMAS = new Set([MANIFEST_V1, MANIFEST_V1_1]);
+const MANIFEST_SCHEMAS = new Set([MANIFEST_V1, MANIFEST_V1_1, MANIFEST_V1_2]);
 const SNAPSHOT_MARKER = "ATLAS_CORRECTION_SNAPSHOT_V1";
 const BASELINE_MARKER = "ATLAS_CORRECTION_BASELINE_A_V2";
 
@@ -78,6 +76,13 @@ function requirePayload(body) {
   const schema = String(body.manifest.schema || "").trim();
   if (!MANIFEST_SCHEMAS.has(schema)) throw new Error("UNSUPPORTED_CORRECTION_MANIFEST_SCHEMA");
   return { deploymentSha, sourcePath, mode, manifest: body.manifest, schema, activityIds: null };
+}
+
+function createService(client, schema) {
+  if (schema === MANIFEST_V1) return createV1Service({ client });
+  if (schema === MANIFEST_V1_1) return createCorrectionManifestV11Service({ client });
+  if (schema === MANIFEST_V1_2) return createCorrectionManifestV12Service({ client });
+  throw new Error("UNSUPPORTED_CORRECTION_MANIFEST_SCHEMA");
 }
 
 function createCorrectionApplyHandler({
@@ -155,7 +160,7 @@ function createCorrectionApplyHandler({
       }
 
       if (payload.mode === "apply") await applyMigrations(client);
-      const service = createCorrectionManifestServiceForSchema({ client, schema: payload.schema });
+      const service = createService(client, payload.schema);
       const outcome = await service.execute(payload.manifest, { dryRun: payload.mode === "dry_run" });
       return json(res, 200, {
         ok: true,
@@ -181,5 +186,5 @@ function createCorrectionApplyHandler({
   };
 }
 
-module.exports = Object.freeze({ createCorrectionApplyHandler, requirePayload, requireDeployment, bearerToken,
+module.exports = Object.freeze({ createCorrectionApplyHandler, requirePayload, requireDeployment, bearerToken, createService,
   CORRECTION_PATH_RE, MODES, MANIFEST_SCHEMAS, SNAPSHOT_MARKER, BASELINE_MARKER });
