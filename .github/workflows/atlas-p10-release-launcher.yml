@@ -1,5 +1,5 @@
 name: ATLAS P10 Release Launcher
-# Controlled rerun checkpoint after the reviewed Suleiman I temporal-boundary repair.
+# Controlled rerun checkpoint after the reviewed Suleiman I relation-type repair.
 
 on:
   push:
@@ -77,7 +77,7 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
-          MANIFEST: corrections/intents/suleiman-i-start-granularity-p10.json
+          MANIFEST: corrections/requests/suleiman-i-relation-type-p10.v2.json
         run: |
           set -euo pipefail
           payload="$(jq -cn --arg manifest "$MANIFEST" '{ref:"main",inputs:{manifest:$manifest}}')"
