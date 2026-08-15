@@ -1,0 +1,43 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import fs from 'node:fs';
+
+const tableView = fs.readFileSync(new URL('../atlas-person-table-view.js', import.meta.url), 'utf8');
+const tableCss = fs.readFileSync(new URL('../atlas-person-table-view.css', import.meta.url), 'utf8');
+const mainSource = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url), 'utf8');
+const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+
+test('UI7 table presentation decorates the existing Person render without a second read or write path', () => {
+  assert.match(tableView, /atlas-person-main-rendered/);
+  assert.match(tableView, /\.person-card-grid/);
+  assert.match(tableView, /\.person-card/);
+  assert.match(tableView, /person-table-head/);
+  assert.match(tableView, /person-table-identity/);
+  assert.doesNotMatch(tableView, /fetch\s*\(/);
+  assert.doesNotMatch(tableView, /listPersons|readPerson|ATLAS_SERVER_WRITE_ADAPTER|data-authoring-action/);
+});
+
+test('UI7 keeps the UI-6R4 authoritative compact Activity tuple intact', () => {
+  assert.match(mainSource, /person-card-activities/);
+  assert.match(mainSource, /activity\?\.polity\?\.display_name/);
+  assert.match(mainSource, /activity\?\.relation\?\.code/);
+  assert.match(mainSource, /activity\?\.role\?\.display_name/);
+  assert.match(mainSource, /activity\?\.period_basis\?\.display_name/);
+  assert.match(mainSource, /activity\?\.chronology_status/);
+  assert.match(mainSource, /activity\?\.confidence/);
+});
+
+test('UI7 uses one table model on desktop and mobile with horizontal overflow and a sticky Person column', () => {
+  assert.match(tableCss, /overflow-x:auto/);
+  assert.match(tableCss, /grid-template-columns/);
+  assert.match(tableCss, /position:sticky;left:0/);
+  assert.match(tableCss, /@media\(max-width:760px\)/);
+  assert.match(tableCss, /@media\(max-width:520px\)/);
+  assert.doesNotMatch(tableCss, /display:\s*none[^}]*person-table/i);
+});
+
+test('UI7 assets load as a presentation layer before Person Main initializes', () => {
+  assert.match(html, /atlas-person-table-view\.css\?v=20260815-ui7-table/);
+  assert.match(html, /atlas-person-table-view\.js\?v=20260815-ui7-table/);
+  assert.ok(html.indexOf('atlas-person-table-view.js?v=20260815-ui7-table') < html.indexOf('atlas-person-main.js?v=20260815-ui6r4'));
+});
