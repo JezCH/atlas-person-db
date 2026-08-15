@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:muwatalli-ii:hittite-empire:1295-1272-bce:v1",
+  "person": {
+    "canonical_name_en": "Muwatalli II",
+    "display_name_ko": "무와탈리 2세"
+  },
+  "polity": {
+    "canonical_name_en": "Hittite Empire",
+    "display_name_ko": "히타이트 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Great King",
+    "role_display_name_ko": "대왕",
+    "start_year": -1295,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -1272,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Muwatalli II (also commonly spelled Muwattalli II in scholarly publications) was a Great King of the Hittite Empire and one of the principal rulers of its imperial period. He transferred the royal seat from Hattusa to Tarhuntassa, maintained and strengthened Hittite control in western Anatolia and Syria, concluded the treaty with Alaksandu of Wilusa, and commanded the Hittite forces against Ramesses II at the Battle of Kadesh in 1274 BCE. ATLAS uses c. 1295-1272 BCE as the representative reign chronology following Trevor Bryce's modern reconstruction. Both boundaries are approximate because Hittite absolute chronology remains reconstructed and other references retain differing endpoints, including c. 1295-1282 BCE. The user-supplied label Hittite is normalized to the imperial-period map polity Hittite Empire."
+  },
+  "sources": [
+    {
+      "title": "The Showdown with Egypt: The Reign of Muwattalli II (c.1295–1272) — The Kingdom of the Hittites",
+      "canonical_url": "https://academic.oup.com/book/36172/chapter-abstract/314549393",
+      "citation_text": "Trevor Bryce dates Muwattalli II's reign approximately 1295-1272 BCE and treats the transfer of the Hittite seat to Tarhuntassa, the Syrian conflict with Egypt, and the Battle of Kadesh as central events of his reign.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Treaty between Muwattalli II of Hatti and Alaksandu of Wilusa — British Museum 108569",
+      "canonical_url": "https://www.britishmuseum.org/collection/object/W_1913-1011-22",
+      "citation_text": "The British Museum catalogs a Hittite treaty between Muwattalli II, king of Hatti, and Alaksandu of Wilusa, providing direct material evidence for his sovereign authority and western Anatolian diplomacy.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Hittites — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/essays/the-hittites",
+      "citation_text": "The Metropolitan Museum describes Muwatalli's transfer of the capital to Tarhuntasha, continued Hittite control in western Anatolia, the Alaksandu treaty, and the confrontation with Ramesses II at Kadesh. Its differing reign dates illustrate the need to mark ATLAS year boundaries approximate.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "구약성서 예루살렘에 나타난 히타이트 유산 — 서양고대사연구",
+      "canonical_url": "https://www.kci.go.kr/kciportal/landing/article.kci?arti_id=ART003201314",
+      "citation_text": "The Korean scholarly article uses the Korean form 무와탈리 2세 for Muwatalli II, supporting the ATLAS Korean display name.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
