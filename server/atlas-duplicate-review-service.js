@@ -8,6 +8,7 @@ const { lockPersonDuplicateFrontier } = require("./atlas-person-duplicate-fronti
 
 const { detectPersonDuplicateCandidates, DETECTOR_VERSION, REVALIDATION_SEMANTIC_VERSION } = duplicateDetector;
 const DECISIONS = new Set(["MERGE", "KEEP_SEPARATE", "REVIEW"]);
+const DUPLICATE_REVIEW_REQUEST_ID_COLLISION = "DUPLICATE_REVIEW_REQUEST_ID_COLLISION";
 
 function schemaUnavailable(error) {
   return error?.code === "42P01" || /person_duplicate_(?:candidates|reviews|revalidation_requirements)/i.test(String(error?.message || ""));
@@ -246,8 +247,15 @@ async function reviewCandidate({ client,candidateId,decision,rationale=null,requ
     await lockPersonDuplicateFrontier(client);
     const replay = await client.query(`select candidate_id,decision from atlas_v2.person_duplicate_reviews where request_id=$1`, [normalizedRequestId]);
     if (replay.rowCount === 1) {
+      const priorCandidateId = String(replay.rows[0].candidate_id);
+      const priorDecision = String(replay.rows[0].decision);
+      if (priorCandidateId !== normalizedCandidateId || priorDecision !== normalizedDecision) {
+        const error = new Error("review request_id collision with different payload");
+        error.code = DUPLICATE_REVIEW_REQUEST_ID_COLLISION;
+        throw error;
+      }
       await client.query("COMMIT");
-      return { replayed:true,candidate_id:String(replay.rows[0].candidate_id),decision:String(replay.rows[0].decision) };
+      return { replayed:true,candidate_id:normalizedCandidateId,decision:normalizedDecision };
     }
     const locked = await client.query(`
       select id,person_low_id,person_high_id,candidate_state,evidence,evidence_fingerprint,detector_version
@@ -278,6 +286,7 @@ async function reviewCandidate({ client,candidateId,decision,rationale=null,requ
 
 module.exports = Object.freeze({
   DECISIONS,
+  DUPLICATE_REVIEW_REQUEST_ID_COLLISION,
   schemaUnavailable,
   loadRevalidationRequirements,
   loadDetectorInput,

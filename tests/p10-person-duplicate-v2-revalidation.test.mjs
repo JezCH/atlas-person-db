@@ -4,7 +4,11 @@ import test from 'node:test';
 import reviewService from '../server/atlas-duplicate-review-service.js';
 import mergeInterlock from '../server/atlas-person-merge-interlock.js';
 
-const { loadDetectorInput } = reviewService;
+const {
+  loadDetectorInput,
+  reviewCandidate,
+  DUPLICATE_REVIEW_REQUEST_ID_COLLISION
+} = reviewService;
 const {
   PERSON_MERGE_LIFECYCLE_VERSION,
   REQUIRED_PERSON_MERGE_LIFECYCLE_VERSION,
@@ -13,6 +17,21 @@ const {
 
 function tick() {
   return new Promise((resolve) => setImmediate(resolve));
+}
+
+function replayClient({ candidateId, decision }) {
+  const calls = [];
+  return {
+    calls,
+    async query(sql) {
+      const text = String(sql);
+      calls.push(text);
+      if (/from atlas_v2\.person_duplicate_reviews where request_id=\$1/i.test(text)) {
+        return { rowCount: 1, rows: [{ candidate_id: candidateId, decision }] };
+      }
+      return { rowCount: 0, rows: [] };
+    }
+  };
 }
 
 test('detector input serializes queries on one pg client and loads the full semantic-v2 Activity contract', async () => {
@@ -45,6 +64,66 @@ test('detector input serializes queries on one pg client and loads the full sema
   ]) {
     assert.match(activityQuery, new RegExp(`\\b${field}\\b`));
   }
+});
+
+test('duplicate review request_id replays only the same candidate and decision', async () => {
+  const candidateId = '11111111-1111-4111-8111-111111111111';
+  const client = replayClient({ candidateId, decision: 'MERGE' });
+  const outcome = await reviewCandidate({
+    client,
+    candidateId,
+    decision: 'merge',
+    rationale: 'retry may carry different non-semantic rationale text',
+    requestId: 'review-replay-1'
+  });
+
+  assert.deepEqual(outcome, { replayed: true, candidate_id: candidateId, decision: 'MERGE' });
+  assert.ok(client.calls.some((sql) => sql === 'COMMIT'));
+  assert.equal(client.calls.some((sql) => sql === 'ROLLBACK'), false);
+  assert.equal(client.calls.some((sql) => /person_duplicate_candidates where id=\$1 for update/i.test(sql)), false);
+});
+
+test('duplicate review request_id fails closed when reused for another candidate', async () => {
+  const storedCandidateId = '11111111-1111-4111-8111-111111111111';
+  const incomingCandidateId = '22222222-2222-4222-8222-222222222222';
+  const client = replayClient({ candidateId: storedCandidateId, decision: 'MERGE' });
+
+  await assert.rejects(
+    reviewCandidate({
+      client,
+      candidateId: incomingCandidateId,
+      decision: 'MERGE',
+      requestId: 'review-collision-candidate-1'
+    }),
+    (error) => {
+      assert.equal(error.code, DUPLICATE_REVIEW_REQUEST_ID_COLLISION);
+      assert.match(error.message, /request_id collision with different payload/);
+      return true;
+    }
+  );
+  assert.ok(client.calls.some((sql) => sql === 'ROLLBACK'));
+  assert.equal(client.calls.some((sql) => sql === 'COMMIT'), false);
+});
+
+test('duplicate review request_id fails closed when reused for another decision', async () => {
+  const candidateId = '11111111-1111-4111-8111-111111111111';
+  const client = replayClient({ candidateId, decision: 'MERGE' });
+
+  await assert.rejects(
+    reviewCandidate({
+      client,
+      candidateId,
+      decision: 'KEEP_SEPARATE',
+      requestId: 'review-collision-decision-1'
+    }),
+    (error) => {
+      assert.equal(error.code, DUPLICATE_REVIEW_REQUEST_ID_COLLISION);
+      assert.match(error.message, /request_id collision with different payload/);
+      return true;
+    }
+  );
+  assert.ok(client.calls.some((sql) => sql === 'ROLLBACK'));
+  assert.equal(client.calls.some((sql) => sql === 'COMMIT'), false);
 });
 
 test('P10 rebuild invalidates reviewed decisions on detector-version drift as well as evidence drift', () => {
