@@ -98,6 +98,10 @@ function assertProjectionCovered(entity, projected) {
   assert.deepEqual(actual, declared, `${entity} projection changed without a matching coverage registry update`);
 }
 
+function prefixedRegistryPaths(entity, prefix = '') {
+  return Object.keys(registry.entities[entity] || {}).map((path) => prefix ? `${prefix}.${path}` : path);
+}
+
 test('UI-T7 coverage registry exactly covers the public Person projection', () => {
   assertProjectionCovered('Person', readService.projectPerson(personRow));
 });
@@ -114,6 +118,34 @@ test('UI-T7 compact Activity list projection cannot introduce an unmapped field'
 
 test('UI-T7 coverage registry exactly covers the public Source projection', () => {
   assertProjectionCovered('Source', readService.projectSource(sourceRow, 'page:10'));
+});
+
+test('UI-T7 final Person detail assembly cannot introduce an unmapped nested field', async () => {
+  const personSourceRow = { ...sourceRow };
+  const activitySourceRow = {
+    ...sourceRow,
+    person_politics_id: activityRow.id,
+    source_locator_key: 'page:10'
+  };
+  const client = {
+    async query(sql) {
+      if (sql === readService.PERSON_DETAIL_SQL) return { rowCount: 1, rows: [personRow] };
+      if (sql === readService.ACTIVITY_DETAIL_SQL) return { rowCount: 1, rows: [activityRow] };
+      if (sql === readService.PERSON_SOURCE_SQL) return { rowCount: 1, rows: [personSourceRow] };
+      if (sql === readService.ACTIVITY_SOURCE_SQL) return { rowCount: 1, rows: [activitySourceRow] };
+      throw new Error('unexpected SQL in coverage fixture');
+    }
+  };
+
+  const detail = await readService.readPersonDetail({ client, personId: personRow.id });
+  const actual = sortedUnique(leafPaths(detail));
+  const expected = sortedUnique([
+    ...prefixedRegistryPaths('Person'),
+    ...prefixedRegistryPaths('Source', 'sources[]'),
+    ...prefixedRegistryPaths('Activity', 'activities[]'),
+    ...prefixedRegistryPaths('Source', 'activities[].sources[]')
+  ]);
+  assert.deepEqual(actual, expected, 'Final Person detail payload changed without a matching coverage registry update');
 });
 
 test('UI-T7 every curated non-timeline source field is mapped', () => {
