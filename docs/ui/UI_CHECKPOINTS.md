@@ -25,16 +25,26 @@
   - GitHub Actions status intentionally not fabricated inside runtime
   - current main was merged structurally at `c4f73d27fde9637ccbe5acffeb59cf0dc47695a1`; PR #149 became mergeable again
   - post-merge checkpoint passed ATLAS Integrity #747, Human Authoring Operational Parity #95 and P10 Person Duplicate V2 Revalidation #86
-- UI-2F — Admin observability screen wiring: IMPLEMENTED — CI REQUESTED
-  - add authenticated read-only System Status panel backed only by `/api/atlas-admin-system-status`
-  - render runtime identity, secret-presence booleans, database identity, migration identity, semantic versions, authoring/P10 readiness, duplicate lifecycle and dynamically discovered atlas_v2 exact table counts
-  - add UUID Object Inspector backed only by `/api/atlas-admin-inspector`
-  - derive supported Inspector object kinds from the server capabilities response rather than a frontend authority list
-  - clear displayed Admin read state on logout or session expiry
-  - register both new read endpoints in the existing session-gate protected-path handling
-  - isolate screen logic and styles in `atlas-admin-observability.js` / `atlas-admin-observability.css`; existing authoring and duplicate-review write logic remains separate
+- UI-2F — Admin observability screen wiring: COMPLETE
+  - authenticated read-only System Status panel backed only by `/api/atlas-admin-system-status`
+  - runtime identity, secret-presence booleans, database identity, migration identity, semantic versions, authoring/P10 readiness, duplicate lifecycle and dynamically discovered atlas_v2 exact table counts
+  - UUID Object Inspector backed only by `/api/atlas-admin-inspector`
+  - supported Inspector object kinds come from the server capabilities response rather than a frontend authority list
+  - displayed Admin read state is cleared on logout or session expiry
+  - both new read endpoints participate in the existing session-gate protected-path handling
+  - screen logic and styles isolated in `atlas-admin-observability.js` / `atlas-admin-observability.css`; existing authoring and duplicate-review write logic remains separate
+  - commit `d8b277342e65e66b1f9b2d3665a15bfb8a19178c` passed ATLAS Integrity #749, Human Authoring Operational Parity #97 and P10 Person Duplicate V2 Revalidation #88
   - no Vercel deployment or runtime mutation required for this checkpoint
-- UI-3 — Main Persons information-complete redesign
+- UI-3A — Main Person-centered browser read foundation: IMPLEMENTED — CI REQUESTED
+  - add a browser reader for `/api/atlas-person-read` without changing the current Main screen yet
+  - list/detail access is GET-only; malformed detail UUIDs fail before fetch
+  - Person `historicity` remains raw authoritative data
+  - primary historical grouping uses only the established authoritative value `historical`; every other observed value is retained verbatim under a separate other/uncertain group rather than forced into a frontend enum
+  - a historical Person with unknown activity chronology remains historical
+  - BCE years remain integer years and sort numerically; unknown activity years sort last
+  - historicity partitioning occurs before secondary search/filter predicates
+  - observed historicity vocabulary remains derived from the payload
+- UI-3B — Main Persons information-complete screen wiring
 - UI-4 — Admin interface consolidation
 - UI-5 — navigation / future-authority shells
 - UI-6 — responsive and interaction polish
@@ -43,4 +53,4 @@
 - UI-9 — backend-lifecycle-aware main integration
 - UI-10 — Production verification
 
-Vercel rule: routine `agent/ui-information-completeness` commits must create zero deployments. Preview/Production are reserved for intentional checkpoints. UI-2E/UI-2F and subsequent static/contract work can be completed with GitHub + CI only; runtime deployment verification waits for an intentional checkpoint.
+Vercel rule: routine `agent/ui-information-completeness` commits must create zero deployments. Preview/Production are reserved for intentional checkpoints. UI-2E/UI-2F/UI-3A and subsequent static/contract work can be completed with GitHub + CI only; runtime deployment verification waits for an intentional checkpoint.
