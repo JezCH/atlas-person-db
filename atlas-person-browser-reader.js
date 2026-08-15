@@ -4,9 +4,16 @@
   const ENDPOINT = "/api/atlas-person-read";
   const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
   const PRIMARY_HISTORICITY_VALUE = "historical";
+  const HIDDEN_ORPHAN_PERSON_IDS = new Set([
+    "93b50bf5-9468-41ea-93a4-12510b9ed0c4" // duplicate/orphan Gorgo; keep Gorgo of Sparta
+  ]);
 
   function text(value) {
     return value == null ? "" : String(value);
+  }
+
+  function publicPersons(persons) {
+    return (persons || []).filter((person) => !HIDDEN_ORPHAN_PERSON_IDS.has(text(person?.id)));
   }
 
   function observedHistoricityValues(persons) {
@@ -20,14 +27,15 @@
   function partitionByHistoricity(persons) {
     const historical = [];
     const otherOrUncertain = [];
-    for (const person of persons || []) {
+    for (const person of publicPersons(persons)) {
       if (historicityGroup(person) === "historical") historical.push(person);
       else otherOrUncertain.push(person);
     }
+    const visiblePersons = publicPersons(persons);
     return Object.freeze({
       historical: Object.freeze(historical),
       other_or_uncertain: Object.freeze(otherOrUncertain),
-      observed_historicity_values: Object.freeze(observedHistoricityValues(persons))
+      observed_historicity_values: Object.freeze(observedHistoricityValues(visiblePersons))
     });
   }
 
@@ -126,7 +134,7 @@
       roles: new Map(),
       period_bases: new Map()
     };
-    for (const person of persons || []) {
+    for (const person of publicPersons(persons)) {
       for (const key of Object.keys(dimensions)) {
         for (const item of facetRows(person, key)) {
           const id = text(item?.id);
@@ -162,7 +170,8 @@
     facetFilters = {},
     secondaryPredicate = null
   } = {}) {
-    const partitioned = partitionByHistoricity(persons);
+    const visiblePersons = publicPersons(persons);
+    const partitioned = partitionByHistoricity(visiblePersons);
     const filterAndSort = (rows) => rows
       .filter((person) => personMatchesQuery(person, query))
       .filter((person) => personMatchesFacets(person, facetFilters))
@@ -174,7 +183,7 @@
       historical: Object.freeze(filterAndSort(partitioned.historical)),
       other_or_uncertain: Object.freeze(filterAndSort(partitioned.other_or_uncertain)),
       observed_historicity_values: partitioned.observed_historicity_values,
-      facet_catalog: facetCatalog(persons)
+      facet_catalog: facetCatalog(visiblePersons)
     });
   }
 
@@ -200,19 +209,20 @@
   async function listPersons({ fetchImpl = globalThis.fetch } = {}) {
     const payload = await getJson(ENDPOINT, fetchImpl);
     if (payload.mode !== "list" || !Array.isArray(payload.persons)) throw new Error("INVALID_PERSON_LIST_RESPONSE");
+    const persons = publicPersons(payload.persons);
     return Object.freeze({
       schema: payload.schema,
       source: payload.source,
-      persons: Object.freeze(payload.persons.slice()),
+      persons: Object.freeze(persons.slice()),
       summary: payload.summary || null,
-      groups: partitionByHistoricity(payload.persons),
-      facet_catalog: facetCatalog(payload.persons)
+      groups: partitionByHistoricity(persons),
+      facet_catalog: facetCatalog(persons)
     });
   }
 
   async function readPerson(personId, { fetchImpl = globalThis.fetch } = {}) {
     const id = text(personId).trim();
-    if (!UUID_PATTERN.test(id)) {
+    if (!UUID_PATTERN.test(id) || HIDDEN_ORPHAN_PERSON_IDS.has(id)) {
       const error = new Error("INVALID_PERSON_ID");
       error.code = "INVALID_PERSON_ID";
       throw error;
