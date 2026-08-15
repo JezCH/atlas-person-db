@@ -5,6 +5,8 @@
 -- Person UUIDs are deliberate historical snapshots: there are no Person FKs,
 -- because a completed physical merge will retire one of the two Person rows.
 -- Applying this migration does NOT authorize or execute a Person merge.
+-- Replay preserves lifecycle progress: an already RETIRED requirement is valid
+-- and must never be reactivated by migration replay.
 
 BEGIN;
 SELECT pg_advisory_xact_lock(hashtext('atlas-p10-person-duplicate-revalidation-requirements-v1'));
@@ -101,7 +103,7 @@ BEGIN
    WHERE requirement_key='p10:gorgo-of-sparta:gorgo:p4-reviewed-same-person'
      AND person_low_id='5136407a-9792-5103-be6f-54c947b255a5'::uuid
      AND person_high_id='a3367f19-e901-5213-aba6-76c4aef1b730'::uuid
-     AND requirement_state='ACTIVE'
+     AND requirement_state IN ('ACTIVE','RETIRED')
      AND requirement_version='p10-revalidation-requirement/v1'
      AND prior_outcome='MERGE'
      AND source_artifact='stage2/integration/baseline-a-person-identity-decisions.v1.json'
