@@ -23,17 +23,18 @@ test('candidate approval fingerprint covers the complete canonical evidence cont
   assert.match(mergeService, /LIVE_EVIDENCE_CHANGED/);
 });
 
-test('relationship resolution is planned from locked live state inside the serializable person merge transaction', () => {
+test('relationship resolution is planned from locked requirement-aware live state inside the serializable person merge transaction', () => {
   const executeStart = mergeService.indexOf('async function executeApprovedPersonMerge');
   assert.ok(executeStart >= 0);
   const executeBody = mergeService.slice(executeStart);
   const begin = executeBody.indexOf('BEGIN ISOLATION LEVEL SERIALIZABLE');
+  const requirements = executeBody.indexOf('const requirements = await lockPairRevalidationRequirements');
   const lock = executeBody.indexOf('const liveState = await lockLiveMergeState');
-  const evidence = executeBody.indexOf('assertLiveCandidateEvidence(candidateRow, liveState)');
+  const evidence = executeBody.indexOf('assertLiveCandidateEvidence(candidateRow, liveState, requirements)');
   const groups = executeBody.indexOf('const groups = buildRelationshipReconciliationGroups');
   const plan = executeBody.indexOf('const reconciliationPlan = buildReconciliationPlan');
   const mutation = executeBody.indexOf('for (const item of reconciliationPlan.coalesces)');
-  assert.ok(begin >= 0 && lock > begin && evidence > lock && groups > evidence && plan > groups && mutation > plan);
+  assert.ok(begin >= 0 && requirements > begin && lock > requirements && evidence > lock && groups > evidence && plan > groups && mutation > plan);
 });
 
 test('relationship coalesce preserves dependent facts before deleting the redundant relationship', () => {
