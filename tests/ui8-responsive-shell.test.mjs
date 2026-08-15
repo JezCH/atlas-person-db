@@ -14,6 +14,21 @@ test('UI8 removes fixed desktop width pressure and provides a collapsible sideba
   assert.match(shellSource, /max-width: 1239px/);
 });
 
+test('UI8 normalizes every sidebar action so collapsed labels cannot wrap vertically', () => {
+  assert.match(shellSource, /sidebar-compact-action/);
+  assert.match(shellSource, /sidebar\.querySelectorAll\("button,a"\)/);
+  assert.match(shellSource, /MutationObserver\(decorateSidebarActions\)/);
+  assert.match(shellCss, /sidebar-compact-action\{font-size:0!important/);
+  assert.match(shellCss, /span:not\(:first-child\)\{display:none!important\}/);
+});
+
+test('UI8 compact desktop expansion overlays instead of stealing table width', () => {
+  assert.match(shellCss, /@media\(max-width:1239px\) and \(min-width:761px\)/);
+  assert.match(shellCss, /grid-template-columns:68px minmax\(0,1fr\)!important/);
+  assert.match(shellCss, /\.sidebar\{width:230px;z-index:61/);
+  assert.match(shellCss, /\.workspace-shell\.sidebar-collapsed \.sidebar\{width:68px;box-shadow:none\}/);
+});
+
 test('UI8 makes Person detail zero-width until selection and opens it as an overlay drawer', () => {
   assert.match(shellCss, /\.person-main-layout\{display:block!important\}/);
   assert.match(shellCss, /\.person-main-detail\[hidden\],#personMainDetailBackdrop\[hidden\]\{display:none!important\}/);
@@ -30,9 +45,9 @@ test('UI8 remains presentation-only and does not create another data read or wri
 });
 
 test('UI8 shell assets load after Person Main so the generated detail panel exists', () => {
-  assert.match(html, /atlas-responsive-shell\.css\?v=20260815-ui8-shell/);
+  assert.match(html, /atlas-responsive-shell\.css\?v=20260815-ui8-shell-r2/);
   const mainScript = html.indexOf('atlas-person-main.js?v=20260815-ui6r4');
-  const shellScript = html.indexOf('atlas-responsive-shell.js?v=20260815-ui8-shell');
+  const shellScript = html.indexOf('atlas-responsive-shell.js?v=20260815-ui8-shell-r2');
   const navScript = html.indexOf('atlas-main-authority-nav.js?v=20260815-ui5');
   assert.ok(mainScript >= 0 && shellScript > mainScript && navScript > shellScript);
 });

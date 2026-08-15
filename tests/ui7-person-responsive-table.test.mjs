@@ -32,7 +32,28 @@ test('UI7 uses four visible columns and folds non-historical status into Person 
   assert.match(tableView, /person-table-status-inline/);
   assert.match(tableView, /value\.toLowerCase\(\) === "historical"/);
   assert.match(tableCss, /person-table-status-inline/);
-  assert.match(tableCss, /grid-template-columns:minmax\(200px,1\.1fr\) minmax\(165px,\.85fr\) minmax\(460px,3\.2fr\) 82px/);
+  assert.match(tableCss, /grid-template-columns:minmax\(200px,1\.1fr\) minmax\(165px,\.85fr\) minmax\(500px,3\.45fr\) 76px/);
+});
+
+test('UI7 exposes semantic subheaders and human-readable Main labels', () => {
+  assert.match(tableView, /활동 수/);
+  assert.match(tableView, /정치체 · 관계/);
+  assert.match(tableView, /역할 · 기간 기준/);
+  assert.match(tableView, /활동 기간/);
+  assert.match(tableView, /rules: "통치"/);
+  assert.match(tableView, /reign: "재위"/);
+  assert.match(tableView, /"relation 미상": "관계 미확정"/);
+  assert.match(tableView, /역사 자료에서 실재 인물로 분류된 인물입니다/);
+  assert.match(tableView, /historicity 값", "역사성 분류/);
+});
+
+test('UI7 hides ordinary diagnostics and duplicate single-Activity periods while preserving exceptions', () => {
+  assert.match(tableView, /exact_as_recorded: null/);
+  assert.match(tableView, /legacy_asserted: null/);
+  assert.match(tableView, /reviewed_stage2_traditional_disputed: "연대 논쟁 있음"/);
+  assert.match(tableView, /period\.classList\.add\("is-redundant"\)/);
+  assert.match(tableCss, /person-card-activity-period\.is-redundant\{visibility:hidden\}/);
+  assert.match(tableCss, /person-table-exception/);
 });
 
 test('UI7 uses one table model on desktop and mobile with horizontal overflow and a sticky Person column', () => {
@@ -45,7 +66,7 @@ test('UI7 uses one table model on desktop and mobile with horizontal overflow an
 });
 
 test('UI7 assets load as a presentation layer before Person Main initializes', () => {
-  assert.match(html, /atlas-person-table-view\.css\?v=20260815-ui7-table-r2/);
-  assert.match(html, /atlas-person-table-view\.js\?v=20260815-ui7-table-r2/);
-  assert.ok(html.indexOf('atlas-person-table-view.js?v=20260815-ui7-table-r2') < html.indexOf('atlas-person-main.js?v=20260815-ui6r4'));
+  assert.match(html, /atlas-person-table-view\.css\?v=20260815-ui7-table-r3/);
+  assert.match(html, /atlas-person-table-view\.js\?v=20260815-ui7-table-r3/);
+  assert.ok(html.indexOf('atlas-person-table-view.js?v=20260815-ui7-table-r3') < html.indexOf('atlas-person-main.js?v=20260815-ui6r4'));
 });
