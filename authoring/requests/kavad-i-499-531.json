@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:kavad-i:sasanian-empire:499-531:v1",
+  "person": {
+    "canonical_name_en": "Kavad I",
+    "display_name_ko": "카바드 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Sasanian Empire",
+    "display_name_ko": "사산 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Shahanshah (King of Kings)",
+    "role_display_name_ko": "샤한샤(왕중왕)",
+    "start_year": 499,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 531,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "This is Kavad I's restored second reign, not a second Person. After his deposition in 496, Kavad escaped and obtained Hephthalite support before recovering the Sasanian throne. Iranica's detailed numismatic discussion notes that resumed Kavad coinage begins with regnal year 11 in 498/9, while its historical chronology places the restoration in 499; ATLAS therefore uses 499 as the representative year boundary but marks the start approximate rather than inventing a precise restoration date. The second reign continued until his death and Khosrow I's accession in 531. Kavad strengthened royal authority and initiated major administrative and fiscal changes later developed under Khosrow I. The historiography of Kavad's relationship with the Mazdakite movement is complex and is not reduced here to a simplistic ideological label."
+  },
+  "sources": [
+    {
+      "title": "KAWĀD I i. Reign — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/kawad-i/kawad-i-reign/",
+      "citation_text": "Encyclopaedia Iranica separates Kavad's second reign, explains that his resumed coinage begins in regnal year 11 (498/9), describes his restoration with Hephthalite support, and discusses the strengthening of kingship and administrative reform under his later rule.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Chronology of Iranian History Part 1 — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/chronology-of-iranian-history-part-1/",
+      "citation_text": "The Iranica chronology dates Kavad's restoration to 499 and Khosrow I's accession to 531, providing the representative year-level outer boundaries used by ATLAS.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Silver drachm of Kavad I, 499 CE — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/object/C_1862-1004-131",
+      "citation_text": "The British Museum catalogues a silver drachm dated 499 CE specifically to Kavad I's second reign, independently supporting the restored-reign phase around the ATLAS start boundary.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
