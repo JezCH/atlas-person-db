@@ -145,7 +145,9 @@ function validatedActivityMap(rows) {
     });
     map.set(personId, list);
   }
-  for (const list of map.values()) list.sort((a, b) => a.exact_context.localeCompare(b.exact_context) || String(a.id).localeCompare(String(b.id)));
+  for (const list of map.values()) {
+    list.sort((a, b) => a.exact_context.localeCompare(b.exact_context) || String(a.id).localeCompare(String(b.id)));
+  }
   return map;
 }
 
@@ -185,7 +187,6 @@ function contextEvidence(lowRows, highRows) {
   }
 
   const rolelessContexts = sharedValues(lowRows, highRows, "roleless_context");
-    .filter((context) => !exactContexts.some((exact) => exact.replace(/\|[^|]+\|(?=[^|]+\|[^|]+\|$)/, "|") === context));
   if (rolelessContexts.length && !exactContexts.length) {
     evidence.push({ kind: "P10_ROLE_VARIANT_ACTIVITY_CONTEXT", count: rolelessContexts.length, contexts: rolelessContexts });
     adjustment += 0.01;
