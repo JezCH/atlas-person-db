@@ -10,6 +10,7 @@ const {
 
 const MARKER = "ATLAS_P10_REVALIDATION_RELEASE_V1";
 const RELEASE_ID = "p10_person_duplicate_revalidation_20260815_v1";
+// Deployment checkpoint: force the exact main SHA used by the one-shot release launcher to become Production before dispatch.
 const MODES = new Set(["preflight", "migration_dry_run", "migration_apply", "rebuild_candidates", "final_verify"]);
 
 function json(res, status, body) {
