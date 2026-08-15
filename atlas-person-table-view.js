@@ -5,8 +5,7 @@
     ["person-table-col-identity", "인물"],
     ["person-table-col-range", "주요 활동기간"],
     ["person-table-col-activities", "활동 관계"],
-    ["person-table-col-count", "Activity"],
-    ["person-table-col-status", "역사성 · 유형"]
+    ["person-table-col-count", "Activity"]
   ];
 
   function makeHeader() {
@@ -36,6 +35,25 @@
     return identity;
   }
 
+  function foldExceptionalStatus(identity, status) {
+    if (!status) return;
+    let meaningful = 0;
+    for (const child of [...status.children]) {
+      const value = String(child.textContent || "").trim();
+      if (!value || value.toLowerCase() === "historical") {
+        child.hidden = true;
+      } else {
+        meaningful += 1;
+      }
+    }
+    if (!meaningful || !identity) {
+      status.remove();
+      return;
+    }
+    status.classList.add("person-table-status-inline");
+    identity.append(status);
+  }
+
   function decorateRow(row) {
     if (!row || row.dataset.personTableDecorated === "true") return;
     row.dataset.personTableDecorated = "true";
@@ -50,12 +68,13 @@
     range?.classList.add("person-table-range");
     activities?.classList.add("person-table-activities");
     count?.classList.add("person-table-count");
-    status?.classList.add("person-table-status");
+    foldExceptionalStatus(identity, status);
 
     // Keep the body DOM in the exact same semantic order as HEADER_CELLS.
-    // This prevents CSS grid auto-placement from shifting cells when the
-    // source Person card DOM uses a different order.
-    for (const cell of [identity, range, activities, count, status]) {
+    // Historicity/type are group-level metadata for historical rows, so they
+    // do not reserve a dedicated column. Non-historical exceptions remain
+    // visible inside the Person identity cell.
+    for (const cell of [identity, range, activities, count]) {
       if (cell) row.append(cell);
     }
   }
