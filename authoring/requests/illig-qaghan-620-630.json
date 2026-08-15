@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:illig-qaghan:eastern-turkic-khaganate:620-630:v1",
+  "person": {
+    "canonical_name_en": "Illig Qaghan",
+    "display_name_ko": "힐리가한"
+  },
+  "polity": {
+    "canonical_name_en": "Eastern Turkic Khaganate",
+    "display_name_ko": "동돌궐"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Qaghan",
+    "role_display_name_ko": "가한",
+    "start_year": 620,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 630,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Illig Qaghan, born Ashina Duobi (阿史那咄苾), was the final independent qaghan of the Eastern Turkic Khaganate before its defeat by Tang forces in 630. Korean historical-reference usage renders his Chinese-transcribed title 頡利可汗 as 힐리가한 and identifies it with Old Turkic Ilig qaghan. The user-supplied form 伊利可汗 is retained as an alternate title form in provenance context, while 頡利可汗 is the standard form in the cited Chinese historical tradition. The record represents his sovereign reign from 620 to 630 at year granularity."
+  },
+  "sources": [
+    {
+      "title": "Samguk Sagi annotation — Korean Ancient History Database",
+      "canonical_url": "https://db.history.go.kr/ancient/level.do?levelId=sg_020r_0030_0120",
+      "citation_text": "The Korean Ancient History Database identifies 頡利可汗 as 힐리가한, explains it as a transcription of Old Turkic Ilig qaghan, and gives his reign as 620–630 as the eleventh and final qaghan of the Eastern Turks.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Old Book of Tang, Eastern Turks — Northeast Asian History Network",
+      "canonical_url": "https://contents.nahf.or.kr/id/jo.k_0016_0194_0100",
+      "citation_text": "The Northeast Asian History Network translation of the Old Book of Tang records 頡利可汗 as 힐리가한 and documents his rule and confrontation with Tang Taizong in the Eastern Turkic context.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Political Role of the Sogdians in the Turkic Khaganate — National Taiwan Normal University Historical Journal",
+      "canonical_url": "https://www.his.ntnu.edu.tw/publish03/show_paper_detail.php?issue_id=46&locale=en&paper_id=311&periodicalsDir=ASC&periodicalsOrder=Sorter_issue_ch&periodicalsPage=2",
+      "citation_text": "The journal abstract identifies Illig Qaghan (Jieli Khagan, 頡利可汗) as ruler of the Turkic Khaganate with a reign of 620–630.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
