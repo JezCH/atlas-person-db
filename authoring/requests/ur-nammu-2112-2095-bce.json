@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ur-nammu:third-dynasty-of-ur:ca-2112-2095-bce:v1",
+  "person": {
+    "canonical_name_en": "Ur-Nammu",
+    "display_name_ko": "우르남무"
+  },
+  "polity": {
+    "canonical_name_en": "Third Dynasty of Ur",
+    "display_name_ko": "우르 제3왕조"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -2112,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -2095,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ur-Nammu was the founder and first ruler of the Third Dynasty of Ur. Museum records conventionally place his reign at 2112-2095 BCE and contemporary royal inscriptions style him King of Ur and King of Sumer and Akkad. ATLAS uses that conventional Middle-Chronology-scale interval for the year-level reign representation, but both absolute endpoints are marked approximate because third-millennium BCE Mesopotamian absolute chronology is reconstructed and alternative chronological schemes exist. The user-supplied label 'Ur III Dynasty' is normalized to the standard historical polity name Third Dynasty of Ur rather than treated as a separate identity."
+  },
+  "sources": [
+    {
+      "title": "Ur-Nammu — British Museum Collections Online",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG63102",
+      "citation_text": "The British Museum identifies Ur-Nammu as a Mesopotamian ruler of the Third Dynasty of Ur and gives his rule as 2112-2095 BCE.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Inscribed brick — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/art/collection/search/324915",
+      "citation_text": "The Metropolitan Museum dates the Ur III ruler Ur-Nammu to ca. 2112-2095 BCE and preserves an inscription naming him king of Ur and king of Sumer and Akkad.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Third Dynasty of Ur. The Stela of Ur-Nammu — Penn Museum Bulletin",
+      "canonical_url": "https://www.penn.museum/sites/bulletin/2657/",
+      "citation_text": "The Penn Museum publication identifies Ur-Nammu as the founder of the Third Dynasty of Ur and describes the dynasty's kingship over Sumer and Akkad.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
