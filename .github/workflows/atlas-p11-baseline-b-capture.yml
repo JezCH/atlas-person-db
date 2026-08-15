@@ -118,7 +118,7 @@ jobs:
             .result.baseline.readiness.ready == true and
             .result.baseline.authority.production_mutation_authorized == false and
             (.result.baseline.baseline_digest | test("^sha256:[0-9a-f]{64}$")) and
-            (.result.baseline.datasets | keys | length) == 18
+            (.result.baseline.datasets | keys | length) == 41
           ' "$capture" >/dev/null
 
           cp "$capture" /tmp/atlas-p11-baseline-b/baseline-b.json
