@@ -4,8 +4,6 @@ import fs from 'node:fs';
 
 const apiDir = new URL('../api/', import.meta.url);
 const apiFiles = fs.readdirSync(apiDir).filter((name) => name.endsWith('.js')).sort();
-const adminInspectorApi = fs.readFileSync(new URL('../api/atlas-admin-inspector.js', import.meta.url), 'utf8');
-const adminSystemStatusApi = fs.readFileSync(new URL('../api/atlas-admin-system-status.js', import.meta.url), 'utf8');
 const auditInventoryApi = fs.readFileSync(new URL('../api/atlas-audit-inventory.js', import.meta.url), 'utf8');
 const authoringApi = fs.readFileSync(new URL('../api/atlas-authoring.js', import.meta.url), 'utf8');
 const authoringApplyApi = fs.readFileSync(new URL('../api/atlas-authoring-apply.js', import.meta.url), 'utf8');
@@ -14,20 +12,18 @@ const duplicateReviewApi = fs.readFileSync(new URL('../api/atlas-duplicate-revie
 const identityApi = fs.readFileSync(new URL('../api/atlas-identity.js', import.meta.url), 'utf8');
 const mutateApi = fs.readFileSync(new URL('../api/atlas-mutate.js', import.meta.url), 'utf8');
 const p10ReleaseApi = fs.readFileSync(new URL('../api/atlas-p10-revalidation-release.js', import.meta.url), 'utf8');
-const personReadApi = fs.readFileSync(new URL('../api/atlas-person-read.js', import.meta.url), 'utf8');
 const readApi = fs.readFileSync(new URL('../api/atlas-read.js', import.meta.url), 'utf8');
 const sessionApi = fs.readFileSync(new URL('../api/atlas-session.js', import.meta.url), 'utf8');
 const stage2SchemaReleaseApi = fs.readFileSync(new URL('../api/atlas-stage2-schema-release.js', import.meta.url), 'utf8');
 const stage2Train2ReleaseApi = fs.readFileSync(new URL('../api/atlas-stage2-train2-release.js', import.meta.url), 'utf8');
 const postgresClient = fs.readFileSync(new URL('../server/atlas-postgres-client.js', import.meta.url), 'utf8');
 const pkg = JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
+const vercel = JSON.parse(fs.readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
 const index = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const admin = fs.readFileSync(new URL('../admin.html', import.meta.url), 'utf8');
 
-test('Vercel exposes exactly the current ATLAS API entrypoints', () => {
+test('Vercel exposes exactly twelve physical ATLAS API functions on Hobby', () => {
   assert.deepEqual(apiFiles, [
-    'atlas-admin-inspector.js',
-    'atlas-admin-system-status.js',
     'atlas-audit-inventory.js',
     'atlas-authoring-apply.js',
     'atlas-authoring.js',
@@ -36,16 +32,36 @@ test('Vercel exposes exactly the current ATLAS API entrypoints', () => {
     'atlas-identity.js',
     'atlas-mutate.js',
     'atlas-p10-revalidation-release.js',
-    'atlas-person-read.js',
     'atlas-read.js',
     'atlas-session.js',
     'atlas-stage2-schema-release.js',
     'atlas-stage2-train2-release.js'
   ]);
+  assert.equal(apiFiles.length, 12);
+});
+
+test('UI read URLs rewrite to the consolidated atlas-read function', () => {
+  assert.deepEqual(vercel.rewrites, [
+    { source: '/api/atlas-person-read', destination: '/api/atlas-read?__atlas_read_surface=person' },
+    { source: '/api/atlas-admin-inspector', destination: '/api/atlas-read?__atlas_read_surface=admin-inspector' },
+    { source: '/api/atlas-admin-system-status', destination: '/api/atlas-read?__atlas_read_surface=admin-system-status' }
+  ]);
+});
+
+test('consolidated read entrypoint preserves normalized, Person and authenticated Admin handlers', () => {
+  assert.match(readApi, /atlas-normalized-read-handler\.js/);
+  assert.match(readApi, /createNormalizedReadHandler/);
+  assert.match(readApi, /atlas-person-read-handler\.js/);
+  assert.match(readApi, /createPersonReadHandler/);
+  assert.match(readApi, /atlas-admin-inspector-handler\.js/);
+  assert.match(readApi, /createAdminInspectorHandler/);
+  assert.match(readApi, /atlas-admin-system-status-handler\.js/);
+  assert.match(readApi, /createAdminSystemStatusHandler/);
+  assert.doesNotMatch(readApi, /SUPABASE_DB_URL|ATLAS_SESSION_SECRET|ATLAS_MUTATION_TOKEN|postgres:\/\/|postgresql:\/\//);
 });
 
 test('database-backed browser entrypoints share one server PostgreSQL client boundary', () => {
-  const sources = [adminInspectorApi, adminSystemStatusApi, authoringApi, duplicateReviewApi, identityApi, mutateApi, personReadApi, readApi];
+  const sources = [authoringApi, duplicateReviewApi, identityApi, mutateApi, readApi];
   for (const source of sources) {
     assert.match(source, /atlas-postgres-client\.js/);
     assert.match(source, /createPostgresClient/);
@@ -57,28 +73,10 @@ test('database-backed browser entrypoints share one server PostgreSQL client bou
   assert.match(postgresClient, /SUPABASE_DB_CA/);
 });
 
-test('Admin inspector endpoint delegates to the isolated session-authenticated read handler', () => {
-  assert.match(adminInspectorApi, /atlas-admin-inspector-handler\.js/);
-  assert.match(adminInspectorApi, /createAdminInspectorHandler/);
-  assert.doesNotMatch(adminInspectorApi, /SUPABASE_DB_URL|ATLAS_SESSION_SECRET|ATLAS_MUTATION_TOKEN|postgres:\/\/|postgresql:\/\//);
-});
-
-test('Admin system status endpoint delegates to the session-authenticated read handler', () => {
-  assert.match(adminSystemStatusApi, /atlas-admin-system-status-handler\.js/);
-  assert.match(adminSystemStatusApi, /createAdminSystemStatusHandler/);
-  assert.doesNotMatch(adminSystemStatusApi, /SUPABASE_DB_URL|ATLAS_SESSION_SECRET|ATLAS_MUTATION_TOKEN|postgres:\/\/|postgresql:\/\//);
-});
-
 test('normal human authoring endpoint delegates to the Stage 2-native direct authoring handler', () => {
   assert.match(authoringApi, /atlas-human-authoring-handler\.js/);
   assert.match(authoringApi, /createHumanAuthoringHandler/);
   assert.doesNotMatch(authoringApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
-});
-
-test('public Person read endpoint delegates to the Person-centered read handler', () => {
-  assert.match(personReadApi, /atlas-person-read-handler\.js/);
-  assert.match(personReadApi, /createPersonReadHandler/);
-  assert.doesNotMatch(personReadApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
 });
 
 test('server-only authoring apply endpoint delegates to its isolated handler', () => {
@@ -118,7 +116,7 @@ test('server-only P10 release endpoint delegates to its exact-SHA OIDC release h
   assert.doesNotMatch(p10ReleaseApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
 });
 
-test('session entrypoint is the only browser authentication endpoint', () => {
+test('session entrypoint remains the only browser authentication endpoint', () => {
   assert.match(sessionApi, /atlas-session-auth|createSessionHandler/);
   assert.doesNotMatch(sessionApi, /person_politics|atlas_v2\./);
 });
