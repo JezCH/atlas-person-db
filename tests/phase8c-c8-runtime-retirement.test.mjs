@@ -45,6 +45,7 @@ test('historical C8 workflow manifest remains audit evidence while current workf
     'atlas-p10-person-duplicate-v2-revalidation.yml',
     'atlas-p10-release-launcher.yml',
     'atlas-p10-revalidation-release.yml',
+    'atlas-p11-baseline-b-readiness.yml',
     'atlas-stage2-schema-release.yml',
     'atlas-stage2-train2-live-parity.yml',
     'atlas-stage2-train2-release.yml'
@@ -85,6 +86,16 @@ test('historical C8 workflow manifest remains audit evidence while current workf
   assert.match(p10ReleaseWorkflow, /call migration_dry_run[\s\S]*call migration_apply[\s\S]*call rebuild_candidates[\s\S]*call final_verify/);
   assert.doesNotMatch(p10ReleaseWorkflow, /SUPABASE_DB_URL|DATABASE_URL/);
   assert.doesNotMatch(p10ReleaseWorkflow, /REVIEW_CANDIDATE|EXECUTE_APPROVED_MERGE|executeApprovedPersonMerge/);
+
+  const p11Workflow = fs.readFileSync(new URL('../.github/workflows/atlas-p11-baseline-b-readiness.yml', import.meta.url), 'utf8');
+  assert.match(p11Workflow, /\bpull_request\s*:/m);
+  assert.match(p11Workflow, /^\s*push\s*:/m);
+  assert.match(p11Workflow, /branches:\s*\n\s*- main/);
+  assert.match(p11Workflow, /workflow_dispatch\s*:/m);
+  assert.match(p11Workflow, /postgres:17/);
+  assert.match(p11Workflow, /rehearse-p11-baseline-b-readiness\.mjs/);
+  assert.doesNotMatch(p11Workflow, /environment:\s*production/);
+  assert.doesNotMatch(p11Workflow, /SUPABASE_DB_URL|id-token:\s*write/);
 
   const stage2SchemaWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-stage2-schema-release.yml', import.meta.url), 'utf8');
   assert.match(stage2SchemaWorkflow, /workflow_dispatch\s*:/);
