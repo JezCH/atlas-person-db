@@ -30,6 +30,11 @@ const CORE_DATASET_QUERIES = Object.freeze([
 ]);
 
 function canonicalize(value) {
+  if (value instanceof Date) {
+    if (Number.isNaN(value.getTime())) throw new Error("P11_BASELINE_B_INVALID_DATE");
+    return value.toISOString();
+  }
+  if (Buffer.isBuffer(value)) return canonicalize(value.toJSON());
   if (Array.isArray(value)) return value.map(canonicalize);
   if (value && typeof value === "object") {
     return Object.fromEntries(Object.keys(value).sort().map((key) => [key, canonicalize(value[key])]));
