@@ -48,6 +48,13 @@ test('UI-T3 preserves original values while adding readable labels', () => {
   assert.match(source, /<code>\$\{escapeHtml\(rawTimeline\)\}<\/code>/);
 });
 
+test('UI-T3 does not coerce null historical years into year zero', () => {
+  assert.match(source, /function numericYear\(value\)/);
+  assert.match(source, /value == null \|\| String\(value\)\.trim\(\) === ""/);
+  assert.match(source, /if \(year == null\) return "미상"/);
+  assert.match(source, /if \(start == null && end == null\) return "시작·종료 모두 미상"/);
+});
+
 test('UI-T3 curated records carry the fields required by the restored surface', () => {
   assert.ok(Array.isArray(data) && data.length > 0);
   for (const [index, row] of data.entries()) {
@@ -60,8 +67,8 @@ test('UI-T3 curated records carry the fields required by the restored surface', 
   }
 });
 
-test('UI-T3 asset contract loads dedicated table CSS before the non-timeline module', () => {
+test('UI-T3/T5 asset contract loads dedicated table CSS before the searchable non-timeline module', () => {
   assert.match(html, /non-timeline-list\.css\?v=20260816-ui-t3/);
-  assert.match(html, /non-timeline-list\.js\?v=20260816-ui-t3/);
+  assert.match(html, /non-timeline-list\.js\?v=20260816-ui-t5/);
   assert.ok(html.indexOf('non-timeline-list.css') < html.indexOf('non-timeline-list.js'));
 });
