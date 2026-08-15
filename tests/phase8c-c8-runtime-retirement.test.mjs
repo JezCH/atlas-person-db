@@ -92,6 +92,7 @@ test('historical C8 workflow manifest remains audit evidence while current workf
   assert.match(p11Workflow, /^\s*push\s*:/m);
   assert.match(p11Workflow, /branches:\s*\n\s*- main/);
   assert.match(p11Workflow, /workflow_dispatch\s*:/m);
+  assert.match(p11Workflow, /permissions:\s*\n\s*contents:\s*read/);
   assert.match(p11Workflow, /postgres:17/);
   assert.match(p11Workflow, /rehearse-p11-baseline-b-readiness\.mjs/);
   assert.doesNotMatch(p11Workflow, /environment:\s*production/);
