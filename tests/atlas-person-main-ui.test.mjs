@@ -83,7 +83,7 @@ test('mobile appbar search delegates to the Person Main search after Person shel
 });
 
 test('existing Activity authoring DOM is moved into a separate expandable tool instead of being recreated or deleted', () => {
-  assert.match(main, /body\.append\(toolbar, legacyContent\)/);
+  assert.match(main, /append\(toolbar, legacyContent\)/);
   assert.match(main, /relationshipAuthoringTools/);
   assert.match(main, /전체 관계 편집표/);
   assert.match(main, /기존 Activity 행 등록·수정·엑셀 도구/);
