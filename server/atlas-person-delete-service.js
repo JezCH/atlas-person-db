@@ -75,8 +75,16 @@ async function verifyNoLiveReferences(client, personId, { requirementLedgerPrese
   };
 }
 
-function createPersonDeleteService({ client } = {}) {
+function createPersonDeleteService({
+  client,
+  referenceReadiness = assertPersonMergeReferenceReadiness,
+  frontierLock = lockPersonDuplicateFrontier,
+  refreshFrontier = refreshCandidateFrontier
+} = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client with query() is required");
+  if (typeof referenceReadiness !== "function") throw new Error("referenceReadiness must be a function");
+  if (typeof frontierLock !== "function") throw new Error("frontierLock must be a function");
+  if (typeof refreshFrontier !== "function") throw new Error("refreshFrontier must be a function");
 
   async function mutate(request = {}) {
     const requestId = String(request.request_id || crypto.randomUUID());
@@ -89,9 +97,9 @@ function createPersonDeleteService({ client } = {}) {
 
     await client.query("BEGIN ISOLATION LEVEL SERIALIZABLE");
     try {
-      const referenceReadiness = await assertPersonMergeReferenceReadiness(client);
-      const requirementLedgerPresent = Boolean(referenceReadiness?.requirement_ledger_present);
-      await lockPersonDuplicateFrontier(client);
+      const referenceState = await referenceReadiness(client);
+      const requirementLedgerPresent = Boolean(referenceState?.requirement_ledger_present);
+      await frontierLock(client);
 
       const person = await client.query(`
         select id,canonical_key,person_type,historicity
@@ -159,7 +167,7 @@ function createPersonDeleteService({ client } = {}) {
       if (personDelete.rowCount !== 1) throw new Error("Person delete did not affect exactly one row");
       deleted.persons = personDelete.rowCount;
 
-      const frontier = await refreshCandidateFrontier(client);
+      const frontier = await refreshFrontier(client);
       const verification = await verifyNoLiveReferences(client, personId, { requirementLedgerPresent });
       if (!verification.match) {
         const error = new Error(`PERSON_DELETE_VERIFICATION_FAILED:${JSON.stringify(verification.counts)}`);
