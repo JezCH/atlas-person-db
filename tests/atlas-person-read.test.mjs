@@ -7,6 +7,8 @@ const {
   PERSON_READ_SQL,
   PERSON_DETAIL_SQL,
   ACTIVITY_DETAIL_SQL,
+  PERSON_SOURCE_SQL,
+  ACTIVITY_SOURCE_SQL,
   readPersons,
   readPersonDetail
 } = require('../server/atlas-person-read-service.js');
@@ -77,6 +79,26 @@ function detailActivityRow() {
     period_basis_code: 'reign',
     period_basis_name_en: 'Reign',
     period_basis_name_ko: '재위'
+  };
+}
+
+function personSourceRow() {
+  return {
+    source_type: 'bibliographic_reference',
+    title: 'A History of the Scythians',
+    canonical_url: null,
+    citation_text: 'Example Scholar, A History of the Scythians, 2024.'
+  };
+}
+
+function activitySourceRow() {
+  return {
+    person_politics_id: ACTIVITY_ID,
+    source_locator_key: 'pp. 40-42',
+    source_type: 'web_bibliographic_reference',
+    title: 'Ateas chronology study',
+    canonical_url: 'https://example.org/ateas',
+    citation_text: 'Example Journal 12 (2025), pp. 40-42.'
   };
 }
 
@@ -172,18 +194,15 @@ test('Person Main read keeps chronology availability separate from historicity',
   assert.equal(result.persons[0].last_activity_year, null);
 });
 
-test('Person detail exposes authoritative Activity semantics without flattening temporal certainty', async () => {
-  let queryIndex = 0;
+test('Person detail exposes authoritative Activity semantics and readable provenance without raw Source identity leakage', async () => {
   const client = {
     async query(sql, params) {
-      queryIndex += 1;
       assert.deepEqual(params, [PERSON_ID]);
-      if (queryIndex === 1) {
-        assert.equal(sql, PERSON_DETAIL_SQL);
-        return { rowCount: 1, rows: [detailPersonRow()] };
-      }
-      assert.equal(sql, ACTIVITY_DETAIL_SQL);
-      return { rowCount: 1, rows: [detailActivityRow()] };
+      if (sql === PERSON_DETAIL_SQL) return { rowCount: 1, rows: [detailPersonRow()] };
+      if (sql === ACTIVITY_DETAIL_SQL) return { rowCount: 1, rows: [detailActivityRow()] };
+      if (sql === PERSON_SOURCE_SQL) return { rowCount: 1, rows: [personSourceRow()] };
+      if (sql === ACTIVITY_SOURCE_SQL) return { rowCount: 1, rows: [activitySourceRow()] };
+      throw new Error('unexpected Person detail query');
     }
   };
 
@@ -192,6 +211,15 @@ test('Person detail exposes authoritative Activity semantics without flattening 
   assert.equal(person.activity_count, 1);
   assert.equal(person.first_activity_year, -360);
   assert.equal(person.last_activity_year, -339);
+  assert.equal(person.sources.length, 1);
+  assert.deepEqual(person.sources[0], {
+    title: 'A History of the Scythians',
+    source_type: 'bibliographic_reference',
+    canonical_url: null,
+    citation_text: 'Example Scholar, A History of the Scythians, 2024.',
+    locator: null,
+    display_reference: 'Example Scholar, A History of the Scythians, 2024.'
+  });
 
   const activity = person.activities[0];
   assert.equal(activity.id, ACTIVITY_ID);
@@ -222,6 +250,22 @@ test('Person detail exposes authoritative Activity semantics without flattening 
   assert.equal(activity.confidence, 'likely');
   assert.equal(activity.chronology_status, 'reviewed');
   assert.match(activity.notes, /not an asserted accession year/);
+  assert.deepEqual(activity.sources[0], {
+    title: 'Ateas chronology study',
+    source_type: 'web_bibliographic_reference',
+    canonical_url: 'https://example.org/ateas',
+    citation_text: 'Example Journal 12 (2025), pp. 40-42.',
+    locator: 'pp. 40-42',
+    display_reference: 'Example Journal 12 (2025), pp. 40-42.'
+  });
+  for (const source of [...person.sources, ...activity.sources]) {
+    assert.equal('id' in source, false);
+    assert.equal('source_key' in source, false);
+    assert.equal('sha256' in source, false);
+    assert.equal('bytes' in source, false);
+  }
+  assert.doesNotMatch(PERSON_SOURCE_SQL, /select\s+s\.id/i);
+  assert.doesNotMatch(ACTIVITY_SOURCE_SQL, /select\s+[\s\S]*s\.id[\s,]/i);
   assert.doesNotMatch(ACTIVITY_DETAIL_SQL, /canonical_key/);
   for (const field of [
     'relation_type_id',
@@ -239,20 +283,25 @@ test('Person detail exposes authoritative Activity semantics without flattening 
     'chronology_status',
     'notes'
   ]) assert.match(ACTIVITY_DETAIL_SQL, new RegExp(field));
+  for (const field of ['title', 'source_type', 'canonical_url', 'citation_text']) {
+    assert.match(PERSON_SOURCE_SQL, new RegExp(field));
+    assert.match(ACTIVITY_SOURCE_SQL, new RegExp(field));
+  }
+  assert.match(ACTIVITY_SOURCE_SQL, /source_locator_key/);
 });
 
 test('Person read handler supports list and UUID detail modes and rejects malformed IDs before DB access', async () => {
   let ended = false;
-  let queryIndex = 0;
   const handler = createPersonReadHandler({
     env: { SUPABASE_DB_URL: 'postgresql://example.invalid/atlas' },
     clientFactory: async () => ({
       async query(sql) {
-        queryIndex += 1;
         if (sql === PERSON_READ_SQL) return { rows: [] };
         if (sql === PERSON_DETAIL_SQL) return { rowCount: 1, rows: [detailPersonRow()] };
         if (sql === ACTIVITY_DETAIL_SQL) return { rowCount: 1, rows: [detailActivityRow()] };
-        throw new Error(`unexpected query ${queryIndex}`);
+        if (sql === PERSON_SOURCE_SQL) return { rowCount: 1, rows: [personSourceRow()] };
+        if (sql === ACTIVITY_SOURCE_SQL) return { rowCount: 1, rows: [activitySourceRow()] };
+        throw new Error('unexpected handler query');
       },
       async end() { ended = true; }
     })
@@ -275,6 +324,8 @@ test('Person read handler supports list and UUID detail modes and rejects malfor
   assert.equal(detailPayload.mode, 'detail');
   assert.equal(detailPayload.person.id, PERSON_ID);
   assert.equal(detailPayload.person.activities[0].relation.code, 'rules');
+  assert.equal(detailPayload.person.sources[0].title, 'A History of the Scythians');
+  assert.equal(detailPayload.person.activities[0].sources[0].locator, 'pp. 40-42');
   assert.equal(ended, true);
 
   let factoryCalled = false;
