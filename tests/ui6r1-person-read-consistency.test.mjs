@@ -4,7 +4,7 @@ import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
 const personRead = require('../server/atlas-person-read-service.js');
-const personFacets = require('../server/atlas-person-list-facet-service.js');
+const personSemantics = require('../server/atlas-person-list-semantic-service.js');
 
 const {
   PERSON_DETAIL_SQL,
@@ -14,9 +14,9 @@ const {
   readPersonDetail
 } = personRead;
 const {
-  PERSON_LIST_FACET_SQL,
-  attachPersonListFacets
-} = personFacets;
+  PERSON_LIST_SEMANTIC_SQL,
+  attachPersonListSemantics
+} = personSemantics;
 
 const PERSON_ID = '52237f0f-0679-5c65-adaa-a36a9c535a6f';
 const ACTIVITY_ID = '16781cf4-9279-5ce0-a7f4-0c491d7af9c5';
@@ -103,18 +103,21 @@ test('Person detail read preserves an Activity whose Stage 2 relation_type_id is
   assert.equal(detail.activities[0].relation, null);
 });
 
-test('Person list facets keep resolvable dimensions when relation_type_id is unresolved instead of dropping the Activity row', () => {
-  assert.match(PERSON_LIST_FACET_SQL, /left join atlas_v2\.person_polity_relation_types prt/i);
-  assert.doesNotMatch(PERSON_LIST_FACET_SQL, /\njoin atlas_v2\.person_polity_relation_types prt/i);
+test('Person list semantics keep the Activity tuple and resolvable facets when relation_type_id is unresolved', () => {
+  assert.match(PERSON_LIST_SEMANTIC_SQL, /left join atlas_v2\.person_polity_relation_types prt/i);
+  assert.doesNotMatch(PERSON_LIST_SEMANTIC_SQL, /\njoin atlas_v2\.person_polity_relation_types prt/i);
 
   const row = unresolvedRelationActivityRow();
-  const enriched = attachPersonListFacets(
+  const enriched = attachPersonListSemantics(
     [Object.freeze({ id: PERSON_ID, display_name: '무르실리 1세', activity_count: 1 })],
     [row]
   );
 
   assert.equal(enriched.length, 1);
   assert.equal(enriched[0].activity_count, 1);
+  assert.equal(enriched[0].activity_summaries.length, 1);
+  assert.equal(enriched[0].activity_summaries[0].id, ACTIVITY_ID);
+  assert.equal(enriched[0].activity_summaries[0].relation, null);
   assert.equal(enriched[0].facets.polities.length, 1);
   assert.equal(enriched[0].facets.polities[0].display_name, '히타이트 왕국');
   assert.equal(enriched[0].facets.roles.length, 1);
@@ -126,5 +129,5 @@ test('Person list facets keep resolvable dimensions when relation_type_id is unr
 
 test('UI-6R1 does not weaken required Period Basis resolution while repairing nullable Relation Type reads', () => {
   assert.match(ACTIVITY_DETAIL_SQL, /\njoin atlas_v2\.period_bases pb/i);
-  assert.match(PERSON_LIST_FACET_SQL, /\njoin atlas_v2\.period_bases pb/i);
+  assert.match(PERSON_LIST_SEMANTIC_SQL, /\njoin atlas_v2\.period_bases pb/i);
 });
