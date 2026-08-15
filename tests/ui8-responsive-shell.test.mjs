@@ -1,0 +1,38 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import fs from 'node:fs';
+
+const shellSource = fs.readFileSync(new URL('../atlas-responsive-shell.js', import.meta.url), 'utf8');
+const shellCss = fs.readFileSync(new URL('../atlas-responsive-shell.css', import.meta.url), 'utf8');
+const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+
+test('UI8 removes fixed desktop width pressure and provides a collapsible sidebar rail', () => {
+  assert.match(shellCss, /body\{min-width:0!important\}/);
+  assert.match(shellCss, /\.workspace-shell\.sidebar-collapsed\{grid-template-columns:68px minmax\(0,1fr\)\}/);
+  assert.match(shellSource, /sidebar-collapse-toggle/);
+  assert.match(shellSource, /atlas\.sidebar\.collapsed/);
+  assert.match(shellSource, /max-width: 1239px/);
+});
+
+test('UI8 makes Person detail zero-width until selection and opens it as an overlay drawer', () => {
+  assert.match(shellCss, /\.person-main-layout\{display:block!important\}/);
+  assert.match(shellCss, /\.person-main-detail\[hidden\],#personMainDetailBackdrop\[hidden\]\{display:none!important\}/);
+  assert.match(shellCss, /\.person-main-detail\{position:fixed!important/);
+  assert.match(shellSource, /detailPanel\.hidden = true/);
+  assert.match(shellSource, /\[data-person-id\]/);
+  assert.match(shellSource, /person-detail-overlay-close/);
+  assert.match(shellSource, /event\.key === "Escape"/);
+  assert.match(shellSource, /backdrop\.addEventListener\("click"/);
+});
+
+test('UI8 remains presentation-only and does not create another data read or write path', () => {
+  assert.doesNotMatch(shellSource, /fetch\s*\(|listPersons|readPerson|ATLAS_SERVER_WRITE_ADAPTER|\.submit\s*\(/);
+});
+
+test('UI8 shell assets load after Person Main so the generated detail panel exists', () => {
+  assert.match(html, /atlas-responsive-shell\.css\?v=20260815-ui8-shell/);
+  const mainScript = html.indexOf('atlas-person-main.js?v=20260815-ui6r4');
+  const shellScript = html.indexOf('atlas-responsive-shell.js?v=20260815-ui8-shell');
+  const navScript = html.indexOf('atlas-main-authority-nav.js?v=20260815-ui5');
+  assert.ok(mainScript >= 0 && shellScript > mainScript && navScript > shellScript);
+});
