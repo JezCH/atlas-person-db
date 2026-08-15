@@ -23,7 +23,6 @@
   - duplicate queue/review/merge/revalidation aggregate lifecycle
   - optional P10 revalidation readiness integration when that backend module is present
   - GitHub Actions status intentionally not fabricated inside runtime
-  - current main was merged structurally at `c4f73d27fde9637ccbe5acffeb59cf0dc47695a1`; PR #149 became mergeable again
   - post-merge checkpoint passed ATLAS Integrity #747, Human Authoring Operational Parity #95 and P10 Person Duplicate V2 Revalidation #86
 - UI-2F — Admin observability screen wiring: COMPLETE
   - authenticated read-only System Status panel backed only by `/api/atlas-admin-system-status`
@@ -34,39 +33,36 @@
   - both new read endpoints participate in the existing session-gate protected-path handling
   - screen logic and styles isolated in `atlas-admin-observability.js` / `atlas-admin-observability.css`; existing authoring and duplicate-review write logic remains separate
   - commit `d8b277342e65e66b1f9b2d3665a15bfb8a19178c` passed ATLAS Integrity #749, Human Authoring Operational Parity #97 and P10 Person Duplicate V2 Revalidation #88
-  - no Vercel deployment or runtime mutation required for this checkpoint
 - UI-3A — Main Person-centered browser read foundation: COMPLETE
-  - browser reader for `/api/atlas-person-read` without changing the current Main screen
-  - list/detail access GET-only; malformed detail UUIDs fail before fetch
+  - browser reader for `/api/atlas-person-read`
   - Person `historicity` remains raw authoritative data
-  - primary historical grouping uses only the established authoritative value `historical`; every other observed value is retained verbatim under a separate other/uncertain group rather than forced into a frontend enum
+  - primary historical grouping uses only `historical`; every other observed value is retained verbatim under a separate other/uncertain group
   - a historical Person with unknown activity chronology remains historical
   - BCE years remain integer years and sort numerically; unknown activity years sort last
   - historicity partitioning occurs before secondary search/filter predicates
-  - observed historicity vocabulary remains derived from the payload
   - commit `e30f544f4ea81a648b7946c1fd151aabef30afe2` passed ATLAS Integrity #750, Human Authoring Operational Parity #98 and P10 Person Duplicate V2 Revalidation #89
-- UI-3B1 — Person-centered Main shell and complete read detail: COMPLETE — LATEST MAIN INTEGRATION CI REQUESTED
-  - Main primary read surface now uses the Person-centered browser reader
+- UI-3B1 — Person-centered Main shell and complete read detail: COMPLETE
+  - Main primary read surface uses the Person-centered browser reader
   - explicit visible sections separate `historical` Persons from all other/uncertain raw historicity values
-  - Person cards show readable identity, raw historicity, Person type, Activity range and count
-  - selected Person detail shows all names, descriptions and readable Person sources
-  - Activity detail shows Polity, Relation, Role, Period Basis, full start/end boundary, granularity/certainty/calendar, confidence, chronology status, notes and readable Activity sources
-  - BCE/AD rendering is presentation-only and does not convert raw integer year identity into JavaScript Date values
-  - public Source links are limited to HTTP(S) before becoming clickable
-  - existing Activity authoring DOM and event handlers are preserved and moved intact under an expandable `관계 편집 도구`; legacy write logic is not rewritten in this slice
-  - new Person Main logic is isolated in `atlas-person-main.js` / `atlas-person-main.css`
-  - no Admin-only object data, secret values or mutation endpoints are introduced into the Person read module
+  - selected Person detail exposes names, descriptions, readable Person sources and complete Activity meaning/provenance
+  - existing Activity authoring DOM/event handlers remain preserved under expandable `관계 편집 도구`
   - complete screen tree passed ATLAS Integrity #753, Human Authoring Operational Parity #101 and P10 Person Duplicate V2 Revalidation #92
-  - main then advanced only `.github/workflows/atlas-authoring-apply.yml`; current main `29c34063d81777b39dc278938a5a0c1db2361597` was merged without touching UI code at `cf264039aa804f23ef150175360807132ebb3cd5`
-  - this Contents checkpoint triggers CI for that exact latest-main integration tree
-  - no Vercel deployment or runtime DB mutation is required for this checkpoint
-- UI-3B2 — Person-centered Main interaction/mobile integration and secondary semantic filters
+- UI-3B2 — Person-centered Main interaction/mobile integration and secondary semantic filters: COMPLETE
+  - compact Person-list facets: Polity / Relation / Role / Period Basis
+  - one bounded facet query for a non-empty list; no per-Person detail N+1 fetching
+  - mobile search delegates to the Person-centered surface and follows visible Person count
+  - selected Person detail is force-refreshed after list refresh
+  - previous exact UI-3B2 HEAD passed ATLAS Integrity #763, Human Authoring Operational Parity #111 and P10 Person Duplicate V2 Revalidation #102
 - UI-4 — Admin interface consolidation
 - UI-5 — navigation / future-authority shells
 - UI-6 — responsive and interaction polish
 - UI-7 — coverage gate and integration verification
 - UI-8 — intentional Vercel runtime checkpoint
-- UI-9 — backend-lifecycle-aware main integration
-- UI-10 — Production verification
+- UI-9 — backend-lifecycle-aware main integration: IN PROGRESS
+  - latest main `bf7cc9ba1ab3722cd989c9b4ef245b007edb4b19` includes Correction v1.2 / Suleiman temporal repair and current P10 release-launcher state
+  - latest main was structurally integrated into the UI workstream at merge commit `2ef0bdb880383b57f30581f3c49bda92b144a209`
+  - the integration tree uses latest main as the base and overlays only the UI workstream's authoritative changed paths, preserving current Correction/P10 semantics
+  - this Contents commit intentionally requests GitHub Actions verification for the exact production-release candidate tree
+- UI-10 — Production verification: PENDING FINAL CI + PR MERGE
 
-Vercel rule: routine `agent/ui-information-completeness` commits must create zero deployments. Preview/Production are reserved for intentional checkpoints. UI-2E/UI-2F/UI-3A/UI-3B1 and subsequent static/contract work can be completed with GitHub + CI only; runtime deployment verification waits for an intentional checkpoint.
+Vercel rule: routine UI development avoided Preview/Production deployment. The current checkpoint is now an intentional Production integration checkpoint requested by the user; Production may proceed only after the exact latest-main integration HEAD passes the required GitHub gates.
