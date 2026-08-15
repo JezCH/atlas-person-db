@@ -6,6 +6,7 @@ const require=createRequire(import.meta.url);
 const sem=require('../server/atlas-activity-semantic-key-v2.js');
 const p9Planner=require('../server/atlas-p9-mutation-planner.js');
 const reconciliation=require('../server/atlas-relationship-reconciliation.js');
+const duplicateDetector=require('../server/atlas-duplicate-detector.js');
 const interlock=require('../server/atlas-person-merge-interlock.js');
 const manifest=JSON.parse(fs.readFileSync('stage2/releases/p9-semantic-key-v2-cutover.v1.json','utf8'));
 if(fs.existsSync('artifacts/stage2-p7p8-effective-cutover-gate.json')){
@@ -45,7 +46,9 @@ assert.match(nativeAuthoring,/atlas-activity-semantic-key-v2\.js/);
 assert.match(nativeActivity,/atlas-activity-semantic-key-v2\.js/);
 
 for(const token of ['relation_type_id','activity_start_month','activity_start_day','activity_start_granularity','activity_start_calendar','activity_end_month','activity_end_day','activity_end_granularity','activity_end_calendar']) assert.match(duplicateService,new RegExp(token));
-assert.match(duplicateService,/semantic_version:\s*"v2-relation-full-temporal"/);
+assert.equal(duplicateDetector.REVALIDATION_SEMANTIC_VERSION,'v2-relation-full-temporal');
+assert.equal(duplicateDetector.SEMANTIC_KEY_VERSION,sem.SEMANTIC_KEY_VERSION);
+assert.match(duplicateService,/REVALIDATION_SEMANTIC_VERSION/);
 assert.equal(reconciliation.RECONCILIATION_SEMANTIC_VERSION,'v2-relation-full-temporal');
 assert.equal(interlock.REQUIRED_RECONCILIATION_SEMANTIC_VERSION,'v2-relation-full-temporal');
 assert.equal(interlock.personMergeExecutionState().allowed,false);
