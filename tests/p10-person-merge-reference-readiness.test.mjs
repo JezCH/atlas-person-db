@@ -9,12 +9,14 @@ const interlock = require('../server/atlas-person-merge-interlock.js');
 const mergeSource = fs.readFileSync(new URL('../server/atlas-person-merge-service.js', import.meta.url), 'utf8');
 const readinessSource = fs.readFileSync(new URL('../server/atlas-person-merge-reference-readiness.js', import.meta.url), 'utf8');
 
-test('P10 Person merge reference policy is explicit and includes authoring lifecycle pointers', () => {
+test('P10 Person merge reference policy is explicit and includes every reviewed live Person pointer', () => {
   assert.equal(readiness.PERSON_REFERENCE_POLICY_VERSION, 'p10-person-reference-surface/v1');
   assert.deepEqual(readiness.EXPECTED_PERSON_FKS.map((row) => [row.key, row.delete_action]), [
     ['atlas_v2.authoring_manifest_runs.person_id', 'SET NULL'],
     ['atlas_v2.person_descriptions.person_id', 'CASCADE'],
+    ['atlas_v2.person_event_participations.person_id', 'RESTRICT'],
     ['atlas_v2.person_names.person_id', 'CASCADE'],
+    ['atlas_v2.person_people_affiliations.person_id', 'RESTRICT'],
     ['atlas_v2.person_politics_v2.person_id', 'RESTRICT'],
     ['atlas_v2.person_sources.person_id', 'CASCADE']
   ]);
@@ -52,6 +54,17 @@ test('dormant merge executor requires schema-derived readiness and locks full se
   ]) assert.match(mergeSource, new RegExp(token));
   assert.match(mergeSource, /activities: liveState\.relationships/);
   assert.match(mergeSource, /authoring_person_pointers_cleared_by_lifecycle_fk/);
+});
+
+test('People affiliation and Event participation assertions are remapped without deleting assertion or provenance rows', () => {
+  assert.match(mergeSource, /update atlas_v2\.person_people_affiliations set person_id=\$2 where person_id=\$1 returning id/);
+  assert.match(mergeSource, /update atlas_v2\.person_event_participations set person_id=\$2 where person_id=\$1 returning id/);
+  assert.match(mergeSource, /people affiliation count changed during person merge/);
+  assert.match(mergeSource, /people affiliation provenance count changed during person merge/);
+  assert.match(mergeSource, /event participation count changed during person merge/);
+  assert.match(mergeSource, /event participation provenance count changed during person merge/);
+  assert.match(mergeSource, /people_affiliations_moved/);
+  assert.match(mergeSource, /event_participations_moved/);
 });
 
 test('P10-B does not unlock physical Person merge', () => {
