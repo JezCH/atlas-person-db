@@ -106,9 +106,14 @@ test('historical C8 workflow manifest remains audit evidence while current workf
   assert.match(p11CaptureWorkflow, /permissions:\s*\n\s*contents:\s*read\s*\n\s*id-token:\s*write/);
   assert.match(p11CaptureWorkflow, /environment:\s*production/);
   assert.match(p11CaptureWorkflow, /atlas-person-db-p11-baseline-b-capture/);
+  assert.match(p11CaptureWorkflow, /EXPECTED_CAPTURE_ID:\s*p11_baseline_b_20260815_v2/);
+  assert.match(p11CaptureWorkflow, /ATLAS_P11_BASELINE_B_CAPTURE_V2/);
+  assert.match(p11CaptureWorkflow, /atlas-stage2-baseline-b\/v2/);
+  assert.match(p11CaptureWorkflow, /dataset_count == 41/);
   assert.match(p11CaptureWorkflow, /CAPTURE:\$\{EXPECTED_CAPTURE_ID\}/);
   assert.match(p11CaptureWorkflow, /call_capture readiness[\s\S]*call_capture capture/);
   assert.match(p11CaptureWorkflow, /production_mutation_authorized == false/);
+  assert.doesNotMatch(p11CaptureWorkflow, /p11_baseline_b_20260815_v1|ATLAS_P11_BASELINE_B_CAPTURE_V1|atlas-stage2-baseline-b\/v1/);
   assert.doesNotMatch(p11CaptureWorkflow, /SUPABASE_DB_URL|DATABASE_URL/);
   assert.doesNotMatch(p11CaptureWorkflow, /migration_apply|rebuild_candidates|EXECUTE_APPROVED_MERGE|executeApprovedPersonMerge/);
 
