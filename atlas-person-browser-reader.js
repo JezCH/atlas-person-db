@@ -12,6 +12,21 @@
     return value == null ? "" : String(value);
   }
 
+  function normalizeSearchText(value) {
+    return text(value)
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[’‘`´]/g, "'")
+      .replace(/[‐‑‒–—―]/g, "-")
+      .replace(/[^\p{L}\p{N}]+/gu, " ")
+      .trim()
+      .toLocaleLowerCase("ko-KR");
+  }
+
+  function compactSearchText(value) {
+    return normalizeSearchText(value).replace(/\s+/g, "");
+  }
+
   function publicPersons(persons) {
     return (persons || []).filter((person) => !HIDDEN_ORPHAN_PERSON_IDS.has(text(person?.id)));
   }
@@ -100,15 +115,29 @@
     const facets = ["polities", "relations", "roles", "period_bases"]
       .flatMap((key) => facetRows(person, key).flatMap(facetText));
     const activities = activityRows(person).flatMap(activitySearchText);
-    return [person?.display_name, person?.canonical_name_en, person?.preferred_name_ko, ...names, ...descriptions, ...facets, ...activities]
-      .map(text)
-      .join("\n")
-      .toLocaleLowerCase("ko");
+    return normalizeSearchText([
+      person?.display_name,
+      person?.canonical_name_en,
+      person?.preferred_name_ko,
+      person?.historicity,
+      person?.person_type,
+      ...names,
+      ...descriptions,
+      ...facets,
+      ...activities
+    ].map(text).join("\n"));
   }
 
   function personMatchesQuery(person, query) {
-    const needle = text(query).trim().toLocaleLowerCase("ko");
-    return !needle || searchableText(person).includes(needle);
+    const normalizedNeedle = normalizeSearchText(query);
+    if (!normalizedNeedle) return true;
+    const haystack = searchableText(person);
+    const compactNeedle = compactSearchText(query);
+    const compactHaystack = haystack.replace(/\s+/g, "");
+    const tokens = normalizedNeedle.split(/\s+/).filter(Boolean);
+    return haystack.includes(normalizedNeedle)
+      || (compactNeedle && compactHaystack.includes(compactNeedle))
+      || tokens.every((token) => haystack.includes(token));
   }
 
   function hasFacetId(person, key, id) {
