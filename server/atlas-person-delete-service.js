@@ -6,6 +6,15 @@ const { lockPersonDuplicateFrontier } = require("./atlas-person-duplicate-fronti
 const { refreshCandidateFrontier } = require("./atlas-duplicate-review-service.js");
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const ZERO_WIDTH_RE = /[\u200B-\u200D\u2060\uFEFF]/g;
+
+function normalizeConfirmationName(value) {
+  return String(value ?? "")
+    .normalize("NFC")
+    .replace(ZERO_WIDTH_RE, "")
+    .trim()
+    .replace(/\s+/g, " ");
+}
 
 function outcomeBase({ requestId, committed, v2, verification = null, validationFailures = [], transactionFailure = null, rollback = false }) {
   return Object.freeze({
@@ -91,7 +100,7 @@ function createPersonDeleteService({
     if (String(request.operation || "") !== "delete_person") return blocked(requestId, "PERSON_DELETE_OPERATION_REQUIRED");
 
     const personId = String(request.payload?.person_id || "").trim();
-    const confirmationName = String(request.payload?.confirmation_name || "").trim();
+    const confirmationName = normalizeConfirmationName(request.payload?.confirmation_name);
     if (!UUID_RE.test(personId)) return blocked(requestId, "PERSON_ID_REQUIRED");
     if (!confirmationName) return blocked(requestId, "PERSON_DELETE_CONFIRMATION_NAME_REQUIRED");
 
@@ -118,7 +127,7 @@ function createPersonDeleteService({
          order by is_preferred desc,locale,name,id
          for update`, [personId]);
       const nameRows = names.rows || [];
-      const confirmationMatches = nameRows.some((row) => String(row.name).trim() === confirmationName);
+      const confirmationMatches = nameRows.some((row) => normalizeConfirmationName(row.name) === confirmationName);
       if (!confirmationMatches) {
         await client.query("ROLLBACK");
         return blocked(requestId, "PERSON_DELETE_CONFIRMATION_MISMATCH", confirmationName);
@@ -206,4 +215,4 @@ function createPersonDeleteService({
   return Object.freeze({ mutate });
 }
 
-module.exports = Object.freeze({ createPersonDeleteService, verifyNoLiveReferences, tablePresent });
+module.exports = Object.freeze({ createPersonDeleteService, verifyNoLiveReferences, tablePresent, normalizeConfirmationName });
