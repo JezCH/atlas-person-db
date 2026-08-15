@@ -4,6 +4,7 @@ const {
   BASELINE_B_SCHEMA,
   BASELINE_B_SEMANTIC_VERSION,
   CORE_DATASET_QUERIES,
+  digest,
   inspectBaselineBReadiness,
   captureBaselineB
 } = require("./atlas-baseline-b.js");
@@ -29,7 +30,24 @@ function assertProductionBaselineBArtifact(baseline) {
   if (!sameKeys(exactKeys(baseline.datasets), EXPECTED_DATASET_KEYS)) throw new Error("P11_BASELINE_B_DATASET_KEYS_DRIFT");
   if (!sameKeys(exactKeys(baseline.counts), EXPECTED_DATASET_KEYS)) throw new Error("P11_BASELINE_B_COUNT_KEYS_DRIFT");
   if (!sameKeys(exactKeys(baseline.dataset_digests), EXPECTED_DATASET_KEYS)) throw new Error("P11_BASELINE_B_DIGEST_KEYS_DRIFT");
-  if (!/^sha256:[0-9a-f]{64}$/.test(String(baseline.baseline_digest || ""))) throw new Error("P11_BASELINE_B_DIGEST_INVALID");
+
+  for (const key of EXPECTED_DATASET_KEYS) {
+    const rows = baseline.datasets[key];
+    if (!Array.isArray(rows)) throw new Error(`P11_BASELINE_B_DATASET_NOT_ARRAY:${key}`);
+    if (!Number.isInteger(baseline.counts[key]) || baseline.counts[key] !== rows.length) {
+      throw new Error(`P11_BASELINE_B_ROW_COUNT_DRIFT:${key}`);
+    }
+    if (baseline.dataset_digests[key] !== digest(rows)) throw new Error(`P11_BASELINE_B_DATASET_DIGEST_DRIFT:${key}`);
+  }
+
+  const expectedBaselineDigest = digest({
+    schema: baseline.schema,
+    semantic_version: baseline.semantic_version,
+    dataset_count: baseline.dataset_count,
+    counts: baseline.counts,
+    dataset_digests: baseline.dataset_digests
+  });
+  if (baseline.baseline_digest !== expectedBaselineDigest) throw new Error("P11_BASELINE_B_DIGEST_DRIFT");
   if (baseline.readiness?.ready !== true) throw new Error("P11_BASELINE_B_READINESS_DRIFT");
   if (baseline.authority?.production_mutation_authorized !== false) throw new Error("P11_BASELINE_B_AUTHORITY_DRIFT");
   return baseline;
