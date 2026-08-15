@@ -45,7 +45,7 @@
   - historicity partitioning occurs before secondary search/filter predicates
   - observed historicity vocabulary remains derived from the payload
   - commit `e30f544f4ea81a648b7946c1fd151aabef30afe2` passed ATLAS Integrity #750, Human Authoring Operational Parity #98 and P10 Person Duplicate V2 Revalidation #89
-- UI-3B1 — Person-centered Main shell and complete read detail: IMPLEMENTED — FINAL CI TRIGGERED
+- UI-3B1 — Person-centered Main shell and complete read detail: COMPLETE — LATEST MAIN INTEGRATION CI REQUESTED
   - Main primary read surface now uses the Person-centered browser reader
   - explicit visible sections separate `historical` Persons from all other/uncertain raw historicity values
   - Person cards show readable identity, raw historicity, Person type, Activity range and count
@@ -56,7 +56,9 @@
   - existing Activity authoring DOM and event handlers are preserved and moved intact under an expandable `관계 편집 도구`; legacy write logic is not rewritten in this slice
   - new Person Main logic is isolated in `atlas-person-main.js` / `atlas-person-main.css`
   - no Admin-only object data, secret values or mutation endpoints are introduced into the Person read module
-  - complete screen tree was assembled at `79c296bef7af738d0ad549b263ba6bba64b85a49`; this checkpoint Contents commit intentionally triggers GitHub Actions for the exact complete tree because the low-level ref update itself does not emit pull-request synchronize workflows
+  - complete screen tree passed ATLAS Integrity #753, Human Authoring Operational Parity #101 and P10 Person Duplicate V2 Revalidation #92
+  - main then advanced only `.github/workflows/atlas-authoring-apply.yml`; current main `29c34063d81777b39dc278938a5a0c1db2361597` was merged without touching UI code at `cf264039aa804f23ef150175360807132ebb3cd5`
+  - this Contents checkpoint triggers CI for that exact latest-main integration tree
   - no Vercel deployment or runtime DB mutation is required for this checkpoint
 - UI-3B2 — Person-centered Main interaction/mobile integration and secondary semantic filters
 - UI-4 — Admin interface consolidation
