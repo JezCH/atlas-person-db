@@ -1,0 +1,64 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:suppiluliuma-i:hittite-empire:1344-1322-bce:v1",
+  "person": {
+    "canonical_name_en": "Suppiluliuma I",
+    "display_name_ko": "수필룰리우마 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Hittite Empire",
+    "display_name_ko": "히타이트 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Great King",
+    "role_display_name_ko": "대왕",
+    "start_year": -1344,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -1322,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Suppiluliuma I (scholarly transliteration Šuppiluliuma I) was the Hittite Great King who restored Hittite control in Anatolia, broke Mitanni dominance in Syria, established Hittite dynastic rule at major Syrian centers including Carchemish, and transformed Hatti into one of the dominant imperial powers of the Late Bronze Age. The user-supplied label Hittite is normalized to the imperial-period map polity Hittite Empire, distinct from the earlier Hittite Kingdom used for Old Kingdom rulers such as Mursili I. ATLAS uses c. 1344-1322 BCE as a representative modern chronology, but both boundaries are approximate: Hittite sources do not preserve regnal lengths in a king list and scholarly reconstructions have ranged substantially, with older references often using approximately 1370-1330 BCE. The interval therefore represents a reviewed approximate sovereign reign rather than exact accession and death dates."
+  },
+  "sources": [
+    {
+      "title": "The Oxford Handbook of Cuneiform Culture — Index",
+      "canonical_url": "https://academic.oup.com/edited-volume/27992/chapter/211715496",
+      "citation_text": "The Oxford Handbook index lists Suppiluliuma I of Hatti with a reign of 1344-1322 BCE, supporting the representative chronology used by ATLAS while not resolving the broader chronology debate.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Hittites — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/essays/the-hittites",
+      "citation_text": "The Metropolitan Museum describes Shuppiluliuma I as consolidating Hittite power, reconquering and fortifying Hattusha, advancing into Syria, establishing Carchemish as a royal center, and bringing Hatti to parity with Egypt; it also preserves an older 1370-1330 BCE chronology that demonstrates absolute-date variation.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Some Observations on the Chronology of Šuppiluliuma's Reign — Anatolian Studies",
+      "canonical_url": "https://www.cambridge.org/core/journals/anatolian-studies/article/some-observations-on-the-chronology-of-suppiluliumas-reign/6057DDDA858483E5D5E19E71F1793820",
+      "citation_text": "Trevor Bryce reviews the textual evidence for the chronology of Suppiluliuma's Anatolian campaigns and Syrian wars and explains the interpretive limits of the Deeds of Suppiluliuma and related sources, supporting approximate rather than exact ATLAS boundaries.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Treaty between Suppiluliuma I and Shattiwaza — British Museum 108609",
+      "canonical_url": "https://www.britishmuseum.org/collection/object/W_1913-1011-62",
+      "citation_text": "The British Museum catalogs a Hittite cuneiform treaty between Suppiluliuma I, king of Hatti, and Shattiwaza, king of Mittanni, providing direct material evidence for his great-power diplomacy and rule in the mid-fourteenth century BCE.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "히타이트 제국의 역사 — 디지털집현전",
+      "canonical_url": "https://k-knowledge.kr/srch/read.jsp?id=266127451",
+      "citation_text": "The Korean catalog record for the translated history of the Hittite Empire uses the Korean form 수필룰리우마 1세 and describes him as the ruler who restored Anatolian hegemony during the Hittite New Kingdom, supporting the Korean display form.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
