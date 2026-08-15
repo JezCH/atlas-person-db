@@ -35,16 +35,29 @@
   - screen logic and styles isolated in `atlas-admin-observability.js` / `atlas-admin-observability.css`; existing authoring and duplicate-review write logic remains separate
   - commit `d8b277342e65e66b1f9b2d3665a15bfb8a19178c` passed ATLAS Integrity #749, Human Authoring Operational Parity #97 and P10 Person Duplicate V2 Revalidation #88
   - no Vercel deployment or runtime mutation required for this checkpoint
-- UI-3A — Main Person-centered browser read foundation: IMPLEMENTED — CI REQUESTED
-  - add a browser reader for `/api/atlas-person-read` without changing the current Main screen yet
-  - list/detail access is GET-only; malformed detail UUIDs fail before fetch
+- UI-3A — Main Person-centered browser read foundation: COMPLETE
+  - browser reader for `/api/atlas-person-read` without changing the current Main screen
+  - list/detail access GET-only; malformed detail UUIDs fail before fetch
   - Person `historicity` remains raw authoritative data
   - primary historical grouping uses only the established authoritative value `historical`; every other observed value is retained verbatim under a separate other/uncertain group rather than forced into a frontend enum
   - a historical Person with unknown activity chronology remains historical
   - BCE years remain integer years and sort numerically; unknown activity years sort last
   - historicity partitioning occurs before secondary search/filter predicates
   - observed historicity vocabulary remains derived from the payload
-- UI-3B — Main Persons information-complete screen wiring
+  - commit `e30f544f4ea81a648b7946c1fd151aabef30afe2` passed ATLAS Integrity #750, Human Authoring Operational Parity #98 and P10 Person Duplicate V2 Revalidation #89
+- UI-3B1 — Person-centered Main shell and complete read detail: IMPLEMENTED — CI REQUESTED
+  - Main primary read surface now uses the Person-centered browser reader
+  - explicit visible sections separate `historical` Persons from all other/uncertain raw historicity values
+  - Person cards show readable identity, raw historicity, Person type, Activity range and count
+  - selected Person detail shows all names, descriptions and readable Person sources
+  - Activity detail shows Polity, Relation, Role, Period Basis, full start/end boundary, granularity/certainty/calendar, confidence, chronology status, notes and readable Activity sources
+  - BCE/AD rendering is presentation-only and does not convert raw integer year identity into JavaScript Date values
+  - public Source links are limited to HTTP(S) before becoming clickable
+  - existing Activity authoring DOM and event handlers are preserved and moved intact under an expandable `관계 편집 도구`; legacy write logic is not rewritten in this slice
+  - new Person Main logic is isolated in `atlas-person-main.js` / `atlas-person-main.css`
+  - no Admin-only object data, secret values or mutation endpoints are introduced into the Person read module
+  - no Vercel deployment or runtime DB mutation is required for this checkpoint
+- UI-3B2 — Person-centered Main interaction/mobile integration and secondary semantic filters
 - UI-4 — Admin interface consolidation
 - UI-5 — navigation / future-authority shells
 - UI-6 — responsive and interaction polish
@@ -53,4 +66,4 @@
 - UI-9 — backend-lifecycle-aware main integration
 - UI-10 — Production verification
 
-Vercel rule: routine `agent/ui-information-completeness` commits must create zero deployments. Preview/Production are reserved for intentional checkpoints. UI-2E/UI-2F/UI-3A and subsequent static/contract work can be completed with GitHub + CI only; runtime deployment verification waits for an intentional checkpoint.
+Vercel rule: routine `agent/ui-information-completeness` commits must create zero deployments. Preview/Production are reserved for intentional checkpoints. UI-2E/UI-2F/UI-3A/UI-3B1 and subsequent static/contract work can be completed with GitHub + CI only; runtime deployment verification waits for an intentional checkpoint.
