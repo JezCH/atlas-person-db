@@ -23,7 +23,7 @@ test('Person-centered Main makes historicity an explicit primary grouping before
   assert.match(main, /reader\.preparePersonGroups\(persons, \{ query, sortOrder, facetFilters \}\)/);
   assert.match(main, /역사 인물/);
   assert.match(main, /전설·신화·역사성 미확정 및 기타/);
-  assert.match(main, /historical 이외의 authoritative historicity 값을 별도 구역에 원문 그대로 표시합니다/);
+  assert.match(main, /전설·신화 또는 역사성 판정이 확정되지 않은 인물을 원래 분류값에 따라 별도로 표시합니다/);
   assert.match(reader, /partitionByHistoricity/);
   assert.match(reader, /PRIMARY_HISTORICITY_VALUE = "historical"/);
   assert.match(reader, /personMatchesFacets/);
