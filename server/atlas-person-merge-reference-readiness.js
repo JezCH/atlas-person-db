@@ -110,8 +110,8 @@ async function inspectPersonMergeReferenceReadiness(client) {
 
   const personFks = await foreignKeysTo(client, "atlas_v2.persons");
   const relationshipFks = await foreignKeysTo(client, "atlas_v2.person_politics_v2");
-  const personLikeUuidColumns = await uuidColumns(client, "(^|_)person(_|$)|person_(low|high)_id");
-  const relationshipLikeUuidColumns = await uuidColumns(client, "person_politics_id|relationship_id");
+  const personLikeUuidColumns = await uuidColumns(client, "(^|_)person_id$|person_(low|high)_id$");
+  const relationshipLikeUuidColumns = await uuidColumns(client, "person_politics_id$|relationship_id$");
 
   const personFkColumns = new Set(personFks.flatMap((row) => row.columns.map((column) => `${row.table_schema}.${row.table_name}.${column}`)));
   const relationshipFkColumns = new Set(relationshipFks.flatMap((row) => row.columns.map((column) => `${row.table_schema}.${row.table_name}.${column}`)));
