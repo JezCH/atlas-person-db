@@ -81,6 +81,29 @@
     return `<ul class="person-source-list">${sources.map(sourceHtml).join("")}</ul>`;
   }
 
+  function compactActivityHtml(activity) {
+    const polity = activity?.polity?.display_name || activity?.polity?.canonical_name_en || "정치체 미상";
+    const relation = activity?.relation?.code || "relation 미상";
+    const role = activity?.role?.display_name || activity?.role?.source_label || "역할 미지정";
+    const basis = activity?.period_basis?.display_name || activity?.period_basis?.code || "기간 기준 미상";
+    const semantic = [
+      activity?.chronology_status ? `chronology: ${activity.chronology_status}` : null,
+      activity?.confidence != null ? `confidence: ${activity.confidence}` : null
+    ].filter(Boolean);
+    return `<span class="person-card-activity" data-activity-id="${escapeHtml(activity?.id || "")}">
+      <span class="person-card-activity-head"><b>${escapeHtml(polity)}</b><span class="person-relation-badge">${escapeHtml(relation)}</span></span>
+      <span class="person-card-activity-role">${escapeHtml(role)} · ${escapeHtml(basis)}</span>
+      <span class="person-card-activity-period">${escapeHtml(boundaryLabel(activity?.start))} – ${escapeHtml(boundaryLabel(activity?.end))}</span>
+      ${semantic.length ? `<small>${semantic.map(escapeHtml).join(" · ")}</small>` : ""}
+    </span>`;
+  }
+
+  function compactActivitiesHtml(person) {
+    const activities = Array.isArray(person?.activity_summaries) ? person.activity_summaries : [];
+    if (!activities.length) return '<span class="person-card-activities is-empty">등록된 Activity 없음</span>';
+    return `<span class="person-card-activities">${activities.map(compactActivityHtml).join("")}</span>`;
+  }
+
   function personCard(person) {
     const rawHistoricity = person?.historicity == null || String(person.historicity) === "" ? "historicity 미상" : String(person.historicity);
     const canonical = person?.canonical_name_en && person.canonical_name_en !== person.display_name
@@ -91,6 +114,7 @@
       ${canonical}
       <span class="person-card-range">${escapeHtml(rangeLabel(person))}</span>
       <span class="person-card-count">Activity ${Number(person.activity_count || 0)}건</span>
+      ${compactActivitiesHtml(person)}
     </button>`;
   }
 
@@ -399,7 +423,7 @@
     const personView = document.createElement("section");
     personView.id = "personMainView";
     personView.className = "person-main-view";
-    personView.innerHTML = `<section class="person-main-toolbar card"><div class="person-main-toolbar-heading"><p class="eyebrow">AUTHORITATIVE PERSON READ</p><h2>인물 목록</h2><p>역사성 분류와 연대 확실성을 분리해 표시합니다.</p></div><div class="person-main-actions" aria-label="Person 운영 도구"><button id="personMainAdd" class="btn btn-primary" type="button">+ 관계 추가</button><button id="personMainRefresh" class="btn" type="button">↻ 새로고침</button><button id="personMainFilterToggle" class="btn person-main-filter-toggle" type="button" aria-controls="personMainFilters" aria-expanded="false">필터</button><div class="person-main-more"><button id="personMainMoreButton" class="btn" type="button" aria-controls="personMainMoreMenu" aria-expanded="false">⋯ 더보기</button><div id="personMainMoreMenu" class="person-main-more-menu" hidden><button type="button" data-person-main-action="export">엑셀 내보내기</button><button type="button" data-person-main-action="import">엑셀 불러오기</button><a href="./admin.html">관리자 페이지</a><button type="button" data-person-main-action="legacy-tools">전체 관계 편집표</button></div></div></div><div class="person-main-controls"><input id="personMainSearch" type="search" autocomplete="off" placeholder="인물·정치체·관계·역할 검색" /><select id="personMainSort" aria-label="Person 정렬"><option value="start-asc">활동연도 ↑ 과거→현재</option><option value="start-desc">활동연도 ↓ 현재→과거</option></select></div><div id="personMainFilters" class="person-main-filters" role="group" aria-label="Activity semantic filters"><select id="personMainPolityFilter" aria-label="정치체 필터"><option value="">모든 정치체</option></select><select id="personMainRelationFilter" aria-label="관계 필터"><option value="">모든 관계</option></select><select id="personMainRoleFilter" aria-label="역할 필터"><option value="">모든 역할</option></select><select id="personMainBasisFilter" aria-label="기간 기준 필터"><option value="">모든 기간 기준</option></select><button id="personMainClearFilters" class="btn" type="button">필터 초기화</button></div><div id="personMainSummary" class="person-main-summary"></div><span id="personMainStatus" class="person-main-status">초기화</span></section>
+    personView.innerHTML = `<section class="person-main-toolbar card"><div class="person-main-toolbar-heading"><p class="eyebrow">AUTHORITATIVE PERSON READ</p><h2>인물 목록</h2><p>역사성 분류와 연대 확실성을 분리해 표시합니다.</p></div><div class="person-main-actions" aria-label="Person 운영 도구"><button id="personMainAdd" class="btn btn-primary" type="button">+ 관계 추가</button><button id="personMainRefresh" class="btn" type="button">↻ 새로고침</button><button id="personMainFilterToggle" class="btn person-main-filter-toggle" type="button" aria-controls="personMainFilters" aria-expanded="false">필터</button><div class="person-main-more"><button id="personMainMoreButton" class="btn" type="button" aria-controls="personMainMoreMenu" aria-expanded="false">⋯ 더보기</button><div id="personMainMoreMenu" class="person-main-more-menu" hidden><button type="button" data-person-main-action="export">엑셀 내보내기</button><button type="button" data-person-main-action="import">엑셀 불러오기</button><a href="./admin.html">관리자 페이지</a><button type="button" data-person-main-action="legacy-tools">전체 관계 편집표</button></div></div></div><div class="person-main-controls"><input id="personMainSearch" type="search" autocomplete="off" placeholder="인물·정치체·관계·역할·기간·비고 검색" /><select id="personMainSort" aria-label="Person 정렬"><option value="start-asc">활동연도 ↑ 과거→현재</option><option value="start-desc">활동연도 ↓ 현재→과거</option></select></div><div id="personMainFilters" class="person-main-filters" role="group" aria-label="Activity semantic filters"><select id="personMainPolityFilter" aria-label="정치체 필터"><option value="">모든 정치체</option></select><select id="personMainRelationFilter" aria-label="관계 필터"><option value="">모든 관계</option></select><select id="personMainRoleFilter" aria-label="역할 필터"><option value="">모든 역할</option></select><select id="personMainBasisFilter" aria-label="기간 기준 필터"><option value="">모든 기간 기준</option></select><button id="personMainClearFilters" class="btn" type="button">필터 초기화</button></div><div id="personMainSummary" class="person-main-summary"></div><span id="personMainStatus" class="person-main-status">초기화</span></section>
       <div class="person-main-layout"><div id="personMainGroups" class="person-main-groups"></div><aside id="personMainDetail" class="person-main-detail card" aria-live="polite"><p class="person-detail-placeholder">왼쪽에서 인물을 선택하면 이름·설명·출처와 모든 Activity 의미를 확인할 수 있습니다.</p></aside></div>`;
 
     const authoringTools = document.createElement("details");

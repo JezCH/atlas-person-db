@@ -36,6 +36,10 @@
     return Array.isArray(value) ? value : [];
   }
 
+  function activityRows(person) {
+    return Array.isArray(person?.activity_summaries) ? person.activity_summaries : [];
+  }
+
   function facetText(item) {
     if (!item) return [];
     return [
@@ -48,12 +52,47 @@
     ].map(text).filter(Boolean);
   }
 
+  function boundarySearchText(boundary) {
+    if (!boundary) return [];
+    const tokens = [boundary.month, boundary.day, boundary.granularity, boundary.certainty, boundary.calendar]
+      .map(text)
+      .filter(Boolean);
+    if (Number.isInteger(boundary.year)) {
+      tokens.push(String(boundary.year));
+      if (boundary.year < 0) {
+        const absolute = Math.abs(boundary.year);
+        tokens.push(`BC ${absolute}`, `BCE ${absolute}`, `기원전 ${absolute}`);
+      } else if (boundary.year > 0) {
+        tokens.push(`AD ${boundary.year}`, `CE ${boundary.year}`, `서기 ${boundary.year}`);
+      } else {
+        tokens.push("year 0", "연도 0");
+      }
+    }
+    return tokens;
+  }
+
+  function activitySearchText(activity) {
+    if (!activity) return [];
+    return [
+      ...facetText(activity.polity),
+      ...facetText(activity.relation),
+      ...facetText(activity.role),
+      ...facetText(activity.period_basis),
+      ...boundarySearchText(activity.start),
+      ...boundarySearchText(activity.end),
+      activity.confidence,
+      activity.chronology_status,
+      activity.notes
+    ].map(text).filter(Boolean);
+  }
+
   function searchableText(person) {
     const names = Array.isArray(person?.names) ? person.names.map((row) => row?.name) : [];
     const descriptions = Array.isArray(person?.descriptions) ? person.descriptions.map((row) => row?.content) : [];
     const facets = ["polities", "relations", "roles", "period_bases"]
       .flatMap((key) => facetRows(person, key).flatMap(facetText));
-    return [person?.display_name, person?.canonical_name_en, person?.preferred_name_ko, ...names, ...descriptions, ...facets]
+    const activities = activityRows(person).flatMap(activitySearchText);
+    return [person?.display_name, person?.canonical_name_en, person?.preferred_name_ko, ...names, ...descriptions, ...facets, ...activities]
       .map(text)
       .join("\n")
       .toLocaleLowerCase("ko");
@@ -191,6 +230,7 @@
     observedHistoricityValues,
     partitionByHistoricity,
     facetRows,
+    activityRows,
     facetCatalog,
     personMatchesQuery,
     personMatchesFacets,
