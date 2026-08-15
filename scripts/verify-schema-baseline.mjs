@@ -23,7 +23,8 @@ const expectedAuthoringMigrations = [
 const expectedCorrectionMigrations = [
   '20260811_correction_manifest_runs.sql',
   '20260812_correction_manifest_v1_1.sql',
-  '20260813_correction_manifest_v2.sql'
+  '20260813_correction_manifest_v2.sql',
+  '20260815_correction_manifest_v1_2.sql'
 ];
 
 const expectedTables = [
@@ -162,7 +163,7 @@ try {
      where n.nspname='atlas_v2'
        and con.conname='correction_manifest_runs_manifest_schema_check'`);
   const correctionSchemaDefinition = String(correctionSchemaConstraint.rows[0]?.definition || '');
-  for (const schema of ['atlas-correction-manifest/v1','atlas-correction-manifest/v1.1','atlas-correction-manifest/v2']) {
+  for (const schema of ['atlas-correction-manifest/v1','atlas-correction-manifest/v1.1','atlas-correction-manifest/v1.2','atlas-correction-manifest/v2']) {
     if (!correctionSchemaDefinition.includes(schema)) {
       throw new Error(`correction manifest schema constraint missing ${schema}: ${correctionSchemaDefinition}`);
     }
@@ -204,7 +205,7 @@ try {
     authoring_migration_replay: true,
     correction_migrations: firstCorrectionReplay.applied.length,
     correction_migration_replay: true,
-    correction_manifest_schemas: ['atlas-correction-manifest/v1','atlas-correction-manifest/v1.1','atlas-correction-manifest/v2'],
+    correction_manifest_schemas: ['atlas-correction-manifest/v1','atlas-correction-manifest/v1.1','atlas-correction-manifest/v1.2','atlas-correction-manifest/v2'],
     clean_target_guard: true,
     legacy_objects: 0
   }, null, 2));
