@@ -13,6 +13,7 @@ const correctionApplyApi = fs.readFileSync(new URL('../api/atlas-correction-appl
 const duplicateReviewApi = fs.readFileSync(new URL('../api/atlas-duplicate-review.js', import.meta.url), 'utf8');
 const identityApi = fs.readFileSync(new URL('../api/atlas-identity.js', import.meta.url), 'utf8');
 const mutateApi = fs.readFileSync(new URL('../api/atlas-mutate.js', import.meta.url), 'utf8');
+const p10ReleaseApi = fs.readFileSync(new URL('../api/atlas-p10-revalidation-release.js', import.meta.url), 'utf8');
 const personReadApi = fs.readFileSync(new URL('../api/atlas-person-read.js', import.meta.url), 'utf8');
 const readApi = fs.readFileSync(new URL('../api/atlas-read.js', import.meta.url), 'utf8');
 const sessionApi = fs.readFileSync(new URL('../api/atlas-session.js', import.meta.url), 'utf8');
@@ -34,6 +35,7 @@ test('Vercel exposes exactly the current ATLAS API entrypoints', () => {
     'atlas-duplicate-review.js',
     'atlas-identity.js',
     'atlas-mutate.js',
+    'atlas-p10-revalidation-release.js',
     'atlas-person-read.js',
     'atlas-read.js',
     'atlas-session.js',
@@ -110,6 +112,12 @@ test('server-only Stage 2 Train 2 endpoint delegates to its isolated exact-SHA O
   assert.doesNotMatch(stage2Train2ReleaseApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
 });
 
+test('server-only P10 release endpoint delegates to its exact-SHA OIDC release handler', () => {
+  assert.match(p10ReleaseApi, /atlas-p10-production-release-handler\.js/);
+  assert.match(p10ReleaseApi, /createP10ProductionReleaseHandler/);
+  assert.doesNotMatch(p10ReleaseApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
+});
+
 test('session entrypoint is the only browser authentication endpoint', () => {
   assert.match(sessionApi, /atlas-session-auth|createSessionHandler/);
   assert.doesNotMatch(sessionApi, /person_politics|atlas_v2\./);
@@ -124,7 +132,7 @@ test('server runtime dependency is explicit and lock-backed', () => {
 
 test('browser pages do not load server entrypoints or pg', () => {
   for (const html of [index, admin]) {
-    assert.doesNotMatch(html, /api\/atlas-(?:admin-inspector|admin-system-status|audit-inventory|authoring|authoring-apply|correction-apply|duplicate-review|identity|mutate|person-read|read|session|stage2-schema-release|stage2-train2-release)\.js/);
+    assert.doesNotMatch(html, /api\/atlas-(?:admin-inspector|admin-system-status|audit-inventory|authoring|authoring-apply|correction-apply|duplicate-review|identity|mutate|p10-revalidation-release|person-read|read|session|stage2-schema-release|stage2-train2-release)\.js/);
     assert.doesNotMatch(html, /node_modules\/pg|require\("pg"\)/);
   }
 });

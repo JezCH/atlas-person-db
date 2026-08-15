@@ -11,10 +11,11 @@ const client = fs.readFileSync(new URL('../atlas-admin-duplicate-review.js', imp
 const admin = fs.readFileSync(new URL('../admin.js', import.meta.url), 'utf8');
 
 test('candidate approval fingerprint covers the complete canonical evidence contract', () => {
-  assert.match(detector, /p10-v2-person-revalidation\/v1/);
+  assert.match(detector, /p10-v2-person-revalidation\/v2/);
   assert.match(detector, /REVALIDATION_SEMANTIC_VERSION = "v2-relation-full-temporal"/);
   assert.match(detector, /SEMANTIC_KEY_VERSION/);
   assert.match(detector, /P10_SEMANTIC_PROFILE/);
+  assert.match(detector, /P10_REVALIDATION_REQUIREMENT/);
   assert.match(detector, /evidence_fingerprint: stableFingerprint\(evidence\)/);
   assert.match(detector, /canonicalJson/);
   assert.match(mergeService, /stableFingerprint\(candidateRow\.evidence \|\| \[\]\)/);
@@ -22,17 +23,18 @@ test('candidate approval fingerprint covers the complete canonical evidence cont
   assert.match(mergeService, /LIVE_EVIDENCE_CHANGED/);
 });
 
-test('relationship resolution is planned from locked live state inside the serializable person merge transaction', () => {
+test('relationship resolution is planned from locked requirement-aware live state inside the serializable person merge transaction', () => {
   const executeStart = mergeService.indexOf('async function executeApprovedPersonMerge');
   assert.ok(executeStart >= 0);
   const executeBody = mergeService.slice(executeStart);
   const begin = executeBody.indexOf('BEGIN ISOLATION LEVEL SERIALIZABLE');
+  const requirements = executeBody.indexOf('const requirements = await lockPairRevalidationRequirements');
   const lock = executeBody.indexOf('const liveState = await lockLiveMergeState');
-  const evidence = executeBody.indexOf('assertLiveCandidateEvidence(candidateRow, liveState)');
+  const evidence = executeBody.indexOf('assertLiveCandidateEvidence(candidateRow, liveState, requirements)');
   const groups = executeBody.indexOf('const groups = buildRelationshipReconciliationGroups');
   const plan = executeBody.indexOf('const reconciliationPlan = buildReconciliationPlan');
   const mutation = executeBody.indexOf('for (const item of reconciliationPlan.coalesces)');
-  assert.ok(begin >= 0 && lock > begin && evidence > lock && groups > evidence && plan > groups && mutation > plan);
+  assert.ok(begin >= 0 && requirements > begin && lock > requirements && evidence > lock && groups > evidence && plan > groups && mutation > plan);
 });
 
 test('relationship coalesce preserves dependent facts before deleting the redundant relationship', () => {
@@ -69,7 +71,7 @@ test('admin review queue exposes notes and provenance before a relationship is s
 });
 
 test('same authenticated endpoint carries explicit survivor and resolution plan into the atomic service', () => {
-  assert.match(handler, /relationshipResolutions: body\.relationship_resolutions/);
+  assert.match(handler, /relationshipResolutions:body\.relationship_resolutions/);
   assert.match(client, /relationship_resolutions: relationshipResolutions/);
   assert.match(admin, /collectRelationshipResolutions/);
   assert.match(admin, /처리 방법 선택/);

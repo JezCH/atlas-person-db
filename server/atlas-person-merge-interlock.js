@@ -5,7 +5,7 @@ const {
 } = require("./atlas-relationship-reconciliation.js");
 
 const REQUIRED_RECONCILIATION_SEMANTIC_VERSION = "v2-relation-full-temporal";
-const PERSON_MERGE_LIFECYCLE_VERSION = "pre-p10-blocked";
+const PERSON_MERGE_LIFECYCLE_VERSION = "p10-v2-revalidated";
 const REQUIRED_PERSON_MERGE_LIFECYCLE_VERSION = "p10-v2-revalidated";
 const PERSON_MERGE_BLOCK_CODE = "PERSON_MERGE_BLOCKED_UNTIL_P10_V2_REVALIDATION";
 

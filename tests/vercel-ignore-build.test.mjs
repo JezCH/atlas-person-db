@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import {
   isSafeToSkipPath,
   isAuthoringDataOnly,
+  isSafeForDeployedAuthoringRuntimePath,
+  requiresAuthoringRuntimeDeployment,
   shouldBuildForChangedPaths
 } from "../scripts/vercel-ignore-build.mjs";
 
@@ -52,6 +54,59 @@ test("runtime, schema, release-operation and production-workflow changes always 
     assert.equal(isSafeToSkipPath(file), false, file);
     assert.equal(shouldBuildForChangedPaths([file]), true, file);
   }
+});
+
+test("authoring runtime compatibility allows only proven non-authoring drift", () => {
+  const safe = [
+    ".github/workflows/atlas-p10-person-duplicate-v2-revalidation.yml",
+    "authoring/requests/new-person.json",
+    "scripts/rehearse-p10-person-duplicate-v2-revalidation.mjs",
+    "tests/p10-person-duplicate-v2-revalidation.test.mjs",
+    "server/atlas-duplicate-detector.js",
+    "server/atlas-duplicate-review-service.js"
+  ];
+  for (const file of safe) assert.equal(isSafeForDeployedAuthoringRuntimePath(file), true, file);
+  assert.equal(requiresAuthoringRuntimeDeployment(safe), false);
+});
+
+test("authoring runtime compatibility remains fail-closed for its actual dependency surface", () => {
+  for (const file of [
+    "api/atlas-authoring.js",
+    "api/atlas-authoring-apply.js",
+    "server/atlas-human-authoring-handler.js",
+    "server/atlas-human-authoring-service.js",
+    "server/atlas-authoring-apply-handler.js",
+    "server/atlas-authoring-readiness.js",
+    "server/atlas-postgres-client.js",
+    "server/atlas-stage2-native-activity-service.js",
+    "server/atlas-activity-semantic-key-v2.js",
+    "db/migrations/20260812_stage2_schema.sql",
+    "package.json",
+    "package-lock.json",
+    "vercel.json"
+  ]) {
+    assert.equal(isSafeForDeployedAuthoringRuntimePath(file), false, file);
+    assert.equal(requiresAuthoringRuntimeDeployment([file]), true, file);
+  }
+});
+
+test("ATLAS Authoring Apply keeps Vercel build policy strict while using its narrower compatibility boundary", () => {
+  const before = process.env.GITHUB_WORKFLOW;
+  try {
+    process.env.GITHUB_WORKFLOW = "ATLAS Authoring Apply";
+    assert.equal(shouldBuildForChangedPaths([
+      "server/atlas-duplicate-detector.js",
+      "server/atlas-duplicate-review-service.js",
+      "scripts/rehearse-p10-person-duplicate-v2-revalidation.mjs",
+      "authoring/requests/new-person.json"
+    ]), false);
+    assert.equal(shouldBuildForChangedPaths(["server/atlas-human-authoring-service.js"]), true);
+  } finally {
+    if (before == null) delete process.env.GITHUB_WORKFLOW;
+    else process.env.GITHUB_WORKFLOW = before;
+  }
+
+  assert.equal(shouldBuildForChangedPaths(["server/atlas-duplicate-detector.js"]), true);
 });
 
 test("one deployment-relevant path makes a mixed commit build", () => {

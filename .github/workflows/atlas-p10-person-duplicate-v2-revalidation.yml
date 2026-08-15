@@ -38,8 +38,23 @@ jobs:
           cache: npm
       - name: Install exact locked dependencies
         run: npm ci --ignore-scripts --no-audit --no-fund
-      - name: Rehearse P10 Person duplicate v2 revalidation lifecycle
+      - name: Rehearse P10 Person duplicate v2 semantic lifecycle
         shell: bash
         run: |
           set -euo pipefail
           node scripts/rehearse-p10-person-duplicate-v2-revalidation.mjs
+      - name: Rehearse durable P10 completion frontier
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/rehearse-p10-person-duplicate-revalidation-readiness.mjs
+      - name: Rehearse transactionally gated P10 physical merge
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/rehearse-p10-person-physical-merge-readiness.mjs
+      - name: Rehearse P10 Production revalidation release path
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/rehearse-p10-production-revalidation-release.mjs

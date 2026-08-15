@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:galdan-boshugtu-khan:zunghar-empire:1671-1697:v1",
+  "person": {
+    "canonical_name_en": "Galdan Boshugtu Khan",
+    "display_name_ko": "갈단 보쇽트 칸"
+  },
+  "polity": {
+    "canonical_name_en": "Zunghar Empire",
+    "display_name_ko": "준가르 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khan",
+    "role_display_name_ko": "칸",
+    "start_year": 1671,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1697,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Galdan Boshugtu Khan was an Oirat ruler who consolidated the Zunghars into a centralized imperial polity and ruled from 1671 until his death in 1697. He styled himself khan in 1678; ATLAS records 1671-1697 as the full sovereign-rule interval at year granularity rather than treating the later title assumption as the beginning of his political rule. Under Galdan, Zunghar power expanded across Central Asia and came into major conflict with the Qing Empire."
+  },
+  "sources": [
+    {
+      "title": "The Expansion of the Qing Dynasty of China and the Zunghar Mongol State — Oxford Research Encyclopedia of Asian History",
+      "canonical_url": "https://academic.oup.com/edited-volume/61799/chapter/546312989",
+      "citation_text": "The Oxford Research Encyclopedia identifies Galdan as the founder and ruler of the Zunghar state, gives his reign as 1671-1697, and describes the consolidation and expansion of Zunghar power under him.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "17~18세기 준가르帝國과 호이드 - 호이드 귀족 가문의 위상 변화를 중심으로 -",
+      "canonical_url": "https://www.kci.go.kr/kciportal/landing/article.kci?arti_id=ART002748221",
+      "citation_text": "The Korean academic article uses the Korean form 갈단 보쇽트 칸 and describes the centralized 준가르 제국 that emerged under Galdan from the former Four Oirat confederation.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "아로득(阿魯得) — 조선왕조실록사전, 한국학중앙연구원",
+      "canonical_url": "https://dh.aks.ac.kr/sillokwiki/index.php/아로득(阿魯得)",
+      "citation_text": "The Academy of Korean Studies entry describes Galdan Khan as unifying the Oirats around the Zunghars and founding the Zunghar Empire, supporting the polity identification and Korean terminology.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
