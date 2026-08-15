@@ -149,6 +149,10 @@
       createActivity: (payload) => mutate("create", payload),
       updateActivity: (id, value) => mutate("update", { id, value }),
       deleteActivity: (id) => mutate("delete", { id }),
+      deletePerson: (personId, confirmationName) => mutate("delete_person", {
+        person_id: String(personId || "").trim(),
+        confirmation_name: String(confirmationName || "").trim()
+      }),
       importActivities: (rows) => mutate("import", rows),
       ensureSession,
       sessionStatus,
