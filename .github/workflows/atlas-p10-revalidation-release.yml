@@ -1,0 +1,140 @@
+name: ATLAS P10 Revalidation Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_id:
+        description: 'Exact P10 release id'
+        required: true
+        type: string
+      approval:
+        description: 'Type APPLY:<release_id> exactly'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: atlas-p10-revalidation-production
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    env:
+      ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-p10-revalidation-release
+      AUDIENCE: atlas-person-db-p10-revalidation-release
+      EXPECTED_RELEASE_ID: p10_person_duplicate_revalidation_20260815_v1
+      RELEASE_ID: ${{ inputs.release_id }}
+      APPROVAL: ${{ inputs.approval }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Validate immutable P10 release envelope
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "${GITHUB_REF}" == "refs/heads/main" ]]
+          [[ "${RELEASE_ID}" == "${EXPECTED_RELEASE_ID}" ]]
+          [[ "${APPROVAL}" == "APPLY:${EXPECTED_RELEASE_ID}" ]]
+
+      - name: Execute P10 schema and revalidation frontier release
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/atlas-p10-release/responses
+          request_oidc() {
+            curl --fail-with-body --silent --show-error \
+              -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+              "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${AUDIENCE}" | jq -er '.value'
+          }
+          call() {
+            local mode="$1"
+            local output="/tmp/atlas-p10-release/responses/$(printf '%03d' "${CALL_NO}")-${mode}.json"
+            local token payload status code
+            token="$(request_oidc)"
+            payload="$(jq -cn \
+              --arg sha "${GITHUB_SHA}" \
+              --arg release "${RELEASE_ID}" \
+              --arg approval "${APPROVAL}" \
+              --arg mode "${mode}" \
+              '{deployment_sha:$sha,release_id:$release,approval:$approval,mode:$mode}')"
+            status="$(curl --silent --show-error --output "$output" --write-out '%{http_code}' \
+              --request POST -H 'content-type: application/json' -H "authorization: Bearer ${token}" \
+              --data "$payload" "$ENDPOINT")"
+            if [[ "$status" != "200" ]]; then
+              cat "$output" >&2 || true
+              code="$(jq -r '.code//"UNKNOWN"' "$output" 2>/dev/null || true)"
+              echo "P10 ${mode} failed HTTP ${status} ${code}" >&2
+              exit 1
+            fi
+            jq -e --arg mode "$mode" --arg sha "${GITHUB_SHA}" --arg release "${EXPECTED_RELEASE_ID}" '
+              .ok==true and
+              .marker=="ATLAS_P10_REVALIDATION_RELEASE_V1" and
+              .mode==$mode and
+              .deployment_sha==$sha and
+              .release_id==$release and
+              .automatic_review_performed==false and
+              .physical_person_merge_executed==false
+            ' "$output" >/dev/null
+            LAST_RESPONSE="$output"
+            CALL_NO=$((CALL_NO+1))
+          }
+          CALL_NO=1
+
+          call preflight
+          jq -e '
+            .result.merge_execution_state.lifecycle_code_ready==true and
+            .result.physical_person_merge_executed_by_release==false
+          ' "$LAST_RESPONSE" >/dev/null
+
+          call migration_dry_run
+          jq -e '
+            .result.dry_run==true and .result.committed==false and
+            .result.during.requirement_ledger.table_present==true and
+            .result.during.requirement_ledger.gorgo_requirement_present==true
+          ' "$LAST_RESPONSE" >/dev/null
+
+          call migration_apply
+          jq -e '
+            .result.committed==true and .result.dry_run==false and
+            .result.after.requirement_ledger.table_present==true and
+            .result.after.requirement_ledger.gorgo_requirement_present==true
+          ' "$LAST_RESPONSE" >/dev/null
+
+          call rebuild_candidates
+          jq -e '
+            .result.physical_person_merge_executed==false and
+            .result.review_decision_written==false and
+            .result.after.requirement_ledger.table_present==true
+          ' "$LAST_RESPONSE" >/dev/null
+
+          call final_verify
+          jq -e '
+            .result.requirement_ledger.table_present==true and
+            .result.requirement_ledger.gorgo_requirement_present==true and
+            .result.reference_readiness.ready==true and
+            .result.merge_execution_state.lifecycle_code_ready==true and
+            .result.physical_person_merge_executed_by_release==false
+          ' "$LAST_RESPONSE" >/dev/null
+          jq -n \
+            --arg sha "${GITHUB_SHA}" \
+            --arg release "${EXPECTED_RELEASE_ID}" \
+            --slurpfile final "$LAST_RESPONSE" \
+            '{deployment_sha:$sha,release_id:$release,final:$final[0],note:"Human duplicate review and physical merge are intentionally outside this release workflow."}' \
+            > /tmp/atlas-p10-release/final.json
+
+      - name: Upload immutable P10 release evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-p10-revalidation-${{ github.sha }}
+          path: /tmp/atlas-p10-release/
+          if-no-files-found: warn
+          retention-days: 90
