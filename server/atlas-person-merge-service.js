@@ -47,7 +47,20 @@ async function ensureMergeSchema(client) {
 }
 
 async function snapshotPerson(client, personId) {
-  const [person, names, sources, descriptions, relationships, relationshipSources, chronologyClaims, relationshipDescriptions] = await Promise.all([
+  const [
+    person,
+    names,
+    sources,
+    descriptions,
+    relationships,
+    relationshipSources,
+    chronologyClaims,
+    relationshipDescriptions,
+    peopleAffiliations,
+    peopleAffiliationSources,
+    eventParticipations,
+    eventParticipationSources
+  ] = await Promise.all([
     client.query(`select id,canonical_key,person_type,historicity from atlas_v2.persons where id=$1`, [personId]),
     client.query(`select id,locale,name,name_type,is_preferred from atlas_v2.person_names where person_id=$1 order by locale,is_preferred desc,name,name_type,id`, [personId]),
     client.query(`select source_id from atlas_v2.person_sources where person_id=$1 order by source_id`, [personId]),
@@ -59,9 +72,13 @@ async function snapshotPerson(client, personId) {
       confidence,chronology_status,legacy_source_key,notes,source_locator,content_hash
       from atlas_v2.person_politics_v2 where person_id=$1
       order by activity_start,activity_end,polity_id,relation_type_id,role_id nulls first,period_basis_id,id`, [personId]),
-    client.query(`select pps.person_politics_id,pps.source_id,pps.source_locator_key from atlas_v2.person_politics_sources pps join atlas_v2.person_politics_v2 pp on pp.id=pps.person_politics_id where pp.person_id=$1 order by pps.person_politics_id,pps.source_id`, [personId]),
+    client.query(`select pps.person_politics_id,pps.source_id,pps.source_locator_key from atlas_v2.person_politics_sources pps join atlas_v2.person_politics_v2 pp on pp.id=pps.person_politics_id where pp.person_id=$1 order by pps.person_politics_id,pps.source_id,pps.source_locator_key`, [personId]),
     client.query(`select cc.id,cc.person_politics_id,cc.claim_type,cc.start_year,cc.end_year from atlas_v2.chronology_claims cc join atlas_v2.person_politics_v2 pp on pp.id=cc.person_politics_id where pp.person_id=$1 order by cc.person_politics_id,cc.id`, [personId]),
-    client.query(`select rd.id,rd.person_politics_id,rd.locale,rd.content from atlas_v2.relationship_descriptions rd join atlas_v2.person_politics_v2 pp on pp.id=rd.person_politics_id where pp.person_id=$1 order by rd.person_politics_id,rd.locale,rd.id`, [personId])
+    client.query(`select rd.id,rd.person_politics_id,rd.locale,rd.content from atlas_v2.relationship_descriptions rd join atlas_v2.person_politics_v2 pp on pp.id=rd.person_politics_id where pp.person_id=$1 order by rd.person_politics_id,rd.locale,rd.id`, [personId]),
+    client.query(`select id,people_group_id,affiliation_type,valid_from_year,valid_from_month,valid_from_day,valid_from_granularity,valid_from_certainty,valid_from_calendar,valid_to_year,valid_to_month,valid_to_day,valid_to_granularity,valid_to_certainty,valid_to_calendar,confidence,notes from atlas_v2.person_people_affiliations where person_id=$1 order by id`, [personId]),
+    client.query(`select s.person_people_affiliation_id,s.source_id,s.source_locator_key from atlas_v2.person_people_affiliation_sources s join atlas_v2.person_people_affiliations a on a.id=s.person_people_affiliation_id where a.person_id=$1 order by s.person_people_affiliation_id,s.source_id,s.source_locator_key`, [personId]),
+    client.query(`select id,historical_event_id,participation_type,role_label,valid_from_year,valid_from_month,valid_from_day,valid_from_granularity,valid_from_certainty,valid_from_calendar,valid_to_year,valid_to_month,valid_to_day,valid_to_granularity,valid_to_certainty,valid_to_calendar,confidence,notes from atlas_v2.person_event_participations where person_id=$1 order by id`, [personId]),
+    client.query(`select s.person_event_participation_id,s.source_id,s.source_locator_key from atlas_v2.person_event_participation_sources s join atlas_v2.person_event_participations p on p.id=s.person_event_participation_id where p.person_id=$1 order by s.person_event_participation_id,s.source_id,s.source_locator_key`, [personId])
   ]);
   if (person.rowCount !== 1) throw new Error("merge person not found");
   return {
@@ -72,7 +89,11 @@ async function snapshotPerson(client, personId) {
     relationships: relationships.rows,
     relationship_sources: relationshipSources.rows,
     chronology_claims: chronologyClaims.rows,
-    relationship_descriptions: relationshipDescriptions.rows
+    relationship_descriptions: relationshipDescriptions.rows,
+    people_affiliations: peopleAffiliations.rows,
+    people_affiliation_sources: peopleAffiliationSources.rows,
+    event_participations: eventParticipations.rows,
+    event_participation_sources: eventParticipationSources.rows
   };
 }
 
@@ -82,7 +103,11 @@ async function globalCounts(client) {
     (select count(*)::int from atlas_v2.person_politics_v2) as relationships,
     (select count(*)::int from atlas_v2.chronology_claims) as chronology_claims,
     (select count(*)::int from atlas_v2.person_politics_sources) as relationship_sources,
-    (select count(*)::int from atlas_v2.relationship_descriptions) as relationship_descriptions`);
+    (select count(*)::int from atlas_v2.relationship_descriptions) as relationship_descriptions,
+    (select count(*)::int from atlas_v2.person_people_affiliations) as people_affiliations,
+    (select count(*)::int from atlas_v2.person_people_affiliation_sources) as people_affiliation_sources,
+    (select count(*)::int from atlas_v2.person_event_participations) as event_participations,
+    (select count(*)::int from atlas_v2.person_event_participation_sources) as event_participation_sources`);
   return result.rows[0];
 }
 
@@ -107,10 +132,7 @@ async function lockLiveMergeState(client, personIds) {
 }
 
 function assertLiveCandidateEvidence(candidateRow, liveState) {
-  const detected = detectPersonDuplicateCandidates({
-    names: liveState.names,
-    activities: liveState.relationships
-  });
+  const detected = detectPersonDuplicateCandidates({ names: liveState.names, activities: liveState.relationships });
   const low = String(candidateRow.person_low_id);
   const high = String(candidateRow.person_high_id);
   const current = detected.find((item) => item.person_low_id === low && item.person_high_id === high);
@@ -121,9 +143,7 @@ function assertLiveCandidateEvidence(candidateRow, liveState) {
     current.evidence_fingerprint !== candidateRow.evidence_fingerprint ||
     current.detector_version !== candidateRow.detector_version ||
     Number(current.confidence) !== Number(candidateRow.confidence)
-  ) {
-    throw new Error("LIVE_EVIDENCE_CHANGED: approved duplicate evidence no longer matches live person state");
-  }
+  ) throw new Error("LIVE_EVIDENCE_CHANGED: approved duplicate evidence no longer matches live person state");
   return current;
 }
 
@@ -151,12 +171,7 @@ async function moveSources(client, sourceId, survivorId) {
 }
 
 async function coalesceRelationship(client, keepId, dropId) {
-  const links = await client.query(`
-    select person_politics_id,source_id,source_locator_key
-      from atlas_v2.person_politics_sources
-     where person_politics_id=any($1::uuid[])
-     order by source_id,person_politics_id
-     for update`, [[keepId, dropId]]);
+  const links = await client.query(`select person_politics_id,source_id,source_locator_key from atlas_v2.person_politics_sources where person_politics_id=any($1::uuid[]) order by source_id,person_politics_id for update`, [[keepId, dropId]]);
   const keepBySource = new Map();
   const dropLinks = [];
   for (const row of links.rows || []) {
@@ -164,7 +179,6 @@ async function coalesceRelationship(client, keepId, dropId) {
     if (String(row.person_politics_id) === keepId) keepBySource.set(sourceId, String(row.source_locator_key));
     else dropLinks.push({ source_id: sourceId, source_locator_key: String(row.source_locator_key) });
   }
-
   let insertedSourceLinks = 0;
   let collapsedSourceLinks = 0;
   for (const link of dropLinks) {
@@ -179,26 +193,15 @@ async function coalesceRelationship(client, keepId, dropId) {
       collapsedSourceLinks += 1;
       continue;
     }
-    const inserted = await client.query(`
-      insert into atlas_v2.person_politics_sources(person_politics_id,source_id,source_locator_key)
-      values($1,$2,$3)
-      returning source_id`, [keepId, link.source_id, link.source_locator_key]);
+    const inserted = await client.query(`insert into atlas_v2.person_politics_sources(person_politics_id,source_id,source_locator_key) values($1,$2,$3) returning source_id`, [keepId, link.source_id, link.source_locator_key]);
     insertedSourceLinks += inserted.rowCount;
     keepBySource.set(link.source_id, link.source_locator_key);
   }
-
   const chronology = await client.query(`update atlas_v2.chronology_claims set person_politics_id=$1 where person_politics_id=$2 returning id`, [keepId, dropId]);
   const descriptions = await client.query(`update atlas_v2.relationship_descriptions set person_politics_id=$1 where person_politics_id=$2 returning id`, [keepId, dropId]);
   const deleted = await client.query(`delete from atlas_v2.person_politics_v2 where id=$1 returning id`, [dropId]);
   if (deleted.rowCount !== 1) throw new Error("relationship reconciliation drop did not delete exactly one relationship");
-  return {
-    keep_relationship_id: keepId,
-    drop_relationship_id: dropId,
-    inserted_source_links: insertedSourceLinks,
-    collapsed_source_links: collapsedSourceLinks,
-    chronology_claims_moved: chronology.rowCount,
-    relationship_descriptions_moved: descriptions.rowCount
-  };
+  return { keep_relationship_id: keepId, drop_relationship_id: dropId, inserted_source_links: insertedSourceLinks, collapsed_source_links: collapsedSourceLinks, chronology_claims_moved: chronology.rowCount, relationship_descriptions_moved: descriptions.rowCount };
 }
 
 async function executeApprovedPersonMerge({ client, candidateId, survivorPersonId, requestId, relationshipResolutions = [], reviewerKind = "admin_session" } = {}) {
@@ -217,21 +220,13 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
     const replay = await client.query(`select id,candidate_id,survivor_person_id,source_person_id,mutation_summary from atlas_v2.person_merge_audits where request_id=$1`, [request]);
     if (replay.rowCount === 1) {
       const previousResolutions = replay.rows[0].mutation_summary?.relationship_reconciliation?.requested_resolutions || [];
-      if (
-        String(replay.rows[0].candidate_id) !== candidate ||
-        String(replay.rows[0].survivor_person_id) !== survivorInput ||
-        stableJson(previousResolutions) !== stableJson(normalizedResolutions)
-      ) throw new Error("merge request_id collision with different payload");
+      if (String(replay.rows[0].candidate_id) !== candidate || String(replay.rows[0].survivor_person_id) !== survivorInput || stableJson(previousResolutions) !== stableJson(normalizedResolutions)) throw new Error("merge request_id collision with different payload");
       await client.query("COMMIT");
       return { replayed: true, merge_audit_id: String(replay.rows[0].id), candidate_id: String(replay.rows[0].candidate_id), survivor_person_id: String(replay.rows[0].survivor_person_id), source_person_id: String(replay.rows[0].source_person_id), mutation_summary: replay.rows[0].mutation_summary };
     }
 
     await client.query(`select pg_advisory_xact_lock(hashtext($1))`, [`atlas-phase9b-candidate:${candidate}`]);
-    const candidateResult = await client.query(`
-      select id,person_low_id,person_high_id,candidate_state,current_decision,
-             confidence,evidence,evidence_fingerprint,decision_evidence_fingerprint,detector_version
-        from atlas_v2.person_duplicate_candidates
-       where id=$1 for update`, [candidate]);
+    const candidateResult = await client.query(`select id,person_low_id,person_high_id,candidate_state,current_decision,confidence,evidence,evidence_fingerprint,decision_evidence_fingerprint,detector_version from atlas_v2.person_duplicate_candidates where id=$1 for update`, [candidate]);
     if (candidateResult.rowCount !== 1) throw new Error("candidate not found");
     const candidateRow = candidateResult.rows[0];
     if (candidateRow.candidate_state !== "ACTIVE") throw new Error("candidate is stale; rebuild before merge");
@@ -252,15 +247,8 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
 
     const liveState = await lockLiveMergeState(client, [sides.survivor_person_id, sides.source_person_id]);
     assertLiveCandidateEvidence(candidateRow, liveState);
-    const groups = buildRelationshipReconciliationGroups({
-      rows: liveState.relationships,
-      lowPersonId: String(candidateRow.person_low_id),
-      highPersonId: String(candidateRow.person_high_id)
-    });
-    const reconciliationPlan = buildReconciliationPlan({
-      groups,
-      resolutions: normalizedResolutions
-    });
+    const groups = buildRelationshipReconciliationGroups({ rows: liveState.relationships, lowPersonId: String(candidateRow.person_low_id), highPersonId: String(candidateRow.person_high_id) });
+    const reconciliationPlan = buildReconciliationPlan({ groups, resolutions: normalizedResolutions });
 
     const beforeCounts = await globalCounts(client);
     const survivorBefore = await snapshotPerson(client, sides.survivor_person_id);
@@ -279,6 +267,8 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
     const sources = await moveSources(client, sides.source_person_id, sides.survivor_person_id);
     const descriptions = await client.query(`update atlas_v2.person_descriptions set person_id=$2 where person_id=$1 returning id`, [sides.source_person_id, sides.survivor_person_id]);
     const relationships = await client.query(`update atlas_v2.person_politics_v2 set person_id=$2 where person_id=$1 returning id`, [sides.source_person_id, sides.survivor_person_id]);
+    const peopleAffiliations = await client.query(`update atlas_v2.person_people_affiliations set person_id=$2 where person_id=$1 returning id`, [sides.source_person_id, sides.survivor_person_id]);
+    const eventParticipations = await client.query(`update atlas_v2.person_event_participations set person_id=$2 where person_id=$1 returning id`, [sides.source_person_id, sides.survivor_person_id]);
     const staleCandidates = await client.query(`update atlas_v2.person_duplicate_candidates set candidate_state='STALE',updated_at=now() where candidate_state='ACTIVE' and (person_low_id=any($1::uuid[]) or person_high_id=any($1::uuid[])) returning id`, [[sides.source_person_id, sides.survivor_person_id]]);
 
     const deleted = await client.query(`delete from atlas_v2.persons where id=$1 returning id`, [sides.source_person_id]);
@@ -288,6 +278,8 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
       (select count(*)::int from atlas_v2.person_sources where person_id=$1) as sources,
       (select count(*)::int from atlas_v2.person_descriptions where person_id=$1) as descriptions,
       (select count(*)::int from atlas_v2.person_politics_v2 where person_id=$1) as relationships,
+      (select count(*)::int from atlas_v2.person_people_affiliations where person_id=$1) as people_affiliations,
+      (select count(*)::int from atlas_v2.person_event_participations where person_id=$1) as event_participations,
       (select count(*)::int from atlas_v2.authoring_manifest_runs where person_id=$1) as authoring_person_pointers,
       (select count(*)::int from atlas_v2.persons where id=$1) as person`, [sides.source_person_id]);
     if (Object.values(remainingSourceRefs.rows[0]).some((value) => Number(value) !== 0)) throw new Error("source person references remain after merge");
@@ -298,34 +290,27 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
     if (afterCounts.chronology_claims !== beforeCounts.chronology_claims) throw new Error("chronology_claims count changed during person merge");
     if (afterCounts.relationship_descriptions !== beforeCounts.relationship_descriptions) throw new Error("relationship_descriptions count changed during person merge");
     if (afterCounts.relationship_sources !== beforeCounts.relationship_sources - collapsedSourceLinks) throw new Error("relationship_sources count changed outside deterministic source-link collapse");
+    if (afterCounts.people_affiliations !== beforeCounts.people_affiliations) throw new Error("people affiliation count changed during person merge");
+    if (afterCounts.people_affiliation_sources !== beforeCounts.people_affiliation_sources) throw new Error("people affiliation provenance count changed during person merge");
+    if (afterCounts.event_participations !== beforeCounts.event_participations) throw new Error("event participation count changed during person merge");
+    if (afterCounts.event_participation_sources !== beforeCounts.event_participation_sources) throw new Error("event participation provenance count changed during person merge");
 
     const mutationSummary = {
-      reference_readiness: {
-        policy_version: referenceReadiness.policy_version,
-        ready: referenceReadiness.ready
-      },
-      relationship_reconciliation: {
-        requested_resolutions: normalizedResolutions,
-        applied_resolutions: reconciliationPlan.resolutions,
-        coalesces: reconciliationMutations,
-        relationships_removed: reconciliationPlan.coalesces.length,
-        duplicate_source_links_collapsed: collapsedSourceLinks
-      },
+      reference_readiness: { policy_version: referenceReadiness.policy_version, ready: referenceReadiness.ready },
+      relationship_reconciliation: { requested_resolutions: normalizedResolutions, applied_resolutions: reconciliationPlan.resolutions, coalesces: reconciliationMutations, relationships_removed: reconciliationPlan.coalesces.length, duplicate_source_links_collapsed: collapsedSourceLinks },
       names,
       sources,
       descriptions_moved: descriptions.rowCount,
       relationships_moved: relationships.rowCount,
+      people_affiliations_moved: peopleAffiliations.rowCount,
+      event_participations_moved: eventParticipations.rowCount,
       authoring_person_pointers_cleared_by_lifecycle_fk: Number(authoringPersonPointersBefore.rows[0]?.count || 0),
       candidates_staled: staleCandidates.rowCount,
       before_counts: beforeCounts,
       after_counts: afterCounts
     };
     const auditId = crypto.randomUUID();
-    await client.query(`insert into atlas_v2.person_merge_audits(
-      id,request_id,candidate_id,review_id,survivor_person_id,source_person_id,evidence_fingerprint,reviewer_kind,survivor_before,source_before,mutation_summary,merged_at
-    ) values($1,$2,$3,$4,$5,$6,$7,$8,$9::jsonb,$10::jsonb,$11::jsonb,now())`, [
-      auditId,request,candidate,String(latestReview.rows[0].id),sides.survivor_person_id,sides.source_person_id,candidateRow.evidence_fingerprint,reviewer,JSON.stringify(survivorBefore),JSON.stringify(sourceBefore),JSON.stringify(mutationSummary)
-    ]);
+    await client.query(`insert into atlas_v2.person_merge_audits(id,request_id,candidate_id,review_id,survivor_person_id,source_person_id,evidence_fingerprint,reviewer_kind,survivor_before,source_before,mutation_summary,merged_at) values($1,$2,$3,$4,$5,$6,$7,$8,$9::jsonb,$10::jsonb,$11::jsonb,now())`, [auditId,request,candidate,String(latestReview.rows[0].id),sides.survivor_person_id,sides.source_person_id,candidateRow.evidence_fingerprint,reviewer,JSON.stringify(survivorBefore),JSON.stringify(sourceBefore),JSON.stringify(mutationSummary)]);
     await client.query("COMMIT");
     return { replayed: false, merge_audit_id: auditId, candidate_id: candidate, ...sides, mutation_summary: mutationSummary };
   } catch (error) {
