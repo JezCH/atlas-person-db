@@ -11,6 +11,7 @@ const correctionApplyApi = fs.readFileSync(new URL('../api/atlas-correction-appl
 const duplicateReviewApi = fs.readFileSync(new URL('../api/atlas-duplicate-review.js', import.meta.url), 'utf8');
 const identityApi = fs.readFileSync(new URL('../api/atlas-identity.js', import.meta.url), 'utf8');
 const mutateApi = fs.readFileSync(new URL('../api/atlas-mutate.js', import.meta.url), 'utf8');
+const personReadApi = fs.readFileSync(new URL('../api/atlas-person-read.js', import.meta.url), 'utf8');
 const readApi = fs.readFileSync(new URL('../api/atlas-read.js', import.meta.url), 'utf8');
 const sessionApi = fs.readFileSync(new URL('../api/atlas-session.js', import.meta.url), 'utf8');
 const stage2SchemaReleaseApi = fs.readFileSync(new URL('../api/atlas-stage2-schema-release.js', import.meta.url), 'utf8');
@@ -29,6 +30,7 @@ test('Vercel exposes exactly the current ATLAS API entrypoints', () => {
     'atlas-duplicate-review.js',
     'atlas-identity.js',
     'atlas-mutate.js',
+    'atlas-person-read.js',
     'atlas-read.js',
     'atlas-session.js',
     'atlas-stage2-schema-release.js',
@@ -37,7 +39,7 @@ test('Vercel exposes exactly the current ATLAS API entrypoints', () => {
 });
 
 test('database-backed browser entrypoints share one server PostgreSQL client boundary', () => {
-  const sources = [authoringApi, duplicateReviewApi, identityApi, mutateApi, readApi];
+  const sources = [authoringApi, duplicateReviewApi, identityApi, mutateApi, personReadApi, readApi];
   for (const source of sources) {
     assert.match(source, /atlas-postgres-client\.js/);
     assert.match(source, /createPostgresClient/);
@@ -53,6 +55,12 @@ test('normal human authoring endpoint delegates to the Stage 2-native direct aut
   assert.match(authoringApi, /atlas-human-authoring-handler\.js/);
   assert.match(authoringApi, /createHumanAuthoringHandler/);
   assert.doesNotMatch(authoringApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
+});
+
+test('public Person read endpoint delegates to the Person-centered read handler', () => {
+  assert.match(personReadApi, /atlas-person-read-handler\.js/);
+  assert.match(personReadApi, /createPersonReadHandler/);
+  assert.doesNotMatch(personReadApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
 });
 
 test('server-only authoring apply endpoint delegates to its isolated handler', () => {
@@ -100,7 +108,7 @@ test('server runtime dependency is explicit and lock-backed', () => {
 
 test('browser pages do not load server entrypoints or pg', () => {
   for (const html of [index, admin]) {
-    assert.doesNotMatch(html, /api\/atlas-(?:audit-inventory|authoring|authoring-apply|correction-apply|duplicate-review|identity|mutate|read|session|stage2-schema-release|stage2-train2-release)\.js/);
+    assert.doesNotMatch(html, /api\/atlas-(?:audit-inventory|authoring|authoring-apply|correction-apply|duplicate-review|identity|mutate|person-read|read|session|stage2-schema-release|stage2-train2-release)\.js/);
     assert.doesNotMatch(html, /node_modules\/pg|require\("pg"\)/);
   }
 });
