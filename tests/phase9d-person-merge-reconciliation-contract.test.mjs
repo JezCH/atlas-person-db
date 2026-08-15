@@ -11,10 +11,11 @@ const client = fs.readFileSync(new URL('../atlas-admin-duplicate-review.js', imp
 const admin = fs.readFileSync(new URL('../admin.js', import.meta.url), 'utf8');
 
 test('candidate approval fingerprint covers the complete canonical evidence contract', () => {
-  assert.match(detector, /p10-v2-person-revalidation\/v1/);
+  assert.match(detector, /p10-v2-person-revalidation\/v2/);
   assert.match(detector, /REVALIDATION_SEMANTIC_VERSION = "v2-relation-full-temporal"/);
   assert.match(detector, /SEMANTIC_KEY_VERSION/);
   assert.match(detector, /P10_SEMANTIC_PROFILE/);
+  assert.match(detector, /P10_REVALIDATION_REQUIREMENT/);
   assert.match(detector, /evidence_fingerprint: stableFingerprint\(evidence\)/);
   assert.match(detector, /canonicalJson/);
   assert.match(mergeService, /stableFingerprint\(candidateRow\.evidence \|\| \[\]\)/);
@@ -69,7 +70,7 @@ test('admin review queue exposes notes and provenance before a relationship is s
 });
 
 test('same authenticated endpoint carries explicit survivor and resolution plan into the atomic service', () => {
-  assert.match(handler, /relationshipResolutions: body\.relationship_resolutions/);
+  assert.match(handler, /relationshipResolutions:body\.relationship_resolutions/);
   assert.match(client, /relationship_resolutions: relationshipResolutions/);
   assert.match(admin, /collectRelationshipResolutions/);
   assert.match(admin, /처리 방법 선택/);

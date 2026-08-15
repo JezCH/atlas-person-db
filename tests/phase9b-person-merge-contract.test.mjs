@@ -128,7 +128,7 @@ test('merge creates immutable before-state audit and keeps idempotent request re
 test('admin transport exposes execution only as a separately named approved operation with explicit survivor and relationship choices', () => {
   assert.match(handler, /EXECUTE_APPROVED_MERGE/);
   assert.match(handler, /executeApprovedPersonMerge/);
-  assert.match(handler, /relationshipResolutions: body\.relationship_resolutions/);
+  assert.match(handler, /relationshipResolutions:\s*body\.relationship_resolutions/);
   assert.match(client, /executeApprovedMerge/);
   assert.match(client, /survivor_person_id/);
   assert.match(client, /relationship_resolutions/);

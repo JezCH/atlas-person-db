@@ -28,7 +28,7 @@ test('P10 Person merge reference policy is explicit and includes every reviewed 
   ]);
 });
 
-test('snapshot UUID columns are reviewed explicitly instead of masquerading as live Person FKs', () => {
+test('P10-B base snapshots and optional P10-C requirement snapshots are both explicit', () => {
   assert.deepEqual(readiness.EXPECTED_NON_FK_PERSON_UUID_COLUMNS, [
     'atlas_v2.person_duplicate_candidates.person_high_id',
     'atlas_v2.person_duplicate_candidates.person_low_id',
@@ -37,7 +37,13 @@ test('snapshot UUID columns are reviewed explicitly instead of masquerading as l
     'atlas_v2.person_merge_audits.source_person_id',
     'atlas_v2.person_merge_audits.survivor_person_id'
   ]);
+  assert.deepEqual(readiness.P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS, [
+    'atlas_v2.person_duplicate_revalidation_requirements.person_high_id',
+    'atlas_v2.person_duplicate_revalidation_requirements.person_low_id'
+  ]);
   assert.deepEqual(readiness.EXPECTED_NON_FK_RELATIONSHIP_UUID_COLUMNS, []);
+  assert.match(readinessSource, /requirement_ledger_present/);
+  assert.match(readinessSource, /expected_non_fk_person_uuid_columns/);
   assert.match(readinessSource, /PERSON_UUID_REFERENCE_UNREVIEWED/);
   assert.match(readinessSource, /RELATIONSHIP_UUID_REFERENCE_UNREVIEWED/);
   assert.match(readinessSource, /MERGE_SURFACE_TRIGGER_UNREVIEWED/);
@@ -67,7 +73,7 @@ test('People affiliation and Event participation assertions are remapped without
   assert.match(mergeSource, /event_participations_moved/);
 });
 
-test('P10-B does not unlock physical Person merge', () => {
+test('P10-C still does not unlock physical Person merge', () => {
   const state = interlock.personMergeExecutionState();
   assert.equal(state.person_merge_lifecycle_version, 'pre-p10-blocked');
   assert.equal(state.required_person_merge_lifecycle_version, 'p10-v2-revalidated');
