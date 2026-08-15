@@ -41,6 +41,15 @@
     return document.querySelectorAll("#personMainGroups .person-card").length;
   }
 
+  function visibleNonTimelineCount() {
+    return [...document.querySelectorAll("#nonTimelineBody .non-timeline-data-row")]
+      .filter((row) => !row.hidden && row.style.display !== "none").length;
+  }
+
+  function visiblePersonRecordCount() {
+    return visiblePersonCount() + visibleNonTimelineCount();
+  }
+
   function setMenu(open) {
     if (!drawer || !backdrop || !menuButton) return;
     drawer.classList.toggle("open", open);
@@ -68,7 +77,7 @@
     const hasValue = mobileSearch.value.trim().length > 0;
     if (mobileSearchClear) mobileSearchClear.hidden = !hasValue;
     if (mobileSearchCount) {
-      const value = count ?? (personMainActive() ? visiblePersonCount() : visibleRowCount());
+      const value = count ?? (personMainActive() ? visiblePersonRecordCount() : visibleRowCount());
       mobileSearchCount.textContent = hasValue ? `${value}건` : "";
     }
   }
@@ -104,7 +113,7 @@
     if (personSearch) {
       if (personSearch.value !== query) personSearch.value = query;
       personSearch.dispatchEvent(new Event("input", { bubbles: true }));
-      updateMobileSearchState(visiblePersonCount());
+      updateMobileSearchState(visiblePersonRecordCount());
       return;
     }
     const count = filterRenderedRows(query);
@@ -153,7 +162,7 @@
   const bodyObserver = dataBody && "MutationObserver" in window
     ? new MutationObserver(() => {
         if (personMainActive()) {
-          updateMobileSearchState(visiblePersonCount());
+          updateMobileSearchState(visiblePersonRecordCount());
           return;
         }
         const query = mobileSearch?.value || "";
@@ -163,11 +172,14 @@
     : null;
   bodyObserver?.observe(dataBody, { childList: true, subtree: true });
 
-  window.addEventListener("atlas-person-main-rendered", (event) => {
+  window.addEventListener("atlas-person-main-rendered", () => {
     const personSearch = personMainSearch();
     if (mobileSearch && personSearch && mobileSearch.value !== personSearch.value) mobileSearch.value = personSearch.value;
-    const count = Number(event?.detail?.visibleCount);
-    updateMobileSearchState(Number.isFinite(count) ? count : visiblePersonCount());
+    updateMobileSearchState(visiblePersonRecordCount());
+  });
+
+  window.addEventListener("atlas-non-timeline-rendered", () => {
+    if (personMainActive()) updateMobileSearchState(visiblePersonRecordCount());
   });
 
   document.addEventListener("keydown", (event) => {
@@ -189,7 +201,7 @@
     if (event.matches && mobileSearch) {
       const personSearch = personMainSearch();
       mobileSearch.value = personSearch?.value ?? desktopSearch?.value ?? mobileSearch.value;
-      if (personSearch) updateMobileSearchState(visiblePersonCount());
+      if (personSearch) updateMobileSearchState(visiblePersonRecordCount());
       else updateMobileSearchState(filterRenderedRows(mobileSearch.value));
     }
   });
