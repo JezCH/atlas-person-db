@@ -20,7 +20,7 @@ select distinct
   pben.name as period_basis_name_en,
   pbko.name as period_basis_name_ko
 from atlas_v2.person_politics_v2 pp
-join atlas_v2.person_polity_relation_types prt
+left join atlas_v2.person_polity_relation_types prt
   on prt.id = pp.relation_type_id
 left join atlas_v2.polity_names pen
   on pen.polity_id = pp.polity_id
@@ -69,6 +69,7 @@ function displayValue(preferredKo, canonicalEn, fallback = null) {
 function projectFacetRow(row) {
   const polityNameEn = optionalText(row?.polity_name_en);
   const polityNameKo = optionalText(row?.polity_name_ko);
+  const relationTypeId = row?.relation_type_id == null ? null : String(row.relation_type_id);
   const roleId = row?.role_id == null ? null : String(row.role_id);
   const roleNameEn = optionalText(row?.role_name_en);
   const roleNameKo = optionalText(row?.role_name_ko);
@@ -82,10 +83,10 @@ function projectFacetRow(row) {
       preferred_name_ko: polityNameKo,
       display_name: displayValue(polityNameKo, polityNameEn, String(row.polity_id))
     }),
-    relation: Object.freeze({
-      id: String(row.relation_type_id),
-      code: String(row.relation_type_code),
-      category: String(row.relation_type_category)
+    relation: relationTypeId == null ? null : Object.freeze({
+      id: relationTypeId,
+      code: optionalText(row.relation_type_code),
+      category: optionalText(row.relation_type_category)
     }),
     role: roleId == null ? null : Object.freeze({
       id: roleId,
