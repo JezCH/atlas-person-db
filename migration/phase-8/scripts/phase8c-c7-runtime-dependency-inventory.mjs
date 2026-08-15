@@ -31,6 +31,7 @@ const intendedApiRoutes = [
   'api/atlas-duplicate-review.js',
   'api/atlas-identity.js',
   'api/atlas-mutate.js',
+  'api/atlas-person-read.js',
   'api/atlas-read.js',
   'api/atlas-session.js',
   'api/atlas-stage2-schema-release.js',
