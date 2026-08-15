@@ -24,6 +24,7 @@ const allFiles = walk();
 const jsFiles = new Set(allFiles.filter((p) => /\.(?:js|mjs|cjs)$/.test(p)));
 const apiRoutes = [...jsFiles].filter((p) => /^api\/[^/]+\.js$/.test(p)).sort();
 const intendedApiRoutes = [
+  'api/atlas-admin-inspector.js',
   'api/atlas-audit-inventory.js',
   'api/atlas-authoring-apply.js',
   'api/atlas-authoring.js',
