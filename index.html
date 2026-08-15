@@ -9,14 +9,16 @@
   <title>ATLAS Authoring</title>
   <link rel="stylesheet" href="./styles.css?v=20260804-mobile-compact-shell" />
   <link rel="stylesheet" href="./mobile-compact.css?v=20260804-mobile-compact-shell" />
+  <link rel="stylesheet" href="./atlas-person-main.css?v=20260815-ui3b2" />
+  <link rel="stylesheet" href="./atlas-person-main-filters.css?v=20260815-ui3b2" />
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
   <header class="mobile-appbar">
     <button id="mobileMenuButton" class="mobile-menu-button" type="button" aria-controls="mobileDrawer" aria-expanded="false" aria-label="메뉴 열기">☰</button>
-    <label class="mobile-search" aria-label="인물·정치체 검색">
+    <label class="mobile-search" aria-label="인물·정치체·관계·역할 검색">
       <span class="mobile-search-icon" aria-hidden="true">⌕</span>
-      <input id="mobileSearchInput" type="search" inputmode="search" autocomplete="off" placeholder="인물·정치체 검색" />
+      <input id="mobileSearchInput" type="search" inputmode="search" autocomplete="off" placeholder="인물·정치체·관계·역할 검색" />
       <button id="mobileSearchClear" class="mobile-search-clear" type="button" aria-label="검색어 지우기" hidden>×</button>
     </label>
     <span id="mobileSearchCount" class="mobile-search-count" aria-live="polite"></span>
@@ -58,9 +60,11 @@
   <div id="toast" class="toast" hidden></div>
   <script src="./atlas-reader-observability.js?v=20260810-phase9-ui-localized"></script>
   <script src="./atlas-reader.js?v=20260810-phase9-ui-localized"></script>
+  <script src="./atlas-person-browser-reader.js?v=20260815-ui3b2"></script>
   <script src="./atlas-server-write-adapter.js?v=20260810-phase8c-c5-v2-only"></script>
   <script src="./app.js?v=20260810-phase9-ui-localized"></script>
   <script src="./status-summary.js?v=20260810-phase9-ui-localized"></script>
-  <script src="./mobile-ui.js?v=20260810-phase9-ui-localized"></script>
+  <script src="./mobile-ui.js?v=20260815-ui3b2"></script>
+  <script src="./atlas-person-main.js?v=20260815-ui3b2"></script>
 </body>
 </html>
