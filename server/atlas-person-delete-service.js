@@ -43,7 +43,18 @@ async function collectIds(client, sql, params) {
   return (result.rows || []).map((row) => String(row.id));
 }
 
-async function verifyNoLiveReferences(client, personId) {
+async function tablePresent(client, regclass) {
+  const result = await client.query(`select to_regclass($1)::text as relation`, [regclass]);
+  return Boolean(result.rows[0]?.relation);
+}
+
+async function verifyNoLiveReferences(client, personId, { requirementLedgerPresent = null } = {}) {
+  const hasRequirementLedger = requirementLedgerPresent == null
+    ? await tablePresent(client, "atlas_v2.person_duplicate_revalidation_requirements")
+    : Boolean(requirementLedgerPresent);
+  const requirementCountSql = hasRequirementLedger
+    ? `(select count(*)::int from atlas_v2.person_duplicate_revalidation_requirements where requirement_state='ACTIVE' and (person_low_id=$1 or person_high_id=$1))`
+    : `0::int`;
   const result = await client.query(`
     select
       (select count(*)::int from atlas_v2.persons where id=$1) as persons,
@@ -55,7 +66,7 @@ async function verifyNoLiveReferences(client, personId) {
       (select count(*)::int from atlas_v2.person_event_participations where person_id=$1) as event_participations,
       (select count(*)::int from atlas_v2.authoring_manifest_runs where person_id=$1) as authoring_person_refs,
       (select count(*)::int from atlas_v2.person_duplicate_candidates where candidate_state='ACTIVE' and (person_low_id=$1 or person_high_id=$1)) as active_duplicate_candidates,
-      (select count(*)::int from atlas_v2.person_duplicate_revalidation_requirements where requirement_state='ACTIVE' and (person_low_id=$1 or person_high_id=$1)) as active_revalidation_requirements
+      ${requirementCountSql} as active_revalidation_requirements
   `, [personId]);
   const counts = result.rows[0] || {};
   return {
@@ -78,7 +89,8 @@ function createPersonDeleteService({ client } = {}) {
 
     await client.query("BEGIN ISOLATION LEVEL SERIALIZABLE");
     try {
-      await assertPersonMergeReferenceReadiness(client);
+      const referenceReadiness = await assertPersonMergeReferenceReadiness(client);
+      const requirementLedgerPresent = Boolean(referenceReadiness?.requirement_ledger_present);
       await lockPersonDuplicateFrontier(client);
 
       const person = await client.query(`
@@ -133,18 +145,22 @@ function createPersonDeleteService({ client } = {}) {
       deleted.person_descriptions = (await client.query(`delete from atlas_v2.person_descriptions where person_id=$1 returning id`, [personId])).rowCount;
       deleted.person_names = (await client.query(`delete from atlas_v2.person_names where person_id=$1 returning id`, [personId])).rowCount;
       deleted.authoring_person_refs_cleared = (await client.query(`update atlas_v2.authoring_manifest_runs set person_id=null where person_id=$1 returning request_id`, [personId])).rowCount;
-      deleted.revalidation_requirements_retired = (await client.query(`
-        update atlas_v2.person_duplicate_revalidation_requirements
-           set requirement_state='RETIRED',updated_at=now()
-         where requirement_state='ACTIVE' and (person_low_id=$1 or person_high_id=$1)
-         returning requirement_key`, [personId])).rowCount;
+      if (requirementLedgerPresent) {
+        deleted.revalidation_requirements_retired = (await client.query(`
+          update atlas_v2.person_duplicate_revalidation_requirements
+             set requirement_state='RETIRED',updated_at=now()
+           where requirement_state='ACTIVE' and (person_low_id=$1 or person_high_id=$1)
+           returning requirement_key`, [personId])).rowCount;
+      } else {
+        deleted.revalidation_requirements_retired = 0;
+      }
 
       const personDelete = await client.query(`delete from atlas_v2.persons where id=$1 returning id`, [personId]);
       if (personDelete.rowCount !== 1) throw new Error("Person delete did not affect exactly one row");
       deleted.persons = personDelete.rowCount;
 
       const frontier = await refreshCandidateFrontier(client);
-      const verification = await verifyNoLiveReferences(client, personId);
+      const verification = await verifyNoLiveReferences(client, personId, { requirementLedgerPresent });
       if (!verification.match) {
         const error = new Error(`PERSON_DELETE_VERIFICATION_FAILED:${JSON.stringify(verification.counts)}`);
         error.code = "PERSON_DELETE_VERIFICATION_FAILED";
@@ -182,4 +198,4 @@ function createPersonDeleteService({ client } = {}) {
   return Object.freeze({ mutate });
 }
 
-module.exports = Object.freeze({ createPersonDeleteService, verifyNoLiveReferences });
+module.exports = Object.freeze({ createPersonDeleteService, verifyNoLiveReferences, tablePresent });
