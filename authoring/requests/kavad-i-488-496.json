@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:kavad-i:sasanian-empire:488-496:v1",
+  "person": {
+    "canonical_name_en": "Kavad I",
+    "display_name_ko": "카바드 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Sasanian Empire",
+    "display_name_ko": "사산 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Shahanshah (King of Kings)",
+    "role_display_name_ko": "샤한샤(왕중왕)",
+    "start_year": 488,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 496,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kavad I (also written Kawad I, Kavadh I, and scholarly Kawād I) first ruled the Sasanian Empire from 488 until his deposition in 496. Encyclopaedia Iranica treats his reign as a turning point in Sasanian history and explicitly separates a first reign of 488-496 from his later restoration. ATLAS therefore ends this rules Activity in 496 and does not project Kavad's authority through the interruption, during which Zamasp/Jamasp occupied the throne. His later restored reign is represented by a separate Activity for the same Person and Polity rather than by duplicating the Person or fabricating continuous rule."
+  },
+  "sources": [
+    {
+      "title": "KAWĀD I i. Reign — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/kawad-i/kawad-i-reign/",
+      "citation_text": "Encyclopaedia Iranica identifies Kavad's reign as a turning point in Sasanian history, labels the first reign 488-496, and describes his deposition and subsequent escape to the Hephthalite court.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Chronology of Iranian History Part 1 — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/chronology-of-iranian-history-part-1/",
+      "citation_text": "The Iranica chronology records Kavad's accession in 488 and his deposition by Jamasp in 496, supporting the year-level boundaries of the first reign.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

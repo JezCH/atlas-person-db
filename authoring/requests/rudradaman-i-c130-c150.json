@@ -1,0 +1,45 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:rudradaman-i:western-kshatrapas:c130-c150:v1",
+  "person": {
+    "canonical_name_en": "Rudradaman I",
+    "display_name_ko": "루드라다만 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Western Kshatrapas",
+    "display_name_ko": "서부 크샤트라파"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Mahakshatrapa",
+    "role_display_name_ko": "대크샤트라파",
+    "start_year": 130,
+    "end_year": 150,
+    "start_certainty": "approximate",
+    "end_certainty": "uncertain",
+    "start_calendar": "unspecified_historical",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Rudradaman I was a major ruler of the Western Kshatrapas and is securely attested with the sovereign title Mahakshatrapa. British Museum cataloguing conventionally places his rule around 130-150 CE, while dated inscriptional evidence establishes him as Mahakshatrapa by year 52 of the Saka era (130 CE) and still reigning in year 72 (150 CE). Some numismatic reconstructions extend his rule beyond 150 CE. ATLAS therefore records c.130-150 as the reviewed conventional reign window at year granularity, treats the start as approximate and the 150 boundary as uncertain, and does not assert 150 as a securely known death or deposition year."
+  },
+  "sources": [
+    {
+      "title": "Rudradaman I — British Museum Collections Online",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG183411",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Junagadh Rock Inscription of Rudradaman; The Year 72 — Epigraphia Indica, Vol. VIII",
+      "canonical_url": "https://ignca.gov.in/hi/epigraphia-indica/",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Western Satrap (Western Kshatrapa) Kingdom — The Encyclopedia of Empire",
+      "canonical_url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/9781118455074.wbeoe334",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

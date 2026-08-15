@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mahmud:khanate-of-kazan:1445-1462:v1",
+  "person": {
+    "canonical_name_en": "Mäxmüd of Kazan",
+    "display_name_ko": "마흐무드 칸"
+  },
+  "polity": {
+    "canonical_name_en": "Khanate of Kazan",
+    "display_name_ko": "카잔 칸국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khan",
+    "role_display_name_ko": "칸",
+    "start_year": 1445,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1462,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mäxmüd of Kazan (Tatar: Мәхмүд; Russian chronicle form: Махмутек), supplied by the user as 'Maxmud I, Khan of Kazan', was the eldest son of Ulugh Muhammad and became khan of the Khanate of Kazan in 1445. Modern Tatar and Turkish reference works give his reign as 1445–1462. He had commanded Kazan forces at the Battle of Suzdal in 1445 before his accession and, during his reign, the Kazan Khanate consolidated its administrative and political structure. The ordinal 'I' is retained only as a user-supplied labeling variant; the cited reference works identify him simply as Mahmud/Mäxmüd rather than Mahmud I."
+  },
+  "sources": [
+    {
+      "title": "Махмуд — Татарская энциклопедия TATARICA",
+      "canonical_url": "https://tatarica.org/ru/razdely/istoriya/srednie-veka/personalii/mahmud-1",
+      "citation_text": "The Tatar Encyclopedia identifies Mahmud (Mahmud Khan; Russian chronicle form Makhmutek) as Khan of Kazan from 1445 to 1462, gives his death year as 1462, and states that he was proclaimed khan after Ulugh Muhammad's death in 1445.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "KAZAN HANLIĞI — TDV İslâm Ansiklopedisi",
+      "canonical_url": "https://islamansiklopedisi.org.tr/kazan-hanligi",
+      "citation_text": "The TDV Encyclopaedia of Islam gives Mahmud, eldest son of Ulugh Muhammad, as ruler of the Kazan Khanate from 1445 to 1462 and identifies Halil as his successor.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "States of the Chinggisids and their successors in Central Asia and Eastern Europe — Runivers",
+      "canonical_url": "https://old.runivers.ru/doc/isl/element.php?ELEMENT_ID=83505&IBLOCK_ID=50&SECTION_ID=5580",
+      "citation_text": "The dynastic chronology lists Mahmud son of Ulugh Muhammad as Khan of Kazan from 1445 to 1462, followed by Khalil from 1462 to 1467.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
