@@ -20,12 +20,14 @@ const EXPECTED_RELATIONSHIP_FKS = Object.freeze([
 const EXPECTED_NON_FK_PERSON_UUID_COLUMNS = Object.freeze([
   "atlas_v2.person_duplicate_candidates.person_high_id",
   "atlas_v2.person_duplicate_candidates.person_low_id",
-  "atlas_v2.person_duplicate_revalidation_requirements.person_high_id",
-  "atlas_v2.person_duplicate_revalidation_requirements.person_low_id",
   "atlas_v2.person_duplicate_reviews.person_high_id",
   "atlas_v2.person_duplicate_reviews.person_low_id",
   "atlas_v2.person_merge_audits.source_person_id",
   "atlas_v2.person_merge_audits.survivor_person_id"
+]);
+const P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS = Object.freeze([
+  "atlas_v2.person_duplicate_revalidation_requirements.person_high_id",
+  "atlas_v2.person_duplicate_revalidation_requirements.person_low_id"
 ]);
 const EXPECTED_NON_FK_RELATIONSHIP_UUID_COLUMNS = Object.freeze([]);
 const DELETE_ACTIONS = Object.freeze({ a:"NO ACTION",r:"RESTRICT",c:"CASCADE",n:"SET NULL",d:"SET DEFAULT" });
@@ -80,6 +82,13 @@ function evaluateFkSurface(label,actualRows,expectedRows,blockers) {
 
 async function inspectPersonMergeReferenceReadiness(client) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client with query() is required");
+  const requirementTable = await client.query(`select to_regclass('atlas_v2.person_duplicate_revalidation_requirements')::text as requirements`);
+  const requirementLedgerPresent = Boolean(requirementTable.rows[0]?.requirements);
+  const expectedPersonSnapshots = [
+    ...EXPECTED_NON_FK_PERSON_UUID_COLUMNS,
+    ...(requirementLedgerPresent ? P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS : [])
+  ].sort();
+
   const personFks = await foreignKeysTo(client,"atlas_v2.persons");
   const relationshipFks = await foreignKeysTo(client,"atlas_v2.person_politics_v2");
   const personLikeUuidColumns = await uuidColumns(client,"(^|_)person_id$|person_(low|high)_id$");
@@ -104,14 +113,16 @@ async function inspectPersonMergeReferenceReadiness(client) {
   const blockers = [];
   evaluateFkSurface("PERSON",personFks,EXPECTED_PERSON_FKS,blockers);
   evaluateFkSurface("RELATIONSHIP",relationshipFks,EXPECTED_RELATIONSHIP_FKS,blockers);
-  for (const column of difference(nonFkPersonUuidColumns,EXPECTED_NON_FK_PERSON_UUID_COLUMNS)) blockers.push(`PERSON_UUID_REFERENCE_UNREVIEWED:${column}`);
-  for (const column of difference(EXPECTED_NON_FK_PERSON_UUID_COLUMNS,nonFkPersonUuidColumns)) blockers.push(`PERSON_UUID_SNAPSHOT_MISSING:${column}`);
+  for (const column of difference(nonFkPersonUuidColumns,expectedPersonSnapshots)) blockers.push(`PERSON_UUID_REFERENCE_UNREVIEWED:${column}`);
+  for (const column of difference(expectedPersonSnapshots,nonFkPersonUuidColumns)) blockers.push(`PERSON_UUID_SNAPSHOT_MISSING:${column}`);
   for (const column of difference(nonFkRelationshipUuidColumns,EXPECTED_NON_FK_RELATIONSHIP_UUID_COLUMNS)) blockers.push(`RELATIONSHIP_UUID_REFERENCE_UNREVIEWED:${column}`);
   for (const column of difference(EXPECTED_NON_FK_RELATIONSHIP_UUID_COLUMNS,nonFkRelationshipUuidColumns)) blockers.push(`RELATIONSHIP_UUID_SNAPSHOT_MISSING:${column}`);
   for (const trigger of userTriggers) blockers.push(`MERGE_SURFACE_TRIGGER_UNREVIEWED:${trigger}`);
 
   return Object.freeze({
     policy_version:PERSON_REFERENCE_POLICY_VERSION,ready:blockers.length===0,blockers:Object.freeze(blockers.sort()),
+    requirement_ledger_present:requirementLedgerPresent,
+    expected_non_fk_person_uuid_columns:Object.freeze(expectedPersonSnapshots),
     person_fks:Object.freeze(personFks),relationship_fks:Object.freeze(relationshipFks),
     non_fk_person_uuid_columns:Object.freeze(nonFkPersonUuidColumns),non_fk_relationship_uuid_columns:Object.freeze(nonFkRelationshipUuidColumns),
     user_triggers:Object.freeze(userTriggers)
@@ -125,4 +136,8 @@ async function assertPersonMergeReferenceReadiness(client) {
   }
   return readiness;
 }
-module.exports=Object.freeze({PERSON_REFERENCE_POLICY_VERSION,EXPECTED_PERSON_FKS,EXPECTED_RELATIONSHIP_FKS,EXPECTED_NON_FK_PERSON_UUID_COLUMNS,EXPECTED_NON_FK_RELATIONSHIP_UUID_COLUMNS,inspectPersonMergeReferenceReadiness,assertPersonMergeReferenceReadiness});
+module.exports=Object.freeze({
+  PERSON_REFERENCE_POLICY_VERSION,EXPECTED_PERSON_FKS,EXPECTED_RELATIONSHIP_FKS,
+  EXPECTED_NON_FK_PERSON_UUID_COLUMNS,P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS,EXPECTED_NON_FK_RELATIONSHIP_UUID_COLUMNS,
+  inspectPersonMergeReferenceReadiness,assertPersonMergeReferenceReadiness
+});
