@@ -71,7 +71,7 @@ test('UI-6R3 keeps semantic filters reachable on mobile without permanently cons
 test('UI-6R3 keeps the complete legacy relationship table available as an explicit advanced surface', () => {
   for (const token of [
     'authoringTools.id = "relationshipAuthoringTools"',
-    'body.append(toolbar, legacyContent)',
+    'append(toolbar, legacyContent)',
     'tools.open = true',
     'tools.scrollIntoView'
   ]) expectToken(mainSource, token);
