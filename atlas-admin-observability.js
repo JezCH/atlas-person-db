@@ -4,6 +4,29 @@
   const STATUS_ENDPOINT = "/api/atlas-admin-system-status";
   const INSPECTOR_ENDPOINT = "/api/atlas-admin-inspector";
 
+  function ensureTableStyles() {
+    if (document.querySelector('link[data-atlas-admin-table-view]')) return;
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.dataset.atlasAdminTableView = "true";
+    link.href = window.ATLAS_ASSETS?.withSession?.("./atlas-admin-table-view.css") || "./atlas-admin-table-view.css?v=20260816-ui-t8";
+    document.head.appendChild(link);
+  }
+
+  function ensureInspectorContainer() {
+    const current = document.getElementById("inspectorResult");
+    if (!current || current.tagName !== "PRE") return current;
+    const replacement = document.createElement("div");
+    replacement.id = current.id;
+    replacement.className = current.className;
+    replacement.setAttribute("aria-live", current.getAttribute("aria-live") || "polite");
+    replacement.textContent = current.textContent;
+    current.replaceWith(replacement);
+    return replacement;
+  }
+
+  ensureTableStyles();
+
   const statusBadge = document.getElementById("systemStatusBadge");
   const statusBody = document.getElementById("systemStatusBody");
   const refreshStatusButton = document.getElementById("refreshSystemStatusButton");
@@ -11,7 +34,7 @@
   const inspectorKind = document.getElementById("inspectorKind");
   const inspectorId = document.getElementById("inspectorId");
   const inspectorForm = document.getElementById("adminInspectorForm");
-  const inspectorResult = document.getElementById("inspectorResult");
+  const inspectorResult = ensureInspectorContainer();
   const inspectorClearButton = document.getElementById("clearInspectorButton");
 
   function escapeHtml(value) {
@@ -26,20 +49,39 @@
   function scalar(value) {
     if (value === null || value === undefined || value === "") return '<span class="obs-null">unknown / not supplied</span>';
     if (typeof value === "boolean") return `<span class="obs-boolean" data-value="${value}">${value ? "true" : "false"}</span>`;
+    if (typeof value === "number") return `<code class="obs-value">${escapeHtml(value)}</code>`;
     return `<code class="obs-value">${escapeHtml(value)}</code>`;
   }
 
-  function renderTree(value) {
+  function flattenRows(value, prefix = "") {
+    const rows = [];
     if (Array.isArray(value)) {
-      if (!value.length) return '<span class="obs-null">[]</span>';
-      return `<ol class="obs-list">${value.map((item) => `<li>${renderTree(item)}</li>`).join("")}</ol>`;
+      if (!value.length) return [{ path: prefix || "value", value: [] }];
+      value.forEach((item, index) => rows.push(...flattenRows(item, `${prefix}[${index}]`)));
+      return rows;
     }
     if (value && typeof value === "object") {
       const entries = Object.entries(value);
-      if (!entries.length) return '<span class="obs-null">{}</span>';
-      return `<dl class="obs-tree">${entries.map(([key, item]) => `<div><dt>${escapeHtml(key)}</dt><dd>${renderTree(item)}</dd></div>`).join("")}</dl>`;
+      if (!entries.length) return [{ path: prefix || "value", value: {} }];
+      for (const [key, item] of entries) {
+        const path = prefix ? `${prefix}.${key}` : key;
+        rows.push(...flattenRows(item, path));
+      }
+      return rows;
     }
+    return [{ path: prefix || "value", value }];
+  }
+
+  function tableScalar(value) {
+    if (Array.isArray(value)) return '<span class="obs-null">[]</span>';
+    if (value && typeof value === "object") return '<span class="obs-null">{}</span>';
     return scalar(value);
+  }
+
+  function renderKeyValueTable(value, { pathLabel = "Field", valueLabel = "Value" } = {}) {
+    const rows = flattenRows(value);
+    if (!rows.length) return '<p class="empty-state">표시할 정보가 없습니다.</p>';
+    return `<div class="obs-table-wrap"><table class="obs-table obs-key-value-table"><thead><tr><th>${escapeHtml(pathLabel)}</th><th>${escapeHtml(valueLabel)}</th></tr></thead><tbody>${rows.map((row) => `<tr><td><code>${escapeHtml(row.path)}</code></td><td>${tableScalar(row.value)}</td></tr>`).join("")}</tbody></table></div>`;
   }
 
   async function getJson(url) {
@@ -63,26 +105,31 @@
   function statusSection(title, value, { open = false } = {}) {
     return `<details class="obs-section"${open ? " open" : ""}>
       <summary>${escapeHtml(title)}</summary>
-      <div class="obs-section-body">${renderTree(value)}</div>
+      <div class="obs-section-body">${renderKeyValueTable(value)}</div>
     </details>`;
   }
 
   function renderTableCounts(counts) {
     const entries = Object.entries(counts || {}).sort(([a], [b]) => a.localeCompare(b));
     if (!entries.length) return '<p class="empty-state">atlas_v2 table count 정보가 없습니다.</p>';
-    return `<div class="obs-table-wrap"><table class="obs-table"><thead><tr><th>Table</th><th>Rows</th></tr></thead><tbody>${entries.map(([name, count]) => `<tr><td><code>${escapeHtml(name)}</code></td><td>${escapeHtml(count)}</td></tr>`).join("")}</tbody></table></div>`;
+    return `<div class="obs-table-wrap"><table class="obs-table obs-count-table"><thead><tr><th>Table</th><th>Rows</th></tr></thead><tbody>${entries.map(([name, count]) => `<tr><td><code>${escapeHtml(name)}</code></td><td>${escapeHtml(count)}</td></tr>`).join("")}</tbody></table></div>`;
+  }
+
+  function renderStatusMatrix(payload) {
+    const tableCount = payload.counts?.atlas_v2_table_count ?? null;
+    const rows = [
+      ["Runtime", payload.runtime?.environment ?? "unknown", payload.runtime?.git_commit_ref ?? payload.runtime?.provider ?? "unknown"],
+      ["Database", payload.database?.reachable === true ? "reachable" : "unknown", `atlas_v2: ${payload.database?.atlas_v2_schema_present === true ? "present" : "not confirmed"}`],
+      ["atlas_v2 tables", tableCount === null ? "—" : tableCount, "catalog-discovered"],
+      ["Actions verification", payload.verification?.github_actions_status_embedded === true ? "embedded" : "external", payload.verification?.reason ?? "unknown"]
+    ];
+    return `<div class="obs-table-wrap"><table class="obs-table obs-status-matrix"><thead><tr><th>Scope</th><th>Current state</th><th>Detail</th></tr></thead><tbody>${rows.map(([scope, state, detail]) => `<tr><td><strong>${escapeHtml(scope)}</strong></td><td>${scalar(state)}</td><td>${escapeHtml(detail)}</td></tr>`).join("")}</tbody></table></div>`;
   }
 
   function renderSystemStatus(payload) {
     if (!statusBody) return;
-    const tableCount = payload.counts?.atlas_v2_table_count ?? null;
     statusBody.innerHTML = `
-      <div class="obs-summary-grid">
-        <div><span>Runtime</span><strong>${escapeHtml(payload.runtime?.environment ?? "unknown")}</strong><small>${escapeHtml(payload.runtime?.git_commit_ref ?? payload.runtime?.provider ?? "unknown")}</small></div>
-        <div><span>Database</span><strong>${payload.database?.reachable === true ? "reachable" : "unknown"}</strong><small>atlas_v2: ${payload.database?.atlas_v2_schema_present === true ? "present" : "not confirmed"}</small></div>
-        <div><span>atlas_v2 tables</span><strong>${tableCount === null ? "—" : escapeHtml(tableCount)}</strong><small>catalog-discovered</small></div>
-        <div><span>Actions verification</span><strong>${payload.verification?.github_actions_status_embedded === true ? "embedded" : "external"}</strong><small>${escapeHtml(payload.verification?.reason ?? "unknown")}</small></div>
-      </div>
+      ${renderStatusMatrix(payload)}
       <div class="obs-sections">
         ${statusSection("Runtime identity", payload.runtime, { open: true })}
         ${statusSection("Configuration presence — values are never exposed", payload.configuration, { open: true })}
@@ -94,6 +141,12 @@
         <details class="obs-section"><summary>atlas_v2 exact row counts</summary><div class="obs-section-body">${renderTableCounts(payload.counts?.tables)}</div></details>
         ${statusSection("Runtime verification boundary", payload.verification)}
       </div>`;
+  }
+
+  function renderInspectorResult(payload) {
+    if (!inspectorResult) return;
+    inspectorResult.innerHTML = `<div class="obs-inspector-head"><span>Object kind</span><strong>${escapeHtml(payload.kind)}</strong></div>${renderKeyValueTable(payload.object, { pathLabel: "Field / path", valueLabel: "Raw value" })}`;
+    inspectorResult.dataset.type = "success";
   }
 
   function setBadge(node, text, state = "") {
@@ -145,10 +198,7 @@
     setBadge(inspectorBadge, "조회 중", "");
     try {
       const payload = await getJson(`${INSPECTOR_ENDPOINT}?kind=${encodeURIComponent(kind)}&id=${encodeURIComponent(id)}`);
-      if (inspectorResult) {
-        inspectorResult.textContent = JSON.stringify({ kind: payload.kind, object: payload.object }, null, 2);
-        inspectorResult.dataset.type = "success";
-      }
+      renderInspectorResult(payload);
       setBadge(inspectorBadge, "Object 확인", "ready");
     } catch (error) {
       if (inspectorResult) {
@@ -189,6 +239,8 @@
 
   window.ATLAS_ADMIN_OBSERVABILITY = Object.freeze({
     loadSystemStatus,
-    loadInspectorCapabilities
+    loadInspectorCapabilities,
+    flattenRows,
+    renderKeyValueTable
   });
 })();
