@@ -9,6 +9,7 @@
   <title>ATLAS Admin</title>
   <link rel="stylesheet" href="./admin.css?v=20260811-maintenance-m1" />
   <link rel="stylesheet" href="./atlas-admin-observability.css?v=20260815-ui2f" />
+  <link rel="stylesheet" href="./atlas-admin-workspace.css?v=20260815-ui4" />
 </head>
 <body>
   <main class="admin-shell">
@@ -230,6 +231,7 @@
         };
 
         try {
+          await window.ATLAS_ASSETS.loadScript("./atlas-admin-workspace.js");
           await window.ATLAS_ASSETS.loadScript("./atlas-admin-session-gate.js");
           const gate = window.ATLAS_ADMIN_SESSION_GATE;
           if (!gate) throw new Error("관리자 세션 게이트를 초기화하지 못했습니다.");
