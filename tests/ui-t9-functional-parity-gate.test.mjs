@@ -68,8 +68,9 @@ test('UI-T9 preserves all four protected Admin workspaces and raw observability'
 });
 
 test('UI-T9 Main presentation changes do not introduce a new API endpoint', () => {
-  for (const source of [main, reader, mobile, nonTimeline, responsive]) {
-    assert.doesNotMatch(source, /\/api\/atlas-[a-z0-9-]+/i, 'Main presentation module must not add a new API route');
+  for (const source of [main, mobile, nonTimeline, responsive]) {
+    assert.doesNotMatch(source, /\/api\/atlas-[a-z0-9-]+/i, 'presentation module must not add a new API route');
   }
-  assert.match(reader, /const ENDPOINT = "\/api\/atlas-person-read"/);
+  const readerRoutes = [...reader.matchAll(/"(\/api\/atlas-[a-z0-9-]+)"/gi)].map((match) => match[1]);
+  assert.deepEqual([...new Set(readerRoutes)], ['/api/atlas-person-read']);
 });
