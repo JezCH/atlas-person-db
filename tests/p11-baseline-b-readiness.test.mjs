@@ -5,6 +5,7 @@ import baselineB from '../server/atlas-baseline-b.js';
 const {
   BASELINE_B_SCHEMA,
   BASELINE_B_SEMANTIC_VERSION,
+  BASELINE_B_CANONICAL_TABLES,
   buildBaselineBDocument,
   inspectBaselineBReadiness,
   captureBaselineB
@@ -31,14 +32,24 @@ function readinessClient({
   unresolved = 0,
   audits = 0,
   mergedSourcePersonStillLive = 0,
-  mergeAuditSchemaReady = true
+  mergeAuditSchemaReady = true,
+  missingCanonicalTables = []
 } = {}) {
   const calls = [];
+  const missing = new Set(missingCanonicalTables);
   return {
     calls,
     async query(sql) {
       const text = String(sql);
       calls.push(text);
+      if (/unnest\(\$1::text\[\]\)/i.test(text)) {
+        return {
+          rows: BASELINE_B_CANONICAL_TABLES.map((table) => ({
+            table_name: table,
+            relation_name: missing.has(table) ? null : `atlas_v2.${table}`
+          }))
+        };
+      }
       if (/to_regclass\('atlas_v2\.person_merge_audits'\)/i.test(text)) {
         return { rows: [{ merge_audits: mergeAuditSchemaReady ? 'atlas_v2.person_merge_audits' : null }] };
       }
@@ -112,7 +123,7 @@ test('P11 stays blocked after terminal P10 review while an approved physical Per
   assert.equal(readiness.activity.semantic_v2_incomplete, 0);
 });
 
-test('P11 readiness opens only when semantic-v2 data, P10 frontier, and merge audit state are clean', async () => {
+test('P11 readiness opens only when all 41 canonical tables, semantic-v2 data, P10 frontier, and merge audit state are clean', async () => {
   const client = readinessClient({
     activeCandidates: 2,
     keepSeparate: 2,
@@ -122,8 +133,22 @@ test('P11 readiness opens only when semantic-v2 data, P10 frontier, and merge au
 
   assert.equal(readiness.ready, true);
   assert.deepEqual(readiness.blockers, []);
+  assert.equal(readiness.canonical_schema.expected_table_count, 41);
+  assert.equal(readiness.canonical_schema.present_table_count, 41);
+  assert.deepEqual(readiness.canonical_schema.missing_tables, []);
   assert.equal(readiness.duplicate_frontier.keep_separate, 2);
   assert.equal(readiness.merge_audit.merged_source_person_still_live, 0);
+});
+
+test('P11 readiness fails closed before capture when any canonical Stage 2 table is missing', async () => {
+  const client = readinessClient({
+    missingCanonicalTables: ['person_event_participation_sources']
+  });
+  const readiness = await inspectBaselineBReadiness(client, readinessDependencies());
+
+  assert.equal(readiness.ready, false);
+  assert.deepEqual(readiness.canonical_schema.missing_tables, ['person_event_participation_sources']);
+  assert.ok(readiness.blockers.includes('BASELINE_B_CANONICAL_SCHEMA_MISSING:person_event_participation_sources'));
 });
 
 test('P11 readiness fails closed on incomplete temporal semantics, year zero, unresolved frontier, or resurrected merged source UUID', async () => {
