@@ -160,8 +160,12 @@ jobs:
             and .readiness.p9.old_index_present==false
             and .readiness.p9.new_index_present==true
             and .readiness.p9.duplicate_groups==0
-            and .readiness.person_merge.allowed==false
-            and .readiness.person_merge.person_merge_lifecycle_version=="pre-p10-blocked"
+            and .readiness.person_merge.required_person_merge_lifecycle_version=="p10-v2-revalidated"
+            and (
+              (.readiness.person_merge.person_merge_lifecycle_version=="pre-p10-blocked" and .readiness.person_merge.allowed==false)
+              or
+              (.readiness.person_merge.person_merge_lifecycle_version=="p10-v2-revalidated" and .readiness.person_merge.allowed==true)
+            )
             and (.ready==true or .bootstrap_ready==true)
           ' /tmp/atlas-authoring-evidence/readiness.json >/dev/null
 
