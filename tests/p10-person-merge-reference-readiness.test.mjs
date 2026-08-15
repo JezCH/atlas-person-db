@@ -28,18 +28,22 @@ test('P10 Person merge reference policy is explicit and includes every reviewed 
   ]);
 });
 
-test('snapshot UUID columns include duplicate candidates, durable requirements, reviews and immutable merge audits', () => {
+test('P10-B base snapshots and optional P10-C requirement snapshots are both explicit', () => {
   assert.deepEqual(readiness.EXPECTED_NON_FK_PERSON_UUID_COLUMNS, [
     'atlas_v2.person_duplicate_candidates.person_high_id',
     'atlas_v2.person_duplicate_candidates.person_low_id',
-    'atlas_v2.person_duplicate_revalidation_requirements.person_high_id',
-    'atlas_v2.person_duplicate_revalidation_requirements.person_low_id',
     'atlas_v2.person_duplicate_reviews.person_high_id',
     'atlas_v2.person_duplicate_reviews.person_low_id',
     'atlas_v2.person_merge_audits.source_person_id',
     'atlas_v2.person_merge_audits.survivor_person_id'
   ]);
+  assert.deepEqual(readiness.P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS, [
+    'atlas_v2.person_duplicate_revalidation_requirements.person_high_id',
+    'atlas_v2.person_duplicate_revalidation_requirements.person_low_id'
+  ]);
   assert.deepEqual(readiness.EXPECTED_NON_FK_RELATIONSHIP_UUID_COLUMNS, []);
+  assert.match(readinessSource, /requirement_ledger_present/);
+  assert.match(readinessSource, /expected_non_fk_person_uuid_columns/);
   assert.match(readinessSource, /PERSON_UUID_REFERENCE_UNREVIEWED/);
   assert.match(readinessSource, /RELATIONSHIP_UUID_REFERENCE_UNREVIEWED/);
   assert.match(readinessSource, /MERGE_SURFACE_TRIGGER_UNREVIEWED/);
