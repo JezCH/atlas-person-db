@@ -7,8 +7,8 @@ const {
   captureProductionBaselineB
 } = require("./atlas-p11-baseline-b-production-service.js");
 
-const MARKER = "ATLAS_P11_BASELINE_B_CAPTURE_V1";
-const CAPTURE_ID = "p11_baseline_b_20260815_v1";
+const MARKER = "ATLAS_P11_BASELINE_B_CAPTURE_V2";
+const CAPTURE_ID = "p11_baseline_b_20260815_v2";
 const MODES = new Set(["readiness", "capture"]);
 const ALLOWED_BODY_KEYS = new Set(["deployment_sha", "capture_id", "approval", "mode"]);
 
@@ -57,12 +57,12 @@ function requireDeployment(env, deploymentSha) {
   }
 }
 
-function statusFor(code) {
+function statusFor(code, fallback = 400) {
   const value = String(code || "");
   if (value === "DEPLOYMENT_SHA_MISMATCH" || value.includes("NOT_READY") || value.includes("DRIFT") || value.includes("PENDING") || value.includes("UNRESOLVED") || value.includes("REAPPEARED")) return 409;
   if (value.includes("OIDC") || value.includes("APPROVAL")) return 403;
   if (value.includes("NOT_PRODUCTION") || value.includes("SUPABASE")) return 503;
-  return 400;
+  return fallback;
 }
 
 function createP11BaselineBCaptureHandler({
@@ -81,7 +81,7 @@ function createP11BaselineBCaptureHandler({
       requireDeployment(env, envelope.deploymentSha);
     } catch (error) {
       const code = String(error?.message || "P11_CAPTURE_REQUEST_REJECTED");
-      return json(res, statusFor(code), {
+      return json(res, statusFor(code, 400), {
         ok: false,
         marker: MARKER,
         code,
@@ -118,7 +118,7 @@ function createP11BaselineBCaptureHandler({
       });
     } catch (error) {
       const code = String(error?.code || error?.message || "P11_CAPTURE_FAILED");
-      return json(res, statusFor(code), { ok: false, marker: MARKER, capture_id: CAPTURE_ID, mode: envelope.mode, code });
+      return json(res, statusFor(code, 500), { ok: false, marker: MARKER, capture_id: CAPTURE_ID, mode: envelope.mode, code });
     } finally {
       if (client && typeof client.end === "function") try { await client.end(); } catch {}
     }
