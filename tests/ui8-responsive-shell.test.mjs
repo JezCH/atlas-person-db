@@ -29,15 +29,40 @@ test('UI8 compact desktop expansion overlays instead of stealing table width', (
   assert.match(shellCss, /\.workspace-shell\.sidebar-collapsed \.sidebar\{width:68px;box-shadow:none\}/);
 });
 
-test('UI8 makes Person detail zero-width until selection and opens it as an overlay drawer', () => {
+test('UI-T4 makes Person detail zero-width until selection and opens it as a modal drawer', () => {
   assert.match(shellCss, /\.person-main-layout\{display:block!important\}/);
   assert.match(shellCss, /\.person-main-detail\[hidden\],#personMainDetailBackdrop\[hidden\]\{display:none!important\}/);
   assert.match(shellCss, /\.person-main-detail\{position:fixed!important/);
   assert.match(shellSource, /detailPanel\.hidden = true/);
   assert.match(shellSource, /\[data-person-id\]/);
   assert.match(shellSource, /person-detail-overlay-close/);
+  assert.match(shellSource, /detailPanel\.setAttribute\("role", "dialog"\)/);
+  assert.match(shellSource, /detailPanel\.setAttribute\("aria-modal", "true"\)/);
   assert.match(shellSource, /event\.key === "Escape"/);
   assert.match(shellSource, /backdrop\.addEventListener\("click"/);
+});
+
+test('UI-T4 moves focus into the drawer, traps Tab, survives detail rerender and restores row focus', () => {
+  assert.match(shellSource, /function detailFocusableElements\(\)/);
+  assert.match(shellSource, /function focusDetail\(\)/);
+  assert.match(shellSource, /window\.requestAnimationFrame/);
+  assert.match(shellSource, /function trapDetailFocus\(event\)/);
+  assert.match(shellSource, /event\.key !== "Tab"/);
+  assert.match(shellSource, /event\.shiftKey && active === first/);
+  assert.match(shellSource, /!event\.shiftKey && active === last/);
+  assert.match(shellSource, /if \(!detailPanel\.contains\(document\.activeElement\)\) focusDetail\(\)/);
+  assert.match(shellSource, /function restoreTriggerFocus\(\)/);
+  assert.match(shellSource, /lastTrigger\.focus\(\{ preventScroll: true \}\)/);
+});
+
+test('UI-T4 locks background scrolling and provides safe mobile drawer edges and touch target', () => {
+  assert.match(shellCss, /body\.person-detail-overlay-open\{overflow:hidden\}/);
+  assert.match(shellCss, /overscroll-behavior:contain/);
+  assert.match(shellCss, /\.person-detail-overlay-close\{[^}]*width:44px;height:44px/);
+  assert.match(shellCss, /env\(safe-area-inset-top\)/);
+  assert.match(shellCss, /env\(safe-area-inset-right\)/);
+  assert.match(shellCss, /env\(safe-area-inset-bottom\)/);
+  assert.match(shellCss, /env\(safe-area-inset-left\)/);
 });
 
 test('UI8 remains presentation-only and does not create another data read or write path', () => {
@@ -46,7 +71,7 @@ test('UI8 remains presentation-only and does not create another data read or wri
 
 test('UI8 shell assets load after Person Main so the generated detail panel exists', () => {
   assert.match(html, /atlas-responsive-shell\.css\?v=20260815-ui8-shell-r2/);
-  const mainScript = html.indexOf('atlas-person-main.js?v=20260815-ui6r4');
+  const mainScript = html.indexOf('atlas-person-main.js?v=20260816-ui-t01');
   const shellScript = html.indexOf('atlas-responsive-shell.js?v=20260815-ui8-shell-r2');
   const navScript = html.indexOf('atlas-main-authority-nav.js?v=20260815-ui5');
   assert.ok(mainScript >= 0 && shellScript > mainScript && navScript > shellScript);
