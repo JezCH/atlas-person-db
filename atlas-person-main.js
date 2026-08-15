@@ -81,6 +81,29 @@
     return `<ul class="person-source-list">${sources.map(sourceHtml).join("")}</ul>`;
   }
 
+  function compactActivityHtml(activity) {
+    const polity = activity?.polity?.display_name || activity?.polity?.canonical_name_en || "정치체 미상";
+    const relation = activity?.relation?.code || "relation 미상";
+    const role = activity?.role?.display_name || activity?.role?.source_label || "역할 미지정";
+    const basis = activity?.period_basis?.display_name || activity?.period_basis?.code || "기간 기준 미상";
+    const semantic = [
+      activity?.chronology_status ? `chronology: ${activity.chronology_status}` : null,
+      activity?.confidence != null ? `confidence: ${activity.confidence}` : null
+    ].filter(Boolean);
+    return `<span class="person-card-activity" data-activity-id="${escapeHtml(activity?.id || "")}">
+      <span class="person-card-activity-head"><b>${escapeHtml(polity)}</b><span class="person-relation-badge">${escapeHtml(relation)}</span></span>
+      <span class="person-card-activity-role">${escapeHtml(role)} · ${escapeHtml(basis)}</span>
+      <span class="person-card-activity-period">${escapeHtml(boundaryLabel(activity?.start))} – ${escapeHtml(boundaryLabel(activity?.end))}</span>
+      ${semantic.length ? `<small>${semantic.map(escapeHtml).join(" · ")}</small>` : ""}
+    </span>`;
+  }
+
+  function compactActivitiesHtml(person) {
+    const activities = Array.isArray(person?.activity_summaries) ? person.activity_summaries : [];
+    if (!activities.length) return '<span class="person-card-activities is-empty">등록된 Activity 없음</span>';
+    return `<span class="person-card-activities">${activities.map(compactActivityHtml).join("")}</span>`;
+  }
+
   function personCard(person) {
     const rawHistoricity = person?.historicity == null || String(person.historicity) === "" ? "historicity 미상" : String(person.historicity);
     const canonical = person?.canonical_name_en && person.canonical_name_en !== person.display_name
@@ -91,6 +114,7 @@
       ${canonical}
       <span class="person-card-range">${escapeHtml(rangeLabel(person))}</span>
       <span class="person-card-count">Activity ${Number(person.activity_count || 0)}건</span>
+      ${compactActivitiesHtml(person)}
     </button>`;
   }
 
@@ -103,6 +127,14 @@
 
   function activeFacetCount() {
     return Object.values(facetFilters).filter(Boolean).length;
+  }
+
+  function updateFilterToggle() {
+    const button = document.getElementById("personMainFilterToggle");
+    if (!button) return;
+    const active = activeFacetCount();
+    button.textContent = active ? `필터 ${active}` : "필터";
+    button.classList.toggle("has-active-filter", active > 0);
   }
 
   function notifyPersonRender(shown) {
@@ -133,6 +165,7 @@
         kind: "other"
       })
     ].join("");
+    updateFilterToggle();
     notifyPersonRender(shown);
     return shown;
   }
@@ -159,8 +192,9 @@
       activity.confidence != null ? `confidence: ${activity.confidence}` : null,
       activity.chronology_status ? `chronology: ${activity.chronology_status}` : null
     ].filter(Boolean);
-    return `<article class="person-activity-card">
-      <header><div><span class="person-relation-badge">${escapeHtml(relation)}</span><h4>${escapeHtml(polity)}</h4><p>${escapeHtml(role)} · ${escapeHtml(basis)}</p></div></header>
+    const activityId = escapeHtml(activity.id || "");
+    return `<article class="person-activity-card" data-activity-id="${activityId}">
+      <header><div><span class="person-relation-badge">${escapeHtml(relation)}</span><h4>${escapeHtml(polity)}</h4><p>${escapeHtml(role)} · ${escapeHtml(basis)}</p></div><div class="person-activity-actions"><button class="mini-btn edit" type="button" data-authoring-action="edit" data-activity-id="${activityId}">수정</button><button class="mini-btn danger delete" type="button" data-authoring-action="delete" data-activity-id="${activityId}">삭제</button></div></header>
       <dl class="person-activity-dates">
         <div><dt>시작</dt><dd>${escapeHtml(boundaryLabel(activity.start))}${startMeta.length ? `<small>${startMeta.map(escapeHtml).join(" · ")}</small>` : ""}</dd></div>
         <div><dt>종료</dt><dd>${escapeHtml(boundaryLabel(activity.end))}${endMeta.length ? `<small>${endMeta.map(escapeHtml).join(" · ")}</small>` : ""}</dd></div>
@@ -237,6 +271,7 @@
     fillFacetSelect("personMainRelationFilter", facetCatalog.relations, "모든 관계", "relation_type_id");
     fillFacetSelect("personMainRoleFilter", facetCatalog.roles, "모든 역할", "role_id");
     fillFacetSelect("personMainBasisFilter", facetCatalog.period_bases, "모든 기간 기준", "period_basis_id");
+    updateFilterToggle();
   }
 
   async function loadPersons({ keepSelection = true } = {}) {
@@ -267,6 +302,116 @@
     }
   }
 
+  function showOperationalMessage(message) {
+    const toast = document.getElementById("toast");
+    if (!toast) return;
+    toast.textContent = message;
+    toast.hidden = false;
+    clearTimeout(showOperationalMessage.timer);
+    showOperationalMessage.timer = setTimeout(() => { toast.hidden = true; }, 3200);
+  }
+
+  function legacyActivityButton(activityId, action) {
+    return [...document.querySelectorAll(`#dataBody button.${action}[data-id]`)]
+      .find((button) => String(button.dataset.id) === String(activityId)) || null;
+  }
+
+  function waitForLegacyActivityButton(activityId, action, timeoutMs = 4000) {
+    const existing = legacyActivityButton(activityId, action);
+    if (existing) return Promise.resolve(existing);
+    const body = document.getElementById("dataBody");
+    if (!body || typeof MutationObserver !== "function") return Promise.resolve(null);
+    return new Promise((resolve) => {
+      let settled = false;
+      const finish = (value) => {
+        if (settled) return;
+        settled = true;
+        observer.disconnect();
+        clearTimeout(timer);
+        resolve(value);
+      };
+      const observer = new MutationObserver(() => {
+        const button = legacyActivityButton(activityId, action);
+        if (button) finish(button);
+      });
+      const timer = setTimeout(() => finish(null), timeoutMs);
+      observer.observe(body, { childList: true, subtree: true });
+    });
+  }
+
+  function refreshAfterDialogClose() {
+    const dialog = document.getElementById("editorDialog");
+    dialog?.addEventListener("close", () => loadPersons({ keepSelection: true }), { once: true });
+  }
+
+  function refreshAfterLegacyRowsChange(timeoutMs = 15000) {
+    const body = document.getElementById("dataBody");
+    if (!body || typeof MutationObserver !== "function") return;
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      observer.disconnect();
+      clearTimeout(timer);
+      loadPersons({ keepSelection: true });
+    };
+    const observer = new MutationObserver(finish);
+    const timer = setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      observer.disconnect();
+    }, timeoutMs);
+    observer.observe(body, { childList: true, subtree: true });
+  }
+
+  function openLegacyCreate() {
+    const button = document.getElementById("addButton");
+    if (!button) return showOperationalMessage("관계 추가 도구를 찾지 못했습니다.");
+    refreshAfterDialogClose();
+    button.click();
+  }
+
+  async function invokeLegacyActivityAction(activityId, action) {
+    if (!activityId || !["edit", "delete"].includes(action)) return;
+    const button = await waitForLegacyActivityButton(activityId, action);
+    if (!button) {
+      openLegacyTools();
+      showOperationalMessage("해당 Activity 편집 행을 찾지 못해 전체 관계 편집표를 열었습니다.");
+      return;
+    }
+    if (action === "edit") refreshAfterDialogClose();
+    if (action === "delete") refreshAfterLegacyRowsChange();
+    button.click();
+  }
+
+  function exportLegacyExcel() {
+    const button = document.getElementById("exportButton");
+    if (!button) return showOperationalMessage("엑셀 내보내기 도구를 찾지 못했습니다.");
+    button.click();
+  }
+
+  function importLegacyExcel() {
+    const input = document.getElementById("importInput");
+    if (!input) return showOperationalMessage("엑셀 불러오기 도구를 찾지 못했습니다.");
+    refreshAfterLegacyRowsChange();
+    input.click();
+  }
+
+  function openLegacyTools() {
+    const tools = document.getElementById("relationshipAuthoringTools");
+    if (!tools) return;
+    tools.open = true;
+    tools.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function setMoreMenu(open) {
+    const button = document.getElementById("personMainMoreButton");
+    const menu = document.getElementById("personMainMoreMenu");
+    if (!button || !menu) return;
+    menu.hidden = !open;
+    button.setAttribute("aria-expanded", String(open));
+  }
+
   function installShell() {
     const title = topbar.querySelector("h1");
     const eyebrow = topbar.querySelector(".eyebrow");
@@ -278,13 +423,13 @@
     const personView = document.createElement("section");
     personView.id = "personMainView";
     personView.className = "person-main-view";
-    personView.innerHTML = `<section class="person-main-toolbar card"><div><p class="eyebrow">AUTHORITATIVE PERSON READ</p><h2>인물 목록</h2><p>역사성 분류와 연대 확실성을 분리해 표시합니다.</p></div><div class="person-main-controls"><input id="personMainSearch" type="search" autocomplete="off" placeholder="인물·정치체·관계·역할 검색" /><select id="personMainSort" aria-label="Person 정렬"><option value="start-asc">활동연도 ↑ 과거→현재</option><option value="start-desc">활동연도 ↓ 현재→과거</option></select><button id="personMainRefresh" class="btn" type="button">↻ 새로고침</button></div><div class="person-main-filters" role="group" aria-label="Activity semantic filters"><select id="personMainPolityFilter" aria-label="정치체 필터"><option value="">모든 정치체</option></select><select id="personMainRelationFilter" aria-label="관계 필터"><option value="">모든 관계</option></select><select id="personMainRoleFilter" aria-label="역할 필터"><option value="">모든 역할</option></select><select id="personMainBasisFilter" aria-label="기간 기준 필터"><option value="">모든 기간 기준</option></select><button id="personMainClearFilters" class="btn" type="button">필터 초기화</button></div><div id="personMainSummary" class="person-main-summary"></div><span id="personMainStatus" class="person-main-status">초기화</span></section>
+    personView.innerHTML = `<section class="person-main-toolbar card"><div class="person-main-toolbar-heading"><p class="eyebrow">AUTHORITATIVE PERSON READ</p><h2>인물 목록</h2><p>역사성 분류와 연대 확실성을 분리해 표시합니다.</p></div><div class="person-main-actions" aria-label="Person 운영 도구"><button id="personMainAdd" class="btn btn-primary" type="button">+ 관계 추가</button><button id="personMainRefresh" class="btn" type="button">↻ 새로고침</button><button id="personMainFilterToggle" class="btn person-main-filter-toggle" type="button" aria-controls="personMainFilters" aria-expanded="false">필터</button><div class="person-main-more"><button id="personMainMoreButton" class="btn" type="button" aria-controls="personMainMoreMenu" aria-expanded="false">⋯ 더보기</button><div id="personMainMoreMenu" class="person-main-more-menu" hidden><button type="button" data-person-main-action="export">엑셀 내보내기</button><button type="button" data-person-main-action="import">엑셀 불러오기</button><a href="./admin.html">관리자 페이지</a><button type="button" data-person-main-action="legacy-tools">전체 관계 편집표</button></div></div></div><div class="person-main-controls"><input id="personMainSearch" type="search" autocomplete="off" placeholder="인물·정치체·관계·역할·기간·비고 검색" /><select id="personMainSort" aria-label="Person 정렬"><option value="start-asc">활동연도 ↑ 과거→현재</option><option value="start-desc">활동연도 ↓ 현재→과거</option></select></div><div id="personMainFilters" class="person-main-filters" role="group" aria-label="Activity semantic filters"><select id="personMainPolityFilter" aria-label="정치체 필터"><option value="">모든 정치체</option></select><select id="personMainRelationFilter" aria-label="관계 필터"><option value="">모든 관계</option></select><select id="personMainRoleFilter" aria-label="역할 필터"><option value="">모든 역할</option></select><select id="personMainBasisFilter" aria-label="기간 기준 필터"><option value="">모든 기간 기준</option></select><button id="personMainClearFilters" class="btn" type="button">필터 초기화</button></div><div id="personMainSummary" class="person-main-summary"></div><span id="personMainStatus" class="person-main-status">초기화</span></section>
       <div class="person-main-layout"><div id="personMainGroups" class="person-main-groups"></div><aside id="personMainDetail" class="person-main-detail card" aria-live="polite"><p class="person-detail-placeholder">왼쪽에서 인물을 선택하면 이름·설명·출처와 모든 Activity 의미를 확인할 수 있습니다.</p></aside></div>`;
 
     const authoringTools = document.createElement("details");
     authoringTools.id = "relationshipAuthoringTools";
     authoringTools.className = "relationship-authoring-tools";
-    authoringTools.innerHTML = `<summary><span><b>관계 편집 도구</b><small>기존 Activity 행 등록·수정·엑셀 도구</small></span><span aria-hidden="true">＋</span></summary><div class="relationship-authoring-body"></div>`;
+    authoringTools.innerHTML = `<summary><span><b>전체 관계 편집표</b><small>기존 Activity 행 등록·수정·엑셀 도구의 전체 표</small></span><span aria-hidden="true">＋</span></summary><div class="relationship-authoring-body"></div>`;
     const body = authoringTools.querySelector(".relationship-authoring-body");
     body.append(toolbar, legacyContent);
 
@@ -293,9 +438,15 @@
 
     const search = document.getElementById("personMainSearch");
     const sort = document.getElementById("personMainSort");
+    const add = document.getElementById("personMainAdd");
     const refresh = document.getElementById("personMainRefresh");
+    const filterToggle = document.getElementById("personMainFilterToggle");
+    const filters = document.getElementById("personMainFilters");
+    const moreButton = document.getElementById("personMainMoreButton");
+    const moreMenu = document.getElementById("personMainMoreMenu");
     const clearFilters = document.getElementById("personMainClearFilters");
     const groups = document.getElementById("personMainGroups");
+    const detail = document.getElementById("personMainDetail");
     const facetBindings = [
       ["personMainPolityFilter", "polity_id"],
       ["personMainRelationFilter", "relation_type_id"],
@@ -322,10 +473,40 @@
       renderFacetControls();
       renderGroups();
     });
+    add?.addEventListener("click", openLegacyCreate);
     refresh?.addEventListener("click", () => loadPersons({ keepSelection: true }));
+    filterToggle?.addEventListener("click", () => {
+      const open = !filters?.classList.contains("is-open");
+      filters?.classList.toggle("is-open", open);
+      filterToggle.setAttribute("aria-expanded", String(open));
+    });
+    moreButton?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      setMoreMenu(moreMenu?.hidden !== false);
+    });
+    moreMenu?.addEventListener("click", (event) => {
+      const action = event.target.closest("[data-person-main-action]")?.dataset.personMainAction;
+      if (!action) return;
+      setMoreMenu(false);
+      if (action === "export") exportLegacyExcel();
+      if (action === "import") importLegacyExcel();
+      if (action === "legacy-tools") openLegacyTools();
+    });
     groups?.addEventListener("click", (event) => {
       const card = event.target.closest("[data-person-id]");
       if (card) selectPerson(card.dataset.personId);
+    });
+    detail?.addEventListener("click", (event) => {
+      const actionButton = event.target.closest("[data-authoring-action][data-activity-id]");
+      if (!actionButton) return;
+      invokeLegacyActivityAction(actionButton.dataset.activityId, actionButton.dataset.authoringAction);
+    });
+    document.addEventListener("click", (event) => {
+      if (moreMenu?.hidden !== false) return;
+      if (!event.target.closest("#personMainMoreMenu") && !event.target.closest("#personMainMoreButton")) setMoreMenu(false);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") setMoreMenu(false);
     });
   }
 
@@ -338,6 +519,11 @@
     renderGroups,
     yearLabel,
     boundaryLabel,
-    safeHttpUrl
+    safeHttpUrl,
+    openLegacyCreate,
+    invokeLegacyActivityAction,
+    exportLegacyExcel,
+    importLegacyExcel,
+    openLegacyTools
   });
 })();

@@ -1,0 +1,125 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "request_id": "correction:suleiman-i:p10-relation-type:20260815:v1",
+  "review_status": "approved",
+  "release_order": 110,
+  "baseline": "post-temporal-correction-production-snapshot",
+  "exact_live_snapshot_digest": "sha256:416dc129045a7ecfd07a0c231b5b15bd4dbd478364161a896dde611fa83e173b",
+  "exact_live_snapshot_activity_ids": [
+    "c8aaf090-cab4-50c8-8abb-b77baddffb30"
+  ],
+  "evidence": {
+    "reason": "Restore the missing normalized rules relation_type_id on the existing Suleiman I Ottoman reign Activity after P10 revalidation rejected the legacy null FK. Preserve the exact Activity UUID, Person, Polity, role, period basis, 1520-1566 interval, temporal metadata, provenance, notes, source links, chronology claims and descriptions.",
+    "temporal_correction_run_id": 31871605696,
+    "temporal_correction_artifact_id": 9243577612,
+    "p10_failed_activity_id": "c8aaf090-cab4-50c8-8abb-b77baddffb30",
+    "rules_relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c"
+  },
+  "execution_guards": {
+    "serializable_required": true,
+    "advisory_lock_required": true,
+    "manifest_hash_idempotency_required": true,
+    "immutable_audit_required": true,
+    "dry_run_before_apply_required": true,
+    "partial_commit_forbidden": true,
+    "exact_before_state_required": true,
+    "no_runtime_name_or_semantic_identity_resolution": true,
+    "no_silent_source_loss": true,
+    "no_fake_legacy_source_key": true,
+    "provenance_link_identity_is_composite": true,
+    "synthetic_provenance_link_uuid_forbidden": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true
+  },
+  "operations": [
+    {
+      "case_id": "p10-suleiman-i-legacy-null-relation-type",
+      "type": "rewrite_activity",
+      "activity_id": "c8aaf090-cab4-50c8-8abb-b77baddffb30",
+      "exact_before": {
+        "activity": {
+          "id": "c8aaf090-cab4-50c8-8abb-b77baddffb30",
+          "person_id": "021b9e7c-92ee-532e-876d-fb58681107e9",
+          "polity_id": "6d1520e2-0aff-5063-b2b7-95eb86daf372",
+          "relation_type_id": null,
+          "role_id": "1a91542a-fc8f-5c4c-b4d2-f533d1af7fb8",
+          "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+          "activity_start": 1520,
+          "activity_start_month": null,
+          "activity_start_day": null,
+          "activity_start_granularity": "year",
+          "activity_start_certainty": "exact",
+          "activity_start_calendar": "unspecified_historical",
+          "activity_end": 1566,
+          "activity_end_month": null,
+          "activity_end_day": null,
+          "activity_end_granularity": "year",
+          "activity_end_certainty": "exact",
+          "activity_end_calendar": "unspecified_historical",
+          "confidence": "legacy_asserted",
+          "chronology_status": "exact_as_recorded",
+          "legacy_source_key": "pending-records-supplement.json:50:454fc8d588ece91b",
+          "notes": "Reigned as Ottoman sultan from 1520 until his death in 1566.",
+          "source_locator": {
+            "file": "pending-records-supplement.json",
+            "index": 50,
+            "source_sha256": "719b77b0a781d991f6a1df24a999a90cb37d84e8be2bc5dee3b7af8c342e5093"
+          },
+          "content_hash": "454fc8d588ece91b81f3edfb9f1d837f6094d5db5c34c85f2cab47c5843da6f9"
+        },
+        "normalized_source_links": [
+          {
+            "person_politics_id": "c8aaf090-cab4-50c8-8abb-b77baddffb30",
+            "source_id": "55efaae0-3d24-5462-9d30-bc813ea7de0a",
+            "source_locator_key": "pending-records-supplement.json:50"
+          }
+        ],
+        "chronology_claims": [],
+        "relationship_descriptions": []
+      },
+      "exact_after": {
+        "activity": {
+          "id": "c8aaf090-cab4-50c8-8abb-b77baddffb30",
+          "person_id": "021b9e7c-92ee-532e-876d-fb58681107e9",
+          "polity_id": "6d1520e2-0aff-5063-b2b7-95eb86daf372",
+          "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+          "role_id": "1a91542a-fc8f-5c4c-b4d2-f533d1af7fb8",
+          "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+          "activity_start": 1520,
+          "activity_start_month": null,
+          "activity_start_day": null,
+          "activity_start_granularity": "year",
+          "activity_start_certainty": "exact",
+          "activity_start_calendar": "unspecified_historical",
+          "activity_end": 1566,
+          "activity_end_month": null,
+          "activity_end_day": null,
+          "activity_end_granularity": "year",
+          "activity_end_certainty": "exact",
+          "activity_end_calendar": "unspecified_historical",
+          "confidence": "legacy_asserted",
+          "chronology_status": "exact_as_recorded",
+          "legacy_source_key": "pending-records-supplement.json:50:454fc8d588ece91b",
+          "notes": "Reigned as Ottoman sultan from 1520 until his death in 1566.",
+          "source_locator": {
+            "file": "pending-records-supplement.json",
+            "index": 50,
+            "source_sha256": "719b77b0a781d991f6a1df24a999a90cb37d84e8be2bc5dee3b7af8c342e5093"
+          },
+          "content_hash": "454fc8d588ece91b81f3edfb9f1d837f6094d5db5c34c85f2cab47c5843da6f9"
+        },
+        "normalized_source_links": [
+          {
+            "person_politics_id": "c8aaf090-cab4-50c8-8abb-b77baddffb30",
+            "source_id": "55efaae0-3d24-5462-9d30-bc813ea7de0a",
+            "source_locator_key": "pending-records-supplement.json:50"
+          }
+        ],
+        "chronology_claims": [],
+        "relationship_descriptions": []
+      }
+    }
+  ],
+  "manifest_sha256": "sha256:b64cf9bf1536da2cd7f9ca4cbe65f8e34e72d9bda23cf874494640c281d8450f",
+  "production_executable": true
+}

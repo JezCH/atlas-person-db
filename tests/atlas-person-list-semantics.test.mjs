@@ -48,7 +48,8 @@ function semanticRow({
   startCertainty = 'exact',
   endCertainty = 'exact',
   confidence = 'reviewed',
-  chronologyStatus = 'reviewed'
+  chronologyStatus = 'reviewed',
+  notes = 'Court chronicle note'
 } = {}) {
   return {
     id,
@@ -82,16 +83,17 @@ function semanticRow({
     activity_end_certainty: endCertainty,
     activity_end_calendar: 'unspecified_historical',
     confidence,
-    chronology_status: chronologyStatus
+    chronology_status: chronologyStatus,
+    notes
   };
 }
 
-test('compact list semantic SQL returns one Activity-shaped tuple and no detail-only payload', () => {
+test('compact list semantic SQL returns one Activity-shaped tuple including legacy-readable notes and no private detail payload', () => {
   for (const token of [
     'pp.id', 'pp.person_id', 'pp.polity_id', 'pp.relation_type_id', 'pp.role_id', 'pp.period_basis_id',
     'pp.activity_start', 'pp.activity_end', 'activity_start_granularity', 'activity_start_certainty',
     'activity_start_calendar', 'activity_end_granularity', 'activity_end_certainty', 'activity_end_calendar',
-    'pp.confidence', 'pp.chronology_status', 'relation_type_code', 'relation_type_category',
+    'pp.confidence', 'pp.chronology_status', 'pp.notes', 'relation_type_code', 'relation_type_category',
     'role_code', 'role_category', 'role_source_label', 'period_basis_code'
   ]) assert.match(PERSON_LIST_SEMANTIC_SQL, new RegExp(token.replace('.', '\\.')));
 
@@ -102,10 +104,10 @@ test('compact list semantic SQL returns one Activity-shaped tuple and no detail-
   assert.match(PERSON_LIST_SEMANTIC_SQL, /order by pn\.id\s+limit 1/i);
   assert.match(PERSON_LIST_SEMANTIC_SQL, /order by rn\.id\s+limit 1/i);
   assert.match(PERSON_LIST_SEMANTIC_SQL, /order by pbn\.id\s+limit 1/i);
-  assert.doesNotMatch(PERSON_LIST_SEMANTIC_SQL, /\bnotes\b|source_locator|source_key|sha256|bytes|canonical_key/i);
+  assert.doesNotMatch(PERSON_LIST_SEMANTIC_SQL, /source_locator|source_key|sha256|bytes|canonical_key/i);
 });
 
-test('compact Activity projection preserves the actual Polity-Relation-Role-Basis-temporal tuple', () => {
+test('compact Activity projection preserves the actual Polity-Relation-Role-Basis-temporal tuple plus notes', () => {
   const projected = projectCompactActivity(semanticRow());
   assert.equal(projected.polity.display_name, 'A 왕국');
   assert.equal(projected.relation.code, 'rules');
@@ -129,7 +131,7 @@ test('compact Activity projection preserves the actual Polity-Relation-Role-Basi
   });
   assert.equal(projected.confidence, 'reviewed');
   assert.equal(projected.chronology_status, 'reviewed');
-  assert.equal('notes' in projected, false);
+  assert.equal(projected.notes, 'Court chronicle note');
   assert.equal('person_id' in projected, false);
 });
 
