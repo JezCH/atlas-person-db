@@ -149,6 +149,10 @@
       createActivity: (payload) => mutate("create", payload),
       updateActivity: (id, value) => mutate("update", { id, value }),
       deleteActivity: (id) => mutate("delete", { id }),
+      deletePerson: (personId, confirmationName) => mutate("delete_person", {
+        person_id: String(personId || "").trim(),
+        confirmation_name: String(confirmationName || "").trim()
+      }),
       importActivities: (rows) => mutate("import", rows),
       ensureSession,
       sessionStatus,
@@ -156,7 +160,20 @@
     });
   }
 
+  function loadPersonHardDeleteUi() {
+    if (typeof window === "undefined" || typeof document === "undefined") return;
+    if (document.querySelector('script[data-atlas-person-hard-delete="true"]')) return;
+    const script = document.createElement("script");
+    script.src = "./atlas-person-hard-delete.js?v=20260816-person-hard-delete-v1";
+    script.async = true;
+    script.dataset.atlasPersonHardDelete = "true";
+    document.head.append(script);
+  }
+
   const api = Object.freeze({ createAdapter, defaultCredentialProvider });
   if (typeof module !== "undefined" && module.exports) module.exports = api;
-  if (typeof window !== "undefined") window.ATLAS_SERVER_WRITE_ADAPTER = api;
+  if (typeof window !== "undefined") {
+    window.ATLAS_SERVER_WRITE_ADAPTER = api;
+    loadPersonHardDeleteUi();
+  }
 })();
