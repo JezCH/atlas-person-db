@@ -13,12 +13,12 @@ const GORGO_REQUIREMENT_KEY = "p10:gorgo-of-sparta:gorgo:p4-reviewed-same-person
 
 function migrationBody(sql) {
   const source = String(sql || "").trim();
-  const withoutBegin = source.replace(/^BEGIN;\s*/i, "");
-  const withoutCommit = withoutBegin.replace(/\s*COMMIT;\s*$/i, "");
-  if (/\bBEGIN\s*;/i.test(withoutCommit) || /\bCOMMIT\s*;/i.test(withoutCommit)) {
+  let body = source.replace(/(^|\n)\s*BEGIN;\s*(?=\n)/i, "$1");
+  body = body.replace(/\s*COMMIT;\s*$/i, "");
+  if (/\bBEGIN\s*;/i.test(body) || /\bCOMMIT\s*;/i.test(body)) {
     throw new Error("P10_RELEASE_MIGRATION_TRANSACTION_WRAPPER_DRIFT");
   }
-  return withoutCommit.trim();
+  return body.trim();
 }
 
 function loadRequirementMigration() {
