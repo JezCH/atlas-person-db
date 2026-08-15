@@ -24,6 +24,7 @@ select
   pp.activity_end_calendar,
   pp.confidence,
   pp.chronology_status,
+  pp.notes,
   prt.code as relation_type_code,
   prt.category as relation_type_category,
   (
@@ -106,7 +107,8 @@ function projectCompactActivity(row) {
     start: activity.start,
     end: activity.end,
     confidence: activity.confidence,
-    chronology_status: activity.chronology_status
+    chronology_status: activity.chronology_status,
+    notes: activity.notes
   });
 }
 
