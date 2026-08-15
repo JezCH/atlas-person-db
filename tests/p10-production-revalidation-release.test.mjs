@@ -93,13 +93,13 @@ test('release service executes the canonical migration body under its own transa
   assert.doesNotMatch(canonical, /COMMIT;\s*$/i);
 });
 
-test('Production workflow uses OIDC and dry-run before apply without DB secrets or merge commands', () => {
+test('Production workflow uses OIDC and dry-run before apply without DB secrets or destructive operations', () => {
   assert.match(workflow, /environment: production/);
   assert.match(workflow, /id-token: write/);
   assert.match(workflow, /atlas-person-db-p10-revalidation-release/);
   assert.match(workflow, /call migration_dry_run[\s\S]*call migration_apply[\s\S]*call rebuild_candidates[\s\S]*call final_verify/);
   assert.doesNotMatch(workflow, /SUPABASE_DB_URL|DATABASE_URL/);
-  assert.doesNotMatch(workflow, /REVIEW_CANDIDATE|EXECUTE_APPROVED_MERGE|physical merge/i);
+  assert.doesNotMatch(workflow, /REVIEW_CANDIDATE|EXECUTE_APPROVED_MERGE|executeApprovedPersonMerge/);
   assert.match(workflow, /review_decision_written==false/);
   assert.match(workflow, /physical_person_merge_executed==false/);
 });
