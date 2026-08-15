@@ -234,6 +234,7 @@ jobs:
           jq . /tmp/atlas-correction-results.json
 
       - name: Upload correction and Baseline A evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: atlas-correction-results-${{ github.sha }}
