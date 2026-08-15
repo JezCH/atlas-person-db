@@ -18,7 +18,8 @@ test('Person table body order matches the four visible headers in the direct ren
   const header = source.slice(source.indexOf('function personTableHeaderHtml'), source.indexOf('function personTableRow'));
   const row = source.slice(source.indexOf('function personTableRow'), source.indexOf('function groupSection'));
   ordered(header, ['person-table-col-identity', 'person-table-col-range', 'person-table-col-activities', 'person-table-col-count']);
-  ordered(row, ['person-table-identity', 'person-table-range', 'person-table-activities', 'person-table-count']);
+  ordered(row, ['person-table-identity', 'person-table-range', 'compactActivitiesHtml(person)', 'person-table-count']);
+  assert.match(source, /person-card-activities person-table-activities/);
 });
 
 test('direct table renderer uses a fresh browser cache key and no adapter asset', () => {
