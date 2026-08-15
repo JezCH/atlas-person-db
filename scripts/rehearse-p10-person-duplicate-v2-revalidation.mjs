@@ -14,6 +14,8 @@ const { createStage2NativeActivityTx, loadStage2NativeActivity } = require('../s
 const duplicateReview = require('../server/atlas-duplicate-review-service.js');
 const duplicateDetector = require('../server/atlas-duplicate-detector.js');
 const mergeInterlock = require('../server/atlas-person-merge-interlock.js');
+const mergeReadiness = require('../server/atlas-person-merge-reference-readiness.js');
+const mergeService = require('../server/atlas-person-merge-service.js');
 
 const { Client } = pg;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -115,6 +117,36 @@ try {
   const schemaRelease = await applyStage2SchemaRelease(client);
   assert.equal(schemaRelease.applied.length, 6);
 
+  const initialReferenceReadiness = await mergeReadiness.inspectPersonMergeReferenceReadiness(client);
+  assert.equal(initialReferenceReadiness.ready, true, initialReferenceReadiness.blockers.join(';'));
+  assert.equal(initialReferenceReadiness.person_fks.length, 7);
+  assert.equal(initialReferenceReadiness.relationship_fks.length, 4);
+  assert.deepEqual(initialReferenceReadiness.non_fk_person_uuid_columns, mergeReadiness.EXPECTED_NON_FK_PERSON_UUID_COLUMNS);
+  assert.deepEqual(initialReferenceReadiness.non_fk_relationship_uuid_columns, []);
+  assert.deepEqual(initialReferenceReadiness.user_triggers, []);
+  const mergeSchemaReadiness = await mergeService.ensureMergeSchema(client);
+  assert.equal(mergeSchemaReadiness.ready, true);
+
+  await client.query(`create table atlas_v2.p10_unreviewed_person_reference(
+    id uuid primary key,
+    subject_person_id uuid references atlas_v2.persons(id) on delete restrict
+  )`);
+  let drift = await mergeReadiness.inspectPersonMergeReferenceReadiness(client);
+  assert.equal(drift.ready, false);
+  assert.ok(drift.blockers.some((item) => item === 'PERSON_FK_UNREVIEWED:atlas_v2.p10_unreviewed_person_reference.subject_person_id'));
+  await assert.rejects(() => mergeService.ensureMergeSchema(client), (error) => error?.code === 'P10_PERSON_MERGE_REFERENCE_SURFACE_DRIFT');
+  await client.query('drop table atlas_v2.p10_unreviewed_person_reference');
+
+  await client.query(`create table atlas_v2.p10_unreviewed_relationship_reference(
+    id uuid primary key,
+    subject_relationship_id uuid references atlas_v2.person_politics_v2(id) on delete restrict
+  )`);
+  drift = await mergeReadiness.inspectPersonMergeReferenceReadiness(client);
+  assert.equal(drift.ready, false);
+  assert.ok(drift.blockers.some((item) => item === 'RELATIONSHIP_FK_UNREVIEWED:atlas_v2.p10_unreviewed_relationship_reference.subject_relationship_id'));
+  await client.query('drop table atlas_v2.p10_unreviewed_relationship_reference');
+  assert.equal((await mergeReadiness.inspectPersonMergeReferenceReadiness(client)).ready, true);
+
   await client.query(`insert into atlas_v2.period_bases(id,code,is_active) values($1::uuid,'p10_fixture_period',true)`, [PERIOD_ID]);
   await client.query(`insert into atlas_v2.period_basis_names(id,period_basis_id,locale,name,is_preferred) values(gen_random_uuid(),$1::uuid,'en','P10 fixture period',true)`, [PERIOD_ID]);
 
@@ -148,6 +180,33 @@ try {
   assert.ok(candidate.evidence.some((item) => item.kind === 'P10_SEMANTIC_PROFILE'));
   assert.ok(candidate.evidence.some((item) => item.kind === 'P10_EXACT_ACTIVITY_SEMANTIC_CONTEXT'));
   const exactFingerprint = candidate.evidence_fingerprint;
+
+  await client.query('begin');
+  try {
+    const liveState = await mergeService.lockLiveMergeState(client, [candidate.low.id, candidate.high.id]);
+    assert.equal(liveState.relationships.length, 2);
+    for (const row of liveState.relationships) {
+      assert.ok(row.relation_type_id);
+      assert.ok(row.period_basis_id);
+      assert.equal(row.activity_start_month, 3);
+      assert.equal(row.activity_start_day, 4);
+      assert.equal(row.activity_start_granularity, 'day');
+      assert.equal(row.activity_end_month, 5);
+      assert.equal(row.activity_end_day, 6);
+      assert.equal(row.activity_end_granularity, 'day');
+    }
+    const currentEvidence = mergeService.assertLiveCandidateEvidence({
+      person_low_id: candidate.low.id,
+      person_high_id: candidate.high.id,
+      evidence: candidate.evidence,
+      evidence_fingerprint: candidate.evidence_fingerprint,
+      detector_version: candidate.detector_version,
+      confidence: candidate.confidence
+    }, liveState);
+    assert.equal(currentEvidence.evidence_fingerprint, candidate.evidence_fingerprint);
+  } finally {
+    await client.query('rollback');
+  }
 
   const review = await duplicateReview.reviewCandidate({
     client,
@@ -184,13 +243,18 @@ try {
   assert.equal(mergeState.reconciliation_semantic_version, duplicateDetector.REVALIDATION_SEMANTIC_VERSION);
   assert.equal(mergeState.person_merge_lifecycle_version, 'pre-p10-blocked');
   assert.equal(mergeState.required_person_merge_lifecycle_version, 'p10-v2-revalidated');
-  assert.equal(mergeState.allowed, false, 'P10-A must not unlock physical Person merge');
+  assert.equal(mergeState.allowed, false, 'P10-B must not unlock physical Person merge');
 
   console.log(JSON.stringify({
     marker: 'ATLAS_P10_PERSON_DUPLICATE_V2_REVALIDATION_OK',
     detector_version: duplicateDetector.DETECTOR_VERSION,
     reconciliation_semantic_version: duplicateDetector.REVALIDATION_SEMANTIC_VERSION,
+    reference_policy_version: mergeReadiness.PERSON_REFERENCE_POLICY_VERSION,
     fresh_postgresql: true,
+    reference_surface_ready: true,
+    unknown_person_fk_blocked: true,
+    unknown_relationship_fk_blocked: true,
+    merge_live_lock_full_semantic_v2: true,
     exact_semantic_context_detected: true,
     reviewed_merge_reverted_on_semantic_change: true,
     role_variant_context_detected: true,
