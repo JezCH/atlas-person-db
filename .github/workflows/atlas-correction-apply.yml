@@ -53,7 +53,7 @@ jobs:
             [[ -n "$source_path" ]] || continue
             if [[ "$source_path" =~ ^corrections/requests/[A-Za-z0-9._-]+\.json$ ]]; then
               jq -e '
-                (.schema == "atlas-correction-manifest/v1" or .schema == "atlas-correction-manifest/v1.1") and
+                (.schema == "atlas-correction-manifest/v1" or .schema == "atlas-correction-manifest/v1.1" or .schema == "atlas-correction-manifest/v1.2") and
                 .review_status == "approved" and
                 ((.release_order // 500) | type == "number") and
                 ((.release_order // 500) | floor == .)
@@ -68,7 +68,7 @@ jobs:
                 ((.release_order // 500) | type == "number") and
                 ((.release_order // 500) | floor == .) and
                 (.operation | type == "object") and
-                (.operation.type == "retire_activity" or .operation.type == "update_activity_interval") and
+                (.operation.type == "retire_activity" or .operation.type == "update_activity_interval" or .operation.type == "update_activity_temporal_metadata") and
                 (.operation.relationship_id | test("^[0-9a-fA-F-]{36}$")) and
                 (if .operation.type == "update_activity_interval" then
                    (.operation.after.activity_start | type == "number") and
@@ -76,6 +76,16 @@ jobs:
                    (.operation.after.activity_start | floor == .) and
                    (.operation.after.activity_end | floor == .) and
                    (.operation.after.activity_end >= .operation.after.activity_start)
+                 elif .operation.type == "update_activity_temporal_metadata" then
+                   (.operation.after | type == "object") and
+                   ((.operation.after | keys | length) > 0) and
+                   ((.operation.after | keys) - ["activity_start_granularity","activity_start_certainty","activity_start_calendar","activity_end_granularity","activity_end_certainty","activity_end_calendar"] | length == 0) and
+                   (.operation.after | to_entries | all(
+                     if (.key | endswith("_granularity")) then (.value | IN("year","month","day"))
+                     elif (.key | endswith("_certainty")) then (.value | IN("exact","approximate","uncertain"))
+                     elif (.key | endswith("_calendar")) then (.value | IN("gregorian","julian","unspecified_historical","source_calendar"))
+                     else false end
+                   ))
                  else true end)
               ' "$source_path" >/dev/null
               order="$(jq -er '.release_order // 500' "$source_path")"
@@ -134,6 +144,7 @@ jobs:
             case "$(jq -r '.schema' "$1")" in
               atlas-correction-manifest/v1) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V1' ;;
               atlas-correction-manifest/v1.1) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V1_1' ;;
+              atlas-correction-manifest/v1.2) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V1_2' ;;
               *) echo "Unsupported correction manifest schema in $1" >&2; return 1 ;;
             esac
           }
@@ -156,12 +167,22 @@ jobs:
             jq -n --slurpfile intent "$intent" --slurpfile snapshot "$snapshot" '
               $intent[0] as $i | $snapshot[0].snapshots[0].relationship as $r |
               def before: {person_id:($r.person_id|ascii_downcase),polity_id:($r.polity_id|ascii_downcase),role_id:(if $r.role_id==null then null else ($r.role_id|ascii_downcase) end),period_basis_id:($r.period_basis_id|ascii_downcase),activity_start:$r.activity_start,activity_end:$r.activity_end,notes:$r.notes,legacy_source_key:$r.legacy_source_key};
-              {schema:"atlas-correction-manifest/v1.1",request_id:$i.request_id,review_status:"approved",release_order:($i.release_order//500),evidence:{reviewed_intent:$i,exact_snapshot_deployment_sha:$snapshot[0].deployment_sha,exact_snapshot_source_path:$snapshot[0].source_path},operations:[
-                if $i.operation.type=="retire_activity" then {type:"retire_activity",relationship_id:($i.operation.relationship_id|ascii_downcase),expected:before}
-                elif $i.operation.type=="update_activity_interval" then {type:"update_activity_interval",relationship_id:($i.operation.relationship_id|ascii_downcase),expected_before:before,expected_after:(before+{activity_start:$i.operation.after.activity_start,activity_end:$i.operation.after.activity_end})}
-                else error("unsupported intent operation") end]}
+              def temporal_before: {
+                id:($r.id|ascii_downcase),person_id:($r.person_id|ascii_downcase),polity_id:($r.polity_id|ascii_downcase),relation_type_id:(if $r.relation_type_id==null then null else ($r.relation_type_id|ascii_downcase) end),role_id:(if $r.role_id==null then null else ($r.role_id|ascii_downcase) end),period_basis_id:($r.period_basis_id|ascii_downcase),
+                activity_start:$r.activity_start,activity_start_month:$r.activity_start_month,activity_start_day:$r.activity_start_day,activity_start_granularity:$r.activity_start_granularity,activity_start_certainty:$r.activity_start_certainty,activity_start_calendar:$r.activity_start_calendar,
+                activity_end:$r.activity_end,activity_end_month:$r.activity_end_month,activity_end_day:$r.activity_end_day,activity_end_granularity:$r.activity_end_granularity,activity_end_certainty:$r.activity_end_certainty,activity_end_calendar:$r.activity_end_calendar,
+                confidence:$r.confidence,chronology_status:$r.chronology_status,legacy_source_key:$r.legacy_source_key,notes:$r.notes,source_locator:$r.source_locator,content_hash:$r.content_hash
+              };
+              if $i.operation.type=="update_activity_temporal_metadata" then
+                {schema:"atlas-correction-manifest/v1.2",request_id:$i.request_id,review_status:"approved",release_order:($i.release_order//500),evidence:{reviewed_intent:$i,exact_snapshot_deployment_sha:$snapshot[0].deployment_sha,exact_snapshot_source_path:$snapshot[0].source_path},operations:[{type:"update_activity_temporal_metadata",relationship_id:($i.operation.relationship_id|ascii_downcase),expected_before:temporal_before,expected_after:(temporal_before+$i.operation.after)}]}
+              else
+                {schema:"atlas-correction-manifest/v1.1",request_id:$i.request_id,review_status:"approved",release_order:($i.release_order//500),evidence:{reviewed_intent:$i,exact_snapshot_deployment_sha:$snapshot[0].deployment_sha,exact_snapshot_source_path:$snapshot[0].source_path},operations:[
+                  if $i.operation.type=="retire_activity" then {type:"retire_activity",relationship_id:($i.operation.relationship_id|ascii_downcase),expected:before}
+                  elif $i.operation.type=="update_activity_interval" then {type:"update_activity_interval",relationship_id:($i.operation.relationship_id|ascii_downcase),expected_before:before,expected_after:(before+{activity_start:$i.operation.after.activity_start,activity_end:$i.operation.after.activity_end})}
+                  else error("unsupported intent operation") end]}
+              end
             ' > "$output"
-            jq -e '.schema == "atlas-correction-manifest/v1.1" and .review_status == "approved" and (.operations | length == 1)' "$output" >/dev/null
+            jq -e '(.schema == "atlas-correction-manifest/v1.1" or .schema == "atlas-correction-manifest/v1.2") and .review_status == "approved" and (.operations | length == 1)' "$output" >/dev/null
           }
 
           call_correction() {
