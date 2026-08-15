@@ -66,3 +66,31 @@ jobs:
             exit 1
           fi
           echo "Controlled P10 revalidation workflow dispatched for ${GITHUB_SHA}."
+
+  dispatch_correction:
+    if: contains(github.event.head_commit.message, '[launch-correction-snapshot]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Dispatch reviewed Suleiman I correction through the existing Production workflow
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MANIFEST: corrections/intents/suleiman-i-start-granularity-p10.json
+        run: |
+          set -euo pipefail
+          payload="$(jq -cn --arg manifest "$MANIFEST" '{ref:"main",inputs:{manifest:$manifest}}')"
+          status="$(curl --silent --show-error --output /tmp/dispatch.json --write-out '%{http_code}' \
+            --request POST \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            -H 'Content-Type: application/json' \
+            --data "$payload" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/atlas-correction-apply.yml/dispatches")"
+          if [[ "$status" != "204" ]]; then
+            cat /tmp/dispatch.json >&2 || true
+            echo "Correction workflow dispatch failed: HTTP $status" >&2
+            exit 1
+          fi
+          echo "Reviewed correction workflow dispatched for ${GITHUB_SHA}: ${MANIFEST}."
