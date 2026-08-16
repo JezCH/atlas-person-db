@@ -1,0 +1,45 @@
+@media (max-width: 760px) {
+  .person-card-grid.person-table-grid {
+    --era-band-width: 42px;
+  }
+
+  .person-table-head {
+    grid-template-columns: var(--era-band-width) 136px 120px minmax(390px, 1fr) 66px;
+    min-width: 754px;
+  }
+
+  .person-era-group {
+    grid-template-columns: var(--era-band-width) minmax(712px, 1fr);
+    min-width: 754px;
+  }
+
+  .person-era-rows > .person-card {
+    grid-template-columns: 136px 120px minmax(390px, 1fr) 66px;
+    min-width: 712px;
+  }
+}
+
+@media (max-width: 520px) {
+  .person-card-grid.person-table-grid {
+    --era-band-width: 36px;
+  }
+
+  .person-table-head {
+    grid-template-columns: var(--era-band-width) 128px 112px minmax(375px, 1fr) 62px;
+    min-width: 713px;
+  }
+
+  .person-era-group {
+    grid-template-columns: var(--era-band-width) minmax(677px, 1fr);
+    min-width: 713px;
+  }
+
+  .person-era-rows > .person-card {
+    grid-template-columns: 128px 112px minmax(375px, 1fr) 62px;
+    min-width: 677px;
+  }
+
+  .person-table-range {
+    white-space: nowrap;
+  }
+}
