@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tigranes-ii:kingdom-of-armenia:king:95-55-bce:v1",
+  "person": {
+    "canonical_name_en": "Tigranes II the Great",
+    "display_name_ko": "티그라네스 2세"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Armenia",
+    "display_name_ko": "아르메니아 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -95,
+    "start_certainty": "uncertain",
+    "start_calendar": "gregorian",
+    "end_year": -55,
+    "end_certainty": "uncertain",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tigranes II the Great was the Artaxiad king of Armenia conventionally dated to 95-55 BCE. The exact regnal boundaries are not fully stable across modern scholarship: Encyclopaedia Iranica gives the conventional reign as 95-55 BCE while also noting accession chronologies of 95 or 94 BCE and death/succession chronologies around 56/55 or 55/54 BCE; the Metropolitan Museum likewise labels his coinage 95/96-56/55 BCE. ATLAS therefore uses -95 and -55 as representative numeric boundaries but marks both as uncertain rather than inventing false precision. His later expansion into Syria and Mesopotamia and adoption of the title King of Kings did not interrupt his underlying kingship of Armenia, so one continuous reign Activity is preserved. The polity is Kingdom of Armenia rather than an anachronistic separate 'Armenian Empire'."
+  },
+  "sources": [
+    {
+      "title": "TIGRAN II",
+      "canonical_url": "https://www.iranicaonline.org/articles/tigran-ii/",
+      "citation_text": "Encyclopaedia Iranica identifies Tigranes II the Great as king of Armenia, conventionally reigning 95-55 BCE, and describes the expansion and contraction of his Armenian kingdom during that reign.",
+      "source_type": "scholarly_reference"
+    },
+    {
+      "title": "ARMENIA AND IRAN ii. The pre-Islamic period",
+      "canonical_url": "https://www.iranicaonline.org/articles/armenia-ii/",
+      "citation_text": "Encyclopaedia Iranica notes that the accession of Tigranes is usually dated to 95 or 94 BCE and that he remained on the Armenian throne until a death/succession transition dated around 55/54 BCE, demonstrating uncertainty in the exact regnal boundaries.",
+      "source_type": "scholarly_reference"
+    },
+    {
+      "title": "Tetradrachm of King Tigranes II (95/96-56/55 b.c.)",
+      "canonical_url": "https://www.metmuseum.org/art/collection/search/478573",
+      "citation_text": "The Metropolitan Museum of Art identifies the Armenian ruler as King Tigranes II and dates the associated royal coinage to 95/96-56/55 BCE, independently supporting the uncertain boundary treatment.",
+      "source_type": "museum_collection"
+    },
+    {
+      "title": "coin - Tigranes II, Armenia",
+      "canonical_url": "https://www.britishmuseum.org/collection/object/C_1919-1120-122",
+      "citation_text": "The British Museum associates Tigranes II explicitly with the Kingdom of Armenia and identifies him as its ruler, supporting Kingdom of Armenia as the ATLAS polity rather than a separate modernized 'Armenian Empire' label.",
+      "source_type": "museum_collection"
+    }
+  ]
+}
