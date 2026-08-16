@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:benito-mussolini:kingdom-of-italy:1922-1943:v1",
+  "person": {
+    "canonical_name_en": "Benito Mussolini",
+    "display_name_ko": "베니토 무솔리니"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Italy",
+    "display_name_ko": "이탈리아 왕국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1922,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1943,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Benito Mussolini headed the government of the Kingdom of Italy from 31 October 1922 until 25 July 1943. During this period he transformed the Italian political system into a Fascist dictatorship, but Italy legally remained a monarchy under King Victor Emmanuel III; ATLAS therefore attaches the Person Activity to the Kingdom of Italy rather than creating a separate 'Fascist Italy' Polity. The Activity ends with Mussolini's removal from office and arrest in July 1943 and does not conflate his later leadership of the Italian Social Republic with his Kingdom of Italy premiership."
+  },
+  "sources": [
+    {
+      "title": "I Governo Mussolini",
+      "canonical_url": "https://storia.camera.it/governi/i-governo-mussolini/storia/dal%3A19270721%2Cal%3A19271219",
+      "citation_text": "The Historical Portal of the Italian Chamber of Deputies dates the first Mussolini government from 31 October 1922 to 25 July 1943 and lists Benito Mussolini as President of the Council throughout that interval.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Benito Mussolini",
+      "canonical_url": "https://encyclopedia.ushmm.org/content/en/article/benito-mussolini-1",
+      "citation_text": "The United States Holocaust Memorial Museum records Mussolini's Fascist dictatorship and his removal from power by King Victor Emmanuel III in 1943.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
