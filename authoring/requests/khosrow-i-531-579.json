@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:khosrow-i:sasanian-empire:531-579:v1",
+  "person": {
+    "canonical_name_en": "Khosrow I",
+    "display_name_ko": "호스로 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Sasanian Empire",
+    "display_name_ko": "사산 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Shahanshah (King of Kings)",
+    "role_display_name_ko": "샤한샤(왕중왕)",
+    "start_year": 531,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 579,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Khosrow I, also known as Anushirvan, is recorded as ruler of the Sasanian Empire from 531 to 579 CE. Encyclopaedia Iranica identifies him as a Sasanian king (r. 531-79) and son and successor of Kavad I; the Oxford Handbook of Iranian History likewise lists Khosrow I (Anushirvan) as the Sasanian ruler for 531-579. ATLAS therefore binds the user-supplied broad label Persia to the historically specific Sasanian Empire. The Activity records the established regnal years at year granularity and does not infer an exact accession or death day. His reign is particularly associated with major fiscal, administrative, and military reforms, but those developments are contextual evidence rather than separate Person-Polity Activities here."
+  },
+  "sources": [
+    {
+      "title": "Khosrow I — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/kosrow/",
+      "citation_text": "Encyclopaedia Iranica identifies Khosrow I, also known as Anoshiravan, as a Sasanian king who reigned from 531 to 579 CE and as the son of Kavad I.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Khosrow I ii. Reforms — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/kosrow-1-parent/kosrow-i-ii-reforms/",
+      "citation_text": "Encyclopaedia Iranica's reforms entry dates Khosrow I Anushirvan's reign to 531-579 and discusses the taxation and military reforms completed under him after initiatives begun by Kavad I.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Ruling Dynasties of Iran — The Oxford Handbook of Iranian History",
+      "canonical_url": "https://academic.oup.com/edited-volume/34347/chapter/291408604",
+      "citation_text": "The Oxford Handbook's Sasanian ruler list places Khosrow I (Anushirvan), son of Kavad I, in 531-579 CE, followed by Hormizd IV.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Sasanian Persia — Northeast Asian History Network",
+      "canonical_url": "https://contents.nahf.or.kr/id/jo.k_0016_0194_0530",
+      "citation_text": "The Northeast Asian History Foundation describes the Sasanian dynasty as ruling Persia from 226 to 651 and uses the Korean form 호스로 1세 for the ruler under whom Sasanian Persia reached a high point while fighting Byzantium.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
