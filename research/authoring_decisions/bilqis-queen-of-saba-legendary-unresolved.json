@@ -1,0 +1,72 @@
+{
+  "schema": "atlas-person-authoring-decision/v1",
+  "review_status": "reviewed_blocked",
+  "subject": "Bilqis",
+  "user_supplied_context": "Saba Kingdom",
+  "person": {
+    "canonical_name_en": "Bilqis",
+    "display_name_ko": "빌키스",
+    "person_type": "legendary",
+    "historicity": "legendary"
+  },
+  "polity_resolution": {
+    "canonical_name_en": "Kingdom of Saba",
+    "display_name_ko": "사바 왕국",
+    "historical_polity": true,
+    "use_as_activity_polity_candidate": true,
+    "confidence": "traditional_association",
+    "reason": "The Kingdom of Saba is a historically attested South Arabian polity centered on Ma'rib. Biblical and Qur'anic traditions associate the Queen of Sheba/Saba with this polity, but no Sabaic inscription securely identifies a ruler named Bilqis."
+  },
+  "narrative_identity_resolution": {
+    "queen_of_sheba_equivalence": "traditional",
+    "quranic_name_status": "unnamed_in_quran",
+    "later_islamic_name": "Bilqis",
+    "notes": "Qur'an 27 narrates a woman ruling Saba but does not give her a personal name. Bilqis is the standard name in later Islamic/Arabic tradition. ATLAS therefore treats Bilqis as the legendary/traditional identity of the Queen of Sheba rather than as an epigraphically verified Sabaean monarch."
+  },
+  "narrative_activity": {
+    "historical_runtime_ready": false,
+    "relation_type_candidate": "rules",
+    "role_candidate": "Queen",
+    "polity_identity": "Kingdom of Saba",
+    "period_basis_candidate": "reign",
+    "chronology_status": "unresolved",
+    "start_year": null,
+    "end_year": null,
+    "traditional_context": "Conventionally associated with the age of Solomon, often placed in the 10th century BCE, but this does not establish Bilqis's own accession or terminal reign boundaries.",
+    "do_not_fabricate_temporal_boundaries": true,
+    "notes": "The Queen of Sheba narrative presents a sovereign woman ruling Saba. The historical Kingdom of Saba is real, but Bilqis herself is not independently attested in the Sabaic epigraphic record. The conventional Solomon-era setting can be retained as narrative context only; it must not be converted into invented reign years."
+  },
+  "authoring_contract_blocker": {
+    "current_schema": "atlas-human-authoring/v1",
+    "problem": "Current executable Human Authoring requires integer Activity start and end years.",
+    "model_invariant": "Unknown historical boundaries must not be replaced with fake reign years merely to satisfy transitional runtime constraints.",
+    "required_resolution": "Support Person-only and/or unresolved-Activity authoring before compiling Bilqis into Production as a legendary Person with a traditional Saba ruling relationship."
+  },
+  "sources": [
+    {
+      "title": "Queen of Sheba and Her Mighty Throne — The Unforgettable Queens of Islam",
+      "canonical_url": "https://www.cambridge.org/core/books/unforgettable-queens-of-islam/queen-of-sheba-and-her-mighty-throne/D543C25499C20ECE1F05707874DECD45",
+      "use": "Cambridge scholarship notes that the Qur'anic queen is not given a personal name and that Bilqis is the popular later identity attached to the Queen of Sheba tradition."
+    },
+    {
+      "title": "The Queen of Sheba in Yemeni and Ethiopian Mythology — Africa and the Gulf Region",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/africa-and-the-gulf-region/queen-of-sheba-in-yemeni-and-ethiopian-mythology/0D5EE23CDD6349CF82585F883457B780",
+      "use": "Treats Bilqis as the Arab/Islamic Queen of Sheba figure and explicitly analyzes the narrative as mythology tied to Yemeni and Ethiopian identity."
+    },
+    {
+      "title": "The Queen of Sheba Enthroned — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/art/collection/search/452952",
+      "use": "Museum catalog identifies Bilqis with the Queen of Sheba in the later Qur'anic narrative tradition and documents her enduring traditional identity."
+    },
+    {
+      "title": "The Kingdoms of Ancient Arabia — World History Foundation",
+      "canonical_url": "https://etc.worldhistory.org/interviews/the-wealthy-kingdoms-of-ancient-arabia/",
+      "use": "Archaeological overview establishes Saba as a real South Arabian kingdom centered on Ma'rib and distinguishes the historical kingdom from the later folklore association with Bilqis."
+    },
+    {
+      "title": "예멘의 역사를 보존하다 — National Geographic Korea",
+      "canonical_url": "https://www.nationalgeographic.co.kr/news.php?aseq=100264&mgz_seq=239",
+      "use": "Supports the Korean display forms 사바 왕국 and 빌키스 while describing Bilqis as the legendary ruler associated with Saba."
+    }
+  ]
+}
