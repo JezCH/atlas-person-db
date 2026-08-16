@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:yaa-asantewaa:asante-empire:1900:v1",
+  "person": {
+    "canonical_name_en": "Yaa Asantewaa",
+    "display_name_ko": "야 아산테와"
+  },
+  "polity": {
+    "canonical_name_en": "Asante Empire",
+    "display_name_ko": "아산테 제국"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Military Commander",
+    "role_display_name_ko": "군사 지휘관",
+    "start_year": 1900,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1900,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "In 1900, with the backing of the remaining Asante leaders, Yaa Asantewaa became leader of the Asante fighting force in the War of the Golden Stool. Oxford describes her as the only female Asante ruler known to have commanded a national army. This Activity is modeled as 'serves' the Asante Empire with a military role rather than 'rules' or 'governs' the entire empire, because her authority over Asante as a whole was military resistance leadership, not sovereign kingship. The wider conflict continued into 1901, but Cambridge evidence places her capture by December 1900, so her direct personal military-command interval is conservatively bounded to 1900 at year granularity."
+  },
+  "sources": [
+    {
+      "title": "Asantewa, Nana Yaa",
+      "canonical_url": "https://academic.oup.com/edited-volume/61663/chapter-abstract/553482896",
+      "citation_text": "Oxford Research Encyclopedia of African History states that Yaa Asantewaa inspired and led resistance to British rule and was the only female Asante ruler known to have commanded a national army.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Heroes: Principles of African Greatness — Yaa Asantewaa",
+      "canonical_url": "https://africa.si.edu/exhibitions/heroes-principles-african-greatness",
+      "citation_text": "Smithsonian National Museum of African Art states that, with the backing of remaining Asante leaders, Yaa Asantewaa became leader of the Asante fighting force in 1900.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Consolidating Colonial Rule: Detentions in the Gold Coast and Sierra Leone, 1896–1901",
+      "canonical_url": "https://www.cambridge.org/core/books/imperial-incarceration/consolidating-colonial-rule-detentions-in-the-gold-coast-and-sierra-leone-18961901/E812C29E7083C2BD57894929115865B0",
+      "citation_text": "Cambridge records the 1900 revolt as led by Yaa Asantewaa and states that by December the rebel leaders, including the Queen, had been captured.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Asante Gold Regalia",
+      "canonical_url": "https://www.britishmuseum.org/about-us/british-museum-story/contested-objects-collection/asante-gold-regalia",
+      "citation_text": "The British Museum describes the 1900 Asante uprising as led by Yaa Asantewaa, Queen Mother of Ejisu, and records her subsequent exile after defeat of the uprising.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
