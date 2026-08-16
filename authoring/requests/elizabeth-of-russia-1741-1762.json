@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:elizabeth-of-russia:russian-empire:1741-1762:v1",
+  "person": {
+    "canonical_name_en": "Elizabeth of Russia",
+    "display_name_ko": "옐리자베타 페트로브나"
+  },
+  "polity": {
+    "canonical_name_en": "Russian Empire",
+    "display_name_ko": "러시아 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Empress",
+    "role_display_name_ko": "여제",
+    "start_year": 1741,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1762,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Elizabeth Petrovna, daughter of Peter the Great, became Empress of Russia after the palace coup of 1741 and reigned until her death in early 1762 by New Style dating. Russian Museum materials give the reign as 25 November/6 December 1741 to 25 December 1761/5 January 1762. ATLAS records the sovereign Activity at year granularity as 1741–1762 to avoid mixing Old Style and New Style day-level dates in one interval."
+  },
+  "sources": [
+    {
+      "title": "Portrait of Empress Elizaveta Petrovna — Virtual Russian Museum",
+      "canonical_url": "https://rusmuseumvrm.ru/data/collections/painting/18_19/st_3/index.php?lang=en",
+      "citation_text": "The Virtual Russian Museum identifies Elizaveta Petrovna as Russian Empress and gives her reign as 25 November/6 December 1741 to 25 December 1761/5 January 1762.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Saint Petersburg — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/toah/hd/stpt/hd_stpt.htm",
+      "citation_text": "The Metropolitan Museum of Art identifies Elizabeth (Elizaveta Petrovna) as Empress and gives her reign as 1741–1762.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
