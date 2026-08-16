@@ -12,7 +12,7 @@
   },
   "activity": {
     "relation_type": "serves",
-    "period_basis": "service",
+    "period_basis": "military_activity",
     "role": "Military Commander",
     "role_display_name_ko": "군사 지휘관",
     "start_year": 632,
@@ -27,7 +27,7 @@
     "end_calendar": "unspecified_historical",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "Khalid ibn al-Walid was a military commander rather than a sovereign ruler. ATLAS therefore binds him to the Rashidun Caliphate with relation_type 'serves', not 'rules' or 'governs'. The Activity begins in 632, when after Muhammad's death Caliph Abu Bakr employed Khalid as a principal commander in the Ridda wars and subsequent expansion. Khalid led campaigns in Arabia, Iraq and Syria. Umar removed him from the highest command after becoming caliph, but Khalid continued to fight as a subordinate field commander in the Syrian campaigns; the Activity ends in 638 with his final dismissal from military service. The 632-638 interval deliberately excludes Khalid's earlier military service under Muhammad before the Rashidun Caliphate existed, and does not imply that he held supreme command throughout the entire period."
+    "notes": "Khalid ibn al-Walid was a military commander rather than a sovereign ruler. ATLAS therefore binds him to the Rashidun Caliphate with relation_type 'serves', not 'rules' or 'governs'. The Activity begins in 632, when after Muhammad's death Caliph Abu Bakr employed Khalid as a principal commander in the Ridda wars and subsequent expansion. Khalid led campaigns in Arabia, Iraq and Syria. Umar removed him from the highest command after becoming caliph, but Khalid continued to fight as a subordinate field commander in the Syrian campaigns; the Activity ends in 638 with his final dismissal from military service. The 632-638 interval deliberately excludes Khalid's earlier military service under Muhammad before the Rashidun Caliphate existed, and does not imply that he held supreme command throughout the entire period. The period basis uses the existing active ATLAS controlled-vocabulary code 'military_activity'."
   },
   "sources": [
     {
