@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:john-a-macdonald:canada:prime-minister:1867-1873:v1",
+  "person": {
+    "canonical_name_en": "John A. Macdonald",
+    "display_name_ko": "존 A. 맥도널드"
+  },
+  "polity": {
+    "canonical_name_en": "Canada",
+    "display_name_ko": "캐나다"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1867,
+    "start_month": 7,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1873,
+    "end_month": 11,
+    "end_day": 5,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "John A. Macdonald served as the first Prime Minister of Canada from Confederation on 1 July 1867 until 5 November 1873. His later return to the same office in 1878 followed a genuine interruption in office, so ATLAS models the two premierships as separate Activities rather than one continuous term."
+  },
+  "sources": [
+    {
+      "title": "National Program for the Grave Sites of Canadian Prime Ministers",
+      "canonical_url": "https://parks.canada.ca/culture/designation/sepulture-gravesite",
+      "citation_text": "Parks Canada lists the Right Honourable Sir John Alexander Macdonald as Prime Minister from 1 July 1867 to 5 November 1873 and again from 17 October 1878 to 6 June 1891.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "First Ministry - Guide to Canadian Ministries since Confederation",
+      "canonical_url": "https://guide-ministries.canada.ca/en/canadian-ministries/ministry-details/1/1",
+      "citation_text": "The Government of Canada's Guide to Canadian Ministries identifies the First Ministry as 1 July 1867 to 5 November 1873 and names Sir John Alexander Macdonald as Prime Minister.",
+      "source_type": "government_record"
+    },
+    {
+      "title": "MACDONALD, Sir JOHN ALEXANDER",
+      "canonical_url": "https://www.biographi.ca/en/bio.php?BioId=40370",
+      "citation_text": "The Dictionary of Canadian Biography documents Macdonald's pre-Confederation political leadership and his central role in Confederation, providing scholarly biographical context for his selection as Canada's first prime minister.",
+      "source_type": "scholarly_biography"
+    }
+  ]
+}

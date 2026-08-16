@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:john-a-macdonald:canada:prime-minister:1878-1891:v1",
+  "person": {
+    "canonical_name_en": "John A. Macdonald",
+    "display_name_ko": "존 A. 맥도널드"
+  },
+  "polity": {
+    "canonical_name_en": "Canada",
+    "display_name_ko": "캐나다"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1878,
+    "start_month": 10,
+    "start_day": 17,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1891,
+    "end_month": 6,
+    "end_day": 6,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "John A. Macdonald returned to office as Prime Minister of Canada on 17 October 1878 after the intervening Alexander Mackenzie ministry and remained Prime Minister until his death on 6 June 1891. Because the 1873-1878 interval was a genuine period out of office, this is modeled as a second distinct Activity."
+  },
+  "sources": [
+    {
+      "title": "National Program for the Grave Sites of Canadian Prime Ministers",
+      "canonical_url": "https://parks.canada.ca/culture/designation/sepulture-gravesite",
+      "citation_text": "Parks Canada lists the Right Honourable Sir John Alexander Macdonald as Prime Minister from 1 July 1867 to 5 November 1873 and again from 17 October 1878 to 6 June 1891.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "Third Ministry - Guide to Canadian Ministries since Confederation",
+      "canonical_url": "https://guide-ministries.canada.ca/en/canadian-ministries/ministry-details/3/1",
+      "citation_text": "The Government of Canada's Guide to Canadian Ministries identifies the Third Ministry as 17 October 1878 to 6 June 1891 and names the Right Honourable Sir John Alexander Macdonald as Prime Minister.",
+      "source_type": "government_record"
+    },
+    {
+      "title": "MACDONALD, Sir JOHN ALEXANDER",
+      "canonical_url": "https://www.biographi.ca/en/bio.php?BioId=40370",
+      "citation_text": "The Dictionary of Canadian Biography provides scholarly biographical context for Macdonald's political career and leadership through Confederation and the later Dominion period.",
+      "source_type": "scholarly_biography"
+    }
+  ]
+}
