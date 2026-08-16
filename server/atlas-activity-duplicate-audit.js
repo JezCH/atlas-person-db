@@ -8,6 +8,15 @@ const SIGNALS = Object.freeze({
   CONTAINMENT_SAME_CONTEXT: "containment_same_context"
 });
 
+const VERDICTS = Object.freeze({
+  EXACT_DUPLICATE: "exact_duplicate",
+  MIGRATION_DUPLICATE_RELATION_GAP: "migration_duplicate_relation_gap",
+  RELATION_VARIANT_REVIEW: "relation_variant_review",
+  ROLE_ALIAS_REVIEW: "role_alias_review",
+  POLITY_IDENTITY_REVIEW: "polity_identity_review",
+  STALE_WIDE_INTERVAL_REVIEW: "stale_wide_interval_review"
+});
+
 function nullableId(value) {
   if (value == null || String(value).trim() === "") return null;
   return String(value).trim().toLowerCase();
@@ -100,6 +109,32 @@ function pairSignal(leftRaw, rightRaw) {
   return null;
 }
 
+function pairVerdict(leftRaw, rightRaw) {
+  const left = normalizeActivity(leftRaw);
+  const right = normalizeActivity(rightRaw);
+  const signal = pairSignal(left, right);
+  if (!signal) return null;
+
+  if (signal === SIGNALS.EXACT_ACTIVITY_DUPLICATE) {
+    return Object.freeze({ signal, verdict: VERDICTS.EXACT_DUPLICATE, confirmed_duplicate: true });
+  }
+  if (signal === SIGNALS.RELATION_VARIANT_SAME_SLOT) {
+    const oneLegacyNull = (left.relation_type_id == null) !== (right.relation_type_id == null);
+    return Object.freeze({
+      signal,
+      verdict: oneLegacyNull ? VERDICTS.MIGRATION_DUPLICATE_RELATION_GAP : VERDICTS.RELATION_VARIANT_REVIEW,
+      confirmed_duplicate: oneLegacyNull
+    });
+  }
+  if (signal === SIGNALS.ROLE_VARIANT_SAME_SLOT) {
+    return Object.freeze({ signal, verdict: VERDICTS.ROLE_ALIAS_REVIEW, confirmed_duplicate: false });
+  }
+  if (signal === SIGNALS.POLITY_VARIANT_SAME_SLOT) {
+    return Object.freeze({ signal, verdict: VERDICTS.POLITY_IDENTITY_REVIEW, confirmed_duplicate: false });
+  }
+  return Object.freeze({ signal, verdict: VERDICTS.STALE_WIDE_INTERVAL_REVIEW, confirmed_duplicate: false });
+}
+
 function auditSamePersonActivities(rows = []) {
   const normalized = rows.map(normalizeActivity);
   const groups = new Map();
@@ -113,14 +148,14 @@ function auditSamePersonActivities(rows = []) {
   for (const [personId, list] of groups.entries()) {
     for (let i = 0; i < list.length; i += 1) {
       for (let j = i + 1; j < list.length; j += 1) {
-        const signal = pairSignal(list[i], list[j]);
-        if (!signal) continue;
+        const classification = pairVerdict(list[i], list[j]);
+        if (!classification) continue;
         const [activityLowId, activityHighId] = [list[i].id, list[j].id].sort();
         signals.push(Object.freeze({
           person_id: personId,
           activity_low_id: activityLowId,
           activity_high_id: activityHighId,
-          signal
+          ...classification
         }));
       }
     }
@@ -135,7 +170,9 @@ function auditSamePersonActivities(rows = []) {
 
 module.exports = Object.freeze({
   SIGNALS,
+  VERDICTS,
   normalizeActivity,
   pairSignal,
+  pairVerdict,
   auditSamePersonActivities
 });
