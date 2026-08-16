@@ -44,4 +44,16 @@ test("production workflow uses exact-SHA OIDC and verifies relationship guard", 
   assert.match(workflow, /atlas-person-db-ko-repair/);
   assert.match(workflow, /deployment_sha/);
   assert.match(workflow, /relationship_guard\.unchanged == true/);
+  assert.match(workflow, /atlas-correction-apply\?__atlas_correction_surface=authoritative-ko-repair/);
+});
+
+test("Korean repair reuses the correction apply Vercel function instead of adding a thirteenth function", () => {
+  const apiDir = new URL("../api/", import.meta.url);
+  const apiFiles = fs.readdirSync(apiDir).filter((name) => name.endsWith(".js"));
+  const correctionApi = fs.readFileSync(new URL("../api/atlas-correction-apply.js", import.meta.url), "utf8");
+  assert.equal(apiFiles.length, 12);
+  assert.equal(apiFiles.includes("atlas-authoritative-ko-repair.js"), false);
+  assert.match(correctionApi, /createAuthoritativeKoRepairHandler/);
+  assert.match(correctionApi, /authoritative-ko-repair/);
+  assert.match(correctionApi, /ATLAS_CORRECTION_SURFACE_NOT_FOUND/);
 });
