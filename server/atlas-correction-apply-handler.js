@@ -4,7 +4,8 @@ const { createPostgresClient } = require("./atlas-postgres-client.js");
 const { MANIFEST_V1, createCorrectionManifestService: createV1Service } = require("./atlas-correction-manifest-service.js");
 const { MANIFEST_V1_1, createCorrectionManifestV11Service } = require("./atlas-correction-manifest-v1-1-service.js");
 const { MANIFEST_V1_2, createCorrectionManifestV12Service } = require("./atlas-correction-manifest-v1-2-service.js");
-const { MANIFEST_V2, createCorrectionManifestV2Service } = require("./atlas-correction-manifest-v2-service.js");
+const { MANIFEST_V2 } = require("./atlas-correction-manifest-v2-service.js");
+const { createCorrectionManifestV2DispatchService } = require("./atlas-correction-manifest-v2-dispatch-service.js");
 const {
   normalizeSnapshotActivityIds,
   createCorrectionTargetSnapshot
@@ -111,7 +112,7 @@ function createService(client, schema) {
   if (schema === MANIFEST_V1) return createV1Service({ client });
   if (schema === MANIFEST_V1_1) return createCorrectionManifestV11Service({ client });
   if (schema === MANIFEST_V1_2) return createCorrectionManifestV12Service({ client });
-  if (schema === MANIFEST_V2) return createCorrectionManifestV2Service({ client });
+  if (schema === MANIFEST_V2) return createCorrectionManifestV2DispatchService({ client });
   throw new Error("UNSUPPORTED_CORRECTION_MANIFEST_SCHEMA");
 }
 
