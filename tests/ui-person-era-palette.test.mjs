@@ -24,7 +24,7 @@ test('ATLAS era bands use the reviewed accessible categorical palette', () => {
 test('era palette loads after the base table stylesheet and before mobile width overrides', () => {
   const base = 'atlas-person-table-view.css?v=20260816-era-band-v1';
   const paletteAsset = 'atlas-person-era-palette.css?v=20260816-era-palette-v1';
-  const mobile = 'atlas-person-mobile-column-widths.css?v=20260816-mobile-widths-v1';
+  const mobile = 'atlas-person-mobile-column-widths.css?v=20260816-mobile-widths-v2';
   assert.ok(html.includes(base));
   assert.ok(html.includes(paletteAsset));
   assert.ok(html.includes(mobile));
