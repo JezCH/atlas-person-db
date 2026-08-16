@@ -2,6 +2,7 @@
   "use strict";
 
   const SESSION_ID = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  const LOCALIZATION_ASSET = "./atlas-ui-localization.js";
 
   function withSession(path) {
     const url = new URL(path, window.location.href);
@@ -9,7 +10,7 @@
     return url.href;
   }
 
-  function loadScript(path) {
+  function rawLoadScript(path) {
     return new Promise((resolve, reject) => {
       const script = document.createElement("script");
       script.src = withSession(path);
@@ -21,17 +22,29 @@
     });
   }
 
+  const localizationReady = window.ATLAS_UI_I18N
+    ? Promise.resolve(LOCALIZATION_ASSET)
+    : rawLoadScript(LOCALIZATION_ASSET);
+
+  async function loadScript(path) {
+    if (path !== LOCALIZATION_ASSET) await localizationReady;
+    return rawLoadScript(path);
+  }
+
   async function loadSeries(paths) {
-    for (const path of paths) await loadScript(path);
+    await localizationReady;
+    for (const path of paths) await rawLoadScript(path);
     window.ATLAS_RUNTIME_BUILD = Object.freeze({
       sessionId: SESSION_ID,
       loadedAt: new Date().toISOString(),
-      assets: [...paths]
+      assets: [LOCALIZATION_ASSET, ...paths]
     });
   }
 
   window.ATLAS_ASSETS = Object.freeze({
     SESSION_ID,
+    LOCALIZATION_ASSET,
+    localizationReady,
     withSession,
     loadScript,
     loadSeries
