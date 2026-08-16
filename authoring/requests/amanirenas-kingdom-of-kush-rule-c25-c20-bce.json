@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:amanirenas:kingdom-of-kush:kandake:c25-c20-bce:v1",
+  "person": {
+    "canonical_name_en": "Amanirenas",
+    "display_name_ko": "아마니레나스"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Kush",
+    "display_name_ko": "쿠시 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Kandake",
+    "role_display_name_ko": "칸다케",
+    "start_year": -25,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": -20,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Amanirenas is directly attested in Meroitic inscriptions with the titles qore ('ruler') and kdke/kandake after previously appearing as kandake alongside King Teriteqas. Modern scholarship generally identifies her with the Candace who led Kush during the conflict with Roman Egypt under Augustus. Because the absolute chronology of late first-century BCE Meroitic rulers remains uncertain, ATLAS does not adopt the popular but over-precise c.40-10 BCE regnal span as a secure sole reign. Instead this Activity records the conservative attested ruling window around the Roman-Kushite conflict, c.25-c.20 BCE; it should not be interpreted as establishing the full beginning and end of her reign."
+  },
+  "sources": [
+    {
+      "title": "Fontes historiae Nubiorum, Vol. 2: From the mid-fifth to the first century BC",
+      "canonical_url": "https://marcus.uib.no/instance/book/ubb-msref-0939-078-fon-02.html",
+      "citation_text": "The University of Bergen edition documents Amanirenas as attested in four inscriptions: first as kandake with Teriteqas and, after his death, with the titles qore ('ruler') and Candace; it also records the generally accepted identification with the Candace opposed to Petronius during the Roman-Meroitic war of 25 to 21/20 BCE.",
+      "source_type": "scholarly_monograph"
+    },
+    {
+      "title": "Les interprétations historiques des stèles méroïtiques d’Akinidad à la lumière des récentes découvertes",
+      "canonical_url": "https://books.openedition.org/psorbonne/125835",
+      "citation_text": "The Éditions de la Sorbonne study transcribes the Hamadab royal protocol as Amanirenas qore-li kdwe-li, explicitly identifying her as ruler and kandake, with Akinidad as prince and administrator, while emphasizing the need for caution in reconstructing the Roman-war narrative from the Meroitic texts.",
+      "source_type": "scholarly_chapter"
+    },
+    {
+      "title": "Meroitic royal chronology: the conflict with Rome and its aftermath",
+      "canonical_url": "https://www.sudarchrs.org.uk/resources/publications/journal/",
+      "citation_text": "Janice W. Yellin's peer-reviewed Sudan & Nubia study dates the open conflict with Petronius to 24/25 BCE and the Treaty of Samos to 21/20 BCE, stresses uncertainty in the detailed Meroitic royal chronology, and treats Amanirenas as Teriteqas's wife and successor in the relevant royal sequence.",
+      "source_type": "peer_reviewed_journal"
+    }
+  ]
+}
