@@ -1,0 +1,23 @@
+name: TEMP Stage2 Relation Export
+on:
+  push:
+    branches:
+      - agent/tmp-stage2-relation-export
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Build reviewed Stage2 relation coverage
+        run: node scripts/build-stage2-full-relation-coverage-v3.mjs
+      - name: Upload reviewed relation coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage2-relation-coverage-v3
+          path: artifacts/stage2-full-relation-coverage-v3.json
+          retention-days: 7
