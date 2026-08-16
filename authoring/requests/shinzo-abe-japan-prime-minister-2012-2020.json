@@ -1,0 +1,64 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:shinzo-abe:japan:prime-minister:2012-2020:v1",
+  "person": {
+    "canonical_name_en": "Shinzo Abe",
+    "display_name_ko": "아베 신조"
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 2012,
+    "start_month": 12,
+    "start_day": 26,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2020,
+    "end_month": 9,
+    "end_day": 16,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Shinzo Abe returned to the premiership on 26 December 2012 and remained continuously in office through subsequent cabinet formations and re-designations in 2014 and 2017. Those re-designations did not create an out-of-office interval, so ATLAS models one continuous Prime Minister Activity from 26 December 2012 until the Abe Cabinet resigned en masse on 16 September 2020."
+  },
+  "sources": [
+    {
+      "title": "96th ABE Shinzo - Previous Prime Ministers",
+      "canonical_url": "https://japan.kantei.go.jp/past_cabinet/096.html",
+      "citation_text": "The Prime Minister's Office of Japan lists ABE Shinzo as the 96th Prime Minister beginning on December 26, 2012.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "Designation of the Prime Minister - December 26, 2012",
+      "canonical_url": "https://japan.kantei.go.jp/96_abe/actions/201212/abesimei_e.html",
+      "citation_text": "The Prime Minister's Office records that Shinzo Abe was designated Prime Minister on December 26, 2012 and became the 96th Prime Minister.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "97th ABE Shinzo - Previous Prime Ministers",
+      "canonical_url": "https://japan.kantei.go.jp/past_cabinet/097.html",
+      "citation_text": "The official 97th-prime-minister page records Abe's December 24, 2014 reappointment and the continuation of his premiership into 2017.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "98th ABE Shinzo - Previous Prime Ministers",
+      "canonical_url": "https://japan.kantei.go.jp/past_cabinet/098.html",
+      "citation_text": "The official 98th-prime-minister page records the final segment of Abe's premiership from November 1, 2017 to September 16, 2020.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "The Resignation En Masse of the Abe Cabinet",
+      "canonical_url": "https://japan.kantei.go.jp/98_abe/actions/202009/_00008.html",
+      "citation_text": "The Prime Minister's Office records that the Abe Cabinet resigned en masse on September 16, 2020, marking the end of Abe's second continuous premiership.",
+      "source_type": "government_web"
+    }
+  ]
+}
