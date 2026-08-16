@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:grigori-rasputin:russian-empire:spiritual-adviser:1905-1916:v1",
+  "person": {
+    "canonical_name_en": "Grigori Rasputin",
+    "display_name_ko": "그리고리 라스푸틴"
+  },
+  "polity": {
+    "canonical_name_en": "Russian Empire",
+    "display_name_ko": "러시아 제국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "religious_activity",
+    "role": "Spiritual Adviser",
+    "role_display_name_ko": "영적 조언자",
+    "start_year": 1905,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1916,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Grigori Rasputin was a Siberian religious wanderer and informal spiritual adviser whose connection with the Russian imperial family began in 1905, when Nicholas II and Alexandra became acquainted with him. He held no formal governmental or ecclesiastical office: the International Encyclopedia of the First World War describes him as a starets without formal church position and explains that his intimacy with the imperial family grew from Alexandra's belief that his prayers or presence could help the haemophiliac heir Alexei. His political influence became the subject of intense contemporary accusation and later legend, so ATLAS does not model him as a ruler, officeholder, or formal servant of the state. Instead, his principal historical Activity is conservatively represented as informal religious and court influence within the Russian Empire from 1905 until his assassination in December 1916, at year granularity.",
+    "sources": [
+      {
+        "title": "Rasputin, Grigorii Efimovich — 1914-1918-online: International Encyclopedia of the First World War",
+        "canonical_url": "https://encyclopedia.1914-1918-online.net/article/rasputin-grigorii-efimovich/",
+        "citation_text": "The International Encyclopedia of the First World War describes Rasputin as a starets holding no formal church position, records his introduction to Nicholas II and Alexandra in 1905-1906, and explains the growth of his intimacy with the imperial family through Alexandra's belief in his ability to help Alexei.",
+        "source_type": "web_bibliographic_reference"
+      },
+      {
+        "title": "The assassination of Rasputin — University College Oxford",
+        "canonical_url": "https://www.univ.ox.ac.uk/news/the-assassination-of-rasputin/",
+        "citation_text": "University College Oxford identifies Rasputin as the holy man who became a favourite of Nicholas II and Alexandra because of their belief in his healing powers over Alexei and records his assassination on 30 December 1916 (17 December Old Style).",
+        "source_type": "institutional_web"
+      }
+    ]
+  }
+}
