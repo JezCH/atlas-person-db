@@ -10,17 +10,8 @@
   const writeAdapter = api.createAdapter();
   const STYLE_ID = "atlasPersonHardDeleteStyles";
   const STYLE_HREF = "./atlas-person-hard-delete.css?v=20260816-person-hard-delete-v1";
-  const ZERO_WIDTH_RE = /[\u00AD\u034F\u061C\u180E\u200B-\u200F\u202A-\u202E\u2060-\u206F\uFEFF]/g;
   let lastSelected = null;
   let scheduled = false;
-
-  function normalizeConfirmationName(value) {
-    return String(value ?? "")
-      .normalize("NFKC")
-      .replace(ZERO_WIDTH_RE, "")
-      .trim()
-      .replace(/\s+/g, " ");
-  }
 
   function ensureStyles() {
     if (document.getElementById(STYLE_ID)) return;
@@ -36,7 +27,7 @@
     const row = groups?.querySelector("[data-person-id].is-selected") || null;
     if (!row) return lastSelected;
     const id = String(row.dataset.personId || "").trim();
-    const name = normalizeConfirmationName(row.querySelector(".person-table-identity strong, strong")?.textContent || "");
+    const name = String(row.querySelector(".person-table-identity strong, strong")?.textContent || "").trim();
     return id && name ? { id, name } : lastSelected;
   }
 
@@ -47,9 +38,6 @@
       messages.push(...outcome.validation_failures.map((item) => item.code || item.field || JSON.stringify(item)));
     }
     if (outcome?.transaction_failure) messages.push(String(outcome.transaction_failure));
-    if (messages.some((message) => message.includes("PERSON_DELETE_CONFIRMATION_MISMATCH"))) {
-      return "입력한 이름이 선택한 Person의 DB 등록 이름과 일치하지 않습니다.";
-    }
     if (messages.some((message) => message.includes("PERSON_DELETE_TARGET_NOT_FOUND"))) {
       return "선택한 Person이 DB에 존재하지 않습니다. 목록을 새로고침한 뒤 다시 확인하세요.";
     }
@@ -60,7 +48,7 @@
     return `<section class="person-hard-delete-zone" data-person-id="${escapeAttribute(person.id)}" data-person-name="${escapeAttribute(person.name)}">
       <div class="person-hard-delete-copy">
         <strong>인물 데이터 완전 삭제</strong>
-        <p>이 Person과 현재 연결된 Activity·출처 연결·설명·소속·이벤트 참여를 실제 데이터베이스에서 삭제합니다. 화면에서만 숨기는 기능이 아닙니다. 과거 중복 검토·병합 감사 기록은 감사 이력으로 보존됩니다.</p>
+        <p>이 Person과 현재 연결된 Activity·출처 연결·설명·소속·이벤트 참여를 실제 데이터베이스에서 삭제합니다. 화면에서만 숨기는 기능이 아닙니다.</p>
       </div>
       <button class="btn person-hard-delete-button" type="button">인물 완전 삭제</button>
     </section>`;
@@ -82,7 +70,7 @@
 
     const existing = detail.querySelector(":scope > .person-hard-delete-zone");
     if (existing) {
-      if (existing.dataset.personId === person.id && normalizeConfirmationName(existing.dataset.personName) === person.name) return;
+      if (existing.dataset.personId === person.id && existing.dataset.personName === person.name) return;
       existing.remove();
     }
     detail.insertAdjacentHTML("beforeend", dangerZoneHtml(person));
@@ -97,34 +85,23 @@
   async function deleteSelectedPerson(button) {
     const zone = button.closest(".person-hard-delete-zone");
     const personId = String(zone?.dataset.personId || "").trim();
-    const personName = normalizeConfirmationName(zone?.dataset.personName || "");
-    if (!personId || !personName) {
-      window.alert("삭제할 Person UUID 또는 인물명을 확인할 수 없습니다.");
+    const personName = String(zone?.dataset.personName || "").trim();
+    if (!personId) {
+      window.alert("삭제할 Person UUID를 확인할 수 없습니다.");
       return;
     }
 
-    const firstConfirmed = window.confirm(
-      `「${personName}」 Person을 데이터베이스에서 완전히 삭제합니다.\n\n` +
-      "현재 연결된 모든 Activity와 Person 종속 데이터도 함께 삭제되며 되돌릴 수 없습니다. 계속할까요?"
+    const confirmed = window.confirm(
+      `「${personName || "선택한 인물"}」을 데이터베이스에서 완전히 삭제할까요?\n\n` +
+      "연결된 Activity와 Person 종속 데이터도 함께 삭제되며 되돌릴 수 없습니다."
     );
-    if (!firstConfirmed) return;
-
-    const typed = window.prompt(
-      `최종 확인입니다. 삭제 대상 인물의 이름을 입력하세요.\n\n현재 표시명: ${personName}\nDB에 등록된 다른 이름도 사용할 수 있으며, 서버가 선택한 Person UUID와 직접 대조합니다.`,
-      ""
-    );
-    if (typed == null) return;
-    const normalizedTyped = normalizeConfirmationName(typed);
-    if (!normalizedTyped) {
-      window.alert("확인용 인물명을 입력해야 합니다.");
-      return;
-    }
+    if (!confirmed) return;
 
     button.disabled = true;
     const originalText = button.textContent;
     button.textContent = "삭제 중…";
     try {
-      const outcome = await writeAdapter.deletePerson(personId, normalizedTyped);
+      const outcome = await writeAdapter.deletePerson(personId);
       const committed = outcome?.committed === true
         && outcome?.v2?.committed === true
         && String(outcome?.v2?.deleted_person_id || "") === personId
@@ -137,7 +114,7 @@
 
       const counts = outcome.v2.deleted_counts || {};
       const activities = Number(counts.activities || 0);
-      window.alert(`「${personName}」을 완전히 삭제했습니다.\nActivity ${activities}건과 연결된 현재 Person 데이터가 함께 삭제되었고, DB 재검증도 통과했습니다.`);
+      window.alert(`「${personName || "선택한 인물"}」을 완전히 삭제했습니다.\nActivity ${activities}건과 연결된 현재 Person 데이터가 함께 삭제되었고, DB 재검증도 통과했습니다.`);
       window.location.reload();
     } catch (error) {
       console.error("ATLAS Person hard-delete failed", error);
@@ -163,8 +140,8 @@
     const groups = document.getElementById("personMainGroups");
     if (!row || !groups?.contains(row)) return;
     const id = String(row.dataset.personId || "").trim();
-    const name = normalizeConfirmationName(row.querySelector(".person-table-identity strong, strong")?.textContent || "");
-    if (id && name) lastSelected = { id, name };
+    const name = String(row.querySelector(".person-table-identity strong, strong")?.textContent || "").trim();
+    if (id) lastSelected = { id, name };
     scheduleDangerZone();
   }, true);
 
@@ -176,7 +153,6 @@
 
   window.ATLAS_PERSON_HARD_DELETE = Object.freeze({
     ensureDangerZone,
-    selectedFromDom,
-    normalizeConfirmationName
+    selectedFromDom
   });
 })();
