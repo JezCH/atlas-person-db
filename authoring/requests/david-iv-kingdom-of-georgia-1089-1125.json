@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:david-iv:kingdom-of-georgia:king:1089-1125:v1",
+  "person": {
+    "canonical_name_en": "David IV the Builder",
+    "display_name_ko": "다비트 4세"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Georgia",
+    "display_name_ko": "조지아 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1089,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1125,
+    "end_month": 1,
+    "end_day": 24,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "David IV the Builder was enthroned as king of the united Kingdom of Georgia in 1089 after the removal/abdication of his father Giorgi II and remained king until his death on 24 January 1125. Georgian reference works consistently give the reign as 1089-1125, while the Georgian Encyclopedia supplies the exact death date. ATLAS therefore stores a single continuous sovereign reign. His territorial expansion, reconquest of Tbilisi in 1122, and wider Caucasian supremacy did not create a separate polity identity or interrupt his underlying kingship of Georgia."
+  },
+  "sources": [
+    {
+      "title": "დავით IV აღმაშენებელი",
+      "canonical_url": "https://georgianencyclopedia.ge/ka/form/3649",
+      "citation_text": "The Georgian Encyclopedia identifies David IV Aghmashenebeli as king of Georgia from 1089 to 1125 and gives his death as 24 January 1125.",
+      "source_type": "national_encyclopedia"
+    },
+    {
+      "title": "coin - Davit IV",
+      "canonical_url": "https://www.britishmuseum.org/collection/object/C_1857-1226-7",
+      "citation_text": "The British Museum identifies Davit IV as the ruler represented on a Georgian royal coin and dates his authority to 1089-1125; the inscription calls him King David and lists the peoples and lands under his rule.",
+      "source_type": "museum_collection"
+    },
+    {
+      "title": "King David IV - The Builder",
+      "canonical_url": "https://www.britishcouncil.ge/en/king-david",
+      "citation_text": "The British Council in Georgia states that King David IV of Georgia was crowned in 1089 after his father Giorgi II abdicated and describes his 36-year reign and unification of the Georgian state.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "დავით აღმაშენებლის ძეგლი",
+      "canonical_url": "https://dspace.nplg.gov.ge/handle/1234/185748",
+      "citation_text": "The National Parliamentary Library of Georgia identifies David IV the Builder as king of Georgia from 1089 to 1125 and a member of the Bagrationi dynasty.",
+      "source_type": "national_library"
+    }
+  ]
+}
