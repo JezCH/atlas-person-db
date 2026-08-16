@@ -13,10 +13,10 @@
   const CHRONOLOGY_LABELS = Object.freeze({ exact_as_recorded: null, reviewed_stage2_traditional_disputed: "연대 논쟁 있음", disputed: "연대 논쟁 있음", approximate: "연대 근사", inferred: "연대 추정", unknown: "연대 미확정" });
   const CONFIDENCE_LABELS = Object.freeze({ legacy_asserted: null, high: "신뢰도 높음", medium: "신뢰도 보통", low: "신뢰도 낮음", uncertain: "신뢰도 미확정" });
   const ERAS = Object.freeze([
-    Object.freeze({ code: "ancient", label: "고대", range: "BC 500 이전", test: (year) => year < -500 }),
-    Object.freeze({ code: "classical", label: "고전", range: "BC 500 – AD 499", test: (year) => year < 500 }),
-    Object.freeze({ code: "medieval", label: "중세", range: "AD 500 – 1499", test: (year) => year < 1500 }),
-    Object.freeze({ code: "early-modern", label: "근세", range: "AD 1500 – 1749", test: (year) => year < 1750 }),
+    Object.freeze({ code: "ancient", label: "고대", range: "BC 480 이전", test: (year) => year < -480 }),
+    Object.freeze({ code: "classical", label: "고전", range: "BC 480 – AD 499", test: (year) => year < 500 }),
+    Object.freeze({ code: "medieval", label: "중세", range: "AD 500 – 1491", test: (year) => year < 1492 }),
+    Object.freeze({ code: "early-modern", label: "근세", range: "AD 1492 – 1749", test: (year) => year < 1750 }),
     Object.freeze({ code: "industrial-imperial", label: "산업·제국", range: "AD 1750 – 1913", test: (year) => year < 1914 }),
     Object.freeze({ code: "world-wars", label: "세계대전", range: "AD 1914 – 1944", test: (year) => year < 1945 }),
     Object.freeze({ code: "contemporary", label: "현대", range: "AD 1945 이후", test: () => true })
