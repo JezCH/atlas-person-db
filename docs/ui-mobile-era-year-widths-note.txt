@@ -1,0 +1,1 @@
+Mobile-only visual adjustment. No data-path or schema change.
