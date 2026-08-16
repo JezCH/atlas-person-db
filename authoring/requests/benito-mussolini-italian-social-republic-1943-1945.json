@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:benito-mussolini:italian-social-republic:1943-1945:v1",
+  "person": {
+    "canonical_name_en": "Benito Mussolini",
+    "display_name_ko": "베니토 무솔리니"
+  },
+  "polity": {
+    "canonical_name_en": "Italian Social Republic",
+    "display_name_ko": "이탈리아 사회공화국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Duce and Head of Government",
+    "role_display_name_ko": "두체·정부수반",
+    "start_year": 1943,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1945,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After his removal from the Kingdom of Italy government, Benito Mussolini was freed from detention by German forces and on 23 September 1943 established the Italian Social Republic in German-occupied northern and central Italy. He headed this regime as Duce and head of government until its collapse in April 1945; Mussolini was captured and executed on 28 April 1945. ATLAS treats the Italian Social Republic as a distinct de facto territorial political authority because it maintained a government and exercised authority over territory under severe German military domination, while preserving in the notes that its sovereignty was constrained and its legal legitimacy was contested. This Activity is therefore separate from Mussolini's 1922-1943 premiership in the Kingdom of Italy."
+  },
+  "sources": [
+    {
+      "title": "Transizione costituzionale",
+      "canonical_url": "https://www.senato.it/legislature/regno/transizione-costituzionale",
+      "citation_text": "The Italian Senate records that Mussolini, after being freed from captivity, returned to Italy and constituted the Italian Social Republic at Salò on 23 September 1943, broadly over German-occupied territory.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Italy",
+      "canonical_url": "https://encyclopedia.ushmm.org/content/en/article/italy",
+      "citation_text": "The United States Holocaust Memorial Museum states that German forces installed Mussolini as head of the pro-German Italian Social Republic based in Salò after September 1943.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Benito Mussolini",
+      "canonical_url": "https://encyclopedia.ushmm.org/content/en/article/benito-mussolini-1",
+      "citation_text": "The United States Holocaust Memorial Museum describes the Italian Social Republic as Mussolini's competing government under German domination and records his execution on 28 April 1945.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
