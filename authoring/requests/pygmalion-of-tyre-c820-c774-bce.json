@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:pygmalion-of-tyre:kingdom-of-tyre:c820-c774-bce:v1",
+  "person": {
+    "canonical_name_en": "Pygmalion of Tyre",
+    "display_name_ko": "티레의 피그말리온"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Tyre",
+    "display_name_ko": "티레 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -820,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -774,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Pygmalion of Tyre (Phoenician Pumiyaton/Pumayyaton in modern discussions) is preserved in the Tyrian royal tradition transmitted by Menander of Ephesus through Josephus. Josephus reports a forty-seven-year reign and places the flight of Pygmalion's sister in his seventh regnal year. Modern chronological reconstructions vary substantially because the Tyrian king list survives through later literary transmission and because the absolute date of Carthage's foundation is debated. ATLAS therefore uses the conventional c.820–c.774 BCE reconstruction as a representative reign window with both endpoints approximate and confidence `likely`, rather than presenting the literary chronology as exact. The political authority is the Kingdom of Tyre, not a unified Phoenicia."
+  },
+  "sources": [
+    {
+      "title": "Flavius Josephus, Against Apion 1.125",
+      "canonical_url": "https://penelope.uchicago.edu/josephus/apion-1.html",
+      "citation_text": "Josephus, quoting the Phoenician/Tyrian historical tradition associated with Menander of Ephesus, states that Pygmalion succeeded Mattan, lived fifty-six years, reigned forty-seven years, and that his sister fled in the seventh year of his reign.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The House of Tyre — Biblical Archaeology Society",
+      "canonical_url": "https://www.biblicalarchaeology.org/daily/ancient-cultures/the-house-of-tyre/",
+      "citation_text": "The Biblical Archaeology Society reviews the Tyrian king tradition preserved by Menander through Josephus, identifies Mattan as father of Pumiyaton/Pygmalion and Elissa, and stresses that the history is known chiefly through later Greek and Roman writers rather than surviving Tyrian royal archives.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Tyre Timeline — World History Encyclopedia",
+      "canonical_url": "https://www.worldhistory.org/timeline/Tyre/",
+      "citation_text": "The World History Encyclopedia timeline gives the conventional reconstruction of Pygmalion's reign as 820–774 BCE and places the traditional foundation of Carthage around 814 BCE.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
