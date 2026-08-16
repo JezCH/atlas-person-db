@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:leonid-brezhnev:soviet-union:cpsu-leader:1964-1982:v1",
+  "person": {
+    "canonical_name_en": "Leonid Brezhnev",
+    "display_name_ko": "레오니트 브레즈네프"
+  },
+  "polity": {
+    "canonical_name_en": "Soviet Union",
+    "display_name_ko": "소련"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Leader of the Communist Party of the Soviet Union",
+    "role_display_name_ko": "소련 공산당 최고지도자",
+    "start_year": 1964,
+    "start_month": 10,
+    "start_day": 14,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1982,
+    "end_month": 11,
+    "end_day": 10,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Leonid Brezhnev was elected First Secretary of the Central Committee of the Communist Party of the Soviet Union on 14 October 1964 after Nikita Khrushchev's removal and remained the top CPSU leader until his death on 10 November 1982. His formal title was First Secretary from 1964 to 1966 and General Secretary from April 1966 onward. Great Russian Encyclopedia treats this as one continuous party-leadership tenure, listing Brezhnev among the CPSU's First/General Secretaries from 14 October 1964 to 10 November 1982. ATLAS therefore preserves the continuous leadership interval under the normalized role 'Leader of the Communist Party of the Soviet Union' rather than splitting one political leadership tenure solely because the office title was renamed. The exact title change is preserved in the evidence and notes. Because Brezhnev exercised supreme political leadership over the Soviet polity, the Person–Polity relation is `governs`, matching the Khrushchev normalization."
+  },
+  "sources": [
+    {
+      "title": "Брежнев Леонид Ильич — Большая российская энциклопедия",
+      "canonical_url": "https://bigenc.ru/c/brezhnev-leonid-il-ich-1583b5",
+      "citation_text": "Great Russian Encyclopedia states that Brezhnev was First Secretary of the CPSU Central Committee from 1964 to 1966 and General Secretary from 1966, and identifies his continuous party leadership until 1982.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Правители и руководители России, СССР, РФ — Большая российская энциклопедия",
+      "canonical_url": "https://old.bigenc.ru/domestic_history/text/5578161",
+      "citation_text": "Great Russian Encyclopedia's chronology of Soviet leaders gives Leonid Brezhnev's tenure as First/General Secretary of the CPSU Central Committee from 14 October 1964 to 10 November 1982, directly following Khrushchev.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Foreign Relations of the United States, 1964–1968, Volume XIV, Soviet Union — Persons",
+      "canonical_url": "https://history.state.gov/historicaldocuments/frus1964-68v14/persons",
+      "citation_text": "The U.S. Department of State's Office of the Historian identifies Brezhnev as First Secretary of the CPSU Central Committee from October 1964 and notes the title became General Secretary after April 1966.",
+      "source_type": "institutional_web"
+    }
+  ]
+}
