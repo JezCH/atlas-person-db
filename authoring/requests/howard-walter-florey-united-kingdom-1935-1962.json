@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:howard-walter-florey:united-kingdom:pathologist:1935-1962:v1",
+  "person": {
+    "canonical_name_en": "Howard Walter Florey",
+    "display_name_ko": "하워드 플로리"
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Pathologist",
+    "role_display_name_ko": "병리학자",
+    "start_year": 1935,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1962,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Howard Walter Florey became Professor of Pathology and head of Oxford's Sir William Dunn School of Pathology in 1935. At Oxford he recruited and led the research programme that, from 1938-1939 onward, systematically investigated antibacterial substances and developed penicillin into an effective therapeutic drug; he shared the 1945 Nobel Prize in Physiology or Medicine for this work. In 1962 he left the pathology professorship to become Provost of The Queen's College, Oxford. This Activity therefore records his core Oxford pathology research leadership from 1935 through 1962 rather than his lifespan, Australian nationality, or later institutional offices."
+  },
+  "sources": [
+    {
+      "title": "Our History",
+      "canonical_url": "https://www.path.ox.ac.uk/centenary/our-history/",
+      "citation_text": "The University of Oxford's Dunn School records that Howard Florey became head of the department in 1935 and that the Oxford team developed penicillin, culminating in the 1945 Nobel Prize.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "The Discovery of Penicillin",
+      "canonical_url": "https://www.path.ox.ac.uk/centenary/our-history/the-discovery-of-penicillin/",
+      "citation_text": "The Dunn School states that E. B. Chain and H. W. Florey began work on penicillin at Oxford in 1939 as part of a broader research programme on antibacterial substances.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Sir Howard Florey – Biographical",
+      "canonical_url": "https://www.nobelprize.org/prizes/medicine/1945/florey/biographical/",
+      "citation_text": "NobelPrize.org records Florey's appointment as Professor of Pathology at Oxford in 1935, his collaboration with Chain beginning in 1938, the penicillin programme from 1939, and his appointment as Provost of The Queen's College in 1962.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Howard Walter Florey (1898–1968)",
+      "canonical_url": "https://adb.anu.edu.au/biography/florey-howard-walter-10206",
+      "citation_text": "The Australian Dictionary of Biography documents Florey's scientific career in Britain, his leadership of penicillin development, and his later senior institutional roles.",
+      "source_type": "institutional_web"
+    }
+  ]
+}
