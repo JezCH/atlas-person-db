@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:irene-of-athens:byzantine-empire:regency:780-790:v1",
+  "person": {
+    "canonical_name_en": "Irene of Athens",
+    "display_name_ko": "아테네의 이레네"
+  },
+  "polity": {
+    "canonical_name_en": "Byzantine Empire",
+    "display_name_ko": "비잔티움 제국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Regent",
+    "role_display_name_ko": "섭정",
+    "start_year": 780,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 790,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After Leo IV died in 780, Irene headed the imperial government as regent for her minor son Constantine VI. This Activity ends in 790 when Constantine was proclaimed sole ruler and Irene was removed from government. It models regency governance, not Irene's later sole imperial reign."
+  },
+  "sources": [
+    {
+      "title": "Political Power and Christian Faith in Byzantium: The Case of Irene (Regent 780-90, Emperor 797-802)",
+      "canonical_url": "https://academic.oup.com/princeton-scholarship-online/book/37320/chapter-abstract/331222044",
+      "citation_text": "Judith Herrin identifies Irene as officially at the head of the Byzantine imperial government as regent for Constantine VI from 780 to 790, and later as sole ruler from 797 to 802.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Administrative Elites and Political Change",
+      "canonical_url": "https://www.cambridge.org/core/books/political-communication-in-chinese-and-european-history-8001600/administrative-elites-and-political-change/9E51178885850AF6D155B79779C7FDFC",
+      "citation_text": "Cambridge scholarship describes Irene as co-regent to Constantine VI in 780-790 and again in 792-797, before her sole reign in 797-802.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
