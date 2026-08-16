@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:herod-the-great:kingdom-of-judea:37-4-bce:v1",
+  "person": {
+    "canonical_name_en": "Herod the Great",
+    "display_name_ko": "헤로데 대왕"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Judea",
+    "display_name_ko": "유대 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -37,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -4,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Herod the Great was the Roman-backed client king of Judea. The Roman Senate had proclaimed him king de jure several years earlier, but he became king in fact after capturing Jerusalem in 37 BCE; ATLAS therefore uses 37 BCE as the start of the actual Person-Polity ruling Activity rather than the earlier Roman appointment. He ruled Judea until his death conventionally dated to 4 BCE. The current Oxford Classical Dictionary gives his lifespan as 73/72-5/4 BCE, so the terminal year is preserved as 4 BCE at year granularity but marked approximate rather than falsely implying a universally uncontested precise boundary. The polity is modeled as the Kingdom of Judea, a Roman client kingdom, rather than as the Roman Empire itself because Herod exercised kingship over the Judean kingdom under Roman supremacy."
+  },
+  "sources": [
+    {
+      "title": "Herod (1) the Great, 73/72-5/4 BCE — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548932360",
+      "citation_text": "The Oxford Classical Dictionary states that Herod was proclaimed king de jure of Judaea by the Roman Senate and became king de facto upon his conquest of Jerusalem in 37 BCE; the current entry dates his life to 73/72-5/4 BCE.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "External Appearance versus Internal Truth: The Aggadah of Herod in Bavli Bava Batra — AJS Review",
+      "canonical_url": "https://www.cambridge.org/core/journals/ajs-review/article/abs/external-appearance-versus-internal-truth-the-aggadah-of-herod-in-bavli-bava-batra/2C8396CECAEB16D007D9333F144BF43D",
+      "citation_text": "This peer-reviewed AJS Review article states that King Herod ruled Judea from 37 to 4 BCE.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Herodian Jerusalem — Hebrew University of Jerusalem",
+      "canonical_url": "https://cris.huji.ac.il/en/publications/herodian-jerusalem-2/",
+      "citation_text": "The Hebrew University chapter explains that Herod captured Jerusalem in 37 BCE and only then realized his earlier Roman appointment as client king of Judea.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Eastern Mediterranean and Syria, 1000 B.C.-1 A.D. — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/toah/ht/04/wae.html",
+      "citation_text": "The Metropolitan Museum of Art chronology lists Herod the Great as king of Judaea from 37 to 4 BCE.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
