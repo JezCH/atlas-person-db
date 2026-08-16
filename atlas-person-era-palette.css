@@ -1,0 +1,9 @@
+/* ATLAS Global Era palette: categorical hues with light backgrounds and dark labels for high legibility. */
+.person-era-ancient{background:#F3E8CF;color:#6A4B18}
+.person-era-classical{background:#E4EAF3;color:#354F73}
+.person-era-medieval{background:#E4EDE5;color:#3E5B46}
+.person-era-early-modern{background:#EDE4EE;color:#65486B}
+.person-era-industrial-imperial{background:#E5E7E8;color:#4E5963}
+.person-era-world-wars{background:#E8E6D9;color:#4B5237}
+.person-era-contemporary{background:#E1EEF1;color:#315E68}
+.person-era-unknown{background:#ECEFF2;color:#616A75}
