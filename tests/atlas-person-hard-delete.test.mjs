@@ -4,15 +4,13 @@ import fs from 'node:fs';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const { createPersonDeleteService, normalizeConfirmationName } = require('../server/atlas-person-delete-service.js');
+const { createPersonDeleteService } = require('../server/atlas-person-delete-service.js');
 const { validateRequest } = require('../server/atlas-mutation-transport.js');
 
 const PERSON = '11111111-1111-4111-8111-111111111111';
 const REL = '22222222-2222-4222-8222-222222222222';
 const AFFILIATION = '33333333-3333-4333-8333-333333333333';
 const PARTICIPATION = '44444444-4444-4444-8444-444444444444';
-const NAME = '삭제 대상';
-const HANGUL_NAME = '디도';
 
 function normalized(sql) {
   return String(sql).replace(/\s+/g, ' ').trim().toLowerCase();
@@ -34,7 +32,7 @@ function verificationRow(overrides = {}) {
   };
 }
 
-function createFakeClient({ confirmationName = NAME, verification = verificationRow() } = {}) {
+function createFakeClient({ personExists = true, verification = verificationRow() } = {}) {
   const calls = [];
   return {
     calls,
@@ -45,10 +43,9 @@ function createFakeClient({ confirmationName = NAME, verification = verification
       if (text.startsWith('begin ') || text === 'commit' || text === 'rollback') return { rowCount: 0, rows: [] };
       if (text.includes('as active_duplicate_candidates')) return { rowCount: 1, rows: [verification] };
       if (text.startsWith('select id,canonical_key,person_type,historicity from atlas_v2.persons')) {
-        return { rowCount: 1, rows: [{ id: PERSON, canonical_key: 'delete-target', person_type: 'historical', historicity: 'historical' }] };
-      }
-      if (text.startsWith('select id,name,locale,is_preferred from atlas_v2.person_names')) {
-        return { rowCount: 1, rows: [{ id: '55555555-5555-4555-8555-555555555555', name: confirmationName, locale: 'ko', is_preferred: true }] };
+        return personExists
+          ? { rowCount: 1, rows: [{ id: PERSON, canonical_key: 'delete-target', person_type: 'historical', historicity: 'historical' }] }
+          : { rowCount: 0, rows: [] };
       }
       if (text.startsWith('select id from atlas_v2.person_politics_v2')) return { rowCount: 1, rows: [{ id: REL }] };
       if (text.startsWith('select id from atlas_v2.person_people_affiliations')) return { rowCount: 1, rows: [{ id: AFFILIATION }] };
@@ -77,51 +74,45 @@ function dependencies({ requirementLedgerPresent = true } = {}) {
   };
 }
 
-test('delete_person is a distinct authenticated mutation transport operation', () => {
+test('delete_person accepts authenticated Person UUID without name confirmation payload', () => {
   const validation = validateRequest({
     operation: 'delete_person',
-    payload: { person_id: PERSON, confirmation_name: NAME }
+    payload: { person_id: PERSON }
   });
   assert.equal(validation.valid, true);
   assert.equal(validation.request.operation, 'delete_person');
+  assert.deepEqual(validation.request.payload, { person_id: PERSON });
 });
 
-test('confirmation normalization tolerates mobile IME Unicode and invisible spacing artifacts', () => {
-  const mobileInput = ` \u200B${HANGUL_NAME.normalize('NFD')}\uFEFF `;
-  assert.equal(normalizeConfirmationName(mobileInput), HANGUL_NAME);
-});
-
-test('exact-name mismatch rolls back before any destructive SQL', async () => {
-  const client = createFakeClient({ confirmationName: '다른 이름' });
+test('invalid Person UUID fails before destructive SQL', async () => {
+  const client = createFakeClient();
   const deps = dependencies();
   const service = createPersonDeleteService({ client, ...deps });
   const outcome = await service.mutate({
-    request_id: 'hard-delete-name-mismatch',
+    request_id: 'hard-delete-invalid-id',
     operation: 'delete_person',
-    payload: { person_id: PERSON, confirmation_name: NAME }
+    payload: { person_id: 'not-a-uuid' }
   });
 
   assert.equal(outcome.committed, false);
-  assert.equal(outcome.validation_failures[0].code, 'PERSON_DELETE_CONFIRMATION_MISMATCH');
+  assert.equal(outcome.validation_failures[0].code, 'PERSON_ID_REQUIRED');
   assert.equal(client.calls.some(({ text }) => text.startsWith('delete from ')), false);
-  assert.equal(client.calls.at(-1).text, 'rollback');
-  assert.equal(deps.calls.refresh, 0);
 });
 
-test('normalized Hangul confirmation reaches the authoritative delete transaction and commits', async () => {
-  const client = createFakeClient({ confirmationName: HANGUL_NAME });
+test('missing Person rolls back before destructive SQL', async () => {
+  const client = createFakeClient({ personExists: false });
   const deps = dependencies();
   const service = createPersonDeleteService({ client, ...deps });
   const outcome = await service.mutate({
-    request_id: 'hard-delete-normalized-hangul',
+    request_id: 'hard-delete-missing-person',
     operation: 'delete_person',
-    payload: { person_id: PERSON, confirmation_name: ` \u200B${HANGUL_NAME.normalize('NFD')}\uFEFF ` }
+    payload: { person_id: PERSON }
   });
 
-  assert.equal(outcome.committed, true);
-  assert.equal(outcome.v2.deleted_person_id, PERSON);
-  assert.equal(outcome.verification.match, true);
-  assert.equal(client.calls.at(-1).text, 'commit');
+  assert.equal(outcome.committed, false);
+  assert.equal(outcome.validation_failures[0].code, 'PERSON_DELETE_TARGET_NOT_FOUND');
+  assert.equal(client.calls.some(({ text }) => text.startsWith('delete from ')), false);
+  assert.equal(client.calls.at(-1).text, 'rollback');
 });
 
 test('successful Person hard-delete removes live references, refreshes duplicate frontier, verifies zero, then commits', async () => {
@@ -131,7 +122,7 @@ test('successful Person hard-delete removes live references, refreshes duplicate
   const outcome = await service.mutate({
     request_id: 'hard-delete-success',
     operation: 'delete_person',
-    payload: { person_id: PERSON, confirmation_name: NAME }
+    payload: { person_id: PERSON }
   });
 
   assert.equal(outcome.committed, true);
@@ -160,6 +151,7 @@ test('successful Person hard-delete removes live references, refreshes duplicate
     'delete from atlas_v2.persons'
   ]) assert.ok(sql.some((text) => text.startsWith(expected)), `missing ${expected}`);
 
+  assert.equal(sql.some((text) => text.includes('select id,name,locale,is_preferred from atlas_v2.person_names')), false);
   assert.ok(sql.some((text) => text.includes('person_duplicate_revalidation_requirements') && text.startsWith('update ')));
   assert.equal(sql.some((text) => text.includes('delete from atlas_v2.person_duplicate_reviews')), false);
   assert.equal(sql.some((text) => text.includes('delete from atlas_v2.person_merge_audit')), false);
@@ -174,7 +166,7 @@ test('remaining live reference after destructive statements fails closed and rol
   const outcome = await service.mutate({
     request_id: 'hard-delete-verification-failure',
     operation: 'delete_person',
-    payload: { person_id: PERSON, confirmation_name: NAME }
+    payload: { person_id: PERSON }
   });
 
   assert.equal(outcome.committed, false);
@@ -193,7 +185,7 @@ test('older schema without revalidation ledger skips its update but still verifi
   const outcome = await service.mutate({
     request_id: 'hard-delete-no-revalidation-ledger',
     operation: 'delete_person',
-    payload: { person_id: PERSON, confirmation_name: NAME }
+    payload: { person_id: PERSON }
   });
 
   assert.equal(outcome.committed, true);
@@ -203,24 +195,22 @@ test('older schema without revalidation ledger skips its update but still verifi
   assert.equal(sql.at(-1), 'commit');
 });
 
-test('browser delegates non-empty Person name confirmation to the authoritative server and requires DB verification before reload', () => {
+test('browser uses one confirmation and UUID-only delete while retaining DB verification before reload', () => {
   const adapter = fs.readFileSync(new URL('../atlas-server-write-adapter.js', import.meta.url), 'utf8');
   const ui = fs.readFileSync(new URL('../atlas-person-hard-delete.js', import.meta.url), 'utf8');
   const css = fs.readFileSync(new URL('../atlas-person-hard-delete.css', import.meta.url), 'utf8');
   const handler = fs.readFileSync(new URL('../server/atlas-vercel-mutation-handler.js', import.meta.url), 'utf8');
+  const index = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 
-  assert.match(adapter, /deletePerson:\s*\(personId, confirmationName\)\s*=>\s*mutate\("delete_person"/);
+  assert.match(adapter, /deletePerson:\s*\(personId\)\s*=>\s*mutate\("delete_person"/);
   assert.match(adapter, /person_id:/);
-  assert.match(adapter, /confirmation_name:/);
-  assert.match(adapter, /person-hard-delete-v3/);
+  assert.doesNotMatch(adapter, /confirmation_name:/);
+  assert.match(adapter, /person-hard-delete-v4/);
+  assert.match(index, /atlas-server-write-adapter\.js\?v=20260816-person-hard-delete-v4/);
   assert.match(handler, /operation\s*===\s*"delete_person"/);
-  assert.match(ui, /window\.prompt/);
-  assert.match(ui, /normalizeConfirmationName\(typed\)/);
-  assert.match(ui, /if \(!normalizedTyped\)/);
-  assert.doesNotMatch(ui, /normalizedTyped !== personName/);
-  assert.doesNotMatch(ui, /String\(typed\) !== personName/);
-  assert.match(ui, /deletePerson\(personId, normalizedTyped\)/);
-  assert.match(ui, /PERSON_DELETE_CONFIRMATION_MISMATCH/);
+  assert.match(ui, /window\.confirm/);
+  assert.doesNotMatch(ui, /window\.prompt/);
+  assert.match(ui, /deletePerson\(personId\)/);
   assert.match(ui, /outcome\?\.verification\?\.checked === true/);
   assert.match(ui, /outcome\?\.verification\?\.match === true/);
   assert.match(ui, /window\.location\.reload\(\)/);
