@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:shajar-al-durr:mamluk-sultanate:sultan:1250:v1",
+  "person": {
+    "canonical_name_en": "Shajar al-Durr",
+    "display_name_ko": "샤자르 알두르"
+  },
+  "polity": {
+    "canonical_name_en": "Mamluk Sultanate",
+    "display_name_ko": "맘루크 술탄국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1250,
+    "start_month": 5,
+    "start_day": 2,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1250,
+    "end_month": 7,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Shajar al-Durr was installed as sovereign ruler of Egypt after the assassination of Turanshah on 2 May 1250. Contemporary-style indicators of sovereignty included coinage struck in her name and the khutba proclaimed in her name. Modern scholarship treats her brief reign as the hinge between Ayyubid and Mamluk rule, and institutional numismatic catalogues classify her as a Mamluk ruler. Because exact secondary chronologies vary on the day of her abdication while agreeing that it occurred in July 1250 after roughly three months of rule, ATLAS records the accession day exactly and the end at approximate month granularity. The user-supplied game/civilization label 'Arabia' is not used as the historical Polity, since her sovereign authority was the Egyptian sultanate centered on Cairo. Her influential role between al-Salih Ayyub's death and Turanshah's accession is not separately modeled as a formal regency because scholarship distinguishes informal control of treasury and military affairs from a clearly constituted sovereign office during that interval."
+  },
+  "sources": [
+    {
+      "title": "Tree of Pearls: The Extraordinary Architectural Patronage of the 13th-Century Egyptian Slave-Queen Shajar al-Durr",
+      "canonical_url": "https://academic.oup.com/book/32122",
+      "citation_text": "Oxford University Press describes Shajar al-Durr as a woman sultan who ruled Egypt in the summer of 1250 and whose reign marked the transition from the Ayyubid to the Mamluk dynasty.",
+      "source_type": "academic_monograph"
+    },
+    {
+      "title": "Shajar al-Durr",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/AUTH242136",
+      "citation_text": "The British Museum identifies Shajar al-Durr as ruler and records her as Regent and Sultan of Egypt; its associated coin catalogue classifies her 1250 coinage under the Bahri Mamluk dynasty.",
+      "source_type": "museum_reference"
+    },
+    {
+      "title": "Coinage of the Mamluk Sultans of Egypt and Syria: Shajar al-Durr",
+      "canonical_url": "https://numismatics.org/digitallibrary/ark:/53695/nnan55713",
+      "citation_text": "The American Numismatic Society catalogue documents Shajar al-Durr's Cairo coinage of AH 648 / 1250 and records the sovereign titles carried on her dinars and dirhams.",
+      "source_type": "institutional_numismatic_catalogue"
+    },
+    {
+      "title": "Shajar al-Durr: A Case of Female Sultanate in Medieval Islam",
+      "canonical_url": "https://worldhistoryconnected.press.uillinois.edu/7.1/levanoni.html",
+      "citation_text": "Amalia Levanoni's study analyzes Shajar al-Durr's rise to power and distinguishes the post-1249 control of treasury and military affairs from the later formal female sultanate, supporting a conservative sovereign-activity model.",
+      "source_type": "academic_article"
+    }
+  ]
+}
