@@ -4,8 +4,11 @@ const { createPostgresClient } = require("./atlas-postgres-client.js");
 const { createMutationAuthorizer, requireEnv } = require("./atlas-session-auth.js");
 const { verifyGitHubActionsOidc } = require("./atlas-github-oidc.js");
 const { inspectAuthoringReadiness } = require("./atlas-authoring-readiness.js");
-const { runtimeIdentity, requireRuntime, bearerToken, MANIFEST_PATH_RE, TRANSPORT_VERSION } = require("./atlas-authoring-apply-handler.js");
+const { runtimeIdentity, requireRuntime, bearerToken, TRANSPORT_VERSION } = require("./atlas-authoring-apply-handler.js");
 const { HUMAN_AUTHORING_MARKER, HUMAN_AUTHORING_SCHEMA, createHumanAuthoringService, loadHumanAuthoringCatalogs } = require("./atlas-human-authoring-service.js");
+const { HUMAN_PERSON_AUTHORING_SCHEMA, createHumanPersonAuthoringService } = require("./atlas-human-person-authoring-service.js");
+
+const HUMAN_MANIFEST_PATH_RE = /^authoring\/(?:requests|person_requests)\/[A-Za-z0-9._-]+\.json$/;
 
 function json(res, status, body) {
   res.statusCode = status;
@@ -25,7 +28,7 @@ function parseBody(req) {
 function statusForError(code) {
   if (/UNAUTHORIZED|OIDC/.test(code)) return 401;
   if (/COLLISION|AMBIGUOUS|DUPLICATE|UNRESOLVED|CONFLICT|DRIFT|NOT_READY/.test(code)) return 409;
-  if (/REQUIRED|INVALID|FORBIDDEN|MISMATCH/.test(code)) return 400;
+  if (/REQUIRED|INVALID|FORBIDDEN|MISMATCH|NOT_APPROVED/.test(code)) return 400;
   if (/SUPABASE|NOT_PRODUCTION|NOT_MAIN|REPOSITORY/.test(code)) return 503;
   return 500;
 }
@@ -39,7 +42,7 @@ function transportEnvelope(body) {
   const manifestPath = String(body.manifest_path || "").trim();
   if (!/^[0-9a-f]{40}$/.test(runtimeSha)) throw new Error("HUMAN_AUTHORING_RUNTIME_SHA_REQUIRED");
   if (!/^[0-9a-f]{40}$/.test(authoringSha)) throw new Error("HUMAN_AUTHORING_SHA_REQUIRED");
-  if (!MANIFEST_PATH_RE.test(manifestPath)) throw new Error("HUMAN_AUTHORING_MANIFEST_PATH_NOT_ALLOWED");
+  if (!HUMAN_MANIFEST_PATH_RE.test(manifestPath)) throw new Error("HUMAN_AUTHORING_MANIFEST_PATH_NOT_ALLOWED");
   return Object.freeze({ runtimeSha, authoringSha, manifestPath });
 }
 
@@ -65,7 +68,16 @@ async function authorizeRequest(req, body, { env, verifyOidc, now }) {
   });
 }
 
-function createHumanAuthoringHandler({ env = process.env, clientFactory = createPostgresClient, verifyOidc = verifyGitHubActionsOidc, inspectReadiness = inspectAuthoringReadiness, createService = createHumanAuthoringService, loadCatalogs = loadHumanAuthoringCatalogs, now } = {}) {
+function createHumanAuthoringHandler({
+  env = process.env,
+  clientFactory = createPostgresClient,
+  verifyOidc = verifyGitHubActionsOidc,
+  inspectReadiness = inspectAuthoringReadiness,
+  createService = createHumanAuthoringService,
+  createPersonService = createHumanPersonAuthoringService,
+  loadCatalogs = loadHumanAuthoringCatalogs,
+  now
+} = {}) {
   if (typeof clientFactory !== "function") throw new Error("clientFactory is required");
   return async function handler(req, res) {
     if (!["GET", "POST"].includes(String(req?.method || "").toUpperCase())) return json(res, 405, { ok:false, marker:HUMAN_AUTHORING_MARKER, code:"METHOD_NOT_ALLOWED" });
@@ -97,7 +109,8 @@ function createHumanAuthoringHandler({ env = process.env, clientFactory = create
         return json(res, 200, { ok:true, marker:HUMAN_AUTHORING_MARKER, schema:HUMAN_AUTHORING_SCHEMA, auth_method:auth.method, ready:true, catalogs });
       }
       const request = body?.request && typeof body.request === "object" && !Array.isArray(body.request) ? body.request : body;
-      const outcome = await createService({ client }).apply(request, { transport:auth.transport });
+      const serviceFactory = request?.schema === HUMAN_PERSON_AUTHORING_SCHEMA ? createPersonService : createService;
+      const outcome = await serviceFactory({ client }).apply(request, { transport:auth.transport });
       return json(res, 200, { ok:true, auth_method:auth.method, ...outcome });
     } catch (error) {
       const code = String(error?.message || "HUMAN_AUTHORING_FAILED");
@@ -110,4 +123,11 @@ function createHumanAuthoringHandler({ env = process.env, clientFactory = create
   };
 }
 
-module.exports = Object.freeze({ createHumanAuthoringHandler, parseBody, statusForError, transportEnvelope, authorizeRequest });
+module.exports = Object.freeze({
+  HUMAN_MANIFEST_PATH_RE,
+  createHumanAuthoringHandler,
+  parseBody,
+  statusForError,
+  transportEnvelope,
+  authorizeRequest
+});
