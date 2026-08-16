@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:murad-iv:ottoman-empire:1623-1640:v1",
+  "person": {
+    "canonical_name_en": "Murad IV",
+    "display_name_ko": "무라드 4세"
+  },
+  "polity": {
+    "canonical_name_en": "Ottoman Empire",
+    "display_name_ko": "오스만 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1623,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1640,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Murad IV was an Ottoman sultan whose reign lasted from 1623 to 1640. TDV İslâm Ansiklopedisi identifies him explicitly as an Ottoman ruler (Osmanlı padişahı) for 1623–1640. The British Museum independently catalogues Murad IV as an Ottoman Sultan and gives his ruled dates as 1623–1640. ATLAS therefore normalizes the user-supplied polity label Ottomans to the existing canonical label Ottoman Empire and records his sovereign Activity as one continuous 1623–1640 reign at year granularity."
+  },
+  "sources": [
+    {
+      "title": "MURAD IV — TDV İslâm Ansiklopedisi",
+      "canonical_url": "https://islamansiklopedisi.org.tr/murad-iv",
+      "citation_text": "TDV İslâm Ansiklopedisi identifies Murad IV as an Ottoman sultan and gives his reign as 1623–1640.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Murad IV — British Museum Collections Online",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG118443",
+      "citation_text": "The British Museum catalogues Murad IV as an Ottoman Sultan and records his ruled dates as 1623–1640.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
