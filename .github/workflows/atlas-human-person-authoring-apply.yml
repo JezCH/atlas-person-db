@@ -1,0 +1,177 @@
+name: ATLAS Human Person Authoring Apply
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'authoring/person_requests/*.json'
+  workflow_dispatch:
+    inputs:
+      request:
+        description: 'Path under authoring/person_requests/'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: atlas-authoring-production
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: production
+    env:
+      ATLAS_AUTHORING_READINESS_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply
+      ATLAS_HUMAN_AUTHORING_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring
+      ATLAS_AUTHORING_AUDIENCE: atlas-person-db-authoring
+      ATLAS_AUTHORING_TRANSPORT_VERSION: '2'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve approved Person-only authoring requests
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/atlas-person-authoring-evidence/responses
+          : > /tmp/atlas-person-candidates.txt
+          : > /tmp/atlas-person-requests.txt
+
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            [[ -n "${{ inputs.request }}" ]] || { echo 'request is required' >&2; exit 1; }
+            printf '%s\n' "${{ inputs.request }}" > /tmp/atlas-person-candidates.txt
+          else
+            git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}" -- 'authoring/person_requests/*.json' > /tmp/atlas-person-candidates.txt
+          fi
+
+          while IFS= read -r request; do
+            [[ -n "$request" ]] || continue
+            [[ "$request" =~ ^authoring/person_requests/[A-Za-z0-9._-]+\.json$ ]] || { echo "Rejected Person-only request path: $request" >&2; exit 1; }
+            jq -e '
+              .schema == "atlas-human-person-authoring/v1"
+              and .review_status == "approved"
+              and (.request_id | type == "string" and length > 0)
+              and (.person.canonical_name_en | type == "string" and length > 0)
+              and (.person.display_name_ko | type == "string" and length > 0)
+              and (.person.person_type | type == "string" and length > 0)
+              and (.person.historicity | type == "string" and length > 0)
+              and (.sources | type == "array" and length > 0)
+              and (.activity == null)
+              and (.polity == null)
+            ' "$request" >/dev/null || { echo "Rejected Person-only authoring request: $request" >&2; exit 1; }
+            printf '%s\n' "$request" >> /tmp/atlas-person-requests.txt
+          done < /tmp/atlas-person-candidates.txt
+
+          sort -u -o /tmp/atlas-person-requests.txt /tmp/atlas-person-requests.txt
+          [[ -s /tmp/atlas-person-requests.txt ]] || { echo 'No approved Person-only requests selected.' >&2; exit 1; }
+          cp /tmp/atlas-person-requests.txt /tmp/atlas-person-authoring-evidence/requests.txt
+          cat /tmp/atlas-person-requests.txt
+
+      - name: Verify deployed authoring runtime readiness
+        shell: bash
+        run: |
+          set -euo pipefail
+          status=""
+          for attempt in $(seq 1 60); do
+            status="$(curl --silent --show-error \
+              --output /tmp/atlas-person-authoring-evidence/readiness.json \
+              --write-out '%{http_code}' \
+              "$ATLAS_AUTHORING_READINESS_ENDPOINT")"
+            if [[ "$status" == "200" ]]; then break; fi
+            if [[ "$status" == "404" && "$attempt" != "60" ]]; then
+              echo "Production authoring readiness route is not live yet (attempt ${attempt}/60); retrying in 10s."
+              sleep 10
+              continue
+            fi
+            cat /tmp/atlas-person-authoring-evidence/readiness.json >&2 || true
+            echo "Person-only authoring readiness failed: HTTP ${status}" >&2
+            exit 1
+          done
+
+          jq -e --argjson version "$ATLAS_AUTHORING_TRANSPORT_VERSION" '
+            .ok==true
+            and .marker=="ATLAS_AUTHORING_TRANSPORT_V2"
+            and .transport_version==$version
+            and (.runtime_sha | test("^[0-9a-f]{40}$"))
+            and .ready==true
+          ' /tmp/atlas-person-authoring-evidence/readiness.json >/dev/null
+
+          runtime_sha="$(jq -er '.runtime_sha' /tmp/atlas-person-authoring-evidence/readiness.json)"
+          git cat-file -e "${runtime_sha}^{commit}" || { echo "Deployed runtime commit is unavailable: ${runtime_sha}" >&2; exit 1; }
+          git merge-base --is-ancestor "$runtime_sha" "$GITHUB_SHA" || { echo 'Deployed runtime is not an ancestor of Person-only authoring commit' >&2; exit 1; }
+          git diff --name-only --diff-filter=ACDMRTUXB "$runtime_sha" "$GITHUB_SHA" -- > /tmp/atlas-person-authoring-evidence/runtime-diff.txt
+
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import { shouldBuildForChangedPaths } from './scripts/vercel-ignore-build.mjs';
+          const text = fs.readFileSync('/tmp/atlas-person-authoring-evidence/runtime-diff.txt', 'utf8').trim();
+          const paths = text ? text.split(/\r?\n/).filter(Boolean) : [];
+          if (shouldBuildForChangedPaths(paths)) {
+            console.error('PERSON_AUTHORING_RUNTIME_CODE_DRIFT: deployment-relevant changes exist after the deployed runtime SHA');
+            for (const path of paths) console.error(`  ${path}`);
+            process.exit(1);
+          }
+          console.log(`Person-only authoring delta is deployment-safe (${paths.length} path${paths.length === 1 ? '' : 's'}).`);
+          NODE
+
+          echo "ATLAS_RUNTIME_SHA=${runtime_sha}" >> "$GITHUB_ENV"
+
+      - name: Apply Person-only requests through deployed Vercel server
+        shell: bash
+        run: |
+          set -euo pipefail
+          request_oidc() {
+            curl --fail-with-body --silent --show-error \
+              -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+              "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_AUTHORING_AUDIENCE}" | jq -er '.value'
+          }
+
+          while IFS= read -r request; do
+            [[ -n "$request" ]] || continue
+            oidc_token="$(request_oidc)"
+            response="/tmp/atlas-person-authoring-evidence/responses/$(basename "$request" .json).json"
+            payload="$(jq -cn \
+              --argjson transport_version "$ATLAS_AUTHORING_TRANSPORT_VERSION" \
+              --arg runtime_sha "$ATLAS_RUNTIME_SHA" \
+              --arg authoring_sha "$GITHUB_SHA" \
+              --arg manifest_path "$request" \
+              --slurpfile request "$request" \
+              '{transport_version:$transport_version,runtime_sha:$runtime_sha,authoring_sha:$authoring_sha,manifest_path:$manifest_path,request:$request[0]}')"
+            status="$(curl --silent --show-error \
+              --output "$response" \
+              --write-out '%{http_code}' \
+              --request POST \
+              -H 'content-type: application/json' \
+              -H "authorization: Bearer ${oidc_token}" \
+              --data "$payload" \
+              "$ATLAS_HUMAN_AUTHORING_ENDPOINT")"
+            if [[ "$status" != "200" ]]; then
+              cat "$response" >&2 || true
+              echo "Person-only human authoring apply failed: HTTP ${status}" >&2
+              exit 1
+            fi
+            jq -e '
+              .ok==true
+              and .auth_method=="github_oidc"
+              and .marker=="ATLAS_HUMAN_PERSON_AUTHORING_V1"
+              and .schema=="atlas-human-person-authoring/v1"
+              and .committed==true
+              and .result.semantic_version=="v1-person-identity-only"
+            ' "$response" >/dev/null
+            jq . "$response"
+          done < /tmp/atlas-person-requests.txt
+
+      - name: Upload immutable Person-only authoring evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-person-authoring-${{ github.sha }}
+          path: /tmp/atlas-person-authoring-evidence/
+          if-no-files-found: error
+          retention-days: 90
