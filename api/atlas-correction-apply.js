@@ -6,11 +6,22 @@ const { createAuthoritativeKoRepairHandler } = require("../server/atlas-authorit
 const correctionApplyHandler = createCorrectionApplyHandler();
 const authoritativeKoRepairHandler = createAuthoritativeKoRepairHandler();
 const KO_REPAIR_SURFACE = "authoritative-ko-repair";
+const SURFACE_PARAM = "__atlas_correction_surface";
 
 function normalizedSurface(req) {
-  const value = req?.query?.__atlas_correction_surface;
-  if (Array.isArray(value)) return "__invalid__";
-  return String(value || "").trim();
+  const queryValue = req?.query?.[SURFACE_PARAM];
+  if (Array.isArray(queryValue)) return "__invalid__";
+  const normalizedQuery = String(queryValue || "").trim();
+  if (normalizedQuery) return normalizedQuery;
+
+  try {
+    const parsed = new URL(String(req?.url || ""), "https://atlas.invalid");
+    const values = parsed.searchParams.getAll(SURFACE_PARAM);
+    if (values.length > 1) return "__invalid__";
+    return String(values[0] || "").trim();
+  } catch {
+    return "";
+  }
 }
 
 async function handler(req, res) {
@@ -26,6 +37,7 @@ async function handler(req, res) {
 
 module.exports = handler;
 module.exports.KO_REPAIR_SURFACE = KO_REPAIR_SURFACE;
+module.exports.SURFACE_PARAM = SURFACE_PARAM;
 module.exports.normalizedSurface = normalizedSurface;
 module.exports.createCorrectionApplyHandler = createCorrectionApplyHandler;
 module.exports.createAuthoritativeKoRepairHandler = createAuthoritativeKoRepairHandler;
