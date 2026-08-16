@@ -160,7 +160,7 @@ test('successful Person hard-delete removes live references, refreshes duplicate
     'delete from atlas_v2.persons'
   ]) assert.ok(sql.some((text) => text.startsWith(expected)), `missing ${expected}`);
 
-  assert.ok(sql.some((text) => text.includes("person_duplicate_revalidation_requirements") && text.startsWith('update ')));
+  assert.ok(sql.some((text) => text.includes('person_duplicate_revalidation_requirements') && text.startsWith('update ')));
   assert.equal(sql.some((text) => text.includes('delete from atlas_v2.person_duplicate_reviews')), false);
   assert.equal(sql.some((text) => text.includes('delete from atlas_v2.person_merge_audit')), false);
   assert.equal(sql.some((text) => text.includes('delete from atlas_v2.person_duplicate_candidates')), false);
@@ -203,7 +203,7 @@ test('older schema without revalidation ledger skips its update but still verifi
   assert.equal(sql.at(-1), 'commit');
 });
 
-test('browser adapter and UI normalize typed name and require DB verification before reload', () => {
+test('browser delegates non-empty Person name confirmation to the authoritative server and requires DB verification before reload', () => {
   const adapter = fs.readFileSync(new URL('../atlas-server-write-adapter.js', import.meta.url), 'utf8');
   const ui = fs.readFileSync(new URL('../atlas-person-hard-delete.js', import.meta.url), 'utf8');
   const css = fs.readFileSync(new URL('../atlas-person-hard-delete.css', import.meta.url), 'utf8');
@@ -212,12 +212,15 @@ test('browser adapter and UI normalize typed name and require DB verification be
   assert.match(adapter, /deletePerson:\s*\(personId, confirmationName\)\s*=>\s*mutate\("delete_person"/);
   assert.match(adapter, /person_id:/);
   assert.match(adapter, /confirmation_name:/);
+  assert.match(adapter, /person-hard-delete-v3/);
   assert.match(handler, /operation\s*===\s*"delete_person"/);
   assert.match(ui, /window\.prompt/);
   assert.match(ui, /normalizeConfirmationName\(typed\)/);
-  assert.match(ui, /normalizedTyped !== personName/);
+  assert.match(ui, /if \(!normalizedTyped\)/);
+  assert.doesNotMatch(ui, /normalizedTyped !== personName/);
   assert.doesNotMatch(ui, /String\(typed\) !== personName/);
   assert.match(ui, /deletePerson\(personId, normalizedTyped\)/);
+  assert.match(ui, /PERSON_DELETE_CONFIRMATION_MISMATCH/);
   assert.match(ui, /outcome\?\.verification\?\.checked === true/);
   assert.match(ui, /outcome\?\.verification\?\.match === true/);
   assert.match(ui, /window\.location\.reload\(\)/);

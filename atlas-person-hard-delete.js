@@ -10,13 +10,13 @@
   const writeAdapter = api.createAdapter();
   const STYLE_ID = "atlasPersonHardDeleteStyles";
   const STYLE_HREF = "./atlas-person-hard-delete.css?v=20260816-person-hard-delete-v1";
-  const ZERO_WIDTH_RE = /[\u200B-\u200D\u2060\uFEFF]/g;
+  const ZERO_WIDTH_RE = /[\u00AD\u034F\u061C\u180E\u200B-\u200F\u202A-\u202E\u2060-\u206F\uFEFF]/g;
   let lastSelected = null;
   let scheduled = false;
 
   function normalizeConfirmationName(value) {
     return String(value ?? "")
-      .normalize("NFC")
+      .normalize("NFKC")
       .replace(ZERO_WIDTH_RE, "")
       .trim()
       .replace(/\s+/g, " ");
@@ -41,11 +41,19 @@
   }
 
   function errorText(outcome) {
-    if (Array.isArray(outcome?.errors) && outcome.errors.length) return outcome.errors.join("; ");
-    if (Array.isArray(outcome?.validation_failures) && outcome.validation_failures.length) {
-      return outcome.validation_failures.map((item) => item.code || item.field || JSON.stringify(item)).join("; ");
+    const messages = [];
+    if (Array.isArray(outcome?.errors)) messages.push(...outcome.errors.map(String));
+    if (Array.isArray(outcome?.validation_failures)) {
+      messages.push(...outcome.validation_failures.map((item) => item.code || item.field || JSON.stringify(item)));
     }
-    return outcome?.transaction_failure || "인물 완전 삭제가 완료되지 않았습니다.";
+    if (outcome?.transaction_failure) messages.push(String(outcome.transaction_failure));
+    if (messages.some((message) => message.includes("PERSON_DELETE_CONFIRMATION_MISMATCH"))) {
+      return "입력한 이름이 선택한 Person의 DB 등록 이름과 일치하지 않습니다.";
+    }
+    if (messages.some((message) => message.includes("PERSON_DELETE_TARGET_NOT_FOUND"))) {
+      return "선택한 Person이 DB에 존재하지 않습니다. 목록을 새로고침한 뒤 다시 확인하세요.";
+    }
+    return messages.filter(Boolean).join("; ") || "인물 완전 삭제가 완료되지 않았습니다.";
   }
 
   function dangerZoneHtml(person) {
@@ -102,13 +110,13 @@
     if (!firstConfirmed) return;
 
     const typed = window.prompt(
-      `최종 확인입니다. 삭제하려면 아래 인물명을 정확히 입력하세요.\n\n${personName}`,
+      `최종 확인입니다. 삭제 대상 인물의 이름을 입력하세요.\n\n현재 표시명: ${personName}\nDB에 등록된 다른 이름도 사용할 수 있으며, 서버가 선택한 Person UUID와 직접 대조합니다.`,
       ""
     );
     if (typed == null) return;
     const normalizedTyped = normalizeConfirmationName(typed);
-    if (normalizedTyped !== personName) {
-      window.alert("인물명이 정확히 일치하지 않아 삭제하지 않았습니다.");
+    if (!normalizedTyped) {
+      window.alert("확인용 인물명을 입력해야 합니다.");
       return;
     }
 
