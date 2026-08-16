@@ -9,11 +9,19 @@ const {
   normalizeSnapshotActivityIds,
   createCorrectionTargetSnapshot
 } = require("./atlas-correction-snapshot-service.js");
+const { createCorrectionV2TargetSnapshot } = require("./atlas-correction-v2-snapshot-service.js");
+const {
+  PLAN_SCHEMA,
+  requiredSnapshotActivityIds
+} = require("./atlas-correction-v2-manifest-synthesizer.js");
+const { synthesizeUnifiedCorrectionV2Manifest } = require("./atlas-correction-v2-unified-plan-synthesizer.js");
+const { createUnifiedCorrectionManifestV2Service } = require("./atlas-correction-manifest-v2-unified-service.js");
 const { queryFullStage2Baseline } = require("./atlas-audit-inventory-handler.js");
 const { applyCorrectionMigrations } = require("./atlas-correction-migrations.js");
 const { verifyGitHubActionsOidc } = require("./atlas-correction-github-oidc.js");
 
-const CORRECTION_PATH_RE = /^corrections\/(?:requests|intents)\/[A-Za-z0-9._-]+\.json$/;
+const CORRECTION_PATH_RE = /^corrections\/(?:requests|intents|plans)\/[A-Za-z0-9._-]+\.json$/;
+const CORRECTION_PLAN_PATH_RE = /^corrections\/plans\/[A-Za-z0-9._-]+\.json$/;
 const MODES = new Set(["snapshot", "dry_run", "apply", "full_stage2_baseline"]);
 const MANIFEST_SCHEMAS = new Set([MANIFEST_V1, MANIFEST_V1_1, MANIFEST_V1_2, MANIFEST_V2]);
 const SNAPSHOT_MARKER = "ATLAS_CORRECTION_SNAPSHOT_V1";
@@ -53,6 +61,17 @@ function requireDeployment(env, requestedSha) {
   return deployedSha;
 }
 
+function requireExecutionPlan(raw) {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error("CORRECTION_V2_EXECUTION_PLAN_OBJECT_REQUIRED");
+  if (String(raw.schema || "").trim() !== PLAN_SCHEMA) throw new Error("CORRECTION_V2_EXECUTION_PLAN_SCHEMA_INVALID");
+  if (!String(raw.batch_id || "").trim()) throw new Error("CORRECTION_V2_EXECUTION_PLAN_BATCH_ID_REQUIRED");
+  if (!Array.isArray(raw.operations) || raw.operations.length === 0) throw new Error("CORRECTION_V2_EXECUTION_PLAN_OPERATIONS_REQUIRED");
+  if (raw?.execution_rules?.production_executable !== false || raw?.execution_rules?.production_mutation_authorized !== false) {
+    throw new Error("CORRECTION_V2_EXECUTION_PLAN_PREMATURE_PRODUCTION_AUTHORIZATION");
+  }
+  return raw;
+}
+
 function requirePayload(body) {
   const deploymentSha = String(body?.deployment_sha || "").trim();
   if (!/^[0-9a-f]{40}$/i.test(deploymentSha)) throw new Error("CORRECTION_APPLY_SHA_REQUIRED");
@@ -60,23 +79,32 @@ function requirePayload(body) {
   if (!MODES.has(mode)) throw new Error("CORRECTION_MODE_REQUIRED");
 
   if (mode === "full_stage2_baseline") {
-    if (body?.manifest_path != null || body?.intent_path != null || body?.manifest != null || body?.activity_ids != null) {
+    if (body?.manifest_path != null || body?.intent_path != null || body?.manifest != null || body?.plan != null || body?.activity_ids != null) {
       throw new Error("CORRECTION_BASELINE_INPUTS_FORBIDDEN");
     }
-    return { deploymentSha, sourcePath: null, mode, activityIds: null, manifest: null, schema: null };
+    return { deploymentSha, sourcePath: null, mode, activityIds: null, manifest: null, schema: null, plan: null };
   }
 
-  const sourcePath = String(body?.manifest_path || body?.intent_path || "").trim();
+  const sourcePath = String(body?.manifest_path || body?.intent_path || body?.plan_path || "").trim();
   if (!CORRECTION_PATH_RE.test(sourcePath)) throw new Error("CORRECTION_SOURCE_PATH_NOT_ALLOWED");
 
   if (mode === "snapshot") {
-    return { deploymentSha, sourcePath, mode, activityIds: normalizeSnapshotActivityIds(body?.activity_ids), manifest: null, schema: null };
+    if (body?.plan != null) throw new Error("CORRECTION_PLAN_SNAPSHOT_MODE_FORBIDDEN");
+    return { deploymentSha, sourcePath, mode, activityIds: normalizeSnapshotActivityIds(body?.activity_ids), manifest: null, schema: null, plan: null };
   }
 
+  if (body?.plan != null) {
+    if (!CORRECTION_PLAN_PATH_RE.test(sourcePath)) throw new Error("CORRECTION_V2_EXECUTION_PLAN_PATH_NOT_ALLOWED");
+    if (body?.manifest != null) throw new Error("CORRECTION_PLAN_AND_MANIFEST_MUTUALLY_EXCLUSIVE");
+    const plan = requireExecutionPlan(body.plan);
+    return { deploymentSha, sourcePath, mode, activityIds: null, manifest: null, schema: MANIFEST_V2, plan };
+  }
+
+  if (CORRECTION_PLAN_PATH_RE.test(sourcePath)) throw new Error("CORRECTION_V2_EXECUTION_PLAN_OBJECT_REQUIRED");
   if (!body?.manifest || typeof body.manifest !== "object" || Array.isArray(body.manifest)) throw new Error("CORRECTION_MANIFEST_OBJECT_REQUIRED");
   const schema = String(body.manifest.schema || "").trim();
   if (!MANIFEST_SCHEMAS.has(schema)) throw new Error("UNSUPPORTED_CORRECTION_MANIFEST_SCHEMA");
-  return { deploymentSha, sourcePath, mode, manifest: body.manifest, schema, activityIds: null };
+  return { deploymentSha, sourcePath, mode, manifest: body.manifest, schema, activityIds: null, plan: null };
 }
 
 function createService(client, schema) {
@@ -93,6 +121,10 @@ function createCorrectionApplyHandler({
   createClient = createPostgresClient,
   applyMigrations = applyCorrectionMigrations,
   createSnapshot = createCorrectionTargetSnapshot,
+  createV2Snapshot = createCorrectionV2TargetSnapshot,
+  requiredV2SnapshotIds = requiredSnapshotActivityIds,
+  synthesizeV2Plan = synthesizeUnifiedCorrectionV2Manifest,
+  createUnifiedV2Service = createUnifiedCorrectionManifestV2Service,
   queryBaseline = queryFullStage2Baseline
 } = {}) {
   return async function handler(req, res) {
@@ -161,6 +193,30 @@ function createCorrectionApplyHandler({
         });
       }
 
+      if (payload.plan) {
+        if (payload.mode === "apply") await applyMigrations(client);
+        const activityIds = requiredV2SnapshotIds(payload.plan);
+        const snapshot = await createV2Snapshot(client, activityIds);
+        const manifest = synthesizeV2Plan(payload.plan, snapshot);
+        const service = createUnifiedV2Service({ client });
+        const outcome = await service.execute(manifest, { dryRun: payload.mode === "dry_run" });
+        return json(res, 200, {
+          ok: true,
+          marker: outcome.marker,
+          schema: MANIFEST_V2,
+          request_id: outcome.request_id,
+          mode: payload.mode,
+          dry_run: outcome.dry_run,
+          committed: outcome.committed,
+          replay: outcome.replay,
+          result: outcome.result,
+          deployment_sha: payload.deploymentSha,
+          source_path: payload.sourcePath,
+          exact_live_snapshot_digest: snapshot.snapshot_digest,
+          manifest_sha256: manifest.manifest_sha256
+        });
+      }
+
       if (payload.mode === "apply") await applyMigrations(client);
       const service = createService(client, payload.schema);
       const outcome = await service.execute(payload.manifest, { dryRun: payload.mode === "dry_run" });
@@ -188,5 +244,17 @@ function createCorrectionApplyHandler({
   };
 }
 
-module.exports = Object.freeze({ createCorrectionApplyHandler, requirePayload, requireDeployment, bearerToken, createService,
-  CORRECTION_PATH_RE, MODES, MANIFEST_SCHEMAS, SNAPSHOT_MARKER, BASELINE_MARKER });
+module.exports = Object.freeze({
+  createCorrectionApplyHandler,
+  requirePayload,
+  requireExecutionPlan,
+  requireDeployment,
+  bearerToken,
+  createService,
+  CORRECTION_PATH_RE,
+  CORRECTION_PLAN_PATH_RE,
+  MODES,
+  MANIFEST_SCHEMAS,
+  SNAPSHOT_MARKER,
+  BASELINE_MARKER
+});

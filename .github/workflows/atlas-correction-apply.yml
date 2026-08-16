@@ -7,10 +7,11 @@ on:
     paths:
       - 'corrections/requests/*.json'
       - 'corrections/intents/*.json'
+      - 'corrections/plans/*.json'
   workflow_dispatch:
     inputs:
       manifest:
-        description: 'Path under corrections/requests/ or corrections/intents/'
+        description: 'Path under corrections/requests/, corrections/intents/, or corrections/plans/'
         required: true
         type: string
 
@@ -46,7 +47,7 @@ jobs:
             printf '%s\n' "${{ inputs.manifest }}" > /tmp/atlas-correction-candidates.txt
           else
             git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}" -- \
-              'corrections/requests/*.json' 'corrections/intents/*.json' > /tmp/atlas-correction-candidates.txt
+              'corrections/requests/*.json' 'corrections/intents/*.json' 'corrections/plans/*.json' > /tmp/atlas-correction-candidates.txt
           fi
 
           while IFS= read -r source_path; do
@@ -90,6 +91,18 @@ jobs:
               ' "$source_path" >/dev/null
               order="$(jq -er '.release_order // 500' "$source_path")"
               kind="intent"
+            elif [[ "$source_path" =~ ^corrections/plans/[A-Za-z0-9._-]+\.json$ ]]; then
+              jq -e '
+                .schema == "atlas-stage2-correction-v2-execution-plan/v1" and
+                (.batch_id | type == "string" and length > 0) and
+                (.operations | type == "array" and length > 0) and
+                (.execution_rules.production_executable == false) and
+                (.execution_rules.production_mutation_authorized == false) and
+                ((.release_order // 500) | type == "number") and
+                ((.release_order // 500) | floor == .)
+              ' "$source_path" >/dev/null
+              order="$(jq -er '.release_order // 500' "$source_path")"
+              kind="plan"
             else
               echo "Rejected correction source path: $source_path" >&2
               exit 1
@@ -201,8 +214,29 @@ jobs:
             jq -c --arg source_path "$source_path" --arg mode "$mode" '. + {workflow_source:$source_path,workflow_mode:$mode}' "$response" >> /tmp/atlas-correction-results.jsonl
           }
 
+          call_plan_correction() {
+            local plan="$1" source_path="$2" mode="$3" safe response payload
+            safe="$(safe_name "$source_path")"
+            response="/tmp/atlas-correction-evidence/responses/${safe}-${mode}.json"
+            payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" --arg plan_path "$source_path" --arg mode "$mode" --slurpfile plan "$plan" \
+              '{deployment_sha:$deployment_sha,plan_path:$plan_path,mode:$mode,plan:$plan[0]}')"
+            post_with_deployment_retry "$payload" "$response" "correction plan ${mode}"
+            if [[ "$mode" == "dry_run" ]]; then
+              jq -e '.ok == true and .marker == "ATLAS_CORRECTION_MANIFEST_V2" and .schema == "atlas-correction-manifest/v2" and .dry_run == true and .committed == false and (.exact_live_snapshot_digest | test("^sha256:[0-9a-f]{64}$")) and (.manifest_sha256 | test("^sha256:[0-9a-f]{64}$"))' "$response" >/dev/null
+            else
+              jq -e '.ok == true and .marker == "ATLAS_CORRECTION_MANIFEST_V2" and .schema == "atlas-correction-manifest/v2" and .dry_run == false and .committed == true and (.exact_live_snapshot_digest | test("^sha256:[0-9a-f]{64}$")) and (.manifest_sha256 | test("^sha256:[0-9a-f]{64}$"))' "$response" >/dev/null
+            fi
+            jq -c --arg source_path "$source_path" --arg mode "$mode" '. + {workflow_source:$source_path,workflow_mode:$mode}' "$response" >> /tmp/atlas-correction-results.jsonl
+          }
+
           while IFS=$'\t' read -r order kind source_path; do
             [[ -n "$source_path" ]] || continue
+            if [[ "$kind" == "plan" ]]; then
+              call_plan_correction "$source_path" "$source_path" dry_run
+              call_plan_correction "$source_path" "$source_path" apply
+              continue
+            fi
+
             manifest="$source_path"
             if [[ "$kind" == "intent" ]]; then
               safe="$(safe_name "$source_path")"; snapshot="/tmp/atlas-correction-evidence/snapshots/${safe}.json"; manifest="/tmp/atlas-correction-evidence/generated-manifests/${safe}.manifest.json"
