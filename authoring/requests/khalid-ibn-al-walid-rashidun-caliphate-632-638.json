@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:khalid-ibn-al-walid:rashidun-caliphate:632-638:v1",
+  "person": {
+    "canonical_name_en": "Khalid ibn al-Walid",
+    "display_name_ko": "할리드 이븐 알왈리드"
+  },
+  "polity": {
+    "canonical_name_en": "Rashidun Caliphate",
+    "display_name_ko": "라시둔 칼리파국"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "service",
+    "role": "Military Commander",
+    "role_display_name_ko": "군사 지휘관",
+    "start_year": 632,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 638,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Khalid ibn al-Walid was a military commander rather than a sovereign ruler. ATLAS therefore binds him to the Rashidun Caliphate with relation_type 'serves', not 'rules' or 'governs'. The Activity begins in 632, when after Muhammad's death Caliph Abu Bakr employed Khalid as a principal commander in the Ridda wars and subsequent expansion. Khalid led campaigns in Arabia, Iraq and Syria. Umar removed him from the highest command after becoming caliph, but Khalid continued to fight as a subordinate field commander in the Syrian campaigns; the Activity ends in 638 with his final dismissal from military service. The 632-638 interval deliberately excludes Khalid's earlier military service under Muhammad before the Rashidun Caliphate existed, and does not imply that he held supreme command throughout the entire period."
+  },
+  "sources": [
+    {
+      "title": "Hâlid b. Velîd’in Komutanlığı ve Azledilmesi / The Command and Dismissal of Khālid b. al-Walīd",
+      "canonical_url": "https://dergipark.org.tr/tr/pub/dinbil/article/745999",
+      "citation_text": "Haci Ataş's 2020 research article identifies Khalid as a leading military commander, records his commander-in-chief role under Abu Bakr in the Ridda wars, and discusses Umar's later removal of him from command.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "ʿARAB ii. Arab conquest of Iran",
+      "canonical_url": "https://www.iranicaonline.org/articles/arab-ii/",
+      "citation_text": "Encyclopaedia Iranica documents Khalid's 633 campaign into Sasanian Iraq after the Ridda wars, confirming his senior military role during Abu Bakr's caliphate.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Battle of Firāḍ: The Day on Which Khālid b. al-Walīd Did [Not] Defeat Both Byzantines and Persians",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/journal-of-medieval-military-history/battle-of-firad-the-day-on-which-khalid-b-alwalid-did-not-defeat-both-byzantines-and-persians/476A229E680237670593FEF5103A7AF7",
+      "citation_text": "The Journal of Medieval Military History study places Khalid as the Arab general moving from Iraq into Syria in 634 and critically evaluates the early conquest narratives.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Khālid ibn al-Walīd",
+      "canonical_url": "https://www.treccani.it/enciclopedia/khalid-ibn-al-walid_%28Enciclopedia-Italiana%29/",
+      "citation_text": "Treccani describes Khalid as a major early Islamic military commander, notes that Umar removed him from supreme command, and that Khalid continued participating in the war in a subordinate capacity afterward.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
