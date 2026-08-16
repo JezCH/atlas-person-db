@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:karadorde-petrovic:revolutionary-serbia:1804-1813:v1",
+  "request_id": "authoring:karadorde-petrovic:revolutionary-serbia:1804-1813:v2",
   "person": {
     "canonical_name_en": "Karađorđe Petrović",
     "display_name_ko": "카라조르제 페트로비치"
@@ -14,7 +14,7 @@
     "relation_type": "governs",
     "period_basis": "de_facto_rule",
     "role": "Grand Vožd",
-    "role_display_name_ko": "최고지도자",
+    "role_display_name_ko": "대보주드",
     "start_year": 1804,
     "start_month": null,
     "start_day": null,
@@ -27,7 +27,7 @@
     "end_calendar": "unspecified_historical",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "Karađorđe Petrović was elected leader of the Serbian uprising at Orašac in 1804 and became the principal political and military head of the short-lived Serbian revolutionary state until its collapse in 1813. ATLAS models the relevant political authority as Revolutionary Serbia rather than the First Serbian Uprising itself, because the uprising was an event while the insurgents created governing institutions and exercised territorial political authority. The Serbian Encyclopedia gives his tenure as Grand Vožd from 14 February 1804 to 21 September 1813; this Activity conservatively stores the same interval at year granularity."
+    "notes": "Karađorđe Petrović was elected leader of the Serbian uprising at Orašac in 1804 and became the principal political and military head of the short-lived Serbian revolutionary state until its collapse in 1813. ATLAS models the relevant political authority as Revolutionary Serbia rather than the First Serbian Uprising itself, because the uprising was an event while the insurgents created governing institutions and exercised territorial political authority. The Serbian Encyclopedia gives his tenure as Grand Vožd from 14 February 1804 to 21 September 1813; this Activity conservatively stores the same interval at year granularity. The Korean role label 대보주드 preserves the historically specific Grand Vožd title without colliding with an existing generic 최고지도자 role label."
   },
   "sources": [
     {

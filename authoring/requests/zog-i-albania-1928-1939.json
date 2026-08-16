@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:zog-i:kingdom-of-albania:1928-1939:v1",
+  "request_id": "authoring:zog-i:kingdom-of-albania:1928-1939:v2",
   "person": {
     "canonical_name_en": "Zog I",
     "display_name_ko": "조구 1세"
