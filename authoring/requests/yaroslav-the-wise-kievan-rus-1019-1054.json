@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:yaroslav-the-wise:kievan-rus:1019-1054:v1",
+  "person": {
+    "canonical_name_en": "Yaroslav the Wise",
+    "display_name_ko": "야로슬라프 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Kievan Rus'",
+    "display_name_ko": "키예프 루스"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Grand Prince",
+    "role_display_name_ko": "대공",
+    "start_year": 1019,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1054,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The user-supplied archaic East Slavic form Ꙗрославъ Володимѣровичь corresponds to Yaroslav Vladimirovich, commonly known in English as Yaroslav the Wise. The Internet Encyclopedia of Ukraine identifies Yaroslav as Grand Prince of Kyiv from 1019 and records his death in 1054; it also notes that he regained the Kyivan throne in 1019 after defeating Sviatopolk. The Great Russian Encyclopedia independently gives his Kyiv tenure as 1019–1054 after an earlier interrupted tenure in 1016–1018. ATLAS therefore records his principal continuous sovereign Activity as Grand Prince of Kievan Rus' from 1019 through 1054 at year granularity. His earlier rule in Rostov and Novgorod, the interrupted 1016–1018 Kyiv tenure, and the internal territorial division with Mstislav before 1036 are not modeled as separate Activities in this registration.",
+    "role_category": "ruler"
+  },
+  "sources": [
+    {
+      "title": "Yaroslav the Wise — Internet Encyclopedia of Ukraine",
+      "canonical_url": "https://www.encyclopediaofukraine.com/display.asp?linkpath=pages\\Y\\A\\YaroslavtheWise",
+      "citation_text": "The Internet Encyclopedia of Ukraine identifies Yaroslav the Wise (Jaroslav Volodymyrovyč) as Grand Prince of Kyiv from 1019, states that he regained the Kyivan throne in 1019, and records his death in 1054.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Ярослав Владимирович (князь киевский) — Большая российская энциклопедия",
+      "canonical_url": "https://bigenc.ru/c/iaroslav-vladimirovich-kniaz-kievskii-c20fe7",
+      "citation_text": "The Great Russian Encyclopedia identifies Yaroslav Vladimirovich the Wise as prince of Kyiv in 1016–1018 and again continuously in 1019–1054, independently confirming the principal 1019–1054 Kyiv tenure.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Kievan Russia — Companion to Russian Studies — Cambridge University Press",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/companion-to-russian-studies/kievan-russia/841B584BEFE125AAC1EE4E710AB9DD48",
+      "citation_text": "Cambridge University Press describes the reigns of Vladimir I and Yaroslav the Wise (1019–54) as the period in which Kievan Russia reached its maximum power and development.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
