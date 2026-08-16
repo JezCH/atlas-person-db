@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:boran:sasanian-empire:630-631:v1",
+  "person": {
+    "canonical_name_en": "Boran",
+    "display_name_ko": "보란"
+  },
+  "polity": {
+    "canonical_name_en": "Sasanian Empire",
+    "display_name_ko": "사산 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Queen",
+    "role_display_name_ko": "여왕",
+    "start_year": 630,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 631,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Boran (Bōrān; also Buran, Puran and Burandukht in modern catalogues) was a daughter of Khosrow II and a ruling queen of the Sasanian Empire. Encyclopaedia Iranica places her accession in spring 630 after the death of Shahrvaraz and notes differing traditions for the length of her reign; it considers her probable death to have occurred in autumn 631, while extant coins are dated to the first, second and third regnal years. The British Museum independently catalogues Boran as a Sasanian ruler who ruled in 630-631. ATLAS therefore records one continuous 630-631 reign at year granularity: the 630 start year is treated as established, while the 631 end is marked approximate because the precise duration and terminal date remain debated. This Activity does not create a separate second reign or extend the reign to 632 without stronger evidence."
+  },
+  "sources": [
+    {
+      "title": "Boran — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/boran-pers/",
+      "citation_text": "Encyclopaedia Iranica identifies Boran as a Sasanian queen and daughter of Khosrow II, places her accession in spring 630, records competing reign-length traditions, and considers a death in autumn 631 probable.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Boran — British Museum Collections Online",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG163180",
+      "citation_text": "The British Museum catalogues Boran as a Persian ruler of the Sasanian Dynasty, daughter of Khusrau II, with ruled dates 630-631; it also records the variant names Burandukht, Buran and Puran.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "History and Coinage of the Sasanian Queen Boran (AD 629-631)",
+      "canonical_url": "https://www.jstor.org/stable/42668553",
+      "citation_text": "Hodge Mehdi Malek and Vesta Sarkhosh Curtis, The Numismatic Chronicle 158 (1998), pp. 113-129, is a dedicated scholarly study of Boran's history and coinage and dates the reign within the late 629-631 chronological framework.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Women i. In Pre-Islamic Persia — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/women-i/",
+      "citation_text": "Encyclopaedia Iranica identifies Boran as the reigning Sasanian queen of 630-31 and notes that her appearance on royal coinage was exceptional among Sasanian women.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
