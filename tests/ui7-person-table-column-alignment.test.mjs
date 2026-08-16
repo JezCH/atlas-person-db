@@ -19,9 +19,9 @@ test('Person table composes an era band with the existing four Person data cells
 });
 
 test('era classification uses the agreed ATLAS global cut points and preserves unknown chronology', () => {
-  assert.match(source, /year < -500/);
+  assert.match(source, /year < -480/);
   assert.match(source, /year < 500/);
-  assert.match(source, /year < 1500/);
+  assert.match(source, /year < 1492/);
   assert.match(source, /year < 1750/);
   assert.match(source, /year < 1914/);
   assert.match(source, /year < 1945/);
