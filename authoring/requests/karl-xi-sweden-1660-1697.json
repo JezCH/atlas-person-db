@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:karl-xi:sweden:1660-1697:v1",
+  "person": {"canonical_name_en": "Karl XI", "display_name_ko": "칼 11세"},
+  "polity": {"canonical_name_en": "Sweden", "display_name_ko": "스웨덴"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 1660, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 1697, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Karl XI succeeded as King of Sweden in 1660 and reigned until 1697. Because he was a child at accession, a regency governed during his minority until 1672, but his sovereign reign itself remained continuous; ATLAS therefore preserves the conventional 1660–1697 regnal interval."},
+  "sources": [{"title": "The monarchy of Sweden — The Royal Court of Sweden", "canonical_url": "https://www.kungahuset.se/english/the-monarchy-of-sweden", "citation_text": "The Royal Court of Sweden lists Karl XI as reigning from 1660 to 1697.", "source_type": "government_web"}, {"title": "Monarkins historia — Kungahuset", "canonical_url": "https://www.kungahuset.se/sveriges-monarki/monarkins-historia", "citation_text": "The Royal Court explains that Karl XI succeeded in 1660 as a four-year-old and that a regency governed until his majority in 1672.", "source_type": "government_web"}]
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gustavus-adolphus:sweden:1611-1632:v1",
+  "person": {"canonical_name_en": "Gustavus Adolphus", "display_name_ko": "구스타브 2세 아돌프"},
+  "polity": {"canonical_name_en": "Sweden", "display_name_ko": "스웨덴"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 1611, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 1632, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Gustavus Adolphus, Gustav II Adolf in Swedish usage, reigned as King of Sweden from 1611 until his death at Lützen in 1632. ATLAS records one continuous Swedish sovereign Activity at year granularity."},
+  "sources": [{"title": "The monarchy of Sweden — The Royal Court of Sweden", "canonical_url": "https://www.kungahuset.se/english/the-monarchy-of-sweden", "citation_text": "The Royal Court of Sweden lists Gustav II Adolf as reigning from 1611 to 1632.", "source_type": "government_web"}, {"title": "Monarkins historia — Kungahuset", "canonical_url": "https://www.kungahuset.se/sveriges-monarki/monarkins-historia", "citation_text": "The Royal Court describes Gustav II Adolf's reign and records his death at the Battle of Lützen in 1632.", "source_type": "government_web"}]
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:margaret-i:kalmar-union:1397-1412:v1",
+  "person": {"canonical_name_en": "Margaret I", "display_name_ko": "마르그레테 1세"},
+  "polity": {"canonical_name_en": "Kalmar Union", "display_name_ko": "칼마르 연합"},
+  "activity": {"relation_type": "governs", "period_basis": "de_facto_rule", "role": "Regent", "role_display_name_ko": "섭정", "start_year": 1397, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 1412, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Margaret I exercised governing power in Denmark, Norway and Sweden before the formal Kalmar Union and founded the union in 1397. Erik of Pomerania was formally king, but Margaret remained the effective ruler until her death in 1412. ATLAS therefore uses one union-level `governs` + `de_facto_rule` Activity for 1397–1412 instead of duplicating three overlapping kingdom Activities."},
+  "sources": [{"title": "Margrete 1., 1353–1412 — Danmarkshistorien/Lex", "canonical_url": "https://danmarkshistorien.lex.dk/Margrete_1.%2C_1353-1412", "citation_text": "Danmarkshistorien states that Margaret exercised governing power in Denmark, Norway and Sweden and founded the Kalmar Union in 1397, remaining the dominant ruler until 1412.", "source_type": "academic_reference"}, {"title": "Kongerækken — Det danske kongehus", "canonical_url": "https://www.kongehuset.dk/monarkiet-i-danmark/kongerakken", "citation_text": "The Danish Royal House describes Margaret I as the effective regent and founder of the Kalmar Union, retaining real power until her death in 1412 even after Erik's accession.", "source_type": "government_web"}]
+}

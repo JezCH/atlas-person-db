@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:christian-iv:denmark-norway:1588-1648:v1",
+  "person": {"canonical_name_en": "Christian IV", "display_name_ko": "크리스티안 4세"},
+  "polity": {"canonical_name_en": "Denmark–Norway", "display_name_ko": "덴마크-노르웨이"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 1588, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 1648, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Christian IV became King of Denmark and Norway in 1588 and reigned until 1648. He was a minor at accession and was crowned and began personal rule in 1596, but the regnal interval conventionally begins in 1588. ATLAS records the composite Denmark–Norway monarchy rather than duplicating separate Danish and Norwegian Activities."},
+  "sources": [{"title": "Kongerækken — Det danske kongehus", "canonical_url": "https://www.kongehuset.dk/monarkiet-i-danmark/kongerakken", "citation_text": "The Danish Royal House identifies Christian IV as King of Denmark and Norway from 1588/1596 to 1648, noting the minority regency before his coronation in 1596.", "source_type": "government_web"}, {"title": "Norges regenter: kongerekken — Det norske kongehus", "canonical_url": "https://www.kongehuset.no/monarkiet/historie/kongerekken", "citation_text": "The Norwegian Royal House lists Christian IV as king from 1588 to 1648.", "source_type": "government_web"}]
+}

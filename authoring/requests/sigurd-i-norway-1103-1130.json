@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sigurd-i:norway:1103-1130:v1",
+  "person": {"canonical_name_en": "Sigurd I", "display_name_ko": "시구르드 1세"},
+  "polity": {"canonical_name_en": "Norway", "display_name_ko": "노르웨이"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 1103, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 1130, "end_month": 3, "end_day": 26, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Sigurd I Magnusson, known as Sigurd Jorsalfare or Sigurd the Crusader, was King of Norway from 1103 until his death on 26 March 1130. He initially shared kingship with his brothers, but the co-kingship represented shared royal authority rather than a partition of Norway; ATLAS therefore records his continuous kingship from 1103 to 1130."},
+  "sources": [{"title": "Sigurd Jorsalfare — Store norske leksikon", "canonical_url": "https://snl.no/Sigurd_Jorsalfare", "citation_text": "Store norske leksikon identifies Sigurd I Magnusson Jorsalfare as King of Norway from 1103 to 1130 and gives his death as 26 March 1130.", "source_type": "academic_reference"}, {"title": "Kongerekka — monarker i Norge — Store norske leksikon", "canonical_url": "https://snl.no/monarker_i_Norge_-_kongerekken", "citation_text": "The Norwegian monarch list gives Sigurd I's reign as 1103–1130, overlapping with his brothers during the early co-kingship.", "source_type": "academic_reference"}]
+}

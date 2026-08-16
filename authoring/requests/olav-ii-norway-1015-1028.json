@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:olav-ii-haraldsson:norway:1015-1028:v1",
+  "person": {"canonical_name_en": "Olav II Haraldsson", "display_name_ko": "올라프 2세"},
+  "polity": {"canonical_name_en": "Norway", "display_name_ko": "노르웨이"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 1015, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 1028, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Olav II Haraldsson, later Saint Olav, was King of Norway from 1015 to 1028. He was driven from the kingdom before returning and dying at Stiklestad in 1030; ATLAS therefore ends the sovereign Activity in 1028 rather than extending it to his death."},
+  "sources": [{"title": "Olav den hellige — Store norske leksikon", "canonical_url": "https://snl.no/Olav_den_hellige", "citation_text": "Store norske leksikon identifies Olav II Haraldsson as King of Norway from 1015 to 1028.", "source_type": "academic_reference"}, {"title": "Norges historie fra 800 til 1130 — Store norske leksikon", "canonical_url": "https://snl.no/Norges_historie_fra_800_til_1130", "citation_text": "The history survey likewise gives Olav II's kingship as 1015–1028 and discusses his role in consolidation and Christianization.", "source_type": "academic_reference"}]
+}

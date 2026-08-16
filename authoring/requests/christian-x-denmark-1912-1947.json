@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:christian-x:denmark:1912-1947:v1",
+  "person": {"canonical_name_en": "Christian X", "display_name_ko": "크리스티안 10세"},
+  "polity": {"canonical_name_en": "Denmark", "display_name_ko": "덴마크"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 1912, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 1947, "end_month": 4, "end_day": 20, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Christian X became King of Denmark in 1912 and reigned until his death on 20 April 1947. He was also King of Iceland under the personal union until 1944, but ATLAS keeps Denmark as the primary polity and does not add a second overlapping Iceland Activity here."},
+  "sources": [{"title": "The Story of King Christian X — The Danish Royal House", "canonical_url": "https://www.kongehuset.dk/en/menu/news/the-story-of-king-christian-x", "citation_text": "The Danish Royal House states that Christian X assumed the throne in 1912, was King of Denmark until his death in 1947, and was also King of Iceland until 1944.", "source_type": "government_web"}, {"title": "The Royal Lineage — The Danish Royal House", "canonical_url": "https://www.kongehuset.dk/en/the-monarchy-in-denmark/the-royal-lineage/", "citation_text": "The Danish Royal House lists Christian X as reigning from 1912 to 1947.", "source_type": "government_web"}]
+}
