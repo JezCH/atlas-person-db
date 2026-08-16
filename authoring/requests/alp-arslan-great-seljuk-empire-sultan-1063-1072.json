@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:alp-arslan:great-seljuk-empire:sultan:1063-1072:v1",
+  "person": {
+    "canonical_name_en": "Alp Arslan",
+    "display_name_ko": "알프 아르슬란"
+  },
+  "polity": {
+    "canonical_name_en": "Great Seljuk Empire",
+    "display_name_ko": "대셀주크 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1063,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1072,
+    "end_month": 11,
+    "end_day": 24,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Alp Arslan succeeded to the central Great Seljuk sultanate in 1063 after Tughril Beg's death and ruled until his death during the Transoxiana campaign on 24 November 1072. This Activity models his sovereign office as Sultan of the Great Seljuks, not the later and distinct Seljuk Sultanate of Rum. The accession is represented at year granularity because the sources securely establish 1063 but the succession unfolded through proclamation and a brief contest, while the death boundary is recorded at day granularity from the Hijri/Gregorian conversion cited by TDV and modern source-critical scholarship."
+  },
+  "sources": [
+    {
+      "title": "ALP ARSLAN",
+      "canonical_url": "https://www.iranicaonline.org/articles/alp-arslan-saljuq-sultan/",
+      "citation_text": "Encyclopaedia Iranica identifies Alp Arslan as Saljuq sultan from 455/1063 until his death in Rabi I 465/November-December 1072 and distinguishes him within the line of the Great Saljuqs of Iraq and Iran.",
+      "source_type": "academic_encyclopedia"
+    },
+    {
+      "title": "ALPARSLAN",
+      "canonical_url": "https://islamansiklopedisi.org.tr/Alparslan",
+      "citation_text": "TDV Islam Ansiklopedisi records Alp Arslan's death as 10 Rabi I 465 / 24 November 1072 after he was mortally wounded during the campaign against the Western Qarakhanids.",
+      "source_type": "academic_encyclopedia"
+    },
+    {
+      "title": "Regnal Dates in Bilad al-Sham",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/medieval-syria-and-the-onset-of-the-crusades/regnal-dates-in-bilad-alsham/29B6C35438796F07B86FDA6B1416B7D8",
+      "citation_text": "The modern regnal chronology lists Alp Arslan within the Great Seljuq Sultanate from AH 455-465 / 1063-73, confirming the political identity of his central sultanate and its distinction from later regional Seljuq states.",
+      "source_type": "academic_book"
+    },
+    {
+      "title": "How Was Sultan Alp Arslan Killed?",
+      "canonical_url": "https://dergipark.org.tr/en/pub/iuturkiyat/article/195475",
+      "citation_text": "This source-critical study using major period sources concludes that Alp Arslan died on 24 November 1072 after being stabbed during his final campaign and that Malik-Shah succeeded him.",
+      "source_type": "academic_journal"
+    }
+  ]
+}
