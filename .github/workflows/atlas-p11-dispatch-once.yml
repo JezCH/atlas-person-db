@@ -1,0 +1,33 @@
+name: ATLAS P11 Dispatch Once
+
+on:
+  push:
+    branches:
+      - agent/p11-dispatch-once
+    paths:
+      - .github/workflows/atlas-p11-dispatch-once.yml
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Dispatch exact P11 capture on protected main
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          API: https://api.github.com/repos/${{ github.repository }}/actions/workflows/atlas-p11-baseline-b-capture.yml/dispatches
+        run: |
+          set -euo pipefail
+          payload='{"ref":"main","inputs":{"capture_id":"p11_baseline_b_20260815_v2","approval":"CAPTURE:p11_baseline_b_20260815_v2"},"return_run_details":true}'
+          response="$(curl --fail-with-body -sS -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2026-03-10" \
+            "${API}" \
+            -d "${payload}")"
+          printf '%s\n' "${response}"
