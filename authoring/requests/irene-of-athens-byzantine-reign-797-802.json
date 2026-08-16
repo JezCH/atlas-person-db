@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:irene-of-athens:byzantine-empire:reign:797-802:v1",
+  "person": {
+    "canonical_name_en": "Irene of Athens",
+    "display_name_ko": "아테네의 이레네"
+  },
+  "polity": {
+    "canonical_name_en": "Byzantine Empire",
+    "display_name_ko": "비잔티움 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Empress Regnant",
+    "role_display_name_ko": "여제",
+    "start_year": 797,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 802,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After Constantine VI was overthrown in 797, Irene ruled the Byzantine Empire in her own right until her deposition in 802. This is the sole sovereign-reign phase and is therefore modeled as rules/reign rather than regency governance."
+  },
+  "sources": [
+    {
+      "title": "Political Power and Christian Faith in Byzantium: The Case of Irene (Regent 780-90, Emperor 797-802)",
+      "canonical_url": "https://academic.oup.com/princeton-scholarship-online/book/37320/chapter-abstract/331222044",
+      "citation_text": "Judith Herrin states that Irene ruled alone from 797 to 802, an unprecedented case in Byzantine history.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Administrative Elites and Political Change",
+      "canonical_url": "https://www.cambridge.org/core/books/political-communication-in-chinese-and-european-history-8001600/administrative-elites-and-political-change/9E51178885850AF6D155B79779C7FDFC",
+      "citation_text": "Cambridge scholarship identifies Irene as the reigning empress from 797 to 802 after earlier periods of co-regency with Constantine VI.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Empress Irene the Athenian",
+      "canonical_url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/1E2B60BDD85D40C6B01AF8E238457E31/S0143045900000351a.pdf/the-empress-irene-the-athenian.pdf",
+      "citation_text": "Steven Runciman describes Irene as the first woman in recorded European history to reign as a sovereign monarch and treats her reign as a period of major Byzantine political and ecclesiastical importance.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
