@@ -38,7 +38,7 @@ test("correction transport uses a third isolated OIDC audience/workflow boundary
 test("correction handler accepts exact Production SHA, bounded sources, explicit mode, reviewed manifest schemas, and pathless Baseline A v2 capture", () => {
   const manifest = { schema: "atlas-correction-manifest/v1" };
   assert.deepEqual(correctionHandler.requirePayload({ deployment_sha: SHA, manifest_path: "corrections/requests/r0.json", mode: "dry_run", manifest }),
-    { deploymentSha: SHA, sourcePath: "corrections/requests/r0.json", mode: "dry_run", manifest, schema: "atlas-correction-manifest/v1", activityIds: null });
+    { deploymentSha: SHA, sourcePath: "corrections/requests/r0.json", mode: "dry_run", manifest, schema: "atlas-correction-manifest/v1", activityIds: null, plan: null });
   const manifestV11 = { schema: "atlas-correction-manifest/v1.1" };
   assert.equal(correctionHandler.requirePayload({ deployment_sha: SHA, intent_path: "corrections/intents/r1.json", mode: "apply", manifest: manifestV11 }).schema, "atlas-correction-manifest/v1.1");
   const manifestV12 = { schema: "atlas-correction-manifest/v1.2" };
@@ -47,7 +47,7 @@ test("correction handler accepts exact Production SHA, bounded sources, explicit
   assert.equal(correctionHandler.requirePayload({ deployment_sha: SHA, manifest_path: "corrections/requests/r3.json", mode: "dry_run", manifest: manifestV2 }).schema, "atlas-correction-manifest/v2");
   assert.equal(typeof correctionHandler.createService({ query() {} }, "atlas-correction-manifest/v2").execute, "function");
   assert.deepEqual(correctionHandler.requirePayload({ deployment_sha: SHA, mode: "full_stage2_baseline" }),
-    { deploymentSha: SHA, sourcePath: null, mode: "full_stage2_baseline", activityIds: null, manifest: null, schema: null });
+    { deploymentSha: SHA, sourcePath: null, mode: "full_stage2_baseline", activityIds: null, manifest: null, schema: null, plan: null });
   assert.throws(() => correctionHandler.requirePayload({ deployment_sha: SHA, mode: "full_activity_baseline" }), /CORRECTION_MODE_REQUIRED/);
   assert.throws(() => correctionHandler.requirePayload({ deployment_sha: SHA, manifest_path: "authoring/requests/x.json", mode: "apply", manifest }), /CORRECTION_SOURCE_PATH_NOT_ALLOWED/);
   assert.throws(() => correctionHandler.requirePayload({ deployment_sha: SHA, manifest_path: "corrections/requests/x.json", mode: "delete", manifest }), /CORRECTION_MODE_REQUIRED/);
