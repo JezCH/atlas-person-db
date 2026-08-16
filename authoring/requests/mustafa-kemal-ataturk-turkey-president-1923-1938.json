@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mustafa-kemal-ataturk:turkey:president:1923-1938:v1",
+  "person": {
+    "canonical_name_en": "Mustafa Kemal Atatürk",
+    "display_name_ko": "무스타파 케말 아타튀르크"
+  },
+  "polity": {
+    "canonical_name_en": "Turkey",
+    "display_name_ko": "튀르키예"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1923,
+    "start_month": 10,
+    "start_day": 29,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1938,
+    "end_month": 11,
+    "end_day": 10,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mustafa Kemal Atatürk was elected the first President of the Turkish Republic on 29 October 1923 and remained President until his death on 10 November 1938. Turkey's Ministry of National Defence gives his presidential service explicitly as 29 October 1923 to 10 November 1938, while the Ministry of Culture and Tourism identifies him as founder and first President of the Republic and records his re-elections in 1927, 1931, and 1935. ATLAS follows the project's modern-state naming convention by using the concise canonical polity label Turkey rather than the full constitutional state title, and records one continuous presidential Activity across his successive constitutional terms. The surname Atatürk was granted by the Turkish Grand National Assembly in 1934, but the widely established historical person name Mustafa Kemal Atatürk is retained as the canonical person label."
+  },
+  "sources": [
+    {
+      "title": "Mustafa Kemal Atatürk — Republic of Türkiye Ministry of National Defence",
+      "canonical_url": "https://ata.msb.gov.tr/Sayfa/SayfaGoster/mustafa-kemal-ataturk",
+      "citation_text": "The Republic of Türkiye Ministry of National Defence states that Mustafa Kemal Atatürk served as President from 29 October 1923 to 10 November 1938.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Biography of Atatürk — Republic of Türkiye Ministry of Culture and Tourism",
+      "canonical_url": "https://www.ktb.gov.tr/EN-103908/biography-of-ataturk.html",
+      "citation_text": "The Ministry of Culture and Tourism identifies Atatürk as founder of the Turkish Republic and its first President, records his election on 29 October 1923 and re-elections in 1927, 1931, and 1935, and gives his lifespan as 1881–1938.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Cumhuriyetin İlânı — Atatürk Araştırma Merkezi",
+      "canonical_url": "https://atam.gov.tr/cumhuriyetin-ilani/",
+      "citation_text": "Atatürk Research Center describes the proclamation of the Republic on 29 October 1923 and the subsequent unanimous election of Mustafa Kemal Pasha as President.",
+      "source_type": "institutional_web"
+    }
+  ]
+}
