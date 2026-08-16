@@ -87,7 +87,7 @@ jobs:
               if [[ "$ATLAS_AUDIT_MODE" == "targeted" ]]; then
                 jq -e '.ok == true and .marker == "ATLAS_AUDIT_INVENTORY_V1" and .mode == "targeted" and .read_only == true and .committed == false and (.row_count == .requested_count)' audit-inventory-response.json >/dev/null
               else
-                jq -e '.ok == true and .marker == "ATLAS_AUDIT_INVENTORY_V1" and .mode == "full_stage2_baseline" and .read_only == true and .committed == false and (.row_count == .counts.activities) and (.catalogs.persons|length)==.counts.persons and (.catalogs.polities|length)==.counts.polities and (.catalogs.sources|length)==.counts.sources and (.baseline_digest | test("^sha256:[0-9a-f]{64}$"))' audit-inventory-response.json >/dev/null
+                jq -e '.ok == true and .marker == "ATLAS_AUDIT_INVENTORY_V1" and .mode == "full_stage2_baseline" and .read_only == true and .committed == false and (.row_count == .counts.activities) and (.catalogs.persons|length)==.counts.persons and (.catalogs.polities|length)==.counts.polities and (.catalogs.roles|length)==.counts.roles and ([.catalogs.roles[].names[]] | length)==.counts.role_names and (.catalogs.sources|length)==.counts.sources and (.baseline_digest | test("^sha256:[0-9a-f]{64}$"))' audit-inventory-response.json >/dev/null
               fi
               fetched=true
               break
@@ -107,7 +107,7 @@ jobs:
           if [[ "$ATLAS_AUDIT_MODE" == "targeted" ]]; then
             jq '{marker,mode,read_only,committed,deployment_sha,requested_count,row_count}' audit-inventory-response.json | tee audit-inventory-summary.json
           else
-            jq '{marker,mode,read_only,committed,deployment_sha,row_count,counts,baseline_digest,catalog_cardinality:{persons:(.catalogs.persons|length),polities:(.catalogs.polities|length),roles:(.catalogs.roles|length),period_bases:(.catalogs.period_bases|length),sources:(.catalogs.sources|length)}}' audit-inventory-response.json | tee audit-inventory-summary.json
+            jq '{marker,mode,read_only,committed,deployment_sha,row_count,counts,baseline_digest,catalog_cardinality:{persons:(.catalogs.persons|length),polities:(.catalogs.polities|length),roles:(.catalogs.roles|length),role_names:([.catalogs.roles[].names[]] | length),period_bases:(.catalogs.period_bases|length),sources:(.catalogs.sources|length)}}' audit-inventory-response.json | tee audit-inventory-summary.json
             jq '.rows | map(.activity_id)' audit-inventory-response.json > baseline-activity-uuids.json
             jq '.catalogs' audit-inventory-response.json > baseline-identity-catalogs.json
           fi
