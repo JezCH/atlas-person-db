@@ -17,10 +17,12 @@
   }[c]));
 
   function formatTraditionalDate(row) {
+    if (row.traditional_year === null || row.traditional_year === undefined || row.traditional_year === "") return "미상";
     const year = Number(row.traditional_year);
-    const alt = Number(row.traditional_year_alternative);
     if (!Number.isFinite(year)) return "미상";
     const primary = year < 0 ? `기원전 ${Math.abs(year)}` : String(year);
+    const hasAlternative = row.traditional_year_alternative !== null && row.traditional_year_alternative !== undefined && row.traditional_year_alternative !== "";
+    const alt = hasAlternative ? Number(row.traditional_year_alternative) : NaN;
     if (Number.isFinite(alt) && alt !== year) {
       const alternative = alt < 0 ? `기원전 ${Math.abs(alt)}` : String(alt);
       return `전승상 ${primary}/${alternative}`;
