@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:nicolaus-copernicus:prince-bishopric-of-warmia:astronomer:1503-1543:v1",
+  "person": {
+    "canonical_name_en": "Nicolaus Copernicus",
+    "display_name_ko": "니콜라우스 코페르니쿠스"
+  },
+  "polity": {
+    "canonical_name_en": "Prince-Bishopric of Warmia",
+    "display_name_ko": "바르미아 주교령"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Astronomer",
+    "role_display_name_ko": "천문학자",
+    "start_year": 1503,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1543,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Copernicus returned from Italy to Warmia in 1503 and, while serving at Bishop Lucas Watzenrode's court in Lidzbark Warmiński, developed an early outline of his astronomical system before 1510. From 1510 he worked principally at Frombork, continuing observations and calculations while holding offices in the Warmian cathedral chapter. His De revolutionibus orbium coelestium was published in Nuremberg in 1543, the year of his death. This Activity models his sustained intellectual and astronomical work in Warmia rather than his entire lifespan or his ecclesiastical office. Warmia was a prince-bishopric within Royal Prussia and the Polish Crown during this period; the local polity is used because it was the immediate institutional and territorial setting of his work."
+  },
+  "sources": [
+    {
+      "title": "Mikołaj Kopernik",
+      "canonical_url": "https://muzeumkopernika.pl/mikolaj-kopernik/",
+      "citation_text": "The Nicolaus Copernicus Museum in Frombork states that Copernicus left Italy and came to Warmia in 1503, spent 1503–1510 at the bishop's court in Lidzbark Warmiński where he developed an early outline of his astronomical theory, and continued his observations and writing in Warmia until De revolutionibus appeared in 1543.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Mikołaj Kopernik – życie i dzieło",
+      "canonical_url": "https://muzeumkopernika.pl/mikolaj-kopernik-zycie-i-dzielo/",
+      "citation_text": "The Nicolaus Copernicus Museum describes Warmia as part of Royal Prussia from 1466, identifies Lidzbark, Olsztyn and Frombork as the principal places of Copernicus's work, and presents his astronomical research as a central part of his activity there.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Copernicus's Development in Context: Politics, Astrology, Cosmology and a Prince-Bishopric",
+      "canonical_url": "https://www.cambridge.org/core/journals/science-in-context/article/abs/copernicuss-development-in-context-politics-astrology-cosmology-and-a-princebishopric/E19F8E61D47B54478A3C8C392DA37A31",
+      "citation_text": "This Cambridge University Press article analyzes Copernicus's scientific development in the political and institutional context of the prince-bishopric of Warmia and identifies 1510 as a major turning point in his personal and scientific development.",
+      "source_type": "academic_article"
+    },
+    {
+      "title": "Nicolai Copernici Torinensis De revolutionibus orbium coelestium, libri VI",
+      "canonical_url": "https://www.loc.gov/item/46031925",
+      "citation_text": "The Library of Congress catalog records the first edition of Copernicus's De revolutionibus orbium coelestium as published in Nuremberg in 1543.",
+      "source_type": "library_catalog"
+    }
+  ]
+}
