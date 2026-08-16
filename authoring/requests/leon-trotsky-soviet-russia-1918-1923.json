@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:leon-trotsky:soviet-russia:peoples-commissar-military-naval-affairs:1918-1923:v1",
+  "person": {
+    "canonical_name_en": "Leon Trotsky",
+    "display_name_ko": "레프 트로츠키"
+  },
+  "polity": {
+    "canonical_name_en": "Soviet Russia",
+    "display_name_ko": "소비에트 러시아"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "People's Commissar for Military and Naval Affairs",
+    "role_display_name_ko": "군사·해군 인민위원",
+    "start_year": 1918,
+    "start_month": 3,
+    "start_day": 14,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1923,
+    "end_month": 7,
+    "end_day": 6,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The user supplied 'Trotsky', identifying Leon Trotsky (Lev Davidovich Bronstein), conventionally rendered in Korean as 레프 트로츠키. Trotsky was one of the principal Bolshevik leaders of the October Revolution and subsequently held several senior Soviet posts. For ATLAS, his primary representative Activity is his formal service as People's Commissar for Military and Naval Affairs of Soviet Russia from 14 March 1918 to 6 July 1923. This captures the period in which he organized and directed the Red Army during the Russian Civil War. Because Trotsky was a senior minister and military-political leader rather than sovereign or head of government, the relation is `serves`, not `rules` or `governs`. His preceding tenure as People's Commissar for Foreign Affairs and his continuation in the corresponding union-level military office after the USSR government was constituted are not added as parallel Activities in this registration, preserving a single representative office rather than flattening distinct political levels into one record."
+  },
+  "sources": [
+    {
+      "title": "Троцкий, Лев Давидович — ПЕРСОНА ТАСС",
+      "canonical_url": "https://tass.ru/encyclopedia/person/trockiy-lev-davidovich",
+      "citation_text": "TASS records that Trotsky was appointed chairman of the RSFSR Supreme Military Council in March 1918 and served as People's Commissar for Military and Naval Affairs of the RSFSR from 14 March 1918 to 6 July 1923, while also chairing the Revolutionary Military Council from September 1918.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Trotsky, Leon — 1914-1918-online: International Encyclopedia of the First World War",
+      "canonical_url": "https://encyclopedia.1914-1918-online.net/article/trotsky-leon/",
+      "citation_text": "The International Encyclopedia of the First World War identifies Leon Trotsky as a leading Bolshevik revolutionary who became People's Commissar for Foreign Affairs and People's Commissar for War in the first Soviet government and later led the Red Army.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Trotsky, Leon — YIVO Encyclopedia of Jews in Eastern Europe",
+      "canonical_url": "https://encyclopedia.yivo.org/article.aspx/trotsky_leon",
+      "citation_text": "YIVO records Trotsky's leading role in the October Revolution, his service in the first Soviet government, and his tenure as people's commissar of war and naval affairs from 1918 to 1925 as a founder of the Red Army.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
