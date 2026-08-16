@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:selim-i:ottoman-empire:1512-1520:v1",
+  "person": {
+    "canonical_name_en": "Selim I",
+    "display_name_ko": "셀림 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Ottoman Empire",
+    "display_name_ko": "오스만 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1512,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1520,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Selim I, commonly known in Turkish historiography as Yavuz Sultan Selim, was the ninth Ottoman ruler. TDV İslâm Ansiklopedisi identifies him as an Ottoman sultan reigning from 1512 to 1520 and records his accession on 24 April 1512. The Metropolitan Museum of Art independently gives his reign as 1512–20 and places his conquests of Mamluk Syria, Egypt, and the Holy Cities within that reign. ATLAS normalizes the user-supplied polity label Ottomans to the canonical state label Ottoman Empire and records his sovereign Activity as one continuous 1512–1520 reign at year granularity."
+  },
+  "sources": [
+    {
+      "title": "SELİM I — TDV İslâm Ansiklopedisi",
+      "canonical_url": "https://islamansiklopedisi.org.tr/selim-i",
+      "citation_text": "TDV İslâm Ansiklopedisi identifies Selim I, known as Yavuz, as an Ottoman sultan reigning from 1512 to 1520 and records his accession as the ninth Ottoman ruler on 24 April 1512.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Art of the Ottomans before 1600 — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/essays/the-art-of-the-ottomans-before-1600",
+      "citation_text": "The Metropolitan Museum of Art gives Selim I's reign as 1512–20 and states that under him the Ottoman realm added Mamluk Syria, Egypt, Mecca, and Medina.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Establishment and Survival of Ottoman Rule in the Arab Lands, 1516–1798 — Cambridge University Press",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/arabs-of-the-ottoman-empire-15161918/establishment-and-survival-of-ottoman-rule-in-the-arab-lands-15161798/143A29ABC0352B40E526ED1CBC721ECE",
+      "citation_text": "Cambridge University Press summarizes Ottoman expansion into the Arab lands during the reign of Selim I (1512–20), independently confirming the ruler, polity context, and reign interval.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
