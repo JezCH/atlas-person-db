@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:benito-juarez:mexico:president:1858-1872:v1",
+  "person": {
+    "canonical_name_en": "Benito Juárez",
+    "display_name_ko": "베니토 후아레스"
+  },
+  "polity": {
+    "canonical_name_en": "Mexico",
+    "display_name_ko": "멕시코"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1858,
+    "start_month": 1,
+    "start_day": 19,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1872,
+    "end_month": 7,
+    "end_day": 18,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Benito Juárez held the presidency of the Mexican Republic continuously from 19 January 1858 until his death in office on 18 July 1872. This Activity is kept continuous across his successive constitutional mandates because there was no break in Juárez's republican presidential office. During the Reform War and the French Intervention/Second Mexican Empire, rival authorities controlled substantial territory and at times Mexico City, but Juárez continued to head the constitutional republican government, including as an itinerant government during the French occupation. The rival Second Mexican Empire is therefore not treated as terminating this Person–Mexico presidential Activity."
+  },
+  "sources": [
+    {
+      "title": "Benito Juárez",
+      "canonical_url": "https://www.constitucion1917.gob.mx/es/inehrm/juarez",
+      "citation_text": "Mexico's INEHRM states that Benito Juárez was president of Mexico between 1858 and 1872, became president by operation of law in 1858, maintained an itinerant government during the French Intervention, returned to the capital after the republican victory in 1867, and died in office in 1872.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "18 de julio de 1872, aniversario luctuoso de Benito Juárez García Benemérito de las Américas",
+      "canonical_url": "https://www.gob.mx/defensa/documentos/18-de-julio-de-1872-aniversario-luctuoso-de-benito-juarez-garcia-benemerito-de-las-americas",
+      "citation_text": "Mexico's Secretariat of National Defense gives Juárez's presidential tenure as 19 January 1858 through 18 July 1872 and notes his defense of the republic against the French Intervention and Second Mexican Empire.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "French Intervention in Mexico and the American Civil War, 1862–1867",
+      "canonical_url": "https://history.state.gov/milestones/1861-1865/french-intervention",
+      "citation_text": "The U.S. Office of the Historian describes the Juárez government as the liberal republican government recognized by the United States and explains the French intervention and installation of Maximilian as a rival imperial regime.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Juárez, Maximilian, and the French Occupation of Mexico",
+      "canonical_url": "https://academic.oup.com/edited-volume/34726/chapter-abstract/296489555",
+      "citation_text": "The Oxford Handbook of Mexican History treats Juárez's Reform government, the French invasion, Maximilian's empire, and the restoration of the Mexican Republic as a connected political struggle rather than a simple disappearance of the Juárez government during occupation.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
