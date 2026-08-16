@@ -1,0 +1,1 @@
+era 36px; year 112px at <=520px
