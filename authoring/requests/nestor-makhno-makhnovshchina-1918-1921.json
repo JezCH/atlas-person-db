@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:nestor-makhno:makhnovshchina:military-commander:1918-1921:v1",
+  "person": {
+    "canonical_name_en": "Nestor Makhno",
+    "display_name_ko": "네스토르 마흐노"
+  },
+  "polity": {
+    "canonical_name_en": "Makhnovshchina",
+    "display_name_ko": "마흐노우슈치나"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Military Commander",
+    "role_display_name_ko": "군사 지휘관",
+    "start_year": 1918,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1921,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The user supplied 'Makhno', identifying Nestor Ivanovich Makhno, the Ukrainian anarchist and peasant-insurgent leader. ATLAS binds his principal representative Activity to the Makhnovshchina, the anarchist insurgent political-military order centered on Huliai-Pole, rather than to a conventional sovereign state. The Encyclopedia of Ukraine records that Makhno began mobilizing resistance in July 1918, became the military leader of a disciplined peasant insurgent army, and that his forces subsequently exercised effective territorial control in southern and eastern Ukraine. The International Encyclopedia of the First World War explicitly describes the high point of the Makhnovshchina and emphasizes that Makhno retained military and political independence even during temporary alliances with the Bolsheviks. Ukrainian national historical reference works characterize him as the leader of the southern Ukrainian peasant insurgent movement of 1918–1921. Because Makhno rejected conventional state office and was not a sovereign or head of government, ATLAS does not use `rules` or `governs`; his defining relation is represented as `serves` in the capacity of Military Commander, with `military_activity` covering 1918–1921 at year granularity."
+  },
+  "sources": [
+    {
+      "title": "Makhno, Nestor — Encyclopedia of Ukraine",
+      "canonical_url": "https://www.encyclopediaofukraine.com/display.asp?AddButton=pages%5CM%5CA%5CMakhnoNestor.htm",
+      "citation_text": "The Encyclopedia of Ukraine records Makhno's mobilization of resistance from July 1918, his role as military leader of a disciplined peasant insurgent army, and the effective territorial control exercised by his forces in southern and eastern Ukraine.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Makhno, Nestor Ivanovich — 1914-1918-online: International Encyclopedia of the First World War",
+      "canonical_url": "https://encyclopedia.1914-1918-online.net/article/makhno-nestor-ivanovich/",
+      "citation_text": "The International Encyclopedia of the First World War describes the formation and expansion of Makhno's insurgent army, the high point of the Makhnovshchina, and Makhno's continued military and political independence despite temporary Bolshevik alliances.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Махно (Міхненко) Нестор Іванович — Encyclopedia of the History of Ukraine",
+      "canonical_url": "https://resource.history.org.ua/cgi-bin/eiu/history.exe?C21COM=S&I21DBN=EIU&P21DBN=&S21CNR=20&S21COLORTERMS=0&S21FMT=eiu_all&S21P01=0&S21P02=0&S21P03=TRN%3D&S21REF=10&S21STN=1&S21STR=Makhno_N_I&Z21ID=",
+      "citation_text": "The Encyclopedia of the History of Ukraine identifies Nestor Makhno as the leader of the peasant insurgent movement in southern Ukraine in 1918–1921 and an anarcho-communist.",
+      "source_type": "institutional_web"
+    }
+  ]
+}
