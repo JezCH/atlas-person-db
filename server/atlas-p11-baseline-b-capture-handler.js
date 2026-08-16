@@ -13,6 +13,8 @@ const CAPTURE_ID = "p11_baseline_b_20260815_v2";
 const MODES = new Set(["readiness", "capture"]);
 const ALLOWED_BODY_KEYS = new Set(["deployment_sha", "capture_id", "approval", "mode"]);
 const STREAM_CHUNK_BYTES = 64 * 1024;
+const SHA_RE = /^[0-9a-f]{40}$/i;
+const GITHUB_COMPARE_BASE = "https://api.github.com/repos/JezCH/atlas-person-db/compare";
 
 function applyJsonHeaders(res) {
   res.setHeader("content-type", "application/json; charset=utf-8");
@@ -60,7 +62,7 @@ function requireEnvelope(raw) {
   if (unexpected.length) throw new Error(`P11_CAPTURE_INPUTS_FORBIDDEN:${unexpected.sort().join(",")}`);
 
   const deploymentSha = String(raw.deployment_sha || "").trim().toLowerCase();
-  if (!/^[0-9a-f]{40}$/.test(deploymentSha)) throw new Error("P11_CAPTURE_SHA_REQUIRED");
+  if (!SHA_RE.test(deploymentSha)) throw new Error("P11_CAPTURE_SHA_REQUIRED");
   const captureId = String(raw.capture_id || "").trim();
   if (captureId !== CAPTURE_ID) throw new Error("P11_CAPTURE_ID_MISMATCH");
   if (String(raw.approval || "").trim() !== `CAPTURE:${CAPTURE_ID}`) throw new Error("P11_CAPTURE_APPROVAL_REQUIRED");
@@ -79,17 +81,39 @@ function requireDeployment(env, deploymentSha) {
   }
 }
 
+async function verifyDeploymentAncestry(deploymentSha, workflowSha, { fetchImpl = globalThis.fetch } = {}) {
+  const deployed = String(deploymentSha || "").trim().toLowerCase();
+  const workflow = String(workflowSha || "").trim().toLowerCase();
+  if (!SHA_RE.test(deployed) || !SHA_RE.test(workflow)) throw new Error("P11_CAPTURE_ANCESTRY_SHA_INVALID");
+  if (deployed === workflow) return Object.freeze({ status: "identical", deployment_sha: deployed, workflow_sha: workflow });
+  if (typeof fetchImpl !== "function") throw new Error("P11_CAPTURE_GITHUB_COMPARE_UNAVAILABLE");
+
+  const response = await fetchImpl(`${GITHUB_COMPARE_BASE}/${deployed}...${workflow}`, {
+    headers: {
+      accept: "application/vnd.github+json",
+      "user-agent": "atlas-person-db-p11-baseline-b-capture"
+    }
+  });
+  if (!response?.ok) throw new Error(`P11_CAPTURE_GITHUB_COMPARE_HTTP_${response?.status || "UNKNOWN"}`);
+  const body = await response.json();
+  const status = String(body?.status || "");
+  const mergeBase = String(body?.merge_base_commit?.sha || "").trim().toLowerCase();
+  if (status !== "ahead" || mergeBase !== deployed) throw new Error("P11_CAPTURE_DEPLOYMENT_NOT_ANCESTOR");
+  return Object.freeze({ status, deployment_sha: deployed, workflow_sha: workflow });
+}
+
 function statusFor(code, fallback = 400) {
   const value = String(code || "");
-  if (value === "DEPLOYMENT_SHA_MISMATCH" || value.includes("NOT_READY") || value.includes("DRIFT") || value.includes("PENDING") || value.includes("UNRESOLVED") || value.includes("REAPPEARED")) return 409;
+  if (value === "DEPLOYMENT_SHA_MISMATCH" || value.includes("NOT_READY") || value.includes("DRIFT") || value.includes("PENDING") || value.includes("UNRESOLVED") || value.includes("REAPPEARED") || value.includes("NOT_ANCESTOR")) return 409;
   if (value.includes("OIDC") || value.includes("APPROVAL")) return 403;
-  if (value.includes("NOT_PRODUCTION") || value.includes("SUPABASE")) return 503;
+  if (value.includes("GITHUB_COMPARE") || value.includes("NOT_PRODUCTION") || value.includes("SUPABASE")) return 503;
   return fallback;
 }
 
 function createP11BaselineBCaptureHandler({
   env = process.env,
   verifyOidc = verifyGitHubActionsOidc,
+  verifyAncestry = verifyDeploymentAncestry,
   createClient = createPostgresClient,
   inspectReadiness = inspectProductionBaselineBReadiness,
   captureBaseline = captureProductionBaselineB
@@ -113,10 +137,14 @@ function createP11BaselineBCaptureHandler({
 
     const token = bearerToken(req);
     if (!token) return json(res, 401, { ok: false, marker: MARKER, code: "P11_CAPTURE_OIDC_TOKEN_REQUIRED" });
+
+    let oidcPayload;
     try {
-      await verifyOidc(token, { expectedSha: envelope.deploymentSha });
+      oidcPayload = await verifyOidc(token);
+      await verifyAncestry(envelope.deploymentSha, oidcPayload?.sha);
     } catch (error) {
-      return json(res, 403, { ok: false, marker: MARKER, code: String(error?.message || "P11_CAPTURE_OIDC_REJECTED") });
+      const code = String(error?.message || "P11_CAPTURE_OIDC_REJECTED");
+      return json(res, statusFor(code, 403), { ok: false, marker: MARKER, code });
     }
 
     const databaseUrl = String(env?.SUPABASE_DB_URL || "").trim();
@@ -141,6 +169,7 @@ function createP11BaselineBCaptureHandler({
       marker: MARKER,
       capture_id: CAPTURE_ID,
       mode: envelope.mode,
+      workflow_sha: String(oidcPayload?.sha || "").trim().toLowerCase(),
       deployment_sha: envelope.deploymentSha,
       read_only: true,
       database_write_committed: false,
@@ -157,9 +186,11 @@ module.exports = Object.freeze({
   MODES,
   ALLOWED_BODY_KEYS,
   STREAM_CHUNK_BYTES,
+  GITHUB_COMPARE_BASE,
   createP11BaselineBCaptureHandler,
   requireEnvelope,
   requireDeployment,
+  verifyDeploymentAncestry,
   statusFor,
   bearerToken,
   streamJson

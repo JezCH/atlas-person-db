@@ -9,6 +9,7 @@ const EXPECTED_REPOSITORY = "JezCH/atlas-person-db";
 const EXPECTED_REPOSITORY_ID = "1319427399";
 const EXPECTED_REF = "refs/heads/main";
 const EXPECTED_WORKFLOW_REF = "JezCH/atlas-person-db/.github/workflows/atlas-p11-baseline-b-capture.yml@refs/heads/main";
+const SHA_RE = /^[0-9a-f]{40}$/i;
 
 let jwksCache = null;
 let jwksCachedAt = 0;
@@ -41,7 +42,7 @@ function verifyTemporalClaims(payload, nowSeconds) {
   if (Number.isFinite(payload?.iat) && payload.iat > nowSeconds + skew) throw new Error("P11_CAPTURE_OIDC_IAT_IN_FUTURE");
 }
 
-function verifyTrustClaims(payload, expectedSha) {
+function verifyTrustClaims(payload, expectedSha = null) {
   if (payload?.iss !== ISSUER) throw new Error("P11_CAPTURE_OIDC_ISSUER_MISMATCH");
   const audiences = Array.isArray(payload?.aud) ? payload.aud : [payload?.aud];
   if (!audiences.includes(EXPECTED_AUDIENCE)) throw new Error("P11_CAPTURE_OIDC_AUDIENCE_MISMATCH");
@@ -54,12 +55,17 @@ function verifyTrustClaims(payload, expectedSha) {
   if (payload?.environment !== "production" || payload?.event_name !== "workflow_dispatch") {
     throw new Error("P11_CAPTURE_OIDC_CONTEXT_MISMATCH");
   }
-  if (String(payload?.sha || "").toLowerCase() !== String(expectedSha || "").toLowerCase()) {
-    throw new Error("P11_CAPTURE_OIDC_SHA_MISMATCH");
+
+  const actualSha = String(payload?.sha || "").trim().toLowerCase();
+  if (!SHA_RE.test(actualSha)) throw new Error("P11_CAPTURE_OIDC_SHA_INVALID");
+  if (expectedSha !== null && expectedSha !== undefined) {
+    const normalizedExpected = String(expectedSha || "").trim().toLowerCase();
+    if (!SHA_RE.test(normalizedExpected)) throw new Error("P11_CAPTURE_EXPECTED_SHA_INVALID");
+    if (actualSha !== normalizedExpected) throw new Error("P11_CAPTURE_OIDC_SHA_MISMATCH");
   }
 }
 
-async function verifyGitHubActionsOidc(token, { expectedSha, fetchImpl = globalThis.fetch, now = Date.now } = {}) {
+async function verifyGitHubActionsOidc(token, { expectedSha = null, fetchImpl = globalThis.fetch, now = Date.now } = {}) {
   const parts = String(token || "").split(".");
   if (parts.length !== 3) throw new Error("P11_CAPTURE_OIDC_MALFORMED_TOKEN");
   const header = decodeJsonPart(parts[0]);
@@ -97,5 +103,6 @@ module.exports = Object.freeze({
   EXPECTED_REPOSITORY,
   EXPECTED_REPOSITORY_ID,
   EXPECTED_REF,
-  EXPECTED_WORKFLOW_REF
+  EXPECTED_WORKFLOW_REF,
+  SHA_RE
 });
