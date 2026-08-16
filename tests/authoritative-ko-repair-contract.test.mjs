@@ -5,6 +5,7 @@ import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
 const service = require("../server/atlas-authoritative-ko-repair-service.js");
+const correctionApi = require("../api/atlas-correction-apply.js");
 const repair = JSON.parse(fs.readFileSync(new URL("../maintenance/korean-localization/authoritative-ko-repair.json", import.meta.url), "utf8"));
 
 test("authoritative Korean repair catalog is normalized, bounded and reviewed", () => {
@@ -50,10 +51,16 @@ test("production workflow uses exact-SHA OIDC and verifies relationship guard", 
 test("Korean repair reuses the correction apply Vercel function instead of adding a thirteenth function", () => {
   const apiDir = new URL("../api/", import.meta.url);
   const apiFiles = fs.readdirSync(apiDir).filter((name) => name.endsWith(".js"));
-  const correctionApi = fs.readFileSync(new URL("../api/atlas-correction-apply.js", import.meta.url), "utf8");
+  const source = fs.readFileSync(new URL("../api/atlas-correction-apply.js", import.meta.url), "utf8");
   assert.equal(apiFiles.length, 12);
   assert.equal(apiFiles.includes("atlas-authoritative-ko-repair.js"), false);
-  assert.match(correctionApi, /createAuthoritativeKoRepairHandler/);
-  assert.match(correctionApi, /authoritative-ko-repair/);
-  assert.match(correctionApi, /ATLAS_CORRECTION_SURFACE_NOT_FOUND/);
+  assert.match(source, /createAuthoritativeKoRepairHandler/);
+  assert.match(source, /authoritative-ko-repair/);
+  assert.match(source, /ATLAS_CORRECTION_SURFACE_NOT_FOUND/);
+});
+
+test("correction surface routing survives Vercel raw request URLs", () => {
+  assert.equal(correctionApi.normalizedSurface({ query:{ __atlas_correction_surface:"authoritative-ko-repair" } }), "authoritative-ko-repair");
+  assert.equal(correctionApi.normalizedSurface({ url:"/api/atlas-correction-apply?__atlas_correction_surface=authoritative-ko-repair" }), "authoritative-ko-repair");
+  assert.equal(correctionApi.normalizedSurface({ url:"/api/atlas-correction-apply?__atlas_correction_surface=a&__atlas_correction_surface=b" }), "__invalid__");
 });
