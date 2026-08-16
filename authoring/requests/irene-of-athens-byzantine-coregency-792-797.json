@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:irene-of-athens:byzantine-empire:coregency:792-797:v1",
+  "person": {
+    "canonical_name_en": "Irene of Athens",
+    "display_name_ko": "아테네의 이레네"
+  },
+  "polity": {
+    "canonical_name_en": "Byzantine Empire",
+    "display_name_ko": "비잔티움 제국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Co-regent",
+    "role_display_name_ko": "공동 섭정",
+    "start_year": 792,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 797,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Irene returned to imperial power in 792 as co-regent/co-ruler alongside Constantine VI. This distinct Activity preserves the interruption of her authority in 790-792 and does not collapse the joint-rule phase into either her earlier regency or her later sole reign."
+  },
+  "sources": [
+    {
+      "title": "Administrative Elites and Political Change",
+      "canonical_url": "https://www.cambridge.org/core/books/political-communication-in-chinese-and-european-history-8001600/administrative-elites-and-political-change/9E51178885850AF6D155B79779C7FDFC",
+      "citation_text": "Cambridge scholarship states that Irene acted as co-regent to Constantine VI in 780-790 and 792-797, then reigned in her own right from 797 to 802.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Empress Irene the Athenian",
+      "canonical_url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/1E2B60BDD85D40C6B01AF8E238457E31/S0143045900000351a.pdf/the-empress-irene-the-athenian.pdf",
+      "citation_text": "Steven Runciman's study treats Irene's political career and imperial authority as distinct phases culminating in her unprecedented sovereign rule.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
