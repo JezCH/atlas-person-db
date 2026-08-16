@@ -58,11 +58,12 @@ jobs:
 
           call_capture() {
             local mode="$1" output="$2"
-            local token payload status code
+            local token payload status code reported_sha
+            local deployment_sha="${GITHUB_SHA}"
             for attempt in $(seq 1 60); do
               token="$(request_oidc)"
               payload="$(jq -cn \
-                --arg sha "${GITHUB_SHA}" \
+                --arg sha "${deployment_sha}" \
                 --arg capture_id "${CAPTURE_ID}" \
                 --arg approval "${APPROVAL}" \
                 --arg mode "${mode}" \
@@ -72,26 +73,40 @@ jobs:
                 --data "$payload" "$ENDPOINT")"
               if [[ "$status" == "200" ]]; then return 0; fi
               code="$(jq -r '.code // "UNKNOWN"' "$output" 2>/dev/null || printf 'UNKNOWN')"
-              if [[ "$status" == "404" || ( "$status" == "409" && "$code" == "DEPLOYMENT_SHA_MISMATCH" ) ]]; then
-                echo "Production P11 route has not reached ${GITHUB_SHA} (attempt ${attempt}/60); retrying."
+
+              if [[ "$status" == "409" && "$code" == "DEPLOYMENT_SHA_MISMATCH" ]]; then
+                reported_sha="$(jq -r '.deployed_sha // empty' "$output" 2>/dev/null || true)"
+                if [[ "$reported_sha" =~ ^[0-9a-f]{40}$ ]]; then
+                  echo "Production is ${reported_sha}; retrying with exact deployed SHA while OIDC stays bound to workflow ${GITHUB_SHA}."
+                  deployment_sha="$reported_sha"
+                  sleep 1
+                  continue
+                fi
+              fi
+
+              if [[ "$status" == "404" || ( "$status" == "403" && "$code" == "P11_CAPTURE_OIDC_SHA_MISMATCH" ) ]]; then
+                echo "Production P11 route has not reached the race-safe capture protocol (attempt ${attempt}/60); retrying."
+                deployment_sha="${GITHUB_SHA}"
                 sleep 10
                 continue
               fi
+
               cat "$output" >&2 || true
               echo "P11 ${mode} failed: HTTP ${status}, code ${code}" >&2
               return 1
             done
-            echo "Production deployment did not reach ${GITHUB_SHA} for P11 ${mode} within retry window" >&2
+            echo "Production P11 route did not become compatible with workflow ${GITHUB_SHA} within retry window" >&2
             return 1
           }
 
           readiness=/tmp/atlas-p11-baseline-b/responses/001-readiness.json
           call_capture readiness "$readiness"
-          jq -e --arg sha "${GITHUB_SHA}" --arg capture_id "${EXPECTED_CAPTURE_ID}" '
+          jq -e --arg workflow_sha "${GITHUB_SHA}" --arg capture_id "${EXPECTED_CAPTURE_ID}" '
             .ok == true and
             .marker == "ATLAS_P11_BASELINE_B_CAPTURE_V2" and
             .mode == "readiness" and
-            .deployment_sha == $sha and
+            .workflow_sha == $workflow_sha and
+            (.deployment_sha | test("^[0-9a-f]{40}$")) and
             .capture_id == $capture_id and
             .read_only == true and
             .database_write_committed == false and
@@ -103,11 +118,12 @@ jobs:
 
           capture=/tmp/atlas-p11-baseline-b/responses/002-capture.json
           call_capture capture "$capture"
-          jq -e --arg sha "${GITHUB_SHA}" --arg capture_id "${EXPECTED_CAPTURE_ID}" '
+          jq -e --arg workflow_sha "${GITHUB_SHA}" --arg capture_id "${EXPECTED_CAPTURE_ID}" '
             .ok == true and
             .marker == "ATLAS_P11_BASELINE_B_CAPTURE_V2" and
             .mode == "capture" and
-            .deployment_sha == $sha and
+            .workflow_sha == $workflow_sha and
+            (.deployment_sha | test("^[0-9a-f]{40}$")) and
             .capture_id == $capture_id and
             .read_only == true and
             .database_write_committed == false and
@@ -125,10 +141,11 @@ jobs:
           ' "$capture" >/dev/null
 
           cp "$capture" /tmp/atlas-p11-baseline-b/baseline-b.json
-          jq --arg sha "${GITHUB_SHA}" --arg capture_id "${EXPECTED_CAPTURE_ID}" '
+          jq --arg capture_id "${EXPECTED_CAPTURE_ID}" '
             {
               marker,
-              deployment_sha:$sha,
+              workflow_sha,
+              deployment_sha,
               capture_id:$capture_id,
               mode,
               read_only,
