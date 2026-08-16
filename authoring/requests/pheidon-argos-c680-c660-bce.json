@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:pheidon:argos:c680-c660-bce:v1",
+  "person": {"canonical_name_en": "Pheidon", "display_name_ko": "페이돈"},
+  "polity": {"canonical_name_en": "Argos", "display_name_ko": "아르고스"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": -680, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical", "end_year": -660, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical", "confidence": "likely", "chronology_status": "reviewed", "notes": "Oxford identifies Pheidon as king of Argos and places his reign most probably around 680–660 BCE. The surviving tradition is diffuse, so both boundaries remain approximate; Argos is used instead of generic Greece."},
+  "sources": [{"title": "Pheidon - Oxford Classical Dictionary", "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/549702701", "citation_text": "Oxford Classical Dictionary identifies Pheidon as king of Argos and gives the most probable reign dating as c.680–660 BCE.", "source_type": "academic_reference"}]
+}

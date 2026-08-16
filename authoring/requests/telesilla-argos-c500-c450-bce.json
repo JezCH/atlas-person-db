@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:telesilla:argos:c500-c450-bce:v1",
+  "person": {"canonical_name_en": "Telesilla", "display_name_ko": "텔레실라"},
+  "polity": {"canonical_name_en": "Argos", "display_name_ko": "아르고스"},
+  "activity": {"relation_type": "active_in", "period_basis": "artistic_activity", "role": "Poet", "role_display_name_ko": "시인", "start_year": -500, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical", "end_year": -450, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical", "confidence": "likely", "chronology_status": "reviewed", "notes": "Telesilla is modeled as a fifth-century BCE Argive lyric poet. Oxford cautions that the later story of her arming Argive women may be fabricated, so ATLAS does not create a military command; c.500–c.450 is a broad representative artistic window reflecting conflicting ancient dating traditions."},
+  "sources": [{"title": "Telesilla, Argive poet - Oxford Classical Dictionary", "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548206650", "citation_text": "Oxford Classical Dictionary identifies Telesilla as an Argive poet of the fifth century BCE and cautions that the later military story may be fabricated.", "source_type": "academic_reference"}, {"title": "Telesilla - Perseus Catalog", "canonical_url": "https://catalog.perseus.org/catalog/urn:cite:perseus:author.1360", "citation_text": "Perseus Catalog records Telesilla as an Argive lyric poet and summarizes conflicting ancient chronological traditions.", "source_type": "academic_catalog"}]
+}

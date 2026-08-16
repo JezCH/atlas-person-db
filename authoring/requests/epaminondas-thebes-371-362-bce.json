@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:epaminondas:thebes:371-362-bce:v1",
+  "person": {"canonical_name_en": "Epaminondas", "display_name_ko": "에파메이논다스"},
+  "polity": {"canonical_name_en": "Thebes", "display_name_ko": "테베"},
+  "activity": {"relation_type": "serves", "period_basis": "military_activity", "role": "General", "role_display_name_ko": "장군", "start_year": -371, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": -362, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Epaminondas was a boeotarch in 371, architect of Leuctra, and remained the central Theban military leader until his death at Mantinea in 362. Because boeotarchy was not held continuously every year, ATLAS models sustained military service rather than fabricating an uninterrupted office term."},
+  "sources": [{"title": "Epaminondas - Oxford Classical Dictionary", "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548947164", "citation_text": "Oxford Classical Dictionary identifies Epaminondas as the Theban general, boeotarch in 371 BCE, and records his death at Mantinea in 362 BCE.", "source_type": "academic_reference"}]
+}

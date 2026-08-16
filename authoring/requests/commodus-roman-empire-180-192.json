@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:commodus:roman-empire:180-192:v1",
+  "person": {"canonical_name_en": "Commodus", "display_name_ko": "콤모두스"},
+  "polity": {"canonical_name_en": "Roman Empire", "display_name_ko": "로마 제국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Emperor", "role_display_name_ko": "황제", "start_year": 180, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 192, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "User-supplied COMMODVS is normalized to Commodus. Oxford gives his sole imperial reign as 180–192 CE and separately notes that he was Augustus and co-ruler from 177; ATLAS uses the principal sole-emperor interval."},
+  "sources": [{"title": "Commodus, Roman emperor - Oxford Classical Dictionary", "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548753953", "citation_text": "Oxford Classical Dictionary identifies Commodus as sole Roman emperor from 180 to 192 CE and notes his earlier co-rule from 177.", "source_type": "academic_reference"}]
+}

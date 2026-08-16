@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:caracalla:roman-empire:198-217:v1",
+  "person": {"canonical_name_en": "Caracalla", "display_name_ko": "카라칼라"},
+  "polity": {"canonical_name_en": "Roman Empire", "display_name_ko": "로마 제국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Emperor", "role_display_name_ko": "황제", "start_year": 198, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 217, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "User-supplied CARACALLA is normalized to Caracalla. Oxford identifies him as Roman emperor 198–217 CE: Augustus from 198 and sole ruler after Geta's death in 211. ATLAS preserves the full official imperial tenure."},
+  "sources": [{"title": "Caracalla, Roman emperor - Oxford Classical Dictionary", "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548547954", "citation_text": "Oxford Classical Dictionary identifies Caracalla as Roman emperor from 198 to 217 CE, Augustus from 198 and sole ruler after 211.", "source_type": "academic_reference"}]
+}

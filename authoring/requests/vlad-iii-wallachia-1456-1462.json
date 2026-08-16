@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:vlad-iii:wallachia:1456-1462:v1",
+  "person": {"canonical_name_en": "Vlad III", "display_name_ko": "블라드 3세"},
+  "polity": {"canonical_name_en": "Wallachia", "display_name_ko": "왈라키아"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Voivode", "role_display_name_ko": "보이보드", "start_year": 1456, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 1462, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Vlad III ruled Wallachia three times: 1448, 1456–1462, and 1476. ATLAS records the long central reign of 1456–1462 as his principal representative sovereign Activity; the two brief interrupted reigns are intentionally excluded from this registration."},
+  "sources": [{"title": "Counting the Stakes: Vlad III Dracula's Practice of Collective Impalements - Cambridge Core", "canonical_url": "https://www.cambridge.org/core/journals/transactions-of-the-royal-historical-society/article/counting-the-stakes-a-reassessment-of-vlad-iii-draculas-practice-of-collective-impalements-in-fifteenthcentury-southeastern-europe/F1B68C737C004D494BBE3B8B9B5E0FF7", "citation_text": "Transactions of the Royal Historical Society identifies Vlad III as the three-time voivode of Wallachia, ruling in 1448, 1456–62, and 1476.", "source_type": "peer_reviewed_article"}]
+}

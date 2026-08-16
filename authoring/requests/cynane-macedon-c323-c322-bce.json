@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cynane:macedon:c323-c322-bce:v1",
+  "person": {"canonical_name_en": "Cynane", "display_name_ko": "키나네"},
+  "polity": {"canonical_name_en": "Macedon", "display_name_ko": "마케도니아"},
+  "activity": {"relation_type": "active_in", "period_basis": "military_activity", "role": "Military Leader", "role_display_name_ko": "군사 지도자", "start_year": -323, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical", "end_year": -322, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Cynane, daughter of Philip II, is not modeled as a sovereign. Her most consequential independent action was the armed expedition after Alexander's death to secure her daughter Adea-Eurydice's dynastic marriage. The event belongs around 323/322 BCE, so ATLAS uses an approximate military-activity window in Macedon."},
+  "sources": [{"title": "The Women of Alexander's Court - Cambridge Companion to Alexander the Great", "canonical_url": "https://www.cambridge.org/core/books/abs/cambridge-companion-to-alexander-the-great/women-of-alexanders-court/C893BF2C166F3F40EA64CEA7CD59C234", "citation_text": "The Cambridge Companion notes that Alexander's half-sister Cynnane became politically important after Alexander's death.", "source_type": "academic_reference"}, {"title": "A Mediterranean Game of Thrones - Metropolitan Museum of Art", "canonical_url": "https://www.metmuseum.org/perspectives/mediterranean-game-of-thrones", "citation_text": "The Met describes Cynnane as a daughter of Philip II with battlefield experience who crossed into Asia with an armed force after Alexander's death.", "source_type": "museum_research"}]
+}

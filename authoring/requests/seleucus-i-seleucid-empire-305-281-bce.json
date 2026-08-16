@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:seleucus-i-nicator:seleucid-empire:305-281-bce:v1",
+  "person": {"canonical_name_en": "Seleucus I Nicator", "display_name_ko": "셀레우코스 1세 니카토르"},
+  "polity": {"canonical_name_en": "Seleucid Empire", "display_name_ko": "셀레우코스 제국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": -305, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": -281, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Seleucus I founded the Seleucid Empire after recovering Babylonia and took the royal title in 305 BCE. ATLAS records the royal phase 305–281, excluding his earlier satrapal and strategos authority."},
+  "sources": [{"title": "Seleucus I Nicator - Oxford Classical Dictionary", "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/550495960", "citation_text": "Oxford Classical Dictionary identifies Seleucus I as founder of the Seleucid empire and states that he took the title of king in 305 BCE.", "source_type": "academic_reference"}, {"title": "Time Line and King Lists - The Making of a King", "canonical_url": "https://academic.oup.com/book/39231/chapter-abstract/338749176", "citation_text": "Oxford's Hellenistic king list gives Seleucus I Nicator as ruler from 305 to 281 BCE.", "source_type": "scholarly_monograph"}]
+}
