@@ -1,0 +1,62 @@
+/* Shared Person-table geometry contract.
+   Header, era groups, and every Person row must resolve against the same total width
+   so independent era groups cannot choose different column widths. */
+.person-card-grid.person-table-grid {
+  --person-data-columns: minmax(200px, 1.1fr) minmax(165px, .85fr) minmax(500px, 3.45fr) 76px;
+  --person-data-min-width: 940px;
+  --person-table-min-width: 998px;
+}
+
+.person-table-head,
+.person-era-group {
+  width: 100%;
+  min-width: var(--person-table-min-width);
+  box-sizing: border-box;
+}
+
+.person-table-head {
+  grid-template-columns: var(--era-band-width) var(--person-data-columns);
+}
+
+.person-era-group {
+  grid-template-columns: var(--era-band-width) minmax(0, 1fr);
+}
+
+.person-era-rows {
+  width: 100%;
+  min-width: 0;
+}
+
+.person-era-rows > .person-card {
+  width: 100%;
+  min-width: var(--person-data-min-width);
+  box-sizing: border-box;
+  grid-template-columns: var(--person-data-columns);
+}
+
+/* Polity is the primary Activity identity in the table, so give it the same
+   visual weight as the Person name rather than the previous secondary-text size. */
+.person-table-activities .person-card-activity-head b {
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+@media (max-width: 760px) {
+  .person-card-grid.person-table-grid {
+    --person-data-columns: 124px 108px minmax(390px, 1fr) 66px;
+    --person-data-min-width: 688px;
+    --person-table-min-width: 726px;
+  }
+
+  .person-table-activities .person-card-activity-head b {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 520px) {
+  .person-card-grid.person-table-grid {
+    --person-data-columns: 116px 104px minmax(375px, 1fr) 62px;
+    --person-data-min-width: 657px;
+    --person-table-min-width: 689px;
+  }
+}
