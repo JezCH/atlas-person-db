@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ahiram:kingdom-of-byblos:c1000-c980-bce:v1",
+  "person": {
+    "canonical_name_en": "Ahiram",
+    "display_name_ko": "아히람"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Byblos",
+    "display_name_ko": "비블로스 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -1000,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -980,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The user supplied Ahiram with the parenthetical label Phoenicia. ATLAS normalizes the political authority to the Kingdom of Byblos rather than a unitary Phoenicia: Ahiram's own royal sarcophagus inscription identifies him as king of Byblos/Gebal, and Oxford describes Byblos as a major Phoenician city and an independent kingdom. Absolute chronology is reconstructed rather than directly dated. DEAPS summarizes major scholarly schemes that place Ahiram around 1000 BCE and his son/successor Ittobaal around 980–975 BCE. ATLAS therefore uses c.1000–c.980 BCE as a conservative representative reign window with both endpoints approximate; it is not asserted as an exact accession/death span."
+  },
+  "sources": [
+    {
+      "title": "KAI 001 — Ahiram Sarcophagus — DEAPS, Ohio State University",
+      "canonical_url": "https://deaps.osu.edu/text_objects/11441",
+      "citation_text": "DEAPS identifies the Phoenician royal inscription of Ahiram of Byblos and summarizes major scholarly chronological schemes placing Ahiram around 1000 BCE and his son Ittobaal around 980–975 BCE.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Byblos — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548548667",
+      "citation_text": "The Oxford Classical Dictionary describes Byblos as a major port of Phoenicia, notes the sarcophagus of King Ahiram as a tenth-century BCE royal monument, and identifies Byblos as an independent kingdom.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
