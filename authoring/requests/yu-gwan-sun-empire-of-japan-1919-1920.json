@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:yu-gwan-sun:empire-of-japan:independence-activist:1919-1920:v1",
+  "person": {
+    "canonical_name_en": "Yu Gwan-sun",
+    "display_name_ko": "유관순"
+  },
+  "polity": {
+    "canonical_name_en": "Empire of Japan",
+    "display_name_ko": "일본 제국"
+  },
+  "activity": {
+    "relation_type": "opposes",
+    "period_basis": "general_activity",
+    "role": "Independence Activist",
+    "role_display_name_ko": "독립운동가",
+    "start_year": 1919,
+    "start_month": 3,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1920,
+    "end_month": 9,
+    "end_day": 28,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Yu Gwan-sun participated in the March First independence demonstrations in Seoul on 1 March 1919, then returned to the Cheonan area and helped organize and lead the Aunae Market independence demonstration on 1 April 1919. After arrest and imprisonment she continued resistance to Japanese colonial rule, including the 1 March 1920 prison protest at Seodaemun Prison, and died in custody on 28 September 1920 after prolonged torture and malnutrition. Because her historically significant relationship to the governing imperial state was organized resistance rather than officeholding or service, this Activity uses opposes/general_activity against the Empire of Japan. The interval represents her documented independence activism, not her lifespan."
+  },
+  "sources": [
+    {
+      "title": "유관순",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0041268",
+      "citation_text": "The Academy of Korean Studies identifies Yu Gwan-sun as an independence activist who participated in the March First Movement, led the Aunae independence demonstration, continued a prison independence protest on 1 March 1920, and died in Seodaemun Prison on 28 September 1920.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "독립운동인명사전 - 유관순",
+      "canonical_url": "https://search.i815.or.kr/dictionary/detail.do?id=614&index=1&reSearchWord=&searchType=all&searchWord=",
+      "citation_text": "The Independence Hall of Korea records Yu Gwan-sun's participation in the Seoul demonstrations on 1 March 1919, leadership in the Cheonan-area demonstration on 1 April 1919, and her life dates of 16 December 1902 to 28 September 1920.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "독립운동가 자료실 - 유관순",
+      "canonical_url": "https://www.mpva.go.kr/mpva/selectBbsNttView.do?bbsNo=82&integrDeptCode=&key=226&nttNo=219515&pageIndex=1&searchCnd=all&searchCtgry=&searchKrwd=",
+      "citation_text": "The Ministry of Patriots and Veterans Affairs records that Yu Gwan-sun continued independence resistance while imprisoned, participated in the major prison protest on 1 March 1920, and died at Seodaemun Prison on 28 September 1920 following torture and malnutrition.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Yu Gwan-sun: a hero for today, a hero for independence",
+      "canonical_url": "https://www.korea.net/NewsFocus/HonoraryReporters/view?articleId=144383",
+      "citation_text": "The Republic of Korea's official English-language portal uses the Romanized form Yu Gwan-sun and describes her as an organizer of the 1919 March First Movement and a symbol of Korea's independence struggle against Japanese colonial rule.",
+      "source_type": "institutional_web"
+    }
+  ]
+}
