@@ -14,6 +14,7 @@ const duplicateReview = require('../server/atlas-duplicate-review-service.js');
 const p10Completion = require('../server/atlas-person-duplicate-revalidation-readiness.js');
 const mergeService = require('../server/atlas-person-merge-service.js');
 const baselineB = require('../server/atlas-baseline-b.js');
+const p11Production = require('../server/atlas-p11-baseline-b-production-service.js');
 
 const { Client } = pg;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -83,13 +84,29 @@ try {
 
   const p11AfterMerge = await baselineB.inspectBaselineBReadiness(client);
   assert.equal(p11AfterMerge.ready, true, p11AfterMerge.blockers.join(';'));
+  assert.equal(p11AfterMerge.canonical_schema.expected_table_count, 41);
+  assert.equal(p11AfterMerge.canonical_schema.present_table_count, 41);
+  assert.deepEqual(p11AfterMerge.canonical_schema.missing_tables, []);
   assert.equal(p11AfterMerge.duplicate_frontier.approved_merges_pending, 0);
   assert.equal(p11AfterMerge.duplicate_frontier.unresolved, 0);
   assert.equal(p11AfterMerge.merge_audit.merged_source_person_still_live, 0);
 
-  const capture = await baselineB.captureBaselineB(client);
+  const productionReadiness = await p11Production.inspectProductionBaselineBReadiness(client);
+  assert.equal(productionReadiness.read_only, true);
+  assert.equal(productionReadiness.database_write_committed, false);
+  assert.equal(productionReadiness.readiness.ready, true, productionReadiness.readiness.blockers.join(';'));
+  assert.equal(productionReadiness.readiness.canonical_schema.present_table_count, 41);
+
+  const productionCapture = await p11Production.captureProductionBaselineB(client);
+  assert.equal(productionCapture.read_only, true);
+  assert.equal(productionCapture.database_write_committed, false);
+  const capture = productionCapture.baseline;
   assert.equal(capture.schema, baselineB.BASELINE_B_SCHEMA);
   assert.equal(capture.semantic_version, baselineB.BASELINE_B_SEMANTIC_VERSION);
+  assert.equal(capture.dataset_count, 41);
+  assert.equal(Object.keys(capture.datasets).length, 41);
+  assert.equal(Object.keys(capture.counts).length, 41);
+  assert.equal(Object.keys(capture.dataset_digests).length, 41);
   assert.equal(capture.authority.production_mutation_authorized, false);
   assert.equal(capture.counts.persons, 1);
   assert.equal(capture.counts.person_names, 2);
@@ -107,11 +124,15 @@ try {
 
   console.log(JSON.stringify({
     marker: 'ATLAS_P11_BASELINE_B_READINESS_OK',
+    baseline_b_schema: capture.schema,
     p10_review_ready_before_merge: p10BeforeMerge.ready,
     p11_blocked_until_physical_merge: true,
     p11_ready_after_physical_merge: p11AfterMerge.ready,
+    canonical_schema_tables_present: p11AfterMerge.canonical_schema.present_table_count,
+    production_service_read_only: productionCapture.read_only,
+    database_write_committed: productionCapture.database_write_committed,
     baseline_b_digest: capture.baseline_digest,
-    captured_dataset_count: Object.keys(capture.datasets).length,
+    captured_dataset_count: capture.dataset_count,
     serialized_round_trip_stable: true,
     production_mutation_authorized: false
   }, null, 2));

@@ -5,29 +5,63 @@ const { inspectAuthoringReadiness } = require("./atlas-authoring-readiness.js");
 const { inspectPersonDuplicateRevalidationReadiness } = require("./atlas-person-duplicate-revalidation-readiness.js");
 const { personMergeExecutionState } = require("./atlas-person-merge-interlock.js");
 
-const BASELINE_B_SCHEMA = "atlas-stage2-baseline-b/v1";
+const BASELINE_B_SCHEMA = "atlas-stage2-baseline-b/v2";
 const BASELINE_B_SEMANTIC_VERSION = "v2-relation-full-temporal";
 
+function dataset(key, table, orderBy) {
+  return Object.freeze({ key, table, sql: `select * from atlas_v2.${table} order by ${orderBy}` });
+}
+
 const CORE_DATASET_QUERIES = Object.freeze([
-  Object.freeze({ key: "persons", sql: "select * from atlas_v2.persons order by id" }),
-  Object.freeze({ key: "person_names", sql: "select * from atlas_v2.person_names order by person_id,locale,is_preferred desc,name,name_type,id" }),
-  Object.freeze({ key: "person_descriptions", sql: "select * from atlas_v2.person_descriptions order by person_id,locale,id" }),
-  Object.freeze({ key: "person_sources", sql: "select * from atlas_v2.person_sources order by person_id,source_id" }),
-  Object.freeze({ key: "polities", sql: "select * from atlas_v2.polities order by id" }),
-  Object.freeze({ key: "polity_names", sql: "select * from atlas_v2.polity_names order by polity_id,locale,is_preferred desc,name,name_type,id" }),
-  Object.freeze({ key: "polity_descriptions", sql: "select * from atlas_v2.polity_descriptions order by polity_id,locale,id" }),
-  Object.freeze({ key: "polity_sources", sql: "select * from atlas_v2.polity_sources order by polity_id,source_id" }),
-  Object.freeze({ key: "activities", sql: "select * from atlas_v2.person_politics_v2 order by person_id,polity_id,relation_type_id,role_id nulls first,period_basis_id,activity_start,activity_start_month nulls first,activity_start_day nulls first,activity_end,activity_end_month nulls first,activity_end_day nulls first,id" }),
-  Object.freeze({ key: "activity_sources", sql: "select * from atlas_v2.person_politics_sources order by person_politics_id,source_id,source_locator_key" }),
-  Object.freeze({ key: "chronology_claims", sql: "select * from atlas_v2.chronology_claims order by person_politics_id,id" }),
-  Object.freeze({ key: "relationship_descriptions", sql: "select * from atlas_v2.relationship_descriptions order by person_politics_id,locale,id" }),
-  Object.freeze({ key: "sources", sql: "select * from atlas_v2.sources order by id" }),
-  Object.freeze({ key: "roles", sql: "select * from atlas_v2.roles order by id" }),
-  Object.freeze({ key: "role_names", sql: "select * from atlas_v2.role_names order by role_id,locale,is_preferred desc,name,id" }),
-  Object.freeze({ key: "period_bases", sql: "select * from atlas_v2.period_bases order by id" }),
-  Object.freeze({ key: "period_basis_names", sql: "select * from atlas_v2.period_basis_names order by period_basis_id,locale,is_preferred desc,name,id" }),
-  Object.freeze({ key: "relation_types", sql: "select * from atlas_v2.person_polity_relation_types order by id" })
+  dataset("persons", "persons", "id"),
+  dataset("person_names", "person_names", "person_id,locale,is_preferred desc,name,name_type,id"),
+  dataset("person_descriptions", "person_descriptions", "person_id,locale,id"),
+  dataset("person_sources", "person_sources", "person_id,source_id"),
+
+  dataset("polities", "polities", "id"),
+  dataset("polity_names", "polity_names", "polity_id,locale,is_preferred desc,name,name_type,id"),
+  dataset("polity_descriptions", "polity_descriptions", "polity_id,locale,id"),
+  dataset("polity_sources", "polity_sources", "polity_id,source_id"),
+
+  dataset("governance_contexts", "governance_contexts", "id"),
+  dataset("governance_context_names", "governance_context_names", "governance_context_id,locale,is_preferred desc,name,name_type,id"),
+  dataset("polity_governance_periods", "polity_governance_periods", "id"),
+  dataset("polity_governance_period_sources", "polity_governance_period_sources", "polity_governance_period_id,source_id,source_locator_key"),
+  dataset("polity_relation_types", "polity_relation_types", "id"),
+  dataset("polity_relations", "polity_relations", "id"),
+  dataset("polity_relation_sources", "polity_relation_sources", "polity_relation_id,source_id,source_locator_key"),
+  dataset("polity_designations", "polity_designations", "id"),
+  dataset("polity_designation_names", "polity_designation_names", "polity_designation_id,locale,is_preferred desc,name,id"),
+  dataset("polity_designation_sources", "polity_designation_sources", "polity_designation_id,source_id,source_locator_key"),
+  dataset("polity_identity_relation_types", "polity_identity_relation_types", "id"),
+  dataset("polity_identity_relations", "polity_identity_relations", "id"),
+  dataset("polity_identity_relation_sources", "polity_identity_relation_sources", "polity_identity_relation_id,source_id,source_locator_key"),
+
+  dataset("people_groups", "people_groups", "id"),
+  dataset("people_group_names", "people_group_names", "people_group_id,locale,is_preferred desc,name,name_type,id"),
+  dataset("people_group_sources", "people_group_sources", "people_group_id,source_id,source_locator_key"),
+  dataset("historical_events", "historical_events", "id"),
+  dataset("historical_event_names", "historical_event_names", "historical_event_id,locale,is_preferred desc,name,name_type,id"),
+  dataset("historical_event_sources", "historical_event_sources", "historical_event_id,source_id,source_locator_key"),
+  dataset("person_people_affiliations", "person_people_affiliations", "id"),
+  dataset("person_people_affiliation_sources", "person_people_affiliation_sources", "person_people_affiliation_id,source_id,source_locator_key"),
+  dataset("person_event_participations", "person_event_participations", "id"),
+  dataset("person_event_participation_sources", "person_event_participation_sources", "person_event_participation_id,source_id,source_locator_key"),
+
+  dataset("activities", "person_politics_v2", "person_id,polity_id,relation_type_id,role_id nulls first,period_basis_id,activity_start,activity_start_month nulls first,activity_start_day nulls first,activity_end,activity_end_month nulls first,activity_end_day nulls first,id"),
+  dataset("activity_sources", "person_politics_sources", "person_politics_id,source_id,source_locator_key"),
+  dataset("chronology_claims", "chronology_claims", "person_politics_id,id"),
+  dataset("relationship_descriptions", "relationship_descriptions", "person_politics_id,locale,id"),
+
+  dataset("sources", "sources", "id"),
+  dataset("roles", "roles", "id"),
+  dataset("role_names", "role_names", "role_id,locale,is_preferred desc,name,id"),
+  dataset("period_bases", "period_bases", "id"),
+  dataset("period_basis_names", "period_basis_names", "period_basis_id,locale,is_preferred desc,name,id"),
+  dataset("relation_types", "person_polity_relation_types", "id")
 ]);
+
+const BASELINE_B_CANONICAL_TABLES = Object.freeze(CORE_DATASET_QUERIES.map((item) => item.table));
 
 function canonicalize(value) {
   if (value instanceof Date) {
@@ -61,6 +95,7 @@ function buildBaselineBDocument({ datasets, readiness }) {
   const manifest = Object.freeze({
     schema: BASELINE_B_SCHEMA,
     semantic_version: BASELINE_B_SEMANTIC_VERSION,
+    dataset_count: orderedKeys.length,
     counts: Object.freeze(counts),
     dataset_digests: Object.freeze(datasetDigests)
   });
@@ -76,6 +111,22 @@ function buildBaselineBDocument({ datasets, readiness }) {
   });
 }
 
+async function inspectCanonicalSchemaCoverage(client) {
+  const result = await client.query(`
+    select expected.table_name,
+           to_regclass(format('atlas_v2.%I', expected.table_name))::text as relation_name
+      from unnest($1::text[]) with ordinality as expected(table_name, ordinal_position)
+     order by expected.ordinal_position`, [BASELINE_B_CANONICAL_TABLES]);
+  const relationByTable = new Map((result.rows || []).map((row) => [String(row.table_name), row.relation_name]));
+  const missing = BASELINE_B_CANONICAL_TABLES.filter((table) => !relationByTable.get(table)).sort();
+  return Object.freeze({
+    expected_table_count: BASELINE_B_CANONICAL_TABLES.length,
+    present_table_count: BASELINE_B_CANONICAL_TABLES.length - missing.length,
+    missing_tables: Object.freeze(missing),
+    ready: missing.length === 0
+  });
+}
+
 async function inspectBaselineBReadiness(client, {
   inspectAuthoring = inspectAuthoringReadiness,
   inspectRevalidation = inspectPersonDuplicateRevalidationReadiness,
@@ -83,6 +134,7 @@ async function inspectBaselineBReadiness(client, {
 } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client with query() is required");
 
+  const canonicalSchema = await inspectCanonicalSchemaCoverage(client);
   const authoring = await inspectAuthoring(client);
   const revalidation = await inspectRevalidation(client);
   const merge = mergeExecutionState();
@@ -124,6 +176,7 @@ async function inspectBaselineBReadiness(client, {
   }
 
   const blockers = [];
+  if (!canonicalSchema.ready) blockers.push(`BASELINE_B_CANONICAL_SCHEMA_MISSING:${canonicalSchema.missing_tables.join(",")}`);
   if (!authoring?.ready) blockers.push("AUTHORING_NOT_READY");
   if (!revalidation?.ready) blockers.push("P10_REVALIDATION_NOT_READY");
   if (!merge?.allowed) blockers.push("P10_PERSON_MERGE_LIFECYCLE_NOT_READY");
@@ -142,6 +195,7 @@ async function inspectBaselineBReadiness(client, {
     schema: BASELINE_B_SCHEMA,
     semantic_version: BASELINE_B_SEMANTIC_VERSION,
     blockers: uniqueBlockers,
+    canonical_schema: canonicalSchema,
     authoring,
     p10_revalidation: revalidation,
     person_merge: merge,
@@ -206,10 +260,12 @@ async function captureBaselineB(client, {
 module.exports = Object.freeze({
   BASELINE_B_SCHEMA,
   BASELINE_B_SEMANTIC_VERSION,
+  BASELINE_B_CANONICAL_TABLES,
   CORE_DATASET_QUERIES,
   canonicalize,
   digest,
   buildBaselineBDocument,
+  inspectCanonicalSchemaCoverage,
   inspectBaselineBReadiness,
   assertBaselineBReadiness,
   captureBaselineB

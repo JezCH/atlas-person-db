@@ -32,6 +32,7 @@ const intendedApiRoutes = [
   'api/atlas-identity.js',
   'api/atlas-mutate.js',
   'api/atlas-p10-revalidation-release.js',
+  'api/atlas-p11-baseline-b-capture.js',
   'api/atlas-read.js',
   'api/atlas-session.js',
   'api/atlas-stage2-schema-release.js',
