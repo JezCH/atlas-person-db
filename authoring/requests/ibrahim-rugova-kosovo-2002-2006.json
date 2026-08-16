@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ibrahim-rugova:kosovo:president:2002-2006:v1",
+  "person": {
+    "canonical_name_en": "Ibrahim Rugova",
+    "display_name_ko": "이브라힘 루고바"
+  },
+  "polity": {
+    "canonical_name_en": "Kosovo",
+    "display_name_ko": "코소보"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 2002,
+    "start_month": 3,
+    "start_day": 4,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2006,
+    "end_month": 1,
+    "end_day": 21,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ibrahim Rugova was elected President of Kosovo by the Assembly on 4 March 2002 and remained in office until his death on 21 January 2006. ATLAS uses this post-war institutional presidency under the UN-administered/self-government framework as the representative Activity. His earlier 1992 election as president of the parallel Republic of Kosovo is preserved as historical context but is not added as a second Activity here so that distinct institutional contexts are not flattened together."
+  },
+  "sources": [
+    {
+      "title": "Dr. Ibrahim Rugova – Former President of Kosovo",
+      "canonical_url": "https://president-ksgov.net/en/former-presidents-of-kosovo/dr-ibrahim-rugova/",
+      "citation_text": "The official Presidency of Kosovo biography records Rugova's election as President in March 2002, his re-election in 2004, and his death on 21 January 2006.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "Prime Minister Kurti commemorates President Ibrahim Rugova",
+      "canonical_url": "https://kryeministri.rks-gov.net/news/kryeministri-kurti-vleresojme-perpjekjen-insistuese-dhe-institucionale-angazhimin-politik-per-liri-dhe-pavaresi-te-presidentit-rugova/",
+      "citation_text": "The Government of Kosovo records that Rugova was elected President by the Assembly on 4 March 2002 and distinguishes that office from his earlier parallel-state presidency.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "Kosovo: Rugova Elected President",
+      "canonical_url": "https://www.rferl.org/a/1098978.html",
+      "citation_text": "RFE/RL reports the Kosovo Assembly's election of Ibrahim Rugova as president on 4 March 2002.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

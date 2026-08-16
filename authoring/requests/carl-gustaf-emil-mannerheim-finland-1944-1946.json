@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:carl-gustaf-emil-mannerheim:finland:president:1944-1946:v1",
+  "person": {
+    "canonical_name_en": "Carl Gustaf Emil Mannerheim",
+    "display_name_ko": "칼 구스타프 에밀 만네르헤임"
+  },
+  "polity": {
+    "canonical_name_en": "Finland",
+    "display_name_ko": "핀란드"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1944,
+    "start_month": 8,
+    "start_day": 4,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1946,
+    "end_month": 3,
+    "end_day": 4,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Carl Gustaf Emil Mannerheim was elected President of Finland on 4 August 1944 and resigned on 4 March 1946. ATLAS records this constitutional presidency as his representative political Activity. His earlier service as Commander-in-Chief and wartime Marshal is historically central but is not added as a parallel Activity in this registration in order to preserve one primary person–polity representation."
+  },
+  "sources": [
+    {
+      "title": "Former Presidents of the Republic of Finland",
+      "canonical_url": "https://www.presidentti.fi/en/presidency/former-presidents-of-the-republic-of-finland/",
+      "citation_text": "The official Presidency of Finland lists Carl Gustaf Emil Mannerheim as President of the Republic from 1944 to 1946.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "Gustaf Mannerheim – Chronology",
+      "canonical_url": "https://mannerheim-museo.fi/en/gustaf-mannerheim/chronology/",
+      "citation_text": "The Mannerheim Museum chronology records his election as President on 4 August 1944 and his resignation on 4 March 1946.",
+      "source_type": "museum_research"
+    },
+    {
+      "title": "President Paasikivi's speech on Mannerheim's resignation",
+      "canonical_url": "https://jkpaasikivi.fi/book/paasikiven-linja-juho-kusti-paasikiven-puheita-vuosilta-1944-1956/puheet-1946/6/",
+      "citation_text": "The Paasikivi archive reproduces material associated with Mannerheim's resignation from the presidency in March 1946.",
+      "source_type": "primary_document"
+    }
+  ]
+}

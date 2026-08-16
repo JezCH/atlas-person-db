@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:simeon-i-of-bulgaria:first-bulgarian-empire:893-927:v1",
+  "person": {
+    "canonical_name_en": "Simeon I of Bulgaria",
+    "display_name_ko": "시메온 1세"
+  },
+  "polity": {
+    "canonical_name_en": "First Bulgarian Empire",
+    "display_name_ko": "제1차 불가리아 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Tsar",
+    "role_display_name_ko": "차르",
+    "start_year": 893,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 927,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Simeon I ruled Bulgaria continuously from 893 until his death in 927, a reign conventionally associated with the First Bulgarian Empire's political and cultural Golden Age. His titulature developed during the reign, culminating in an imperial claim; ATLAS keeps one continuous sovereign Activity under the normalized role Tsar rather than splitting the same reign solely because his formal style changed."
+  },
+  "sources": [
+    {
+      "title": "History of Bulgaria",
+      "canonical_url": "https://gov.bg/index.php/en/About-Bulgaria/HISTORY/tabsss1",
+      "citation_text": "The Council of Ministers of Bulgaria identifies 893–927 as the reign of Simeon the Great and the Golden Age of the First Bulgarian Empire.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "History of Bulgaria",
+      "canonical_url": "https://www.mfa.government.bg/bg/data/istoria",
+      "citation_text": "The Bulgarian Ministry of Foreign Affairs identifies Tsar Simeon I's reign as 893–927 and describes Bulgaria's political, territorial, and cultural expansion under him.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "Symeon I – Prosopography of the Byzantine Empire",
+      "canonical_url": "https://pbe.kcl.ac.uk/data/D72/F71.htm",
+      "citation_text": "The Prosopography of the Byzantine Empire records Symeon as ruler of the Bulgars from 893 to 927.",
+      "source_type": "academic_reference"
+    }
+  ]
+}

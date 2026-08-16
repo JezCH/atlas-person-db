@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:zog-i:kingdom-of-albania:1928-1939:v1",
+  "person": {
+    "canonical_name_en": "Zog I",
+    "display_name_ko": "조구 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Albania",
+    "display_name_ko": "알바니아 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1928,
+    "start_month": 9,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1939,
+    "end_month": 4,
+    "end_day": 7,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "On 1 September 1928 Albania was proclaimed a monarchy and Ahmet Zogu became Zog I, King of the Albanians. His effective rule in Albania ended with the Italian invasion on 7 April 1939, when he left the country. ATLAS therefore records the Kingdom of Albania as the relevant polity and uses 1 September 1928 through 7 April 1939 as the representative effective royal reign, without extending the Activity through later exile claims."
+  },
+  "sources": [
+    {
+      "title": "History of the Assembly of Albania",
+      "canonical_url": "https://www.parlament.al/kuvendi/historiku",
+      "citation_text": "The Parliament of Albania records the proclamation of the monarchy and Ahmet Zog as King of the Albanians on 1 September 1928, followed by the Italian invasion on 7 April 1939 and Zog's departure from Albania.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "History of the Institution of the President",
+      "canonical_url": "https://president.al/the-history-of-the-institution/?lang=en",
+      "citation_text": "The Presidency of Albania records the transition from republic to monarchy on 1 September 1928 and identifies Ahmet Zogu as Zog I, King of the Albanians, until the 1939 Italian invasion.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "Recognition of the Kingdom of Albania and King Zog I",
+      "canonical_url": "https://history.state.gov/historicaldocuments/frus1928v01/d709",
+      "citation_text": "The U.S. Department of State historical record documents the international recognition of the Albanian monarchy and King Zog I in 1928.",
+      "source_type": "primary_document"
+    }
+  ]
+}
