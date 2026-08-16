@@ -5,7 +5,9 @@ import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 const {
   SIGNALS,
+  VERDICTS,
   pairSignal,
+  pairVerdict,
   auditSamePersonActivities
 } = require("../server/atlas-activity-duplicate-audit.js");
 
@@ -24,47 +26,60 @@ function row(id, patch = {}) {
 }
 
 test("flags an exact same-person legacy Activity duplicate", () => {
-  assert.equal(
-    pairSignal(
-      row("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"),
-      row("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb")
-    ),
-    SIGNALS.EXACT_ACTIVITY_DUPLICATE
+  const verdict = pairVerdict(
+    row("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"),
+    row("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb")
   );
+  assert.equal(verdict.signal, SIGNALS.EXACT_ACTIVITY_DUPLICATE);
+  assert.equal(verdict.verdict, VERDICTS.EXACT_DUPLICATE);
+  assert.equal(verdict.confirmed_duplicate, true);
 });
 
-test("flags relation variants without calling them exact duplicates", () => {
-  assert.equal(
-    pairSignal(
-      row("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"),
-      row("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb", {
-        relation_type_id: "55555555-5555-4555-8555-555555555555"
-      })
-    ),
-    SIGNALS.RELATION_VARIANT_SAME_SLOT
+test("treats legacy null relation versus normalized relation in the same historical slot as a migration duplicate", () => {
+  const verdict = pairVerdict(
+    row("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"),
+    row("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb", {
+      relation_type_id: "55555555-5555-4555-8555-555555555555"
+    })
   );
+  assert.equal(verdict.signal, SIGNALS.RELATION_VARIANT_SAME_SLOT);
+  assert.equal(verdict.verdict, VERDICTS.MIGRATION_DUPLICATE_RELATION_GAP);
+  assert.equal(verdict.confirmed_duplicate, true);
 });
 
-test("flags role variants for review", () => {
-  assert.equal(
-    pairSignal(
-      row("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"),
-      row("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb", {
-        role_id: "66666666-6666-4666-8666-666666666666"
-      })
-    ),
-    SIGNALS.ROLE_VARIANT_SAME_SLOT
+test("keeps two non-null relation variants as review instead of auto-deleting", () => {
+  const verdict = pairVerdict(
+    row("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa", {
+      relation_type_id: "55555555-5555-4555-8555-555555555555"
+    }),
+    row("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb", {
+      relation_type_id: "77777777-7777-4777-8777-777777777777"
+    })
   );
+  assert.equal(verdict.verdict, VERDICTS.RELATION_VARIANT_REVIEW);
+  assert.equal(verdict.confirmed_duplicate, false);
 });
 
-test("flags strict containment only when semantic context is otherwise the same", () => {
-  assert.equal(
-    pairSignal(
-      row("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa", { activity_start: 1930, activity_end: 1974 }),
-      row("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb", { activity_start: 1930, activity_end: 1936 })
-    ),
-    SIGNALS.CONTAINMENT_SAME_CONTEXT
+test("flags role variants for alias review", () => {
+  const verdict = pairVerdict(
+    row("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"),
+    row("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb", {
+      role_id: "66666666-6666-4666-8666-666666666666"
+    })
   );
+  assert.equal(verdict.signal, SIGNALS.ROLE_VARIANT_SAME_SLOT);
+  assert.equal(verdict.verdict, VERDICTS.ROLE_ALIAS_REVIEW);
+  assert.equal(verdict.confirmed_duplicate, false);
+});
+
+test("flags strict containment as a stale-wide-interval review candidate", () => {
+  const verdict = pairVerdict(
+    row("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa", { activity_start: 1930, activity_end: 1974 }),
+    row("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb", { activity_start: 1930, activity_end: 1936 })
+  );
+  assert.equal(verdict.signal, SIGNALS.CONTAINMENT_SAME_CONTEXT);
+  assert.equal(verdict.verdict, VERDICTS.STALE_WIDE_INTERVAL_REVIEW);
+  assert.equal(verdict.confirmed_duplicate, false);
 });
 
 test("does not flag adjacent segments with different relations", () => {
@@ -85,11 +100,13 @@ test("does not flag adjacent segments with different relations", () => {
   );
 });
 
-test("audit groups by person and emits deterministic pairs", () => {
+test("audit groups by person and emits deterministic verdict pairs", () => {
   const signals = auditSamePersonActivities([
     row("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"),
     row("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa")
   ]);
   assert.equal(signals.length, 1);
   assert.equal(signals[0].activity_low_id, "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa");
+  assert.equal(signals[0].verdict, VERDICTS.EXACT_DUPLICATE);
+  assert.equal(signals[0].confirmed_duplicate, true);
 });
