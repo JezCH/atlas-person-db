@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:wilma-mankiller:cherokee-nation:principal-chief:1985-1995:v1",
+  "person": {
+    "canonical_name_en": "Wilma Mankiller",
+    "display_name_ko": "윌마 맨킬러"
+  },
+  "polity": {
+    "canonical_name_en": "Cherokee Nation",
+    "display_name_ko": "체로키 네이션"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Principal Chief",
+    "role_display_name_ko": "수석 추장",
+    "start_year": 1985,
+    "start_month": 12,
+    "start_day": 5,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1995,
+    "end_month": 8,
+    "end_day": 14,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Wilma Mankiller became Principal Chief of the Cherokee Nation by constitutional succession after Principal Chief Ross Swimmer left to head the Bureau of Indian Affairs. A contemporaneous Associated Press report states that she took the oath privately on 5 December 1985 so that she could begin official acts immediately; a larger public ceremony followed on 14 December. She subsequently won election in her own right in 1987 and reelection in 1991. These succession and election events did not interrupt her tenure in the same office, so ATLAS models one continuous term. The endpoint is 14 August 1995, when successor Joe Byrd was in office and signing Cherokee Nation legislation as Principal Chief."
+  },
+  "sources": [
+    {
+      "title": "Wilma Mankiller Led as the First Woman Principal Chief of the Cherokee Nation",
+      "canonical_url": "https://womenshistory.si.edu/blog/wilma-mankiller-led-first-woman-principal-chief-cherokee-nation",
+      "citation_text": "The Smithsonian American Women's History Museum states that Mankiller became Principal Chief when Ross Swimmer stepped down in 1985, was elected in 1987 and reelected in 1991, and remained Principal Chief for ten years.",
+      "source_type": "museum_web"
+    },
+    {
+      "title": "1st Woman Chief of Major U.S. Indian Tribe Sworn In",
+      "canonical_url": "https://www.latimes.com/archives/la-xpm-1985-12-05-mn-880-story.html",
+      "citation_text": "A contemporaneous Associated Press report published by the Los Angeles Times records that Wilma Mankiller took the oath of office as Principal Chief on 5 December 1985 in a private ceremony so she could begin official acts immediately, with formal ceremonies planned for 14 December.",
+      "source_type": "press_archive"
+    },
+    {
+      "title": "Wilma P. Mankiller Cherokee Capitol Park Grand Opening",
+      "canonical_url": "https://anadisgoi.com/index.php/government-stories/wilma-p-mankiller-cherokee-capitol-park-grand-opening",
+      "citation_text": "Cherokee Nation's official news service identifies Wilma Mankiller as the first woman Principal Chief of the Cherokee Nation and states that she held the position from 1985 to 1995.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Council of the Cherokee Nation - File #: LA-04-95",
+      "canonical_url": "https://cherokee.legistar.com/LegislationDetail.aspx?GUID=F523666B-B83A-44E4-9047-F9548836AE7A&ID=266831",
+      "citation_text": "Cherokee Nation legislation enacted and approved on 14 August 1995 bears Joe Byrd's signature as Principal Chief, providing an institutional terminus for Mankiller's continuous tenure before her successor assumed the office.",
+      "source_type": "institutional_record"
+    }
+  ]
+}
