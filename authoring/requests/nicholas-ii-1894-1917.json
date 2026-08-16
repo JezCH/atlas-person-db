@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:nicholas-ii:russian-empire:1894-1917:v1",
+  "person": {
+    "canonical_name_en": "Nicholas II",
+    "display_name_ko": "니콜라이 2세"
+  },
+  "polity": {
+    "canonical_name_en": "Russian Empire",
+    "display_name_ko": "러시아 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1894,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1917,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Nicholas II was the last Emperor of the Russian Empire. The State Russian Museum identifies him as the last Russian Emperor, records his accession in 1894, and dates his abdication to 2/15 March 1917 in Old Style/New Style notation. The British Museum independently identifies him as the last Tsar of Russia, succeeding Alexander III in 1894 and abdicating after the February Revolution of 1917. ATLAS records his continuous sovereign Activity as Emperor of the Russian Empire from 1894 to 1917 at year granularity, avoiding calendar-system ambiguity at day granularity."
+  },
+  "sources": [
+    {
+      "title": "Portrait of Nicholas II — Virtual Russian Museum",
+      "canonical_url": "https://rusmuseumvrm.ru/data/collections/painting/19_20/lipgart_ek_portret_nikolaya_ii_1914_zhb_1934/?lang=en",
+      "citation_text": "The State Russian Museum identifies Nicholas II as the last Russian Emperor, states that he came to the throne in 1894, and records his abdication on 2/15 March 1917.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Nicholas II, Tsar of Russia — British Museum Collections Online",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG112781",
+      "citation_text": "The British Museum identifies Nicholas II as the last Tsar of Russia, records that he succeeded his father in 1894, and states that he abdicated following the February Revolution of 1917.",
+      "source_type": "institutional_web"
+    }
+  ]
+}
