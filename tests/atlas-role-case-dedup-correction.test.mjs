@@ -42,12 +42,12 @@ test("case-only guard rejects role-name semantic drift", () => {
   assert.throws(() => roleMerge.requireManifest(changed), /NAME_SEMANTICS_MISMATCH/);
 });
 
-test("v2 dispatcher isolates role-catalog merges from activity correction operations", async () => {
+test("v2 dispatcher isolates role-catalog merges from activity correction operations", () => {
   const fakeClient = { query: async () => { throw new Error("query should not run"); } };
   const service = dispatch.createCorrectionManifestV2DispatchService({ client: fakeClient });
   const mixed = structuredClone(manifest);
   mixed.operations.push({ type: "rewrite_activity" });
-  await assert.rejects(() => service.execute(mixed, { dryRun: true }), /MIXED_OPERATION_FAMILY_FORBIDDEN/);
+  assert.throws(() => service.execute(mixed, { dryRun: true }), /MIXED_OPERATION_FAMILY_FORBIDDEN/);
 });
 
 test("correction apply handler routes direct v2 manifests through dispatcher", () => {
