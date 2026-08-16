@@ -11,6 +11,7 @@ const {
   normalizeMode,
   queryInventory,
   queryFullStage2Baseline,
+  querySemanticV2Breakdown,
   digestBaseline
 } = require("../server/atlas-audit-inventory-handler.js");
 const authoringOidc = require("../server/atlas-github-oidc.js");
@@ -68,6 +69,21 @@ function fakeInventoryClient(ids) {
       const text = String(sql).trim().toLowerCase();
       if (text.startsWith("begin isolation level repeatable read read only")) return { rows: [] };
       if (text.includes("current_setting('transaction_read_only')")) return { rows: [{ read_only: "on" }] };
+      if (text.includes("as semantic_v2_incomplete") && text.includes("relation_type_id_null")) {
+        return { rows: [{ activity_count: rows.length, relation_type_id_null: rows.length ? 1 : 0, period_basis_id_null: 0,
+          activity_start_granularity_null: 0, activity_start_calendar_null: 0, activity_end_granularity_null: 0,
+          activity_end_calendar_null: 0, semantic_v2_incomplete: rows.length ? 1 : 0 }] };
+      }
+      if (text.includes("as relation_type_missing") && text.includes("group by 1,2,3,4,5,6")) {
+        return { rows: rows.length ? [
+          { relation_type_missing: false, period_basis_missing: false, activity_start_granularity_missing: false,
+            activity_start_calendar_missing: false, activity_end_granularity_missing: false, activity_end_calendar_missing: false,
+            count: Math.max(rows.length - 1, 0) },
+          { relation_type_missing: true, period_basis_missing: false, activity_start_granularity_missing: false,
+            activity_start_calendar_missing: false, activity_end_granularity_missing: false, activity_end_calendar_missing: false,
+            count: 1 }
+        ].filter((row) => row.count > 0) : [] };
+      }
       if (text.includes("from atlas_v2.person_politics_v2 pp")) {
         if (text.includes("where pp.id = any($1::uuid[])")) {
           const requested = new Set((params[0] || []).map(String));
@@ -120,7 +136,18 @@ test("targeted audit fails closed when any reviewed Activity UUID is missing", a
   assert.equal(client.statements.at(-1).sql.trim().toLowerCase(), "rollback");
 });
 
-test("Baseline A v2 captures complete identity/name/source catalogs in the same read-only transaction", async () => {
+test("semantic v2 breakdown isolates null fields and overlap patterns without writing", async () => {
+  const client = fakeInventoryClient([ACTIVITY_A, ACTIVITY_B]);
+  const breakdown = await querySemanticV2Breakdown(client);
+  assert.equal(breakdown.activity_count, 2);
+  assert.equal(breakdown.semantic_v2_incomplete, 1);
+  assert.equal(breakdown.null_counts.relation_type_id, 1);
+  assert.equal(breakdown.null_counts.period_basis_id, 0);
+  assert.equal(breakdown.patterns.length, 2);
+  for (const { sql } of client.statements) assert.doesNotMatch(sql, /\b(insert|update|delete|alter|drop|create|truncate|grant|revoke)\b/i);
+});
+
+test("Baseline A v2 captures complete identity/name/source catalogs and semantic diagnostics in the same read-only transaction", async () => {
   const client = fakeInventoryClient([ACTIVITY_A, ACTIVITY_B]);
   const baseline = await queryFullStage2Baseline(client);
   assert.equal(baseline.rows.length, 2);
@@ -128,6 +155,8 @@ test("Baseline A v2 captures complete identity/name/source catalogs in the same 
   assert.equal(baseline.catalogs.polities.length, 2);
   assert.equal(baseline.catalogs.sources.length, 1);
   assert.equal(baseline.counts.activities, 2);
+  assert.equal(baseline.semantic_v2_breakdown.activity_count, 2);
+  assert.equal(baseline.semantic_v2_breakdown.semantic_v2_incomplete, 1);
   assert.equal(baseline.baseline_digest, digestBaseline(baseline.rows, baseline.counts, baseline.catalogs));
   assert.match(client.statements[0].sql, /repeatable read read only/i);
   for (const { sql } of client.statements) assert.doesNotMatch(sql, /\b(insert|update|delete|alter|drop|create|truncate|grant|revoke)\b/i);
@@ -145,7 +174,7 @@ test("authoring and audit OIDC trust boundaries remain separate", () => {
   assert.throws(() => auditOidc.verifyTrustClaims(authoringPayload, SHA), /GITHUB_OIDC_AUDIENCE_MISMATCH/);
 });
 
-test("same exact-SHA audit handler returns Baseline A v2 catalogs without a second deployment", async () => {
+test("same exact-SHA audit handler returns Baseline A v2 catalogs and semantic diagnostics without a second deployment", async () => {
   const client = fakeInventoryClient([ACTIVITY_A, ACTIVITY_B]);
   const handler = createAuditInventoryHandler({
     env: { VERCEL_ENV: "production", VERCEL_GIT_REPO_OWNER: "JezCH", VERCEL_GIT_REPO_SLUG: "atlas-person-db",
@@ -160,5 +189,7 @@ test("same exact-SHA audit handler returns Baseline A v2 catalogs without a seco
   assert.equal(res.body.committed, false);
   assert.equal(res.body.row_count, 2);
   assert.equal(res.body.catalogs.polities.length, 2);
+  assert.equal(res.body.semantic_v2_breakdown.semantic_v2_incomplete, 1);
+  assert.equal(res.body.semantic_v2_breakdown.null_counts.relation_type_id, 1);
   assert.match(res.body.baseline_digest, /^sha256:[0-9a-f]{64}$/);
 });
