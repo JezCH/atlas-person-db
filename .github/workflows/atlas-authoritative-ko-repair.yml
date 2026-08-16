@@ -1,0 +1,108 @@
+name: ATLAS Authoritative Korean Data Repair
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/atlas-authoritative-ko-repair.yml'
+      - 'maintenance/korean-localization/authoritative-ko-repair.json'
+      - 'api/atlas-authoritative-ko-repair.js'
+      - 'server/atlas-authoritative-ko-repair-handler.js'
+      - 'server/atlas-authoritative-ko-repair-service.js'
+      - 'server/atlas-ko-repair-github-oidc.js'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: atlas-authoritative-ko-repair-production
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: production
+    env:
+      ATLAS_KO_REPAIR_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoritative-ko-repair
+      ATLAS_KO_REPAIR_AUDIENCE: atlas-person-db-ko-repair
+      ATLAS_KO_REPAIR_FILE: maintenance/korean-localization/authoritative-ko-repair.json
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate reviewed repair catalog
+        shell: bash
+        run: |
+          set -euo pipefail
+          jq -e '
+            .schema == "atlas-authoritative-ko-repair/v1" and
+            .review_status == "approved" and
+            .policy.locale == "ko" and
+            .policy.canonical_english_is_preserved == true and
+            .policy.existing_preferred_korean_is_never_overwritten == true and
+            .policy.relationship_rows_must_not_change == true and
+            (.polities | type == "array" and length > 0) and
+            (.period_bases | type == "array" and length > 0) and
+            ([.polities[].id] | unique | length) == (.polities | length) and
+            ([.period_bases[].code] | unique | length) == (.period_bases | length) and
+            ([.polities[].display_name_ko, .period_bases[].display_name_ko] | all(type == "string" and length > 0))
+          ' "$ATLAS_KO_REPAIR_FILE" >/dev/null
+
+      - name: Apply after exact Production SHA is live
+        shell: bash
+        run: |
+          set -euo pipefail
+          request_oidc() {
+            curl --fail-with-body --silent --show-error \
+              -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+              "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_KO_REPAIR_AUDIENCE}" | jq -er '.value'
+          }
+
+          payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" --slurpfile repair "$ATLAS_KO_REPAIR_FILE" '{deployment_sha:$deployment_sha,repair:$repair[0]}')"
+          applied=false
+          for attempt in $(seq 1 60); do
+            oidc_token="$(request_oidc)"
+            status="$(curl --silent --show-error --output ko-repair-response.json --write-out '%{http_code}' --request POST \
+              -H 'content-type: application/json' -H "authorization: Bearer ${oidc_token}" --data "$payload" "$ATLAS_KO_REPAIR_ENDPOINT")"
+            if [[ "$status" == "200" ]]; then
+              jq -e --slurpfile repair "$ATLAS_KO_REPAIR_FILE" '
+                .ok == true and
+                .marker == "ATLAS_AUTHORITATIVE_KO_REPAIR_V1" and
+                .schema == "atlas-authoritative-ko-repair/v1" and
+                .committed == true and
+                .locale == "ko" and
+                .relationship_guard.unchanged == true and
+                .relationship_guard.before.count == .relationship_guard.after.count and
+                .relationship_guard.before.sha256 == .relationship_guard.after.sha256 and
+                .polity_targets == ($repair[0].polities | length) and
+                .period_basis_targets == ($repair[0].period_bases | length)
+              ' ko-repair-response.json >/dev/null
+              applied=true
+              break
+            fi
+            code="$(jq -r '.code // "UNKNOWN"' ko-repair-response.json 2>/dev/null || printf 'UNKNOWN')"
+            if [[ "$status" == "404" || ( "$status" == "409" && "$code" == "DEPLOYMENT_SHA_MISMATCH" ) ]]; then
+              echo "Production repair route for ${GITHUB_SHA} is not live yet (attempt ${attempt}/60); retrying."
+              sleep 10
+              continue
+            fi
+            cat ko-repair-response.json >&2 || true
+            echo "Korean data repair failed: HTTP ${status}, code ${code}" >&2
+            exit 1
+          done
+          [[ "$applied" == "true" ]] || { echo "Production deployment did not reach ${GITHUB_SHA} within retry window" >&2; exit 1; }
+          jq '{marker,schema,repair_id,committed,deployment_sha,polity_targets,period_basis_targets,polity_summary,period_basis_summary,relationship_guard}' ko-repair-response.json | tee ko-repair-summary.json
+
+      - name: Upload repair evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-authoritative-ko-repair-${{ github.sha }}
+          path: |
+            maintenance/korean-localization/authoritative-ko-repair.json
+            ko-repair-response.json
+            ko-repair-summary.json
+          if-no-files-found: error
+          retention-days: 90
