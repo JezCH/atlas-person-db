@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:said-bin-sultan:oman:sultan:1806-1856:v1",
+  "person": {
+    "canonical_name_en": "Said bin Sultan",
+    "display_name_ko": "사이드 빈 술탄"
+  },
+  "polity": {
+    "canonical_name_en": "Oman",
+    "display_name_ko": "오만"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1806,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1856,
+    "end_month": 10,
+    "end_day": 19,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Said bin Sultan became the effective sovereign ruler of Oman in 1806 and ruled until his death at sea on 19 October 1856. During his reign Oman's Indian Ocean dominions included Zanzibar and other East African possessions. He increasingly based his court in Zanzibar and moved the capital there in the 1830s, but Zanzibar did not constitute a separate sovereign Sultanate during his lifetime. The Omani and East African portions of his dominions were divided among his sons after his death, eventually producing separate Omani and Zanzibari sultanates. ATLAS therefore models one continuous sovereign reign bound to Oman rather than an artificial second Zanzibar reign.",
+    "sources": []
+  },
+  "sources": [
+    {
+      "title": "History of Oman",
+      "canonical_url": "https://www.fm.gov.om/en/about-oman/state/history/",
+      "citation_text": "Oman's Ministry of Foreign Affairs explains that Oman expanded its influence down the East African coast and that Zanzibar became Oman's capital for a time, with the Sultan's main palace located there.",
+      "source_type": "official_government"
+    },
+    {
+      "title": "Oman, Zanzibar and Empire",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/history-of-modern-oman/oman-zanzibar-and-empire/1593B4DC97F85ECC97177DFA5F0417F9",
+      "citation_text": "A History of Modern Oman describes the period through Said bin Sultan's death in 1856 as the era in which Oman became a major commercial and maritime power in the Indian Ocean, treating Oman and Zanzibar within the same Omani imperial framework.",
+      "source_type": "academic_monograph"
+    },
+    {
+      "title": "Seyyid Said bin Sultan BuSaid of Oman and Zanzibar: Women in the Life of this Arab Patriarch",
+      "canonical_url": "https://www.tandfonline.com/doi/full/10.1080/13530194.2012.726488",
+      "citation_text": "The British Journal of Middle Eastern Studies identifies Said bin Sultan as ruler of Oman from 1806 to 1856 and of Oman and Zanzibar during the later part of that reign, confirming the continuity of his Omani sovereignty while his East African center grew in importance.",
+      "source_type": "academic_journal"
+    },
+    {
+      "title": "Muscat Death of His Highness the Imam of-",
+      "canonical_url": "https://www.qdl.qa/en/archive/81055/vdc_100109347748.0x000001",
+      "citation_text": "A contemporary British consular record preserved by the Qatar Digital Library reports that Said bin Sultan, Imam of Muscat, died at sea on 19 October 1856 while returning from Muscat to Zanzibar.",
+      "source_type": "archival_primary_source"
+    }
+  ]
+}
