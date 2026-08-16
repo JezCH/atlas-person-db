@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cesare-beccaria:duchy-of-milan:jurist-economist:1762-1770:v1",
+  "person": {
+    "canonical_name_en": "Cesare Beccaria",
+    "display_name_ko": "체사레 베카리아"
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Milan",
+    "display_name_ko": "밀라노 공국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Jurist and Economist",
+    "role_display_name_ko": "법학자·경제학자",
+    "start_year": 1762,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1770,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Cesare Beccaria was a Milanese jurist, economist, and leading figure of the Milanese Enlightenment. ATLAS bounds his principal published intellectual activity from 1762, when his first economic essay on the monetary disorders of the State of Milan appeared, through 1770, when he published Ricerche intorno alla natura dello stile, identified by Treccani as his last publication. His internationally influential Dei delitti e delle pene was written in 1763-1764 and published in 1764. From 1768 he also held the chair of political economy at Milan's Scuole Palatine, and from 1771 his career shifted decisively into Habsburg public administration. The normalized territorial binding is the Duchy of Milan: Milan and its duchy were under Austrian Habsburg rule throughout this interval, but the duchy remained the historically specific state-level polity in which Beccaria's Milanese intellectual activity occurred. His later administrative career is retained as context rather than extending this intellectual_activity mechanically to his death in 1794."
+  },
+  "sources": [
+    {
+      "title": "Beccaria, Cesare - Il Contributo italiano alla storia del Pensiero: Economia",
+      "canonical_url": "https://www.treccani.it/enciclopedia/cesare-beccaria_%28Il-Contributo-italiano-alla-storia-del-Pensiero%3A-Economia%29/",
+      "citation_text": "Treccani states that Beccaria wrote his first work on the monetary disorders of the State of Milan in 1762, published Dei delitti e delle pene in 1764, contributed to Il Caffè in 1764-1766, published Ricerche intorno alla natura dello stile in 1770 as his last publication, and entered public administration in 1771.",
+      "source_type": "reference_encyclopedia"
+    },
+    {
+      "title": "Beccaria, Cesare - Dizionario di Storia",
+      "canonical_url": "https://www.treccani.it/enciclopedia/cesare-beccaria_%28Dizionario-di-Storia%29/",
+      "citation_text": "Treccani identifies Beccaria as a Milanese jurist and economist, records his 1762 economic essay, the writing of Dei delitti e delle pene in 1763-1764, his political-economy chair from 1768, and his appointment to the Supreme Council of Economy in 1771.",
+      "source_type": "reference_encyclopedia"
+    },
+    {
+      "title": "Milano - Dizionario di Storia",
+      "canonical_url": "https://www.treccani.it/enciclopedia/milano_%28Dizionario-di-Storia%29/",
+      "citation_text": "Treccani explains that Milan and the duchy passed into Habsburg domains and that Austrian rule in Milan began in 1707 and continued until the Napoleonic conquest, with the principal eighteenth-century administrative reorganization occurring under Maria Theresa and Joseph II.",
+      "source_type": "reference_encyclopedia"
+    },
+    {
+      "title": "The Italian Nationality Problem of the Austrian Empire",
+      "canonical_url": "https://www.cambridge.org/core/journals/austrian-history-yearbook/article/abs/italian-nationality-problem-of-the-austrian-empire1/684FE8FBA69E886CBBA311001720A7DD",
+      "citation_text": "Austrian History Yearbook notes that Austria acquired the Duchy of Milan in 1713 and specifically situates Cesare Beccaria and the Milanese Enlightenment within Austrian Habsburg rule and reform politics.",
+      "source_type": "academic_article"
+    }
+  ]
+}
