@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:abd-al-malik-ibn-marwan:umayyad-caliphate:caliph:685-705:v1",
+  "person": {
+    "canonical_name_en": "Abd al-Malik ibn Marwan",
+    "display_name_ko": "압드 알말리크 이븐 마르완"
+  },
+  "polity": {
+    "canonical_name_en": "Umayyad Caliphate",
+    "display_name_ko": "우마이야 칼리파국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Caliph",
+    "role_display_name_ko": "칼리프",
+    "start_year": 685,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 705,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Abd al-Malik ibn Marwan was acclaimed caliph in 685 as successor to Marwan I and remained Umayyad caliph until his death in 705. His accession occurred during the Second Fitna: at first his effective authority was concentrated in Syria and Egypt, while Abd Allah ibn al-Zubayr and other rivals controlled major regions. Campaigns in 691-692 defeated those rivals and restored Umayyad control over Iraq and the Hijaz. ATLAS therefore preserves the full 685-705 caliphal reign rather than beginning the Activity only in 692; the changing territorial reach reflects contested and subsequently consolidated control, not an interruption in Abd al-Malik's tenure as Umayyad caliph. His reign also saw major centralizing reforms, including administrative Arabization, monetary reform, and the construction of the Dome of the Rock."
+  },
+  "sources": [
+    {
+      "title": "The Umayyad Empire",
+      "canonical_url": "https://www.cambridge.org/core/books/umayyad-empire/C78245BCD0B74A6D0E58BD9541DC9A37/listing",
+      "citation_text": "Andrew Marsham's Cambridge history states that Abd al-Malik was acclaimed by the Umayyad clan and Syrian supporters in 685, explains that victories in 691-692 extended his rule beyond Syria and Egypt to Iraq and the Hijaz, and treats his reign through 705.",
+      "source_type": "scholarly_monograph"
+    },
+    {
+      "title": "The Imperial Marwanid Caliphate",
+      "canonical_url": "https://resolve.cambridge.org/core/services/aop-cambridge-core/content/view/8BB3DF062CEF1198B17D8F67E5836238/9781399527392c6_p127-161_CBO.pdf/imperial_marwanid_caliphate.pdf",
+      "citation_text": "Cambridge's chapter on the imperial Marwanid caliphate distinguishes Abd al-Malik's 685 acclamation from the consolidation of empire-wide rule in 691-692, when loyalists regained Iraq and the Hijaz.",
+      "source_type": "scholarly_monograph_chapter"
+    },
+    {
+      "title": "Abd al Malik ibn Marwan",
+      "canonical_url": "https://www.metmuseum.org/exhibitions/listings/2012/byzantium-and-islam/blog/characters/posts/abd-al-malik",
+      "citation_text": "The Metropolitan Museum of Art identifies Abd al-Malik as the fifth Umayyad caliph and describes his centralizing institutions, monetary reform, and patronage of the Dome of the Rock.",
+      "source_type": "museum_reference"
+    },
+    {
+      "title": "The Eastern Mediterranean, 500-1000 A.D. - Chronology",
+      "canonical_url": "https://82nd-and-fifth.metmuseum.org/toah/ht/06/wae.html",
+      "citation_text": "The Metropolitan Museum's Heilbrunn Timeline explicitly gives Abd al-Malik's reign as 685-705 and records the completion of the Dome of the Rock under his patronage in 691.",
+      "source_type": "museum_reference"
+    }
+  ]
+}
