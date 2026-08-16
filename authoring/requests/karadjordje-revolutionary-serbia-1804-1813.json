@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:karadorde-petrovic:revolutionary-serbia:1804-1813:v1",
+  "person": {
+    "canonical_name_en": "Karađorđe Petrović",
+    "display_name_ko": "카라조르제 페트로비치"
+  },
+  "polity": {
+    "canonical_name_en": "Revolutionary Serbia",
+    "display_name_ko": "혁명기 세르비아"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Grand Vožd",
+    "role_display_name_ko": "최고지도자",
+    "start_year": 1804,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1813,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Karađorđe Petrović was elected leader of the Serbian uprising at Orašac in 1804 and became the principal political and military head of the short-lived Serbian revolutionary state until its collapse in 1813. ATLAS models the relevant political authority as Revolutionary Serbia rather than the First Serbian Uprising itself, because the uprising was an event while the insurgents created governing institutions and exercised territorial political authority. The Serbian Encyclopedia gives his tenure as Grand Vožd from 14 February 1804 to 21 September 1813; this Activity conservatively stores the same interval at year granularity."
+  },
+  "sources": [
+    {
+      "title": "Карађорђе Петровић",
+      "canonical_url": "https://srpskaenciklopedija.org/doku.php?id=%D0%BA%D0%B0%D1%80%D0%B0%D1%92%D0%BE%D1%80%D1%92%D0%B5_%D0%BF%D0%B5%D1%82%D1%80%D0%BE%D0%B2%D0%B8%D1%9B",
+      "citation_text": "The Serbian Encyclopedia identifies Karađorđe as Grand Vožd and gives his leadership interval from 14 February 1804 to 21 September 1813.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Serbia 1804–1903 – Permanent Exhibition at the Residence of Prince Miloš",
+      "canonical_url": "https://imus.org.rs/en/exhibitions/serbia-1804-1903-the-permament-exhibition-at-the-residence-of-prince-milos/",
+      "citation_text": "The Historical Museum of Serbia treats the First Serbian Uprising of 1804–1813 as the beginning of modern Serbian state-building and identifies Karađorđe among its initiators and leaders.",
+      "source_type": "museum_research"
+    },
+    {
+      "title": "Chronology of the First Serbian Uprising",
+      "canonical_url": "https://www.mi.sanu.ac.rs/muzej.beograd/d/eng/sad/hron_8.htm",
+      "citation_text": "The Serbian Academy of Sciences and Arts chronology describes the insurgent organization of political authority under Karađorđe during the First Serbian Uprising.",
+      "source_type": "institutional_web"
+    }
+  ]
+}

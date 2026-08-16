@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:skanderbeg:principality-of-kastrioti:1443-1468:v1",
+  "person": {
+    "canonical_name_en": "Skanderbeg",
+    "display_name_ko": "스컨데르베우"
+  },
+  "polity": {
+    "canonical_name_en": "Principality of Kastrioti",
+    "display_name_ko": "카스트리오티 공국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Prince",
+    "role_display_name_ko": "공",
+    "start_year": 1443,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1468,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Skanderbeg (Gjergj Kastrioti) recovered Krujë in November 1443 and restored the territorial authority of the Kastrioti house, which he led until his death in 1468. The League of Lezhë elected him commander-in-chief in 1444, but ATLAS does not treat that alliance as a unitary Albanian state. The representative sovereign Activity is therefore his rule of the Principality of Kastrioti from 1443 to 1468; his League command remains contextual evidence rather than a second Polity Activity."
+  },
+  "sources": [
+    {
+      "title": "Skanderbeg Era",
+      "canonical_url": "https://www.muzeu-fa.gov.al/english/skanderbeg-era",
+      "citation_text": "The Albanian Armed Forces Museum records Skanderbeg's recovery of Krujë on 28 November 1443, the Assembly of Lezhë on 2 March 1444, his selection as commander-in-chief, and his death on 17 January 1468.",
+      "source_type": "museum_research"
+    },
+    {
+      "title": "Albanians in the Middle Ages, 500–1500",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/concise-history-of-albania/albanians-in-the-middle-ages-5001500/4D76AD2C42582554EDBE1A555AA429CE",
+      "citation_text": "Cambridge's Concise History of Albania places Skanderbeg within the landscape of medieval Albanian regional lordships and the resistance to Ottoman rule.",
+      "source_type": "scholarly_monograph"
+    },
+    {
+      "title": "The Kastrioti Family and Its Territorial Possessions",
+      "canonical_url": "https://albanica.al/studialbanica/article/view/351",
+      "citation_text": "Studia Albanica discusses the territorial possessions and political authority of the Kastrioti family, supporting the use of the Kastrioti principality rather than modern Albania as Skanderbeg's direct polity.",
+      "source_type": "academic_reference"
+    }
+  ]
+}
