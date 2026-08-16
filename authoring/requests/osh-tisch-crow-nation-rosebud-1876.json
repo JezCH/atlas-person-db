@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:osh-tisch:crow-nation:warrior:rosebud:1876:v1",
+  "person": {
+    "canonical_name_en": "Osh-Tisch",
+    "display_name_ko": "오시티시"
+  },
+  "polity": {
+    "canonical_name_en": "Crow Nation",
+    "display_name_ko": "크로우 네이션"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Warrior",
+    "role_display_name_ko": "전사",
+    "start_year": 1876,
+    "start_month": 6,
+    "start_day": 17,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1876,
+    "end_month": 6,
+    "end_day": 17,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Osh-Tisch (also rendered Osh-Tish), an Apsáalooke/Crow badé, is securely remembered as a Crow warrior who fought at the Battle of the Rosebud on 17 June 1876. Crow testimony recorded by later ethnographers recounts Osh-Tisch and The-Other-Magpie rescuing the wounded Crow warrior Bull Snake during the battle. ATLAS records the precisely attested military episode rather than stretching military activity across Osh-Tisch's entire life. The Crow social-gender role badé is preserved here as historical context, not converted into a political or military office. Because Osh-Tisch acted as a Crow warrior but is not documented as holding a formal command or governmental appointment, the Person is linked to Crow Nation with active_in rather than rules, governs, or serves."
+  },
+  "sources": [
+    {
+      "title": "Celebrating Pride Month at the Maxwell Museum of Anthropology: Ethnographic Photograph Collections and Other Gendered Stories",
+      "canonical_url": "https://maxwellmuseum.unm.edu/news-events/blog/celebrating-pride-month-maxwell-museum-anthropology-2-ethnographic-photograph",
+      "citation_text": "The University of New Mexico's Maxwell Museum identifies Osh-Tisch as a Crow badé and states that Osh-Tisch fought in the 1876 Battle of the Rosebud, where U.S. forces and their Crow and Shoshoni allies fought Lakota and Cheyenne forces.",
+      "source_type": "museum_institutional"
+    },
+    {
+      "title": "Rosebud, June 17, 1876: Prelude to the Little Big Horn",
+      "canonical_url": "https://www.oupress.com/9780806166162/rosebud-june-17-1876/",
+      "citation_text": "The University of Oklahoma Press describes the Battle of the Rosebud as occurring on 17 June 1876 and identifies Crow warriors as allies in George Crook's force against Sioux and Northern Cheyenne forces.",
+      "source_type": "scholarly_monograph"
+    },
+    {
+      "title": "Osh-Tisch",
+      "canonical_url": "https://www.encyclopedia.com/social-sciences/encyclopedias-almanacs-transcripts-and-maps/osh-tisch",
+      "citation_text": "Will Roscoe's encyclopedia entry identifies Osh-Tisch as a Crow medicine person, warrior, and artisan, and recounts Osh-Tisch fighting alongside The Other Magpie and rescuing a fallen Crow warrior during the Rosebud battle.",
+      "source_type": "scholarly_encyclopedia"
+    }
+  ]
+}
