@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:adolf-hitler:germany:1933-1945:v1",
+  "person": {
+    "canonical_name_en": "Adolf Hitler",
+    "display_name_ko": "아돌프 히틀러"
+  },
+  "polity": {
+    "canonical_name_en": "Germany",
+    "display_name_ko": "독일"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Reich Chancellor",
+    "role_display_name_ko": "독일국 총리",
+    "start_year": 1933,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1945,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Adolf Hitler was appointed Reich Chancellor on 30 January 1933 and remained head of the German government until his death on 30 April 1945. After Reich President Paul von Hindenburg died on 2 August 1934, the offices of Reich President and Reich Chancellor were combined and Hitler assumed the title Führer und Reichskanzler, completing the concentration of dictatorial state power in his person. ATLAS attaches this Activity to the higher-order Germany Polity; National Socialism / Nazi Germany describes the dictatorial regime and period rather than a separate territorial Polity. The 1933-1945 interval is stored at year granularity and does not imply that the Führer title itself began in 1933."
+  },
+  "sources": [
+    {
+      "title": "30. Januar 1933: Ernennung Adolf Hitlers zum Reichskanzler",
+      "canonical_url": "https://www.bundesarchiv.de/themen-entdecken/online-entdecken/geschichtsgalerien/30-januar-1933-ernennung-adolf-hitlers-zum-reichskanzler/",
+      "citation_text": "The German Federal Archives records that President Paul von Hindenburg appointed Adolf Hitler Reich Chancellor on 30 January 1933.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Nationalsozialismus (1933–1945)",
+      "canonical_url": "https://www.bundestag.de/parlament/geschichte/parlamentarismus/drittes_reich",
+      "citation_text": "The German Bundestag describes Hitler's appointment as Reich Chancellor on 30 January 1933 and the 2 August 1934 combination of the presidency and chancellorship into Führer und Reichskanzler.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Law on the Head of State of the German Reich",
+      "canonical_url": "https://encyclopedia.ushmm.org/content/en/article/law-on-the-head-of-state-of-the-german-reich-1",
+      "citation_text": "The United States Holocaust Memorial Museum documents the combination of the presidency and chancellorship under Hitler and notes that this arrangement remained in effect until his suicide on 30 April 1945.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
