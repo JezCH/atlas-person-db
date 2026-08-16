@@ -1,1 +1,0 @@
-ATLAS Global Era navigation cutoffs refined for the Person table UI only: BC 480, AD 500, AD 1492, AD 1750, AD 1914, AD 1945. This does not change historical source data, Person/Activity records, DB schema, API semantics, or authoring behavior.
