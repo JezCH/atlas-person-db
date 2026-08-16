@@ -2,7 +2,8 @@
   "use strict";
 
   const koPolities = {
-    Carthage: "카르타고"
+    Carthage: "카르타고",
+    "Kingdom of Saba": "사바 왕국"
   };
 
   const labels = {
