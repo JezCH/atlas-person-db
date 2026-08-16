@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:zenobia:palmyrene-empire:augusta:272:v1",
+  "person": {
+    "canonical_name_en": "Zenobia",
+    "display_name_ko": "제노비아"
+  },
+  "polity": {
+    "canonical_name_en": "Palmyrene Empire",
+    "display_name_ko": "팔미라 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Augusta",
+    "role_display_name_ko": "아우구스타",
+    "start_year": 272,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 272,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "In early 272, when Aurelian moved against the Palmyrene regime, Zenobia adopted the Roman imperial title Augusta and Vaballathus the title Augustus. This marks a distinct constitutional-political phase from her earlier regency: the Palmyrene regime openly asserted imperial authority and controlled a large eastern territorial bloc until Aurelian defeated Zenobia's forces and captured her in 272. ATLAS therefore models the explicit imperial phase separately rather than retrojecting an independent empire back to 267."
+  },
+  "sources": [
+    {
+      "title": "Civil War",
+      "canonical_url": "https://academic.oup.com/book/3925/chapter-abstract/145521553",
+      "citation_text": "Andrade's Oxford chapter states that in early 272 Aurelian invaded Zenobia's territory and she responded by claiming the titles Augusta for herself and Augustus for Wahballath, before her defeat and capture later that year.",
+      "source_type": "scholarly_monograph_chapter"
+    },
+    {
+      "title": "Zenobia",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548205292",
+      "citation_text": "The Oxford Classical Dictionary likewise records that by the time Aurelian moved against her in 272 Zenobia was calling herself Augusta and her son Augustus, and that she was captured before Palmyra fell.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Palmyra",
+      "canonical_url": "https://www.metmuseum.org/es/essays/palmyra",
+      "citation_text": "The Metropolitan Museum of Art describes Zenobia as establishing Palmyra as the capital of an independent, far-reaching Roman-style empire and records Aurelian's reconquest and her capture in 272.",
+      "source_type": "museum_essay"
+    },
+    {
+      "title": "coin 1860,0327.273",
+      "canonical_url": "https://www.britishmuseum.org/collection/object/C_1860-0327-273",
+      "citation_text": "The British Museum catalogs Zenobia as ruler on Alexandrian coinage of 271-272 and describes her as the real power behind the Palmyrene usurpation, providing material evidence for her sovereign presentation in the final phase.",
+      "source_type": "museum_object_record"
+    }
+  ]
+}

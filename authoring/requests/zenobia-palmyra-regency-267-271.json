@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:zenobia:palmyra:regent:267-271:v1",
+  "person": {
+    "canonical_name_en": "Zenobia",
+    "display_name_ko": "제노비아"
+  },
+  "polity": {
+    "canonical_name_en": "Palmyra",
+    "display_name_ko": "팔미라"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Regent",
+    "role_display_name_ko": "섭정",
+    "start_year": 267,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "uncertain",
+    "start_calendar": "gregorian",
+    "end_year": 271,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After Odaenathus was killed in 267, Zenobia secured political power in the name of her young son Vaballathus. Modern scholarship describes her as regent and the effective leader of the Palmyrene regime. The precise onset is uncertain because some modern scholarship summarizes her governance as 268-272, while other authoritative references place her assumption of power immediately after Odaenathus's death in 267. During 270-271 Palmyrene forces expanded into Egypt and Asia Minor while Zenobia and Vaballathus still maintained a formal relationship with Roman imperial authority. This Activity ends before the explicit imperial-title break in early 272, which is modeled separately."
+  },
+  "sources": [
+    {
+      "title": "Zenobia",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548205292",
+      "citation_text": "The Oxford Classical Dictionary states that after Odaenathus's death in 267 Zenobia secured power in the name of her young son Vaballathus; in 270 she expanded into Egypt and much of Asia Minor while still recognizing Aurelian, before adopting the titles Augusta and Augustus in 272.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Return to Palmyra",
+      "canonical_url": "https://www.getty.edu/research/exhibitions_events/exhibitions/palmyra/essay.html",
+      "citation_text": "The Getty Research Institute describes Zenobia as assuming power as regent to Vaballathus after Odaenathus's assassination in 267 and later forging a Palmyrene empire before Aurelian's campaign in 272.",
+      "source_type": "museum_research"
+    },
+    {
+      "title": "Zenobia: Shooting Star of Palmyra",
+      "canonical_url": "https://academic.oup.com/book/3925",
+      "citation_text": "Nathanael Andrade's Oxford monograph summarizes Zenobia as governing territory in the eastern Roman Empire from 268 to 272, providing the basis for preserving uncertainty around the exact beginning of her effective rule.",
+      "source_type": "scholarly_monograph"
+    }
+  ]
+}
