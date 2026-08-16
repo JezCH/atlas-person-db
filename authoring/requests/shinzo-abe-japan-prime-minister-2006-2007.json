@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:shinzo-abe:japan:prime-minister:2006-2007:v1",
+  "person": {
+    "canonical_name_en": "Shinzo Abe",
+    "display_name_ko": "아베 신조"
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 2006,
+    "start_month": 9,
+    "start_day": 26,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2007,
+    "end_month": 9,
+    "end_day": 26,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Shinzo Abe's first tenure as Prime Minister of Japan ran from 26 September 2006 to 26 September 2007. This Activity is kept separate from his later premiership because he left the office in 2007 and did not return until December 2012, producing a genuine out-of-office interval rather than a continuous reappointment sequence."
+  },
+  "sources": [
+    {
+      "title": "90th ABE Shinzo - Previous Prime Ministers",
+      "canonical_url": "https://japan.kantei.go.jp/past_cabinet/090.html",
+      "citation_text": "The Prime Minister's Office of Japan lists ABE Shinzo as the 90th Prime Minister, with the term in office from September 26, 2006 to September 26, 2007.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "Previous Prime Ministers",
+      "canonical_url": "https://japan.kantei.go.jp/past_cabinet/index.html",
+      "citation_text": "The official historical list of Japanese prime ministers records ABE Shinzo's 90th premiership as September 26, 2006 to September 26, 2007 and identifies Yasuo Fukuda as taking office on September 26, 2007.",
+      "source_type": "government_web"
+    }
+  ]
+}
