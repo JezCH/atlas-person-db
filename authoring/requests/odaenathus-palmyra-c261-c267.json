@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:odaenathus:palmyra:c261-c267:v1",
+  "person": {
+    "canonical_name_en": "Odaenathus",
+    "display_name_ko": "오다에나투스"
+  },
+  "polity": {
+    "canonical_name_en": "Palmyra",
+    "display_name_ko": "팔미라"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 261,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 267,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Odaenathus (Septimius Odaenathus) was the ruler of Palmyra and the dominant Roman-aligned power in the eastern provinces after the crisis of 260. The PLRE-based Connecting Late Antiquities entry summarizes his role as king of Palmyra c.261–c.267 and records his wider Roman titles, including corrector totius Orientis. Scholarly reconstruction based on inscriptions shows earlier Palmyrene and Roman civic status before this royal phase. ATLAS therefore records only the principal Palmyrene sovereign Activity, c.261–c.267, with approximate endpoints. This does not model him as a Roman emperor or project the later independent imperial claims of Zenobia backward onto his reign. The Korean display form is 오다에나투스."
+  },
+  "sources": [
+    {
+      "title": "SEPTIMIVS ODAENATHVS — Connecting Late Antiquities / PLRE I",
+      "canonical_url": "https://connectinglateantiquities.org/text.html?id=plre-1-odaenathus",
+      "citation_text": "The PLRE-based entry identifies Septimius Odaenathus as king of Palmyra approximately 261–267 and records his Roman offices and eastern authority.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "A Reconstruction of the Career of Odaenathus — Kyoto University Repository",
+      "canonical_url": "https://repository.kulib.kyoto-u.ac.jp/handle/2433/239971",
+      "citation_text": "Fuminori Inoue reconstructs Odaenathus's career from inscriptional evidence and discusses his Roman and Palmyrene offices during Gallienus's sole reign, supporting a distinction between earlier civic status and his later regional rulership.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The foundation inscription of the tomb of Odainat — Palmyra Archaeological Museum",
+      "canonical_url": "https://virtual-museum-syria.org/palmyra/the-foundation-inscription-of-the-tomb-of-odainat/",
+      "citation_text": "The Palmyra Archaeological Museum reviews inscriptions used to reconstruct Odaenathus's genealogy and early attested leadership at Palmyra, including evidence published from inscriptions dated to the 250s.",
+      "source_type": "institutional_web"
+    }
+  ]
+}
