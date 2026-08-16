@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-correction-manifest/v1",
+  "request_id": "activity-integrity:yongle-exact-duplicate:2026-08-16:v1",
+  "review_status": "approved",
+  "release_order": 520,
+  "evidence": {
+    "baseline_production_sha": "3c0a632daa7328ec5f3b506758984963261661ea",
+    "baseline_digest": "sha256:d9ed7b8b394e447f785389dc18e4d815d26545d1724cb73ee2686241cb990b3",
+    "audit_doc": "docs/audits/ACTIVITY_DUPLICATE_INTEGRITY_2026-08-16.md",
+    "current_detail_surface": "api/atlas-person-read?person_id=37634648-d825-557a-ba1f-4e2534f28fd8",
+    "decision": "Exact same-person legacy Activity duplicate; retain richer description row and preserve both provenance links."
+  },
+  "operations": [
+    {
+      "type": "coalesce_relationship",
+      "keep_relationship_id": "d1630b88-d82b-5c5e-a7a1-195bf9661465",
+      "drop_relationship_id": "b5e49aa2-44b9-5b1c-bc84-a2650d946ef5",
+      "expected_keep": {
+        "person_id": "37634648-d825-557a-ba1f-4e2534f28fd8",
+        "polity_id": "756460ea-0f77-519e-9e91-43dfb694926a",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1402,
+        "activity_end": 1424,
+        "notes": "Zhu Di reigned as the Yongle Emperor from 1402 to 1424. He moved the capital to Beijing, commissioned the Forbidden City, sponsored Zheng He's voyages, and oversaw the Yongle Encyclopedia.",
+        "legacy_source_key": "pending-records-supplement-7.json:9:1aadd864587e4d75"
+      },
+      "expected_drop": {
+        "person_id": "37634648-d825-557a-ba1f-4e2534f28fd8",
+        "polity_id": "756460ea-0f77-519e-9e91-43dfb694926a",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1402,
+        "activity_end": 1424,
+        "notes": "Reigned as Ming emperor from 1402 until 1424.",
+        "legacy_source_key": "pending-records-supplement-3.json:34:ff6759fbc18fc7e9"
+      }
+    }
+  ]
+}
