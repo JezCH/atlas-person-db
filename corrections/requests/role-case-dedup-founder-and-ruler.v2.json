@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "role-case-dedup:founder-and-ruler:v1",
+  "release_order": 500,
+  "evidence": {
+    "basis": "ATLAS audit inventory baseline from workflow run 31951249411, artifact 9264699649",
+    "decision": "Case-only duplicate. Preserve the lower-case canonical wording already used by Osman I and rebind Parameswara before removing the duplicate Role row."
+  },
+  "operations": [
+    {
+      "type": "merge_role_case_duplicate",
+      "case_id": "role-case-only:founder-and-ruler",
+      "expected_keep_role": {
+        "id": "514dc2ef-d152-50e5-8bdf-e4c4cea69601",
+        "code": "legacy:founder_and_ruler:4b88a1fd4fb2",
+        "category": "legacy_free_text",
+        "source_label": "Founder and ruler",
+        "is_active": true
+      },
+      "expected_drop_role": {
+        "id": "d3b293b3-fd9e-57dc-81a9-d8694ae7db50",
+        "code": "legacy:founder_and_ruler:0e2cb660ed21",
+        "category": "legacy_free_text",
+        "source_label": "Founder and Ruler",
+        "is_active": true
+      },
+      "expected_keep_names": [
+        {
+          "id": "767833c5-37e0-5c9c-8494-a80008101fec",
+          "role_id": "514dc2ef-d152-50e5-8bdf-e4c4cea69601",
+          "locale": "en",
+          "name": "Founder and ruler",
+          "is_preferred": true
+        },
+        {
+          "id": "ffd7818f-3dd7-547f-ae0e-cf356b32d0f7",
+          "role_id": "514dc2ef-d152-50e5-8bdf-e4c4cea69601",
+          "locale": "ko",
+          "name": "창건자·통치자",
+          "is_preferred": true
+        }
+      ],
+      "expected_drop_names": [
+        {
+          "id": "100cf1ba-f722-5171-ae6b-ceb847e0ff93",
+          "role_id": "d3b293b3-fd9e-57dc-81a9-d8694ae7db50",
+          "locale": "en",
+          "name": "Founder and Ruler",
+          "is_preferred": true
+        },
+        {
+          "id": "8bc42934-0cae-517e-a119-04d51f7ccda4",
+          "role_id": "d3b293b3-fd9e-57dc-81a9-d8694ae7db50",
+          "locale": "ko",
+          "name": "창건자·통치자",
+          "is_preferred": true
+        }
+      ],
+      "affected_activity_ids": [
+        "f3ae824b-bc23-4b58-8c35-fd833eb00f91"
+      ]
+    }
+  ]
+}
