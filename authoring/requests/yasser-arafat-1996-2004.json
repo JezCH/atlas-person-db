@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:yasser-arafat:palestinian-national-authority:1996-2004:v1",
+  "person": {
+    "canonical_name_en": "Yasser Arafat",
+    "display_name_ko": "야세르 아라파트"
+  },
+  "polity": {
+    "canonical_name_en": "Palestinian National Authority",
+    "display_name_ko": "팔레스타인 자치정부"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1996,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 2004,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Yasser Arafat was elected President of the Palestinian Authority in the 20 January 1996 Palestinian elections and remained the Palestinian National Authority's president until his death on 11 November 2004. He had already headed the newly established Palestinian Authority from 1994, but this Activity deliberately begins with the clearly defined elected presidential office in 1996. His separate chairmanship of the Palestine Liberation Organization is an organizational leadership role and is not conflated with this territorial-government Polity Activity."
+  },
+  "sources": [
+    {
+      "title": "Yasser Arafat – Biographical",
+      "canonical_url": "https://www.nobelprize.org/prizes/peace/1994/arafat/biographical/",
+      "citation_text": "NobelPrize.org states that the Oslo agreement provided for Palestinian elections in early 1996, that Arafat was elected President of the Palestine Authority, and that he died on 11 November 2004.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Yearbook of the United Nations 1996 (excerpts) - Question of Palestine",
+      "canonical_url": "https://www.un.org/unispal/document/auto-insert-208732/",
+      "citation_text": "The United Nations Yearbook records the Palestinian elections of 20 January 1996, in which Palestinians elected a President, and subsequently refers to President Yasser Arafat exercising the Palestinian Authority's executive leadership.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Request for Partner for Democracy status with PACE submitted by the Palestinian National Council - Report/Non-UN document - Question of Palestine",
+      "canonical_url": "https://www.un.org/unispal/document/auto-insert-207373/",
+      "citation_text": "The report distinguishes Arafat's PLO chairmanship from his governmental office and states that he was elected President of the Palestinian National Authority in 1996 and remained in Palestinian leadership until his death in 2004.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Yasser Arafat – Facts",
+      "canonical_url": "https://www.nobelprize.org/prizes/peace/1994/arafat/facts/",
+      "citation_text": "NobelPrize.org identifies Arafat's role as President of the Palestinian National Authority and gives his death date as 11 November 2004.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
