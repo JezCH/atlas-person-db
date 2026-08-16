@@ -11,7 +11,8 @@ const {
   STREAM_CHUNK_BYTES,
   createP11BaselineBCaptureHandler,
   requireEnvelope,
-  requireDeployment
+  requireDeployment,
+  verifyDeploymentAncestry
 } = captureHandlerModule;
 const {
   EXPECTED_AUDIENCE,
@@ -36,6 +37,7 @@ const {
 } = baselineBModule;
 
 const SHA = 'a'.repeat(40);
+const WORKFLOW_SHA = 'b'.repeat(40);
 const ENV = Object.freeze({
   VERCEL_ENV: 'production',
   VERCEL_GIT_COMMIT_REF: 'main',
@@ -122,10 +124,10 @@ test('P11 capture deployment attestation requires exact Production main reposito
   assert.throws(() => requireDeployment({ ...ENV, VERCEL_ENV: 'preview' }, SHA), /P11_CAPTURE_NOT_PRODUCTION_MAIN/);
   assert.throws(() => requireDeployment({ ...ENV, VERCEL_GIT_COMMIT_REF: 'feature' }, SHA), /P11_CAPTURE_NOT_PRODUCTION_MAIN/);
   assert.throws(() => requireDeployment({ ...ENV, VERCEL_GIT_REPO_SLUG: 'other' }, SHA), /P11_CAPTURE_REPOSITORY_MISMATCH/);
-  assert.throws(() => requireDeployment({ ...ENV, VERCEL_GIT_COMMIT_SHA: 'b'.repeat(40) }, SHA), /DEPLOYMENT_SHA_MISMATCH/);
+  assert.throws(() => requireDeployment({ ...ENV, VERCEL_GIT_COMMIT_SHA: WORKFLOW_SHA }, SHA), /DEPLOYMENT_SHA_MISMATCH/);
 });
 
-test('P11 OIDC trust is scoped to one manual Production workflow and exact SHA', () => {
+test('P11 OIDC trust is scoped to one manual Production workflow and can bind workflow SHA independently from deployed SHA', () => {
   const payload = {
     iss: ISSUER,
     aud: EXPECTED_AUDIENCE,
@@ -138,16 +140,63 @@ test('P11 OIDC trust is scoped to one manual Production workflow and exact SHA',
     sha: SHA
   };
   assert.doesNotThrow(() => verifyTrustClaims(payload, SHA));
-  assert.throws(() => verifyTrustClaims({ ...payload, event_name: 'push' }, SHA), /P11_CAPTURE_OIDC_CONTEXT_MISMATCH/);
-  assert.throws(() => verifyTrustClaims({ ...payload, environment: 'preview' }, SHA), /P11_CAPTURE_OIDC_CONTEXT_MISMATCH/);
-  assert.throws(() => verifyTrustClaims({ ...payload, sha: 'b'.repeat(40) }, SHA), /P11_CAPTURE_OIDC_SHA_MISMATCH/);
+  assert.doesNotThrow(() => verifyTrustClaims(payload));
+  assert.throws(() => verifyTrustClaims({ ...payload, event_name: 'push' }), /P11_CAPTURE_OIDC_CONTEXT_MISMATCH/);
+  assert.throws(() => verifyTrustClaims({ ...payload, environment: 'preview' }), /P11_CAPTURE_OIDC_CONTEXT_MISMATCH/);
+  assert.throws(() => verifyTrustClaims({ ...payload, sha: 'short' }), /P11_CAPTURE_OIDC_SHA_INVALID/);
+  assert.throws(() => verifyTrustClaims({ ...payload, sha: WORKFLOW_SHA }, SHA), /P11_CAPTURE_OIDC_SHA_MISMATCH/);
 });
 
-test('P11 readiness handler authenticates before opening DB and returns read-only state', async () => {
+test('P11 deployment ancestry accepts exact or older Production main SHA and rejects divergence', async () => {
+  let fetchCalls = 0;
+  const identical = await verifyDeploymentAncestry(SHA, SHA, {
+    fetchImpl: async () => { fetchCalls += 1; throw new Error('must-not-fetch'); }
+  });
+  assert.equal(identical.status, 'identical');
+  assert.equal(fetchCalls, 0);
+
+  const ancestor = await verifyDeploymentAncestry(SHA, WORKFLOW_SHA, {
+    fetchImpl: async (url) => {
+      fetchCalls += 1;
+      assert.match(String(url), new RegExp(`${SHA}\\.\\.\\.${WORKFLOW_SHA}$`));
+      return {
+        ok: true,
+        status: 200,
+        async json() {
+          return { status: 'ahead', merge_base_commit: { sha: SHA } };
+        }
+      };
+    }
+  });
+  assert.equal(ancestor.status, 'ahead');
+  assert.equal(ancestor.deployment_sha, SHA);
+  assert.equal(ancestor.workflow_sha, WORKFLOW_SHA);
+  assert.equal(fetchCalls, 1);
+
+  await assert.rejects(
+    verifyDeploymentAncestry(SHA, WORKFLOW_SHA, {
+      fetchImpl: async () => ({
+        ok: true,
+        status: 200,
+        async json() { return { status: 'diverged', merge_base_commit: { sha: 'c'.repeat(40) } }; }
+      })
+    }),
+    /P11_CAPTURE_DEPLOYMENT_NOT_ANCESTOR/
+  );
+});
+
+test('P11 readiness handler authenticates workflow SHA, verifies deployed ancestry, then opens DB read-only', async () => {
   const calls = [];
   const handler = createP11BaselineBCaptureHandler({
     env: ENV,
-    verifyOidc: async (token, options) => { calls.push(['oidc', token, options.expectedSha]); },
+    verifyOidc: async (token) => {
+      calls.push(['oidc', token]);
+      return { sha: WORKFLOW_SHA };
+    },
+    verifyAncestry: async (deploymentSha, workflowSha) => {
+      calls.push(['ancestry', deploymentSha, workflowSha]);
+      return { status: 'ahead' };
+    },
     createClient: async () => { calls.push(['db']); return { end: async () => calls.push(['end']) }; },
     inspectReadiness: async () => ({ read_only: true, database_write_committed: false, readiness: { ready: true, blockers: [] } })
   });
@@ -157,17 +206,21 @@ test('P11 readiness handler authenticates before opening DB and returns read-onl
   assert.equal(res.record.statusCode, 200);
   assert.equal(res.record.body.ok, true);
   assert.equal(res.record.body.marker, MARKER);
+  assert.equal(res.record.body.workflow_sha, WORKFLOW_SHA);
+  assert.equal(res.record.body.deployment_sha, SHA);
   assert.equal(res.record.body.read_only, true);
   assert.equal(res.record.body.database_write_committed, false);
   assert.equal(res.record.writeCalls, 0);
-  assert.deepEqual(calls.map((item) => item[0]), ['oidc', 'db', 'end']);
+  assert.deepEqual(calls.map((item) => item[0]), ['oidc', 'ancestry', 'db', 'end']);
 });
 
-test('P11 invalid OIDC fails before any database client is created', async () => {
+test('P11 invalid OIDC fails before ancestry or database access', async () => {
+  let ancestryChecked = false;
   let dbOpened = false;
   const handler = createP11BaselineBCaptureHandler({
     env: ENV,
     verifyOidc: async () => { throw new Error('P11_CAPTURE_OIDC_AUDIENCE_MISMATCH'); },
+    verifyAncestry: async () => { ancestryChecked = true; },
     createClient: async () => { dbOpened = true; return {}; }
   });
   const res = responseRecorder();
@@ -175,6 +228,23 @@ test('P11 invalid OIDC fails before any database client is created', async () =>
 
   assert.equal(res.record.statusCode, 403);
   assert.equal(res.record.body.code, 'P11_CAPTURE_OIDC_AUDIENCE_MISMATCH');
+  assert.equal(ancestryChecked, false);
+  assert.equal(dbOpened, false);
+});
+
+test('P11 non-ancestor Production deployment fails closed before database access', async () => {
+  let dbOpened = false;
+  const handler = createP11BaselineBCaptureHandler({
+    env: ENV,
+    verifyOidc: async () => ({ sha: WORKFLOW_SHA }),
+    verifyAncestry: async () => { throw new Error('P11_CAPTURE_DEPLOYMENT_NOT_ANCESTOR'); },
+    createClient: async () => { dbOpened = true; return {}; }
+  });
+  const res = responseRecorder();
+  await handler(request('capture'), res);
+
+  assert.equal(res.record.statusCode, 409);
+  assert.equal(res.record.body.code, 'P11_CAPTURE_DEPLOYMENT_NOT_ANCESTOR');
   assert.equal(dbOpened, false);
 });
 
@@ -214,7 +284,7 @@ test('P11 capture returns the exact Baseline B v2 document without enabling writ
   const baseline = completeBaselineFixture();
   const handler = createP11BaselineBCaptureHandler({
     env: ENV,
-    verifyOidc: async () => ({}),
+    verifyOidc: async () => ({ sha: SHA }),
     createClient: async () => ({ end: async () => {} }),
     captureBaseline: async () => ({ read_only: true, database_write_committed: false, baseline })
   });
@@ -223,6 +293,7 @@ test('P11 capture returns the exact Baseline B v2 document without enabling writ
 
   assert.equal(res.record.statusCode, 200);
   assert.equal(res.record.body.mode, 'capture');
+  assert.equal(res.record.body.workflow_sha, SHA);
   assert.deepEqual(res.record.body.result.baseline, baseline);
   assert.equal(res.record.body.result.baseline.schema, BASELINE_B_SCHEMA);
   assert.equal(res.record.body.result.baseline.dataset_count, EXPECTED_DATASET_COUNT);
@@ -235,7 +306,7 @@ test('P11 capture streams an artifact larger than the normal Vercel 4.5 MB respo
   const baseline = completeBaselineFixture({ oversizedBytes: 5 * 1024 * 1024 });
   const handler = createP11BaselineBCaptureHandler({
     env: ENV,
-    verifyOidc: async () => ({}),
+    verifyOidc: async () => ({ sha: SHA }),
     createClient: async () => ({ end: async () => {} }),
     captureBaseline: async () => ({ read_only: true, database_write_committed: false, baseline })
   });
