@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:christian-ix:denmark:1863-1906:v1",
+  "person": {"canonical_name_en": "Christian IX", "display_name_ko": "크리스티안 9세"},
+  "polity": {"canonical_name_en": "Denmark", "display_name_ko": "덴마크"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 1863, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 1906, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Christian IX acceded to the Danish throne in 1863 and reigned until 1906 as the first Danish monarch of the House of Glücksburg. ATLAS records his Danish sovereign reign as one continuous Activity."},
+  "sources": [{"title": "The Royal Lineage — The Danish Royal House", "canonical_url": "https://www.kongehuset.dk/en/the-monarchy-in-denmark/the-royal-lineage/", "citation_text": "The Danish Royal House lists Christian IX as reigning from 1863 to 1906.", "source_type": "government_web"}, {"title": "History — The Danish Royal House", "canonical_url": "https://www.kongehuset.dk/en/the-monarchy-in-denmark/history/", "citation_text": "The Danish Royal House identifies Christian IX as the first monarch of the current Glücksburg line and records his accession in 1863.", "source_type": "government_web"}]
+}
