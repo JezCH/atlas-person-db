@@ -1,5 +1,5 @@
 name: ATLAS P10 Release Launcher
-# Controlled rerun checkpoint after the reviewed Suleiman I temporal-boundary repair.
+# Controlled rerun checkpoint after the reviewed Suleiman I relation correction was applied successfully in Production.
 
 on:
   push:
