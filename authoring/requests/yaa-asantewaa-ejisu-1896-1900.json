@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:yaa-asantewaa:ejisu:1896-1900:v1",
+  "person": {
+    "canonical_name_en": "Yaa Asantewaa",
+    "display_name_ko": "야 아산테와"
+  },
+  "polity": {
+    "canonical_name_en": "Ejisu",
+    "display_name_ko": "에지수"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Regent",
+    "role_display_name_ko": "섭정",
+    "start_year": 1896,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1900,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Yaa Asantewaa was the Queen Mother of Ejisu, a constituent chiefdom/political unit within the Asante Empire. After the British exiled the Ejisu ruler together with Asantehene Prempeh I in 1896, she became regent of Ejisu. ATLAS therefore models this office as 'governs' Ejisu rather than as rule over the whole Asante Empire. Her de facto governing Activity ends in 1900, when she was captured after leading the anti-colonial war; her subsequent 1901 deportation and exile do not extend the Ejisu governing interval."
+  },
+  "sources": [
+    {
+      "title": "Heroes: Principles of African Greatness — Yaa Asantewaa",
+      "canonical_url": "https://africa.si.edu/exhibitions/heroes-principles-african-greatness",
+      "citation_text": "Smithsonian National Museum of African Art identifies Yaa Asantewaa as Queen Mother of Ejisu and states that she became regent of Ejisu after the British exile of its ruler and Asantehene Prempeh I in 1896.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Asantewa, Nana Yaa",
+      "canonical_url": "https://academic.oup.com/edited-volume/61663/chapter-abstract/553482896",
+      "citation_text": "Oxford Research Encyclopedia of African History describes Yaa Asantewaa as the female ruler of Ejisu and distinguishes her local political authority from her later leadership of the wider Asante resistance.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Yaa Asantewaa",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/AUTH227870",
+      "citation_text": "The British Museum identifies Yaa Asantewaa as Queen Mother and Regent of Ejisu and records her capture and exile following the 1900 resistance.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Consolidating Colonial Rule: Detentions in the Gold Coast and Sierra Leone, 1896–1901",
+      "canonical_url": "https://www.cambridge.org/core/books/imperial-incarceration/consolidating-colonial-rule-detentions-in-the-gold-coast-and-sierra-leone-18961901/E812C29E7083C2BD57894929115865B0",
+      "citation_text": "Cambridge's study of imperial incarceration states that by December 1900 the rebel leaders, including Yaa Asantewaa, had been captured, supporting 1900 as the terminal year for her de facto governing activity in Ejisu.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
