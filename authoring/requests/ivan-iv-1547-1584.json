@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ivan-iv:tsardom-of-russia:1547-1584:v1",
+  "person": {
+    "canonical_name_en": "Ivan IV",
+    "display_name_ko": "이반 4세"
+  },
+  "polity": {
+    "canonical_name_en": "Tsardom of Russia",
+    "display_name_ko": "러시아 차르국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Tsar",
+    "role_display_name_ko": "차르",
+    "start_year": 1547,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1584,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ivan IV Vasilyevich, commonly known as Ivan the Terrible, was Grand Prince of Moscow from 1533 to 1547 and was crowned the first Russian tsar in 1547. ATLAS records his principal sovereign Activity in the Tsardom of Russia as Tsar from 1547 until his death in 1584. The earlier 1533-1547 grand-princely tenure is not added as a separate Activity in this registration."
+  },
+  "sources": [
+    {
+      "title": "Иван IV Васильевич Грозный, 1530-1584 — Moscow Kremlin Museums",
+      "canonical_url": "https://collectiononline.kreml.ru/entity/PERSON/14",
+      "citation_text": "The Moscow Kremlin Museums identify Ivan IV Vasilyevich as Grand Prince of Moscow in 1533-1547 and Tsar of all Rus' from 16 January 1547 to 18 March 1584.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Ivan IV, Tsar of Russia — British Museum Collections Online",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG110117",
+      "citation_text": "The British Museum identifies Ivan IV as a Russian ruler who assumed the title Tsar of Russia in 1547, with associated ruler records dated 1547-1584.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Иван IV Васильевич — Большая российская энциклопедия",
+      "canonical_url": "https://bigenc.ru/c/ivan-iv-vasil-evich-f7714d",
+      "citation_text": "The Great Russian Encyclopedia identifies Ivan IV as Grand Prince of Moscow and Vladimir in 1533-1547 and the first Russian tsar in 1547-1584.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
