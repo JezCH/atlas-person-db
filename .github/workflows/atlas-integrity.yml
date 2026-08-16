@@ -14,7 +14,7 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     services:
       postgres:
         image: postgres:17
@@ -33,6 +33,7 @@ jobs:
       DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/atlas_ci
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
@@ -48,7 +49,7 @@ jobs:
           find api server scripts -type f \( -name '*.js' -o -name '*.mjs' -o -name '*.cjs' \) -print0 | while IFS= read -r -d '' f; do node --check "$f"; done
           for f in atlas-*.js admin.js app.js asset-loader.js; do test -f "$f" && node --check "$f"; done
 
-      - name: Run complete test suite
+      - name: Run complete current test suite
         id: complete-tests
         shell: bash
         run: |
@@ -64,98 +65,14 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-      - name: Verify requirements source of truth
+      - name: Verify current requirements source of truth
         run: npm run test:requirements
 
-      - name: Verify Vercel-minimized release governance
+      - name: Verify current release governance
         run: npm run test:release
 
-      - name: Verify R0 future semantic equivalence
-        run: npm run test:r0-gate
-
-      - name: Verify Stage 2 Baseline A integration prep
-        run: npm run test:stage2-prep
-
-      - name: Verify current Stage 2 machine-readable domain contract
+      - name: Verify current Stage 2 domain contract
         run: npm run test:stage2-contract
-
-      - name: Download exact Train 1 Baseline A artifact
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          mkdir -p artifacts/baseline-a-source
-          curl --fail --silent --show-error --location \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${GH_TOKEN}" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/artifacts/9135783402/zip" \
-            -o artifacts/baseline-a-source.zip
-          echo "9f345256859f1605942e36402b135721b631afcaf5863928f1347aa7ea2848dd  artifacts/baseline-a-source.zip" | sha256sum --check --strict
-          unzip -q artifacts/baseline-a-source.zip -d artifacts/baseline-a-source
-          test -f artifacts/baseline-a-source/atlas-correction-evidence/baseline-a.json
-          cp artifacts/baseline-a-source/atlas-correction-evidence/baseline-a.json artifacts/baseline-a-source.json
-
-      - name: Validate Baseline A v2 capture
-        run: npm run test:stage2-baseline-a
-
-      - name: Generate fresh Baseline A Stage 2 ledger and work queues
-        id: baseline-ledger
-        shell: bash
-        run: |
-          set -o pipefail
-          mkdir -p artifacts
-          npm run test:stage2-baseline-a-ledger 2>&1 | tee artifacts/stage2-baseline-a-ledger.log
-
-      - name: Build effective politic-resolution frontier
-        shell: bash
-        run: |
-          set -euo pipefail
-          node scripts/build-stage2-baseline-a-effective-p5p6-frontier.mjs
-          node scripts/verify-stage2-baseline-a-effective-p5p6-frontier.mjs
-
-      - name: Build and verify P7/P8 semantic cutover gates
-        shell: bash
-        run: |
-          set -euo pipefail
-          node scripts/build-stage2-p7p8-precutover-inventory.mjs
-          node scripts/verify-stage2-p7p8-precutover-inventory.mjs
-          node scripts/build-stage2-p7p8-effective-cutover-gate.mjs
-          node scripts/verify-stage2-p7p8-effective-cutover-gate.mjs
-
-      - name: Upload Baseline A ledger failure diagnostics
-        if: failure() && steps.baseline-ledger.outcome == 'failure'
-        uses: actions/upload-artifact@v4
-        with:
-          name: atlas-stage2-baseline-a-ledger-failure-${{ github.sha }}
-          path: artifacts/stage2-baseline-a-ledger.log
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Verify Correction v2 prebinding Batch 2
-        run: node scripts/verify-stage2-correction-v2-prebinding-batch2.mjs
-
-      - name: Upload Baseline A Stage 2 integration evidence
-        uses: actions/upload-artifact@v4
-        with:
-          name: atlas-stage2-baseline-a-integration-${{ github.sha }}
-          path: |
-            artifacts/stage2-baseline-a-intake.json
-            artifacts/stage2-baseline-a-master-ledger.json
-            artifacts/stage2-baseline-a-master-ledger-summary.json
-            artifacts/stage2-baseline-a-work-queues.json
-            artifacts/stage2-baseline-a-work-queues-summary.json
-            artifacts/stage2-baseline-a-person-duplicate-candidates.json
-            artifacts/stage2-baseline-a-p5p6-execution-manifest.json
-            artifacts/stage2-baseline-a-effective-p5p6-frontier.json
-            artifacts/stage2-p7p8-precutover-inventory.json
-            artifacts/stage2-p7a-reviewed-relation-backfill.json
-            artifacts/stage2-p7-relation-resolution-status.json
-            artifacts/stage2-full-relation-coverage-v2.json
-            artifacts/stage2-p7p8-effective-cutover-gate.json
-          if-no-files-found: error
-          retention-days: 30
 
       - name: Verify runtime architecture
         run: npm run test:runtime
@@ -163,218 +80,10 @@ jobs:
       - name: Rebuild current v2 schema on fresh PostgreSQL
         run: npm run test:schema
 
-      - name: Rehearse additive Stage 2 schema on current v2 baseline
-        run: npm run test:stage2-schema-rehearsal
-
-      - name: Rehearse normalized Stage 2 provenance
-        run: npm run test:stage2-provenance-rehearsal
-
-      - name: Rehearse Stage 2 entity boundaries and naming
-        run: npm run test:stage2-entity-boundaries
-
-      - name: Rehearse Activity semantic-key v2 replacement
-        run: npm run test:stage2-semantic-key-rehearsal
-
-      - name: Rehearse P5 additive schema release candidate and exact replay
-        id: p5-schema-release
-        shell: bash
-        run: |
-          set -o pipefail
-          mkdir -p artifacts
-          node scripts/rehearse-stage2-p5-additive-schema-release.mjs 2>&1 | tee artifacts/stage2-p5-schema-release.log
-
-      - name: Upload P5 schema release failure diagnostics
-        if: failure() && steps.p5-schema-release.outcome == 'failure'
-        uses: actions/upload-artifact@v4
-        with:
-          name: atlas-stage2-p5-schema-release-failure-${{ github.sha }}
-          path: artifacts/stage2-p5-schema-release.log
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Rehearse exact reviewed P5 identity and Source authoring
-        id: p5-entity-authoring
-        shell: bash
-        run: |
-          set -o pipefail
-          mkdir -p artifacts
-          node scripts/rehearse-stage2-p5-reviewed-entity-authoring.mjs 2>&1 | tee artifacts/stage2-p5-entity-authoring.log
-
-      - name: Upload P5 entity authoring failure diagnostics
-        if: failure() && steps.p5-entity-authoring.outcome == 'failure'
-        uses: actions/upload-artifact@v4
-        with:
-          name: atlas-stage2-p5-entity-authoring-failure-${{ github.sha }}
-          path: artifacts/stage2-p5-entity-authoring.log
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Rehearse Correction v2 engine on final P5 schema
-        id: p6-correction-v2-engine
-        shell: bash
-        run: |
-          set -o pipefail
-          mkdir -p artifacts
-          node scripts/rehearse-stage2-correction-v2-engine.mjs 2>&1 | tee artifacts/stage2-p6-correction-v2-engine.log
-
-      - name: Upload Correction v2 engine failure diagnostics
-        if: failure() && steps.p6-correction-v2-engine.outcome == 'failure'
-        uses: actions/upload-artifact@v4
-        with:
-          name: atlas-stage2-p6-correction-v2-engine-failure-${{ github.sha }}
-          path: artifacts/stage2-p6-correction-v2-engine.log
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Rehearse complete Correction v2 Stage 2 assertions
-        id: p6-correction-v2-assertions
-        shell: bash
-        run: |
-          set -o pipefail
-          mkdir -p artifacts
-          node scripts/rehearse-stage2-correction-v2-assertions.mjs 2>&1 | tee artifacts/stage2-p6-correction-v2-assertions.log
-
-      - name: Upload Correction v2 assertion failure diagnostics
-        if: failure() && steps.p6-correction-v2-assertions.outcome == 'failure'
-        uses: actions/upload-artifact@v4
-        with:
-          name: atlas-stage2-p6-correction-v2-assertion-failure-${{ github.sha }}
-          path: artifacts/stage2-p6-correction-v2-assertions.log
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Rehearse Hōjō Tokimune Japan/Kamakura governance correction
-        id: p7-hojo-governance
-        shell: bash
-        run: |
-          set -o pipefail
-          mkdir -p artifacts
-          node scripts/rehearse-stage2-p7-hojo-governance.mjs 2>&1 | tee artifacts/stage2-p7-hojo-governance.log
-
-      - name: Upload Hōjō governance rehearsal failure diagnostics
-        if: failure() && steps.p7-hojo-governance.outcome == 'failure'
-        uses: actions/upload-artifact@v4
-        with:
-          name: atlas-stage2-p7-hojo-governance-failure-${{ github.sha }}
-          path: artifacts/stage2-p7-hojo-governance.log
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Rehearse Tokugawa Ieyasu Japan/Tokugawa governance and overlap retirement
-        id: p7-tokugawa-ieyasu-governance
-        shell: bash
-        run: |
-          set -o pipefail
-          mkdir -p artifacts
-          node scripts/rehearse-stage2-p7-tokugawa-ieyasu-governance.mjs 2>&1 | tee artifacts/stage2-p7-tokugawa-ieyasu-governance.log
-
-      - name: Upload Tokugawa Ieyasu governance rehearsal failure diagnostics
-        if: failure() && steps.p7-tokugawa-ieyasu-governance.outcome == 'failure'
-        uses: actions/upload-artifact@v4
-        with:
-          name: atlas-stage2-p7-tokugawa-ieyasu-governance-failure-${{ github.sha }}
-          path: artifacts/stage2-p7-tokugawa-ieyasu-governance.log
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Rehearse Charles de Gaulle French Republic/Fifth Republic governance correction
-        id: p7-charles-de-gaulle-governance
-        shell: bash
-        run: |
-          set -o pipefail
-          mkdir -p artifacts
-          node scripts/rehearse-stage2-p7-charles-de-gaulle-governance.mjs 2>&1 | tee artifacts/stage2-p7-charles-de-gaulle-governance.log
-
-      - name: Upload Charles de Gaulle governance rehearsal failure diagnostics
-        if: failure() && steps.p7-charles-de-gaulle-governance.outcome == 'failure'
-        uses: actions/upload-artifact@v4
-        with:
-          name: atlas-stage2-p7-charles-de-gaulle-governance-failure-${{ github.sha }}
-          path: artifacts/stage2-p7-charles-de-gaulle-governance.log
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Rehearse Toyotomi Hideyoshi 1590 authority split and governance correction
-        id: p7-toyotomi-hideyoshi-governance
-        shell: bash
-        run: |
-          set -o pipefail
-          mkdir -p artifacts
-          node scripts/rehearse-stage2-p7-toyotomi-hideyoshi-governance.mjs 2>&1 | tee artifacts/stage2-p7-toyotomi-hideyoshi-governance.log
-
-      - name: Upload Toyotomi Hideyoshi governance rehearsal failure diagnostics
-        if: failure() && steps.p7-toyotomi-hideyoshi-governance.outcome == 'failure'
-        uses: actions/upload-artifact@v4
-        with:
-          name: atlas-stage2-p7-toyotomi-hideyoshi-governance-failure-${{ github.sha }}
-          path: artifacts/stage2-p7-toyotomi-hideyoshi-governance.log
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Rehearse Stalin and Bolivar chronology corrections
-        id: p7-stalin-bolivar-chronology
-        shell: bash
-        run: |
-          set -o pipefail
-          mkdir -p artifacts
-          node scripts/rehearse-stage2-p7-stalin-bolivar-chronology.mjs 2>&1 | tee artifacts/stage2-p7-stalin-bolivar-chronology.log
-
-      - name: Upload Stalin and Bolivar chronology rehearsal failure diagnostics
-        if: failure() && steps.p7-stalin-bolivar-chronology.outcome == 'failure'
-        uses: actions/upload-artifact@v4
-        with:
-          name: atlas-stage2-p7-stalin-bolivar-chronology-failure-${{ github.sha }}
-          path: artifacts/stage2-p7-stalin-bolivar-chronology.log
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Rehearse Lakshmibai discontinuous Jhansi rule split
-        id: p7-lakshmibai-jhansi-split
-        shell: bash
-        run: |
-          set -o pipefail
-          mkdir -p artifacts
-          node scripts/rehearse-stage2-p7-lakshmibai-jhansi-split.mjs 2>&1 | tee artifacts/stage2-p7-lakshmibai-jhansi-split.log
-
-      - name: Upload Lakshmibai Jhansi split rehearsal failure diagnostics
-        if: failure() && steps.p7-lakshmibai-jhansi-split.outcome == 'failure'
-        uses: actions/upload-artifact@v4
-        with:
-          name: atlas-stage2-p7-lakshmibai-jhansi-split-failure-${{ github.sha }}
-          path: artifacts/stage2-p7-lakshmibai-jhansi-split.log
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Rehearse full P6 54-target artifact-reconstructed package
-        id: p6-full-54-rehearsal
-        shell: bash
-        run: |
-          set -o pipefail
-          mkdir -p artifacts
-          node scripts/rehearse-stage2-p6-full-54-artifact-reconstruction.mjs 2>&1 | tee artifacts/stage2-p6-full-54-rehearsal.log
-
-      - name: Upload full P6 54-target rehearsal failure diagnostics
-        if: failure() && steps.p6-full-54-rehearsal.outcome == 'failure'
-        uses: actions/upload-artifact@v4
-        with:
-          name: atlas-stage2-p6-full-54-rehearsal-failure-${{ github.sha }}
-          path: artifacts/stage2-p6-full-54-rehearsal.log
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Rehearse Stage 2 native new Person authoring lifecycle
-        id: new-person-authoring-gate
-        shell: bash
-        run: |
-          set -o pipefail
-          mkdir -p artifacts
-          node scripts/rehearse-stage2-native-new-person-authoring.mjs 2>&1 | tee artifacts/stage2-native-new-person-authoring.log
-
-      - name: Upload new Person authoring gate failure diagnostics
-        if: failure() && steps.new-person-authoring-gate.outcome == 'failure'
-        uses: actions/upload-artifact@v4
-        with:
-          name: atlas-stage2-new-person-authoring-failure-${{ github.sha }}
-          path: artifacts/stage2-native-new-person-authoring.log
-          if-no-files-found: error
-          retention-days: 7
+# Historical Baseline A P3-P9 integration/rehearsal scripts remain immutable evidence
+# in the repository and in their successful release workflows. They are intentionally
+# not replayed on every current PR after the P5-P9 Production release. That includes
+# the P9 replacement rehearsal, which requires the legacy v1 index to exist before
+# proving its removal and therefore is not a validator for the already-cut-over schema.
+# Current P10 and P11 gates run in their dedicated workflows, so a historical
+# branch-only assertion cannot force completed Production phases back to PENDING.

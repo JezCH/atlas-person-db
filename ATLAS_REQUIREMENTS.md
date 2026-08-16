@@ -1,12 +1,16 @@
 # ATLAS Requirements Source of Truth v1
 
-> Status: **PRODUCTION TRAIN 1 COMPLETE / BASELINE A V2 CAPTURED / P3 BRANCH-ONLY INTEGRATION IN PROGRESS**
+> Status: **PRODUCTION THROUGH P9 COMPLETE / P10 CURRENT / P11 CAPTURE READY BUT NOT EXECUTED**
 >
+> As of: **2026-08-16**  
 > Machine registry: `requirements/atlas-requirements.v1.json`  
 > Validator: `scripts/verify-atlas-requirements.mjs`  
-> Release policy: `RELEASE_GOVERNANCE.md`
+> Release policy: `RELEASE_GOVERNANCE.md`  
+> Current release evidence: `docs/release/STAGE2_CURRENT_STATUS_2026-08-16.md`
 
 ATLAS의 기준은 **100% traceable**, **0 known contradictions**, **0 silently omitted requirements**, **unknown stays unknown**이다. 역사적 사실은 구현 편의가 아니라 reviewed primary/academic evidence로 판정하며, 근거가 부족하면 unresolved를 보존한다.
+
+이 문서는 현재 요구사항의 사람용 기준본이다. 과거 Baseline A 숫자·과거 branch 상태·실패한 workflow run은 역사적 증거로 보존하되 **현재 실행 위치로 재해석하지 않는다.** 현재 단계 판정은 machine registry와 `docs/release/STAGE2_CURRENT_STATUS_2026-08-16.md`가 함께 고정한다.
 
 ## 1. Binding constitution
 
@@ -28,196 +32,221 @@ ATLAS의 기준은 **100% traceable**, **0 known contradictions**, **0 silently 
 | `ATLAS-RQ-0014` | Person is a first-class Authoring object, not merely the name column of an Activity row. |
 | `ATLAS-RQ-0015` | Place and Source are first-class Authoring entities. Place identity is not Polity identity; Source identity is not merely an Activity locator. |
 | `ATLAS-RQ-0016` | Compile emits Runtime-ready state. Unresolved Authoring assertions must never appear as valid Runtime truth merely because they exist in the authoring database. |
-| `ATLAS-RQ-0017` | A known Person–Polity assertion with an unknown start/end boundary must remain representable without inventing an endpoint year. |
+| `ATLAS-RQ-0017` | A known Person–Polity assertion with an **unknown start/end boundary** must remain representable without inventing an endpoint year. |
 
-Polity naming follows `stage2/contracts/entity-boundaries-current.v1.json`: historical names, historiographic names and explicitly tagged editorial catalog labels are semantically distinct. Editorial labels never become historical self-designations or UUID identity.
+Polity naming follows the current Stage 2 entity-boundary contracts: historical names, historiographic names and explicitly tagged editorial catalog labels are semantically distinct. Editorial labels never become historical self-designations or UUID identity.
 
 ### Product-scope boundary
 
-The current row-oriented Persons screen and Stage 2 political model are **not** the final product definition. The final Authoring System keeps the established historical core small and composable:
+The row-oriented Persons screen is a working product surface, not the final ontology definition. The final Authoring System keeps the historical core small and composable:
 
 - Person object: identity/names, descriptions, source-backed life facts such as birth/death date/place, representative media reference, optional typed biographical facts, and related Activities.
 - Polity / Government / PeopleGroup / HistoricalEvent remain semantically separate objects.
 - Place is reusable by life facts, events and later map/runtime navigation; it does not become a Polity merely because an event or Person is associated with it.
 - Source is a reusable evidence object capable of bibliographic/web metadata plus artifact/hash metadata when an ingested file exists. File hash/bytes are not a substitute for citation metadata.
-- AI research follows `candidate → evidence/source/confidence → human review → authoritative authoring`; it never bypasses the normalized writer.
-- Game-specific or presentation-only fields must be extensions/crosswalks, not Person/Polity identity.
+- AI research follows **candidate → evidence/source/confidence → human review → authoritative authoring**; it never bypasses the normalized writer.
+- Game-specific or presentation-only fields are extensions/crosswalks, not Person/Polity identity.
 
-Unknown optional profile facts remain absent/unresolved. The system must not require religion, dynasty, gender, media, place or any other optional field merely to make a Person row “complete”.
+Unknown optional profile facts remain absent/unresolved. The system must not require religion, dynasty, gender, media, place or any other optional field merely to make a Person row “complete”. **Person, Place and Source exist as first-class Authoring objects** in the intended end state.
 
 ## 2. Completed foundations — do not rebuild
 
-| ID | Completed evidence |
+| ID | State | Foundation |
+|---|---|---|
+| `ATLAS-RQ-0101` | COMPLETED | normalized `atlas_v2` authority |
+| `ATLAS-RQ-0102` | COMPLETED | normalized identity authoring |
+| `ATLAS-RQ-0103` | COMPLETED | reconstructible current schema |
+| `ATLAS-RQ-0104` | COMPLETED | centralized ATLAS Integrity |
+| `ATLAS-RQ-0105` | COMPLETED | shared deterministic PostgreSQL client |
+| `ATLAS-RQ-0106` | COMPLETED | dedicated admin session secret role |
+| `ATLAS-RQ-0107` | COMPLETED | reviewed atomic authoring manifest v2 |
+| `ATLAS-RQ-0108` | COMPLETED | evidence-based Person duplicate review architecture |
+| `ATLAS-RQ-0109` | COMPLETED | isolated dry-run-first Correction v1 |
+
+`COMPLETED` means implementation plus repository/Production evidence exists. A successful branch rehearsal alone does not upgrade a Production requirement to completed.
+
+## 3. P0–P14 execution state
+
+### P0 — Production control — COMPLETED
+
+- `ATLAS-RQ-0201` — **COMPLETED:** fail-closed release control exists when repository protection alone is insufficient.
+- `ATLAS-RQ-0202` — **COMPLETED:** exact Production SHA deployment was proven for Train 1.
+
+### P1 — Current-schema cleanup — COMPLETED
+
+- `ATLAS-RQ-0203` — **COMPLETED:** R0 future-semantic gate and reviewed exact duplicate coalescence.
+- `ATLAS-RQ-0204` — **COMPLETED:** bounded Correction v1.1 operations.
+- `ATLAS-RQ-0205` — **COMPLETED:** reviewed current-schema R1 corrections.
+
+### P2 — Baseline A v2 — COMPLETED / HISTORICAL SNAPSHOT
+
+- `ATLAS-RQ-0206` — **COMPLETED:** full read-only Baseline A v2 captured from the then-live Production state.
+
+Historical Baseline A v2 contains **338 Activities, 302 Persons, 212 Polities and 20 Sources**, digest `sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27`.
+
+These counts are immutable historical evidence, **not current Production inventory counts**.
+
+### P3 — Baseline A Stage 2 integration — COMPLETED
+
+- `ATLAS-RQ-0207` — **COMPLETED:** Stage 2 integration rebuilt from validated Baseline A v2.
+- `ATLAS-RQ-0208` — **COMPLETED:** Sengoku authority research closure.
+- `ATLAS-RQ-0209` — **COMPLETED:** six regional-authority cases closure.
+- `ATLAS-RQ-0210` — **COMPLETED:** layered-authority R1 cases closure.
+- `ATLAS-RQ-0211` — **COMPLETED:** remaining Baseline-A-independent historical blockers closure.
+- `ATLAS-RQ-0214` — **COMPLETED:** structural Polity-relation models and normalized Source handoff.
+
+### P4 — Identity decisions — COMPLETED
+
+- `ATLAS-RQ-0212` — **COMPLETED:** Person duplicate decisions completed without premature destructive merge.
+- `ATLAS-RQ-0213` — **COMPLETED:** reviewed canonical Polity identities bound to surviving Baseline A UUIDs or explicitly modeled as new identities.
+
+### P5 — Additive Stage 2 schema — COMPLETED IN PRODUCTION
+
+- `ATLAS-RQ-0215` — **COMPLETED:** Relation, Governance, People/Event and semantic-name-kind schema package released through the controlled Production schema workflow.
+
+Production evidence is summarized in `docs/release/STAGE2_CURRENT_STATUS_2026-08-16.md`. The first failed schema run is retained only as failure history; the later controlled run succeeded.
+
+### P6 — Correction engine v2 — COMPLETED
+
+- `ATLAS-RQ-0216` — **COMPLETED:** exact UUID + exact before-state + reviewed after-state + provenance-preserving Correction v2 supports the Stage 2 correction families used by Train 2 and later integrity repair.
+
+### P7 — Historical correction/backfill — COMPLETED THROUGH TRAIN 2
+
+- `ATLAS-RQ-0217` — **COMPLETED:** reviewed structural/identity/governance/relation/temporal/provenance correction package was released through the controlled Train 2 Production path.
+
+Later corrections remain ordinary governed maintenance; they do not reopen P7 as a roadmap phase.
+
+### P8 — Global semantic gate — COMPLETED
+
+- `ATLAS-RQ-0218` — **COMPLETED:** the reviewed cutover frontier reached zero known Runtime semantic blockers before P9.
+
+Explicit unresolved history may remain Authoring-only; it must never be silently coerced into Runtime-ready truth.
+
+### P9 — Activity semantic-key v2 — COMPLETED IN PRODUCTION
+
+- `ATLAS-RQ-0219` — **COMPLETED:** Activity identity is coherently keyed by Person + Polity + Relation + nullable Role + Period Basis + full interpreted start/end temporal boundaries.
+
+Production Train 2 run `31806129999` completed successfully. Its fail-closed final verification requires the v2 index present, legacy index absent, zero semantic duplicate groups, and the Person physical-merge interlock still closed at that release point.
+
+### P10 — Person duplicate revalidation / physical merge — CURRENT, NOT COMPLETE
+
+- `ATLAS-RQ-0220` — **PENDING:** upgrade reconciliation under semantic-key v2 and physically merge only Persons that survive complete reviewed revalidation and require a merge.
+
+Current facts:
+
+- non-destructive `ATLAS P10 Person Duplicate V2 Revalidation` is green on the audited current-main line;
+- controlled Production P10 revalidation release attempts have not completed successfully;
+- therefore a green CI revalidation is **not** an authorization for physical Person merge;
+- physical merge remains fail-closed unless the exact live Production gate succeeds and reviewed candidates require execution.
+
+P10 must not be marked completed merely because later P11 code exists.
+
+### P11 — Baseline B / end-state snapshot — READY TO CAPTURE, NOT COMPLETE
+
+- `ATLAS-RQ-0221` — **PENDING:** create the authenticated, read-only, repeatable-read Baseline B and enforce end-state constraints from the actual post-P10 Production state.
+
+The P11 Baseline B implementation and readiness workflow are on main, but during the 2026-08-16 audit the Production capture workflow had **zero capture runs**. No Baseline B artifact may be claimed until that governed capture actually succeeds.
+
+### P12 — Remove reachable legacy/transitional paths — PENDING
+
+- `ATLAS-RQ-0222` — **PENDING:** after P10/P11 prove the live end state, remove reachable legacy and transitional writers/readers/contracts without destroying historical audit evidence.
+
+Historical files may remain archived as evidence. “Remove” means no active Runtime/Authoring path can resurrect obsolete semantics.
+
+### P13 — Full product lifecycle — PENDING
+
+- `ATLAS-RQ-0223` — **PENDING:** pass full Production product lifecycle acceptance.
+- `ATLAS-RQ-0226` — **PENDING:** complete first-class Person object authoring without forcing unknown optional profile facts.
+- `ATLAS-RQ-0227` — **PENDING:** complete Place and bibliographic Source authoring as independent objects.
+- `ATLAS-RQ-0228` — **PENDING:** implement explicit Compile → Runtime projection and readiness filtering.
+- `ATLAS-RQ-0229` — **PENDING:** represent unresolved Person Activity boundaries without fabricated endpoints.
+- `ATLAS-RQ-0230` — **PENDING:** complete source-backed AI candidate → human review → authoritative authoring workflow.
+
+P13 acceptance requires Person, Place and Source exist as first-class Authoring objects, the normalized writer remains authoritative, and Runtime cannot publish unresolved Authoring data as if it were settled fact.
+
+### P14 — Historical map contract — PENDING
+
+- `ATLAS-RQ-0224` — **PENDING:** integrate the historical map contract using Person → Activity → Polity → Territory → Geometry.
+- `ATLAS-RQ-0225` — **PENDING:** preserve the ATLAS map research standard and evidence discipline.
+
+Territory/Geometry work must never back-propagate invented identity, chronology or political authority into the Person DB.
+
+## 4. Current project-integrity cleanup lane
+
+This cleanup lane does not change roadmap semantics and does not bypass P10/P11.
+
+A read-only Baseline B audit is now the intended single sweep for:
+
+- Korean preferred-name coverage across Person, Polity, Role, Period Basis, Governance Context, Polity Designation, PeopleGroup and HistoricalEvent catalogs;
+- zero-source Activity detection;
+- dangling Activity/Source/reference detection;
+- semantic-key v2 completeness;
+- exact Activity semantic duplicates;
+- Activity-unreferenced Polity/Role/Period Basis candidates;
+- Polity names that look Event-like, as **review signals only**;
+- exact normalized Polity ↔ HistoricalEvent name collisions.
+
+An unused catalog row is not automatically garbage. An Event-looking name is not automatically misclassified. No destructive cleanup is authorized by string heuristics.
+
+Current audit implementation:
+
+- `server/atlas-project-integrity-audit.js`
+- `scripts/audit-atlas-project-integrity.mjs`
+- `tests/atlas-project-integrity-audit.test.mjs`
+
+Destructive data cleanup must wait for a fresh governed Production snapshot or use an existing exact correction/authoring path with source/provenance preservation.
+
+## 5. Superseded requirements — historical only
+
+| ID | State | Replacement |
+|---|---|---|
+| `ATLAS-RQ-0301` | SUPERSEDED | duplicate Person physical merge moved behind `ATLAS-RQ-0212`, `ATLAS-RQ-0219`, `ATLAS-RQ-0220` |
+| `ATLAS-RQ-0302` | SUPERSEDED | Baseline A + future Baseline B (`ATLAS-RQ-0206`, `ATLAS-RQ-0221`) |
+| `ATLAS-RQ-0303` | SUPERSEDED | bounded v1.1 plus Correction v2 (`ATLAS-RQ-0204`, `ATLAS-RQ-0216`) |
+| `ATLAS-RQ-0304` | SUPERSEDED | strict Polity/entity boundaries (`ATLAS-RQ-0003`, `ATLAS-RQ-0004`) |
+
+Superseded requirements are retained for traceability and never treated as current authority.
+
+## 6. Permanent prohibitions
+
+| ID | Prohibition |
 |---|---|
-| `ATLAS-RQ-0101` | normalized `atlas_v2` authority |
-| `ATLAS-RQ-0102` | normalized identity authoring |
-| `ATLAS-RQ-0103` | reconstructible current schema |
-| `ATLAS-RQ-0104` | centralized ATLAS Integrity |
-| `ATLAS-RQ-0105` | shared deterministic PostgreSQL client |
-| `ATLAS-RQ-0106` | dedicated admin session secret role |
-| `ATLAS-RQ-0107` | reviewed atomic authoring manifest v2 |
-| `ATLAS-RQ-0108` | evidence-based Person duplicate review architecture |
-| `ATLAS-RQ-0109` | isolated dry-run-first correction v1 |
+| `ATLAS-NO-0001` | No Person-owned geometry. |
+| `ATLAS-NO-0002` | No invented history or geometry. |
+| `ATLAS-NO-0003` | No string-based automatic Polity classification. |
+| `ATLAS-NO-0004` | No generic Relation default. |
+| `ATLAS-NO-0005` | No v1/v2 split brain. |
+| `ATLAS-NO-0006` | No early destructive Person merge. |
+| `ATLAS-NO-0007` | No stale Stage 2 stack piecemeal merge. |
+| `ATLAS-NO-0008` | No premature relink/split through legacy Correction v1.1. |
+| `ATLAS-NO-0009` | No placeholder geometry for missing evidence. |
+| `ATLAS-NO-0010` | No Runtime-driven historical distortion. |
+| `ATLAS-NO-0011` | No legacy Runtime resurrection. |
+| `ATLAS-NO-0012` | No unnecessary deployment churn. |
+| `ATLAS-NO-0013` | No merge-to-main or deploy for branch-only work. |
 
-`COMPLETED` means implementation/research or verified Production evidence exists in the repository. Production deployment state is tracked explicitly rather than inferred from Git history.
+## 7. Current execution queue
 
-## 3. Current P0–P14 execution order
+1. **P10:** settle the exact Production revalidation gate; do not physically merge Persons unless the reviewed live frontier requires it.
+2. **P11:** execute the authenticated Production Baseline B capture after the preceding P10 condition is actually settled.
+3. Run the read-only project-integrity audit against that Baseline B.
+4. Convert confirmed data problems only into reviewed, provenance-safe correction/authoring operations; Korean-display gaps are data-quality work, not identity rewrites.
+5. **P12:** remove only genuinely reachable legacy/transitional paths proven unnecessary by the captured end state.
+6. **P13:** finish and acceptance-test the first-class Person/Place/Source Authoring → Compile → Runtime lifecycle.
+7. **P14:** integrate the historical-map contract without weakening the Person/Polity evidence model.
 
-### P0 — Production control — COMPLETED for Train 1
-- `ATLAS-RQ-0201` — **COMPLETED:** use GitHub-enforced `ATLAS Integrity` protection whenever actually enforceable; otherwise use exact green PR head + zero unresolved threads + expected-head merge + exact Production SHA fail-closed control.
-- `ATLAS-RQ-0202` — **COMPLETED:** Train 1 proved exact GitHub/Vercel Production SHA before mutation. The current ledger-reconciled Production state is also exact-SHA verified.
+UI presentation work may proceed independently where it does not alter Authoring identity or Production data semantics.
 
-Evidence: `docs/release/P0_MAIN_PROTECTION_AVAILABILITY_2026-08-12.md`, `docs/release/PRODUCTION_TRAIN1_RESULT_2026-08-12.md`.
+## 8. Completion definition
 
-### P1 — Current-schema Train 1 cleanup — COMPLETED
-- `ATLAS-RQ-0203` — **COMPLETED:** R0 future-semantic gate + six exact duplicate coalesces.
-- `ATLAS-RQ-0204` — **COMPLETED:** correction v1.1 bounded to coalesce / retire / interval update.
-- `ATLAS-RQ-0205` — **COMPLETED:** Franklin retired, Bismarck Prussia interval corrected to 1862–1890, Muhammad 610–632 Medina back-projection retired while 622–632 Medinan Polity remains.
+ATLAS is not “done” merely because the current table renders or a migration ran. Completion requires:
 
-The measured Production relationship count after R0/R1 is 338. The old 346 count is historical evidence only.
-
-### P2 — Baseline A v2 — COMPLETED
-- `ATLAS-RQ-0206` — **COMPLETED:** full read-only Baseline A v2 captured from live Production and independently recaptured after ledger reconciliation with the same digest.
-
-Baseline A v2 contains **338 Activities, 302 Persons, 212 Polities and 20 Sources**, plus every Person/Polity/Role/Period Basis name catalog. Digest:
-
-`sha256:44794e825831bc7869e391d4422ce174082c1d54813b1b97889fe5afb85c3c27`
-
-The exact full snapshot is durably preserved under `stage2/baselines/` so P3 does not depend on an expiring Actions artifact or another live DB read.
-
-### P3 — Stage 2 integration — IN PROGRESS / branch only
-- `ATLAS-RQ-0207` — rebuild fresh integration from current `main` + validated Baseline A v2; never merge the old 346-row stack as authority.
-- `ATLAS-RQ-0208` — **COMPLETED** Sengoku model research.
-- `ATLAS-RQ-0209` — **COMPLETED** six regional-authority model cases.
-- `ATLAS-RQ-0210` — **COMPLETED** layered Rurik/Cao Cao/pre-221 Shu-Han model cases.
-- `ATLAS-RQ-0211` — **COMPLETED** remaining Baseline-A-independent historical model research. Irreducible uncertainty is explicit, not guessed.
-- `ATLAS-RQ-0214` — bind reviewed structural Polity relations to surviving live Polity/Source UUIDs where representable; explicit new-identity blockers remain explicit.
-
-P3 produces a **fresh 338-row master ledger and fresh work queues**. Applied R0/R1 operations are provenance, not pending work. The old 346-row master ledger and UUID bindings are not current authority.
-
-The current pre-live historical closure authority is `research/pre-vercel/stage2-pre-vercel-domain-closure.v1.json`. Territory/Geometry that does not alter Person Activity semantics is P14 work, not a reason to fabricate Stage 2 Activity identity.
-
-### P4 — Identity decisions, no destructive merge
-- `ATLAS-RQ-0212` — rebuild duplicate candidates and decide MERGE / KEEP_SEPARATE / REVIEW; execution stays blocked until P10.
-- `ATLAS-RQ-0213` — bind reviewed Polity identity models to surviving Baseline A UUIDs, or explicitly mark a reviewed target as requiring a new Polity identity. Names/keys only nominate review candidates.
-
-### P5 — Additive Stage 2 schema
-- `ATLAS-RQ-0215` — add nullable Relation Type, Governance Context, Polity relations/designations/identity transitions, full temporal boundaries, normalized provenance, Polity semantic name kind, PeopleGroup/PersonPeopleAffiliation, HistoricalEvent/PersonEventParticipation. Existing Runtime/write behavior remains valid until P9.
-
-P5 is the Stage 2 political-semantic migration, **not** a license to force the whole future Person/Place/Source product model into the live database before the final authoring/runtime boundary is ready.
-
-### P6 — Correction engine v2
-- `ATLAS-RQ-0216` — exact UUID + exact before-state + reviewed after-state + provenance + postconditions + immutable audit for relink/split/semantic/governance/Polity relation/designation/identity/source operations.
-
-### P7 — Historical correction/backfill
-- `ATLAS-RQ-0217` — apply structural correction → identity → governance → Polity relation → temporal → Relation → People/Event/name-kind → provenance backfill.
-
-### P8 — Global semantic gate
-- `ATLAS-RQ-0218` — no cutover until every Runtime-required historical/identity/provenance/semantic key is computable. Explicit unresolved history may remain in Authoring but cannot be silently coerced into Runtime-ready state.
-
-### P9 — Atomic semantic-key v2 cutover
-- `ATLAS-RQ-0219` — DB index, planner, transactions, admin/import, replay, correction and duplicate reconciliation switch coherently; no v1/v2 split brain.
-
-### P10 — Person physical merge
-- `ATLAS-RQ-0220` — only after v2-aware reconciliation + P10 candidate revalidation. Current runtime interlock rejects physical merge before that lifecycle state. Until then MERGE/KEEP_SEPARATE/REVIEW decisions remain available but destructive execution also remains disabled in the UI.
-
-### P11 — Baseline B / end-state constraints
-- `ATLAS-RQ-0221` — capture final live Baseline B, then enforce final required fields/uniqueness/checks for Runtime-ready semantic state. Do not turn optional/unknown historical facts into mandatory fake values.
-
-### P12 — Legacy retirement
-- `ATLAS-RQ-0222` — remove reachable v1 semantic identity, obsolete adapters/reconciliation, transitional writers, superseded rehearsals/CI/runtime paths.
-
-### P13 — Full Authoring product + Compile/Runtime acceptance
-- `ATLAS-RQ-0223` — pass complete Production product lifecycle acceptance.
-- `ATLAS-RQ-0226` — finish first-class Person object authoring. Minimum scope is identity/names + description + source-backed life-event date/place + representative media reference + related Activity; optional biographical attributes are typed/source-backed and never forced when unknown.
-- `ATLAS-RQ-0227` — finish reusable Place and bibliographic Source authoring as independent objects.
-- `ATLAS-RQ-0228` — implement explicit `Authoring → Compile → Runtime` projection/materialization. Runtime search/list/detail consumes compiled readiness state rather than treating every Authoring row as publishable historical truth.
-- `ATLAS-RQ-0229` — represent unresolved Person Activity boundary assertions without fake endpoint years.
-- `ATLAS-RQ-0230` — implement source-backed AI research candidate flow: candidate/evidence/confidence → human review → normalized authoring. No AI direct-to-truth write path.
-
-P13 acceptance includes, at minimum:
-
-```text
-Person object create/edit
-→ Place/Source reuse or create where needed
-→ Polity reuse/create
-→ Activity + Relation + full/unknown-aware period authoring
-→ provenance and review state
-→ Compile
-→ Runtime list/search/detail
-→ duplicate decision
-→ v2 merge/reconciliation/audit
-→ delete/reread/recompile
-```
-
-The present Activity-row table may remain a transition/editor surface until this phase, but it cannot be declared the final Person object UI merely because the underlying Stage 2 relation model is complete.
-
-### P14 — Historical map
-- `ATLAS-RQ-0224` — Person → Activity → shared Polity UUID → Territory Record → Geometry.
-- `ATLAS-RQ-0225` — preserve source hierarchy, control/influence/contested separation, uncertainty/confidence and no invented GeoJSON.
-
-P14 consumes shared UUIDs and compiled Runtime-ready historical state. Place and Territory remain different concepts: a Place is a location/entity reference; Territory is a time-varying Polity spatial assertion.
-
-## 4. Superseded plans — never revive
-
-- `ATLAS-RQ-0301` — early destructive Person merge → replaced by `ATLAS-RQ-0212`, `ATLAS-RQ-0219`, `ATLAS-RQ-0220`.
-- `ATLAS-RQ-0302` — one post-cleanup baseline only → replaced by `ATLAS-RQ-0206`, `ATLAS-RQ-0221`.
-- `ATLAS-RQ-0303` — correction v1 direct RELINK/SPLIT → replaced by `ATLAS-RQ-0204`, `ATLAS-RQ-0216`.
-- `ATLAS-RQ-0304` — country/government labels interchangeable with Polity → replaced by `ATLAS-RQ-0003`, `ATLAS-RQ-0004`.
-
-## 5. Negative requirements
-
-| ID | Forbidden |
-|---|---|
-| `ATLAS-NO-0001` | Person-owned geometry |
-| `ATLAS-NO-0002` | invented history or geometry |
-| `ATLAS-NO-0003` | string-based automatic Polity classification |
-| `ATLAS-NO-0004` | generic Relation default |
-| `ATLAS-NO-0005` | v1/v2 split brain |
-| `ATLAS-NO-0006` | early destructive Person merge |
-| `ATLAS-NO-0007` | stale Stage 2 stack piecemeal merge |
-| `ATLAS-NO-0008` | RELINK/SPLIT in correction v1.1 |
-| `ATLAS-NO-0009` | placeholder geometry |
-| `ATLAS-NO-0010` | Runtime-driven historical distortion |
-| `ATLAS-NO-0011` | legacy runtime resurrection |
-| `ATLAS-NO-0012` | unnecessary deployment churn |
-| `ATLAS-NO-0013` | merge/deploy for branch-only work |
-
-## 6. Release-train dependency
-
-```text
-P0/P1/P2 Production Train 1 — COMPLETED
-→ durable Baseline A v2 — COMPLETED
-→ P3 fresh branch-only 338-row rebinding/build/test — CURRENT
-→ P4 reviewed identity decisions, no destructive Person merge
-→ Production Train 2: P5 additive migration + P6/P7 correction/backfill + P8 + P9 + P10 + Baseline B
-→ P12 legacy retirement
-→ P13 full Authoring + Compile/Runtime acceptance
-→ P14 historical map integration
-```
-
-Train 2 cannot be safely finalized by guessing future UUID/identity decisions. Conversely, no additional Vercel deployment is justified merely to regenerate information already preserved in the durable Baseline A capture.
-
-The P13 product requirements remain downstream and do **not** expand Stage 2 Train 2 beyond the semantic transition needed to stabilize the historical core.
-
-## 7. Completion definition
-
-ATLAS development is complete only when:
-
-- every binding requirement is ACTIVE or COMPLETED;
-- `PENDING = 0`;
-- known conflict = 0;
-- silently omitted agreed core scope = 0;
-- unverified release state = 0;
-- reviewed semantic cutover blocker = 0;
-- reachable legacy runtime/writer = 0;
-- duplicate semantic identity implementation = 0;
-- unresolved Authoring assertions are representable without fabricated values and excluded from Runtime until ready;
-- Person, Place and Source exist as first-class Authoring objects at the product layer;
-- Runtime consumes an explicit Compile output/readiness projection rather than raw unresolved Authoring semantics;
-- final Baseline B exists;
-- full Production lifecycle acceptance passes;
-- historical map integration retains Polity-owned territory;
-- avoidable Vercel Production deployment churn = 0.
-
-Requirements or release-order changes must update this document, `requirements/atlas-requirements.v1.json`, and when applicable `RELEASE_GOVERNANCE.md` in the same reviewed change.
+- every active requirement is either satisfied or explicitly unresolved;
+- zero known contradictions between the human Source of Truth, machine registry, current Production evidence and Runtime contract;
+- no silently omitted requirements;
+- unknown stays unknown instead of being filled with convenient guesses;
+- all destructive corrections preserve reviewed Source/provenance;
+- no reachable legacy path can recreate v1/v2 split brain;
+- Authoring, Compile and Runtime boundaries are explicit and acceptance-tested;
+- Person, Place and Source exist as first-class Authoring objects;
+- historical map integration consumes the political/territorial model rather than rewriting it for display convenience.
