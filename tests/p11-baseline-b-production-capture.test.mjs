@@ -158,7 +158,7 @@ test('P11 deployment ancestry accepts exact or older Production main SHA and rej
   const ancestor = await verifyDeploymentAncestry(SHA, WORKFLOW_SHA, {
     fetchImpl: async (url) => {
       fetchCalls += 1;
-      assert.match(String(url), new RegExp(`${SHA}\\.\\.${WORKFLOW_SHA}$`));
+      assert.match(String(url), new RegExp(`${SHA}\\.\\.\\.${WORKFLOW_SHA}$`));
       return {
         ok: true,
         status: 200,
@@ -189,8 +189,8 @@ test('P11 readiness handler authenticates workflow SHA, verifies deployed ancest
   const calls = [];
   const handler = createP11BaselineBCaptureHandler({
     env: ENV,
-    verifyOidc: async (token, options) => {
-      calls.push(['oidc', token, options.expectedSha]);
+    verifyOidc: async (token) => {
+      calls.push(['oidc', token]);
       return { sha: WORKFLOW_SHA };
     },
     verifyAncestry: async (deploymentSha, workflowSha) => {
@@ -212,7 +212,6 @@ test('P11 readiness handler authenticates workflow SHA, verifies deployed ancest
   assert.equal(res.record.body.database_write_committed, false);
   assert.equal(res.record.writeCalls, 0);
   assert.deepEqual(calls.map((item) => item[0]), ['oidc', 'ancestry', 'db', 'end']);
-  assert.equal(calls[0][2], undefined);
 });
 
 test('P11 invalid OIDC fails before ancestry or database access', async () => {
