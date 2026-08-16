@@ -32,7 +32,7 @@ function verificationRow(overrides = {}) {
   };
 }
 
-function createFakeClient({ personExists = true, verification = verificationRow() } = {}) {
+function createFakeClient({ personExists = true, verification = verificationRow(), requirementLedgerPresent = true } = {}) {
   const calls = [];
   return {
     calls,
@@ -41,6 +41,9 @@ function createFakeClient({ personExists = true, verification = verificationRow(
       calls.push({ text, params });
 
       if (text.startsWith('begin ') || text === 'commit' || text === 'rollback') return { rowCount: 0, rows: [] };
+      if (text.startsWith('select to_regclass')) {
+        return { rowCount: 1, rows: [{ relation: requirementLedgerPresent ? 'atlas_v2.person_duplicate_revalidation_requirements' : null }] };
+      }
       if (text.includes('as active_duplicate_candidates')) return { rowCount: 1, rows: [verification] };
       if (text.startsWith('select id,canonical_key,person_type,historicity from atlas_v2.persons')) {
         return personExists
@@ -53,24 +56,17 @@ function createFakeClient({ personExists = true, verification = verificationRow(
       if (text.startsWith('delete from atlas_v2.person_names')) return { rowCount: 1, rows: [{ id: '55555555-5555-4555-8555-555555555555' }] };
       if (text.startsWith('delete from atlas_v2.persons')) return { rowCount: 1, rows: [{ id: PERSON }] };
       if (text.startsWith('delete from ') || text.startsWith('update atlas_v2.')) return { rowCount: 1, rows: [{}] };
+      if (text.startsWith('select pg_advisory_xact_lock')) return { rowCount: 1, rows: [{}] };
       throw new Error(`Unexpected SQL in fake client: ${text}`);
     }
   };
 }
 
-function dependencies({ requirementLedgerPresent = true } = {}) {
-  const calls = { readiness: 0, lock: 0, refresh: 0 };
+function dependencies() {
+  const calls = { lock: 0 };
   return {
     calls,
-    referenceReadiness: async () => {
-      calls.readiness += 1;
-      return { requirement_ledger_present: requirementLedgerPresent };
-    },
-    frontierLock: async () => { calls.lock += 1; },
-    refreshFrontier: async () => {
-      calls.refresh += 1;
-      return { detected: [], staled: 1, active_requirements: 0 };
-    }
+    frontierLock: async () => { calls.lock += 1; }
   };
 }
 
@@ -115,9 +111,35 @@ test('missing Person rolls back before destructive SQL', async () => {
   assert.equal(client.calls.at(-1).text, 'rollback');
 });
 
-test('successful Person hard-delete removes live references, refreshes duplicate frontier, verifies zero, then commits', async () => {
+test('Person hard-delete is a local cleanup and does not invoke global P10 readiness or frontier rebuild', async () => {
   const client = createFakeClient();
-  const deps = dependencies({ requirementLedgerPresent: true });
+  const deps = dependencies();
+  const service = createPersonDeleteService({
+    client,
+    ...deps,
+    referenceReadiness: async () => { throw new Error('P10_ACTIVITY_NOT_SEMANTIC_V2_READY: malformed relation_type_id'); },
+    refreshFrontier: async () => { throw new Error('global frontier rebuild must not run during hard delete'); }
+  });
+  const outcome = await service.mutate({
+    request_id: 'hard-delete-malformed-target',
+    operation: 'delete_person',
+    payload: { person_id: PERSON }
+  });
+
+  assert.equal(outcome.committed, true);
+  assert.equal(outcome.v2.deleted_person_id, PERSON);
+  assert.equal(outcome.verification.match, true);
+  assert.equal(deps.calls.lock, 1);
+
+  const serviceSource = fs.readFileSync(new URL('../server/atlas-person-delete-service.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(serviceSource, /assertPersonMergeReferenceReadiness/);
+  assert.doesNotMatch(serviceSource, /refreshCandidateFrontier/);
+  assert.match(serviceSource, /candidate_state='STALE'/);
+});
+
+test('successful Person hard-delete removes live references, stales only target duplicate frontier rows, verifies zero, then commits', async () => {
+  const client = createFakeClient();
+  const deps = dependencies();
   const service = createPersonDeleteService({ client, ...deps });
   const outcome = await service.mutate({
     request_id: 'hard-delete-success',
@@ -131,9 +153,8 @@ test('successful Person hard-delete removes live references, refreshes duplicate
   assert.equal(outcome.verification.checked, true);
   assert.equal(outcome.verification.match, true);
   assert.deepEqual(outcome.verification.remaining_live_references, verificationRow());
-  assert.equal(deps.calls.readiness, 1);
   assert.equal(deps.calls.lock, 1);
-  assert.equal(deps.calls.refresh, 1);
+  assert.equal(outcome.v2.duplicate_frontier.staled_for_deleted_person, 1);
 
   const sql = client.calls.map(({ text }) => text);
   for (const expected of [
@@ -151,7 +172,7 @@ test('successful Person hard-delete removes live references, refreshes duplicate
     'delete from atlas_v2.persons'
   ]) assert.ok(sql.some((text) => text.startsWith(expected)), `missing ${expected}`);
 
-  assert.equal(sql.some((text) => text.includes('select id,name,locale,is_preferred from atlas_v2.person_names')), false);
+  assert.ok(sql.some((text) => text.startsWith('update atlas_v2.person_duplicate_candidates') && text.includes("candidate_state='stale'")));
   assert.ok(sql.some((text) => text.includes('person_duplicate_revalidation_requirements') && text.startsWith('update ')));
   assert.equal(sql.some((text) => text.includes('delete from atlas_v2.person_duplicate_reviews')), false);
   assert.equal(sql.some((text) => text.includes('delete from atlas_v2.person_merge_audit')), false);
@@ -179,8 +200,8 @@ test('remaining live reference after destructive statements fails closed and rol
 });
 
 test('older schema without revalidation ledger skips its update but still verifies and commits', async () => {
-  const client = createFakeClient();
-  const deps = dependencies({ requirementLedgerPresent: false });
+  const client = createFakeClient({ requirementLedgerPresent: false });
+  const deps = dependencies();
   const service = createPersonDeleteService({ client, ...deps });
   const outcome = await service.mutate({
     request_id: 'hard-delete-no-revalidation-ledger',
