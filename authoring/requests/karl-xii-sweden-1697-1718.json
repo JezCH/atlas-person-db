@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:karl-xii:sweden:1697-1718:v1",
+  "request_id": "authoring:karl-xii:sweden:1697-1718:v2",
   "person": {"canonical_name_en": "Karl XII", "display_name_ko": "칼 12세"},
   "polity": {"canonical_name_en": "Sweden", "display_name_ko": "스웨덴"},
   "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 1697, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 1718, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Karl XII reigned as King of Sweden from 1697 until his death at Fredriksten in 1718. ATLAS records the conventional continuous sovereign reign at year granularity."},

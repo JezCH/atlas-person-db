@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:snorri-sturluson:icelandic-commonwealth:1206-1241:v1",
+  "request_id": "authoring:snorri-sturluson:icelandic-commonwealth:1206-1241:v2",
   "person": {"canonical_name_en": "Snorri Sturluson", "display_name_ko": "스노리 스투를루손"},
   "polity": {"canonical_name_en": "Icelandic Commonwealth", "display_name_ko": "아이슬란드 자유국"},
   "activity": {"relation_type": "active_in", "period_basis": "artistic_activity", "role": "Historian and Poet", "role_display_name_ko": "역사가·시인", "start_year": 1206, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical", "end_year": 1241, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Snorri Sturluson was an Icelandic chieftain, historian, poet and politician of the Icelandic Commonwealth. Snorrastofa records that he lived at Reykholt from 1206 until his death in 1241 and credits him with major works including the Edda and Heimskringla. ATLAS therefore uses a broad representative literary and scholarly Activity from c.1206 to 1241 rather than reducing him to either of his two non-contiguous terms as lawspeaker (1215–1218 and 1222–1231)."},
