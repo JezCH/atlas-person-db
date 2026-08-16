@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sappho:mytilene:c600-c580-bce:v1",
+  "person": {
+    "canonical_name_en": "Sappho",
+    "display_name_ko": "사포"
+  },
+  "polity": {
+    "canonical_name_en": "Mytilene",
+    "display_name_ko": "미틸레네"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "artistic_activity",
+    "role": "Poet",
+    "role_display_name_ko": "시인",
+    "start_year": -600,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -580,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sappho was an Archaic Greek lyric poet associated with Lesbos and especially Mytilene. This Activity models her as a poet active in the polis of Mytilene, not as a ruler of Lesbos. Oxford Bibliographies reports broad scholarly consensus that she composed many poems between approximately 600 and 580 BCE while emphasizing uncertainty in the exact floruit; those dates are therefore used as approximate artistic-activity boundaries rather than converting the broader c. 630-c. 570 BCE biographical range into a false exact career span. Mytilene is preferred over the island label Lesbos because the evidence places her life and activity chiefly in Mytilene and Mytilene functioned as a major polis within the Lesbian political setting."
+  },
+  "sources": [
+    {
+      "title": "Sappho, lyric poet, c. 630-c. 570 BCE",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/550496350",
+      "citation_text": "The Oxford Classical Dictionary identifies Sappho as an Archaic Greek lyric poet and gives the broad biographical chronology c. 630-c. 570 BCE.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Sappho - Oxford Bibliographies in Classics",
+      "canonical_url": "https://academic.oup.com/reference/62365/reference-article-abstract/554613087",
+      "citation_text": "Oxford Bibliographies states that broad scholarly consensus places the composition of many of Sappho's poems between c. 600 and 580 BCE, while stressing uncertainty over the exact dates of her floruit and noting her activities in Mytilene.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Sappho's Lesbos",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/cambridge-companion-to-sappho/sapphos-lesbos/D35D52CAED9F32A66CC990782FAD554F",
+      "citation_text": "The Cambridge Companion to Sappho situates Sappho in Archaic Lesbos and treats Mytilene as a central polis in the historical and geographic context of her poetry.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Aeolic Component of Homeric Diction",
+      "canonical_url": "https://chs.harvard.edu/curated-article/gregory-nagy-the-aeolic-component-of-homeric-diction/",
+      "citation_text": "Harvard's Center for Hellenic Studies places the poetic language of Sappho and Alcaeus in the political setting of the federation of Aeolian cities on Lesbos, controlled by Mytilene, in the late seventh and early sixth centuries BCE.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
