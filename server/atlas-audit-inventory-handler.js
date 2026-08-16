@@ -151,6 +151,59 @@ async function queryIdentityCatalogs(client) {
   return Object.freeze({ persons: persons.rows, polities: polities.rows, roles: roles.rows, period_bases: periodBases.rows, sources: sources.rows });
 }
 
+async function querySemanticV2Breakdown(client) {
+  const totalsResult = await client.query(`
+      select count(*)::int as activity_count,
+             count(*) filter (where relation_type_id is null)::int as relation_type_id_null,
+             count(*) filter (where period_basis_id is null)::int as period_basis_id_null,
+             count(*) filter (where activity_start_granularity is null)::int as activity_start_granularity_null,
+             count(*) filter (where activity_start_calendar is null)::int as activity_start_calendar_null,
+             count(*) filter (where activity_end_granularity is null)::int as activity_end_granularity_null,
+             count(*) filter (where activity_end_calendar is null)::int as activity_end_calendar_null,
+             count(*) filter (
+               where relation_type_id is null
+                  or period_basis_id is null
+                  or activity_start_granularity is null
+                  or activity_start_calendar is null
+                  or activity_end_granularity is null
+                  or activity_end_calendar is null
+             )::int as semantic_v2_incomplete
+        from atlas_v2.person_politics_v2`);
+  const patternsResult = await client.query(`
+      select (relation_type_id is null) as relation_type_missing,
+             (period_basis_id is null) as period_basis_missing,
+             (activity_start_granularity is null) as activity_start_granularity_missing,
+             (activity_start_calendar is null) as activity_start_calendar_missing,
+             (activity_end_granularity is null) as activity_end_granularity_missing,
+             (activity_end_calendar is null) as activity_end_calendar_missing,
+             count(*)::int as count
+        from atlas_v2.person_politics_v2
+       group by 1,2,3,4,5,6
+       order by count(*) desc, 1,2,3,4,5,6`);
+  const totals = totalsResult.rows[0] || {};
+  return Object.freeze({
+    activity_count: Number(totals.activity_count || 0),
+    semantic_v2_incomplete: Number(totals.semantic_v2_incomplete || 0),
+    null_counts: Object.freeze({
+      relation_type_id: Number(totals.relation_type_id_null || 0),
+      period_basis_id: Number(totals.period_basis_id_null || 0),
+      activity_start_granularity: Number(totals.activity_start_granularity_null || 0),
+      activity_start_calendar: Number(totals.activity_start_calendar_null || 0),
+      activity_end_granularity: Number(totals.activity_end_granularity_null || 0),
+      activity_end_calendar: Number(totals.activity_end_calendar_null || 0)
+    }),
+    patterns: patternsResult.rows.map((row) => Object.freeze({
+      relation_type_missing: Boolean(row.relation_type_missing),
+      period_basis_missing: Boolean(row.period_basis_missing),
+      activity_start_granularity_missing: Boolean(row.activity_start_granularity_missing),
+      activity_start_calendar_missing: Boolean(row.activity_start_calendar_missing),
+      activity_end_granularity_missing: Boolean(row.activity_end_granularity_missing),
+      activity_end_calendar_missing: Boolean(row.activity_end_calendar_missing),
+      count: Number(row.count || 0)
+    }))
+  });
+}
+
 function nestedNameCount(rows) {
   return rows.reduce((sum, row) => sum + (Array.isArray(row.names) ? row.names.length : 0), 0);
 }
@@ -211,8 +264,11 @@ async function queryFullStage2Baseline(client) {
     const activityIds = rows.map((row) => String(row.activity_id).toLowerCase());
     if (new Set(activityIds).size !== activityIds.length) throw new Error("AUDIT_BASELINE_DUPLICATE_ACTIVITY_UUID");
     assertCatalogCounts(catalogs, counts);
+    const semanticV2Breakdown = await querySemanticV2Breakdown(client);
+    if (semanticV2Breakdown.activity_count !== Number(counts.activities)) throw new Error("AUDIT_BASELINE_SEMANTIC_V2_COUNT_DRIFT");
     await client.query("commit");
-    return Object.freeze({ rows, counts, catalogs, baseline_digest: digestBaseline(rows, counts, catalogs) });
+    return Object.freeze({ rows, counts, catalogs, semantic_v2_breakdown: semanticV2Breakdown,
+      baseline_digest: digestBaseline(rows, counts, catalogs) });
   } catch (error) {
     try { await client.query("rollback"); } catch {}
     throw error;
@@ -246,7 +302,8 @@ function createAuditInventoryHandler({ env = process.env, verifyOidc = verifyGit
         if (req.body?.activity_ids != null) throw new Error("AUDIT_BASELINE_ACTIVITY_IDS_FORBIDDEN");
         const baseline = await queryFullStage2Baseline(client);
         return json(res, 200, { ok: true, marker: MARKER, mode, read_only: true, committed: false, deployment_sha: deployment.actualSha,
-          row_count: baseline.rows.length, counts: baseline.counts, baseline_digest: baseline.baseline_digest, rows: baseline.rows, catalogs: baseline.catalogs });
+          row_count: baseline.rows.length, counts: baseline.counts, baseline_digest: baseline.baseline_digest,
+          semantic_v2_breakdown: baseline.semantic_v2_breakdown, rows: baseline.rows, catalogs: baseline.catalogs });
       }
       const activityIds = normalizeActivityIds(req.body?.activity_ids);
       const rows = await queryInventory(client, activityIds);
@@ -262,5 +319,5 @@ function createAuditInventoryHandler({ env = process.env, verifyOidc = verifyGit
 }
 
 module.exports = Object.freeze({ MARKER, MAX_ACTIVITY_IDS, MODES, AUDIT_OIDC_AUDIENCE, AUDIT_WORKFLOW_REF,
-  createAuditInventoryHandler, normalizeActivityIds, normalizeMode, queryInventory, queryIdentityCatalogs, queryFullStage2Baseline,
-  digestBaseline, requireDeployment, bearerToken, statusForError });
+  createAuditInventoryHandler, normalizeActivityIds, normalizeMode, queryInventory, queryIdentityCatalogs, querySemanticV2Breakdown,
+  queryFullStage2Baseline, digestBaseline, requireDeployment, bearerToken, statusForError });
