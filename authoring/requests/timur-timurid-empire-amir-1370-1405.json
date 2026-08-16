@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:timur:timurid-empire:amir:1370-1405:v1",
+  "person": {
+    "canonical_name_en": "Timur",
+    "display_name_ko": "티무르"
+  },
+  "polity": {
+    "canonical_name_en": "Timurid Empire",
+    "display_name_ko": "티무르 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Amir",
+    "role_display_name_ko": "아미르",
+    "start_year": 1370,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1405,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Timur became master of Transoxiana in 1370, established Samarqand as his capital, and ruled the Timurid polity until his death in 1405. Although his empire expanded across much of Central and West Asia, the underlying sovereign Activity remained continuous. ATLAS uses the role Amir rather than Khan: Timur was not a direct male-line Chinggisid and ruled while maintaining Chinggisid khans as nominal dynastic legitimators; contemporary and institutional references commonly style him Amir Timur or Timur Gurkan. The polity is modeled as the Timurid Empire rather than the Chagatai Khanate because Timur's post-1370 regime became the eponymous political order continued by his descendants.",
+    "start_granularity": "year",
+    "end_granularity": "year"
+  },
+  "sources": [
+    {
+      "title": "Timur",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG14668",
+      "citation_text": "The British Museum identifies Timur, also known as Amir Timur Gurkan and Tamerlane, as a Timurid ruler and gives his reign as 1370-1405.",
+      "source_type": "museum_collection"
+    },
+    {
+      "title": "The Art of the Timurid Period (ca. 1370-1507)",
+      "canonical_url": "https://www.metmuseum.org/pt/essays/the-art-of-the-timurid-period-ca-1370-1507",
+      "citation_text": "The Metropolitan Museum of Art states that in 1370 Timur became master of Transoxiana, established Samarqand as his capital, founded the Timurid dynasty, and died in 1405.",
+      "source_type": "museum_scholarly_essay"
+    },
+    {
+      "title": "Timurnamah-i kulliyat-i Farsi",
+      "canonical_url": "https://www.loc.gov/item/2001287275/",
+      "citation_text": "The Library of Congress describes the work as a historical study of Amir Timur's conquests and identifies Timur as the Turkic-Mongolian founder of the Timurid dynasty and lineage.",
+      "source_type": "library_collection"
+    },
+    {
+      "title": "BIBI KHANOM MOSQUE",
+      "canonical_url": "https://www.iranicaonline.org/articles/bibi-khanom-mosque-named-after-bibi-khanom-otherwise-known-as-saray-molk-khanom-chief-wife-of-timur-r/",
+      "citation_text": "Encyclopaedia Iranica gives Timur's reign as 771-807 AH / 1370-1405 and explains his use of the dynastic-marital title Gurkan through his Chinggisid marriage connection.",
+      "source_type": "scholarly_reference"
+    }
+  ]
+}
