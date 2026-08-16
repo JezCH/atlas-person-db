@@ -1,9 +1,7 @@
 "use strict";
 
 const crypto = require("node:crypto");
-const { assertPersonMergeReferenceReadiness } = require("./atlas-person-merge-reference-readiness.js");
 const { lockPersonDuplicateFrontier } = require("./atlas-person-duplicate-frontier-lock.js");
-const { refreshCandidateFrontier } = require("./atlas-duplicate-review-service.js");
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -77,14 +75,10 @@ async function verifyNoLiveReferences(client, personId, { requirementLedgerPrese
 
 function createPersonDeleteService({
   client,
-  referenceReadiness = assertPersonMergeReferenceReadiness,
-  frontierLock = lockPersonDuplicateFrontier,
-  refreshFrontier = refreshCandidateFrontier
+  frontierLock = lockPersonDuplicateFrontier
 } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client with query() is required");
-  if (typeof referenceReadiness !== "function") throw new Error("referenceReadiness must be a function");
   if (typeof frontierLock !== "function") throw new Error("frontierLock must be a function");
-  if (typeof refreshFrontier !== "function") throw new Error("refreshFrontier must be a function");
 
   async function mutate(request = {}) {
     const requestId = String(request.request_id || crypto.randomUUID());
@@ -95,8 +89,10 @@ function createPersonDeleteService({
 
     await client.query("BEGIN ISOLATION LEVEL SERIALIZABLE");
     try {
-      const referenceState = await referenceReadiness(client);
-      const requirementLedgerPresent = Boolean(referenceState?.requirement_ledger_present);
+      // Hard-delete is a local cleanup operation. It must remain usable precisely when
+      // the target Person contains malformed/non-semantic Activity data, so it must not
+      // depend on global P10 semantic readiness or a full duplicate-frontier rebuild.
+      const requirementLedgerPresent = await tablePresent(client, "atlas_v2.person_duplicate_revalidation_requirements");
       await frontierLock(client);
 
       const person = await client.query(`
@@ -138,6 +134,14 @@ function createPersonDeleteService({
       deleted.person_descriptions = (await client.query(`delete from atlas_v2.person_descriptions where person_id=$1 returning id`, [personId])).rowCount;
       deleted.person_names = (await client.query(`delete from atlas_v2.person_names where person_id=$1 returning id`, [personId])).rowCount;
       deleted.authoring_person_refs_cleared = (await client.query(`update atlas_v2.authoring_manifest_runs set person_id=null where person_id=$1 returning request_id`, [personId])).rowCount;
+
+      // Preserve duplicate/audit history, but remove the deleted UUID from the live frontier.
+      deleted.duplicate_candidates_staled = (await client.query(`
+        update atlas_v2.person_duplicate_candidates
+           set candidate_state='STALE',updated_at=now()
+         where candidate_state='ACTIVE' and (person_low_id=$1 or person_high_id=$1)
+         returning id`, [personId])).rowCount;
+
       if (requirementLedgerPresent) {
         deleted.revalidation_requirements_retired = (await client.query(`
           update atlas_v2.person_duplicate_revalidation_requirements
@@ -152,7 +156,6 @@ function createPersonDeleteService({
       if (personDelete.rowCount !== 1) throw new Error("Person delete did not affect exactly one row");
       deleted.persons = personDelete.rowCount;
 
-      const frontier = await refreshFrontier(client);
       const verification = await verifyNoLiveReferences(client, personId, { requirementLedgerPresent });
       if (!verification.match) {
         const error = new Error(`PERSON_DELETE_VERIFICATION_FAILED:${JSON.stringify(verification.counts)}`);
@@ -170,9 +173,8 @@ function createPersonDeleteService({
           deleted_person_id: personId,
           deleted_counts: deleted,
           duplicate_frontier: {
-            detected: frontier.detected.length,
-            staled: frontier.staled,
-            active_requirements: frontier.active_requirements
+            staled_for_deleted_person: deleted.duplicate_candidates_staled,
+            active_requirements_retired: deleted.revalidation_requirements_retired
           }
         },
         verification: { checked: true, match: true, remaining_live_references: verification.counts }
