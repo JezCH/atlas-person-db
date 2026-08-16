@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:enheduanna:akkadian-empire:c2285-2250-bce:v1",
+  "person": {
+    "canonical_name_en": "Enheduanna",
+    "display_name_ko": "엔헤두안나"
+  },
+  "polity": {
+    "canonical_name_en": "Akkadian Empire",
+    "display_name_ko": "아카드 제국"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "religious_activity",
+    "role": "High Priestess of Nanna",
+    "role_display_name_ko": "난나 최고여사제",
+    "start_year": -2285,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -2250,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Enheduanna was a historical Akkadian royal princess and the high priestess (en-priestess) of the moon god Nanna at Ur. Her contemporary calcite disk identifies her as daughter of Sargon of Akkad and priestess/spouse of Nanna. Modern scholarship places her priestly career from the reign of Sargon into that of his grandson Naram-Sin; during the great rebellion under Naram-Sin she was expelled from office and subsequently restored. ATLAS therefore models her as serving the Akkadian Empire through a politically significant religious office rather than as ruling Akkad or Ur. The c.2285-c.2250 BCE boundaries are conventional biographical/activity estimates, not independently attested installation and death dates, and are intentionally approximate. Literary works are traditionally attributed to Enheduanna, but this Activity does not depend on resolving the separate scholarly debate over the authorship and transmission history of those compositions."
+  },
+  "sources": [
+    {
+      "title": "Disc of Enheduanna — Penn Museum Collections",
+      "canonical_url": "https://www.penn.museum/collections/object/293415",
+      "citation_text": "Penn Museum catalogs the Old Akkadian-period disk from Ur, dated ca. 2300 BCE, whose inscription identifies Enheduanna as the daughter of Sargon of Akkad; the object provides contemporary evidence for her historical identity and cultic office.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "EN-ḪEDU-ANA: THE BIRTH OF LITERATURE THROUGH THE GODDESS — Iraq, Cambridge Core",
+      "canonical_url": "https://www.cambridge.org/core/journals/iraq/article/enheduana-the-birth-of-literature-through-the-goddess/3B1A7705D84B732E39EDFEC6B1233B6F",
+      "citation_text": "The peer-reviewed study states that Enheduanna's historicity is proven by contemporary evidence and that she served as high priestess of Nanna at Ur from the reign of Sargon into that of his grandson Naram-Sin, including the historical context of the Great Rebellion.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "A Conqueror and a Priestess — Weavers, Scribes, and Kings, Oxford Academic",
+      "canonical_url": "https://academic.oup.com/book/43787/chapter-abstract/371086241",
+      "citation_text": "Amanda H. Podany describes Enheduanna as Sargon's daughter and high en-priestess of the moon god at Ur, and notes her expulsion during a rebellion under Naram-Sin and restoration after the rebellion was defeated.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Enheduanna — The New Historia",
+      "canonical_url": "https://www.thenewhistoria.org/schema/enheduanna/",
+      "citation_text": "The scholarly biography compiled by Louise M. Pryke gives the conventional approximate biographical dates 2285-2250 BCE and describes Enheduanna's appointment to the moon-god temple at Ur, supporting the representative ATLAS chronology while not making it exact.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

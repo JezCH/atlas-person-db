@@ -1,0 +1,45 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ateas:scythian-kingdom:c360-339-bce:v1",
+  "person": {
+    "canonical_name_en": "Ateas",
+    "display_name_ko": "아테아스"
+  },
+  "polity": {
+    "canonical_name_en": "Scythian Kingdom",
+    "display_name_ko": "스키타이 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -360,
+    "end_year": -339,
+    "start_certainty": "uncertain",
+    "end_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Ateas was a fourth-century BCE Scythian king whose securely documented political activity belongs to the 360s-339 BCE and who died in 339 BCE in war against Philip II of Macedon. The -360 start is a conventional year-level boundary representing activity attested from the 360s BCE, not a securely known accession year. Modern scholarship also disputes whether Ateas ruled all of Scythia or primarily the western Scythians around the lower Danube and Pontic steppe. ATLAS therefore uses the map-level polity label Scythian Kingdom while preserving the territorial-scope uncertainty rather than asserting universal rule over every Scythian group."
+  },
+  "sources": [
+    {
+      "title": "SCYTHIANS — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/scythians/",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Ateas and Theopompus — The Journal of Hellenic Studies",
+      "canonical_url": "https://www.cambridge.org/core/journals/journal-of-hellenic-studies/article/abs/ateas-and-theopompus/18676CEAE4B6754AB7F01A3D388405FD",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Les contacts diplomatiques entre le Bosphore et la Scythie à l'époque d'Atéas — Dialogues d'histoire ancienne",
+      "canonical_url": "https://www.persee.fr/doc/dha_0755-7256_1992_num_18_1_1986",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

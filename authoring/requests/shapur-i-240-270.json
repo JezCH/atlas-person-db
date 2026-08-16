@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:shapur-i:sasanian-empire:240-270:v1",
+  "person": {
+    "canonical_name_en": "Shapur I",
+    "display_name_ko": "샤푸르 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Sasanian Empire",
+    "display_name_ko": "사산 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Shahanshah (King of Kings)",
+    "role_display_name_ko": "샤한샤(왕중왕)",
+    "start_year": 240,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 270,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Shapur I was the second Sasanian king of kings and one of the formative rulers of the early Sasanian Empire. He continued and expanded the new dynasty's imperial program, fought major wars against Rome, captured the Roman emperor Valerian in 260 CE, and commemorated his victories and the extent of his realm in monumental rock reliefs and the trilingual Ka'ba-ye Zardosht inscription. ATLAS begins the rules relation in 240 CE, the year strongly associated with his coronation/accession; some scholarship interprets this first phase as co-rule with his father Ardashir I before Shapur became sole monarch, so the record does not imply that every part of 240 was uncontested sole rule. Iranica's reconstructed chronology places his death around May 270, while some museum and older reference chronologies extend the reign to 272. ATLAS therefore uses 240-270 as the reviewed representative reign interval, preserving the end boundary as approximate rather than presenting the disputed absolute chronology as exact."
+  },
+  "sources": [
+    {
+      "title": "SHĀPUR I: History — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/shapur-i/",
+      "citation_text": "Encyclopaedia Iranica identifies Shapur I as the second Sasanian king of kings, argues for a 240 accession/coronation, describes his major Roman wars including Valerian's capture, and places his death probably in May 270 while discussing the chronology problem.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "SASANIAN DYNASTY — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/sasanian-dynasty/",
+      "citation_text": "The dynastic history describes Shapur as Ardashir I's successor, gives 12 April 240 for his accession in one reconstruction, and highlights the Ka'ba-ye Zardosht inscription as a major record of his Roman wars and the extent and institutions of the empire.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Sasanian Empire (224–651 A.D.) — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/ko/essays/the-sasanian-empire-224-651-a-d",
+      "citation_text": "The Metropolitan Museum calls Shapur I one of the most energetic and able Sasanian rulers, describes institutional strengthening and his capture of the Roman emperor Valerian, and illustrates the alternative 241-272 reign chronology retained in some reference traditions.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "글로벌 세계 대백과사전 — 파르티아 왕국과 사산 왕조 페르시아",
+      "canonical_url": "https://ko.wikisource.org/wiki/글로벌_세계_대백과사전/세계사/인류_문화의_시작/그리스도교의_성립/파르티아_왕국과_사산_왕조_페르시아",
+      "citation_text": "The Korean encyclopedia tradition uses the display form 샤푸르 1세 and identifies him as the second Sasanian ruler whose wars against Rome, including the capture of Valerian, greatly strengthened the dynasty.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

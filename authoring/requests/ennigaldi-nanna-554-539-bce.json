@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ennigaldi-nanna:neo-babylonian-empire:554-539-bce:v1",
+  "person": {
+    "canonical_name_en": "Ennigaldi-Nanna",
+    "display_name_ko": "엔니갈디-난나"
+  },
+  "polity": {
+    "canonical_name_en": "Neo-Babylonian Empire",
+    "display_name_ko": "신바빌로니아 제국"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "religious_activity",
+    "role": "Entu High Priestess of Sin at Ur",
+    "role_display_name_ko": "우르의 달신 난나(신) 엔투 최고여사제",
+    "start_year": -554,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -539,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ennigaldi-Nanna was a daughter of Nabonidus, the last king of the Neo-Babylonian Empire. Nabonidus' own inscriptions record that after divination he elevated his daughter to the revived office of entu high priestess of the moon god Sin/Nanna at Ur and gave her the ceremonial name En-nigaldi-Nanna. The appointment belongs to Nabonidus' second regnal year, 554 BCE. ATLAS models her as serving the Neo-Babylonian Empire through a royal-religious office rather than as a sovereign ruler. The terminal year 539 BCE is the end of the Neo-Babylonian political context after the Persian conquest and is not asserted as her death date or necessarily the end of her priestly life. A sixth-century BCE antiquities collection excavated in the complex associated with her has often been interpreted since Leonard Woolley as the world's earliest known museum and Ennigaldi-Nanna is therefore frequently called an early or the first museum curator; this is a historically important modern archaeological interpretation, not a contemporaneous title or a securely documented personal act, so ATLAS does not use 'curator' as her primary Activity role. The user-supplied label Babylon is normalized to Neo-Babylonian Empire."
+  },
+  "sources": [
+    {
+      "title": "Nabonidus 34 — Royal Inscriptions of Babylonia Online (RIBo/ORACC)",
+      "canonical_url": "https://oracc.museum.upenn.edu/ribo/Q005431",
+      "citation_text": "The royal inscription records the divine request for an entu-priestess and Nabonidus' response concerning the appointment of his daughter at Ur.",
+      "source_type": "primary_text_digital_edition"
+    },
+    {
+      "title": "RINBE 2, Nabonidus 34 composite — Cuneiform Digital Library Initiative",
+      "canonical_url": "https://cdli.earth/P519058",
+      "citation_text": "The CDLI edition translates Nabonidus' statement that he raised his own daughter to the high-priestess office and named her En-Nigaldi-Nanna; the inscription's astronomical and regnal context supports the 554 BCE appointment.",
+      "source_type": "primary_text_digital_edition"
+    },
+    {
+      "title": "The Giparu at Ur — Iraq 37 (1975)",
+      "canonical_url": "https://www.cambridge.org/core/journals/iraq/article/abs/giparu-at-ur/9A82B8A406B8F2BEC32B02FBF2CC008B",
+      "citation_text": "Penelope Weadock identifies the giparu as the official residence of the entu-priestess and states that Nabonidus revived the long-lapsed office and established his daughter Ennigaldi-Nanna as entu at Ur.",
+      "source_type": "scholarly_article"
+    },
+    {
+      "title": "Architecture on Display — Les Cahiers de la recherche architecturale urbaine et paysagere",
+      "canonical_url": "https://journals.openedition.org/lha/10902?lang=en",
+      "citation_text": "The article discusses the sixth-century BCE antiquities display associated with Ennigaldi-Nanna and the modern interpretation of it as the earliest known exhibition or museum, while making clear that little of the display itself can be reconstructed.",
+      "source_type": "scholarly_article"
+    }
+  ]
+}
