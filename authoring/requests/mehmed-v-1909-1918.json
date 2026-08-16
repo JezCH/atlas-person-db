@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mehmed-v:ottoman-empire:1909-1918:v1",
+  "person": {
+    "canonical_name_en": "Mehmed V",
+    "display_name_ko": "메흐메트 5세"
+  },
+  "polity": {
+    "canonical_name_en": "Ottoman Empire",
+    "display_name_ko": "오스만 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1909,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1918,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mehmed V, also widely known as Mehmed Reşad or Sultan Reşad, was the thirty-fifth Ottoman sultan. TDV İslâm Ansiklopedisi identifies him as an Ottoman ruler reigning from 1909 to 1918 and records his accession on 27 April 1909 after the deposition of Abdülhamid II. The British Museum independently identifies him as an Ottoman Sultan and gives his ruled dates as 1909–1918. ATLAS therefore normalizes the user-supplied polity label Ottomans to the existing canonical state label Ottoman Empire and records his sovereign Activity as one continuous 1909–1918 reign at year granularity."
+  },
+  "sources": [
+    {
+      "title": "MEHMED V — TDV İslâm Ansiklopedisi",
+      "canonical_url": "https://islamansiklopedisi.org.tr/mehmed-v",
+      "citation_text": "TDV İslâm Ansiklopedisi identifies Mehmed V as an Ottoman sultan reigning from 1909 to 1918 and records his accession following the deposition of Abdülhamid II on 27 April 1909.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Mehmed V — British Museum Collections Online",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG167395",
+      "citation_text": "The British Museum identifies Mehmed V as an Ottoman Sultan and gives his ruled dates as AD 1909–AD 1918.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
