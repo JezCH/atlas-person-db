@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ismail-i:safavid-empire:1501-1524:v1",
+  "person": {
+    "canonical_name_en": "Ismail I",
+    "display_name_ko": "이스마일 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Safavid Empire",
+    "display_name_ko": "사파비 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Shah",
+    "role_display_name_ko": "샤",
+    "start_year": 1501,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1524,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ismail I (Shah Ismail I; Persian Esma'il I Safawi) founded Safavid political rule in Iran. Encyclopaedia Iranica records that he was crowned Shah at Tabriz in 1501 and died on 23 May 1524; its Safavid dynasty overview likewise gives his reign as 1501-24. The British Museum independently catalogues him as founder of the Safavid dynasty and ruler from 1501 to 1524, while the Metropolitan Museum of Art identifies him as the first Safavid shah, crowned at Tabriz in 1501 and reigning until 1524. ATLAS therefore normalizes the user-supplied broad label Iran to the historically specific Safavid Empire and records his royal Activity as one continuous 1501-1524 reign at year granularity. The Korean display name is normalized to the commonly used 이스마일 1세 rather than the user-entered 이스마엘 1세 spelling."
+  },
+  "sources": [
+    {
+      "title": "Esmāʿīl I Ṣafawī — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/esmail-i-safawi/",
+      "citation_text": "Encyclopaedia Iranica identifies Esmail I Safawi as founder of the Safavid dynasty, records his coronation as Shah at Tabriz in 1501, and gives his death as 23 May 1524.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Safavid Dynasty — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/safavids/",
+      "citation_text": "Encyclopaedia Iranica's Safavid dynasty overview lists Esmail I as reigning from 1501 to 1524 and states that he inaugurated Safavid political rule by proclaiming himself shah in Tabriz in 1501.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Shah Isma'il I — British Museum Collections Online",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG118353",
+      "citation_text": "The British Museum catalogues Shah Isma'il I as a Persian ruler, founder of the Safavid dynasty, with ruled dates 1501-1524 and Tabriz as the Safavid capital under him.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Art of the Safavids before 1600 — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/ko/essays/the-art-of-the-safavids-before-1600",
+      "citation_text": "The Metropolitan Museum of Art states that Isma'il Safavi was crowned in Tabriz in 1501 as the first Safavid shah and gives his reign as 1501-1524.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
