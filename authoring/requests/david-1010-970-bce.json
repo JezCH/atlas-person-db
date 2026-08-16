@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:david:kingdom-of-israel:1010-970-bce:v1",
+  "person": {
+    "canonical_name_en": "David",
+    "display_name_ko": "다윗"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Israel",
+    "display_name_ko": "이스라엘 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -1010,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -970,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "David is recorded here as king of the Kingdom of Israel using the conventional working chronology c. 1010-970 BCE. The Hebrew Bible attributes a forty-year reign to David, distinguishing seven years and six months at Hebron over Judah from thirty-three years at Jerusalem over Israel and Judah. The absolute regnal years are reconstructed rather than textually exact, and scholarship continues to debate the scale and political organization of the tenth-century United Monarchy. This Activity therefore encodes the conventional reign interval at year granularity without asserting the maximal territorial picture of the biblical narrative."
+  },
+  "sources": [
+    {
+      "title": "David — Oxford Bibliographies in Biblical Studies",
+      "canonical_url": "https://academic.oup.com/reference/62341/reference-article-abstract/554099170",
+      "citation_text": "Oxford Bibliographies places David in the setting of a tenth-century BCE united monarchy and notes that the discovery of the Tel Dan 'House of David' inscription renewed scholarly debate over the historicity of David and the biblical narrative.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "MARCH MADNESS FAQ: Which Pre-exilic Monarch of Israel/Judah Is the Greatest? — University of Iowa Bible & Archaeology",
+      "canonical_url": "https://bam.sites.uiowa.edu/faq/who-was-greatest-king",
+      "citation_text": "The University of Iowa Bible & Archaeology resource uses the conventional regnal chronology David r. 1010-970 BCE.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "2 Samuel 5:4-5 — ESV.org",
+      "canonical_url": "https://www.esv.org/verses/2%2BSamuel%2B5%3A4%E2%80%9310/",
+      "citation_text": "2 Samuel 5:4-5 gives David a forty-year reign, with seven years and six months at Hebron over Judah and thirty-three years at Jerusalem over Israel and Judah.",
+      "source_type": "primary_text_web_reference"
+    },
+    {
+      "title": "Tel Dan Stele — The Jewish Museum",
+      "canonical_url": "https://thejewishmuseum.org/exhibitions/tel-dan-stele/",
+      "citation_text": "The Jewish Museum describes the ninth-century BCE Tel Dan Stele as containing the earliest extra-biblical mention of the House of David, an important archaeological datum in discussions of David's historicity.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
