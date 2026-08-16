@@ -1,0 +1,154 @@
+name: ATLAS P11 Baseline B Capture
+
+on:
+  workflow_dispatch:
+    inputs:
+      capture_id:
+        description: 'Exact P11 Baseline B capture id'
+        required: true
+        type: string
+      approval:
+        description: 'Type CAPTURE:<capture_id> exactly'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: atlas-p11-baseline-b-production-capture
+  cancel-in-progress: false
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    env:
+      ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-p11-baseline-b-capture
+      AUDIENCE: atlas-person-db-p11-baseline-b-capture
+      EXPECTED_CAPTURE_ID: p11_baseline_b_20260815_v2
+      CAPTURE_ID: ${{ inputs.capture_id }}
+      APPROVAL: ${{ inputs.approval }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Validate immutable P11 capture envelope
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "${GITHUB_REF}" == "refs/heads/main" ]]
+          [[ "${CAPTURE_ID}" == "${EXPECTED_CAPTURE_ID}" ]]
+          [[ "${APPROVAL}" == "CAPTURE:${EXPECTED_CAPTURE_ID}" ]]
+
+      - name: Capture read-only Production Baseline B
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/atlas-p11-baseline-b/responses
+
+          request_oidc() {
+            curl --fail-with-body --silent --show-error \
+              -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+              "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${AUDIENCE}" | jq -er '.value'
+          }
+
+          call_capture() {
+            local mode="$1" output="$2"
+            local token payload status code
+            for attempt in $(seq 1 60); do
+              token="$(request_oidc)"
+              payload="$(jq -cn \
+                --arg sha "${GITHUB_SHA}" \
+                --arg capture_id "${CAPTURE_ID}" \
+                --arg approval "${APPROVAL}" \
+                --arg mode "${mode}" \
+                '{deployment_sha:$sha,capture_id:$capture_id,approval:$approval,mode:$mode}')"
+              status="$(curl --silent --show-error --output "$output" --write-out '%{http_code}' \
+                --request POST -H 'content-type: application/json' -H "authorization: Bearer ${token}" \
+                --data "$payload" "$ENDPOINT")"
+              if [[ "$status" == "200" ]]; then return 0; fi
+              code="$(jq -r '.code // "UNKNOWN"' "$output" 2>/dev/null || printf 'UNKNOWN')"
+              if [[ "$status" == "404" || ( "$status" == "409" && "$code" == "DEPLOYMENT_SHA_MISMATCH" ) ]]; then
+                echo "Production P11 route has not reached ${GITHUB_SHA} (attempt ${attempt}/60); retrying."
+                sleep 10
+                continue
+              fi
+              cat "$output" >&2 || true
+              echo "P11 ${mode} failed: HTTP ${status}, code ${code}" >&2
+              return 1
+            done
+            echo "Production deployment did not reach ${GITHUB_SHA} for P11 ${mode} within retry window" >&2
+            return 1
+          }
+
+          readiness=/tmp/atlas-p11-baseline-b/responses/001-readiness.json
+          call_capture readiness "$readiness"
+          jq -e --arg sha "${GITHUB_SHA}" --arg capture_id "${EXPECTED_CAPTURE_ID}" '
+            .ok == true and
+            .marker == "ATLAS_P11_BASELINE_B_CAPTURE_V2" and
+            .mode == "readiness" and
+            .deployment_sha == $sha and
+            .capture_id == $capture_id and
+            .read_only == true and
+            .database_write_committed == false and
+            .result.read_only == true and
+            .result.database_write_committed == false and
+            .result.readiness.ready == true and
+            (.result.readiness.blockers | length) == 0
+          ' "$readiness" >/dev/null
+
+          capture=/tmp/atlas-p11-baseline-b/responses/002-capture.json
+          call_capture capture "$capture"
+          jq -e --arg sha "${GITHUB_SHA}" --arg capture_id "${EXPECTED_CAPTURE_ID}" '
+            .ok == true and
+            .marker == "ATLAS_P11_BASELINE_B_CAPTURE_V2" and
+            .mode == "capture" and
+            .deployment_sha == $sha and
+            .capture_id == $capture_id and
+            .read_only == true and
+            .database_write_committed == false and
+            .result.read_only == true and
+            .result.database_write_committed == false and
+            .result.baseline.schema == "atlas-stage2-baseline-b/v2" and
+            .result.baseline.semantic_version == "v2-relation-full-temporal" and
+            .result.baseline.dataset_count == 41 and
+            .result.baseline.readiness.ready == true and
+            .result.baseline.authority.production_mutation_authorized == false and
+            (.result.baseline.baseline_digest | test("^sha256:[0-9a-f]{64}$")) and
+            (.result.baseline.datasets | keys | length) == 41 and
+            (.result.baseline.counts | keys | length) == 41 and
+            (.result.baseline.dataset_digests | keys | length) == 41
+          ' "$capture" >/dev/null
+
+          cp "$capture" /tmp/atlas-p11-baseline-b/baseline-b.json
+          jq --arg sha "${GITHUB_SHA}" --arg capture_id "${EXPECTED_CAPTURE_ID}" '
+            {
+              marker,
+              deployment_sha:$sha,
+              capture_id:$capture_id,
+              mode,
+              read_only,
+              database_write_committed,
+              schema:.result.baseline.schema,
+              semantic_version:.result.baseline.semantic_version,
+              dataset_count:.result.baseline.dataset_count,
+              baseline_digest:.result.baseline.baseline_digest,
+              counts:.result.baseline.counts,
+              dataset_digests:.result.baseline.dataset_digests,
+              readiness:.result.baseline.readiness,
+              authority:.result.baseline.authority
+            }
+          ' "$capture" > /tmp/atlas-p11-baseline-b/baseline-b-summary.json
+
+      - name: Upload immutable P11 Baseline B evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-p11-baseline-b-${{ github.sha }}
+          path: /tmp/atlas-p11-baseline-b/
+          if-no-files-found: warn
+          retention-days: 90

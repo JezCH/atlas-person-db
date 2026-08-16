@@ -40,11 +40,12 @@ test('Vercel exposes exactly twelve physical ATLAS API functions on Hobby', () =
   assert.equal(apiFiles.length, 12);
 });
 
-test('UI read URLs rewrite to the consolidated atlas-read function', () => {
+test('logical read and P11 capture URLs consolidate onto existing physical functions', () => {
   assert.deepEqual(vercel.rewrites, [
     { source: '/api/atlas-person-read', destination: '/api/atlas-read?__atlas_read_surface=person' },
     { source: '/api/atlas-admin-inspector', destination: '/api/atlas-read?__atlas_read_surface=admin-inspector' },
-    { source: '/api/atlas-admin-system-status', destination: '/api/atlas-read?__atlas_read_surface=admin-system-status' }
+    { source: '/api/atlas-admin-system-status', destination: '/api/atlas-read?__atlas_read_surface=admin-system-status' },
+    { source: '/api/atlas-p11-baseline-b-capture', destination: '/api/atlas-audit-inventory?__atlas_audit_surface=p11-baseline-b-capture' }
   ]);
 });
 
@@ -91,9 +92,13 @@ test('server-only correction apply endpoint delegates to its isolated handler', 
   assert.doesNotMatch(correctionApplyApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
 });
 
-test('server-only audit inventory endpoint delegates to its isolated read-only handler', () => {
+test('audit inventory and P11 Baseline B share one physical read-only function with isolated handlers', () => {
   assert.match(auditInventoryApi, /atlas-audit-inventory-handler\.js/);
   assert.match(auditInventoryApi, /createAuditInventoryHandler/);
+  assert.match(auditInventoryApi, /atlas-p11-baseline-b-capture-handler\.js/);
+  assert.match(auditInventoryApi, /createP11BaselineBCaptureHandler/);
+  assert.match(auditInventoryApi, /p11-baseline-b-capture/);
+  assert.match(auditInventoryApi, /ATLAS_AUDIT_SURFACE_NOT_FOUND/);
   assert.doesNotMatch(auditInventoryApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
   assert.doesNotMatch(auditInventoryApi, /insert\s+into|\bupdate\b|\bdelete\s+from|\btruncate\b/i);
 });
