@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:leopold-i:belgium:king:1831-1865:v1",
+  "person": {
+    "canonical_name_en": "Leopold I",
+    "display_name_ko": "레오폴드 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Belgium",
+    "display_name_ko": "벨기에"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King of the Belgians",
+    "role_display_name_ko": "벨기에 국왕",
+    "start_year": 1831,
+    "start_month": 7,
+    "start_day": 21,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1865,
+    "end_month": 12,
+    "end_day": 10,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Leopold I took the constitutional oath on 21 July 1831 and thereby became the first King of the Belgians. He remained king until his death on 10 December 1865. ATLAS therefore models one continuous sovereign reign Activity bound to the state-level polity Belgium."
+  },
+  "sources": [
+    {
+      "title": "King Leopold I",
+      "canonical_url": "https://www.monarchie.be/en/royal-family/history/king-leopold-i",
+      "citation_text": "The official Belgian Monarchy states that Leopold took the oath as the first King of the Belgians on 21 July 1831 and died on 10 December 1865.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Belgium's independence (1830 - present time)",
+      "canonical_url": "https://www.belgium.be/en/about_belgium/country/history/belgium_from_1830",
+      "citation_text": "Belgium's official federal portal identifies Leopold I of Saxe-Coburg as the first King of the Belgians and gives his reign as 1831–1865.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "National Day and feast days of Communities and Regions",
+      "canonical_url": "https://www.belgium.be/en/about_belgium/country/belgium_in_nutshell/symbols/national_holiday",
+      "citation_text": "Belgium's official federal portal explains that 21 July commemorates Leopold I taking the constitutional oath as the first King of Belgium on 21 July 1831.",
+      "source_type": "institutional_web"
+    }
+  ]
+}
