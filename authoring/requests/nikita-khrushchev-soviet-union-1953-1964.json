@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:nikita-khrushchev:soviet-union:cpsu-leader:1953-1964:v1",
+  "person": {
+    "canonical_name_en": "Nikita Khrushchev",
+    "display_name_ko": "니키타 흐루쇼프"
+  },
+  "polity": {
+    "canonical_name_en": "Soviet Union",
+    "display_name_ko": "소련"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Leader of the Communist Party of the Soviet Union",
+    "role_display_name_ko": "소련 공산당 최고지도자",
+    "start_year": 1953,
+    "start_month": 9,
+    "start_day": 7,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1964,
+    "end_month": 10,
+    "end_day": 14,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Nikita Khrushchev was elected First Secretary of the Central Committee of the Communist Party of the Soviet Union on 7 September 1953 and was removed on 14 October 1964. Great Russian Encyclopedia explicitly treats 1953–1964 as the period in which he headed the CPSU and the USSR; by 1955 he had emerged as the dominant Soviet leader, and from 1958 he simultaneously chaired the Council of Ministers. ATLAS records the continuous top-party leadership interval as the principal representative Activity for the Soviet Union. The normalized role label 'Leader of the Communist Party of the Soviet Union' preserves comparability with Leonid Brezhnev, whose formal title changed from First Secretary to General Secretary during a continuous leadership tenure. Because the party leader exercised supreme political leadership over the Soviet polity rather than merely serving as a subordinate official, the Person–Polity relation is `governs`; the exact formal title 'First Secretary' remains preserved in the evidence and notes."
+  },
+  "sources": [
+    {
+      "title": "Хрущёв Никита Сергеевич — Большая российская энциклопедия",
+      "canonical_url": "https://bigenc.ru/c/khrushchiov-nikita-sergeevich-1082af",
+      "citation_text": "Great Russian Encyclopedia states that Khrushchev was elected First Secretary of the CPSU Central Committee on 7 September 1953 and held the office until 14 October 1964, under a section explicitly titled 'At the head of the CPSU and USSR (1953–1964)'.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Khrushchev Era Ends — Office of the Historian, U.S. Department of State",
+      "canonical_url": "https://history.state.gov/historicaldocuments/frus1964-68v14/d51",
+      "citation_text": "The U.S. Department of State's Office of the Historian records the 14 October 1964 removal of Khrushchev from the posts of CPSU First Secretary and Chairman of the USSR Council of Ministers.",
+      "source_type": "institutional_web"
+    }
+  ]
+}
