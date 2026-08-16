@@ -164,7 +164,7 @@
     if (typeof window === "undefined" || typeof document === "undefined") return;
     if (document.querySelector('script[data-atlas-person-hard-delete="true"]')) return;
     const script = document.createElement("script");
-    script.src = "./atlas-person-hard-delete.js?v=20260816-person-hard-delete-v1";
+    script.src = "./atlas-person-hard-delete.js?v=20260816-person-hard-delete-v3";
     script.async = true;
     script.dataset.atlasPersonHardDelete = "true";
     document.head.append(script);
