@@ -1,16 +1,7 @@
 (() => {
   "use strict";
 
-  const koPolities = {
-    Carthage: "카르타고",
-    "Kingdom of Saba": "사바 왕국"
-  };
-
-  const labels = {
-    legendary: "전설",
-    mythical: "신화",
-    uncertain: "역사성 불확실"
-  };
+  const i18n = window.ATLAS_UI_I18N;
 
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>'"]/g, (c) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;"
@@ -46,7 +37,7 @@
     section.innerHTML = `
       <div class="non-timeline-head">
         <div>
-          <p class="eyebrow">LEGENDARY & MYTHICAL PERSONS</p>
+          <p class="eyebrow">전설·신화 인물</p>
           <h2>전설·신화 인물</h2>
           <p>연대가 확정되지 않아 연도 기반 지도와 일반 활동 DB에서는 제외된 인물입니다.</p>
         </div>
@@ -54,7 +45,7 @@
       </div>
       <div class="table-scroll non-timeline-scroll">
         <table class="non-timeline-table">
-          <thead><tr><th>인물</th><th>Politic</th><th>전승 연대</th><th>종료</th><th>역할·분류</th><th>지도 처리</th></tr></thead>
+          <thead><tr><th>인물</th><th>정치체</th><th>전승 연대</th><th>종료</th><th>역할·분류</th><th>지도 처리</th></tr></thead>
           <tbody id="nonTimelineBody"></tbody>
         </table>
       </div>
@@ -79,12 +70,14 @@
 
       body.innerHTML = items.map((row) => {
         const person = row.display_name_ko || row.person_name;
-        const politic = koPolities[row.politic_name] || row.politic_name;
-        const type = labels[row.historicity] || row.historicity || "미상";
+        const polity = row.politic_display_name_ko || row.politic_name;
+        const type = row.historicity_display_ko
+          || i18n?.enumLabel?.("historicity", row.historicity, { fallback: "역사성 미확정" })
+          || "역사성 미확정";
         const role = row.role_ko || `건국자·여왕 (${type})`;
         return `<tr>
           <td>${escapeHtml(person)}</td>
-          <td>${escapeHtml(politic)}</td>
+          <td>${escapeHtml(polity)}</td>
           <td>${escapeHtml(formatTraditionalDate(row))}</td>
           <td>미상</td>
           <td>${escapeHtml(role)}</td>
@@ -133,7 +126,7 @@
       .non-timeline-table td::before{position:absolute;left:12px;width:76px;color:#7b8494;font-size:11px;font-weight:800}
       .non-timeline-table td:nth-child(1){padding:0 0 10px;font-size:17px;font-weight:800;border-bottom:1px solid #edf0f4;margin-bottom:5px}
       .non-timeline-table td:nth-child(1)::before{content:none}
-      .non-timeline-table td:nth-child(2)::before{content:"Politic"}
+      .non-timeline-table td:nth-child(2)::before{content:"정치체"}
       .non-timeline-table td:nth-child(3)::before{content:"전승 연대"}
       .non-timeline-table td:nth-child(4)::before{content:"종료"}
       .non-timeline-table td:nth-child(5)::before{content:"역할·분류"}
