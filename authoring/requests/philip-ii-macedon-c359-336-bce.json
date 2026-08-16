@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philip-ii-of-macedon:macedon:c359-336-bce:v1",
+  "person": {"canonical_name_en": "Philip II of Macedon", "display_name_ko": "필리포스 2세"},
+  "polity": {"canonical_name_en": "Macedon", "display_name_ko": "마케도니아"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": -359, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical", "end_year": -336, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Oxford describes Philip II as king of Macedon from 360/59 to 336 BCE. ATLAS uses the common representative start year 359 but marks it approximate to preserve the 360/359 accession convention; 336 is the secure terminal year."},
+  "sources": [{"title": "Philip II, king of Macedon - Oxford Classical Dictionary", "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/549705697", "citation_text": "Oxford Classical Dictionary identifies Philip II as king of Macedon between 360/59 and 336 BCE.", "source_type": "academic_reference"}]
+}

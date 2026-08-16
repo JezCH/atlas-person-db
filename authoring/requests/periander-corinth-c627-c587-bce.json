@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:periander:corinth:c627-c587-bce:v1",
+  "person": {"canonical_name_en": "Periander", "display_name_ko": "페리안드로스"},
+  "polity": {"canonical_name_en": "Corinth", "display_name_ko": "코린토스"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Tyrant", "role_display_name_ko": "참주", "start_year": -627, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical", "end_year": -587, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Periander is securely identified as tyrant of Corinth; Oxford gives the conventional reign c.627–587 BCE. Archaic absolute chronology remains approximate, and the polity is Corinth rather than generic Greece."},
+  "sources": [{"title": "Periander - Oxford Classical Dictionary", "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/549686198", "citation_text": "Oxford Classical Dictionary identifies Periander as tyrant of Corinth c.627–587 BCE.", "source_type": "academic_reference"}]
+}

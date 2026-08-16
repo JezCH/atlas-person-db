@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:olympias:macedon:317-316-bce:v1",
+  "person": {"canonical_name_en": "Olympias", "display_name_ko": "올림피아스"},
+  "polity": {"canonical_name_en": "Macedon", "display_name_ko": "마케도니아"},
+  "activity": {"relation_type": "governs", "period_basis": "de_facto_rule", "role": "Regent", "role_display_name_ko": "섭정", "start_year": -317, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": -316, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Olympias is recorded only for her decisive Macedonian rule in 317–316 BCE, not for her entire period as royal wife or queen mother. Oxford's Hellenistic ruler list explicitly places Olympias as ruler for underage Alexander IV in 317–316; she surrendered to Cassander in spring 316."},
+  "sources": [{"title": "Olympias - Oxford Classical Dictionary", "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/549687713", "citation_text": "Oxford Classical Dictionary describes Olympias's return to Macedon in 317, seizure of power, and surrender to Cassander in 316 BCE.", "source_type": "academic_reference"}, {"title": "Time Line and King Lists - The Making of a King", "canonical_url": "https://academic.oup.com/book/39231/chapter-abstract/338749176", "citation_text": "Oxford's Hellenistic ruler list gives Olympias, for the underage Alexander IV, as ruler of Macedon in 317–316 BCE.", "source_type": "scholarly_monograph"}]
+}

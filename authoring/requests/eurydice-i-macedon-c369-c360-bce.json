@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:eurydice-i:macedon:c369-c360-bce:v1",
+  "person": {"canonical_name_en": "Eurydice I of Macedon", "display_name_ko": "마케도니아의 에우리디케 1세"},
+  "polity": {"canonical_name_en": "Macedon", "display_name_ko": "마케도니아"},
+  "activity": {"relation_type": "active_in", "period_basis": "general_activity", "role": "Queen Mother", "role_display_name_ko": "왕대비", "start_year": -369, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical", "end_year": -360, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Eurydice I, wife of Amyntas III and mother of three Macedonian kings, is modeled through her best-attested public political phase after Amyntas's death. Elizabeth Carney identifies her as a political actor and faction leader during the 360s. ATLAS therefore uses a representative c.369–c.360 public-activity window rather than inventing a formal regency or sovereign reign."},
+  "sources": [{"title": "Eurydice and the Birth of Macedonian Power - Oxford Academic", "canonical_url": "https://academic.oup.com/book/34911", "citation_text": "Elizabeth Carney describes Eurydice as the first Macedonian royal woman known to play a significant public role and as an active figure at court and in international affairs.", "source_type": "scholarly_monograph"}, {"title": "Eurydice and Her Sons - Oxford Academic", "canonical_url": "https://academic.oup.com/book/34911/chapter-abstract/298488267", "citation_text": "Carney characterizes Eurydice as a political actor and faction leader during the 360s BCE.", "source_type": "scholarly_monograph"}]
+}

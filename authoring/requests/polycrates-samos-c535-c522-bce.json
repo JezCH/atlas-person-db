@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:polycrates:samos:c535-c522-bce:v1",
+  "person": {"canonical_name_en": "Polycrates", "display_name_ko": "폴리크라테스"},
+  "polity": {"canonical_name_en": "Samos", "display_name_ko": "사모스"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Tyrant", "role_display_name_ko": "참주", "start_year": -535, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical", "end_year": -522, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Oxford places Polycrates' seizure of power on Samos around 535 BCE and his death around 522 BCE. ATLAS records the Samian tyranny rather than generic Greece and retains approximate endpoints."},
+  "sources": [{"title": "Polycrates, tyrant of Samos - Oxford Classical Dictionary", "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/549705316", "citation_text": "Oxford Classical Dictionary identifies Polycrates as tyrant of Samos, from c.535 to c.522 BCE.", "source_type": "academic_reference"}]
+}

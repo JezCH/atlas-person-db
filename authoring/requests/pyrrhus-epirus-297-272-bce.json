@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:pyrrhus-of-epirus:epirus:297-272-bce:v1",
+  "person": {"canonical_name_en": "Pyrrhus of Epirus", "display_name_ko": "피로스"},
+  "polity": {"canonical_name_en": "Epirus", "display_name_ko": "에페이로스"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": -297, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": -272, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Pyrrhus is normalized to Epirus, his primary kingdom, rather than generic Greece or Macedon. ATLAS records his main adult Epirote reign, 297–272 BCE; his earlier interrupted minority reign and separate Macedonian kingship are intentionally not expanded into extra Activities here."},
+  "sources": [{"title": "Pyrrhus of Epirus - Oxford Classical Dictionary", "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/550493312", "citation_text": "Oxford Classical Dictionary identifies Pyrrhus as the leading Molossian king of Epirus, records an earlier interrupted minority reign, later restoration, and death in 272 BCE.", "source_type": "academic_reference"}, {"title": "Dione - Oxford Classical Dictionary", "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548753522", "citation_text": "Oxford Classical Dictionary dates an Epirote tetradrachm of Pyrrhus to c.297 BCE, supporting the conventional start of his restored adult kingship.", "source_type": "academic_reference"}]
+}
