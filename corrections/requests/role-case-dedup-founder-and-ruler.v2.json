@@ -4,7 +4,7 @@
   "request_id": "role-case-dedup:founder-and-ruler:v1",
   "release_order": 500,
   "evidence": {
-    "basis": "ATLAS audit inventory baseline from workflow run 31951249411, artifact 9264699649",
+    "basis": "Exact Production Baseline A v2 from ATLAS Audit Inventory run 31953655246, artifact 9265344871, deployment 24037fa3bdbea90ebd6409c834b7cf4c330d86a6",
     "decision": "Case-only duplicate. Preserve the lower-case canonical wording already used by Osman I and rebind Parameswara before removing the duplicate Role row."
   },
   "operations": [
@@ -12,30 +12,30 @@
       "type": "merge_role_case_duplicate",
       "case_id": "role-case-only:founder-and-ruler",
       "expected_keep_role": {
-        "id": "514dc2ef-d152-50e5-8bdf-e4c4cea69601",
-        "code": "legacy:founder_and_ruler:4b88a1fd4fb2",
+        "id": "5f65d329-acbb-50f3-a0b6-c201644ca031",
+        "code": "legacy_5ebb9108eace513f",
         "category": "legacy_free_text",
         "source_label": "Founder and ruler",
         "is_active": true
       },
       "expected_drop_role": {
-        "id": "d3b293b3-fd9e-57dc-81a9-d8694ae7db50",
-        "code": "legacy:founder_and_ruler:0e2cb660ed21",
+        "id": "d3b25e95-e418-57eb-8ad5-4e1b20b25dee",
+        "code": "legacy_209ce3445d7d7e4b",
         "category": "legacy_free_text",
         "source_label": "Founder and Ruler",
         "is_active": true
       },
       "expected_keep_names": [
         {
-          "id": "767833c5-37e0-5c9c-8494-a80008101fec",
-          "role_id": "514dc2ef-d152-50e5-8bdf-e4c4cea69601",
+          "id": "5ceb7e2a-f0b9-58ce-a974-af6ba52001c9",
+          "role_id": "5f65d329-acbb-50f3-a0b6-c201644ca031",
           "locale": "en",
           "name": "Founder and ruler",
           "is_preferred": true
         },
         {
-          "id": "ffd7818f-3dd7-547f-ae0e-cf356b32d0f7",
-          "role_id": "514dc2ef-d152-50e5-8bdf-e4c4cea69601",
+          "id": "a909a27b-654f-45b8-89f8-7323e8e40ed7",
+          "role_id": "5f65d329-acbb-50f3-a0b6-c201644ca031",
           "locale": "ko",
           "name": "창건자·통치자",
           "is_preferred": true
@@ -43,22 +43,22 @@
       ],
       "expected_drop_names": [
         {
-          "id": "100cf1ba-f722-5171-ae6b-ceb847e0ff93",
-          "role_id": "d3b293b3-fd9e-57dc-81a9-d8694ae7db50",
+          "id": "78bbb4a4-5f3e-51e8-8293-f11f26e0a257",
+          "role_id": "d3b25e95-e418-57eb-8ad5-4e1b20b25dee",
           "locale": "en",
           "name": "Founder and Ruler",
           "is_preferred": true
         },
         {
-          "id": "8bc42934-0cae-517e-a119-04d51f7ccda4",
-          "role_id": "d3b293b3-fd9e-57dc-81a9-d8694ae7db50",
+          "id": "c83582e0-dce3-4fc8-8217-5d53855e5c22",
+          "role_id": "d3b25e95-e418-57eb-8ad5-4e1b20b25dee",
           "locale": "ko",
           "name": "창건자·통치자",
           "is_preferred": true
         }
       ],
       "affected_activity_ids": [
-        "f3ae824b-bc23-4b58-8c35-fd833eb00f91"
+        "e8e7c16d-3e09-5453-bdef-005b9a2009cd"
       ]
     }
   ]

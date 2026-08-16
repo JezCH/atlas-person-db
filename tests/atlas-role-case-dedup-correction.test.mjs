@@ -25,7 +25,7 @@ test("Founder and ruler cleanup is an exact case-only role merge", () => {
   assert.equal(operation.type, "merge_role_case_duplicate");
   assert.equal(operation.keep_role.source_label, "Founder and ruler");
   assert.equal(operation.drop_role.source_label, "Founder and Ruler");
-  assert.deepEqual(operation.affected_activity_ids, ["f3ae824b-bc23-4b58-8c35-fd833eb00f91"]);
+  assert.deepEqual(operation.affected_activity_ids, ["e8e7c16d-3e09-5453-bdef-005b9a2009cd"]);
   assert.equal(operation.keep_names.length, 2);
   assert.equal(operation.drop_names.length, 2);
 });
