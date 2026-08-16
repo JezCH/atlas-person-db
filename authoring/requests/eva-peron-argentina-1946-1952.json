@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:eva-peron:argentina:first-lady:1946-1952:v1",
+  "person": {
+    "canonical_name_en": "Eva Perón",
+    "display_name_ko": "에바 페론"
+  },
+  "polity": {
+    "canonical_name_en": "Argentina",
+    "display_name_ko": "아르헨티나"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "First Lady",
+    "role_display_name_ko": "영부인",
+    "start_year": 1946,
+    "start_month": 6,
+    "start_day": 4,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1952,
+    "end_month": 7,
+    "end_day": 26,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Eva Perón became First Lady when Juan Domingo Perón assumed the Argentine presidency on 4 June 1946 and remained a central political and social actor until her death on 26 July 1952. The Museo Evita explicitly notes that she became First Lady on 4 June 1946, rapidly developed into a political leader with an important role in her husband's government, and nevertheless held no official government office. She promoted women's suffrage, founded and led the Partido Peronista Femenino, presided over the Eva Perón Foundation, and acted as a major link between the Peronist government and organized labor. Because she never became president or vice president and her proposed 1951 vice-presidential candidacy was renounced, ATLAS models this as active_in rather than rules, governs, or claims_rule. Organization-specific leadership is retained as context rather than creating non-territorial Polities."
+  },
+  "sources": [
+    {
+      "title": "Ser Evita, el camino de la igualdad",
+      "canonical_url": "https://museoevita.org.ar/ser-evita-el-camino-de-la-igualdad/",
+      "citation_text": "The Instituto Nacional de Investigaciones Históricas Eva Perón–Museo Evita states that Juan Domingo Perón assumed the constitutional presidency on 4 June 1946, when Eva became First Lady; it adds that she quickly became a political leader with an important role in the government, while holding no official office.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Una visita especial",
+      "canonical_url": "https://museoevita.org.ar/una-visita-especial/",
+      "citation_text": "Museo Evita describes Eva Perón as First Lady from 1946 to 1952, founder and president of the Partido Peronista Femenino, a central figure in social and labor rights, a direct link between the government and unions, and records her death on 26 July 1952.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "A 70 años del fallecimiento de Eva Duarte de Perón",
+      "canonical_url": "https://www.argentina.gob.ar/noticias/70-anos-del-fallecimiento-de-eva-duarte-de-peron",
+      "citation_text": "Argentina's national government describes Eva Perón as First Lady alongside Juan Domingo Perón, president of the Eva Perón Foundation, an advocate for women's suffrage and social and labor rights, founder of the Partido Peronista Femenino, and records her death on 26 July 1952.",
+      "source_type": "institutional_web"
+    }
+  ]
+}
