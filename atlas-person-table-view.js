@@ -2,6 +2,7 @@
   "use strict";
 
   const HEADER_CELLS = [
+    ["person-table-col-era", "시대"],
     ["person-table-col-identity", "인물"],
     ["person-table-col-range", "주요 활동기간"],
     ["person-table-col-activities", "활동 관계"],
@@ -11,6 +12,16 @@
   const BASIS_LABELS = Object.freeze({ reign: "재위", term: "임기", de_facto_rule: "실권 장악", military_activity: "군사 활동", religious_activity: "종교 활동", intellectual_activity: "학술 활동", artistic_activity: "예술 활동", general_activity: "주요 활동" });
   const CHRONOLOGY_LABELS = Object.freeze({ exact_as_recorded: null, reviewed_stage2_traditional_disputed: "연대 논쟁 있음", disputed: "연대 논쟁 있음", approximate: "연대 근사", inferred: "연대 추정", unknown: "연대 미확정" });
   const CONFIDENCE_LABELS = Object.freeze({ legacy_asserted: null, high: "신뢰도 높음", medium: "신뢰도 보통", low: "신뢰도 낮음", uncertain: "신뢰도 미확정" });
+  const ERAS = Object.freeze([
+    Object.freeze({ code: "ancient", label: "고대", range: "BC 500 이전", test: (year) => year < -500 }),
+    Object.freeze({ code: "classical", label: "고전", range: "BC 500 – AD 499", test: (year) => year < 500 }),
+    Object.freeze({ code: "medieval", label: "중세", range: "AD 500 – 1499", test: (year) => year < 1500 }),
+    Object.freeze({ code: "early-modern", label: "근세", range: "AD 1500 – 1749", test: (year) => year < 1750 }),
+    Object.freeze({ code: "industrial-imperial", label: "산업·제국", range: "AD 1750 – 1913", test: (year) => year < 1914 }),
+    Object.freeze({ code: "world-wars", label: "세계대전", range: "AD 1914 – 1944", test: (year) => year < 1945 }),
+    Object.freeze({ code: "contemporary", label: "현대", range: "AD 1945 이후", test: () => true })
+  ]);
+  const UNKNOWN_ERA = Object.freeze({ code: "unknown", label: "연대 미상", range: "주요 활동연도 미상" });
 
   function cleanCode(value) { return String(value || "").trim().replaceAll("_", " "); }
   function makeHeader() {
@@ -104,6 +115,58 @@
     for (const cell of [identity, range, activities, count]) if (cell) row.append(cell);
   }
 
+  function chronologyYearFromRange(rangeText) {
+    const match = String(rangeText || "").toUpperCase().match(/\b(BC|AD)\s*(\d+)\b/);
+    if (!match) return null;
+    const absolute = Number(match[2]);
+    if (!Number.isFinite(absolute) || absolute <= 0) return null;
+    return match[1] === "BC" ? -absolute : absolute;
+  }
+
+  function eraForRow(row) {
+    const range = row?.querySelector?.(":scope > .person-table-range, :scope > .person-card-range");
+    const year = chronologyYearFromRange(range?.textContent || "");
+    if (!Number.isInteger(year)) return UNKNOWN_ERA;
+    return ERAS.find((era) => era.test(year)) || UNKNOWN_ERA;
+  }
+
+  function makeEraBand(era) {
+    const band = document.createElement("div");
+    band.className = `person-era-band person-era-${era.code}`;
+    band.setAttribute("role", "rowheader");
+    band.setAttribute("aria-label", `${era.label} · ${era.range}`);
+    band.title = `${era.label} · ${era.range}`;
+    const label = document.createElement("span");
+    label.textContent = era.label;
+    band.append(label);
+    return band;
+  }
+
+  function groupRowsByEra(grid) {
+    const rows = [...grid.querySelectorAll(":scope > .person-card")];
+    if (!rows.length) return;
+    let activeGroup = null;
+    let activeRows = null;
+    let activeCode = null;
+
+    for (const row of rows) {
+      const era = eraForRow(row);
+      row.dataset.atlasEra = era.code;
+      if (era.code !== activeCode) {
+        activeGroup = document.createElement("div");
+        activeGroup.className = "person-era-group";
+        activeGroup.dataset.atlasEra = era.code;
+        activeGroup.append(makeEraBand(era));
+        activeRows = document.createElement("div");
+        activeRows.className = "person-era-rows";
+        activeGroup.append(activeRows);
+        grid.append(activeGroup);
+        activeCode = era.code;
+      }
+      activeRows.append(row);
+    }
+  }
+
   function humanizePageCopy() {
     if (typeof document.querySelector !== "function") return;
     const historical = document.querySelector(".person-group-historical .person-group-head>div>p:not(.eyebrow)");
@@ -118,7 +181,9 @@
     if (!grid) return;
     grid.classList.add("person-table-grid");
     if (!grid.querySelector(":scope > .person-table-head")) grid.prepend(makeHeader());
-    grid.querySelectorAll(":scope > .person-card").forEach(decorateRow);
+    const directRows = [...grid.querySelectorAll(":scope > .person-card")];
+    directRows.forEach(decorateRow);
+    groupRowsByEra(grid);
   }
   function decorateAll() { document.querySelectorAll(".person-card-grid").forEach(decorateGrid); humanizePageCopy(); }
   window.addEventListener("atlas-person-main-rendered", decorateAll);
