@@ -7,7 +7,7 @@ on:
     paths:
       - '.github/workflows/atlas-authoritative-ko-repair.yml'
       - 'maintenance/korean-localization/authoritative-ko-repair.json'
-      - 'api/atlas-authoritative-ko-repair.js'
+      - 'api/atlas-correction-apply.js'
       - 'server/atlas-authoritative-ko-repair-handler.js'
       - 'server/atlas-authoritative-ko-repair-service.js'
       - 'server/atlas-ko-repair-github-oidc.js'
@@ -27,7 +27,7 @@ jobs:
     timeout-minutes: 15
     environment: production
     env:
-      ATLAS_KO_REPAIR_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoritative-ko-repair
+      ATLAS_KO_REPAIR_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-correction-apply?__atlas_correction_surface=authoritative-ko-repair
       ATLAS_KO_REPAIR_AUDIENCE: atlas-person-db-ko-repair
       ATLAS_KO_REPAIR_FILE: maintenance/korean-localization/authoritative-ko-repair.json
     steps:
