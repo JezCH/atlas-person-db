@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:itzcoatl:mexico-tenochtitlan:tlatoani:1427-1440:v1",
+  "person": {
+    "canonical_name_en": "Itzcoatl",
+    "display_name_ko": "이츠코아틀"
+  },
+  "polity": {
+    "canonical_name_en": "Mexico-Tenochtitlan",
+    "display_name_ko": "멕시코-테노치티틀란"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Tlatoani",
+    "role_display_name_ko": "틀라토아니",
+    "start_year": 1427,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "uncertain",
+    "start_calendar": "gregorian",
+    "end_year": 1440,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Itzcoatl was tlatoani of Mexico-Tenochtitlan until his death in 1440. INAH materials date his government to 1427-1440 and the Codex Chimalpahin tradition records his installation in 1427, while some modern scholarly chronologies use 1428 as the accepted Gregorian accession year; ATLAS therefore retains 1427 as the source-backed start year but marks that boundary uncertain. In 1428 Itzcoatl joined the rulers of Texcoco and Tlacopan in the political confederacy now called the Aztec Triple Alliance, defeated the Tepanec power of Azcapotzalco, and helped establish the imperial system that expanded under Mexica leadership. Because the alliance remained a confederacy of allied altepetl rather than a unitary monarchy personally ruled by Itzcoatl, the normalized sovereign binding is to Mexico-Tenochtitlan rather than retrospectively treating him as sole monarch of the entire Aztec Empire."
+  },
+  "sources": [
+    {
+      "title": "Los Códices de San Andrés Tetepilco, un pueblo inscrito en la historia tenochca y en el nuevo orden virreinal",
+      "canonical_url": "https://inah.gob.mx/especiales-inah/reportajes/los-codices-de-san-andres-tetepilco-un-pueblo-inscrito-en-la-historia-tenochca-y-en-el-nuevo-orden-virreinal",
+      "citation_text": "Mexico's Instituto Nacional de Antropología e Historia identifies Itzcoatl as the tlatoani who exercised command of Tenochtitlan between 1427 and 1440 and discusses conquests carried out under his command.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Punto 2. Etapa III. Gobierno de Itzcóatl (1427-1440)",
+      "canonical_url": "https://lugares.inah.gob.mx/es/pagina-de-elemento/1260",
+      "citation_text": "INAH's Templo Mayor record dates Stage III to the government of Itzcoatl, 1427-1440.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Aztec and Tlaxcalan Economic Interaction: Blockade or Interregional Exchange?",
+      "canonical_url": "https://www.cambridge.org/core/journals/latin-american-antiquity/article/aztec-and-tlaxcalan-economic-interaction-blockade-or-interregional-exchange/CBE14EE68216FC6CA5BC5C8F2A1BD3C3",
+      "citation_text": "Latin American Antiquity states that in 1428 the Mexica revolted from their Azcapotzalco overlords and that Itzcoatl, the Mexica huey tlatoani, joined with the rulers of Texcoco and Tlacopan in the political confederacy known today as the Aztec Triple Alliance.",
+      "source_type": "academic_article"
+    },
+    {
+      "title": "Itzcóatl, Serpiente de obsidiana (1427-1440)",
+      "canonical_url": "https://arqueologiamexicana.mx/mexico-antiguo/itzcoatl-serpiente-de-obsidiana-1427-1440",
+      "citation_text": "Arqueología Mexicana dates Itzcoatl's reign to 1427-1440, describes the 1428 defeat of Azcapotzalco and alliance with Tacuba and Texcoco, and characterizes him as a decisive founder of Mexica imperial hegemony while noting the formal power-sharing of the alliance.",
+      "source_type": "scholarly_web"
+    }
+  ]
+}
