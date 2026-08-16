@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tiglath-pileser-iii:neo-assyrian-empire:745-727-bce:v1",
+  "person": {
+    "canonical_name_en": "Tiglath-Pileser III",
+    "display_name_ko": "티글라트-필레세르 3세"
+  },
+  "polity": {
+    "canonical_name_en": "Neo-Assyrian Empire",
+    "display_name_ko": "신아시리아 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -745,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -727,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tiglath-Pileser III (Akkadian Tukulti-apil-Esharra III) became king of Assyria in 745 BCE and ruled until 727 BCE. His reign reversed the preceding period of Assyrian weakness, expanded direct imperial administration through annexed provinces, and transformed the army into a more professional standing force. These reforms and conquests were foundational to the renewed expansion of the Neo-Assyrian Empire, making him a historically strong representative figure for Assyria rather than a marginal mod-leader choice. He also took the Babylonian crown in 729 BCE, but this manifest deliberately models only his Assyrian sovereign reign; any Babylonian kingship should be represented as a separate Activity rather than conflated with this relation."
+  },
+  "sources": [
+    {
+      "title": "Assyrian Empire Builders — Tiglath-pileser III, king of Assyria",
+      "canonical_url": "https://oracc.museum.upenn.edu/saao/aebp/Essentials/Kings/Tiglath-pileserIII/index.html",
+      "citation_text": "ORACC identifies Tiglath-Pileser III as king of Assyria, describes the major territorial expansion and transformation of the Assyrian army under him, and notes his seizure of the Babylonian crown in 729 BCE.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Eastern Mediterranean and Syria, 1000 B.C.–1 A.D. — Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/toah/ht/04/wae.html",
+      "citation_text": "The Metropolitan Museum chronology gives Tiglath-Pileser III's reign as 745-727 BCE and highlights his reorganization of conquered territory into directly administered provinces and his mass-deportation program.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Wall panel relief of Tiglath-Pileser III — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/object/W_1851-0902-498",
+      "citation_text": "The British Museum identifies Tiglath-Pileser III as the ruler associated with Neo-Assyrian palace reliefs and cites the standard 745-727 BCE reign chronology in its bibliography and object context.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

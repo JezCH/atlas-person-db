@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sargon-of-akkad:akkadian-empire:2334-2279-bce:v1",
+  "person": {
+    "canonical_name_en": "Sargon of Akkad",
+    "display_name_ko": "아카드의 사르곤"
+  },
+  "polity": {
+    "canonical_name_en": "Akkadian Empire",
+    "display_name_ko": "아카드 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -2334,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -2279,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sargon of Akkad was the founding king of the Akkadian dynasty and established a territorial empire centered on Akkad/Agade after conquering the Sumerian city-states. ATLAS uses the widely cited 2334-2279 BCE reign convention as a representative chronology, but both endpoints are approximate because third-millennium BCE Mesopotamian absolute chronology is reconstructed and major scholarly references use alternative placements, including ca. 2340-2285 BCE. The user-supplied civilization label Akkad is normalized to the map-level historical polity Akkadian Empire rather than treated as only the city of Akkad."
+  },
+  "sources": [
+    {
+      "title": "Akkadian — Collections Online, British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/x13587",
+      "citation_text": "The British Museum identifies Sargon I as the first king of the Akkadian Dynasty, states that he united the whole of Mesopotamia under one ruler, and dates the dynasty beginning to 2334 BCE.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Akkadian Period (ca. 2350–2150 B.C.) — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/essays/the-akkadian-period-ca-2350-2150-b-c",
+      "citation_text": "The Metropolitan Museum identifies Sargon as the first king of the dynasty and dates his reign approximately 2340-2285 BCE, documenting the chronological variation that requires approximate ATLAS boundaries.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Fragment d'une stèle de victoire d'un roi d'Akkad — Louvre Collections",
+      "canonical_url": "https://collections.louvre.fr/en/ark:/53355/cl010123453",
+      "citation_text": "The Louvre catalogs an Akkadian victory-stele fragment under the period of Sargon of Akkad and gives the Sargonic date range 2334-2279 BCE, supporting the conventional chronology used for the ATLAS representative interval.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "사르곤 — 한국가톨릭대사전",
+      "canonical_url": "https://encyclopedia.catholic.or.kr/entry/2871",
+      "citation_text": "The Korean encyclopedia uses the form 아카드의 사르곤 and gives 2334-2279 BCE, supporting the Korean display name and the representative conventional chronology.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

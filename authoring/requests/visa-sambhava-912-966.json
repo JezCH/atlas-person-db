@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:visa-sambhava:kingdom-of-khotan:912-966:v1",
+  "person": {
+    "canonical_name_en": "Viśa' Saṃbhava",
+    "display_name_ko": "비샤 삼바바(이성천)"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Khotan",
+    "display_name_ko": "호탄 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 912,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 966,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Viśa' Saṃbhava, known in Chinese sources as Li Shengtian (李聖天) and in Korean historical-reference usage as 이성천, was king of Khotan from 912 to about 966. Encyclopaedia Iranica identifies him as Viśa' Saṃbhava and gives the reign as 912-ca. 966, while the Northeast Asian History Network gives 912-966. The Civilization mod label 'Scythia' reflects Khotan's Khotanese/Saka Iranian linguistic heritage and is not treated as the historical polity identity. ATLAS therefore attaches this sovereign Activity to the Kingdom of Khotan. The end boundary is approximate because scholarly chronology is not fully uniform around 966/967."
+  },
+  "sources": [
+    {
+      "title": "KHOTAN ii. History in the Pre-Islamic Period — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/khotan-parent/khotan-ii-history-in-the-pre-islamic-period/",
+      "citation_text": "Encyclopaedia Iranica identifies the Khotanese king Viśa' Saṃbhava, called Li Shengtian in Chinese sources, and places his reign from 912 to about 966; it also documents his 938 diplomatic exchange with Later Jin.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Li Shengtian annotation — Northeast Asian History Network",
+      "canonical_url": "https://contents.nahf.or.kr/item/item.do?levelId=jo.k_0020_0490_0020_0010",
+      "citation_text": "The Northeast Asian History Network identifies 李聖天 as the king of Khotan (Yutian), gives his reign as 912-966, and records his original name as 尉遲僧烏波.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Mañjuśrī cult in Khotan — Studies in Chinese Religions",
+      "canonical_url": "https://www.tandfonline.com/doi/full/10.1080/23729988.2019.1686871",
+      "citation_text": "The peer-reviewed article identifies the Khotanese king Li Shengtian as Viśa' Saṃbhava and gives the reign 912-966 in discussing his representation and dynastic links with Dunhuang.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
