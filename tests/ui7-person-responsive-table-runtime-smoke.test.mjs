@@ -41,6 +41,7 @@ function node(className, textContent = '') {
       if (selector === ':scope > .person-table-identity') return this.children.find((c) => String(c.className).split(' ').includes('person-table-identity')) || null;
       if (selector === ':scope > strong') return this.children.find((c) => c.tagName === 'STRONG') || null;
       if (selector === ':scope > .person-card-canonical') return this.children.find((c) => String(c.className).split(' ').includes('person-card-canonical')) || null;
+      if (selector === ':scope > .person-table-range, :scope > .person-card-range') return this.children.find((c) => String(c.className).split(' ').some((cls) => cls === 'person-table-range' || cls === 'person-card-range')) || null;
       for (const cls of ['person-card-range','person-card-activities','person-card-count','person-card-top','person-table-head']) {
         if (selector === `:scope > .${cls}`) return this.children.find((c) => String(c.className).split(' ').includes(cls)) || null;
       }
@@ -61,22 +62,22 @@ function node(className, textContent = '') {
   return element;
 }
 
-function personRow(historicity, personType) {
+function personRow(historicity, personType, rangeText = '') {
   const strong = node(''); strong.tagName = 'STRONG';
   const canonical = node('person-card-canonical');
-  const range = node('person-card-range');
+  const range = node('person-card-range', rangeText);
   const activities = node('person-card-activities');
   const count = node('person-card-count');
   const status = node('person-card-top');
   status.append(node('person-historicity', historicity), node('', personType));
   const row = node('person-card');
   row.append(status, strong, canonical, range, count, activities);
-  return { row, strong, canonical, status };
+  return { row, strong, canonical, range, status };
 }
 
-test('UI7 table removes redundant historical status column and keeps only exceptional status inline', () => {
-  const historical = personRow('historical', 'historical');
-  const legendary = personRow('legendary', 'historical');
+test('UI7 table keeps status folding and groups visible rows under the derived era band', () => {
+  const historical = personRow('historical', 'historical', 'BC 1792 – BC 1750');
+  const legendary = personRow('legendary', 'historical', 'BC 1620 – BC 1590');
   const grid = node('person-card-grid');
   grid.append(historical.row, legendary.row);
   const document = {
@@ -86,11 +87,18 @@ test('UI7 table removes redundant historical status column and keeps only except
     addEventListener() {}
   };
   const window = { addEventListener() {} };
-  vm.runInNewContext(source, { window, document, Object, Set, String, queueMicrotask: (fn) => fn() });
+  vm.runInNewContext(source, { window, document, Object, Set, String, Number, queueMicrotask: (fn) => fn() });
 
   const header = grid.children[0];
   assert.ok(header.className.includes('person-table-head'));
-  assert.equal(header.children.length, 4);
+  assert.equal(header.children.length, 5);
+  assert.equal(header.children[0].textContent, '시대');
+
+  const eraGroup = grid.children[1];
+  assert.ok(eraGroup.className.includes('person-era-group'));
+  assert.equal(eraGroup.dataset.atlasEra, 'ancient');
+  assert.equal(eraGroup.children[0].children[0].textContent, '고대');
+  assert.equal(eraGroup.children[1].children.length, 2);
 
   assert.deepEqual(
     historical.row.children.map((child) => child.className),
