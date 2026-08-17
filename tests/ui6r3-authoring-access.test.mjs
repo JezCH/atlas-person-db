@@ -4,18 +4,17 @@ import fs from 'node:fs';
 
 const mainSource = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url), 'utf8');
 const mainCss = fs.readFileSync(new URL('../atlas-person-main.css', import.meta.url), 'utf8');
-const filterCss = fs.readFileSync(new URL('../atlas-person-main-filters.css', import.meta.url), 'utf8');
+const eraSource = fs.readFileSync(new URL('../atlas-person-era-navigation.js', import.meta.url), 'utf8');
 
 function expectToken(source, token) {
   assert.ok(source.includes(token), `expected source to contain ${token}`);
 }
 
-test('UI-6R3 restores primary Person authoring controls before the long Person list', () => {
+test('UI-6R3 keeps primary Person authoring controls before the long Person list', () => {
   for (const token of [
     'id="personMainAdd"',
     '+ 관계 추가',
     'id="personMainRefresh"',
-    'id="personMainFilterToggle"',
     'id="personMainMoreButton"',
     'id="personMainMoreMenu"',
     '엑셀 내보내기',
@@ -60,12 +59,12 @@ test('UI-6R3 refreshes Person read state after edit/create close and row-changin
   ]) expectToken(mainSource, token);
 });
 
-test('UI-6R3 keeps semantic filters reachable on mobile without permanently consuming card space', () => {
-  expectToken(mainCss, '.person-main-filter-toggle{display:none}');
-  expectToken(mainCss, '@media(max-width:760px)');
-  expectToken(mainCss, '.person-main-filter-toggle{display:inline-flex');
-  expectToken(filterCss, '.person-main-filters{display:none;grid-template-columns:1fr 1fr}');
-  expectToken(filterCss, '.person-main-filters.is-open{display:grid}');
+test('current exploration UI keeps only Polity filtering and places it with era navigation', () => {
+  assert.match(mainSource, /let facetFilters = \{ polity_id: "" \}/);
+  assert.doesNotMatch(mainSource, /personMainFilterToggle|personMainRelationFilter|personMainRoleFilter|personMainBasisFilter/);
+  assert.match(eraSource, /person-era-polity-filter/);
+  assert.match(eraSource, /atlas-person-polity-filter-change/);
+  assert.match(mainCss, /@media\(max-width:760px\)/);
 });
 
 test('UI-6R3 keeps the complete legacy relationship table available as an explicit advanced surface', () => {
