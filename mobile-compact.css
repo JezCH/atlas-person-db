@@ -8,7 +8,7 @@
     height:58px;
     padding:8px 10px;
     align-items:center;
-    gap:8px;
+    gap:10px;
     background:rgba(16,24,39,.96);
     color:#fff;
     backdrop-filter:blur(14px);
@@ -16,21 +16,14 @@
     box-shadow:0 6px 18px rgba(8,15,28,.16);
   }
   .mobile-menu-button { width:40px; height:40px; flex:0 0 40px; border:0; border-radius:10px; color:#fff; background:#1e293b; font-size:22px; }
+  .mobile-appbar-title { min-width:0; flex:1 1 auto; display:flex; flex-direction:column; justify-content:center; line-height:1.08; }
+  .mobile-appbar-title strong { font-size:14px; font-weight:900; letter-spacing:.01em; }
+  .mobile-appbar-title small { margin-top:3px; color:#b9c6d8; font-size:9px; font-weight:700; letter-spacing:.04em; }
   .mobile-brand { display:flex; align-items:center; gap:10px; min-width:0; }
   .mobile-brand-mark { width:42px; height:42px; display:grid; place-items:center; border-radius:11px; background:#5967d9; font-weight:900; }
   .mobile-brand strong,.mobile-brand small { display:block; }
   .mobile-brand small { color:#aeb8ca; }
   .mobile-section { display:none; }
-
-  .mobile-search { position:relative; display:flex; align-items:center; flex:1 1 auto; min-width:0; height:40px; border:1px solid rgba(255,255,255,.13); border-radius:11px; background:#f7f9fc; color:#111827; }
-  .mobile-search:focus-within { border-color:#8f9cff; box-shadow:0 0 0 3px rgba(89,103,217,.22); }
-  .mobile-search-icon { flex:0 0 auto; padding-left:11px; color:#6b7280; font-size:20px; line-height:1; }
-  .mobile-search input { width:100%; min-width:0; height:100%; border:0; outline:0; padding:0 34px 0 8px; background:transparent; color:#111827; font:inherit; font-size:14px; }
-  .mobile-search input::placeholder { color:#8a93a3; }
-  .mobile-search input::-webkit-search-cancel-button { display:none; }
-  .mobile-search-clear { position:absolute; right:4px; top:4px; width:32px; height:32px; border:0; border-radius:8px; background:transparent; color:#667085; font-size:22px; line-height:1; }
-  .mobile-search-clear:active { background:#e8ecf3; }
-  .mobile-search-count { flex:0 0 auto; min-width:34px; max-width:52px; color:#d9dfeb; font-size:11px; font-weight:800; text-align:right; white-space:nowrap; }
 
   .workspace-shell { display:block; min-height:calc(100vh - 58px); }
   .sidebar { display:none; }
@@ -68,43 +61,11 @@
     gap:6px;
     border-radius:11px;
   }
-  .toolbar-left { display:grid; grid-template-columns:minmax(0,1fr) 40px 40px; width:100%; gap:5px; }
+  .toolbar-left { display:grid; grid-template-columns:minmax(0,1fr) 40px; width:100%; gap:5px; }
   .toolbar-left .btn { min-height:38px; padding:0 9px; justify-content:center; text-align:center; border-radius:8px; }
   .toolbar-left #addButton { font-size:13px; font-weight:900; }
   .desktop-label,.desktop-secondary-action { display:none !important; }
-  .mobile-label,.mobile-tools-button { display:inline-flex; }
-  .mobile-tools-button { align-items:center; justify-content:center; font-size:21px; line-height:1; }
-
-  .mobile-tools-menu {
-    position:absolute;
-    top:50px;
-    right:6px;
-    z-index:35;
-    min-width:180px;
-    padding:6px;
-    border:1px solid var(--border);
-    border-radius:11px;
-    background:#fff;
-    box-shadow:0 14px 34px rgba(17,24,39,.16);
-  }
-  .mobile-tools-menu[hidden] { display:none; }
-  .mobile-tools-menu button,.mobile-tools-menu a {
-    display:flex;
-    width:100%;
-    min-height:40px;
-    align-items:center;
-    padding:0 11px;
-    border:0;
-    border-radius:8px;
-    background:transparent;
-    color:#172033;
-    text-decoration:none;
-    font:inherit;
-    font-size:13px;
-    font-weight:800;
-    text-align:left;
-  }
-  .mobile-tools-menu button:active,.mobile-tools-menu a:active { background:#f0f3f8; }
+  .mobile-label { display:inline-flex; }
 
   .filters { display:block; width:auto; }
   .filters #searchInput { display:none; }
@@ -219,5 +180,5 @@
 }
 
 @media (min-width: 761px) {
-  .mobile-appbar,.mobile-drawer,.mobile-drawer-backdrop,.mobile-label,.mobile-tools-button,.mobile-tools-menu { display:none !important; }
+  .mobile-appbar,.mobile-drawer,.mobile-drawer-backdrop,.mobile-label { display:none !important; }
 }
