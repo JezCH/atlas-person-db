@@ -19,7 +19,8 @@ test('era navigation consumes rendered era bands instead of creating a second ch
 test('era navigation owns Person search, Polity filtering, and current-result status in one toolbar', () => {
   assert.match(navSource, /person-era-search/);
   assert.match(navSource, /search\.id = "personMainSearch"/);
-  assert.match(navSource, /controls\.append\(search, select, summary\)/);
+  assert.match(navSource, /intro\.append\(title, status, summary\)/);
+  assert.match(navSource, /controls\.append\(search, select\)/);
   assert.match(navSource, /atlas-person-search-change/);
   assert.match(navSource, /person-era-polity-filter/);
   assert.match(navSource, /모든 정치체/);
@@ -63,6 +64,7 @@ test('era navigation is sticky, responsive, and preserves horizontal era scrolli
   assert.match(navCss, /\.person-era-nav-track/);
   assert.match(navCss, /\.person-era-search/);
   assert.match(navCss, /\.person-era-polity-filter/);
+  assert.match(navCss, /\.person-era-nav-summary/);
   assert.match(navCss, /\.person-era-jump-list\{[^}]*overflow-x:auto/);
   assert.match(navCss, /\.person-era-group\{scroll-margin-top:/);
   assert.match(navCss, /@media\(max-width:760px\)/);
@@ -72,10 +74,10 @@ test('era navigation is sticky, responsive, and preserves horizontal era scrolli
 
 test('era navigation assets load after era grouping/palette and before Person Main initializes', () => {
   const tableJs = 'atlas-person-table-view.js?v=20260816-era-band-v1';
-  const navJs = 'atlas-person-era-navigation.js?v=20260817-era-search-toolbar-v1';
-  const mainJs = 'atlas-person-main.js?v=20260817-era-search-toolbar-v1';
+  const navJs = 'atlas-person-era-navigation.js?v=20260817-era-search-toolbar-v2';
+  const mainJs = 'atlas-person-main.js?v=20260817-era-search-toolbar-v2';
   const paletteCss = 'atlas-person-era-palette.css?v=20260816-era-palette-v1';
-  const navCssAsset = 'atlas-person-era-navigation.css?v=20260817-era-search-toolbar-v1';
+  const navCssAsset = 'atlas-person-era-navigation.css?v=20260817-era-search-toolbar-v2';
   const mobileCss = 'atlas-person-mobile-column-widths.css?v=20260816-mobile-widths-v2';
 
   for (const asset of [tableJs, navJs, mainJs, paletteCss, navCssAsset, mobileCss]) assert.ok(html.includes(asset));

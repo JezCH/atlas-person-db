@@ -165,9 +165,14 @@ test('era navigator builds from rendered era groups, owns search/Polity status, 
 
   const nav = container.children[0];
   assert.equal(nav.id, 'personEraNavigator');
-  assert.equal(nav.querySelector('.person-era-search').value, 'alexander');
-  assert.equal(nav.querySelector('.person-era-nav-summary').textContent, '인물 5명 · 정치체 2개');
+  const search = nav.querySelector('.person-era-search');
+  const summary = nav.querySelector('.person-era-nav-summary');
   const politySelect = nav.querySelector('.person-era-polity-filter');
+  assert.equal(search.value, 'alexander');
+  assert.equal(summary.textContent, '인물 5명 · 정치체 2개');
+  assert.ok(hasClass(summary.parent, 'person-era-nav-intro'));
+  assert.ok(hasClass(search.parent, 'person-era-nav-controls'));
+  assert.equal(politySelect.parent, search.parent);
   assert.equal(politySelect.value, 'rome');
   assert.equal(politySelect.children.length, 3);
 

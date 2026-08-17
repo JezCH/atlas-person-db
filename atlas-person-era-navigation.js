@@ -104,7 +104,11 @@
     status.className = "person-era-nav-current";
     status.setAttribute("aria-live", "polite");
     status.textContent = "표시 중인 시대를 선택하세요";
-    intro.append(title, status);
+    const summary = document.createElement("span");
+    summary.className = "person-era-nav-summary";
+    summary.setAttribute("aria-live", "polite");
+    summary.textContent = "인물 0명 · 정치체 0개";
+    intro.append(title, status, summary);
 
     const controls = document.createElement("div");
     controls.className = "person-era-nav-controls";
@@ -124,11 +128,7 @@
     all.value = "";
     all.textContent = "모든 정치체";
     select.append(all);
-    const summary = document.createElement("span");
-    summary.className = "person-era-nav-summary";
-    summary.setAttribute("aria-live", "polite");
-    summary.textContent = "인물 0명 · 정치체 0개";
-    controls.append(search, select, summary);
+    controls.append(search, select);
     top.append(intro, controls);
 
     const track = document.createElement("div");

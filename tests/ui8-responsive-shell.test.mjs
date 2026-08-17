@@ -46,7 +46,7 @@ test('UI8 remains presentation-only and does not create another data read or wri
 
 test('UI8 shell assets load after Person Main so the generated detail panel exists', () => {
   assert.match(html, /atlas-responsive-shell\.css\?v=20260815-ui8-shell-r2/);
-  const mainScript = html.indexOf('atlas-person-main.js?v=20260817-era-search-toolbar-v1');
+  const mainScript = html.indexOf('atlas-person-main.js?v=20260817-era-search-toolbar-v2');
   const shellScript = html.indexOf('atlas-responsive-shell.js?v=20260815-ui8-shell-r2');
   const navScript = html.indexOf('atlas-main-authority-nav.js?v=20260815-ui5');
   assert.ok(mainScript >= 0 && shellScript > mainScript && navScript > shellScript);
