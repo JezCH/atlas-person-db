@@ -1,0 +1,42 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:galileo-galilei:grand-duchy-of-tuscany:mathematician-natural-philosopher:1610-1642:v1",
+  "person": {
+    "canonical_name_en": "Galileo Galilei",
+    "display_name_ko": "갈릴레오 갈릴레이"
+  },
+  "polity": {
+    "canonical_name_en": "Grand Duchy of Tuscany",
+    "display_name_ko": "토스카나 대공국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Mathematician and natural philosopher",
+    "role_display_name_ko": "수학자·자연철학자",
+    "start_year": 1610,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1642,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "In 1610 Galileo was recalled from Padua to Tuscany and appointed mathematician and philosopher to the Grand Duke of Tuscany. He remained based in the Tuscan grand-ducal sphere through the final decades of his scientific career and died in 1642. ATLAS therefore uses 1610-1642 as the representative Tuscan intellectual-activity phase, rather than claiming an exact uninterrupted court-office term for every year."
+  },
+  "sources": [
+    {
+      "title": "Galileo Galilei — Museo Galileo",
+      "canonical_url": "https://catalogue.museogalileo.it/biography/GalileoGalilei.html",
+      "citation_text": "Museo Galileo records Galileo's appointment in 1610 as mathematician and philosopher to the Grand Duke of Tuscany and gives his lifespan as 1564-1642.",
+      "source_type": "scholarly_web"
+    },
+    {
+      "title": "Sidereus Nuncius (1610) — Museo Galileo",
+      "canonical_url": "https://www2.museogalileo.it/en/library-and-research-institute/projects/meet-galileo/38-works/464-sidereus-nuncius-the-starry-messenger-1610.html",
+      "citation_text": "Museo Galileo explains that Galileo's 1610 discoveries led the Grand Duke of Tuscany to summon him to Florence as First Mathematician and Philosopher to the Court.",
+      "source_type": "scholarly_web"
+    }
+  ]
+}
