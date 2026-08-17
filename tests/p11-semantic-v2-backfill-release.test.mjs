@@ -33,6 +33,7 @@ test('P11 semantic-v2 backfill release is exact-SHA, dry-run-first, bounded, and
   assert.equal(exceptions.rules.temporal_boundary_metadata_must_be_complete, true);
   assert.equal(exceptions.rules.unknown_incomplete_activity_outside_this_list_blocks_p11, true);
 
+  assert.match(workflow, /workflow_dispatch:/);
   assert.match(workflow, /push:\s*\n\s*branches:\s*\n\s*- main/);
   assert.match(workflow, /stage2\/releases\/p11-semantic-v2-backfill-release\.v1\.json/);
   assert.match(workflow, /id-token: write/);
