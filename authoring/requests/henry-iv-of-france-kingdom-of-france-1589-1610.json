@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:henry-iv-of-france:kingdom-of-france:king:1589-1610:v1",
+  "person": {"canonical_name_en": "Henry IV of France", "display_name_ko": "앙리 4세"},
+  "polity": {"canonical_name_en": "Kingdom of France", "display_name_ko": "프랑스 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 1589, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1610, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Henry IV ruled France from 1589 to 1610. The canonical name includes 'of France' to distinguish him from other rulers named Henry IV."},
+  "sources": [{"title": "Henri IV (1553-1610; roi de France) — Bibliothèque nationale de France", "canonical_url": "https://catalogue.bnf.fr/ark:/12148/cb120154019", "citation_text": "The BnF authority record identifies Henri IV as King of France from 1589 to 1610.", "source_type": "government_web"}]
+}

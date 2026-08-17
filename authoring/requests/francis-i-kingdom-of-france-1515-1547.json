@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:francis-i:kingdom-of-france:king:1515-1547:v1",
+  "person": {"canonical_name_en": "Francis I", "display_name_ko": "프랑수아 1세"},
+  "polity": {"canonical_name_en": "Kingdom of France", "display_name_ko": "프랑스 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 1515, "start_certainty": "exact", "start_calendar": "julian", "end_year": 1547, "end_certainty": "exact", "end_calendar": "julian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Francis I ruled the Kingdom of France from 1515 to 1547."},
+  "sources": [{"title": "François Ier (roi de France) — Château de Fontainebleau", "canonical_url": "https://collections-ressources.chateaudefontainebleau.fr/document/francois-ier-roi-de-france/5f6b540ffde2e4199866ce4e", "citation_text": "The Château de Fontainebleau collections record identifies François I as King of France from 1515 to 1547.", "source_type": "government_web"}]
+}

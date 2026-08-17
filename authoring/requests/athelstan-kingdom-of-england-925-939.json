@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:athelstan:kingdom-of-england:king:925-939:v1",
+  "person": {"canonical_name_en": "Athelstan", "display_name_ko": "애설스탠"},
+  "polity": {"canonical_name_en": "Kingdom of England", "display_name_ko": "잉글랜드 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 925, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 939, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "ATLAS uses Athelstan's crowned English kingship from 925 to 939. Sources sometimes label the succession year as 924, but the Royal Family narrative itself gives his reign as 925-939 and describes the subsequent consolidation of the English kingdom."},
+  "sources": [{"title": "Athelstan (r.924-939) — The Royal Family", "canonical_url": "https://www.royal.uk/athelstan-r924-939", "citation_text": "The Royal Family narrative states that Athelstan reigned 925-939 and describes his consolidation and expansion of the English kingdom.", "source_type": "government_web"}]
+}

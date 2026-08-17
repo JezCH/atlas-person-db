@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:louis-ix:kingdom-of-france:king:1226-1270:v1",
+  "person": {"canonical_name_en": "Louis IX", "display_name_ko": "루이 9세"},
+  "polity": {"canonical_name_en": "Kingdom of France", "display_name_ko": "프랑스 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 1226, "start_certainty": "exact", "start_calendar": "julian", "end_year": 1270, "end_certainty": "exact", "end_calendar": "julian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Louis IX ruled France from 1226 until his death in 1270. The activity records his French kingship only."},
+  "sources": [{"title": "Louis IX (1214-1270; roi de France) — Bibliothèque nationale de France", "canonical_url": "https://catalogue.bnf.fr/ark:/12148/cb120344600", "citation_text": "The BnF authority record identifies Louis IX as King of France from 1226 to 1270.", "source_type": "government_web"}]
+}

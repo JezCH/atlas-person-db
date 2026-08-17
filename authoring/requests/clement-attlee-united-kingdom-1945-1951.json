@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:clement-attlee:united-kingdom:prime-minister:1945-1951:v1",
+  "person": {"canonical_name_en": "Clement Attlee", "display_name_ko": "클레멘트 애틀리"},
+  "polity": {"canonical_name_en": "United Kingdom", "display_name_ko": "영국"},
+  "activity": {"relation_type": "governs", "period_basis": "term", "role": "Prime Minister", "role_display_name_ko": "총리", "start_year": 1945, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1951, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Clement Attlee served as Prime Minister of the United Kingdom from 1945 to 1951."},
+  "sources": [{"title": "Clement Attlee — GOV.UK", "canonical_url": "https://www.gov.uk/government/history/past-prime-ministers/clement-attlee", "citation_text": "GOV.UK records Clement Attlee as Prime Minister from 1945 to 1951.", "source_type": "government_web"}]
+}

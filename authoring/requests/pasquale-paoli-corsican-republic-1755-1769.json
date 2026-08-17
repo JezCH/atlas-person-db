@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:pasquale-paoli:corsican-republic:general-of-the-corsican-people:1755-1769:v1",
+  "person": {"canonical_name_en": "Pasquale Paoli", "display_name_ko": "파스콸레 파올리"},
+  "polity": {"canonical_name_en": "Corsican Republic", "display_name_ko": "코르시카 공화국"},
+  "activity": {"relation_type": "governs", "period_basis": "term", "role": "General of the Corsican People", "role_display_name_ko": "코르시카 국민총장", "start_year": 1755, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1769, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Paoli led the Corsican Republic from 1755 to 1769 under the title General of the Corsican People. This is modeled as republican government rather than rule over France."},
+  "sources": [{"title": "Pasquale Paoli, General and Head of the Corsican Republic — British Museum", "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG113435", "citation_text": "The British Museum identifies Paoli as General and Head of the Corsican Republic and gives 1755-1769 as his period of rule.", "source_type": "scholarly_web"}]
+}

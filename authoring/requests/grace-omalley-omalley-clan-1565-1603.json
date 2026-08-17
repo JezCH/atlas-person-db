@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:grace-omalley:omalley-clan:maritime-leader:c1565-1603:v1",
+  "person": {"canonical_name_en": "Grace O'Malley", "display_name_ko": "그레이스 오맬리"},
+  "polity": {"canonical_name_en": "O'Malley Clan", "display_name_ko": "오말리 씨족"},
+  "activity": {"relation_type": "active_in", "period_basis": "general_activity", "role": "Chieftain and maritime leader", "role_display_name_ko": "족장·해상 지도자", "start_year": 1565, "start_certainty": "approximate", "start_calendar": "julian", "end_year": 1603, "end_certainty": "approximate", "end_calendar": "gregorian", "confidence": "likely", "chronology_status": "reviewed", "notes": "Irish state heritage sources describe the O'Malleys as a ruling Gaelic seafaring clan in Connacht and place the independent launch of Grace O'Malley's maritime career after her first husband's death in 1565. She is believed to have died in 1603. The interval is therefore explicitly approximate and does not treat the later 'Pirate Queen' label as a sovereign royal title."},
+  "sources": [{"title": "Clare Island Castle — Heritage Ireland", "canonical_url": "https://heritageireland.ie/unguided-sites/clare-island-castle/", "citation_text": "Heritage Ireland identifies the O'Malley family as a powerful Gaelic clan and states that Grace established Clare Island Castle as a base for her maritime career after her first husband's death in 1565.", "source_type": "government_web"}, {"title": "Rockfleet Castle — Heritage Ireland", "canonical_url": "https://heritageireland.ie/unguided-sites/rockfleet-castle/", "citation_text": "Heritage Ireland records Grace's continuing fleet and political activity and states that she is believed to have died at Rockfleet in 1603.", "source_type": "government_web"}]
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:alfred-the-great:kingdom-of-wessex:king:871-899:v1",
+  "person": {"canonical_name_en": "Alfred the Great", "display_name_ko": "알프레드 대왕"},
+  "polity": {"canonical_name_en": "Kingdom of Wessex", "display_name_ko": "웨식스 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 871, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 899, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Alfred ruled Wessex from 871 to 899 and led the surviving West Saxon kingdom against Viking conquest. ATLAS retains Wessex as his direct polity despite later English unification."},
+  "sources": [{"title": "Alfred 'The Great' (r.871-899) — The Royal Family", "canonical_url": "https://www.royal.uk/alfred-great-r-871-899", "citation_text": "The Royal Family records Alfred as King of Wessex from 871 to 899.", "source_type": "government_web"}]
+}

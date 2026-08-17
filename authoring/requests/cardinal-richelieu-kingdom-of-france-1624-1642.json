@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cardinal-richelieu:kingdom-of-france:principal-minister:1624-1642:v1",
+  "person": {"canonical_name_en": "Cardinal Richelieu", "display_name_ko": "리슐리외 추기경"},
+  "polity": {"canonical_name_en": "Kingdom of France", "display_name_ko": "프랑스 왕국"},
+  "activity": {"relation_type": "serves", "period_basis": "term", "role": "Principal Minister", "role_display_name_ko": "수석대신", "start_year": 1624, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1642, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Cardinal Richelieu became principal minister to Louis XIII in 1624 and remained the central royal minister until his death in 1642. ATLAS records formal service rather than sovereign rule."},
+  "sources": [{"title": "Richelieu, Armand Jean du Plessis duc de (1585-1642) — Bibliothèque nationale de France", "canonical_url": "https://catalogue.bnf.fr/ark:/12148/cb11921894w", "citation_text": "The BnF authority record identifies Richelieu as principal minister of Louis XIII from 1624.", "source_type": "government_web"}]
+}
