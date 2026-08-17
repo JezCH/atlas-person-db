@@ -11,6 +11,7 @@ const exceptions = JSON.parse(fs.readFileSync(path.join(root, 'stage2/contracts/
 
 test('P11 semantic-v2 backfill release is exact-SHA, dry-run-first, bounded, and non-destructive', () => {
   assert.equal(release.status, 'APPROVED_FOR_EXACT_SHA_PRODUCTION_CORRECTION_WORKFLOW');
+  assert.equal(release.execution_request, 'p11-semantic-v2-backfill-oidc-retry-20260817');
   assert.deepEqual(release.expected, {
     semantic_v2_incomplete_before: 301,
     relation_missing_before: 259,
