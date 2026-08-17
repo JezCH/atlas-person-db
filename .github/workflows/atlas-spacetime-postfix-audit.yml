@@ -1,0 +1,44 @@
+name: ATLAS Spacetime Postfix Audit
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/atlas-spacetime-postfix-audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit exact Production placement coverage
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail-with-body --silent --show-error https://atlas-person-db.vercel.app/api/atlas-person-read -o person-read.json
+          curl --fail-with-body --silent --show-error https://atlas-person-db.vercel.app/atlas-polity-spatial-index.json -o spatial-index.json
+          node <<'NODE'
+          const fs=require('fs');
+          const model=require('./atlas-person-spacetime-model.js');
+          const read=JSON.parse(fs.readFileSync('person-read.json','utf8'));
+          const index=JSON.parse(fs.readFileSync('spatial-index.json','utf8'));
+          const validation=model.validateSpatialIndex(index); if(!validation.valid) throw new Error(validation.errors.join(' | '));
+          const lookup=model.createSpatialLookup(index);
+          const counts={persons:(read.persons||[]).length,activities:0,placed:0,spatial_unresolved:0,capital_period_no_overlap:0,chronology_unresolved:0,polity_unresolved:0,incomplete_placed_coverage:0,static_direct_records:Object.keys(index.polity_geography||{}).length,static_capital_records:(index.capital_records||[]).length,static_review_records:(index.review_queue||[]).length};
+          const unresolved=[]; const incomplete=[];
+          const ord=model.historicalYearToOrdinal;
+          for(const person of read.persons||[]){for(const activity of person.activity_summaries||[]){counts.activities++;const placement=model.resolveActivityPlacement(activity,lookup);counts[placement.status]=(counts[placement.status]||0)+1;const polity=activity.polity||{};const label={person:person.display_name||person.preferred_name_ko||person.canonical_name_en,polity:polity.display_name||polity.preferred_name_ko||polity.canonical_name_en,activity_id:activity.id,polity_id:polity.id,status:placement.status};if(placement.status!=='placed'){unresolved.push(label);continue;}const segs=placement.segments||[];const start=activity.start?.year,end=activity.end?.year;let full=segs.length>0&&segs[0].start_year===start&&segs.at(-1).end_year===end;for(let i=1;i<segs.length&&full;i++)full=ord(segs[i].start_year)===ord(segs[i-1].end_year)+1;if(!full){counts.incomplete_placed_coverage++;incomplete.push({...label,start,end,segments:segs.map(s=>({start:s.start_year,end:s.end_year,region:s.region_code,capital:s.capital_name}))});}}}
+          const byPolity={};for(const row of unresolved){const k=`${row.polity}||${row.polity_id}`;(byPolity[k]??={polity:row.polity,polity_id:row.polity_id,count:0,statuses:{}}).count++;byPolity[k].statuses[row.status]=(byPolity[k].statuses[row.status]||0)+1;}
+          const out={schema:'atlas-spacetime-postfix-production-audit/v1',generated_at:new Date().toISOString(),authority:read.authority||null,counts,unresolved_polities:Object.values(byPolity).sort((a,b)=>b.count-a.count),incomplete_placed_coverage:incomplete};
+          fs.writeFileSync('postfix-audit.json',JSON.stringify(out,null,2));console.log(JSON.stringify(out,null,2));
+          if(counts.capital_period_no_overlap||counts.chronology_unresolved||counts.polity_unresolved||counts.incomplete_placed_coverage) process.exitCode=1;
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: atlas-spacetime-postfix-audit-${{ github.sha }}
+          path: postfix-audit.json
+          retention-days: 30
