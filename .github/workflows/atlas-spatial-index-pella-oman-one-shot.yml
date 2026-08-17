@@ -1,0 +1,54 @@
+name: ATLAS Spatial Index Pella Oman One Shot
+
+on:
+  pull_request:
+    paths:
+      - '.tmp/spatial-index-pella-oman-delta.json'
+      - '.github/workflows/atlas-spatial-index-pella-oman-one-shot.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  compile:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - name: Apply reviewed delta and validate index
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('fs');
+          const model = require('./atlas-person-spacetime-model.js');
+          const path = 'atlas-polity-spatial-index.json';
+          const index = JSON.parse(fs.readFileSync(path, 'utf8'));
+          const delta = JSON.parse(fs.readFileSync('.tmp/spatial-index-pella-oman-delta.json', 'utf8'));
+          index.generated_at = delta.generated_at;
+          const capitalMap = new Map((index.capital_records || []).map((row) => [row.polity_id, row]));
+          for (const row of delta.capital_upserts || []) capitalMap.set(row.polity_id, row);
+          index.capital_records = [...capitalMap.values()].sort((a,b) => a.polity_id.localeCompare(b.polity_id));
+          const removed = new Set(delta.remove_from_review_queue || []);
+          index.review_queue = (index.review_queue || []).filter((row) => !removed.has(row.polity_id)).sort((a,b) => a.polity_id.localeCompare(b.polity_id));
+          const validation = model.validateSpatialIndex(index);
+          if (!validation.valid) throw new Error(validation.errors.join(' | '));
+          fs.writeFileSync(path, JSON.stringify(index, null, 2) + '\n');
+          NODE
+      - name: Commit generated reviewed index
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- atlas-polity-spatial-index.json; then
+            echo 'Index already compiled; nothing to commit.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add atlas-polity-spatial-index.json
+          git commit -m 'Resolve reviewed Pella and Oman spacetime placements'
+          git push origin HEAD:${{ github.head_ref }}
