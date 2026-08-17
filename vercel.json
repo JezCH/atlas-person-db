@@ -1,7 +1,7 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "ignoreCommand": "node scripts/vercel-ignore-build.mjs",
+  "ignoreCommand": "node -e \"process.exit(1)\"",
   "git": {
     "deploymentEnabled": {
       "agent/*": false
