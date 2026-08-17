@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:daniel-oconnell:united-kingdom:political-reformer:c1823-1847:v1",
+  "person": {"canonical_name_en": "Daniel O'Connell", "display_name_ko": "대니얼 오코넬"},
+  "polity": {"canonical_name_en": "United Kingdom", "display_name_ko": "영국"},
+  "activity": {"relation_type": "active_in", "period_basis": "general_activity", "role": "Political reformer", "role_display_name_ko": "정치 개혁가", "start_year": 1823, "start_certainty": "approximate", "start_calendar": "gregorian", "end_year": 1847, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "O'Connell's representative mass-political reform activity is anchored to the emergence of the Catholic Association campaign in the early 1820s and continues through his death in 1847. Because this predates an independent Irish state, the higher-order polity is the United Kingdom."},
+  "sources": [{"title": "State commemoration for Daniel O'Connell — Government of Ireland", "canonical_url": "https://www.gov.ie/en/department-of-the-taoiseach/speeches/speech-by-taoiseach-miche%C3%A1l-martin-state-commemoration-to-mark-250th-anniversary-of-birth-of-daniel-oconnell/", "citation_text": "The Government of Ireland describes O'Connell's Catholic Association as the mass political vehicle that achieved Catholic Emancipation in 1829 and emphasizes his international influence as a political leader.", "source_type": "government_web"}]
+}

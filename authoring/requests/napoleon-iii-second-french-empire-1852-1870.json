@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:napoleon-iii:second-french-empire:emperor:1852-1870:v1",
+  "person": {"canonical_name_en": "Napoleon III", "display_name_ko": "나폴레옹 3세"},
+  "polity": {"canonical_name_en": "Second French Empire", "display_name_ko": "프랑스 제2제국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Emperor", "role_display_name_ko": "황제", "start_year": 1852, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1870, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Louis-Napoléon Bonaparte became Napoleon III, Emperor of the French, when the Second Empire was proclaimed in 1852; imperial rule ended with the regime's collapse in September 1870."},
+  "sources": [{"title": "Louis-Napoléon Bonaparte — Élysée", "canonical_url": "https://www.elysee.fr/en/louis-napoleon-bonaparte", "citation_text": "The Élysée chronology states that the Second Empire began on 2 December 1852 and that the Republic was proclaimed on 4 September 1870 after Napoleon III's capture at Sedan.", "source_type": "government_web"}]
+}

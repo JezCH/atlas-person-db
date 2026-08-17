@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:aethelberht-of-kent:kingdom-of-kent:king:c560-616:v1",
+  "person": {"canonical_name_en": "Æthelberht of Kent", "display_name_ko": "에설버흐트"},
+  "polity": {"canonical_name_en": "Kingdom of Kent", "display_name_ko": "켄트 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 560, "start_certainty": "approximate", "start_calendar": "unspecified_historical", "end_year": 616, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "likely", "chronology_status": "reviewed", "notes": "The conventional chronology gives Æthelberht's reign in Kent as c.560-616. The start is explicitly approximate because the early Anglo-Saxon chronology is reconstructed from later sources."},
+  "sources": [{"title": "Anglo Saxon Kings — The Royal Family", "canonical_url": "https://www.royal.uk/anglo-saxon-kings", "citation_text": "The Royal Family identifies Æthelberht as King of Kent and gives his reign as c.560-616.", "source_type": "government_web"}]
+}

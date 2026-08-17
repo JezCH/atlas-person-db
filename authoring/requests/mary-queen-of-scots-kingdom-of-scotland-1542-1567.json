@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mary-queen-of-scots:kingdom-of-scotland:queen:1542-1567:v1",
+  "person": {"canonical_name_en": "Mary, Queen of Scots", "display_name_ko": "스코틀랜드의 메리 여왕"},
+  "polity": {"canonical_name_en": "Kingdom of Scotland", "display_name_ko": "스코틀랜드 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Queen", "role_display_name_ko": "여왕", "start_year": 1542, "start_certainty": "exact", "start_calendar": "julian", "end_year": 1567, "end_certainty": "exact", "end_calendar": "julian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Mary became Queen of Scots six days after birth in 1542 and was forced to abdicate in 1567. The canonical name avoids confusion with Mary I of England."},
+  "sources": [{"title": "Mary, Queen of Scots (r.1542-1567) — The Royal Family", "canonical_url": "https://www.royal.uk/mary-queen-scots-r1542-1567", "citation_text": "The Royal Family records Mary's Scottish reign as 1542-1567 and states that she was forced to abdicate in 1567.", "source_type": "government_web"}]
+}

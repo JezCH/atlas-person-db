@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:david-trimble:northern-ireland:first-minister:1999-2001:v1",
+  "person": {"canonical_name_en": "David Trimble", "display_name_ko": "데이비드 트림블"},
+  "polity": {"canonical_name_en": "Northern Ireland", "display_name_ko": "북아일랜드"},
+  "activity": {"relation_type": "governs", "period_basis": "term", "role": "First Minister", "role_display_name_ko": "수석장관", "start_year": 1999, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 2001, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Trimble served as First Minister after devolution took effect in December 1999 until his resignation took effect on 1 July 2001. ATLAS splits this from his later return rather than creating a false continuous 1999-2002 term."},
+  "sources": [{"title": "Northern Ireland Assembly Chronology", "canonical_url": "https://archive.niassembly.gov.uk/Narrative.htm", "citation_text": "The Northern Ireland Assembly chronology records Trimble's First Ministership under devolution and his resignation taking effect on 1 July 2001.", "source_type": "government_web"}]
+}

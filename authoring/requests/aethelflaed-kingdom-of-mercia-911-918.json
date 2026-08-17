@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:aethelflaed:kingdom-of-mercia:lady-of-the-mercians:911-918:v1",
+  "person": {"canonical_name_en": "Æthelflæd", "display_name_ko": "애설플래드"},
+  "polity": {"canonical_name_en": "Kingdom of Mercia", "display_name_ko": "머시아 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Lady of the Mercians", "role_display_name_ko": "머시아인의 여군주", "start_year": 911, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 918, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "After Æthelred's death in 911, Æthelflæd governed Mercia in her own right until her death in 918. Her historical title is preserved rather than normalizing her into a later-style queen."},
+  "sources": [{"title": "Edward 'The Elder' (r.899-924) — The Royal Family", "canonical_url": "https://www.royal.uk/edward-elder-r-899-924", "citation_text": "The Royal Family states that Æthelflæd governed Mercia after her husband's death.", "source_type": "government_web"}, {"title": "Stowe Ch 22 — British Library", "canonical_url": "https://searcharchives.bl.uk/catalog/040-001953970", "citation_text": "The British Library catalogue identifies Æthelred (d.911) and Æthelflæd (d.918) as rulers of the Mercians.", "source_type": "scholarly_web"}]
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:marie-antoinette:kingdom-of-france:queen-consort:1774-1792:v1",
+  "person": {"canonical_name_en": "Marie Antoinette", "display_name_ko": "마리 앙투아네트"},
+  "polity": {"canonical_name_en": "Kingdom of France", "display_name_ko": "프랑스 왕국"},
+  "activity": {"relation_type": "active_in", "period_basis": "general_activity", "role": "Queen Consort", "role_display_name_ko": "왕비", "start_year": 1774, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1792, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Marie Antoinette became Queen of France when Louis XVI succeeded in 1774. ATLAS ends this representative queen-consort activity with the fall of the monarchy in 1792 and does not model her as a sovereign ruler."},
+  "sources": [{"title": "Marie-Antoinette — Château de Versailles", "canonical_url": "https://www.chateauversailles.fr/decouvrir/histoire/grands-personnages/marie-antoinette", "citation_text": "The Château de Versailles identifies Marie Antoinette as Queen of France and describes her position from Louis XVI's accession in 1774 through the revolutionary collapse of the monarchy in 1792.", "source_type": "government_web"}]
+}

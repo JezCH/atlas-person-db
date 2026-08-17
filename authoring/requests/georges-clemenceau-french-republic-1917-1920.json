@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:georges-clemenceau:french-republic:prime-minister:1917-1920:v1",
+  "person": {"canonical_name_en": "Georges Clemenceau", "display_name_ko": "조르주 클레망소"},
+  "polity": {"canonical_name_en": "French Republic", "display_name_ko": "프랑스 공화국"},
+  "activity": {"relation_type": "governs", "period_basis": "term", "role": "Prime Minister", "role_display_name_ko": "총리", "start_year": 1917, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1920, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "ATLAS records Clemenceau's second and historically defining term as President of the Council, from November 1917 to January 1920, normalized under the generic Prime Minister role."},
+  "sources": [{"title": "Georges, Eugène, Benjamin Clemenceau — Assemblée nationale", "canonical_url": "https://www.assemblee-nationale.fr/histoire/tables_archives/georges-clemenceau.asp", "citation_text": "The French National Assembly records Clemenceau as President of the Council and Minister of War from 16 November 1917 to 18 January 1920.", "source_type": "government_web"}]
+}

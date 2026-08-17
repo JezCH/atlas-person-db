@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:clovis-i:frankish-kingdom:king:481-511:v1",
+  "person": {"canonical_name_en": "Clovis I", "display_name_ko": "클로비스 1세"},
+  "polity": {"canonical_name_en": "Frankish Kingdom", "display_name_ko": "프랑크 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 481, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 511, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Clovis I is recorded as Merovingian King of the Franks from 481 to 511. ATLAS uses the contemporary Frankish polity rather than retrojecting the later Kingdom of France."},
+  "sources": [{"title": "Clovis I, King of the Franks — British Museum", "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG141386", "citation_text": "The British Museum identifies Clovis I as Merovingian King of the Franks and gives his reign as 481-511.", "source_type": "scholarly_web"}]
+}

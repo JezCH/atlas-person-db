@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mael-sechnaill-mac-maele-ruanaid:kingdom-of-mide:king:846-862:v1",
+  "person": {"canonical_name_en": "Máel Sechnaill mac Máele Ruanaid", "display_name_ko": "말 셰흐날 막 말레 루아니"},
+  "polity": {"canonical_name_en": "Kingdom of Mide", "display_name_ko": "미데 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 846, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 862, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Chronicon Scotorum records that Máel Sechnaill began to rule in 846 and died in 862 in the sixteenth year of his reign. ATLAS anchors him to his dynastic base in Mide; wider high-kingship claims are not modeled as a centralized Kingdom of Ireland."},
+  "sources": [{"title": "Chronicon Scotorum — CELT, University College Cork", "canonical_url": "https://research.ucc.ie/celt/document/T100016/", "citation_text": "Chronicon Scotorum records 'Maelsechlainn rules' under 846 and his death in 862 in the sixteenth year of his reign.", "source_type": "scholarly_web"}]
+}

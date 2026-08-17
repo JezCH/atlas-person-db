@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:empress-matilda:kingdom-of-england:lady-of-the-english:1141:v1",
+  "person": {"canonical_name_en": "Empress Matilda", "display_name_ko": "마틸다 황후"},
+  "polity": {"canonical_name_en": "Kingdom of England", "display_name_ko": "잉글랜드 왕국"},
+  "activity": {"relation_type": "active_in", "period_basis": "general_activity", "role": "Lady of the English and claimant to the throne", "role_display_name_ko": "잉글랜드의 여군주·왕위 주장자", "start_year": 1141, "start_certainty": "exact", "start_calendar": "julian", "end_year": 1141, "end_certainty": "exact", "end_calendar": "julian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Matilda was Henry I's designated heir and fought Stephen for the English throne. In 1141 Stephen was captured and Matilda reached the high point of her claim, styling herself Lady of the English, but she was never crowned. ATLAS therefore records a bounded claimant activity rather than a sovereign reign and does not invent a nonexistent claims_rule relation type."},
+  "sources": [{"title": "Stephen and Matilda (r.1135-1154) — The Royal Family", "canonical_url": "https://www.royal.uk/stephen-and-matilda", "citation_text": "The Royal Family describes Matilda's disputed claim, Stephen's capture in 1141, and the continuation of the succession conflict; Matilda was not established as a crowned reigning queen.", "source_type": "government_web"}]
+}

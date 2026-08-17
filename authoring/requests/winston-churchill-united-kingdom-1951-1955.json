@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:winston-churchill:united-kingdom:prime-minister:1951-1955:v1",
+  "person": {"canonical_name_en": "Winston Churchill", "display_name_ko": "윈스턴 처칠"},
+  "polity": {"canonical_name_en": "United Kingdom", "display_name_ko": "영국"},
+  "activity": {"relation_type": "governs", "period_basis": "term", "role": "Prime Minister", "role_display_name_ko": "총리", "start_year": 1951, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1955, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "This manifest adds Churchill's second, separate premiership from 1951 to 1955 to the existing ATLAS person. It intentionally does not merge the term with his already-live 1940-1945 premiership."},
+  "sources": [{"title": "Sir Winston Churchill — GOV.UK", "canonical_url": "https://www.gov.uk/government/history/past-prime-ministers/winston-churchill", "citation_text": "GOV.UK records Churchill's two separate premierships as 1940-1945 and 1951-1955.", "source_type": "government_web"}]
+}

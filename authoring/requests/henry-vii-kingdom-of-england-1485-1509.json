@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:henry-vii:kingdom-of-england:king:1485-1509:v1",
+  "person": {"canonical_name_en": "Henry VII", "display_name_ko": "헨리 7세"},
+  "polity": {"canonical_name_en": "Kingdom of England", "display_name_ko": "잉글랜드 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 1485, "start_certainty": "exact", "start_calendar": "julian", "end_year": 1509, "end_certainty": "exact", "end_calendar": "julian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Henry VII founded the Tudor dynasty and ruled England from 1485 to 1509."},
+  "sources": [{"title": "Henry VII (r.1485-1509) — The Royal Family", "canonical_url": "https://www.royal.uk/henry-vii?page=1", "citation_text": "The Royal Family identifies Henry VII as the founder of the Tudor dynasty and gives his reign as 1485-1509.", "source_type": "government_web"}]
+}

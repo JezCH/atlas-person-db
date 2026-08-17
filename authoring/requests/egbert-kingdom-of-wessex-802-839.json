@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:egbert:kingdom-of-wessex:king:802-839:v1",
+  "person": {"canonical_name_en": "Egbert", "display_name_ko": "에그버트"},
+  "polity": {"canonical_name_en": "Kingdom of Wessex", "display_name_ko": "웨식스 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 802, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 839, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Egbert ruled Wessex from 802 to 839. His wider overlordship is noted historically but ATLAS anchors the Activity to his direct kingdom of Wessex."},
+  "sources": [{"title": "Egbert, King of Wessex (r.802-839) — The Royal Family", "canonical_url": "https://www.royal.uk/egbert-king-wessex-r-802-839", "citation_text": "The Royal Family records Egbert as King of Wessex from 802 until 839.", "source_type": "government_web"}]
+}
