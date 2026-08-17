@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:angela-merkel:germany:federal-chancellor:2005-2021:v1",
+  "person": {
+    "canonical_name_en": "Angela Merkel",
+    "display_name_ko": "앙겔라 메르켈"
+  },
+  "polity": {
+    "canonical_name_en": "Germany",
+    "display_name_ko": "독일"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Federal Chancellor",
+    "role_display_name_ko": "연방총리",
+    "start_year": 2005,
+    "start_month": 11,
+    "start_day": 22,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2021,
+    "end_month": 12,
+    "end_day": 8,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Angela Merkel became Federal Chancellor of Germany on 22 November 2005 and remained continuously in office through four cabinets until Olaf Scholz was elected and the Chancellery was handed over on 8 December 2021. ATLAS models the uninterrupted chancellorship as one governing Activity despite successive parliamentary terms and cabinet formations."
+  },
+  "sources": [
+    {
+      "title": "Dr. Angela Dorothea Merkel — Deutscher Bundestag",
+      "canonical_url": "https://www.bundestag.de/webarchiv/abgeordnete/biografien19/M/merkel_angela-521968",
+      "citation_text": "The German Bundestag biography states that Angela Merkel was Federal Chancellor from 22 November 2005.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "Election, appointment, swearing-in – the new Federal Government — Federal Government",
+      "canonical_url": "https://www.bundesregierung.de/breg-en/service/archive/election-appointment-swearing-in-the-new-federal-government-1990064",
+      "citation_text": "The German Federal Government records Olaf Scholz's election as Federal Chancellor and Angela Merkel's handover of the Federal Chancellery on 8 December 2021.",
+      "source_type": "government_web"
+    }
+  ]
+}

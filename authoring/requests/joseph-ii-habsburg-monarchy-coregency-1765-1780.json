@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:joseph-ii:habsburg-monarchy:co-regent:1765-1780:v1",
+  "person": {
+    "canonical_name_en": "Joseph II",
+    "display_name_ko": "요제프 2세"
+  },
+  "polity": {
+    "canonical_name_en": "Habsburg Monarchy",
+    "display_name_ko": "합스부르크 군주국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Co-regent",
+    "role_display_name_ko": "공동 섭정",
+    "start_year": 1765,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1780,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Joseph II served as Maria Theresa's co-regent in the Habsburg Monarchy from 1765 to 1780. This Activity is kept distinct from his 1780-1790 sole rule. Although Joseph was also Holy Roman Emperor from 1765, ATLAS does not mislabel him as an 'Emperor of Austria', a title/state form that did not yet exist; this request records the Habsburg Monarchy relationship requested for Austria."
+  },
+  "sources": [
+    {
+      "title": "Joseph II — Die Welt der Habsburger",
+      "canonical_url": "https://www.habsburger.net/en/persons/habsburg-emperor/joseph-ii",
+      "citation_text": "Die Welt der Habsburger identifies Joseph II as Holy Roman Emperor from 1765 to 1790, co-regent of Maria Theresa in the Habsburg Monarchy from 1765 to 1780, and sole regent from 1780 to 1790.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Joseph II as co-regent — Die Welt der Habsburger",
+      "canonical_url": "https://www.habsburger.net/en/chapter/joseph-ii-co-regent",
+      "citation_text": "The Habsburg history project describes the joint regency of Maria Theresa and Joseph II from 1765 to 1780 and notes that Maria Theresa remained ruler of the Habsburg Monarchy during the co-regency.",
+      "source_type": "institutional_web"
+    }
+  ]
+}
