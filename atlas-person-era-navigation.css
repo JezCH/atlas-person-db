@@ -1,14 +1,14 @@
 .person-era-navigator{position:sticky;top:10px;z-index:18;display:grid;gap:7px;padding:8px 10px;border:1px solid #dce2eb;border-radius:12px;background:rgba(255,255,255,.96);box-shadow:0 8px 24px #18243a14;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-.person-era-nav-top{display:flex;min-width:0;align-items:center;justify-content:space-between;gap:12px}
+.person-era-nav-top{display:grid;grid-template-columns:minmax(0,1fr) auto;min-width:0;align-items:center;gap:12px}
 .person-era-nav-intro{display:flex;min-width:0;align-items:baseline;gap:8px}
 .person-era-nav-intro>strong{flex:0 0 auto;font-size:12px;color:#273148}
 .person-era-nav-current{min-width:0;overflow:hidden;color:#747e90;font-size:9px;line-height:1.35;text-overflow:ellipsis;white-space:nowrap}
+.person-era-nav-summary{flex:0 0 auto;color:#364156;font-size:10px;font-weight:850;white-space:nowrap}
 .person-era-nav-controls{display:flex;min-width:0;align-items:center;justify-content:flex-end;gap:9px}
 .person-era-search{width:260px;max-width:36vw;height:30px;padding:0 10px;border:1px solid #d5dce8;border-radius:8px;background:#fff;color:#273148;font:inherit;font-size:10px;font-weight:700;outline:none}
 .person-era-search::placeholder{color:#8b94a4;font-weight:600}
 .person-era-polity-filter{width:210px;max-width:30vw;height:30px;padding:0 28px 0 9px;border:1px solid #d5dce8;border-radius:8px;background:#fff;color:#273148;font:inherit;font-size:10px;font-weight:750;outline:none}
 .person-era-search:focus,.person-era-polity-filter:focus{border-color:#8994d8;box-shadow:0 0 0 3px #5967d91f}
-.person-era-nav-summary{flex:0 0 auto;color:#364156;font-size:10px;font-weight:850;white-space:nowrap}
 .person-era-nav-track{display:grid;grid-template-columns:34px minmax(0,1fr) 34px;align-items:center;gap:8px}
 .person-era-nav-step{display:grid;width:34px;height:34px;place-items:center;border:1px solid #dce2eb;border-radius:9px;background:#fff;color:#536075;font:inherit;font-size:21px;line-height:1;cursor:pointer}
 .person-era-nav-step:hover:not(:disabled){border-color:#bfc7d6;background:#f5f7fa}
@@ -23,15 +23,21 @@
 .person-era-jump-range{grid-area:range;align-self:start;max-width:122px;overflow:hidden;font-size:8px;font-weight:700;line-height:1.2;opacity:.8;text-overflow:ellipsis;white-space:nowrap}
 .person-era-jump-count{grid-area:count;display:grid;min-width:24px;height:24px;place-items:center;align-self:center;padding:0 5px;border-radius:999px;background:#ffffffa8;color:currentColor;font-size:9px;font-style:normal;font-weight:900}
 .person-era-group{scroll-margin-top:122px}
+@media(max-width:900px){
+  .person-era-nav-top{grid-template-columns:minmax(0,1fr)}
+  .person-era-nav-controls{justify-content:stretch}
+  .person-era-search{width:min(360px,58vw);max-width:none}
+  .person-era-polity-filter{width:min(230px,34vw);max-width:none}
+}
 @media(max-width:760px){
   .person-era-navigator{top:64px;z-index:24;margin:0 -2px;padding:7px 8px;border-radius:10px}
-  .person-era-nav-top{align-items:stretch;gap:7px}
-  .person-era-nav-intro{display:grid;flex:1 1 auto;align-content:center;gap:1px}
+  .person-era-nav-top{gap:5px}
+  .person-era-nav-intro{align-items:baseline;gap:6px}
   .person-era-nav-intro>strong{font-size:11px}
   .person-era-nav-current{font-size:8px}
-  .person-era-nav-controls{flex:0 1 68%;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) auto;gap:5px}
+  .person-era-nav-summary{font-size:8px}
+  .person-era-nav-controls{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:5px}
   .person-era-search,.person-era-polity-filter{width:100%;max-width:none;height:29px;font-size:9px}
-  .person-era-nav-summary{align-self:center;font-size:8px}
   .person-era-nav-track{grid-template-columns:32px minmax(0,1fr) 32px;gap:5px}
   .person-era-nav-step{width:32px;height:32px;font-size:20px}
   .person-era-jump-list{gap:5px}
@@ -42,10 +48,9 @@
   .person-era-group{scroll-margin-top:166px}
 }
 @media(max-width:520px){
-  .person-era-nav-top{display:grid;grid-template-columns:minmax(0,1fr);gap:5px}
-  .person-era-nav-intro{display:flex;align-items:baseline;gap:6px}
-  .person-era-nav-controls{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.9fr) auto;gap:4px}
-  .person-era-nav-summary{align-self:center;text-align:right;font-size:8px}
+  .person-era-nav-intro{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:6px;row-gap:1px}
+  .person-era-nav-summary{grid-column:1/-1}
+  .person-era-nav-controls{grid-template-columns:minmax(0,1.2fr) minmax(0,.9fr);gap:4px}
   .person-era-search,.person-era-polity-filter{height:28px}
   .person-era-nav-track{grid-template-columns:30px minmax(0,1fr) 30px;gap:4px}
   .person-era-nav-step{width:30px;height:30px}
@@ -54,8 +59,7 @@
   .person-era-group{scroll-margin-top:204px}
 }
 @media(max-width:390px){
-  .person-era-nav-controls{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)}
-  .person-era-nav-summary{grid-column:1/-1;text-align:right}
+  .person-era-nav-current{overflow:hidden;text-overflow:ellipsis}
   .person-era-group{scroll-margin-top:218px}
 }
 @media(prefers-reduced-motion:reduce){.person-era-jump-list{scroll-behavior:auto}}
