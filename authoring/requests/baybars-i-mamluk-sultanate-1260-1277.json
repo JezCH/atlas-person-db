@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:baybars-i:mamluk-sultanate:1260-1277:v1",
+  "person": {"canonical_name_en": "Baybars I", "display_name_ko": "바이바르스 1세"},
+  "polity": {"canonical_name_en": "Mamluk Sultanate", "display_name_ko": "맘루크 술탄국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Sultan", "role_display_name_ko": "술탄", "start_year": 1260, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 1277, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Baybars I (al-Malik al-Zahir Baybars) ruled the Mamluk Sultanate from 1260 until his death in 1277. ATLAS uses the generic reusable Sultan role and binds the sovereign Activity to the Mamluk Sultanate rather than embedding Egypt or Syria in the Role label."},
+  "sources": [{"title": "Baybars I — British Museum", "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG118270", "citation_text": "The British Museum identifies Baybars I as Mamluk Sultan of Egypt and Syria and dates his rule to 1260–1277.", "source_type": "museum_research"}]
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:imhotep:egypt:djoser-adviser:c2667-c2648-bce:v1",
+  "person": {"canonical_name_en": "Imhotep", "display_name_ko": "임호테프"},
+  "polity": {"canonical_name_en": "Egypt", "display_name_ko": "이집트"},
+  "activity": {"relation_type": "serves", "period_basis": "general_activity", "role": "Adviser", "role_display_name_ko": "고문", "start_year": -2667, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical", "end_year": -2648, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical", "confidence": "likely", "chronology_status": "reviewed", "notes": "Imhotep was a historical non-royal adviser to King Djoser and is credited with the design/oversight of Djoser's Step Pyramid. Exact appointment boundaries are not preserved. ATLAS therefore uses Djoser's approximate 2667–2648 BCE reign only as a representative service window and marks both boundaries approximate rather than treating them as Imhotep's exact term."},
+  "sources": [{"title": "Imhotep — The Metropolitan Museum of Art", "canonical_url": "https://www.metmuseum.org/art/collection/search/570671", "citation_text": "The Metropolitan Museum of Art identifies Imhotep as adviser to King Djoser in the Third Dynasty and credits him with the design of the Step Pyramid at Saqqara.", "source_type": "museum_research"}, {"title": "The Step Pyramid Complex of Djoser — Egyptian Ministry of Tourism and Antiquities", "canonical_url": "https://egymonuments.gov.eg/en/monuments/the-step-pyramid-complex-of-djoser", "citation_text": "Egypt's Ministry of Tourism and Antiquities dates Djoser's reign approximately 2667–2648 BCE and identifies the Step Pyramid as his Third Dynasty monument; this reign provides only a representative chronological envelope for Imhotep's service.", "source_type": "government_web"}]
+}

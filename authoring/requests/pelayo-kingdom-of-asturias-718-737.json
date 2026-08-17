@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:pelayo:kingdom-of-asturias:718-737:v1",
+  "person": {"canonical_name_en": "Pelayo", "display_name_ko": "펠라요"},
+  "polity": {"canonical_name_en": "Kingdom of Asturias", "display_name_ko": "아스투리아스 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 718, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 737, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Pelayo is represented as the first king of the Kingdom of Asturias, ruling from 718 to 737. ATLAS uses the historical Asturian polity rather than a generic Spain identity; later Reconquista significance is contextual and does not change the sovereign binding."},
+  "sources": [{"title": "Pelayo, Rey de Asturias — Diccionarios del patrimonio cultural de España", "canonical_url": "https://tesauros.cultura.gob.es/tesauros/contextosculturales/1040261.html", "citation_text": "Spain's Ministry of Culture heritage thesaurus identifies Pelayo as the first king of Asturias and dates his reign to 718–737, including his leadership at Covadonga and succession by Fafila.", "source_type": "government_reference"}]
+}
