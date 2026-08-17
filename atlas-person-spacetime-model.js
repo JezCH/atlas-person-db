@@ -197,15 +197,32 @@
     const startOrdinal = historicalYearToOrdinal(startYear);
     const endOrdinal = historicalYearToOrdinal(endYear);
     if (startOrdinal == null || endOrdinal == null || startOrdinal > endOrdinal) return Object.freeze([]);
+
     const ticks = [];
-    for (let year = startYear; historicalYearToOrdinal(year) <= endOrdinal;) {
-      ticks.push(Object.freeze({ year, ordinal: historicalYearToOrdinal(year), label: yearLabel(year) }));
-      const nextOrdinal = historicalYearToOrdinal(year) + 100;
-      year = ordinalToHistoricalYear(nextOrdinal);
+    const seen = new Set();
+    const push = (year, terminal = false) => {
+      const ordinal = historicalYearToOrdinal(year);
+      if (ordinal == null || ordinal < startOrdinal || ordinal > endOrdinal || seen.has(year)) return;
+      seen.add(year);
+      ticks.push(Object.freeze({ year, ordinal, label: yearLabel(year), ...(terminal ? { terminal: true } : {}) }));
+    };
+
+    push(startYear);
+
+    if (startYear <= -1) {
+      const oldestBcCentury = Math.floor(Math.abs(Math.min(startYear, -1)) / 100) * 100;
+      for (let magnitude = oldestBcCentury; magnitude >= 100; magnitude -= 100) push(-magnitude);
     }
-    if (!ticks.length || ticks[ticks.length - 1].year !== endYear) {
-      ticks.push(Object.freeze({ year: endYear, ordinal: endOrdinal, label: yearLabel(endYear), terminal: true }));
+
+    if (startYear <= 1 && endYear >= 1) push(1);
+
+    if (endYear >= 100) {
+      const firstAdCentury = Math.max(100, Math.ceil(Math.max(startYear, 1) / 100) * 100);
+      for (let year = firstAdCentury; year <= endYear; year += 100) push(year);
     }
+
+    push(endYear, true);
+    ticks.sort((left, right) => left.ordinal - right.ordinal);
     return Object.freeze(ticks);
   }
 

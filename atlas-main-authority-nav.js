@@ -254,7 +254,7 @@
   function setMobileSearchEnabled(enabled, label) {
     if (!mobileSearch) return;
     mobileSearch.disabled = !enabled;
-    mobileSearch.placeholder = enabled ? mobileSearchPlaceholder : `${label}: 전용 검색 사용`;
+    mobileSearch.placeholder = enabled ? mobileSearchPlaceholder : `${label}: first-class 검색 surface 준비 전`;
     if (!enabled) {
       if (mobileSearchClear) mobileSearchClear.hidden = true;
       if (mobileSearchCount) mobileSearchCount.textContent = "";

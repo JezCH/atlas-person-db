@@ -261,8 +261,10 @@
     ${renderSelection(selectedItem)}
     <section class="spacetime-frame card">
       <div class="spacetime-scroll" tabindex="0" aria-label="역사 시간과 수도 권역에 따른 인물 활동 분포">
-        <div class="spacetime-sticky-corner"><span>시대</span><span>연도</span></div>
-        <div class="spacetime-region-head" style="width:${contentWidth}px">${regionMeta.map((region) => `<div style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${region.items.length}구간</small></div>`).join("")}</div>
+        <div class="spacetime-top-axis" style="width:${168 + contentWidth}px">
+          <div class="spacetime-sticky-corner"><span>시대</span><span>연도</span></div>
+          <div class="spacetime-region-head" style="width:${contentWidth}px">${regionMeta.map((region) => `<div style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${region.items.length}구간</small></div>`).join("")}</div>
+        </div>
         <div class="spacetime-era-axis" style="height:${timelineHeight}px">${eras.map((era) => `<div class="person-era-${escapeHtml(era.code)}" style="top:${era.top}px;height:${era.height}px"><span>${escapeHtml(era.label)}</span></div>`).join("")}</div>
         <div class="spacetime-year-axis" style="height:${timelineHeight}px">${ticks.map((tick) => `<span style="top:${yForYear(tick.year, timeline.start_year, pxPerYear)}px">${escapeHtml(tick.label)}</span>`).join("")}</div>
         <div class="spacetime-canvas" style="width:${contentWidth}px;height:${timelineHeight}px">
@@ -314,7 +316,4 @@
   }
 
   window.ATLAS_PERSON_SPACETIME_VIEW = Object.freeze({ activate });
-  window.addEventListener("atlas-authority-domain-changed", (event) => {
-    if (event.detail?.domain === "spacetime") activate();
-  });
 })();

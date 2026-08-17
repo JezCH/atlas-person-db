@@ -15,11 +15,17 @@ test("historical timeline has no year zero", () => {
   assert.equal(model.yearLabel(1), "AD 1");
 });
 
-test("century ticks cross BC/AD without creating year zero", () => {
+test("century ticks use conventional BC and AD labels without year zero or AD 101 drift", () => {
   const ticks = model.buildCenturyTicks(-200, 201);
-  assert.ok(ticks.some((tick) => tick.year === -200));
-  assert.ok(ticks.some((tick) => tick.year > 0));
+  assert.deepEqual(ticks.map((tick) => tick.year), [-200, -100, 1, 100, 200, 201]);
+  assert.deepEqual(ticks.map((tick) => tick.label), ["BC 200", "BC 100", "AD 1", "AD 100", "AD 200", "AD 201"]);
   assert.equal(ticks.some((tick) => tick.year === 0), false);
+  assert.equal(ticks.some((tick) => tick.year === 101), false);
+});
+
+test("century ticks preserve non-century endpoints while keeping interior labels conventional", () => {
+  assert.deepEqual(model.buildCenturyTicks(-250, -50).map((tick) => tick.year), [-250, -200, -100, -50]);
+  assert.deepEqual(model.buildCenturyTicks(101, 250).map((tick) => tick.year), [101, 200, 250]);
 });
 
 test("empty reviewed capital index is valid and never guesses a placement", () => {
