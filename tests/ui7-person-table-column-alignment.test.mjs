@@ -37,6 +37,7 @@ test('era classification uses the agreed ATLAS global cut points and preserves u
 test('era band remains sticky while the geometry contract owns its desktop and mobile widths', () => {
   assert.match(css, /person-era-band\{position:sticky;left:0/);
   assert.match(css, /writing-mode:vertical-rl/);
+  assert.doesNotMatch(css, /--era-band-width\s*:/);
   assert.match(alignmentCss, /--era-band-width:\s*58px/);
   assert.match(alignmentCss, /@media \(max-width: 760px\)[\s\S]*--era-band-width:\s*38px/);
   assert.match(alignmentCss, /@media \(max-width: 520px\)[\s\S]*--era-band-width:\s*32px/);
@@ -51,6 +52,7 @@ test('header, era groups, Person rows and Activity rows share one effective geom
   assert.match(alignmentCss, /\.person-era-group\s*\{[^}]*grid-template-columns:\s*var\(--era-band-width\) minmax\(0, 1fr\)/s);
   assert.match(alignmentCss, /\.person-era-rows > \.person-card\s*\{[^}]*width:\s*100%[^}]*grid-template-columns:\s*var\(--person-data-columns\)/s);
   assert.match(alignmentCss, /\.person-table-activity-subhead,\s*\n\.person-table-activities \.person-card-activity\s*\{[^}]*grid-template-columns:\s*var\(--person-activity-columns\)/s);
+  assert.doesNotMatch(css, /grid-template-columns\s*:/);
 });
 
 test('polity label has the same primary type size as the Person name', () => {
@@ -58,14 +60,15 @@ test('polity label has the same primary type size as the Person name', () => {
   assert.match(alignmentCss, /@media \(max-width: 760px\)[\s\S]*\.person-table-activities \.person-card-activity-head b\s*\{[^}]*font-size:\s*13px/s);
 });
 
-test('canonical geometry layer loads after existing table and compatibility styles', () => {
-  const tableStyle = html.indexOf('atlas-person-table-view.css');
-  const compatibility = html.indexOf('atlas-person-mobile-column-widths.css');
-  const alignment = html.indexOf('atlas-person-table-alignment.css?v=20260816-table-alignment-v1');
-  assert.ok(tableStyle >= 0 && compatibility > tableStyle && alignment > compatibility);
+test('canonical geometry layer loads directly after the table presentation assets', () => {
+  const tableStyle = html.indexOf('atlas-person-table-view.css?v=20260817-era-band-r2');
+  const alignment = html.indexOf('atlas-person-table-alignment.css?v=20260817-table-geometry-r2');
+  assert.ok(tableStyle >= 0 && alignment > tableStyle);
+  assert.doesNotMatch(html, /atlas-person-mobile-column-widths\.css/);
 });
 
-test('era band presentation uses fresh browser cache keys', () => {
-  assert.match(html, /atlas-person-table-view\.css\?v=20260816-era-band-v1/);
+test('era band presentation and geometry use fresh browser cache keys', () => {
+  assert.match(html, /atlas-person-table-view\.css\?v=20260817-era-band-r2/);
+  assert.match(html, /atlas-person-table-alignment\.css\?v=20260817-table-geometry-r2/);
   assert.match(html, /atlas-person-table-view\.js\?v=20260816-era-band-v1/);
 });
