@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:artemisia-i-of-caria:achaemenid-empire:480-bce:v1",
+  "person": {
+    "canonical_name_en": "Artemisia I of Caria",
+    "display_name_ko": "아르테미시아 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Achaemenid Empire",
+    "display_name_ko": "아케메네스 제국"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Naval Commander",
+    "role_display_name_ko": "해군 지휘관",
+    "start_year": -480,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -480,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Artemisia I was ruler of Halicarnassus in Caria and a dependent ally of Xerxes I. Herodotean evidence summarized by Encyclopaedia Iranica places her in supreme command of the forces supplied by Halicarnassus, Cos, Nisyrus, and Calydna during the Persian expedition of 480 BCE, including five ships at Salamis. Because her accession and end of reign cannot be dated securely, ATLAS does not invent a continuous royal reign and instead records the securely dated 480 BCE naval command as the representative Activity under the Achaemenid Empire."
+  },
+  "sources": [
+    {
+      "title": "ARTEMISIA — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/artemisia-queen-of-caria-see-caria-achaemenid-province/",
+      "citation_text": "Encyclopaedia Iranica identifies Artemisia as queen of Halicarnassus in Caria, a Persian-dependent ally of Xerxes I, and supreme commander of the forces supplied by Halicarnassus, Cos, Nisyrus, and Calydna in the 480 BCE expedition.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Artemisia — Encyclopaedia Britannica, 1911",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Artemisia_(daughter_of_Lygdamis)",
+      "citation_text": "The Britannica entry places Artemisia at about 480 BCE, notes her dependence on Persia, and records her personal command of five ships at the Battle of Salamis.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

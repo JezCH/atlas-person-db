@@ -1,0 +1,36 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:nelson-mandela:south-africa:president:1994-1999:v1",
+  "person": {
+    "canonical_name_en": "Nelson Mandela",
+    "display_name_ko": "넬슨 만델라"
+  },
+  "polity": {
+    "canonical_name_en": "South Africa",
+    "display_name_ko": "남아프리카 공화국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1994,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1999,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Nelson Mandela served as President of South Africa from 10 May 1994 to 16 June 1999. ATLAS records the constitutional presidential term only, rather than extending the Activity backward through his anti-apartheid leadership or forward through his post-presidential public work."
+  },
+  "sources": [
+    {
+      "title": "History — The Presidency, Republic of South Africa",
+      "canonical_url": "https://www.presidency.gov.za/history",
+      "citation_text": "The Presidency lists Nelson Rolihlahla Mandela as President of the Republic from 10 May 1994 to 16 June 1999.",
+      "source_type": "government_web"
+    }
+  ]
+}

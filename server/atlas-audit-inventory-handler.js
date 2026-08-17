@@ -176,11 +176,41 @@ async function querySemanticV2Breakdown(client) {
              (activity_start_calendar is null) as activity_start_calendar_missing,
              (activity_end_granularity is null) as activity_end_granularity_missing,
              (activity_end_calendar is null) as activity_end_calendar_missing,
-             count(*)::int as count
+             count(*)::int as count,
+             jsonb_agg(jsonb_build_object(
+               'activity_id', id,
+               'person_id', person_id,
+               'polity_id', polity_id,
+               'relation_type_id', relation_type_id,
+               'role_id', role_id,
+               'period_basis_id', period_basis_id,
+               'activity_start', activity_start,
+               'activity_start_month', activity_start_month,
+               'activity_start_day', activity_start_day,
+               'activity_start_granularity', activity_start_granularity,
+               'activity_start_calendar', activity_start_calendar,
+               'activity_start_certainty', activity_start_certainty,
+               'activity_end', activity_end,
+               'activity_end_month', activity_end_month,
+               'activity_end_day', activity_end_day,
+               'activity_end_granularity', activity_end_granularity,
+               'activity_end_calendar', activity_end_calendar,
+               'activity_end_certainty', activity_end_certainty
+             ) order by id) filter (
+               where relation_type_id is null
+                  or period_basis_id is null
+                  or activity_start_granularity is null
+                  or activity_start_calendar is null
+                  or activity_end_granularity is null
+                  or activity_end_calendar is null
+             ) as incomplete_rows
         from atlas_v2.person_politics_v2
        group by 1,2,3,4,5,6
        order by count(*) desc, 1,2,3,4,5,6`);
   const totals = totalsResult.rows[0] || {};
+  const incompleteRows = patternsResult.rows
+    .flatMap((row) => Array.isArray(row.incomplete_rows) ? row.incomplete_rows : [])
+    .sort((a, b) => String(a.activity_id).localeCompare(String(b.activity_id)));
   return Object.freeze({
     activity_count: Number(totals.activity_count || 0),
     semantic_v2_incomplete: Number(totals.semantic_v2_incomplete || 0),
@@ -200,7 +230,8 @@ async function querySemanticV2Breakdown(client) {
       activity_end_granularity_missing: Boolean(row.activity_end_granularity_missing),
       activity_end_calendar_missing: Boolean(row.activity_end_calendar_missing),
       count: Number(row.count || 0)
-    }))
+    })),
+    incomplete_rows: Object.freeze(incompleteRows)
   });
 }
 

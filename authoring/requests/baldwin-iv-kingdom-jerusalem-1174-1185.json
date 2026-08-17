@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:baldwin-iv-of-jerusalem:kingdom-of-jerusalem:king:1174-1185:v1",
+  "person": {
+    "canonical_name_en": "Baldwin IV of Jerusalem",
+    "display_name_ko": "보두앵 4세"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Jerusalem",
+    "display_name_ko": "예루살렘 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1174,
+    "start_month": 7,
+    "start_day": 11,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 1185,
+    "end_certainty": "approximate",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Baldwin IV succeeded his father Amalric as King of Jerusalem on 11 July 1174 and remained king until his death in 1185. He had his nephew Baldwin V crowned as co-king in 1183 as part of the succession arrangements, but Baldwin IV did not cease to be king at that point. The exact date of Baldwin IV's death is not securely fixed within 1185, so ATLAS keeps the terminal boundary at year granularity and marks it approximate rather than fabricating a day."
+  },
+  "sources": [
+    {
+      "title": "Bernard Hamilton, The Leper King and his Heirs — Prologue",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/leper-king-and-his-heirs/prologue/3227F765B0806F1FBB5F7D7AEF6814EF",
+      "citation_text": "Cambridge University Press records Amalric's death on 11 July 1174, Baldwin IV's succession and coronation four days later, and states that Baldwin remained king until his death in 1185.",
+      "source_type": "scholarly_web"
+    },
+    {
+      "title": "Bernard Hamilton, The Leper King and his Heirs",
+      "canonical_url": "https://www.cambridge.org/core/books/leper-king-and-his-heirs/0F31E1FB132285680B59FE284BD5B6CE",
+      "citation_text": "Hamilton's specialist monograph identifies Baldwin IV's reign as 1174-1185 and treats him as king of the Crusader Kingdom of Jerusalem throughout that period.",
+      "source_type": "scholarly_web"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:thierry-of-alsace:county-of-flanders:count:1128-1168:v1",
+  "person": {
+    "canonical_name_en": "Thierry of Alsace",
+    "display_name_ko": "알자스의 티에리"
+  },
+  "polity": {
+    "canonical_name_en": "County of Flanders",
+    "display_name_ko": "플랑드르 백국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Count",
+    "role_display_name_ko": "백작",
+    "start_year": 1128,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1168,
+    "end_month": 1,
+    "end_day": 4,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Thierry of Alsace (French Thierry d'Alsace) became Count of Flanders in 1128 during the succession struggle after the murder of Charles the Good and remained count until his death at Ghent on 4 January 1168. ATLAS models the County of Flanders as the historically specific polity rather than a generic medieval Belgium or France label."
+  },
+  "sources": [
+    {
+      "title": "Fédération des Sociétés d'Histoire et d'Archéologie d'Alsace — Thierry d'Alsace",
+      "canonical_url": "https://www.alsace-histoire.org/netdba/thierry-dalsace/",
+      "citation_text": "The Alsatian historical federation identifies Thierry d'Alsace as Count of Flanders, succeeding in 1128 and dying at Ghent on 4 January 1168.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Persée — Un tarif de tonlieu inconnu, institué par le comte de Flandre Thierry d'Alsace (1128-1168)",
+      "canonical_url": "https://www.persee.fr/doc/bcrh_0001-415x_1998_num_164_1_1163",
+      "citation_text": "The scholarly Persée article explicitly identifies Thierry d'Alsace as Count of Flanders for 1128-1168.",
+      "source_type": "scholarly_web"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:richard-i:kingdom-of-england:king:1189-1199:v1",
+  "person": {
+    "canonical_name_en": "Richard I",
+    "display_name_ko": "리처드 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of England",
+    "display_name_ko": "잉글랜드 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1189,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1199,
+    "end_month": 4,
+    "end_day": 6,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Richard I, known as Richard the Lionheart, reigned as King of England from 1189 until his death on 6 April 1199. The Royal Family gives his reign as 1189-1199, and Westminster Abbey records his coronation on 3 September 1189 and death on 6 April 1199. ATLAS records his English sovereign reign as the representative Activity and does not create additional concurrent French territorial Activities in this registration."
+  },
+  "sources": [
+    {
+      "title": "Richard I Coeur de Lion ('The Lionheart') (r.1189-1199) — The Royal Family",
+      "canonical_url": "https://www.royal.uk/richard-i",
+      "citation_text": "The Royal Family identifies Richard I as reigning from 1189 to 1199 and describes his kingship and death during the siege of Chalus.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "Richard I — Westminster Abbey",
+      "canonical_url": "https://www.westminster-abbey.org/abbey-commemorations/royals/richard-i",
+      "citation_text": "Westminster Abbey records Richard I's coronation on 3 September 1189 and his death on 6 April 1199.",
+      "source_type": "institutional_web"
+    }
+  ]
+}

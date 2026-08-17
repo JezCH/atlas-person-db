@@ -1,0 +1,36 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cimon:athens:strategos-statesman:478-461-bce:v1",
+  "person": {
+    "canonical_name_en": "Cimon",
+    "display_name_ko": "키몬"
+  },
+  "polity": {
+    "canonical_name_en": "Athens",
+    "display_name_ko": "아테네"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Strategos and statesman",
+    "role_display_name_ko": "스트라테고스·정치가",
+    "start_year": -478,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -461,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Cimon was a major Athenian statesman and recurrent strategos in the generation between the Persian Wars and the ascendancy of Pericles. Oxford records that in 478 BCE he helped Aristides bring the maritime Greeks into the Delian League and commanded most league operations from 476 to 463, including the major victory at the Eurymedon and the suppression of Thasos. His principal continuous political-military phase ended with his ostracism in 461. Because strategos was an annually elected office and Cimon did not hold one uninterrupted statutory term for the whole interval, ATLAS models sustained military service rather than fabricating a continuous office term. His later recall and final Cyprus campaign are left outside this primary representative Activity."
+  },
+  "sources": [
+    {
+      "title": "Cimon — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548724520",
+      "citation_text": "Oxford records Cimon's participation in forming the Delian League in 478 BCE, his frequent service as strategos, command of most league operations from 476 to 463, and his ostracism in 461.",
+      "source_type": "academic_reference"
+    }
+  ]
+}

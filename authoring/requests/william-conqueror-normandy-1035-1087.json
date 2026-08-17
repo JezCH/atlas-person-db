@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:william-the-conqueror:normandy:duke:1035-1087:v1",
+  "person": {
+    "canonical_name_en": "William the Conqueror",
+    "display_name_ko": "정복왕 윌리엄 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Normandy",
+    "display_name_ko": "노르망디"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Duke",
+    "role_display_name_ko": "공작",
+    "start_year": 1035,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1087,
+    "end_month": 9,
+    "end_day": 9,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "William the Conqueror inherited Normandy after the death of his father Robert I in 1035 and remained Duke of Normandy until his death on 9 September 1087. His later conquest and kingship of England did not terminate his Norman rule, so ATLAS models Normandy and England as separate concurrent sovereign Activities for the same Person."
+  },
+  "sources": [
+    {
+      "title": "The Royal Family — William I 'The Conqueror' (r. 1066-1087)",
+      "canonical_url": "https://www.royal.uk/william-the-conqueror",
+      "citation_text": "The Royal Family records that William was recognized as heir to the Duchy of Normandy on his father's death in 1035 and remained connected to Normandy until his death on 9 September 1087.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "The Henry Project — William the Conqueror",
+      "canonical_url": "https://fasg.org/projects/henryproject/data/willi001.htm",
+      "citation_text": "The Henry Project explicitly lists William as Duke of Normandy from 1035 to 1087 and King of England from 1066 to 1087.",
+      "source_type": "scholarly_web"
+    }
+  ]
+}

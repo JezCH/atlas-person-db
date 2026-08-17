@@ -1,0 +1,42 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:shotoku-taishi:japan:regent:c593-622:v1",
+  "person": {
+    "canonical_name_en": "Shōtoku Taishi",
+    "display_name_ko": "쇼토쿠 태자"
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Regent",
+    "role_display_name_ko": "섭정",
+    "start_year": 593,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 622,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Traditional Japanese chronology places Prince Shōtoku's appointment as regent under Empress Suiko in 593, and his death in 622. Because the precise constitutional character of the early office is reconstructed through later historical tradition, ATLAS marks the start approximate and confidence likely rather than treating the later regency concept as an unqualified modern office. The Activity represents his political leadership under Suiko and does not treat him as sovereign emperor."
+  },
+  "sources": [
+    {
+      "title": "Tsubaki-do — Japan Tourism Agency multilingual historical interpretation",
+      "canonical_url": "https://www.mlit.go.jp/tagengo-db/en/H30-00768.html",
+      "citation_text": "The Japan Tourism Agency states that, according to tradition, Prince Shotoku (574-622) was appointed regent in 593.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "State Buddhism formation process — National Diet Library Search",
+      "canonical_url": "https://ndlsearch.ndl.go.jp/books/R000000004-I770269",
+      "citation_text": "The National Diet Library record summarizes scholarship stating that Empress Suiko appointed Prince Shotoku (574-622) to the regency.",
+      "source_type": "government_web"
+    }
+  ]
+}

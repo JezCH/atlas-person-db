@@ -1,0 +1,42 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:isaac-newton:kingdom-of-england:lucasian-professor:1669-1701:v1",
+  "person": {
+    "canonical_name_en": "Isaac Newton",
+    "display_name_ko": "아이작 뉴턴"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of England",
+    "display_name_ko": "잉글랜드 왕국"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Lucasian Professor of Mathematics",
+    "role_display_name_ko": "루커스 수학 교수",
+    "start_year": 1669,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 1701,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Isaac Newton held the Lucasian Professorship of Mathematics at the University of Cambridge from 1669 until resigning the chair in 1701. ATLAS uses this precisely documented academic office as his representative Activity under the Kingdom of England, rather than stretching his scientific career across his entire life or later Mint and Royal Society offices."
+  },
+  "sources": [
+    {
+      "title": "Papers of Sir Isaac Newton — Cambridge University Library",
+      "canonical_url": "https://www.lib.cam.ac.uk/collections/departments/archives-modern-and-medieval-manuscripts-and-university-archives-35",
+      "citation_text": "Cambridge University Library states that Newton succeeded Isaac Barrow in the Lucasian Chair in 1669 and resigned the chair in 1701 after his appointment as Master of the Mint.",
+      "source_type": "scholarly_web"
+    },
+    {
+      "title": "Cambridge University Library — Newton Exhibition",
+      "canonical_url": "https://wwwe.lib.cam.ac.uk/CUL/exhibitions/Footprints_of_the_Lion/index.html",
+      "citation_text": "Cambridge University Library identifies Newton as Lucasian Professor of Mathematics from 1669 to 1701.",
+      "source_type": "scholarly_web"
+    }
+  ]
+}

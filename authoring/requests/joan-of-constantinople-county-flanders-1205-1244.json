@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:joan-of-constantinople:county-of-flanders:countess:1205-1244:v1",
+  "person": {
+    "canonical_name_en": "Joan of Constantinople",
+    "display_name_ko": "콘스탄티노플의 잔"
+  },
+  "polity": {
+    "canonical_name_en": "County of Flanders",
+    "display_name_ko": "플랑드르 백국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Countess",
+    "role_display_name_ko": "여백작",
+    "start_year": 1205,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1244,
+    "end_month": 12,
+    "end_day": 5,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Joan of Constantinople inherited Flanders after the death of her father Baldwin IX in 1205 and remained Countess of Flanders until her death on 5 December 1244. Her minority initially required regency and her husbands later shared political authority, but her comital title and dynastic sovereignty were continuous. ATLAS records her as a ruling countess of the County of Flanders rather than merely as a count's consort."
+  },
+  "sources": [
+    {
+      "title": "Columbia University Epistolae — Joan of Constantinople, Countess of Flanders",
+      "canonical_url": "https://epistolae.ctl.columbia.edu/woman/21739.html",
+      "citation_text": "Columbia's Epistolae project identifies Joan as Countess of Flanders and explains that the death of Baldwin in 1205 left Joan and her sister as heirs, with a regent ruling in Joan's name during her minority.",
+      "source_type": "scholarly_web"
+    },
+    {
+      "title": "Bibliothèque nationale de France — Jeanne (1200?-1244 ; comtesse de Flandre)",
+      "canonical_url": "https://catalogue.bnf.fr/ark:/12148/cb13188951q",
+      "citation_text": "The BnF authority record identifies Jeanne/Joan of Constantinople as Countess of Flanders from 1205 to 1244 and records her death on 5 December 1244.",
+      "source_type": "institutional_web"
+    }
+  ]
+}

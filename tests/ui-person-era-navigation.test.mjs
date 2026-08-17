@@ -58,13 +58,20 @@ test('era navigation tracks current location without repeating the era count', (
   assert.doesNotMatch(navSource, /const text = \[entry\.label, entry\.range, `\$\{entry\.count\}명 표시`\]/);
 });
 
-test('era navigation is sticky, responsive, and preserves horizontal era scrolling', () => {
+test('era navigation is sticky, responsive, and uses larger desktop but slightly smaller mobile typography', () => {
   assert.match(navCss, /\.person-era-navigator\{position:sticky/);
   assert.match(navCss, /\.person-era-nav-top/);
   assert.match(navCss, /\.person-era-nav-track/);
   assert.match(navCss, /\.person-era-search/);
   assert.match(navCss, /\.person-era-polity-filter/);
   assert.match(navCss, /\.person-era-nav-summary/);
+  assert.match(navCss, /\.person-era-nav-intro>strong\{[^}]*font-size:14px/);
+  assert.match(navCss, /\.person-era-nav-current\{[^}]*font-size:11px/);
+  assert.match(navCss, /\.person-era-jump-label\{[^}]*font-size:13px/);
+  assert.match(navCss, /\.person-era-jump-count\{[^}]*font-size:10\.5px/);
+  assert.match(navCss, /@media\(max-width:760px\)[\s\S]*\.person-era-nav-intro>strong\{font-size:10px\}/);
+  assert.match(navCss, /@media\(max-width:760px\)[\s\S]*\.person-era-nav-current\{font-size:7\.5px\}/);
+  assert.match(navCss, /@media\(max-width:760px\)[\s\S]*\.person-era-jump-label\{font-size:9\.5px\}/);
   assert.match(navCss, /\.person-era-jump-list\{[^}]*overflow-x:auto/);
   assert.match(navCss, /\.person-era-group\{scroll-margin-top:/);
   assert.match(navCss, /@media\(max-width:760px\)/);
@@ -77,7 +84,7 @@ test('era navigation assets load after era grouping/palette and before Person Ma
   const navJs = 'atlas-person-era-navigation.js?v=20260817-era-search-toolbar-v2';
   const mainJs = 'atlas-person-main.js?v=20260817-era-search-toolbar-v2';
   const paletteCss = 'atlas-person-era-palette.css?v=20260816-era-palette-v1';
-  const navCssAsset = 'atlas-person-era-navigation.css?v=20260817-era-search-toolbar-v2';
+  const navCssAsset = 'atlas-person-era-navigation.css?v=20260817-era-search-toolbar-v3';
   const mobileCss = 'atlas-person-mobile-column-widths.css?v=20260816-mobile-widths-v2';
 
   for (const asset of [tableJs, navJs, mainJs, paletteCss, navCssAsset, mobileCss]) assert.ok(html.includes(asset));

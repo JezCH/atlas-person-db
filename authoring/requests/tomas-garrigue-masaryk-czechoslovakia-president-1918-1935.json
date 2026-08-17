@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tomas-garrigue-masaryk:czechoslovakia:president:1918-1935:v1",
+  "person": {
+    "canonical_name_en": "Tomáš Garrigue Masaryk",
+    "display_name_ko": "토마시 가리크 마사리크"
+  },
+  "polity": {
+    "canonical_name_en": "Czechoslovakia",
+    "display_name_ko": "체코슬로바키아"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1918,
+    "start_month": 11,
+    "start_day": 14,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1935,
+    "end_month": 12,
+    "end_day": 14,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tomáš Garrigue Masaryk was elected the first President of Czechoslovakia on 14 November 1918. He was subsequently elected under the constitutional order in 1920 and re-elected in 1927 and 1934, serving without an out-of-office interval until he resigned for health reasons on 14 December 1935. ATLAS therefore records one continuous presidential Activity across the successive elections rather than splitting the same uninterrupted tenure into separate Activities."
+  },
+  "sources": [
+    {
+      "title": "Life and works in dates — Prague Castle",
+      "canonical_url": "https://www.hrad.cz/en/president-of-the-cr/former-presidents/tomas-garrigue-masaryk/life-and-works-in-dates",
+      "citation_text": "Prague Castle records Masaryk as the first President of the Czechoslovak Republic in 1918, his later presidential elections in 1920, 1927 and 1934, and his resignation in 1935.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "Osobnost v čele státu — Ministry of the Interior of the Czech Republic",
+      "canonical_url": "https://mv.gov.cz/clanek/osobnost-v-cele-statu.aspx",
+      "citation_text": "The Czech Ministry of the Interior records Masaryk's fourth presidential election and states that he resigned from the presidency on 14 December 1935.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "Historical record of 14 November 1918 — Senate of the Parliament of the Czech Republic",
+      "canonical_url": "https://www.senat.cz/informace/z_historie/tisky/4vo/stena/120schuz/S120001.htm",
+      "citation_text": "The Czech Senate's historical record identifies 14 November 1918 as the day Tomáš Masaryk was proclaimed the first President of the Czechoslovak Republic.",
+      "source_type": "government_web"
+    }
+  ]
+}

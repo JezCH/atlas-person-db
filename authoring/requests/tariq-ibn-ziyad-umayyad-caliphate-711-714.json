@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tariq-ibn-ziyad:umayyad-caliphate:711-714:v1",
+  "person": {
+    "canonical_name_en": "Tariq ibn Ziyad",
+    "display_name_ko": "타리크 이븐 지야드"
+  },
+  "polity": {
+    "canonical_name_en": "Umayyad Caliphate",
+    "display_name_ko": "우마이야 칼리파국"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Military Commander",
+    "role_display_name_ko": "군사령관",
+    "start_year": 711,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 714,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tariq ibn Ziyad, governor of Tangier under Musa ibn Nusayr, led the Umayyad invasion force that crossed into Iberia in 711, defeated the Visigothic king Roderic, and participated in the rapid conquest that followed. Turkish Diyanet's Islam Encyclopedia records that Tariq and Musa left al-Andalus for Damascus in 714. ATLAS therefore uses 711–714 as the representative military-activity interval under the Umayyad Caliphate rather than extending his Activity into his poorly documented later life."
+  },
+  "sources": [
+    {
+      "title": "TÂRIK b. ZİYÂD — TDV İslâm Ansiklopedisi",
+      "canonical_url": "https://islamansiklopedisi.org.tr/tarik-b-ziyad",
+      "citation_text": "TDV İslâm Ansiklopedisi describes Tariq's conquest activity in Iberia and states that Tariq and Musa departed al-Andalus for Damascus in 714.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "MÛSÂ b. NUSAYR — TDV İslâm Ansiklopedisi",
+      "canonical_url": "https://islamansiklopedisi.org.tr/musa-b-nusayr",
+      "citation_text": "TDV's Musa ibn Nusayr entry states that Tariq, governor of Tangier, was sent in spring 711 at the head of a 7,000-man force and crossed into Iberia to begin the conquest.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "La batalla de Guadalete — Museo del Ejército de España",
+      "canonical_url": "https://ejercito.defensa.gob.es/museo/en/HECHOS_HISTORICOS/HECHOS_HISTORICOS/07.19_julio_BATALLA_DE_GUADALETE.html?__locale=en",
+      "citation_text": "The Spanish Army Museum identifies Tariq ibn Ziyad as commander of the Umayyad forces at the decisive 711 Battle of Guadalete and summarizes the subsequent conquest campaigns.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

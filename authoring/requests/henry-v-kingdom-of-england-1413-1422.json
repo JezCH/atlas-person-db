@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:henry-v:kingdom-of-england:1413-1422:v1",
+  "person": {
+    "canonical_name_en": "Henry V",
+    "display_name_ko": "헨리 5세"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of England",
+    "display_name_ko": "잉글랜드 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1413,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1422,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Henry V became King of England in 1413 and reigned until his death in 1422. The Royal Family's official historical profile gives the reign as 1413–1422 and highlights his 1415 campaign and victory at Agincourt as well as the Treaty of Troyes in 1420. ATLAS records the conventional sovereign reign at year granularity rather than adding overlapping military campaign Activities."
+  },
+  "sources": [
+    {
+      "title": "Henry V (r. 1413-1422) — The Royal Family",
+      "canonical_url": "https://www.royal.uk/henry-v",
+      "citation_text": "The Royal Family's official historical profile gives Henry V's reign as 1413–1422 and summarizes his campaigns in France, including Agincourt and the Treaty of Troyes.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

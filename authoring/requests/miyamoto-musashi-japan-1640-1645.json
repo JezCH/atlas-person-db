@@ -1,0 +1,36 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:miyamoto-musashi:japan:swordsman-strategist:1640-1645:v1",
+  "person": {
+    "canonical_name_en": "Miyamoto Musashi",
+    "display_name_ko": "미야모토 무사시"
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Swordsman and strategist",
+    "role_display_name_ko": "검객·병법가",
+    "start_year": 1640,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1645,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Miyamoto Musashi was a swordsman and strategist rather than a sovereign ruler or state officeholder. Kumamoto City records that he was invited to Kumamoto in 1640 as a guest of the Hosokawa house, spent his final years there, completed the Book of Five Rings at Reigando, and died in 1645. ATLAS therefore uses the securely documented 1640-1645 late-career interval as a conservative representative Activity under the higher-order Japan polity. The relation is active_in, not rules, governs, or formal state service. Earlier duel and career chronologies are not stretched into this Activity because substantial parts of Musashi's popular biography depend on later tradition and are less securely bounded."
+  },
+  "sources": [
+    {
+      "title": "History of Nishi Ward — Kumamoto City",
+      "canonical_url": "https://www.city.kumamoto.jp/nishi/kiji00313644/index.html",
+      "citation_text": "Kumamoto City records that Miyamoto Musashi was invited to Kumamoto in 1640 as a guest of the Hosokawa house, completed the Book of Five Rings, and died in 1645.",
+      "source_type": "government_web"
+    }
+  ]
+}
