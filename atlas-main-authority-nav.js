@@ -269,6 +269,7 @@
 
   function showDomain(domain, { updateHash = false } = {}) {
     const next = DOMAIN_ORDER.includes(domain) ? domain : "persons";
+    const previousDomain = currentDomain;
     currentDomain = next;
     const isPersons = next === "persons";
     personView.hidden = !isPersons;
@@ -285,6 +286,11 @@
     }
     window.dispatchEvent(new CustomEvent("atlas-authority-domain-changed", { detail: { domain: next } }));
     if (next === "spacetime") activateSpacetime();
+    if (previousDomain !== next) {
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      });
+    }
   }
 
   function handleNavigationClick(event) {
