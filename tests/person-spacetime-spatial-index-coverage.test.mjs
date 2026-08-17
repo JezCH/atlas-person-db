@@ -38,8 +38,8 @@ test("reviewed live spatial index snapshot validates and has expected coverage c
   const validation = model.validateSpatialIndex(index);
   assert.equal(validation.valid, true, validation.errors.join(" | "));
   assert.equal(Object.keys(index.polity_geography).length, 325);
-  assert.equal(index.capital_records.length, 8);
-  assert.equal(index.review_queue.length, 5);
+  assert.equal(index.capital_records.length, 10);
+  assert.equal(index.review_queue.length, 3);
 });
 
 test("capital evidence contains no internal ATLAS reviewed placeholder references", () => {
@@ -93,9 +93,30 @@ test("formerly unresolved coarse polities now use reviewed broad placement", () 
   }
 });
 
-test("genuinely transregional live polities remain unresolved instead of being guessed", () => {
+test("Alexander activity is placed at reviewed Macedonian capital Pella", () => {
   const lookup = model.createSpatialLookup(index);
-  for (const polityId of [IDS.macedonian, IDS.omani, IDS.seleucid, IDS.mongol]) {
+  const placement = model.resolveActivityPlacement(activity(IDS.macedonian, -336, -323, "alexander"), lookup);
+  assert.equal(placement.status, "placed");
+  assert.deepEqual(placement.segments.map((segment) => [segment.capital_name, segment.region_code, segment.start_year, segment.end_year]), [
+    ["Pella", "europe", -336, -323]
+  ]);
+  contiguous(placement.segments, -336, -323);
+});
+
+test("Said bin Sultan activity crosses the reviewed 1840 Muscat-to-Zanzibar capital transfer", () => {
+  const lookup = model.createSpatialLookup(index);
+  const placement = model.resolveActivityPlacement(activity(IDS.omani, 1806, 1856, "said-bin-sultan"), lookup);
+  assert.equal(placement.status, "placed");
+  assert.deepEqual(placement.segments.map((segment) => [segment.capital_name, segment.region_code, segment.start_year, segment.end_year]), [
+    ["Muscat", "west-asia", 1806, 1839],
+    ["Stone Town, Zanzibar", "africa", 1840, 1856]
+  ]);
+  contiguous(placement.segments, 1806, 1856);
+});
+
+test("polities without a defensible single capital chronology remain unresolved instead of being guessed", () => {
+  const lookup = model.createSpatialLookup(index);
+  for (const polityId of [IDS.seleucid, IDS.mongol]) {
     assert.equal(lookup.has(polityId), false);
     const placement = model.resolveActivityPlacement(activity(polityId, 100, 101, polityId), lookup);
     assert.equal(placement.status, "spatial_unresolved");
