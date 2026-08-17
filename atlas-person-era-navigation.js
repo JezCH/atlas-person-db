@@ -4,6 +4,7 @@
   const NAV_ID = "personEraNavigator";
   const GROUPS_ID = "personMainGroups";
   const RENDER_EVENT = "atlas-person-main-rendered";
+  const POLITY_EVENT = "atlas-person-polity-filter-change";
   const state = {
     nav: null,
     groups: [],
@@ -11,7 +12,11 @@
     targetsByCode: new Map(),
     activeCode: null,
     framePending: false,
-    globalListenersBound: false
+    globalListenersBound: false,
+    visibleCount: 0,
+    visiblePolityCount: 0,
+    selectedPolityId: "",
+    polityOptions: []
   };
 
   function hasDom() {
@@ -84,7 +89,10 @@
     const nav = document.createElement("nav");
     nav.id = NAV_ID;
     nav.className = "person-era-navigator";
-    nav.setAttribute("aria-label", "시대 바로가기");
+    nav.setAttribute("aria-label", "시대 및 정치체 탐색");
+
+    const top = document.createElement("div");
+    top.className = "person-era-nav-top";
 
     const intro = document.createElement("div");
     intro.className = "person-era-nav-intro";
@@ -96,18 +104,37 @@
     status.textContent = "표시 중인 시대를 선택하세요";
     intro.append(title, status);
 
+    const controls = document.createElement("div");
+    controls.className = "person-era-nav-controls";
+    const select = document.createElement("select");
+    select.className = "person-era-polity-filter";
+    select.dataset.eraPolityFilter = "true";
+    select.setAttribute("aria-label", "정치체 필터");
+    const all = document.createElement("option");
+    all.value = "";
+    all.textContent = "모든 정치체";
+    select.append(all);
+    const summary = document.createElement("span");
+    summary.className = "person-era-nav-summary";
+    summary.setAttribute("aria-live", "polite");
+    summary.textContent = "인물 0명 · 정치체 0개";
+    controls.append(select, summary);
+    top.append(intro, controls);
+
+    const track = document.createElement("div");
+    track.className = "person-era-nav-track";
     const previous = makeButton("person-era-nav-step person-era-nav-prev", "‹", "이전 시대로 이동");
     previous.dataset.eraStep = "previous";
-
     const list = document.createElement("div");
     list.className = "person-era-jump-list";
     list.setAttribute("aria-label", "현재 결과의 시대 목록");
-
     const next = makeButton("person-era-nav-step person-era-nav-next", "›", "다음 시대로 이동");
     next.dataset.eraStep = "next";
+    track.append(previous, list, next);
 
-    nav.append(intro, previous, list, next);
+    nav.append(top, track);
     nav.addEventListener("click", onNavigatorClick);
+    nav.addEventListener("change", onNavigatorChange);
     list.addEventListener("keydown", onEraListKeyDown);
     return nav;
   }
@@ -143,6 +170,49 @@
       button.append(label, range, count);
       list.append(button);
     }
+  }
+
+  function normalizePolityOptions(options) {
+    if (!Array.isArray(options)) return [];
+    const seen = new Set();
+    const rows = [];
+    for (const item of options) {
+      const id = String(item?.id || "").trim();
+      const label = String(item?.label || "").trim();
+      if (!id || !label || seen.has(id)) continue;
+      seen.add(id);
+      rows.push({ id, label });
+    }
+    return rows;
+  }
+
+  function updateRenderState(detail = null) {
+    if (!detail || typeof detail !== "object") return;
+    if (Number.isInteger(detail.visibleCount)) state.visibleCount = detail.visibleCount;
+    if (Number.isInteger(detail.visiblePolityCount)) state.visiblePolityCount = detail.visiblePolityCount;
+    state.selectedPolityId = String(detail.selectedPolityId || "").trim();
+    if (Array.isArray(detail.polityOptions)) state.polityOptions = normalizePolityOptions(detail.polityOptions);
+  }
+
+  function renderPolityControls(nav) {
+    const select = nav.querySelector(".person-era-polity-filter");
+    const summary = nav.querySelector(".person-era-nav-summary");
+    if (select) {
+      select.replaceChildren();
+      const all = document.createElement("option");
+      all.value = "";
+      all.textContent = "모든 정치체";
+      select.append(all);
+      for (const item of state.polityOptions) {
+        const option = document.createElement("option");
+        option.value = item.id;
+        option.textContent = item.label;
+        select.append(option);
+      }
+      const selectedExists = !state.selectedPolityId || state.polityOptions.some((item) => item.id === state.selectedPolityId);
+      select.value = selectedExists ? state.selectedPolityId : "";
+    }
+    if (summary) summary.textContent = `인물 ${state.visibleCount}명 · 정치체 ${state.visiblePolityCount}개`;
   }
 
   function reducedMotion() {
@@ -206,6 +276,12 @@
     if (step === "next") stepEra(1);
   }
 
+  function onNavigatorChange(event) {
+    const select = event.target?.closest?.("select[data-era-polity-filter]");
+    if (!select) return;
+    window.dispatchEvent(new CustomEvent(POLITY_EVENT, { detail: { polityId: String(select.value || "") } }));
+  }
+
   function onEraListKeyDown(event) {
     if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
     const buttons = [...event.currentTarget.querySelectorAll("button[data-era]")];
@@ -239,7 +315,7 @@
     const entry = entryForCode(code);
     const status = state.nav.querySelector(".person-era-nav-current");
     if (status && entry) {
-      const text = [entry.label, entry.range, `${entry.count}명 표시`].filter(Boolean).join(" · ");
+      const text = [entry.label, entry.range].filter(Boolean).join(" · ");
       status.textContent = announce ? `${text} 위치로 이동` : `현재 위치: ${text}`;
     }
 
@@ -288,8 +364,9 @@
     window.addEventListener("resize", scheduleViewportUpdate, { passive: true });
   }
 
-  function installNavigator() {
+  function installNavigator(event = null) {
     if (!hasDom()) return;
+    updateRenderState(event?.detail || null);
     const container = document.querySelector(`#${GROUPS_ID}`);
     if (!container?.querySelectorAll) return;
 
@@ -309,6 +386,7 @@
     const nav = existing || makeNavigator();
     if (!existing) container.prepend(nav);
     state.nav = nav;
+    renderPolityControls(nav);
     renderEraButtons(nav, state.entries);
 
     const preserved = state.activeCode && state.targetsByCode.has(state.activeCode) ? state.activeCode : state.entries[0].code;
