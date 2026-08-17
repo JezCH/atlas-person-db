@@ -57,6 +57,7 @@
 
   function placementBasisLabel(segment) {
     if (segment?.placement_basis === "capital") return `수도: ${segment.location_label || segment.capital_name || "미상"}`;
+    if (segment?.placement_basis === "authority_center") return `왕정·정치 중심: ${segment.location_label || segment.authority_center_name || "미상"}`;
     return "검토된 정치체 권역";
   }
 
@@ -182,8 +183,9 @@
 
   function reasonLabel(reason) {
     return ({
-      spatial_unresolved: "검토된 정치체 권역·수도 기준 없음",
+      spatial_unresolved: "검토된 정치체 권역·수도·왕정 중심 기준 없음",
       capital_period_no_overlap: "활동기간과 검토된 수도 기간이 겹치지 않음",
+      authority_center_period_no_overlap: "활동기간과 검토된 왕정·정치 중심 기간이 겹치지 않음",
       polity_unresolved: "정치체 identity 미확정",
       invalid_region: "공간 권역 코드 오류",
       missing_boundaries: "활동 시작·종료 연도 모두 미확정",
@@ -252,20 +254,21 @@
 
     const directCount = spatialIndex?.polity_geography && typeof spatialIndex.polity_geography === "object" ? Object.keys(spatialIndex.polity_geography).length : 0;
     const capitalCount = Array.isArray(spatialIndex?.capital_records) ? spatialIndex.capital_records.length : 0;
+    const authorityCount = Array.isArray(spatialIndex?.authority_center_records) ? spatialIndex.authority_center_records.length : 0;
     const reviewCount = Array.isArray(spatialIndex?.review_queue) ? spatialIndex.review_queue.length : 0;
     const placedCount = regionMeta.reduce((sum, region) => sum + region.items.length, 0);
 
     mount.innerHTML = `<section class="spacetime-toolbar card">
-      <div class="spacetime-toolbar-copy"><p class="eyebrow">PERSON SPACETIME ATLAS</p><h2>시공간 인물도</h2><p>세로는 역사 시간, 가로는 검토된 정치체 권역입니다. 정치체의 위치가 광역적으로 애매한 경우에만 해당 활동 시기의 수도를 기준으로 판정합니다.</p></div>
+      <div class="spacetime-toolbar-copy"><p class="eyebrow">PERSON SPACETIME ATLAS</p><h2>시공간 인물도</h2><p>세로는 역사 시간, 가로는 검토된 정치체 권역입니다. 광역 위치가 애매하면 당시 수도를 사용하고, 고정 수도가 성립하지 않는 유목·순회 왕정에 한해서만 검토된 왕정·정치 중심을 보조 기준으로 사용합니다.</p></div>
       <div class="spacetime-controls">
         <label>검색<input id="spacetimeSearch" type="search" value="${escapeHtml(query)}" placeholder="인물·정치체·역할 검색" /></label>
         <label>100년 높이<select id="spacetimeScale"><option value="28"${centuryHeight === 28 ? " selected" : ""}>28px · 압축</option><option value="36"${centuryHeight === 36 ? " selected" : ""}>36px · 기본</option><option value="52"${centuryHeight === 52 ? " selected" : ""}>52px · 확대</option></select></label>
       </div>
     </section>
     <section class="spacetime-status-row">
-      <span><b>${entries.length}</b> Activity</span><span><b>${placedCount}</b> 배치 구간</span><span><b>${placement.unresolvedPosition.length}</b> 위치 미확정</span><span><b>${placement.unresolvedChronology.length}</b> 연대 미확정</span><span><b>${directCount}</b> 정치체 권역</span><span><b>${capitalCount}</b> 수도 판정 Polity</span><span><b>${reviewCount}</b> 기준 검토 대기</span>
+      <span><b>${entries.length}</b> Activity</span><span><b>${placedCount}</b> 배치 구간</span><span><b>${placement.unresolvedPosition.length}</b> 위치 미확정</span><span><b>${placement.unresolvedChronology.length}</b> 연대 미확정</span><span><b>${directCount}</b> 정치체 권역</span><span><b>${capitalCount}</b> 수도 판정 Polity</span><span><b>${authorityCount}</b> 왕정 중심 Polity</span><span><b>${reviewCount}</b> 기준 검토 대기</span>
     </section>
-    ${(reviewCount || placement.unresolvedPosition.length) ? `<section class="spacetime-integrity-note card"><strong>근거 없는 위치는 자동 추정하지 않습니다.</strong><p>명확한 정치체는 검토된 광역 권역을 사용하고, 다지역 정치체는 검토된 당시 수도를 사용합니다. 아직 기준이 없는 정치체와 최신 신규 UUID는 아래 ‘위치 미확정’에 남아 공간 인덱스 검토 대상으로 보존됩니다.</p></section>` : ""}
+    ${(reviewCount || placement.unresolvedPosition.length) ? `<section class="spacetime-integrity-note card"><strong>근거 없는 위치는 자동 추정하지 않습니다.</strong><p>명확한 정치체는 검토된 광역 권역, 다지역 정치체는 검토된 당시 수도를 사용합니다. 고정 수도가 없다고 확인된 경우에만 사료로 검토된 왕정·정치 중심을 사용하며, 그마저 특정할 수 없으면 ‘위치 미확정’으로 보존합니다.</p></section>` : ""}
     ${renderSelection(selectedItem)}
     <section class="spacetime-frame card">
       <div class="spacetime-scroll" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 인물 활동 분포">
@@ -281,7 +284,7 @@
       </div>
     </section>
     <section class="spacetime-unresolved-grid">
-      <article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">PLACEMENT REVIEW</p><h3>위치 미확정</h3></div><strong>${placement.unresolvedPosition.length}</strong></div><p>검토된 정치체 권역 또는 필요한 당시 수도 기준이 없어 가로 위치를 확정하지 않은 Activity입니다.</p>${unresolvedRows(placement.unresolvedPosition)}</article>
+      <article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">PLACEMENT REVIEW</p><h3>위치 미확정</h3></div><strong>${placement.unresolvedPosition.length}</strong></div><p>검토된 정치체 권역·당시 수도·필요한 왕정 중심 중 어느 기준도 확정할 수 없어 가로 위치를 만들지 않은 Activity입니다.</p>${unresolvedRows(placement.unresolvedPosition)}</article>
       <article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">CHRONOLOGY REVIEW</p><h3>연대 미확정</h3></div><strong>${placement.unresolvedChronology.length}</strong></div><p>Activity 시작·종료 연도를 둘 다 확정할 수 없는 경우 세로축에 임의 기간을 만들지 않습니다.</p>${unresolvedRows(placement.unresolvedChronology)}</article>
     </section>`;
 

@@ -1,11 +1,12 @@
 {
   "schema": "atlas-polity-spatial-index/v1",
-  "generated_at": "2026-08-18T08:44:00+09:00",
+  "generated_at": "2026-08-18T09:00:00+09:00",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When a polity spans or straddles broad regions, use its reviewed capital for the activity period.",
     "no_guessing": "Do not infer placement from person names, modern nationality, ethnicity, or unreviewed geometry.",
-    "unresolved": "If neither a reviewed polity region nor a reviewed matching capital period exists, keep the activity in placement review."
+    "unresolved": "If neither a reviewed polity region nor a reviewed matching capital period exists, keep the activity in placement review.",
+    "no_fixed_capital_fallback": "If a polity is explicitly documented as lacking a fixed capital, a reviewed contemporaneous royal/political authority center may be used; otherwise keep placement unresolved."
   },
   "regions": [
     {
@@ -604,10 +605,39 @@
     {
       "polity_id": "a1c6b0b4-ca71-420d-8d9f-502dc7914dd7",
       "reason": "multiple_royal_residences_no_single_reviewed_capital_period"
-    },
+    }
+  ],
+  "authority_center_records": [
     {
       "polity_id": "d54c540c-f3fb-5d05-9dc0-26af4ee9815a",
-      "reason": "mobile_imperial_court_and_capital_transitions_require_activity_period_review"
+      "authority_periods": [
+        {
+          "start_year": 1206,
+          "end_year": 1259,
+          "center_name": "Mongolian imperial court core (Avarga–Karakorum)",
+          "center_type": "imperial_court_core",
+          "region_code": "central-asia",
+          "confidence": "well_established",
+          "source_refs": [
+            "UNESCO World Heritage Centre: Archaeological Site at Khuduu Aral and Surrounding Cultural Landscape",
+            "Cambridge Antiquity: Mapping Karakorum, the capital of the Mongol Empire",
+            "Cambridge Modern Asian Studies: The cosmopolitanism of Karakorum, capital of the Mongol empire in Mongolia"
+          ]
+        },
+        {
+          "start_year": 1260,
+          "end_year": 1271,
+          "center_name": "Kublai court in North China (Shangdu–Dadu)",
+          "center_type": "imperial_court_core",
+          "region_code": "east-asia",
+          "confidence": "well_established",
+          "source_refs": [
+            "Cambridge History of the Mongol Empire: Mongolia in the Mongol Empire",
+            "UNESCO World Heritage Centre: Site of Xanadu",
+            "Metropolitan Museum of Art: China, 1000–1400 A.D. chronology"
+          ]
+        }
+      ]
     }
   ]
 }

@@ -39,11 +39,15 @@ test("reviewed live spatial index snapshot validates and has expected coverage c
   assert.equal(validation.valid, true, validation.errors.join(" | "));
   assert.equal(Object.keys(index.polity_geography).length, 325);
   assert.equal(index.capital_records.length, 10);
-  assert.equal(index.review_queue.length, 3);
+  assert.equal(index.authority_center_records.length, 1);
+  assert.equal(index.review_queue.length, 2);
 });
 
 test("capital evidence contains no internal ATLAS reviewed placeholder references", () => {
-  const refs = index.capital_records.flatMap((record) => record.capital_periods.flatMap((period) => period.source_refs || []));
+  const refs = [
+    ...index.capital_records.flatMap((record) => record.capital_periods.flatMap((period) => period.source_refs || [])),
+    ...index.authority_center_records.flatMap((record) => record.authority_periods.flatMap((period) => period.source_refs || []))
+  ];
   assert.equal(refs.some((ref) => String(ref).startsWith("ATLAS reviewed")), false);
   assert.equal(refs.every((ref) => String(ref).trim().length > 0), true);
 });
@@ -114,11 +118,29 @@ test("Said bin Sultan activity crosses the reviewed 1840 Muscat-to-Zanzibar capi
   contiguous(placement.segments, 1806, 1856);
 });
 
-test("polities without a defensible single capital chronology remain unresolved instead of being guessed", () => {
+test("Mongol activities use reviewed authority-center regions without pretending a fixed capital", () => {
   const lookup = model.createSpatialLookup(index);
-  for (const polityId of [IDS.seleucid, IDS.mongol]) {
-    assert.equal(lookup.has(polityId), false);
-    const placement = model.resolveActivityPlacement(activity(polityId, 100, 101, polityId), lookup);
-    assert.equal(placement.status, "spatial_unresolved");
+  const cases = [
+    ["genghis", 1206, 1227, "central-asia", "Mongolian imperial court core (Avarga–Karakorum)"],
+    ["borte", 1206, 1230, "central-asia", "Mongolian imperial court core (Avarga–Karakorum)"],
+    ["ogedei", 1229, 1241, "central-asia", "Mongolian imperial court core (Avarga–Karakorum)"],
+    ["kublai", 1260, 1271, "east-asia", "Kublai court in North China (Shangdu–Dadu)"]
+  ];
+  for (const [id, start, end, region, center] of cases) {
+    const placement = model.resolveActivityPlacement(activity(IDS.mongol, start, end, id), lookup);
+    assert.equal(placement.status, "placed");
+    assert.equal(placement.segments.length, 1);
+    assert.equal(placement.segments[0].placement_basis, "authority_center");
+    assert.equal(placement.segments[0].authority_center_type, "imperial_court_core");
+    assert.equal(placement.segments[0].region_code, region);
+    assert.equal(placement.segments[0].authority_center_name, center);
+    contiguous(placement.segments, start, end);
   }
+});
+
+test("Seleucid activities remain unresolved because the peripatetic court had no fixed capital", () => {
+  const lookup = model.createSpatialLookup(index);
+  assert.equal(lookup.has(IDS.seleucid), false);
+  const placement = model.resolveActivityPlacement(activity(IDS.seleucid, -305, -281, "seleucus"), lookup);
+  assert.equal(placement.status, "spatial_unresolved");
 });

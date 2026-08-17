@@ -19,7 +19,8 @@
   ]);
   const REGION_CODES = new Set(REGION_DEFINITIONS.map((item) => item.code));
   const ALLOWED_CONFIDENCE = new Set(["well_established", "likely", "speculative", "disputed", "unknown"]);
-  const PLACEMENT_BASES = new Set(["polity_geography", "capital"]);
+  const PLACEMENT_BASES = new Set(["polity_geography", "capital", "authority_center"]);
+  const AUTHORITY_CENTER_TYPES = new Set(["imperial_court_core", "royal_court", "political_center"]);
   const SPATIAL_INDEX_SCHEMA = "atlas-polity-spatial-index/v1";
 
   function text(value) {
@@ -84,12 +85,32 @@
     return errors.map((message) => `records[${index}] polity ${polityId}: ${message}`);
   }
 
+  function validateAuthorityCenterPeriod(period, polityId, index) {
+    const regionCode = text(period?.region_code);
+    const startYear = period?.start_year == null ? null : Number(period.start_year);
+    const endYear = period?.end_year == null ? null : Number(period.end_year);
+    const errors = [];
+    if (!REGION_CODES.has(regionCode)) errors.push(`invalid region_code: ${regionCode || "(empty)"}`);
+    if (!text(period?.center_name)) errors.push("center_name is required");
+    const centerType = text(period?.center_type);
+    if (!AUTHORITY_CENTER_TYPES.has(centerType)) errors.push(`invalid center_type: ${centerType || "(empty)"}`);
+    if (startYear != null && (!Number.isInteger(startYear) || startYear === 0)) errors.push("start_year must be a historical integer year or null");
+    if (endYear != null && (!Number.isInteger(endYear) || endYear === 0)) errors.push("end_year must be a historical integer year or null");
+    if (startYear != null && endYear != null && normalizeInterval(startYear, endYear)?.reversed_input) errors.push("start_year must not be after end_year");
+    const sourceRefs = Array.isArray(period?.source_refs) ? period.source_refs.map(text).filter(Boolean) : [];
+    if (!sourceRefs.length) errors.push("source_refs must contain at least one reviewed source reference");
+    const confidence = text(period?.confidence);
+    if (!ALLOWED_CONFIDENCE.has(confidence)) errors.push(`invalid confidence: ${confidence || "(empty)"}`);
+    return errors.map((message) => `authority_center_records[${index}] polity ${polityId}: ${message}`);
+  }
+
   function validateSpatialIndex(value) {
     const errors = [];
     if (!value || typeof value !== "object") return Object.freeze({ valid: false, errors: Object.freeze(["spatial index must be an object"]) });
     if (value.schema !== SPATIAL_INDEX_SCHEMA) errors.push(`schema must be ${SPATIAL_INDEX_SCHEMA}`);
     if (!value.polity_geography || typeof value.polity_geography !== "object" || Array.isArray(value.polity_geography)) errors.push("polity_geography must be an object");
     if (!Array.isArray(value.capital_records)) errors.push("capital_records must be an array");
+    if (value.authority_center_records != null && !Array.isArray(value.authority_center_records)) errors.push("authority_center_records must be an array when present");
     if (value.review_queue != null && !Array.isArray(value.review_queue)) errors.push("review_queue must be an array when present");
 
     const resolved = new Set();
@@ -110,6 +131,18 @@
         errors.push(`capital_records[${index}] polity ${polityId}: capital_periods must be a non-empty array`);
       } else {
         for (const period of record.capital_periods) errors.push(...validateCapitalPeriod(period, polityId, index));
+      }
+    }
+
+    for (const [index, record] of (Array.isArray(value.authority_center_records) ? value.authority_center_records : []).entries()) {
+      const polityId = text(record?.polity_id);
+      if (!polityId) errors.push(`authority_center_records[${index}]: polity_id is required`);
+      if (resolved.has(polityId)) errors.push(`authority_center_records[${index}]: polity_id ${polityId} is already resolved`);
+      if (polityId) resolved.add(polityId);
+      if (!Array.isArray(record?.authority_periods) || !record.authority_periods.length) {
+        errors.push(`authority_center_records[${index}] polity ${polityId}: authority_periods must be a non-empty array`);
+      } else {
+        for (const period of record.authority_periods) errors.push(...validateAuthorityCenterPeriod(period, polityId, index));
       }
     }
 
@@ -139,6 +172,9 @@
     }
     for (const record of index.capital_records || []) {
       lookup.set(text(record.polity_id), Object.freeze({ placement_basis: "capital", capital_periods: record.capital_periods.slice() }));
+    }
+    for (const record of index.authority_center_records || []) {
+      lookup.set(text(record.polity_id), Object.freeze({ placement_basis: "authority_center", authority_periods: record.authority_periods.slice() }));
     }
     return lookup;
   }
@@ -194,20 +230,25 @@
 
     const activityStart = interval.start_ordinal;
     const activityEnd = interval.end_ordinal;
+    const isAuthorityCenter = record.placement_basis === "authority_center";
+    const periods = isAuthorityCenter ? (record.authority_periods || []) : (record.capital_periods || []);
     const segments = [];
-    for (const period of record.capital_periods || []) {
+    for (const period of periods) {
       const { startOrdinal, endOrdinal } = periodOrdinals(period);
       const overlapStart = Math.max(activityStart, startOrdinal);
       const overlapEnd = Math.min(activityEnd, endOrdinal);
       if (overlapStart > overlapEnd) continue;
+      const locationName = isAuthorityCenter ? text(period.center_name) : text(period.capital_name);
       segments.push(Object.freeze({
         activity_id: activityId,
         polity_id: polityId,
         region_code: text(period.region_code),
-        placement_basis: "capital",
-        location_label: text(period.capital_name),
-        capital_name: text(period.capital_name),
-        capital_place_id: text(period.capital_place_id) || null,
+        placement_basis: isAuthorityCenter ? "authority_center" : "capital",
+        location_label: locationName,
+        capital_name: isAuthorityCenter ? null : locationName,
+        capital_place_id: isAuthorityCenter ? null : (text(period.capital_place_id) || null),
+        authority_center_name: isAuthorityCenter ? locationName : null,
+        authority_center_type: isAuthorityCenter ? text(period.center_type) : null,
         confidence: text(period.confidence),
         source_refs: Object.freeze((period.source_refs || []).map(text).filter(Boolean)),
         start_year: ordinalToHistoricalYear(overlapStart),
@@ -216,7 +257,8 @@
       }));
     }
     if (!segments.length) {
-      return Object.freeze({ activity_id: activityId, polity_id: polityId, status: "capital_period_no_overlap", segments: Object.freeze([]) });
+      const status = isAuthorityCenter ? "authority_center_period_no_overlap" : "capital_period_no_overlap";
+      return Object.freeze({ activity_id: activityId, polity_id: polityId, status, segments: Object.freeze([]) });
     }
     return Object.freeze({ activity_id: activityId, polity_id: polityId, status: "placed", segments: Object.freeze(segments) });
   }
