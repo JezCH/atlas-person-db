@@ -6,7 +6,7 @@ const read = (rel) => fs.readFileSync(new URL(`../${rel}`, import.meta.url), 'ut
 const exists = (rel) => fs.existsSync(new URL(`../${rel}`, import.meta.url));
 const contract = JSON.parse(read('migration/phase-9/ui-localization-ko.json'));
 const app = read('app.js');
-const mobile = read('mobile-ui.js');
+const personReader = read('atlas-person-browser-reader.js');
 const index = read('index.html');
 const readerService = read('server/atlas-normalized-read-service.js');
 const identityService = read('server/atlas-identity-service.js');
@@ -52,7 +52,9 @@ test('authoring UI displays localized fields while retaining canonical values fo
   assert.match(app, /data-search=/);
   assert.match(app, /record\.person_name/);
   assert.match(app, /record\.politic_name/);
-  assert.match(mobile, /row\.dataset\.search \|\| row\.textContent/);
+  assert.match(personReader, /person\?\.display_name, person\?\.canonical_name_en, person\?\.preferred_name_ko/);
+  assert.match(personReader, /item\.display_name/);
+  assert.match(personReader, /item\.canonical_name_en/);
 });
 
 test('static browser locale patches are retired from the active page and repository root', () => {
