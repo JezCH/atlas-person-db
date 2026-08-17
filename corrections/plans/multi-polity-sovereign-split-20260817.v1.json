@@ -1,0 +1,209 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "multi_polity_sovereign_split_20260817_v1",
+  "as_of": "2026-08-17",
+  "status": "REVIEWED_MULTI_POLITY_SOVEREIGN_ACTIVITY_SPLIT",
+  "release_order": 542,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "docs/audits/MULTI_POLITY_ACTIVITY_SPLIT_2026-08-17.md",
+  "baseline": {
+    "deployment_sha": "ab871ed3339c739467810ae74083696f0753ddbb",
+    "baseline_digest": "sha256:61dbe69b973cea5d02d3ef1c8ebe7123b5094674e46d319692ad665a6b0e8c22"
+  },
+  "execution_rules": {
+    "one_activity_one_person_one_polity_scope": true,
+    "simultaneous_distinct_polity_offices_require_distinct_activities": true,
+    "true_reviewed_composite_polity_may_remain_single_activity": true,
+    "role_must_not_encode_polity_scope": true,
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "multi_polity_christian_iv_denmark_norway",
+      "type": "split_activity",
+      "activity_id": "b3328785-0b69-47f1-bfe2-b9d2a07e725f",
+      "baseline_before": {
+        "person_id": "75270079-7198-48c6-b695-b9fe172440b9",
+        "polity_id": "7d07f3c1-13e3-4e03-8a5a-37f4eb2cb8e6",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1588,
+        "activity_end": 1648,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "fragments": [
+        {
+          "survivor": true,
+          "activity_id": "b3328785-0b69-47f1-bfe2-b9d2a07e725f",
+          "person_id": "75270079-7198-48c6-b695-b9fe172440b9",
+          "polity_id": "c117fb82-4943-40d6-bc2d-740f0665665a",
+          "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+          "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+          "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+          "activity_start": 1588,
+          "activity_end": 1648,
+          "activity_start_detail": {
+            "year": 1588,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "unspecified_historical"
+          },
+          "activity_end_detail": {
+            "year": 1648,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "unspecified_historical"
+          },
+          "confidence": "well_established",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "Christian IV became King of Denmark in 1588 and reigned until 1648. His concurrent Norwegian kingship is recorded as a separate Norway Activity because Denmark and Norway are modeled as distinct Polities.",
+          "add_source_links": []
+        },
+        {
+          "survivor": false,
+          "activity_id": "9ca8121c-ba11-5f3b-806f-3ee4cfb32f6a",
+          "person_id": "75270079-7198-48c6-b695-b9fe172440b9",
+          "polity_id": "683037ec-b5e1-4373-986e-c63df8ea75c2",
+          "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+          "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+          "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+          "activity_start": 1588,
+          "activity_end": 1648,
+          "activity_start_detail": {
+            "year": 1588,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "unspecified_historical"
+          },
+          "activity_end_detail": {
+            "year": 1648,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "unspecified_historical"
+          },
+          "confidence": "well_established",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "Christian IV became King of Norway in 1588 and reigned until 1648. His concurrent Danish kingship is recorded as a separate Denmark Activity because Denmark and Norway are modeled as distinct Polities.",
+          "source_copy_policy": "COPY_EXISTING",
+          "add_source_links": []
+        }
+      ],
+      "gap_overlap_policy": "FULL_OVERLAP_REVIEWED_SIMULTANEOUS_SOVEREIGN_OFFICES_IN_DISTINCT_POLITIES"
+    },
+    {
+      "case_id": "multi_polity_oscar_ii_sweden_norway",
+      "type": "split_activity",
+      "activity_id": "3829e15f-a41d-4368-8c50-f0843c3d51a2",
+      "baseline_before": {
+        "person_id": "c9924ddf-74ae-471d-b860-7b6275eef473",
+        "polity_id": "a47f57af-8ac2-4724-81b0-43074c64f84c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1872,
+        "activity_end": 1905,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 3
+      },
+      "fragments": [
+        {
+          "survivor": true,
+          "activity_id": "3829e15f-a41d-4368-8c50-f0843c3d51a2",
+          "person_id": "c9924ddf-74ae-471d-b860-7b6275eef473",
+          "polity_id": "93613017-b4c4-5f82-8e96-3ce6b2d3a61e",
+          "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+          "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+          "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+          "activity_start": 1872,
+          "activity_end": 1907,
+          "activity_start_detail": {
+            "year": 1872,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "unspecified_historical"
+          },
+          "activity_end_detail": {
+            "year": 1907,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "unspecified_historical"
+          },
+          "confidence": "well_established",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "Oscar II was King of Sweden from 1872 to 1907. His concurrent Norwegian kingship is recorded as a separate Norway Activity and ended in 1905.",
+          "add_source_links": []
+        },
+        {
+          "survivor": false,
+          "activity_id": "fb062557-682e-5b34-9b92-fae05d3bd08e",
+          "person_id": "c9924ddf-74ae-471d-b860-7b6275eef473",
+          "polity_id": "683037ec-b5e1-4373-986e-c63df8ea75c2",
+          "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+          "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+          "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+          "activity_start": 1872,
+          "activity_end": 1905,
+          "activity_start_detail": {
+            "year": 1872,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "unspecified_historical"
+          },
+          "activity_end_detail": {
+            "year": 1905,
+            "month": 10,
+            "day": 26,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "well_established",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "Oscar II was King of Norway from 1872 until he formally renounced the Norwegian crown on 26 October 1905. His Swedish kingship continued to 1907 and is recorded as a separate Sweden Activity.",
+          "source_copy_policy": "COPY_EXISTING",
+          "add_source_links": []
+        }
+      ],
+      "gap_overlap_policy": "OVERLAP_AND_SWEDISH_SURVIVOR_EXTENSION_REVIEWED_DISTINCT_SOVEREIGN_OFFICES"
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "split_activity_count": 2,
+    "new_activity_count": 2,
+    "retired_composite_activity_count": 0,
+    "production_mutation_authorized": false
+  }
+}
