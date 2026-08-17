@@ -165,7 +165,7 @@
     const groups = reader.preparePersonGroups(persons, { query, sortOrder, facetFilters });
     const rows = [...groups.historical, ...groups.other_or_uncertain];
     const shown = rows.length;
-    list.innerHTML = [
+    const renderedGroups = [
       groupSection({
         title: "역사 인물",
         description: "Person.historicity가 historical로 기록된 인물입니다. 활동연도가 미상이어도 역사성 분류는 유지됩니다.",
@@ -179,8 +179,20 @@
         kind: "other"
       })
     ].join("");
+    for (const child of [...list.children]) {
+      if (child.id !== "personEraNavigator") child.remove();
+    }
+    list.insertAdjacentHTML("beforeend", renderedGroups);
     notifyPersonRender({ shown, polityCount: visiblePolityCount(rows) });
     return shown;
+  }
+
+  function setSearchQuery(value) {
+    const next = String(value ?? "");
+    if (query === next) return false;
+    query = next;
+    renderGroups();
+    return true;
   }
 
   function setPolityFilter(value) {
@@ -403,7 +415,7 @@
     const personView = document.createElement("section");
     personView.id = "personMainView";
     personView.className = "person-main-view";
-    personView.innerHTML = `<section class="person-main-toolbar card"><div class="person-main-toolbar-heading"><p class="eyebrow">AUTHORITATIVE PERSON READ</p><h2>인물 목록</h2><p>역사성 분류와 연대 확실성을 분리해 표시합니다.</p></div><div class="person-main-actions" aria-label="Person 운영 도구"><button id="personMainAdd" class="btn btn-primary" type="button">+ 관계 추가</button><button id="personMainRefresh" class="btn" type="button">↻ 새로고침</button><div class="person-main-more"><button id="personMainMoreButton" class="btn" type="button" aria-controls="personMainMoreMenu" aria-expanded="false">⋯ 더보기</button><div id="personMainMoreMenu" class="person-main-more-menu" hidden><button type="button" data-person-main-action="export">엑셀 내보내기</button><button type="button" data-person-main-action="import">엑셀 불러오기</button><a href="./admin.html">관리자 페이지</a><button type="button" data-person-main-action="legacy-tools">전체 관계 편집표</button></div></div></div><div class="person-main-controls"><input id="personMainSearch" type="search" autocomplete="off" placeholder="인물·정치체·관계·역할·기간·비고 검색" /><select id="personMainSort" aria-label="Person 정렬"><option value="start-asc">활동연도 ↑ 과거→현재</option><option value="start-desc">활동연도 ↓ 현재→과거</option></select></div></section>
+    personView.innerHTML = `<section class="person-main-toolbar card"><div class="person-main-toolbar-heading"><p class="eyebrow">AUTHORITATIVE PERSON READ</p><h2>인물 목록</h2><p>역사성 분류와 연대 확실성을 분리해 표시합니다.</p></div><div class="person-main-actions" aria-label="Person 운영 도구"><button id="personMainAdd" class="btn btn-primary" type="button">+ 관계 추가</button><button id="personMainRefresh" class="btn" type="button">↻ 새로고침</button><div class="person-main-more"><button id="personMainMoreButton" class="btn" type="button" aria-controls="personMainMoreMenu" aria-expanded="false">⋯ 더보기</button><div id="personMainMoreMenu" class="person-main-more-menu" hidden><button type="button" data-person-main-action="export">엑셀 내보내기</button><button type="button" data-person-main-action="import">엑셀 불러오기</button><a href="./admin.html">관리자 페이지</a><button type="button" data-person-main-action="legacy-tools">전체 관계 편집표</button></div></div></div><div class="person-main-controls"><select id="personMainSort" aria-label="Person 정렬"><option value="start-asc">활동연도 ↑ 과거→현재</option><option value="start-desc">활동연도 ↓ 현재→과거</option></select></div></section>
       <div class="person-main-layout"><div id="personMainGroups" class="person-main-groups"></div><aside id="personMainDetail" class="person-main-detail card" aria-live="polite"><p class="person-detail-placeholder">왼쪽에서 인물을 선택하면 이름·설명·출처와 모든 Activity 의미를 확인할 수 있습니다.</p></aside></div>`;
 
     const authoringTools = document.createElement("details");
@@ -416,7 +428,6 @@
     topbar.insertAdjacentElement("afterend", personView);
     personView.insertAdjacentElement("afterend", authoringTools);
 
-    const search = document.getElementById("personMainSearch");
     const sort = document.getElementById("personMainSort");
     const add = document.getElementById("personMainAdd");
     const refresh = document.getElementById("personMainRefresh");
@@ -425,10 +436,6 @@
     const groups = document.getElementById("personMainGroups");
     const detail = document.getElementById("personMainDetail");
 
-    search?.addEventListener("input", () => {
-      query = search.value;
-      renderGroups();
-    });
     sort?.addEventListener("change", () => {
       sortOrder = sort.value === "start-desc" ? "start-desc" : "start-asc";
       renderGroups();
@@ -463,6 +470,9 @@
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") setMoreMenu(false);
     });
+    window.addEventListener("atlas-person-search-change", (event) => {
+      setSearchQuery(event?.detail?.query);
+    });
     window.addEventListener("atlas-person-polity-filter-change", (event) => {
       setPolityFilter(event?.detail?.polityId);
     });
@@ -475,6 +485,8 @@
     loadPersons,
     selectPerson,
     renderGroups,
+    setSearchQuery,
+    getSearchQuery: () => query,
     setPolityFilter,
     getPolityFilter: () => facetFilters.polity_id,
     getPolityOptions: polityOptions,
