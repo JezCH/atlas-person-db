@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:theodoric-the-great:ostrogothic-kingdom:493-526:v1",
+  "person": {"canonical_name_en": "Theodoric the Great", "display_name_ko": "테오도리쿠스 대왕"},
+  "polity": {"canonical_name_en": "Ostrogothic Kingdom", "display_name_ko": "동고트 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 493, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 526, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Theodoric the Great (Theoderic in much modern scholarship) secured sole rule in Italy after Odoacer's death in 493 and ruled until his death in 526. ATLAS binds him to the Ostrogothic Kingdom as the durable Gothic political authority he established in Italy, rather than to the Roman Empire or to a generic Italy polity."},
+  "sources": [{"title": "Theoderic (1), Gothic king of Italy, 493–526 CE — Oxford Classical Dictionary", "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548073794", "citation_text": "Oxford Classical Dictionary identifies Theoderic, also spelled Theodoric and known as the Great, as Gothic king and ruler of Italy from 493 until his death in 526.", "source_type": "academic_reference"}, {"title": "Theoderic the Great and Ostrogothic Italy — Oxford Bibliographies", "canonical_url": "https://academic.oup.com/reference/62365/reference-article-abstract/554606549", "citation_text": "Oxford Bibliographies describes Theoderic's conquest of Italy, sole rule from 493, and political organization of Goths and Romans until his death in 526.", "source_type": "academic_reference"}]
+}

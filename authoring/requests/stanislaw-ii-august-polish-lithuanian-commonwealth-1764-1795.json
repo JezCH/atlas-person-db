@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:stanislaw-ii-august:polish-lithuanian-commonwealth:1764-1795:v1",
+  "person": {"canonical_name_en": "Stanisław II August", "display_name_ko": "스타니스와프 2세 아우구스트"},
+  "polity": {"canonical_name_en": "Polish–Lithuanian Commonwealth", "display_name_ko": "폴란드-리투아니아 연방"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 1764, "start_month": 9, "start_day": 6, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1795, "end_month": 11, "end_day": 25, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Stanisław II August (Stanisław August Poniatowski) was elected on 6 September 1764 and was the final monarch of the Polish–Lithuanian Commonwealth. His reign ended with his abdication on 25 November 1795 after the Third Partition. ATLAS records the Commonwealth-level sovereign Activity rather than a Poland-only monarchy."},
+  "sources": [{"title": "Zamek w epoce króla Stanisława Augusta — Zamek Królewski w Warszawie", "canonical_url": "https://zamek-krolewski.pl/strona/historia/606-zamek-w-epoce-krola-stanislawa-augusta", "citation_text": "The Royal Castle in Warsaw identifies Stanisław August Poniatowski as the last Polish monarch, ruling from 1764 until his abdication in 1795.", "source_type": "museum_research"}, {"title": "Stanisław August Poniatowski — Archiwum Państwowe w Łodzi", "canonical_url": "https://www.lodz.ap.gov.pl/art,796,stanislaw-august-poniatowski", "citation_text": "The State Archives in Łódź records his election on 6 September 1764, coronation later that year, and abdication on 25 November 1795 after the Third Partition.", "source_type": "government_web"}]
+}

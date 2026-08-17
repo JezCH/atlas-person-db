@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mieszko-i:poland:960-992:v1",
+  "person": {"canonical_name_en": "Mieszko I", "display_name_ko": "미에슈코 1세"},
+  "polity": {"canonical_name_en": "Poland", "display_name_ko": "폴란드"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Duke", "role_display_name_ko": "공작", "start_year": 960, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical", "end_year": 992, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Mieszko I is the first historically attested ruler of the early Polish state. Modern Polish reference works conventionally place the beginning of his rule around 960 and his death in 992. ATLAS uses Poland as the polity-level identity and the normalized role Duke, with the accession year marked approximate because the surviving evidence does not establish an exact accession date."},
+  "sources": [{"title": "Polska. Królowie i książęta — Encyklopedia PWN", "canonical_url": "https://encyklopedia.pwn.pl/haslo/Polska-Krolowie-i-ksiazeta;446995.html", "citation_text": "PWN's list of Polish rulers gives Mieszko I in the Early Piast monarchy approximately 960–992.", "source_type": "academic_reference"}, {"title": "Panowanie Mieszka I i chrzest Polski — Zintegrowana Platforma Edukacyjna", "canonical_url": "https://zpe.gov.pl/a/wprowadzenie/DSlijxzSD", "citation_text": "Poland's national educational platform dates Mieszko I's assumption of power over the Polan state to about 960 and his death and succession to 992.", "source_type": "government_web"}]
+}

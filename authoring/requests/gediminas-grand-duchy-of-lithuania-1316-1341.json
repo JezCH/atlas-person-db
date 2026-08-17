@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gediminas:grand-duchy-of-lithuania:1316-1341:v1",
+  "person": {"canonical_name_en": "Gediminas", "display_name_ko": "게디미나스"},
+  "polity": {"canonical_name_en": "Grand Duchy of Lithuania", "display_name_ko": "리투아니아 대공국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Grand Duke", "role_display_name_ko": "리투아니아 대공", "start_year": 1316, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 1341, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Gediminas ruled the Grand Duchy of Lithuania from 1316 to 1341. Contemporary titulature varied and could style him king of Lithuanians and Rus', but ATLAS uses the standard modern office label Grand Duke and binds the Activity to the Grand Duchy of Lithuania."},
+  "sources": [{"title": "Gediminas — Visuotinė lietuvių enciklopedija", "canonical_url": "https://www.vle.lt/straipsnis/gediminas/", "citation_text": "The Universal Lithuanian Encyclopedia identifies Gediminas as Grand Duke of Lithuania from 1316 to 1341 and discusses his titulature and consolidation of the state.", "source_type": "academic_reference"}]
+}
