@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:bertrand-du-guesclin:kingdom-of-france:1370-1380:v1",
+  "person": {
+    "canonical_name_en": "Bertrand du Guesclin",
+    "display_name_ko": "베르트랑 뒤 게클랭"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of France",
+    "display_name_ko": "프랑스 왕국"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Constable of France",
+    "role_display_name_ko": "프랑스군 총사령관",
+    "start_year": 1370,
+    "start_month": 10,
+    "start_day": 2,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1380,
+    "end_month": 7,
+    "end_day": 13,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bertrand du Guesclin entered the service of Charles V and was made Constable of France on 2 October 1370. He retained the constableship through the renewed Hundred Years' War campaigns until his death at Châteauneuf-de-Randon on 13 July 1380. ATLAS records this formal office rather than his earlier and more fragmented Breton and Castilian military service."
+  },
+  "sources": [
+    {
+      "title": "Bertrand Duguesclin — Bibliothèque nationale de France",
+      "canonical_url": "https://classes.bnf.fr/ema/grands/9-2.htm",
+      "citation_text": "The Bibliothèque nationale de France states that Charles V presented Bertrand du Guesclin with the sword of constable on 2 October 1370.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Guesclin (Bertrand du) — Larousse",
+      "canonical_url": "https://www.larousse.fr/dictionnaires/college/Bertrand_du_Guesclin/18998",
+      "citation_text": "Larousse identifies du Guesclin as Constable of France, describes his 1370 appointment and campaigns against the English, and gives his death in 1380.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Mort de Du Guesclin — POP, Ministère de la Culture",
+      "canonical_url": "https://pop.culture.gouv.fr/notice/joconde/000PE004238",
+      "citation_text": "The French Ministry of Culture collection record dates the represented death of Bertrand du Guesclin to 13 July 1380 at Châteauneuf-de-Randon.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
