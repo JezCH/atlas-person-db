@@ -10,7 +10,7 @@ const SHA = "a".repeat(40);
 const P11_WORKFLOW_REF = "JezCH/atlas-person-db/.github/workflows/atlas-p11-semantic-v2-backfill.yml@refs/heads/main";
 const UNRELATED_WORKFLOW_REF = "JezCH/atlas-person-db/.github/workflows/atlas-authoring-apply.yml@refs/heads/main";
 
-function trustPayload(oidc, workflowRef) {
+function trustPayload(oidc, workflowRef, eventName = "push") {
   return {
     iss: oidc.ISSUER,
     aud: oidc.EXPECTED_AUDIENCE,
@@ -19,23 +19,27 @@ function trustPayload(oidc, workflowRef) {
     ref: oidc.EXPECTED_REF,
     workflow_ref: workflowRef,
     environment: "production",
-    event_name: "push",
+    event_name: eventName,
     sha: SHA
   };
 }
 
-test("P11 semantic-v2 backfill is explicitly authorized for the audit audience without widening the workflow boundary", () => {
-  assert.deepEqual(auditOidc.ALLOWED_WORKFLOW_REFS, [auditOidc.EXPECTED_WORKFLOW_REF, P11_WORKFLOW_REF]);
-  assert.equal(Object.isFrozen(auditOidc.ALLOWED_WORKFLOW_REFS), true);
-  assert.doesNotThrow(() => auditOidc.verifyTrustClaims(trustPayload(auditOidc, auditOidc.EXPECTED_WORKFLOW_REF), SHA));
-  assert.doesNotThrow(() => auditOidc.verifyTrustClaims(trustPayload(auditOidc, P11_WORKFLOW_REF), SHA));
-  assert.throws(() => auditOidc.verifyTrustClaims(trustPayload(auditOidc, UNRELATED_WORKFLOW_REF), SHA), /GITHUB_OIDC_WORKFLOW_MISMATCH/);
+function assertBoundedP11Trust(oidc) {
+  assert.deepEqual(oidc.ALLOWED_WORKFLOW_REFS, [oidc.EXPECTED_WORKFLOW_REF, P11_WORKFLOW_REF]);
+  assert.deepEqual(oidc.ALLOWED_EVENTS, ["push", "workflow_dispatch"]);
+  assert.equal(Object.isFrozen(oidc.ALLOWED_WORKFLOW_REFS), true);
+  assert.equal(Object.isFrozen(oidc.ALLOWED_EVENTS), true);
+  assert.doesNotThrow(() => oidc.verifyTrustClaims(trustPayload(oidc, oidc.EXPECTED_WORKFLOW_REF), SHA));
+  assert.doesNotThrow(() => oidc.verifyTrustClaims(trustPayload(oidc, P11_WORKFLOW_REF), SHA));
+  assert.doesNotThrow(() => oidc.verifyTrustClaims(trustPayload(oidc, P11_WORKFLOW_REF, "workflow_dispatch"), SHA));
+  assert.throws(() => oidc.verifyTrustClaims(trustPayload(oidc, UNRELATED_WORKFLOW_REF), SHA), /GITHUB_OIDC_WORKFLOW_MISMATCH/);
+  assert.throws(() => oidc.verifyTrustClaims(trustPayload(oidc, P11_WORKFLOW_REF, "pull_request"), SHA), /GITHUB_OIDC_EVENT_MISMATCH/);
+}
+
+test("P11 semantic-v2 backfill is explicitly authorized for the audit audience without widening workflow or event boundaries", () => {
+  assertBoundedP11Trust(auditOidc);
 });
 
-test("P11 semantic-v2 backfill is explicitly authorized for the correction audience without widening the workflow boundary", () => {
-  assert.deepEqual(correctionOidc.ALLOWED_WORKFLOW_REFS, [correctionOidc.EXPECTED_WORKFLOW_REF, P11_WORKFLOW_REF]);
-  assert.equal(Object.isFrozen(correctionOidc.ALLOWED_WORKFLOW_REFS), true);
-  assert.doesNotThrow(() => correctionOidc.verifyTrustClaims(trustPayload(correctionOidc, correctionOidc.EXPECTED_WORKFLOW_REF), SHA));
-  assert.doesNotThrow(() => correctionOidc.verifyTrustClaims(trustPayload(correctionOidc, P11_WORKFLOW_REF), SHA));
-  assert.throws(() => correctionOidc.verifyTrustClaims(trustPayload(correctionOidc, UNRELATED_WORKFLOW_REF), SHA), /GITHUB_OIDC_WORKFLOW_MISMATCH/);
+test("P11 semantic-v2 backfill is explicitly authorized for the correction audience without widening workflow or event boundaries", () => {
+  assertBoundedP11Trust(correctionOidc);
 });

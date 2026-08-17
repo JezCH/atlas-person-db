@@ -14,7 +14,7 @@ const ALLOWED_WORKFLOW_REFS = Object.freeze([
   EXPECTED_WORKFLOW_REF,
   P11_SEMANTIC_V2_BACKFILL_WORKFLOW_REF
 ]);
-const ALLOWED_EVENTS = new Set(["push", "workflow_dispatch"]);
+const ALLOWED_EVENTS = Object.freeze(["push", "workflow_dispatch"]);
 
 let jwksCache = null;
 let jwksCachedAt = 0;
@@ -62,7 +62,7 @@ function verifyTrustClaims(payload, expectedSha) {
   if (payload?.ref !== EXPECTED_REF) throw new Error("GITHUB_OIDC_REF_MISMATCH");
   if (!ALLOWED_WORKFLOW_REFS.includes(payload?.workflow_ref)) throw new Error("GITHUB_OIDC_WORKFLOW_MISMATCH");
   if (payload?.environment !== "production") throw new Error("GITHUB_OIDC_ENVIRONMENT_MISMATCH");
-  if (!ALLOWED_EVENTS.has(payload?.event_name)) throw new Error("GITHUB_OIDC_EVENT_MISMATCH");
+  if (!ALLOWED_EVENTS.includes(payload?.event_name)) throw new Error("GITHUB_OIDC_EVENT_MISMATCH");
   if (payload?.sha !== expectedSha) throw new Error("GITHUB_OIDC_SHA_MISMATCH");
 }
 
@@ -110,5 +110,6 @@ module.exports = Object.freeze({
   EXPECTED_REF,
   EXPECTED_WORKFLOW_REF,
   P11_SEMANTIC_V2_BACKFILL_WORKFLOW_REF,
-  ALLOWED_WORKFLOW_REFS
+  ALLOWED_WORKFLOW_REFS,
+  ALLOWED_EVENTS
 });
