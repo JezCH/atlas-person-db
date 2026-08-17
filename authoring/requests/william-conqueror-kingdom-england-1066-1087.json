@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:william-the-conqueror:kingdom-of-england:king:1066-1087:v1",
+  "person": {
+    "canonical_name_en": "William the Conqueror",
+    "display_name_ko": "정복왕 윌리엄 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of England",
+    "display_name_ko": "잉글랜드 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1066,
+    "start_month": 12,
+    "start_day": 25,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 1087,
+    "end_month": 9,
+    "end_day": 9,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After defeating Harold II at Hastings, William was crowned King of England at Westminster Abbey on 25 December 1066 and reigned until his death on 9 September 1087. This English kingship is a distinct concurrent sovereign Activity from his continuing rule as Duke of Normandy. The existing Kingdom of England polity and generic King role are reused."
+  },
+  "sources": [
+    {
+      "title": "The Royal Family — William I 'The Conqueror' (r. 1066-1087)",
+      "canonical_url": "https://www.royal.uk/william-the-conqueror",
+      "citation_text": "The Royal Family states that William was crowned at Westminster Abbey on Christmas Day 1066 and died on 9 September 1087.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Historic Royal Palaces — Kings and Queens of England and Britain",
+      "canonical_url": "https://www.hrp.org.uk/kings-and-queens-of-england-and-britain/",
+      "citation_text": "Historic Royal Palaces identifies William I the Conqueror as the Norman King of England reigning from 1066 to 1087.",
+      "source_type": "institutional_web"
+    }
+  ]
+}
