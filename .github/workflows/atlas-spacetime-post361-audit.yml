@@ -1,0 +1,58 @@
+name: ATLAS Spacetime Post361 Audit
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/atlas-spacetime-post361-audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit exact Production placements with current model
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail-with-body --silent --show-error https://atlas-person-db.vercel.app/api/atlas-person-read -o person-read.json
+          curl --fail-with-body --silent --show-error https://atlas-person-db.vercel.app/atlas-polity-spatial-index.json -o spatial-index.json
+          node <<'NODE'
+          const fs=require('fs');
+          const model=require('./atlas-person-spacetime-model.js');
+          const read=JSON.parse(fs.readFileSync('person-read.json','utf8'));
+          const index=JSON.parse(fs.readFileSync('spatial-index.json','utf8'));
+          const lookup=model.createSpatialLookup(index);
+          const counts={persons:(read.persons||[]).length,activities:0,placed:0,spatial_unresolved:0,chronology_unresolved:0,polity_unresolved:0,capital_period_no_overlap:0,incomplete_placed_coverage:0};
+          const unresolved=[];
+          const ord=model.historicalYearToOrdinal;
+          for(const person of read.persons||[]){
+            for(const activity of person.activity_summaries||[]){
+              counts.activities++;
+              const result=model.resolveActivityPlacement(activity,lookup);
+              if(result.status==='placed'){
+                counts.placed++;
+                const s=activity?.start?.year,e=activity?.end?.year;
+                const segments=result.segments||[];
+                let complete=segments.length>0 && segments[0].start_year===s && segments.at(-1).end_year===e;
+                for(let i=1;i<segments.length;i++) complete=complete && ord(segments[i].start_year)===ord(segments[i-1].end_year)+1;
+                if(!complete) counts.incomplete_placed_coverage++;
+              } else {
+                counts[result.status]=(counts[result.status]||0)+1;
+                unresolved.push({person:person.display_name||person.preferred_name_ko||person.canonical_name_en||person.id,polity:activity?.polity?.display_name||activity?.polity?.preferred_name_ko||activity?.polity?.canonical_name_en||activity?.polity?.canonical_key||activity?.polity?.id,start:activity?.start?.year,end:activity?.end?.year,status:result.status});
+              }
+            }
+          }
+          const out={counts,unresolved};
+          fs.writeFileSync('post361-audit.json',JSON.stringify(out,null,2));
+          console.log(JSON.stringify(out,null,2));
+          if(counts.persons!==522 || counts.activities!==586 || counts.placed!==580 || counts.spatial_unresolved!==6 || counts.chronology_unresolved!==0 || counts.polity_unresolved!==0 || counts.capital_period_no_overlap!==0 || counts.incomplete_placed_coverage!==0) process.exit(2);
+          NODE
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atlas-spacetime-post361-audit-${{ github.sha }}
+          path: post361-audit.json
+          retention-days: 30
