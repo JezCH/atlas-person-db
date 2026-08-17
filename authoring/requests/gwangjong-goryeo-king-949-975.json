@@ -1,0 +1,36 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gwangjong:goryeo:king:949-975:v1",
+  "person": {
+    "canonical_name_en": "Gwangjong of Goryeo",
+    "display_name_ko": "광종"
+  },
+  "polity": {
+    "canonical_name_en": "Goryeo",
+    "display_name_ko": "고려"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 949,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 975,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gwangjong was the fourth king of Goryeo and reigned from 949 to 975. His reign is associated with measures such as the slave review law and the civil service examination that strengthened central royal authority. ATLAS records the sovereign reign only."
+  },
+  "sources": [
+    {
+      "title": "광종 — 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0005220",
+      "citation_text": "The Encyclopedia of Korean Culture identifies Gwangjong as Goryeo's fourth king and gives his reign as 949–975.",
+      "source_type": "academic_reference"
+    }
+  ]
+}

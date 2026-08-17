@@ -1,0 +1,36 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gongmin:goryeo:king:1351-1374:v1",
+  "person": {
+    "canonical_name_en": "Gongmin of Goryeo",
+    "display_name_ko": "공민왕"
+  },
+  "polity": {
+    "canonical_name_en": "Goryeo",
+    "display_name_ko": "고려"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1351,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1374,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gongmin was the 31st king of Goryeo and reigned from 1351 until his assassination in 1374. His reign coincided with the Yuan-Ming transition and repeated reform efforts aimed at reducing Yuan influence and strengthening royal authority. ATLAS records the sovereign reign only."
+  },
+  "sources": [
+    {
+      "title": "공민왕 — 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0004295",
+      "citation_text": "The Encyclopedia of Korean Culture identifies Gongmin as Goryeo's 31st king and gives his reign as 1351–1374.",
+      "source_type": "academic_reference"
+    }
+  ]
+}

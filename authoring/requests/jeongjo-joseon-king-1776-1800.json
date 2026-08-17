@@ -1,0 +1,36 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jeongjo:joseon:king:1776-1800:v1",
+  "person": {
+    "canonical_name_en": "Jeongjo of Joseon",
+    "display_name_ko": "정조"
+  },
+  "polity": {
+    "canonical_name_en": "Joseon",
+    "display_name_ko": "조선"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1776,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1800,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Jeongjo was the 22nd king of Joseon and reigned from 1776 to 1800. His reign is associated with the Kyujanggak, institutional and cultural reform, and the construction of Hwaseong. ATLAS records the sovereign reign only."
+  },
+  "sources": [
+    {
+      "title": "정조 — 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0050867",
+      "citation_text": "The Encyclopedia of Korean Culture identifies Jeongjo as Joseon's 22nd king and gives his reign as 1776–1800.",
+      "source_type": "academic_reference"
+    }
+  ]
+}

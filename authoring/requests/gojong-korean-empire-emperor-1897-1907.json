@@ -1,0 +1,42 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gojong-of-korea:korean-empire:emperor:1897-1907:v1",
+  "person": {
+    "canonical_name_en": "Gojong of Korea",
+    "display_name_ko": "고종"
+  },
+  "polity": {
+    "canonical_name_en": "Korean Empire",
+    "display_name_ko": "대한제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1897,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1907,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gojong assumed the imperial title in October 1897 and ruled the Korean Empire until Japan forced his abdication in 1907. ATLAS records this as a separate sovereign Activity from his earlier kingship of Joseon, preserving the real polity and title transition."
+  },
+  "sources": [
+    {
+      "title": "고종 — 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0003939",
+      "citation_text": "The Encyclopedia of Korean Culture identifies Gojong as the first emperor of the Korean Empire and records his rule through forced abdication in 1907.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "국호를 대한으로 하고 임금을 황제로 칭한다고 선포하다 — 조선왕조실록",
+      "canonical_url": "https://sillok.history.go.kr/id/kza_13410013_002",
+      "citation_text": "The Veritable Records for 13 October 1897 record the proclamation of Daehan and the imperial title.",
+      "source_type": "government_web"
+    }
+  ]
+}

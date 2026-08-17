@@ -1,0 +1,36 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:an-jung-geun:korean-empire:independence-activist:1907-1909:v1",
+  "person": {
+    "canonical_name_en": "An Jung-geun",
+    "display_name_ko": "안중근"
+  },
+  "polity": {
+    "canonical_name_en": "Korean Empire",
+    "display_name_ko": "대한제국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Independence Activist",
+    "role_display_name_ko": "독립운동가",
+    "start_year": 1907,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1909,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "An Jung-geun moved from educational and patriotic activism into armed anti-Japanese resistance after the 1907 Korea-Japan agreement, was appointed chief of staff of a Korean righteous-army force in the Russian Far East, commanded operations in 1908, and killed Ito Hirobumi at Harbin in 1909. ATLAS binds this representative independence activity to the Korean Empire as the Korean sovereign polity whose independence he sought to defend. The relation is active_in, not serves: this record does not claim that An held a regular Korean Empire state office or that all activity occurred within its territory."
+  },
+  "sources": [
+    {
+      "title": "안중근 — 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0035026",
+      "citation_text": "The Encyclopedia of Korean Culture records An Jung-geun's 1907 move into organized anti-Japanese resistance, his appointment as Korean righteous-army chief of staff, armed operations in 1908, and the 1909 killing of Ito Hirobumi at Harbin.",
+      "source_type": "academic_reference"
+    }
+  ]
+}
