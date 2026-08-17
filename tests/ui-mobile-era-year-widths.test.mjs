@@ -3,7 +3,7 @@ import test from 'node:test';
 import fs from 'node:fs';
 
 const geometryCss = fs.readFileSync(new URL('../atlas-person-table-alignment.css', import.meta.url), 'utf8');
-const compatibilityCss = fs.readFileSync(new URL('../atlas-person-mobile-column-widths.css', import.meta.url), 'utf8');
+const tableCss = fs.readFileSync(new URL('../atlas-person-table-view.css', import.meta.url), 'utf8');
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 
 test('canonical geometry contract owns the effective mobile table widths', () => {
@@ -28,17 +28,23 @@ test('canonical geometry contract owns Activity subcolumns and mobile polity typ
   assert.match(geometryCss, /@media \(max-width: 760px\)[\s\S]*\.person-table-activities \.person-card-activity-head b\s*\{[^}]*font-size:\s*13px/s);
 });
 
-test('legacy mobile width asset is declaration-free during compatibility retirement', () => {
-  assert.doesNotMatch(compatibilityCss, /--era-band-width|--person-data-columns|grid-template-columns|min-width\s*:|font-size\s*:|white-space\s*:/);
+test('presentation stylesheet no longer carries fallback table geometry', () => {
+  assert.doesNotMatch(tableCss, /--era-band-width\s*:/);
+  assert.doesNotMatch(tableCss, /grid-template-columns\s*:/);
+  for (const staleWidth of ['998px', '940px', '770px', '724px', '733px', '691px']) {
+    assert.doesNotMatch(tableCss, new RegExp(`min-width:${staleWidth.replace('.', '\\.')}`));
+  }
 });
 
-test('canonical geometry contract loads after the base table and compatibility asset', () => {
-  const base = 'atlas-person-table-view.css?v=20260816-era-band-v1';
-  const compatibility = 'atlas-person-mobile-column-widths.css?v=20260816-mobile-widths-v2';
-  const geometry = 'atlas-person-table-alignment.css?v=20260816-table-alignment-v1';
+test('legacy mobile width asset is fully retired', () => {
+  assert.equal(fs.existsSync(new URL('../atlas-person-mobile-column-widths.css', import.meta.url)), false);
+  assert.doesNotMatch(html, /atlas-person-mobile-column-widths\.css/);
+});
+
+test('canonical geometry contract loads after the base table with fresh cache keys', () => {
+  const base = 'atlas-person-table-view.css?v=20260817-era-band-r2';
+  const geometry = 'atlas-person-table-alignment.css?v=20260817-table-geometry-r2';
   assert.ok(html.includes(base));
-  assert.ok(html.includes(compatibility));
   assert.ok(html.includes(geometry));
-  assert.ok(html.indexOf(base) < html.indexOf(compatibility));
-  assert.ok(html.indexOf(compatibility) < html.indexOf(geometry));
+  assert.ok(html.indexOf(base) < html.indexOf(geometry));
 });
