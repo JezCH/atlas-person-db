@@ -17,7 +17,7 @@
   let selectedPersonId = null;
   let query = "";
   let sortOrder = "start-asc";
-  let facetFilters = { polity_id: "", relation_type_id: "", role_id: "", period_basis_id: "" };
+  let facetFilters = { polity_id: "" };
   let requestSerial = 0;
 
   function escapeHtml(value) {
@@ -120,37 +120,51 @@
 
   function groupSection({ title, description, rows, kind }) {
     return `<section class="person-group person-group-${escapeHtml(kind)}" aria-labelledby="person-group-${escapeHtml(kind)}-title">
-      <header class="person-group-head"><div><p class="eyebrow">${kind === "historical" ? "HISTORICAL PERSONS" : "OTHER / UNCERTAIN HISTORICITY"}</p><h2 id="person-group-${escapeHtml(kind)}-title">${escapeHtml(title)}</h2><p>${escapeHtml(description)}</p></div><strong>${rows.length}명</strong></header>
+      <header class="person-group-head"><div><p class="eyebrow">${kind === "historical" ? "HISTORICAL PERSONS" : "OTHER / UNCERTAIN HISTORICITY"}</p><h2 id="person-group-${escapeHtml(kind)}-title">${escapeHtml(title)}</h2><p>${escapeHtml(description)}</p></div></header>
       <div class="person-card-grid">${rows.length ? rows.map(personCard).join("") : '<p class="person-empty-state">현재 조건에 해당하는 인물이 없습니다.</p>'}</div>
     </section>`;
   }
 
-  function activeFacetCount() {
-    return Object.values(facetFilters).filter(Boolean).length;
+  function facetLabel(item) {
+    return String(item?.display_name || item?.preferred_name_ko || item?.canonical_name_en || item?.source_label || item?.code || item?.id || "");
   }
 
-  function updateFilterToggle() {
-    const button = document.getElementById("personMainFilterToggle");
-    if (!button) return;
-    const active = activeFacetCount();
-    button.textContent = active ? `필터 ${active}` : "필터";
-    button.classList.toggle("has-active-filter", active > 0);
+  function polityOptions() {
+    return (facetCatalog.polities || [])
+      .map((item) => ({ id: String(item?.id || "").trim(), label: facetLabel(item) }))
+      .filter((item) => item.id && item.label);
   }
 
-  function notifyPersonRender(shown) {
+  function visiblePolityCount(rows) {
+    if (facetFilters.polity_id) return rows.length ? 1 : 0;
+    const ids = new Set();
+    for (const person of rows) {
+      for (const value of person?.facets?.polities || []) {
+        const id = String(value || "").trim();
+        if (id) ids.add(id);
+      }
+    }
+    return ids.size;
+  }
+
+  function notifyPersonRender({ shown, polityCount }) {
     window.dispatchEvent(new CustomEvent("atlas-person-main-rendered", {
-      detail: { visibleCount: shown, query, activeFacetCount: activeFacetCount() }
+      detail: {
+        visibleCount: shown,
+        visiblePolityCount: polityCount,
+        query,
+        selectedPolityId: facetFilters.polity_id,
+        polityOptions: polityOptions()
+      }
     }));
   }
 
   function renderGroups() {
     const list = document.getElementById("personMainGroups");
-    const summary = document.getElementById("personMainSummary");
-    if (!list || !summary) return 0;
+    if (!list) return 0;
     const groups = reader.preparePersonGroups(persons, { query, sortOrder, facetFilters });
-    const shown = groups.historical.length + groups.other_or_uncertain.length;
-    const active = activeFacetCount();
-    summary.innerHTML = `<strong>${shown}명 표시</strong><span>전체 ${persons.length}명 · historicity 값 ${groups.observed_historicity_values.length}종${active ? ` · semantic filter ${active}개` : ""}</span>`;
+    const rows = [...groups.historical, ...groups.other_or_uncertain];
+    const shown = rows.length;
     list.innerHTML = [
       groupSection({
         title: "역사 인물",
@@ -165,9 +179,18 @@
         kind: "other"
       })
     ].join("");
-    updateFilterToggle();
-    notifyPersonRender(shown);
+    notifyPersonRender({ shown, polityCount: visiblePolityCount(rows) });
     return shown;
+  }
+
+  function setPolityFilter(value) {
+    const requested = String(value || "").trim();
+    const valid = !requested || polityOptions().some((item) => item.id === requested);
+    const next = valid ? requested : "";
+    if (facetFilters.polity_id === next) return false;
+    facetFilters = { polity_id: next };
+    renderGroups();
+    return true;
   }
 
   function namesHtml(names) {
@@ -242,62 +265,19 @@
     }
   }
 
-  function facetLabel(item) {
-    return String(item?.display_name || item?.preferred_name_ko || item?.canonical_name_en || item?.source_label || item?.code || item?.id || "");
-  }
-
-  function fillFacetSelect(id, items, allLabel, stateKey) {
-    const select = document.getElementById(id);
-    if (!select) return;
-    const selected = facetFilters[stateKey] || "";
-    select.replaceChildren();
-    const all = document.createElement("option");
-    all.value = "";
-    all.textContent = allLabel;
-    select.append(all);
-    for (const item of items || []) {
-      const option = document.createElement("option");
-      option.value = String(item.id);
-      option.textContent = facetLabel(item);
-      select.append(option);
-    }
-    const stillValid = !selected || [...select.options].some((option) => option.value === selected);
-    facetFilters[stateKey] = stillValid ? selected : "";
-    select.value = facetFilters[stateKey];
-  }
-
-  function renderFacetControls() {
-    fillFacetSelect("personMainPolityFilter", facetCatalog.polities, "모든 정치체", "polity_id");
-    fillFacetSelect("personMainRelationFilter", facetCatalog.relations, "모든 관계", "relation_type_id");
-    fillFacetSelect("personMainRoleFilter", facetCatalog.roles, "모든 역할", "role_id");
-    fillFacetSelect("personMainBasisFilter", facetCatalog.period_bases, "모든 기간 기준", "period_basis_id");
-    updateFilterToggle();
-  }
-
   async function loadPersons({ keepSelection = true } = {}) {
-    const status = document.getElementById("personMainStatus");
     const groups = document.getElementById("personMainGroups");
-    if (status) {
-      status.textContent = "Person 조회 중";
-      status.dataset.state = "loading";
-    }
     try {
       const result = await reader.listPersons();
       persons = result.persons.slice();
       facetCatalog = result.facet_catalog || reader.facetCatalog(persons);
-      renderFacetControls();
-      if (status) {
-        status.textContent = `Person ${persons.length}명`;
-        status.dataset.state = "ready";
+      if (facetFilters.polity_id && !polityOptions().some((item) => item.id === facetFilters.polity_id)) {
+        facetFilters = { polity_id: "" };
       }
       if (!keepSelection || !persons.some((person) => person.id === selectedPersonId)) selectedPersonId = null;
       renderGroups();
       if (selectedPersonId) await selectPerson(selectedPersonId, { force: true });
     } catch (error) {
-      if (status) {
-        status.textContent = "Person 조회 실패";
-        status.dataset.state = "error";
-      }
       if (groups) groups.innerHTML = `<p class="person-empty-state is-error">Person 목록 조회 실패: ${escapeHtml(error?.code || error?.message || "unknown")}</p>`;
     }
   }
@@ -423,7 +403,7 @@
     const personView = document.createElement("section");
     personView.id = "personMainView";
     personView.className = "person-main-view";
-    personView.innerHTML = `<section class="person-main-toolbar card"><div class="person-main-toolbar-heading"><p class="eyebrow">AUTHORITATIVE PERSON READ</p><h2>인물 목록</h2><p>역사성 분류와 연대 확실성을 분리해 표시합니다.</p></div><div class="person-main-actions" aria-label="Person 운영 도구"><button id="personMainAdd" class="btn btn-primary" type="button">+ 관계 추가</button><button id="personMainRefresh" class="btn" type="button">↻ 새로고침</button><button id="personMainFilterToggle" class="btn person-main-filter-toggle" type="button" aria-controls="personMainFilters" aria-expanded="false">필터</button><div class="person-main-more"><button id="personMainMoreButton" class="btn" type="button" aria-controls="personMainMoreMenu" aria-expanded="false">⋯ 더보기</button><div id="personMainMoreMenu" class="person-main-more-menu" hidden><button type="button" data-person-main-action="export">엑셀 내보내기</button><button type="button" data-person-main-action="import">엑셀 불러오기</button><a href="./admin.html">관리자 페이지</a><button type="button" data-person-main-action="legacy-tools">전체 관계 편집표</button></div></div></div><div class="person-main-controls"><input id="personMainSearch" type="search" autocomplete="off" placeholder="인물·정치체·관계·역할·기간·비고 검색" /><select id="personMainSort" aria-label="Person 정렬"><option value="start-asc">활동연도 ↑ 과거→현재</option><option value="start-desc">활동연도 ↓ 현재→과거</option></select></div><div id="personMainFilters" class="person-main-filters" role="group" aria-label="Activity semantic filters"><select id="personMainPolityFilter" aria-label="정치체 필터"><option value="">모든 정치체</option></select><select id="personMainRelationFilter" aria-label="관계 필터"><option value="">모든 관계</option></select><select id="personMainRoleFilter" aria-label="역할 필터"><option value="">모든 역할</option></select><select id="personMainBasisFilter" aria-label="기간 기준 필터"><option value="">모든 기간 기준</option></select><button id="personMainClearFilters" class="btn" type="button">필터 초기화</button></div><div id="personMainSummary" class="person-main-summary"></div><span id="personMainStatus" class="person-main-status">초기화</span></section>
+    personView.innerHTML = `<section class="person-main-toolbar card"><div class="person-main-toolbar-heading"><p class="eyebrow">AUTHORITATIVE PERSON READ</p><h2>인물 목록</h2><p>역사성 분류와 연대 확실성을 분리해 표시합니다.</p></div><div class="person-main-actions" aria-label="Person 운영 도구"><button id="personMainAdd" class="btn btn-primary" type="button">+ 관계 추가</button><button id="personMainRefresh" class="btn" type="button">↻ 새로고침</button><div class="person-main-more"><button id="personMainMoreButton" class="btn" type="button" aria-controls="personMainMoreMenu" aria-expanded="false">⋯ 더보기</button><div id="personMainMoreMenu" class="person-main-more-menu" hidden><button type="button" data-person-main-action="export">엑셀 내보내기</button><button type="button" data-person-main-action="import">엑셀 불러오기</button><a href="./admin.html">관리자 페이지</a><button type="button" data-person-main-action="legacy-tools">전체 관계 편집표</button></div></div></div><div class="person-main-controls"><input id="personMainSearch" type="search" autocomplete="off" placeholder="인물·정치체·관계·역할·기간·비고 검색" /><select id="personMainSort" aria-label="Person 정렬"><option value="start-asc">활동연도 ↑ 과거→현재</option><option value="start-desc">활동연도 ↓ 현재→과거</option></select></div></section>
       <div class="person-main-layout"><div id="personMainGroups" class="person-main-groups"></div><aside id="personMainDetail" class="person-main-detail card" aria-live="polite"><p class="person-detail-placeholder">왼쪽에서 인물을 선택하면 이름·설명·출처와 모든 Activity 의미를 확인할 수 있습니다.</p></aside></div>`;
 
     const authoringTools = document.createElement("details");
@@ -440,19 +420,10 @@
     const sort = document.getElementById("personMainSort");
     const add = document.getElementById("personMainAdd");
     const refresh = document.getElementById("personMainRefresh");
-    const filterToggle = document.getElementById("personMainFilterToggle");
-    const filters = document.getElementById("personMainFilters");
     const moreButton = document.getElementById("personMainMoreButton");
     const moreMenu = document.getElementById("personMainMoreMenu");
-    const clearFilters = document.getElementById("personMainClearFilters");
     const groups = document.getElementById("personMainGroups");
     const detail = document.getElementById("personMainDetail");
-    const facetBindings = [
-      ["personMainPolityFilter", "polity_id"],
-      ["personMainRelationFilter", "relation_type_id"],
-      ["personMainRoleFilter", "role_id"],
-      ["personMainBasisFilter", "period_basis_id"]
-    ];
 
     search?.addEventListener("input", () => {
       query = search.value;
@@ -462,24 +433,8 @@
       sortOrder = sort.value === "start-desc" ? "start-desc" : "start-asc";
       renderGroups();
     });
-    for (const [id, stateKey] of facetBindings) {
-      document.getElementById(id)?.addEventListener("change", (event) => {
-        facetFilters = { ...facetFilters, [stateKey]: event.currentTarget.value };
-        renderGroups();
-      });
-    }
-    clearFilters?.addEventListener("click", () => {
-      facetFilters = { polity_id: "", relation_type_id: "", role_id: "", period_basis_id: "" };
-      renderFacetControls();
-      renderGroups();
-    });
     add?.addEventListener("click", openLegacyCreate);
     refresh?.addEventListener("click", () => loadPersons({ keepSelection: true }));
-    filterToggle?.addEventListener("click", () => {
-      const open = !filters?.classList.contains("is-open");
-      filters?.classList.toggle("is-open", open);
-      filterToggle.setAttribute("aria-expanded", String(open));
-    });
     moreButton?.addEventListener("click", (event) => {
       event.stopPropagation();
       setMoreMenu(moreMenu?.hidden !== false);
@@ -508,6 +463,9 @@
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") setMoreMenu(false);
     });
+    window.addEventListener("atlas-person-polity-filter-change", (event) => {
+      setPolityFilter(event?.detail?.polityId);
+    });
   }
 
   installShell();
@@ -517,6 +475,9 @@
     loadPersons,
     selectPerson,
     renderGroups,
+    setPolityFilter,
+    getPolityFilter: () => facetFilters.polity_id,
+    getPolityOptions: polityOptions,
     yearLabel,
     boundaryLabel,
     safeHttpUrl,
