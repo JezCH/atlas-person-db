@@ -171,6 +171,6 @@ test('batch operation is GitHub OIDC only', async () => {
       requests:[{}]
     }
   },res);
-  assert.equal(res.statusCode,400);
+  assert.equal(res.statusCode,401);
   assert.equal(JSON.parse(res.body).code,'HUMAN_AUTHORING_BATCH_GITHUB_OIDC_REQUIRED');
 });
