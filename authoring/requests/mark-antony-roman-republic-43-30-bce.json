@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mark-antony:roman-republic:triumvir:43-30-bce:v1",
+  "person": {
+    "canonical_name_en": "Mark Antony",
+    "display_name_ko": "마르쿠스 안토니우스"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Republic",
+    "display_name_ko": "로마 공화정"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Triumvir",
+    "role_display_name_ko": "삼두정치 위원",
+    "start_year": -43,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -30,
+    "end_month": 8,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mark Antony (Marcus Antonius) became one of the legally constituted triumviri rei publicae constituendae with Octavian and Lepidus in 43 BCE. Oxford notes that the triumvirs exercised supreme emergency authority over the Roman Republic and that Antony continued using the triumviral title until his death; after Philippi he became the virtual ruler of the eastern Roman world for roughly a decade. Following defeat by Octavian at Actium and Alexandria, he died by suicide on 1 August 30 BCE. ATLAS therefore models one Roman Republic governs + de_facto_rule Activity from 43 to 30 BCE rather than treating Antony as an Egyptian king or creating a separate sovereign eastern empire."
+  },
+  "sources": [
+    {
+      "title": "Antonius, Marcus (2), Roman consul and triumvir, 83–30 BCE — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548072126",
+      "citation_text": "Oxford identifies Marcus Antonius as a triumvir from 43 BCE, describes him as virtual ruler of the eastern Roman empire for the following decade, and records his suicide on 1 August 30 BCE.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "triumviri — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548206294",
+      "citation_text": "Oxford explains that the Second Triumvirate was created by the lex Titia in 43 BCE and exercised supreme emergency authority above ordinary republican magistrates; Antony used the title until his death in 30 BCE.",
+      "source_type": "academic_reference"
+    }
+  ]
+}
