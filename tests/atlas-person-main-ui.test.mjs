@@ -42,9 +42,10 @@ test('Person Main owns only Polity filter state and delegates its control surfac
   assert.doesNotMatch(renderGroupsBody, /readPerson\(/);
 });
 
-test('Person search is rendered left of Polity in the persistent era toolbar', () => {
+test('Person search is rendered left of Polity while current-result status sits beside era status', () => {
   assert.match(nav, /search\.id = "personMainSearch"/);
-  assert.match(nav, /controls\.append\(search, select, summary\)/);
+  assert.match(nav, /intro\.append\(title, status, summary\)/);
+  assert.match(nav, /controls\.append\(search, select\)/);
   assert.match(nav, /atlas-person-search-change/);
   assert.match(main, /function setSearchQuery/);
   assert.match(main, /window\.addEventListener\("atlas-person-search-change"/);
@@ -59,6 +60,14 @@ test('Person Main emits one current-result Person and Polity status contract', (
   assert.match(main, /visiblePolityCount: polityCount/);
   assert.doesNotMatch(main, /<strong>\$\{rows\.length\}명<\/strong>/);
   assert.doesNotMatch(html, /atlas-person-summary-counts\.js/);
+});
+
+test('current-result Polity count uses authoritative facet IDs instead of stringifying facet objects', () => {
+  assert.match(main, /function polityFacetId\(value\)/);
+  assert.match(main, /typeof value === "object"/);
+  assert.match(main, /String\(value\.id \|\| ""\)\.trim\(\)/);
+  assert.match(main, /const id = polityFacetId\(value\)/);
+  assert.doesNotMatch(main, /if \(facetFilters\.polity_id\) return rows\.length \? 1 : 0/);
 });
 
 test('Person detail renders readable names, descriptions, Person sources and complete Activity meaning', () => {
