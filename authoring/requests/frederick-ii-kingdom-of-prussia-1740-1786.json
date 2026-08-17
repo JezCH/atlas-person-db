@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:frederick-ii-of-prussia:kingdom-of-prussia:king:1740-1786:v1",
+  "person": {
+    "canonical_name_en": "Frederick II of Prussia",
+    "display_name_ko": "프리드리히 2세 대왕"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Prussia",
+    "display_name_ko": "프로이센 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1740,
+    "start_month": 5,
+    "start_day": 31,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1786,
+    "end_month": 8,
+    "end_day": 17,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Frederick II, known as Frederick the Great, succeeded Frederick William I on 31 May 1740 and ruled Prussia until his death on 17 August 1786. ATLAS binds him to the Kingdom of Prussia rather than a generic Germany polity. His titulature was technically King in Prussia until 1772 and King of Prussia thereafter; the normalized role remains King for the continuous sovereign reign."
+  },
+  "sources": [
+    {
+      "title": "Fürstenmacht und Allianzen in Europa — Deutsches Historisches Museum",
+      "canonical_url": "https://www.dhm.de/ausstellungen/dauerausstellung/fuerstenmacht-und-allianzen-in-europa/",
+      "citation_text": "The Deutsches Historisches Museum identifies Friedrich II as King of Prussia from 1740 to 1786 and notes that he succeeded his father in 1740.",
+      "source_type": "museum_research"
+    },
+    {
+      "title": "Frederick the Great — University of Oxford",
+      "canonical_url": "https://frederick.mml.ox.ac.uk/history",
+      "citation_text": "The University of Oxford Frederick the Great project identifies Frederick II as King of Prussia from 1740 to 1786 and notes the technical titulature King in Prussia until 1772.",
+      "source_type": "academic_reference"
+    }
+  ]
+}
