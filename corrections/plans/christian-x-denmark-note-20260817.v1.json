@@ -1,0 +1,79 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "christian_x_denmark_note_20260817_v1",
+  "as_of": "2026-08-17",
+  "status": "REVIEWED_POST_SPLIT_NOTE_CORRECTION",
+  "release_order": 543,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "docs/audits/MULTI_POLITY_ACTIVITY_SPLIT_2026-08-17.md",
+  "baseline": {
+    "deployment_sha": "9a57b0edc3bcfcf62624db60b3be25f243d00a3d",
+    "baseline_digest": "sha256:61dbe69b973cea5d02d3ef1c8ebe7123b5094674e46d319692ad665a6b0e8c22"
+  },
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "semantic_identity_change_forbidden": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "christian_x_denmark_note_after_iceland_split",
+      "type": "rewrite_activity",
+      "activity_id": "c8b783cb-e235-427a-b217-470f0f5fafb2",
+      "baseline_before": {
+        "person_id": "bf004b79-b184-4ba6-b38a-66b3d1ce69f5",
+        "polity_id": "c117fb82-4943-40d6-bc2d-740f0665665a",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1912,
+        "activity_end": 1947,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "c8b783cb-e235-427a-b217-470f0f5fafb2",
+        "person_id": "bf004b79-b184-4ba6-b38a-66b3d1ce69f5",
+        "polity_id": "c117fb82-4943-40d6-bc2d-740f0665665a",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1912,
+        "activity_end": 1947,
+        "activity_start_detail": {
+          "year": 1912,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1947,
+          "month": 4,
+          "day": 20,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Christian X became King of Denmark in 1912 and reigned until his death on 20 April 1947. His distinct kingship of Iceland from 1918 to 1944 is recorded as a separate Iceland Activity.",
+        "add_source_links": []
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "production_mutation_authorized": false
+  }
+}
