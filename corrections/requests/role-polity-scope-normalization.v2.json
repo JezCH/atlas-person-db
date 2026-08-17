@@ -1,0 +1,161 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "role-scope-normalization:polity-qualifiers:v1",
+  "release_order": 501,
+  "evidence": {
+    "decision": "Role stores reusable office/function/title semantics, not the target Polity identity. Redundant polity-qualified Roles are rebound to generic Roles. If one Person rules multiple distinct Polities, those bindings must be represented as separate Activities rather than encoded inside one Role label."
+  },
+  "operations": [
+    {
+      "type": "merge_role_polity_qualifier",
+      "case_id": "role-scope:solomon-israel",
+      "review_reason": "POLITY_SCOPE_REDUNDANT_IN_ROLE",
+      "expected_keep_role": {
+        "id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "code": "legacy_13166b63aaa73022",
+        "category": "legacy_free_text",
+        "source_label": "King",
+        "is_active": true
+      },
+      "expected_drop_role": {
+        "id": "8bf8e59b-8f84-559e-b49d-4f8133a480c7",
+        "code": "legacy_bfe0da960bae8a98",
+        "category": "legacy_free_text",
+        "source_label": "King of Israel",
+        "is_active": true
+      },
+      "expected_keep_names": [
+        {"id": "39c89350-a025-4047-9bdd-4e5a18ac59e8", "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3", "locale": "ko", "name": "왕", "is_preferred": true},
+        {"id": "76a60d9b-106e-532e-97ca-2b0442f33aa3", "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3", "locale": "en", "name": "King", "is_preferred": true}
+      ],
+      "expected_drop_names": [
+        {"id": "2f0c4811-c26c-4231-973f-3476f2828c47", "role_id": "8bf8e59b-8f84-559e-b49d-4f8133a480c7", "locale": "ko", "name": "이스라엘 왕", "is_preferred": true},
+        {"id": "e3ac3acd-7004-5929-82ca-dcdef6b68758", "role_id": "8bf8e59b-8f84-559e-b49d-4f8133a480c7", "locale": "en", "name": "King of Israel", "is_preferred": true}
+      ],
+      "affected_activity_bindings": [
+        {"activity_id": "5e503b05-371c-5dcb-91ec-68b6d0eef95c", "polity_id": "89509d8c-67a9-54aa-bf30-a3c49b150ac1"}
+      ]
+    },
+    {
+      "type": "merge_role_polity_qualifier",
+      "case_id": "role-scope:gwanggaeto-goguryeo",
+      "review_reason": "POLITY_SCOPE_REDUNDANT_IN_ROLE",
+      "expected_keep_role": {
+        "id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "code": "legacy_13166b63aaa73022",
+        "category": "legacy_free_text",
+        "source_label": "King",
+        "is_active": true
+      },
+      "expected_drop_role": {
+        "id": "aeb3c7dd-3d82-5cae-8e36-bfc2117849c8",
+        "code": "legacy_589413137a7b6f6b",
+        "category": "legacy_free_text",
+        "source_label": "King of Goguryeo",
+        "is_active": true
+      },
+      "expected_keep_names": [
+        {"id": "39c89350-a025-4047-9bdd-4e5a18ac59e8", "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3", "locale": "ko", "name": "왕", "is_preferred": true},
+        {"id": "76a60d9b-106e-532e-97ca-2b0442f33aa3", "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3", "locale": "en", "name": "King", "is_preferred": true}
+      ],
+      "expected_drop_names": [
+        {"id": "6aa258d5-0f47-59c1-adf9-e632f9374a48", "role_id": "aeb3c7dd-3d82-5cae-8e36-bfc2117849c8", "locale": "en", "name": "King of Goguryeo", "is_preferred": true},
+        {"id": "9de8f4fa-48e1-4a43-800d-9f6cf6976662", "role_id": "aeb3c7dd-3d82-5cae-8e36-bfc2117849c8", "locale": "ko", "name": "고구려왕", "is_preferred": true}
+      ],
+      "affected_activity_bindings": [
+        {"activity_id": "eda91173-ac7b-5246-9458-45dc58e241a7", "polity_id": "f0450e38-c5d8-579b-92ec-1e08434355b6"}
+      ]
+    },
+    {
+      "type": "merge_role_polity_qualifier",
+      "case_id": "role-scope:jadwiga-poland",
+      "review_reason": "POLITY_SCOPE_REDUNDANT_IN_ROLE",
+      "expected_keep_role": {
+        "id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "code": "legacy_13166b63aaa73022",
+        "category": "legacy_free_text",
+        "source_label": "King",
+        "is_active": true
+      },
+      "expected_drop_role": {
+        "id": "33e96671-a427-565c-acff-23fb55cf965f",
+        "code": "legacy_32b144b43a019b49",
+        "category": "legacy_free_text",
+        "source_label": "King of Poland",
+        "is_active": true
+      },
+      "expected_keep_names": [
+        {"id": "39c89350-a025-4047-9bdd-4e5a18ac59e8", "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3", "locale": "ko", "name": "왕", "is_preferred": true},
+        {"id": "76a60d9b-106e-532e-97ca-2b0442f33aa3", "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3", "locale": "en", "name": "King", "is_preferred": true}
+      ],
+      "expected_drop_names": [
+        {"id": "5ac16186-701e-5377-9497-36e840463fac", "role_id": "33e96671-a427-565c-acff-23fb55cf965f", "locale": "en", "name": "King of Poland", "is_preferred": true},
+        {"id": "c8c17102-2dcb-49b6-9b9f-a66dd2dcf99a", "role_id": "33e96671-a427-565c-acff-23fb55cf965f", "locale": "ko", "name": "폴란드 왕", "is_preferred": true}
+      ],
+      "affected_activity_bindings": [
+        {"activity_id": "3a774989-0cfa-5a7d-8510-646462ae90bc", "polity_id": "97b7e996-cb8f-5527-b171-6ea28d9991d3"}
+      ]
+    },
+    {
+      "type": "merge_role_polity_qualifier",
+      "case_id": "role-scope:charles-v-hre",
+      "review_reason": "POLITY_SCOPE_REDUNDANT_IN_ROLE",
+      "expected_keep_role": {
+        "id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "code": "legacy_bd8349be6df7fdb0",
+        "category": "legacy_free_text",
+        "source_label": "Emperor",
+        "is_active": true
+      },
+      "expected_drop_role": {
+        "id": "3557a0e6-70a3-59fa-9df9-372eb79b943e",
+        "code": "legacy_377dc79fdc8f182e",
+        "category": "legacy_free_text",
+        "source_label": "Holy Roman Emperor",
+        "is_active": true
+      },
+      "expected_keep_names": [
+        {"id": "0efb2824-585d-573c-8f38-d67d6f89c9d8", "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e", "locale": "en", "name": "Emperor", "is_preferred": true},
+        {"id": "7df25771-ccf7-4391-b34e-4fe8d2c9d818", "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e", "locale": "ko", "name": "황제", "is_preferred": true}
+      ],
+      "expected_drop_names": [
+        {"id": "01b6ee7d-b5ca-470e-99ca-47ab8d8488a2", "role_id": "3557a0e6-70a3-59fa-9df9-372eb79b943e", "locale": "ko", "name": "신성 로마 황제", "is_preferred": true},
+        {"id": "c2d5c395-1ff1-599d-b6ab-91a783623cc6", "role_id": "3557a0e6-70a3-59fa-9df9-372eb79b943e", "locale": "en", "name": "Holy Roman Emperor", "is_preferred": true}
+      ],
+      "affected_activity_bindings": [
+        {"activity_id": "16ebebde-e4e4-553d-a520-00da68a276d2", "polity_id": "aefaece0-759c-5bde-b653-6eed173f98f8"}
+      ]
+    },
+    {
+      "type": "merge_role_polity_qualifier",
+      "case_id": "role-scope:leopold-belgium",
+      "review_reason": "POLITY_SCOPE_REDUNDANT_IN_ROLE",
+      "expected_keep_role": {
+        "id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "code": "legacy_13166b63aaa73022",
+        "category": "legacy_free_text",
+        "source_label": "King",
+        "is_active": true
+      },
+      "expected_drop_role": {
+        "id": "9cd191e0-7954-4472-9802-dae516783ece",
+        "code": "king_of_the_belgians",
+        "category": "ruler",
+        "source_label": "King of the Belgians",
+        "is_active": true
+      },
+      "expected_keep_names": [
+        {"id": "39c89350-a025-4047-9bdd-4e5a18ac59e8", "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3", "locale": "ko", "name": "왕", "is_preferred": true},
+        {"id": "76a60d9b-106e-532e-97ca-2b0442f33aa3", "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3", "locale": "en", "name": "King", "is_preferred": true}
+      ],
+      "expected_drop_names": [
+        {"id": "7f4fbcf8-f23e-4d9d-a37b-10da724b0790", "role_id": "9cd191e0-7954-4472-9802-dae516783ece", "locale": "en", "name": "King of the Belgians", "is_preferred": true},
+        {"id": "95108e71-d57f-4607-91f6-387b6bb3a1c9", "role_id": "9cd191e0-7954-4472-9802-dae516783ece", "locale": "ko", "name": "벨기에 국왕", "is_preferred": true}
+      ],
+      "affected_activity_bindings": [
+        {"activity_id": "d047dfcf-c0ee-4fb9-947c-25512eff8e04", "polity_id": "ff5f5bfa-2f12-442c-9621-d2d71c94382f"}
+      ]
+    }
+  ]
+}
