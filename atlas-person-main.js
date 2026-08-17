@@ -135,12 +135,16 @@
       .filter((item) => item.id && item.label);
   }
 
+  function polityFacetId(value) {
+    if (value && typeof value === "object") return String(value.id || "").trim();
+    return String(value || "").trim();
+  }
+
   function visiblePolityCount(rows) {
-    if (facetFilters.polity_id) return rows.length ? 1 : 0;
     const ids = new Set();
     for (const person of rows) {
       for (const value of person?.facets?.polities || []) {
-        const id = String(value || "").trim();
+        const id = polityFacetId(value);
         if (id) ids.add(id);
       }
     }
