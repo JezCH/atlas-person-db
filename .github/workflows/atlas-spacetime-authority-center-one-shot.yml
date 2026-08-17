@@ -1,0 +1,37 @@
+name: ATLAS Spacetime Authority Center One Shot
+
+on:
+  pull_request:
+    paths:
+      - '.tmp/apply-spacetime-authority-center.cjs'
+      - '.github/workflows/atlas-spacetime-authority-center-one-shot.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  compile:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - name: Apply authority-center contract and run focused tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          node .tmp/apply-spacetime-authority-center.cjs
+          node --test tests/person-spacetime-model.test.mjs tests/person-spacetime-spatial-index-coverage.test.mjs
+      - name: Commit generated reviewed implementation
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add atlas-person-spacetime-model.js atlas-person-spacetime-view.js atlas-polity-spatial-index.json tests/person-spacetime-spatial-index-coverage.test.mjs
+          git diff --cached --quiet && { echo 'Nothing to commit.'; exit 0; }
+          git commit -m 'Add reviewed authority-center spacetime fallback'
+          git push origin HEAD:${{ github.head_ref }}
