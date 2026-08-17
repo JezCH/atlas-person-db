@@ -131,8 +131,10 @@
     line-height:1;
     transition:transform .18s ease,color .18s ease;
   }
-  #dataBody tr.selected::after { transform:rotate(90deg); color:var(--primary); }
-  #dataBody tr.selected { border-color:#aeb7ff; box-shadow:0 7px 22px rgba(62,76,170,.12); }
+  #dataBody tr.selected::after,
+  #dataBody tr.mobile-expanded::after { transform:rotate(90deg); color:var(--primary); }
+  #dataBody tr.selected,
+  #dataBody tr.mobile-expanded { border-color:#aeb7ff; box-shadow:0 7px 22px rgba(62,76,170,.12); }
 
   #dataBody td { display:block; position:static; border:0; padding:0; overflow:visible; white-space:normal; text-overflow:clip; background:transparent !important; }
   #dataBody td:nth-child(1) { grid-area:person; padding-right:8px; font-size:19px; font-weight:900; line-height:1.25; }
@@ -153,7 +155,8 @@
   #dataBody .action-buttons { display:grid; grid-template-columns:1fr 1fr; gap:8px; width:100%; }
   #dataBody .mini-btn { min-height:40px; font-size:13px; }
 
-  #dataBody tr.selected td:nth-child(6) {
+  #dataBody tr.selected td:nth-child(6),
+  #dataBody tr.mobile-expanded td:nth-child(6) {
     grid-area:basis;
     display:block;
     margin-top:7px;
@@ -163,7 +166,8 @@
     font-size:12px;
     font-weight:700;
   }
-  #dataBody tr.selected td:nth-child(6)::before { content:"기간 기준  " !important; display:inline !important; color:#8992a1; font-weight:800; }
+  #dataBody tr.selected td:nth-child(6)::before,
+  #dataBody tr.mobile-expanded td:nth-child(6)::before { content:"기간 기준  " !important; display:inline !important; color:#8992a1; font-weight:800; }
 
   .detail-panel { display:none; }
 
