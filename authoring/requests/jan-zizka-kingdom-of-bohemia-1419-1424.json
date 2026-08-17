@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jan-zizka:kingdom-of-bohemia:1419-1424:v1",
+  "person": {
+    "canonical_name_en": "Jan Žižka",
+    "display_name_ko": "얀 지슈카"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Bohemia",
+    "display_name_ko": "보헤미아 왕국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Hussite Military Leader",
+    "role_display_name_ko": "후스파 군사지도자",
+    "start_year": 1419,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1424,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Jan Žižka emerged as a leading Hussite military figure in Bohemia in 1419 and remained an active commander until his death in 1424. He led the Taborites and other Hussite forces in the civil and crusading wars within the Kingdom of Bohemia, but he was not a conventional royal officeholder serving the Bohemian crown. ATLAS therefore links him to the Kingdom of Bohemia with active_in + military_activity rather than a misleading formal service relation."
+  },
+  "sources": [
+    {
+      "title": "Stálá expozice — Památník Jana Žižky z Trocnova, Jihočeské muzeum",
+      "canonical_url": "https://www.muzeumcb.cz/jihoceske-muzeum/stala-expozice-1/",
+      "citation_text": "The South Bohemian Museum's Jan Žižka memorial presents Žižka as a major military commander of the Hussite period and documents his campaigns and tactics in Bohemia.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Žižka, John — Encyclopaedia Britannica, 1911",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/%C5%BDi%C5%BEka,_John",
+      "citation_text": "The Britannica entry describes Žižka as a Bohemian general and Hussite leader, traces his prominence from the Hussite rising of 1419, and records his death in 1424.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

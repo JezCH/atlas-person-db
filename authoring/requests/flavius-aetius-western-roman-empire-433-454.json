@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:flavius-aetius:western-roman-empire:433-454:v1",
+  "person": {
+    "canonical_name_en": "Flavius Aetius",
+    "display_name_ko": "플라비우스 아이티우스"
+  },
+  "polity": {
+    "canonical_name_en": "Western Roman Empire",
+    "display_name_ko": "서로마 제국"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Magister Militum",
+    "role_display_name_ko": "군사총사령관",
+    "start_year": 433,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 454,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Flavius Aetius returned to supreme military power in the Western Roman Empire in 433 and remained the empire's dominant general until his assassination by Valentinian III in 454. Oxford characterizes him as a Roman patrician and general who effectively ruled the western Empire from about 432 to 454; specialist scholarship identifies 433–454 as the period of his generalissimo-level power. ATLAS therefore records his principal representative Activity as service to the Western Roman Empire as Magister Militum from 433 to 454, rather than treating him as a formal sovereign."
+  },
+  "sources": [
+    {
+      "title": "Aetius, Flavius, d. 454 CE — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548070885",
+      "citation_text": "The Oxford Classical Dictionary identifies Flavius Aetius as Roman patrician and general and describes him as the effective ruler of the western Empire from about 432 until his assassination in 454.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Le numéro deux dans l’empire romain tardif (289-476) — Presses universitaires de Rennes",
+      "canonical_url": "https://books.openedition.org/pur/235162?lang=fr",
+      "citation_text": "Presses universitaires de Rennes describes Aetius as the western magister militum/generalissimo whose power dominated the Western Empire in the period 433–454.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
