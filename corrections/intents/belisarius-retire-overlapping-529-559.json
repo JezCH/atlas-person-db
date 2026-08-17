@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:belisarius:retire-overlapping-529-559:20260817:v1",
+  "review_status": "approved",
+  "release_order": 100,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "c4b51c64-f8bf-4bf7-a077-29a270a690ea"
+  },
+  "evidence": {
+    "reason": "Production normalized read after the ancient-medieval authoring batch shows two active Belisarius Activities for the same Person, Byzantine Empire polity, General role, and military_activity basis. Preserve the pre-existing broader Activity 42b31007-4727-5a37-a033-4beaa1835bca (527–565) and retire only the narrower overlapping Activity c4b51c64-f8bf-4bf7-a077-29a270a690ea (529–559) created by the later batch. No historical replacement Activity is required.",
+    "survivor_activity_id": "42b31007-4727-5a37-a033-4beaa1835bca",
+    "retire_activity_id": "c4b51c64-f8bf-4bf7-a077-29a270a690ea",
+    "source_authoring_merge_sha": "4d2a68689fbc3309dbff322a94eb5ed6842a48d4"
+  }
+}
