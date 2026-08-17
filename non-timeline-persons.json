@@ -44,6 +44,21 @@
     "map_policy": "Do not display on the year timeline unless a separate legendary overlay is enabled."
   },
   {
+    "person_name": "Bjorn Ironside",
+    "politic_name": "Sweden",
+    "display_name_ko": "비요른 아이언사이드",
+    "historicity": "legendary_possible_historical_core",
+    "timeline_status": "excluded",
+    "date_basis": "later_norse_and_danish_legendary_tradition",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "전승상 스웨덴의 왕·바이킹 지도자",
+    "reason": "Bjorn Ironside is portrayed in later Norse and Danish legendary traditions as a son of Ragnar Lodbrok and a ruler associated with Sweden. A ninth-century Viking leader named Berno/Bjorn may preserve a historical core, but the identification is not secure and no reliable personal reign chronology can be established. ATLAS therefore preserves the traditional Sweden association while leaving all timeline years unknown.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
+  },
+  {
     "person_name": "Gilgamesh",
     "politic_name": "Uruk",
     "display_name_ko": "길가메시",
