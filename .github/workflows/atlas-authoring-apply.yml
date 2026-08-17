@@ -254,6 +254,60 @@ jobs:
               "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_AUTHORING_AUDIENCE}" | jq -er '.value'
           }
 
+          mapfile -t manifests < /tmp/atlas-manifests.txt
+          all_human=true
+          for manifest in "${manifests[@]}"; do
+            [[ "$(jq -r '.schema' "$manifest")" == "atlas-human-authoring/v1" ]] || {
+              all_human=false
+              break
+            }
+          done
+
+          if [[ "$all_human" == "true" && "${#manifests[@]}" -gt 0 ]]; then
+            oidc_token="$(request_oidc)"
+            response="/tmp/atlas-authoring-evidence/responses/human-authoring-batch.json"
+            manifest_paths="$(printf '%s\n' "${manifests[@]}" | jq -R . | jq -s .)"
+            requests="$(jq -s '.' "${manifests[@]}")"
+            payload="$(jq -cn \
+              --argjson transport_version "$ATLAS_AUTHORING_TRANSPORT_VERSION" \
+              --arg runtime_sha "$ATLAS_RUNTIME_SHA" \
+              --arg authoring_sha "$GITHUB_SHA" \
+              --argjson manifest_paths "$manifest_paths" \
+              --argjson requests "$requests" \
+              '{operation:"apply_batch",transport_version:$transport_version,runtime_sha:$runtime_sha,authoring_sha:$authoring_sha,manifest_paths:$manifest_paths,requests:$requests}')"
+            status="$(curl --silent --show-error \
+              --output "$response" \
+              --write-out '%{http_code}' \
+              --request POST \
+              -H 'content-type: application/json' \
+              -H "authorization: Bearer ${oidc_token}" \
+              --data "$payload" \
+              "$ATLAS_HUMAN_AUTHORING_ENDPOINT")"
+            if [[ "$status" != "200" ]]; then
+              cat "$response" >&2 || true
+              code="$(jq -r '.code // "UNKNOWN"' "$response" 2>/dev/null || printf 'UNKNOWN')"
+              echo "Human authoring batch apply failed: HTTP ${status}, code ${code}" >&2
+              exit 1
+            fi
+            jq -e --argjson count "${#manifests[@]}" '
+              .ok==true
+              and .auth_method=="github_oidc"
+              and .marker=="ATLAS_HUMAN_AUTHORING_BATCH_V1"
+              and .schema=="atlas-human-authoring-batch/v1"
+              and .committed==true
+              and .count==$count
+              and (.results | type=="array" and length==$count)
+              and all(.results[];
+                .marker=="ATLAS_HUMAN_AUTHORING_V1"
+                and .schema=="atlas-human-authoring/v1"
+                and .committed==true
+                and .result.semantic_version=="v2-relation-full-temporal"
+              )
+            ' "$response" >/dev/null
+            jq . "$response"
+            exit 0
+          fi
+
           while IFS= read -r manifest; do
             [[ -n "$manifest" ]] || continue
             schema="$(jq -r '.schema' "$manifest")"
