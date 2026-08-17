@@ -82,7 +82,7 @@ test('era navigation is sticky, responsive, and uses larger desktop but slightly
 test('era navigation assets load after era grouping/palette and before Person Main initializes', () => {
   const tableJs = 'atlas-person-table-view.js?v=20260816-era-band-v1';
   const navJs = 'atlas-person-era-navigation.js?v=20260817-era-search-toolbar-v2';
-  const mainJs = 'atlas-person-main.js?v=20260817-era-search-toolbar-v2';
+  const mainJs = 'atlas-person-main.js?v=20260817-toolbar-owner-r1';
   const paletteCss = 'atlas-person-era-palette.css?v=20260816-era-palette-v1';
   const navCssAsset = 'atlas-person-era-navigation.css?v=20260817-era-search-toolbar-v3';
   const geometryCss = 'atlas-person-table-alignment.css?v=20260817-table-geometry-r2';
