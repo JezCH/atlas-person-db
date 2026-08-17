@@ -21,8 +21,8 @@
     "end_year": 1999,
     "end_certainty": "exact",
     "end_calendar": "gregorian",
-    "confidence": "well_established",
     "chronology_status": "reviewed",
+    "confidence": "well_established",
     "notes": "Nelson Mandela served as President of South Africa from 10 May 1994 to 16 June 1999. ATLAS records the constitutional presidential term only, rather than extending the Activity backward through his anti-apartheid leadership or forward through his post-presidential public work."
   },
   "sources": [
