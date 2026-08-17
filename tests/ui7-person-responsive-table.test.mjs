@@ -71,5 +71,5 @@ test('UI7 uses one table model on desktop and mobile with sticky Era and Person 
 test('UI7 assets load as a presentation layer before Person Main initializes', () => {
   assert.match(html, /atlas-person-table-view\.css\?v=20260816-era-band-v1/);
   assert.match(html, /atlas-person-table-view\.js\?v=20260816-era-band-v1/);
-  assert.ok(html.indexOf('atlas-person-table-view.js?v=20260816-era-band-v1') < html.indexOf('atlas-person-main.js?v=20260815-ui6r4'));
+  assert.ok(html.indexOf('atlas-person-table-view.js?v=20260816-era-band-v1') < html.indexOf('atlas-person-main.js?v=20260817-era-polity-toolbar-v1'));
 });
