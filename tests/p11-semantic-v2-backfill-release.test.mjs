@@ -11,7 +11,7 @@ const exceptions = JSON.parse(fs.readFileSync(path.join(root, 'stage2/contracts/
 
 test('P11 semantic-v2 backfill release is exact-SHA, dry-run-first, bounded, and non-destructive', () => {
   assert.equal(release.status, 'APPROVED_FOR_EXACT_SHA_PRODUCTION_CORRECTION_WORKFLOW');
-  assert.equal(release.execution_request, 'p11-semantic-v2-backfill-oidc-retry-20260817');
+  assert.equal(release.execution_request, 'p11-semantic-v2-backfill-file-transport-retry-20260817');
   assert.deepEqual(release.expected, {
     semantic_v2_incomplete_before: 301,
     relation_missing_before: 259,
@@ -42,6 +42,9 @@ test('P11 semantic-v2 backfill release is exact-SHA, dry-run-first, bounded, and
   assert.match(workflow, /mode:\"full_stage2_baseline\"/);
   assert.match(workflow, /for mode in dry_run apply/);
   assert.match(workflow, /--chunk-size 100/);
+  assert.equal(workflow.includes('--data-binary "@${payload_file}"'), true);
+  assert.equal(workflow.includes('--data "$payload"'), false);
+  assert.match(workflow, /\/tmp\/atlas-p11-backfill\/requests/);
   assert.match(workflow, /semantic_v2_incomplete == 21/);
   assert.match(workflow, /null_counts\.relation_type_id == 21/);
   assert.doesNotMatch(workflow, /atlas-person-merge/i);
