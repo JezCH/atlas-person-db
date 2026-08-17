@@ -39,7 +39,6 @@ test('historical C8 workflow manifest remains audit evidence while current workf
   assert.deepEqual(workflows, [
     'atlas-audit-inventory.yml',
     'atlas-authoring-apply.yml',
-    'atlas-authoritative-ko-repair.yml',
     'atlas-correction-apply.yml',
     'atlas-human-authoring-operational-parity.yml',
     'atlas-integrity.yml',
@@ -57,17 +56,6 @@ test('historical C8 workflow manifest remains audit evidence while current workf
   assert.match(correctionWorkflow, /^\s*-\s*'corrections\/requests\/\*\.json'\s*$/m);
   assert.doesNotMatch(correctionWorkflow, /public\.person_politics|atlas_person_politics_compat_v1/);
   assert.doesNotMatch(correctionWorkflow, /SUPABASE_DB_URL/);
-
-  const koRepairWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-authoritative-ko-repair.yml', import.meta.url), 'utf8');
-  assert.match(koRepairWorkflow, /^\s*push\s*:/m);
-  assert.match(koRepairWorkflow, /branches:\s*\n\s*- main/);
-  assert.match(koRepairWorkflow, /workflow_dispatch\s*:/m);
-  assert.match(koRepairWorkflow, /environment:\s*production/);
-  assert.match(koRepairWorkflow, /id-token:\s*write/);
-  assert.match(koRepairWorkflow, /atlas-person-db-ko-repair/);
-  assert.match(koRepairWorkflow, /__atlas_correction_surface=authoritative-ko-repair/);
-  assert.match(koRepairWorkflow, /relationship_guard\.unchanged == true/);
-  assert.doesNotMatch(koRepairWorkflow, /SUPABASE_DB_URL|DATABASE_URL/);
 
   const humanOperationalWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-human-authoring-operational-parity.yml', import.meta.url), 'utf8');
   assert.match(humanOperationalWorkflow, /\bpull_request\s*:/m);
