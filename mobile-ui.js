@@ -7,39 +7,6 @@
   const drawer = document.getElementById("mobileDrawer");
   const backdrop = document.getElementById("mobileDrawerBackdrop");
   const dataBody = document.getElementById("dataBody");
-  const desktopSearch = document.getElementById("searchInput");
-  const mobileSearch = document.getElementById("mobileSearchInput");
-  const mobileSearchClear = document.getElementById("mobileSearchClear");
-  const mobileSearchCount = document.getElementById("mobileSearchCount");
-  const rowCount = document.getElementById("rowCount");
-  const emptyState = document.getElementById("emptyState");
-  const toolsButton = document.getElementById("mobileToolsButton");
-  const toolsMenu = document.getElementById("mobileToolsMenu");
-  const exportButton = document.getElementById("exportButton");
-  const importInput = document.getElementById("importInput");
-
-  const normalizeSearchText = (value) => String(value ?? "")
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[’‘`´]/g, "'")
-    .replace(/[‐‑‒–—―]/g, "-")
-    .replace(/[^\p{L}\p{N}]+/gu, " ")
-    .trim()
-    .toLocaleLowerCase("ko-KR");
-
-  const compactSearchText = (value) => normalizeSearchText(value).replace(/\s+/g, "");
-
-  function personMainSearch() {
-    return document.getElementById("personMainSearch");
-  }
-
-  function personMainActive() {
-    return Boolean(document.getElementById("personMainView"));
-  }
-
-  function visiblePersonCount() {
-    return document.querySelectorAll("#personMainGroups .person-card").length;
-  }
 
   function setMenu(open) {
     if (!drawer || !backdrop || !menuButton) return;
@@ -51,147 +18,16 @@
     document.body.classList.toggle("mobile-menu-open", open);
   }
 
-  function setToolsMenu(open) {
-    if (!toolsButton || !toolsMenu) return;
-    toolsMenu.hidden = !open;
-    toolsButton.setAttribute("aria-expanded", String(open));
-  }
-
-  function visibleRowCount() {
-    if (!dataBody) return 0;
-    return [...dataBody.querySelectorAll("tr[data-id]")]
-      .filter((row) => !row.hidden && row.style.display !== "none").length;
-  }
-
-  function updateMobileSearchState(count = null) {
-    if (!mobileSearch) return;
-    const hasValue = mobileSearch.value.trim().length > 0;
-    if (mobileSearchClear) mobileSearchClear.hidden = !hasValue;
-    if (mobileSearchCount) {
-      const value = count ?? (personMainActive() ? visiblePersonCount() : visibleRowCount());
-      mobileSearchCount.textContent = hasValue ? `${value}건` : "";
-    }
-  }
-
-  function filterRenderedRows(query) {
-    if (!dataBody) return 0;
-    const normalizedQuery = normalizeSearchText(query);
-    const compactQuery = compactSearchText(query);
-    const queryTokens = normalizedQuery.split(/\s+/).filter(Boolean);
-    let count = 0;
-
-    dataBody.querySelectorAll("tr[data-id]").forEach((row) => {
-      const renderedText = row.dataset.search || row.textContent || "";
-      const normalizedRow = normalizeSearchText(renderedText);
-      const compactRow = compactSearchText(renderedText);
-      const matched = !normalizedQuery ||
-        (compactQuery && compactRow.includes(compactQuery)) ||
-        (queryTokens.length > 0 && queryTokens.every((token) => normalizedRow.includes(token)));
-      row.hidden = !matched;
-      row.style.display = matched ? "" : "none";
-      if (matched) count += 1;
-    });
-
-    if (rowCount) rowCount.textContent = `${count}개 행`;
-    if (emptyState) emptyState.hidden = count !== 0;
-    return count;
-  }
-
-  function syncMobileSearchToMain() {
-    if (!mobileSearch) return;
-    const query = mobileSearch.value;
-    const personSearch = personMainSearch();
-    if (personSearch) {
-      if (personSearch.value !== query) personSearch.value = query;
-      personSearch.dispatchEvent(new Event("input", { bubbles: true }));
-      updateMobileSearchState(visiblePersonCount());
-      return;
-    }
-    const count = filterRenderedRows(query);
-    if (desktopSearch && desktopSearch.value !== query) desktopSearch.value = query;
-    updateMobileSearchState(count);
-  }
-
-  menuButton?.addEventListener("click", () => {
-    setToolsMenu(false);
-    setMenu(true);
-  });
+  menuButton?.addEventListener("click", () => setMenu(true));
   menuClose?.addEventListener("click", () => setMenu(false));
   backdrop?.addEventListener("click", () => setMenu(false));
 
-  toolsButton?.addEventListener("click", (event) => {
-    event.stopPropagation();
-    setToolsMenu(toolsMenu?.hidden !== false);
-  });
-  toolsMenu?.addEventListener("click", (event) => {
-    const action = event.target.closest("[data-mobile-action]")?.dataset.mobileAction;
-    if (!action) return;
-    setToolsMenu(false);
-    if (action === "export") exportButton?.click();
-    if (action === "import") importInput?.click();
-  });
-  document.addEventListener("click", (event) => {
-    if (!toolsMenu || toolsMenu.hidden) return;
-    if (!event.target.closest("#mobileToolsMenu") && !event.target.closest("#mobileToolsButton")) setToolsMenu(false);
-  });
-
-  mobileSearch?.addEventListener("input", syncMobileSearchToMain);
-  mobileSearchClear?.addEventListener("click", () => {
-    if (!mobileSearch) return;
-    mobileSearch.value = "";
-    syncMobileSearchToMain();
-    mobileSearch.focus();
-  });
-
-  desktopSearch?.addEventListener("input", () => {
-    if (!mobileSearch || document.activeElement === mobileSearch || personMainActive()) return;
-    mobileSearch.value = desktopSearch.value;
-    const count = filterRenderedRows(mobileSearch.value);
-    updateMobileSearchState(count);
-  });
-
-  const bodyObserver = dataBody && "MutationObserver" in window
-    ? new MutationObserver(() => {
-        if (personMainActive()) {
-          updateMobileSearchState(visiblePersonCount());
-          return;
-        }
-        const query = mobileSearch?.value || "";
-        const count = filterRenderedRows(query);
-        updateMobileSearchState(count);
-      })
-    : null;
-  bodyObserver?.observe(dataBody, { childList: true, subtree: true });
-
-  window.addEventListener("atlas-person-main-rendered", (event) => {
-    const personSearch = personMainSearch();
-    if (mobileSearch && personSearch && mobileSearch.value !== personSearch.value) mobileSearch.value = personSearch.value;
-    const count = Number(event?.detail?.visibleCount);
-    updateMobileSearchState(Number.isFinite(count) ? count : visiblePersonCount());
-  });
-
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      setMenu(false);
-      setToolsMenu(false);
-      if (mq.matches && document.activeElement === mobileSearch && mobileSearch?.value) {
-        mobileSearch.value = "";
-        syncMobileSearchToMain();
-      }
-    }
+    if (event.key === "Escape") setMenu(false);
   });
 
   mq.addEventListener("change", (event) => {
-    if (!event.matches) {
-      setMenu(false);
-      setToolsMenu(false);
-    }
-    if (event.matches && mobileSearch) {
-      const personSearch = personMainSearch();
-      mobileSearch.value = personSearch?.value ?? desktopSearch?.value ?? mobileSearch.value;
-      if (personSearch) updateMobileSearchState(visiblePersonCount());
-      else updateMobileSearchState(filterRenderedRows(mobileSearch.value));
-    }
+    if (!event.matches) setMenu(false);
   });
 
   dataBody?.addEventListener("click", (event) => {
@@ -210,10 +46,4 @@
       row.setAttribute("aria-expanded", "true");
     }
   }, true);
-
-  if (mobileSearch) {
-    mobileSearch.value = desktopSearch?.value || "";
-    const count = filterRenderedRows(mobileSearch.value);
-    updateMobileSearchState(count);
-  }
 })();
