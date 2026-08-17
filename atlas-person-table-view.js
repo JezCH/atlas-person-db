@@ -22,6 +22,22 @@
     Object.freeze({ code: "contemporary", label: "현대", range: "AD 1945 이후", test: () => true })
   ]);
   const UNKNOWN_ERA = Object.freeze({ code: "unknown", label: "연대 미상", range: "주요 활동연도 미상" });
+  const ERA_INTERVALS = Object.freeze({
+    ancient: Object.freeze({ start_year: null, end_year: -481 }),
+    classical: Object.freeze({ start_year: -480, end_year: 499 }),
+    medieval: Object.freeze({ start_year: 500, end_year: 1491 }),
+    "early-modern": Object.freeze({ start_year: 1492, end_year: 1749 }),
+    "industrial-imperial": Object.freeze({ start_year: 1750, end_year: 1913 }),
+    "world-wars": Object.freeze({ start_year: 1914, end_year: 1944 }),
+    contemporary: Object.freeze({ start_year: 1945, end_year: null })
+  });
+  const PUBLIC_ERAS = Object.freeze(ERAS.map((era) => Object.freeze({
+    code: era.code,
+    label: era.label,
+    range: era.range,
+    start_year: ERA_INTERVALS[era.code].start_year,
+    end_year: ERA_INTERVALS[era.code].end_year
+  })));
 
   function cleanCode(value) { return String(value || "").trim().replaceAll("_", " "); }
   function makeHeader() {
@@ -189,5 +205,5 @@
   window.addEventListener("atlas-person-main-rendered", decorateAll);
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", decorateAll, { once: true });
   else queueMicrotask(decorateAll);
-  window.ATLAS_PERSON_TABLE_VIEW = Object.freeze({ decorateAll });
+  window.ATLAS_PERSON_TABLE_VIEW = Object.freeze({ decorateAll, eras: PUBLIC_ERAS });
 })();
