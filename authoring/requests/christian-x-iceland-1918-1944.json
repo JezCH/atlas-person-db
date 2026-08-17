@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:christian-x:iceland:1918-1944:v1",
+  "person": {
+    "canonical_name_en": "Christian X",
+    "display_name_ko": "크리스티안 10세"
+  },
+  "polity": {
+    "canonical_name_en": "Iceland",
+    "display_name_ko": "아이슬란드"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1918,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1944,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Christian X was King of Iceland from 1918 to 1944 while also remaining King of Denmark. ATLAS records the Icelandic and Danish crowns as separate concurrent Person–Polity Activities because Iceland and Denmark are distinct Polities."
+  },
+  "sources": [
+    {
+      "title": "The Royal Lineage — The Danish Royal House",
+      "canonical_url": "https://www.kongehuset.dk/monarkiet-i-danmark/kongerakken",
+      "citation_text": "The Danish Royal House lists Christian X as King of Denmark 1912–1947 and of Iceland 1918–1944.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "Speech marking 100 years of Icelandic sovereignty — The Danish Royal House",
+      "canonical_url": "https://www.kongehuset.dk/nyheder/hm-dronningens-tale-i-anledning-af-fejringen-af-100-aaret-for-islands-suveraenitet",
+      "citation_text": "The Danish Royal House states that Christian X was common head of state for Denmark and Iceland and from 1918 held the title King of Iceland, with the arrangement ending when Iceland became a republic in 1944.",
+      "source_type": "government_web"
+    }
+  ]
+}
