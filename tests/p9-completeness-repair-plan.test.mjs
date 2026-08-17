@@ -44,18 +44,20 @@ function detail(activity_id, { role = 'Emperor', chronology_status = 'exact_as_r
   };
 }
 
-test('P9 repair planner preserves P7 precedence and fails closed', () => {
+test('P9 repair planner preserves P7 compile-time precedence and fails closed', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'atlas-p9-plan-'));
   const auditPath = path.join(dir, 'audit.json');
   const outPath = path.join(dir, 'plan.json');
   const generic = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
   const runtimeExcluded = '1446e736-96f8-5401-913f-022cb9b4b7c2';
+  const runtimePublished = '17eba513-c00d-59c5-ba29-4a69f9143d9a';
   const temporalOnly = 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb';
   const unknownChronology = 'cccccccc-cccc-4ccc-8ccc-cccccccccccc';
   const existingRelation = '7ca4de8f-01d4-542c-acc1-a06848c6742c';
   const incompleteRows = [
     incomplete(generic),
     incomplete(runtimeExcluded),
+    incomplete(runtimePublished),
     incomplete(temporalOnly, existingRelation),
     incomplete(unknownChronology)
   ];
@@ -65,12 +67,13 @@ test('P9 repair planner preserves P7 precedence and fails closed', () => {
     read_only: true,
     committed: false,
     deployment_sha: '0123456789012345678901234567890123456789',
-    row_count: 4,
-    counts: { activities: 4 },
+    row_count: 5,
+    counts: { activities: 5 },
     semantic_v2_breakdown: { incomplete_rows: incompleteRows },
     rows: [
       detail(generic),
       detail(runtimeExcluded, { role: 'Explorer, traveler and jurist' }),
+      detail(runtimePublished, { role: 'Provisional President and revolutionary leader' }),
       detail(temporalOnly, { role: 'King' }),
       detail(unknownChronology, { chronology_status: 'UNMAPPED_STATUS' })
     ]
@@ -87,9 +90,12 @@ test('P9 repair planner preserves P7 precedence and fails closed', () => {
   assert.equal(byId.get(generic).temporal.activity_start_calendar, 'unspecified_historical');
   assert.equal(byId.get(generic).disposition, 'SEMANTIC_BACKFILL_READY');
 
-  assert.equal(byId.get(runtimeExcluded).relation.class, 'RUNTIME_EXCLUDE_STRUCTURAL_FIRST');
-  assert.equal(byId.get(runtimeExcluded).relation.ready, false);
-  assert.equal(byId.get(runtimeExcluded).disposition, 'PRECONDITION_REQUIRED');
+  for (const id of [runtimeExcluded, runtimePublished]) {
+    assert.equal(byId.get(id).relation.class, 'REVIEWED_AUTHORING_RELATION_EXCEPTION');
+    assert.equal(byId.get(id).relation.ready, false);
+    assert.equal(byId.get(id).disposition, 'PRECONDITION_REQUIRED');
+    assert.equal(byId.get(id).temporal.activity_start_calendar, 'unspecified_historical');
+  }
 
   assert.equal(byId.get(temporalOnly).relation.class, 'ALREADY_PRESENT');
   assert.equal(byId.get(temporalOnly).disposition, 'SEMANTIC_BACKFILL_READY');
@@ -97,7 +103,8 @@ test('P9 repair planner preserves P7 precedence and fails closed', () => {
   assert.equal(byId.get(unknownChronology).temporal.class, 'CHRONOLOGY_STATUS_UNMAPPED');
   assert.equal(byId.get(unknownChronology).temporal.ready, false);
   assert.equal(byId.get(unknownChronology).disposition, 'PRECONDITION_REQUIRED');
-  assert.equal(plan.summary.semantic_v2_incomplete, 4);
+  assert.equal(plan.summary.semantic_v2_incomplete, 5);
   assert.equal(plan.summary.semantic_backfill_ready, 2);
-  assert.equal(plan.summary.precondition_required, 2);
+  assert.equal(plan.summary.precondition_required, 3);
+  assert.deepEqual(plan.summary.reviewed_authoring_relation_exception_activity_ids.sort(), [runtimeExcluded, runtimePublished].sort());
 });

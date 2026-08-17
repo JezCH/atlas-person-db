@@ -4,9 +4,16 @@ const crypto = require("node:crypto");
 const { inspectAuthoringReadiness } = require("./atlas-authoring-readiness.js");
 const { inspectPersonDuplicateRevalidationReadiness } = require("./atlas-person-duplicate-revalidation-readiness.js");
 const { personMergeExecutionState } = require("./atlas-person-merge-interlock.js");
+const reviewedSemanticExceptions = require("../stage2/contracts/p11-reviewed-semantic-v2-exceptions.v1.json");
 
 const BASELINE_B_SCHEMA = "atlas-stage2-baseline-b/v2";
 const BASELINE_B_SEMANTIC_VERSION = "v2-relation-full-temporal";
+const P11_REVIEWED_RELATION_EXCEPTION_IDS = Object.freeze(
+  [...new Set((reviewedSemanticExceptions.exceptions || []).map((item) => String(item.activity_id || "").trim().toLowerCase()).filter(Boolean))].sort()
+);
+if (reviewedSemanticExceptions.schema !== "atlas-p11-reviewed-semantic-v2-exceptions/v1" || reviewedSemanticExceptions.rules?.exception_scope !== "relation_type_id_only") {
+  throw new Error("P11_REVIEWED_SEMANTIC_EXCEPTION_CONTRACT_INVALID");
+}
 
 function dataset(key, table, orderBy) {
   return Object.freeze({ key, table, sql: `select * from atlas_v2.${table} order by ${orderBy}` });
@@ -150,9 +157,33 @@ async function inspectBaselineBReadiness(client, {
         or activity_start_calendar is null
         or activity_end_granularity is null
         or activity_end_calendar is null)::int as semantic_v2_incomplete,
+      count(*) filter (where relation_type_id is null
+        and id = any($1::uuid[])
+        and period_basis_id is not null
+        and activity_start_granularity is not null
+        and activity_start_certainty is not null
+        and activity_start_calendar is not null
+        and activity_end_granularity is not null
+        and activity_end_certainty is not null
+        and activity_end_calendar is not null)::int as reviewed_relation_exceptions,
+      count(*) filter (where (relation_type_id is null
+        or period_basis_id is null
+        or activity_start_granularity is null
+        or activity_start_calendar is null
+        or activity_end_granularity is null
+        or activity_end_calendar is null)
+        and not (relation_type_id is null
+          and id = any($1::uuid[])
+          and period_basis_id is not null
+          and activity_start_granularity is not null
+          and activity_start_certainty is not null
+          and activity_start_calendar is not null
+          and activity_end_granularity is not null
+          and activity_end_certainty is not null
+          and activity_end_calendar is not null))::int as semantic_v2_blocking_incomplete,
       count(*) filter (where activity_start=0 or activity_end=0)::int as year_zero_rows,
       count(*) filter (where activity_start>activity_end)::int as reversed_ranges
-      from atlas_v2.person_politics_v2`);
+      from atlas_v2.person_politics_v2`, [P11_REVIEWED_RELATION_EXCEPTION_IDS]);
   const activity = activityResult.rows[0] || {};
 
   const frontierResult = await client.query(`
@@ -182,7 +213,7 @@ async function inspectBaselineBReadiness(client, {
   if (!merge?.allowed) blockers.push("P10_PERSON_MERGE_LIFECYCLE_NOT_READY");
   if (String(merge?.reconciliation_semantic_version || "") !== BASELINE_B_SEMANTIC_VERSION) blockers.push("SEMANTIC_VERSION_DRIFT");
   if (!mergeAuditSchemaReady) blockers.push("PERSON_MERGE_AUDIT_SCHEMA_MISSING");
-  if (Number(activity.semantic_v2_incomplete || 0) !== 0) blockers.push(`ACTIVITY_SEMANTIC_V2_INCOMPLETE:${Number(activity.semantic_v2_incomplete || 0)}`);
+  if (Number(activity.semantic_v2_blocking_incomplete || 0) !== 0) blockers.push(`ACTIVITY_SEMANTIC_V2_BLOCKING_INCOMPLETE:${Number(activity.semantic_v2_blocking_incomplete || 0)}`);
   if (Number(activity.year_zero_rows || 0) !== 0) blockers.push(`ACTIVITY_YEAR_ZERO:${Number(activity.year_zero_rows || 0)}`);
   if (Number(activity.reversed_ranges || 0) !== 0) blockers.push(`ACTIVITY_REVERSED_RANGE:${Number(activity.reversed_ranges || 0)}`);
   if (Number(frontier.approved_merges_pending || 0) !== 0) blockers.push(`APPROVED_PERSON_MERGES_PENDING:${Number(frontier.approved_merges_pending || 0)}`);
@@ -202,8 +233,14 @@ async function inspectBaselineBReadiness(client, {
     activity: Object.freeze({
       activities: Number(activity.activities || 0),
       semantic_v2_incomplete: Number(activity.semantic_v2_incomplete || 0),
+      reviewed_relation_exceptions: Number(activity.reviewed_relation_exceptions || 0),
+      semantic_v2_blocking_incomplete: Number(activity.semantic_v2_blocking_incomplete || 0),
       year_zero_rows: Number(activity.year_zero_rows || 0),
       reversed_ranges: Number(activity.reversed_ranges || 0)
+    }),
+    reviewed_semantic_exception_contract: Object.freeze({
+      schema: reviewedSemanticExceptions.schema,
+      declared_exception_ids: P11_REVIEWED_RELATION_EXCEPTION_IDS.length
     }),
     duplicate_frontier: Object.freeze({
       active_candidates: Number(frontier.active_candidates || 0),
@@ -261,6 +298,7 @@ module.exports = Object.freeze({
   BASELINE_B_SCHEMA,
   BASELINE_B_SEMANTIC_VERSION,
   BASELINE_B_CANONICAL_TABLES,
+  P11_REVIEWED_RELATION_EXCEPTION_IDS,
   CORE_DATASET_QUERIES,
   canonicalize,
   digest,
