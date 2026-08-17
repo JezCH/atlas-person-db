@@ -85,11 +85,12 @@ test('era navigation assets load after era grouping/palette and before Person Ma
   const mainJs = 'atlas-person-main.js?v=20260817-era-search-toolbar-v2';
   const paletteCss = 'atlas-person-era-palette.css?v=20260816-era-palette-v1';
   const navCssAsset = 'atlas-person-era-navigation.css?v=20260817-era-search-toolbar-v3';
-  const mobileCss = 'atlas-person-mobile-column-widths.css?v=20260816-mobile-widths-v2';
+  const geometryCss = 'atlas-person-table-alignment.css?v=20260817-table-geometry-r2';
 
-  for (const asset of [tableJs, navJs, mainJs, paletteCss, navCssAsset, mobileCss]) assert.ok(html.includes(asset));
+  for (const asset of [tableJs, navJs, mainJs, paletteCss, navCssAsset, geometryCss]) assert.ok(html.includes(asset));
   assert.ok(html.indexOf(tableJs) < html.indexOf(navJs));
   assert.ok(html.indexOf(navJs) < html.indexOf(mainJs));
   assert.ok(html.indexOf(paletteCss) < html.indexOf(navCssAsset));
-  assert.ok(html.indexOf(navCssAsset) < html.indexOf(mobileCss));
+  assert.ok(html.indexOf(navCssAsset) < html.indexOf(geometryCss));
+  assert.doesNotMatch(html, /atlas-person-mobile-column-widths\.css/);
 });
