@@ -1,6 +1,7 @@
 name: ATLAS P11 Semantic V2 Backfill
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
