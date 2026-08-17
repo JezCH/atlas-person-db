@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'stage2/releases/p11-semantic-v2-backfill-release.v1.json'
+  workflow_dispatch:
 
 permissions:
   contents: read
