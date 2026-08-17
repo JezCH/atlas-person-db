@@ -21,13 +21,14 @@ test('ATLAS era bands use the reviewed accessible categorical palette', () => {
   }
 });
 
-test('era palette loads after the base table stylesheet and before mobile width overrides', () => {
-  const base = 'atlas-person-table-view.css?v=20260816-era-band-v1';
+test('era palette loads after the base table stylesheet and before canonical geometry', () => {
+  const base = 'atlas-person-table-view.css?v=20260817-era-band-r2';
   const paletteAsset = 'atlas-person-era-palette.css?v=20260816-era-palette-v1';
-  const mobile = 'atlas-person-mobile-column-widths.css?v=20260816-mobile-widths-v2';
+  const geometry = 'atlas-person-table-alignment.css?v=20260817-table-geometry-r2';
   assert.ok(html.includes(base));
   assert.ok(html.includes(paletteAsset));
-  assert.ok(html.includes(mobile));
+  assert.ok(html.includes(geometry));
   assert.ok(html.indexOf(base) < html.indexOf(paletteAsset));
-  assert.ok(html.indexOf(paletteAsset) < html.indexOf(mobile));
+  assert.ok(html.indexOf(paletteAsset) < html.indexOf(geometry));
+  assert.doesNotMatch(html, /atlas-person-mobile-column-widths\.css/);
 });

@@ -1,4 +1,0 @@
-/* Compatibility asset retained during R1 cleanup.
-   Responsive Person-table geometry now lives exclusively in
-   atlas-person-table-alignment.css. Keep this file declaration-free until the
-   asset reference is removed with the broader stylesheet ownership cleanup. */
