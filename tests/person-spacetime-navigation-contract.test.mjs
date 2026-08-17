@@ -1,0 +1,24 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import test from 'node:test';
+
+const navScript = readFileSync(new URL('../atlas-main-authority-nav.js', import.meta.url), 'utf8');
+const navCss = readFileSync(new URL('../atlas-main-authority-nav.css', import.meta.url), 'utf8');
+const spacetimeCss = readFileSync(new URL('../atlas-person-spacetime-view.css', import.meta.url), 'utf8');
+
+test('spacetime nested scroller allows vertical scroll chaining to the page', () => {
+  assert.match(spacetimeCss, /overscroll-behavior-y\s*:\s*auto/);
+  assert.doesNotMatch(spacetimeCss, /overscroll-behavior\s*:\s*contain/);
+});
+
+test('authority navigation resets the viewport only when the domain changes', () => {
+  assert.match(navScript, /const previousDomain\s*=\s*currentDomain/);
+  assert.match(navScript, /previousDomain\s*!==\s*next/);
+  assert.match(navScript, /window\.scrollTo\(\{\s*top:\s*0,\s*left:\s*0,\s*behavior:\s*["']auto["']\s*\}\)/s);
+});
+
+test('inactive person surfaces are forced out of layout', () => {
+  assert.match(navCss, /#personMainView\[hidden\]/);
+  assert.match(navCss, /#relationshipAuthoringTools\[hidden\]/);
+  assert.match(navCss, /display\s*:\s*none\s*!important/);
+});
