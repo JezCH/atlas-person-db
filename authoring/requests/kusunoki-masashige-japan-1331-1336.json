@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:kusunoki-masashige:japan:military:1331-1336:v1",
+  "person": {"canonical_name_en": "Kusunoki Masashige", "display_name_ko": "구스노키 마사시게"},
+  "polity": {"canonical_name_en": "Japan", "display_name_ko": "일본"},
+  "activity": {"relation_type": "serves", "period_basis": "military_activity", "role": "Military Commander", "role_display_name_ko": "군사 지휘관", "start_year": 1331, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 1336, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Kusunoki Masashige served Emperor Go-Daigo as a military commander from the emperor's first anti-Kamakura rising in 1331 through the overthrow of the shogunate, the Kenmu Restoration, and his death fighting for Go-Daigo in 1336. ATLAS binds him to Japan, while the Kenmu Restoration is treated as a government/regime context rather than incorrectly promoted to a separate Polity."},
+  "sources": [{"title": "Statue of Kusunoki Masashige — Japan Ministry of the Environment", "canonical_url": "https://www.env.go.jp/garden/kokyogaien/english/statue_of_kusunoki_masashige.html", "citation_text": "Japan's Ministry of the Environment identifies Kusunoki Masashige as a 1294–1336 warrior whose strategic leadership helped Emperor Go-Daigo overthrow the shogunate and notes Go-Daigo's failed first attempt in 1331 and Kusunoki's later death in battle.", "source_type": "government_web"}]
+}
