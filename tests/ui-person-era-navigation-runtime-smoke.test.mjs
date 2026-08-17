@@ -14,7 +14,9 @@ function matches(node, selector) {
   if (selector === 'span') return node.tagName === 'SPAN';
   if (selector === '.person-era-band') return hasClass(node, 'person-era-band');
   if (selector === '.person-era-rows') return hasClass(node, 'person-era-rows');
+  if (selector === '.person-card') return hasClass(node, 'person-card');
   if (selector === '.person-era-jump-list') return hasClass(node, 'person-era-jump-list');
+  if (selector === '.person-era-jump-count') return hasClass(node, 'person-era-jump-count');
   if (selector === '.person-era-nav-current') return hasClass(node, 'person-era-nav-current');
   if (selector === '.person-era-nav-prev') return hasClass(node, 'person-era-nav-prev');
   if (selector === '.person-era-nav-next') return hasClass(node, 'person-era-nav-next');
