@@ -21,8 +21,8 @@
     "end_year": -94,
     "end_certainty": "approximate",
     "end_calendar": "unspecified_historical",
-    "confidence": "well_established",
     "chronology_status": "reviewed",
+    "confidence": "well_established",
     "notes": "Sima Qian was a Western Han imperial official and historian who continued the comprehensive historical project conceived by his father Sima Tan. Sources place Sima Tan's death in 110 BCE and the completion of Sima Qian's Shiji in the early 90s BCE, probably around 94 BCE. ATLAS therefore records c.110-c.94 as the representative composition phase of his historical work, using active_in and intellectual_activity rather than pretending that these approximate literary boundaries are an exact court-office term."
   },
   "sources": [
