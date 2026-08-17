@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-stage2-p9-legacy-temporal-metadata-migration/v1",
+  "as_of": "2026-08-17",
+  "status": "REVIEWED_MIGRATION_POLICY_NO_PRODUCTION_MUTATION",
+  "purpose": "Materialize Stage 2 temporal metadata that P9 semantic-key v2 requires without changing recorded Activity years or inventing lower-precision date components.",
+  "authority": [
+    "docs/audits/TEMPORAL_INTERVAL_CONTRACT_V1_2026-08-12.md",
+    "contracts/stage2-domain-contract.v1.json",
+    "corrections/requests/suleiman-i-relation-type-p10.v2.json"
+  ],
+  "rules": {
+    "preserve_existing_start_end_years_exactly": true,
+    "fabricate_month_or_day_forbidden": true,
+    "year_only_granularity": "year",
+    "calendar_when_legacy_row_has_no_reviewed_calendar": "unspecified_historical",
+    "reviewed_runtime_or_correction_calendar_overrides_legacy_fallback": true,
+    "certainty_from_legacy_chronology_status_only": true,
+    "generic_certainty_default_forbidden": true,
+    "unknown_chronology_status_blocks_automatic_migration": true,
+    "production_mutation_authorized": false
+  },
+  "chronology_status_mapping": {
+    "exact_as_recorded": {
+      "activity_start_certainty": "exact",
+      "activity_end_certainty": "exact",
+      "basis": "The legacy chronology status already asserts the stored year boundaries as exact-as-recorded; migration preserves that existing assertion rather than independently re-evaluating historical certainty."
+    },
+    "TRADITIONAL_RETROSPECTIVE_UNCERTAIN": {
+      "activity_start_certainty": "uncertain",
+      "activity_end_certainty": "uncertain",
+      "basis": "The legacy chronology status explicitly marks the traditional retrospective chronology as uncertain; migration preserves that uncertainty."
+    }
+  },
+  "boundary_materialization": {
+    "activity_start_month": null,
+    "activity_start_day": null,
+    "activity_start_granularity": "year",
+    "activity_start_calendar": "unspecified_historical",
+    "activity_end_month": null,
+    "activity_end_day": null,
+    "activity_end_granularity": "year",
+    "activity_end_calendar": "unspecified_historical"
+  },
+  "safety": {
+    "changes_activity_years": false,
+    "claims_gregorian_or_julian_calendar_without_review": false,
+    "creates_month_or_day_precision": false,
+    "changes_person_polity_relation": false,
+    "changes_provenance": false,
+    "production_mutation": false
+  }
+}
