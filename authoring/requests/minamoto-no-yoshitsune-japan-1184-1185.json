@@ -1,0 +1,42 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:minamoto-no-yoshitsune:japan:military-commander:1184-1185:v1",
+  "person": {
+    "canonical_name_en": "Minamoto no Yoshitsune",
+    "display_name_ko": "미나모토노 요시츠네"
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Military Commander",
+    "role_display_name_ko": "군사 지휘관",
+    "start_year": 1184,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1185,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Minamoto no Yoshitsune was a historical Genji military commander whose decisive campaigns against the Taira are securely documented in 1184-1185. The National Theatre of Japan identifies his surprise attack at Ichi-no-Tani in 1184, his campaign at Yashima in 1185, and his command in the final naval battle at Dan-no-ura in 1185, which ended Taira power. ATLAS therefore records the tightly bounded 1184-1185 military-command phase under the higher-order Japan polity, reusing the existing Military Commander role. This Activity does not treat Yoshitsune as a sovereign ruler, and it does not extend his military chronology through his later conflict with Yoritomo and flight before his death in 1189."
+  },
+  "sources": [
+    {
+      "title": "源, 義経, 1159-1189 - Web NDL Authorities",
+      "canonical_url": "https://id.ndl.go.jp/auth/ndlna/00622842",
+      "citation_text": "The National Diet Library authority record identifies Minamoto Yoshitsune as a historical person, 1159-1189, and gives the romanized name Minamoto, Yoshitsune.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "義経千本桜 — 歴史上の源義経",
+      "canonical_url": "https://www2.ntj.jac.go.jp/dglib/contents/learn/exp3/exp_new/pages/arekore/rekishi.html",
+      "citation_text": "The National Theatre of Japan Cultural Digital Library describes Yoshitsune's decisive military actions at Ichi-no-Tani in 1184, Yashima in 1185, and Dan-no-ura in 1185.",
+      "source_type": "government_web"
+    }
+  ]
+}
