@@ -14,14 +14,22 @@ test('reviewed GitHub fallback accepts human-readable requests without weakening
   assert.match(workflow, /\.activity\.relation_type_id \| type == "string"/);
 });
 
-test('human fallback uses the same GitHub OIDC token and separate runtime/authoring SHA envelope', () => {
-  assert.match(workflow, /--arg runtime_sha "\$ATLAS_RUNTIME_SHA"/);
-  assert.match(workflow, /--arg authoring_sha "\$GITHUB_SHA"/);
-  assert.match(workflow, /manifest_path:\$manifest_path,request:\$request\[0\]/);
-  assert.match(workflow, /authorization: Bearer \$\{oidc_token\}/);
-  assert.match(workflow, /\.auth_method=="github_oidc"/);
-  assert.match(workflow, /\.marker=="ATLAS_HUMAN_AUTHORING_V1"/);
+test('all-human authoring batches use one OIDC envelope and one HTTP request', () => {
+  assert.match(workflow, /operation:"apply_batch"/);
+  assert.match(workflow, /manifest_paths:\$manifest_paths/);
+  assert.match(workflow, /requests:\$requests/);
+  assert.match(workflow, /oidc_token="\$\(request_oidc\)"/);
+  assert.match(workflow, /ATLAS_HUMAN_AUTHORING_BATCH_V1/);
+  assert.match(workflow, /atlas-human-authoring-batch\/v1/);
+  assert.match(workflow, /all\(\.results\[\];/);
   assert.match(workflow, /\.result\.semantic_version=="v2-relation-full-temporal"/);
+});
+
+test('native or mixed authoring retains the existing safe per-manifest fallback', () => {
+  assert.match(workflow, /while IFS= read -r manifest/);
+  assert.match(workflow, /manifest_path:\$manifest_path,manifest:\$manifest\[0\]/);
+  assert.match(workflow, /ATLAS_AUTHORING_MANIFEST_V2_STAGE2_NATIVE/);
+  assert.match(workflow, /authorization: Bearer \$\{oidc_token\}/);
 });
 
 test('authoring readiness preserves bounded route-propagation retry instead of failing on transient 404', () => {
