@@ -9,6 +9,11 @@ const EXPECTED_REPOSITORY = "JezCH/atlas-person-db";
 const EXPECTED_REPOSITORY_ID = "1319427399";
 const EXPECTED_REF = "refs/heads/main";
 const EXPECTED_WORKFLOW_REF = "JezCH/atlas-person-db/.github/workflows/atlas-audit-inventory.yml@refs/heads/main";
+const P11_SEMANTIC_V2_BACKFILL_WORKFLOW_REF = "JezCH/atlas-person-db/.github/workflows/atlas-p11-semantic-v2-backfill.yml@refs/heads/main";
+const ALLOWED_WORKFLOW_REFS = Object.freeze([
+  EXPECTED_WORKFLOW_REF,
+  P11_SEMANTIC_V2_BACKFILL_WORKFLOW_REF
+]);
 const ALLOWED_EVENTS = new Set(["push", "workflow_dispatch"]);
 
 let jwksCache = null;
@@ -55,7 +60,7 @@ function verifyTrustClaims(payload, expectedSha) {
   if (payload?.repository !== EXPECTED_REPOSITORY) throw new Error("GITHUB_OIDC_REPOSITORY_MISMATCH");
   if (String(payload?.repository_id || "") !== EXPECTED_REPOSITORY_ID) throw new Error("GITHUB_OIDC_REPOSITORY_ID_MISMATCH");
   if (payload?.ref !== EXPECTED_REF) throw new Error("GITHUB_OIDC_REF_MISMATCH");
-  if (payload?.workflow_ref !== EXPECTED_WORKFLOW_REF) throw new Error("GITHUB_OIDC_WORKFLOW_MISMATCH");
+  if (!ALLOWED_WORKFLOW_REFS.includes(payload?.workflow_ref)) throw new Error("GITHUB_OIDC_WORKFLOW_MISMATCH");
   if (payload?.environment !== "production") throw new Error("GITHUB_OIDC_ENVIRONMENT_MISMATCH");
   if (!ALLOWED_EVENTS.has(payload?.event_name)) throw new Error("GITHUB_OIDC_EVENT_MISMATCH");
   if (payload?.sha !== expectedSha) throw new Error("GITHUB_OIDC_SHA_MISMATCH");
@@ -108,5 +113,7 @@ module.exports = Object.freeze({
   EXPECTED_REPOSITORY,
   EXPECTED_REPOSITORY_ID,
   EXPECTED_REF,
-  EXPECTED_WORKFLOW_REF
+  EXPECTED_WORKFLOW_REF,
+  P11_SEMANTIC_V2_BACKFILL_WORKFLOW_REF,
+  ALLOWED_WORKFLOW_REFS
 });
