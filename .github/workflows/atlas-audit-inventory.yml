@@ -9,6 +9,11 @@ on:
       - 'api/atlas-audit-inventory.js'
       - 'server/atlas-audit-inventory-handler.js'
       - 'server/atlas-audit-github-oidc.js'
+      - 'scripts/build-p9-completeness-repair-plan.mjs'
+      - 'stage2/integration/p9-legacy-temporal-metadata-migration.v1.json'
+      - 'stage2/integration/p7-explicit-person-relation-decisions-batch*.v1.json'
+      - 'stage2/integration/p7-full-relation-review-dispositions.v1.json'
+      - 'stage2/integration/p7-runtime-readiness-dispositions.v1.json'
       - 'docs/audits/STAGE2_R0_NORMALIZED_INVENTORY_REQUEST.json'
   workflow_dispatch:
     inputs:
@@ -112,6 +117,24 @@ jobs:
             jq '.catalogs' audit-inventory-response.json > baseline-identity-catalogs.json
           fi
 
+      - name: Build deterministic P9 completeness repair plan
+        if: env.ATLAS_AUDIT_MODE == 'full_stage2_baseline'
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/build-p9-completeness-repair-plan.mjs \
+            --audit audit-inventory-response.json \
+            --out p9-completeness-repair-plan.json
+          jq -e '
+            .schema == "atlas-stage2-p9-completeness-repair-plan/v1" and
+            .status == "READ_ONLY_PLANNER_NO_PRODUCTION_MUTATION" and
+            .summary.semantic_v2_incomplete == (.rows | length) and
+            (.summary.semantic_backfill_ready + .summary.precondition_required) == .summary.semantic_v2_incomplete and
+            .rules.generic_relation_default_forbidden == true and
+            .rules.production_mutation_authorized == false
+          ' p9-completeness-repair-plan.json >/dev/null
+          jq '.summary' p9-completeness-repair-plan.json | tee p9-completeness-repair-summary.json
+
       - name: Upload read-only inventory evidence
         uses: actions/upload-artifact@v4
         with:
@@ -121,6 +144,8 @@ jobs:
             audit-inventory-summary.json
             baseline-activity-uuids.json
             baseline-identity-catalogs.json
+            p9-completeness-repair-plan.json
+            p9-completeness-repair-summary.json
             docs/audits/STAGE2_R0_NORMALIZED_INVENTORY_REQUEST.json
           if-no-files-found: warn
           retention-days: 90
