@@ -1,0 +1,3 @@
+#personDomainRoot[hidden]{display:none!important}
+#atlasAuthorityShell .spacetime-scroll{max-height:none!important;overscroll-behavior:auto!important}
+@media(max-width:900px){#atlasAuthorityShell .spacetime-scroll{max-height:none!important}}
