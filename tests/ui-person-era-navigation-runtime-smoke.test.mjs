@@ -19,6 +19,7 @@ function matches(node, selector) {
   if (selector === '.person-era-jump-count') return hasClass(node, 'person-era-jump-count');
   if (selector === '.person-era-nav-current') return hasClass(node, 'person-era-nav-current');
   if (selector === '.person-era-nav-summary') return hasClass(node, 'person-era-nav-summary');
+  if (selector === '.person-era-search') return hasClass(node, 'person-era-search');
   if (selector === '.person-era-polity-filter') return hasClass(node, 'person-era-polity-filter');
   if (selector === '.person-era-nav-prev') return hasClass(node, 'person-era-nav-prev');
   if (selector === '.person-era-nav-next') return hasClass(node, 'person-era-nav-next');
@@ -117,7 +118,7 @@ function eraGroup(code, label, range, count, top) {
   return group;
 }
 
-test('era navigator builds from rendered era groups, owns Polity status, and jumps without a data read path', () => {
+test('era navigator builds from rendered era groups, owns search/Polity status, and jumps without a data read path', () => {
   const container = createNode('div', 'person-main-groups');
   container.id = 'personMainGroups';
   const ancient = eraGroup('ancient', '고대', 'BC 480 이전', 2, 100);
@@ -156,6 +157,7 @@ test('era navigator builds from rendered era groups, owns Polity status, and jum
     detail: {
       visibleCount: 5,
       visiblePolityCount: 2,
+      query: 'alexander',
       selectedPolityId: 'rome',
       polityOptions: [{ id: 'rome', label: '로마 제국' }, { id: 'france', label: '프랑스 왕국' }]
     }
@@ -163,6 +165,7 @@ test('era navigator builds from rendered era groups, owns Polity status, and jum
 
   const nav = container.children[0];
   assert.equal(nav.id, 'personEraNavigator');
+  assert.equal(nav.querySelector('.person-era-search').value, 'alexander');
   assert.equal(nav.querySelector('.person-era-nav-summary').textContent, '인물 5명 · 정치체 2개');
   const politySelect = nav.querySelector('.person-era-polity-filter');
   assert.equal(politySelect.value, 'rome');

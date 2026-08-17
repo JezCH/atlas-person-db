@@ -6,6 +6,7 @@ import vm from 'node:vm';
 const semanticService = fs.readFileSync(new URL('../server/atlas-person-list-semantic-service.js', import.meta.url), 'utf8');
 const readerSource = fs.readFileSync(new URL('../atlas-person-browser-reader.js', import.meta.url), 'utf8');
 const mainSource = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url), 'utf8');
+const navSource = fs.readFileSync(new URL('../atlas-person-era-navigation.js', import.meta.url), 'utf8');
 const css = fs.readFileSync(new URL('../atlas-person-main.css', import.meta.url), 'utf8');
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 
@@ -99,10 +100,13 @@ test('R4 Person cards render the authoritative compact Activity tuple without de
 });
 
 test('R4 advertises the restored search scope and busts changed Person assets only', () => {
-  assert.match(mainSource, /인물·정치체·관계·역할·기간·비고 검색/);
+  assert.match(navSource, /인물·정치체·관계·역할·기간·비고 검색/);
+  assert.match(navSource, /search\.id = "personMainSearch"/);
+  assert.match(mainSource, /atlas-person-search-change/);
   assert.match(html, /atlas-person-browser-reader\.js\?v=20260815-ui6r4/);
-  assert.match(html, /atlas-person-main\.js\?v=20260817-era-polity-toolbar-v1/);
+  assert.match(html, /atlas-person-main\.js\?v=20260817-era-search-toolbar-v1/);
   assert.match(html, /atlas-person-main\.css\?v=20260817-era-polity-toolbar-v1/);
+  assert.match(html, /atlas-person-era-navigation\.js\?v=20260817-era-search-toolbar-v1/);
   assert.match(html, /aria-label="인물·정치체·관계·역할·기간·비고 검색"/);
 });
 

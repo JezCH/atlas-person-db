@@ -5,6 +5,7 @@ import fs from 'node:fs';
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const main = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url), 'utf8');
 const reader = fs.readFileSync(new URL('../atlas-person-browser-reader.js', import.meta.url), 'utf8');
+const nav = fs.readFileSync(new URL('../atlas-person-era-navigation.js', import.meta.url), 'utf8');
 const css = fs.readFileSync(new URL('../atlas-person-main.css', import.meta.url), 'utf8');
 const mobile = fs.readFileSync(new URL('../mobile-ui.js', import.meta.url), 'utf8');
 
@@ -37,8 +38,19 @@ test('Person Main owns only Polity filter state and delegates its control surfac
   for (const removed of ['personMainFilterToggle', 'personMainFilters', 'personMainRelationFilter', 'personMainRoleFilter', 'personMainBasisFilter', 'personMainClearFilters', 'personMainSummary', 'personMainStatus']) {
     assert.doesNotMatch(main, new RegExp(removed));
   }
-  const renderGroupsBody = main.slice(main.indexOf('function renderGroups'), main.indexOf('function setPolityFilter'));
+  const renderGroupsBody = main.slice(main.indexOf('function renderGroups'), main.indexOf('function setSearchQuery'));
   assert.doesNotMatch(renderGroupsBody, /readPerson\(/);
+});
+
+test('Person search is rendered left of Polity in the persistent era toolbar', () => {
+  assert.match(nav, /search\.id = "personMainSearch"/);
+  assert.match(nav, /controls\.append\(search, select, summary\)/);
+  assert.match(nav, /atlas-person-search-change/);
+  assert.match(main, /function setSearchQuery/);
+  assert.match(main, /window\.addEventListener\("atlas-person-search-change"/);
+  assert.doesNotMatch(main, /<input id="personMainSearch"/);
+  assert.match(main, /if \(child\.id !== "personEraNavigator"\) child\.remove\(\)/);
+  assert.match(main, /list\.insertAdjacentHTML\("beforeend", renderedGroups\)/);
 });
 
 test('Person Main emits one current-result Person and Polity status contract', () => {
@@ -87,6 +99,7 @@ test('mobile appbar search delegates to the Person Main search after Person shel
   assert.match(mobile, /personSearch\.dispatchEvent\(new Event\("input", \{ bubbles: true \}\)\)/);
   assert.match(mobile, /atlas-person-main-rendered/);
   assert.match(main, /new CustomEvent\("atlas-person-main-rendered"/);
+  assert.match(nav, /id = "personMainSearch"/);
   assert.match(mobile, /visiblePersonCount/);
 });
 

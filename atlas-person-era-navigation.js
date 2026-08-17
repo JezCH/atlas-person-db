@@ -4,6 +4,7 @@
   const NAV_ID = "personEraNavigator";
   const GROUPS_ID = "personMainGroups";
   const RENDER_EVENT = "atlas-person-main-rendered";
+  const SEARCH_EVENT = "atlas-person-search-change";
   const POLITY_EVENT = "atlas-person-polity-filter-change";
   const state = {
     nav: null,
@@ -15,6 +16,7 @@
     globalListenersBound: false,
     visibleCount: 0,
     visiblePolityCount: 0,
+    query: "",
     selectedPolityId: "",
     polityOptions: []
   };
@@ -89,7 +91,7 @@
     const nav = document.createElement("nav");
     nav.id = NAV_ID;
     nav.className = "person-era-navigator";
-    nav.setAttribute("aria-label", "시대 및 정치체 탐색");
+    nav.setAttribute("aria-label", "인물 검색·정치체 필터·시대 이동");
 
     const top = document.createElement("div");
     top.className = "person-era-nav-top";
@@ -106,6 +108,14 @@
 
     const controls = document.createElement("div");
     controls.className = "person-era-nav-controls";
+    const search = document.createElement("input");
+    search.id = "personMainSearch";
+    search.type = "search";
+    search.autocomplete = "off";
+    search.className = "person-era-search";
+    search.dataset.eraSearch = "true";
+    search.placeholder = "인물·정치체·관계·역할·기간·비고 검색";
+    search.setAttribute("aria-label", "인물·정치체·관계·역할·기간·비고 검색");
     const select = document.createElement("select");
     select.className = "person-era-polity-filter";
     select.dataset.eraPolityFilter = "true";
@@ -118,7 +128,7 @@
     summary.className = "person-era-nav-summary";
     summary.setAttribute("aria-live", "polite");
     summary.textContent = "인물 0명 · 정치체 0개";
-    controls.append(select, summary);
+    controls.append(search, select, summary);
     top.append(intro, controls);
 
     const track = document.createElement("div");
@@ -134,6 +144,7 @@
 
     nav.append(top, track);
     nav.addEventListener("click", onNavigatorClick);
+    nav.addEventListener("input", onNavigatorInput);
     nav.addEventListener("change", onNavigatorChange);
     list.addEventListener("keydown", onEraListKeyDown);
     return nav;
@@ -190,13 +201,16 @@
     if (!detail || typeof detail !== "object") return;
     if (Number.isInteger(detail.visibleCount)) state.visibleCount = detail.visibleCount;
     if (Number.isInteger(detail.visiblePolityCount)) state.visiblePolityCount = detail.visiblePolityCount;
+    if (Object.prototype.hasOwnProperty.call(detail, "query")) state.query = String(detail.query ?? "");
     state.selectedPolityId = String(detail.selectedPolityId || "").trim();
     if (Array.isArray(detail.polityOptions)) state.polityOptions = normalizePolityOptions(detail.polityOptions);
   }
 
   function renderPolityControls(nav) {
+    const search = nav.querySelector(".person-era-search");
     const select = nav.querySelector(".person-era-polity-filter");
     const summary = nav.querySelector(".person-era-nav-summary");
+    if (search && search.value !== state.query) search.value = state.query;
     if (select) {
       select.replaceChildren();
       const all = document.createElement("option");
@@ -274,6 +288,12 @@
     const step = event.target?.closest?.("button[data-era-step]")?.dataset?.eraStep;
     if (step === "previous") stepEra(-1);
     if (step === "next") stepEra(1);
+  }
+
+  function onNavigatorInput(event) {
+    const search = event.target?.closest?.("input[data-era-search]");
+    if (!search) return;
+    window.dispatchEvent(new CustomEvent(SEARCH_EVENT, { detail: { query: String(search.value || "") } }));
   }
 
   function onNavigatorChange(event) {
@@ -376,18 +396,23 @@
     state.targetsByCode = collected.targetsByCode;
 
     const existing = container.querySelector(`#${NAV_ID}`);
-    if (!state.entries.length) {
-      existing?.remove?.();
-      state.nav = null;
-      state.activeCode = null;
-      return;
-    }
-
     const nav = existing || makeNavigator();
     if (!existing) container.prepend(nav);
     state.nav = nav;
     renderPolityControls(nav);
     renderEraButtons(nav, state.entries);
+
+    if (!state.entries.length) {
+      state.activeCode = null;
+      const status = nav.querySelector(".person-era-nav-current");
+      const previous = nav.querySelector(".person-era-nav-prev");
+      const next = nav.querySelector(".person-era-nav-next");
+      if (status) status.textContent = "현재 조건에 해당하는 시대가 없습니다";
+      if (previous) previous.disabled = true;
+      if (next) next.disabled = true;
+      bindGlobalListeners();
+      return;
+    }
 
     const preserved = state.activeCode && state.targetsByCode.has(state.activeCode) ? state.activeCode : state.entries[0].code;
     setActiveEra(preserved);
