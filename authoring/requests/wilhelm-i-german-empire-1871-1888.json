@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:wilhelm-i:german-empire:german-emperor:1871-1888:v1",
+  "person": {
+    "canonical_name_en": "Wilhelm I",
+    "display_name_ko": "빌헬름 1세"
+  },
+  "polity": {
+    "canonical_name_en": "German Empire",
+    "display_name_ko": "독일 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "German Emperor",
+    "role_display_name_ko": "독일 황제",
+    "start_year": 1871,
+    "start_month": 1,
+    "start_day": 18,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1888,
+    "end_month": 3,
+    "end_day": 9,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Wilhelm I was proclaimed the first German Emperor at Versailles on 18 January 1871 and remained German Emperor until his death on 9 March 1888. ATLAS binds this Activity to the German Empire rather than modern Germany because the 1871 constitutional-monarchical federal state is the historically specific polity relevant to his imperial rule."
+  },
+  "sources": [
+    {
+      "title": "LeMO Biografie — Wilhelm I.",
+      "canonical_url": "https://www.dhm.de/lemo/biografie/wilhelm-i",
+      "citation_text": "The Deutsches Historisches Museum records Wilhelm I's proclamation as Emperor of the newly founded German Empire on 18 January 1871 and his death on 9 March 1888.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Kaiserreich und Erster Weltkrieg — Deutsches Historisches Museum",
+      "canonical_url": "https://www.dhm.de/ausstellungen/dauerausstellung/kaiserreich-und-erster-weltkrieg/",
+      "citation_text": "The Deutsches Historisches Museum describes the German Empire as a constitutional-monarchical federal state founded in 1871 and identifies the Prussian king Wilhelm I as its head of state and German Emperor.",
+      "source_type": "institutional_web"
+    }
+  ]
+}

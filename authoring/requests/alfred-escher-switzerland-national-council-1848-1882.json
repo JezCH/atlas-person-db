@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:alfred-escher:switzerland:national-council:1848-1882:v1",
+  "person": {
+    "canonical_name_en": "Alfred Escher",
+    "display_name_ko": "알프레트 에셔"
+  },
+  "polity": {
+    "canonical_name_en": "Switzerland",
+    "display_name_ko": "스위스"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Member of the National Council",
+    "role_display_name_ko": "국민의회 의원",
+    "start_year": 1848,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1882,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Alfred Escher sat in Switzerland's National Council from 1848 until his death in 1882 and served three times as President of the National Council. ATLAS uses the full, continuously documented federal parliamentary service as the primary Switzerland Activity. He was an exceptionally influential politician and economic figure but not a Swiss sovereign or national head of government, so the relation is serves rather than rules or governs."
+  },
+  "sources": [
+    {
+      "title": "Alfred Escher – ein «König» im Schweizer Parlament — Swiss Parliament",
+      "canonical_url": "https://www.parlament.ch/blog/Pages/alfred-escher%E2%80%93ein-koenig-im-schweizer-parlament.aspx?lang=1047",
+      "citation_text": "The Swiss Parliament states that Alfred Escher sat in the National Council for thirty-four years, from 1848 until his death in 1882, and presided over the council in 1849, 1856 and 1862.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "Alfred Escher – Chronologie — Alfred Escher Briefedition",
+      "canonical_url": "https://www.briefedition.alfred-escher.ch/kontexte/chronologie/",
+      "citation_text": "The Alfred Escher scholarly letter-edition chronology records his National Council membership from 1848 to 1882 and his presidencies in 1849/50, 1856/57 and 1862/63.",
+      "source_type": "institutional_web"
+    }
+  ]
+}
