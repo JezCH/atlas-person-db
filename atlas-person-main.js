@@ -419,7 +419,7 @@
     const personView = document.createElement("section");
     personView.id = "personMainView";
     personView.className = "person-main-view";
-    personView.innerHTML = `<section class="person-main-toolbar card"><div class="person-main-toolbar-heading"><p class="eyebrow">AUTHORITATIVE PERSON READ</p><h2>인물 목록</h2><p>역사성 분류와 연대 확실성을 분리해 표시합니다.</p></div><div class="person-main-actions" aria-label="Person 운영 도구"><button id="personMainAdd" class="btn btn-primary" type="button">+ 관계 추가</button><button id="personMainRefresh" class="btn" type="button">↻ 새로고침</button><div class="person-main-more"><button id="personMainMoreButton" class="btn" type="button" aria-controls="personMainMoreMenu" aria-expanded="false">⋯ 더보기</button><div id="personMainMoreMenu" class="person-main-more-menu" hidden><button type="button" data-person-main-action="export">엑셀 내보내기</button><button type="button" data-person-main-action="import">엑셀 불러오기</button><a href="./admin.html">관리자 페이지</a><button type="button" data-person-main-action="legacy-tools">전체 관계 편집표</button></div></div></div><div class="person-main-controls"><select id="personMainSort" aria-label="Person 정렬"><option value="start-asc">활동연도 ↑ 과거→현재</option><option value="start-desc">활동연도 ↓ 현재→과거</option></select></div></section>
+    personView.innerHTML = `<section class="person-main-toolbar card"><div class="person-main-toolbar-heading"><p class="eyebrow">AUTHORITATIVE PERSON READ</p><h2>인물 목록</h2><p>역사성 분류와 연대 확실성을 분리해 표시합니다.</p></div><div class="person-main-actions" aria-label="Person 운영 도구"><button id="personMainAdd" class="btn btn-primary" type="button">+ 관계 추가</button><button id="personMainRefresh" class="btn" type="button">↻ 새로고침</button><button id="personMainExcelExport" class="btn" type="button">⇩ 엑셀 출력</button><button id="personMainExcelImport" class="btn" type="button">⇧ 엑셀 업로드</button><div class="person-main-more"><button id="personMainMoreButton" class="btn" type="button" aria-controls="personMainMoreMenu" aria-expanded="false">⋯ 더보기</button><div id="personMainMoreMenu" class="person-main-more-menu" hidden><a href="./admin.html">관리자 페이지</a><button type="button" data-person-main-action="legacy-tools">전체 관계 편집표</button></div></div></div><div class="person-main-controls"><select id="personMainSort" aria-label="Person 정렬"><option value="start-asc">활동연도 ↑ 과거→현재</option><option value="start-desc">활동연도 ↓ 현재→과거</option></select></div></section>
       <div class="person-main-layout"><div id="personMainGroups" class="person-main-groups"></div><aside id="personMainDetail" class="person-main-detail card" aria-live="polite"><p class="person-detail-placeholder">왼쪽에서 인물을 선택하면 이름·설명·출처와 모든 Activity 의미를 확인할 수 있습니다.</p></aside></div>`;
 
     const authoringTools = document.createElement("details");
@@ -435,6 +435,8 @@
     const sort = document.getElementById("personMainSort");
     const add = document.getElementById("personMainAdd");
     const refresh = document.getElementById("personMainRefresh");
+    const excelExport = document.getElementById("personMainExcelExport");
+    const excelImport = document.getElementById("personMainExcelImport");
     const moreButton = document.getElementById("personMainMoreButton");
     const moreMenu = document.getElementById("personMainMoreMenu");
     const groups = document.getElementById("personMainGroups");
@@ -446,6 +448,8 @@
     });
     add?.addEventListener("click", openLegacyCreate);
     refresh?.addEventListener("click", () => loadPersons({ keepSelection: true }));
+    excelExport?.addEventListener("click", exportLegacyExcel);
+    excelImport?.addEventListener("click", importLegacyExcel);
     moreButton?.addEventListener("click", (event) => {
       event.stopPropagation();
       setMoreMenu(moreMenu?.hidden !== false);
@@ -454,8 +458,6 @@
       const action = event.target.closest("[data-person-main-action]")?.dataset.personMainAction;
       if (!action) return;
       setMoreMenu(false);
-      if (action === "export") exportLegacyExcel();
-      if (action === "import") importLegacyExcel();
       if (action === "legacy-tools") openLegacyTools();
     });
     groups?.addEventListener("click", (event) => {
