@@ -104,9 +104,9 @@ test('R4 advertises the restored search scope and busts changed Person assets on
   assert.match(navSource, /search\.id = "personMainSearch"/);
   assert.match(mainSource, /atlas-person-search-change/);
   assert.match(html, /atlas-person-browser-reader\.js\?v=20260815-ui6r4/);
-  assert.match(html, /atlas-person-main\.js\?v=20260817-era-search-toolbar-v1/);
+  assert.match(html, /atlas-person-main\.js\?v=20260817-era-search-toolbar-v2/);
   assert.match(html, /atlas-person-main\.css\?v=20260817-era-polity-toolbar-v1/);
-  assert.match(html, /atlas-person-era-navigation\.js\?v=20260817-era-search-toolbar-v1/);
+  assert.match(html, /atlas-person-era-navigation\.js\?v=20260817-era-search-toolbar-v2/);
   assert.match(html, /aria-label="인물·정치체·관계·역할·기간·비고 검색"/);
 });
 
