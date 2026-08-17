@@ -177,5 +177,20 @@
     "role_ko": "사바의 전설적 여왕",
     "reason": "Bilqis is the later Arabic and Islamic traditional name for the Queen of Sheba. The Kingdom of Saba is historically attested, but no secure Sabaic inscription independently identifies a monarch named Bilqis, and her personal reign chronology is unresolved.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or traditional overlay is enabled."
+  },
+  {
+    "person_name": "Dangun Wanggeom",
+    "politic_name": "Gojoseon",
+    "display_name_ko": "단군왕검",
+    "historicity": "legendary_founder_tradition",
+    "timeline_status": "excluded",
+    "date_basis": "later_korean_foundation_tradition",
+    "traditional_year": -2333,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "고조선의 전설적 건국자",
+    "reason": "Dangun Wanggeom is the legendary founder of Gojoseon in later Korean historical tradition. The conventional 2333 BCE foundation date is preserved only as a traditional-year association; it is not treated as a verified reign boundary, and no secure contemporary personal chronology exists.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or traditional overlay is enabled."
   }
 ]
