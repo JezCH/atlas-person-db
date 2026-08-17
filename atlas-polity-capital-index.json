@@ -1,0 +1,31 @@
+{
+  "schema": "atlas-polity-capital-index/v1",
+  "description": "Reviewed polity-capital history used only to place Person Activities on the spacetime view. Empty by design until capital periods are source-reviewed; the UI must leave unresolved placements unresolved rather than infer from names, modern countries, birthplace or travel.",
+  "placement_rule": "Use the capital of the Activity's linked Polity for the overlapping historical period. A capital change may split only the visual placement, never the authoritative Activity.",
+  "region_order": [
+    "americas",
+    "europe",
+    "africa",
+    "west-asia",
+    "south-asia",
+    "central-asia",
+    "southeast-asia",
+    "oceania",
+    "east-asia"
+  ],
+  "record_contract": {
+    "polity_id": "authoritative atlas_v2.polities UUID",
+    "capital_periods": [
+      {
+        "start_year": "historical integer year or null; year 0 forbidden",
+        "end_year": "historical integer year or null; year 0 forbidden",
+        "capital_name": "reviewed human-readable capital label",
+        "capital_place_id": "future first-class Place UUID or null",
+        "region_code": "one of region_order",
+        "confidence": "well_established | likely | speculative | disputed | unknown",
+        "source_refs": ["one or more reviewed source identifiers"]
+      }
+    ]
+  },
+  "records": []
+}

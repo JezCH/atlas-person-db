@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const DOMAIN_ORDER = ["dashboard", "persons", "polities", "places", "events", "sources", "geometry"];
+  const DOMAIN_ORDER = ["dashboard", "persons", "spacetime", "polities", "places", "events", "sources", "geometry"];
   const DOMAINS = Object.freeze({
     dashboard: {
       label: "Dashboard",
@@ -17,6 +17,15 @@
       eyebrow: "PERSON-CENTERED DATASET",
       status: "READY",
       summary: "Person identity, historicity, names, descriptions, Activities and readable provenance are available."
+    },
+    spacetime: {
+      label: "시공간 인물도",
+      eyebrow: "PERSON SPACETIME ATLAS",
+      status: "READY / CAPITAL DATA GATED",
+      summary: "BC 수천 년부터 현재까지의 세로 시간축과 아메리카→동아시아 가로 공간축 위에 Person Activity를 배치합니다. 가로 위치는 해당 시기의 Polity 수도만 사용합니다.",
+      available: "현재 Person Activity의 정확한 시간축, 기존 시대구분, 수도 시계열 검증 계약, 겹침 방지 lane과 미확정 보존 경로가 연결되어 있습니다.",
+      missing: "현재 Person DB에는 first-class Polity 수도 시계열이 없으므로 source-reviewed 수도 기록이 없는 Activity는 위치 미확정으로 남습니다.",
+      principle: "인물 출생지·현대국가·이름으로 위치를 추정하지 않습니다. 수도가 바뀌면 Activity를 변형하지 않고 화면 배치 구간만 나눕니다."
     },
     polities: {
       label: "Polities",
@@ -65,6 +74,26 @@
     }
   });
 
+  function ensureSpacetimeNavButtons() {
+    const desktopNav = document.querySelector(".nav-list");
+    if (desktopNav && !desktopNav.querySelector('[data-atlas-domain="spacetime"]')) {
+      const button = document.createElement("button");
+      button.className = "nav-item";
+      button.dataset.atlasDomain = "spacetime";
+      button.innerHTML = "<span>⌗</span>시공간 인물도<small>사용 가능</small>";
+      desktopNav.querySelector('[data-atlas-domain="persons"]')?.insertAdjacentElement("afterend", button);
+    }
+    const mobileNav = document.querySelector(".mobile-nav");
+    if (mobileNav && !mobileNav.querySelector('[data-atlas-domain="spacetime"]')) {
+      const button = document.createElement("button");
+      button.dataset.atlasDomain = "spacetime";
+      button.innerHTML = "⌗ <span>시공간 인물도</span><small>사용 가능</small>";
+      mobileNav.querySelector('[data-atlas-domain="persons"]')?.insertAdjacentElement("afterend", button);
+    }
+  }
+
+  ensureSpacetimeNavButtons();
+
   const mainArea = document.querySelector(".main-area");
   const topbar = mainArea?.querySelector(":scope > .topbar");
   const personView = document.getElementById("personMainView");
@@ -96,6 +125,7 @@
   topbar.insertAdjacentElement("afterend", shell);
 
   let currentDomain = "persons";
+  let spacetimeAssetsPromise = null;
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -107,7 +137,7 @@
   }
 
   function statusClass(status) {
-    if (status === "READY") return "is-ready";
+    if (String(status).startsWith("READY")) return "is-ready";
     if (String(status).includes("PARTIAL")) return "is-partial";
     return "is-future";
   }
@@ -126,6 +156,7 @@
   function domainHtml(key) {
     const domain = DOMAINS[key];
     if (!domain) return "";
+    if (key === "spacetime") return '<div id="personSpacetimeMount" class="person-spacetime-mount"></div>';
     const dashboard = key === "dashboard" ? dashboardHtml() : "";
     return `<div class="authority-shell-head card">
       <div><p class="eyebrow">${escapeHtml(domain.eyebrow)}</p><h2>${escapeHtml(domain.label)}</h2><p>${escapeHtml(domain.summary)}</p></div>
@@ -137,6 +168,61 @@
       <article class="card"><small>NOT AUTHORITATIVE YET</small><h3>아직 없는 surface</h3><p>${escapeHtml(domain.missing)}</p></article>
       <article class="card"><small>AUTHORITY RULE</small><h3>구조 원칙</h3><p>${escapeHtml(domain.principle)}</p></article>
     </section>`}`;
+  }
+
+  function appendStylesheetOnce(href) {
+    if (document.querySelector(`link[data-atlas-asset="${href}"]`)) return;
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = href;
+    link.dataset.atlasAsset = href;
+    document.head.append(link);
+  }
+
+  function loadScriptOnce(src, ready) {
+    if (typeof ready === "function" && ready()) return Promise.resolve();
+    const existing = document.querySelector(`script[data-atlas-asset="${src}"]`);
+    if (existing) return new Promise((resolve, reject) => {
+      if (typeof ready === "function" && ready()) return resolve();
+      existing.addEventListener("load", resolve, { once: true });
+      existing.addEventListener("error", reject, { once: true });
+    });
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.dataset.atlasAsset = src;
+      script.addEventListener("load", resolve, { once: true });
+      script.addEventListener("error", () => reject(new Error(`ATLAS_ASSET_LOAD_FAILED: ${src}`)), { once: true });
+      document.body.append(script);
+    });
+  }
+
+  function ensureSpacetimeAssets() {
+    if (window.ATLAS_PERSON_SPACETIME_VIEW) return Promise.resolve(window.ATLAS_PERSON_SPACETIME_VIEW);
+    if (spacetimeAssetsPromise) return spacetimeAssetsPromise;
+    appendStylesheetOnce("./atlas-person-spacetime-view.css?v=20260817-spacetime-v1");
+    spacetimeAssetsPromise = loadScriptOnce("./atlas-person-spacetime-model.js?v=20260817-spacetime-v1", () => Boolean(window.ATLAS_PERSON_SPACETIME_MODEL))
+      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20260817-spacetime-v1", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
+      .then(() => window.ATLAS_PERSON_SPACETIME_VIEW)
+      .catch((error) => {
+        spacetimeAssetsPromise = null;
+        throw error;
+      });
+    return spacetimeAssetsPromise;
+  }
+
+  function activateSpacetime() {
+    const mount = document.getElementById("personSpacetimeMount");
+    if (!mount) return;
+    mount.innerHTML = '<section class="card" style="padding:24px"><strong>시공간 인물도 모듈 준비 중</strong></section>';
+    ensureSpacetimeAssets().then((view) => {
+      if (currentDomain === "spacetime") view?.activate?.();
+    }).catch((error) => {
+      console.error(error);
+      if (currentDomain === "spacetime" && document.getElementById("personSpacetimeMount")) {
+        document.getElementById("personSpacetimeMount").innerHTML = `<section class="card" style="padding:24px"><strong>시공간 인물도 모듈을 불러오지 못했습니다.</strong><p>${escapeHtml(error?.message || error)}</p></section>`;
+      }
+    });
   }
 
   function setNavigationActive(domain) {
@@ -168,7 +254,7 @@
   function setMobileSearchEnabled(enabled, label) {
     if (!mobileSearch) return;
     mobileSearch.disabled = !enabled;
-    mobileSearch.placeholder = enabled ? mobileSearchPlaceholder : `${label}: first-class 검색 surface 준비 전`;
+    mobileSearch.placeholder = enabled ? mobileSearchPlaceholder : `${label}: 전용 검색 사용`;
     if (!enabled) {
       if (mobileSearchClear) mobileSearchClear.hidden = true;
       if (mobileSearchCount) mobileSearchCount.textContent = "";
@@ -197,6 +283,7 @@
       if (window.location.hash !== target) history.pushState(null, "", target);
     }
     window.dispatchEvent(new CustomEvent("atlas-authority-domain-changed", { detail: { domain: next } }));
+    if (next === "spacetime") activateSpacetime();
   }
 
   function handleNavigationClick(event) {
