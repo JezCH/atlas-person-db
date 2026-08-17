@@ -1,0 +1,78 @@
+name: ATLAS Spacetime Production Audit
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/atlas-spacetime-production-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch current public Production projections
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail-with-body --silent --show-error https://atlas-person-db.vercel.app/api/atlas-person-read -o person-read.json
+          curl --fail-with-body --silent --show-error https://atlas-person-db.vercel.app/atlas-polity-spatial-index.json -o spatial-index.json
+          jq -e '.ok == true and (.persons | type == "array")' person-read.json >/dev/null
+          jq -e '.schema == "atlas-polity-spatial-index/v1"' spatial-index.json >/dev/null
+      - name: Build exact live spatial coverage audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs=require('fs');
+          const read=JSON.parse(fs.readFileSync('person-read.json','utf8'));
+          const index=JSON.parse(fs.readFileSync('spatial-index.json','utf8'));
+          const persons=Array.isArray(read.persons)?read.persons:[];
+          const direct=new Map(Object.entries(index.polity_geography||{}));
+          const capitals=new Map((index.capital_records||[]).map(r=>[String(r.polity_id||''),r]).filter(([id])=>id));
+          const review=new Map((index.review_queue||[]).map(r=>[String(r.polity_id||''),r]).filter(([id])=>id));
+          const live=new Map();
+          const chronology={year_zero:[],missing_both:[],incomplete:[],reversed:[]};
+          let activityCount=0;
+          const pName=p=>String(p?.display_name||p?.preferred_name_ko||p?.canonical_name_en||p?.id||'인물 미상');
+          const polityName=p=>String(p?.display_name||p?.preferred_name_ko||p?.canonical_name_en||p?.canonical_key||p?.id||'정치체 미상');
+          const regionOf=r=>typeof r==='string'?r:String(r?.region_code||r?.region||'');
+          for(const person of persons){
+            for(const a of person.activity_summaries||[]){
+              activityCount++;
+              const p=a?.polity||{};const id=String(p.id||'').trim();
+              if(id){
+                if(!live.has(id))live.set(id,{polity_id:id,polity_name:polityName(p),activity_count:0,person_ids:new Set(),examples:[]});
+                const x=live.get(id);x.activity_count++;x.person_ids.add(String(person.id||''));
+                if(x.examples.length<12)x.examples.push({person_id:person.id||null,person_name:pName(person),activity_id:a.id||null,start_year:a?.start?.year??null,end_year:a?.end?.year??null});
+              }
+              const s=a?.start?.year,e=a?.end?.year;
+              const ref={person_id:person.id||null,person_name:pName(person),activity_id:a.id||null,polity_id:id||null,polity_name:polityName(p),start_year:s??null,end_year:e??null};
+              if(s===0||e===0)chronology.year_zero.push(ref);
+              if(!Number.isInteger(s)&&!Number.isInteger(e))chronology.missing_both.push(ref);
+              else if(!Number.isInteger(s)||!Number.isInteger(e))chronology.incomplete.push(ref);
+              else if(s>e)chronology.reversed.push(ref);
+            }
+          }
+          const mapped=[],capitalFallback=[],reviewQueue=[],missing=[];
+          for(const raw of live.values()){
+            const item={...raw,person_count:raw.person_ids.size};delete item.person_ids;
+            if(direct.has(item.polity_id))mapped.push({...item,placement_basis:'polity_geography',region_code:regionOf(direct.get(item.polity_id))});
+            else if(capitals.has(item.polity_id))capitalFallback.push({...item,placement_basis:'capital',capital_period_count:Array.isArray(capitals.get(item.polity_id)?.capital_periods)?capitals.get(item.polity_id).capital_periods.length:0});
+            else if(review.has(item.polity_id))reviewQueue.push({...item,placement_basis:'review_queue',reason:review.get(item.polity_id)?.reason||review.get(item.polity_id)?.review_note||null});
+            else missing.push({...item,placement_basis:'missing'});
+          }
+          for(const rows of [mapped,capitalFallback,reviewQueue,missing])rows.sort((a,b)=>b.activity_count-a.activity_count||a.polity_name.localeCompare(b.polity_name));
+          const audit={schema:'atlas-spacetime-production-audit/v1',generated_at:new Date().toISOString(),production_authority:read.authority||null,counts:{persons:persons.length,activities:activityCount,live_polities:live.size,direct_mapped_live_polities:mapped.length,capital_fallback_live_polities:capitalFallback.length,review_queue_live_polities:reviewQueue.length,missing_live_polities:missing.length,missing_activities:missing.reduce((n,x)=>n+x.activity_count,0),chronology_year_zero:chronology.year_zero.length,chronology_missing_both:chronology.missing_both.length,chronology_incomplete:chronology.incomplete.length,chronology_reversed:chronology.reversed.length,static_direct_records:direct.size,static_capital_records:capitals.size,static_review_records:review.size},missing_polities:missing,live_review_queue:reviewQueue,live_capital_fallback:capitalFallback,live_direct_mapped:mapped,chronology_issues:chronology};
+          fs.writeFileSync('spacetime-production-audit.json',JSON.stringify(audit,null,2));
+          console.log(JSON.stringify(audit.counts,null,2));
+          NODE
+      - name: Upload compact audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-spacetime-production-audit-${{ github.sha }}
+          path: spacetime-production-audit.json
+          retention-days: 30
