@@ -13,7 +13,7 @@ test('era navigation consumes the rendered era bands instead of creating a secon
   assert.match(navSource, /aria-label/);
   assert.match(navSource, /atlasEra/);
   assert.doesNotMatch(navSource, /BC 480|AD 499|AD 1492|AD 1750|AD 1914|AD 1945/);
-  assert.match(tableSource, /const ERAS = \[/);
+  assert.match(tableSource, /const ERAS = Object\.freeze\(\[/);
 });
 
 test('era navigation remains a presentation-only enhancement on the Person Main render lifecycle', () => {
