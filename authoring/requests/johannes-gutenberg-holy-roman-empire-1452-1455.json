@@ -1,0 +1,42 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:johannes-gutenberg:holy-roman-empire:printer-inventor:1452-1455:v1",
+  "person": {
+    "canonical_name_en": "Johannes Gutenberg",
+    "display_name_ko": "요하네스 구텐베르크"
+  },
+  "polity": {
+    "canonical_name_en": "Holy Roman Empire",
+    "display_name_ko": "신성 로마 제국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Printer and inventor",
+    "role_display_name_ko": "인쇄업자·발명가",
+    "start_year": 1452,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 1455,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Johannes Gutenberg's most securely bounded representative activity is the production of the 42-line Gutenberg Bible in Mainz between 1452 and 1455. ATLAS records this documented printing phase under the higher-order Holy Roman Empire polity and does not invent a lifelong professional chronology from the less precisely dated stages of his technical development."
+  },
+  "sources": [
+    {
+      "title": "The Gutenberg Bibles — Gutenberg Museum Mainz",
+      "canonical_url": "https://www.mainz.de/en/microsite/gutenberg-museum/Forschung_Sammlung_/Gutenberg_Bibeln",
+      "citation_text": "The Gutenberg Museum states that Gutenberg created the two-volume 42-line Bible between 1452 and 1455 with numerous assistants.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "Gutenberg's invention — City of Mainz / Gutenberg.de",
+      "canonical_url": "https://mainz.de/en/microsite/gutenberg/erfindung/",
+      "citation_text": "The City of Mainz's Gutenberg resource describes Gutenberg as an inventor and media revolutionary and explains his movable-metal-type printing process.",
+      "source_type": "government_web"
+    }
+  ]
+}
