@@ -1,0 +1,42 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:charles-martel:frankish-kingdom:mayor-palace:718-741:v1",
+  "person": {
+    "canonical_name_en": "Charles Martel",
+    "display_name_ko": "카를 마르텔"
+  },
+  "polity": {
+    "canonical_name_en": "Frankish Kingdom",
+    "display_name_ko": "프랑크 왕국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Mayor of the Palace",
+    "role_display_name_ko": "궁재",
+    "start_year": 718,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 741,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Charles Martel was the Carolingian mayor of the palace who became the effective ruler of the Frankish realm while Merovingian kings retained nominal kingship. His power developed through the civil conflicts after Pippin II's death; by 718-719 he had consolidated authority across Austrasia and Neustria, and he governed until his death in 741, including a period after 737 when no Frankish king was installed. ATLAS therefore binds him to the higher-order Frankish Kingdom with governs + de_facto_rule rather than falsely styling him King of the Franks. The start is represented as c.718 because consolidation over the whole Frankish realm was a process rather than a single uncontested accession event."
+  },
+  "sources": [
+    {
+      "title": "Carolingian Era — Oxford Bibliographies in Medieval Studies",
+      "canonical_url": "https://academic.oup.com/reference/62384/reference-article-abstract/555061229",
+      "citation_text": "Oxford Bibliographies describes the Carolingian family as rising through the mayoralty and states that Charles Martel overcame opposition and ruled as mayor until 741, at times without a king on the throne.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Charles Martel — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/people/history/french-history-biographies/charles-martel",
+      "citation_text": "The reference describes Charles as undisputed leader of Austrasia by 717 and as claiming hegemony over the whole Frankish kingdom after extending control over Neustria in 718-719.",
+      "source_type": "reference_web"
+    }
+  ]
+}
