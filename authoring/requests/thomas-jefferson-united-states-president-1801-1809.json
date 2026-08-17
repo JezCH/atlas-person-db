@@ -1,0 +1,36 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:thomas-jefferson:united-states:president:1801-1809:v1",
+  "person": {
+    "canonical_name_en": "Thomas Jefferson",
+    "display_name_ko": "토머스 제퍼슨"
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1801,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1809,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Thomas Jefferson was the third President of the United States and served two presidential terms from 1801 through 1809. ATLAS records that presidential term rather than his earlier diplomatic, cabinet, vice-presidential, or revolutionary activity."
+  },
+  "sources": [
+    {
+      "title": "Thomas Jefferson: A Resource Guide — Library of Congress",
+      "canonical_url": "https://guides.loc.gov/thomas-jefferson",
+      "citation_text": "The Library of Congress identifies Thomas Jefferson as the third president of the United States and dates his presidency to 1801-09.",
+      "source_type": "government_web"
+    }
+  ]
+}

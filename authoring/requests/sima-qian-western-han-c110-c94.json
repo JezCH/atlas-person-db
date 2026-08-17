@@ -1,0 +1,42 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sima-qian:western-han:historian:c110-c94:v1",
+  "person": {
+    "canonical_name_en": "Sima Qian",
+    "display_name_ko": "사마천"
+  },
+  "polity": {
+    "canonical_name_en": "Western Han",
+    "display_name_ko": "전한"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Historian",
+    "role_display_name_ko": "역사가",
+    "start_year": -110,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -94,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sima Qian was a Western Han imperial official and historian who continued the comprehensive historical project conceived by his father Sima Tan. Sources place Sima Tan's death in 110 BCE and the completion of Sima Qian's Shiji in the early 90s BCE, probably around 94 BCE. ATLAS therefore records c.110-c.94 as the representative composition phase of his historical work, using active_in and intellectual_activity rather than pretending that these approximate literary boundaries are an exact court-office term."
+  },
+  "sources": [
+    {
+      "title": "Timeline of Chinese History, Art, and Culture — Smithsonian National Museum of Asian Art",
+      "canonical_url": "https://asia-archive.si.edu/learn/for-educators/teaching-china-with-the-smithsonian/interactives/timelines/timeline-of-chinese-history-art-and-culture/",
+      "citation_text": "The Smithsonian identifies Sima Qian (ca.145-ca.87 BCE) as a Han imperial official and historian best known for composing the Records of the Grand Historian, begun by his father Sima Tan.",
+      "source_type": "scholarly_web"
+    },
+    {
+      "title": "Sima Qian — Research Centre for Translation, Chinese University of Hong Kong",
+      "canonical_url": "https://www.cuhk.edu.hk/rct/renditions/authors/simaq.html",
+      "citation_text": "CUHK states that after Sima Tan's death in 110 BCE, Sima Qian took up the historical project and spent the next twenty-some years bringing it to completion.",
+      "source_type": "scholarly_web"
+    }
+  ]
+}

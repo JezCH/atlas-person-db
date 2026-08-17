@@ -1,0 +1,42 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:leif-erikson:norse-greenland:explorer:c1000:v1",
+  "person": {
+    "canonical_name_en": "Leif Erikson",
+    "display_name_ko": "레이프 에이릭손"
+  },
+  "polity": {
+    "canonical_name_en": "Norse Greenland",
+    "display_name_ko": "노르드계 그린란드"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Explorer",
+    "role_display_name_ko": "탐험가",
+    "start_year": 1000,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1000,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Leif Erikson is recorded in the Vinland saga tradition as leading a westward expedition from Norse Greenland around AD 1000. Archaeology independently establishes a Norse exploration base at L'Anse aux Meadows at about the same time, while Parks Canada and UNESCO caution that the precise identification of the site with Leif's own camp rests partly on the later sagas. ATLAS therefore records only a conservative c.1000 exploration Activity, uses active_in rather than formal office or rule, and associates him with the Greenland Norse community from which the expedition sailed."
+  },
+  "sources": [
+    {
+      "title": "L'Anse aux Meadows National Historic Site — Parks Canada",
+      "canonical_url": "https://parks.canada.ca/culture/spm-whs/sites-canada/sec02a",
+      "citation_text": "Parks Canada states that about fifteen years after reports of lands west of Greenland, Leif Eiriksson wintered at a settlement identified in the tradition as Leif's Camp around AD 1000.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "L'Anse aux Meadows National Historic Site — UNESCO World Heritage Centre",
+      "canonical_url": "https://whc.unesco.org/en/list/4",
+      "citation_text": "UNESCO states that the Vinland Sagas document voyages by Leif Erikson and other Norse explorers westward from Iceland and Greenland, while the site provides archaeological evidence of Norse presence in North America.",
+      "source_type": "scholarly_web"
+    }
+  ]
+}
