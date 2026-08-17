@@ -1,0 +1,42 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gojong-of-korea:joseon:king:1863-1897:v1",
+  "person": {
+    "canonical_name_en": "Gojong of Korea",
+    "display_name_ko": "고종"
+  },
+  "polity": {
+    "canonical_name_en": "Joseon",
+    "display_name_ko": "조선"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1863,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1897,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gojong succeeded to the Joseon throne in 1863. In October 1897 he assumed the imperial title and the state name Daehan (Korean Empire) was proclaimed. ATLAS therefore ends the Joseon kingship Activity in 1897 and records his imperial rule as a separate Activity rather than flattening the polity and title transition."
+  },
+  "sources": [
+    {
+      "title": "고종 — 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0003939",
+      "citation_text": "The Encyclopedia of Korean Culture identifies Gojong as Joseon's 26th king and the first emperor of the Korean Empire, with overall rule from 1863 to 1907.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "국호를 대한으로 하고 임금을 황제로 칭한다고 선포하다 — 조선왕조실록",
+      "canonical_url": "https://sillok.history.go.kr/id/kza_13410013_002",
+      "citation_text": "The Veritable Records for 13 October 1897 record the proclamation of the state name Daehan and the emperor title, supporting the split between Gojong's Joseon kingship and Korean Empire emperorship.",
+      "source_type": "government_web"
+    }
+  ]
+}

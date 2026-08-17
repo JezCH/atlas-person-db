@@ -1,0 +1,36 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:geunchogo:baekje:king:346-375:v1",
+  "person": {
+    "canonical_name_en": "Geunchogo of Baekje",
+    "display_name_ko": "근초고왕"
+  },
+  "polity": {
+    "canonical_name_en": "Baekje",
+    "display_name_ko": "백제"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 346,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 375,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Geunchogo was the 13th king of Baekje and reigned from 346 to 375. His reign is conventionally associated with major territorial expansion and stronger royal authority. ATLAS records the sovereign reign only."
+  },
+  "sources": [
+    {
+      "title": "근초고왕 — 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0007465",
+      "citation_text": "The Encyclopedia of Korean Culture identifies Geunchogo as Baekje's 13th king and gives his reign as 346–375.",
+      "source_type": "academic_reference"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jinheung:silla:king:540-576:v1",
+  "person": {
+    "canonical_name_en": "Jinheung of Silla",
+    "display_name_ko": "진흥왕"
+  },
+  "polity": {
+    "canonical_name_en": "Silla",
+    "display_name_ko": "신라"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 540,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 576,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Jinheung was the 24th king of Silla and reigned from 540 to 576. His reign saw major territorial expansion, including control of the Han River basin, and is a central phase in Silla's rise. ATLAS records the sovereign reign only."
+  },
+  "sources": [
+    {
+      "title": "진흥왕 — 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0055013",
+      "citation_text": "The Encyclopedia of Korean Culture identifies Jinheung as Silla's 24th king and gives his reign as 540–576.",
+      "source_type": "academic_reference"
+    }
+  ]
+}
