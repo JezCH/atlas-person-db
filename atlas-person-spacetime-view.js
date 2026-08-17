@@ -3,6 +3,7 @@
 
   const reader = window.ATLAS_PERSON_BROWSER_READER;
   const model = window.ATLAS_PERSON_SPACETIME_MODEL;
+  const eraModel = window.ATLAS_PERSON_ERA_MODEL;
   const SPATIAL_INDEX_URL = "./atlas-polity-spatial-index.json";
   const MIN_CARD_HEIGHT = 48;
   const CARD_WIDTH = 164;
@@ -10,17 +11,8 @@
   const REGION_PADDING = 18;
   const MIN_REGION_WIDTH = 230;
   const DEFAULT_CENTURY_HEIGHT = 36;
-  const ERA_DEFINITIONS = Object.freeze([
-    Object.freeze({ code: "ancient", label: "고대", range: "BC 480 이전", start_year: null, end_year: -481 }),
-    Object.freeze({ code: "classical", label: "고전", range: "BC 480 – AD 499", start_year: -480, end_year: 499 }),
-    Object.freeze({ code: "medieval", label: "중세", range: "AD 500 – 1491", start_year: 500, end_year: 1491 }),
-    Object.freeze({ code: "early-modern", label: "근세", range: "AD 1492 – 1749", start_year: 1492, end_year: 1749 }),
-    Object.freeze({ code: "industrial-imperial", label: "산업·제국", range: "AD 1750 – 1913", start_year: 1750, end_year: 1913 }),
-    Object.freeze({ code: "world-wars", label: "세계대전", range: "AD 1914 – 1944", start_year: 1914, end_year: 1944 }),
-    Object.freeze({ code: "contemporary", label: "현대", range: "AD 1945 이후", start_year: 1945, end_year: null })
-  ]);
 
-  if (!reader || !model) {
+  if (!reader || !model || !eraModel) {
     console.error("ATLAS spacetime view could not initialize required dependencies");
     return;
   }
@@ -122,7 +114,7 @@
   function buildEraBands(range, pxPerYear) {
     const rangeStart = model.historicalYearToOrdinal(range.start_year);
     const rangeEnd = model.historicalYearToOrdinal(range.end_year);
-    return ERA_DEFINITIONS.map((era) => {
+    return eraModel.ERAS.map((era) => {
       const eraStart = era.start_year == null ? rangeStart : model.historicalYearToOrdinal(era.start_year);
       const eraEnd = era.end_year == null ? rangeEnd : model.historicalYearToOrdinal(era.end_year);
       if (eraStart == null || eraEnd == null) return null;

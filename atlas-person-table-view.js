@@ -1,6 +1,12 @@
 (() => {
   "use strict";
 
+  const eraModel = window.ATLAS_PERSON_ERA_MODEL;
+  if (!eraModel) {
+    console.error("ATLAS Person table view could not initialize shared era model");
+    return;
+  }
+
   const HEADER_CELLS = [
     ["person-table-col-era", "시대"],
     ["person-table-col-identity", "인물"],
@@ -12,16 +18,6 @@
   const BASIS_LABELS = Object.freeze({ reign: "재위", term: "임기", de_facto_rule: "실권 장악", military_activity: "군사 활동", religious_activity: "종교 활동", intellectual_activity: "학술 활동", artistic_activity: "예술 활동", general_activity: "주요 활동" });
   const CHRONOLOGY_LABELS = Object.freeze({ exact_as_recorded: null, reviewed_stage2_traditional_disputed: "연대 논쟁 있음", disputed: "연대 논쟁 있음", approximate: "연대 근사", inferred: "연대 추정", unknown: "연대 미확정" });
   const CONFIDENCE_LABELS = Object.freeze({ legacy_asserted: null, high: "신뢰도 높음", medium: "신뢰도 보통", low: "신뢰도 낮음", uncertain: "신뢰도 미확정" });
-  const ERAS = Object.freeze([
-    Object.freeze({ code: "ancient", label: "고대", range: "BC 480 이전", test: (year) => year < -480 }),
-    Object.freeze({ code: "classical", label: "고전", range: "BC 480 – AD 499", test: (year) => year < 500 }),
-    Object.freeze({ code: "medieval", label: "중세", range: "AD 500 – 1491", test: (year) => year < 1492 }),
-    Object.freeze({ code: "early-modern", label: "근세", range: "AD 1492 – 1749", test: (year) => year < 1750 }),
-    Object.freeze({ code: "industrial-imperial", label: "산업·제국", range: "AD 1750 – 1913", test: (year) => year < 1914 }),
-    Object.freeze({ code: "world-wars", label: "세계대전", range: "AD 1914 – 1944", test: (year) => year < 1945 }),
-    Object.freeze({ code: "contemporary", label: "현대", range: "AD 1945 이후", test: () => true })
-  ]);
-  const UNKNOWN_ERA = Object.freeze({ code: "unknown", label: "연대 미상", range: "주요 활동연도 미상" });
 
   function cleanCode(value) { return String(value || "").trim().replaceAll("_", " "); }
   function makeHeader() {
@@ -126,8 +122,7 @@
   function eraForRow(row) {
     const range = row?.querySelector?.(":scope > .person-table-range, :scope > .person-card-range");
     const year = chronologyYearFromRange(range?.textContent || "");
-    if (!Number.isInteger(year)) return UNKNOWN_ERA;
-    return ERAS.find((era) => era.test(year)) || UNKNOWN_ERA;
+    return eraModel.eraForYear(year);
   }
 
   function makeEraBand(era) {
