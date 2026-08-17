@@ -103,13 +103,13 @@ test('refresh preserves selected Person and forces authoritative detail refresh'
   assert.match(main, /\(!force && selectedPersonId === personId\)/);
 });
 
-test('mobile appbar search delegates to the Person Main search after Person shell installation', () => {
-  assert.match(mobile, /function personMainSearch\(\)/);
-  assert.match(mobile, /personSearch\.dispatchEvent\(new Event\("input", \{ bubbles: true \}\)\)/);
-  assert.match(mobile, /atlas-person-main-rendered/);
+test('mobile shell does not create a second Person search owner', () => {
+  assert.match(nav, /search\.id = "personMainSearch"/);
+  assert.match(nav, /atlas-person-search-change/);
   assert.match(main, /new CustomEvent\("atlas-person-main-rendered"/);
-  assert.match(nav, /id = "personMainSearch"/);
-  assert.match(mobile, /visiblePersonCount/);
+  assert.doesNotMatch(mobile, /personMainSearch|atlas-person-main-rendered|atlas-person-search-change|visiblePersonCount/);
+  assert.doesNotMatch(html, /mobileSearchInput|mobileSearchClear|mobileSearchCount/);
+  assert.match(html, /mobile-appbar-title/);
 });
 
 test('existing Activity authoring DOM is moved into a separate expandable tool instead of being recreated or deleted', () => {
