@@ -2,27 +2,43 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import fs from 'node:fs';
 
-const css = fs.readFileSync(new URL('../atlas-person-mobile-column-widths.css', import.meta.url), 'utf8');
+const geometryCss = fs.readFileSync(new URL('../atlas-person-table-alignment.css', import.meta.url), 'utf8');
+const compatibilityCss = fs.readFileSync(new URL('../atlas-person-mobile-column-widths.css', import.meta.url), 'utf8');
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 
-test('mobile table uses tighter era, person and year columns', () => {
-  assert.match(css, /@media \(max-width: 760px\)/);
-  assert.match(css, /--era-band-width:\s*38px/);
-  assert.match(css, /124px 108px minmax\(390px, 1fr\) 66px/);
-  assert.match(css, /@media \(max-width: 520px\)/);
-  assert.match(css, /--era-band-width:\s*32px/);
-  assert.match(css, /116px 104px minmax\(375px, 1fr\) 62px/);
-  assert.match(css, /white-space:\s*nowrap/);
+test('canonical geometry contract owns the effective mobile table widths', () => {
+  assert.match(geometryCss, /@media \(max-width: 760px\)/);
+  assert.match(geometryCss, /--era-band-width:\s*38px/);
+  assert.match(geometryCss, /--person-data-columns:\s*124px 108px minmax\(390px, 1fr\) 66px/);
+  assert.match(geometryCss, /--person-data-min-width:\s*688px/);
+  assert.match(geometryCss, /--person-table-min-width:\s*726px/);
+  assert.match(geometryCss, /@media \(max-width: 520px\)/);
+  assert.match(geometryCss, /--era-band-width:\s*32px/);
+  assert.match(geometryCss, /--person-data-columns:\s*116px 104px minmax\(375px, 1fr\) 62px/);
+  assert.match(geometryCss, /--person-data-min-width:\s*657px/);
+  assert.match(geometryCss, /--person-table-min-width:\s*689px/);
+  assert.match(geometryCss, /white-space:\s*nowrap/);
 });
 
-test('mobile table enlarges polity names inside Activity rows', () => {
-  assert.match(css, /\.person-table-activities \.person-card-activity-head b\s*\{[^}]*font-size:\s*12px/s);
+test('canonical geometry contract owns Activity subcolumns and mobile polity type size', () => {
+  assert.match(geometryCss, /--person-activity-columns:\s*minmax\(145px, 1\.15fr\) minmax\(135px, 1fr\) minmax\(125px, \.9fr\)/);
+  assert.match(geometryCss, /--person-activity-columns:\s*120px 105px 100px/);
+  assert.match(geometryCss, /--person-activity-columns:\s*115px 100px 96px/);
+  assert.match(geometryCss, /\.person-table-activities \.person-card-activity-head b\s*\{[^}]*font-size:\s*14px/s);
+  assert.match(geometryCss, /@media \(max-width: 760px\)[\s\S]*\.person-table-activities \.person-card-activity-head b\s*\{[^}]*font-size:\s*13px/s);
 });
 
-test('mobile width override loads after the base table stylesheet', () => {
+test('legacy mobile width asset is declaration-free during compatibility retirement', () => {
+  assert.doesNotMatch(compatibilityCss, /--era-band-width|--person-data-columns|grid-template-columns|min-width\s*:|font-size\s*:|white-space\s*:/);
+});
+
+test('canonical geometry contract loads after the base table and compatibility asset', () => {
   const base = 'atlas-person-table-view.css?v=20260816-era-band-v1';
-  const override = 'atlas-person-mobile-column-widths.css?v=20260816-mobile-widths-v2';
+  const compatibility = 'atlas-person-mobile-column-widths.css?v=20260816-mobile-widths-v2';
+  const geometry = 'atlas-person-table-alignment.css?v=20260816-table-alignment-v1';
   assert.ok(html.includes(base));
-  assert.ok(html.includes(override));
-  assert.ok(html.indexOf(base) < html.indexOf(override));
+  assert.ok(html.includes(compatibility));
+  assert.ok(html.includes(geometry));
+  assert.ok(html.indexOf(base) < html.indexOf(compatibility));
+  assert.ok(html.indexOf(compatibility) < html.indexOf(geometry));
 });

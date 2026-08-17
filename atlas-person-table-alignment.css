@@ -1,10 +1,13 @@
-/* Shared Person-table geometry contract.
-   Header, era groups, and every Person row must resolve against the same total width
-   so independent era groups cannot choose different column widths. */
+/* Canonical Person-table geometry contract.
+   This layer owns the effective table widths for desktop and responsive layouts.
+   Header, era groups, Person rows, and Activity subcolumns resolve from the same
+   variables so later presentation layers do not need width-specific overrides. */
 .person-card-grid.person-table-grid {
+  --era-band-width: 58px;
   --person-data-columns: minmax(200px, 1.1fr) minmax(165px, .85fr) minmax(500px, 3.45fr) 76px;
   --person-data-min-width: 940px;
   --person-table-min-width: 998px;
+  --person-activity-columns: minmax(145px, 1.15fr) minmax(135px, 1fr) minmax(125px, .9fr);
 }
 
 .person-table-head,
@@ -34,6 +37,11 @@
   grid-template-columns: var(--person-data-columns);
 }
 
+.person-table-activity-subhead,
+.person-table-activities .person-card-activity {
+  grid-template-columns: var(--person-activity-columns);
+}
+
 /* Polity is the primary Activity identity in the table, so give it the same
    visual weight as the Person name rather than the previous secondary-text size. */
 .person-table-activities .person-card-activity-head b {
@@ -43,9 +51,11 @@
 
 @media (max-width: 760px) {
   .person-card-grid.person-table-grid {
+    --era-band-width: 38px;
     --person-data-columns: 124px 108px minmax(390px, 1fr) 66px;
     --person-data-min-width: 688px;
     --person-table-min-width: 726px;
+    --person-activity-columns: 120px 105px 100px;
   }
 
   .person-table-activities .person-card-activity-head b {
@@ -55,8 +65,14 @@
 
 @media (max-width: 520px) {
   .person-card-grid.person-table-grid {
+    --era-band-width: 32px;
     --person-data-columns: 116px 104px minmax(375px, 1fr) 62px;
     --person-data-min-width: 657px;
     --person-table-min-width: 689px;
+    --person-activity-columns: 115px 100px 96px;
+  }
+
+  .person-table-range {
+    white-space: nowrap;
   }
 }
