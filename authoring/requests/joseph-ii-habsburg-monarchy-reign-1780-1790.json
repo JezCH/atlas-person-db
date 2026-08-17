@@ -13,7 +13,7 @@
   "activity": {
     "relation_type": "rules",
     "period_basis": "reign",
-    "role": "Sovereign",
+    "role": "Monarch",
     "role_display_name_ko": "군주",
     "start_year": 1780,
     "start_month": null,
@@ -27,7 +27,7 @@
     "end_calendar": "unspecified_historical",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "After Maria Theresa's death in 1780, Joseph II became the sole ruler of the Habsburg Monarchy and remained so until his death in 1790. ATLAS records this as a separate rules/reign Activity rather than extending the preceding co-regency across the entire 1765-1790 period. Joseph's simultaneous office as Holy Roman Emperor is historically distinct from this Habsburg Monarchy Activity."
+    "notes": "After Maria Theresa's death in 1780, Joseph II became the sole ruler of the Habsburg Monarchy and remained so until his death in 1790. ATLAS records this as a separate rules/reign Activity rather than extending the preceding co-regency across the entire 1765-1790 period. The existing generic Monarch / 군주 role is reused so this Activity does not create a duplicate role label. Joseph's simultaneous office as Holy Roman Emperor is historically distinct from this Habsburg Monarchy Activity."
   },
   "sources": [
     {

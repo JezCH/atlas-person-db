@@ -27,7 +27,7 @@
     "end_calendar": "gregorian",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "Tomáš Garrigue Masaryk was elected the first President of Czechoslovakia on 14 November 1918. He was subsequently elected under the constitutional order in 1920 and re-elected in 1927 and 1934, serving continuously until his abdication for health reasons on 14 December 1935. ATLAS records one continuous presidential Activity across those successive elections because there was no interruption in his tenure."
+    "notes": "Tomáš Garrigue Masaryk was elected the first President of Czechoslovakia on 14 November 1918. He was subsequently elected under the constitutional order in 1920 and re-elected in 1927 and 1934, serving without an out-of-office interval until he resigned for health reasons on 14 December 1935. ATLAS therefore records one continuous presidential Activity across the successive elections rather than splitting the same uninterrupted tenure into separate Activities."
   },
   "sources": [
     {
@@ -39,7 +39,7 @@
     {
       "title": "Osobnost v čele státu — Ministry of the Interior of the Czech Republic",
       "canonical_url": "https://mv.gov.cz/clanek/osobnost-v-cele-statu.aspx",
-      "citation_text": "The Czech Ministry of the Interior records Masaryk's fourth presidential election and states that he abdicated on 14 December 1935.",
+      "citation_text": "The Czech Ministry of the Interior records Masaryk's fourth presidential election and states that he resigned from the presidency on 14 December 1935.",
       "source_type": "government_web"
     },
     {
