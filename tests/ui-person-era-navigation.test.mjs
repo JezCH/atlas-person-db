@@ -16,7 +16,11 @@ test('era navigation consumes rendered era bands instead of creating a second ch
   assert.match(tableSource, /const ERAS = Object\.freeze\(\[/);
 });
 
-test('era navigation owns the visible Polity control and current-result status', () => {
+test('era navigation owns Person search, Polity filtering, and current-result status in one toolbar', () => {
+  assert.match(navSource, /person-era-search/);
+  assert.match(navSource, /search\.id = "personMainSearch"/);
+  assert.match(navSource, /controls\.append\(search, select, summary\)/);
+  assert.match(navSource, /atlas-person-search-change/);
   assert.match(navSource, /person-era-polity-filter/);
   assert.match(navSource, /모든 정치체/);
   assert.match(navSource, /인물 \$\{state\.visibleCount\}명 · 정치체 \$\{state\.visiblePolityCount\}개/);
@@ -24,6 +28,13 @@ test('era navigation owns the visible Polity control and current-result status',
   assert.match(navSource, /selectedPolityId/);
   assert.match(navSource, /polityOptions/);
   assert.doesNotMatch(html, /atlas-person-summary-counts\.js/);
+});
+
+test('era navigation keeps search available even when the current query has no era results', () => {
+  assert.match(navSource, /if \(!state\.entries\.length\)/);
+  assert.match(navSource, /현재 조건에 해당하는 시대가 없습니다/);
+  const zeroResultBody = navSource.slice(navSource.indexOf('if (!state.entries.length)'), navSource.indexOf('const preserved'));
+  assert.doesNotMatch(zeroResultBody, /nav\.remove|existing\?\.remove/);
 });
 
 test('era navigation remains a presentation enhancement on the Person Main render lifecycle', () => {
@@ -50,6 +61,7 @@ test('era navigation is sticky, responsive, and preserves horizontal era scrolli
   assert.match(navCss, /\.person-era-navigator\{position:sticky/);
   assert.match(navCss, /\.person-era-nav-top/);
   assert.match(navCss, /\.person-era-nav-track/);
+  assert.match(navCss, /\.person-era-search/);
   assert.match(navCss, /\.person-era-polity-filter/);
   assert.match(navCss, /\.person-era-jump-list\{[^}]*overflow-x:auto/);
   assert.match(navCss, /\.person-era-group\{scroll-margin-top:/);
@@ -60,10 +72,10 @@ test('era navigation is sticky, responsive, and preserves horizontal era scrolli
 
 test('era navigation assets load after era grouping/palette and before Person Main initializes', () => {
   const tableJs = 'atlas-person-table-view.js?v=20260816-era-band-v1';
-  const navJs = 'atlas-person-era-navigation.js?v=20260817-era-polity-toolbar-v1';
-  const mainJs = 'atlas-person-main.js?v=20260817-era-polity-toolbar-v1';
+  const navJs = 'atlas-person-era-navigation.js?v=20260817-era-search-toolbar-v1';
+  const mainJs = 'atlas-person-main.js?v=20260817-era-search-toolbar-v1';
   const paletteCss = 'atlas-person-era-palette.css?v=20260816-era-palette-v1';
-  const navCssAsset = 'atlas-person-era-navigation.css?v=20260817-era-polity-toolbar-v1';
+  const navCssAsset = 'atlas-person-era-navigation.css?v=20260817-era-search-toolbar-v1';
   const mobileCss = 'atlas-person-mobile-column-widths.css?v=20260816-mobile-widths-v2';
 
   for (const asset of [tableJs, navJs, mainJs, paletteCss, navCssAsset, mobileCss]) assert.ok(html.includes(asset));
