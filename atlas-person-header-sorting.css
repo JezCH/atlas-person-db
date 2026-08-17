@@ -1,0 +1,14 @@
+/* Direct sorting controls for the rendered Person table. Geometry remains owned by atlas-person-table-alignment.css. */
+.person-table-sort-button{display:inline-flex;width:100%;min-width:0;align-items:center;justify-content:flex-start;gap:5px;margin:0;padding:0;border:0;background:transparent;color:inherit;font:inherit;font-weight:inherit;letter-spacing:inherit;text-align:left;cursor:pointer}
+.person-table-sort-button:hover{color:#28344d}
+.person-table-sort-button:focus-visible{outline:2px solid #5967d966;outline-offset:2px;border-radius:4px}
+.person-table-sort-icon{flex:0 0 auto;font-size:9px;line-height:1;opacity:.42}
+.person-table-sort-button.is-active{color:#27344f}
+.person-table-sort-button.is-active .person-table-sort-icon{opacity:1}
+.person-table-head-cell.is-sort-active,.person-table-activity-subhead>span.is-sort-active{background:#e9edf6;color:#35415c}
+.person-table-activity-subhead>span.is-sortable{display:flex;align-items:center}
+.person-table-sort-flat .person-era-group-flat .person-era-band{padding:3px 2px}
+.person-table-sort-flat .person-era-group-flat .person-era-band>span{writing-mode:horizontal-tb;text-orientation:mixed;letter-spacing:0;line-height:1.05;font-size:9px;overflow-wrap:anywhere;word-break:break-all}
+.person-table-sort-flat .person-era-group-flat{border-bottom:1px solid #e5e9f1}
+@media(max-width:760px){.person-table-sort-button{gap:4px}.person-table-sort-icon{font-size:8px}.person-table-sort-flat .person-era-group-flat .person-era-band>span{font-size:8px}}
+@media(max-width:520px){.person-table-sort-button{gap:3px}.person-table-sort-icon{font-size:7px}.person-table-sort-flat .person-era-group-flat .person-era-band>span{font-size:7.5px}}
