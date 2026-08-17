@@ -68,7 +68,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p /tmp/atlas-p11-backfill/generated /tmp/atlas-p11-backfill/responses
+          mkdir -p /tmp/atlas-p11-backfill/generated \
+                   /tmp/atlas-p11-backfill/responses \
+                   /tmp/atlas-p11-backfill/payloads
 
           request_oidc() {
             local audience="$1"
@@ -77,14 +79,15 @@ jobs:
               "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${audience}" | jq -er '.value'
           }
 
-          call_json_with_retry() {
-            local endpoint="$1" audience="$2" payload="$3" output="$4" label="$5"
+          call_json_file_with_retry() {
+            local endpoint="$1" audience="$2" payload_file="$3" output="$4" label="$5"
+            [[ -s "$payload_file" ]] || { echo "Missing JSON payload file: ${payload_file}" >&2; return 1; }
             for attempt in $(seq 1 60); do
               local token status code
               token="$(request_oidc "$audience")"
               status="$(curl --silent --show-error --output "$output" --write-out '%{http_code}' \
                 --request POST -H 'content-type: application/json' -H "authorization: Bearer ${token}" \
-                --data "$payload" "$endpoint")"
+                --data-binary "@${payload_file}" "$endpoint")"
               if [[ "$status" == "200" ]]; then return 0; fi
               code="$(jq -r '.code // "UNKNOWN"' "$output" 2>/dev/null || printf 'UNKNOWN')"
               if [[ "$status" == "404" || ( "$status" == "409" && "$code" == "DEPLOYMENT_SHA_MISMATCH" ) ]]; then
@@ -100,8 +103,9 @@ jobs:
             return 1
           }
 
-          audit_payload="$(jq -cn --arg sha "$GITHUB_SHA" '{deployment_sha:$sha,mode:"full_stage2_baseline"}')"
-          call_json_with_retry "$AUDIT_ENDPOINT" "$AUDIT_AUDIENCE" "$audit_payload" /tmp/atlas-p11-backfill/before-audit.json "P11 pre-backfill audit"
+          audit_payload_file="/tmp/atlas-p11-backfill/payloads/audit.json"
+          jq -cn --arg sha "$GITHUB_SHA" '{deployment_sha:$sha,mode:"full_stage2_baseline"}' > "$audit_payload_file"
+          call_json_file_with_retry "$AUDIT_ENDPOINT" "$AUDIT_AUDIENCE" "$audit_payload_file" /tmp/atlas-p11-backfill/before-audit.json "P11 pre-backfill audit"
           jq -e --arg sha "$GITHUB_SHA" '
             .ok == true and .marker == "ATLAS_AUDIT_INVENTORY_V1" and
             .mode == "full_stage2_baseline" and .read_only == true and .committed == false and
@@ -135,9 +139,10 @@ jobs:
             plan_path="corrections/plans/${base}"
             for mode in dry_run apply; do
               output="/tmp/atlas-p11-backfill/responses/${base%.json}-${mode}.json"
-              payload="$(jq -cn --arg sha "$GITHUB_SHA" --arg path "$plan_path" --arg mode "$mode" --slurpfile plan "$plan" \
-                '{deployment_sha:$sha,plan_path:$path,mode:$mode,plan:$plan[0]}')"
-              call_json_with_retry "$CORRECTION_ENDPOINT" "$CORRECTION_AUDIENCE" "$payload" "$output" "${base} ${mode}"
+              payload_file="/tmp/atlas-p11-backfill/payloads/${base%.json}-${mode}.json"
+              jq -cn --arg sha "$GITHUB_SHA" --arg path "$plan_path" --arg mode "$mode" --slurpfile plan "$plan" \
+                '{deployment_sha:$sha,plan_path:$path,mode:$mode,plan:$plan[0]}' > "$payload_file"
+              call_json_file_with_retry "$CORRECTION_ENDPOINT" "$CORRECTION_AUDIENCE" "$payload_file" "$output" "${base} ${mode}"
               if [[ "$mode" == "dry_run" ]]; then
                 jq -e '.ok==true and .marker=="ATLAS_CORRECTION_MANIFEST_V2" and .schema=="atlas-correction-manifest/v2" and .dry_run==true and .committed==false' "$output" >/dev/null
               else
@@ -147,7 +152,7 @@ jobs:
             done
           done
 
-          call_json_with_retry "$AUDIT_ENDPOINT" "$AUDIT_AUDIENCE" "$audit_payload" /tmp/atlas-p11-backfill/after-audit.json "P11 post-backfill audit"
+          call_json_file_with_retry "$AUDIT_ENDPOINT" "$AUDIT_AUDIENCE" "$audit_payload_file" /tmp/atlas-p11-backfill/after-audit.json "P11 post-backfill audit"
           jq -e --slurpfile exceptions "$EXCEPTION_FILE" '
             .ok == true and .marker == "ATLAS_AUDIT_INVENTORY_V1" and
             .mode == "full_stage2_baseline" and .read_only == true and .committed == false and
