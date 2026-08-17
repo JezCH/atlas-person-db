@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import handlerModule from '../server/atlas-human-authoring-handler.js';
-const { createHumanAuthoringHandler, transportEnvelope } = handlerModule;
+const { createHumanAuthoringHandler, transportEnvelope, batchEnvelope } = handlerModule;
 const RUNTIME_SHA = 'a'.repeat(40);
 const AUTHORING_SHA = 'b'.repeat(40);
 function responseRecorder() { return { statusCode:0, headers:{}, body:'', setHeader(key,value){this.headers[key.toLowerCase()]=value;}, end(body){this.body=String(body||'');} }; }
@@ -57,4 +57,120 @@ test('GitHub fallback transport remains exact-runtime and exact-authoring SHA bo
 
 test('GitHub fallback envelope rejects paths outside reviewed authoring requests', () => {
   assert.throws(()=>transportEnvelope({transport_version:2,runtime_sha:RUNTIME_SHA,authoring_sha:AUTHORING_SHA,manifest_path:'tmp/request.json'}),/MANIFEST_PATH_NOT_ALLOWED/);
+});
+
+test('GitHub batch authoring authenticates, connects, and checks readiness once while preserving manifest order', async () => {
+  const res=responseRecorder();
+  let verifyCount=0;
+  let clientFactoryCount=0;
+  let readinessCount=0;
+  let serviceCount=0;
+  let endCount=0;
+  const seen=[];
+  const client={query:async()=>({rows:[],rowCount:0}),end:async()=>{endCount+=1;}};
+  const handler=createHumanAuthoringHandler({
+    env:env(),
+    verifyOidc:async(_token,options)=>{verifyCount+=1;assert.equal(options.expectedSha,AUTHORING_SHA);return {};},
+    clientFactory:async()=>{clientFactoryCount+=1;return client;},
+    inspectReadiness:async(seenClient)=>{readinessCount+=1;assert.equal(seenClient,client);return {ready:true};},
+    createService:({client:seenClient})=>{
+      serviceCount+=1;
+      assert.equal(seenClient,client);
+      return {
+        apply:async(request,context)=>{
+          seen.push({request,context});
+          return {
+            marker:'ATLAS_HUMAN_AUTHORING_V1',
+            schema:'atlas-human-authoring/v1',
+            request_id:request.request_id,
+            committed:true,
+            replay:false,
+            person_id:`person-${request.request_id}`,
+            polity_id:'q',
+            role_id:null,
+            relationship_id:`activity-${request.request_id}`,
+            source_ids:['s'],
+            result:{semantic_version:'v2-relation-full-temporal'}
+          };
+        }
+      };
+    }
+  });
+  const body={
+    operation:'apply_batch',
+    transport_version:2,
+    runtime_sha:RUNTIME_SHA,
+    authoring_sha:AUTHORING_SHA,
+    manifest_paths:['authoring/requests/a.json','authoring/requests/b.json'],
+    requests:[
+      {schema:'atlas-human-authoring/v1',request_id:'a'},
+      {schema:'atlas-human-authoring/v1',request_id:'b'}
+    ]
+  };
+  await handler({method:'POST',headers:{authorization:'Bearer oidc.jwt.token'},body},res);
+  assert.equal(res.statusCode,200);
+  const response=JSON.parse(res.body);
+  assert.equal(response.ok,true);
+  assert.equal(response.auth_method,'github_oidc');
+  assert.equal(response.marker,'ATLAS_HUMAN_AUTHORING_BATCH_V1');
+  assert.equal(response.schema,'atlas-human-authoring-batch/v1');
+  assert.equal(response.committed,true);
+  assert.equal(response.count,2);
+  assert.equal(response.results.length,2);
+  assert.equal(verifyCount,1);
+  assert.equal(clientFactoryCount,1);
+  assert.equal(readinessCount,1);
+  assert.equal(serviceCount,1);
+  assert.equal(endCount,1);
+  assert.deepEqual(seen.map(({request})=>request.request_id),['a','b']);
+  assert.deepEqual(seen.map(({context})=>context.transport.manifest_path),['authoring/requests/a.json','authoring/requests/b.json']);
+  assert.ok(seen.every(({context})=>context.transport.kind==='github_oidc'));
+  assert.ok(seen.every(({context})=>context.transport.runtime_sha===RUNTIME_SHA));
+  assert.ok(seen.every(({context})=>context.transport.authoring_sha===AUTHORING_SHA));
+});
+
+test('batch envelope rejects unsafe shape before any write', () => {
+  assert.throws(()=>batchEnvelope({
+    operation:'apply_batch',
+    transport_version:2,
+    runtime_sha:RUNTIME_SHA,
+    authoring_sha:AUTHORING_SHA,
+    manifest_paths:['authoring/requests/a.json'],
+    requests:[{},{}]
+  }),/BATCH_LENGTH_MISMATCH/);
+  assert.throws(()=>batchEnvelope({
+    operation:'apply_batch',
+    transport_version:2,
+    runtime_sha:RUNTIME_SHA,
+    authoring_sha:AUTHORING_SHA,
+    manifest_paths:['tmp/a.json'],
+    requests:[{}]
+  }),/MANIFEST_PATH_NOT_ALLOWED/);
+  assert.throws(()=>batchEnvelope({
+    operation:'apply_batch',
+    transport_version:2,
+    runtime_sha:RUNTIME_SHA,
+    authoring_sha:AUTHORING_SHA,
+    manifest_paths:Array.from({length:101},(_,i)=>`authoring/requests/p-${i}.json`),
+    requests:Array.from({length:101},()=>({}))
+  }),/BATCH_SIZE_INVALID/);
+});
+
+test('batch operation is GitHub OIDC only', async () => {
+  const res=responseRecorder();
+  const handler=createHumanAuthoringHandler({env:env(),clientFactory:async()=>fakeClient(),inspectReadiness:async()=>({ready:true})});
+  await handler({
+    method:'POST',
+    headers:{authorization:'Bearer mutation-secret'},
+    body:{
+      operation:'apply_batch',
+      transport_version:2,
+      runtime_sha:RUNTIME_SHA,
+      authoring_sha:AUTHORING_SHA,
+      manifest_paths:['authoring/requests/a.json'],
+      requests:[{}]
+    }
+  },res);
+  assert.equal(res.statusCode,401);
+  assert.equal(JSON.parse(res.body).code,'HUMAN_AUTHORING_BATCH_GITHUB_OIDC_REQUIRED');
 });
