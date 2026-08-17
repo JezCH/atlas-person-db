@@ -15,7 +15,7 @@
   };
 
   function hasDom() {
-    return typeof document?.querySelector === "function" && typeof document?.createElement === "function";
+    return typeof document !== "undefined" && typeof document.querySelector === "function" && typeof document.createElement === "function";
   }
 
   function directEraBand(group) {
@@ -101,7 +101,6 @@
 
     const list = document.createElement("div");
     list.className = "person-era-jump-list";
-    list.setAttribute("role", "list");
     list.setAttribute("aria-label", "현재 결과의 시대 목록");
 
     const next = makeButton("person-era-nav-step person-era-nav-next", "›", "다음 시대로 이동");
@@ -123,7 +122,6 @@
       button.type = "button";
       button.className = `person-era-jump person-era-${entry.code}`;
       button.dataset.era = entry.code;
-      button.setAttribute("role", "listitem");
       const description = [entry.label, entry.range, `${entry.count}명`].filter(Boolean).join(" · ");
       button.setAttribute("aria-label", `${description} 위치로 이동`);
       button.title = description;
@@ -226,11 +224,16 @@
     if (!state.nav || !code || !state.targetsByCode.has(code)) return;
     state.activeCode = code;
     const buttons = state.nav.querySelectorAll("button[data-era]");
+    let activeButton = null;
     for (const button of buttons) {
       const active = button.dataset.era === code;
       button.classList.toggle("is-current", active);
-      if (active) button.setAttribute("aria-current", "location");
-      else button.removeAttribute("aria-current");
+      if (active) {
+        activeButton = button;
+        button.setAttribute("aria-current", "location");
+      } else {
+        button.removeAttribute("aria-current");
+      }
     }
 
     const entry = entryForCode(code);
@@ -246,7 +249,6 @@
     if (previous) previous.disabled = index <= 0;
     if (next) next.disabled = index < 0 || index >= state.entries.length - 1;
 
-    const activeButton = state.nav.querySelector(`button[data-era="${CSS.escape?.(code) || code}"]`);
     activeButton?.scrollIntoView?.({ behavior: "auto", block: "nearest", inline: "nearest" });
   }
 
