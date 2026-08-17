@@ -1,0 +1,42 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mencius:state-of-qi:philosopher-political-thinker:c319-c314:v1",
+  "person": {
+    "canonical_name_en": "Mencius",
+    "display_name_ko": "맹자"
+  },
+  "polity": {
+    "canonical_name_en": "State of Qi",
+    "display_name_ko": "제나라"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Philosopher and political thinker",
+    "role_display_name_ko": "철학자·정치사상가",
+    "start_year": -319,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -314,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Mencius was an itinerant Warring States philosopher rather than a ruler. The received Mencius preserves repeated interviews with King Xuan of Qi, while modern scholarship dates Mencius' securely datable late-life encounters with rulers to approximately 323-314 BCE. Because King Xuan's reign began in 319 BCE, ATLAS uses c.319-c.314 as a deliberately conservative overlap window for Mencius' attested intellectual-political activity at the Qi court. The relation is active_in; the record does not assert continuous formal office throughout this span, and both boundaries are explicitly approximate."
+  },
+  "sources": [
+    {
+      "title": "Mencius (Mengzi) — Internet Encyclopedia of Philosophy",
+      "canonical_url": "https://iep.utm.edu/mencius/",
+      "citation_text": "The IEP notes that Mencius' encounters with rulers in old age can be dated between 323 and 314 BCE and that he is traditionally associated with service in Qi.",
+      "source_type": "scholarly_web"
+    },
+    {
+      "title": "Mengzi: Liang Hui Wang I — Chinese Text Project",
+      "canonical_url": "https://ctext.org/mengzi/liang-hui-wang-i",
+      "citation_text": "The transmitted text directly records Mencius in dialogue with King Xuan of Qi on royal government.",
+      "source_type": "scholarly_web"
+    }
+  ]
+}
