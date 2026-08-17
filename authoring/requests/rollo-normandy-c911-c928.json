@@ -1,0 +1,42 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:rollo:normandy:princeps-normannorum:c911-c928:v1",
+  "person": {
+    "canonical_name_en": "Rollo",
+    "display_name_ko": "롤로"
+  },
+  "polity": {
+    "canonical_name_en": "Normandy",
+    "display_name_ko": "노르망디"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Princeps Normannorum",
+    "role_display_name_ko": "노르만인의 지도자",
+    "start_year": 911,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 928,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Rollo was the Viking leader whose possession of Rouen and the surrounding district was legitimized by Charles the Simple around 911, forming the political nucleus that developed into Normandy. Contemporary evidence calls him princeps Normannorum ('leader of the Normans'); calling him 'Duke of Normandy' is anachronistic for his own lifetime. The end of his rule is not securely dated: Rollo is still attested in 928, while his son William is leading the Normans by 933. ATLAS therefore uses c.911-c.928 as a conservative representative ruling window, with both boundaries approximate, rather than inventing a precise abdication or death year."
+  },
+  "sources": [
+    {
+      "title": "The Henry Project — Rollo of Normandy",
+      "canonical_url": "https://fasg.org/projects/henryproject/data/rollo000.htm",
+      "citation_text": "The Henry Project identifies Rollo as princeps Nortmannorum, explains that 'Duke of Normandy' is anachronistic, dates Charles the Simple's grant to about 911, and notes Rollo was still living and politically active in 928 while William is attested as leading the Normans by 933.",
+      "source_type": "scholarly_web"
+    },
+    {
+      "title": "Mark Hagger, Norman Rule in Normandy, 911-1144 — Cambridge University Press",
+      "canonical_url": "https://www.cambridge.org/core/books/norman-rule-in-normandy-9111144/8235B7C17991047F308DBC4350A89A26/listing",
+      "citation_text": "Hagger's study explains that around 911 Charles the Simple legitimized Rollo's de facto possession of Rouen and the surrounding district, establishing the political basis of Normandy.",
+      "source_type": "scholarly_web"
+    }
+  ]
+}

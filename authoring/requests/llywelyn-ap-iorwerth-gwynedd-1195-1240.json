@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:llywelyn-ap-iorwerth:gwynedd:prince-of-gwynedd:1195-1240:v1",
+  "person": {
+    "canonical_name_en": "Llywelyn ap Iorwerth",
+    "display_name_ko": "르웰린 압 이오르웨르스"
+  },
+  "polity": {
+    "canonical_name_en": "Gwynedd",
+    "display_name_ko": "귀네드"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Prince of Gwynedd",
+    "role_display_name_ko": "귀네드 공",
+    "start_year": 1195,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1240,
+    "end_month": 4,
+    "end_day": 11,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Llywelyn ap Iorwerth (Llywelyn the Great) was prince of Gwynedd from about 1195 until his death on 11 April 1240. He expanded his authority over much of Wales and became the dominant native Welsh ruler of his generation, but he did not adopt the formal title Prince of Wales; in 1230 he styled himself Prince of Aberffraw and Lord of Snowdon. ATLAS therefore normalizes the user-supplied civilization label Wales to his historically specific sovereign base, Gwynedd, rather than creating a retrospective kingdom or principality of all Wales."
+  },
+  "sources": [
+    {
+      "title": "Dictionary of Welsh Biography — Llywelyn ap Iorwerth",
+      "canonical_url": "https://biography.wales/article/s-LLYW-API-1173.html",
+      "citation_text": "The Dictionary of Welsh Biography identifies Llywelyn ap Iorwerth as prince of Gwynedd, describes the restoration of undivided sovereignty over Gwynedd and his wider de facto suzerainty in Wales, and records his death on 11 April 1240.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "Oxford Companion to British History — Llywelyn ab Iorwerth",
+      "canonical_url": "https://www.encyclopedia.com/history/encyclopedias-almanacs-transcripts-and-maps/llywelyn-ab-iorwerth",
+      "citation_text": "The Oxford Companion to British History gives Llywelyn as prince of Gwynedd from 1195 to 1240 and notes that he mastered Gwynedd and extended his hegemony across Wales.",
+      "source_type": "reference_web"
+    }
+  ]
+}

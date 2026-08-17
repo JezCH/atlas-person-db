@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:willem-ii:kingdom-of-the-netherlands:king:1840-1849:v1",
+  "person": {
+    "canonical_name_en": "Willem II",
+    "display_name_ko": "빌럼 2세"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of the Netherlands",
+    "display_name_ko": "네덜란드 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1840,
+    "start_month": 10,
+    "start_day": 7,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1849,
+    "end_month": 3,
+    "end_day": 17,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Willem II succeeded his father Willem I as King of the Netherlands after Willem I abdicated on 7 October 1840 and remained king until his death on 17 March 1849. He simultaneously held the titles of Grand Duke of Luxembourg and Duke of Limburg, but this registration models only the Netherlands sovereign Activity requested by the user. The existing Kingdom of the Netherlands polity and generic King role are reused."
+  },
+  "sources": [
+    {
+      "title": "Royal House of the Netherlands — King Willem II (1792-1849)",
+      "canonical_url": "https://www.royal-house.nl/topics/history/kings-and-queens/king-willem-ii-1792-1849",
+      "citation_text": "The Royal House states that Willem II was King of the Netherlands from 1840 to 1849 and remained on the throne until his death on 17 March 1849.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "Royal House of the Netherlands — King Willem I (1772-1843)",
+      "canonical_url": "https://www.royal-house.nl/topics/history/kings-and-queens/king-willem-i-1772-1843",
+      "citation_text": "The Royal House records Willem I's abdication on 7 October 1840 and his succession by Willem II.",
+      "source_type": "government_web"
+    }
+  ]
+}
