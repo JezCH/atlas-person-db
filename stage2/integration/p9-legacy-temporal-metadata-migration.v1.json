@@ -13,7 +13,8 @@
     "fabricate_month_or_day_forbidden": true,
     "year_only_granularity": "year",
     "calendar_when_legacy_row_has_no_reviewed_calendar": "unspecified_historical",
-    "reviewed_runtime_or_correction_calendar_overrides_legacy_fallback": true,
+    "reviewed_correction_calendar_may_override_legacy_fallback": true,
+    "runtime_compile_override_calendar_writeback_forbidden": true,
     "certainty_from_legacy_chronology_status_only": true,
     "generic_certainty_default_forbidden": true,
     "unknown_chronology_status_blocks_automatic_migration": true,
@@ -46,6 +47,7 @@
     "claims_gregorian_or_julian_calendar_without_review": false,
     "creates_month_or_day_precision": false,
     "changes_person_polity_relation": false,
+    "writes_compile_only_runtime_override_back_to_authoring_source": false,
     "changes_provenance": false,
     "production_mutation": false
   }

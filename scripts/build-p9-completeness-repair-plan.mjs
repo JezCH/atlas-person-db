@@ -50,16 +50,15 @@ function missingFields(row) {
   return ['relation_type_id','period_basis_id','activity_start_granularity','activity_start_calendar','activity_end_granularity','activity_end_calendar'].filter((k) => row[k] == null);
 }
 
-function temporalResolution(row, runtime) {
+function temporalResolution(row) {
   if (!['activity_start_granularity','activity_start_calendar','activity_end_granularity','activity_end_calendar'].some((k) => row[k] == null)) {
     return { class: 'ALREADY_COMPLETE', ready: true };
   }
   const status = String(row.chronology_status || '');
   const mapping = temporalPolicy.chronology_status_mapping?.[status];
   if (!mapping) return { class: 'CHRONOLOGY_STATUS_UNMAPPED', ready: false, chronology_status: status || null };
-  const reviewedCalendar = runtime?.runtime_override?.calendar || null;
   return {
-    class: reviewedCalendar ? 'REVIEWED_OVERRIDE_PLUS_LEGACY_METADATA' : 'LEGACY_YEAR_ONLY_METADATA',
+    class: 'LEGACY_YEAR_ONLY_METADATA',
     ready: true,
     preserve_start_year: row.activity_start,
     preserve_end_year: row.activity_end,
@@ -67,23 +66,27 @@ function temporalResolution(row, runtime) {
     activity_start_day: null,
     activity_start_granularity: 'year',
     activity_start_certainty: mapping.activity_start_certainty,
-    activity_start_calendar: reviewedCalendar || temporalPolicy.boundary_materialization.activity_start_calendar,
+    activity_start_calendar: temporalPolicy.boundary_materialization.activity_start_calendar,
     activity_end_month: null,
     activity_end_day: null,
     activity_end_granularity: 'year',
     activity_end_certainty: mapping.activity_end_certainty,
-    activity_end_calendar: reviewedCalendar || temporalPolicy.boundary_materialization.activity_end_calendar,
+    activity_end_calendar: temporalPolicy.boundary_materialization.activity_end_calendar,
     authority: 'stage2/integration/p9-legacy-temporal-metadata-migration.v1.json'
   };
 }
 
 function relationResolution(detail, incomplete, runtime, structural) {
   if (incomplete.relation_type_id != null) return { class: 'ALREADY_PRESENT', ready: true, relation_type_id: incomplete.relation_type_id };
-  if (runtime?.runtime_action === 'exclude_activity') {
-    return { class: 'RUNTIME_EXCLUDE_STRUCTURAL_FIRST', ready: false, reviewed_decision: runtime.reviewed_decision, authority: 'stage2/integration/p7-runtime-readiness-dispositions.v1.json' };
-  }
-  if (runtime?.runtime_action === 'publish_activity') {
-    return { class: 'REVIEWED_RUNTIME_OVERRIDE', ready: true, relation_type_id: runtime.runtime_override?.relation_type_id || null, reviewed_decision: runtime.reviewed_decision, authority: 'stage2/integration/p7-runtime-readiness-dispositions.v1.json' };
+  if (runtime) {
+    return {
+      class: 'REVIEWED_AUTHORING_RELATION_EXCEPTION',
+      ready: false,
+      runtime_action: runtime.runtime_action,
+      reviewed_decision: runtime.reviewed_decision,
+      reason: 'P7 Runtime disposition is compile-time authority and must not be written back onto a broader or different Authoring source Activity.',
+      authority: 'stage2/integration/p7-runtime-readiness-dispositions.v1.json'
+    };
   }
   if (structural) return { class: structural.class, ready: false, reviewed_decision: structural.decision, reason: structural.reason, authority: 'stage2/integration/p7-full-relation-review-dispositions.v1.json' };
   const explicit = explicitDecisions.get(String(incomplete.activity_id).toLowerCase());
@@ -105,7 +108,7 @@ const rows = incomplete.map((row) => {
   const runtime = runtimeById.get(id) || null;
   const structural = structuralById.get(id) || null;
   const relation = relationResolution(detail, row, runtime, structural);
-  const temporal = temporalResolution(detail, runtime);
+  const temporal = temporalResolution(detail);
   const executable = relation.ready && temporal.ready;
   return {
     activity_id: id,
@@ -132,17 +135,19 @@ const summary = {
   relation_classes: countBy((r) => r.relation.class),
   temporal_classes: countBy((r) => r.temporal.class),
   unresolved_relation_activity_ids: rows.filter((r) => r.relation.class === 'UNRESOLVED_RELATION').map((r) => r.activity_id),
+  reviewed_authoring_relation_exception_activity_ids: rows.filter((r) => r.relation.class === 'REVIEWED_AUTHORING_RELATION_EXCEPTION').map((r) => r.activity_id),
   temporal_unmapped_activity_ids: rows.filter((r) => !r.temporal.ready).map((r) => r.activity_id)
 };
 const plan = {
   schema: 'atlas-stage2-p9-completeness-repair-plan/v1',
   status: 'READ_ONLY_PLANNER_NO_PRODUCTION_MUTATION',
   rules: {
-    p7_runtime_disposition_overrides_general_relation_policy: true,
+    p7_runtime_disposition_is_compile_time_and_not_authoring_writeback: true,
     p7_structural_disposition_precedes_relation_backfill: true,
     reviewed_explicit_relation_precedes_exact_role_carry_forward: true,
     generic_relation_default_forbidden: true,
     temporal_migration_must_preserve_legacy_years: true,
+    runtime_compile_override_calendar_writeback_forbidden: true,
     production_mutation_authorized: false
   },
   summary,

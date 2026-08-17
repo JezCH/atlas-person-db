@@ -6,6 +6,7 @@ const {
   BASELINE_B_SCHEMA,
   BASELINE_B_SEMANTIC_VERSION,
   BASELINE_B_CANONICAL_TABLES,
+  P11_REVIEWED_RELATION_EXCEPTION_IDS,
   buildBaselineBDocument,
   inspectBaselineBReadiness,
   captureBaselineB
@@ -24,6 +25,8 @@ function readinessDependencies({ authoringReady = true, revalidationReady = true
 
 function readinessClient({
   semanticIncomplete = 0,
+  reviewedRelationExceptions = 0,
+  blockingSemanticIncomplete = semanticIncomplete,
   yearZeroRows = 0,
   reversedRanges = 0,
   activeCandidates = 0,
@@ -57,6 +60,8 @@ function readinessClient({
         return { rows: [{
           activities: 12,
           semantic_v2_incomplete: semanticIncomplete,
+          reviewed_relation_exceptions: reviewedRelationExceptions,
+          semantic_v2_blocking_incomplete: blockingSemanticIncomplete,
           year_zero_rows: yearZeroRows,
           reversed_ranges: reversedRanges
         }] };
@@ -123,7 +128,27 @@ test('P11 stays blocked after terminal P10 review while an approved physical Per
   assert.equal(readiness.activity.semantic_v2_incomplete, 0);
 });
 
-test('P11 readiness opens only when all 41 canonical tables, semantic-v2 data, P10 frontier, and merge audit state are clean', async () => {
+test('P11 readiness opens when only exact reviewed Authoring relation exceptions remain', async () => {
+  const client = readinessClient({
+    semanticIncomplete: 3,
+    reviewedRelationExceptions: 3,
+    blockingSemanticIncomplete: 0,
+    activeCandidates: 2,
+    keepSeparate: 2,
+    audits: 1
+  });
+  const readiness = await inspectBaselineBReadiness(client, readinessDependencies());
+
+  assert.equal(readiness.ready, true);
+  assert.deepEqual(readiness.blockers, []);
+  assert.equal(readiness.activity.semantic_v2_incomplete, 3);
+  assert.equal(readiness.activity.reviewed_relation_exceptions, 3);
+  assert.equal(readiness.activity.semantic_v2_blocking_incomplete, 0);
+  assert.equal(readiness.reviewed_semantic_exception_contract.declared_exception_ids, P11_REVIEWED_RELATION_EXCEPTION_IDS.length);
+  assert.ok(P11_REVIEWED_RELATION_EXCEPTION_IDS.length >= 20);
+});
+
+test('P11 readiness opens only when all 41 canonical tables, semantic-v2 blockers, P10 frontier, and merge audit state are clean', async () => {
   const client = readinessClient({
     activeCandidates: 2,
     keepSeparate: 2,
@@ -151,9 +176,11 @@ test('P11 readiness fails closed before capture when any canonical Stage 2 table
   assert.ok(readiness.blockers.includes('BASELINE_B_CANONICAL_SCHEMA_MISSING:person_event_participation_sources'));
 });
 
-test('P11 readiness fails closed on incomplete temporal semantics, year zero, unresolved frontier, or resurrected merged source UUID', async () => {
+test('P11 readiness fails closed on unreviewed semantic incompleteness, year zero, unresolved frontier, or resurrected merged source UUID', async () => {
   const client = readinessClient({
-    semanticIncomplete: 2,
+    semanticIncomplete: 4,
+    reviewedRelationExceptions: 2,
+    blockingSemanticIncomplete: 2,
     yearZeroRows: 1,
     reversedRanges: 1,
     activeCandidates: 1,
@@ -165,7 +192,7 @@ test('P11 readiness fails closed on incomplete temporal semantics, year zero, un
 
   assert.equal(readiness.ready, false);
   for (const blocker of [
-    'ACTIVITY_SEMANTIC_V2_INCOMPLETE:2',
+    'ACTIVITY_SEMANTIC_V2_BLOCKING_INCOMPLETE:2',
     'ACTIVITY_YEAR_ZERO:1',
     'ACTIVITY_REVERSED_RANGE:1',
     'PERSON_DUPLICATE_FRONTIER_UNRESOLVED:1',
