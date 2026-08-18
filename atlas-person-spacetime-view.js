@@ -65,9 +65,9 @@
   }
 
   function placementBasisLabel(segment) {
-    if (segment?.placement_basis === "capital") return `수도: ${segment.location_label || segment.capital_name || "미상"}`;
-    if (segment?.placement_basis === "authority_center") return `왕정·정치 중심: ${segment.location_label || segment.authority_center_name || "미상"}`;
-    return "검토된 정치체 권역";
+    if (segment?.placement_basis !== "polity_place_function") return "검토된 정치체 권역";
+    const typeLabel = ({ capital: "수도", royal_court: "왕정 중심", royal_residence: "왕실 거점", imperial_court_core: "제국 궁정 중심", political_center: "정치 중심", administrative_center: "행정 중심" })[segment?.place_function_type] || "정치체 장소 기능";
+    return `${typeLabel}: ${segment.location_label || segment.place_name || "미상"}`;
   }
 
   function searchable(entry) {
@@ -230,9 +230,9 @@
 
   function reasonLabel(reason) {
     return ({
-      spatial_unresolved: "검토된 정치체 권역·수도·왕정 중심 기준 없음",
-      capital_period_no_overlap: "활동기간과 검토된 수도 기간이 겹치지 않음",
-      authority_center_period_no_overlap: "활동기간과 검토된 왕정·정치 중심 기간이 겹치지 않음",
+      spatial_unresolved: "검토된 정치체 권역·장소 기능 기준 없음",
+      place_function_period_gap: "활동기간 전체를 덮는 검토된 정치체 장소 기능이 없음",
+      place_function_region_conflict: "동시기 검토된 정치체 장소 기능이 여러 권역으로 갈림",
       polity_unresolved: "정치체 identity 미확정",
       invalid_region: "공간 권역 코드 오류",
       missing_boundaries: "활동 시작·종료 연도 모두 미확정",
@@ -302,8 +302,7 @@
     const selectedItem = regionMeta.flatMap((region) => region.items).find((item) => item.stable_id === selectedKey) || null;
 
     const directCount = spatialIndex?.polity_geography && typeof spatialIndex.polity_geography === "object" ? Object.keys(spatialIndex.polity_geography).length : 0;
-    const capitalCount = Array.isArray(spatialIndex?.capital_records) ? spatialIndex.capital_records.length : 0;
-    const authorityCount = Array.isArray(spatialIndex?.authority_center_records) ? spatialIndex.authority_center_records.length : 0;
+    const placeFunctionCount = Array.isArray(spatialIndex?.place_function_records) ? spatialIndex.place_function_records.length : 0;
     const reviewCount = Array.isArray(spatialIndex?.review_queue) ? spatialIndex.review_queue.length : 0;
     const placedCount = regionMeta.reduce((sum, region) => sum + region.items.length, 0);
     const frameModeClass = horizontalViewMode === "overview" ? " is-overview" : " is-detail";
@@ -317,9 +316,9 @@
       </div>
     </section>
     <section class="spacetime-status-row">
-      <span><b>${entries.length}</b> Activity</span><span><b>${placedCount}</b> 배치 구간</span><span><b>${placement.unresolvedPosition.length}</b> 위치 미확정</span><span><b>${placement.unresolvedChronology.length}</b> 연대 미확정</span><span><b>${directCount}</b> 정치체 권역</span><span><b>${capitalCount}</b> 수도 판정 Polity</span><span><b>${authorityCount}</b> 왕정 중심 Polity</span><span><b>${reviewCount}</b> 기준 검토 대기</span>
+      <span><b>${entries.length}</b> Activity</span><span><b>${placedCount}</b> 배치 구간</span><span><b>${placement.unresolvedPosition.length}</b> 위치 미확정</span><span><b>${placement.unresolvedChronology.length}</b> 연대 미확정</span><span><b>${directCount}</b> 정치체 권역</span><span><b>${placeFunctionCount}</b> 장소 기능 Polity</span><span><b>${reviewCount}</b> 기준 검토 대기</span>
     </section>
-    ${(reviewCount || placement.unresolvedPosition.length) ? `<section class="spacetime-integrity-note card"><strong>근거 없는 위치는 자동 추정하지 않습니다.</strong><p>명확한 정치체는 검토된 광역 권역, 다지역 정치체는 검토된 당시 수도를 사용합니다. 고정 수도가 없다고 확인된 경우에만 사료로 검토된 왕정·정치 중심을 사용하며, 그마저 특정할 수 없으면 ‘위치 미확정’으로 보존합니다.</p></section>` : ""}
+    ${(reviewCount || placement.unresolvedPosition.length) ? `<section class="spacetime-integrity-note card"><strong>근거 없는 위치는 자동 추정하지 않습니다.</strong><p>명확한 정치체는 검토된 광역 권역을 사용합니다. 다지역 정치체는 수도·왕정 중심·정치 중심 등 검토된 동시기 정치체 장소 기능을 하나의 시간 모델에서 Compile하며, 기간 공백이나 권역 충돌이 있으면 임의 좌표를 만들지 않고 ‘위치 미확정’으로 보존합니다.</p></section>` : ""}
     ${renderSelection(selectedItem)}
     <section class="spacetime-frame card${frameModeClass}">
       <div class="spacetime-scroll${frameModeClass}" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 인물 활동 분포">

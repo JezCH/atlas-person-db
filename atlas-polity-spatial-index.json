@@ -1,12 +1,15 @@
 {
-  "schema": "atlas-polity-spatial-index/v1",
-  "generated_at": "2026-08-18T09:00:00+09:00",
+  "schema": "atlas-polity-spatial-index/v2",
+  "generated_at": "2026-08-18T11:26:00+09:00",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
-    "ambiguous_fallback": "When a polity spans or straddles broad regions, use its reviewed capital for the activity period.",
+    "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
+    "temporal_segmentation": "Split an Activity only on reviewed polity-place-function temporal boundaries. Every segment must have complete reviewed coverage.",
+    "regional_consensus": "If multiple reviewed place functions are simultaneously active, they may place the Activity only when they resolve to one region. Conflicting regions remain unresolved.",
+    "no_partial_placement": "A gap or regional conflict anywhere in an Activity prevents silent partial placement of that Activity.",
+    "presentation_boundary": "Pure display anchors are compile/runtime presentation data and must not masquerade as historical polity-place facts.",
     "no_guessing": "Do not infer placement from person names, modern nationality, ethnicity, or unreviewed geometry.",
-    "unresolved": "If neither a reviewed polity region nor a reviewed matching capital period exists, keep the activity in placement review.",
-    "no_fixed_capital_fallback": "If a polity is explicitly documented as lacking a fixed capital, a reviewed contemporaneous royal/political authority center may be used; otherwise keep placement unresolved."
+    "unresolved": "If neither reviewed broad geography nor complete reviewed polity-place-function coverage yields one region, keep the Activity unresolved."
   },
   "regions": [
     {
@@ -373,14 +376,16 @@
     "fe3ec27b-1ba3-4dc0-9758-b144320d6dc4": "east-asia",
     "ff5f5bfa-2f12-442c-9621-d2d71c94382f": "europe"
   },
-  "capital_records": [
+  "place_function_records": [
     {
       "polity_id": "01f4ce7b-aaa3-473a-a6fd-9c95c4a85ff7",
-      "capital_periods": [
+      "functions": [
         {
           "start_year": 1063,
           "end_year": 1072,
-          "capital_name": "Isfahan",
+          "function_type": "capital",
+          "place_name": "Isfahan",
+          "place_id": null,
           "region_code": "west-asia",
           "confidence": "well_established",
           "source_refs": [
@@ -391,11 +396,13 @@
     },
     {
       "polity_id": "074510f4-f2e7-5795-8cfb-2a4206fa7254",
-      "capital_periods": [
+      "functions": [
         {
           "start_year": 330,
           "end_year": 1203,
-          "capital_name": "Constantinople",
+          "function_type": "capital",
+          "place_name": "Constantinople",
+          "place_id": null,
           "region_code": "europe",
           "confidence": "well_established",
           "source_refs": [
@@ -405,7 +412,9 @@
         {
           "start_year": 1204,
           "end_year": 1260,
-          "capital_name": "Nicaea",
+          "function_type": "capital",
+          "place_name": "Nicaea",
+          "place_id": null,
           "region_code": "west-asia",
           "confidence": "well_established",
           "source_refs": [
@@ -415,7 +424,9 @@
         {
           "start_year": 1261,
           "end_year": 1453,
-          "capital_name": "Constantinople",
+          "function_type": "capital",
+          "place_name": "Constantinople",
+          "place_id": null,
           "region_code": "europe",
           "confidence": "well_established",
           "source_refs": [
@@ -426,11 +437,13 @@
     },
     {
       "polity_id": "28448862-277d-4738-9fb4-7f51a9e4c03a",
-      "capital_periods": [
+      "functions": [
         {
           "start_year": 1923,
           "end_year": null,
-          "capital_name": "Ankara",
+          "function_type": "capital",
+          "place_name": "Ankara",
+          "place_id": null,
           "region_code": "west-asia",
           "confidence": "well_established",
           "source_refs": [
@@ -441,11 +454,13 @@
     },
     {
       "polity_id": "2f6e890f-1704-5c76-aa94-f18d7f905e06",
-      "capital_periods": [
+      "functions": [
         {
           "start_year": -336,
           "end_year": -323,
-          "capital_name": "Pella",
+          "function_type": "capital",
+          "place_name": "Pella",
+          "place_id": null,
           "region_code": "europe",
           "confidence": "well_established",
           "source_refs": [
@@ -457,11 +472,13 @@
     },
     {
       "polity_id": "3b8f7efc-40ae-5a33-8956-e9e852fbede4",
-      "capital_periods": [
+      "functions": [
         {
           "start_year": 1815,
           "end_year": 1821,
-          "capital_name": "Rio de Janeiro",
+          "function_type": "capital",
+          "place_name": "Rio de Janeiro",
+          "place_id": null,
           "region_code": "americas",
           "confidence": "well_established",
           "source_refs": [
@@ -472,11 +489,13 @@
     },
     {
       "polity_id": "5d9a6186-bbe6-5d1a-ba93-02190ae4c417",
-      "capital_periods": [
+      "functions": [
         {
           "start_year": -27,
           "end_year": 329,
-          "capital_name": "Rome",
+          "function_type": "capital",
+          "place_name": "Rome",
+          "place_id": null,
           "region_code": "europe",
           "confidence": "well_established",
           "source_refs": [
@@ -486,7 +505,9 @@
         {
           "start_year": 330,
           "end_year": 395,
-          "capital_name": "Constantinople",
+          "function_type": "capital",
+          "place_name": "Constantinople",
+          "place_id": null,
           "region_code": "europe",
           "confidence": "well_established",
           "source_refs": [
@@ -497,11 +518,13 @@
     },
     {
       "polity_id": "6539c314-ec29-42e0-a0c2-90991fb9ffd8",
-      "capital_periods": [
+      "functions": [
         {
           "start_year": 1370,
           "end_year": 1405,
-          "capital_name": "Samarkand",
+          "function_type": "capital",
+          "place_name": "Samarkand",
+          "place_id": null,
           "region_code": "central-asia",
           "confidence": "well_established",
           "source_refs": [
@@ -512,11 +535,13 @@
     },
     {
       "polity_id": "68c83ef6-0023-5af9-a6e8-26ccf5b8e116",
-      "capital_periods": [
+      "functions": [
         {
           "start_year": 1806,
           "end_year": 1839,
-          "capital_name": "Muscat",
+          "function_type": "capital",
+          "place_name": "Muscat",
+          "place_id": null,
           "region_code": "west-asia",
           "confidence": "well_established",
           "source_refs": [
@@ -526,7 +551,9 @@
         {
           "start_year": 1840,
           "end_year": 1856,
-          "capital_name": "Stone Town, Zanzibar",
+          "function_type": "capital",
+          "place_name": "Stone Town, Zanzibar",
+          "place_id": null,
           "region_code": "africa",
           "confidence": "well_established",
           "source_refs": [
@@ -538,11 +565,13 @@
     },
     {
       "polity_id": "6d1520e2-0aff-5063-b2b7-95eb86daf372",
-      "capital_periods": [
+      "functions": [
         {
           "start_year": 1299,
           "end_year": 1325,
-          "capital_name": "Söğüt",
+          "function_type": "capital",
+          "place_name": "Söğüt",
+          "place_id": null,
           "region_code": "west-asia",
           "confidence": "well_established",
           "source_refs": [
@@ -552,7 +581,9 @@
         {
           "start_year": 1326,
           "end_year": 1364,
-          "capital_name": "Bursa",
+          "function_type": "capital",
+          "place_name": "Bursa",
+          "place_id": null,
           "region_code": "west-asia",
           "confidence": "well_established",
           "source_refs": [
@@ -562,7 +593,9 @@
         {
           "start_year": 1365,
           "end_year": 1452,
-          "capital_name": "Edirne",
+          "function_type": "capital",
+          "place_name": "Edirne",
+          "place_id": null,
           "region_code": "europe",
           "confidence": "well_established",
           "source_refs": [
@@ -572,7 +605,9 @@
         {
           "start_year": 1453,
           "end_year": 1922,
-          "capital_name": "Constantinople",
+          "function_type": "capital",
+          "place_name": "Constantinople",
+          "place_id": null,
           "region_code": "europe",
           "confidence": "well_established",
           "source_refs": [
@@ -582,12 +617,47 @@
       ]
     },
     {
+      "polity_id": "d54c540c-f3fb-5d05-9dc0-26af4ee9815a",
+      "functions": [
+        {
+          "start_year": 1206,
+          "end_year": 1259,
+          "function_type": "imperial_court_core",
+          "place_name": "Mongolian imperial court core (Avarga–Karakorum)",
+          "place_id": null,
+          "region_code": "central-asia",
+          "confidence": "well_established",
+          "source_refs": [
+            "UNESCO World Heritage Centre: Archaeological Site at Khuduu Aral and Surrounding Cultural Landscape",
+            "Cambridge Antiquity: Mapping Karakorum, the capital of the Mongol Empire",
+            "Cambridge Modern Asian Studies: The cosmopolitanism of Karakorum, capital of the Mongol empire in Mongolia"
+          ]
+        },
+        {
+          "start_year": 1260,
+          "end_year": 1271,
+          "function_type": "imperial_court_core",
+          "place_name": "Kublai court in North China (Shangdu–Dadu)",
+          "place_id": null,
+          "region_code": "east-asia",
+          "confidence": "well_established",
+          "source_refs": [
+            "Cambridge History of the Mongol Empire: Mongolia in the Mongol Empire",
+            "UNESCO World Heritage Centre: Site of Xanadu",
+            "Metropolitan Museum of Art: China, 1000–1400 A.D. chronology"
+          ]
+        }
+      ]
+    },
+    {
       "polity_id": "e3da3007-529a-40ec-9934-7b70dfd11cb7",
-      "capital_periods": [
+      "functions": [
         {
           "start_year": 1250,
           "end_year": 1517,
-          "capital_name": "Cairo",
+          "function_type": "capital",
+          "place_name": "Cairo",
+          "place_id": null,
           "region_code": "africa",
           "confidence": "well_established",
           "source_refs": [
@@ -604,40 +674,7 @@
     },
     {
       "polity_id": "a1c6b0b4-ca71-420d-8d9f-502dc7914dd7",
-      "reason": "multiple_royal_residences_no_single_reviewed_capital_period"
-    }
-  ],
-  "authority_center_records": [
-    {
-      "polity_id": "d54c540c-f3fb-5d05-9dc0-26af4ee9815a",
-      "authority_periods": [
-        {
-          "start_year": 1206,
-          "end_year": 1259,
-          "center_name": "Mongolian imperial court core (Avarga–Karakorum)",
-          "center_type": "imperial_court_core",
-          "region_code": "central-asia",
-          "confidence": "well_established",
-          "source_refs": [
-            "UNESCO World Heritage Centre: Archaeological Site at Khuduu Aral and Surrounding Cultural Landscape",
-            "Cambridge Antiquity: Mapping Karakorum, the capital of the Mongol Empire",
-            "Cambridge Modern Asian Studies: The cosmopolitanism of Karakorum, capital of the Mongol empire in Mongolia"
-          ]
-        },
-        {
-          "start_year": 1260,
-          "end_year": 1271,
-          "center_name": "Kublai court in North China (Shangdu–Dadu)",
-          "center_type": "imperial_court_core",
-          "region_code": "east-asia",
-          "confidence": "well_established",
-          "source_refs": [
-            "Cambridge History of the Mongol Empire: Mongolia in the Mongol Empire",
-            "UNESCO World Heritage Centre: Site of Xanadu",
-            "Metropolitan Museum of Art: China, 1000–1400 A.D. chronology"
-          ]
-        }
-      ]
+      "reason": "multiple_reviewed_royal_centers_require_activity_specific_spatial_representation"
     }
   ]
 }
