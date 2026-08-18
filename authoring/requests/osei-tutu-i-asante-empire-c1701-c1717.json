@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:osei-tutu-i:asante-empire:c1701-c1717:v1",
+  "person": {"canonical_name_en": "Osei Tutu I", "display_name_ko": "오세이 투투 1세"},
+  "polity": {"canonical_name_en": "Asante Empire", "display_name_ko": "아샨티 제국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Asantehene", "role_display_name_ko": "아산테헤네", "start_year": 1701, "start_month": null, "start_day": null, "start_certainty": "uncertain", "start_calendar": "unspecified_historical", "end_year": 1717, "end_month": null, "end_day": null, "end_certainty": "uncertain", "end_calendar": "unspecified_historical", "confidence": "likely", "chronology_status": "reviewed", "notes": "This Activity begins around the conventional 1701 formation/independence point of the Asante state; scholarly chronologies vary on Osei Tutu's earlier accession and even his death year."},
+  "sources": [{"title": "Order and Conflict in the Asante Empire: A Study in Interest Group Relations — African Studies Review", "canonical_url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/2E63632ACFBA70F02AA57B0AB757140D/S0002020600019338a.pdf/order_and_conflict_in_the_asante_empire_a_study_in_interest_group_relations.pdf", "source_type": "academic_reference"}, {"title": "History of Ashanti by Otumfuo, Nana Osei Agyeman Prempeh II — JSTOR", "canonical_url": "https://www.jstor.org/stable/jj.31510226", "source_type": "academic_reference"}]
+}

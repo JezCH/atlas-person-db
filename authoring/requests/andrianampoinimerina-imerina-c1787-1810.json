@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:andrianampoinimerina:kingdom-of-imerina:c1787-1810:v1",
+  "person": {"canonical_name_en": "Andrianampoinimerina", "display_name_ko": "안드리아남포이니메리나"},
+  "polity": {"canonical_name_en": "Kingdom of Imerina", "display_name_ko": "이메리나 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 1787, "start_month": null, "start_day": null, "start_certainty": "uncertain", "start_calendar": "unspecified_historical", "end_year": 1810, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "likely", "chronology_status": "reviewed", "notes": "Andrianampoinimerina is attached to the highland Kingdom of Imerina; c.1787 is a conventional accession boundary and is not treated as exact."},
+  "sources": [{"title": "La Haute Ville d’Antananarivo — UNESCO World Heritage Centre Tentative List", "canonical_url": "https://whc.unesco.org/en/tentativelists/6078/", "source_type": "institutional_web"}, {"title": "Writing Ideology: Ranavalona, The Ancestral Bureaucrat — History in Africa", "canonical_url": "https://www.cambridge.org/core/journals/history-in-africa/article/abs/writing-ideology-ranavalona-the-ancestral-bureaucrat/7C8543ADFE0C00D73213DF32A4C889D4", "source_type": "academic_reference"}]
+}

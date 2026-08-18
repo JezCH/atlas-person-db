@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:nyatsimba-mutota:kingdom-of-mutapa:c1430-c1450:v1",
+  "person": {"canonical_name_en": "Nyatsimba Mutota", "display_name_ko": "냐침바 무토타"},
+  "polity": {"canonical_name_en": "Kingdom of Mutapa", "display_name_ko": "무타파 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Mwene Mutapa", "role_display_name_ko": "므웨네 무타파", "start_year": 1430, "start_month": null, "start_day": null, "start_certainty": "uncertain", "start_calendar": "unspecified_historical", "end_year": 1450, "end_month": null, "end_day": null, "end_certainty": "uncertain", "end_calendar": "unspecified_historical", "confidence": "likely", "chronology_status": "reviewed", "notes": "Nyatsimba Mutota is the original Mwene Mutapa and a founder of the fifteenth-century Mutapa state. Early chronology is explicitly uncertain; c.1430-c.1450 is stored as a conventional reconstruction."},
+  "sources": [{"title": "Dynasties of the Mutapa-Rozwi complex — The Journal of African History (AfricaBib record)", "canonical_url": "https://www.africabib.org/rec.php?RID=190927445", "source_type": "academic_reference"}, {"title": "Monomotapa — Dizionario di Storia, Treccani", "canonical_url": "https://www.treccani.it/enciclopedia/monomotapa_%28Dizionario-di-Storia%29/", "source_type": "web_bibliographic_reference"}]
+}

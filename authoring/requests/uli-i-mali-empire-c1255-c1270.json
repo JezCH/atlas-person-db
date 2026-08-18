@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:uli-i:mali-empire:c1255-c1270:v1",
+  "person": {"canonical_name_en": "Uli I", "display_name_ko": "울리 1세"},
+  "polity": {"canonical_name_en": "Mali Empire", "display_name_ko": "말리 제국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Mansa", "role_display_name_ko": "만사", "start_year": 1255, "start_month": null, "start_day": null, "start_certainty": "uncertain", "start_calendar": "unspecified_historical", "end_year": 1270, "end_month": null, "end_day": null, "end_certainty": "uncertain", "end_calendar": "unspecified_historical", "confidence": "likely", "chronology_status": "reviewed", "notes": "Mansa Uli (Yerelinkon) is securely identified as Sundiata's powerful son and successor, but c.1255-c.1270 is a reconstructed chronology rather than exact contemporary dating."},
+  "sources": [{"title": "The Thirteenth- and Fourteenth-Century Kings of Mali — The Journal of African History", "canonical_url": "https://www.cambridge.org/core/journals/journal-of-african-history/article/abs/thirteenth-and-fourteenthcentury-kings-of-mali1/F6837FD917408E5ACDFF65500ECA04DE", "source_type": "academic_reference"}, {"title": "Mali Empire Timeline — World History Encyclopedia", "canonical_url": "https://www.worldhistory.org/timeline/Mali_Empire/", "source_type": "web_bibliographic_reference"}]
+}

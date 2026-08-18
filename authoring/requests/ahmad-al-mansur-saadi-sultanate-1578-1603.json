@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ahmad-al-mansur:saadi-sultanate:1578-1603:v1",
+  "person": {"canonical_name_en": "Ahmad al-Mansur", "display_name_ko": "아흐마드 알만수르"},
+  "polity": {"canonical_name_en": "Saadi Sultanate", "display_name_ko": "사디 술탄국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Sultan", "role_display_name_ko": "술탄", "start_year": 1578, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 1603, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Sovereign reign of Ahmad al-Mansur in the Saadi Sultanate, 1578-1603."},
+  "sources": [{"title": "AHMED el-MANSÛR — TDV İslâm Ansiklopedisi", "canonical_url": "https://islamansiklopedisi.org.tr/ahmed-el-mansur", "source_type": "academic_reference"}, {"title": "Le sultan à l’école. À propos d’une licence délivrée au Sultan saadien Ahmad Al-Mansur — Persée", "canonical_url": "https://www.persee.fr/doc/crai_0065-0536_2012_num_156_2_93629", "source_type": "academic_reference"}]
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:masinissa:kingdom-of-numidia:c202-148-bce:v1",
+  "person": {"canonical_name_en": "Masinissa", "display_name_ko": "마시니사"},
+  "polity": {"canonical_name_en": "Kingdom of Numidia", "display_name_ko": "누미디아 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": -202, "start_month": null, "start_day": null, "start_certainty": "uncertain", "start_calendar": "unspecified_historical", "end_year": -148, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "likely", "chronology_status": "reviewed", "notes": "c.202 BCE is used for Masinissa's rule of the unified Numidian kingdom; his earlier Massylian kingship is not back-projected into this polity."},
+  "sources": [{"title": "Masinissa — Oxford Classical Dictionary", "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/549655097", "source_type": "academic_reference"}, {"title": "Numidia and Rome — Bulletin of the Institute of Classical Studies", "canonical_url": "https://academic.oup.com/bics/article/68/2/129/8313572", "source_type": "academic_reference"}]
+}
