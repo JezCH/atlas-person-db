@@ -41,3 +41,17 @@ test('spacetime vertical timeline is not constrained to a nested viewport height
   assert.doesNotMatch(css, /\.spacetime-scroll\{[^}]*max-height:72vh/);
   assert.doesNotMatch(css, /@media\(max-width:900px\)\{[^}]*\.spacetime-scroll\{[^}]*75vh/);
 });
+
+test('overview renders name-only 24px micro-cards while detail mode keeps full activity information', async () => {
+  const view = await fixture(viewUrl);
+  const css = await fixture(cssUrl);
+  assert.match(view, /const OVERVIEW_CARD_HEIGHT = 24;/);
+  assert.match(view, /const OVERVIEW_MAX_CARD_WIDTH = 108;/);
+  assert.match(view, /const totalLaneOffset = Math\.min\(10, maxLane \* 2\);/);
+  assert.match(view, /const cardBody = overview/);
+  assert.match(view, /\? `<strong>\$\{escapeHtml\(personLabel\(item\.person\)\)\}<\/strong>`/);
+  assert.match(view, /: `<strong>\$\{escapeHtml\(personLabel\(item\.person\)\)\}<\/strong>\n      <span>/);
+  assert.match(css, /\.spacetime-frame\.is-overview \.spacetime-person-card\.is-overview\{[^}]*height:24px;[^}]*max-width:108px;[^}]*border-left:2px solid #607ca9;[^}]*box-shadow:none;/);
+  assert.match(css, /\.spacetime-frame\.is-overview \.spacetime-person-card\.is-overview>span,[^{]+\{display:none\}/);
+  assert.match(css, /\.spacetime-frame\.is-overview \.spacetime-duration-rail\{[^}]*width:2px;[^}]*opacity:\.72;/);
+});
