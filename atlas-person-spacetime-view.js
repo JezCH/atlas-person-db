@@ -11,10 +11,11 @@
   const DETAIL_MIN_REGION_WIDTH = 230;
   const OVERVIEW_MIN_REGION_WIDTH = 72;
   const OVERVIEW_REGION_GAP = 4;
+  const OVERVIEW_MAX_CARD_WIDTH = 108;
   const DEFAULT_TIMELINE_HEIGHT = 2800;
   const LOG_SOFTENING_YEARS = 180;
   const MIN_CARD_HEIGHT = 48;
-  const OVERVIEW_CARD_HEIGHT = 36;
+  const OVERVIEW_CARD_HEIGHT = 24;
   const ERA_DEFINITIONS = Object.freeze([
     Object.freeze({ code: "ancient", label: "고대", range: "BC 480 이전", start_year: null, end_year: -481 }),
     Object.freeze({ code: "classical", label: "고전", range: "BC 480 – AD 499", start_year: -480, end_year: 499 }),
@@ -210,9 +211,9 @@
     const regions = regionLayouts.map((region, index) => {
       const width = OVERVIEW_MIN_REGION_WIDTH + flexible * (weights[index] / totalWeight);
       const maxLane = Math.max(0, region.lane_count - 1);
-      const totalLaneOffset = Math.min(18, maxLane * 3);
+      const totalLaneOffset = Math.min(10, maxLane * 2);
       const laneOffset = maxLane ? totalLaneOffset / maxLane : 0;
-      const cardWidth = Math.max(58, width - OVERVIEW_REGION_GAP * 2 - totalLaneOffset);
+      const cardWidth = Math.max(48, Math.min(OVERVIEW_MAX_CARD_WIDTH, width - OVERVIEW_REGION_GAP * 2 - totalLaneOffset));
       const current = {
         ...region,
         left: x,
@@ -262,12 +263,15 @@
     const compactClass = overview ? " is-overview" : "";
     const visualTop = item.visual_top;
     const visualHeight = overview ? OVERVIEW_CARD_HEIGHT : MIN_CARD_HEIGHT;
-    return `<div class="spacetime-person-anchor" style="left:${laneLeft}px;top:${item.top}px;height:${trueHeight}px"><span class="spacetime-duration-rail" aria-hidden="true"></span></div>
-    <button type="button" class="spacetime-person-card${compactClass}${selected}" data-spacetime-key="${escapeHtml(item.stable_id)}" style="left:${laneLeft + (overview ? 3 : 8)}px;top:${visualTop}px;width:${region.card_width}px;min-height:${visualHeight}px" title="${escapeHtml(title)}">
-      <strong>${escapeHtml(personLabel(item.person))}</strong>
+    const cardBody = overview
+      ? `<strong>${escapeHtml(personLabel(item.person))}</strong>`
+      : `<strong>${escapeHtml(personLabel(item.person))}</strong>
       <span>${escapeHtml(polityLabel(item.activity))}</span>
       <small>${escapeHtml(periodLabel(item.activity))}</small>
-      <i>${escapeHtml(basis)}</i>
+      <i>${escapeHtml(basis)}</i>`;
+    return `<div class="spacetime-person-anchor" style="left:${laneLeft}px;top:${item.top}px;height:${trueHeight}px"><span class="spacetime-duration-rail" aria-hidden="true"></span></div>
+    <button type="button" class="spacetime-person-card${compactClass}${selected}" data-spacetime-key="${escapeHtml(item.stable_id)}" style="left:${laneLeft + (overview ? 2 : 8)}px;top:${visualTop}px;width:${region.card_width}px;min-height:${visualHeight}px" title="${escapeHtml(title)}">
+      ${cardBody}
     </button>`;
   }
 
@@ -305,7 +309,7 @@
     const frameModeClass = horizontalViewMode === "overview" ? " is-overview" : " is-detail";
 
     mount.innerHTML = `<section class="spacetime-toolbar card">
-      <div class="spacetime-toolbar-copy"><p class="eyebrow">PERSON SPACETIME ATLAS</p><h2>시공간 인물도</h2><p>기본 ‘전체 보기’에서는 아메리카부터 동아시아까지 모든 권역을 한 화면에 압축해 세계 분포를 조망합니다. ‘상세 보기’에서는 카드 폭과 권역 폭을 넓혀 개별 Activity를 자세히 확인할 수 있습니다. 세로축은 현재에 가까울수록 확대되는 로그 시간축입니다.</p></div>
+      <div class="spacetime-toolbar-copy"><p class="eyebrow">PERSON SPACETIME ATLAS</p><h2>시공간 인물도</h2><p>기본 ‘전체 보기’에서는 아메리카부터 동아시아까지 모든 권역과 이름 한 줄 micro-card만 표시해 세계 분포를 빠르게 조망합니다. 정치체·기간·위치 근거는 hover와 선택 상세에서 확인하며, ‘상세 보기’에서는 기존 전체 카드를 사용합니다. 세로축은 현재에 가까울수록 확대되는 로그 시간축입니다.</p></div>
       <div class="spacetime-controls">
         <label>검색<input id="spacetimeSearch" type="search" value="${escapeHtml(query)}" placeholder="인물·정치체·역할 검색" /></label>
         <label>가로 보기<select id="spacetimeHorizontalMode"><option value="overview"${horizontalViewMode === "overview" ? " selected" : ""}>전체 보기</option><option value="detail"${horizontalViewMode === "detail" ? " selected" : ""}>상세 보기</option></select></label>
