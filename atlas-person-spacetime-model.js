@@ -287,6 +287,86 @@
     return Object.freeze({ start_year: startYear, end_year: now });
   }
 
+  function createLogTimelineScale(startYear, endYear, height = 2800, softeningYears = 180) {
+    const startOrdinal = historicalYearToOrdinal(startYear);
+    const endOrdinal = historicalYearToOrdinal(endYear);
+    if (startOrdinal == null || endOrdinal == null || startOrdinal >= endOrdinal) throw new Error("INVALID_TIMELINE_RANGE");
+    const safeHeight = Number.isFinite(Number(height)) && Number(height) > 0 ? Number(height) : 2800;
+    const softness = Number.isFinite(Number(softeningYears)) && Number(softeningYears) > 0 ? Number(softeningYears) : 180;
+    const span = endOrdinal - startOrdinal;
+    const denominator = Math.log1p(span / softness);
+
+    function yForOrdinal(ordinal) {
+      if (!Number.isFinite(Number(ordinal))) return null;
+      const clamped = Math.min(endOrdinal, Math.max(startOrdinal, Number(ordinal)));
+      const age = endOrdinal - clamped;
+      return safeHeight * (1 - Math.log1p(age / softness) / denominator);
+    }
+
+    function yForYear(year) {
+      const ordinal = historicalYearToOrdinal(year);
+      return ordinal == null ? null : yForOrdinal(ordinal);
+    }
+
+    return Object.freeze({
+      mode: "log_age",
+      start_year: startYear,
+      end_year: endYear,
+      start_ordinal: startOrdinal,
+      end_ordinal: endOrdinal,
+      height: safeHeight,
+      softening_years: softness,
+      yForOrdinal,
+      yForYear
+    });
+  }
+
+  function adaptiveTickInterval(ageYears) {
+    if (ageYears > 3500) return 1000;
+    if (ageYears > 2200) return 500;
+    if (ageYears > 1200) return 250;
+    if (ageYears > 500) return 100;
+    if (ageYears > 180) return 50;
+    if (ageYears > 70) return 25;
+    return 10;
+  }
+
+  function alignedHistoricalYear(year, interval) {
+    if (!Number.isInteger(year) || year === 0) return false;
+    return Math.abs(year) % interval === 0;
+  }
+
+  function buildAdaptiveTimeTicks(startYear, endYear, scale, minPixelGap = 24) {
+    const startOrdinal = historicalYearToOrdinal(startYear);
+    const endOrdinal = historicalYearToOrdinal(endYear);
+    if (startOrdinal == null || endOrdinal == null || startOrdinal > endOrdinal || !scale?.yForYear) return Object.freeze([]);
+    const candidates = new Map();
+    const add = (year, intervalYears, terminal = false) => {
+      if (!Number.isInteger(year) || year === 0) return;
+      candidates.set(year, { year, interval_years: intervalYears, terminal });
+    };
+    add(startYear, adaptiveTickInterval(endOrdinal - startOrdinal), false);
+    for (let ordinal = startOrdinal; ordinal <= endOrdinal; ordinal += 1) {
+      const year = ordinalToHistoricalYear(ordinal);
+      const age = endOrdinal - ordinal;
+      const interval = adaptiveTickInterval(age);
+      if (alignedHistoricalYear(year, interval)) add(year, interval, false);
+    }
+    add(endYear, 0, true);
+    const sorted = [...candidates.values()].sort((left, right) => historicalYearToOrdinal(left.year) - historicalYearToOrdinal(right.year));
+    const ticks = [];
+    let lastY = Number.NEGATIVE_INFINITY;
+    for (const candidate of sorted) {
+      const y = scale.yForYear(candidate.year);
+      if (!Number.isFinite(y)) continue;
+      const isBoundary = candidate.year === startYear || candidate.year === endYear;
+      if (!isBoundary && y - lastY < minPixelGap) continue;
+      ticks.push(Object.freeze({ ...candidate, ordinal: historicalYearToOrdinal(candidate.year), label: yearLabel(candidate.year), y }));
+      lastY = y;
+    }
+    return Object.freeze(ticks);
+  }
+
   function buildCenturyTicks(startYear, endYear) {
     const startOrdinal = historicalYearToOrdinal(startYear);
     const endOrdinal = historicalYearToOrdinal(endYear);
@@ -348,6 +428,8 @@
     resolveActivityPlacement,
     deriveTimelineRange,
     buildCenturyTicks,
+    createLogTimelineScale,
+    buildAdaptiveTimeTicks,
     assignLanes
   });
 });

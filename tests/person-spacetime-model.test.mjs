@@ -132,3 +132,26 @@ test("collision lane assignment is deterministic and keeps overlapping cards apa
   assert.equal(first.find((item) => item.stable_id === "b").lane, 1);
   assert.equal(first.find((item) => item.stable_id === "c").lane, 0);
 });
+
+
+test("logarithmic timeline gives recent centuries more vertical space", () => {
+  const scale = model.createLogTimelineScale(-3000, 2026, 2800, 180);
+  assert.equal(scale.yForYear(-3000), 0);
+  assert.ok(Math.abs(scale.yForYear(2026) - 2800) < 1e-9);
+  const ancientCentury = scale.yForYear(-1900) - scale.yForYear(-2000);
+  const modernCentury = scale.yForYear(2000) - scale.yForYear(1900);
+  assert.ok(modernCentury > ancientCentury * 4, "expected modern century to be much wider");
+});
+
+test("adaptive log ticks become finer toward the present and never emit year zero", () => {
+  const scale = model.createLogTimelineScale(-3000, 2026, 2800, 180);
+  const ticks = model.buildAdaptiveTimeTicks(-3000, 2026, scale);
+  assert.equal(ticks.some((tick) => tick.year === 0), false);
+  assert.equal(ticks[0].year, -3000);
+  assert.equal(ticks.at(-1).year, 2026);
+  const ancient = ticks.filter((tick) => tick.year >= -3000 && tick.year <= -1000).map((tick) => tick.interval_years).filter(Boolean);
+  const recent = ticks.filter((tick) => tick.year >= 1950).map((tick) => tick.interval_years).filter(Boolean);
+  assert.ok(Math.min(...ancient) >= 250);
+  assert.ok(Math.min(...recent) <= 25);
+  for (let index = 1; index < ticks.length; index += 1) assert.ok(ticks[index].y > ticks[index - 1].y);
+});

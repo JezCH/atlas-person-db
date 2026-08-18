@@ -9,7 +9,8 @@
   const LANE_GAP = 10;
   const REGION_PADDING = 18;
   const MIN_REGION_WIDTH = 230;
-  const DEFAULT_CENTURY_HEIGHT = 36;
+  const DEFAULT_TIMELINE_HEIGHT = 2800;
+  const LOG_SOFTENING_YEARS = 180;
   const ERA_DEFINITIONS = Object.freeze([
     Object.freeze({ code: "ancient", label: "고대", range: "BC 480 이전", start_year: null, end_year: -481 }),
     Object.freeze({ code: "classical", label: "고전", range: "BC 480 – AD 499", start_year: -480, end_year: 499 }),
@@ -29,7 +30,7 @@
   let persons = [];
   let spatialIndex = null;
   let query = "";
-  let centuryHeight = DEFAULT_CENTURY_HEIGHT;
+  let timelineHeightSetting = DEFAULT_TIMELINE_HEIGHT;
   let selectedKey = null;
 
   function escapeHtml(value) {
@@ -110,17 +111,7 @@
     return loadPromise;
   }
 
-  function ordinalDistance(startYear, endYear) {
-    const start = model.historicalYearToOrdinal(startYear);
-    const end = model.historicalYearToOrdinal(endYear);
-    return start == null || end == null ? 0 : end - start;
-  }
-
-  function yForYear(year, startYear, pxPerYear) {
-    return ordinalDistance(startYear, year) * pxPerYear;
-  }
-
-  function buildEraBands(range, pxPerYear) {
+  function buildEraBands(range, scale) {
     const rangeStart = model.historicalYearToOrdinal(range.start_year);
     const rangeEnd = model.historicalYearToOrdinal(range.end_year);
     return ERA_DEFINITIONS.map((era) => {
@@ -130,11 +121,13 @@
       const start = Math.max(rangeStart, eraStart);
       const end = Math.min(rangeEnd, eraEnd);
       if (start > end) return null;
-      return { ...era, top: (start - rangeStart) * pxPerYear, height: Math.max(1, (end - start + 1) * pxPerYear) };
+      const top = scale.yForOrdinal(start);
+      const bottom = end >= rangeEnd ? scale.height : scale.yForOrdinal(end + 1);
+      return { ...era, top, height: Math.max(1, bottom - top) };
     }).filter(Boolean);
   }
 
-  function buildPlacement(entries, lookup, timeline, pxPerYear) {
+  function buildPlacement(entries, lookup, scale) {
     const placedByRegion = new Map(model.REGION_DEFINITIONS.map((region) => [region.code, []]));
     const unresolvedPosition = [];
     const unresolvedChronology = [];
@@ -150,8 +143,8 @@
         continue;
       }
       for (const [segmentIndex, segment] of placement.segments.entries()) {
-        const top = yForYear(segment.start_year, timeline.start_year, pxPerYear);
-        const bottom = yForYear(segment.end_year, timeline.start_year, pxPerYear);
+        const top = scale.yForYear(segment.start_year);
+        const bottom = scale.yForYear(segment.end_year);
         const trueTop = Math.min(top, bottom);
         const trueBottom = Math.max(top, bottom);
         const visualBottom = Math.max(trueBottom, trueTop + MIN_CARD_HEIGHT);
@@ -236,12 +229,12 @@
     const needle = query.trim().toLocaleLowerCase("ko");
     const entries = needle ? allEntries.filter((entry) => searchable(entry).includes(needle)) : allEntries;
     const timeline = model.deriveTimelineRange(allEntries.map((entry) => entry.activity), new Date().getFullYear());
-    const pxPerYear = centuryHeight / 100;
-    const timelineHeight = Math.max(800, yForYear(timeline.end_year, timeline.start_year, pxPerYear) + 2);
+    const timelineScale = model.createLogTimelineScale(timeline.start_year, timeline.end_year, timelineHeightSetting, LOG_SOFTENING_YEARS);
+    const timelineHeight = timelineScale.height;
     const lookup = model.createSpatialLookup(spatialIndex);
-    const placement = buildPlacement(entries, lookup, timeline, pxPerYear);
-    const ticks = model.buildCenturyTicks(timeline.start_year, timeline.end_year);
-    const eras = buildEraBands(timeline, pxPerYear);
+    const placement = buildPlacement(entries, lookup, timelineScale);
+    const ticks = model.buildAdaptiveTimeTicks(timeline.start_year, timeline.end_year, timelineScale);
+    const eras = buildEraBands(timeline, timelineScale);
 
     let x = 0;
     const regionMeta = placement.regionLayouts.map((region) => {
@@ -259,10 +252,10 @@
     const placedCount = regionMeta.reduce((sum, region) => sum + region.items.length, 0);
 
     mount.innerHTML = `<section class="spacetime-toolbar card">
-      <div class="spacetime-toolbar-copy"><p class="eyebrow">PERSON SPACETIME ATLAS</p><h2>시공간 인물도</h2><p>세로는 역사 시간, 가로는 검토된 정치체 권역입니다. 광역 위치가 애매하면 당시 수도를 사용하고, 고정 수도가 성립하지 않는 유목·순회 왕정에 한해서만 검토된 왕정·정치 중심을 보조 기준으로 사용합니다.</p></div>
+      <div class="spacetime-toolbar-copy"><p class="eyebrow">PERSON SPACETIME ATLAS</p><h2>시공간 인물도</h2><p>세로축은 현재에 가까울수록 연도 간격이 넓어지는 로그 시간축입니다. 고대는 압축하고 근현대는 세분화해 인물 밀집을 완화합니다. 가로 위치는 검토된 정치체 권역·당시 수도·필요한 왕정 중심 기준을 사용합니다.</p></div>
       <div class="spacetime-controls">
         <label>검색<input id="spacetimeSearch" type="search" value="${escapeHtml(query)}" placeholder="인물·정치체·역할 검색" /></label>
-        <label>100년 높이<select id="spacetimeScale"><option value="28"${centuryHeight === 28 ? " selected" : ""}>28px · 압축</option><option value="36"${centuryHeight === 36 ? " selected" : ""}>36px · 기본</option><option value="52"${centuryHeight === 52 ? " selected" : ""}>52px · 확대</option></select></label>
+        <label>시간축 밀도<select id="spacetimeScale"><option value="2200"${timelineHeightSetting === 2200 ? " selected" : ""}>압축</option><option value="2800"${timelineHeightSetting === 2800 ? " selected" : ""}>기본</option><option value="3600"${timelineHeightSetting === 3600 ? " selected" : ""}>확대</option></select></label>
       </div>
     </section>
     <section class="spacetime-status-row">
@@ -275,9 +268,9 @@
         <div class="spacetime-sticky-corner"><span>시대</span><span>연도</span></div>
         <div class="spacetime-region-head" style="width:${contentWidth}px">${regionMeta.map((region) => `<div style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${region.items.length}구간</small></div>`).join("")}</div>
         <div class="spacetime-era-axis" style="height:${timelineHeight}px">${eras.map((era) => `<div class="person-era-${escapeHtml(era.code)}" style="top:${era.top}px;height:${era.height}px"><span>${escapeHtml(era.label)}</span></div>`).join("")}</div>
-        <div class="spacetime-year-axis" style="height:${timelineHeight}px">${ticks.map((tick) => `<span style="top:${yForYear(tick.year, timeline.start_year, pxPerYear)}px">${escapeHtml(tick.label)}</span>`).join("")}</div>
+        <div class="spacetime-year-axis" style="height:${timelineHeight}px">${ticks.map((tick) => `<span style="top:${tick.y}px">${escapeHtml(tick.label)}</span>`).join("")}</div>
         <div class="spacetime-canvas" style="width:${contentWidth}px;height:${timelineHeight}px">
-          ${ticks.map((tick) => `<i class="spacetime-century-line" style="top:${yForYear(tick.year, timeline.start_year, pxPerYear)}px"></i>`).join("")}
+          ${ticks.map((tick) => `<i class="spacetime-century-line" style="top:${tick.y}px"></i>`).join("")}
           ${regionMeta.map((region) => `<i class="spacetime-region-line" style="left:${region.left}px;height:${timelineHeight}px"></i>`).join("")}
           ${regionMeta.map((region) => region.items.map((item) => renderCard(item, region.left)).join("")).join("")}
         </div>
@@ -298,7 +291,7 @@
       });
     });
     mount.querySelector("#spacetimeScale")?.addEventListener("change", (event) => {
-      centuryHeight = Number(event.target.value) || DEFAULT_CENTURY_HEIGHT;
+      timelineHeightSetting = Number(event.target.value) || DEFAULT_TIMELINE_HEIGHT;
       renderInto(mount);
     });
     mount.querySelectorAll("[data-spacetime-key]").forEach((button) => {
