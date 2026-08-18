@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Inspect current spatial index
+      - name: Inspect current spatial index and live polity identities
         run: |
           node <<'NODE'
           const fs = require('fs');
@@ -28,4 +28,31 @@ jobs:
           for (const r of index.authority_center_records||[]) console.log('AUTHORITY', JSON.stringify(r));
           console.log('review_queue', (index.review_queue||[]).length);
           for (const r of index.review_queue||[]) console.log('REVIEW', JSON.stringify(r));
+
+          const targetIds = new Set([
+            ...(index.capital_records||[]).map(r => r.polity_id),
+            ...(index.authority_center_records||[]).map(r => r.polity_id),
+            ...(index.review_queue||[]).map(r => r.polity_id)
+          ]);
+
+          function walk(value, path = '$') {
+            if (!value || typeof value !== 'object') return;
+            if (Array.isArray(value)) {
+              value.forEach((item, i) => walk(item, `${path}[${i}]`));
+              return;
+            }
+            const hit = Object.entries(value).find(([key, val]) =>
+              typeof val === 'string' && targetIds.has(val) && /polity.*id|id/i.test(key)
+            );
+            if (hit) console.log('LIVE_MATCH', path, JSON.stringify(value));
+            for (const [key, val] of Object.entries(value)) walk(val, `${path}.${key}`);
+          }
+
+          fetch('https://atlas-person-db.vercel.app/api/atlas-read')
+            .then(r => {
+              if (!r.ok) throw new Error(`atlas-read HTTP ${r.status}`);
+              return r.json();
+            })
+            .then(data => walk(data))
+            .catch(err => { console.error(err); process.exitCode = 1; });
           NODE
