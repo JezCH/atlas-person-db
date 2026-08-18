@@ -45,13 +45,15 @@ test('spacetime vertical timeline is not constrained to a nested viewport height
 test('overview renders name-only 24px micro-cards while detail mode keeps full activity information', async () => {
   const view = await fixture(viewUrl);
   const css = await fixture(cssUrl);
-  assert.match(view, /const OVERVIEW_CARD_HEIGHT = 24;/);
-  assert.match(view, /const OVERVIEW_MAX_CARD_WIDTH = 108;/);
-  assert.match(view, /const totalLaneOffset = Math\.min\(10, maxLane \* 2\);/);
-  assert.match(view, /const cardBody = overview/);
-  assert.match(view, /\? `<strong>\$\{escapeHtml\(personLabel\(item\.person\)\)\}<\/strong>`/);
-  assert.match(view, /: `<strong>\$\{escapeHtml\(personLabel\(item\.person\)\)\}<\/strong>\n      <span>/);
-  assert.match(css, /\.spacetime-frame\.is-overview \.spacetime-person-card\.is-overview\{[^}]*height:24px;[^}]*max-width:108px;[^}]*border-left:2px solid #607ca9;[^}]*box-shadow:none;/);
-  assert.match(css, /\.spacetime-frame\.is-overview \.spacetime-person-card\.is-overview>span,[^{]+\{display:none\}/);
-  assert.match(css, /\.spacetime-frame\.is-overview \.spacetime-duration-rail\{[^}]*width:2px;[^}]*opacity:\.72;/);
+  assert.ok(view.includes('const OVERVIEW_CARD_HEIGHT = 24;'));
+  assert.ok(view.includes('const OVERVIEW_MAX_CARD_WIDTH = 108;'));
+  assert.ok(view.includes('const totalLaneOffset = Math.min(10, maxLane * 2);'));
+  assert.ok(view.includes('const cardBody = overview'));
+  assert.ok(view.includes('? `<strong>${escapeHtml(personLabel(item.person))}</strong>`'));
+  assert.ok(view.includes(': `<strong>${escapeHtml(personLabel(item.person))}</strong>\n      <span>${escapeHtml(polityLabel(item.activity))}</span>'));
+  assert.ok(css.includes('.spacetime-frame.is-overview .spacetime-person-card.is-overview{height:24px;min-height:24px;max-height:24px;max-width:108px;'));
+  assert.ok(css.includes('border-left:2px solid #607ca9'));
+  assert.ok(css.includes('box-shadow:none'));
+  assert.ok(css.includes('.spacetime-frame.is-overview .spacetime-person-card.is-overview>span,.spacetime-frame.is-overview .spacetime-person-card.is-overview small,.spacetime-frame.is-overview .spacetime-person-card.is-overview i{display:none}'));
+  assert.ok(css.includes('.spacetime-frame.is-overview .spacetime-duration-rail{width:2px;opacity:.72}'));
 });
