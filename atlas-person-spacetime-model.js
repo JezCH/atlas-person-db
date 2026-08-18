@@ -81,8 +81,8 @@
     const sourceRefs = Array.isArray(fn?.source_refs) ? fn.source_refs.map(text).filter(Boolean) : [];
     if (!sourceRefs.length) errors.push("source_refs must contain at least one reviewed source reference");
     const confidence = text(fn?.confidence);
-    if (!ALLOWED_CONFIDENCE.has(confidence)) errors.push(`invalid confidence: ${regionCode || "(empty)"}`);
-    return errors.map((message) => `place_function_records[] polity  function : ${regionCode || "(empty)"}`);
+    if (!ALLOWED_CONFIDENCE.has(confidence)) errors.push(`invalid confidence: ${confidence || "(empty)"}`);
+    return errors.map((message) => `place_function_records[${recordIndex}] polity ${polityId || "(empty)"} function ${functionIndex}: ${message}`);
   }
 
   function validateSpatialIndex(value) {
@@ -100,17 +100,17 @@
       const id = text(polityId);
       const regionCode = text(rawRegionCode);
       if (!id) errors.push("polity_geography contains an empty polity_id");
-      if (!REGION_CODES.has(regionCode)) errors.push(`polity_geography polity : invalid region_code ${regionCode || "(empty)"}`);
+      if (!REGION_CODES.has(regionCode)) errors.push(`polity_geography polity ${id || "(empty)"}: invalid region_code ${regionCode || "(empty)"}`);
       if (id) resolved.add(id);
     }
 
     for (const [recordIndex, record] of (Array.isArray(value.place_function_records) ? value.place_function_records : []).entries()) {
       const polityId = text(record?.polity_id);
-      if (!polityId) errors.push(`place_function_records[]: polity_id is required${regionCode || "(empty)"}`);
-      if (resolved.has(polityId)) errors.push(`place_function_records[]: polity_id  is already resolved by polity_geography${regionCode || "(empty)"}`);
+      if (!polityId) errors.push(`place_function_records[${recordIndex}]: polity_id is required`);
+      if (resolved.has(polityId)) errors.push(`place_function_records[${recordIndex}]: polity_id ${polityId} is already resolved by polity_geography`);
       if (polityId) resolved.add(polityId);
       if (!Array.isArray(record?.functions) || !record.functions.length) {
-        errors.push(`place_function_records[] polity : functions must be a non-empty array${regionCode || "(empty)"}`);
+        errors.push(`place_function_records[${recordIndex}] polity ${polityId || "(empty)"}: functions must be a non-empty array`);
       } else {
         for (const [functionIndex, fn] of record.functions.entries()) errors.push(...validatePlaceFunction(fn, polityId, recordIndex, functionIndex));
       }
@@ -119,9 +119,9 @@
     const reviewSeen = new Set();
     for (const [index, record] of (Array.isArray(value.review_queue) ? value.review_queue : []).entries()) {
       const polityId = text(record?.polity_id);
-      if (!polityId) errors.push(`review_queue[]: polity_id is required${regionCode || "(empty)"}`);
-      if (resolved.has(polityId)) errors.push(`review_queue[]: polity_id  is already resolved${regionCode || "(empty)"}`);
-      if (reviewSeen.has(polityId)) errors.push(`review_queue[]: duplicate polity_id ${regionCode || "(empty)"}`);
+      if (!polityId) errors.push(`review_queue[${index}]: polity_id is required`);
+      if (resolved.has(polityId)) errors.push(`review_queue[${index}]: polity_id ${polityId} is already resolved`);
+      if (reviewSeen.has(polityId)) errors.push(`review_queue[${index}]: duplicate polity_id ${polityId}`);
       if (polityId) reviewSeen.add(polityId);
     }
 
