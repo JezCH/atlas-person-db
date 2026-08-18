@@ -1,0 +1,28 @@
+name: Temporary Spacetime Place Function Audit
+
+on:
+  push:
+    branches:
+      - agent/spacetime-place-function-v2
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect current spatial index
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const index = JSON.parse(fs.readFileSync('atlas-polity-spatial-index.json','utf8'));
+          console.log('schema', index.schema);
+          console.log('capital_records', (index.capital_records||[]).length);
+          for (const r of index.capital_records||[]) console.log('CAPITAL', JSON.stringify(r));
+          console.log('authority_center_records', (index.authority_center_records||[]).length);
+          for (const r of index.authority_center_records||[]) console.log('AUTHORITY', JSON.stringify(r));
+          console.log('review_queue', (index.review_queue||[]).length);
+          for (const r of index.review_queue||[]) console.log('REVIEW', JSON.stringify(r));
+          NODE
