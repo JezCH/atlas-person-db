@@ -3,7 +3,7 @@ name: ATLAS Spacetime Log Axis One Shot
 on:
   pull_request:
     paths:
-      - '.tmp/apply-spacetime-log-axis-v2.cjs'
+      - '.tmp/apply-spacetime-log-axis-v3.cjs'
       - '.github/workflows/atlas-spacetime-log-axis-one-shot.yml'
 
 permissions:
@@ -23,7 +23,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node .tmp/apply-spacetime-log-axis-v2.cjs
+          node .tmp/apply-spacetime-log-axis-v3.cjs
           node --test tests/person-spacetime-model.test.mjs tests/person-spacetime-spatial-index-coverage.test.mjs
       - name: Commit generated implementation
         shell: bash
