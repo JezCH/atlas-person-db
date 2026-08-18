@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:al-hasan-ibn-sulaiman:kilwa-sultanate:c1310-c1333:v1",
+  "person": {"canonical_name_en": "al-Hasan ibn Sulaiman", "display_name_ko": "알하산 이븐 술라이만"},
+  "polity": {"canonical_name_en": "Kilwa Sultanate", "display_name_ko": "킬와 술탄국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Sultan", "role_display_name_ko": "술탄", "start_year": 1310, "start_month": null, "start_day": null, "start_certainty": "uncertain", "start_calendar": "unspecified_historical", "end_year": 1333, "end_month": null, "end_day": null, "end_certainty": "uncertain", "end_calendar": "unspecified_historical", "confidence": "likely", "chronology_status": "reviewed", "notes": "This is explicitly the early-fourteenth-century Kilwa ruler associated with the Husuni Kubwa phase, not the later same-name fifteenth-century ruler."},
+  "sources": [{"title": "Ruins of Kilwa Kisiwani and Ruins of Songo Mnara — UNESCO World Heritage Centre", "canonical_url": "https://whc.unesco.org/en/list/144", "source_type": "institutional_web"}, {"title": "Islamic coin HCR20159 — Ashmolean Museum, Oxford", "canonical_url": "https://hcr.ashmus.ox.ac.uk/coin/hcr20159", "source_type": "museum_research"}]
+}

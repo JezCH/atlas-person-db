@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ranavalona-i:kingdom-of-madagascar:1828-1861:v1",
+  "person": {"canonical_name_en": "Ranavalona I", "display_name_ko": "라나발로나 1세"},
+  "polity": {"canonical_name_en": "Kingdom of Madagascar", "display_name_ko": "마다가스카르 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Queen", "role_display_name_ko": "여왕", "start_year": 1828, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 1861, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Ranavalona I ruled the Kingdom of Madagascar from 1828 to 1861."},
+  "sources": [{"title": "An Economic History of Imperial Madagascar, 1750–1895 — Cambridge University Press", "canonical_url": "https://assets.cambridge.org/052183/9351/excerpt/0521839351_excerpt.htm", "source_type": "academic_reference"}, {"title": "The Adoption of Autarky in Imperial Madagascar, 1820–1835 — The Journal of African History", "canonical_url": "https://www.cambridge.org/core/journals/journal-of-african-history/article/abs/adoption-of-autarky-in-imperial-madagascar-182018351/3A8C7FA41BA0DC5997D0D371F3B2C310", "source_type": "academic_reference"}]
+}

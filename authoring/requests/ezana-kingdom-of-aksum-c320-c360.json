@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ezana:kingdom-of-aksum:c320-c360:v1",
+  "person": {"canonical_name_en": "Ezana", "display_name_ko": "에자나"},
+  "polity": {"canonical_name_en": "Kingdom of Aksum", "display_name_ko": "악숨 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 320, "start_month": null, "start_day": null, "start_certainty": "uncertain", "start_calendar": "unspecified_historical", "end_year": 360, "end_month": null, "end_day": null, "end_certainty": "uncertain", "end_calendar": "unspecified_historical", "confidence": "likely", "chronology_status": "reviewed", "notes": "Ezana's fourth-century reign is secure, but absolute dates vary; ATLAS stores the common c.320-c.360 reconstruction as uncertain boundaries."},
+  "sources": [{"title": "The Routledge History of Monarchy — Kingdom of Aksum", "canonical_url": "https://routledgetextbooks.com/textbooks/9781138703322/resources.php", "source_type": "academic_reference"}, {"title": "African Christianity in Ethiopia — The Metropolitan Museum of Art", "canonical_url": "https://www.metmuseum.org/essays/african-christianity-in-ethiopia", "source_type": "museum_research"}]
+}

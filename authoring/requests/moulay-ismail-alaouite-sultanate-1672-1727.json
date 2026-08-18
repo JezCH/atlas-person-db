@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:moulay-ismail:alaouite-sultanate:1672-1727:v1",
+  "person": {"canonical_name_en": "Moulay Ismail ibn Sharif", "display_name_ko": "물라이 이스마일 이븐 샤리프"},
+  "polity": {"canonical_name_en": "Alaouite Sultanate", "display_name_ko": "알라위 술탄국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Sultan", "role_display_name_ko": "술탄", "start_year": 1672, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 1727, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Moulay Ismail ruled the Alaouite Moroccan state from 1672 to 1727."},
+  "sources": [{"title": "Alawite Dynasty — Encyclopedia.com", "canonical_url": "https://www.encyclopedia.com/humanities/encyclopedias-almanacs-transcripts-and-maps/alawite-dynasty", "source_type": "web_bibliographic_reference"}, {"title": "المولى إسماعيل (1082-1139هـ/1672-1727) — Ministry of Habous and Islamic Affairs, Morocco", "canonical_url": "https://www.habous.gov.ma/2012-05-28-10-40-28/40-%D9%85%D9%84%D9%88%D9%83-%D8%A7%D9%84%D9%85%D8%BA%D8%B1%D8%A8/274-1082-1139-1672-1727.html", "source_type": "government_web"}]
+}

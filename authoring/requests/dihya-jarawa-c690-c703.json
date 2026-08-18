@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:dihya:jarawa:c690-c703:v1",
+  "person": {"canonical_name_en": "Dihya", "display_name_ko": "디히야"},
+  "polity": {"canonical_name_en": "Jarawa", "display_name_ko": "자라와"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Queen", "role_display_name_ko": "여왕", "start_year": 690, "start_month": null, "start_day": null, "start_certainty": "uncertain", "start_calendar": "unspecified_historical", "end_year": 703, "end_month": null, "end_day": null, "end_certainty": "uncertain", "end_calendar": "unspecified_historical", "confidence": "likely", "chronology_status": "reviewed", "notes": "Dihya is attached conservatively to the political Jarawa grouping in the Aurès. c.690-c.703 is conventional and uncertain; ATLAS does not invent a Berber Empire."},
+  "sources": [{"title": "The Role of Women in Resistance in Early Medieval North Africa: The Case of Al-Kahina (Dihya) (7th Century)", "canonical_url": "https://dergipark.org.tr/tr/pub/atdd/article/1860461", "source_type": "academic_reference"}, {"title": "Jungle and Desert in Postcolonial Texts: Intertextual Ecosystems — Cambridge Core", "canonical_url": "https://www.cambridge.org/core/journals/cambridge-journal-of-postcolonial-literary-inquiry/article/abs/jungle-and-desert-in-postcolonial-texts-intertextual-ecosystems/B12015EA7FE977BE1528A4A957727F37", "source_type": "academic_reference"}]
+}

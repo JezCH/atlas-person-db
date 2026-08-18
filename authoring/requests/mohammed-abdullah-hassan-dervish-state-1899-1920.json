@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mohammed-abdullah-hassan:somali-dervish-state:1899-1920:v1",
+  "person": {"canonical_name_en": "Mohammed Abdullah Hassan", "display_name_ko": "모하메드 압둘라 하산"},
+  "polity": {"canonical_name_en": "Somali Dervish State", "display_name_ko": "소말리 데르비시 국가"},
+  "activity": {"relation_type": "governs", "period_basis": "de_facto_rule", "role": "Dervish Leader", "role_display_name_ko": "데르비시 지도자", "start_year": 1899, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 1920, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Mohammed Abdullah Hassan was the central political-religious authority of the Dervish proto-state from 1899 to 1920; ATLAS uses governs rather than treating him as a monarch of modern Somalia."},
+  "sources": [{"title": "Dervish State (Somali) — The Encyclopedia of Empire, Wiley", "canonical_url": "https://onlinelibrary.wiley.com/doi/10.1002/9781118455074.wbeoe069", "source_type": "academic_reference"}]
+}

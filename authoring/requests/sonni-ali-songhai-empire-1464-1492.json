@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sonni-ali:songhai-empire:1464-1492:v1",
+  "person": {"canonical_name_en": "Sonni Ali", "display_name_ko": "손니 알리"},
+  "polity": {"canonical_name_en": "Songhai Empire", "display_name_ko": "송가이 제국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": 1464, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 1492, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Sovereign reign of Sonni Ali in the Songhai Empire, 1464-1492."},
+  "sources": [{"title": "Sonni ‘Alī — EBSCO Research Starters", "canonical_url": "https://www.ebsco.com/research-starters/biography/sonni-ali", "source_type": "academic_reference"}, {"title": "SONNI ALI — Encyclopædia Universalis", "canonical_url": "https://www.universalis.fr/encyclopedie/sonni-ali/", "source_type": "web_bibliographic_reference"}]
+}
