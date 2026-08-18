@@ -1,0 +1,80 @@
+name: Spacetime Micro Card One Shot
+
+on:
+  push:
+    branches:
+      - agent/spacetime-micro-cards-compact3
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.event.head_commit.message == 'Bootstrap spacetime micro-card compiler'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/spacetime-micro-cards-compact3
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Apply micro-card compaction
+        shell: python
+        run: |
+          from pathlib import Path
+
+          view_path = Path('atlas-person-spacetime-view.js')
+          view = view_path.read_text()
+          replacements = [
+              ('const OVERVIEW_REGION_GAP = 4;\n', 'const OVERVIEW_REGION_GAP = 4;\n  const OVERVIEW_MAX_CARD_WIDTH = 108;\n'),
+              ('const OVERVIEW_CARD_HEIGHT = 36;', 'const OVERVIEW_CARD_HEIGHT = 24;'),
+              ('const totalLaneOffset = Math.min(18, maxLane * 3);', 'const totalLaneOffset = Math.min(10, maxLane * 2);'),
+              ('const cardWidth = Math.max(58, width - OVERVIEW_REGION_GAP * 2 - totalLaneOffset);', 'const cardWidth = Math.max(48, Math.min(OVERVIEW_MAX_CARD_WIDTH, width - OVERVIEW_REGION_GAP * 2 - totalLaneOffset));'),
+              ('    const visualHeight = overview ? OVERVIEW_CARD_HEIGHT : MIN_CARD_HEIGHT;\n    return `<div class="spacetime-person-anchor" style="left:${laneLeft}px;top:${item.top}px;height:${trueHeight}px"><span class="spacetime-duration-rail" aria-hidden="true"></span></div>\n    <button type="button" class="spacetime-person-card${compactClass}${selected}" data-spacetime-key="${escapeHtml(item.stable_id)}" style="left:${laneLeft + (overview ? 3 : 8)}px;top:${visualTop}px;width:${region.card_width}px;min-height:${visualHeight}px" title="${escapeHtml(title)}">\n      <strong>${escapeHtml(personLabel(item.person))}</strong>\n      <span>${escapeHtml(polityLabel(item.activity))}</span>\n      <small>${escapeHtml(periodLabel(item.activity))}</small>\n      <i>${escapeHtml(basis)}</i>\n    </button>`;',
+               '    const visualHeight = overview ? OVERVIEW_CARD_HEIGHT : MIN_CARD_HEIGHT;\n    const cardBody = overview\n      ? `<strong>${escapeHtml(personLabel(item.person))}</strong>`\n      : `<strong>${escapeHtml(personLabel(item.person))}</strong>\n      <span>${escapeHtml(polityLabel(item.activity))}</span>\n      <small>${escapeHtml(periodLabel(item.activity))}</small>\n      <i>${escapeHtml(basis)}</i>`;\n    return `<div class="spacetime-person-anchor" style="left:${laneLeft}px;top:${item.top}px;height:${trueHeight}px"><span class="spacetime-duration-rail" aria-hidden="true"></span></div>\n    <button type="button" class="spacetime-person-card${compactClass}${selected}" data-spacetime-key="${escapeHtml(item.stable_id)}" style="left:${laneLeft + (overview ? 2 : 8)}px;top:${visualTop}px;width:${region.card_width}px;min-height:${visualHeight}px" title="${escapeHtml(title)}">\n      ${cardBody}\n    </button>`;'),
+              ('기본 ‘전체 보기’에서는 아메리카부터 동아시아까지 모든 권역을 한 화면에 압축해 세계 분포를 조망합니다. ‘상세 보기’에서는 카드 폭과 권역 폭을 넓혀 개별 Activity를 자세히 확인할 수 있습니다. 세로축은 현재에 가까울수록 확대되는 로그 시간축입니다.',
+               '기본 ‘전체 보기’에서는 아메리카부터 동아시아까지 모든 권역과 이름 한 줄 micro-card만 표시해 세계 분포를 빠르게 조망합니다. 정치체·기간·위치 근거는 hover와 선택 상세에서 확인하며, ‘상세 보기’에서는 기존 전체 카드를 사용합니다. 세로축은 현재에 가까울수록 확대되는 로그 시간축입니다.')
+          ]
+          for old, new in replacements:
+              if old not in view:
+                  raise SystemExit(f'missing view pattern: {old[:90]}')
+              view = view.replace(old, new, 1)
+          view_path.write_text(view)
+
+          css_path = Path('atlas-person-spacetime-view.css')
+          css = css_path.read_text()
+          old_css = '''.spacetime-frame.is-overview .spacetime-person-card.is-overview{min-height:36px;padding:5px 5px 4px;border-left-width:3px;border-radius:7px;gap:1px;background:rgba(255,255,255,.92);box-shadow:0 1px 4px rgba(35,50,74,.07)}
+.spacetime-frame.is-overview .spacetime-person-card.is-overview strong{font-size:10px}
+.spacetime-frame.is-overview .spacetime-person-card.is-overview>span{font-size:8px}
+.spacetime-frame.is-overview .spacetime-person-card.is-overview small,.spacetime-frame.is-overview .spacetime-person-card.is-overview i{display:none}
+.spacetime-frame.is-overview .spacetime-person-card.is-overview:hover,.spacetime-frame.is-overview .spacetime-person-card.is-overview.is-selected{background:#fff;box-shadow:0 7px 18px rgba(35,50,74,.18)}'''
+          new_css = '''.spacetime-frame.is-overview .spacetime-person-card.is-overview{height:24px;min-height:24px;max-height:24px;max-width:108px;padding:2px 4px;border:0;border-left:2px solid #607ca9;border-radius:3px;display:block;background:rgba(255,255,255,.78);box-shadow:none;line-height:19px}
+.spacetime-frame.is-overview .spacetime-person-card.is-overview strong{font-size:9px;line-height:19px;font-weight:700}
+.spacetime-frame.is-overview .spacetime-person-card.is-overview>span,.spacetime-frame.is-overview .spacetime-person-card.is-overview small,.spacetime-frame.is-overview .spacetime-person-card.is-overview i{display:none}
+.spacetime-frame.is-overview .spacetime-duration-rail{width:2px;opacity:.72}
+.spacetime-frame.is-overview .spacetime-person-card.is-overview:hover,.spacetime-frame.is-overview .spacetime-person-card.is-overview.is-selected{background:#fff;box-shadow:0 4px 10px rgba(35,50,74,.14)}'''
+          if old_css not in css:
+              raise SystemExit('missing overview css block')
+          css = css.replace(old_css, new_css, 1)
+          css = css.replace('@media(max-width:1100px){.spacetime-frame.is-overview .spacetime-region-head strong{font-size:10px}.spacetime-frame.is-overview .spacetime-person-card.is-overview strong{font-size:9px}.spacetime-frame.is-overview .spacetime-person-card.is-overview>span{font-size:7px}}', '@media(max-width:1100px){.spacetime-frame.is-overview .spacetime-region-head strong{font-size:10px}.spacetime-frame.is-overview .spacetime-person-card.is-overview strong{font-size:8px}}', 1)
+          css_path.write_text(css)
+
+          test_path = Path('tests/person-spacetime-overview-ui.test.mjs')
+          tests = test_path.read_text()
+          addition = '''\n\ntest('overview renders name-only 24px micro-cards while detail mode keeps full activity information', async () => {\n  const view = await fixture(viewUrl);\n  const css = await fixture(cssUrl);\n  assert.match(view, /const OVERVIEW_CARD_HEIGHT = 24;/);\n  assert.match(view, /const OVERVIEW_MAX_CARD_WIDTH = 108;/);\n  assert.match(view, /const cardBody = overview/);\n  assert.match(view, /\? `<strong>\$\{escapeHtml\(personLabel\(item\.person\)\)\}<\\\/strong>`/);\n  assert.match(css, /\.spacetime-frame\.is-overview \.spacetime-person-card\.is-overview\{[^}]*height:24px;[^}]*max-width:108px;[^}]*border-left:2px solid #607ca9;[^}]*box-shadow:none;/);\n  assert.match(css, /\.spacetime-frame\.is-overview \.spacetime-person-card\.is-overview>span,[^{]+\{display:none\}/);\n});\n'''
+          if 'name-only 24px micro-cards' not in tests:
+              tests += addition
+          test_path.write_text(tests)
+      - name: Verify syntax and focused tests
+        run: |
+          node --check atlas-person-spacetime-view.js
+          node --test tests/person-spacetime-overview-ui.test.mjs
+      - name: Commit generated change
+        run: |
+          git config user.name "ATLAS Agent"
+          git config user.email "actions@users.noreply.github.com"
+          git add atlas-person-spacetime-view.js atlas-person-spacetime-view.css tests/person-spacetime-overview-ui.test.mjs
+          git commit -m "Apply spacetime micro-card compaction"
+          git push origin HEAD:agent/spacetime-micro-cards-compact3
