@@ -117,8 +117,8 @@ test('polity identity uses the same deterministic key/name lock boundary', async
 });
 
 test('role identity locks every resolver token and creates exact vocabulary', async () => {
-  const responses = empty(11);
-  responses[8] = { rows: [{ id: 'role-1' }] };
+  const responses = empty(10);
+  responses[7] = { rows: [{ id: 'role-1' }] };
   const client = scriptedClient(responses);
   const outcome = await createIdentityService({ client }).mutate('create_role', {
     code: 'emperor', source_label: 'Emperor', display_name_ko: '황제', category: 'sovereign'
@@ -130,8 +130,24 @@ test('role identity locks every resolver token and creates exact vocabulary', as
     'atlas-identity:role:token:Emperor',
     'atlas-identity:role:token:황제'
   ]));
-  assert.deepEqual(client.calls[8].params, ['emperor', 'sovereign', 'Emperor']);
-  assert.deepEqual(client.calls[9].params, ['role-1', 'Emperor', '황제']);
+  assert.deepEqual(client.calls[7].params, ['emperor', 'sovereign', 'Emperor']);
+  assert.deepEqual(client.calls[8].params, ['role-1', 'Emperor', '황제']);
+});
+
+test('distinct canonical roles may share the same localized display label', async () => {
+  const responses = empty(10);
+  responses[7] = { rows: [{ id: 'role-governor-general' }] };
+  const client = scriptedClient(responses);
+  const outcome = await createIdentityService({ client }).mutate('create_role', {
+    code: 'governor_general', source_label: 'Governor General', display_name_ko: '총독', category: 'governance'
+  });
+  assert.equal(outcome.id, 'role-governor-general');
+  assert.equal(outcome.replay, false);
+  const collisionChecks = client.calls.filter((call) => /from atlas_v2\.roles r/.test(call.sql) && /role_names rn/.test(call.sql));
+  assert.deepEqual(collisionChecks.map((call) => call.params[0]), ['governor_general', 'Governor General']);
+  assert.equal(collisionChecks.some((call) => call.params[0] === '총독'), false);
+  assert.deepEqual(client.calls[8].params, ['role-governor-general', 'Governor General', '총독']);
+  assert.match(client.calls.at(-1).sql, /^commit$/i);
 });
 
 test('new role code cannot reuse an existing role label or alias', async () => {
