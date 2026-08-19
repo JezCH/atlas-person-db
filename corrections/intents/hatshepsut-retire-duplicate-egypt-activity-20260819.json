@@ -1,0 +1,17 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:hatshepsut:retire-duplicate-egypt-activity:20260819:v1",
+  "review_status": "approved",
+  "release_order": 110,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "a9143873-3bf4-4ea5-b481-5e1e4c323175"
+  },
+  "evidence": {
+    "reason": "Production Person read after Egypt/Kush batch #371 shows the pre-existing Hatshepsut Activity 3c213212-f4f3-5018-8a2f-1eb2602984d7 for New Kingdom of Egypt, 1479-1458 BCE, plus a later overlapping Egypt Activity a9143873-3bf4-4ea5-b481-5e1e4c323175 with the same pharaonic reign window and #371 reviewed wording. Preserve the pre-existing Activity and retire only the redundant Activity introduced by #371.",
+    "person_id": "52530876-ecec-5a85-87c5-90eab802ec50",
+    "survivor_activity_id": "3c213212-f4f3-5018-8a2f-1eb2602984d7",
+    "retire_activity_id": "a9143873-3bf4-4ea5-b481-5e1e4c323175",
+    "source_authoring_merge_sha": "0b6cb159a500edeb2f3828b2048624f77df83907"
+  }
+}
