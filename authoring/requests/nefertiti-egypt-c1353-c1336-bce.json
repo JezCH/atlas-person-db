@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:nefertiti:egypt:great-royal-wife:c1353-c1336-bce:v1",
+  "person": {"canonical_name_en": "Nefertiti", "display_name_ko": "네페르티티"},
+  "polity": {"canonical_name_en": "Egypt", "display_name_ko": "이집트"},
+  "activity": {"relation_type": "serves", "period_basis": "general_activity", "role": "Great Royal Wife", "role_display_name_ko": "대왕비", "start_year": -1353, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical", "end_year": -1336, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Nefertiti was the principal queen (Great Royal Wife) of Akhenaten and an unusually prominent royal figure in the Amarna court. ATLAS does not promote the disputed identification with a later female co-ruler or pharaoh to settled fact; this Activity records only her securely attested royal role during Akhenaten's reign."},
+  "sources": [{"title": "Relief of Queen Nefertiti — The Metropolitan Museum of Art", "canonical_url": "https://www.metmuseum.org/art/collection/search/545803", "citation_text": "The Metropolitan Museum identifies Nefertiti as Akhenaten's principal queen and a powerful court figure during the Amarna Period, approximately 1353–1336 BCE.", "source_type": "museum_research"}]
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:taharqa:egypt:reign:690-664-bce:v1",
+  "person": {"canonical_name_en": "Taharqa", "display_name_ko": "타하르카"},
+  "polity": {"canonical_name_en": "Egypt", "display_name_ko": "이집트"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Pharaoh", "role_display_name_ko": "파라오", "start_year": -690, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": -664, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Taharqa was a Twenty-fifth Dynasty Kushite pharaoh of Egypt. ATLAS records Egypt separately from his Kingdom of Kush sovereignty so both historically meaningful political associations are preserved without replacing either with a generic Nubia label."},
+  "sources": [{"title": "Taharqo — British Museum", "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG56113", "citation_text": "The British Museum identifies Taharqo/Taharqa as a Twenty-fifth Dynasty Nubian ruler of Egypt and King of Upper and Lower Egypt, dated 690–664 BCE.", "source_type": "museum_research"}]
+}

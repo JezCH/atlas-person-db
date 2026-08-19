@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:piye:kingdom-of-kush:reign:c747-c721-bce:v1",
+  "person": {"canonical_name_en": "Piye", "display_name_ko": "피이"},
+  "polity": {"canonical_name_en": "Kingdom of Kush", "display_name_ko": "쿠시 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": -747, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical", "end_year": -721, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Piye (Piankhy) was a Kushite king ruling from Napata who successfully campaigned into Egypt and compelled Egyptian rulers to submit. ATLAS binds his sovereign Activity to the Kingdom of Kush rather than treating Nubia as a generic polity; the reign boundaries are approximate."},
+  "sources": [{"title": "Egypt in the Third Intermediate Period — The Metropolitan Museum of Art", "canonical_url": "https://www.metmuseum.org/essays/egypt-in-the-third-intermediate-period-1070-712-b-c", "citation_text": "The Metropolitan Museum describes Piankhy/Piye as the Nubian king of Kush who campaigned successfully in Egypt around 730 BCE and established Kushite dominance.", "source_type": "museum_research"}, {"title": "The Kingdom of Kush — World History Encyclopedia", "canonical_url": "https://www.worldhistory.org/Kush/", "citation_text": "The reference chronology places Piye's Kushite reign approximately 747–721 BCE and describes his consolidation of Kushite rule in Egypt.", "source_type": "academic_reference"}]
+}

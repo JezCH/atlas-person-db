@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:djoser:egypt:reign:c2667-c2648-bce:v1",
+  "person": {"canonical_name_en": "Djoser", "display_name_ko": "조세르"},
+  "polity": {"canonical_name_en": "Egypt", "display_name_ko": "이집트"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Pharaoh", "role_display_name_ko": "파라오", "start_year": -2667, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical", "end_year": -2648, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Djoser (Netjerykhet) was a Third Dynasty king of Egypt. ATLAS follows the Egyptian Ministry of Tourism and Antiquities chronology of approximately 2667–2648 BCE and preserves both boundaries as approximate."},
+  "sources": [{"title": "The Step Pyramid Complex of Djoser — Egyptian Ministry of Tourism and Antiquities", "canonical_url": "https://egymonuments.gov.eg/monuments/the-step-pyramid-complex-of-djoser/", "citation_text": "Egypt's Ministry of Tourism and Antiquities identifies Netjerykhet, better known as Djoser, as the Third Dynasty king who reigned approximately 2667–2648 BCE.", "source_type": "government_web"}]
+}

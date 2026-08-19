@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gamal-abdel-nasser:united-arab-republic:president:1958-1970:v1",
+  "person": {"canonical_name_en": "Gamal Abdel Nasser", "display_name_ko": "가말 압델 나세르"},
+  "polity": {"canonical_name_en": "United Arab Republic", "display_name_ko": "아랍 연합 공화국"},
+  "activity": {"relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령", "start_year": 1958, "start_month": 2, "start_day": 22, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1970, "end_month": 9, "end_day": 28, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Nasser became president of the United Arab Republic when Egypt and Syria formed the union on 22 February 1958 and remained president until his death on 28 September 1970. Syria withdrew in 1961, but Egypt retained the official United Arab Republic name during the remainder of Nasser's presidency."},
+  "sources": [{"title": "Gamal Abdel Nasser — Egypt State Information Service", "canonical_url": "https://sis.gov.eg/en/egypt/egyptian-figures/gamal-abdel-nasser/", "citation_text": "Egypt's State Information Service records the formation of the United Arab Republic on 22 February 1958 under Nasser's presidency and his death on 28 September 1970.", "source_type": "government_web"}, {"title": "Gamal Abdel Nasser — Presidency of the Arab Republic of Egypt", "canonical_url": "https://www.presidency.eg/en/%D8%A7%D9%84%D8%B1%D8%A6%D8%A7%D8%B3%D8%A9/%D9%82%D8%A7%D8%A6%D9%85%D8%A9-%D8%A7%D9%84%D8%B4%D8%B1%D9%81/%D8%AC%D9%85%D8%A7%D9%84-%D8%B9%D8%A8%D8%AF-%D8%A7%D9%84%D9%86%D8%A7%D8%B5%D8%B1-%D8%AD%D8%B3%D9%8A%D9%86-1/", "citation_text": "The Egyptian Presidency identifies Gamal Abdel Nasser with the office of President of the United Arab Republic.", "source_type": "government_web"}]
+}
