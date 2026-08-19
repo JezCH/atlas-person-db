@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jefferson-davis:confederate-states:1861-1865:v1",
+  "person": {"canonical_name_en": "Jefferson Davis", "display_name_ko": "제퍼슨 데이비스"},
+  "polity": {"canonical_name_en": "Confederate States of America", "display_name_ko": "아메리카 연합국"},
+  "activity": {"relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령", "start_year": 1861, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1865, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Jefferson Davis served as the first and only President of the Confederate States of America during its existence from 1861 to 1865. ATLAS links this office to the Confederate States rather than the United States."},
+  "sources": [{"title": "Jefferson Davis — National Park Service", "canonical_url": "https://www.nps.gov/people/jefferson-davis.htm", "source_type": "government_reference"}, {"title": "DAVIS, Jefferson — U.S. House of Representatives: History, Art & Archives", "canonical_url": "https://history.house.gov/People/Detail/11970", "source_type": "government_reference"}]
+}
