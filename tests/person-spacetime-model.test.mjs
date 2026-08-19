@@ -10,20 +10,20 @@ function geographyIndex(region = "east-asia") {
   return {
     schema: model.SPATIAL_INDEX_SCHEMA,
     polity_geography: { "polity-a": region },
-    capital_records: [],
+    place_function_records: [],
     review_queue: []
   };
 }
 
-function capitalIndex() {
+function placeFunctionIndex() {
   return {
     schema: model.SPATIAL_INDEX_SCHEMA,
     polity_geography: {},
-    capital_records: [{
+    place_function_records: [{
       polity_id: "polity-a",
-      capital_periods: [
-        { start_year: 100, end_year: 109, capital_name: "Old Capital", region_code: "west-asia", confidence: "well_established", source_refs: ["source:old"] },
-        { start_year: 110, end_year: 130, capital_name: "New Capital", region_code: "east-asia", confidence: "well_established", source_refs: ["source:new"] }
+      functions: [
+        { start_year: 100, end_year: 109, function_type: "capital", place_name: "Old Capital", region_code: "west-asia", confidence: "well_established", source_refs: ["source:old"] },
+        { start_year: 110, end_year: 130, function_type: "capital", place_name: "New Capital", region_code: "east-asia", confidence: "well_established", source_refs: ["source:new"] }
       ]
     }],
     review_queue: []
@@ -48,7 +48,7 @@ test("century ticks use calendar centuries across BC and AD", () => {
   assert.equal(ticks.some((tick) => tick.year === 0), false);
 });
 
-test("reviewed polity geography places an activity without capital data", () => {
+test("reviewed polity geography places an activity without place-function data", () => {
   const lookup = model.createSpatialLookup(geographyIndex("east-asia"));
   const placement = model.resolveActivityPlacement({ id: "activity-a", polity: { id: "polity-a" }, start: { year: 100 }, end: { year: 120 } }, lookup);
   assert.equal(placement.status, "placed");
@@ -60,7 +60,7 @@ test("reviewed polity geography places an activity without capital data", () => 
 });
 
 test("missing reviewed spatial record never guesses a placement", () => {
-  const lookup = model.createSpatialLookup({ schema: model.SPATIAL_INDEX_SCHEMA, polity_geography: {}, capital_records: [], review_queue: [] });
+  const lookup = model.createSpatialLookup({ schema: model.SPATIAL_INDEX_SCHEMA, polity_geography: {}, place_function_records: [], review_queue: [] });
   const placement = model.resolveActivityPlacement({ id: "activity-a", polity: { id: "polity-a" }, start: { year: 100 }, end: { year: 120 } }, lookup);
   assert.equal(placement.status, "spatial_unresolved");
   assert.deepEqual(placement.segments, []);
@@ -77,21 +77,21 @@ test("partial and reversed chronology remain review-required", () => {
 });
 
 test("a reviewed capital move splits only visual placement segments", () => {
-  const lookup = model.createSpatialLookup(capitalIndex());
+  const lookup = model.createSpatialLookup(placeFunctionIndex());
   const activity = { id: "activity-a", polity: { id: "polity-a" }, start: { year: 105 }, end: { year: 115 } };
   const placement = model.resolveActivityPlacement(activity, lookup);
   assert.equal(placement.status, "placed");
-  assert.deepEqual(placement.segments.map((segment) => [segment.capital_name, segment.start_year, segment.end_year, segment.region_code]), [
-    ["Old Capital", 105, 109, "west-asia"],
-    ["New Capital", 110, 115, "east-asia"]
+  assert.deepEqual(placement.segments.map((segment) => [segment.place_function_type, segment.place_name, segment.start_year, segment.end_year, segment.region_code]), [
+    ["capital", "Old Capital", 105, 109, "west-asia"],
+    ["capital", "New Capital", 110, 115, "east-asia"]
   ]);
   assert.equal(activity.start.year, 105);
   assert.equal(activity.end.year, 115);
 });
 
-test("capital records require reviewed source references", () => {
-  const invalid = capitalIndex();
-  invalid.capital_records[0].capital_periods[0].source_refs = [];
+test("place-function records require reviewed source references", () => {
+  const invalid = placeFunctionIndex();
+  invalid.place_function_records[0].functions[0].source_refs = [];
   const result = model.validateSpatialIndex(invalid);
   assert.equal(result.valid, false);
   assert.ok(result.errors.some((message) => message.includes("source_refs")));
@@ -116,7 +116,9 @@ test("committed spatial index satisfies the reviewed placement contract", () => 
   const result = model.validateSpatialIndex(index);
   assert.equal(result.valid, true, result.errors.join(" | "));
   assert.ok(Object.keys(index.polity_geography).length > 0);
-  assert.ok(index.capital_records.length > 0);
+  assert.ok(index.place_function_records.length > 0);
+  assert.equal(Object.hasOwn(index, "capital_records"), false);
+  assert.equal(Object.hasOwn(index, "authority_center_records"), false);
 });
 
 test("collision lane assignment is deterministic and keeps overlapping cards apart", () => {
@@ -132,7 +134,6 @@ test("collision lane assignment is deterministic and keeps overlapping cards apa
   assert.equal(first.find((item) => item.stable_id === "b").lane, 1);
   assert.equal(first.find((item) => item.stable_id === "c").lane, 0);
 });
-
 
 test("logarithmic timeline gives recent centuries more vertical space", () => {
   const scale = model.createLogTimelineScale(-3000, 2026, 2800, 180);
