@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:marie-laveau:united-states:c1830-c1860:v1",
+  "person": {"canonical_name_en": "Marie Laveau", "display_name_ko": "마리 라보"},
+  "polity": {"canonical_name_en": "United States", "display_name_ko": "미국"},
+  "activity": {"relation_type": "active_in", "period_basis": "general_activity", "role": "Voodoo priestess and community leader", "role_display_name_ko": "부두교 여사제·지역 공동체 지도자", "start_year": 1830, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "gregorian", "end_year": 1860, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "gregorian", "confidence": "likely", "chronology_status": "reviewed", "notes": "Represents Marie Laveau's historically prominent religious and community leadership in New Orleans during the central decades of her public career. The boundaries are approximate because later tradition sometimes conflates Marie Laveau I with her daughter of the same name."},
+  "sources": [{"title": "The Mystery in Motion: Louisiana Voodoo — Louisiana State Museum", "canonical_url": "https://louisianastatemuseum.org/mystery-motion-louisiana-voodoo", "source_type": "museum_research"}, {"title": "Voodoo Queen: The Spirited Lives of Marie Laveau — University Press of Mississippi", "canonical_url": "https://www.upress.state.ms.us/Books/V/Voodoo-Queen", "source_type": "academic_reference"}]
+}
