@@ -1,16 +1,16 @@
 # ATLAS Requirements Source of Truth v1
 
-> Status: **PRODUCTION THROUGH P9 COMPLETE / P10 CURRENT / P11 CAPTURE READY BUT NOT EXECUTED**
+> Status: **PRODUCTION THROUGH P9 COMPLETE / P10 CURRENT / P11 REPAIR READY, FINAL PRODUCTION EVIDENCE UNPROVEN**
 >
-> As of: **2026-08-16**  
+> As of: **2026-08-19**  
 > Machine registry: `requirements/atlas-requirements.v1.json`  
 > Validator: `scripts/verify-atlas-requirements.mjs`  
 > Release policy: `RELEASE_GOVERNANCE.md`  
-> Current release evidence: `docs/release/STAGE2_CURRENT_STATUS_2026-08-16.md`
+> Current release evidence: `docs/release/STAGE2_CURRENT_STATUS_2026-08-19.md`
 
 ATLAS의 기준은 **100% traceable**, **0 known contradictions**, **0 silently omitted requirements**, **unknown stays unknown**이다. 역사적 사실은 구현 편의가 아니라 reviewed primary/academic evidence로 판정하며, 근거가 부족하면 unresolved를 보존한다.
 
-이 문서는 현재 요구사항의 사람용 기준본이다. 과거 Baseline A 숫자·과거 branch 상태·실패한 workflow run은 역사적 증거로 보존하되 **현재 실행 위치로 재해석하지 않는다.** 현재 단계 판정은 machine registry와 `docs/release/STAGE2_CURRENT_STATUS_2026-08-16.md`가 함께 고정한다.
+이 문서는 현재 요구사항의 사람용 기준본이다. 과거 Baseline A 숫자·과거 branch 상태·실패한 workflow run은 역사적 증거로 보존하되 **현재 실행 위치로 재해석하지 않는다.** 현재 단계 판정은 machine registry와 `docs/release/STAGE2_CURRENT_STATUS_2026-08-19.md`가 함께 고정한다.
 
 ## 1. Binding constitution
 
@@ -104,7 +104,7 @@ These counts are immutable historical evidence, **not current Production invento
 
 - `ATLAS-RQ-0215` — **COMPLETED:** Relation, Governance, People/Event and semantic-name-kind schema package released through the controlled Production schema workflow.
 
-Production evidence is summarized in `docs/release/STAGE2_CURRENT_STATUS_2026-08-16.md`. The first failed schema run is retained only as failure history; the later controlled run succeeded.
+Production evidence is summarized historically in `docs/release/STAGE2_CURRENT_STATUS_2026-08-16.md`; the current execution position is summarized in `docs/release/STAGE2_CURRENT_STATUS_2026-08-19.md`. The first failed schema run is retained only as failure history; the later controlled run succeeded.
 
 ### P6 — Correction engine v2 — COMPLETED
 
@@ -134,18 +134,20 @@ Production Train 2 run `31806129999` completed successfully. Its fail-closed fin
 
 Current facts:
 
-- non-destructive `ATLAS P10 Person Duplicate V2 Revalidation` is green on the audited current-main line;
-- controlled Production P10 revalidation release attempts have not completed successfully;
+- non-destructive `ATLAS P10 Person Duplicate V2 Revalidation` is repeatedly green on the audited 2026-08-19 current-main cleanup line;
+- the controlled Production P10 revalidation launcher was re-entered after reviewed Suleiman I corrections, but this audit did not recover authoritative final-success evidence for the controlled Production release;
 - therefore a green CI revalidation is **not** an authorization for physical Person merge;
 - physical merge remains fail-closed unless the exact live Production gate succeeds and reviewed candidates require execution.
 
 P10 must not be marked completed merely because later P11 code exists.
 
-### P11 — Baseline B / end-state snapshot — READY TO CAPTURE, NOT COMPLETE
+### P11 — Baseline B / end-state snapshot — REPAIR/READINESS PRESENT, NOT COMPLETE
 
 - `ATLAS-RQ-0221` — **PENDING:** create the authenticated, read-only, repeatable-read Baseline B and enforce end-state constraints from the actual post-P10 Production state.
 
-The P11 Baseline B implementation and readiness workflow are on main, but during the 2026-08-16 audit the Production capture workflow had **zero capture runs**. No Baseline B artifact may be claimed until that governed capture actually succeeds.
+The P11 Baseline B implementation and readiness workflow are on main. Since the 2026-08-16 status, the repository also gained the reviewed legacy semantic-v2 repair path, bounded OIDC authorization, guarded rerun support and file-backed correction payload transport. Current cleanup PRs repeatedly pass `ATLAS P11 Baseline B Readiness`.
+
+However, the 2026-08-19 audit did **not** recover authoritative Production evidence proving both the semantic-v2 backfill/post-audit and a subsequent successful authenticated Baseline B v2 capture. No Baseline B artifact may be claimed until that governed evidence actually exists.
 
 ### P12 — Remove reachable legacy/transitional paths — PENDING
 
@@ -227,13 +229,14 @@ Superseded requirements are retained for traceability and never treated as curre
 
 ## 7. Current execution queue
 
-1. **P10:** settle the exact Production revalidation gate; do not physically merge Persons unless the reviewed live frontier requires it.
-2. **P11:** execute the authenticated Production Baseline B capture after the preceding P10 condition is actually settled.
+1. **P10:** recover or freshly prove the exact Production revalidation gate; do not physically merge Persons unless the reviewed live frontier requires it.
+2. **P11:** recover or execute the governed semantic-v2 Production backfill/post-audit and authenticated Baseline B v2 capture after the P10 condition is actually settled.
 3. Run the read-only project-integrity audit against that Baseline B.
-4. Convert confirmed data problems only into reviewed, provenance-safe correction/authoring operations; Korean-display gaps are data-quality work, not identity rewrites.
+4. Finish current-main UI debt without resurrecting stale branches; confirmed data problems must still use reviewed provenance-safe correction/authoring operations.
 5. **P12:** remove only genuinely reachable legacy/transitional paths proven unnecessary by the captured end state.
 6. **P13:** finish and acceptance-test the first-class Person/Place/Source Authoring → Compile → Runtime lifecycle.
-7. **P14:** integrate the historical-map contract without weakening the Person/Polity evidence model.
+7. Reconcile the existing `civilization-map-project` product branch and resume its accepted historical-map research workflow.
+8. **P14:** integrate the historical-map contract without weakening the Person/Polity evidence model.
 
 UI presentation work may proceed independently where it does not alter Authoring identity or Production data semantics.
 
