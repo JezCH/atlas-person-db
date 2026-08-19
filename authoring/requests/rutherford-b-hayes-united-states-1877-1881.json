@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:rutherford-b-hayes:united-states:1877-1881:v1",
+  "person": {"canonical_name_en": "Rutherford B. Hayes", "display_name_ko": "러더퍼드 B. 헤이스"},
+  "polity": {"canonical_name_en": "United States", "display_name_ko": "미국"},
+  "activity": {"relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령", "start_year": 1877, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1881, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Rutherford B. Hayes served as President of the United States from 1877 to 1881."},
+  "sources": [{"title": "Rutherford B. Hayes — Miller Center", "canonical_url": "https://millercenter.org/president/hayes", "source_type": "academic_reference"}]
+}

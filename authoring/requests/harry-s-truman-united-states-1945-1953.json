@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:harry-s-truman:united-states:1945-1953:v1",
+  "person": {"canonical_name_en": "Harry S. Truman", "display_name_ko": "해리 S. 트루먼"},
+  "polity": {"canonical_name_en": "United States", "display_name_ko": "미국"},
+  "activity": {"relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령", "start_year": 1945, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1953, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Harry S. Truman served as President of the United States from 1945 to 1953."},
+  "sources": [{"title": "Harry S. Truman — Miller Center", "canonical_url": "https://millercenter.org/president/truman", "source_type": "academic_reference"}]
+}

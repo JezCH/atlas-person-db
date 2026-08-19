@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:dwight-d-eisenhower:united-states:1953-1961:v1",
+  "person": {"canonical_name_en": "Dwight D. Eisenhower", "display_name_ko": "드와이트 D. 아이젠하워"},
+  "polity": {"canonical_name_en": "United States", "display_name_ko": "미국"},
+  "activity": {"relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령", "start_year": 1953, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1961, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Dwight D. Eisenhower served two terms as President of the United States from 1953 to 1961."},
+  "sources": [{"title": "Dwight D. Eisenhower — Miller Center", "canonical_url": "https://millercenter.org/president/eisenhower", "source_type": "academic_reference"}]
+}

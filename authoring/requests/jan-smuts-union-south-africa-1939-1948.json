@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jan-smuts:union-south-africa:1939-1948:v1",
+  "person": {"canonical_name_en": "Jan Smuts", "display_name_ko": "얀 스뮈츠"},
+  "polity": {"canonical_name_en": "Union of South Africa", "display_name_ko": "남아프리카 연방"},
+  "activity": {"relation_type": "governs", "period_basis": "term", "role": "Prime Minister", "role_display_name_ko": "총리", "start_year": 1939, "start_month": 9, "start_day": 5, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1948, "end_month": 6, "end_day": 4, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Jan Smuts returned as Prime Minister of the Union of South Africa on 5 September 1939 and served until 4 June 1948. This is separate from his 1919-1924 premiership."},
+  "sources": [{"title": "History of the Presidency — The Presidency, Republic of South Africa", "canonical_url": "https://www.presidency.gov.za/history", "source_type": "government_reference"}, {"title": "General Jan Christiaan Smuts — South African History Online", "canonical_url": "https://sahistory.org.za/people/general-jan-christiaan-smuts", "source_type": "historical_reference"}]
+}

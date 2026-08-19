@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:samuel-de-champlain:new-france:1608-1635:v1",
+  "person": {"canonical_name_en": "Samuel de Champlain", "display_name_ko": "사뮈엘 드 샹플랭"},
+  "polity": {"canonical_name_en": "New France", "display_name_ko": "누벨프랑스"},
+  "activity": {"relation_type": "active_in", "period_basis": "general_activity", "role": "Explorer, founder and colonial administrator", "role_display_name_ko": "탐험가·창건자·식민 행정가", "start_year": 1608, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 1635, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Samuel de Champlain founded Quebec in 1608 and remained a central explorer and colonial administrator of New France until his death in Quebec in 1635. His formal commissions changed over time, and the Dictionary of Canadian Biography notes that he exercised gubernatorial functions without holding a governor's commission, so ATLAS records this as active_in rather than a continuous governor term."},
+  "sources": [{"title": "Samuel de Champlain — Dictionary of Canadian Biography", "canonical_url": "https://www.biographi.ca/en/bio/115?revision_id=24194", "source_type": "academic_reference"}, {"title": "Samuel de Champlain — Parks Canada", "canonical_url": "https://parks.canada.ca/lhn-nhs/qc/fortchambly/culture/histoire-history/site/samuel-de-champlain", "source_type": "government_reference"}]
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:malcolm-turnbull:australia:2015-2018:v1",
+  "person": {"canonical_name_en": "Malcolm Turnbull", "display_name_ko": "맬컴 턴불"},
+  "polity": {"canonical_name_en": "Australia", "display_name_ko": "호주"},
+  "activity": {"relation_type": "governs", "period_basis": "term", "role": "Prime Minister", "role_display_name_ko": "총리", "start_year": 2015, "start_month": 9, "start_day": 15, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 2018, "end_month": 8, "end_day": 24, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Malcolm Turnbull served as Prime Minister of Australia from 15 September 2015 to 24 August 2018."},
+  "sources": [{"title": "Mr Malcolm Turnbull — Parliament of Australia", "canonical_url": "https://www.aph.gov.au/Senators_and_Members/Parliamentarian?MPID=885&lang=en", "source_type": "government_reference"}]
+}
