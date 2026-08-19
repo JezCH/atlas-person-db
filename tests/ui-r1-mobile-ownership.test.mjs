@@ -32,9 +32,10 @@ test('mobile-ui retains only shell drawer and legacy row expansion responsibilit
   assert.doesNotMatch(mobile, /normalize|rowCount|emptyState/);
 });
 
-test('mobile appbar is shell identity rather than a second search or tools surface', () => {
+test('mobile appbar is localized shell identity rather than a second search or tools surface', () => {
   assert.match(html, /mobile-appbar-title/);
-  assert.match(html, /<strong>Persons<\/strong>/);
+  assert.match(html, /<strong>인물<\/strong>/);
+  assert.match(html, /<small>ATLAS 편집<\/small>/);
   assert.match(compactCss, /\.mobile-appbar-title/);
   assert.doesNotMatch(compactCss, /\.mobile-search\b|\.mobile-search-count\b|\.mobile-tools-menu\b/);
 });
