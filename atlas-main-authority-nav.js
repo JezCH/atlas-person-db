@@ -2,94 +2,32 @@
   "use strict";
 
   const DOMAIN_ORDER = ["dashboard", "persons", "spacetime", "polities", "places", "events", "sources", "geometry"];
-  const DOMAINS = Object.freeze({
-    dashboard: {
-      label: "Dashboard",
-      eyebrow: "ATLAS INFORMATION COVERAGE",
-      status: "PARTIAL",
-      summary: "현재 Main이 공개할 수 있는 권위 도메인과 아직 backend read surface가 필요한 영역을 한눈에 보여줍니다.",
-      available: "Person-centered public read와 Person Activity의 Polity·Relation·Role·Period Basis facet이 현재 공개되어 있습니다.",
-      missing: "전 도메인을 합산하는 별도 authoritative dashboard projection은 아직 없습니다.",
-      principle: "없는 지표를 계산해 정상처럼 보이지 않고, 준비 여부 자체를 정보로 표시합니다."
-    },
-    persons: {
-      label: "Persons",
-      eyebrow: "PERSON-CENTERED DATASET",
-      status: "READY",
-      summary: "Person identity, historicity, names, descriptions, Activities and readable provenance are available."
-    },
-    spacetime: {
-      label: "시공간 인물도",
-      eyebrow: "PERSON SPACETIME ATLAS",
-      status: "READY / REVIEWED SPATIAL INDEX",
-      summary: "BC 수천 년부터 현재까지의 세로 시간축과 아메리카→동아시아 가로 공간축 위에 Person Activity를 배치합니다.",
-      available: "검토된 정치체 광역 권역을 기본으로 사용하고, 다지역 정치체처럼 위치가 애매한 경우 활동 시기의 검토된 수도를 사용합니다.",
-      missing: "공간 기준이 아직 검토되지 않은 정치체와 최신 신규 UUID는 위치 미확정으로 보존되어 후속 검토가 필요합니다.",
-      principle: "인물 이름·현대국가·민족으로 위치를 추정하지 않으며 수도 변경은 authoritative Activity를 수정하지 않고 시각 배치 구간만 분할합니다."
-    },
-    polities: {
-      label: "Polities",
-      eyebrow: "POLITY AUTHORITY",
-      status: "PARTIAL READ",
-      summary: "Polity identity is already visible through Person Activity and semantic facets, but a first-class public Polity browser is not authoritative yet.",
-      available: "Person Activity에서 Polity UUID와 읽을 수 있는 이름을 확인할 수 있고 Main 필터에도 Polity facet이 제공됩니다.",
-      missing: "독립 Polity 목록·상세·설명·출처를 제공하는 public read contract가 아직 없습니다.",
-      principle: "Person이 영토를 소유하지 않으며 Person → Activity → Polity 관계를 유지합니다."
-    },
-    places: {
-      label: "Places",
-      eyebrow: "PLACE AUTHORITY",
-      status: "BACKEND SURFACE NEEDED",
-      summary: "Place는 장기적으로 first-class authority이지만 현재 Main용 authoritative read surface가 준비되지 않았습니다.",
-      available: "현재 Person Activity의 Polity 맥락과 source provenance는 볼 수 있습니다.",
-      missing: "출생지·사망지·수도·활동 장소 등을 UUID 기반 Place object로 읽는 public contract가 필요합니다.",
-      principle: "Place 이름을 임의 문자열로 추정하지 않고 향후 first-class identity와 provenance를 사용합니다."
-    },
-    events: {
-      label: "Events",
-      eyebrow: "HISTORICAL EVENT AUTHORITY",
-      status: "BACKEND SURFACE NEEDED",
-      summary: "HistoricalEvent는 Polity·Government·PeopleGroup과 분리된 별도 권위 도메인으로 계획되어 있습니다.",
-      available: "현재 사건 정보가 Activity notes나 source 문맥에 포함될 수는 있지만 독립 Event object로 공개되지는 않습니다.",
-      missing: "Event identity·기간·참여 entity·출처를 위한 authoritative read model이 필요합니다.",
-      principle: "사건을 Polity나 Person Activity와 혼동하지 않고 별도 entity로 유지합니다."
-    },
-    sources: {
-      label: "Sources",
-      eyebrow: "SOURCE / PROVENANCE",
-      status: "PARTIAL READ",
-      summary: "Person과 Activity의 읽을 수 있는 provenance는 이미 Main에 공개되지만 standalone Source browser는 아직 없습니다.",
-      available: "title·source type·canonical URL·citation text와 Activity locator를 Person 상세에서 확인할 수 있습니다.",
-      missing: "Main용 standalone Source 목록/상세 projection은 아직 없으며 Source UUID·key·hash·bytes는 Admin Inspector 영역입니다.",
-      principle: "Main은 사람이 읽을 수 있는 출처를, Admin은 안전한 Source identity와 진단 메타데이터를 담당합니다."
-    },
-    geometry: {
-      label: "Geometry",
-      eyebrow: "MAP / GEOMETRY AUTHORITY",
-      status: "FUTURE / P14",
-      summary: "Geometry는 역사 지도 통합 단계에서 Polity Territory를 통해 연결될 미래 권위 도메인입니다.",
-      available: "현재 Person과 Polity의 역사 의미를 지도 연동에 사용할 수 있도록 Activity semantics를 정규화하고 있습니다.",
-      missing: "Territory·Geometry public projection과 시계열 지도 연결은 아직 Main runtime authority가 아닙니다.",
-      principle: "Person → Activity → Polity → Territory → Geometry 체인을 유지하며 Person에 영토를 직접 귀속하지 않습니다."
-    }
-  });
+  const DOMAINS = window.ATLAS_UI_AUTHORITY_CATALOG_KO;
 
   function ensureSpacetimeNavButtons() {
+    const meta = DOMAINS?.spacetime;
+    const label = meta?.label || "시공간 인물도";
+    const status = meta?.status_label || "사용 가능";
     const desktopNav = document.querySelector(".nav-list");
     if (desktopNav && !desktopNav.querySelector('[data-atlas-domain="spacetime"]')) {
       const button = document.createElement("button");
       button.className = "nav-item";
       button.dataset.atlasDomain = "spacetime";
-      button.innerHTML = "<span>⌗</span>시공간 인물도<small>사용 가능</small>";
+      button.innerHTML = `<span>⌗</span>${label}<small>${status}</small>`;
       desktopNav.querySelector('[data-atlas-domain="persons"]')?.insertAdjacentElement("afterend", button);
     }
     const mobileNav = document.querySelector(".mobile-nav");
     if (mobileNav && !mobileNav.querySelector('[data-atlas-domain="spacetime"]')) {
       const button = document.createElement("button");
       button.dataset.atlasDomain = "spacetime";
-      button.innerHTML = "⌗ <span>시공간 인물도</span><small>사용 가능</small>";
+      button.innerHTML = `⌗ <span>${label}</span><small>${status}</small>`;
       mobileNav.querySelector('[data-atlas-domain="persons"]')?.insertAdjacentElement("afterend", button);
     }
+  }
+
+  if (!DOMAINS) {
+    console.warn("ATLAS authority navigation could not initialize localization catalog.");
+    return;
   }
 
   ensureSpacetimeNavButtons();
@@ -111,8 +49,8 @@
   }
 
   const personHeading = Object.freeze({
-    eyebrow: topbar.querySelector(".eyebrow")?.textContent || "PERSON-CENTERED DATASET",
-    title: topbar.querySelector("h1")?.textContent || "Persons",
+    eyebrow: DOMAINS.persons.eyebrow,
+    title: DOMAINS.persons.label,
     subtitle: topbar.querySelector(".subtitle")?.textContent || ""
   });
   const mobileSearchPlaceholder = mobileSearch?.placeholder || "인물 검색";
@@ -136,9 +74,9 @@
       .replaceAll("'", "&#039;");
   }
 
-  function statusClass(status) {
-    if (String(status).startsWith("READY")) return "is-ready";
-    if (String(status).includes("PARTIAL")) return "is-partial";
+  function statusClass(statusCode) {
+    if (statusCode === "ready") return "is-ready";
+    if (statusCode === "partial") return "is-partial";
     return "is-future";
   }
 
@@ -146,7 +84,7 @@
     return `<section class="authority-dashboard-grid">${DOMAIN_ORDER.map((key) => {
       const domain = DOMAINS[key];
       return `<button type="button" class="authority-domain-card" data-authority-jump="${escapeHtml(key)}">
-        <span class="authority-status ${statusClass(domain.status)}">${escapeHtml(domain.status)}</span>
+        <span class="authority-status ${statusClass(domain.status_code)}">${escapeHtml(domain.status_label)}</span>
         <strong>${escapeHtml(domain.label)}</strong>
         <p>${escapeHtml(domain.summary)}</p>
       </button>`;
@@ -160,13 +98,13 @@
     const dashboard = key === "dashboard" ? dashboardHtml() : "";
     return `<div class="authority-shell-head card">
       <div><p class="eyebrow">${escapeHtml(domain.eyebrow)}</p><h2>${escapeHtml(domain.label)}</h2><p>${escapeHtml(domain.summary)}</p></div>
-      <span class="authority-status ${statusClass(domain.status)}">${escapeHtml(domain.status)}</span>
+      <span class="authority-status ${statusClass(domain.status_code)}">${escapeHtml(domain.status_label)}</span>
     </div>
     ${dashboard}
     ${key === "dashboard" ? "" : `<section class="authority-state-grid">
-      <article class="card"><small>CURRENTLY EXPOSED</small><h3>현재 제공</h3><p>${escapeHtml(domain.available)}</p></article>
-      <article class="card"><small>NOT AUTHORITATIVE YET</small><h3>아직 없는 surface</h3><p>${escapeHtml(domain.missing)}</p></article>
-      <article class="card"><small>AUTHORITY RULE</small><h3>구조 원칙</h3><p>${escapeHtml(domain.principle)}</p></article>
+      <article class="card"><small>현재 제공</small><h3>현재 제공</h3><p>${escapeHtml(domain.available)}</p></article>
+      <article class="card"><small>아직 기준 기능 아님</small><h3>아직 없는 기능</h3><p>${escapeHtml(domain.missing)}</p></article>
+      <article class="card"><small>구조 원칙</small><h3>구조 원칙</h3><p>${escapeHtml(domain.principle)}</p></article>
     </section>`}`;
   }
 
@@ -255,7 +193,7 @@
   function setMobileSearchEnabled(enabled, label) {
     if (!mobileSearch) return;
     mobileSearch.disabled = !enabled;
-    mobileSearch.placeholder = enabled ? mobileSearchPlaceholder : `${label}: first-class 검색 surface 준비 전`;
+    mobileSearch.placeholder = enabled ? mobileSearchPlaceholder : `${label}: 독립 검색 기능 준비 전`;
     if (!enabled) {
       if (mobileSearchClear) mobileSearchClear.hidden = true;
       if (mobileSearchCount) mobileSearchCount.textContent = "";
