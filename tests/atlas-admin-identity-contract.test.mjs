@@ -33,8 +33,10 @@ test('person and polity identity creation requires canonical EN and KO preferred
   assert.match(service, /DISPLAY_NAME_COLLISION_REVIEW_REQUIRED/);
 });
 
-test('role authoring keeps exact vocabulary resolution unambiguous', () => {
+test('role authoring keeps canonical vocabulary unambiguous without treating localized labels as identity', () => {
+  assert.match(service, /ROLE_CODE_COLLIDES_WITH_EXISTING_VOCABULARY/);
   assert.match(service, /ROLE_SOURCE_LABEL_COLLISION/);
-  assert.match(service, /ROLE_DISPLAY_NAME_COLLISION/);
+  assert.doesNotMatch(service, /ROLE_DISPLAY_NAME_COLLISION/);
+  assert.match(service, /Localized display labels are presentation vocabulary, not Role identity/);
   assert.match(service, /insert into atlas_v2\.role_names/);
 });
