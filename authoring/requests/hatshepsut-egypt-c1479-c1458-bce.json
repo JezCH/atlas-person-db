@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:hatshepsut:egypt:c1479-c1458-bce:v1",
+  "person": {"canonical_name_en": "Hatshepsut", "display_name_ko": "하트셉수트"},
+  "polity": {"canonical_name_en": "Egypt", "display_name_ko": "이집트"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Pharaoh", "role_display_name_ko": "파라오", "start_year": -1479, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical", "end_year": -1458, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Hatshepsut ruled Egypt as pharaoh during the early Eighteenth Dynasty, jointly with Thutmose III. The Met dates this reign context to c.1479-c.1458 BCE."},
+  "sources": [{"title": "Large Seated Statue of Hatshepsut — The Metropolitan Museum of Art", "canonical_url": "https://www.metmuseum.org/art/collection/search/548519", "source_type": "museum_research"}]
+}

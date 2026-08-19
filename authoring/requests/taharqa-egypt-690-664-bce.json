@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:taharqa:egypt:690-664-bce:v1",
+  "person": {"canonical_name_en": "Taharqa", "display_name_ko": "타하르카"},
+  "polity": {"canonical_name_en": "Egypt", "display_name_ko": "이집트"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Pharaoh", "role_display_name_ko": "파라오", "start_year": -690, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical", "end_year": -664, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Taharqa was a Twenty-fifth Dynasty Nubian ruler of Egypt. This activity records his Egyptian pharaonic rule separately from his Kushite kingship."},
+  "sources": [{"title": "Taharqo — British Museum Collections Online", "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG56113", "source_type": "museum_research"}, {"title": "King Taharqo — UCL Digital Egypt", "canonical_url": "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/taharqo.html", "source_type": "academic_reference"}]
+}
