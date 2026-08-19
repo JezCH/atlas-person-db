@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jose-manuel-balmaceda:chile:president:1886-1891:v1",
+  "person": {
+    "canonical_name_en": "José Manuel Balmaceda",
+    "display_name_ko": "호세 마누엘 발마세다"
+  },
+  "polity": {
+    "canonical_name_en": "Chile",
+    "display_name_ko": "칠레"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1886,
+    "start_month": 9,
+    "start_day": 18,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1891,
+    "end_month": 8,
+    "end_day": 29,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "José Manuel Balmaceda served as President of Chile from 18 September 1886 until 29 August 1891, when his government collapsed at the end of the Chilean Civil War."
+  },
+  "sources": [
+    {
+      "title": "Reseña Biográfica José Manuel Balmaceda Fernández — Biblioteca del Congreso Nacional de Chile",
+      "canonical_url": "https://www.bcn.cl/historiapolitica/resenas_biograficas/wiki/Jos%C3%A9_Manuel_Balmaceda_Fern%C3%A1ndez",
+      "citation_text": "The Chilean Library of Congress records José Manuel Balmaceda as President from 18 September 1886 to 29 August 1891.",
+      "source_type": "government_web"
+    }
+  ]
+}

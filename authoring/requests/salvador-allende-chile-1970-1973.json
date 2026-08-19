@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:salvador-allende:chile:president:1970-1973:v1",
+  "person": {
+    "canonical_name_en": "Salvador Allende",
+    "display_name_ko": "살바도르 아옌데"
+  },
+  "polity": {
+    "canonical_name_en": "Chile",
+    "display_name_ko": "칠레"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1970,
+    "start_month": 11,
+    "start_day": 3,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1973,
+    "end_month": 9,
+    "end_day": 11,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Salvador Allende served as President of Chile from 3 November 1970 until 11 September 1973, when his presidency ended during the military coup."
+  },
+  "sources": [
+    {
+      "title": "Reseña Biográfica Salvador Allende Gossens — Biblioteca del Congreso Nacional de Chile",
+      "canonical_url": "https://www.bcn.cl/historiapolitica/resenas_biograficas/wiki/Salvador_Allende_Gossens",
+      "citation_text": "The Chilean Library of Congress records Salvador Allende as President from 3 November 1970 to 11 September 1973.",
+      "source_type": "government_web"
+    }
+  ]
+}

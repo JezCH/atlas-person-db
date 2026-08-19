@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ramon-freire:chile:president:1827:v1",
+  "person": {
+    "canonical_name_en": "Ramón Freire",
+    "display_name_ko": "라몬 프레이레"
+  },
+  "polity": {
+    "canonical_name_en": "Chile",
+    "display_name_ko": "칠레"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1827,
+    "start_month": 1,
+    "start_day": 25,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1827,
+    "end_month": 5,
+    "end_day": 8,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ramón Freire served as President of Chile from 25 January to 8 May 1827. ATLAS records this separately from his earlier Supreme Directorship because these were distinct constitutional offices."
+  },
+  "sources": [
+    {
+      "title": "Reseña Biográfica Ramón Freire Serrano — Biblioteca del Congreso Nacional de Chile",
+      "canonical_url": "https://www.bcn.cl/historiapolitica/resenas_biograficas/wiki/Ram%C3%B3n_Freire_Serrano",
+      "citation_text": "The Chilean Library of Congress records Ramón Freire as President of the Republic from 25 January 1827 to 8 May 1827.",
+      "source_type": "government_web"
+    }
+  ]
+}

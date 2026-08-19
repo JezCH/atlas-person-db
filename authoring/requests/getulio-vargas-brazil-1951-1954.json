@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:getulio-vargas:brazil:president:1951-1954:v1",
+  "person": {"canonical_name_en": "Getúlio Vargas", "display_name_ko": "제툴리우 바르가스"},
+  "polity": {"canonical_name_en": "Brazil", "display_name_ko": "브라질"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령",
+    "start_year": 1951, "start_month": 1, "start_day": 31, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1954, "end_month": 8, "end_day": 24, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "After an out-of-office interval, Getúlio Vargas returned to Brazil’s presidency by election, taking office on 31 January 1951 and serving until his death on 24 August 1954. This is a distinct Activity from his 1930–1945 rule."
+  },
+  "sources": [
+    {"title": "‘À sanha dos meus inimigos, o legado de minha morte’", "canonical_url": "https://cpdoc.fgv.br/pesquisa-conhecimento/getulio-vargas-1954", "citation_text": "FGV CPDOC records Vargas’s return to power on 31 January 1951 and the end of his second government with his death on 24 August 1954.", "source_type": "web_bibliographic_reference"},
+    {"title": "4ª República (18.09.1946 - 09.04.1964)", "canonical_url": "https://www2.camara.leg.br/a-camara/conheca/historia/Ex_presidentesCD_Republica/republica4.html", "citation_text": "Brazil’s Chamber of Deputies records Vargas taking office on 31 January 1951 and the vice president assuming after Vargas’s death on 24 August 1954.", "source_type": "web_bibliographic_reference"}
+  ]
+}

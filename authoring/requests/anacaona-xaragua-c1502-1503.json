@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:anacaona:xaragua:cacica:c1502-1503:v1",
+  "person": {"canonical_name_en": "Anacaona", "display_name_ko": "아나카오나"},
+  "polity": {"canonical_name_en": "Xaragua", "display_name_ko": "하라과"},
+  "activity": {
+    "relation_type": "rules", "period_basis": "term", "role": "Cacica (Chief)", "role_display_name_ko": "카시카(추장)",
+    "start_year": 1502, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical",
+    "end_year": 1503, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Anacaona, sister of the Xaragua cacique Behechio, succeeded him as cacica after his death. The precise accession date is uncertain; Dominican historical material places Behechio's death before 1502, while scholarly accounts securely identify Anacaona as cacica of Xaragua by 1503. ATLAS therefore stores the start only approximately around 1502 and the end in 1503, when Spanish governor Nicolás de Ovando destroyed the Xaragua leadership and Anacaona was executed."
+  },
+  "sources": [
+    {"title": "Contested Conquests: African Maroons and the Incomplete Conquest of Hispaniola, 1519–1620", "canonical_url": "https://www.cambridge.org/core/journals/americas/article/contested-conquests-african-maroons-and-the-incomplete-conquest-of-hispaniola-15191620/07BF714EEF5078D4DF7CF2903778BC82", "citation_text": "The scholarly article identifies Anacaona as the cacica of Xaragua when Nicolás de Ovando’s 1503 campaign defeated the chiefdom.", "source_type": "web_bibliographic_reference"},
+    {"title": "El cacicazgo Jaragua", "canonical_url": "https://planlea.edu.do/2022/07/el-cacicazgo-jaragua/", "citation_text": "The Dominican educational history source states that Behechio died before 1502 and was succeeded by his sister Anacaona as ruler of the Jaragua chiefdom.", "source_type": "web_bibliographic_reference"}
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:pedro-aguirre-cerda:chile:president:1938-1941:v1",
+  "person": {
+    "canonical_name_en": "Pedro Aguirre Cerda",
+    "display_name_ko": "페드로 아기레 세르다"
+  },
+  "polity": {
+    "canonical_name_en": "Chile",
+    "display_name_ko": "칠레"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1938,
+    "start_month": 12,
+    "start_day": 24,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1941,
+    "end_month": 11,
+    "end_day": 25,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Pedro Aguirre Cerda served as President of Chile from 24 December 1938 until his death in office on 25 November 1941."
+  },
+  "sources": [
+    {
+      "title": "Reseña Biográfica Pedro Aguirre Cerda — Biblioteca del Congreso Nacional de Chile",
+      "canonical_url": "https://www.bcn.cl/historiapolitica/resenas_parlamentarias/wiki/Pedro_Aguirre_Cerda",
+      "citation_text": "The Chilean Library of Congress records Pedro Aguirre Cerda as President from 24 December 1938 to 25 November 1941.",
+      "source_type": "government_web"
+    }
+  ]
+}

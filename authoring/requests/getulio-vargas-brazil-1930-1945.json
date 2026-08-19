@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:getulio-vargas:brazil:president:1930-1945:v1",
+  "person": {"canonical_name_en": "Getúlio Vargas", "display_name_ko": "제툴리우 바르가스"},
+  "polity": {"canonical_name_en": "Brazil", "display_name_ko": "브라질"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령",
+    "start_year": 1930, "start_month": 11, "start_day": 3, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1945, "end_month": 10, "end_day": 29, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Getúlio Vargas assumed national power on 3 November 1930 as head of the Provisional Government and remained Brazil’s national executive through the 1934 constitutional presidency and the Estado Novo until his deposition on 29 October 1945. ATLAS records this as one continuous governing Activity because there was no out-of-office interval, while the notes preserve the constitutional regime changes."
+  },
+  "sources": [
+    {"title": "‘À sanha dos meus inimigos, o legado de minha morte’", "canonical_url": "https://cpdoc.fgv.br/pesquisa-conhecimento/getulio-vargas-1954", "citation_text": "FGV CPDOC states that Vargas assumed the presidency on 3 November 1930 and that this period ended with his deposition on 29 October 1945.", "source_type": "web_bibliographic_reference"},
+    {"title": "Os presidentes da Era Vargas", "canonical_url": "https://www.camara.leg.br/noticias/93696-os-presidentes-da-era-vargas/", "citation_text": "Brazil’s Chamber of Deputies describes Vargas’s 1930–1945 period as comprising provisional, constitutional, and Estado Novo phases.", "source_type": "web_bibliographic_reference"}
+  ]
+}

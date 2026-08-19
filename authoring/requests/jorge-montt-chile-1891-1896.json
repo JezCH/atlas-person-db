@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jorge-montt:chile:president:1891-1896:v1",
+  "person": {
+    "canonical_name_en": "Jorge Montt",
+    "display_name_ko": "호르헤 몬트"
+  },
+  "polity": {
+    "canonical_name_en": "Chile",
+    "display_name_ko": "칠레"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1891,
+    "start_month": 12,
+    "start_day": 26,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1896,
+    "end_month": 9,
+    "end_day": 18,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Jorge Montt served as President of Chile from 26 December 1891 to 18 September 1896. His earlier presidency of the revolutionary Government Junta is not conflated with this constitutional presidential term."
+  },
+  "sources": [
+    {
+      "title": "Reseña Biográfica Jorge Montt Álvarez — Biblioteca del Congreso Nacional de Chile",
+      "canonical_url": "https://www.bcn.cl/historiapolitica/resenas_biograficas/wiki/Jorge_Montt_%C3%81lvarez",
+      "citation_text": "The Chilean Library of Congress records Jorge Montt as President of the Republic from 26 December 1891 to 18 September 1896.",
+      "source_type": "government_web"
+    }
+  ]
+}

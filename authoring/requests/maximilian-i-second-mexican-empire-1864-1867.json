@@ -1,0 +1,17 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:maximilian-i:second-mexican-empire:emperor:1864-1867:v1",
+  "person": {"canonical_name_en": "Maximilian I of Mexico", "display_name_ko": "막시밀리아노 1세"},
+  "polity": {"canonical_name_en": "Second Mexican Empire", "display_name_ko": "멕시코 제2제국"},
+  "activity": {
+    "relation_type": "rules", "period_basis": "term", "role": "Emperor", "role_display_name_ko": "황제",
+    "start_year": 1864, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical",
+    "end_year": 1867, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Maximilian of Habsburg accepted the Mexican crown in April 1864 and headed the Second Mexican Empire until its collapse in 1867. ATLAS models the historically distinct Second Mexican Empire rather than attaching this imperial reign to the later Mexican republic."
+  },
+  "sources": [
+    {"title": "Reflexionarán en torno al Segundo Imperio, a 160 años de la llegada de Maximiliano de Habsburgo a México", "canonical_url": "https://www.gob.mx/cultura/prensa/reflexionaran-en-torno-al-segundo-imperio-a-160-anos-de-la-llegada-de-maximiliano-de-habsburgo-a-mexico?idiom=es-MX", "citation_text": "Mexico’s Secretaría de Cultura states that Maximilian accepted the crown on 10 April 1864 and identifies the Second Mexican Empire as lasting from 1864 to 1867.", "source_type": "web_bibliographic_reference"}
+  ]
+}
