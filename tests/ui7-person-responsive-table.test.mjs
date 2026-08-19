@@ -75,9 +75,11 @@ test('UI7 keeps presentation separate from canonical geometry ownership', () => 
   assert.match(geometryCss, /grid-template-columns:\s*var\(--era-band-width\) var\(--person-data-columns\)/);
 });
 
-test('UI7 assets load as a presentation layer before Person Main initializes', () => {
+test('UI7 assets load as a presentation layer after shared era ownership and before Person Main initializes', () => {
   assert.match(html, /atlas-person-table-view\.css\?v=20260817-era-band-r2/);
   assert.match(html, /atlas-person-table-alignment\.css\?v=20260817-table-geometry-r2/);
-  assert.match(html, /atlas-person-table-view\.js\?v=20260816-era-band-v1/);
-  assert.ok(html.indexOf('atlas-person-table-view.js?v=20260816-era-band-v1') < html.indexOf('atlas-person-main.js?v=20260817-toolbar-owner-r1'));
+  assert.match(html, /atlas-person-era-model\.js\?v=20260819-era-model-r2/);
+  assert.match(html, /atlas-person-table-view\.js\?v=20260819-era-model-r2/);
+  assert.ok(html.indexOf('atlas-person-era-model.js?v=20260819-era-model-r2') < html.indexOf('atlas-person-table-view.js?v=20260819-era-model-r2'));
+  assert.ok(html.indexOf('atlas-person-table-view.js?v=20260819-era-model-r2') < html.indexOf('atlas-person-main.js?v=20260817-toolbar-owner-r1'));
 });
