@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:george-h-w-bush:united-states:1989-1993:v1",
+  "person": {"canonical_name_en": "George H. W. Bush", "display_name_ko": "조지 H. W. 부시"},
+  "polity": {"canonical_name_en": "United States", "display_name_ko": "미국"},
+  "activity": {"relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령", "start_year": 1989, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1993, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "George H. W. Bush served as President of the United States from 1989 to 1993."},
+  "sources": [{"title": "George H. W. Bush — Miller Center", "canonical_url": "https://millercenter.org/president/bush", "source_type": "academic_reference"}]
+}
