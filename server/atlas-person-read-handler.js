@@ -5,19 +5,55 @@ const { readPersonListSemantics } = require("./atlas-person-list-semantic-servic
 const { requireDatabaseUrl, sendJson } = require("./atlas-normalized-read-handler.js");
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const MAX_QUERY_LENGTH = 120;
 
-function personIdFromRequest(req) {
-  const direct = req?.query?.person_id;
+function requestQueryValue(req, key) {
+  const direct = req?.query?.[key];
   if (Array.isArray(direct)) return direct.length === 1 ? String(direct[0] || "").trim() : "__INVALID_MULTI__";
   if (direct != null) return String(direct).trim();
   const rawUrl = String(req?.url || "").trim();
   if (!rawUrl) return null;
   try {
     const parsed = new URL(rawUrl, "http://atlas.local");
-    return parsed.searchParams.has("person_id") ? String(parsed.searchParams.get("person_id") || "").trim() : null;
+    return parsed.searchParams.has(key) ? String(parsed.searchParams.get(key) || "").trim() : null;
   } catch {
     return null;
   }
+}
+
+function personIdFromRequest(req) {
+  return requestQueryValue(req, "person_id");
+}
+
+function personQueryFromRequest(req) {
+  return requestQueryValue(req, "q");
+}
+
+function normalizeSearchText(value) {
+  return String(value || "").normalize("NFKC").trim().toLocaleLowerCase("und").replace(/\s+/gu, " ");
+}
+
+function personMatchesQuery(person, query) {
+  const needle = normalizeSearchText(query);
+  if (!needle) return true;
+  const names = Array.isArray(person?.names) ? person.names.map((row) => row?.name) : [];
+  const haystack = [person?.canonical_name_en, person?.preferred_name_ko, person?.display_name, ...names]
+    .map(normalizeSearchText)
+    .filter(Boolean);
+  return haystack.some((value) => value.includes(needle));
+}
+
+function filteredSummary(persons) {
+  const byHistoricity = {};
+  for (const person of persons || []) {
+    const key = String(person?.historicity || "");
+    byHistoricity[key] = (byHistoricity[key] || 0) + 1;
+  }
+  return Object.freeze({
+    total: (persons || []).length,
+    historicity_values: Object.freeze(Object.keys(byHistoricity).sort()),
+    by_historicity: Object.freeze(byHistoricity)
+  });
 }
 
 function createPersonReadHandler({ clientFactory, env = process.env, readListSemantics = readPersonListSemantics } = {}) {
@@ -37,6 +73,24 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
         ok: false,
         code: "INVALID_PERSON_ID",
         error: "valid person_id UUID is required"
+      });
+      return;
+    }
+
+    const requestedQuery = personQueryFromRequest(req);
+    if (requestedQuery === "__INVALID_MULTI__" || (requestedQuery != null && requestedQuery.length > MAX_QUERY_LENGTH)) {
+      sendJson(res, 400, {
+        ok: false,
+        code: "INVALID_PERSON_QUERY",
+        error: `q must be a single string of at most ${MAX_QUERY_LENGTH} characters`
+      });
+      return;
+    }
+    if (requestedPersonId && requestedQuery) {
+      sendJson(res, 400, {
+        ok: false,
+        code: "PERSON_READ_MODE_CONFLICT",
+        error: "person_id and q cannot be combined"
       });
       return;
     }
@@ -70,13 +124,18 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
       }
 
       const data = await readPersons({ client });
-      const persons = await readListSemantics({ client, persons: data.persons });
+      const filteredPersons = requestedQuery
+        ? data.persons.filter((person) => personMatchesQuery(person, requestedQuery))
+        : data.persons;
+      const persons = await readListSemantics({ client, persons: filteredPersons });
       sendJson(res, 200, {
         ok: true,
         source: "v2-person-read",
         schema: "atlas-person-read/v1",
         mode: "list",
         ...data,
+        summary: requestedQuery ? filteredSummary(persons) : data.summary,
+        query: requestedQuery || null,
         persons
       });
     } catch (error) {
@@ -92,4 +151,12 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
   };
 }
 
-module.exports = Object.freeze({ UUID_PATTERN, personIdFromRequest, createPersonReadHandler });
+module.exports = Object.freeze({
+  UUID_PATTERN,
+  MAX_QUERY_LENGTH,
+  personIdFromRequest,
+  personQueryFromRequest,
+  normalizeSearchText,
+  personMatchesQuery,
+  createPersonReadHandler
+});
