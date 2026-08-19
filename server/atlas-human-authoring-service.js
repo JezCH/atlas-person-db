@@ -166,17 +166,28 @@ async function resolveOrCreatePolity(client, polity) {
 
 async function resolveOrCreateRole(client, activity) {
   if (!activity.role) return Object.freeze({ id:null, disposition:"none" });
-  const result = await client.query(`
+  const byName = await client.query(`
     select distinct r.id::text
       from atlas_v2.roles r
       left join atlas_v2.role_names n on n.role_id=r.id and n.locale='en' and n.is_preferred=true
      where r.is_active=true and (r.source_label=$1 or n.name=$1)
      order by r.id::text
      limit 2`, [activity.role]);
-  if (result.rows.length > 1) throw new Error("HUMAN_AUTHORING_ROLE_NAME_AMBIGUOUS");
-  if (result.rows.length === 1) return Object.freeze({ id:String(result.rows[0].id).toLowerCase(), disposition:"reused" });
+  if (byName.rows.length > 1) throw new Error("HUMAN_AUTHORING_ROLE_NAME_AMBIGUOUS");
+  if (byName.rows.length === 1) return Object.freeze({ id:String(byName.rows[0].id).toLowerCase(), disposition:"reused" });
+
+  const roleCode = activity.role_code || roleCodeFromLabel(activity.role);
+  const byCode = await client.query(`
+    select r.id::text
+      from atlas_v2.roles r
+     where r.is_active=true and r.code=$1
+     order by r.id::text
+     limit 2`, [roleCode]);
+  if (byCode.rows.length > 1) throw new Error("HUMAN_AUTHORING_ROLE_CODE_AMBIGUOUS");
+  if (byCode.rows.length === 1) return Object.freeze({ id:String(byCode.rows[0].id).toLowerCase(), disposition:"reused" });
+
   if (!activity.role_display_name_ko) throw new Error("HUMAN_AUTHORING_NEW_ROLE_KO_REQUIRED");
-  const created = await createRole(client, { code:activity.role_code, source_label:activity.role, display_name_ko:activity.role_display_name_ko, category:activity.role_category });
+  const created = await createRole(client, { code:roleCode, source_label:activity.role, display_name_ko:activity.role_display_name_ko, category:activity.role_category });
   return Object.freeze({ id:String(created.id).toLowerCase(), disposition:created.replay ? "reused" : "created" });
 }
 
