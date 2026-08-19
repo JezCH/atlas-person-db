@@ -124,18 +124,31 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
       }
 
       const data = await readPersons({ client });
-      const filteredPersons = requestedQuery
-        ? data.persons.filter((person) => personMatchesQuery(person, requestedQuery))
-        : data.persons;
-      const persons = await readListSemantics({ client, persons: filteredPersons });
+      if (requestedQuery) {
+        const filteredPersons = data.persons.filter((person) => personMatchesQuery(person, requestedQuery));
+        const persons = await readListSemantics({ client, persons: filteredPersons });
+        sendJson(res, 200, {
+          ok: true,
+          source: "v2-person-read",
+          schema: "atlas-person-read/v1",
+          mode: "list",
+          ...data,
+          summary: filteredSummary(persons),
+          query: requestedQuery,
+          persons
+        });
+        return;
+      }
+
+      const persons = await readListSemantics({ client, persons: data.persons });
       sendJson(res, 200, {
         ok: true,
         source: "v2-person-read",
         schema: "atlas-person-read/v1",
         mode: "list",
         ...data,
-        summary: requestedQuery ? filteredSummary(persons) : data.summary,
-        query: requestedQuery || null,
+        summary: data.summary,
+        query: null,
         persons
       });
     } catch (error) {
