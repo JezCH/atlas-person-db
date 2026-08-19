@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:nefertiti:egypt:amarna-c1353-c1336-bce:v1",
+  "person": {"canonical_name_en": "Nefertiti", "display_name_ko": "네페르티티"},
+  "polity": {"canonical_name_en": "Egypt", "display_name_ko": "이집트"},
+  "activity": {"relation_type": "serves", "period_basis": "general_activity", "role": "Great Royal Wife", "role_display_name_ko": "대왕비", "start_year": -1353, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical", "end_year": -1336, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical", "confidence": "likely", "chronology_status": "reviewed", "notes": "Nefertiti is securely attested as Akhenaten's Great Royal Wife in the Amarna period. ATLAS uses the c.1353-c.1336 BCE Amarna reign envelope only as a representative activity window and does not assert the disputed identification of Nefertiti with a later co-ruler or pharaoh."},
+  "sources": [{"title": "Relief fragment referring to daughters of Akhenaten — The Metropolitan Museum of Art", "canonical_url": "https://www.metmuseum.org/art/collection/search/572219", "source_type": "museum_research"}]
+}

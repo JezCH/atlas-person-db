@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gamal-abdel-nasser:egypt:1956-1958:v1",
+  "person": {"canonical_name_en": "Gamal Abdel Nasser", "display_name_ko": "가말 압델 나세르"},
+  "polity": {"canonical_name_en": "Egypt", "display_name_ko": "이집트"},
+  "activity": {"relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령", "start_year": 1956, "start_month": 6, "start_day": 23, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1958, "end_month": 2, "end_day": 21, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Nasser served as president of Egypt from June 1956 until the formation of the United Arab Republic in February 1958; his subsequent presidency is recorded separately under the UAR."},
+  "sources": [{"title": "Gamal Abdel Nasser — Egypt State Information Service", "canonical_url": "https://sis.gov.eg/en/egypt/egyptian-figures/gamal-abdel-nasser/", "source_type": "government_web"}]
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:djoser:egypt:c2667-c2648-bce:v1",
+  "person": {"canonical_name_en": "Djoser", "display_name_ko": "조세르"},
+  "polity": {"canonical_name_en": "Egypt", "display_name_ko": "이집트"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Pharaoh", "role_display_name_ko": "파라오", "start_year": -2667, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical", "end_year": -2648, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical", "confidence": "likely", "chronology_status": "reviewed", "notes": "Djoser's Third Dynasty kingship is secure, while absolute Old Kingdom chronology varies. ATLAS uses the same c.2667-c.2648 BCE chronology already used for the Djoser-era Imhotep activity and keeps both boundaries approximate."},
+  "sources": [{"title": "The Step Pyramid Complex of Djoser — Egyptian Ministry of Tourism and Antiquities", "canonical_url": "https://egymonuments.gov.eg/en/monuments/the-step-pyramid-complex-of-djoser", "source_type": "government_web"}]
+}

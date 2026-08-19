@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ptolemy-i-soter:ptolemaic-kingdom:305-282-bce:v1",
+  "person": {"canonical_name_en": "Ptolemy I Soter", "display_name_ko": "프톨레마이오스 1세 소테르"},
+  "polity": {"canonical_name_en": "Ptolemaic Kingdom", "display_name_ko": "프톨레마이오스 왕국"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕", "start_year": -305, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": -282, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Ptolemy I Soter assumed the royal title in 305 BCE and ruled the Ptolemaic Kingdom until his death in 282 BCE. His earlier 323-305 BCE satrapy is not folded into this sovereign reign activity."},
+  "sources": [{"title": "Faience Sistrum Inscribed with the Name of Ptolemy I — The Metropolitan Museum of Art", "canonical_url": "https://www.metmuseum.org/art/collection/search/546038", "source_type": "museum_research"}]
+}

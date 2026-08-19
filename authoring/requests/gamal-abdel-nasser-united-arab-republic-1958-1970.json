@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gamal-abdel-nasser:united-arab-republic:1958-1970:v1",
+  "person": {"canonical_name_en": "Gamal Abdel Nasser", "display_name_ko": "가말 압델 나세르"},
+  "polity": {"canonical_name_en": "United Arab Republic", "display_name_ko": "아랍 연합 공화국"},
+  "activity": {"relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령", "start_year": 1958, "start_month": 2, "start_day": 22, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1970, "end_month": 9, "end_day": 28, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Nasser became president of the United Arab Republic on 22 February 1958 and remained president until his death on 28 September 1970. Egypt retained the UAR state name after Syria's 1961 secession, so this activity continues through 1970."},
+  "sources": [{"title": "Gamal Abdel Nasser — Egypt State Information Service", "canonical_url": "https://sis.gov.eg/en/egypt/egyptian-figures/gamal-abdel-nasser/", "source_type": "government_web"}, {"title": "Egypt & Africa — Gamal Abdel Nasser", "canonical_url": "https://africa.sis.gov.eg/english/figures/politics/gamal-abdel-nasser/", "source_type": "government_web"}]
+}

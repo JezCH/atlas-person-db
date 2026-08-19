@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:senusret-iii:egypt:c1874-c1855-bce:v1",
+  "person": {"canonical_name_en": "Senusret III", "display_name_ko": "세누스레트 3세"},
+  "polity": {"canonical_name_en": "Egypt", "display_name_ko": "이집트"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Pharaoh", "role_display_name_ko": "파라오", "start_year": -1874, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical", "end_year": -1855, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical", "confidence": "likely", "chronology_status": "reviewed", "notes": "Senusret III was a Twelfth Dynasty ruler of Egypt. Absolute Middle Kingdom chronology varies between modern reconstructions, so the British Museum's c.1874-c.1855 BCE dating is stored with approximate boundaries."},
+  "sources": [{"title": "Senusret III — British Museum Collections Online", "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG55801", "source_type": "museum_research"}]
+}
