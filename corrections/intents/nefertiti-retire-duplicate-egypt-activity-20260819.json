@@ -1,0 +1,17 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:nefertiti:retire-duplicate-egypt-activity:20260819:v1",
+  "review_status": "approved",
+  "release_order": 120,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "1a8c6628-2ff9-4184-aa96-e7215bb7603e"
+  },
+  "evidence": {
+    "reason": "Production Person read after Egypt/Kush batch #371 shows the pre-existing Nefertiti Activity 45c30e16-92ba-5e89-8ef1-68dad29129bc for New Kingdom of Egypt, 1353-1336 BCE, plus a later overlapping Egypt Activity 1a8c6628-2ff9-4184-aa96-e7215bb7603e with the same Great Royal Wife activity window and #371 reviewed wording. Preserve the pre-existing Activity and retire only the redundant Activity introduced by #371.",
+    "person_id": "331ed75d-99ca-5e31-8bf9-6f6d6e8d32d7",
+    "survivor_activity_id": "45c30e16-92ba-5e89-8ef1-68dad29129bc",
+    "retire_activity_id": "1a8c6628-2ff9-4184-aa96-e7215bb7603e",
+    "source_authoring_merge_sha": "0b6cb159a500edeb2f3828b2048624f77df83907"
+  }
+}
