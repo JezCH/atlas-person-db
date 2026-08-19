@@ -53,10 +53,11 @@ test('UI8 remains presentation-only and does not create another data read or wri
   assert.doesNotMatch(shellSource, /fetch\s*\(|listPersons|readPerson|ATLAS_SERVER_WRITE_ADAPTER|\.submit\s*\(/);
 });
 
-test('UI8 shell assets load after Person Main so the generated detail panel exists', () => {
+test('UI8 shell assets load after Person Main and before the localized authority navigation', () => {
   assert.match(html, /atlas-responsive-shell\.css\?v=20260817-r1-css-owner-v1/);
   const mainScript = html.indexOf('atlas-person-main.js?v=20260817-toolbar-owner-r1');
   const shellScript = html.indexOf('atlas-responsive-shell.js?v=20260815-ui8-shell-r2');
-  const navScript = html.indexOf('atlas-main-authority-nav.js?v=20260815-ui5');
-  assert.ok(mainScript >= 0 && shellScript > mainScript && navScript > shellScript);
+  const catalogScript = html.indexOf('atlas-ui-authority-catalog.ko.js?v=20260819-ko-r2');
+  const navScript = html.indexOf('atlas-main-authority-nav.js?v=20260819-ko-r2');
+  assert.ok(mainScript >= 0 && shellScript > mainScript && catalogScript > shellScript && navScript > catalogScript);
 });
