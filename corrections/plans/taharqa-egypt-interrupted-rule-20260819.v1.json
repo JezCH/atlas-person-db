@@ -1,0 +1,135 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "taharqa_egypt_interrupted_rule_20260819_v1",
+  "as_of": "2026-08-19",
+  "status": "REVIEWED_TAHARQA_INTERRUPTED_EGYPTIAN_RULE",
+  "release_order": 544,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "docs/audits/TAHARQA_EGYPT_INTERRUPTED_RULE_2026-08-19.md",
+  "baseline": {
+    "deployment_sha": "eb4398824314965f90395df13a99fa47e8b868bb",
+    "baseline_digest": "sha256:968e36ebfb20e0aa98e0827923d065cc8c5fee297b87b52f395e265dc4e04736",
+    "digest_scope": "TARGET_BASELINE_BEFORE_CANONICAL_JSON",
+    "exact_live_snapshot_required_at_release": true
+  },
+  "execution_rules": {
+    "one_activity_one_effective_rule_interval": true,
+    "assyria_671_interruption_must_remain_a_gap": true,
+    "renewed_memphis_rule_is_separate_activity": true,
+    "existing_egypt_activity_uuid_preserved_on_first_segment": true,
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "no_fabricated_month_or_day": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "new_activity_uuid_allocations": [
+    {
+      "case_id": "taharqa_egypt_interrupted_rule",
+      "fragment_id": "renewed_egypt_rule_c669_c667_bce",
+      "activity_uuid": "f582ea25-88c2-5adc-be96-d364959d9680"
+    }
+  ],
+  "operations": [
+    {
+      "case_id": "taharqa_egypt_interrupted_rule",
+      "type": "split_activity",
+      "activity_id": "72b5090a-fdec-43c3-8f6d-717f11a4c042",
+      "baseline_before": {
+        "person_id": "b0962fc1-4cee-4bca-aa96-fc703adf988f",
+        "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+        "role_id": "986fdfa7-dbe6-5320-8f4a-615cbba5ac9c",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": -690,
+        "activity_end": -664,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "fragments": [
+        {
+          "survivor": true,
+          "activity_id": "72b5090a-fdec-43c3-8f6d-717f11a4c042",
+          "person_id": "b0962fc1-4cee-4bca-aa96-fc703adf988f",
+          "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+          "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+          "role_id": "986fdfa7-dbe6-5320-8f4a-615cbba5ac9c",
+          "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+          "activity_start": -690,
+          "activity_end": -671,
+          "activity_start_detail": {
+            "year": -690,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "approximate",
+            "calendar": "unspecified_historical"
+          },
+          "activity_end_detail": {
+            "year": -671,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "unspecified_historical"
+          },
+          "confidence": "well_established",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "Taharqa ruled Egypt as a Twenty-fifth Dynasty pharaoh until Esarhaddon captured Memphis in 671 BCE and forced him south. His later return to Memphis is recorded as a separate renewed-rule Activity rather than treating c. 690–664 BCE as uninterrupted effective Egyptian rule.",
+          "add_source_links": []
+        },
+        {
+          "survivor": false,
+          "activity_id": "f582ea25-88c2-5adc-be96-d364959d9680",
+          "person_id": "b0962fc1-4cee-4bca-aa96-fc703adf988f",
+          "polity_id": "8c25246a-3d73-4df9-8e4a-b0c5ca97c241",
+          "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+          "role_id": "986fdfa7-dbe6-5320-8f4a-615cbba5ac9c",
+          "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+          "activity_start": -669,
+          "activity_end": -667,
+          "activity_start_detail": {
+            "year": -669,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "approximate",
+            "calendar": "unspecified_historical"
+          },
+          "activity_end_detail": {
+            "year": -667,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "approximate",
+            "calendar": "unspecified_historical"
+          },
+          "confidence": "well_established",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "After Esarhaddon died in 669 BCE, Taharqa returned north and re-entered Memphis, reasserting effective Egyptian kingship. Ashurbanipal's campaign in 667/666 BCE defeated him and drove him south again. This Activity records that short renewed phase separately; its year boundaries are approximate because the campaign chronology is conventionally dated around 669–667/666 BCE.",
+          "source_copy_policy": "COPY_EXISTING",
+          "add_source_links": []
+        }
+      ],
+      "gap_overlap_policy": "ASSYRIAN_CONTROL_AFTER_671_ENDS_UNINTERRUPTED_EGYPTIAN_RULE_TAHARQA_REENTERS_MEMPHIS_C669_AND_IS_EXPELLED_AGAIN_C667"
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 1,
+    "split_operations": 1,
+    "survivor_fragments": 1,
+    "new_activity_fragments": 1,
+    "intentional_gap_between_rule_segments": true,
+    "kingdom_of_kush_activity_unchanged": true,
+    "production_mutation_authorized": false
+  }
+}
