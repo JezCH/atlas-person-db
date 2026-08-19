@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:justin-trudeau:canada:2015-2025:v1",
+  "person": {"canonical_name_en": "Justin Trudeau", "display_name_ko": "쥐스탱 트뤼도"},
+  "polity": {"canonical_name_en": "Canada", "display_name_ko": "캐나다"},
+  "activity": {"relation_type": "governs", "period_basis": "term", "role": "Prime Minister", "role_display_name_ko": "총리", "start_year": 2015, "start_month": 11, "start_day": 4, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 2025, "end_month": 3, "end_day": 14, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Justin Trudeau served as Prime Minister of Canada from 4 November 2015 until 14 March 2025. His term is complete, so he is eligible under the ATLAS rule excluding currently serving office-holders."},
+  "sources": [{"title": "Twenty-Ninth Canadian Ministry — Government of Canada Guide to Canadian Ministries", "canonical_url": "https://guide-ministries.canada.ca/en/canadian-ministries/ministry-details/34/1", "source_type": "government_reference"}, {"title": "Swearing-in ceremony — Governor General of Canada", "canonical_url": "https://www.gg.ca/en/activities/2025/swearing-in-ceremony", "source_type": "government_reference"}]
+}
