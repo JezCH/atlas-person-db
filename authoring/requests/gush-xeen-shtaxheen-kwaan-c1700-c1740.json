@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gush-xeen:shtaxheen-kwaan:chief:c1700-c1740:v1",
+  "person": {
+    "canonical_name_en": "Gush X'een",
+    "display_name_ko": "거쉬 신"
+  },
+  "polity": {
+    "canonical_name_en": "Shtax'heen Kwáan",
+    "display_name_ko": "스타흐힌 콴"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Chief (Sheiyksh)",
+    "role_display_name_ko": "추장(셰익스)",
+    "start_year": 1700,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1740,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Gush X'een is preserved in Tlingit historical tradition as an early Shtax'heen leader associated with the origin of the Sheiyksh (Shakes) chiefly title. The chronology is an oral-history reconstruction rather than a precisely dated documentary term, so both boundaries are approximate and confidence is likely rather than well_established."
+  },
+  "sources": [
+    {
+      "title": "The Alaska Tlingit: Where Did We Come From? — William Lewis Paul, Shquindy",
+      "canonical_url": "https://www.trafford.com/en/bookstore/bookdetails/189890-the-alaska-tlingit-where-did-we-come-from",
+      "citation_text": "William Lewis Paul's Tlingit historical account preserves the tradition of Gush X'een as an early chief and the origin history of the Sheiyksh/Shakes title, in an approximately early-eighteenth-century setting.",
+      "source_type": "book"
+    }
+  ]
+}

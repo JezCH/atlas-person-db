@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:barboncito:navajo:chief:1868-1871:v1",
+  "person": {
+    "canonical_name_en": "Barboncito",
+    "display_name_ko": "바르본시토"
+  },
+  "polity": {
+    "canonical_name_en": "Navajo",
+    "display_name_ko": "나바호"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Chief",
+    "role_display_name_ko": "추장",
+    "start_year": 1868,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1871,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Barboncito was a prominent Diné (Navajo) chief and leader. The bounded ATLAS Activity begins with his firmly documented leadership in the 1868 treaty negotiations and ends with his death in 1871; it does not imply that Diné political authority was centralized in a single sovereign chief."
+  },
+  "sources": [
+    {
+      "title": "Navajo Nation Treaty of 1868",
+      "canonical_url": "https://courts.navajo-nsn.gov/Treaty1868.htm",
+      "citation_text": "The 1868 Treaty identifies the Navajo nation or tribe as represented by its chiefs and headmen and lists BARBONCITO first among the signatories with the designation Chief.",
+      "source_type": "primary_source"
+    },
+    {
+      "title": "The Navajo Treaties — National Museum of the American Indian",
+      "canonical_url": "https://americanindian.si.edu/nk360/navajo/bosque-redondo/bosque-redondo.cshtml",
+      "citation_text": "The Smithsonian NMAI identifies Barboncito and Manuelito as Diné leaders who negotiated on behalf of the Navajo in 1868 and pressed for return to their homelands.",
+      "source_type": "museum_web"
+    }
+  ]
+}

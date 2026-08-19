@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:toypurina:spanish-empire:opposes:1785:v1",
+  "person": {
+    "canonical_name_en": "Toypurina",
+    "display_name_ko": "토이푸리나"
+  },
+  "polity": {
+    "canonical_name_en": "Spanish Empire",
+    "display_name_ko": "스페인 제국"
+  },
+  "activity": {
+    "relation_type": "opposes",
+    "period_basis": "military_activity",
+    "role": "Medicine woman and resistance leader",
+    "role_display_name_ko": "치유사·저항 지도자",
+    "start_year": 1785,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1785,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Toypurina, a Gabrieleno/Tongva woman, participated as an Indigenous leader in the 1785 revolt against Mission San Gabriel. ATLAS links this Activity to the Spanish Empire with relation opposes rather than inventing a unified Tongva state from an ethnolinguistic label."
+  },
+  "sources": [
+    {
+      "title": "Mission San Gabriel Archangel — U.S. National Park Service",
+      "canonical_url": "https://www.nps.gov/places/mission-san-gabriel-archangel.htm",
+      "citation_text": "The National Park Service states that Indigenous leaders, including the Gabrieleno woman Toypurina, attempted a rebellion at Mission San Gabriel in 1785.",
+      "source_type": "government_web"
+    }
+  ]
+}

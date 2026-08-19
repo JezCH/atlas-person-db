@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:buffalo-calf-road-woman:northern-cheyenne:warrior:1876:v1",
+  "person": {
+    "canonical_name_en": "Buffalo Calf Road Woman",
+    "display_name_ko": "버펄로 카프 로드 우먼"
+  },
+  "polity": {
+    "canonical_name_en": "Northern Cheyenne",
+    "display_name_ko": "북부 샤이엔"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Warrior",
+    "role_display_name_ko": "전사",
+    "start_year": 1876,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1876,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Buffalo Calf Road Woman, a Northern Cheyenne woman and warrior, fought at the Battle of the Rosebud and the Battle of the Little Bighorn in 1876. At the Rosebud she rescued her brother Comes In Sight after his horse was shot. The Civilization VI mod label Mohkemeona'e is not used as the canonical Person identity because reviewed historical sources identify this figure as Buffalo Calf Road Woman (also recorded as Mutsemiuna/Mutsimiuna)."
+  },
+  "sources": [
+    {
+      "title": "A Young Mother at the Rosebud and Little Bighorn Battles — Montana Women's History",
+      "canonical_url": "https://montanawomenshistory.mt.gov/News/news-articles/A-Young-Mother-at-the-Rosebud-and-Little-Bighorn-Battles",
+      "citation_text": "Montana history records Buffalo Calf Road Woman as a Northern Cheyenne woman who fought at both the Rosebud and Little Bighorn in 1876 and rescued her brother Comes In Sight at the Rosebud.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "Buffalo Calf Road Woman: The Story of a Warrior of the Little Bighorn — Smithsonian Libraries",
+      "canonical_url": "https://www.si.edu/object/siris_sil_970136",
+      "citation_text": "Smithsonian Libraries catalogs the researched biography of Buffalo Calf Road Woman as a Cheyenne woman associated with the 1876 wars and the Battle of the Little Bighorn.",
+      "source_type": "museum_web"
+    }
+  ]
+}

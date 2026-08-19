@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:buffalo-hump:penateka-comanche:war-chief:1840-1859:v1",
+  "person": {
+    "canonical_name_en": "Buffalo Hump",
+    "display_name_ko": "버펄로 험프"
+  },
+  "polity": {
+    "canonical_name_en": "Penateka Comanche",
+    "display_name_ko": "페나테카 코만치"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "War chief",
+    "role_display_name_ko": "전쟁 추장",
+    "start_year": 1840,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1859,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Buffalo Hump (Potsunakwahipu/Potsʉnakwahipʉ in modernized Comanche spelling) was a prominent Penateka Comanche war chief. He rose to prominence after the Council House Fight in 1840, led resistance and diplomacy through the 1840s and 1850s, and in 1859 settled his remaining followers on the Kiowa-Comanche reservation near Fort Cobb."
+  },
+  "sources": [
+    {
+      "title": "Buffalo Hump — Handbook of Texas Online",
+      "canonical_url": "https://www.tshaonline.org/handbook/entries/buffalo-hump",
+      "citation_text": "The Texas State Historical Association identifies Buffalo Hump as a celebrated war chief of the Penateka Comanches, prominent from 1840, active in resistance and treaty diplomacy, and leading his remaining followers to settle near Fort Cobb in 1859.",
+      "source_type": "institutional_web"
+    }
+  ]
+}
