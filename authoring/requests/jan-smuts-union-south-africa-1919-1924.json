@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jan-smuts:union-south-africa:1919-1924:v1",
+  "person": {"canonical_name_en": "Jan Smuts", "display_name_ko": "얀 스뮈츠"},
+  "polity": {"canonical_name_en": "Union of South Africa", "display_name_ko": "남아프리카 연방"},
+  "activity": {"relation_type": "governs", "period_basis": "term", "role": "Prime Minister", "role_display_name_ko": "총리", "start_year": 1919, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1924, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Jan Smuts served his first term as Prime Minister of the Union of South Africa from 1919 to 1924. His later return to the premiership is recorded as a separate Activity because the terms were discontinuous."},
+  "sources": [{"title": "Smuts becomes Prime Minister — South African History Online", "canonical_url": "https://sahistory.org.za/dated-event/smuts-becomes-prime-minister", "source_type": "historical_reference"}, {"title": "General Jan Christiaan Smuts — South African History Online", "canonical_url": "https://sahistory.org.za/people/general-jan-christiaan-smuts", "source_type": "historical_reference"}]
+}
