@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:toussaint-louverture:saint-domingue:1801-1802:v1:requeue-4",
+  "person": {"canonical_name_en": "Toussaint Louverture", "display_name_ko": "투생 루베르튀르"},
+  "polity": {"canonical_name_en": "Saint-Domingue", "display_name_ko": "생도맹그"},
+  "activity": {"relation_type": "governs", "period_basis": "term", "role": "Governor General", "role_display_name_ko": "총독", "start_year": 1801, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical", "end_year": 1802, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Toussaint Louverture became governor-general under the 1801 constitution of Saint-Domingue and exercised government until the French expedition forced his surrender in 1802. ATLAS links this office to Saint-Domingue, the polity then occupying present-day Haiti, rather than to the independent state of Haiti created in 1804."},
+  "sources": [{"title": "Constitution de la colonie française de Saint-Domingue, 1801 — Library of Congress", "canonical_url": "https://www.loc.gov/item/2021666967/", "source_type": "government_reference"}, {"title": "Toussaint Louverture, Général en Chef à St. Domingue, proclamé Gouverneur Général le 1er Juillet 1801 — Library of Congress", "canonical_url": "https://www.loc.gov/item/2004669332/", "source_type": "government_reference"}]
+}
