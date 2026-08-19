@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:norton-i:united-states:claim:1859-1880:v1",
+  "person": {"canonical_name_en": "Norton I", "display_name_ko": "노턴 1세"},
+  "polity": {"canonical_name_en": "United States", "display_name_ko": "미국"},
+  "activity": {"relation_type": "claims_rule", "period_basis": "reign", "role": "Emperor", "role_display_name_ko": "황제", "start_year": 1859, "start_month": 9, "start_day": 17, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1880, "end_month": 1, "end_day": 8, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Joshua Abraham Norton publicly proclaimed himself Norton I, Emperor of the United States, on 17 September 1859 and maintained the self-proclaimed imperial claim until his death on 8 January 1880. This is modeled as claims_rule, not actual sovereignty."},
+  "sources": [{"title": "Emperor Norton — Museum of the City of San Francisco", "canonical_url": "https://sfmuseum.org/hist1/norton.html", "source_type": "museum_research"}, {"title": "The Life of Emperor Norton — The Emperor Norton Trust", "canonical_url": "https://emperornortontrust.org/emperor/life", "source_type": "historical_reference"}]
+}
