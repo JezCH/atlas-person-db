@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:senusret-iii:egypt:c1878-c1840-bce:v1",
+  "person": {"canonical_name_en": "Senusret III", "display_name_ko": "세누스레트 3세"},
+  "polity": {"canonical_name_en": "Egypt", "display_name_ko": "이집트"},
+  "activity": {"relation_type": "rules", "period_basis": "reign", "role": "Pharaoh", "role_display_name_ko": "파라오", "start_year": -1878, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical", "end_year": -1840, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Twelfth Dynasty reign of Senusret III. The Metropolitan Museum dates his reign to ca. 1878-1840 BCE; ATLAS therefore stores both boundaries as approximate."},
+  "sources": [{"title": "The Pyramid Complex of Senwosret III, Dahshur — The Metropolitan Museum of Art", "canonical_url": "https://www.metmuseum.org/essays/the-pyramid-complex-of-senwosret-iii-in-the-cemeteries-of-dahshur", "source_type": "museum_research"}]
+}
