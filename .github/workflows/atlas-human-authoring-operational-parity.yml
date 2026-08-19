@@ -2,9 +2,13 @@ name: ATLAS Human Authoring Operational Parity
 
 on:
   pull_request:
+    paths-ignore:
+      - 'authoring/requests/*.json'
   push:
     branches:
       - main
+    paths-ignore:
+      - 'authoring/requests/*.json'
   workflow_dispatch:
 
 permissions:

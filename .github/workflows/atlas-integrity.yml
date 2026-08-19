@@ -12,7 +12,52 @@ permissions:
   actions: read
 
 jobs:
-  test:
+  classify:
+    runs-on: ubuntu-latest
+    outputs:
+      authoring_only: ${{ steps.classify.outputs.authoring_only }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: classify
+        name: Classify PR scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          authoring_only=false
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            git diff --name-only --diff-filter=ACMRTUXB "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}" > /tmp/atlas-changed.txt
+            if [[ -s /tmp/atlas-changed.txt ]] && ! grep -Evq '^authoring/requests/[A-Za-z0-9._-]+\.json$' /tmp/atlas-changed.txt; then
+              authoring_only=true
+            fi
+          fi
+          echo "authoring_only=${authoring_only}" >> "$GITHUB_OUTPUT"
+          echo "authoring_only=${authoring_only}"
+
+  manifest_validation:
+    needs: classify
+    if: needs.classify.outputs.authoring_only == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate changed authoring manifests
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t manifests < <(git diff --name-only --diff-filter=ACMRTUXB "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}" -- 'authoring/requests/*.json')
+          [[ "${#manifests[@]}" -gt 0 ]] || { echo 'No authoring manifests found in authoring-only PR.' >&2; exit 1; }
+          node scripts/validate-authoring-request-files.mjs "${manifests[@]}"
+
+  full_test:
+    needs: classify
+    if: needs.classify.outputs.authoring_only != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     services:
@@ -79,6 +124,26 @@ jobs:
 
       - name: Rebuild current v2 schema on fresh PostgreSQL
         run: npm run test:schema
+
+  test:
+    name: test
+    needs: [classify, manifest_validation, full_test]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Enforce the correct integrity path
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "${{ needs.classify.result }}" == "success" ]] || { echo 'Scope classification failed.' >&2; exit 1; }
+          if [[ "${{ needs.classify.outputs.authoring_only }}" == "true" ]]; then
+            [[ "${{ needs.manifest_validation.result }}" == "success" ]] || { echo 'Authoring manifest validation failed.' >&2; exit 1; }
+            echo 'Required test context passed through the authoring-only fast path.'
+          else
+            [[ "${{ needs.full_test.result }}" == "success" ]] || { echo 'Full integrity suite failed.' >&2; exit 1; }
+            echo 'Required test context passed through the full integrity suite.'
+          fi
 
 # Historical Baseline A P3-P9 integration/rehearsal scripts remain immutable evidence
 # in the repository and in their successful release workflows. They are intentionally
