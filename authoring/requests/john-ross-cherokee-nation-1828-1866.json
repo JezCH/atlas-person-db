@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:john-ross:cherokee-nation:principal-chief:1828-1866:v1",
+  "person": {
+    "canonical_name_en": "John Ross",
+    "display_name_ko": "존 로스"
+  },
+  "polity": {
+    "canonical_name_en": "Cherokee Nation",
+    "display_name_ko": "체로키 네이션"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Principal Chief",
+    "role_display_name_ko": "수석 추장",
+    "start_year": 1828,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1866,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "John Ross (Koowisguwi) served as Principal Chief of the Cherokee Nation from 1828 until his death in 1866, including through removal to Indian Territory and the American Civil War."
+  },
+  "sources": [
+    {
+      "title": "Papers of Chief John Ross — National Archives",
+      "canonical_url": "https://www.archives.gov/nhprc/projects/catalog//chief-john-ross",
+      "citation_text": "The National Archives identifies John Ross (1790–1866), also known as Koowisguwi, as Principal Chief of the Cherokee Nation from 1828 to 1866.",
+      "source_type": "government_web"
+    }
+  ]
+}

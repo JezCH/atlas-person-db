@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:quanah-parker:comanche:chief:1875-1911:v1",
+  "person": {
+    "canonical_name_en": "Quanah Parker",
+    "display_name_ko": "콰나 파커"
+  },
+  "polity": {
+    "canonical_name_en": "Comanche",
+    "display_name_ko": "코만치"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Chief",
+    "role_display_name_ko": "추장",
+    "start_year": 1875,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1911,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After Quanah Parker and the Quahada Comanches surrendered in 1875, federal agents named him chief in an effort to unite the Comanche bands. This appointment lay outside traditional Comanche precedent, but the tribe acquiesced and Parker became the most influential Comanche leader until his death in 1911. ATLAS therefore uses governs rather than rules and marks the starting boundary approximate."
+  },
+  "sources": [
+    {
+      "title": "Parker, Quanah — Handbook of Texas Online",
+      "canonical_url": "https://www.tshaonline.org/handbook/entries/parker-quanah",
+      "citation_text": "The Texas State Historical Association records the Quahadas' 1875 surrender, the subsequent federal designation of Quanah Parker as chief with tribal acquiescence, and his continuing position as the most influential Comanche leader until his death in 1911.",
+      "source_type": "institutional_web"
+    }
+  ]
+}

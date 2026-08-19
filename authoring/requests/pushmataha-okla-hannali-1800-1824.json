@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:pushmataha:okla-hannali:miko:1800-1824:v1",
+  "person": {
+    "canonical_name_en": "Pushmataha",
+    "display_name_ko": "푸시마타하"
+  },
+  "polity": {
+    "canonical_name_en": "Okla Hannali",
+    "display_name_ko": "옥라 한날리"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Miko (Chief)",
+    "role_display_name_ko": "미코(추장)",
+    "start_year": 1800,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1824,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Pushmataha was Miko (chief) of Okla Hannali, the southern Six Towns district of the Choctaw political system, from 1800 to 1824. ATLAS uses the autonomous district rather than treating him as a unitary sovereign of all Choctaw people."
+  },
+  "sources": [
+    {
+      "title": "Early Political Structure — Choctaw Nation of Oklahoma",
+      "canonical_url": "https://www.choctawnation.com/news/iti-fabvssa/early-political-structure/",
+      "citation_text": "Choctaw Nation describes three geographic-political districts, each with its own Miko, and identifies Pushmataha as chief of Okla Hannali from 1800 to 1824.",
+      "source_type": "institutional_web"
+    },
+    {
+      "title": "All Hail the Chief: Chief Pushmataha — Choctaw Nation of Oklahoma",
+      "canonical_url": "https://www.choctawnation.com/news/chiefs-blog/all-hail-the-chief-chief-pushmataha/",
+      "citation_text": "Choctaw Nation states that Pushmataha served as chief of Okla Hannali (Six Towns), Southern District, from 1800 to 1824.",
+      "source_type": "institutional_web"
+    }
+  ]
+}
