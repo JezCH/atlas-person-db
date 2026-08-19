@@ -35,7 +35,7 @@ jobs:
           echo "authoring_only=${authoring_only}" >> "$GITHUB_OUTPUT"
           echo "authoring_only=${authoring_only}"
 
-  manifest-validation:
+  manifest_validation:
     needs: classify
     if: needs.classify.outputs.authoring_only == 'true'
     runs-on: ubuntu-latest
@@ -55,7 +55,7 @@ jobs:
           [[ "${#manifests[@]}" -gt 0 ]] || { echo 'No authoring manifests found in authoring-only PR.' >&2; exit 1; }
           node scripts/validate-authoring-request-files.mjs "${manifests[@]}"
 
-  full-test:
+  full_test:
     needs: classify
     if: needs.classify.outputs.authoring_only != 'true'
     runs-on: ubuntu-latest
@@ -127,7 +127,7 @@ jobs:
 
   test:
     name: test
-    needs: [classify, manifest-validation, full-test]
+    needs: [classify, manifest_validation, full_test]
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 2
@@ -138,10 +138,10 @@ jobs:
           set -euo pipefail
           [[ "${{ needs.classify.result }}" == "success" ]] || { echo 'Scope classification failed.' >&2; exit 1; }
           if [[ "${{ needs.classify.outputs.authoring_only }}" == "true" ]]; then
-            [[ "${{ needs.manifest-validation.result }}" == "success" ]] || { echo 'Authoring manifest validation failed.' >&2; exit 1; }
+            [[ "${{ needs.manifest_validation.result }}" == "success" ]] || { echo 'Authoring manifest validation failed.' >&2; exit 1; }
             echo 'Required test context passed through the authoring-only fast path.'
           else
-            [[ "${{ needs.full-test.result }}" == "success" ]] || { echo 'Full integrity suite failed.' >&2; exit 1; }
+            [[ "${{ needs.full_test.result }}" == "success" ]] || { echo 'Full integrity suite failed.' >&2; exit 1; }
             echo 'Required test context passed through the full integrity suite.'
           fi
 
