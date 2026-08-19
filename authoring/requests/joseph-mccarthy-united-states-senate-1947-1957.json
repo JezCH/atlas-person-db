@@ -1,0 +1,9 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:joseph-mccarthy:united-states:senate:1947-1957:v1",
+  "person": {"canonical_name_en": "Joseph McCarthy", "display_name_ko": "조지프 매카시"},
+  "polity": {"canonical_name_en": "United States", "display_name_ko": "미국"},
+  "activity": {"relation_type": "serves", "period_basis": "term", "role": "Senator", "role_display_name_ko": "상원의원", "start_year": 1947, "start_month": 1, "start_day": 3, "start_certainty": "exact", "start_calendar": "gregorian", "end_year": 1957, "end_month": 5, "end_day": 2, "end_certainty": "exact", "end_calendar": "gregorian", "confidence": "well_established", "chronology_status": "reviewed", "notes": "Joseph McCarthy served as a United States Senator from Wisconsin from 3 January 1947 until his death in office on 2 May 1957."},
+  "sources": [{"title": "Wisconsin Senators — United States Senate", "canonical_url": "https://www.senate.gov/states/WI/senators.htm", "source_type": "government_reference"}]
+}
