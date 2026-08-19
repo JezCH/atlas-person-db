@@ -198,8 +198,9 @@ async function createRole(client, raw) {
 
   if (await roleCollision(client, code)) throw new Error("ROLE_CODE_COLLIDES_WITH_EXISTING_VOCABULARY");
   if (await roleCollision(client, sourceLabel)) throw new Error("ROLE_SOURCE_LABEL_COLLISION");
-  if (await roleCollision(client, displayName)) throw new Error("ROLE_DISPLAY_NAME_COLLISION");
 
+  // Localized display labels are presentation vocabulary, not Role identity.
+  // Distinct canonical roles may legitimately share the same Korean label.
   const inserted = await client.query(
     `insert into atlas_v2.roles(id,code,category,source_label,is_active) values(gen_random_uuid(),$1,$2,$3,true) returning id`,
     [code, category, sourceLabel]
