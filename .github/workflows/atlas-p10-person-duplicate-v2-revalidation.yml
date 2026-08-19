@@ -2,9 +2,13 @@ name: ATLAS P10 Person Duplicate V2 Revalidation
 
 on:
   pull_request:
+    paths-ignore:
+      - 'authoring/requests/*.json'
   push:
     branches:
       - main
+    paths-ignore:
+      - 'authoring/requests/*.json'
   workflow_dispatch:
 
 permissions:
