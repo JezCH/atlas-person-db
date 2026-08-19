@@ -4,6 +4,7 @@ import fs from 'node:fs';
 
 const navSource = fs.readFileSync(new URL('../atlas-person-era-navigation.js', import.meta.url), 'utf8');
 const navCss = fs.readFileSync(new URL('../atlas-person-era-navigation.css', import.meta.url), 'utf8');
+const eraModelSource = fs.readFileSync(new URL('../atlas-person-era-model.js', import.meta.url), 'utf8');
 const tableSource = fs.readFileSync(new URL('../atlas-person-table-view.js', import.meta.url), 'utf8');
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 
@@ -13,7 +14,10 @@ test('era navigation consumes rendered era bands instead of creating a second ch
   assert.match(navSource, /aria-label/);
   assert.match(navSource, /atlasEra/);
   assert.doesNotMatch(navSource, /BC 480|AD 499|AD 1492|AD 1750|AD 1914|AD 1945/);
-  assert.match(tableSource, /const ERAS = Object\.freeze\(\[/);
+  assert.match(eraModelSource, /const ERAS = Object\.freeze\(\[/);
+  assert.match(tableSource, /window\.ATLAS_PERSON_ERA_MODEL/);
+  assert.match(tableSource, /eraModel\.eraForYear\(year\)/);
+  assert.doesNotMatch(tableSource, /const ERAS\s*=/);
 });
 
 test('era navigation owns Person search, Polity filtering, and current-result status in one toolbar', () => {
@@ -79,15 +83,17 @@ test('era navigation is sticky, responsive, and uses larger desktop but slightly
   assert.match(navCss, /top:64px/);
 });
 
-test('era navigation assets load after era grouping/palette and before Person Main initializes', () => {
-  const tableJs = 'atlas-person-table-view.js?v=20260816-era-band-v1';
+test('era navigation assets load after the shared era model/table grouping and before Person Main initializes', () => {
+  const eraModelJs = 'atlas-person-era-model.js?v=20260819-era-model-r2';
+  const tableJs = 'atlas-person-table-view.js?v=20260819-era-model-r2';
   const navJs = 'atlas-person-era-navigation.js?v=20260817-era-search-toolbar-v2';
   const mainJs = 'atlas-person-main.js?v=20260817-toolbar-owner-r1';
   const paletteCss = 'atlas-person-era-palette.css?v=20260816-era-palette-v1';
   const navCssAsset = 'atlas-person-era-navigation.css?v=20260817-era-search-toolbar-v3';
   const geometryCss = 'atlas-person-table-alignment.css?v=20260817-table-geometry-r2';
 
-  for (const asset of [tableJs, navJs, mainJs, paletteCss, navCssAsset, geometryCss]) assert.ok(html.includes(asset));
+  for (const asset of [eraModelJs, tableJs, navJs, mainJs, paletteCss, navCssAsset, geometryCss]) assert.ok(html.includes(asset));
+  assert.ok(html.indexOf(eraModelJs) < html.indexOf(tableJs));
   assert.ok(html.indexOf(tableJs) < html.indexOf(navJs));
   assert.ok(html.indexOf(navJs) < html.indexOf(mainJs));
   assert.ok(html.indexOf(paletteCss) < html.indexOf(navCssAsset));

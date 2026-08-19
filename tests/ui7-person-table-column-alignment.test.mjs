@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import fs from 'node:fs';
 
+const eraModelSource = fs.readFileSync(new URL('../atlas-person-era-model.js', import.meta.url), 'utf8');
 const source = fs.readFileSync(new URL('../atlas-person-table-view.js', import.meta.url), 'utf8');
 const css = fs.readFileSync(new URL('../atlas-person-table-view.css', import.meta.url), 'utf8');
 const alignmentCss = fs.readFileSync(new URL('../atlas-person-table-alignment.css', import.meta.url), 'utf8');
@@ -19,15 +20,19 @@ test('Person table composes an era band with the existing four Person data cells
   assert.match(source, /foldExceptionalStatus\(identity, status\)/);
 });
 
-test('era classification uses the agreed ATLAS global cut points and preserves unknown chronology', () => {
-  assert.match(source, /year < -480/);
-  assert.match(source, /year < 500/);
-  assert.match(source, /year < 1492/);
-  assert.match(source, /year < 1750/);
-  assert.match(source, /year < 1914/);
-  assert.match(source, /year < 1945/);
+test('era classification uses the agreed shared ATLAS global cut points and preserves unknown chronology', () => {
+  assert.match(source, /window\.ATLAS_PERSON_ERA_MODEL/);
+  assert.match(source, /eraModel\.eraForYear\(year\)/);
+  assert.doesNotMatch(source, /year < -480|year < 500|year < 1492|year < 1750|year < 1914|year < 1945/);
+  assert.match(eraModelSource, /end_year: -481/);
+  assert.match(eraModelSource, /start_year: -480, end_year: 499/);
+  assert.match(eraModelSource, /start_year: 500, end_year: 1491/);
+  assert.match(eraModelSource, /start_year: 1492, end_year: 1749/);
+  assert.match(eraModelSource, /start_year: 1750, end_year: 1913/);
+  assert.match(eraModelSource, /start_year: 1914, end_year: 1944/);
+  assert.match(eraModelSource, /start_year: 1945, end_year: null/);
   for (const label of ['고대', '고전', '중세', '근세', '산업·제국', '세계대전', '현대', '연대 미상']) {
-    assert.match(source, new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+    assert.match(eraModelSource, new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
   assert.match(source, /groupRowsByEra\(grid\)/);
   assert.match(source, /person-era-group/);
@@ -70,5 +75,6 @@ test('canonical geometry layer loads directly after the table presentation asset
 test('era band presentation and geometry use fresh browser cache keys', () => {
   assert.match(html, /atlas-person-table-view\.css\?v=20260817-era-band-r2/);
   assert.match(html, /atlas-person-table-alignment\.css\?v=20260817-table-geometry-r2/);
-  assert.match(html, /atlas-person-table-view\.js\?v=20260816-era-band-v1/);
+  assert.match(html, /atlas-person-era-model\.js\?v=20260819-era-model-r2/);
+  assert.match(html, /atlas-person-table-view\.js\?v=20260819-era-model-r2/);
 });

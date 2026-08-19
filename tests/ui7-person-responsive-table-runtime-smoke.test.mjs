@@ -3,6 +3,7 @@ import test from 'node:test';
 import fs from 'node:fs';
 import vm from 'node:vm';
 
+const eraSource = fs.readFileSync(new URL('../atlas-person-era-model.js', import.meta.url), 'utf8');
 const source = fs.readFileSync(new URL('../atlas-person-table-view.js', import.meta.url), 'utf8');
 
 function moveChild(parent, child, index = parent.children.length) {
@@ -87,7 +88,9 @@ test('UI7 table keeps status folding and groups visible rows under the derived e
     addEventListener() {}
   };
   const window = { addEventListener() {} };
-  vm.runInNewContext(source, { window, document, Object, Set, String, Number, queueMicrotask: (fn) => fn() });
+  const context = { window, document, Object, Set, String, Number, queueMicrotask: (fn) => fn(), console };
+  vm.runInNewContext(eraSource, context);
+  vm.runInNewContext(source, context);
 
   const header = grid.children[0];
   assert.ok(header.className.includes('person-table-head'));
