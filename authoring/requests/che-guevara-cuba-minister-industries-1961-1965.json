@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:che-guevara:cuba:minister-of-industries:1961-1965:v1",
+  "person": {
+    "canonical_name_en": "Che Guevara",
+    "display_name_ko": "체 게바라"
+  },
+  "polity": {
+    "canonical_name_en": "Cuba",
+    "display_name_ko": "쿠바"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Minister of Industries",
+    "role_display_name_ko": "산업부 장관",
+    "start_year": 1961,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1965,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Cuban government created the Ministry of Industries on 23 February 1961 and placed Ernesto 'Che' Guevara in charge. He remained Minister of Industries until leaving his Cuban government role in 1965. ATLAS records this formal cabinet office separately from his earlier revolutionary military activity and from his later guerrilla campaigns outside Cuba."
+  },
+  "sources": [
+    {
+      "title": "Las luces del Ministro de Industrias — Granma",
+      "canonical_url": "https://www.granma.cu/cuba/2017-06-28/las-luces-del-ministro-de-industrias-28-06-2017-21-06-37",
+      "citation_text": "Granma records that Cuba created the Ministry of Industries on 23 February 1961 and assigned Ernesto Che Guevara to direct it.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Che Guevara — HISTORY",
+      "canonical_url": "https://www.history.com/articles/che-guevara",
+      "citation_text": "HISTORY records Guevara's service as head of the Ministry of Industry and his departure from Cuba in 1965 after holding several positions in the revolutionary government.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:che-guevara:cuba:revolutionary-commander:1956-1959:v1",
+  "person": {
+    "canonical_name_en": "Che Guevara",
+    "display_name_ko": "체 게바라"
+  },
+  "polity": {
+    "canonical_name_en": "Cuba",
+    "display_name_ko": "쿠바"
+  },
+  "activity": {
+    "relation_type": "opposes",
+    "period_basis": "military_activity",
+    "role": "Revolutionary commander",
+    "role_display_name_ko": "혁명군 지휘관",
+    "start_year": 1956,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1959,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ernesto 'Che' Guevara landed in Cuba with Fidel Castro's expedition in December 1956 and became a leading commander of the 26th of July Movement during the guerrilla war that overthrew Fulgencio Batista's government in January 1959. ATLAS attaches this conflict Activity to the territorial polity Cuba rather than creating a separate Batista-regime polity; the `opposes` relation denotes opposition to the governing regime and state forces during the revolution, not hostility toward Cuba as a people or geographic community."
+  },
+  "sources": [
+    {
+      "title": "Che Guevara — HISTORY",
+      "canonical_url": "https://www.history.com/articles/che-guevara",
+      "citation_text": "HISTORY records Guevara's participation in Castro's 1956 expedition, his promotion to comandante, and his central role in the Cuban Revolution that overthrew Batista on 1 January 1959.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
