@@ -12,9 +12,9 @@ Do not use ordinary registration to add a person who is currently holding the of
 
 Historically real discontinuities are separate Activities. Never invent an exact day, month, or year merely to satisfy a manifest contract.
 
-## 2. Required historical review
+## 2. Required historical and NamuWiki review
 
-Before writing a request, establish only the facts needed by the Activity model:
+Before writing or submitting a request, establish:
 
 - canonical English Person name and Korean display name when the Person is new;
 - canonical English Polity name and Korean display name when the Polity is new;
@@ -22,7 +22,10 @@ Before writing a request, establish only the facts needed by the Activity model:
 - Role label/code when applicable;
 - reviewed start/end boundaries with independent certainty/calendar values;
 - evidence confidence;
-- at least one real Source.
+- at least one real Source;
+- the exact NamuWiki Person-document outcome: verified document title and URL, or an explicit `not_found` result.
+
+The NamuWiki check is mandatory for every new `atlas-human-authoring/v1` registration after this contract cutover. Do not guess a URL from the Korean name. Verify that the page is for the intended historical Person, including same-name and disambiguation cases. If no exact Person document is found, record `not_found`; omission is not equivalent to document absence.
 
 Reuse existing Person, Polity, Role, Relation Type, Period Basis, and Source identities whenever the live resolver can do so. Role identity is canonical-code based; translated display labels do not create identity.
 
@@ -36,23 +39,45 @@ Use the bounded Production Person read/search once before creating a new registr
 
 The server remains authoritative for Person identity and semantic Activity duplicate enforcement at write time.
 
-## 4. Manifest creation
+## 4. Request creation
 
-For ordinary reviewed historical-person batches, use `atlas-human-authoring/v1`.
+For ordinary reviewed historical-person registration, use `atlas-human-authoring/v1` through either the normal Admin authoring path or the reviewed GitHub fallback.
 
-Each immutable request must contain a stable `request_id`. A retry of the same logical request must reuse the same manifest and request id. Do not mint a new request id merely because a previous Production attempt failed.
+Each request must contain a stable `request_id`. A retry of the same logical request must reuse the same request and request id. Do not mint a new request id merely because a previous Production attempt failed.
 
-Create a new manifest/request id only when the reviewed request content itself has changed materially.
+Every new human-authoring Person request must contain `external_references.namuwiki` in exactly one of these states:
+
+```json
+{
+  "status": "linked",
+  "checked_at": "2026-08-21",
+  "document_title": "정확한 나무위키 문서명",
+  "url": "https://namu.wiki/w/..."
+}
+```
+
+or:
+
+```json
+{
+  "status": "not_found",
+  "checked_at": "2026-08-21"
+}
+```
+
+`unknown`, omission, guessed URLs, non-NamuWiki URLs, and a `not_found` record carrying a title or URL are invalid for a new registration. Detailed field rules are documented in `authoring/NAMUWIKI_REGISTRATION_POLICY.md`.
+
+The normal authoring transaction stores the normalized NamuWiki decision in the existing immutable `authoring_manifest_runs.result_snapshot` together with the Person/Activity result. There is no separate NamuWiki write or registry file to maintain.
 
 ## 5. Pull request validation
 
 A pull request that changes only `authoring/requests/*.json` uses the authoring-only integrity fast path.
 
-The required `test` status remains mandatory, but the fast path runs only structural manifest validation. It does not replay P10, P11, the full schema suite, or the human-authoring operational parity rehearsal.
+The required `test` status remains mandatory. The fast path structurally validates changed manifests and, for `atlas-human-authoring/v1`, rejects a missing or invalid NamuWiki decision. It does not replay P10, P11, the full schema suite, or the human-authoring operational parity rehearsal.
 
-If any runtime code, schema, migration, workflow contract, or other non-manifest file changes, the full ATLAS Integrity suite remains mandatory.
+If runtime code, schema, migration, workflow contract, or another non-manifest file changes, the full ATLAS Integrity suite remains mandatory.
 
-P10, P11, and Human Authoring Operational Parity workflows are intentionally skipped for manifest-only changes and still run for relevant code changes or explicit manual dispatch.
+P10, P11, and Human Authoring Operational Parity workflows are intentionally skipped for manifest-only registration changes and still run for relevant code changes or explicit manual dispatch.
 
 ## 6. Production Apply
 
@@ -65,7 +90,7 @@ A human-authoring batch is item-isolated:
 - later items in the same batch still run;
 - the overall workflow fails if any item failed, and the response contains the failed indexes, manifest paths, and error codes.
 
-This prevents one bad request from silently blocking all later registrations.
+The NamuWiki decision is persisted atomically with that request's normal authoring ledger snapshot. A failed authoring transaction therefore cannot leave a successful Person/Activity with a falsely recorded NamuWiki result from the same request.
 
 ## 7. Retry policy — no requeue-only PRs
 
@@ -78,18 +103,26 @@ If a manifest is correct but Production Apply failed because of a server bug, de
 
 Do **not** create a fresh copy, timestamped replacement, or new request id solely to make GitHub select the request again.
 
-A requeue-only pull request is prohibited unless the manifest content itself must change and therefore needs a new reviewed request version.
+A requeue-only pull request is prohibited unless the reviewed request content itself must change.
 
-## 8. Final verification
+## 8. Final verification and completion report
 
 A registration is complete only after authoritative Production read verification confirms:
 
 - exactly one intended Person identity;
 - the intended Activity exists;
 - Polity, Role, relation type, period basis, and temporal boundaries match the reviewed request;
-- there is no duplicate or partial/half-written Activity.
+- there is no duplicate or partial/half-written Activity;
+- the Person read surface exposes the intended explicit NamuWiki decision when the request was created under this contract.
 
-Do not infer success merely from a merged PR. Do not force-create a Person after a duplicate response; inspect the existing Production row first.
+The completion report must state:
+
+- `나무위키: 연결됨 — <document_title>` for `status: linked`;
+- `나무위키: 문서 없음` for `status: not_found`.
+
+For `linked`, the main Person table name is expected to become the visually distinct NamuWiki hyperlink. `not_found` intentionally creates no hyperlink. The absence of a link by itself is never evidence that a NamuWiki document was checked and found absent.
+
+Do not infer registration success merely from a merged PR. Do not force-create a Person after a duplicate response; inspect the existing Production row first.
 
 ## 9. Safety invariants that must not be removed
 
@@ -104,21 +137,22 @@ Keep all of the following:
 - immutable request ledger/idempotent replay;
 - exact GitHub OIDC, runtime SHA, and authoring SHA boundaries;
 - Production readiness checks;
-- authoritative Production read verification after write.
+- authoritative Production read verification after write;
+- explicit NamuWiki `linked`/`not_found` decision for new human-authoring Person registrations.
 
-These are safety controls, not procedural overhead.
+Legacy pre-cutover GitHub requests remain replayable without bulk rewriting; new or changed reviewed human-authoring manifests are subject to the current NamuWiki validation contract.
 
 ## 10. Procedure summary
 
-Ordinary batch registration is therefore:
+Ordinary registration is therefore:
 
-1. historical review;
+1. historical review and exact NamuWiki Person-document check;
 2. one bounded Production duplicate check;
-3. create reviewed `atlas-human-authoring/v1` manifests;
-4. data-only PR → required authoring manifest validation;
-5. merge;
-6. Production Apply;
-7. authoritative Production read verification;
-8. retry the same manifest by workflow dispatch if an unchanged request needs another attempt.
+3. submit `atlas-human-authoring/v1` with explicit `linked` or `not_found` NamuWiki status;
+4. for GitHub batch work, data-only PR → required manifest validation;
+5. Production Apply or normal Admin authoring transaction;
+6. authoritative Production read verification;
+7. report `나무위키: 연결됨 — <문서명>` or `나무위키: 문서 없음`;
+8. retry the same immutable request when an unchanged GitHub manifest needs another attempt.
 
 No repeated P10/P11 rehearsal and no requeue-only PR are part of the normal path.

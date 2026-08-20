@@ -112,12 +112,16 @@
     panel.className = "panel";
     panel.setAttribute("aria-labelledby", "human-authoring-title");
     panel.innerHTML = `
-      <div class="panel-head"><div><p class="status-label">NORMAL AUTHORING · STAGE 2 NATIVE</p><h2 id="human-authoring-title">일반 신규 인물 등록</h2><p>UUID나 JSON을 입력하지 않습니다. 기존 Person·Polity·Role은 정확히 재사용하고, 없으면 같은 트랜잭션 안에서 생성한 뒤 Relation·기간·Source provenance를 Stage 2 semantic-key v2로 저장합니다.</p></div></div>
+      <div class="panel-head"><div><p class="status-label">NORMAL AUTHORING · STAGE 2 NATIVE</p><h2 id="human-authoring-title">일반 신규 인물 등록</h2><p>UUID나 JSON을 입력하지 않습니다. 기존 Person·Polity·Role은 정확히 재사용하고, 없으면 같은 트랜잭션 안에서 생성한 뒤 Relation·기간·Source provenance를 Stage 2 semantic-key v2로 저장합니다. 나무위키 문서 확인 결과도 등록 요청의 필수 항목으로 함께 저장합니다.</p></div></div>
       <form id="humanAuthoringForm" class="identity-form">
         <div class="identity-two"><label>인물 영문명<input id="humanPersonEn" required /></label><label>인물 한국어명 <small>신규 Person 생성 시 필수</small><input id="humanPersonKo" /></label></div>
         <div class="identity-two"><label>정치체 영문명<input id="humanPolityEn" required /></label><label>정치체 한국어명 <small>신규 Polity 생성 시 필수</small><input id="humanPolityKo" /></label></div>
         <div class="identity-two"><label>관계<select id="humanRelation" required><option value="">불러오는 중...</option></select></label><label>Period basis<select id="humanPeriodBasis" required><option value="">불러오는 중...</option></select></label></div>
         <div class="identity-two"><label>Role 영문명 <small>역할이 없으면 비움</small><input id="humanRoleEn" placeholder="예: Sultan" /></label><label>Role 한국어명 <small>신규 Role 생성 시 필수</small><input id="humanRoleKo" placeholder="예: 술탄" /></label></div>
+        <h3>나무위키 확인</h3>
+        <div class="identity-two"><label>문서 확인 결과<select id="humanNamuWikiStatus" required><option value="">선택</option><option value="linked">문서 있음 · 링크 연결</option><option value="not_found">문서 없음</option></select></label><label>확인일<input id="humanNamuWikiCheckedAt" type="date" required /></label></div>
+        <div class="identity-two"><label>정확한 문서명 <small>문서 있음일 때 필수</small><input id="humanNamuWikiTitle" /></label><label>정확한 문서 URL <small>https://namu.wiki/w/...</small><input id="humanNamuWikiUrl" type="url" placeholder="https://namu.wiki/w/..." /></label></div>
+        <p class="identity-help">동명이인·동음 문서를 확인한 뒤 해당 인물의 정확한 문서만 연결합니다. 문서가 없으면 ‘문서 없음’을 명시적으로 선택합니다.</p>
         <h3>활동 시작</h3>
         <div class="identity-two"><label>시작 연도<input id="humanStartYear" type="number" step="1" required /></label><label>시작 월 <small>선택</small><input id="humanStartMonth" type="number" min="1" max="12" step="1" /></label></div>
         <div class="identity-two"><label>시작 일 <small>선택 · 월 입력 필요</small><input id="humanStartDay" type="number" min="1" max="31" step="1" /></label><label>시작 확실성<select id="humanStartCertainty" required>${certaintyOptions()}</select></label></div>
@@ -201,11 +205,46 @@
     };
   }
 
+  function syncNamuWikiFields() {
+    const status = value("humanNamuWikiStatus");
+    const title = document.getElementById("humanNamuWikiTitle");
+    const url = document.getElementById("humanNamuWikiUrl");
+    const linked = status === "linked";
+    for (const input of [title, url]) {
+      if (!input) continue;
+      input.disabled = status === "not_found";
+      input.required = linked;
+      if (status === "not_found") input.value = "";
+    }
+  }
+
+  function namuwikiReference() {
+    const status = value("humanNamuWikiStatus");
+    const checkedAt = value("humanNamuWikiCheckedAt");
+    if (status !== "linked" && status !== "not_found") throw new Error("나무위키 문서 확인 결과를 선택해야 합니다.");
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(checkedAt)) throw new Error("나무위키 확인일을 입력해야 합니다.");
+    if (status === "not_found") return { status, checked_at:checkedAt };
+    const documentTitle = value("humanNamuWikiTitle");
+    const rawUrl = value("humanNamuWikiUrl");
+    if (!documentTitle) throw new Error("나무위키 문서가 있으면 정확한 문서명을 입력해야 합니다.");
+    let url;
+    try { url = new URL(rawUrl); } catch { throw new Error("나무위키 문서 URL이 올바르지 않습니다."); }
+    if (url.protocol !== "https:" || url.hostname !== "namu.wiki" || !url.pathname.startsWith("/w/") || url.pathname.length <= 3) {
+      throw new Error("나무위키 문서 URL은 정확한 https://namu.wiki/w/... 주소여야 합니다.");
+    }
+    return { status, checked_at:checkedAt, document_title:documentTitle, url:url.href };
+  }
+
   function friendlyAuthoringError(code, fallback) {
     return ({
       HUMAN_AUTHORING_NEW_PERSON_KO_REQUIRED: "신규 Person 생성에는 한국어명이 필요합니다. 기존 Person 재사용이면 비워둘 수 있습니다.",
       HUMAN_AUTHORING_NEW_POLITY_KO_REQUIRED: "신규 Polity 생성에는 한국어명이 필요합니다. 기존 Polity 재사용이면 비워둘 수 있습니다.",
-      HUMAN_AUTHORING_NEW_ROLE_KO_REQUIRED: "신규 Role 생성에는 한국어명이 필요합니다. 기존 Role 재사용이면 비워둘 수 있습니다."
+      HUMAN_AUTHORING_NEW_ROLE_KO_REQUIRED: "신규 Role 생성에는 한국어명이 필요합니다. 기존 Role 재사용이면 비워둘 수 있습니다.",
+      HUMAN_AUTHORING_NAMUWIKI_REQUIRED: "나무위키 문서 확인 결과가 필요합니다.",
+      HUMAN_AUTHORING_NAMUWIKI_STATUS_INVALID: "나무위키 결과는 문서 있음 또는 문서 없음이어야 합니다.",
+      HUMAN_AUTHORING_NAMUWIKI_CHECKED_AT_INVALID: "나무위키 확인일이 올바르지 않습니다.",
+      HUMAN_AUTHORING_NAMUWIKI_DOCUMENT_TITLE_REQUIRED: "나무위키 문서가 있으면 정확한 문서명이 필요합니다.",
+      HUMAN_AUTHORING_NAMUWIKI_URL_INVALID: "나무위키 문서 URL이 올바르지 않습니다."
     })[code] || fallback || code;
   }
 
@@ -215,7 +254,7 @@
     const output = document.getElementById("humanAuthoringResult");
     if (button) button.disabled = true;
     if (output) {
-      output.textContent = "Person · Polity · Role · Source · Activity를 하나의 트랜잭션으로 저장 중...";
+      output.textContent = "Person · Polity · Role · Source · Activity와 나무위키 확인 결과를 하나의 트랜잭션으로 저장 중...";
       output.dataset.type = "info";
     }
     try {
@@ -241,7 +280,8 @@
           title: value("humanSourceTitle"),
           canonical_url: sourceUrl || null,
           citation_text: value("humanSourceCitation") || null
-        }]
+        }],
+        external_references: { namuwiki: namuwikiReference() }
       };
       const response = await fetch(authoringEndpoint, {
         method: "POST",
@@ -257,13 +297,15 @@
         throw new Error(friendlyAuthoringError(code, code || `authoring failed (${response.status})`));
       }
       if (output) {
+        const namuwiki = body.external_references?.namuwiki || payload.external_references.namuwiki;
         output.textContent = [
           `등록 완료${body.replay ? " (동일 요청 재검증)" : ""}`,
           `Person UUID: ${body.person_id}`,
           `Polity UUID: ${body.polity_id}`,
           body.role_id ? `Role UUID: ${body.role_id}` : "Role: 없음",
           `Activity UUID: ${body.relationship_id}`,
-          `Source UUID: ${(body.source_ids || []).join(", ")}`
+          `Source UUID: ${(body.source_ids || []).join(", ")}`,
+          namuwiki?.status === "linked" ? `나무위키: 연결됨 — ${namuwiki.document_title}` : "나무위키: 문서 없음"
         ].join("\n");
         output.dataset.type = "success";
       }
@@ -279,6 +321,8 @@
   }
 
   insertHumanAuthoringPanel();
+  document.getElementById("humanNamuWikiStatus")?.addEventListener("change", syncNamuWikiFields);
+  syncNamuWikiFields();
   document.getElementById("humanAuthoringForm")?.addEventListener("submit", submitHumanAuthoring);
   loadHumanCatalogs();
 })();

@@ -47,6 +47,47 @@ function roleCategoryForRelation(relationCode) {
   })[relationCode] || "activity";
 }
 
+function validIsoDate(value) {
+  const text = String(value || "").trim();
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(text)) return false;
+  const parsed = new Date(`${text}T00:00:00Z`);
+  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === text;
+}
+
+function canonicalNamuWikiUrl(value) {
+  const text = optionalText(value);
+  if (!text) return null;
+  try {
+    const url = new URL(text);
+    if (url.protocol !== "https:" || url.hostname !== "namu.wiki") return null;
+    if (!url.pathname.startsWith("/w/") || url.pathname.length <= 3) return null;
+    if (url.username || url.password) return null;
+    return url.href;
+  } catch {
+    return null;
+  }
+}
+
+function normalizeNamuWikiReference(raw, { allowLegacyOmission = true } = {}) {
+  if (raw == null) {
+    if (allowLegacyOmission) return null;
+    throw new Error("HUMAN_AUTHORING_NAMUWIKI_REQUIRED");
+  }
+  const reference = requiredObject(raw, "HUMAN_AUTHORING_NAMUWIKI_INVALID");
+  const status = requiredText(reference.status, "HUMAN_AUTHORING_NAMUWIKI_STATUS_REQUIRED");
+  if (status !== "linked" && status !== "not_found") throw new Error("HUMAN_AUTHORING_NAMUWIKI_STATUS_INVALID");
+  const checkedAt = requiredText(reference.checked_at, "HUMAN_AUTHORING_NAMUWIKI_CHECKED_AT_REQUIRED");
+  if (!validIsoDate(checkedAt)) throw new Error("HUMAN_AUTHORING_NAMUWIKI_CHECKED_AT_INVALID");
+  if (status === "not_found") {
+    if (reference.document_title != null || reference.url != null) throw new Error("HUMAN_AUTHORING_NAMUWIKI_NOT_FOUND_FIELDS_INVALID");
+    return Object.freeze({ status, checked_at:checkedAt });
+  }
+  const documentTitle = requiredText(reference.document_title, "HUMAN_AUTHORING_NAMUWIKI_DOCUMENT_TITLE_REQUIRED");
+  const url = canonicalNamuWikiUrl(reference.url);
+  if (!url) throw new Error("HUMAN_AUTHORING_NAMUWIKI_URL_INVALID");
+  return Object.freeze({ status, checked_at:checkedAt, document_title:documentTitle, url });
+}
+
 function normalizeBoundary(raw, prefix) {
   const year = historicalYear(raw?.[`${prefix}_year`], `${prefix}_year`);
   const monthValue = raw?.[`${prefix}_month`];
@@ -84,7 +125,7 @@ function normalizeSources(raw) {
   });
 }
 
-function normalizeHumanAuthoringRequest(raw) {
+function normalizeHumanAuthoringRequest(raw, { allowLegacyNamuWikiOmission = true } = {}) {
   const request = requiredObject(raw, "HUMAN_AUTHORING_REQUEST_OBJECT_REQUIRED");
   if (request.schema !== HUMAN_AUTHORING_SCHEMA) throw new Error("HUMAN_AUTHORING_SCHEMA_REQUIRED");
   const requestId = requiredText(request.request_id, "HUMAN_AUTHORING_REQUEST_ID_REQUIRED");
@@ -102,6 +143,7 @@ function normalizeHumanAuthoringRequest(raw) {
   const roleDisplayKo = optionalText(activity.role_display_name_ko);
   const roleCategory = optionalText(activity.role_category) || (roleLabel ? roleCategoryForRelation(relationCode) : null);
   const roleCode = optionalText(activity.role_code) || (roleLabel ? roleCodeFromLabel(roleLabel) : null);
+  const namuwiki = normalizeNamuWikiReference(request?.external_references?.namuwiki, { allowLegacyOmission:allowLegacyNamuWikiOmission });
 
   return Object.freeze({
     requestId,
@@ -132,7 +174,8 @@ function normalizeHumanAuthoringRequest(raw) {
       chronology_status:optionalText(activity.chronology_status) || "reviewed",
       notes:optionalText(activity.notes)
     }),
-    sources:Object.freeze(normalizeSources(request.sources))
+    sources:Object.freeze(normalizeSources(request.sources)),
+    external_references:Object.freeze({ namuwiki })
   });
 }
 
@@ -247,12 +290,13 @@ function activityPayload({ personId, polityId, roleId, relation, periodBasis, ac
   });
 }
 
-function buildSnapshot({ person, polity, role, relation, periodBasis, sources, activity, transport }) {
+function buildSnapshot({ person, polity, role, relation, periodBasis, sources, activity, transport, externalReferences }) {
   return Object.freeze({
     version:1,
     schema:HUMAN_AUTHORING_SCHEMA,
     semantic_version:SEMANTIC_VERSION,
     transport:transport || null,
+    external_references:externalReferences || Object.freeze({ namuwiki:null }),
     entities:Object.freeze({
       person,
       polity,
@@ -290,6 +334,7 @@ function outcome(requestId, replay, snapshot) {
     role_id:snapshot.entities.role.id,
     relationship_id:snapshot.entities.activity.id,
     source_ids:snapshot.entities.sources.map((source) => source.id),
+    external_references:snapshot.external_references || Object.freeze({ namuwiki:null }),
     result:snapshot
   });
 }
@@ -297,8 +342,8 @@ function outcome(requestId, replay, snapshot) {
 function createHumanAuthoringService({ client } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
   return Object.freeze({
-    async apply(rawRequest, { transport = null } = {}) {
-      const request = normalizeHumanAuthoringRequest(rawRequest);
+    async apply(rawRequest, { transport = null, allowLegacyNamuWikiOmission = true } = {}) {
+      const request = normalizeHumanAuthoringRequest(rawRequest, { allowLegacyNamuWikiOmission });
       const hash = manifestHash(rawRequest);
       await client.query("begin isolation level serializable");
       try {
@@ -319,7 +364,7 @@ function createHumanAuthoringService({ client } = {}) {
         const sources = await resolveOrCreateSources(client, request.requestId, request.sources);
         const payload = activityPayload({ personId:person.id, polityId:polity.id, roleId:role.id, relation, periodBasis, activity:request.activity, sources });
         const created = await createStage2NativeActivityTx(client).create(payload, { requestId:request.requestId });
-        const snapshot = buildSnapshot({ person, polity, role, relation, periodBasis, sources, activity:created, transport });
+        const snapshot = buildSnapshot({ person, polity, role, relation, periodBasis, sources, activity:created, transport, externalReferences:request.external_references });
         await client.query(`insert into atlas_v2.authoring_manifest_runs(request_id,manifest_hash,manifest_schema,person_id,relationship_id,result_snapshot) values($1,$2,$3,$4::uuid,$5::uuid,$6::jsonb)`, [request.requestId, hash, HUMAN_AUTHORING_SCHEMA, person.id, created.id, JSON.stringify(snapshot)]);
         await client.query("commit");
         return outcome(request.requestId, false, snapshot);
@@ -349,6 +394,7 @@ module.exports = Object.freeze({
   CALENDARS,
   roleCodeFromLabel,
   roleCategoryForRelation,
+  normalizeNamuWikiReference,
   normalizeHumanAuthoringRequest,
   activityPayload,
   resolveCatalogCode,

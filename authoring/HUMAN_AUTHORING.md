@@ -13,6 +13,9 @@ The operator supplies historical information, not database identifiers:
 - independent start/end certainty and calendar values
 - evidence confidence
 - at least one Source title/reference; URL is optional
+- an explicit NamuWiki Person-document outcome: `linked` with the exact document title and canonical URL, or `not_found`, plus the date checked
+
+The NamuWiki outcome is not optional metadata for a new normal Person registration. The operator must confirm the exact Person page, including same-name/disambiguation cases. Omission and `unknown` are rejected; the system never converts an unchecked state into `not_found`.
 
 The browser never asks for Activity granularity. The server derives `year`, `month`, or `day` granularity from the supplied boundary components and keeps signed historical years as historical data rather than converting them through JavaScript `Date`.
 
@@ -25,16 +28,19 @@ Allowed calendar values are the server contract values:
 
 The server performs the internal work in one PostgreSQL `SERIALIZABLE` transaction:
 
-1. exact preferred-English Person lookup; reuse one exact UUID or create the Person;
-2. exact preferred-English Polity lookup; reuse one exact UUID or create the Polity;
-3. exact active Role lookup; reuse one exact UUID or create a normalized Role when needed;
-4. exact active Relation Type and Period Basis code resolution to UUIDs;
-5. Source creation/reuse and provenance-link construction;
-6. compilation to the UUID-only, full-temporal Stage 2 Activity contract;
-7. semantic-key v2 duplicate enforcement through `atlas-stage2-native-activity-service`;
-8. immutable request ledger snapshot and commit.
+1. validate the explicit NamuWiki `linked`/`not_found` decision;
+2. exact preferred-English Person lookup; reuse one exact UUID or create the Person;
+3. exact preferred-English Polity lookup; reuse one exact UUID or create the Polity;
+4. exact active Role lookup; reuse one exact UUID or create a normalized Role when needed;
+5. exact active Relation Type and Period Basis code resolution to UUIDs;
+6. Source creation/reuse and provenance-link construction;
+7. compilation to the UUID-only, full-temporal Stage 2 Activity contract;
+8. semantic-key v2 duplicate enforcement through `atlas-stage2-native-activity-service`;
+9. immutable request ledger snapshot containing the normalized NamuWiki decision and commit.
 
-Names and controlled vocabulary codes are resolver inputs only. UUIDs remain database identity. Ambiguous exact-name matches, inactive or unknown controlled-vocabulary codes, source-less writes, historical year zero, semantic duplicates, or P9 readiness failure all fail closed.
+The NamuWiki result uses the existing `atlas_v2.authoring_manifest_runs.result_snapshot` JSONB ledger. No extra NamuWiki table or second transaction is required. The Person read service projects the latest explicit stored decision back onto the Person response.
+
+Names and controlled vocabulary codes are resolver inputs only. UUIDs remain database identity. Ambiguous exact-name matches, inactive or unknown controlled-vocabulary codes, source-less writes, historical year zero, semantic duplicates, invalid NamuWiki decisions, or P9 readiness failure all fail closed.
 
 ## Browser path
 
@@ -43,6 +49,17 @@ The Admin page obtains the existing HttpOnly administrator session and calls `/a
 `GET /api/atlas-authoring` returns active Relation Type and Period Basis codes for the human form. Both selectors are populated from that response. The UI does not hardcode the allowed Relation Type set and it does not auto-select `reign` or any other Period Basis.
 
 The browser keeps Person/Polity/Role Korean names optional so exact existing entities can be reused without redundant typing. If the English name does not resolve to an existing entity and the corresponding Korean display name is missing, the server rejects creation explicitly and the Admin UI reports that requirement.
+
+The same form requires a NamuWiki result and checked date. When `linked` is selected, exact document title and a canonical `https://namu.wiki/w/...` URL are required. When `not_found` is selected, title and URL are omitted. The successful result panel explicitly reports either `나무위키: 연결됨 — <문서명>` or `나무위키: 문서 없음`.
+
+## NamuWiki display behavior
+
+The Person list/detail API carries `external_references.namuwiki` when an explicit decision has been stored by authoring. The main Person table consumes that authoritative read data:
+
+- `linked` → the visible main Person name itself receives the existing colored/underlined `↗` NamuWiki hyperlink;
+- `not_found` → no hyperlink is rendered, while the checked status remains available in Person read data.
+
+No NamuWiki link is added to the Person detail-panel heading. Legacy reviewed mappings may remain as compatibility fallbacks for Persons registered before this contract.
 
 ## Temporal boundary policy
 
@@ -70,8 +87,10 @@ New Source rows receive server-generated UUIDs. URL/title/citation fields remain
 
 Reviewed `authoring/requests/*.json` files may also use `atlas-human-authoring/v1`. The existing `ATLAS Authoring Apply` workflow sends those requests to the same service with the already-established exact runtime SHA + authoring SHA + GitHub OIDC boundary.
 
+New or changed human-authoring manifests are structurally rejected by CI if `external_references.namuwiki` is missing or invalid. Pre-cutover immutable GitHub requests remain replayable through the OIDC fallback without being bulk rewritten solely to satisfy the newer NamuWiki field.
+
 This path exists for reviewed batch work, auditability, and deployment smoke tests. It is not the required normal registration workflow.
 
 ## PostgreSQL client discipline
 
-Authoring readiness, P9 inspection, and human catalog loading use one PostgreSQL client sequentially. They must not overlap `client.query()` calls on that client; this avoids the deprecated pg behavior that becomes unsafe in pg@9. Fresh-PostgreSQL operational parity rehearsal covers readiness, catalogs, entity reuse/create, full-temporal Activity creation, URL and URL-less Sources, idempotent replay, and semantic duplicate rejection.
+Authoring readiness, P9 inspection, and human catalog loading use one PostgreSQL client sequentially. They must not overlap `client.query()` calls on that client; this avoids the deprecated pg behavior that becomes unsafe in pg@9. Fresh-PostgreSQL operational parity rehearsal covers readiness, catalogs, entity reuse/create, full-temporal Activity creation, URL and URL-less Sources, idempotent replay, semantic duplicate rejection, and the NamuWiki authoring contract.

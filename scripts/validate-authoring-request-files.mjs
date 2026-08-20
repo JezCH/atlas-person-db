@@ -31,6 +31,48 @@ function optionalDay(value) {
   return value == null || (Number.isInteger(value) && value >= 1 && value <= 31);
 }
 
+function validIsoDate(value) {
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const parsed = new Date(`${value}T00:00:00Z`);
+  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
+}
+
+function canonicalNamuWikiUrl(value) {
+  if (!nonEmptyString(value)) return null;
+  try {
+    const url = new URL(value);
+    if (url.protocol !== 'https:' || url.hostname !== 'namu.wiki') return null;
+    if (!url.pathname.startsWith('/w/') || url.pathname.length <= 3) return null;
+    if (url.username || url.password) return null;
+    return url.href;
+  } catch {
+    return null;
+  }
+}
+
+function validateNamuWiki(file, manifest) {
+  const reference = manifest?.external_references?.namuwiki;
+  if (!reference || typeof reference !== 'object' || Array.isArray(reference)) {
+    fail(file, 'external_references.namuwiki is required for every new human-authoring Person registration');
+  }
+  if (reference.status !== 'linked' && reference.status !== 'not_found') {
+    fail(file, 'external_references.namuwiki.status must be linked or not_found');
+  }
+  if (!validIsoDate(reference.checked_at)) {
+    fail(file, 'external_references.namuwiki.checked_at must be a valid YYYY-MM-DD date');
+  }
+  if (reference.status === 'linked') {
+    if (!nonEmptyString(reference.document_title)) fail(file, 'linked NamuWiki reference requires document_title');
+    const url = canonicalNamuWikiUrl(reference.url);
+    if (!url) fail(file, 'linked NamuWiki reference requires a canonical https://namu.wiki/w/... URL');
+    return Object.freeze({ status:'linked', checked_at:reference.checked_at, document_title:reference.document_title.trim(), url });
+  }
+  if (reference.document_title != null || reference.url != null) {
+    fail(file, 'not_found NamuWiki reference must not contain document_title or url');
+  }
+  return Object.freeze({ status:'not_found', checked_at:reference.checked_at });
+}
+
 function validateBoundary(file, activity, prefix) {
   const year = activity[`${prefix}_year`];
   const month = activity[`${prefix}_month`];
@@ -65,6 +107,7 @@ function validateHuman(file, manifest) {
       fail(file, `sources[${index}].title is required for a new source`);
     }
   }
+  return validateNamuWiki(file, manifest);
 }
 
 function validateNative(file, manifest) {
@@ -114,7 +157,8 @@ for (const file of files) {
   try { manifest = JSON.parse(fs.readFileSync(file, 'utf8')); }
   catch (error) { fail(file, `invalid JSON: ${error.message}`); }
   if (!manifest || typeof manifest !== 'object' || Array.isArray(manifest)) fail(file, 'manifest root must be an object');
-  if (manifest.schema === HUMAN_SCHEMA) validateHuman(file, manifest);
+  let namuwiki = null;
+  if (manifest.schema === HUMAN_SCHEMA) namuwiki = validateHuman(file, manifest);
   else if (manifest.schema === NATIVE_SCHEMA) validateNative(file, manifest);
   else fail(file, `unsupported schema ${String(manifest.schema || '')}`);
 
@@ -126,6 +170,12 @@ for (const file of files) {
   if (key) {
     if (semanticKeys.has(key)) fail(file, `duplicate Person/Activity request also represented by ${semanticKeys.get(key)}`);
     semanticKeys.set(key, file);
+  }
+
+  if (namuwiki?.status === 'linked') {
+    console.log(`[NamuWiki] ${manifest.person.canonical_name_en}: linked — ${namuwiki.document_title}`);
+  } else if (namuwiki?.status === 'not_found') {
+    console.log(`[NamuWiki] ${manifest.person.canonical_name_en}: document not found`);
   }
 }
 
