@@ -167,7 +167,10 @@ function createHumanAuthoringHandler({ env = process.env, clientFactory = create
             manifest_path:manifestPath
           });
           try {
-            results.push(await service.apply(auth.batch.requests[index], { transport }));
+            results.push(await service.apply(auth.batch.requests[index], {
+              transport,
+              allowLegacyNamuWikiOmission:auth.method === "github_oidc"
+            }));
           } catch (error) {
             const code = String(error?.message || "HUMAN_AUTHORING_FAILED");
             failures.push(Object.freeze({
@@ -207,7 +210,10 @@ function createHumanAuthoringHandler({ env = process.env, clientFactory = create
       }
 
       const request = body?.request && typeof body.request === "object" && !Array.isArray(body.request) ? body.request : body;
-      const outcome = await service.apply(request, { transport:auth.transport });
+      const outcome = await service.apply(request, {
+        transport:auth.transport,
+        allowLegacyNamuWikiOmission:auth.method === "github_oidc"
+      });
       return json(res, 200, { ok:true, auth_method:auth.method, ...outcome });
     } catch (error) {
       const code = String(error?.message || "HUMAN_AUTHORING_FAILED");
