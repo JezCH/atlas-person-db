@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:florence-nightingale:united-kingdom:nursing-superintendent:1854-1856:v1",
+  "person": {
+    "canonical_name_en": "Florence Nightingale",
+    "display_name_ko": "플로렌스 나이팅게일"
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "general_activity",
+    "role": "Nursing superintendent",
+    "role_display_name_ko": "간호단장",
+    "start_year": 1854,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1856,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "In 1854 Sidney Herbert asked Florence Nightingale to lead a party of nurses to the military hospitals serving British forces in the Crimean War. She remained associated with that wartime nursing mission through the end of the conflict in 1856. The Activity is modeled as service to the United Kingdom, not as a political office."
+  },
+  "sources": [
+    {
+      "title": "Florence Nightingale — The National Archives",
+      "canonical_url": "https://www.nationalarchives.gov.uk/education/resources/florence-nightingale/",
+      "citation_text": "The UK National Archives records Nightingale's 1854 appointment to lead nurses to the military hospitals and places her work in the 1854-1856 Crimean War.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

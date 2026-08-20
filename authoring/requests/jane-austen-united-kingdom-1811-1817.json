@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jane-austen:united-kingdom:novelist:1811-1817:v1",
+  "person": {
+    "canonical_name_en": "Jane Austen",
+    "display_name_ko": "제인 오스틴"
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "artistic_activity",
+    "role": "Novelist",
+    "role_display_name_ko": "소설가",
+    "start_year": 1811,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1817,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sense and Sensibility appeared in 1811, beginning the publication phase of Austen's major novels, and she continued writing and publishing until her death in 1817. ATLAS models this documented publication career rather than her entire lifetime."
+  },
+  "sources": [
+    {
+      "title": "Jane Austen: names and notability — British Library",
+      "canonical_url": "https://www.bl.uk/stories/blogs/posts/jane-austen-names-and-notability",
+      "citation_text": "The British Library identifies the 1811 publication of Sense and Sensibility and discusses Austen's literary career through her death in 1817.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

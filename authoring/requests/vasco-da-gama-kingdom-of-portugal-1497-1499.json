@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:vasco-da-gama:kingdom-of-portugal:navigator-explorer:1497-1499:v1",
+  "person": {
+    "canonical_name_en": "Vasco da Gama",
+    "display_name_ko": "바스쿠 다 가마"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Portugal",
+    "display_name_ko": "포르투갈 왕국"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "general_activity",
+    "role": "Navigator and explorer",
+    "role_display_name_ko": "항해가·탐험가",
+    "start_year": 1497,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1499,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "King Manuel I entrusted Vasco da Gama with the Portuguese expedition that departed in 1497, reached India by sea and returned to Portugal in 1499. ATLAS records the first India voyage as the representative royal-service Activity rather than his entire later career."
+  },
+  "sources": [
+    {
+      "title": "Vasco da Gama: primeira viagem à Índia — Museu de Marinha / Portuguese Navy",
+      "canonical_url": "https://cultura.marinha.pt/pt/museumarinha_web/multimedia_web/Paginas/Efemeride-vasco-da-gama-primeira-viagem-india-2020.aspx",
+      "citation_text": "Portugal's Navy Museum documents da Gama's appointment and first India voyage from 1497 to 1499.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

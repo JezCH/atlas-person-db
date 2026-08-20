@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tansen:mughal-empire:court-musician:c1563-c1588:v1",
+  "person": {
+    "canonical_name_en": "Tansen",
+    "display_name_ko": "탄센"
+  },
+  "polity": {
+    "canonical_name_en": "Mughal Empire",
+    "display_name_ko": "무굴 제국"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "artistic_activity",
+    "role": "Court musician",
+    "role_display_name_ko": "궁정 음악가",
+    "start_year": 1563,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1588,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Government of India cultural documentation places Tansen's entry into Akbar's court around 1563 and preserves 1588 as a conventional death date, while biographical chronology varies across later traditions. ATLAS therefore records the Mughal court-musician phase with approximate boundaries and excludes miracle stories and other legendary accretions."
+  },
+  "sources": [
+    {
+      "title": "Tansen and his musical legacy — Government of India cultural documentation",
+      "canonical_url": "https://ignca.gov.in/Asi_data/21409.pdf",
+      "citation_text": "Government of India cultural documentation identifies Tansen as a celebrated musician of Akbar's court, places his summons to the Mughal court around 1563, and preserves the conventional late-sixteenth-century chronology.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

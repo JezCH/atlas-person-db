@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:louis-pasteur:french-republic:chemist-microbiologist:1878-1885:v1",
+  "person": {
+    "canonical_name_en": "Louis Pasteur",
+    "display_name_ko": "루이 파스퇴르"
+  },
+  "polity": {
+    "canonical_name_en": "French Republic",
+    "display_name_ko": "프랑스 공화국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Chemist and microbiologist",
+    "role_display_name_ko": "화학자·미생물학자",
+    "start_year": 1878,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1885,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Pasteur's late experimental program on microbial disease and vaccination produced a succession of vaccine studies culminating in the first human rabies treatment in 1885. ATLAS uses 1878-1885 as a representative mature microbiology and vaccination research phase in the French Republic."
+  },
+  "sources": [
+    {
+      "title": "History of the Institut Pasteur — Institut Pasteur",
+      "canonical_url": "https://www.pasteur.fr/en/institut-pasteur/history",
+      "citation_text": "Institut Pasteur's historical timeline documents Pasteur's work on infectious disease and vaccines culminating in the 1885 human rabies vaccination.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ahmad-ibn-majid:kingdom-of-hormuz:navigator-cartographer:c1462-c1498:v1",
+  "person": {
+    "canonical_name_en": "Ahmad ibn Majid",
+    "display_name_ko": "아흐마드 이븐 마지드"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Hormuz",
+    "display_name_ko": "호르무즈 왕국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Navigator and cartographer",
+    "role_display_name_ko": "항해가·지도제작자",
+    "start_year": 1462,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1498,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Ahmad ibn Majid was an Arab navigator and author associated with Julfar and the western Indian Ocean in the later fifteenth century. Library of Congress authority data gives an activity range of 1462-1498, while archaeology places Julfar within the Hormuzi political-commercial sphere in this period. ATLAS therefore uses Kingdom of Hormuz as the representative political context with approximate boundaries. It does not repeat the disputed later claim that Ibn Majid personally piloted Vasco da Gama to India."
+  },
+  "sources": [
+    {
+      "title": "Three Arab navigational texts by Aḥmad ibn Mājid — Library of Congress",
+      "canonical_url": "https://www.loc.gov/item/2008401696/",
+      "citation_text": "The Library of Congress authority record identifies Aḥmad ibn Mājid as an Arab navigator and gives an activity range of 1462-1498, with a major navigational compilation dated 1490.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Archaeology of Julfar — UCL Discovery",
+      "canonical_url": "https://discovery.ucl.ac.uk/id/eprint/10114859/",
+      "citation_text": "Archaeological scholarship on Julfar places the port within the wider Hormuzi political and commercial system in the fourteenth and fifteenth centuries.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

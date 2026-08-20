@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:pythagoras:croton:philosopher:c530-c510-bce:v1",
+  "person": {
+    "canonical_name_en": "Pythagoras",
+    "display_name_ko": "피타고라스"
+  },
+  "polity": {
+    "canonical_name_en": "Croton",
+    "display_name_ko": "크로톤"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Philosopher",
+    "role_display_name_ko": "철학자",
+    "start_year": -530,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -510,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Pythagoras is a historical early Greek thinker, but the surviving biographical tradition is heavily overlaid with later legend. Modern scholarship places his move to Croton around 530 BCE and the Pythagorean community there in the late sixth century. ATLAS therefore records only an approximate c.530-c.510 BCE Croton intellectual phase and excludes miracle stories and pseudo-precise life chronology."
+  },
+  "sources": [
+    {
+      "title": "Pythagoras — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/pythagoras/",
+      "citation_text": "The Stanford Encyclopedia of Philosophy reviews the historical evidence for Pythagoras, places his move to Croton around 530 BCE, and emphasizes the legendary accretions and chronological uncertainty in the later tradition.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

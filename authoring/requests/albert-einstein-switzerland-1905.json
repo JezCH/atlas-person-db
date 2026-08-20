@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:albert-einstein:switzerland:physicist:1905:v1",
+  "person": {
+    "canonical_name_en": "Albert Einstein",
+    "display_name_ko": "알베르트 아인슈타인"
+  },
+  "polity": {
+    "canonical_name_en": "Switzerland",
+    "display_name_ko": "스위스"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Physicist",
+    "role_display_name_ko": "물리학자",
+    "start_year": 1905,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1905,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "While employed at the Swiss patent office in Bern, Einstein produced the landmark papers of his annus mirabilis in 1905. ATLAS records this sharply documented Swiss intellectual-activity year instead of conflating his later German and American careers into one polity span."
+  },
+  "sources": [
+    {
+      "title": "Albert Einstein: Beamter im Patentamt 1900–1909 — ETH Library",
+      "canonical_url": "https://library.ethz.ch/en/collections-and-archives/platforms/einstein-online/beamter-im-patentamt-1900-1909.html",
+      "citation_text": "ETH Library documents Einstein's Bern patent-office period and his major 1905 scientific papers.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

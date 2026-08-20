@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:el-cid:lordship-of-valencia:lord:1094-1099:v1",
+  "person": {
+    "canonical_name_en": "El Cid",
+    "display_name_ko": "엘 시드"
+  },
+  "polity": {
+    "canonical_name_en": "Lordship of Valencia",
+    "display_name_ko": "발렌시아 영주령"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Lord of Valencia",
+    "role_display_name_ko": "발렌시아 영주",
+    "start_year": 1094,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1099,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The historical Rodrigo Díaz de Vivar captured Valencia in 1094 and ruled the city and its surrounding lordship independently until his death in 1099. ATLAS models only this historically attested rule and does not import later epic or legendary accretions attached to El Cid."
+  },
+  "sources": [
+    {
+      "title": "El Cid — Oxford Research Encyclopedia / Oxford Reference",
+      "canonical_url": "https://academic.oup.com/reference/62384/reference-article-abstract/555072580",
+      "citation_text": "Oxford's scholarly reference account distinguishes the historical Rodrigo Díaz from later legend and records his conquest and rule of Valencia from 1094 until his death in 1099.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

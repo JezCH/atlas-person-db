@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:marco-polo:republic-of-venice:merchant-traveler:1271-1295:v1",
+  "person": {
+    "canonical_name_en": "Marco Polo",
+    "display_name_ko": "마르코 폴로"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Venice",
+    "display_name_ko": "베네치아 공화국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Merchant and traveler",
+    "role_display_name_ko": "상인·여행가",
+    "start_year": 1271,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1295,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Marco Polo departed with his Venetian merchant family for Asia in 1271 and returned to Venice in 1295. ATLAS uses the Republic of Venice as his home political affiliation for this travel phase; active_in does not mean he physically remained within Venetian territory, and the record makes no claim that he held a formal Yuan governmental office."
+  },
+  "sources": [
+    {
+      "title": "Marco Polo — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/polo-marco/",
+      "citation_text": "Encyclopaedia Iranica identifies Marco Polo as a Venetian merchant and traveler, places his departure for Asia in 1271 and return to Venice in 1295, and discusses his long stay in the Mongol world.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

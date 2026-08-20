@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ludwig-van-beethoven:austrian-empire:composer:1804-1827:v1",
+  "person": {
+    "canonical_name_en": "Ludwig van Beethoven",
+    "display_name_ko": "루트비히 판 베토벤"
+  },
+  "polity": {
+    "canonical_name_en": "Austrian Empire",
+    "display_name_ko": "오스트리아 제국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "artistic_activity",
+    "role": "Composer",
+    "role_display_name_ko": "작곡가",
+    "start_year": 1804,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1827,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Beethoven's mature Viennese career from 1804 onward unfolded after the proclamation of the Austrian Empire and continued through his late works and death in Vienna in 1827. ATLAS starts this representative phase in 1804 so that the political context is not anachronistically labeled Habsburg Monarchy for the entire later career."
+  },
+  "sources": [
+    {
+      "title": "Chronology: Beethoven in Vienna — Beethoven-Haus Bonn",
+      "canonical_url": "https://www.beethoven.de/en/g/zeittafel-beethoven-in-wien",
+      "citation_text": "Beethoven-Haus documents Beethoven's mature and late Viennese career, including the Ninth Symphony in 1824, later works, and his death in Vienna in 1827.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

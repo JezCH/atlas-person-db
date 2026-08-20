@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:erik-the-red:norse-greenland:explorer-colonizer:c985:v1",
+  "person": {
+    "canonical_name_en": "Erik the Red",
+    "display_name_ko": "붉은 에이리크"
+  },
+  "polity": {
+    "canonical_name_en": "Norse Greenland",
+    "display_name_ko": "노르드계 그린란드"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Explorer and colonizer",
+    "role_display_name_ko": "탐험가·개척자",
+    "start_year": 985,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 985,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Later Icelandic saga traditions associate Erik the Red with organizing the Norse settlement of Greenland around 985 CE. ATLAS follows the same conservative pattern used for Leif Erikson: it records only the approximate colonization episode under Norse Greenland, marks confidence likely, and does not invent a continuous chieftainship or treat saga detail as exact chronology."
+  },
+  "sources": [
+    {
+      "title": "Leif Erikson — World History Encyclopedia",
+      "canonical_url": "https://www.worldhistory.org/Leif_Erikson/",
+      "citation_text": "The overview situates Erik the Red's establishment of the Greenland settlement around 985 CE and describes the saga-based family tradition surrounding the Greenland Norse colony.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
