@@ -2,6 +2,7 @@
   "use strict";
 
   const eraModel = window.ATLAS_PERSON_ERA_MODEL;
+  const externalReferences = window.ATLAS_PERSON_EXTERNAL_REFERENCES;
   if (!eraModel) {
     console.error("ATLAS Person table view could not initialize shared era model");
     return;
@@ -20,6 +21,56 @@
   const CONFIDENCE_LABELS = Object.freeze({ legacy_asserted: null, high: "신뢰도 높음", medium: "신뢰도 보통", low: "신뢰도 낮음", uncertain: "신뢰도 미확정" });
 
   function cleanCode(value) { return String(value || "").trim().replaceAll("_", " "); }
+
+  function safeHttpUrl(value) {
+    const raw = String(value || "").trim();
+    if (!raw) return null;
+    try {
+      const url = new URL(raw, window.location.href);
+      return url.protocol === "http:" || url.protocol === "https:" ? url.href : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function normalizeInteractiveRow(row) {
+    if (!row || row.tagName !== "BUTTON") return row;
+    const replacement = document.createElement("div");
+    for (const attribute of [...row.attributes]) {
+      if (attribute.name === "type") continue;
+      replacement.setAttribute(attribute.name, attribute.value);
+    }
+    replacement.setAttribute("role", "button");
+    replacement.setAttribute("tabindex", "0");
+    while (row.firstChild) replacement.append(row.firstChild);
+    replacement.addEventListener("keydown", (event) => {
+      if (event.target !== replacement || (event.key !== "Enter" && event.key !== " ")) return;
+      event.preventDefault();
+      replacement.click();
+    });
+    row.replaceWith(replacement);
+    return replacement;
+  }
+
+  function decorateMainNameLink(row, name) {
+    if (!row || !name || name.querySelector(":scope > a.person-main-name-link")) return;
+    const reference = externalReferences?.linkForPerson?.({ id: row.dataset.personId }, "namuwiki");
+    const href = safeHttpUrl(reference?.url);
+    if (!href) return;
+    const label = String(name.textContent || "").trim();
+    if (!label) return;
+    const link = document.createElement("a");
+    link.className = "person-main-name-link";
+    link.href = href;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.title = "나무위키에서 보기";
+    link.textContent = label;
+    link.addEventListener("click", (event) => event.stopPropagation());
+    name.textContent = "";
+    name.append(link);
+  }
+
   function makeHeader() {
     const header = document.createElement("div");
     header.className = "person-table-head";
@@ -43,6 +94,7 @@
     if (existing) return existing;
     const name = row.querySelector(":scope > strong");
     if (!name) return null;
+    decorateMainNameLink(row, name);
     const canonical = row.querySelector(":scope > .person-card-canonical");
     const identity = document.createElement("span");
     identity.className = "person-table-identity";
@@ -92,6 +144,7 @@
   }
 
   function decorateRow(row) {
+    row = normalizeInteractiveRow(row);
     if (!row || row.dataset.personTableDecorated === "true") return;
     row.dataset.personTableDecorated = "true";
     row.classList.add("person-table-row");
