@@ -2,6 +2,7 @@
   "use strict";
 
   const reader = window.ATLAS_PERSON_BROWSER_READER;
+  const externalReferences = window.ATLAS_PERSON_EXTERNAL_REFERENCES;
   const mainArea = document.querySelector(".main-area");
   const toolbar = mainArea?.querySelector(":scope > .toolbar");
   const legacyContent = mainArea?.querySelector(":scope > .content-grid");
@@ -38,6 +39,17 @@
     } catch {
       return null;
     }
+  }
+
+  function externalLinksHtml(person) {
+    const links = externalReferences?.linksForPerson?.(person) || [];
+    const safeLinks = links
+      .map((link) => ({ ...link, href: safeHttpUrl(link?.url) }))
+      .filter((link) => link.href);
+    if (!safeLinks.length) return "";
+    return `<span class="person-external-links">${safeLinks.map((link) =>
+      `<a class="person-external-link" href="${escapeHtml(link.href)}" target="_blank" rel="noopener noreferrer" data-provider="${escapeHtml(link.provider || "external")}">${escapeHtml(link.label || link.provider || "외부 링크")} ↗</a>`
+    ).join("")}</span>`;
   }
 
   function yearLabel(value) {
@@ -248,7 +260,7 @@
     const panel = document.getElementById("personMainDetail");
     if (!panel) return;
     const rawHistoricity = person?.historicity == null || String(person.historicity) === "" ? "historicity 미상" : String(person.historicity);
-    panel.innerHTML = `<div class="person-detail-head"><div><p class="eyebrow">PERSON DETAIL</p><h2>${escapeHtml(person.display_name || person.canonical_name_en || "이름 미상")}</h2><p><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span class="person-type-badge">${escapeHtml(person.person_type || "type 미상")}</span></p></div></div>
+    panel.innerHTML = `<div class="person-detail-head"><div><p class="eyebrow">PERSON DETAIL</p><div class="person-detail-name-row"><h2>${escapeHtml(person.display_name || person.canonical_name_en || "이름 미상")}</h2>${externalLinksHtml(person)}</div><p><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span class="person-type-badge">${escapeHtml(person.person_type || "type 미상")}</span></p></div></div>
       <section class="person-detail-section"><h3>이름</h3>${namesHtml(person.names)}</section>
       <section class="person-detail-section"><h3>설명</h3>${descriptionsHtml(person.descriptions)}</section>
       <section class="person-detail-section"><h3>Person 출처</h3>${sourceListHtml(person.sources)}</section>
@@ -499,6 +511,7 @@
     yearLabel,
     boundaryLabel,
     safeHttpUrl,
+    externalLinksHtml,
     openLegacyCreate,
     invokeLegacyActivityAction,
     exportLegacyExcel,
