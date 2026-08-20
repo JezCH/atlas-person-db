@@ -1,0 +1,5 @@
+{
+  "schema": "atlas-person-namuwiki-registry/v1",
+  "generated_from": "authoring/requests/*.json",
+  "persons": {}
+}
