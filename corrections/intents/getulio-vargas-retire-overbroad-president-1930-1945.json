@@ -1,0 +1,17 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:getulio-vargas:retire-overbroad-president-1930-1945:20260820:v1",
+  "review_status": "approved",
+  "release_order": 100,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "bf252ad7-95d0-4628-a24b-3dfb78a1a285"
+  },
+  "evidence": {
+    "reason": "The existing 1930-1945 Getulio Vargas Activity uses the role President across the full interval, but Brazil's Presidency historical biography states that Vargas took office as head of the Provisional Government on 3 November 1930 and became President of the Republic only under the 1934 Constitution. Retire only this overbroad Activity so it can be replaced by two historically distinct Activities without changing the correct 1951-1954 presidency.",
+    "retire_activity_id": "bf252ad7-95d0-4628-a24b-3dfb78a1a285",
+    "surviving_activity_id": "ed7c3548-8dd4-479e-94e4-c6a382264a2d",
+    "source_authoring_merge_sha": "ab6c8d4ffedcbca25d60e23bb1071c8a6a0afcc4",
+    "historical_source": "https://www.gov.br/secretariageral/pt-br/centrais-de-conteudo/biblioteca-da-pr/galeria-dos-ex-presidentes/Vargas/biografia-completa"
+  }
+}
