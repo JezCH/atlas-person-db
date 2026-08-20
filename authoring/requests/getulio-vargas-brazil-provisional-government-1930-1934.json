@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:getulio-vargas:brazil:head-provisional-government:1930-1934:v1",
+  "person": {"canonical_name_en": "Getúlio Vargas", "display_name_ko": "제툴리우 바르가스"},
+  "polity": {"canonical_name_en": "Brazil", "display_name_ko": "브라질"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "Head of Provisional Government", "role_display_name_ko": "임시정부 수반",
+    "start_year": 1930, "start_month": 11, "start_day": 3, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1934, "end_month": 7, "end_day": 20, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Getúlio Vargas took office as head of Brazil's Provisional Government on 3 November 1930. He remained head of that provisional executive until 20 July 1934, when he took the constitutional oath and entered the presidency under the 1934 constitutional order. This Activity replaces the retired overbroad record that had labeled the entire 1930-1945 interval as President."
+  },
+  "sources": [
+    {"title": "Biografia Completa — Getúlio Vargas", "canonical_url": "https://www.gov.br/secretariageral/pt-br/centrais-de-conteudo/biblioteca-da-pr/galeria-dos-ex-presidentes/Vargas/biografia-completa", "citation_text": "Brazil's Presidency biography states that Getúlio Vargas took office as head of the Provisional Government on 3 November 1930 and was subsequently elected President under the 1934 Constitution.", "source_type": "government_web"},
+    {"title": "A 2a República — Câmara dos Deputados", "canonical_url": "https://www2.camara.leg.br/a-camara/conheca/historia/a2republica.html", "citation_text": "Brazil's Chamber of Deputies records that the former head of the Provisional Government took office as President of the Republic and swore the constitutional oath on 20 July 1934.", "source_type": "government_web"}
+  ]
+}

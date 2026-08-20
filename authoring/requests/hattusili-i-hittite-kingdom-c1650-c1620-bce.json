@@ -1,0 +1,17 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:hattusili-i:hittite-kingdom:great-king:c1650-c1620-bce:v1",
+  "person": {"canonical_name_en": "Hattusili I", "display_name_ko": "하투실리 1세"},
+  "polity": {"canonical_name_en": "Hittite Kingdom", "display_name_ko": "히타이트 왕국"},
+  "activity": {
+    "relation_type": "rules", "period_basis": "reign", "role": "Great King", "role_display_name_ko": "대왕",
+    "start_year": -1650, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical",
+    "end_year": -1620, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical",
+    "confidence": "likely", "chronology_status": "reviewed",
+    "notes": "Hattusili I was an early Hittite Great King whose campaigns in northern Syria belong to the formative Old Kingdom. Absolute Hittite chronology remains reconstructed rather than directly fixed by regnal-year evidence, so ATLAS stores the conventional c. 1650-c. 1620 BCE interval with approximate boundaries and reuses the existing Hittite Kingdom polity and Great King role used for Old Kingdom rulers."
+  },
+  "sources": [
+    {"title": "New evidence for Middle Bronze Age chronology from the Syro-Anatolian frontier", "canonical_url": "https://doi.org/10.15184/aqy.2023.30", "citation_text": "The peer-reviewed Antiquity study links the destruction chronology of Zincirli to campaigns probably undertaken in the reign of Hattusili I and states that the radiocarbon evidence affirms the traditional estimate for his reign while emphasizing reconstructed absolute chronology.", "source_type": "academic_article"}
+  ]
+}
