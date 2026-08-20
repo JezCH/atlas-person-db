@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:manfred-von-richthofen:german-empire:fighter-pilot-wing-commander:1917-1918:v1",
+  "person": {
+    "canonical_name_en": "Manfred von Richthofen",
+    "display_name_ko": "만프레트 폰 리히트호펜"
+  },
+  "polity": {
+    "canonical_name_en": "German Empire",
+    "display_name_ko": "독일 제국"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Fighter pilot and wing commander",
+    "role_display_name_ko": "전투기 조종사·비행단장",
+    "start_year": 1917,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1918,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Manfred von Richthofen took command of Jagdstaffel 11 in January 1917 and later became the first commander of Jagdgeschwader 1, remaining an active fighter commander until he was killed in action on 21 April 1918. ATLAS records the well-documented 1917-1918 command phase rather than his entire military career or later popular legend surrounding the 'Red Baron'."
+  },
+  "sources": [
+    {
+      "title": "Manfred von Richthofen 'Der rote Kampfflieger' — Bundesarchiv",
+      "canonical_url": "https://www.bundesarchiv.de/themen-entdecken/online-entdecken/geschichtsgalerien/manfred-von-richthofen-der-rote-kampfflieger/",
+      "citation_text": "The German Federal Archives records Richthofen's command of Jagdstaffel 11 from January 1917, his subsequent command of Jagdgeschwader 1, and his death in combat on 21 April 1918.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Die Jagdstaffel von Richthofen vor einem Flugzeug, 1917 — Deutsches Historisches Museum",
+      "canonical_url": "https://www.dhm.de/lemo/bestand/objekt/die-jagdstaffel-von-richthofen-vor-einem-flugzeug-1917",
+      "citation_text": "The German Historical Museum identifies Richthofen as commander of a fighter squadron in January 1917 and commander of Jagdgeschwader 1 later that year, and records his 80 aerial victories during the First World War.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
