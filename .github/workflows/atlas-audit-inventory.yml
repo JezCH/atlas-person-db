@@ -150,6 +150,47 @@ jobs:
           ' p9-completeness-repair-plan.json >/dev/null
           jq '.summary' p9-completeness-repair-plan.json | tee p9-completeness-repair-summary.json
 
+      - name: Capture complete Polity reference evidence on main push
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          set -euo pipefail
+          request_oidc() {
+            curl --fail-with-body --silent --show-error \
+              -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+              "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_AUDIT_AUDIENCE}" | jq -er '.value'
+          }
+
+          endpoint="${ATLAS_AUDIT_ENDPOINT}?__atlas_audit_surface=polity-reference-audit"
+          payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" \
+            '{deployment_sha:$deployment_sha,evidence_terms:["fifth","kamakura","tokugawa","toyotomi"]}')"
+          fetched=false
+          for attempt in $(seq 1 12); do
+            oidc_token="$(request_oidc)"
+            status="$(curl --silent --show-error --output polity-reference-audit-response.json --write-out '%{http_code}' --request POST \
+              -H 'content-type: application/json' -H "authorization: Bearer ${oidc_token}" --data "$payload" "$endpoint")"
+            if [[ "$status" == "200" ]]; then
+              jq -e '.ok == true and .marker == "ATLAS_POLITY_REFERENCE_AUDIT_V1" and .read_only == true and .committed == false and .complete == true and (.reference_count == (.reference_catalog | length)) and (.polity_count == (.polities | length)) and (.external_orphan_count == ([.polities[] | select(.is_external_orphan == true)] | length))' polity-reference-audit-response.json >/dev/null
+              fetched=true
+              break
+            fi
+            code="$(jq -r '.code // "UNKNOWN"' polity-reference-audit-response.json 2>/dev/null || printf 'UNKNOWN')"
+            if [[ "$status" == "404" || ( "$status" == "409" && "$code" == "DEPLOYMENT_SHA_MISMATCH" ) ]]; then
+              echo "Production Polity audit route for ${GITHUB_SHA} is not live yet (attempt ${attempt}/12); retrying."
+              sleep 10
+              continue
+            fi
+            cat polity-reference-audit-response.json >&2 || true
+            echo "Polity reference audit failed: HTTP ${status}, code ${code}" >&2
+            exit 1
+          done
+          [[ "$fetched" == "true" ]] || { echo "Production Polity audit did not reach ${GITHUB_SHA} within retry window" >&2; exit 1; }
+
+          jq '{marker,read_only,committed,deployment_sha,complete,reference_model,reference_count,polity_count,external_orphan_count}' polity-reference-audit-response.json | tee polity-reference-audit-summary.json
+          jq '.reference_catalog' polity-reference-audit-response.json > polity-reference-catalog.push.json
+          jq '[.polities[] | select(.is_external_orphan == true)]' polity-reference-audit-response.json > polity-external-orphans.push.json
+          jq '[.polities[] | select(((.canonical_key // "") + " " + ([.names[]?.name] | join(" "))) | ascii_downcase | test("fifth|kamakura|tokugawa|toyotomi"))]' polity-reference-audit-response.json | tee polity-reference-candidates.push.json
+
       - name: Upload read-only inventory evidence
         uses: actions/upload-artifact@v4
         with:
@@ -161,6 +202,11 @@ jobs:
             baseline-identity-catalogs.json
             polity-reference-catalog.json
             polity-external-orphans.json
+            polity-reference-audit-response.json
+            polity-reference-audit-summary.json
+            polity-reference-catalog.push.json
+            polity-external-orphans.push.json
+            polity-reference-candidates.push.json
             p9-completeness-repair-plan.json
             p9-completeness-repair-summary.json
             docs/audits/STAGE2_R0_NORMALIZED_INVENTORY_REQUEST.json
