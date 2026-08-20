@@ -28,7 +28,7 @@ jobs:
           authoring_only=false
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
             git diff --name-only --diff-filter=ACMRTUXB "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}" > /tmp/atlas-changed.txt
-            if [[ -s /tmp/atlas-changed.txt ]] && ! grep -Evq '^authoring/requests/[A-Za-z0-9._-]+\.json$' /tmp/atlas-changed.txt; then
+            if [[ -s /tmp/atlas-changed.txt ]] && ! grep -Evq '^(authoring/requests/[A-Za-z0-9._-]+\.json|authoring/person-namuwiki-registry\.json)$' /tmp/atlas-changed.txt; then
               authoring_only=true
             fi
           fi
@@ -47,13 +47,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Validate changed authoring manifests
+      - name: Validate changed authoring manifests and NamuWiki registry
         shell: bash
         run: |
           set -euo pipefail
           mapfile -t manifests < <(git diff --name-only --diff-filter=ACMRTUXB "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}" -- 'authoring/requests/*.json')
           [[ "${#manifests[@]}" -gt 0 ]] || { echo 'No authoring manifests found in authoring-only PR.' >&2; exit 1; }
           node scripts/validate-authoring-request-files.mjs "${manifests[@]}"
+          node scripts/sync-person-namuwiki-registry.mjs --check
 
   full_test:
     needs: classify
