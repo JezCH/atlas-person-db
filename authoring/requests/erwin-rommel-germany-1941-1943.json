@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:erwin-rommel:germany:commander-in-north-africa:1941-1943:v1",
+  "person": {
+    "canonical_name_en": "Erwin Rommel",
+    "display_name_ko": "에르빈 롬멜"
+  },
+  "polity": {
+    "canonical_name_en": "Germany",
+    "display_name_ko": "독일"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Commander of German forces in North Africa",
+    "role_display_name_ko": "북아프리카 독일군 지휘관",
+    "start_year": 1941,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1943,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Erwin Rommel arrived in North Africa with the German intervention in February 1941 and commanded successive German and German-Italian formations there until March 1943. The organizational command changed from the Deutsches Afrikakorps to larger Panzergruppe/Panzerarmee and Heeresgruppe formations, so ATLAS uses the historically accurate umbrella role 'Commander of German forces in North Africa' rather than pretending he held one unchanged unit command throughout 1941-1943. The Activity is attached to the existing higher-order Germany polity; 'Nazi Germany' is a regime-period label, not a separate territorial polity in the ATLAS model."
+  },
+  "sources": [
+    {
+      "title": "Der Afrikafeldzug — Bundesarchiv",
+      "canonical_url": "https://www.bundesarchiv.de/im-archiv-recherchieren/archivgut-recherchieren/nach-themen/der-afrikafeldzug/",
+      "citation_text": "The German Federal Archives records the arrival of the German Afrika Korps under General Erwin Rommel in February 1941 and traces the subsequent North African command formations through 1943.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Verbände und Truppen der deutschen Wehrmacht und Waffen-SS 1939-1945, Band 14 — Bundesarchiv",
+      "canonical_url": "https://www.bundesarchiv.de/assets/bundesarchiv/de/Downloads/Tessin/Bd_14_ocr.pdf",
+      "citation_text": "The Bundesarchiv-hosted Tessin reference lists Rommel as commander of Heeresgruppe Afrika from 23 February 1943 until Hans-Jürgen von Arnim took over on 10 March 1943, confirming the endpoint of Rommel's North African command period.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
