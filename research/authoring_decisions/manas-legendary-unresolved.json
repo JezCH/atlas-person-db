@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-person-authoring-decision/v1",
+  "review_status": "reviewed_blocked",
+  "subject": "Manas",
+  "user_supplied_context": "Kyrgyz Civilization",
+  "person": {
+    "canonical_name_en": "Manas",
+    "display_name_ko": "마나스",
+    "person_type": "legendary",
+    "historicity": "legendary"
+  },
+  "civilization_label_resolution": {
+    "label": "Kyrgyz Civilization",
+    "classification": "game_mod_civilization_label",
+    "use_as_atlas_polity": false,
+    "reason": "TheColdHands' Civilization VI mod explicitly uses 'Kyrgyz Civilization' as its game civilization and Manas as its leader. This is not by itself evidence for a historical polity of that exact identity."
+  },
+  "narrative_activity": {
+    "historical_runtime_ready": false,
+    "relation_type_candidate": "rules",
+    "role_candidate": "Khan",
+    "polity_identity": null,
+    "polity_resolution": "not_yet_source_backed",
+    "chronology_status": "unresolved",
+    "start_year": null,
+    "end_year": null,
+    "do_not_fabricate_temporal_boundaries": true,
+    "notes": "UNESCO treats Manas as the central hero of the Kyrgyz oral epic tradition, whose trilogy narrates the unification of scattered tribes into one nation. A peer-reviewed study of epic historicism states that, in the epic storyline, Manas is elected khan, but proposes only a possible early-ninth-century historical prototype rather than an established identification. Scholarship on the epic's formation treats its chronology and historicism as debated and layered across long periods. ATLAS therefore records Manas as a legendary Person decision, not as a verified historical khan with an invented reign interval."
+  },
+  "authoring_contract_blocker": {
+    "current_schema": "atlas-human-authoring/v1",
+    "problem": "Current Human Authoring requires integer start and end historical years for every Activity.",
+    "model_invariant": "Unknown historical boundaries must not be replaced with fake years merely to satisfy transitional runtime constraints.",
+    "required_resolution": "Support Person creation and/or unresolved Activity authoring without fabricated temporal endpoints before compiling Manas into Production."
+  },
+  "sources": [
+    {
+      "title": "Kyrgyz epic trilogy: Manas, Semetey, Seytek — UNESCO Intangible Cultural Heritage",
+      "canonical_url": "https://ich.unesco.org/en/RL/kyrgyz-epic-trilogy-manas-semetey-seytek-00876",
+      "use": "Establishes Manas as the central figure of a Kyrgyz oral epic tradition and the narrative theme of unifying scattered tribes."
+    },
+    {
+      "title": "Kyrgyz-Chinese Ties in the Tang Era and Their Reflection in the Epic of Manas — Izvestiya of Altai State University",
+      "canonical_url": "https://izvestiya.asu.ru/article/view/%282022%292-08",
+      "use": "States that in the epic storyline Manas is elected khan; the proposed early-ninth-century prototype is explicitly a scholarly hypothesis, not a secure historical identification."
+    },
+    {
+      "title": "From Folk Epics to Epic Monuments: Studying and Publishing Epic Lore in the Soviet Union (1920s–1960s) — Journal of Central Asian History",
+      "canonical_url": "https://brill.com/view/journals/jcah/1/1/article-p100_3.xml",
+      "use": "Documents scholarly debate over layers of the epic and notes that portrayals of Manas as khan were interpreted by Auezov as later transformations of an older clan-leader stratum."
+    },
+    {
+      "title": "TheColdHands' Kyrgyz — Steam Workshop",
+      "canonical_url": "https://steamcommunity.com/workshop/filedetails/?id=3303174123",
+      "use": "Confirms the user-supplied game context: Civilization 'Kyrgyz Civilization', Leader 'Manas'."
+    }
+  ]
+}
