@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:julio-argentino-roca:argentina:president:1880-1886:v1",
+  "person": {
+    "canonical_name_en": "Julio Argentino Roca",
+    "display_name_ko": "훌리오 아르헨티노 로카"
+  },
+  "polity": {
+    "canonical_name_en": "Argentina",
+    "display_name_ko": "아르헨티나"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1880,
+    "start_month": 10,
+    "start_day": 12,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1886,
+    "end_month": 10,
+    "end_day": 12,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Julio Argentino Roca served his first, separately bounded presidential term from 12 October 1880 to 12 October 1886. ATLAS keeps this term distinct from his later 1898–1904 presidency because he was out of office between the two terms."
+  },
+  "sources": [
+    {
+      "title": "Julio Argentino Roca-I (1880 - 1886) — Casa Rosada",
+      "canonical_url": "https://www.casarosada.gob.ar/nuestro-pais/presidentes/93-nuestro-pais/presidentes/47118-julio-argentino-roca-i-1880-1886",
+      "citation_text": "Argentina's Casa Rosada records Julio Argentino Roca's first presidential term as 12 October 1880 to 12 October 1886.",
+      "source_type": "government_web"
+    }
+  ]
+}

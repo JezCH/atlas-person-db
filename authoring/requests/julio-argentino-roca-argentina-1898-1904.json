@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:julio-argentino-roca:argentina:president:1898-1904:v1",
+  "person": {
+    "canonical_name_en": "Julio Argentino Roca",
+    "display_name_ko": "훌리오 아르헨티노 로카"
+  },
+  "polity": {
+    "canonical_name_en": "Argentina",
+    "display_name_ko": "아르헨티나"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1898,
+    "start_month": 10,
+    "start_day": 12,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1904,
+    "end_month": 10,
+    "end_day": 12,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Julio Argentino Roca returned to the presidency for a second distinct term from 12 October 1898 to 12 October 1904. The intervening out-of-office interval requires a separate ATLAS Activity rather than one continuous span."
+  },
+  "sources": [
+    {
+      "title": "Julio Argentino Roca-II (1898 - 1904) — Casa Rosada",
+      "canonical_url": "https://www.casarosada.gob.ar/nuestro-pais/presidentes/93-nuestro-pais/presidentes/47113-julio-argentino-roca-1898-1904",
+      "citation_text": "Argentina's Casa Rosada records Julio Argentino Roca's second presidential term as 12 October 1898 to 12 October 1904.",
+      "source_type": "government_web"
+    }
+  ]
+}

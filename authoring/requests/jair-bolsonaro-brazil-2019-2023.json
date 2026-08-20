@@ -1,0 +1,17 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jair-bolsonaro:brazil:president:2019-2022:v1",
+  "person": {"canonical_name_en": "Jair Bolsonaro", "display_name_ko": "자이르 보우소나루"},
+  "polity": {"canonical_name_en": "Brazil", "display_name_ko": "브라질"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령",
+    "start_year": 2019, "start_month": 1, "start_day": 1, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 2022, "end_month": 12, "end_day": 31, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Jair Bolsonaro served as President of the Federative Republic of Brazil from 1 January 2019 through 31 December 2022. He is a former, not current, officeholder, so the ATLAS current-officeholder exclusion does not apply."
+  },
+  "sources": [
+    {"title": "Jair Bolsonaro", "canonical_url": "https://www.biblioteca.presidencia.gov.br/presidencia/ex-presidentes/bolsonaro/Bolsonaro", "citation_text": "Brazil’s Presidential Library lists Jair Bolsonaro’s government period as 1 January 2019 to 31 December 2022.", "source_type": "web_bibliographic_reference"}
+  ]
+}

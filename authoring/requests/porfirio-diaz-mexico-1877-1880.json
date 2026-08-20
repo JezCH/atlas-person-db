@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:porfirio-diaz:mexico:president:1877-1880:v1",
+  "person": {"canonical_name_en": "Porfirio Díaz", "display_name_ko": "포르피리오 디아스"},
+  "polity": {"canonical_name_en": "Mexico", "display_name_ko": "멕시코"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령",
+    "start_year": 1877, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical",
+    "end_year": 1880, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Porfirio Díaz served as President of Mexico during this continuous presidential interval. ATLAS splits his presidency because Manuel González held the presidency between 1880 and 1884; later consecutive Díaz reelections remain one continuous Activity through 1911."
+  },
+  "sources": [
+    {"title": "IV. Porfiriato", "canonical_url": "https://caracol.inah.gob.mx/index.php/salas/porfiriato", "citation_text": "Mexico’s INAH describes the Porfiriato as Díaz’s governments of 1877–1880 and 1884–1911.", "source_type": "web_bibliographic_reference"},
+    {"title": "Rumbo a un nuevo siglo…", "canonical_url": "https://nuevaescuelamexicana.sep.gob.mx/contenido/coleccion/rumbo-a-un-nuevo-siglo/", "citation_text": "Mexico’s Secretaría de Educación Pública chronology gives Díaz’s first constitutional government as 1877–1880, Manuel González’s administration as 1880–1884, and Díaz’s subsequent rule from 1884 to 1911.", "source_type": "web_bibliographic_reference"}
+  ]
+}

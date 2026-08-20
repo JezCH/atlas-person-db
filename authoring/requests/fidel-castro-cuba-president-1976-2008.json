@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:fidel-castro:cuba:president-council-of-state:1976-2008:v1",
+  "person": {"canonical_name_en": "Fidel Castro", "display_name_ko": "피델 카스트로"},
+  "polity": {"canonical_name_en": "Cuba", "display_name_ko": "쿠바"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "President of the Council of State", "role_display_name_ko": "국가평의회 의장",
+    "start_year": 1976, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical",
+    "end_year": 2008, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Under Cuba’s 1976 constitutional order, the National Assembly elected Fidel Castro to the presidency of the Council of State in December 1976. He provisionally transferred presidential functions to Raúl Castro in July 2006 because of illness but remained the officeholder until declining nomination for a new term in 2008; ATLAS therefore preserves the formal 1976–2008 tenure."
+  },
+  "sources": [
+    {"title": "Mensaje del Comandante en Jefe", "canonical_url": "https://www.granma.cu/granmad/secciones/ref-fidel/art11.html", "citation_text": "Fidel Castro’s 2008 message states that the first National Assembly constituted on 2 December 1976 elected the Council of State and its presidency, and discusses his provisional transfer of presidential duties in 2006 before he declined a new term in 2008.", "source_type": "web_bibliographic_reference"},
+    {"title": "The Republic of Cuba: Chronology of Presidents", "canonical_url": "https://pdba.georgetown.edu/Executive/Cuba/pres.html", "citation_text": "Georgetown University’s Political Database of the Americas lists Fidel Castro as President of the Council of State from 1976 to 2008.", "source_type": "web_bibliographic_reference"}
+  ]
+}

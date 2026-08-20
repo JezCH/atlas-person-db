@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:fidel-castro:cuba:prime-minister:1959-1976:v1",
+  "person": {"canonical_name_en": "Fidel Castro", "display_name_ko": "피델 카스트로"},
+  "polity": {"canonical_name_en": "Cuba", "display_name_ko": "쿠바"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "Prime Minister", "role_display_name_ko": "총리",
+    "start_year": 1959, "start_month": null, "start_day": null, "start_certainty": "exact", "start_calendar": "unspecified_historical",
+    "end_year": 1976, "end_month": null, "end_day": null, "end_certainty": "exact", "end_calendar": "unspecified_historical",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Fidel Castro became Prime Minister of Cuba in February 1959 and held the office until the 1976 constitutional reorganization abolished the premiership. This Activity records the governmental office rather than treating the broader revolutionary movement as a separate polity."
+  },
+  "sources": [
+    {"title": "Fidel asume el cargo de Primer Ministro (primera parte)", "canonical_url": "https://www.granma.cu/granmad/secciones/fidel_en_1959/art-026.html", "citation_text": "Granma’s historical account describes Fidel Castro assuming the office of Prime Minister in 1959.", "source_type": "web_bibliographic_reference"},
+    {"title": "Mensaje del Comandante en Jefe", "canonical_url": "https://www.granma.cu/granmad/secciones/ref-fidel/art11.html", "citation_text": "In his 2008 message, Fidel Castro stated that before the 1976 constitutional order he had served as Prime Minister for nearly eighteen years.", "source_type": "web_bibliographic_reference"}
+  ]
+}
