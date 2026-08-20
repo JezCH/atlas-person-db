@@ -1,0 +1,17 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jorge-montt:chile:president-government-junta:1891:v1",
+  "person": {"canonical_name_en": "Jorge Montt", "display_name_ko": "호르헤 몬트"},
+  "polity": {"canonical_name_en": "Chile", "display_name_ko": "칠레"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "President of the Government Junta", "role_display_name_ko": "정부평의회 의장",
+    "start_year": 1891, "start_month": 8, "start_day": 31, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1891, "end_month": 12, "end_day": 26, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "After the defeat of José Manuel Balmaceda's forces, Jorge Montt served as President of Chile's Government Junta in Santiago from 31 August to 26 December 1891. This is modeled separately from his constitutional presidency beginning on 26 December 1891 because the offices and governmental basis were distinct."
+  },
+  "sources": [
+    {"title": "Reseña Biográfica Jorge Montt Álvarez — Biblioteca del Congreso Nacional de Chile", "canonical_url": "https://www.bcn.cl/historiapolitica/resenas_biograficas/wiki/Jorge_Montt_%C3%81lvarez", "citation_text": "Chile's Biblioteca del Congreso Nacional records Jorge Montt as President of the Government Junta from 31 August to 26 December 1891 and President of the Republic from 26 December 1891 to 18 September 1896.", "source_type": "government_web"}
+  ]
+}

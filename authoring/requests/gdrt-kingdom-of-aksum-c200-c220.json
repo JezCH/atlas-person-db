@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gdrt:kingdom-of-aksum:king:c200-c220:v1",
+  "person": {"canonical_name_en": "GDRT", "display_name_ko": "가다라트"},
+  "polity": {"canonical_name_en": "Kingdom of Aksum", "display_name_ko": "악숨 왕국"},
+  "activity": {
+    "relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕",
+    "start_year": 200, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical",
+    "end_year": 220, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical",
+    "confidence": "likely", "chronology_status": "reviewed",
+    "notes": "GDRT is attested in South Arabian inscriptions as an Aksumite ruler active around the beginning of the third century CE. A modern epigraphic chronology places Gadara (GDR/GDRT) approximately in AD 200-220. Phillipson notes that identifying the South-Arabian GDRT with the locally attested GDR, 'king of Aksum' in RIE 180, is tempting but not wholly convincing. ATLAS therefore keeps the inscriptional form GDRT as the canonical name, stores the reconstructed reign boundaries as approximate, and marks the overall assertion likely rather than overstating the GDR/GDRT identification."
+  },
+  "sources": [
+    {"title": "Aksumite kingship and politics — Foundations of an African Civilisation", "canonical_url": "https://www.cambridge.org/core/books/abs/foundations-of-an-african-civilisation/aksumite-kingship-and-politics/E07D089C61EC0922633A74B11AA505FA", "citation_text": "David Phillipson identifies GDR as the earliest incontrovertible and dateable locally attested king of Aksum and notes that equating him with the South-Arabian GDRT of roughly the same period is plausible but not wholly convincing.", "source_type": "academic_book"},
+    {"title": "Recueil des Inscriptions de l'Éthiopie des périodes pré-axoumite et axoumite — Académie des Inscriptions et Belles Lettres", "canonical_url": "https://aibl.fr/collections/recueil-des-inscriptions-de-lethiopie-des-periodes-pre-axoumite-et-axoumite-t-i-ii-documents-et-planches/", "citation_text": "The Académie des Inscriptions et Belles Lettres notes that GDRT appears as an Aksumite king in South Arabian inscriptions around the beginning of the third century and discusses the possible identification with GDR of RIE 180.", "source_type": "academic_web"},
+    {"title": "Die Throninschrift von Adulis und das Römische Reich am Roten Meer zu Beginn des dritten Jahrhunderts n. Chr.", "canonical_url": "https://www.jstor.org/stable/26603888", "citation_text": "Michael Alexander Speidel's ZPE study places Gadara (GDR/GDRT) approximately in AD 200-220 within the early third-century Aksumite-South Arabian chronology.", "source_type": "academic_article"}
+  ]
+}

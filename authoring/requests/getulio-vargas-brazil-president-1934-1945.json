@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:getulio-vargas:brazil:president:1934-1945:v1",
+  "person": {"canonical_name_en": "Getúlio Vargas", "display_name_ko": "제툴리우 바르가스"},
+  "polity": {"canonical_name_en": "Brazil", "display_name_ko": "브라질"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령",
+    "start_year": 1934, "start_month": 7, "start_day": 20, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1945, "end_month": 10, "end_day": 29, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Getúlio Vargas took the constitutional oath as President of the Republic on 20 July 1934 and remained Brazil's national president until his deposition on 29 October 1945. The authoritarian Estado Novo began in November 1937, but Vargas remained the presidential officeholder without an out-of-office interval; ATLAS therefore preserves one continuous President Activity while recording the regime change in notes rather than mislabeling the preceding 1930-1934 Provisional Government as a presidency."
+  },
+  "sources": [
+    {"title": "1ª República / Constituent chronology — Câmara dos Deputados", "canonical_url": "https://www2.camara.leg.br/a-camara/conheca/historia/Ex_presidentesCD_Republica/republica1.html", "citation_text": "The Chamber of Deputies records Vargas's indirect election on 17 July 1934 and the constitutional presidential period beginning 20 July 1934.", "source_type": "government_web"},
+    {"title": "Biografia Completa — Getúlio Vargas", "canonical_url": "https://www.gov.br/secretariageral/pt-br/centrais-de-conteudo/biblioteca-da-pr/galeria-dos-ex-presidentes/Vargas/biografia-completa", "citation_text": "Brazil's Presidency biography states that Vargas became President under the 1934 Constitution, established the Estado Novo in 1937, and governed until his deposition on 29 October 1945.", "source_type": "government_web"}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:alara:kingdom-of-kush:king:c780-c760-bce:v1",
+  "person": {"canonical_name_en": "Alara", "display_name_ko": "알라라"},
+  "polity": {"canonical_name_en": "Kingdom of Kush", "display_name_ko": "쿠시 왕국"},
+  "activity": {
+    "relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕",
+    "start_year": -780, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical",
+    "end_year": -760, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical",
+    "confidence": "likely", "chronology_status": "reviewed",
+    "notes": "Alara is the earliest named ruler in the later Kushite dynastic tradition and predates Kashta. Modern scholarship conventionally places him around 780-760 BCE, but both the absolute chronology and the exact development from local chieftainship to Kushite kingship are reconstructed from later royal evidence. ATLAS therefore uses King as the conventional political role while marking both boundaries approximate and the assertion confidence likely."
+  },
+  "sources": [
+    {"title": "The Kingdom of Kush: Handbook of the Napatan-Meroitic Civilization", "canonical_url": "https://brill.com/display/book/9789004294011/9789004294011_webready_content_text.pdf", "citation_text": "László Török's scholarly handbook treats Alara as an early ruler in the emergence of Kush and gives the traditional chronology around 780-760 BCE while discussing the later royal tradition surrounding him.", "source_type": "academic_book"},
+    {"title": "Nubia: the Napatan Period — UCL Digital Egypt", "canonical_url": "https://www.ucl.ac.uk/museums-static/digitalegypt/nubia/napatan.html", "citation_text": "UCL Digital Egypt identifies Alara and Kashta as the first post-New Kingdom Nubian leaders known to bear elements of Egyptian royal titulary, supporting Alara's placement at the beginning of the documented Napatan royal sequence.", "source_type": "academic_web"}
+  ]
+}

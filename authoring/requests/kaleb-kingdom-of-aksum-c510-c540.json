@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:kaleb:kingdom-of-aksum:king:c510-c540:v1",
+  "person": {"canonical_name_en": "Kaleb", "display_name_ko": "칼레브"},
+  "polity": {"canonical_name_en": "Kingdom of Aksum", "display_name_ko": "악숨 왕국"},
+  "activity": {
+    "relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕",
+    "start_year": 510, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical",
+    "end_year": 540, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Kaleb was king of Aksum in the early sixth century and is securely attested by Aksumite coinage and the account associated with Cosmas Indicopleustes. The British Museum gives his reign approximately as AD 510-540, so ATLAS preserves both boundaries as approximate rather than manufacturing exact accession or death dates."
+  },
+  "sources": [
+    {"title": "Far from home: travelling the Silk Roads — British Museum", "canonical_url": "https://www.britishmuseum.org/blog/far-home-travelling-silk-roads", "citation_text": "The British Museum identifies Kaleb as king of Aksum, gives his reign as about AD 510-540, and discusses his preparations for the campaign against Himyar.", "source_type": "museum_web"},
+    {"title": "Gold coin of Kaleb — British Museum", "canonical_url": "https://www.britishmuseum.org/collection/object/C_1910-1207-1", "citation_text": "The British Museum coin record identifies Kaleb as the ruler and dates his Aksumite gold coin approximately to AD 500-525.", "source_type": "museum_collection"}
+  ]
+}

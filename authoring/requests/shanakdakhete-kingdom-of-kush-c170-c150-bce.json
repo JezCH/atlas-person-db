@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:shanakdakhete:kingdom-of-kush:queen:c170-c150-bce:v1",
+  "person": {"canonical_name_en": "Shanakdakhete", "display_name_ko": "샤나크다케테"},
+  "polity": {"canonical_name_en": "Kingdom of Kush", "display_name_ko": "쿠시 왕국"},
+  "activity": {
+    "relation_type": "rules", "period_basis": "reign", "role": "Queen", "role_display_name_ko": "여왕",
+    "start_year": -170, "start_month": null, "start_day": null, "start_certainty": "approximate", "start_calendar": "unspecified_historical",
+    "end_year": -150, "end_month": null, "end_day": null, "end_certainty": "approximate", "end_calendar": "unspecified_historical",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Shanakdakhete was a Kushite queen and ruler at Meroë. The British Museum dates her reign approximately to 170-150 BCE and describes her as the first female ruler. ATLAS uses Queen rather than automatically assigning the title Kandake, because the cited museum evidence securely supports her royal status without requiring that additional title claim."
+  },
+  "sources": [
+    {"title": "Temple relief EA719 — British Museum", "canonical_url": "https://www.britishmuseum.org/collection/object/Y_EA719", "citation_text": "The British Museum identifies the relief with Queen Shanakdakhete, calls her the first female ruler, and dates her reign approximately to 170-150 BC.", "source_type": "museum_collection"},
+    {"title": "Shanakdakhete — British Museum Collections Online", "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG55841", "citation_text": "The British Museum authority record classifies Shanakdakhete as an individual ruler of Nubian royal/imperial status in the second century BC.", "source_type": "museum_collection"}
+  ]
+}
