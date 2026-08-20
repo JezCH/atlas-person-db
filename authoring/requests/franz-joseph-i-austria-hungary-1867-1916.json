@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:franz-joseph-i:austria-hungary:emperor-and-king:1867-1916:v1",
+  "person": {
+    "canonical_name_en": "Franz Joseph I",
+    "display_name_ko": "프란츠 요제프 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Austria-Hungary",
+    "display_name_ko": "오스트리아-헝가리"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor and King",
+    "role_display_name_ko": "황제·국왕",
+    "start_year": 1867,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1916,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Austro-Hungarian Compromise of 1867 created the Dual Monarchy, and Franz Joseph was crowned King of Hungary in Budapest on 8 June 1867 while remaining Emperor of Austria. He continued as the common monarch until his death in 1916. ATLAS therefore records a distinct Austria-Hungary sovereign Activity from 1867 to 1916 instead of extending the Austrian Empire polity unchanged through the constitutional reorganization."
+  },
+  "sources": [
+    {
+      "title": "Franz Joseph I — Die Welt der Habsburger",
+      "canonical_url": "https://www.habsburger.net/en/persons/habsburg-emperor/franz-joseph-i",
+      "citation_text": "The Habsburg history portal gives Franz Joseph's overall reign as 1848-1916 and identifies the 1867 Compromise with Hungary as the creation of the Dual Monarchy.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Austro-Hungarian Dual Monarchy: the coronation of the Hungarian royal couple — Die Welt der Habsburger",
+      "canonical_url": "https://www.habsburger.net/en/chapter/austro-hungarian-dual-monarchy-coronation-hungarian-royal-couple",
+      "citation_text": "The Habsburg history portal states that the 1867 Compromise created the Austro-Hungarian Dual Monarchy and records Franz Joseph's coronation as King of Hungary in Budapest in 1867.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
