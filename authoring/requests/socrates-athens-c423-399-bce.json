@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:socrates:athens:philosopher:c423-399-bce:v1",
+  "person": {
+    "canonical_name_en": "Socrates",
+    "display_name_ko": "소크라테스"
+  },
+  "polity": {
+    "canonical_name_en": "Athens",
+    "display_name_ko": "아테네"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Philosopher",
+    "role_display_name_ko": "철학자",
+    "start_year": -423,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -399,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Socrates is a securely historical Athenian philosopher, but he left no writings and the chronology of his philosophical career cannot be reconstructed precisely. Aristophanes' Clouds, produced in 423 BCE, is the earliest surviving contemporary source and shows Socrates already recognizable as an intellectual figure in Athens; his trial and execution occurred in 399 BCE. ATLAS therefore uses c.423-399 BCE as a conservative representative intellectual-activity window rather than his lifespan or a fabricated career start date."
+  },
+  "sources": [
+    {
+      "title": "Socrates — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/socrates/",
+      "citation_text": "The Stanford Encyclopedia of Philosophy identifies Socrates as a historical Athenian philosopher, dates Aristophanes' Clouds to 423 BCE as the earliest surviving contemporary source depicting him, and documents his trial and execution in 399 BCE.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
