@@ -1,8 +1,7 @@
 (() => {
   "use strict";
 
-  const REGISTRY_URL = "./authoring/person-namuwiki-registry.json";
-  const REGISTRY_SCHEMA = "atlas-person-namuwiki-registry/v1";
+  const READ_ENDPOINT = "/api/atlas-person-read";
   const referencesByPersonId = Object.freeze({
     "da0303c2-1faf-40b8-9dc2-1325b77488d7": Object.freeze({
       namuwiki: Object.freeze({
@@ -21,8 +20,8 @@
     })
   });
 
-  let referencesByCanonicalName = Object.freeze({});
-  let registryLoaded = false;
+  let liveReferencesByPersonId = Object.freeze({});
+  let liveReferencesLoaded = false;
 
   function safeHttpUrl(value) {
     const raw = String(value || "").trim();
@@ -35,14 +34,14 @@
     }
   }
 
-  function normalizeRegistryEntry(raw) {
+  function normalizeNamuWiki(raw) {
     if (!raw || typeof raw !== "object" || Array.isArray(raw)) return null;
     const status = String(raw.status || "").trim();
     if (status !== "linked" && status !== "not_found") return null;
     const checkedAt = String(raw.checked_at || "").trim() || null;
     if (status === "not_found") {
       return Object.freeze({
-        namuwiki: Object.freeze({ status, checked_at: checkedAt }),
+        namuwiki: Object.freeze({ status, checked_at:checkedAt }),
         links: Object.freeze([])
       });
     }
@@ -50,16 +49,20 @@
     const documentTitle = String(raw.document_title || "").trim();
     if (!url || !documentTitle) return null;
     return Object.freeze({
-      namuwiki: Object.freeze({ status, checked_at: checkedAt, document_title: documentTitle, url }),
-      links: Object.freeze([Object.freeze({ provider: "namuwiki", label: "나무위키", url })])
+      namuwiki: Object.freeze({ status, checked_at:checkedAt, document_title:documentTitle, url }),
+      links: Object.freeze([Object.freeze({ provider:"namuwiki", label:"나무위키", url })])
     });
   }
 
+  function inlineEntry(person) {
+    return normalizeNamuWiki(person?.external_references?.namuwiki);
+  }
+
   function entryForPerson(person) {
-    const canonicalName = String(person?.canonical_name_en || "").trim();
-    if (canonicalName && referencesByCanonicalName[canonicalName]) return referencesByCanonicalName[canonicalName];
+    const inline = inlineEntry(person);
+    if (inline) return inline;
     const id = String(person?.id || "").trim().toLowerCase();
-    return referencesByPersonId[id] || null;
+    return liveReferencesByPersonId[id] || referencesByPersonId[id] || null;
   }
 
   function linksForPerson(person) {
@@ -77,21 +80,10 @@
     return entryForPerson(person)?.namuwiki || null;
   }
 
-  function personFromRow(row) {
-    const name = row?.querySelector?.(".person-table-identity > strong, :scope > strong");
-    if (!name) return null;
-    const canonical = row.querySelector?.(".person-card-canonical");
-    return {
-      id: row.dataset?.personId || "",
-      canonical_name_en: String(canonical?.textContent || name.textContent || "").trim()
-    };
-  }
-
   function decorateMainTable() {
-    if (!registryLoaded || typeof document?.querySelectorAll !== "function") return;
+    if (!liveReferencesLoaded || typeof document === "undefined" || typeof document.querySelectorAll !== "function") return;
     for (const row of document.querySelectorAll(".person-card[data-person-id]")) {
-      const person = personFromRow(row);
-      if (!person) continue;
+      const person = { id:row.dataset?.personId || "" };
       const status = statusForPerson(person, "namuwiki");
       if (!status) continue;
       row.dataset.namuwikiStatus = status.status;
@@ -115,27 +107,31 @@
     }
   }
 
-  async function loadRegistry() {
+  async function loadLiveReferences() {
     if (typeof fetch !== "function") return;
     try {
-      const response = await fetch(REGISTRY_URL, { cache: "no-store", credentials: "same-origin" });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const response = await fetch(READ_ENDPOINT, {
+        method:"GET",
+        credentials:"same-origin",
+        cache:"no-store",
+        headers:{ accept:"application/json" }
+      });
       const payload = await response.json();
-      if (payload?.schema !== REGISTRY_SCHEMA || !payload.persons || typeof payload.persons !== "object" || Array.isArray(payload.persons)) {
-        throw new Error("invalid registry schema");
+      if (!response.ok || payload?.ok !== true || payload?.mode !== "list" || !Array.isArray(payload.persons)) {
+        throw new Error(`Person read failed (${response.status})`);
       }
       const next = {};
-      for (const [canonicalName, raw] of Object.entries(payload.persons)) {
-        const key = String(canonicalName || "").trim();
-        const entry = normalizeRegistryEntry(raw);
-        if (key && entry) next[key] = entry;
+      for (const person of payload.persons) {
+        const id = String(person?.id || "").trim().toLowerCase();
+        const entry = inlineEntry(person);
+        if (id && entry) next[id] = entry;
       }
-      referencesByCanonicalName = Object.freeze(next);
-      registryLoaded = true;
+      liveReferencesByPersonId = Object.freeze(next);
+      liveReferencesLoaded = true;
       queueMicrotask(decorateMainTable);
       window.dispatchEvent(new CustomEvent("atlas-person-external-references-ready"));
     } catch (error) {
-      console.error("ATLAS Person NamuWiki registry could not be loaded", error);
+      console.error("ATLAS Person external references could not be loaded", error);
     }
   }
 
@@ -147,9 +143,8 @@
     linkForPerson,
     statusForPerson,
     decorateMainTable,
-    registryLoaded: () => registryLoaded,
-    registryUrl: REGISTRY_URL
+    liveReferencesLoaded: () => liveReferencesLoaded
   });
 
-  loadRegistry();
+  loadLiveReferences();
 })();
