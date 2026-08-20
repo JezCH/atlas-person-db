@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:amelia-earhart:united-states:aviator:1928-1937:v1",
+  "person": {
+    "canonical_name_en": "Amelia Earhart",
+    "display_name_ko": "어밀리아 에어하트"
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Aviator",
+    "role_display_name_ko": "비행사",
+    "start_year": 1928,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1937,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Earhart became internationally prominent through the 1928 transatlantic flight and continued a record-setting aviation career until her disappearance during the 1937 world-flight attempt. ATLAS uses 1928-1937 as the representative documented aviation phase."
+  },
+  "sources": [
+    {
+      "title": "Amelia Earhart — Smithsonian National Air and Space Museum",
+      "canonical_url": "https://airandspace.si.edu/collection-objects/amelia-earhart/nasm_A19500108000",
+      "citation_text": "The Smithsonian documents Earhart's 1928 transatlantic breakthrough, later aviation records, and disappearance in 1937.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tutankhamun:new-kingdom-egypt:pharaoh:c1336-c1327-bce:v1",
+  "person": {
+    "canonical_name_en": "Tutankhamun",
+    "display_name_ko": "투탕카멘"
+  },
+  "polity": {
+    "canonical_name_en": "New Kingdom Egypt",
+    "display_name_ko": "이집트 신왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Pharaoh",
+    "role_display_name_ko": "파라오",
+    "start_year": -1336,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -1327,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tutankhamun was an Eighteenth Dynasty pharaoh of New Kingdom Egypt. Modern museum chronologies place his reign approximately in 1336-1327 BCE; both boundaries are therefore stored as approximate rather than converting a reconstructed chronology into exact years."
+  },
+  "sources": [
+    {
+      "title": "Tutankhamun — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/ko/hubs/tutankhamun-100",
+      "citation_text": "The Metropolitan Museum of Art places Tutankhamun's reign approximately in 1336-1327 BCE.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

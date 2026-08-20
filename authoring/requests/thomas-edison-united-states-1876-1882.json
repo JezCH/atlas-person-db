@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:thomas-edison:united-states:inventor:1876-1882:v1",
+  "person": {
+    "canonical_name_en": "Thomas Edison",
+    "display_name_ko": "토머스 에디슨"
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Inventor",
+    "role_display_name_ko": "발명가",
+    "start_year": 1876,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1882,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Edison established his Menlo Park laboratory in 1876, developed the phonograph in 1877 and practical electric-light systems thereafter, and brought the Pearl Street central power system into operation in 1882. ATLAS uses this tightly documented invention-and-system-development phase."
+  },
+  "sources": [
+    {
+      "title": "Thomas Edison Biography: 1847–1882 — National Park Service",
+      "canonical_url": "https://home.nps.gov/people/thomas-edison-biography-1847-1882-birth-to-pearl-street.htm",
+      "citation_text": "The National Park Service documents Edison's Menlo Park laboratory beginning in 1876 and the sequence of major inventions and electric-power development through 1882.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

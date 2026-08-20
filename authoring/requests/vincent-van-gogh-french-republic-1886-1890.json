@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:vincent-van-gogh:french-republic:painter:1886-1890:v1",
+  "person": {
+    "canonical_name_en": "Vincent van Gogh",
+    "display_name_ko": "빈센트 반 고흐"
+  },
+  "polity": {
+    "canonical_name_en": "French Republic",
+    "display_name_ko": "프랑스 공화국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "artistic_activity",
+    "role": "Painter",
+    "role_display_name_ko": "화가",
+    "start_year": 1886,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1890,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Van Gogh moved to Paris in 1886 and spent the remainder of his artistic career in France, including Arles, Saint-Rémy and Auvers-sur-Oise, until his death in 1890. ATLAS records this major French artistic phase rather than his full transnational life."
+  },
+  "sources": [
+    {
+      "title": "Vincent van Gogh chronology — Van Gogh Museum",
+      "canonical_url": "https://www.vangoghmuseum.nl/download/21788126-4cd1-4292-bbf8-cb45110e04c6.pdf",
+      "citation_text": "The Van Gogh Museum chronology documents Van Gogh's move to France in 1886 and his subsequent work in Paris, Arles, Saint-Rémy and Auvers through 1890.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

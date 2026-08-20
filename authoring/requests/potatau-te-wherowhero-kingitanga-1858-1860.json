@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:potatau-te-wherowhero:kingitanga:maori-king:1858-1860:v1",
+  "person": {
+    "canonical_name_en": "Pōtatau Te Wherowhero",
+    "display_name_ko": "포타타우 테 웨로웨로"
+  },
+  "polity": {
+    "canonical_name_en": "Kīngitanga",
+    "display_name_ko": "마오리 왕 운동"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Māori King",
+    "role_display_name_ko": "마오리 왕",
+    "start_year": 1858,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1860,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Pōtatau Te Wherowhero was installed in 1858 as the first Māori King of the Kīngitanga and held the kingship until his death in 1860. ATLAS models the Kīngitanga itself rather than treating him as an officeholder of the colonial New Zealand state."
+  },
+  "sources": [
+    {
+      "title": "The first Māori king — Te Ara Encyclopedia of New Zealand",
+      "canonical_url": "https://teara.govt.nz/en/kingitanga-the-maori-king-movement/page-2",
+      "citation_text": "Te Ara records Pōtatau Te Wherowhero's installation as the first Māori King in 1858 and his death in 1860.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

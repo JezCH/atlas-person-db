@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:wolfgang-amadeus-mozart:habsburg-monarchy:composer:1781-1791:v1",
+  "person": {
+    "canonical_name_en": "Wolfgang Amadeus Mozart",
+    "display_name_ko": "볼프강 아마데우스 모차르트"
+  },
+  "polity": {
+    "canonical_name_en": "Habsburg Monarchy",
+    "display_name_ko": "합스부르크 군주국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "artistic_activity",
+    "role": "Composer",
+    "role_display_name_ko": "작곡가",
+    "start_year": 1781,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1791,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mozart settled in Vienna in 1781 and spent the final decade of his composing career there until his death in 1791. ATLAS uses the Viennese 1781-1791 artistic phase under the Habsburg Monarchy rather than his entire life across Salzburg and extensive travel."
+  },
+  "sources": [
+    {
+      "title": "Wolfgang Amadeus Mozart — International Mozarteum Foundation",
+      "canonical_url": "https://mozarteum.at/en/wolfgang-amade-mozart",
+      "citation_text": "The Mozarteum's biographical chronology covers Mozart's move into the independent Viennese career in 1781 and his death in Vienna in 1791.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

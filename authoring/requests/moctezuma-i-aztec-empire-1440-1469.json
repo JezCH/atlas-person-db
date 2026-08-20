@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:moctezuma-i:aztec-empire:huey-tlatoani:1440-1469:v1",
+  "person": {
+    "canonical_name_en": "Moctezuma I",
+    "display_name_ko": "몬테수마 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Aztec Empire",
+    "display_name_ko": "아즈텍 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Huey Tlatoani",
+    "role_display_name_ko": "우에이 틀라토아니",
+    "start_year": 1440,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1469,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Moctezuma I (Ilhuicamina) succeeded Itzcoatl as huey tlatoani of Tenochtitlan in 1440 and ruled until 1469. ATLAS records the conventional year-level reign while keeping the polity identity consistent with the existing Aztec Empire record used for Moctezuma II."
+  },
+  "sources": [
+    {
+      "title": "Moctezuma I, tlatoani que consolidó el imperio mexica — Secretaría de Cultura / INAH",
+      "canonical_url": "https://www.gob.mx/cultura/prensa/matos-moctezuma-ofrece-semblanza-de-moctezuma-i-tlatoani-que-consolido-el-imperio-mexica?idiom=es-MX",
+      "citation_text": "Mexico's Secretaría de Cultura and INAH identify Moctezuma I as the Mexica ruler who reigned from 1440 to 1469.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

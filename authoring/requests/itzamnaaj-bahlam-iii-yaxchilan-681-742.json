@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:itzamnaaj-bahlam-iii:yaxchilan:ajaw:681-742:v1",
+  "person": {
+    "canonical_name_en": "Itzamnaaj Bahlam III",
+    "display_name_ko": "이참나흐 발람 3세"
+  },
+  "polity": {
+    "canonical_name_en": "Yaxchilan",
+    "display_name_ko": "야슈칠란"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Ajaw",
+    "role_display_name_ko": "아하우",
+    "start_year": 681,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 742,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "FAMSI's synthesis of Classic Maya royal dynasties gives Itzamnaaj Bahlam III of Yaxchilan a reign of 681-742 CE. Older publications vary in ruler numbering and orthography; ATLAS therefore uses the explicit Itzamnaaj Bahlam III identification tied to the 681-742 reign rather than treating a bare B'alam number as sufficient identity."
+  },
+  "sources": [
+    {
+      "title": "Maya Royal Dynasties, Part III — FAMSI",
+      "canonical_url": "https://www.famsi.org/mayawriting/calvin/royal_dynasties_iii.pdf",
+      "citation_text": "FAMSI's dynasty reference identifies Itzamnaaj Bahlam III at Yaxchilan and gives his reign as AD 681-742 while documenting variant numbering conventions.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

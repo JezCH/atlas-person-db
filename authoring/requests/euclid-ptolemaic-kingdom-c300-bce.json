@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:euclid:ptolemaic-kingdom:mathematician:c300-bce:v1",
+  "person": {
+    "canonical_name_en": "Euclid",
+    "display_name_ko": "유클리드"
+  },
+  "polity": {
+    "canonical_name_en": "Ptolemaic Kingdom",
+    "display_name_ko": "프톨레마이오스 왕국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Mathematician",
+    "role_display_name_ko": "수학자",
+    "start_year": -300,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -300,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Almost nothing secure is known about Euclid's biography beyond his association with Alexandria around 300 BCE and the mathematical corpus headed by the Elements. ATLAS therefore records only a single approximate c.300 BCE intellectual Activity in the Ptolemaic Kingdom and deliberately does not fabricate a birth date, death date, or continuous teaching career."
+  },
+  "sources": [
+    {
+      "title": "Euclid of Alexandria — MacTutor History of Mathematics, University of St Andrews",
+      "canonical_url": "https://mathshistory.st-andrews.ac.uk/Biographies/Euclid/",
+      "citation_text": "MacTutor emphasizes how little is known about Euclid personally and places his mathematical activity in Alexandria around 300 BCE.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

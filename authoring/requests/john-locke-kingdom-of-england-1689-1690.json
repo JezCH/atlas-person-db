@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:john-locke:kingdom-of-england:philosopher:1689-1690:v1",
+  "person": {
+    "canonical_name_en": "John Locke",
+    "display_name_ko": "존 로크"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of England",
+    "display_name_ko": "잉글랜드 왕국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Philosopher",
+    "role_display_name_ko": "철학자",
+    "start_year": 1689,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1690,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After returning to England in 1689, Locke published the major works that established his mature philosophical and political legacy across 1689-1690. ATLAS uses this publication phase as a conservative representative intellectual Activity rather than his entire life."
+  },
+  "sources": [
+    {
+      "title": "John Locke — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/locke/",
+      "citation_text": "The Stanford Encyclopedia of Philosophy documents Locke's return to England in 1689 and the publication of his major mature works in 1689-1690.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

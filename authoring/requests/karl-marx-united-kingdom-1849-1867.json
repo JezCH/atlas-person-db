@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:karl-marx:united-kingdom:philosopher-political-economist:1849-1867:v1",
+  "person": {
+    "canonical_name_en": "Karl Marx",
+    "display_name_ko": "카를 마르크스"
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Philosopher and political economist",
+    "role_display_name_ko": "철학자·정치경제학자",
+    "start_year": 1849,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1867,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Marx settled permanently in London in 1849, undertook the research that became his critique of political economy there, and published the first volume of Capital in 1867. ATLAS records 1849-1867 as a representative London intellectual phase rather than equating residence through 1883 with continuous production at the same intensity."
+  },
+  "sources": [
+    {
+      "title": "Karl Marx — English Heritage",
+      "canonical_url": "https://www.english-heritage.org.uk/visit/blue-plaques/karl-marx/",
+      "citation_text": "English Heritage records Marx's settlement in London in 1849 and his work there on Capital, whose first volume appeared in 1867.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

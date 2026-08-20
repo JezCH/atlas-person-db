@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cuauhtemoc:aztec-empire:huey-tlatoani:1520-1521:v1",
+  "person": {
+    "canonical_name_en": "Cuauhtémoc",
+    "display_name_ko": "쿠아우테목"
+  },
+  "polity": {
+    "canonical_name_en": "Aztec Empire",
+    "display_name_ko": "아즈텍 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Huey Tlatoani",
+    "role_display_name_ko": "우에이 틀라토아니",
+    "start_year": 1520,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1521,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Cuauhtémoc was the final huey tlatoani of the Mexica polity during the last phase of the Spanish conquest, reigning from 1520 until the fall of Tenochtitlan in 1521. ATLAS reuses the existing Aztec Empire and Huey Tlatoani identities."
+  },
+  "sources": [
+    {
+      "title": "Estado mexica — Portal Académico CCH, UNAM",
+      "canonical_url": "https://e1.portalacademico.cch.unam.mx/alumno/historiademexico1/unidad2/culturamexica/estado",
+      "citation_text": "UNAM's academic portal lists Cuauhtémoc as tlatoani for 1520-1521.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:spartacus:roman-republic:rebel-leader:73-71-bce:v1",
+  "person": {
+    "canonical_name_en": "Spartacus",
+    "display_name_ko": "스파르타쿠스"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Republic",
+    "display_name_ko": "로마 공화정"
+  },
+  "activity": {
+    "relation_type": "opposes",
+    "period_basis": "military_activity",
+    "role": "Rebel leader",
+    "role_display_name_ko": "반란 지도자",
+    "start_year": -73,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -71,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Spartacus led the major slave revolt against the Roman Republic traditionally called the Third Servile War from 73 to 71 BCE. The relation is opposes, not active_in or serves, because the modeled Activity is the armed rebellion itself."
+  },
+  "sources": [
+    {
+      "title": "Spartacus — National Geographic Education",
+      "canonical_url": "https://education.nationalgeographic.org/resource/spartacus/",
+      "citation_text": "National Geographic summarizes Spartacus's leadership of the slave revolt against Rome from 73 to 71 BCE.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

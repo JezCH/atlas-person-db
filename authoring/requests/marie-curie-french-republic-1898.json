@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:marie-curie:french-republic:physicist-chemist:1898:v1",
+  "person": {
+    "canonical_name_en": "Marie Curie",
+    "display_name_ko": "마리 퀴리"
+  },
+  "polity": {
+    "canonical_name_en": "French Republic",
+    "display_name_ko": "프랑스 공화국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Physicist and chemist",
+    "role_display_name_ko": "물리학자·화학자",
+    "start_year": 1898,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1898,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Marie and Pierre Curie's Paris research in 1898 produced the announcements of polonium and radium. ATLAS records 1898 as a precisely documented representative scientific Activity in the French Republic rather than using Marie Curie's full lifespan or nationality changes as a proxy for research activity."
+  },
+  "sources": [
+    {
+      "title": "Marie and Pierre Curie and the discovery of polonium and radium — Nobel Prize",
+      "canonical_url": "https://www.nobelprize.org/prizes/themes/marie-and-pierre-curie-and-the-discovery-of-polonium-and-radium",
+      "citation_text": "Nobel Prize materials document the Curie's 1898 announcements of polonium and radium in Paris.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
