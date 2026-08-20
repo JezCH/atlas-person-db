@@ -1,0 +1,64 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:governance-context-duplicates:2026-08-21:v1",
+  "release_order": 520,
+  "evidence": {
+    "decision": "French Fifth Republic, Kamakura Shogunate, and Tokugawa Shogunate are duplicate Polity identities for governance/regime contexts already represented by the canonical France/Japan Polities. Production read-only Polity reference audit confirmed zero external references for all three targets. Toyotomi Regime is intentionally retained because its pre-unification authority phase remains a distinct historical political authority in the project model.",
+    "audit_marker": "ATLAS_POLITY_REFERENCE_AUDIT_EVIDENCE_V1",
+    "audit_deployment_sha": "eb1b65e9e1a7db8a40e18a04a4517fe20a02050d"
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:french-fifth-republic",
+      "review_reason": "GOVERNANCE_CONTEXT_DUPLICATE_POLITY",
+      "expected_polity": {
+        "id": "524642ff-33fb-52f3-8623-e4a877b1997a",
+        "canonical_key": "French Fifth Republic",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {"locale": "en", "name": "French Fifth Republic", "is_preferred": true},
+        {"locale": "ko", "name": "프랑스 제5공화국", "is_preferred": true}
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:kamakura-shogunate",
+      "review_reason": "GOVERNANCE_CONTEXT_DUPLICATE_POLITY",
+      "expected_polity": {
+        "id": "53943675-7711-5053-9f2e-f149f727aa54",
+        "canonical_key": "Kamakura Shogunate",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {"locale": "en", "name": "Kamakura Shogunate", "is_preferred": true},
+        {"locale": "ko", "name": "가마쿠라 막부", "is_preferred": true}
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:tokugawa-shogunate",
+      "review_reason": "GOVERNANCE_CONTEXT_DUPLICATE_POLITY",
+      "expected_polity": {
+        "id": "46534f7e-9247-5644-b5ad-9525c3d4f5d6",
+        "canonical_key": "Tokugawa Shogunate",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {"locale": "en", "name": "Tokugawa Shogunate", "is_preferred": true},
+        {"locale": "ko", "name": "도쿠가와 막부", "is_preferred": true}
+      ],
+      "expected_owned_reference_total": 4,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
