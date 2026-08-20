@@ -7,7 +7,6 @@ on:
     paths:
       - '.github/workflows/atlas-audit-inventory.yml'
       - 'api/atlas-audit-inventory.js'
-      - 'api/atlas-polity-reference-audit.js'
       - 'server/atlas-audit-inventory-handler.js'
       - 'server/atlas-polity-reference-audit-handler.js'
       - 'server/atlas-audit-github-oidc.js'
@@ -44,7 +43,6 @@ jobs:
     environment: production
     env:
       ATLAS_AUDIT_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-audit-inventory
-      ATLAS_POLITY_REFERENCE_AUDIT_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-polity-reference-audit
       ATLAS_AUDIT_AUDIENCE: atlas-person-db-audit-inventory
       ATLAS_AUDIT_REQUEST: docs/audits/STAGE2_R0_NORMALIZED_INVENTORY_REQUEST.json
       ATLAS_AUDIT_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || 'full_stage2_baseline' }}
@@ -88,7 +86,7 @@ jobs:
             payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" --arg mode "$ATLAS_AUDIT_MODE" --slurpfile request "$ATLAS_AUDIT_REQUEST" \
               '{deployment_sha:$deployment_sha,mode:$mode,activity_ids:$request[0].activity_ids}')"
           elif [[ "$ATLAS_AUDIT_MODE" == "polity_reference_audit" ]]; then
-            endpoint="$ATLAS_POLITY_REFERENCE_AUDIT_ENDPOINT"
+            endpoint="${ATLAS_AUDIT_ENDPOINT}?__atlas_audit_surface=polity-reference-audit"
             payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" '{deployment_sha:$deployment_sha}')"
           else
             payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" --arg mode "$ATLAS_AUDIT_MODE" '{deployment_sha:$deployment_sha,mode:$mode}')"
