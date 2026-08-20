@@ -7,6 +7,7 @@ const sync = fs.readFileSync(new URL('../scripts/sync-person-namuwiki-registry.m
 const runtime = fs.readFileSync(new URL('../atlas-person-external-references.js', import.meta.url), 'utf8');
 const integrity = fs.readFileSync(new URL('../.github/workflows/atlas-integrity.yml', import.meta.url), 'utf8');
 const policy = fs.readFileSync(new URL('../authoring/NAMUWIKI_REGISTRATION_POLICY.md', import.meta.url), 'utf8');
+const sop = fs.readFileSync(new URL('../authoring/REGISTRATION_SOP.md', import.meta.url), 'utf8');
 const registry = JSON.parse(fs.readFileSync(new URL('../authoring/person-namuwiki-registry.json', import.meta.url), 'utf8'));
 
 test('new human-authoring Person requests require an explicit NamuWiki decision', () => {
@@ -21,7 +22,8 @@ test('new human-authoring Person requests require an explicit NamuWiki decision'
 test('registry is a deterministic projection and is enforced on the authoring fast path', () => {
   assert.equal(registry.schema, 'atlas-person-namuwiki-registry/v1');
   assert.equal(registry.generated_from, 'authoring/requests/*.json');
-  assert.deepEqual(registry.persons, {});
+  assert.equal(typeof registry.persons, 'object');
+  assert.ok(!Array.isArray(registry.persons));
   assert.match(sync, /atlas-human-authoring\/v1/);
   assert.match(sync, /--check/);
   assert.match(sync, /--write/);
@@ -40,9 +42,12 @@ test('main Person table consumes the generated registry while preserving legacy 
   assert.match(runtime, /da0303c2-1faf-40b8-9dc2-1325b77488d7/);
 });
 
-test('registration policy requires explicit completion reporting for linked and missing documents', () => {
-  assert.match(policy, /나무위키: 연결됨/);
-  assert.match(policy, /나무위키: 문서 없음/);
+test('registration policy and SOP require explicit completion reporting for linked and missing documents', () => {
+  for (const source of [policy, sop]) {
+    assert.match(source, /나무위키: 연결됨/);
+    assert.match(source, /나무위키: 문서 없음/);
+  }
   assert.match(policy, /unknown/);
-  assert.match(policy, /same-name|same-name/i);
+  assert.match(policy, /same-name/i);
+  assert.match(sop, /external_references\.namuwiki/);
 });
