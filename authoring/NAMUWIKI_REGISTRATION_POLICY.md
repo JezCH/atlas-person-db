@@ -4,7 +4,7 @@ This policy applies to every new `atlas-human-authoring/v1` Person registration 
 
 ## Required registration decision
 
-Before the registration request is committed, the operator must check whether the exact historical Person has a NamuWiki document. Do not infer a URL from the Korean display name and do not accept a same-name or adjacent-topic page without confirming that it is the intended Person.
+Before the registration request is committed, the operator must check whether the exact historical Person has a NamuWiki document. Do not infer a URL from the Korean display name and do not accept a same-name, disambiguation, or adjacent-topic page without confirming that it is the intended Person.
 
 Every new human-authoring request must contain exactly one explicit decision under `external_references.namuwiki`.
 
@@ -32,19 +32,23 @@ When no Person document can be found after the check:
 }
 ```
 
-Omission, `unknown`, guessed URLs, and non-NamuWiki URLs are not valid decisions for a new human-authoring registration.
+Omission, `unknown`, guessed URLs, non-NamuWiki URLs, and a `not_found` record carrying a title or URL are not valid decisions for a new human-authoring registration.
 
-## Registry and UI
+## Authoritative storage and read path
 
-`authoring/person-namuwiki-registry.json` is a deterministic projection of reviewed human-authoring requests. After adding or changing a request, regenerate it with:
+The NamuWiki decision is part of the human-authoring request itself. The normal authoring transaction persists the normalized decision in the existing immutable `atlas_v2.authoring_manifest_runs.result_snapshot.external_references.namuwiki` ledger snapshot together with the Person/Activity result. No separate NamuWiki database table or second write is required.
 
-```sh
-node scripts/sync-person-namuwiki-registry.mjs --write
-```
+The Person read service exposes the latest explicit NamuWiki decision recorded for that Person. A `linked` decision is consumed by the Person main table so the visible Person name itself receives the existing visually distinct NamuWiki hyperlink. A `not_found` decision intentionally creates no hyperlink but remains machine-readable for reporting and future re-checks.
 
-CI verifies that the committed registry exactly matches the manifests. A `linked` record is used by the Person main table to turn the Person name itself into the visually distinct NamuWiki hyperlink. A `not_found` record intentionally creates no hyperlink, but preserves the explicit checked status for reporting and future re-checks.
+The absence of a link is not equivalent to `not_found`; only an explicit stored decision is authoritative.
 
-Legacy requests created before this cutover remain replayable and are not bulk-edited merely to satisfy the new metadata contract. Existing legacy UI mappings, such as the already reviewed Imhotep mapping, remain supported as compatibility fallbacks.
+## Admin and GitHub registration paths
+
+The normal Admin `/api/atlas-authoring` path fails closed if the NamuWiki decision is omitted. The form requires the operator to select `linked` or `not_found`; linked records require the exact document title and canonical `https://namu.wiki/w/...` URL.
+
+For reviewed GitHub batch registrations, changed `atlas-human-authoring/v1` manifests are rejected by CI when the NamuWiki decision is omitted or invalid. Legacy pre-cutover GitHub requests remain replayable without being bulk-edited merely to satisfy the newer metadata contract.
+
+Existing reviewed legacy UI mappings, such as Imhotep, remain compatibility fallbacks until those Persons obtain an authoritative ledger decision through a later reviewed authoring request.
 
 ## Registration completion report
 
@@ -53,4 +57,4 @@ Every registration completion report must state the NamuWiki outcome explicitly:
 - `나무위키: 연결됨 — <document_title>` when `status` is `linked`.
 - `나무위키: 문서 없음` when `status` is `not_found`.
 
-The absence of a link must never be silently interpreted as `not_found`; only the explicit manifest status is authoritative for registrations covered by this policy.
+The operator must never silently treat an unchecked or unresolved state as `문서 없음`.
