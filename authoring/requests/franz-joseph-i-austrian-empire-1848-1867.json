@@ -1,0 +1,40 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:franz-joseph-i:austrian-empire:emperor:1848-1867:v1",
+  "person": {
+    "canonical_name_en": "Franz Joseph I",
+    "display_name_ko": "프란츠 요제프 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Austrian Empire",
+    "display_name_ko": "오스트리아 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1848,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1867,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Franz Joseph I ascended the throne of the Austrian Empire in 1848. ATLAS ends this first sovereign Activity in 1867 because the Compromise with Hungary reorganized the Habsburg monarchy into the Austro-Hungarian Dual Monarchy. The year-level boundary records the constitutional polity transition rather than implying that his personal reign ceased in 1867."
+  },
+  "sources": [
+    {
+      "title": "Franz Joseph I — Die Welt der Habsburger",
+      "canonical_url": "https://www.habsburger.net/en/persons/habsburg-emperor/franz-joseph-i",
+      "citation_text": "The Habsburg history portal records Franz Joseph I as Emperor of Austria and King of Hungary, ruling from 1848 to 1916, and states that he ascended the throne of the Austrian Empire in 1848 and accepted the creation of the Dual Monarchy through the 1867 Compromise.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
