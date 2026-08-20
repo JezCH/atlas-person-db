@@ -43,8 +43,11 @@ test("correction handler accepts exact Production SHA, bounded sources, explicit
   assert.equal(correctionHandler.requirePayload({ deployment_sha: SHA, intent_path: "corrections/intents/r1.json", mode: "apply", manifest: manifestV11 }).schema, "atlas-correction-manifest/v1.1");
   const manifestV12 = { schema: "atlas-correction-manifest/v1.2" };
   assert.equal(correctionHandler.requirePayload({ deployment_sha: SHA, intent_path: "corrections/intents/r2.json", mode: "apply", manifest: manifestV12 }).schema, "atlas-correction-manifest/v1.2");
+  const manifestV13 = { schema: "atlas-correction-manifest/v1.3" };
+  assert.equal(correctionHandler.requirePayload({ deployment_sha: SHA, manifest_path: "corrections/requests/r3.json", mode: "apply", manifest: manifestV13 }).schema, "atlas-correction-manifest/v1.3");
+  assert.equal(typeof correctionHandler.createService({ query() {} }, "atlas-correction-manifest/v1.3").execute, "function");
   const manifestV2 = { schema: "atlas-correction-manifest/v2" };
-  assert.equal(correctionHandler.requirePayload({ deployment_sha: SHA, manifest_path: "corrections/requests/r3.json", mode: "dry_run", manifest: manifestV2 }).schema, "atlas-correction-manifest/v2");
+  assert.equal(correctionHandler.requirePayload({ deployment_sha: SHA, manifest_path: "corrections/requests/r4.json", mode: "dry_run", manifest: manifestV2 }).schema, "atlas-correction-manifest/v2");
   assert.equal(typeof correctionHandler.createService({ query() {} }, "atlas-correction-manifest/v2").execute, "function");
   assert.deepEqual(correctionHandler.requirePayload({ deployment_sha: SHA, mode: "full_stage2_baseline" }),
     { deploymentSha: SHA, sourcePath: null, mode: "full_stage2_baseline", activityIds: null, manifest: null, schema: null, plan: null });
@@ -70,30 +73,33 @@ test("dry-run does not apply schema migration; apply does; Baseline A v2 remains
 });
 
 test("correction migration registry is ordered, replay-monotonic, and bounded to correction-ledger contract changes", () => {
-  assert.equal(correctionMigrations.CORRECTION_MIGRATION_PATHS.length, 4);
+  assert.equal(correctionMigrations.CORRECTION_MIGRATION_PATHS.length, 5);
   assert.deepEqual(correctionMigrations.CORRECTION_MIGRATION_PATHS.map((item) => path.basename(item)), [
     "20260811_correction_manifest_runs.sql",
     "20260812_correction_manifest_v1_1.sql",
     "20260813_correction_manifest_v2.sql",
-    "20260815_correction_manifest_v1_2.sql"
+    "20260815_correction_manifest_v1_2.sql",
+    "20260821_correction_manifest_v1_3.sql"
   ]);
   const migrations = correctionMigrations.readCorrectionMigrations();
-  assert.equal(migrations.length, 4);
+  assert.equal(migrations.length, 5);
   assert.match(migrations[0].sql, /create table if not exists atlas_v2\.correction_manifest_runs/i);
-  assert.match(migrations[1].sql, /atlas-correction-manifest\/v1\.1/i);
-  assert.match(migrations[2].sql, /atlas-correction-manifest\/v2/i);
-  assert.match(migrations[2].sql, /atlas-correction-manifest\/v1\.2/i);
-  assert.match(migrations[3].sql, /atlas-correction-manifest\/v1\.2/i);
+  assert.match(migrations[1].sql, /atlas-correction-manifest\/v1\.3/i);
+  assert.match(migrations[2].sql, /atlas-correction-manifest\/v1\.3/i);
+  assert.match(migrations[3].sql, /atlas-correction-manifest\/v1\.3/i);
+  assert.match(migrations[4].sql, /atlas-correction-manifest\/v1\.3/i);
   for (const migration of migrations) assert.doesNotMatch(migration.sql, /person_politics_v2\s+set|delete\s+from\s+atlas_v2\.person_politics_v2/i);
 });
 
-test("workflow runs reviewed corrections including v2, dry-runs before apply, then captures Baseline A v2 identity snapshot", () => {
+test("workflow runs reviewed corrections including v1.3 and v2, dry-runs before apply, then captures Baseline A v2 identity snapshot", () => {
   assert.match(workflow, /^\s*-\s*'corrections\/requests\/\*\.json'\s*$/m);
   assert.match(workflow, /^\s*-\s*'corrections\/intents\/\*\.json'\s*$/m);
   assert.doesNotMatch(workflow, /^\s*-\s*'(?:server\/atlas-correction[^']*|api\/atlas-correction[^']*|db\/migrations\/2026081[12]_correction[^']*)'\s*$/m);
   assert.match(workflow, /ATLAS_CORRECTION_AUDIENCE: atlas-person-db-correction-apply/);
   assert.match(workflow, /atlas-correction-manifest\/v1\.1/);
   assert.match(workflow, /atlas-correction-manifest\/v1\.2/);
+  assert.match(workflow, /atlas-correction-manifest\/v1\.3/);
+  assert.match(workflow, /ATLAS_CORRECTION_MANIFEST_V1_3/);
   assert.match(workflow, /atlas-correction-manifest\/v2/);
   assert.match(workflow, /ATLAS_CORRECTION_MANIFEST_V2/);
   assert.match(workflow, /update_activity_temporal_metadata/);

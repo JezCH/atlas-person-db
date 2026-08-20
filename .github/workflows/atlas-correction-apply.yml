@@ -54,7 +54,7 @@ jobs:
             [[ -n "$source_path" ]] || continue
             if [[ "$source_path" =~ ^corrections/requests/[A-Za-z0-9._-]+\.json$ ]]; then
               jq -e '
-                (.schema == "atlas-correction-manifest/v1" or .schema == "atlas-correction-manifest/v1.1" or .schema == "atlas-correction-manifest/v1.2" or .schema == "atlas-correction-manifest/v2") and
+                (.schema == "atlas-correction-manifest/v1" or .schema == "atlas-correction-manifest/v1.1" or .schema == "atlas-correction-manifest/v1.2" or .schema == "atlas-correction-manifest/v1.3" or .schema == "atlas-correction-manifest/v2") and
                 .review_status == "approved" and
                 ((.release_order // 500) | type == "number") and
                 ((.release_order // 500) | floor == .)
@@ -158,6 +158,7 @@ jobs:
               atlas-correction-manifest/v1) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V1' ;;
               atlas-correction-manifest/v1.1) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V1_1' ;;
               atlas-correction-manifest/v1.2) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V1_2' ;;
+              atlas-correction-manifest/v1.3) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V1_3' ;;
               atlas-correction-manifest/v2) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V2' ;;
               *) echo "Unsupported correction manifest schema in $1" >&2; return 1 ;;
             esac
