@@ -45,8 +45,7 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   const personReferences = migrations[4].sql;
   assert.match(personReferences, /CREATE TABLE IF NOT EXISTS atlas_v2\.person_external_references/i);
   assert.match(personReferences, /CREATE TABLE IF NOT EXISTS atlas_v2\.person_profile_mutation_audits/i);
-  assert.match(personReferences, /person_external_references_person_id_fkey/i);
-  assert.match(personReferences, /ON DELETE RESTRICT/i);
+  assert.match(personReferences, /person_id uuid NOT NULL REFERENCES atlas_v2\.persons\(id\) ON DELETE RESTRICT/i);
 });
 
 test('current clean schema baseline remains the measured pre-lifecycle Production shape', () => {
