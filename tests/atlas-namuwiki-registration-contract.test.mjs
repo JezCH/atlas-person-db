@@ -61,12 +61,14 @@ test('authoring persists the decision in the existing immutable result snapshot'
   assert.match(service, /external_references:snapshot\.external_references/);
 });
 
-test('Person read surfaces the latest explicit stored decision without a new table', () => {
-  assert.match(personRead, /authoring_manifest_runs amr/);
-  assert.match(personRead, /result_snapshot->'external_references'/);
-  assert.match(personRead, /result_snapshot->'external_references'->'namuwiki'/);
-  assert.match(personRead, /order by amr\.applied_at desc/);
+test('Person read surfaces normalized stored external references without authoring snapshot dependency', () => {
+  assert.match(personRead, /atlas_v2\.person_external_references per/);
+  assert.match(personRead, /jsonb_object_agg\(/);
+  assert.match(personRead, /'status', per\.status/);
+  assert.match(personRead, /'document_title', per\.document_title/);
+  assert.match(personRead, /'url', per\.url/);
   assert.match(personRead, /external_references:normalizeExternalReferences/);
+  assert.doesNotMatch(personRead, /authoring_manifest_runs amr|result_snapshot->'external_references'/);
 });
 
 test('normal Admin registration requires and reports the NamuWiki outcome', () => {
@@ -79,13 +81,13 @@ test('normal Admin registration requires and reports the NamuWiki outcome', () =
   assert.match(admin, /나무위키: 문서 없음/);
 });
 
-test('main Person table uses authoritative Person read metadata and preserves Imhotep fallback', () => {
+test('main Person table uses authoritative Person read metadata without hardcoded Person fallback', () => {
   assert.match(runtime, /READ_ENDPOINT = "\/api\/atlas-person-read"/);
   assert.match(runtime, /external_references\?\.namuwiki/);
   assert.match(runtime, /statusForPerson/);
   assert.match(runtime, /row\.dataset\.namuwikiStatus = status\.status/);
   assert.match(runtime, /person-main-name-link/);
-  assert.match(runtime, /da0303c2-1faf-40b8-9dc2-1325b77488d7/);
+  assert.doesNotMatch(runtime, /da0303c2-1faf-40b8-9dc2-1325b77488d7/);
 });
 
 test('registration documentation requires explicit linked or not_found completion reporting', () => {
