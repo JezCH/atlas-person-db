@@ -1,0 +1,67 @@
+name: ATLAS Authoring Schema Bootstrap
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'db/migrations/*.sql'
+      - 'server/atlas-authoring-migrations.js'
+      - 'server/atlas-authoring-readiness.js'
+      - '.github/workflows/atlas-authoring-schema-bootstrap.yml'
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: atlas-authoring-schema-bootstrap
+  cancel-in-progress: false
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      ATLAS_AUTHORING_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Wait for exact Production runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 60); do
+            status="$(curl --silent --show-error \
+              --output /tmp/atlas-authoring-readiness.json \
+              --write-out '%{http_code}' \
+              "$ATLAS_AUTHORING_ENDPOINT")"
+            if [[ "$status" == "200" ]]; then
+              runtime_sha="$(jq -r '.runtime_sha // ""' /tmp/atlas-authoring-readiness.json)"
+              if [[ "$runtime_sha" == "$GITHUB_SHA" ]]; then
+                echo "Production runtime is exact target ${GITHUB_SHA}."
+                exit 0
+              fi
+              echo "Production runtime ${runtime_sha:-unknown} is not target ${GITHUB_SHA} yet (attempt ${attempt}/60)."
+            else
+              echo "Production readiness returned HTTP ${status} (attempt ${attempt}/60)."
+            fi
+            sleep 10
+          done
+          cat /tmp/atlas-authoring-readiness.json >&2 || true
+          echo "PRODUCTION_RUNTIME_NOT_AT_SCHEMA_BOOTSTRAP_SHA:${GITHUB_SHA}" >&2
+          exit 1
+
+      - name: Dispatch bounded schema bootstrap
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh workflow run atlas-authoring-apply.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref main \
+            -f bootstrap_only=true
+          echo "Dispatched ATLAS Authoring Apply bootstrap-only for ${GITHUB_SHA}."
