@@ -6,6 +6,12 @@
     "canonical_name_en": "Ying Bu",
     "display_name_ko": "영포"
   },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-21"
+    }
+  },
   "polity": {
     "canonical_name_en": "Kingdom of Jiujiang under Ying Bu",
     "display_name_ko": "영포의 구강국"
