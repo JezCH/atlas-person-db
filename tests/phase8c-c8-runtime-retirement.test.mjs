@@ -43,6 +43,7 @@ test('historical C8 workflow manifest remains audit evidence while current workf
     'atlas-correction-apply.yml',
     'atlas-human-authoring-operational-parity.yml',
     'atlas-integrity.yml',
+    'atlas-namuwiki-link.yml',
     'atlas-p10-person-duplicate-v2-revalidation.yml',
     'atlas-p10-release-launcher.yml',
     'atlas-p10-revalidation-release.yml',

@@ -1,0 +1,129 @@
+name: ATLAS NamuWiki Link
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  id-token: write
+  issues: write
+
+concurrency:
+  group: atlas-namuwiki-link-production
+  cancel-in-progress: false
+
+jobs:
+  link:
+    if: >-
+      github.event.issue.number == 431 &&
+      !github.event.issue.pull_request &&
+      github.actor == 'JezCH' &&
+      startsWith(github.event.comment.body, '/namuwiki-link')
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      ATLAS_NAMUWIKI_LINK_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-namuwiki-link
+      ATLAS_PERSON_READ_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-person-read
+      ATLAS_NAMUWIKI_LINK_AUDIENCE: atlas-person-db-namuwiki-link
+
+    steps:
+      - name: Parse exact command
+        id: command
+        shell: bash
+        env:
+          COMMENT_BODY: ${{ github.event.comment.body }}
+        run: |
+          set -Eeuo pipefail
+          UUID_RE='[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}'
+          if [[ ! "$COMMENT_BODY" =~ ^/namuwiki-link[[:space:]]+($UUID_RE)[[:space:]]+(https://namu\.wiki/w/[^[:space:]]+)[[:space:]]*$ ]]; then
+            echo "Invalid command. Expected: /namuwiki-link <person_uuid> <canonical_namuwiki_url>" >&2
+            exit 2
+          fi
+          PERSON_ID="${BASH_REMATCH[1],,}"
+          NAMUWIKI_URL="${BASH_REMATCH[2]}"
+          printf 'person_id=%s\n' "$PERSON_ID" >> "$GITHUB_OUTPUT"
+          printf 'url=%s\n' "$NAMUWIKI_URL" >> "$GITHUB_OUTPUT"
+
+      - name: Request dedicated GitHub OIDC token
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          TOKEN_FILE="$RUNNER_TEMP/atlas-namuwiki-link-oidc"
+          umask 077
+          curl --fail --silent --show-error \
+            -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_NAMUWIKI_LINK_AUDIENCE}" \
+            | jq -er '.value' > "$TOKEN_FILE"
+          test -s "$TOKEN_FILE"
+
+      - name: Apply one NamuWiki link
+        id: apply
+        shell: bash
+        env:
+          PERSON_ID: ${{ steps.command.outputs.person_id }}
+          NAMUWIKI_URL: ${{ steps.command.outputs.url }}
+        run: |
+          set -Eeuo pipefail
+          TOKEN_FILE="$RUNNER_TEMP/atlas-namuwiki-link-oidc"
+          RESPONSE_FILE="$RUNNER_TEMP/atlas-namuwiki-link-response.json"
+          PAYLOAD="$(jq -cn \
+            --arg runtime_sha "$GITHUB_SHA" \
+            --arg person_id "$PERSON_ID" \
+            --arg url "$NAMUWIKI_URL" \
+            '{runtime_sha:$runtime_sha,person_id:$person_id,url:$url}')"
+          HTTP_STATUS="$(curl --silent --show-error \
+            --output "$RESPONSE_FILE" \
+            --write-out '%{http_code}' \
+            --request POST \
+            --header 'content-type: application/json' \
+            --header "Authorization: Bearer $(cat "$TOKEN_FILE")" \
+            --data "$PAYLOAD" \
+            "$ATLAS_NAMUWIKI_LINK_ENDPOINT")"
+          cat "$RESPONSE_FILE"
+          test "$HTTP_STATUS" = "200"
+          jq -e '.ok == true and .committed == true and (.external_reference.url | type == "string") and (.external_reference.document_title | type == "string")' "$RESPONSE_FILE" >/dev/null
+          printf 'canonical_url=%s\n' "$(jq -r '.external_reference.url' "$RESPONSE_FILE")" >> "$GITHUB_OUTPUT"
+          printf 'document_title=%s\n' "$(jq -r '.external_reference.document_title' "$RESPONSE_FILE")" >> "$GITHUB_OUTPUT"
+          printf 'replay=%s\n' "$(jq -r '.replay' "$RESPONSE_FILE")" >> "$GITHUB_OUTPUT"
+
+      - name: Production Person read-back
+        shell: bash
+        env:
+          PERSON_ID: ${{ steps.command.outputs.person_id }}
+          EXPECTED_URL: ${{ steps.apply.outputs.canonical_url }}
+          EXPECTED_TITLE: ${{ steps.apply.outputs.document_title }}
+        run: |
+          set -Eeuo pipefail
+          READ_FILE="$RUNNER_TEMP/atlas-namuwiki-link-readback.json"
+          curl --fail --silent --show-error \
+            --get \
+            --data-urlencode "person_id=$PERSON_ID" \
+            "$ATLAS_PERSON_READ_ENDPOINT" > "$READ_FILE"
+          cat "$READ_FILE"
+          ACTUAL_URL="$(jq -er '.person.external_references.namuwiki.url' "$READ_FILE")"
+          ACTUAL_TITLE="$(jq -er '.person.external_references.namuwiki.document_title' "$READ_FILE")"
+          test "$ACTUAL_URL" = "$EXPECTED_URL"
+          test "$ACTUAL_TITLE" = "$EXPECTED_TITLE"
+
+      - name: Comment verified result
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PERSON_ID: ${{ steps.command.outputs.person_id }}
+          CANONICAL_URL: ${{ steps.apply.outputs.canonical_url }}
+          DOCUMENT_TITLE: ${{ steps.apply.outputs.document_title }}
+          REPLAY: ${{ steps.apply.outputs.replay }}
+        run: |
+          set -Eeuo pipefail
+          BODY="✅ NamuWiki link verified\n\nPerson: \`$PERSON_ID\`\nDocument: $DOCUMENT_TITLE\nURL: $CANONICAL_URL\nReplay: $REPLAY\nRun: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          gh api "repos/${GITHUB_REPOSITORY}/issues/431/comments" -f body="$BODY" >/dev/null
+
+      - name: Comment failed result
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -Eeuo pipefail
+          BODY="❌ NamuWiki link command failed; no unverified success is accepted.\n\nRun: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          gh api "repos/${GITHUB_REPOSITORY}/issues/431/comments" -f body="$BODY" >/dev/null

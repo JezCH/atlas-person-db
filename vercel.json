@@ -20,6 +20,10 @@
   },
   "rewrites": [
     {
+      "source": "/api/atlas-namuwiki-link",
+      "destination": "/api/atlas-authoring?__atlas_authoring_surface=namuwiki-link"
+    },
+    {
       "source": "/api/atlas-person-read",
       "destination": "/api/atlas-read?__atlas_read_surface=person"
     },
