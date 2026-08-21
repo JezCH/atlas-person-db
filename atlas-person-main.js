@@ -73,12 +73,14 @@
     let label = yearLabel(boundary.year);
     if (Number.isInteger(boundary.month)) label += ` ${boundary.month}월`;
     if (Number.isInteger(boundary.day)) label += ` ${boundary.day}일`;
+    if (boundary.certainty === "approximate") return `약 ${label}`;
+    if (boundary.certainty === "uncertain") return `${label}?`;
     return label;
   }
 
   function boundaryMeta(boundary) {
     if (!boundary) return [];
-    return [boundary.granularity, boundary.certainty, boundary.calendar].filter((value) => value != null && String(value).trim());
+    return [boundary.granularity, boundary.calendar].filter((value) => value != null && String(value).trim());
   }
 
   function sourceHtml(source) {
@@ -99,15 +101,10 @@
     const relation = activity?.relation?.code || "relation 미상";
     const role = activity?.role?.display_name || activity?.role?.source_label || "역할 미지정";
     const basis = activity?.period_basis?.display_name || activity?.period_basis?.code || "기간 기준 미상";
-    const semantic = [
-      activity?.chronology_status ? `chronology: ${activity.chronology_status}` : null,
-      activity?.confidence != null ? `confidence: ${activity.confidence}` : null
-    ].filter(Boolean);
     return `<span class="person-card-activity" data-activity-id="${escapeHtml(activity?.id || "")}">
       <span class="person-card-activity-head"><b>${escapeHtml(polity)}</b><span class="person-relation-badge">${escapeHtml(relation)}</span></span>
       <span class="person-card-activity-role">${escapeHtml(role)} · ${escapeHtml(basis)}</span>
       <span class="person-card-activity-period">${escapeHtml(boundaryLabel(activity?.start))} – ${escapeHtml(boundaryLabel(activity?.end))}</span>
-      ${semantic.length ? `<small>${semantic.map(escapeHtml).join(" · ")}</small>` : ""}
     </span>`;
   }
 
@@ -261,9 +258,7 @@
     const startMeta = boundaryMeta(activity.start);
     const endMeta = boundaryMeta(activity.end);
     const semanticMeta = [
-      activity.relation?.category ? `relation category: ${activity.relation.category}` : null,
-      activity.confidence != null ? `confidence: ${activity.confidence}` : null,
-      activity.chronology_status ? `chronology: ${activity.chronology_status}` : null
+      activity.relation?.category ? `relation category: ${activity.relation.category}` : null
     ].filter(Boolean);
     const activityId = escapeHtml(activity.id || "");
     return `<article class="person-activity-card" data-activity-id="${activityId}">
@@ -495,7 +490,7 @@
     const personView = document.createElement("section");
     personView.id = "personMainView";
     personView.className = "person-main-view";
-    personView.innerHTML = `<section class="person-main-toolbar card"><div class="person-main-toolbar-heading"><p class="eyebrow">AUTHORITATIVE PERSON READ</p><h2>인물 목록</h2><p>역사성 분류와 연대 확실성을 분리해 표시합니다.</p></div><div class="person-main-actions" aria-label="Person 운영 도구"><button id="personMainAdd" class="btn btn-primary" type="button">+ 관계 추가</button><button id="personMainRefresh" class="btn" type="button">↻ 새로고침</button><button id="personMainExcelExport" class="btn" type="button">⇩ 엑셀 출력</button><button id="personMainExcelImport" class="btn" type="button">⇧ 엑셀 업로드</button><div class="person-main-more"><button id="personMainMoreButton" class="btn" type="button" aria-controls="personMainMoreMenu" aria-expanded="false">⋯ 더보기</button><div id="personMainMoreMenu" class="person-main-more-menu" hidden><a href="./admin.html">관리자 페이지</a><button type="button" data-person-main-action="legacy-tools">전체 관계 편집표</button></div></div></div><div class="person-main-controls"><select id="personMainSort" aria-label="Person 정렬"><option value="start-asc">활동연도 ↑ 과거→현재</option><option value="start-desc">활동연도 ↓ 현재→과거</option></select></div></section>
+    personView.innerHTML = `<section class="person-main-toolbar card"><div class="person-main-toolbar-heading"><p class="eyebrow">AUTHORITATIVE PERSON READ</p><h2>인물 목록</h2><p>연대 불확실성은 활동기간 표기에 직접 반영합니다.</p></div><div class="person-main-actions" aria-label="Person 운영 도구"><button id="personMainAdd" class="btn btn-primary" type="button">+ 관계 추가</button><button id="personMainRefresh" class="btn" type="button">↻ 새로고침</button><button id="personMainExcelExport" class="btn" type="button">⇩ 엑셀 출력</button><button id="personMainExcelImport" class="btn" type="button">⇧ 엑셀 업로드</button><div class="person-main-more"><button id="personMainMoreButton" class="btn" type="button" aria-controls="personMainMoreMenu" aria-expanded="false">⋯ 더보기</button><div id="personMainMoreMenu" class="person-main-more-menu" hidden><a href="./admin.html">관리자 페이지</a><button type="button" data-person-main-action="legacy-tools">전체 관계 편집표</button></div></div></div><div class="person-main-controls"><select id="personMainSort" aria-label="Person 정렬"><option value="start-asc">활동연도 ↑ 과거→현재</option><option value="start-desc">활동연도 ↓ 현재→과거</option></select></div></section>
       <div class="person-main-layout"><div id="personMainGroups" class="person-main-groups"></div><aside id="personMainDetail" class="person-main-detail card" aria-live="polite"><p class="person-detail-placeholder">왼쪽에서 인물을 선택하면 이름·설명·출처와 모든 Activity 의미를 확인할 수 있습니다.</p></aside></div>`;
 
     const authoringTools = document.createElement("details");
