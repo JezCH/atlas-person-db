@@ -17,7 +17,8 @@ const expectedAuthoringMigrations = [
   '20260811_authoring_manifest_runs.sql',
   '20260811_authoring_result_snapshot.sql',
   '20260814_authoring_ledger_live_reference_lifecycle.sql',
-  '20260815_human_authoring_manifest_schema.sql'
+  '20260815_human_authoring_manifest_schema.sql',
+  '20260821_person_external_references.sql'
 ];
 
 const expectedCorrectionMigrations = [
@@ -175,6 +176,19 @@ try {
   assertAuthoringMigrationRegistry(firstAuthoringReplay, 'first authoring replay');
   assertAuthoringMigrationRegistry(secondAuthoringReplay, 'second authoring replay');
 
+  const profileTables = await client.query(`
+    select table_name
+      from information_schema.tables
+     where table_schema='atlas_v2'
+       and table_name in ('person_external_references','person_profile_mutation_audits')
+     order by table_name`);
+  same(profileTables.rows.map((row) => row.table_name), ['person_external_references','person_profile_mutation_audits'], 'person profile authoring tables');
+  const profileAuditIndex = await client.query(`
+    select indexname
+      from pg_indexes
+     where schemaname='atlas_v2' and indexname='person_profile_mutation_audits_person_idx'`);
+  same(profileAuditIndex.rows.map((row) => row.indexname), ['person_profile_mutation_audits_person_idx'], 'person profile audit index');
+
   const firstCorrectionReplay = await applyCorrectionMigrations(client);
   const secondCorrectionReplay = await applyCorrectionMigrations(client);
   assertCorrectionMigrationRegistry(firstCorrectionReplay, 'first correction replay');
@@ -204,6 +218,7 @@ try {
     maintenance_indexes: expectedIndexes.length,
     authoring_migrations: firstAuthoringReplay.applied.length,
     authoring_migration_replay: true,
+    person_profile_authoring_tables: profileTables.rows.length,
     correction_migrations: firstCorrectionReplay.applied.length,
     correction_migration_replay: true,
     correction_manifest_schemas: ['atlas-correction-manifest/v1','atlas-correction-manifest/v1.1','atlas-correction-manifest/v1.2','atlas-correction-manifest/v1.3','atlas-correction-manifest/v2'],
