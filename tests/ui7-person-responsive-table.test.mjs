@@ -18,14 +18,16 @@ test('UI7 table presentation decorates the existing Person render without a seco
   assert.doesNotMatch(tableView, /listPersons|readPerson|ATLAS_SERVER_WRITE_ADAPTER|data-authoring-action/);
 });
 
-test('UI7 keeps the UI-6R4 authoritative compact Activity tuple intact', () => {
+test('UI7 keeps the user-facing UI-6R4 compact Activity tuple intact', () => {
   assert.match(mainSource, /person-card-activities/);
   assert.match(mainSource, /activity\?\.polity\?\.display_name/);
   assert.match(mainSource, /activity\?\.relation\?\.code/);
   assert.match(mainSource, /activity\?\.role\?\.display_name/);
   assert.match(mainSource, /activity\?\.period_basis\?\.display_name/);
-  assert.match(mainSource, /activity\?\.chronology_status/);
-  assert.match(mainSource, /activity\?\.confidence/);
+  assert.match(mainSource, /boundaryLabel\(activity\?\.start\)/);
+  assert.match(mainSource, /boundaryLabel\(activity\?\.end\)/);
+  const compactBody = mainSource.slice(mainSource.indexOf('function compactActivityHtml'), mainSource.indexOf('function groupSection'));
+  assert.doesNotMatch(compactBody, /chronology_status|confidence/);
 });
 
 test('UI7 adds one derived era band while retaining the four authoritative Person data cells', () => {
