@@ -20,7 +20,8 @@ CREATE TABLE IF NOT EXISTS atlas_v2.person_external_references (
 
 CREATE TABLE IF NOT EXISTS atlas_v2.person_profile_mutation_audits (
   request_id text NOT NULL,
-  person_id uuid NOT NULL REFERENCES atlas_v2.persons(id) ON DELETE RESTRICT,
+  -- Deliberately no live FK: immutable audit history must survive an intentional Person hard-delete cleanup.
+  person_id uuid NOT NULL,
   operation text NOT NULL,
   before_snapshot jsonb NOT NULL,
   after_snapshot jsonb NOT NULL,
