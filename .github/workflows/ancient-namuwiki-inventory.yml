@@ -1,0 +1,83 @@
+name: Ancient NamuWiki inventory diagnostic
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  ancient-namuwiki-inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Capture complete ancient Person inventory from Production
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          global.window = {};
+          require('./atlas-person-era-model.js');
+          const eraForYear = global.window.ATLAS_PERSON_ERA_MODEL.eraForYear;
+
+          async function readProduction() {
+            const urls = [
+              'https://atlas-person-db.vercel.app/api/atlas-person-read',
+              'https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=person'
+            ];
+            let lastError = null;
+            for (const url of urls) {
+              try {
+                const response = await fetch(url, { headers: { accept: 'application/json' } });
+                const text = await response.text();
+                if (!response.ok) throw new Error(`${url} -> HTTP ${response.status}: ${text.slice(0, 500)}`);
+                const payload = JSON.parse(text);
+                if (!Array.isArray(payload.persons)) throw new Error(`${url} did not return persons[]`);
+                return { url, payload };
+              } catch (error) {
+                lastError = error;
+              }
+            }
+            throw lastError || new Error('Production Person read failed');
+          }
+
+          (async () => {
+            const { url, payload } = await readProduction();
+            const ancient = payload.persons
+              .filter((person) => eraForYear(person.first_activity_year == null ? null : Number(person.first_activity_year)).code === 'ancient')
+              .map((person) => ({
+                id: String(person.id),
+                canonical_name_en: person.canonical_name_en || null,
+                preferred_name_ko: person.preferred_name_ko || null,
+                display_name: person.display_name || null,
+                historicity: person.historicity || null,
+                first_activity_year: person.first_activity_year == null ? null : Number(person.first_activity_year),
+                last_activity_year: person.last_activity_year == null ? null : Number(person.last_activity_year),
+                namuwiki: person.external_references?.namuwiki || null
+              }))
+              .sort((a, b) => (a.first_activity_year - b.first_activity_year) || String(a.display_name).localeCompare(String(b.display_name), 'ko'));
+
+            const result = {
+              source_url: url,
+              production_total: payload.persons.length,
+              ancient_count: ancient.length,
+              ancient
+            };
+            fs.writeFileSync('ancient-namuwiki-inventory.json', JSON.stringify(result, null, 2));
+            console.log(`PRODUCTION_PERSON_TOTAL=${result.production_total}`);
+            console.log(`ANCIENT_PERSON_COUNT=${result.ancient_count}`);
+            console.log('ANCIENT_INVENTORY_BEGIN');
+            for (const person of ancient) console.log(JSON.stringify(person));
+            console.log('ANCIENT_INVENTORY_END');
+          })().catch((error) => {
+            console.error(error?.stack || error);
+            process.exit(1);
+          });
+          NODE
+      - name: Upload inventory artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ancient-namuwiki-inventory
+          path: ancient-namuwiki-inventory.json
+          if-no-files-found: error
