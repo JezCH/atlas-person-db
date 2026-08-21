@@ -1,0 +1,36 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ying-bu:kingdom-of-jiujiang:king:206-203-bce:v1",
+  "person": {
+    "canonical_name_en": "Ying Bu",
+    "display_name_ko": "영포"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Jiujiang under Ying Bu",
+    "display_name_ko": "영포의 구강국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -206,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -203,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Xiang Yu enfeoffed Ying Bu as King of Jiujiang in 206 BCE. Liu Bang later established him as King of Huainan in Han year 4 (203 BCE), so this Activity records the earlier Jiujiang kingship separately from his later Huainan kingship."
+  },
+  "sources": [
+    {
+      "title": "史記 卷091 黥布列傳",
+      "canonical_url": "https://zh.wikisource.org/zh/%E5%8F%B2%E8%A8%98/%E5%8D%B7091",
+      "citation_text": "The Shiji records Xiang Yu enfeoffing Bu as King of Jiujiang and later records Liu Bang establishing him as King of Huainan in Han year 4.",
+      "source_type": "primary_source"
+    }
+  ]
+}
