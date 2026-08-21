@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Capture complete ancient Person inventory from Production
+      - name: Capture complete ancient Person inventory and probe unresolved titles
         shell: bash
         run: |
           node <<'NODE'
@@ -35,9 +35,7 @@ jobs:
                 const payload = JSON.parse(text);
                 if (!Array.isArray(payload.persons)) throw new Error(`${url} did not return persons[]`);
                 return { url, payload };
-              } catch (error) {
-                lastError = error;
-              }
+              } catch (error) { lastError = error; }
             }
             throw lastError || new Error('Production Person read failed');
           }
@@ -52,24 +50,32 @@ jobs:
             try {
               const response = await fetch(url, {
                 redirect: 'follow',
-                headers: {
-                  accept: 'text/html,application/xhtml+xml',
-                  'user-agent': 'Mozilla/5.0 ATLAS-NamuWiki-link-verifier/1.0'
-                }
+                headers: { accept: 'text/html,application/xhtml+xml', 'user-agent': 'Mozilla/5.0 ATLAS-NamuWiki-link-verifier/1.0' }
               });
               const text = await response.text();
-              return {
-                requested_title: title,
-                status: response.status,
-                ok: response.ok,
-                final_url: response.url,
-                html_title: htmlTitle(text),
-                body_prefix: text.slice(0, 180).replace(/\s+/g, ' ')
-              };
+              return { base, requested_title: title, status: response.status, ok: response.ok, final_url: response.url, html_title: htmlTitle(text) };
             } catch (error) {
-              return { requested_title: title, error: String(error) };
+              return { base, requested_title: title, error: String(error) };
             }
           }
+
+          const alternateCandidates = {
+            '에안나툼': ['에안나툼', '에안나툼(라가시)'],
+            '하투실리 1세': ['하투실리 1세', '하투실리 1세(히타이트)'],
+            '아히람': ['아히람', '아히람 왕', '아히람(비블로스)'],
+            '티레의 피그말리온': ['피그말리온', '피그말리온(티레)', '티레의 피그말리온'],
+            '알라라': ['알라라(쿠시)', '알라라(쿠시 왕국)', '알라라(누비아)', '알라라 왕'],
+            '산헤립': ['산헤립', '센나케립', '센나케리브'],
+            '페이돈': ['페이돈', '페이돈(아르고스)'],
+            '아슈르바니팔': ['아슈르바니팔', '아슈르바니팔 왕'],
+            '페리안드로스': ['페리안드로스', '페리안드로스(코린토스)'],
+            '엔니갈디-난나': ['엔니갈디-난나', '엔니갈디 난나', '엔니갈디'],
+            '폴리크라테스': ['폴리크라테스', '폴리크라테스(사모스)'],
+            '오왕 합려': ['합려', '합려(오)', '오왕 합려', '오왕합려'],
+            '텔레실라': ['텔레실라', '텔레실라(아르고스)'],
+            '월왕 구천': ['구천', '구천(월)', '월왕 구천', '월왕구천'],
+            '고르고 왕비': ['고르고', '고르고(스파르타)', '고르고 왕비']
+          };
 
           (async () => {
             const { url, payload } = await readProduction();
@@ -87,33 +93,26 @@ jobs:
               }))
               .sort((a, b) => (a.first_activity_year - b.first_activity_year) || String(a.display_name).localeCompare(String(b.display_name), 'ko'));
 
-            const result = {
-              source_url: url,
-              production_total: payload.persons.length,
-              ancient_count: ancient.length,
-              ancient
-            };
+            const result = { source_url: url, production_total: payload.persons.length, ancient_count: ancient.length, ancient };
             fs.writeFileSync('ancient-namuwiki-inventory.json', JSON.stringify(result, null, 2));
             console.log(`PRODUCTION_PERSON_TOTAL=${result.production_total}`);
             console.log(`ANCIENT_PERSON_COUNT=${result.ancient_count}`);
-            console.log('ANCIENT_INVENTORY_BEGIN');
-            for (const person of ancient) console.log(JSON.stringify(person));
-            console.log('ANCIENT_INVENTORY_END');
+            console.log(`MISSING_NAMUWIKI_COUNT=${ancient.filter((person) => !person.namuwiki).length}`);
 
-            const missing = ancient.filter((person) => !person.namuwiki);
-            console.log(`MISSING_NAMUWIKI_COUNT=${missing.length}`);
-            console.log('NAMUWIKI_PROBE_BEGIN');
-            for (const person of missing) {
-              const preferred = person.preferred_name_ko || person.display_name || person.canonical_name_en;
-              const variants = [...new Set([preferred, preferred.replace(/\s+/g, '')])];
+            console.log('ALTERNATE_PROBE_BEGIN');
+            for (const person of ancient.filter((person) => !person.namuwiki)) {
+              const name = person.preferred_name_ko || person.display_name || person.canonical_name_en;
+              const candidates = alternateCandidates[name];
+              if (!candidates) continue;
               const probes = [];
-              for (const variant of variants) {
-                probes.push({ source: 'namu.wiki', ...(await probe('https://namu.wiki', variant)) });
-                probes.push({ source: 'www.namu.moe', ...(await probe('https://www.namu.moe', variant)) });
+              for (const candidate of candidates) {
+                for (const base of ['https://www.namu.moe', 'https://d.namu.moe', 'https://dark.namu.moe']) {
+                  probes.push(await probe(base, candidate));
+                }
               }
-              console.log(JSON.stringify({ id: person.id, name: preferred, probes }));
+              console.log(JSON.stringify({ id: person.id, name, probes }));
             }
-            console.log('NAMUWIKI_PROBE_END');
+            console.log('ALTERNATE_PROBE_END');
           })().catch((error) => {
             console.error(error?.stack || error);
             process.exit(1);
