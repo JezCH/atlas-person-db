@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:saguamanchica:bacata:zipa:1470-1490:v1",
+  "person": {
+    "canonical_name_en": "Saguamanchica",
+    "display_name_ko": "사과만치카"
+  },
+  "polity": {
+    "canonical_name_en": "Bacatá",
+    "display_name_ko": "바카타"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Zipa",
+    "role_display_name_ko": "지파",
+    "start_year": 1470,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1490,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Banco de la República's historical synthesis identifies Saguamanchica as zipa or great lord of Bacatá and places him around 1470-1490. Because this pre-conquest chronology is reconstructed from later colonial-era traditions rather than contemporary dated records, ATLAS records both boundaries as approximate and uses Bacatá rather than the broad Chibcha cultural-linguistic label."
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-21"
+    }
+  },
+  "sources": [
+    {
+      "title": "Los señores Muiscas — Banco de la República",
+      "canonical_url": "https://www.banrepcultural.org/biblioteca-virtual/credencial-historia/numero-44/los-senores-muiscas",
+      "citation_text": "Banco de la República identifies Saguamanchica as zipa or gran señor de Bacatá and gives the traditional chronology 1470-1490.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
