@@ -67,7 +67,7 @@ or:
 
 `unknown`, omission, guessed URLs, non-NamuWiki URLs, and a `not_found` record carrying a title or URL are invalid for a new registration. Detailed field rules are documented in `authoring/NAMUWIKI_REGISTRATION_POLICY.md`.
 
-The normal authoring transaction stores the normalized NamuWiki decision in the existing immutable `authoring_manifest_runs.result_snapshot` together with the Person/Activity result. There is no separate NamuWiki write or registry file to maintain.
+The normal authoring transaction preserves the reviewed NamuWiki decision in the immutable `authoring_manifest_runs.result_snapshot` together with the Person/Activity result. The same transaction projects that decision to normalized `person_external_references`, which is the current-state source consumed by Person read. This is one atomic database transaction, not an independent second write. Older reviewed ledger decisions cannot overwrite a Person profile whose `checked_at` is newer.
 
 ## 5. Pull request validation
 
@@ -90,7 +90,9 @@ A human-authoring batch is item-isolated:
 - later items in the same batch still run;
 - the overall workflow fails if any item failed, and the response contains the failed indexes, manifest paths, and error codes.
 
-The NamuWiki decision is persisted atomically with that request's normal authoring ledger snapshot. A failed authoring transaction therefore cannot leave a successful Person/Activity with a falsely recorded NamuWiki result from the same request.
+The NamuWiki decision is persisted in the immutable ledger and projected to normalized Person current state atomically with that request's authoring transaction. A failed authoring transaction therefore cannot leave a successful Person/Activity with a falsely recorded or missing NamuWiki result from the same request.
+
+The authoring migration path also backfills valid reviewed ledger decisions that predate normalized projection. It never overwrites a newer Person-profile decision with an older `checked_at` value.
 
 ## 7. Retry policy — no requeue-only PRs
 
@@ -135,6 +137,8 @@ Keep all of the following:
 - real Source provenance;
 - P9 semantic-key v2 duplicate enforcement;
 - immutable request ledger/idempotent replay;
+- atomic projection of reviewed external-reference decisions to normalized Person current state;
+- newer `checked_at` Person-profile state protected from older authoring decisions;
 - exact GitHub OIDC, runtime SHA, and authoring SHA boundaries;
 - Production readiness checks;
 - authoritative Production read verification after write;
