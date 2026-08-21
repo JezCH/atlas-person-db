@@ -137,6 +137,156 @@
           url: "https://namu.wiki/w/%EB%84%A4%EB%B6%80%EC%B9%B4%EB%93%9C%EB%84%A4%EC%9E%90%EB%A5%B4%202%EC%84%B8"
         })
       ])
+    }),
+    "afe59ea0-afac-5c0f-b767-b6aeaa680456": Object.freeze({
+      namuwiki: Object.freeze({
+        status: "linked",
+        checked_at: "2026-08-21",
+        document_title: "알렉산드로스 3세",
+        url: "https://namu.wiki/w/%EC%95%8C%EB%A0%89%EC%82%B0%EB%93%9C%EB%A1%9C%EC%8A%A4%203%EC%84%B8"
+      }),
+      links: Object.freeze([
+        Object.freeze({
+          provider: "namuwiki",
+          label: "나무위키",
+          url: "https://namu.wiki/w/%EC%95%8C%EB%A0%89%EC%82%B0%EB%93%9C%EB%A1%9C%EC%8A%A4%203%EC%84%B8"
+        })
+      ])
+    }),
+    "c1e67378-d8c2-51d4-855c-112f98827268": Object.freeze({
+      namuwiki: Object.freeze({
+        status: "linked",
+        checked_at: "2026-08-21",
+        document_title: "클레오파트라 7세",
+        url: "https://namu.wiki/w/%ED%81%B4%EB%A0%88%EC%98%A4%ED%8C%8C%ED%8A%B8%EB%9D%BC%207%EC%84%B8"
+      }),
+      links: Object.freeze([
+        Object.freeze({
+          provider: "namuwiki",
+          label: "나무위키",
+          url: "https://namu.wiki/w/%ED%81%B4%EB%A0%88%EC%98%A4%ED%8C%8C%ED%8A%B8%EB%9D%BC%207%EC%84%B8"
+        })
+      ])
+    }),
+    "df38fe8d-ed21-5d88-9ceb-315fcc1aeb40": Object.freeze({
+      namuwiki: Object.freeze({
+        status: "linked",
+        checked_at: "2026-08-21",
+        document_title: "율리우스 카이사르",
+        url: "https://namu.wiki/w/%EC%9C%A8%EB%A6%AC%EC%9A%B0%EC%8A%A4%20%EC%B9%B4%EC%9D%B4%EC%82%AC%EB%A5%B4"
+      }),
+      links: Object.freeze([
+        Object.freeze({
+          provider: "namuwiki",
+          label: "나무위키",
+          url: "https://namu.wiki/w/%EC%9C%A8%EB%A6%AC%EC%9A%B0%EC%8A%A4%20%EC%B9%B4%EC%9D%B4%EC%82%AC%EB%A5%B4"
+        })
+      ])
+    }),
+    "9bddf3fc-e9e2-5b0e-bd3e-2ffd0fca809a": Object.freeze({
+      namuwiki: Object.freeze({
+        status: "linked",
+        checked_at: "2026-08-21",
+        document_title: "아우구스투스",
+        url: "https://namu.wiki/w/%EC%95%84%EC%9A%B0%EA%B5%AC%EC%8A%A4%ED%88%AC%EC%8A%A4"
+      }),
+      links: Object.freeze([
+        Object.freeze({
+          provider: "namuwiki",
+          label: "나무위키",
+          url: "https://namu.wiki/w/%EC%95%84%EC%9A%B0%EA%B5%AC%EC%8A%A4%ED%88%AC%EC%8A%A4"
+        })
+      ])
+    }),
+    "709be8f8-d49a-5845-8a03-1868aeb89491": Object.freeze({
+      namuwiki: Object.freeze({
+        status: "linked",
+        checked_at: "2026-08-21",
+        document_title: "한니발 바르카",
+        url: "https://namu.wiki/w/%ED%95%9C%EB%8B%88%EB%B0%9C%20%EB%B0%94%EB%A5%B4%EC%B9%B4"
+      }),
+      links: Object.freeze([
+        Object.freeze({
+          provider: "namuwiki",
+          label: "나무위키",
+          url: "https://namu.wiki/w/%ED%95%9C%EB%8B%88%EB%B0%9C%20%EB%B0%94%EB%A5%B4%EC%B9%B4"
+        })
+      ])
+    }),
+    "2dc2d224-5ee3-5583-a3af-75d928fb240f": Object.freeze({
+      namuwiki: Object.freeze({
+        status: "linked",
+        checked_at: "2026-08-21",
+        document_title: "레오니다스 1세",
+        url: "https://namu.wiki/w/%EB%A0%88%EC%98%A4%EB%8B%88%EB%8B%A4%EC%8A%A4%201%EC%84%B8"
+      }),
+      links: Object.freeze([
+        Object.freeze({
+          provider: "namuwiki",
+          label: "나무위키",
+          url: "https://namu.wiki/w/%EB%A0%88%EC%98%A4%EB%8B%88%EB%8B%A4%EC%8A%A4%201%EC%84%B8"
+        })
+      ])
+    }),
+    "7c1ee280-92f3-4fe7-8e1f-cf9a4f18eca8": Object.freeze({
+      namuwiki: Object.freeze({
+        status: "linked",
+        checked_at: "2026-08-21",
+        document_title: "소크라테스",
+        url: "https://namu.wiki/w/%EC%86%8C%ED%81%AC%EB%9D%BC%ED%85%8C%EC%8A%A4"
+      }),
+      links: Object.freeze([
+        Object.freeze({
+          provider: "namuwiki",
+          label: "나무위키",
+          url: "https://namu.wiki/w/%EC%86%8C%ED%81%AC%EB%9D%BC%ED%85%8C%EC%8A%A4"
+        })
+      ])
+    }),
+    "798a4946-16ef-5a4b-a7bb-80934250bb90": Object.freeze({
+      namuwiki: Object.freeze({
+        status: "linked",
+        checked_at: "2026-08-21",
+        document_title: "플라톤",
+        url: "https://namu.wiki/w/%ED%94%8C%EB%9D%BC%ED%86%A4"
+      }),
+      links: Object.freeze([
+        Object.freeze({
+          provider: "namuwiki",
+          label: "나무위키",
+          url: "https://namu.wiki/w/%ED%94%8C%EB%9D%BC%ED%86%A4"
+        })
+      ])
+    }),
+    "e116230f-13ee-5a39-82c2-cc9d5bf7edba": Object.freeze({
+      namuwiki: Object.freeze({
+        status: "linked",
+        checked_at: "2026-08-21",
+        document_title: "부디카",
+        url: "https://namu.wiki/w/%EB%B6%80%EB%94%94%EC%B9%B4"
+      }),
+      links: Object.freeze([
+        Object.freeze({
+          provider: "namuwiki",
+          label: "나무위키",
+          url: "https://namu.wiki/w/%EB%B6%80%EB%94%94%EC%B9%B4"
+        })
+      ])
+    }),
+    "e727f13f-f80b-42bd-a482-ef9efd87fdac": Object.freeze({
+      namuwiki: Object.freeze({
+        status: "linked",
+        checked_at: "2026-08-21",
+        document_title: "스파르타쿠스",
+        url: "https://namu.wiki/w/%EC%8A%A4%ED%8C%8C%EB%A5%B4%ED%83%80%EC%BF%A0%EC%8A%A4"
+      }),
+      links: Object.freeze([
+        Object.freeze({
+          provider: "namuwiki",
+          label: "나무위키",
+          url: "https://namu.wiki/w/%EC%8A%A4%ED%8C%8C%EB%A5%B4%ED%83%80%EC%BF%A0%EC%8A%A4"
+        })
+      ])
     })
   });
 
