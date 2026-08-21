@@ -15,6 +15,7 @@ test('P10 Person merge reference policy is explicit and includes every reviewed 
     ['atlas_v2.authoring_manifest_runs.person_id', 'SET NULL'],
     ['atlas_v2.person_descriptions.person_id', 'CASCADE'],
     ['atlas_v2.person_event_participations.person_id', 'RESTRICT'],
+    ['atlas_v2.person_external_references.person_id', 'RESTRICT'],
     ['atlas_v2.person_names.person_id', 'CASCADE'],
     ['atlas_v2.person_people_affiliations.person_id', 'RESTRICT'],
     ['atlas_v2.person_politics_v2.person_id', 'RESTRICT'],
@@ -35,7 +36,8 @@ test('P10-B base snapshots and optional P10-C requirement snapshots are both exp
     'atlas_v2.person_duplicate_reviews.person_high_id',
     'atlas_v2.person_duplicate_reviews.person_low_id',
     'atlas_v2.person_merge_audits.source_person_id',
-    'atlas_v2.person_merge_audits.survivor_person_id'
+    'atlas_v2.person_merge_audits.survivor_person_id',
+    'atlas_v2.person_profile_mutation_audits.person_id'
   ]);
   assert.deepEqual(readiness.P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS, [
     'atlas_v2.person_duplicate_revalidation_requirements.person_high_id',
@@ -48,6 +50,12 @@ test('P10-B base snapshots and optional P10-C requirement snapshots are both exp
   assert.match(readinessSource, /RELATIONSHIP_UUID_REFERENCE_UNREVIEWED/);
   assert.match(readinessSource, /MERGE_SURFACE_TRIGGER_UNREVIEWED/);
   assert.match(readinessSource, /P10_PERSON_MERGE_REFERENCE_SURFACE_DRIFT/);
+});
+
+test('profile external references are live merge data while profile mutation audits remain immutable historical references', () => {
+  assert.match(readinessSource, /person_external_references\.person_id.*RESTRICT/);
+  assert.match(readinessSource, /person_profile_mutation_audits\.person_id/);
+  assert.match(readinessSource, /"person_external_references","person_profile_mutation_audits"/);
 });
 
 test('physical merge executor requires schema-derived readiness and locks full semantic-key v2 Activity state', () => {
