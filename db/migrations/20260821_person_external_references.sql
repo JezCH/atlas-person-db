@@ -65,18 +65,23 @@ WHERE status = 'not_found'
    OR (status = 'linked' AND document_title IS NOT NULL AND url IS NOT NULL)
 ON CONFLICT (person_id, provider) DO NOTHING;
 
--- Migrate the reviewed legacy compatibility references so the browser fallback can be retired.
+-- Migrate reviewed legacy compatibility references. The JOIN keeps clean-schema replay data-free.
+WITH legacy(person_id, document_title, url) AS (
+  VALUES
+    ('da0303c2-1faf-40b8-9dc2-1325b77488d7'::uuid, '임호텝', 'https://namu.wiki/w/%EC%9E%84%ED%98%B8%ED%85%9D'),
+    ('554a98f3-c9d1-5314-a59d-6281a8f6524b'::uuid, '람세스 2세', 'https://namu.wiki/w/%EB%9E%8C%EC%84%B8%EC%8A%A4%202%EC%84%B8'),
+    ('52530876-ecec-5a85-87c5-90eab802ec50'::uuid, '하트셉수트', 'https://namu.wiki/w/%ED%95%98%ED%8A%B8%EC%85%89%EC%88%98%ED%8A%B8'),
+    ('f9518a4b-bd24-48eb-9e42-55fb89eef03d'::uuid, '투탕카멘', 'https://namu.wiki/w/%ED%88%AC%ED%83%95%EC%B9%B4%EB%A9%98'),
+    ('e4d6b96d-92c4-5b6c-b43a-14639526b087'::uuid, '함무라비', 'https://namu.wiki/w/%ED%95%A8%EB%AC%B4%EB%9D%BC%EB%B9%84'),
+    ('4fa88c6e-53cc-5f79-a507-aaf9ef622c7c'::uuid, '키루스 2세', 'https://namu.wiki/w/%ED%82%A4%EB%A3%A8%EC%8A%A4%202%EC%84%B8'),
+    ('9b0e339e-27c5-5330-a2af-371a9459f426'::uuid, '다리우스 1세', 'https://namu.wiki/w/%EB%8B%A4%EB%A6%AC%EC%9A%B0%EC%8A%A4%201%EC%84%B8'),
+    ('b38b88f4-2292-5705-9651-7c997d462a51'::uuid, '크세르크세스 1세', 'https://namu.wiki/w/%ED%81%AC%EC%84%B8%EB%A5%B4%ED%81%AC%EC%84%B8%EC%8A%A4%201%EC%84%B8'),
+    ('037b92ed-fc9b-526e-b5c7-6075b361df6e'::uuid, '네부카드네자르 2세', 'https://namu.wiki/w/%EB%84%A4%EB%B6%80%EC%B9%B4%EB%93%9C%EB%84%A4%EC%9E%90%EB%A5%B4%202%EC%84%B8')
+)
 INSERT INTO atlas_v2.person_external_references(person_id, provider, status, checked_at, document_title, url)
-VALUES
-  ('da0303c2-1faf-40b8-9dc2-1325b77488d7', 'namuwiki', 'linked', DATE '2026-08-21', '임호텝', 'https://namu.wiki/w/%EC%9E%84%ED%98%B8%ED%85%9D'),
-  ('554a98f3-c9d1-5314-a59d-6281a8f6524b', 'namuwiki', 'linked', DATE '2026-08-21', '람세스 2세', 'https://namu.wiki/w/%EB%9E%8C%EC%84%B8%EC%8A%A4%202%EC%84%B8'),
-  ('52530876-ecec-5a85-87c5-90eab802ec50', 'namuwiki', 'linked', DATE '2026-08-21', '하트셉수트', 'https://namu.wiki/w/%ED%95%98%ED%8A%B8%EC%85%89%EC%88%98%ED%8A%B8'),
-  ('f9518a4b-bd24-48eb-9e42-55fb89eef03d', 'namuwiki', 'linked', DATE '2026-08-21', '투탕카멘', 'https://namu.wiki/w/%ED%88%AC%ED%83%95%EC%B9%B4%EB%A9%98'),
-  ('e4d6b96d-92c4-5b6c-b43a-14639526b087', 'namuwiki', 'linked', DATE '2026-08-21', '함무라비', 'https://namu.wiki/w/%ED%95%A8%EB%AC%B4%EB%9D%BC%EB%B9%84'),
-  ('4fa88c6e-53cc-5f79-a507-aaf9ef622c7c', 'namuwiki', 'linked', DATE '2026-08-21', '키루스 2세', 'https://namu.wiki/w/%ED%82%A4%EB%A3%A8%EC%8A%A4%202%EC%84%B8'),
-  ('9b0e339e-27c5-5330-a2af-371a9459f426', 'namuwiki', 'linked', DATE '2026-08-21', '다리우스 1세', 'https://namu.wiki/w/%EB%8B%A4%EB%A6%AC%EC%9A%B0%EC%8A%A4%201%EC%84%B8'),
-  ('b38b88f4-2292-5705-9651-7c997d462a51', 'namuwiki', 'linked', DATE '2026-08-21', '크세르크세스 1세', 'https://namu.wiki/w/%ED%81%AC%EC%84%B8%EB%A5%B4%ED%81%AC%EC%84%B8%EC%8A%A4%201%EC%84%B8'),
-  ('037b92ed-fc9b-526e-b5c7-6075b361df6e', 'namuwiki', 'linked', DATE '2026-08-21', '네부카드네자르 2세', 'https://namu.wiki/w/%EB%84%A4%EB%B6%80%EC%B9%B4%EB%93%9C%EB%84%A4%EC%9E%90%EB%A5%B4%202%EC%84%B8')
+SELECT legacy.person_id, 'namuwiki', 'linked', DATE '2026-08-21', legacy.document_title, legacy.url
+FROM legacy
+JOIN atlas_v2.persons p ON p.id = legacy.person_id
 ON CONFLICT (person_id, provider) DO NOTHING;
 
 COMMIT;
