@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:emperor-gaozong-of-song:song-dynasty:emperor:restored-1129-1162:v1",
+  "person": {
+    "canonical_name_en": "Emperor Gaozong of Song",
+    "display_name_ko": "송 고종"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-21",
+      "document_title": "고종(남송)",
+      "url": "https://namu.wiki/w/%EA%B3%A0%EC%A2%85(%EB%82%A8%EC%86%A1)"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Song Dynasty",
+    "display_name_ko": "송나라"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1129,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1162,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Emperor Gaozong was restored to the throne in 1129 after the brief forced abdication and remained emperor until his abdication in 1162. This is a distinct restored-reign Activity; sub-year boundaries are intentionally not asserted here."
+  },
+  "sources": [
+    {
+      "title": "Song: Emperors: 1127-1276 — Archontology",
+      "canonical_url": "https://www.archontology.org/nations/china/song/00_1127_1276_s.php",
+      "citation_text": "The chronology separately records Gaozong's restoration in 1129 and his restored reign through 1162.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Quatrain on Heavenly Mountain — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/art/collection/search/40058",
+      "citation_text": "The Metropolitan Museum of Art identifies Emperor Gaozong as ruling 1127–1162 and notes his retirement from the throne in 1162.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
