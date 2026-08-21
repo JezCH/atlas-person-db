@@ -32,6 +32,9 @@ const P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS = Object.freeze([
   "atlas_v2.person_duplicate_revalidation_requirements.person_low_id"
 ]);
 const EXPECTED_NON_FK_RELATIONSHIP_UUID_COLUMNS = Object.freeze([]);
+const REVIEWED_USER_TRIGGERS = Object.freeze([
+  "atlas_v2.authoring_manifest_runs.authoring_manifest_runs_project_namuwiki"
+]);
 const DELETE_ACTIONS = Object.freeze({ a:"NO ACTION",r:"RESTRICT",c:"CASCADE",n:"SET NULL",d:"SET DEFAULT" });
 
 function fkKey(row) {
@@ -110,7 +113,9 @@ async function inspectPersonMergeReferenceReadiness(client) {
       "person_event_participations","person_event_participation_sources","person_external_references","person_profile_mutation_audits",
       "authoring_manifest_runs","person_duplicate_revalidation_requirements"
     ]]);
-  const userTriggers = (triggerResult.rows || []).map((row) => `${row.table_schema}.${row.table_name}.${row.trigger_name}`);
+  const allUserTriggers = (triggerResult.rows || []).map((row) => `${row.table_schema}.${row.table_name}.${row.trigger_name}`);
+  const userTriggers = difference(allUserTriggers, REVIEWED_USER_TRIGGERS);
+  const reviewedUserTriggers = allUserTriggers.filter((trigger) => REVIEWED_USER_TRIGGERS.includes(trigger));
 
   const blockers = [];
   evaluateFkSurface("PERSON",personFks,EXPECTED_PERSON_FKS,blockers);
@@ -127,7 +132,7 @@ async function inspectPersonMergeReferenceReadiness(client) {
     expected_non_fk_person_uuid_columns:Object.freeze(expectedPersonSnapshots),
     person_fks:Object.freeze(personFks),relationship_fks:Object.freeze(relationshipFks),
     non_fk_person_uuid_columns:Object.freeze(nonFkPersonUuidColumns),non_fk_relationship_uuid_columns:Object.freeze(nonFkRelationshipUuidColumns),
-    user_triggers:Object.freeze(userTriggers)
+    reviewed_user_triggers:Object.freeze(reviewedUserTriggers),user_triggers:Object.freeze(userTriggers)
   });
 }
 async function assertPersonMergeReferenceReadiness(client) {
@@ -140,6 +145,6 @@ async function assertPersonMergeReferenceReadiness(client) {
 }
 module.exports=Object.freeze({
   PERSON_REFERENCE_POLICY_VERSION,EXPECTED_PERSON_FKS,EXPECTED_RELATIONSHIP_FKS,
-  EXPECTED_NON_FK_PERSON_UUID_COLUMNS,P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS,EXPECTED_NON_FK_RELATIONSHIP_UUID_COLUMNS,
+  EXPECTED_NON_FK_PERSON_UUID_COLUMNS,P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS,EXPECTED_NON_FK_RELATIONSHIP_UUID_COLUMNS,REVIEWED_USER_TRIGGERS,
   inspectPersonMergeReferenceReadiness,assertPersonMergeReferenceReadiness
 });

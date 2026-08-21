@@ -36,9 +36,12 @@ The server performs the internal work in one PostgreSQL `SERIALIZABLE` transacti
 6. Source creation/reuse and provenance-link construction;
 7. compilation to the UUID-only, full-temporal Stage 2 Activity contract;
 8. semantic-key v2 duplicate enforcement through `atlas-stage2-native-activity-service`;
-9. immutable request ledger snapshot containing the normalized NamuWiki decision and commit.
+9. immutable request ledger snapshot containing the normalized NamuWiki decision;
+10. atomic projection of that reviewed decision to the normalized current Person external-reference state and commit.
 
-The NamuWiki result uses the existing `atlas_v2.authoring_manifest_runs.result_snapshot` JSONB ledger. No extra NamuWiki table or second transaction is required. The Person read service projects the latest explicit stored decision back onto the Person response.
+The immutable request decision remains in `atlas_v2.authoring_manifest_runs.result_snapshot`. The current Person-level projection lives in `atlas_v2.person_external_references`, which is what Person read consumes. The projection occurs inside the same database transaction as the authoring ledger insert, so there is no second independent write that can partially succeed.
+
+If a Person later receives a newer reviewed external-reference decision, older authoring requests cannot overwrite it: normalized projection only advances when the incoming `checked_at` is later than the current state. Valid reviewed ledger decisions from before the projection contract are backfilled by the authoring migration path.
 
 Names and controlled vocabulary codes are resolver inputs only. UUIDs remain database identity. Ambiguous exact-name matches, inactive or unknown controlled-vocabulary codes, source-less writes, historical year zero, semantic duplicates, invalid NamuWiki decisions, or P9 readiness failure all fail closed.
 
@@ -54,12 +57,12 @@ The same form requires a NamuWiki result and checked date. When `linked` is sele
 
 ## NamuWiki display behavior
 
-The Person list/detail API carries `external_references.namuwiki` when an explicit decision has been stored by authoring. The main Person table consumes that authoritative read data:
+The Person list/detail API carries `external_references.namuwiki` from normalized `person_external_references` current state. The main Person table consumes that authoritative read data:
 
 - `linked` → the visible main Person name itself receives the existing colored/underlined `↗` NamuWiki hyperlink;
 - `not_found` → no hyperlink is rendered, while the checked status remains available in Person read data.
 
-No NamuWiki link is added to the Person detail-panel heading. Legacy reviewed mappings may remain as compatibility fallbacks for Persons registered before this contract.
+No NamuWiki link is added to the Person detail-panel heading. Reviewed compatibility mappings from before normalized Person profiles are migrated into the normalized table rather than retained as a hardcoded Person fallback.
 
 ## Temporal boundary policy
 
