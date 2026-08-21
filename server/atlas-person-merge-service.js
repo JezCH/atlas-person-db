@@ -18,6 +18,7 @@ const {
 const { refreshCandidateFrontier } = require("./atlas-duplicate-review-service.js");
 const { lockPersonDuplicateFrontier } = require("./atlas-person-duplicate-frontier-lock.js");
 const { assertPersonMergeExecutionAllowed } = require("./atlas-person-merge-interlock.js");
+const { reconcilePersonExternalReferences } = require("./atlas-person-external-reference-lifecycle.js");
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -58,6 +59,7 @@ async function snapshotPerson(client, personId) {
   const names = await client.query(`select id,locale,name,name_type,is_preferred from atlas_v2.person_names where person_id=$1 order by locale,is_preferred desc,name,name_type,id`, [personId]);
   const sources = await client.query(`select source_id from atlas_v2.person_sources where person_id=$1 order by source_id`, [personId]);
   const descriptions = await client.query(`select id,locale,content from atlas_v2.person_descriptions where person_id=$1 order by locale,id`, [personId]);
+  const externalReferences = await client.query(`select provider,status,checked_at::text,document_title,url from atlas_v2.person_external_references where person_id=$1 order by provider`, [personId]);
   const relationships = await client.query(`select
       id,person_id,polity_id,relation_type_id,role_id,period_basis_id,
       activity_start,activity_start_month,activity_start_day,activity_start_granularity,activity_start_calendar,activity_start_certainty,
@@ -78,6 +80,7 @@ async function snapshotPerson(client, personId) {
     names: names.rows,
     sources: sources.rows,
     descriptions: descriptions.rows,
+    external_references: externalReferences.rows,
     relationships: relationships.rows,
     relationship_sources: relationshipSources.rows,
     chronology_claims: chronologyClaims.rows,
@@ -99,7 +102,8 @@ async function globalCounts(client) {
     (select count(*)::int from atlas_v2.person_people_affiliations) as people_affiliations,
     (select count(*)::int from atlas_v2.person_people_affiliation_sources) as people_affiliation_sources,
     (select count(*)::int from atlas_v2.person_event_participations) as event_participations,
-    (select count(*)::int from atlas_v2.person_event_participation_sources) as event_participation_sources`);
+    (select count(*)::int from atlas_v2.person_event_participation_sources) as event_participation_sources,
+    (select count(*)::int from atlas_v2.person_external_references) as external_references`);
   return result.rows[0];
 }
 
@@ -288,6 +292,7 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
 
     const names = await moveNames(client, sides.source_person_id, sides.survivor_person_id);
     const sources = await moveSources(client, sides.source_person_id, sides.survivor_person_id);
+    const externalReferences = await reconcilePersonExternalReferences(client, sides.source_person_id, sides.survivor_person_id);
     const descriptions = await client.query(`update atlas_v2.person_descriptions set person_id=$2 where person_id=$1 returning id`, [sides.source_person_id, sides.survivor_person_id]);
     const relationships = await client.query(`update atlas_v2.person_politics_v2 set person_id=$2 where person_id=$1 returning id`, [sides.source_person_id, sides.survivor_person_id]);
     const peopleAffiliations = await client.query(`update atlas_v2.person_people_affiliations set person_id=$2 where person_id=$1 returning id`, [sides.source_person_id, sides.survivor_person_id]);
@@ -307,6 +312,7 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
       (select count(*)::int from atlas_v2.person_politics_v2 where person_id=$1) as relationships,
       (select count(*)::int from atlas_v2.person_people_affiliations where person_id=$1) as people_affiliations,
       (select count(*)::int from atlas_v2.person_event_participations where person_id=$1) as event_participations,
+      (select count(*)::int from atlas_v2.person_external_references where person_id=$1) as external_references,
       (select count(*)::int from atlas_v2.authoring_manifest_runs where person_id=$1) as authoring_person_pointers,
       (select count(*)::int from atlas_v2.persons where id=$1) as person`, [sides.source_person_id]);
     if (Object.values(remainingSourceRefs.rows[0]).some((value) => Number(value) !== 0)) throw new Error("source person references remain after merge");
@@ -323,6 +329,7 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
     if (afterCounts.people_affiliation_sources !== beforeCounts.people_affiliation_sources) throw new Error("people affiliation provenance count changed during person merge");
     if (afterCounts.event_participations !== beforeCounts.event_participations) throw new Error("event participation count changed during person merge");
     if (afterCounts.event_participation_sources !== beforeCounts.event_participation_sources) throw new Error("event participation provenance count changed during person merge");
+    if (afterCounts.external_references !== beforeCounts.external_references - externalReferences.collapsed) throw new Error("external reference count changed outside deterministic reference collapse");
 
     const mutationSummary = {
       reference_readiness: { policy_version: referenceReadiness.policy_version, ready: referenceReadiness.ready },
@@ -330,6 +337,7 @@ async function executeApprovedPersonMerge({ client, candidateId, survivorPersonI
       relationship_reconciliation: { requested_resolutions: normalizedResolutions, applied_resolutions: reconciliationPlan.resolutions, coalesces: reconciliationMutations, relationships_removed: reconciliationPlan.coalesces.length, duplicate_source_links_collapsed: collapsedSourceLinks },
       names,
       sources,
+      external_references: externalReferences,
       descriptions_moved: descriptions.rowCount,
       relationships_moved: relationships.rowCount,
       people_affiliations_moved: peopleAffiliations.rowCount,

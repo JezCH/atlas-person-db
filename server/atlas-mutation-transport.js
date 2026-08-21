@@ -1,6 +1,9 @@
 "use strict";
 
-const ALLOWED_OPERATIONS = new Set(["create", "update", "delete", "delete_person", "import", "reconcile"]);
+const ALLOWED_OPERATIONS = new Set([
+  "create", "update", "delete", "delete_person", "import", "reconcile",
+  "set_person_korean_name", "set_person_external_reference"
+]);
 
 function jsonResponse(status, body) {
   return {
@@ -93,4 +96,4 @@ function createMutationTransport({ mutationService, authorize } = {}) {
   return Object.freeze({ handle });
 }
 
-module.exports = Object.freeze({ createMutationTransport, validateRequest, parseBody, jsonResponse });
+module.exports = Object.freeze({ createMutationTransport, validateRequest, parseBody, jsonResponse, ALLOWED_OPERATIONS });

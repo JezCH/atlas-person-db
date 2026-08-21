@@ -152,6 +152,15 @@
       deletePerson: (personId) => mutate("delete_person", {
         person_id: String(personId || "").trim()
       }),
+      setPersonKoreanName: (personId, name) => mutate("set_person_korean_name", {
+        person_id: String(personId || "").trim(),
+        name: String(name || "").trim()
+      }),
+      setPersonExternalReference: (personId, provider, value) => mutate("set_person_external_reference", {
+        person_id: String(personId || "").trim(),
+        provider: String(provider || "").trim(),
+        value: String(value || "").trim()
+      }),
       importActivities: (rows) => mutate("import", rows),
       ensureSession,
       sessionStatus,

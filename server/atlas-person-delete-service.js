@@ -2,6 +2,7 @@
 
 const crypto = require("node:crypto");
 const { lockPersonDuplicateFrontier } = require("./atlas-person-duplicate-frontier-lock.js");
+const { deletePersonExternalReferences } = require("./atlas-person-external-reference-lifecycle.js");
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -59,6 +60,7 @@ async function verifyNoLiveReferences(client, personId, { requirementLedgerPrese
       (select count(*)::int from atlas_v2.person_names where person_id=$1) as names,
       (select count(*)::int from atlas_v2.person_sources where person_id=$1) as person_sources,
       (select count(*)::int from atlas_v2.person_descriptions where person_id=$1) as person_descriptions,
+      (select count(*)::int from atlas_v2.person_external_references where person_id=$1) as external_references,
       (select count(*)::int from atlas_v2.person_politics_v2 where person_id=$1) as activities,
       (select count(*)::int from atlas_v2.person_people_affiliations where person_id=$1) as people_affiliations,
       (select count(*)::int from atlas_v2.person_event_participations where person_id=$1) as event_participations,
@@ -132,6 +134,7 @@ function createPersonDeleteService({
       deleted.event_participations = (await client.query(`delete from atlas_v2.person_event_participations where person_id=$1 returning id`, [personId])).rowCount;
       deleted.person_sources = (await client.query(`delete from atlas_v2.person_sources where person_id=$1 returning source_id`, [personId])).rowCount;
       deleted.person_descriptions = (await client.query(`delete from atlas_v2.person_descriptions where person_id=$1 returning id`, [personId])).rowCount;
+      deleted.external_references = await deletePersonExternalReferences(client, personId);
       deleted.person_names = (await client.query(`delete from atlas_v2.person_names where person_id=$1 returning id`, [personId])).rowCount;
       deleted.authoring_person_refs_cleared = (await client.query(`update atlas_v2.authoring_manifest_runs set person_id=null where person_id=$1 returning request_id`, [personId])).rowCount;
 

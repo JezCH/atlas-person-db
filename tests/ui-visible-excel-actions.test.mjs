@@ -31,7 +31,7 @@ test('Person Main Excel actions reuse the existing authoritative Excel bridge in
 test('the separate Excel toolbar patch runtime is fully retired', () => {
   assert.equal(fs.existsSync(new URL('../atlas-person-excel-actions.js', import.meta.url)), false);
   assert.doesNotMatch(html, /atlas-person-excel-actions\.js/);
-  assert.match(html, /atlas-person-main\.js\?v=20260817-toolbar-owner-r1/);
+  assert.match(html, /atlas-person-main\.js\?v=20260821-person-profile-v1/);
 });
 
 test('Person Main More menu no longer carries duplicate Excel commands', () => {

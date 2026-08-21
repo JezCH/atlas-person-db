@@ -28,8 +28,11 @@ test('UI-6R3 keeps primary Person authoring controls before the long Person list
   assert.ok(toolbarPosition >= 0 && groupPosition > toolbarPosition, 'primary authoring controls must be emitted before the Person list/detail layout');
 });
 
-test('UI-6R3 reuses the existing authoring controls instead of introducing a second mutation adapter', () => {
-  assert.doesNotMatch(mainSource, /ATLAS_SERVER_WRITE_ADAPTER|createAdapter\(|createActivity\(|updateActivity\(|deleteActivity\(|importActivities\(/);
+test('UI-6R3 reuses legacy Activity authoring controls while allowing dedicated Person profile mutations', () => {
+  assert.doesNotMatch(mainSource, /createAdapter\(|createActivity\(|updateActivity\(|deleteActivity\(|importActivities\(/);
+  assert.match(mainSource, /ATLAS_SERVER_WRITE_ADAPTER/);
+  assert.match(mainSource, /setPersonKoreanName/);
+  assert.match(mainSource, /setPersonExternalReference/);
   for (const token of [
     'document.getElementById("addButton")',
     'document.getElementById("exportButton")',
