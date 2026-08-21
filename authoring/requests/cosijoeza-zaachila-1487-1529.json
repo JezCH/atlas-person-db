@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cosijoeza:zaachila:king:1487-1529:v1",
+  "person": {
+    "canonical_name_en": "Cosijoeza",
+    "display_name_ko": "코시호에사"
+  },
+  "polity": {
+    "canonical_name_en": "Zaachila",
+    "display_name_ko": "사아칠라"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1487,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1529,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "INAH identifies the late Postclassic Zapotec-Mixtec city-state of Zaachila as governed by King Cosijoeza, while older ethnohistorical reconstructions place a ruler of this name in the late fifteenth and early sixteenth centuries. Because Zapotec dynastic genealogies and similarly named rulers are reconstructed from later sources and remain debated in modern scholarship, ATLAS stores 1487-1529 only as an approximate traditional reign window and does not treat the boundaries as exact accession or death dates."
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-21"
+    }
+  },
+  "sources": [
+    {
+      "title": "Zaachila — Instituto Nacional de Antropología e Historia",
+      "canonical_url": "https://lugares.inah.gob.mx/en/node/4368",
+      "citation_text": "INAH describes Zaachila as a Zapotec-Mixtec city governed by King Cosijoeza and identifies it as a major Late Postclassic political center.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Monograph on ornaments on Zapotec funerary urns — Journal de la Société des Américanistes",
+      "canonical_url": "https://www.persee.fr/doc/jsa_0037-9174_1938_num_30_1_1970",
+      "citation_text": "This older scholarly reconstruction gives Cosijoeza's proclamation in 1487 and describes him as the last great Zapotec king; ATLAS uses this chronology only approximately because later scholarship has complicated the dynastic reconstruction.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:alaric-i:visigoths:king:395-410:v1",
+  "person": {
+    "canonical_name_en": "Alaric I",
+    "display_name_ko": "알라리크 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Visigoths",
+    "display_name_ko": "서고트족"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 395,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 410,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Oxford Classical Dictionary identifies Alaric as the Gothic leader of c.395-410 who created the Visigoths. ATLAS therefore attaches his reign to the Visigoth political community rather than an anachronistic territorial Visigothic Kingdom in Gaul, whose durable settlement followed after Alaric's death."
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-21",
+      "document_title": "알라리크",
+      "url": "https://namu.wiki/w/%EC%95%8C%EB%9D%BC%EB%A6%AC%ED%81%AC"
+    }
+  },
+  "sources": [
+    {
+      "title": "Alaric — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548067035",
+      "citation_text": "Peter Heather's Oxford Classical Dictionary article identifies Alaric as the Gothic leader of approximately 395-410 CE who created the Visigoths and died soon after the sack of Rome in 410.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
