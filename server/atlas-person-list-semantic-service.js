@@ -161,7 +161,9 @@ function attachPersonListSemantics(persons, rows) {
     const bucket = byPerson.get(personId) || createBucket();
     const activity = projectCompactActivity(rawRow);
     bucket.activities.push(activity);
-    pushUnique(bucket, "polities", activity.polity);
+    if (activity.relation?.code !== "opposes") {
+      pushUnique(bucket, "polities", activity.polity);
+    }
     pushUnique(bucket, "relations", activity.relation);
     pushUnique(bucket, "roles", activity.role);
     pushUnique(bucket, "period_bases", activity.period_basis);
