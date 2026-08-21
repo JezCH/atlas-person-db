@@ -39,6 +39,7 @@ test('historical C8 workflow manifest remains audit evidence while current workf
   assert.deepEqual(workflows, [
     'atlas-audit-inventory.yml',
     'atlas-authoring-apply.yml',
+    'atlas-authoring-schema-bootstrap.yml',
     'atlas-correction-apply.yml',
     'atlas-human-authoring-operational-parity.yml',
     'atlas-integrity.yml',
