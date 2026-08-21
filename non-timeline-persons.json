@@ -218,5 +218,39 @@
     "role_ko": "고조선의 전설적 건국자",
     "reason": "Dangun Wanggeom is the legendary founder of Gojoseon in later Korean historical tradition. The conventional 2333 BCE foundation date is preserved only as a traditional-year association; it is not treated as a verified reign boundary, and no secure contemporary personal chronology exists.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or traditional overlay is enabled."
+  },
+  {
+    "person_name": "Moses",
+    "politic_name": "Israelites",
+    "display_name_ko": "모세",
+    "politic_display_name_ko": "이스라엘인",
+    "historicity": "legendary_possible_historical_core",
+    "historicity_display_ko": "전승·역사적 핵심 가능",
+    "timeline_status": "excluded",
+    "date_basis": "biblical_tradition_unverified_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "예언자·지도자·입법자",
+    "reason": "Moses is the central leader and lawgiver of the Exodus tradition, but no contemporary evidence securely establishes him as a datable historical individual or provides a verified absolute chronology. ATLAS therefore preserves the traditional Israelite association while leaving all timeline years unknown.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "Abraham",
+    "politic_name": "Abrahamic Clan",
+    "display_name_ko": "아브라함",
+    "politic_display_name_ko": "아브라함 씨족",
+    "historicity": "legendary_or_unverified",
+    "historicity_display_ko": "전승·역사성 미검증",
+    "timeline_status": "excluded",
+    "date_basis": "patriarchal_biblical_tradition_unverified_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "족장·씨족 지도자",
+    "reason": "Abraham is the founding patriarch of the Genesis tradition, but historical-critical scholarship cannot independently establish him as a datable historical individual or derive a secure absolute chronology for his life. ATLAS therefore records the traditional clan-leader association without assigning a timeline year.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
   }
 ]
