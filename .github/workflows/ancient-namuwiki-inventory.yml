@@ -10,7 +10,6 @@ permissions:
 jobs:
   ancient-namuwiki-inventory:
     runs-on: ubuntu-latest
-    environment: production
     env:
       ATLAS_MUTATION_TOKEN: ${{ secrets.ATLAS_MUTATION_TOKEN }}
       ATLAS_ADMIN_PASSWORD: ${{ secrets.ATLAS_ADMIN_PASSWORD }}
