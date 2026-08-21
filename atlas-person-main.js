@@ -3,6 +3,7 @@
 
   const reader = window.ATLAS_PERSON_BROWSER_READER;
   const externalReferences = window.ATLAS_PERSON_EXTERNAL_REFERENCES;
+  const profileWriter = window.ATLAS_SERVER_WRITE_ADAPTER?.createAdapter?.() || null;
   const mainArea = document.querySelector(".main-area");
   const toolbar = mainArea?.querySelector(":scope > .toolbar");
   const legacyContent = mainArea?.querySelector(":scope > .content-grid");
@@ -231,6 +232,27 @@
     return descriptions.map((row) => `<article class="person-description"><small>${escapeHtml(row.locale || "")}</small><p>${escapeHtml(row.content || "")}</p></article>`).join("");
   }
 
+  function profileEditorHtml(person) {
+    const personId = escapeHtml(person?.id || "");
+    const koreanName = escapeHtml(person?.preferred_name_ko || "");
+    const namuwiki = person?.external_references?.namuwiki;
+    const namuwikiValue = namuwiki?.status === "linked" ? escapeHtml(namuwiki.url || "") : "";
+    const namuwikiState = namuwiki?.status === "linked"
+      ? `현재 연결: ${escapeHtml(namuwiki.document_title || namuwiki.url || "나무위키")}`
+      : namuwiki?.status === "not_found" ? "현재 연결된 나무위키 문서 없음" : "미등록";
+    return `<section class="person-detail-section person-profile-editor"><div class="person-detail-section-head"><h3>표시 정보 수정</h3><span>Person 전체 화면에 공통 반영</span></div>
+      <form class="person-profile-form" data-person-profile-operation="set_person_korean_name" data-person-id="${personId}">
+        <label><span>한국어 이름</span><input type="text" name="korean_name" value="${koreanName}" maxlength="160" autocomplete="off" placeholder="한국어 표시 이름" required></label>
+        <button class="mini-btn edit" type="submit">이름 저장</button>
+      </form>
+      <form class="person-profile-form" data-person-profile-operation="set_person_external_reference" data-person-id="${personId}">
+        <label><span>나무위키 문서</span><input type="text" name="namuwiki_reference" value="${namuwikiValue}" autocomplete="off" inputmode="url" placeholder="https://namu.wiki/w/... 또는 문서명" required></label>
+        <button class="mini-btn edit" type="submit">등록</button>
+      </form>
+      <p class="person-profile-help">${namuwikiState} · 저장 시 관리자 인증 후 authoritative Person 데이터에 기록됩니다.</p>
+    </section>`;
+  }
+
   function activityHtml(activity) {
     const role = activity.role?.display_name || activity.role?.source_label || "역할 미지정";
     const relation = activity.relation?.code || "relation 미상";
@@ -261,6 +283,7 @@
     if (!panel) return;
     const rawHistoricity = person?.historicity == null || String(person.historicity) === "" ? "historicity 미상" : String(person.historicity);
     panel.innerHTML = `<div class="person-detail-head"><div><p class="eyebrow">PERSON DETAIL</p><div class="person-detail-name-row"><h2>${escapeHtml(person.display_name || person.canonical_name_en || "이름 미상")}</h2>${externalLinksHtml(person)}</div><p><span class="person-historicity">${escapeHtml(rawHistoricity)}</span><span class="person-type-badge">${escapeHtml(person.person_type || "type 미상")}</span></p></div></div>
+      ${profileEditorHtml(person)}
       <section class="person-detail-section"><h3>이름</h3>${namesHtml(person.names)}</section>
       <section class="person-detail-section"><h3>설명</h3>${descriptionsHtml(person.descriptions)}</section>
       <section class="person-detail-section"><h3>Person 출처</h3>${sourceListHtml(person.sources)}</section>
@@ -317,6 +340,47 @@
     toast.hidden = false;
     clearTimeout(showOperationalMessage.timer);
     showOperationalMessage.timer = setTimeout(() => { toast.hidden = true; }, 3200);
+  }
+
+  function outcomeError(outcome, fallback) {
+    if (Array.isArray(outcome?.errors) && outcome.errors.length) return outcome.errors.join("; ");
+    if (Array.isArray(outcome?.validation_failures) && outcome.validation_failures.length) {
+      return outcome.validation_failures.map((row) => row?.code || row?.field || "validation failed").join("; ");
+    }
+    return outcome?.transaction_failure || fallback;
+  }
+
+  async function handleProfileSubmit(event) {
+    const form = event.target.closest?.("form[data-person-profile-operation][data-person-id]");
+    if (!form) return;
+    event.preventDefault();
+    if (!profileWriter) return showOperationalMessage("Person 편집 서비스가 초기화되지 않았습니다.");
+    const operation = form.dataset.personProfileOperation;
+    const personId = form.dataset.personId;
+    const button = form.querySelector('button[type="submit"]');
+    if (button) button.disabled = true;
+    try {
+      let outcome;
+      if (operation === "set_person_korean_name") {
+        const value = form.elements.korean_name?.value || "";
+        outcome = await profileWriter.setPersonKoreanName(personId, value);
+      } else if (operation === "set_person_external_reference") {
+        const value = form.elements.namuwiki_reference?.value || "";
+        outcome = await profileWriter.setPersonExternalReference(personId, "namuwiki", value);
+      } else {
+        return showOperationalMessage("지원하지 않는 Person 편집 작업입니다.");
+      }
+      if (outcome?.committed !== true) {
+        return showOperationalMessage(outcomeError(outcome, "Person 정보 저장에 실패했습니다."));
+      }
+      if (operation === "set_person_external_reference") await externalReferences?.reload?.();
+      showOperationalMessage(operation === "set_person_korean_name" ? "한국어 이름을 전체 화면에 반영했습니다." : "나무위키 문서를 연결했습니다.");
+      await loadPersons({ keepSelection:true });
+    } catch (error) {
+      showOperationalMessage(error?.message || "Person 정보 저장에 실패했습니다.");
+    } finally {
+      if (button?.isConnected) button.disabled = false;
+    }
   }
 
   function legacyActivityButton(activityId, action) {
@@ -476,6 +540,7 @@
       const card = event.target.closest("[data-person-id]");
       if (card) selectPerson(card.dataset.personId);
     });
+    detail?.addEventListener("submit", handleProfileSubmit);
     detail?.addEventListener("click", (event) => {
       const actionButton = event.target.closest("[data-authoring-action][data-activity-id]");
       if (!actionButton) return;
@@ -512,6 +577,7 @@
     boundaryLabel,
     safeHttpUrl,
     externalLinksHtml,
+    profileEditorHtml,
     openLegacyCreate,
     invokeLegacyActivityAction,
     exportLegacyExcel,
