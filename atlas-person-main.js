@@ -101,8 +101,12 @@
     const relation = activity?.relation?.code || "relation 미상";
     const role = activity?.role?.display_name || activity?.role?.source_label || "역할 미지정";
     const basis = activity?.period_basis?.display_name || activity?.period_basis?.code || "기간 기준 미상";
+    const showAffiliatedPolity = String(relation).trim().toLowerCase() !== "opposes";
+    const polityHead = showAffiliatedPolity
+      ? `<span class="person-card-activity-head"><b>${escapeHtml(polity)}</b><span class="person-relation-badge">${escapeHtml(relation)}</span></span>`
+      : "";
     return `<span class="person-card-activity" data-activity-id="${escapeHtml(activity?.id || "")}">
-      <span class="person-card-activity-head"><b>${escapeHtml(polity)}</b><span class="person-relation-badge">${escapeHtml(relation)}</span></span>
+      ${polityHead}
       <span class="person-card-activity-role">${escapeHtml(role)} · ${escapeHtml(basis)}</span>
       <span class="person-card-activity-period">${escapeHtml(boundaryLabel(activity?.start))} – ${escapeHtml(boundaryLabel(activity?.end))}</span>
     </span>`;
