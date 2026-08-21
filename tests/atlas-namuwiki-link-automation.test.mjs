@@ -13,7 +13,7 @@ const api = fs.readFileSync(new URL("../api/atlas-authoring.js", import.meta.url
 const vercel = JSON.parse(fs.readFileSync(new URL("../vercel.json", import.meta.url), "utf8"));
 const SHA = "a".repeat(40);
 const PERSON_ID = "da0303c2-1faf-40b8-9dc2-1325b77488d7";
-const URL = "https://namu.wiki/w/%EC%9E%84%ED%98%B8%ED%85%9D";
+const NAMUWIKI_URL = "https://namu.wiki/w/%EC%9E%84%ED%98%B8%ED%85%9D";
 
 function trustedClaims(overrides = {}) {
   return {
@@ -43,17 +43,17 @@ test("dedicated NamuWiki OIDC trust accepts only Issue-comment workflow context"
 });
 
 test("dedicated payload is narrow and canonicalizes only a real namu.wiki document URL", () => {
-  const payload = handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, person_id:PERSON_ID, url:URL });
+  const payload = handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, person_id:PERSON_ID, url:NAMUWIKI_URL });
   assert.equal(payload.personId, PERSON_ID);
-  assert.equal(payload.externalReference.url, URL);
+  assert.equal(payload.externalReference.url, NAMUWIKI_URL);
   assert.equal(payload.externalReference.document_title, "임호텝");
   assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, person_id:PERSON_ID, url:"https://namu.moe/w/x" }), /CANONICAL_URL_REQUIRED/);
-  assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, person_id:PERSON_ID, url:`${URL}?from=x` }), /CANONICAL_URL_REQUIRED/);
-  assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, person_id:PERSON_ID, url:URL, operation:"set_person_korean_name" }), /UNEXPECTED_FIELD/);
+  assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, person_id:PERSON_ID, url:`${NAMUWIKI_URL}?from=x` }), /CANONICAL_URL_REQUIRED/);
+  assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, person_id:PERSON_ID, url:NAMUWIKI_URL, operation:"set_person_korean_name" }), /UNEXPECTED_FIELD/);
 });
 
 test("automation overwrite guard blocks a different linked URL but permits replay and not_found recovery", () => {
-  const next = profile.normalizeNamuWikiInput(URL);
+  const next = profile.normalizeNamuWikiInput(NAMUWIKI_URL);
   assert.equal(profile.shouldBlockExternalReferenceOverwrite({ provider:"namuwiki", status:"linked", document_title:"다른 문서", url:"https://namu.wiki/w/other" }, next, { preventOverwrite:true }), true);
   assert.equal(profile.shouldBlockExternalReferenceOverwrite({ provider:"namuwiki", status:"linked", document_title:next.document_title, url:next.url }, next, { preventOverwrite:true }), false);
   assert.equal(profile.shouldBlockExternalReferenceOverwrite({ provider:"namuwiki", status:"not_found", document_title:null, url:null }, next, { preventOverwrite:true }), false);
