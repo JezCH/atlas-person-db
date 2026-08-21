@@ -30,12 +30,18 @@ select
     where pd.person_id = p.id
   ), '[]'::jsonb) as descriptions,
   coalesce((
-    select amr.result_snapshot->'external_references'
-      from atlas_v2.authoring_manifest_runs amr
-     where amr.person_id = p.id
-       and jsonb_typeof(amr.result_snapshot->'external_references'->'namuwiki') = 'object'
-     order by amr.applied_at desc, amr.request_id desc
-     limit 1
+    select jsonb_object_agg(
+      per.provider,
+      jsonb_strip_nulls(jsonb_build_object(
+        'status', per.status,
+        'checked_at', per.checked_at::text,
+        'document_title', per.document_title,
+        'url', per.url
+      ))
+      order by per.provider
+    )
+    from atlas_v2.person_external_references per
+    where per.person_id = p.id
   ), '{}'::jsonb) as external_references,
   (select count(*)::int from atlas_v2.person_politics_v2 pp where pp.person_id = p.id) as activity_count,
   (select min(pp.activity_start) from atlas_v2.person_politics_v2 pp where pp.person_id = p.id) as first_activity_year,
@@ -74,12 +80,18 @@ select
     where pd.person_id = p.id
   ), '[]'::jsonb) as descriptions,
   coalesce((
-    select amr.result_snapshot->'external_references'
-      from atlas_v2.authoring_manifest_runs amr
-     where amr.person_id = p.id
-       and jsonb_typeof(amr.result_snapshot->'external_references'->'namuwiki') = 'object'
-     order by amr.applied_at desc, amr.request_id desc
-     limit 1
+    select jsonb_object_agg(
+      per.provider,
+      jsonb_strip_nulls(jsonb_build_object(
+        'status', per.status,
+        'checked_at', per.checked_at::text,
+        'document_title', per.document_title,
+        'url', per.url
+      ))
+      order by per.provider
+    )
+    from atlas_v2.person_external_references per
+    where per.person_id = p.id
   ), '{}'::jsonb) as external_references
 from atlas_v2.persons p
 where p.id = $1::uuid
