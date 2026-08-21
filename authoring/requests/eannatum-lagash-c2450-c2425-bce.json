@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:eannatum:lagash:ensi:c2450-c2425-bce:v1",
+  "person": {
+    "canonical_name_en": "Eannatum",
+    "display_name_ko": "에안나툼"
+  },
+  "polity": {
+    "canonical_name_en": "Lagash",
+    "display_name_ko": "라가시"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Ensi",
+    "role_display_name_ko": "엔시",
+    "start_year": -2450,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -2425,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Eannatum is securely attested by contemporary Lagash inscriptions and the Stele of the Vultures as ruler of Lagash. Absolute Early Dynastic chronology is not exact: the Louvre dates the Eannatum stele broadly to 2450-2425 BCE, while modern scholarship stresses that the exact length and internal chronology of his reign cannot be reconstructed with certainty. ATLAS therefore uses c.2450-c.2425 BCE only as an approximate reign bracket, not as exact accession and death years."
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-21"
+    }
+  },
+  "sources": [
+    {
+      "title": "Stèle des vautours — Musée du Louvre",
+      "canonical_url": "https://collections.louvre.fr/en/ark:/53355/cl010121794",
+      "citation_text": "The Louvre identifies the Stele of the Vultures as Eannatum's victory monument, calls Eannatum king of Lagash, and dates the monument to the Early Dynastic IIIb period around 2450-2425 BCE.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Ensiship and Lugalship of Lagash in the late Early Dynastic Period III — Tohru Maeda",
+      "canonical_url": "https://www.jstage.jst.go.jp/article/jorient1962/34/2/34_2_93/_article",
+      "citation_text": "Maeda's study of Lagash royal titulature explains the ensi and lugal terminology for rulers including Eannatum and supports modeling him as the ruler of Lagash while keeping titulature historically precise.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

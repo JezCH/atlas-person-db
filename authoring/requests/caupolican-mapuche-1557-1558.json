@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:caupolican:mapuche:toqui:1557-1558:v1",
+  "person": {
+    "canonical_name_en": "Caupolicán",
+    "display_name_ko": "카우폴리칸"
+  },
+  "polity": {
+    "canonical_name_en": "Mapuche",
+    "display_name_ko": "마푸체"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Toqui",
+    "role_display_name_ko": "토키",
+    "start_year": 1557,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 1558,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Chile's Archivo Nacional places Caupolicán's emergence as elected Mapuche toqui after the September 1557 fighting and records his capture and death in 1558. ATLAS follows the existing Mapuche modeling used for Leftraru: a toqui is represented as a military leader serving the Mapuche political community rather than as a sovereign ruler of a centralized state."
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-21"
+    }
+  },
+  "sources": [
+    {
+      "title": "La Muerte Inmortal de Caupolicán — Archivo Nacional de Chile",
+      "canonical_url": "https://www.archivonacional.gob.cl/la-muerte-inmortal-de-caupolican",
+      "citation_text": "Chile's National Archive recounts Caupolicán's election as Mapuche toqui after the September 1557 fighting and his capture and execution in 1558, citing Diego de Rosales' chronicle.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

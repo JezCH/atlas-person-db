@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:atahualpa:inca-empire:sapa-inca:1532-1533:v1",
+  "person": {
+    "canonical_name_en": "Atahualpa",
+    "display_name_ko": "아타우알파"
+  },
+  "polity": {
+    "canonical_name_en": "Inca Empire",
+    "display_name_ko": "잉카 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sapa Inca",
+    "role_display_name_ko": "사파 잉카",
+    "start_year": 1532,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 1533,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Atahualpa emerged victorious from the Inca civil war in 1532 and held imperial authority when Francisco Pizarro captured him at Cajamarca on 16 November 1532. He remained the captive Inca ruler until his execution in 1533. ATLAS stores the secure year-level reign window without forcing a disputed or source-dependent exact execution day into the Activity boundary."
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-21"
+    }
+  },
+  "sources": [
+    {
+      "title": "El Cuarto del Rescate de Atahualpa — Ministerio de Cultura del Perú",
+      "canonical_url": "https://repositorio.cultura.gob.pe/bitstream/handle/CULTURA/90/El%20Cuarto%20del%20Rescate%20de%20Atahualpa%20RAVINES.pdf",
+      "citation_text": "The Peruvian Ministry of Culture publication describes Atahualpa as lord of Tawantinsuyu at Cajamarca in 1532 and records his captivity there through his death in 1533.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

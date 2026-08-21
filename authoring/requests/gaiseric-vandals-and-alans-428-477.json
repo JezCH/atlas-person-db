@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gaiseric:vandals-and-alans:king:428-477:v1",
+  "person": {
+    "canonical_name_en": "Gaiseric",
+    "display_name_ko": "가이세리크"
+  },
+  "polity": {
+    "canonical_name_en": "Vandals and Alans",
+    "display_name_ko": "반달족·알란족"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King of the Vandals and Alans",
+    "role_display_name_ko": "반달족·알란족의 왕",
+    "start_year": 428,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 477,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gaiseric became king of the Vandals and Alans in 428 and remained their ruler until his death in 477. He led the migration into North Africa in 429 and captured Carthage in 439. ATLAS uses the broader Vandals-and-Alans political community for the full 428-477 reign rather than projecting the later territorially consolidated African kingdom backward onto every year of his rule."
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-21"
+    }
+  },
+  "sources": [
+    {
+      "title": "Gaiseric, king of the Vandals and Alans, 428–477 CE — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548937816",
+      "citation_text": "Peter Heather's Oxford Classical Dictionary article identifies Gaiseric as king of the Vandals and Alans from 428 to 477 and records his movement to North Africa and capture of Carthage.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
