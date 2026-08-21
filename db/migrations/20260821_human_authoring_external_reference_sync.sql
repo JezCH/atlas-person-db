@@ -24,7 +24,7 @@ BEGIN
   END IF;
 
   ref_status := ref->>'status';
-  IF ref_status NOT IN ('linked', 'not_found') THEN
+  IF ref_status IS NULL OR ref_status NOT IN ('linked', 'not_found') THEN
     RETURN NEW;
   END IF;
 
