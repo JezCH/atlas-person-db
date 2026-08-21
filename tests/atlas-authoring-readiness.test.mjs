@@ -21,6 +21,7 @@ function clientFor({
   activityColumnsReady = true,
   ledgerColumnsReady = true,
   humanSchemaAllowed = true,
+  personReferenceSchemaReady = true,
   p5Ready = true
 } = {}) {
   return {
@@ -44,6 +45,8 @@ function clientFor({
           activities: baseTablesReady ? 'atlas_v2.person_politics_v2' : null,
           activity_sources: baseTablesReady ? 'atlas_v2.person_politics_sources' : null,
           authoring_ledger: ledgerTableReady ? 'atlas_v2.authoring_manifest_runs' : null,
+          person_external_references: personReferenceSchemaReady ? 'atlas_v2.person_external_references' : null,
+          person_profile_mutation_audits: personReferenceSchemaReady ? 'atlas_v2.person_profile_mutation_audits' : null,
           ledger_manifest_schema: ledgerTableReady && ledgerColumnsReady,
           ledger_result_snapshot: ledgerTableReady && ledgerColumnsReady,
           ledger_human_authoring_schema_allowed: ledgerTableReady && ledgerColumnsReady && humanSchemaAllowed,
@@ -51,7 +54,14 @@ function clientFor({
           activity_start_granularity: activityColumnsReady,
           activity_end_granularity: activityColumnsReady,
           activity_start_calendar: activityColumnsReady,
-          activity_end_calendar: activityColumnsReady
+          activity_end_calendar: activityColumnsReady,
+          person_external_reference_columns: personReferenceSchemaReady,
+          person_profile_mutation_audit_columns: personReferenceSchemaReady,
+          person_external_reference_fk_restrict: personReferenceSchemaReady,
+          person_external_reference_pkey: personReferenceSchemaReady,
+          person_external_reference_checks: personReferenceSchemaReady,
+          person_profile_mutation_audit_pkey: personReferenceSchemaReady,
+          person_profile_mutation_audit_checks: personReferenceSchemaReady
         }] };
       }
       if (text.includes('from pg_indexes')) {
@@ -65,7 +75,7 @@ function clientFor({
   };
 }
 
-test('authoring readiness requires P5, core Stage 2 schema, human-compatible ledger, completed P9 and current P10 merge contract', async () => {
+test('authoring readiness requires P5, core Stage 2 schema, human-compatible ledger, Person profile schema, completed P9 and current P10 merge contract', async () => {
   const result = await inspectAuthoringReadiness(clientFor());
   assert.equal(result.ready, true);
   assert.equal(result.bootstrap_ready, true);
@@ -79,6 +89,10 @@ test('authoring readiness requires P5, core Stage 2 schema, human-compatible led
   assert.equal(result.core.ledger_human_authoring_schema_allowed, true);
   assert.equal(result.core.ledger_contract_ready, true);
   assert.equal(result.core.columns_ready, true);
+  assert.equal(result.core.person_reference_tables_ready, true);
+  assert.equal(result.core.person_reference_columns_ready, true);
+  assert.equal(result.core.person_reference_constraints_ready, true);
+  assert.equal(result.core.person_reference_contract_ready, true);
   assert.equal(result.p9.old_index_present, false);
   assert.equal(result.p9.new_index_present, true);
   assert.equal(result.p9.duplicate_groups, 0);
@@ -103,6 +117,17 @@ test('missing authoring ledger schema is explicitly bootstrappable without weake
   assert.equal(missingLedger.bootstrap_ready, true);
   assert.equal(missingLedger.bootstrap_required, true);
   assert.equal(missingLedger.core.ledger_table_ready, false);
+});
+
+test('missing Person external-reference/profile-audit schema is explicitly bootstrappable', async () => {
+  const result = await inspectAuthoringReadiness(clientFor({ personReferenceSchemaReady: false }));
+  assert.equal(result.ready, false);
+  assert.equal(result.bootstrap_ready, true);
+  assert.equal(result.bootstrap_required, true);
+  assert.equal(result.core.person_reference_tables_ready, false);
+  assert.equal(result.core.person_reference_columns_ready, false);
+  assert.equal(result.core.person_reference_constraints_ready, false);
+  assert.equal(result.core.person_reference_contract_ready, false);
 });
 
 test('legacy authoring ledger CHECK without human schema is bootstrappable, not ready', async () => {
