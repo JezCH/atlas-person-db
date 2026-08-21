@@ -14,6 +14,8 @@ const vercel = JSON.parse(fs.readFileSync(new URL("../vercel.json", import.meta.
 const SHA = "a".repeat(40);
 const PERSON_ID = "da0303c2-1faf-40b8-9dc2-1325b77488d7";
 const NAMUWIKI_URL = "https://namu.wiki/w/%EC%9E%84%ED%98%B8%ED%85%9D";
+const IMMUTABLE_SUB = "repo:JezCH@281085255/atlas-person-db@1319427399:environment:production";
+const LEGACY_SUB = "repo:JezCH/atlas-person-db:environment:production";
 
 function trustedClaims(overrides = {}) {
   return {
@@ -34,12 +36,16 @@ function trustedClaims(overrides = {}) {
   };
 }
 
-test("dedicated NamuWiki OIDC trust accepts only Issue-comment workflow context", () => {
+test("dedicated NamuWiki OIDC trust accepts only the immutable Issue-comment workflow context", () => {
+  assert.equal(oidc.EXPECTED_OWNER_ID, "281085255");
+  assert.equal(oidc.EXPECTED_REPOSITORY_ID, "1319427399");
+  assert.equal(oidc.EXPECTED_SUB, IMMUTABLE_SUB);
   assert.doesNotThrow(() => oidc.verifyClaims(trustedClaims(), SHA, 1000));
   assert.throws(() => oidc.verifyClaims(trustedClaims({ event_name:"workflow_dispatch" }), SHA, 1000), /CONTEXT_MISMATCH/);
   assert.throws(() => oidc.verifyClaims(trustedClaims({ actor:"someone-else" }), SHA, 1000), /ACTOR_MISMATCH/);
   assert.throws(() => oidc.verifyClaims(trustedClaims({ workflow_ref:"JezCH\/atlas-person-db\/.github\/workflows\/atlas-authoring-apply.yml@refs\/heads\/main" }), SHA, 1000), /WORKFLOW_MISMATCH/);
-  assert.throws(() => oidc.verifyClaims(trustedClaims({ sub:"repo:JezCH\/atlas-person-db:ref:refs\/heads\/main" }), SHA, 1000), /SUBJECT_MISMATCH/);
+  assert.throws(() => oidc.verifyClaims(trustedClaims({ sub:LEGACY_SUB }), SHA, 1000), /SUBJECT_MISMATCH/);
+  assert.throws(() => oidc.verifyClaims(trustedClaims({ sub:"repo:JezCH@281085255\/atlas-person-db@1319427399:ref:refs\/heads\/main" }), SHA, 1000), /SUBJECT_MISMATCH/);
 });
 
 test("dedicated payload is narrow and canonicalizes only a real namu.wiki document URL", () => {
