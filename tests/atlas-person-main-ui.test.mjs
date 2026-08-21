@@ -70,7 +70,7 @@ test('current-result Polity count uses authoritative facet IDs instead of string
   assert.doesNotMatch(main, /if \(facetFilters\.polity_id\) return rows\.length \? 1 : 0/);
 });
 
-test('Person detail renders readable names, descriptions, Person sources and complete Activity meaning', () => {
+test('Person detail renders readable names, descriptions, Person sources and user-facing Activity meaning', () => {
   for (const token of [
     'person.names',
     'person.descriptions',
@@ -82,8 +82,6 @@ test('Person detail renders readable names, descriptions, Person sources and com
     'activity.period_basis',
     'activity.start',
     'activity.end',
-    'activity.confidence',
-    'activity.chronology_status',
     'activity.notes',
     'activity.sources'
   ]) assert.match(main, new RegExp(token.replaceAll('.', '\\.')));

@@ -79,7 +79,7 @@ test('R4 search finds notes, raw chronology, era labels and all compact Activity
   assert.equal(reader.personMatchesQuery(cePerson, '서기 120'), true);
 });
 
-test('R4 Person cards render the authoritative compact Activity tuple without detail-loop fetching', () => {
+test('R4 Person cards render the user-facing compact Activity tuple without detail-loop fetching', () => {
   for (const token of [
     'person?.activity_summaries',
     'activity?.polity?.display_name',
@@ -87,14 +87,15 @@ test('R4 Person cards render the authoritative compact Activity tuple without de
     'activity?.role?.display_name',
     'activity?.period_basis?.display_name',
     'activity?.start',
-    'activity?.end',
-    'activity?.chronology_status',
-    'activity?.confidence'
+    'activity?.end'
   ]) assert.match(mainSource, new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   assert.match(mainSource, /person-card-activities/);
   assert.match(mainSource, /역할 미지정/);
   const cardBody = mainSource.slice(mainSource.indexOf('function compactActivityHtml'), mainSource.indexOf('function groupSection'));
   assert.doesNotMatch(cardBody, /readPerson\(/);
+  assert.doesNotMatch(cardBody, /chronology_status|confidence/);
+  assert.match(cardBody, /boundaryLabel\(activity\?\.start\)/);
+  assert.match(cardBody, /boundaryLabel\(activity\?\.end\)/);
   assert.match(css, /\.person-card-activities/);
   assert.match(css, /\.person-card-activity-period/);
 });
