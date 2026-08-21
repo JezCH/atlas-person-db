@@ -13,12 +13,13 @@ const {
 const root = path.resolve(new URL('..', import.meta.url).pathname);
 const baseline = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 
-test('authoring migration registry is ordered and contains durable lifecycle-safe ledger references', () => {
-  assert.equal(AUTHORING_MIGRATION_PATHS.length, 4);
+test('authoring migration registry is ordered and contains durable lifecycle-safe ledger and Person reference migrations', () => {
+  assert.equal(AUTHORING_MIGRATION_PATHS.length, 5);
   assert.match(AUTHORING_MIGRATION_PATHS[0], /20260811_authoring_manifest_runs\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[1], /20260811_authoring_result_snapshot\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[2], /20260814_authoring_ledger_live_reference_lifecycle\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[3], /20260815_human_authoring_manifest_schema\.sql$/);
+  assert.match(AUTHORING_MIGRATION_PATHS[4], /20260821_person_external_references\.sql$/);
   const migrations = readAuthoringMigrations();
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS manifest_schema text/i);
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS result_snapshot jsonb/i);
@@ -40,6 +41,11 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.match(humanSchema, /atlas-human-authoring\/v1/);
   assert.match(humanSchema, /AUTHORING_MANIFEST_SCHEMA_CHECK_DRIFT/);
   assert.match(humanSchema, /HUMAN_AUTHORING_MANIFEST_SCHEMA_NOT_ALLOWED/);
+
+  const personReferences = migrations[4].sql;
+  assert.match(personReferences, /CREATE TABLE IF NOT EXISTS atlas_v2\.person_external_references/i);
+  assert.match(personReferences, /CREATE TABLE IF NOT EXISTS atlas_v2\.person_profile_mutation_audits/i);
+  assert.match(personReferences, /person_id uuid NOT NULL REFERENCES atlas_v2\.persons\(id\) ON DELETE RESTRICT/i);
 });
 
 test('current clean schema baseline remains the measured pre-lifecycle Production shape', () => {

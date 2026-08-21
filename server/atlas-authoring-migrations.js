@@ -7,7 +7,8 @@ const AUTHORING_MIGRATION_PATHS = Object.freeze([
   path.resolve(__dirname, "../db/migrations/20260811_authoring_manifest_runs.sql"),
   path.resolve(__dirname, "../db/migrations/20260811_authoring_result_snapshot.sql"),
   path.resolve(__dirname, "../db/migrations/20260814_authoring_ledger_live_reference_lifecycle.sql"),
-  path.resolve(__dirname, "../db/migrations/20260815_human_authoring_manifest_schema.sql")
+  path.resolve(__dirname, "../db/migrations/20260815_human_authoring_manifest_schema.sql"),
+  path.resolve(__dirname, "../db/migrations/20260821_person_external_references.sql")
 ]);
 
 function readAuthoringMigrations({ readFile = fs.readFileSync } = {}) {
