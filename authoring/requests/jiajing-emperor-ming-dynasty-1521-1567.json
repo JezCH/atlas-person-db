@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jiajing-emperor:ming-dynasty:emperor:1521-1567:v1",
+  "person": {
+    "canonical_name_en": "Jiajing Emperor",
+    "display_name_ko": "가정제"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-21",
+      "document_title": "가정제",
+      "url": "https://namu.wiki/w/%EA%B0%80%EC%A0%95%EC%A0%9C"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Ming Dynasty",
+    "display_name_ko": "명나라"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1521,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1567,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Zhu Houcong ruled the Ming dynasty as the Jiajing Emperor from 1521 to 1567. This Activity records his imperial reign at year granularity."
+  },
+  "sources": [
+    {
+      "title": "About this Collection — Yongle Da Dian — Library of Congress",
+      "canonical_url": "https://www.loc.gov/collections/yongle-da-dian/about-this-collection/",
+      "citation_text": "The Library of Congress dates the reign of the Jiajing emperor to 1521–1567.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Library of Congress Magazine — March/April 2021",
+      "canonical_url": "https://www.loc.gov/lcm/pdf/LCM_2021_0304.pdf",
+      "citation_text": "The Library of Congress identifies the Jiajing emperor as Zhu Houcong in its discussion of the Yongle Encyclopedia copy project.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:emperor-gaozu-of-tang:tang-dynasty:emperor:618-626:v1",
+  "person": {
+    "canonical_name_en": "Emperor Gaozu of Tang",
+    "display_name_ko": "당 고조"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-21",
+      "document_title": "고조(당)",
+      "url": "https://namu.wiki/w/%EA%B3%A0%EC%A1%B0(%EB%8B%B9)"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Tang Dynasty",
+    "display_name_ko": "당나라"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 618,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 626,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Li Yuan founded the Tang dynasty in 618 and reigned as Emperor Gaozu until 626. This Activity records only his imperial reign at year granularity."
+  },
+  "sources": [
+    {
+      "title": "The Life of Daoxuan: According to Others and His Own Words",
+      "canonical_url": "https://backoffice.biblio.ugent.be/download/8581797/8581798",
+      "citation_text": "The historical background identifies Li Yuan as the first emperor of the Tang dynasty, Tang Gaozu, and gives his reign as 618–626.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
