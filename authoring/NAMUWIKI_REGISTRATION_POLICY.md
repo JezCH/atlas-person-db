@@ -36,11 +36,15 @@ Omission, `unknown`, guessed URLs, non-NamuWiki URLs, and a `not_found` record c
 
 ## Authoritative storage and read path
 
-The NamuWiki decision is part of the human-authoring request itself. The normal authoring transaction persists the normalized decision in the existing immutable `atlas_v2.authoring_manifest_runs.result_snapshot.external_references.namuwiki` ledger snapshot together with the Person/Activity result. No separate NamuWiki database table or second write is required.
+The NamuWiki decision is part of the human-authoring request itself. The authoring transaction preserves that reviewed decision immutably in `atlas_v2.authoring_manifest_runs.result_snapshot.external_references.namuwiki` together with the Person/Activity result.
 
-The Person read service exposes the latest explicit NamuWiki decision recorded for that Person. A `linked` decision is consumed by the Person main table so the visible Person name itself receives the existing visually distinct NamuWiki hyperlink. A `not_found` decision intentionally creates no hyperlink but remains machine-readable for reporting and future re-checks.
+The same PostgreSQL transaction also projects the reviewed decision into `atlas_v2.person_external_references`, which is the normalized current-state table consumed by Person read. Projection is driven by the authoring-ledger insert, so a failed authoring transaction cannot leave a Person/Activity and NamuWiki state out of sync. A schema migration backfills valid reviewed ledger decisions that predate this projection contract.
 
-The absence of a link is not equivalent to `not_found`; only an explicit stored decision is authoritative.
+The normalized current state is monotonic by `checked_at`: a later reviewed decision may replace an older one, while replaying or processing an older authoring decision cannot overwrite a newer Person-profile review. The immutable ledger remains the audit record of what each authoring request originally asserted.
+
+The Person read service reads normalized `person_external_references` rather than reconstructing current state from authoring snapshots. A `linked` decision is consumed by the Person main table so the visible Person name itself receives the existing visually distinct NamuWiki hyperlink. A `not_found` decision intentionally creates no hyperlink but remains machine-readable for reporting and future re-checks.
+
+The absence of a link is not equivalent to `not_found`; only an explicit normalized stored decision is authoritative for current read behavior.
 
 ## Admin and GitHub registration paths
 
@@ -48,7 +52,7 @@ The normal Admin `/api/atlas-authoring` path fails closed if the NamuWiki decisi
 
 For reviewed GitHub batch registrations, changed `atlas-human-authoring/v1` manifests are rejected by CI when the NamuWiki decision is omitted or invalid. Legacy pre-cutover GitHub requests remain replayable without being bulk-edited merely to satisfy the newer metadata contract.
 
-Existing reviewed legacy UI mappings, such as Imhotep, remain compatibility fallbacks until those Persons obtain an authoritative ledger decision through a later reviewed authoring request.
+Reviewed compatibility references that existed before normalized Person profiles are migrated into `person_external_references`; the main Person table does not depend on a hardcoded Person-ID fallback.
 
 ## Registration completion report
 
