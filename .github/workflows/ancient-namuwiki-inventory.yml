@@ -42,6 +42,35 @@ jobs:
             throw lastError || new Error('Production Person read failed');
           }
 
+          function htmlTitle(text) {
+            const m = text.match(/<title[^>]*>([^<]+)<\/title>/i);
+            return m ? m[1].replace(/\s+/g, ' ').trim() : null;
+          }
+
+          async function probe(base, title) {
+            const url = `${base}/w/${encodeURIComponent(title)}`;
+            try {
+              const response = await fetch(url, {
+                redirect: 'follow',
+                headers: {
+                  accept: 'text/html,application/xhtml+xml',
+                  'user-agent': 'Mozilla/5.0 ATLAS-NamuWiki-link-verifier/1.0'
+                }
+              });
+              const text = await response.text();
+              return {
+                requested_title: title,
+                status: response.status,
+                ok: response.ok,
+                final_url: response.url,
+                html_title: htmlTitle(text),
+                body_prefix: text.slice(0, 180).replace(/\s+/g, ' ')
+              };
+            } catch (error) {
+              return { requested_title: title, error: String(error) };
+            }
+          }
+
           (async () => {
             const { url, payload } = await readProduction();
             const ancient = payload.persons
@@ -70,6 +99,21 @@ jobs:
             console.log('ANCIENT_INVENTORY_BEGIN');
             for (const person of ancient) console.log(JSON.stringify(person));
             console.log('ANCIENT_INVENTORY_END');
+
+            const missing = ancient.filter((person) => !person.namuwiki);
+            console.log(`MISSING_NAMUWIKI_COUNT=${missing.length}`);
+            console.log('NAMUWIKI_PROBE_BEGIN');
+            for (const person of missing) {
+              const preferred = person.preferred_name_ko || person.display_name || person.canonical_name_en;
+              const variants = [...new Set([preferred, preferred.replace(/\s+/g, '')])];
+              const probes = [];
+              for (const variant of variants) {
+                probes.push({ source: 'namu.wiki', ...(await probe('https://namu.wiki', variant)) });
+                probes.push({ source: 'www.namu.moe', ...(await probe('https://www.namu.moe', variant)) });
+              }
+              console.log(JSON.stringify({ id: person.id, name: preferred, probes }));
+            }
+            console.log('NAMUWIKI_PROBE_END');
           })().catch((error) => {
             console.error(error?.stack || error);
             process.exit(1);
