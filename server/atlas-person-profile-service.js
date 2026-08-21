@@ -159,6 +159,10 @@ function sameReference(row, next) {
     && row.url === next.url;
 }
 
+function shouldBlockExternalReferenceOverwrite(current, next, { preventOverwrite = false } = {}) {
+  return Boolean(preventOverwrite && current?.status === "linked" && !sameReference(current, next));
+}
+
 async function setExternalReference(client, personId, rawPayload) {
   const provider = normalizeExact(rawPayload?.provider || "namuwiki").toLowerCase();
   if (provider !== "namuwiki") throw new Error("PERSON_EXTERNAL_REFERENCE_PROVIDER_UNSUPPORTED");
@@ -166,6 +170,9 @@ async function setExternalReference(client, personId, rawPayload) {
   const current = await currentExternalReference(client, personId, provider, { forUpdate: true });
   if (sameReference(current, next)) {
     return Object.freeze({ replay:true, before:{ external_reference:current }, after:{ external_reference:current } });
+  }
+  if (shouldBlockExternalReferenceOverwrite(current, next, { preventOverwrite:rawPayload?.prevent_overwrite === true })) {
+    throw new Error("PERSON_EXTERNAL_REFERENCE_OVERWRITE_REVIEW_REQUIRED");
   }
 
   const saved = await client.query(`
@@ -251,7 +258,7 @@ function createPersonProfileMutationService({ client } = {}) {
     } catch (error) {
       try { await client.query("ROLLBACK"); } catch {}
       const code = String(error?.message || error || "PERSON_PROFILE_MUTATION_FAILED");
-      const validation = /REQUIRED|INVALID|UNSUPPORTED|COLLISION|AMBIGUOUS|NOT_FOUND|TOO_LONG/.test(code)
+      const validation = /REQUIRED|INVALID|UNSUPPORTED|COLLISION|AMBIGUOUS|NOT_FOUND|TOO_LONG|REVIEW_REQUIRED/.test(code)
         ? [{ code }]
         : [];
       return outcomeBase({
@@ -271,5 +278,6 @@ function createPersonProfileMutationService({ client } = {}) {
 module.exports = Object.freeze({
   PROFILE_OPERATIONS,
   normalizeNamuWikiInput,
+  shouldBlockExternalReferenceOverwrite,
   createPersonProfileMutationService
 });

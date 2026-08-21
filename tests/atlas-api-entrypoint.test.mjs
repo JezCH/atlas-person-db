@@ -40,8 +40,9 @@ test('Vercel exposes exactly twelve physical ATLAS API functions on Hobby', () =
   assert.equal(apiFiles.length, 12);
 });
 
-test('logical read and P11 capture URLs consolidate onto existing physical functions', () => {
+test('logical read, NamuWiki link and P11 capture URLs consolidate onto existing physical functions', () => {
   assert.deepEqual(vercel.rewrites, [
+    { source: '/api/atlas-namuwiki-link', destination: '/api/atlas-authoring?__atlas_authoring_surface=namuwiki-link' },
     { source: '/api/atlas-person-read', destination: '/api/atlas-read?__atlas_read_surface=person' },
     { source: '/api/atlas-admin-inspector', destination: '/api/atlas-read?__atlas_read_surface=admin-inspector' },
     { source: '/api/atlas-admin-system-status', destination: '/api/atlas-read?__atlas_read_surface=admin-system-status' },
@@ -78,6 +79,13 @@ test('normal human authoring endpoint delegates to the Stage 2-native direct aut
   assert.match(authoringApi, /atlas-human-authoring-handler\.js/);
   assert.match(authoringApi, /createHumanAuthoringHandler/);
   assert.doesNotMatch(authoringApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
+});
+
+test('NamuWiki logical endpoint delegates to its isolated exact-SHA OIDC handler without adding a physical function', () => {
+  assert.match(authoringApi, /atlas-namuwiki-link-handler\.js/);
+  assert.match(authoringApi, /createNamuWikiLinkHandler/);
+  assert.match(authoringApi, /surface === "namuwiki-link"/);
+  assert.doesNotMatch(authoringApi, /SUPABASE_DB_URL|ATLAS_SESSION_SECRET|ATLAS_MUTATION_TOKEN|postgres:\/\/|postgresql:\/\//);
 });
 
 test('server-only authoring apply endpoint delegates to its isolated handler', () => {
