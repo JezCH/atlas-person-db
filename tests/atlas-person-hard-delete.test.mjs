@@ -22,6 +22,7 @@ function verificationRow(overrides = {}) {
     names: 0,
     person_sources: 0,
     person_descriptions: 0,
+    external_references: 0,
     activities: 0,
     people_affiliations: 0,
     event_participations: 0,
@@ -168,6 +169,7 @@ test('successful Person hard-delete removes live references, stales only target 
     'delete from atlas_v2.person_event_participations',
     'delete from atlas_v2.person_sources',
     'delete from atlas_v2.person_descriptions',
+    'delete from atlas_v2.person_external_references',
     'delete from atlas_v2.person_names',
     'delete from atlas_v2.persons'
   ]) assert.ok(sql.some((text) => text.startsWith(expected)), `missing ${expected}`);
@@ -227,7 +229,7 @@ test('browser uses one confirmation and UUID-only delete while retaining DB veri
   assert.match(adapter, /person_id:/);
   assert.doesNotMatch(adapter, /confirmation_name:/);
   assert.match(adapter, /person-hard-delete-v4/);
-  assert.match(index, /atlas-server-write-adapter\.js\?v=20260816-person-hard-delete-v4/);
+  assert.match(index, /atlas-server-write-adapter\.js\?v=20260821-person-profile-v1/);
   assert.match(handler, /operation\s*===\s*"delete_person"/);
   assert.match(ui, /window\.confirm/);
   assert.doesNotMatch(ui, /window\.prompt/);
