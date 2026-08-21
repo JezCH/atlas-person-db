@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:ying-bu:huainan-start-203-bce:20260821:v1",
+  "review_status": "approved",
+  "release_order": 500,
+  "operation": {
+    "type": "update_activity_interval",
+    "relationship_id": "a77a000e-2fec-5983-afb9-5d7dbc829223",
+    "after": {
+      "activity_start": -203,
+      "activity_end": -196
+    }
+  },
+  "evidence": {
+    "reason": "The existing Ying Bu Huainan kingship starts at 202 BCE, but Shiji 91 states that Liu Bang established Bu as King of Huainan in Han year 4, seventh month, corresponding to 203 BCE. Preserve the existing end year 196 BCE and correct only the start year.",
+    "person_id": "f22cc2f5-a7c1-5a4f-8a21-0446f4dd5398",
+    "historical_source": "https://zh.wikisource.org/zh/%E5%8F%B2%E8%A8%98/%E5%8D%B7091"
+  }
+}
