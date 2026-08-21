@@ -15,6 +15,8 @@ async function inspectCoreAuthoringSchema(client) {
       to_regclass('atlas_v2.person_politics_v2') as activities,
       to_regclass('atlas_v2.person_politics_sources') as activity_sources,
       to_regclass('atlas_v2.authoring_manifest_runs') as authoring_ledger,
+      to_regclass('atlas_v2.person_external_references') as person_external_references,
+      to_regclass('atlas_v2.person_profile_mutation_audits') as person_profile_mutation_audits,
       exists(
         select 1 from information_schema.columns
          where table_schema='atlas_v2' and table_name='authoring_manifest_runs' and column_name='manifest_schema'
@@ -49,13 +51,79 @@ async function inspectCoreAuthoringSchema(client) {
       exists(
         select 1 from information_schema.columns
          where table_schema='atlas_v2' and table_name='person_politics_v2' and column_name='activity_end_calendar'
-      ) as activity_end_calendar
+      ) as activity_end_calendar,
+      (
+        select count(*) = 7
+          from information_schema.columns
+         where table_schema='atlas_v2'
+           and table_name='person_external_references'
+           and column_name in ('person_id','provider','status','checked_at','document_title','url','updated_at')
+      ) as person_external_reference_columns,
+      (
+        select count(*) = 6
+          from information_schema.columns
+         where table_schema='atlas_v2'
+           and table_name='person_profile_mutation_audits'
+           and column_name in ('request_id','person_id','operation','before_snapshot','after_snapshot','mutated_at')
+      ) as person_profile_mutation_audit_columns,
+      exists(
+        select 1
+          from pg_constraint c
+          join pg_attribute a
+            on a.attrelid = c.conrelid
+           and a.attnum = any(c.conkey)
+          join pg_attribute ra
+            on ra.attrelid = c.confrelid
+           and ra.attnum = any(c.confkey)
+         where c.contype='f'
+           and c.conrelid=to_regclass('atlas_v2.person_external_references')
+           and c.confrelid=to_regclass('atlas_v2.persons')
+           and c.confdeltype='r'
+           and cardinality(c.conkey)=1
+           and cardinality(c.confkey)=1
+           and a.attname='person_id'
+           and ra.attname='id'
+      ) as person_external_reference_fk_restrict,
+      exists(
+        select 1 from pg_constraint c
+         where c.conrelid=to_regclass('atlas_v2.person_external_references')
+           and c.conname='person_external_references_pkey'
+           and c.contype='p'
+      ) as person_external_reference_pkey,
+      (
+        select count(*) = 3 from pg_constraint c
+         where c.conrelid=to_regclass('atlas_v2.person_external_references')
+           and c.conname in (
+             'person_external_references_provider_check',
+             'person_external_references_status_check',
+             'person_external_references_payload_check'
+           )
+           and c.contype='c'
+      ) as person_external_reference_checks,
+      exists(
+        select 1 from pg_constraint c
+         where c.conrelid=to_regclass('atlas_v2.person_profile_mutation_audits')
+           and c.conname='person_profile_mutation_audits_pkey'
+           and c.contype='p'
+      ) as person_profile_mutation_audit_pkey,
+      (
+        select count(*) = 3 from pg_constraint c
+         where c.conrelid=to_regclass('atlas_v2.person_profile_mutation_audits')
+           and c.conname in (
+             'person_profile_mutation_audits_operation_check',
+             'person_profile_mutation_audits_before_snapshot_check',
+             'person_profile_mutation_audits_after_snapshot_check'
+           )
+           and c.contype='c'
+      ) as person_profile_mutation_audit_checks
   `);
   const row = result.rows[0] || {};
   const baseTablesReady = [
     "persons","polities","roles","period_bases","relation_types","activities","activity_sources"
   ].every((field) => Boolean(row[field]));
   const ledgerTableReady = Boolean(row.authoring_ledger);
+  const personReferenceTablesReady = Boolean(row.person_external_references)
+    && Boolean(row.person_profile_mutation_audits);
   const columns = Object.freeze({
     ledger_manifest_schema: row.ledger_manifest_schema === true,
     ledger_result_snapshot: row.ledger_result_snapshot === true,
@@ -63,7 +131,9 @@ async function inspectCoreAuthoringSchema(client) {
     activity_start_granularity: row.activity_start_granularity === true,
     activity_end_granularity: row.activity_end_granularity === true,
     activity_start_calendar: row.activity_start_calendar === true,
-    activity_end_calendar: row.activity_end_calendar === true
+    activity_end_calendar: row.activity_end_calendar === true,
+    person_external_reference_columns: row.person_external_reference_columns === true,
+    person_profile_mutation_audit_columns: row.person_profile_mutation_audit_columns === true
   });
   const activityColumnsReady = [
     "relation_type_id","activity_start_granularity","activity_end_granularity",
@@ -74,6 +144,15 @@ async function inspectCoreAuthoringSchema(client) {
     && columns.ledger_result_snapshot === true;
   const ledgerHumanAuthoringSchemaAllowed = row.ledger_human_authoring_schema_allowed === true;
   const ledgerContractReady = ledgerColumnsReady && ledgerHumanAuthoringSchemaAllowed;
+  const personReferenceColumnsReady = personReferenceTablesReady
+    && columns.person_external_reference_columns === true
+    && columns.person_profile_mutation_audit_columns === true;
+  const personReferenceConstraintsReady = row.person_external_reference_fk_restrict === true
+    && row.person_external_reference_pkey === true
+    && row.person_external_reference_checks === true
+    && row.person_profile_mutation_audit_pkey === true
+    && row.person_profile_mutation_audit_checks === true;
+  const personReferenceContractReady = personReferenceColumnsReady && personReferenceConstraintsReady;
   return Object.freeze({
     base_tables_ready: baseTablesReady,
     ledger_table_ready: ledgerTableReady,
@@ -83,6 +162,10 @@ async function inspectCoreAuthoringSchema(client) {
     ledger_human_authoring_schema_allowed: ledgerHumanAuthoringSchemaAllowed,
     ledger_contract_ready: ledgerContractReady,
     columns_ready: activityColumnsReady && ledgerColumnsReady,
+    person_reference_tables_ready: personReferenceTablesReady,
+    person_reference_columns_ready: personReferenceColumnsReady,
+    person_reference_constraints_ready: personReferenceConstraintsReady,
+    person_reference_contract_ready: personReferenceContractReady,
     columns
   });
 }
@@ -113,6 +196,7 @@ async function inspectAuthoringReadiness(client) {
     && core.tables_ready
     && core.columns_ready
     && core.ledger_contract_ready
+    && core.person_reference_contract_ready
     && p9Ready
     && mergeContractReady;
   const bootstrapReady = p5Ready
