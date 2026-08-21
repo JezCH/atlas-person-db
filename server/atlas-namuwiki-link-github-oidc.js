@@ -6,13 +6,14 @@ const ISSUER = "https://token.actions.githubusercontent.com";
 const JWKS_URL = `${ISSUER}/.well-known/jwks`;
 const EXPECTED_AUDIENCE = "atlas-person-db-namuwiki-link";
 const EXPECTED_REPOSITORY = "JezCH/atlas-person-db";
+const EXPECTED_OWNER_ID = "281085255";
 const EXPECTED_REPOSITORY_ID = "1319427399";
 const EXPECTED_REF = "refs/heads/main";
 const EXPECTED_WORKFLOW_REF = "JezCH/atlas-person-db/.github/workflows/atlas-namuwiki-link.yml@refs/heads/main";
 const EXPECTED_ENVIRONMENT = "production";
 const EXPECTED_EVENT_NAME = "issue_comment";
 const EXPECTED_ACTOR = "JezCH";
-const EXPECTED_SUB = "repo:JezCH/atlas-person-db:environment:production";
+const EXPECTED_SUB = `repo:JezCH@${EXPECTED_OWNER_ID}/atlas-person-db@${EXPECTED_REPOSITORY_ID}:environment:${EXPECTED_ENVIRONMENT}`;
 
 let cache = null;
 let cachedAt = 0;
@@ -89,6 +90,7 @@ module.exports = Object.freeze({
   JWKS_URL,
   EXPECTED_AUDIENCE,
   EXPECTED_REPOSITORY,
+  EXPECTED_OWNER_ID,
   EXPECTED_REPOSITORY_ID,
   EXPECTED_REF,
   EXPECTED_WORKFLOW_REF,
