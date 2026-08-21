@@ -45,7 +45,7 @@ function normalizeNamuWikiInput(value) {
   if (/^https?:\/\//i.test(text)) {
     let parsed;
     try { parsed = new URL(text); } catch { throw new Error("PERSON_NAMUWIKI_URL_INVALID"); }
-    if (parsed.protocol !== "https:" || parsed.hostname !== NAMUWIKI_HOST || parsed.username || parsed.password) {
+    if (parsed.protocol !== "https:" || parsed.host !== NAMUWIKI_HOST || parsed.username || parsed.password) {
       throw new Error("PERSON_NAMUWIKI_URL_INVALID");
     }
     if (!parsed.pathname.startsWith("/w/") || parsed.pathname.length <= 3) throw new Error("PERSON_NAMUWIKI_URL_INVALID");
