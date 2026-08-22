@@ -84,16 +84,26 @@ function boundaryToken(boundary) {
   ].join(":");
 }
 
+function normalizePrimaryPolityPair(row) {
+  const polityId = optionalUuid(row?.polity_id, "polity_id");
+  const relationTypeId = optionalUuid(row?.relation_type_id, "relation_type_id");
+  if ((polityId == null) !== (relationTypeId == null)) {
+    throw new Error("polity_id and relation_type_id must both be null or both be UUIDs");
+  }
+  return Object.freeze({ polityId, relationTypeId });
+}
+
 function canonicalSemanticParts(row) {
   const start = normalizeBoundary(row, "activity_start");
   const end = normalizeBoundary(row, "activity_end");
   assertKnownBoundaryOrder(start, end);
+  const primary = normalizePrimaryPolityPair(row);
 
   return Object.freeze([
     SEMANTIC_KEY_VERSION,
     requiredUuid(row?.person_id, "person_id"),
-    requiredUuid(row?.polity_id, "polity_id"),
-    requiredUuid(row?.relation_type_id, "relation_type_id"),
+    primary.polityId || "<NULL_POLITY>",
+    primary.relationTypeId || "<NULL_RELATION>",
     optionalUuid(row?.role_id, "role_id") || "<NULL_ROLE>",
     requiredUuid(row?.period_basis_id, "period_basis_id"),
     boundaryToken(start),
@@ -128,6 +138,7 @@ module.exports = Object.freeze({
   optionalUuid,
   historicalYear,
   optionalComponent,
+  normalizePrimaryPolityPair,
   canonicalSemanticParts,
   semanticKey,
   semanticHash,
