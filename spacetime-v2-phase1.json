@@ -1,0 +1,24 @@
+{
+  "phase": "spacetime-v2-phase1-camera-core",
+  "base_phase": "spacetime-v2-phase0-baseline",
+  "runtime_cutover": false,
+  "contracts": {
+    "camera_state": ["centerTime", "centerSpace", "zoomTime", "zoomSpace"],
+    "pointer_centered_zoom": true,
+    "independent_time_space_zoom": true,
+    "world_to_screen_roundtrip": true,
+    "pan_clamped_to_world": true,
+    "default_zoom_range": [1, 256],
+    "ordinary_wheel_capture_default": false,
+    "ctrl_or_meta_wheel_zoom": true,
+    "shift_wheel_space_pan": true,
+    "pointer_drag_pan": true,
+    "fit_world_reset": true
+  },
+  "notes": [
+    "This phase introduces the reusable logical camera/coordinate core and its input controller.",
+    "Ordinary wheel remains uncaptured by default to avoid reintroducing scroll traps; a future isolated v2 viewport may opt into vertical-wheel time panning.",
+    "The production v1 renderer remains authoritative until later cutover phases.",
+    "Time semantic remapping and spatial hierarchy are deliberately deferred to phases 2 and 3."
+  ]
+}
