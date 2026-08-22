@@ -113,7 +113,9 @@ async function inspectPersonMergeReferenceReadiness(client) {
       "person_event_participations","person_event_participation_sources","person_external_references","person_profile_mutation_audits",
       "authoring_manifest_runs","person_duplicate_revalidation_requirements"
     ]]);
-  const userTriggers = (triggerResult.rows || []).map((row) => `${row.table_schema}.${row.table_name}.${row.trigger_name}`);
+  const allUserTriggers = (triggerResult.rows || []).map((row) => `${row.table_schema}.${row.table_name}.${row.trigger_name}`);
+  const unreviewedUserTriggers = difference(allUserTriggers,EXPECTED_USER_TRIGGERS);
+  const missingReviewedUserTriggers = difference(EXPECTED_USER_TRIGGERS,allUserTriggers);
 
   const blockers = [];
   evaluateFkSurface("PERSON",personFks,EXPECTED_PERSON_FKS,blockers);
@@ -122,8 +124,8 @@ async function inspectPersonMergeReferenceReadiness(client) {
   for (const column of difference(expectedPersonSnapshots,nonFkPersonUuidColumns)) blockers.push(`PERSON_UUID_SNAPSHOT_MISSING:${column}`);
   for (const column of difference(nonFkRelationshipUuidColumns,EXPECTED_NON_FK_RELATIONSHIP_UUID_COLUMNS)) blockers.push(`RELATIONSHIP_UUID_REFERENCE_UNREVIEWED:${column}`);
   for (const column of difference(EXPECTED_NON_FK_RELATIONSHIP_UUID_COLUMNS,nonFkRelationshipUuidColumns)) blockers.push(`RELATIONSHIP_UUID_SNAPSHOT_MISSING:${column}`);
-  for (const trigger of difference(userTriggers,EXPECTED_USER_TRIGGERS)) blockers.push(`MERGE_SURFACE_TRIGGER_UNREVIEWED:${trigger}`);
-  for (const trigger of difference(EXPECTED_USER_TRIGGERS,userTriggers)) blockers.push(`MERGE_SURFACE_TRIGGER_MISSING:${trigger}`);
+  for (const trigger of unreviewedUserTriggers) blockers.push(`MERGE_SURFACE_TRIGGER_UNREVIEWED:${trigger}`);
+  for (const trigger of missingReviewedUserTriggers) blockers.push(`MERGE_SURFACE_TRIGGER_MISSING:${trigger}`);
 
   return Object.freeze({
     policy_version:PERSON_REFERENCE_POLICY_VERSION,ready:blockers.length===0,blockers:Object.freeze(blockers.sort()),
@@ -131,7 +133,7 @@ async function inspectPersonMergeReferenceReadiness(client) {
     expected_non_fk_person_uuid_columns:Object.freeze(expectedPersonSnapshots),
     person_fks:Object.freeze(personFks),relationship_fks:Object.freeze(relationshipFks),
     non_fk_person_uuid_columns:Object.freeze(nonFkPersonUuidColumns),non_fk_relationship_uuid_columns:Object.freeze(nonFkRelationshipUuidColumns),
-    user_triggers:Object.freeze(userTriggers)
+    user_triggers:Object.freeze(unreviewedUserTriggers),reviewed_user_triggers:Object.freeze(allUserTriggers.filter((trigger) => EXPECTED_USER_TRIGGERS.includes(trigger)))
   });
 }
 async function assertPersonMergeReferenceReadiness(client) {
