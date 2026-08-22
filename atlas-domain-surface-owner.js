@@ -2,6 +2,7 @@
   "use strict";
 
   const ROOT_ID = "personDomainRoot";
+  const SPACETIME_PACKING_ASSET = "./atlas-person-spacetime-label-packing.js?v=20260822-label-pack-v1";
   const PERSON_SURFACE_IDS = Object.freeze([
     "personMainView",
     "nonTimelineSection",
@@ -16,6 +17,7 @@
   }
 
   let personRoot = null;
+  let spacetimePackingPromise = null;
 
   function normalizedHashDomain() {
     const value = String(window.location.hash || "").replace(/^#atlas-/, "").replace(/^#/, "").trim();
@@ -42,6 +44,31 @@
     return personRoot;
   }
 
+  function ensureSpacetimeLabelPacking() {
+    if (window.ATLAS_PERSON_SPACETIME_LABEL_PACKING) return Promise.resolve(window.ATLAS_PERSON_SPACETIME_LABEL_PACKING);
+    if (spacetimePackingPromise) return spacetimePackingPromise;
+    spacetimePackingPromise = new Promise((resolve, reject) => {
+      const existing = document.querySelector(`script[data-atlas-spacetime-packing="${SPACETIME_PACKING_ASSET}"]`);
+      if (existing) {
+        existing.addEventListener("load", () => resolve(window.ATLAS_PERSON_SPACETIME_LABEL_PACKING), { once: true });
+        existing.addEventListener("error", reject, { once: true });
+        return;
+      }
+      const script = document.createElement("script");
+      script.src = SPACETIME_PACKING_ASSET;
+      script.async = false;
+      script.dataset.atlasSpacetimePacking = SPACETIME_PACKING_ASSET;
+      script.addEventListener("load", () => resolve(window.ATLAS_PERSON_SPACETIME_LABEL_PACKING), { once: true });
+      script.addEventListener("error", () => reject(new Error("ATLAS_SPACETIME_LABEL_PACKING_LOAD_FAILED")), { once: true });
+      document.body.appendChild(script);
+    }).catch((error) => {
+      spacetimePackingPromise = null;
+      console.error(error);
+      return null;
+    });
+    return spacetimePackingPromise;
+  }
+
   function closePersonOverlay() {
     const detail = document.getElementById("personMainDetail");
     const backdrop = document.getElementById("personMainDetailBackdrop");
@@ -62,7 +89,10 @@
     root.hidden = !isPersons;
     root.setAttribute("aria-hidden", String(!isPersons));
     if (!isPersons) closePersonOverlay();
-    if (resetScroll && domain === "spacetime") requestAnimationFrame(resetDocumentScroll);
+    if (domain === "spacetime") {
+      ensureSpacetimeLabelPacking();
+      if (resetScroll) requestAnimationFrame(resetDocumentScroll);
+    }
   }
 
   function onDomainChanged(event) {
