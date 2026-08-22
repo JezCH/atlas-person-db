@@ -13,7 +13,7 @@
   const OVERVIEW_MIN_REGION_WIDTH = 72;
   const OVERVIEW_REGION_GAP = 4;
   const OVERVIEW_MAX_CARD_WIDTH = 108;
-  const DEFAULT_TIMELINE_HEIGHT = 2800;
+  const DEFAULT_TIMELINE_HEIGHT = 4200;
   const LOG_SOFTENING_YEARS = 180;
   const MIN_CARD_HEIGHT = 48;
   const OVERVIEW_CARD_HEIGHT = 24;
@@ -304,7 +304,7 @@
       <div class="spacetime-controls">
         <label>검색<input id="spacetimeSearch" type="search" value="${escapeHtml(query)}" placeholder="인물·정치체·역할 검색" /></label>
         <label>가로 보기<select id="spacetimeHorizontalMode"><option value="overview"${horizontalViewMode === "overview" ? " selected" : ""}>전체 보기</option><option value="detail"${horizontalViewMode === "detail" ? " selected" : ""}>상세 보기</option></select></label>
-        <label>시간축 밀도<select id="spacetimeScale"><option value="2200"${timelineHeightSetting === 2200 ? " selected" : ""}>압축</option><option value="2800"${timelineHeightSetting === 2800 ? " selected" : ""}>기본</option><option value="3600"${timelineHeightSetting === 3600 ? " selected" : ""}>확대</option></select></label>
+        <label>시간축 밀도<select id="spacetimeScale"><option value="3000"${timelineHeightSetting === 3000 ? " selected" : ""}>압축</option><option value="4200"${timelineHeightSetting === 4200 ? " selected" : ""}>기본</option><option value="5600"${timelineHeightSetting === 5600 ? " selected" : ""}>확대</option></select></label>
       </div>
     </section>
     <section class="spacetime-status-row">
