@@ -1,0 +1,25 @@
+{
+  "phase": "spacetime-v2-phase9-density-field",
+  "base_phase": "spacetime-v2-phase8-label-engine",
+  "runtime_cutover": false,
+  "contracts": {
+    "density_counts_unique_person_per_cell": true,
+    "multiple_activity_segments_same_person_do_not_double_count_cell": true,
+    "long_activity_can_occupy_multiple_time_cells": true,
+    "raw_person_count_is_preserved": true,
+    "visual_intensity_is_log_normalized": true,
+    "density_has_no_notability_weight": true,
+    "offscreen_segments_do_not_contribute": true,
+    "legend_label": "ATLAS 등록 인물 밀도",
+    "data_basis": "unique_registered_person_activity_density",
+    "density_must_not_be_interpreted_as_population_power_or_importance": true
+  },
+  "notes": [
+    "This phase adds the world-overview density field promised by semantic LOD without changing Person or historical data.",
+    "Each screen cell counts unique ATLAS Person identities whose primary Activity placement crosses that time cell; duplicate Activities/segments for the same Person do not inflate the count.",
+    "A long-lived Person may contribute to multiple vertical time cells because the field represents activity through time rather than one arbitrary biography point.",
+    "Raw counts stay available for inspection while log normalization is used only for visual intensity scaling.",
+    "The legend explicitly states that this is ATLAS dataset density, not historical population, geopolitical power, or editorial importance.",
+    "Production v1 remains authoritative until the later v2 cutover."
+  ]
+}
