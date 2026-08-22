@@ -1,0 +1,26 @@
+{
+  "phase": "spacetime-v2-phase3-space-axis",
+  "base_phase": "spacetime-v2-phase2-time-axis",
+  "runtime_cutover": false,
+  "contracts": {
+    "space_world_coordinate": [0, 1],
+    "macroregion_count": 9,
+    "subregion_count": 33,
+    "macroregions_are_background_bands": true,
+    "subregions_are_display_taxonomy_not_historical_claims": true,
+    "macroregion_widths_are_fixed_and_data_density_independent": true,
+    "subregion_widths_are_fixed_within_parent": true,
+    "macroregion_fallback_allowed": true,
+    "invented_subregion_precision_forbidden": true,
+    "semantic_label_crossfade": true,
+    "subregion_fade_start_zoom": 1.4,
+    "subregion_fade_full_zoom": 3
+  },
+  "notes": [
+    "This phase defines the stable two-level display continuum only; it does not assign existing historical entities to subregions.",
+    "Search results, Person count, and current density never alter band positions or widths.",
+    "A later Spatial Compile phase may use reviewed Place/PolityPlaceFunction evidence to select subregion precision; otherwise the macroregion center remains the honest fallback.",
+    "The taxonomy is a screen-space navigation structure and must not be stored as if it were a historical border or polity fact.",
+    "The production v1 nine-column renderer remains authoritative until the later v2 renderer cutover."
+  ]
+}
