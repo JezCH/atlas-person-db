@@ -115,7 +115,17 @@ async function inspectCoreAuthoringSchema(client) {
              'person_profile_mutation_audits_after_snapshot_check'
            )
            and c.contype='c'
-      ) as person_profile_mutation_audit_checks
+      ) as person_profile_mutation_audit_checks,
+      to_regprocedure('atlas_v2.sync_human_authoring_external_references()')
+        as person_external_reference_sync_function,
+      exists(
+        select 1
+          from pg_trigger t
+         where t.tgrelid=to_regclass('atlas_v2.authoring_manifest_runs')
+           and t.tgname='authoring_manifest_runs_external_reference_sync'
+           and not t.tgisinternal
+           and t.tgfoid=to_regprocedure('atlas_v2.sync_human_authoring_external_references()')
+      ) as person_external_reference_sync_trigger
   `);
   const row = result.rows[0] || {};
   const baseTablesReady = [
@@ -152,7 +162,13 @@ async function inspectCoreAuthoringSchema(client) {
     && row.person_external_reference_checks === true
     && row.person_profile_mutation_audit_pkey === true
     && row.person_profile_mutation_audit_checks === true;
-  const personReferenceContractReady = personReferenceColumnsReady && personReferenceConstraintsReady;
+  const personExternalReferenceSyncFunctionReady = Boolean(row.person_external_reference_sync_function);
+  const personExternalReferenceSyncTriggerReady = row.person_external_reference_sync_trigger === true;
+  const personExternalReferenceSyncReady = personExternalReferenceSyncFunctionReady
+    && personExternalReferenceSyncTriggerReady;
+  const personReferenceContractReady = personReferenceColumnsReady
+    && personReferenceConstraintsReady
+    && personExternalReferenceSyncReady;
   return Object.freeze({
     base_tables_ready: baseTablesReady,
     ledger_table_ready: ledgerTableReady,
@@ -165,6 +181,9 @@ async function inspectCoreAuthoringSchema(client) {
     person_reference_tables_ready: personReferenceTablesReady,
     person_reference_columns_ready: personReferenceColumnsReady,
     person_reference_constraints_ready: personReferenceConstraintsReady,
+    person_external_reference_sync_function_ready: personExternalReferenceSyncFunctionReady,
+    person_external_reference_sync_trigger_ready: personExternalReferenceSyncTriggerReady,
+    person_external_reference_sync_ready: personExternalReferenceSyncReady,
     person_reference_contract_ready: personReferenceContractReady,
     columns
   });
