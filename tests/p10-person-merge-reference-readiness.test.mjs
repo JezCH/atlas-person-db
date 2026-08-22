@@ -10,7 +10,7 @@ const mergeSource = fs.readFileSync(new URL('../server/atlas-person-merge-servic
 const readinessSource = fs.readFileSync(new URL('../server/atlas-person-merge-reference-readiness.js', import.meta.url), 'utf8');
 
 test('P10 Person merge reference policy is explicit and includes every reviewed live Person pointer', () => {
-  assert.equal(readiness.PERSON_REFERENCE_POLICY_VERSION, 'p10-person-reference-surface/v1');
+  assert.equal(readiness.PERSON_REFERENCE_POLICY_VERSION, 'p10-person-reference-surface/v2');
   assert.deepEqual(readiness.EXPECTED_PERSON_FKS.map((row) => [row.key, row.delete_action]), [
     ['atlas_v2.authoring_manifest_runs.person_id', 'SET NULL'],
     ['atlas_v2.person_descriptions.person_id', 'CASCADE'],
