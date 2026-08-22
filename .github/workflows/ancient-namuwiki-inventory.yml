@@ -1,0 +1,103 @@
+name: Ancient NamuWiki inventory diagnostic
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  ancient-namuwiki-inventory:
+    runs-on: ubuntu-latest
+    env:
+      ATLAS_MUTATION_TOKEN: ${{ secrets.ATLAS_MUTATION_TOKEN }}
+      ATLAS_ADMIN_PASSWORD: ${{ secrets.ATLAS_ADMIN_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate complete ancient Person references
+        shell: bash
+        run: |
+          node <<'NODE'
+          global.window = {};
+          require('./atlas-person-era-model.js');
+          const eraForYear = global.window.ATLAS_PERSON_ERA_MODEL.eraForYear;
+
+          async function readProduction() {
+            const response = await fetch('https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=person', { headers: { accept: 'application/json' } });
+            if (!response.ok) throw new Error(`Production read HTTP ${response.status}`);
+            const payload = await response.json();
+            if (!Array.isArray(payload.persons)) throw new Error('Production read did not return persons[]');
+            return payload.persons;
+          }
+
+          async function mirror(title) {
+            const bases = ['https://www.namu.moe', 'https://d.namu.moe', 'https://dark.namu.moe'];
+            const rows = [];
+            for (const base of bases) {
+              try {
+                const response = await fetch(`${base}/w/${encodeURIComponent(title)}`, {
+                  redirect: 'follow',
+                  headers: { 'user-agent': 'Mozilla/5.0 ATLAS-NamuWiki-link-verifier/1.0' }
+                });
+                const text = await response.text();
+                rows.push({ base, status: response.status, final_url: response.url, text });
+              } catch (error) {
+                rows.push({ base, status: 0, final_url: null, text: '', error: String(error) });
+              }
+            }
+            return rows;
+          }
+
+          (async () => {
+            const persons = await readProduction();
+            const ancient = persons.filter((person) => eraForYear(person.first_activity_year == null ? null : Number(person.first_activity_year)).code === 'ancient');
+            const linked = ancient.filter((person) => person.external_references?.namuwiki?.document_title);
+            const missing = ancient.filter((person) => !person.external_references?.namuwiki?.document_title);
+            console.log(`PRODUCTION_PERSON_TOTAL=${persons.length}`);
+            console.log(`ANCIENT_PERSON_COUNT=${ancient.length}`);
+            console.log(`EXISTING_LINKED_COUNT=${linked.length}`);
+            console.log(`MISSING_COUNT=${missing.length}`);
+
+            console.log('EXISTING_LINK_VALIDATION_BEGIN');
+            let invalidExisting = 0;
+            for (const person of linked) {
+              const title = person.external_references.namuwiki.document_title;
+              const probes = await mirror(title);
+              const ok = probes.some((probe) => probe.status === 200);
+              if (!ok) invalidExisting += 1;
+              console.log(JSON.stringify({ id: person.id, name: person.preferred_name_ko, title, ok, statuses: probes.map((p) => p.status), finals: probes.map((p) => p.final_url) }));
+            }
+            console.log(`EXISTING_INVALID_COUNT=${invalidExisting}`);
+            console.log('EXISTING_LINK_VALIDATION_END');
+
+            const semanticTitles = {
+              '티레의 피그말리온': ['피그말리온'],
+              '아슈르바니팔': ['아슈르바니팔'],
+              '고르고 왕비': ['고르고'],
+              '오왕 합려': ['합려','오왕 합려'],
+              '월왕 구천': ['구천']
+            };
+            console.log('SEMANTIC_SNIPPETS_BEGIN');
+            for (const person of missing) {
+              const titles = semanticTitles[person.preferred_name_ko];
+              if (!titles) continue;
+              for (const title of titles) {
+                const probes = await mirror(title);
+                const hit = probes.find((probe) => probe.status === 200) || probes[0];
+                const cleaned = String(hit?.text || '').replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/&nbsp;|&#160;/g, ' ').replace(/\s+/g, ' ').trim();
+                console.log(JSON.stringify({ id: person.id, name: person.preferred_name_ko, title, statuses: probes.map((p) => p.status), finals: probes.map((p) => p.final_url), snippet: cleaned.slice(0, 1200) }));
+              }
+            }
+            console.log('SEMANTIC_SNIPPETS_END');
+          })().catch((error) => {
+            console.error(error?.stack || error);
+            process.exit(1);
+          });
+          NODE
+
+      - name: Report safe Production mutation credentials
+        shell: bash
+        run: |
+          if [[ -n "${ATLAS_MUTATION_TOKEN:-}" ]]; then echo 'HAS_ATLAS_MUTATION_TOKEN=true'; else echo 'HAS_ATLAS_MUTATION_TOKEN=false'; fi
+          if [[ -n "${ATLAS_ADMIN_PASSWORD:-}" ]]; then echo 'HAS_ATLAS_ADMIN_PASSWORD=true'; else echo 'HAS_ATLAS_ADMIN_PASSWORD=false'; fi
