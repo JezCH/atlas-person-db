@@ -1,0 +1,22 @@
+{
+  "phase": "spacetime-v2-phase6-political-placement",
+  "base_phase": "spacetime-v2-phase5-person-tracks",
+  "runtime_cutover": false,
+  "contracts": {
+    "primary_relations": ["rules", "governs", "serves", "active_in", "claims_rule"],
+    "counterparty_relations": ["opposes"],
+    "opposes_never_contributes_to_primary_space_extent": true,
+    "opponent_only_person_primary_placement_unresolved": true,
+    "counterparty_segments_preserved_for_overlay": true,
+    "unknown_relation_never_auto_promoted_to_primary": true,
+    "unclassified_relation_requires_review": true,
+    "source_unresolved_queues_preserved": true
+  },
+  "notes": [
+    "This phase fixes political spatial semantics in the v2 display pipeline: an opposed polity is a counterparty, not the Person's own primary spatial placement.",
+    "Own-side/context relations currently eligible for primary spatial rendering are rules, governs, serves, active_in, and claims_rule; their original relation codes remain visible for later glyph styling.",
+    "If a Person has only opposes segments, v2 leaves primary placement unresolved instead of borrowing the opponent's coordinate.",
+    "Unknown or future relation codes are not guessed into either side and are routed to relation review.",
+    "No historical Activity is deleted or rewritten by this display partitioning layer, and Production v1 remains unchanged."
+  ]
+}
