@@ -301,13 +301,13 @@
   }
 
   function adaptiveTickInterval(ageYears) {
-    if (ageYears > 3500) return 1000;
-    if (ageYears > 2200) return 500;
-    if (ageYears > 1200) return 250;
-    if (ageYears > 500) return 100;
-    if (ageYears > 180) return 50;
-    if (ageYears > 70) return 25;
-    return 10;
+    if (ageYears > 3500) return 500;
+    if (ageYears > 2200) return 250;
+    if (ageYears > 1200) return 100;
+    if (ageYears > 500) return 50;
+    if (ageYears > 180) return 25;
+    if (ageYears > 70) return 10;
+    return 5;
   }
 
   function alignedHistoricalYear(year, interval) {
@@ -315,7 +315,7 @@
     return Math.abs(year) % interval === 0;
   }
 
-  function buildAdaptiveTimeTicks(startYear, endYear, scale, minPixelGap = 24) {
+  function buildAdaptiveTimeTicks(startYear, endYear, scale, minPixelGap = 18) {
     const startOrdinal = historicalYearToOrdinal(startYear);
     const endOrdinal = historicalYearToOrdinal(endYear);
     if (startOrdinal == null || endOrdinal == null || startOrdinal > endOrdinal || !scale?.yForYear) return Object.freeze([]);
