@@ -1,0 +1,24 @@
+{
+  "phase": "spacetime-v2-phase8-label-engine",
+  "base_phase": "spacetime-v2-phase7-semantic-lod",
+  "runtime_cutover": false,
+  "contracts": {
+    "historical_y_never_moved_for_label_collision": true,
+    "label_collision_resolution_is_horizontal_only": true,
+    "placed_labels_must_not_overlap": true,
+    "labels_must_stay_inside_viewport": true,
+    "insufficient_capacity_defers_label_instead_of_overlap": true,
+    "deferred_labels_are_not_ranked_by_historical_importance": true,
+    "selected_or_searched_label_gets_user_intent_priority": true,
+    "packing_is_deterministic": true,
+    "horizontal_connector_allowed_for_displaced_label": true,
+    "renderer_should_supply_measured_label_width_when_available": true
+  },
+  "notes": [
+    "This phase replaces the failed v1 vertical label-packing idea with screen-space horizontal placement only; the historical time anchor never moves.",
+    "When the current viewport cannot fit every eligible label without collision, excess labels are explicitly deferred until additional spatial/time zoom creates enough pixels.",
+    "No notability or editorial importance score decides which ordinary labels appear; deterministic geometry does. User-selected/searched Persons are the only priority override.",
+    "Connectors, when needed, are horizontal because the label and historical anchor share the exact same Y coordinate.",
+    "The production v1 renderer and its previous packing code remain untouched until the later v2 cutover."
+  ]
+}
