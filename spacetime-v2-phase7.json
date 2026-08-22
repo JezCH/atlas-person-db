@@ -1,0 +1,26 @@
+{
+  "phase": "spacetime-v2-phase7-semantic-lod",
+  "base_phase": "spacetime-v2-phase6-political-placement",
+  "runtime_cutover": false,
+  "contracts": {
+    "world_overview_is_density_first": true,
+    "person_point_is_unique_per_visible_track": true,
+    "person_label_candidate_is_unique_per_visible_track": true,
+    "activity_segments_remain_distinct_rails": true,
+    "lod_crossfade_not_abrupt_mode_switch": true,
+    "labels_require_both_time_and_space_detail": true,
+    "rails_require_time_and_space_detail": true,
+    "activity_glyphs_require_high_detail": true,
+    "selected_or_searched_person_label_can_be_forced": true,
+    "offscreen_tracks_are_not_planned_for_rendering": true,
+    "label_collision_resolution_deferred_to_phase8": true
+  },
+  "notes": [
+    "This phase produces a renderer-independent semantic LOD render plan from primary Person tracks.",
+    "World zoom exposes unique Person density sources rather than every Person name.",
+    "Regional zoom introduces Person points and one label candidate per visible Person; higher zoom introduces historical rails and Activity glyph metadata.",
+    "Layer opacity cross-fades continuously as camera detail changes; no separate overview/detail mode button is required by the v2 architecture.",
+    "Label candidates remain anchored to real projected Person segments. Phase 8 will resolve screen-space collisions without moving historical time coordinates.",
+    "Production v1 remains authoritative until the later cutover."
+  ]
+}
