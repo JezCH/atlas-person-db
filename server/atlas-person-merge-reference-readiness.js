@@ -1,6 +1,6 @@
 "use strict";
 
-const PERSON_REFERENCE_POLICY_VERSION = "p10-person-reference-surface/v1";
+const PERSON_REFERENCE_POLICY_VERSION = "p10-person-reference-surface/v2";
 
 const EXPECTED_PERSON_FKS = Object.freeze([
   Object.freeze({ key: "atlas_v2.authoring_manifest_runs.person_id", delete_action: "SET NULL" }),
@@ -32,6 +32,9 @@ const P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS = Object.freeze([
   "atlas_v2.person_duplicate_revalidation_requirements.person_low_id"
 ]);
 const EXPECTED_NON_FK_RELATIONSHIP_UUID_COLUMNS = Object.freeze([]);
+const EXPECTED_USER_TRIGGERS = Object.freeze([
+  "atlas_v2.authoring_manifest_runs.authoring_manifest_runs_external_reference_sync"
+]);
 const DELETE_ACTIONS = Object.freeze({ a:"NO ACTION",r:"RESTRICT",c:"CASCADE",n:"SET NULL",d:"SET DEFAULT" });
 
 function fkKey(row) {
@@ -119,7 +122,8 @@ async function inspectPersonMergeReferenceReadiness(client) {
   for (const column of difference(expectedPersonSnapshots,nonFkPersonUuidColumns)) blockers.push(`PERSON_UUID_SNAPSHOT_MISSING:${column}`);
   for (const column of difference(nonFkRelationshipUuidColumns,EXPECTED_NON_FK_RELATIONSHIP_UUID_COLUMNS)) blockers.push(`RELATIONSHIP_UUID_REFERENCE_UNREVIEWED:${column}`);
   for (const column of difference(EXPECTED_NON_FK_RELATIONSHIP_UUID_COLUMNS,nonFkRelationshipUuidColumns)) blockers.push(`RELATIONSHIP_UUID_SNAPSHOT_MISSING:${column}`);
-  for (const trigger of userTriggers) blockers.push(`MERGE_SURFACE_TRIGGER_UNREVIEWED:${trigger}`);
+  for (const trigger of difference(userTriggers,EXPECTED_USER_TRIGGERS)) blockers.push(`MERGE_SURFACE_TRIGGER_UNREVIEWED:${trigger}`);
+  for (const trigger of difference(EXPECTED_USER_TRIGGERS,userTriggers)) blockers.push(`MERGE_SURFACE_TRIGGER_MISSING:${trigger}`);
 
   return Object.freeze({
     policy_version:PERSON_REFERENCE_POLICY_VERSION,ready:blockers.length===0,blockers:Object.freeze(blockers.sort()),
@@ -141,5 +145,5 @@ async function assertPersonMergeReferenceReadiness(client) {
 module.exports=Object.freeze({
   PERSON_REFERENCE_POLICY_VERSION,EXPECTED_PERSON_FKS,EXPECTED_RELATIONSHIP_FKS,
   EXPECTED_NON_FK_PERSON_UUID_COLUMNS,P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS,EXPECTED_NON_FK_RELATIONSHIP_UUID_COLUMNS,
-  inspectPersonMergeReferenceReadiness,assertPersonMergeReferenceReadiness
+  EXPECTED_USER_TRIGGERS,inspectPersonMergeReferenceReadiness,assertPersonMergeReferenceReadiness
 });
