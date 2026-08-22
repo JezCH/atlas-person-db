@@ -1,0 +1,23 @@
+{
+  "phase": "spacetime-v2-phase5-person-tracks",
+  "base_phase": "spacetime-v2-phase4-spatial-compile",
+  "runtime_cutover": false,
+  "contracts": {
+    "person_identity_one_track": true,
+    "activity_segments_preserved": true,
+    "person_label_stored_once_per_track": true,
+    "same_person_activity_segments_do_not_create_duplicate_person_labels": true,
+    "unresolved_activity_does_not_create_fake_segment": true,
+    "partial_person_tracks_allowed": true,
+    "relation_metadata_preserved": true,
+    "counterparty_relation_classified_not_filtered_in_this_phase": true,
+    "historical_year_zero_forbidden": true
+  },
+  "notes": [
+    "This phase changes the v2 display compilation unit from Activity cards to one Person track with one identity label and one or more historical Activity/placement segments.",
+    "Canonical Activities remain separate historical records; the track layer does not merge or rewrite them.",
+    "Unresolved Activities remain explicit and never receive invented coordinates merely to keep a Person renderable.",
+    "The opposes relation is retained and flagged as a counterparty relation here; Phase 6 will exclude it from primary Person placement while preserving it as an overlay.",
+    "The production v1 renderer remains authoritative until the later v2 renderer cutover."
+  ]
+}
