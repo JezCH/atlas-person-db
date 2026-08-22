@@ -1,0 +1,18 @@
+{
+  "phase": "spacetime-v2-phase1-camera-core",
+  "base_phase": "spacetime-v2-phase0-baseline",
+  "runtime_cutover": false,
+  "contracts": {
+    "camera_state": ["centerTime", "centerSpace", "zoomTime", "zoomSpace"],
+    "pointer_centered_zoom": true,
+    "independent_time_space_zoom": true,
+    "world_to_screen_roundtrip": true,
+    "pan_clamped_to_world": true,
+    "default_zoom_range": [1, 256]
+  },
+  "notes": [
+    "This phase introduces only the reusable logical camera/coordinate core.",
+    "The production v1 renderer remains authoritative until later cutover phases.",
+    "Time semantic remapping and spatial hierarchy are deliberately deferred to phases 2 and 3."
+  ]
+}
