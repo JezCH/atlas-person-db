@@ -1,0 +1,24 @@
+{
+  "phase": "spacetime-v2-phase2-time-axis",
+  "base_phase": "spacetime-v2-phase1-camera-core",
+  "runtime_cutover": false,
+  "contracts": {
+    "historical_year_zero_forbidden": true,
+    "global_mapping": "softened_log_age",
+    "local_mapping": "linear_historical_ordinal",
+    "blend_start_zoom": 2,
+    "blend_full_zoom": 16,
+    "pointer_historical_anchor_stable_during_zoom": true,
+    "time_pan_screen_anchor_stable": true,
+    "adaptive_ticks_from_screen_density": true,
+    "tick_minimum_pixel_gap_default": 42,
+    "world_time_coordinate": [0, 1]
+  },
+  "notes": [
+    "Zoom 1 preserves the current softened logarithmic world-history distribution.",
+    "As time zoom increases, the visible interval continuously blends toward equal spacing per historical ordinal; by zoom 16 the local interval is linear.",
+    "BC 1 and AD 1 remain adjacent through the existing historical ordinal contract and year 0 is never introduced.",
+    "Pointer-centered zoom solves the camera center against the semantic time projection so the historical instant beneath the pointer does not drift while the blend changes.",
+    "This phase is an isolated projection/navigation core only. The production v1 timeline remains authoritative until a later renderer cutover."
+  ]
+}
