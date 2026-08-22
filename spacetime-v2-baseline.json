@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-spacetime-v2-baseline/v1",
+  "source_main_sha": "7b8b0084d76e347391c9cf71718292e8deafc31a",
+  "captured_at": "2026-08-22",
+  "purpose": "Freeze the v1 spacetime visualization source state and the non-negotiable acceptance gates before the camera/coordinate rewrite.",
+  "current_v1_characterization": {
+    "macroregion_count": 9,
+    "default_timeline_height_px": 4200,
+    "log_softening_years": 420,
+    "overview_microcard_height_px": 24,
+    "legacy_label_packing_enabled": true,
+    "legacy_renderer": "activity/spatial-segment cards inside fixed macroregion columns"
+  },
+  "regression_windows": [
+    {
+      "id": "europe-modern-density",
+      "region_code": "europe",
+      "start_year": 1800,
+      "end_year": 1950,
+      "reason": "Primary high-density regression window observed to become unreadable in the current overview."
+    },
+    {
+      "id": "east-asia-long-density",
+      "region_code": "east-asia",
+      "start_year": 500,
+      "end_year": 1900,
+      "reason": "Long-duration dense regression window for East Asia."
+    },
+    {
+      "id": "world-fit",
+      "region_code": "all",
+      "start_year": -3000,
+      "end_year": 2026,
+      "reason": "Global fit regression window for preserving world-scale context."
+    }
+  ],
+  "v2_invariants": {
+    "historical_y_anchor_immutable": true,
+    "stable_world_x_across_zoom_search_and_filter": true,
+    "no_inferred_place_precision": true,
+    "person_identity_rendered_once_per_visible_track": true,
+    "opposes_excluded_from_primary_spatial_placement": true,
+    "all_person_labels_visible_at_sufficient_zoom": true,
+    "zero_screen_space_label_overlap": true,
+    "year_zero_forbidden": true,
+    "authoring_compile_runtime_separation": true,
+    "runtime_layout_values_never_written_back_as_historical_facts": true
+  },
+  "planned_v1_retirement": [
+    "atlas-person-spacetime-label-packing.js",
+    "overview micro-card collision packing",
+    "fixed nine-column overview width allocation",
+    "overview/detail mode as the primary level-of-detail switch",
+    "timeline height presets as the primary time magnification control"
+  ]
+}
