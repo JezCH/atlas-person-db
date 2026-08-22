@@ -1,0 +1,23 @@
+{
+  "phase": "spacetime-v2-phase4-spatial-compile",
+  "base_phase": "spacetime-v2-phase3-space-axis",
+  "runtime_cutover": false,
+  "contracts": {
+    "place_display_index_schema": "atlas-spacetime-place-display-index/v1",
+    "place_id_required_for_place_or_subregion_precision": true,
+    "place_name_guessing_forbidden": true,
+    "reviewed_source_required_for_place_mapping": true,
+    "exact_place_anchor_must_stay_inside_reviewed_subregion": true,
+    "unmapped_place_falls_back_to_macroregion": true,
+    "macroregion_conflict_becomes_unresolved": true,
+    "historical_placement_fields_preserved": true,
+    "authoring_historical_fact_not_mutated": true
+  },
+  "notes": [
+    "This phase adds the Compile layer that converts reviewed historical placement segments into stable v2 display X coordinates/ranges.",
+    "A reviewed Place may carry an exact display-axis anchor; otherwise a reviewed subregion produces a subregion range and center anchor.",
+    "If a Place has no reviewed display mapping, the compiler retains only the known macroregion instead of inferring a subregion from its name or a modern country.",
+    "Conflicts between a historical macroregion and a reviewed Place subregion are surfaced for review rather than silently corrected.",
+    "Existing Production historical data and the v1 renderer remain untouched."
+  ]
+}
