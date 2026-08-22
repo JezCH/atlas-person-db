@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:yu-gwan-sun:korea-under-japanese-rule:1919-1920:v1",
+  "person": {
+    "canonical_name_en": "Yu Gwan-sun",
+    "display_name_ko": "유관순"
+  },
+  "polity": {
+    "canonical_name_en": "Korea under Japanese Rule",
+    "display_name_ko": "일제강점기 조선",
+    "canonical_key": "korea-under-japanese-rule-1910-1945",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Independence Activist",
+    "role_display_name_ko": "독립운동가",
+    "start_year": 1919,
+    "start_month": 3,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1920,
+    "end_month": 9,
+    "end_day": 28,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Own-side political-community Activity for Yu Gwan-sun. 'Korea under Japanese Rule' / '일제강점기 조선' is an ATLAS editorial catalog label for the non-sovereign Korean/Choson historical community under Japanese colonial rule, not an official state name and not the Empire of Japan or the Government-General of Korea. The March First Declaration explicitly declared Choson (朝鮮) an independent country and Choson people (朝鮮人) a self-governing people. The existing Empire of Japan / opposes Activity remains the counterparty relationship; this Activity supplies the representative own-side Polity without erasing colonial jurisdiction or opposition history."
+  },
+  "sources": [
+    {
+      "title": "3·1 독립선언서 — 한국독립운동사자료",
+      "canonical_url": "https://db.history.go.kr/modern/level.do?levelId=kd_004_0040_0020_0070",
+      "source_type": "primary_source",
+      "citation_text": "The March First Declaration states '我朝鮮의 獨立國임과 朝鮮人의 自主民임을 宣言', explicitly identifying Choson and Choson people as the political subject of independence.",
+      "locator": "Declaration opening and independence rationale"
+    },
+    {
+      "title": "일제강점기(1910~1945) — 우리역사넷",
+      "canonical_url": "https://contents.history.go.kr/resources/front/html/txthj_p_02.html",
+      "source_type": "institutional_reference",
+      "citation_text": "The National Institute of Korean History periodizes 1910–1945 as 일제강점기 and describes Joseon/Choson and Joseon people under Japanese colonial rule as a distinct historical society and people subject to colonial policy.",
+      "locator": "일제강점기(1910~1945) overview"
+    }
+  ]
+}
