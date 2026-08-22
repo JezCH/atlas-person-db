@@ -8,7 +8,7 @@ const { manifestHash, readLedger } = require("./atlas-authoring-manifest-service
 const HUMAN_AUTHORING_SCHEMA = "atlas-human-authoring/v1";
 const HUMAN_AUTHORING_MARKER = "ATLAS_HUMAN_AUTHORING_V1";
 const SEMANTIC_VERSION = "v2-relation-full-temporal";
-const RELATION_CODES = new Set(["rules", "governs", "serves", "active_in", "opposes", "claims_rule"]);
+const RELATION_CODES = new Set(["rules", "governs", "serves", "active_in", "claims_rule"]);
 const CERTAINTIES = new Set(["exact", "approximate", "uncertain"]);
 const CONFIDENCE_VALUES = new Set(["well_established", "likely", "speculative", "disputed", "unknown"]);
 const CALENDARS = new Set(["gregorian", "julian", "unspecified_historical", "source_calendar"]);
@@ -42,8 +42,7 @@ function roleCategoryForRelation(relationCode) {
     claims_rule: "ruler",
     governs: "government",
     serves: "service",
-    active_in: "activity",
-    opposes: "opposition"
+    active_in: "activity"
   })[relationCode] || "activity";
 }
 
@@ -130,10 +129,12 @@ function normalizeHumanAuthoringRequest(raw, { allowLegacyNamuWikiOmission = tru
   if (request.schema !== HUMAN_AUTHORING_SCHEMA) throw new Error("HUMAN_AUTHORING_SCHEMA_REQUIRED");
   const requestId = requiredText(request.request_id, "HUMAN_AUTHORING_REQUEST_ID_REQUIRED");
   const person = requiredObject(request.person, "HUMAN_AUTHORING_PERSON_REQUIRED");
-  const polity = requiredObject(request.polity, "HUMAN_AUTHORING_POLITY_REQUIRED");
+  const polity = request.polity == null ? null : requiredObject(request.polity, "HUMAN_AUTHORING_POLITY_INVALID");
   const activity = requiredObject(request.activity, "HUMAN_AUTHORING_ACTIVITY_REQUIRED");
-  const relationCode = requiredText(activity.relation_type, "HUMAN_AUTHORING_RELATION_TYPE_REQUIRED");
-  if (!/^[a-z][a-z0-9_]*$/.test(relationCode)) throw new Error("HUMAN_AUTHORING_RELATION_TYPE_INVALID");
+  const relationCode = optionalText(activity.relation_type);
+  if (relationCode != null && !/^[a-z][a-z0-9_]*$/.test(relationCode)) throw new Error("HUMAN_AUTHORING_RELATION_TYPE_INVALID");
+  if (relationCode === "opposes") throw new Error("HUMAN_AUTHORING_PRIMARY_OPPOSES_FORBIDDEN");
+  if ((polity == null) !== (relationCode == null)) throw new Error("HUMAN_AUTHORING_PRIMARY_POLITY_RELATION_PAIR_REQUIRED");
   const periodBasis = requiredText(activity.period_basis, "HUMAN_AUTHORING_PERIOD_BASIS_REQUIRED");
   const start = normalizeBoundary(activity, "start");
   const end = normalizeBoundary(activity, "end");
@@ -154,7 +155,7 @@ function normalizeHumanAuthoringRequest(raw, { allowLegacyNamuWikiOmission = tru
       person_type:optionalText(person.person_type) || "historical",
       historicity:optionalText(person.historicity) || "historical"
     }),
-    polity:Object.freeze({
+    polity:polity == null ? null : Object.freeze({
       canonical_name_en:requiredText(polity.canonical_name_en, "HUMAN_AUTHORING_POLITY_EN_REQUIRED"),
       display_name_ko:optionalText(polity.display_name_ko),
       canonical_key:optionalText(polity.canonical_key),
@@ -330,7 +331,7 @@ function outcome(requestId, replay, snapshot) {
     committed:true,
     replay,
     person_id:snapshot.entities.person.id,
-    polity_id:snapshot.entities.polity.id,
+    polity_id:snapshot.entities.polity?.id ?? null,
     role_id:snapshot.entities.role.id,
     relationship_id:snapshot.entities.activity.id,
     source_ids:snapshot.entities.sources.map((source) => source.id),
@@ -356,10 +357,14 @@ function createHumanAuthoringService({ client } = {}) {
           await client.query("commit");
           return outcome(request.requestId, true, snapshot);
         }
-        const relation = await resolveCatalogCode(client, { table:"person_polity_relation_types", code:request.activity.relation_type, unresolvedCode:"HUMAN_AUTHORING_RELATION_TYPE_UNRESOLVED" });
+        const relation = request.activity.relation_type == null
+          ? Object.freeze({ id:null, code:null })
+          : await resolveCatalogCode(client, { table:"person_polity_relation_types", code:request.activity.relation_type, unresolvedCode:"HUMAN_AUTHORING_RELATION_TYPE_UNRESOLVED" });
         const periodBasis = await resolveCatalogCode(client, { table:"period_bases", code:request.activity.period_basis, unresolvedCode:"HUMAN_AUTHORING_PERIOD_BASIS_UNRESOLVED" });
         const person = await resolveOrCreatePerson(client, request.person);
-        const polity = await resolveOrCreatePolity(client, request.polity);
+        const polity = request.polity == null
+          ? Object.freeze({ id:null, disposition:"none" })
+          : await resolveOrCreatePolity(client, request.polity);
         const role = await resolveOrCreateRole(client, request.activity);
         const sources = await resolveOrCreateSources(client, request.requestId, request.sources);
         const payload = activityPayload({ personId:person.id, polityId:polity.id, roleId:role.id, relation, periodBasis, activity:request.activity, sources });
@@ -377,9 +382,7 @@ function createHumanAuthoringService({ client } = {}) {
 }
 
 async function loadHumanAuthoringCatalogs(client) {
-  // Keep a single pg.Client sequential. The catalog payload is tiny and does
-  // not justify deprecated concurrent client.query() calls.
-  const relations = await client.query(`select code from atlas_v2.person_polity_relation_types where is_active=true order by code`);
+  const relations = await client.query(`select code from atlas_v2.person_polity_relation_types where is_active=true and code<>'opposes' order by code`);
   const periods = await client.query(`select code from atlas_v2.period_bases where is_active=true order by code`);
   return Object.freeze({ relation_types:Object.freeze(relations.rows.map((row) => String(row.code))), period_bases:Object.freeze(periods.rows.map((row) => String(row.code))) });
 }

@@ -5,6 +5,7 @@ const {
   requiredUuid,
   optionalUuid,
   normalizeBoundary,
+  normalizePrimaryPolityPair,
   semanticKey,
   semanticHash
 } = require("./atlas-activity-semantic-key-v2.js");
@@ -66,11 +67,11 @@ function normalizeStage2NativeActivity(raw) {
 
   const start = normalizeBoundary(raw, "activity_start", { requireCertainty: true });
   const end = normalizeBoundary(raw, "activity_end", { requireCertainty: true });
-  // semanticKey performs full known-order validation with the exact same identity implementation.
+  const primary = normalizePrimaryPolityPair(raw);
   const normalized = {
     person_id: requiredUuid(raw.person_id, "person_id"),
-    polity_id: requiredUuid(raw.polity_id, "polity_id"),
-    relation_type_id: requiredUuid(raw.relation_type_id, "relation_type_id"),
+    polity_id: primary.polityId,
+    relation_type_id: primary.relationTypeId,
     role_id: optionalUuid(raw.role_id, "role_id"),
     period_basis_id: requiredUuid(raw.period_basis_id, "period_basis_id"),
     activity_start: start.year,
@@ -97,12 +98,16 @@ function normalizeStage2NativeActivity(raw) {
 async function requireSingleReference(client, sql, params, code) {
   const result = await client.query(sql, params);
   if (result.rows.length !== 1) throw new Error(code);
+  return result.rows[0];
 }
 
 async function verifyReferences(client, row) {
   await requireSingleReference(client, `select id from atlas_v2.persons where id=$1::uuid`, [row.person_id], "STAGE2_ACTIVITY_PERSON_ID_UNRESOLVED");
-  await requireSingleReference(client, `select id from atlas_v2.polities where id=$1::uuid`, [row.polity_id], "STAGE2_ACTIVITY_POLITY_ID_UNRESOLVED");
-  await requireSingleReference(client, `select id from atlas_v2.person_polity_relation_types where id=$1::uuid and is_active=true`, [row.relation_type_id], "STAGE2_ACTIVITY_RELATION_TYPE_ID_UNRESOLVED");
+  if (row.polity_id != null) {
+    await requireSingleReference(client, `select id from atlas_v2.polities where id=$1::uuid`, [row.polity_id], "STAGE2_ACTIVITY_POLITY_ID_UNRESOLVED");
+    const relation = await requireSingleReference(client, `select id,code from atlas_v2.person_polity_relation_types where id=$1::uuid and is_active=true`, [row.relation_type_id], "STAGE2_ACTIVITY_RELATION_TYPE_ID_UNRESOLVED");
+    if (String(relation.code) === "opposes") throw new Error("STAGE2_ACTIVITY_PRIMARY_OPPOSES_FORBIDDEN");
+  }
   if (row.role_id != null) await requireSingleReference(client, `select id from atlas_v2.roles where id=$1::uuid and is_active=true`, [row.role_id], "STAGE2_ACTIVITY_ROLE_ID_UNRESOLVED");
   await requireSingleReference(client, `select id from atlas_v2.period_bases where id=$1::uuid and is_active=true`, [row.period_basis_id], "STAGE2_ACTIVITY_PERIOD_BASIS_ID_UNRESOLVED");
   for (const link of row.source_links) {
@@ -119,8 +124,8 @@ async function semanticCollisions(client, row, excludeId = null) {
     select id::text
       from atlas_v2.person_politics_v2
      where person_id=$1::uuid
-       and polity_id=$2::uuid
-       and relation_type_id=$3::uuid
+       and polity_id is not distinct from $2::uuid
+       and relation_type_id is not distinct from $3::uuid
        and role_id is not distinct from $4::uuid
        and period_basis_id=$5::uuid
        and activity_start=$6
@@ -159,7 +164,7 @@ async function loadStage2NativeActivity(client, id, { forUpdate = false } = {}) 
     ...row.rows[0],
     id: String(row.rows[0].id).toLowerCase(),
     person_id: String(row.rows[0].person_id).toLowerCase(),
-    polity_id: String(row.rows[0].polity_id).toLowerCase(),
+    polity_id: row.rows[0].polity_id == null ? null : String(row.rows[0].polity_id).toLowerCase(),
     relation_type_id: row.rows[0].relation_type_id == null ? null : String(row.rows[0].relation_type_id).toLowerCase(),
     role_id: row.rows[0].role_id == null ? null : String(row.rows[0].role_id).toLowerCase(),
     period_basis_id: String(row.rows[0].period_basis_id).toLowerCase(),
