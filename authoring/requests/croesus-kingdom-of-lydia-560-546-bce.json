@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:croesus:kingdom-of-lydia:king:ca-560-546-bce:v1",
+  "person": {
+    "canonical_name_en": "Croesus",
+    "display_name_ko": "크로이소스"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Lydia",
+    "display_name_ko": "리디아 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -560,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -546,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Croesus was the last independent king of Lydia, ruling from Sardis until the Persian conquest by Cyrus the Great. Modern museum chronology commonly places his reign at approximately 560-546 BCE. ATLAS therefore records both boundaries as approximate rather than converting the conventional chronology into exact accession and deposition years."
+  },
+  "sources": [
+    {
+      "title": "Sardis — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/ko/essays/sardis",
+      "citation_text": "The Metropolitan Museum identifies Croesus as the last Lydian king and states that he ruled Lydia from around 560 to 546 BCE, before the Persian conquest of Sardis.",
+      "source_type": "museum_web"
+    },
+    {
+      "title": "Lydia and Phrygia — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/ko/essays/lydia-and-phrygia",
+      "citation_text": "The Metropolitan Museum describes Lydia as an independent kingdom centered on Sardis and records its conquest by Cyrus in 546 BCE during the time of King Croesus.",
+      "source_type": "museum_web"
+    }
+  ]
+}

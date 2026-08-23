@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:anawrahta:pagan-kingdom:king:1044-1077:v1",
+  "person": {
+    "canonical_name_en": "Anawrahta",
+    "display_name_ko": "아나우라타"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "아나우라타",
+      "url": "https://namu.wiki/w/%EC%95%84%EB%82%98%EC%9A%B0%EB%9D%BC%ED%83%80"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Pagan Kingdom",
+    "display_name_ko": "바간 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1044,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1077,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Anawrahta (also rendered Aniruddha and in extended royal-name forms such as Anawrahta Minsaw) ruled the Pagan/Bagan kingdom from 1044 to 1077. He is conventionally treated as the major eleventh-century ruler under whom Bagan expanded into the dominant polity of Upper Myanmar. ATLAS uses the historical polity Pagan Kingdom rather than a modern Myanmar/Burma state label."
+  },
+  "sources": [
+    {
+      "title": "Political and Economic Development of Myanmar: An Overview — Myanmar in ASEAN",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/myanmar-in-asean/political-and-economic-development-of-myanmar-an-overview/E9B8D285E21D9E5BF372896B7D0FB061",
+      "citation_text": "Cambridge's overview identifies King Anawrahta of Bagan and gives his reign as 1044-77, placing his rule at the beginning of major Bagan political expansion.",
+      "source_type": "academic_book"
+    },
+    {
+      "title": "Ta Mok Shwe-Gu-Gyi Temple Kyaukse and Bagan — Bagan and the World",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/bagan-and-the-world/ta-mok-shwegugyi-temple-kyaukse-and-bagan/E6223445D6A5D926AE52B01E1EB20F4B",
+      "citation_text": "The archaeological study dates King Anawrahta's reign to 1044-77 CE and discusses material evidence associated with his Bagan-period expansion into Kyaukse.",
+      "source_type": "academic_book"
+    }
+  ]
+}
