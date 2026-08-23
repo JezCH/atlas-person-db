@@ -29,29 +29,10 @@ CREATE INDEX IF NOT EXISTS idx_person_politics_context_polities_polity
 CREATE INDEX IF NOT EXISTS idx_person_politics_context_polities_relation
   ON atlas_v2.person_politics_context_polities(relation_type_id, person_politics_id);
 
--- A conflict target is context, not the person's own polity. Preserve every
--- existing `opposes` binding in the dedicated context table before clearing
--- the primary Person→Polity slot. The Activity, chronology, role, notes and
--- provenance remain on person_politics_v2 unchanged.
-INSERT INTO atlas_v2.person_politics_context_polities(
-  person_politics_id,
-  polity_id,
-  relation_type_id
-)
-SELECT pp.id, pp.polity_id, pp.relation_type_id
-  FROM atlas_v2.person_politics_v2 pp
-  JOIN atlas_v2.person_polity_relation_types rt
-    ON rt.id = pp.relation_type_id
- WHERE rt.code = 'opposes'
-   AND pp.polity_id IS NOT NULL
-ON CONFLICT (person_politics_id, polity_id, relation_type_id) DO NOTHING;
-
-UPDATE atlas_v2.person_politics_v2 pp
-   SET polity_id = NULL,
-       relation_type_id = NULL
-  FROM atlas_v2.person_polity_relation_types rt
- WHERE rt.id = pp.relation_type_id
-   AND rt.code = 'opposes'
-   AND pp.polity_id IS NOT NULL;
+-- Deliberately no blanket data rewrite here. Legacy `opposes` rows are not
+-- semantically uniform: some store an actual opponent polity, while others
+-- use the person's own territorial polity and mean opposition to its regime.
+-- Existing rows must therefore be moved/relinked by reviewed, identity-bound
+-- correction operations rather than by relation-code-only migration.
 
 COMMIT;
