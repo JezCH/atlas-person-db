@@ -134,5 +134,9 @@ test('reviewed data migration is exact-identity bound and covers the audited cor
   ]) assert.match(sql, new RegExp(activityId));
   assert.match(sql, /Spanish colonial Philippines/);
   assert.match(sql, /Guangdong Pirate Confederation/);
-  assert.doesNotMatch(sql, /update[\s\S]+where[\s\S]+relation_type_id\s*=\s*v_opposes/i);
+  const updateStatements = sql.match(/UPDATE\s+atlas_v2\.person_politics_v2[\s\S]*?;/gi) || [];
+  assert.ok(updateStatements.length > 0);
+  for (const statement of updateStatements) {
+    assert.doesNotMatch(statement, /WHERE[\s\S]*?relation_type_id\s*=\s*v_opposes/i);
+  }
 });
