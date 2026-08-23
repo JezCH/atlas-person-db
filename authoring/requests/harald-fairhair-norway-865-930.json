@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:harald-fairhair:kingdom-of-norway:king:865-930:v1",
+  "person": {
+    "canonical_name_en": "Harald Fairhair",
+    "display_name_ko": "하랄 1세 하르파그리"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "하랄 1세 하르파그리",
+      "url": "https://namu.wiki/w/%ED%95%98%EB%9E%84%201%EC%84%B8%20%ED%95%98%EB%A5%B4%ED%8C%8C%EA%B7%B8%EB%A6%AC"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Norway",
+    "display_name_ko": "노르웨이 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 865,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 930,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Harald Fairhair (Old Norse Haraldr hárfagri; Norwegian Harald Hårfagre) is treated by current Norwegian reference historiography as an early Norwegian king, probably ruling from around 865 until roughly 930-933. Later medieval narratives made him the sole conqueror and unifier of all Norway, but modern scholarship regards the unification as a much longer process and debates the geographical extent of Harald's actual authority. ATLAS therefore reuses Kingdom of Norway as the representative polity while recording 865-930 only as an approximate reign window, not as exact accession/death dates or as proof that he exercised uniform control over the territory of modern Norway. His best-supported power base lay in south-western Norway and along the coastal sailing route."
+  },
+  "sources": [
+    {
+      "title": "Harald Hårfagre — Store norske leksikon",
+      "canonical_url": "https://snl.no/Harald_H%C3%A5rfagre",
+      "citation_text": "Store norske leksikon states that Harald Hårfagre was king in Norway from around 865 until his death around 930-933, while stressing that the later image of him as sole unifier of all Norway is debated and that his core power lay in south-western Norway and control of the coastal route.",
+      "source_type": "reference_web"
+    },
+    {
+      "title": "The Beginning of the Viking Age in the West — Journal of Maritime Archaeology",
+      "canonical_url": "https://link.springer.com/article/10.1007/s11457-018-9221-3",
+      "citation_text": "The article discusses Harald Fairhair as a ruler who rose to power around the Rogaland-Hordaland sailing route and extended control along the Norðvegr, supporting a regional and route-based interpretation of his kingship rather than a simplistic instantaneous unification narrative.",
+      "source_type": "academic_journal"
+    }
+  ]
+}
