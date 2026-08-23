@@ -233,7 +233,7 @@ Do not restart generic repository, Production, or deployment discovery because o
 
 Report success only after `VERIFIED`.
 
-Minimum completion report:
+Minimum completion report uses one of the following explicit NamuWiki outcomes:
 
 ```text
 등록 완료
@@ -241,7 +241,19 @@ Person: <English> / <Korean>
 Polity: <...>
 Role: <...>
 Period: <...>
-나무위키: 연결됨 — <document_title> | 문서 없음
+나무위키: 연결됨 — <document_title>
+Production read-back: VERIFIED
+```
+
+or:
+
+```text
+등록 완료
+Person: <English> / <Korean>
+Polity: <...>
+Role: <...>
+Period: <...>
+나무위키: 문서 없음
 Production read-back: VERIFIED
 ```
 
