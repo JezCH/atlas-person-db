@@ -128,7 +128,7 @@ test('human authoring rejects a one-sided primary polity/relation pair', () => {
     () => human.normalizeHumanAuthoringRequest(humanRequest({
       polity: { canonical_name_en: 'Example Polity', display_name_ko: '예시 정치체' }
     })),
-    /HUMAN_AUTHORING_PRIMARY_POLITY_RELATION_PAIR_REQUIRED/
+    /HUMAN_AUTHORING_PRIMARY_POLOLITY_RELATION_PAIR_REQUIRED/
   );
 });
 
@@ -184,5 +184,5 @@ test('opponent-context migration is schema-only and requires reviewed row correc
   assert.match(sql, /ALTER COLUMN relation_type_id DROP NOT NULL/i);
   assert.doesNotMatch(sql, /WHERE\s+rt\.code\s*=\s*'opposes'/i);
   assert.doesNotMatch(sql, /UPDATE\s+atlas_v2\.person_politics_v2/i);
-  assert.match(sql, /reviewed, identity-bound\s+correction operations/i);
+  assert.match(sql, /reviewed,\s+identity-bound\s+correction operations/i);
 });
