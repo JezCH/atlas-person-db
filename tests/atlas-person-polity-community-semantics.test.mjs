@@ -128,7 +128,7 @@ test('human authoring rejects a one-sided primary polity/relation pair', () => {
     () => human.normalizeHumanAuthoringRequest(humanRequest({
       polity: { canonical_name_en: 'Example Polity', display_name_ko: '예시 정치체' }
     })),
-    /HUMAN_AUTHORING_PRIMARY_POLOLITY_RELATION_PAIR_REQUIRED/
+    /HUMAN_AUTHORING_PRIMARY_POLITY_RELATION_PAIR_REQUIRED/
   );
 });
 
