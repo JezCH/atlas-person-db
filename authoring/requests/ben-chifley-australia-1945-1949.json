@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ben-chifley:australia:prime-minister:1945-1949:v1",
+  "person": {
+    "canonical_name_en": "Ben Chifley",
+    "display_name_ko": "벤 치플리"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Australia",
+    "display_name_ko": "호주"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1945,
+    "start_month": 7,
+    "start_day": 13,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1949,
+    "end_month": 12,
+    "end_day": 19,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ben Chifley served as Prime Minister of Australia from 13 July 1945 to 19 December 1949. ATLAS reuses the existing Australia polity and Prime Minister role, matching the established treatment of Australian prime ministers."
+  },
+  "sources": [
+    {
+      "title": "Prime Ministers of Australia — Parliament of Australia",
+      "canonical_url": "https://www.aph.gov.au/Visit_Parliament/Art/Online_Gallery/-/media/06_Visit_Parliament/Parl_House_Art_Collection/664_online_galleries/Portrait_gallery/PM_Portrait_Brochure_Single_Web.pdf",
+      "citation_text": "The Parliament of Australia lists Ben Chifley's term of office as Prime Minister from 13 July 1945 to 19 December 1949.",
+      "source_type": "parliamentary_official_publication"
+    }
+  ]
+}
