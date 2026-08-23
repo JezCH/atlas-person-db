@@ -3,11 +3,13 @@
 const { createPostgresClient } = require("../server/atlas-postgres-client.js");
 const { createNormalizedReadHandler } = require("../server/atlas-normalized-read-handler.js");
 const { createPersonReadHandler } = require("../server/atlas-person-read-handler.js");
+const { createCatalogReadHandler } = require("../server/atlas-catalog-read-handler.js");
 const { createAdminInspectorHandler } = require("../server/atlas-admin-inspector-handler.js");
 const { createAdminSystemStatusHandler } = require("../server/atlas-admin-system-status-handler.js");
 
 const normalizedReadHandler = createNormalizedReadHandler({ clientFactory: createPostgresClient });
 const personReadHandler = createPersonReadHandler({ clientFactory: createPostgresClient });
+const catalogReadHandler = createCatalogReadHandler({ clientFactory: createPostgresClient });
 const adminInspectorHandler = createAdminInspectorHandler({ clientFactory: createPostgresClient });
 const adminSystemStatusHandler = createAdminSystemStatusHandler({ clientFactory: createPostgresClient });
 
@@ -29,6 +31,7 @@ function selectReadSurface(req) {
 async function consolidatedReadHandler(req, res) {
   const surface = selectReadSurface(req);
   if (surface === "person") return personReadHandler(req, res);
+  if (surface === "catalog") return catalogReadHandler(req, res);
   if (surface === "admin-inspector") return adminInspectorHandler(req, res);
   if (surface === "admin-system-status") return adminSystemStatusHandler(req, res);
   return normalizedReadHandler(req, res);
