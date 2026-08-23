@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jozef-pilsudski:second-polish-republic:chief-of-state:1918-1922:v1",
+  "person": {
+    "canonical_name_en": "Józef Piłsudski",
+    "display_name_ko": "유제프 피우수트스키"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-23",
+      "document_title": "유제프 피우수트스키",
+      "url": "https://namu.wiki/w/%EC%9C%A0%EC%A0%9C%ED%94%84%20%ED%94%BC%EC%9A%B0%EC%88%98%ED%8A%B8%EC%8A%A4%ED%82%A4"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Second Polish Republic",
+    "display_name_ko": "폴란드 제2공화국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Chief of State",
+    "role_display_name_ko": "국가원수",
+    "start_year": 1918,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1922,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Józef Piłsudski served as Chief of State of the restored Polish state from November 1918 until December 1922. This Activity records that formal head-of-state term only. His renewed political dominance after the May Coup of 1926 is historically distinct and is intentionally not conflated with the 1918-1922 office term."
+  },
+  "sources": [
+    {
+      "title": "Józef Piłsudski 1867–1935 — Józef Piłsudski Museum in Sulejówek",
+      "canonical_url": "https://muzeumpilsudski.pl/en/jozef-pilsudski-1867-1935-2/",
+      "citation_text": "The Józef Piłsudski Museum states that Piłsudski returned to Warsaw in November 1918, assumed leadership during the restoration of Polish state power, and held the position of Chief of State until December 1922.",
+      "source_type": "museum_web"
+    }
+  ]
+}
