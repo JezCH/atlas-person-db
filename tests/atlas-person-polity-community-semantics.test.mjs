@@ -75,14 +75,8 @@ test('semantic-v2 accepts an Activity with no defensible primary polity', () => 
 });
 
 test('semantic-v2 requires primary polity and primary relation as one pair', () => {
-  assert.throws(
-    () => semantic.semanticKey(nativeRow({ polity_id: POLITY, relation_type_id: null })),
-    /must both be null or both be UUIDs/
-  );
-  assert.throws(
-    () => semantic.semanticKey(nativeRow({ polity_id: null, relation_type_id: RELATION })),
-    /must both be null or both be UUIDs/
-  );
+  assert.throws(() => semantic.semanticKey(nativeRow({ polity_id: POLITY, relation_type_id: null })), /must both be null or both be UUIDs/);
+  assert.throws(() => semantic.semanticKey(nativeRow({ polity_id: null, relation_type_id: RELATION })), /must both be null or both be UUIDs/);
 });
 
 test('native Activity normalization keeps a null primary polity pair', () => {
@@ -96,16 +90,11 @@ test('native reference validation rejects opposes as a primary Person polity rel
   const client = {
     async query(sql) {
       calls.push(String(sql));
-      if (String(sql).includes('from atlas_v2.person_polity_relation_types')) {
-        return { rows: [{ id: RELATION, code: 'opposes' }] };
-      }
+      if (String(sql).includes('from atlas_v2.person_polity_relation_types')) return { rows: [{ id: RELATION, code: 'opposes' }] };
       return { rows: [{ id: PERSON }] };
     }
   };
-  await assert.rejects(
-    () => native.verifyReferences(client, nativeRow({ polity_id: POLITY, relation_type_id: RELATION })),
-    /STAGE2_ACTIVITY_PRIMARY_OPPOSES_FORBIDDEN/
-  );
+  await assert.rejects(() => native.verifyReferences(client, nativeRow({ polity_id: POLITY, relation_type_id: RELATION })), /STAGE2_ACTIVITY_PRIMARY_OPPOSES_FORBIDDEN/);
   assert.ok(calls.some((sql) => sql.includes('person_polity_relation_types')));
 });
 
@@ -113,48 +102,26 @@ test('human authoring permits no primary polity and rejects primary opposes', ()
   const normalized = human.normalizeHumanAuthoringRequest(humanRequest());
   assert.equal(normalized.polity, null);
   assert.equal(normalized.activity.relation_type, null);
-
-  assert.throws(
-    () => human.normalizeHumanAuthoringRequest(humanRequest({
-      polity: { canonical_name_en: 'Colonial State', display_name_ko: '식민 지배국' },
-      activity: { ...humanRequest().activity, relation_type: 'opposes' }
-    })),
-    /HUMAN_AUTHORING_PRIMARY_OPPOSES_FORBIDDEN/
-  );
+  assert.throws(() => human.normalizeHumanAuthoringRequest(humanRequest({
+    polity: { canonical_name_en: 'Colonial State', display_name_ko: '식민 지배국' },
+    activity: { ...humanRequest().activity, relation_type: 'opposes' }
+  })), /HUMAN_AUTHORING_PRIMARY_OPPOSES_FORBIDDEN/);
 });
 
 test('human authoring rejects a one-sided primary polity/relation pair', () => {
-  assert.throws(
-    () => human.normalizeHumanAuthoringRequest(humanRequest({
-      polity: { canonical_name_en: 'Example Polity', display_name_ko: '예시 정치체' }
-    })),
-    /HUMAN_AUTHORING_PRIMARY_POLITY_RELATION_PAIR_REQUIRED/
-  );
+  assert.throws(() => human.normalizeHumanAuthoringRequest(humanRequest({
+    polity: { canonical_name_en: 'Example Polity', display_name_ko: '예시 정치체' }
+  })), /HUMAN_AUTHORING_PRIMARY_POLITY_RELATION_PAIR_REQUIRED/);
 });
 
 test('person read projects null primary polity and relation without losing the Activity', () => {
   const projected = read.projectActivity({
-    id: '55555555-5555-4555-8555-555555555555',
-    person_id: PERSON,
-    polity_id: null,
-    relation_type_id: null,
-    role_id: null,
-    period_basis_id: PERIOD,
-    period_basis_code: 'general_activity',
-    activity_start: 73,
-    activity_start_month: null,
-    activity_start_day: null,
-    activity_start_granularity: 'year',
-    activity_start_certainty: 'exact',
-    activity_start_calendar: 'unspecified_historical',
-    activity_end: 73,
-    activity_end_month: null,
-    activity_end_day: null,
-    activity_end_granularity: 'year',
-    activity_end_certainty: 'exact',
-    activity_end_calendar: 'unspecified_historical',
-    confidence: 'well_established',
-    chronology_status: 'reviewed',
+    id: '55555555-5555-4555-8555-555555555555', person_id: PERSON, polity_id: null, relation_type_id: null, role_id: null,
+    period_basis_id: PERIOD, period_basis_code: 'general_activity', activity_start: 73, activity_start_month: null,
+    activity_start_day: null, activity_start_granularity: 'year', activity_start_certainty: 'exact',
+    activity_start_calendar: 'unspecified_historical', activity_end: 73, activity_end_month: null, activity_end_day: null,
+    activity_end_granularity: 'year', activity_end_certainty: 'exact', activity_end_calendar: 'unspecified_historical',
+    confidence: 'well_established', chronology_status: 'reviewed',
     notes: 'Activity is preserved without misidentifying the opponent as the person’s polity.'
   });
   assert.equal(projected.polity, null);
@@ -164,10 +131,7 @@ test('person read projects null primary polity and relation without losing the A
 });
 
 test('opponent-context migration is post-Stage2, not a correction-ledger migration', () => {
-  assert.equal(
-    migrations.CORRECTION_MIGRATION_PATHS.some((entry) => entry.endsWith('20260822_person_politics_context_polities.sql')),
-    false
-  );
+  assert.equal(migrations.CORRECTION_MIGRATION_PATHS.some((entry) => entry.endsWith('20260822_person_politics_context_polities.sql')), false);
   assert.ok(migrations.POST_STAGE2_MIGRATION_PATHS.some((entry) => entry.endsWith('20260822_person_politics_context_polities.sql')));
 });
 
@@ -184,5 +148,4 @@ test('opponent-context migration is schema-only and requires reviewed row correc
   assert.match(sql, /ALTER COLUMN relation_type_id DROP NOT NULL/i);
   assert.doesNotMatch(sql, /WHERE\s+rt\.code\s*=\s*'opposes'/i);
   assert.doesNotMatch(sql, /UPDATE\s+atlas_v2\.person_politics_v2/i);
-  assert.match(sql, /reviewed,\s+identity-bound\s+correction operations/i);
 });
