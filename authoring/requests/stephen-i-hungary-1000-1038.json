@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:stephen-i-hungary:kingdom-of-hungary:king:1000-1038:v1",
+  "person": {
+    "canonical_name_en": "Stephen I of Hungary",
+    "display_name_ko": "이슈트반 1세"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "이슈트반 1세",
+      "url": "https://namu.wiki/w/%EC%9D%B4%EC%8A%88%ED%8A%B8%EB%B0%98%201%EC%84%B8"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Hungary",
+    "display_name_ko": "헝가리 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1000,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1038,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Stephen I (Hungarian: I. István), the first king of the Christian Kingdom of Hungary, was crowned around the turn of 1000/1001 and ruled until his death in 1038. ATLAS records the royal reign as 1000-1038, with the start boundary explicitly approximate because modern scholarship commonly gives the coronation as 1000/1001. His preceding rule as prince from 997 is a distinct office and is not merged into this kingship Activity."
+  },
+  "sources": [
+    {
+      "title": "Hungarian kings of the house of Árpád — At the Gate of Christendom",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/at-the-gate-of-christendom/hungarian-kings-of-the-house-of-arpad/6AA0425AABA9291D0D1D6F0B7C3D5776",
+      "citation_text": "Cambridge's Árpád-dynasty chronology lists István I as 997-1038 and explicitly notes that he was crowned king in 1000/1001.",
+      "source_type": "academic_book"
+    },
+    {
+      "title": "Collection B — Hungarian National Museum",
+      "canonical_url": "https://mnm.hu/en/en/collection/coins-collection/collection-b",
+      "citation_text": "The Hungarian National Museum identifies the denarius of King Saint Stephen I and gives his royal reign as 1000-1038, linking his coronation and coinage to the Christian Kingdom of Hungary.",
+      "source_type": "museum_web"
+    }
+  ]
+}
