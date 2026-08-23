@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:miguel-hidalgo-y-costilla:mexico:generalissimo:1810-1811:v1",
+  "person": {
+    "canonical_name_en": "Miguel Hidalgo y Costilla",
+    "display_name_ko": "미겔 이달고 이 코스티야"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Mexico",
+    "display_name_ko": "멕시코"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "term",
+    "role": "Generalissimo",
+    "role_display_name_ko": "대원수",
+    "start_year": 1810,
+    "start_month": 10,
+    "start_day": 22,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1811,
+    "end_month": 3,
+    "end_day": 6,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Miguel Hidalgo y Costilla was appointed Generalissimo of the insurgent armies of America at Acambaro on 22 October 1810 and remained the movement's principal political-military leader until he was deposed from command at Saltillo on 6 March 1811. ATLAS uses the existing Mexico polity as Hidalgo's representative own-side political community rather than New Spain or the Spanish Monarchy. This is consistent with Hidalgo's explicitly independence-oriented movement and with the first insurgent government he established at Guadalajara, which Mexican official historical institutions describe as a governmental project for a new independent nation."
+  },
+  "sources": [
+    {
+      "title": "Cronología de la Independencia — 1810 — INEHRM",
+      "canonical_url": "https://www.inehrm.gob.mx/work/models/inehrm/Resource/437/1/images/crono_independencia.pdf",
+      "citation_text": "INEHRM records that on 22 October 1810 the Ejército Insurgente was constituted at Acámbaro and Hidalgo was appointed generalísimo de los ejércitos de América.",
+      "source_type": "government_institution_publication"
+    },
+    {
+      "title": "Natalicio de Miguel Hidalgo — Fomento Cívico, SEGOB",
+      "canonical_url": "https://sitios.segob.gob.mx/es/FomentoCivico/NatalicioHidalgo",
+      "citation_text": "Mexico's Secretaría de Gobernación records that Hidalgo was deposed from command of the insurgent movement at Saltillo on 6 March 1811, when command passed to Ignacio Allende as Generalísimo.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "Hidalgo Constituyente — INEHRM",
+      "canonical_url": "https://www.inehrm.gob.mx/es/inehrm/Hidalgo_Constituyente",
+      "citation_text": "INEHRM documents Hidalgo's plan for government, his political authority within the insurgency, and the constitutional project that developed from the independence movement toward a Mexican nation.",
+      "source_type": "government_institution_web"
+    }
+  ]
+}
