@@ -176,11 +176,13 @@ test('post-Stage2 migration refuses a pre-P5 schema', async () => {
   await assert.rejects(() => migrations.applyPostStage2Migrations(client), /POST_STAGE2_SEMANTIC_SCHEMA_REQUIRED/);
 });
 
-test('opposes migration preserves opponent context before clearing the primary slot', () => {
+test('opponent-context migration is schema-only and requires reviewed row corrections', () => {
   const sqlPath = path.resolve(__dirname, '../db/migrations/20260822_person_politics_context_polities.sql');
   const sql = fs.readFileSync(sqlPath, 'utf8');
   assert.match(sql, /CREATE TABLE IF NOT EXISTS atlas_v2\.person_politics_context_polities/i);
-  assert.match(sql, /rt\.code = 'opposes'/i);
-  assert.match(sql, /SET polity_id = NULL,\s*relation_type_id = NULL/i);
-  assert.match(sql, /ON CONFLICT \(person_politics_id, polity_id, relation_type_id\) DO NOTHING/i);
+  assert.match(sql, /ALTER COLUMN polity_id DROP NOT NULL/i);
+  assert.match(sql, /ALTER COLUMN relation_type_id DROP NOT NULL/i);
+  assert.doesNotMatch(sql, /WHERE\s+rt\.code\s*=\s*'opposes'/i);
+  assert.doesNotMatch(sql, /UPDATE\s+atlas_v2\.person_politics_v2/i);
+  assert.match(sql, /reviewed, identity-bound\s+correction operations/i);
 });
