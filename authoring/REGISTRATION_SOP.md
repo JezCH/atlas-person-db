@@ -103,7 +103,7 @@ Preferred transport:
 
 A request must use one stable `request_id`. A retry of the same logical request reuses the same request and request id.
 
-Every new Human Authoring Person request must contain exactly one NamuWiki decision:
+Every new Human Authoring Person request must contain exactly one NamuWiki decision at `external_references.namuwiki`:
 
 ```json
 {
