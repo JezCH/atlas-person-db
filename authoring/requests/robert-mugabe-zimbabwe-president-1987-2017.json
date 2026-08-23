@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:robert-mugabe:zimbabwe:president:1987-2017:v1",
+  "person": {
+    "canonical_name_en": "Robert Mugabe",
+    "display_name_ko": "로버트 무가베"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Zimbabwe",
+    "display_name_ko": "짐바브웨",
+    "canonical_key": "zimbabwe-1980-present",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1987,
+    "start_month": 12,
+    "start_day": 31,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2017,
+    "end_month": 11,
+    "end_day": 21,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Robert Mugabe became executive President of Zimbabwe on 31 December 1987 after the constitutional restructuring that ended his premiership. He remained President until his resignation took immediate effect on 21 November 2017. ATLAS keeps this presidency distinct from the preceding 1980-1987 Prime Minister Activity because the constitutional office and role changed, while both Activities reuse the same Robert Mugabe Person and Zimbabwe polity."
+  },
+  "sources": [
+    {
+      "title": "Presidential Communications — Office of the President and Cabinet, Zimbabwe",
+      "canonical_url": "https://deptcomms.org.zw/",
+      "citation_text": "Zimbabwe's Office of the President and Cabinet lists Robert Gabriel Mugabe as President from 31 December 1987 to 21 November 2017.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "History of Parliament — Parliament of Zimbabwe",
+      "canonical_url": "https://www.parlzim.gov.zw/history-of-parliament/",
+      "citation_text": "The Parliament of Zimbabwe records that impeachment proceedings in 2017 led to President Robert Mugabe's resignation.",
+      "source_type": "parliamentary_official_web"
+    }
+  ]
+}
