@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:pedro-i-brazil:empire-of-brazil:emperor:1822-1831:v1",
+  "person": {
+    "canonical_name_en": "Pedro I of Brazil",
+    "display_name_ko": "페드루 1세"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "페드루 1세(브라질)",
+      "url": "https://namu.wiki/w/%ED%8E%98%EB%93%9C%EB%A3%A8%201%EC%84%B8%28%EB%B8%8C%EB%9D%BC%EC%A7%88%29"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Empire of Brazil",
+    "display_name_ko": "브라질 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1822,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1831,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Pedro I was acclaimed constitutional Emperor of Brazil on 12 October 1822 and abdicated the Brazilian throne on 7 April 1831. ATLAS records only his Brazilian imperial reign here; his brief 1826 reign in Portugal as Pedro IV is a distinct office and polity and is not merged into this Activity."
+  },
+  "sources": [
+    {
+      "title": "Cetro de d. Pedro I e d. Pedro II — Museu Imperial",
+      "canonical_url": "https://dami.museuimperial.museus.gov.br/handle/acervo/10238",
+      "citation_text": "Museu Imperial identifies Pedro I as Brazil's first emperor, describes his acclamation and coronation in 1822, and records his 1831 abdication in favor of Pedro II.",
+      "source_type": "museum_web"
+    },
+    {
+      "title": "Dom Pedro de Alcantara: Primeiro Imperador do Brasil — Biblioteca Nacional Digital",
+      "canonical_url": "https://bdlb.bn.gov.br/acervo/handle/20.500.12156.3/49734",
+      "citation_text": "Brazil's National Library identifies Pedro I as the first Emperor of Brazil and states that he abdicated on 7 April 1831; its collection classifies the First Reign as 1822-1831.",
+      "source_type": "library_web"
+    }
+  ]
+}
