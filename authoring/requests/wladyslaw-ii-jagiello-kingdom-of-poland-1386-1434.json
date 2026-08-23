@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:wladyslaw-ii-jagiello:kingdom-of-poland:king:1386-1434:v1",
+  "person": {
+    "canonical_name_en": "Władysław II Jagiełło",
+    "display_name_ko": "브와디스와프 2세 야기에우워"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-23",
+      "document_title": "브와디스와프 2세 야기에우워",
+      "url": "https://namu.wiki/w/%EB%B8%8C%EC%99%80%EB%94%94%EC%8A%A4%EC%99%80%ED%94%84%202%EC%84%B8%20%EC%95%BC%EA%B8%B0%EC%97%90%EC%9A%B0%EC%9B%8C"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Poland",
+    "display_name_ko": "폴란드 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1386,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1434,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Władysław II Jagiełło, formerly the Lithuanian grand duke Jogaila, was crowned king of Poland in 1386 and reigned until 1434. This Activity records his Polish kingship; his Lithuanian grand-ducal career is a separate political role and is not merged into this Polish Activity."
+  },
+  "sources": [
+    {
+      "title": "About the Museum — Wawel Royal Castle",
+      "canonical_url": "https://wawel.krakow.pl/en/information-about-museum",
+      "citation_text": "Wawel Royal Castle states that Grand Duke Jogaila of Lithuania converted, married Jadwiga, and was crowned Ladislaus II Jagiello, with a reign dated 1386-1434.",
+      "source_type": "museum_web"
+    },
+    {
+      "title": "Royal History — Jagiellonian Chronicle educational material, Wawel Royal Castle",
+      "canonical_url": "https://wawel.krakow.pl/media/filesetsfiletranslation/filePath/karta-pracy-kronika-jagiellonow-dla-nauczycieli.pdf",
+      "citation_text": "Wawel educational material gives Władysław Jagiełło's years of rule as 1386-1434 and describes his baptism, marriage to Jadwiga, and coronation in 1386.",
+      "source_type": "museum_educational_material"
+    }
+  ]
+}
