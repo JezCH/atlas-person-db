@@ -163,8 +163,17 @@ test('person read projects null primary polity and relation without losing the A
   assert.match(projected.notes, /Activity is preserved/);
 });
 
-test('ordered correction migrations include the opponent-context migration', () => {
-  assert.ok(migrations.CORRECTION_MIGRATION_PATHS.some((entry) => entry.endsWith('20260822_person_politics_context_polities.sql')));
+test('opponent-context migration is post-Stage2, not a correction-ledger migration', () => {
+  assert.equal(
+    migrations.CORRECTION_MIGRATION_PATHS.some((entry) => entry.endsWith('20260822_person_politics_context_polities.sql')),
+    false
+  );
+  assert.ok(migrations.POST_STAGE2_MIGRATION_PATHS.some((entry) => entry.endsWith('20260822_person_politics_context_polities.sql')));
+});
+
+test('post-Stage2 migration refuses a pre-P5 schema', async () => {
+  const client = { query: async () => ({ rows: [{ relation_catalog:false, relation_column:false }] }) };
+  await assert.rejects(() => migrations.applyPostStage2Migrations(client), /POST_STAGE2_SEMANTIC_SCHEMA_REQUIRED/);
 });
 
 test('opposes migration preserves opponent context before clearing the primary slot', () => {
