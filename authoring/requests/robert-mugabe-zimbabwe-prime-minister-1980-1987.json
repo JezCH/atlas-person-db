@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:robert-mugabe:zimbabwe:prime-minister:1980-1987:v1",
+  "person": {
+    "canonical_name_en": "Robert Mugabe",
+    "display_name_ko": "로버트 무가베"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Zimbabwe",
+    "display_name_ko": "짐바브웨",
+    "canonical_key": "zimbabwe-1980-present",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1980,
+    "start_month": 4,
+    "start_day": 18,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1987,
+    "end_month": 12,
+    "end_day": 31,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Robert Mugabe became Prime Minister when Zimbabwe attained independence on 18 April 1980 and remained in that office until 31 December 1987. The office change on 31 December 1987 was constitutional and substantive: the prime-ministerial system ended and Mugabe became executive President. ATLAS therefore records the 1980-1987 premiership separately from his subsequent presidency while binding both Activities to the same Zimbabwe polity and Person identity."
+  },
+  "sources": [
+    {
+      "title": "Presidential Communications — Office of the President and Cabinet, Zimbabwe",
+      "canonical_url": "https://deptcomms.org.zw/",
+      "citation_text": "Zimbabwe's Office of the President and Cabinet lists Robert Gabriel Mugabe as Prime Minister from 18 April 1980 to 31 December 1987 and records Zimbabwe's independence on 18 April 1980.",
+      "source_type": "government_web"
+    }
+  ]
+}
