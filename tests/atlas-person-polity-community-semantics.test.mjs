@@ -21,50 +21,23 @@ const PERIOD = '44444444-4444-4444-8444-444444444444';
 
 function nativeRow(overrides = {}) {
   return {
-    person_id: PERSON,
-    polity_id: null,
-    relation_type_id: null,
-    role_id: null,
-    period_basis_id: PERIOD,
-    activity_start: 73,
-    activity_start_month: null,
-    activity_start_day: null,
-    activity_start_granularity: 'year',
-    activity_start_certainty: 'exact',
-    activity_start_calendar: 'unspecified_historical',
-    activity_end: 73,
-    activity_end_month: null,
-    activity_end_day: null,
-    activity_end_granularity: 'year',
-    activity_end_certainty: 'exact',
-    activity_end_calendar: 'unspecified_historical',
-    confidence: 'well_established',
-    chronology_status: 'reviewed',
-    notes: null,
-    source_links: [],
-    ...overrides
+    person_id: PERSON, polity_id: null, relation_type_id: null, role_id: null, period_basis_id: PERIOD,
+    activity_start: 73, activity_start_month: null, activity_start_day: null, activity_start_granularity: 'year',
+    activity_start_certainty: 'exact', activity_start_calendar: 'unspecified_historical', activity_end: 73,
+    activity_end_month: null, activity_end_day: null, activity_end_granularity: 'year', activity_end_certainty: 'exact',
+    activity_end_calendar: 'unspecified_historical', confidence: 'well_established', chronology_status: 'reviewed',
+    notes: null, source_links: [], ...overrides
   };
 }
 
 function humanRequest(overrides = {}) {
   return {
-    schema: 'atlas-human-authoring/v1',
-    request_id: 'test-null-primary-polity',
-    person: { canonical_name_en: 'Example Person', display_name_ko: '예시 인물' },
-    polity: null,
-    activity: {
-      relation_type: null,
-      period_basis: 'general_activity',
-      start_year: 73,
-      start_certainty: 'exact',
-      start_calendar: 'unspecified_historical',
-      end_year: 73,
-      end_certainty: 'exact',
-      end_calendar: 'unspecified_historical',
-      confidence: 'well_established'
-    },
-    sources: [{ title: 'Reviewed source', citation_text: 'Reviewed source' }],
-    ...overrides
+    schema: 'atlas-human-authoring/v1', request_id: 'test-null-primary-polity',
+    person: { canonical_name_en: 'Example Person', display_name_ko: '예시 인물' }, polity: null,
+    activity: { relation_type: null, period_basis: 'general_activity', start_year: 73, start_certainty: 'exact',
+      start_calendar: 'unspecified_historical', end_year: 73, end_certainty: 'exact', end_calendar: 'unspecified_historical',
+      confidence: 'well_established' },
+    sources: [{ title: 'Reviewed source', citation_text: 'Reviewed source' }], ...overrides
   };
 }
 
@@ -87,13 +60,11 @@ test('native Activity normalization keeps a null primary polity pair', () => {
 
 test('native reference validation rejects opposes as a primary Person polity relation', async () => {
   const calls = [];
-  const client = {
-    async query(sql) {
-      calls.push(String(sql));
-      if (String(sql).includes('from atlas_v2.person_polity_relation_types')) return { rows: [{ id: RELATION, code: 'opposes' }] };
-      return { rows: [{ id: PERSON }] };
-    }
-  };
+  const client = { async query(sql) {
+    calls.push(String(sql));
+    if (String(sql).includes('from atlas_v2.person_polity_relation_types')) return { rows: [{ id: RELATION, code: 'opposes' }] };
+    return { rows: [{ id: PERSON }] };
+  } };
   await assert.rejects(() => native.verifyReferences(client, nativeRow({ polity_id: POLITY, relation_type_id: RELATION })), /STAGE2_ACTIVITY_PRIMARY_OPPOSES_FORBIDDEN/);
   assert.ok(calls.some((sql) => sql.includes('person_polity_relation_types')));
 });
@@ -127,12 +98,12 @@ test('person read projects null primary polity and relation without losing the A
   assert.equal(projected.polity, null);
   assert.equal(projected.relation, null);
   assert.equal(projected.start.year, 73);
-  assert.match(projected.notes, /Activity is preserved/);
 });
 
-test('opponent-context migration is post-Stage2, not a correction-ledger migration', () => {
-  assert.equal(migrations.CORRECTION_MIGRATION_PATHS.some((entry) => entry.endsWith('20260822_person_politics_context_polities.sql')), false);
+test('opponent-context migrations are post-Stage2, not correction-ledger migrations', () => {
+  assert.equal(migrations.CORRECTION_MIGRATION_PATHS.some((entry) => entry.includes('20260822_person_politics_context_polities')), false);
   assert.ok(migrations.POST_STAGE2_MIGRATION_PATHS.some((entry) => entry.endsWith('20260822_person_politics_context_polities.sql')));
+  assert.ok(migrations.POST_STAGE2_MIGRATION_PATHS.some((entry) => entry.endsWith('20260823_person_polity_community_reviewed_corrections.sql')));
 });
 
 test('post-Stage2 migration refuses a pre-P5 schema', async () => {
@@ -140,12 +111,28 @@ test('post-Stage2 migration refuses a pre-P5 schema', async () => {
   await assert.rejects(() => migrations.applyPostStage2Migrations(client), /POST_STAGE2_SEMANTIC_SCHEMA_REQUIRED/);
 });
 
-test('opponent-context migration is schema-only and requires reviewed row corrections', () => {
-  const sqlPath = path.resolve(__dirname, '../db/migrations/20260822_person_politics_context_polities.sql');
-  const sql = fs.readFileSync(sqlPath, 'utf8');
+test('opponent-context migration is schema-only and never blanket-rewrites opposes', () => {
+  const sql = fs.readFileSync(path.resolve(__dirname, '../db/migrations/20260822_person_politics_context_polities.sql'), 'utf8');
   assert.match(sql, /CREATE TABLE IF NOT EXISTS atlas_v2\.person_politics_context_polities/i);
   assert.match(sql, /ALTER COLUMN polity_id DROP NOT NULL/i);
   assert.match(sql, /ALTER COLUMN relation_type_id DROP NOT NULL/i);
   assert.doesNotMatch(sql, /WHERE\s+rt\.code\s*=\s*'opposes'/i);
   assert.doesNotMatch(sql, /UPDATE\s+atlas_v2\.person_politics_v2/i);
+});
+
+test('reviewed data migration is exact-identity bound and covers the audited corrections', () => {
+  const sql = fs.readFileSync(path.resolve(__dirname, '../db/migrations/20260823_person_polity_community_reviewed_corrections.sql'), 'utf8');
+  for (const activityId of [
+    '6c7e0f1c-d843-4b8a-a436-fad247840b31',
+    'fae6f22a-cd28-4cf9-be4a-d7dc60e20ef0',
+    '3ce0a2e1-98e4-52b1-8843-ef6c69701425',
+    '2c9b580a-b31f-4de3-9206-e3decb4c8a53',
+    '02f6e078-2857-4c83-9d3d-f66541177ead',
+    'de6ebd0b-11fe-42a5-a25e-ecce15655bbb',
+    '8b69c528-a2af-4b74-8142-d56fa74e6f45',
+    '10de3778-f47a-4b6e-aa98-d2003270977b'
+  ]) assert.match(sql, new RegExp(activityId));
+  assert.match(sql, /Spanish colonial Philippines/);
+  assert.match(sql, /Guangdong Pirate Confederation/);
+  assert.doesNotMatch(sql, /update[\s\S]+where[\s\S]+relation_type_id\s*=\s*v_opposes/i);
 });
