@@ -15,7 +15,7 @@
     }
   },
   "polity": {
-    "canonical_name_en": "Polish-Lithuanian Commonwealth",
+    "canonical_name_en": "Polish–Lithuanian Commonwealth",
     "display_name_ko": "폴란드-리투아니아 연방"
   },
   "activity": {
@@ -31,7 +31,7 @@
     "end_calendar": "unspecified_historical",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "John III Sobieski was elected king in 1674 and ruled the Polish-Lithuanian Commonwealth until his death in 1696. This Activity records his sovereign kingship of the Commonwealth at year granularity."
+    "notes": "John III Sobieski was elected king in 1674 and ruled the Polish–Lithuanian Commonwealth until his death in 1696. This Activity records his sovereign kingship of the Commonwealth at year granularity."
   },
   "sources": [
     {
