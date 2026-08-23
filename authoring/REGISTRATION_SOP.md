@@ -241,7 +241,7 @@ Person: <English> / <Korean>
 Polity: <...>
 Role: <...>
 Period: <...>
-NamuWiki: 연결됨 — <document_title> | 문서 없음
+나무위키: 연결됨 — <document_title> | 문서 없음
 Production read-back: VERIFIED
 ```
 
