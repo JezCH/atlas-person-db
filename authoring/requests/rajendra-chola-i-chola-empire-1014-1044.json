@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:rajendra-chola-i:chola-empire:emperor:1014-1044:v1",
+  "person": {
+    "canonical_name_en": "Rajendra Chola I",
+    "display_name_ko": "라젠드라 1세"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-23",
+      "document_title": "라젠드라 1세",
+      "url": "https://namu.wiki/w/%EB%9D%BC%EC%A0%A0%EB%93%9C%EB%9D%BC%201%EC%84%B8"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Chola Empire",
+    "display_name_ko": "촐라 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1014,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1044,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Rajendra Chola I succeeded Rajaraja I as sole Chola emperor in 1014 and ruled until 1044. Sources also attest a co-regency beginning in 1012; this Activity intentionally records the standard 1014-1044 sole imperial reign rather than conflating the preceding co-regency with the primary reign interval."
+  },
+  "sources": [
+    {
+      "title": "From the late Chola to early Vijayanagara Empire: Aspects of Kingship and Administration",
+      "canonical_url": "https://kups.ub.uni-koeln.de/73638/",
+      "citation_text": "Duy Chinh Nguyen's University of Cologne dissertation identifies the Chola empire as a major South Indian state and gives Rajendra I's reign as 1014-1044, following Rajaraja I (985-1014).",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Excavation at Gangaikondacholapuram, The Imperial Capital of Rajendra Chola, and Its Significance",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/nagapattinam-to-suvarnadwipa/excavation-at-gangaikondacholapuram-the-imperial-capital-of-rajendra-chola-and-its-significance/D84E4870E94D9F6AEE72E81A2EAC7892",
+      "citation_text": "S. Vasanthi's Cambridge chapter identifies Rajendra Chola as the son of Rajaraja I and treats him as the Chola emperor who expanded and maintained the empire; the chapter also reflects the 1012 co-regency tradition.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Cholas — Outlines of Indian History",
+      "canonical_url": "https://ebooks.inflibnet.ac.in/icp01/chapter/the-cholas/",
+      "citation_text": "The INFLIBNET history module lists Rajendra I as ruler from 1014 to 1044 and describes the continued Chola expansion under his reign.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
