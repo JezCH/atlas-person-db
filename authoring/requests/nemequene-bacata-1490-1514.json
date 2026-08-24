@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:nemequene:bacata:zipa:1490-1514:v1",
+  "person": {
+    "canonical_name_en": "Nemequene",
+    "display_name_ko": "네메케네"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Bacatá",
+    "display_name_ko": "바카타"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Zipa",
+    "role_display_name_ko": "지파",
+    "start_year": 1490,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1514,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Nemequene was the zipa of Bogotá or Bacatá before the Spanish conquest. ATLAS reuses the existing Bacatá polity and Zipa role rather than presenting him as monarch of a single centralized 'Muisca Confederation': Colombian historical reference works describe the Muisca territory as divided between the southern zipazgo centered on Bacatá, the northern zacazgo centered on Hunza, and additional independent lordships. The conventional 1490-1514 reign is retained only at approximate year level because its chronology derives from later colonial and historiographical reconstructions rather than contemporary written records."
+  },
+  "sources": [
+    {
+      "title": "Zipa Nemequeme — Enciclopedia, Red Cultural del Banco de la República",
+      "canonical_url": "https://enciclopedia.banrepcultural.org/index.php?title=Zipa_Nemequeme",
+      "citation_text": "Banco de la República describes Nemequene as the indigenous ruler of Bogotá or Bacatá, governing the zipazgo for approximately 24 years between 1490 and 1514, and explains that Muisca territory was divided into the Bogotá zipazgo, the Hunza zacazgo, and independent lordships.",
+      "source_type": "national_cultural_encyclopedia_web"
+    },
+    {
+      "title": "Capítulo VIII: La etapa de los estados incipientes — Banco de la República digital collection",
+      "canonical_url": "https://babel.banrepcultural.org/digital/api/collection/p17054coll9/id/18/download",
+      "citation_text": "The Banco de la República-hosted anthropological text characterizes the Muisca as organized into two not entirely coherent federations, with a zipa controlling the southern highlands centered on Bacatá and a zaque ruling the north around Hunza.",
+      "source_type": "scholarly_book"
+    }
+  ]
+}
