@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mohammad-reza-pahlavi:imperial-state-of-iran:shah:1941-1979:v1",
+  "person": {"canonical_name_en": "Mohammad Reza Pahlavi", "display_name_ko": "모하마드 레자 팔라비"},
+  "external_references": {"namuwiki": {"status": "linked", "checked_at": "2026-08-24", "document_title": "모하마드 레자 팔라비", "url": "https://namu.wiki/w/%EB%AA%A8%ED%95%98%EB%A7%88%EB%93%9C%20%EB%A0%88%EC%9E%90%20%ED%8C%94%EB%9D%BC%EB%B9%84"}},
+  "polity": {"canonical_name_en": "Imperial State of Iran", "display_name_ko": "이란 제국"},
+  "activity": {
+    "relation_type": "rules", "period_basis": "reign", "role": "Shah", "role_display_name_ko": "샤",
+    "start_year": 1941, "start_month": 9, "start_day": 16, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1979, "end_month": 2, "end_day": 11, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Mohammad Reza Pahlavi succeeded Reza Shah on 16 September 1941 and remained Shah through the collapse of the Pahlavi monarchy in the Iranian Revolution on 11 February 1979. ATLAS uses Imperial State of Iran for the monarchical polity and the general Shah title across the full reign."
+  },
+  "sources": [{"title": "Mohammad Reza Shah Pahlavi — Encyclopaedia Britannica", "canonical_url": "https://www.britannica.com/biography/Mohammad-Reza-Shah-Pahlavi", "citation_text": "Britannica identifies Mohammad Reza Pahlavi as shah of Iran from 1941 until the 1979 revolution ended the monarchy.", "source_type": "reference_web"}]
+}
