@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:menachem-begin:israel:prime-minister:1977-1983:v1",
+  "person": {"canonical_name_en": "Menachem Begin", "display_name_ko": "메나헴 베긴"},
+  "external_references": {"namuwiki": {"status": "linked", "checked_at": "2026-08-24", "document_title": "메나헴 베긴", "url": "https://namu.wiki/w/%EB%A9%94%EB%82%98%ED%97%B4%20%EB%B2%A0%EA%B8%B4"}},
+  "polity": {"canonical_name_en": "Israel", "display_name_ko": "이스라엘"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "Prime Minister", "role_display_name_ko": "총리",
+    "start_year": 1977, "start_month": 6, "start_day": 20, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1983, "end_month": 10, "end_day": 10, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Israel's official government chronology places Menachem Begin at the head of the 18th and 19th Governments from 20 June 1977 until 10 October 1983. ATLAS records that continuous premiership as one Activity."
+  },
+  "sources": [{"title": "Past Governments — Prime Minister's Office, Israel", "canonical_url": "https://www.gov.il/apps/pmo/history/historyGovernmentsEn.html", "citation_text": "Israel's Prime Minister's Office records the Begin governments from 20 June 1977 through 10 October 1983.", "source_type": "government_web"}]
+}
