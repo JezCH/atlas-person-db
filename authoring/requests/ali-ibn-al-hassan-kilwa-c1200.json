@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ali-ibn-al-hassan:kilwa:c1200:v1",
+  "person": {
+    "canonical_name_en": "Ali ibn al-Hassan",
+    "display_name_ko": "알리 이븐 알하산"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kilwa Sultanate",
+    "display_name_ko": "킬와 술탄국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1200,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1200,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ali ibn al-Hassan is recorded in the Kilwa dynastic tradition as the founder of the Shirazi ruling line. ATLAS treats the ruler himself as historical because archaeological and numismatic scholarship identifies the earliest Kilwa coinage with Ali bin al-Hasan, while rejecting the need to accept the later chronicle's Persian-prince migration narrative or its precise regnal chronology. The circa-1200 point date is a representative archaeological approximation, not a claim that his reign lasted only one year; the regnal years in the surviving Kilwa chronicles are not sufficiently reliable for a precise reign interval."
+  },
+  "sources": [
+    {
+      "title": "The ‘Shirazi’ Colonization of East Africa — Neville Chittick, The Journal of African History",
+      "canonical_url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/8D17F7DB2C4A6291F0D34501949706BF/S0021853700005806a.pdf/div-class-title-the-shirazi-colonization-of-east-africa-div.pdf",
+      "citation_text": "Chittick identifies coins of Ali bin al-Hasan as the earliest Kilwa issues and associates him with the first ruler of the Shirazi dynasty at Kilwa around AD 1200, while warning that little reliance should be placed on the chronicles' regnal years.",
+      "source_type": "scholarly_article"
+    },
+    {
+      "title": "Ruins of Kilwa Kisiwani and Songo Mnara World Heritage Site Integrated Management Plan 2025/35 — UNESCO World Heritage Centre",
+      "canonical_url": "https://whc.unesco.org/document/224851",
+      "citation_text": "UNESCO's current management plan describes Kilwa as an Islamic city-state with a series of local rulers using Persian and Arabic names beginning with Ali bin al-Hasan of the Shirazi dynasty, while placing the early chronology broadly rather than providing secure regnal dates.",
+      "source_type": "international_organization_publication"
+    }
+  ]
+}
