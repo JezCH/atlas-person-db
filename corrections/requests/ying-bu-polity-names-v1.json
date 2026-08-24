@@ -1,71 +1,71 @@
 {
-  "schema": "atlas-correction-manifest/v1.3",
-  "review_status": "approved",
-  "request_id": "correction:ying-bu:polity-names:20260821:v1",
-  "operations": [
-    {
-      "type": "replace_polity_preferred_name",
-      "polity_id": "0c0eb202-5ff6-4280-b664-7764731b508b",
-      "expected_before": {
-        "locale": "en",
-        "name": "Kingdom of Jiujiang under Ying Bu",
-        "name_type": "canonical",
-        "is_preferred": true
-      },
-      "expected_after": {
-        "locale": "en",
-        "name": "Kingdom of Jiujiang under Western Chu",
-        "name_type": "canonical",
-        "is_preferred": true
-      }
-    },
-    {
-      "type": "replace_polity_preferred_name",
-      "polity_id": "0c0eb202-5ff6-4280-b664-7764731b508b",
-      "expected_before": {
-        "locale": "ko",
-        "name": "영포의 구강국",
-        "name_type": "display",
-        "is_preferred": true
-      },
-      "expected_after": {
-        "locale": "ko",
-        "name": "서초의 구강국",
-        "name_type": "display",
-        "is_preferred": true
-      }
-    },
-    {
-      "type": "replace_polity_preferred_name",
-      "polity_id": "5f739f09-84c0-42ad-ac3f-8c531f468d5d",
-      "expected_before": {
-        "locale": "en",
-        "name": "Kingdom of Huainan under Ying Bu",
-        "name_type": "canonical",
-        "is_preferred": true
-      },
-      "expected_after": {
-        "locale": "en",
-        "name": "Kingdom of Huainan under Western Han",
-        "name_type": "canonical",
-        "is_preferred": true
-      }
-    },
-    {
-      "type": "replace_polity_preferred_name",
-      "polity_id": "5f739f09-84c0-42ad-ac3f-8c531f468d5d",
-      "expected_before": {
-        "locale": "ko",
-        "name": "영포의 회남국",
-        "name_type": "display",
-        "is_preferred": true
-      },
-      "expected_after": {
-        "locale": "ko",
-        "name": "전한의 회남국",
-        "name_type": "display",
-        "is_preferred": true
-      }
-    }
-  ]
+    "schema": "atlas-correction-manifest/v1.3",
+    "review_status": "approved",
+    "request_id": "correction:ying-bu:polity-names:20260821:v1",
+    "operations": [
+        {
+            "type": "replace_polity_preferred_name",
+            "polity_id": "0c0eb202-5ff6-4280-b664-7764731b508b",
+            "expected_before": {
+                "locale": "en",
+                "name": "Kingdom of Jiujiang under Ying Bu",
+                "name_type": "canonical",
+                "is_preferred": true
+            },
+            "expected_after": {
+                "locale": "en",
+                "name": "Kingdom of Jiujiang under Western Chu",
+                "name_type": "canonical",
+                "is_preferred": true
+            }
+        },
+        {
+            "type": "replace_polity_preferred_name",
+            "polity_id": "0c0eb202-5ff6-4280-b664-7764731b508b",
+            "expected_before": {
+                "locale": "ko",
+                "name": "영포의 구강국",
+                "name_type": "display",
+                "is_preferred": true
+            },
+            "expected_after": {
+                "locale": "ko",
+                "name": "서초의 구강국",
+                "name_type": "display",
+                "is_preferred": true
+            }
+        },
+        {
+            "type": "replace_polity_preferred_name",
+            "polity_id": "5f739f09-84c0-42ad-ac3f-8c531f468d5d",
+            "expected_before": {
+                "locale": "en",
+                "name": "Kingdom of Huainan under Ying Bu",
+                "name_type": "canonical",
+                "is_preferred": true
+            },
+            "expected_after": {
+                "locale": "en",
+                "name": "Kingdom of Huainan under Western Han",
+                "name_type": "canonical",
+                "is_preferred": true
+            }
+        },
+        {
+            "type": "replace_polity_preferred_name",
+            "polity_id": "5f739f09-84c0-42ad-ac3f-8c531f468d5d",
+            "expected_before": {
+                "locale": "ko",
+                "name": "영포의 회남국",
+                "name_type": "display",
+                "is_preferred": true
+            },
+            "expected_after": {
+                "locale": "ko",
+                "name": "전한의 회남국",
+                "name_type": "display",
+                "is_preferred": true
+            }
+        }
+    ]
 }
