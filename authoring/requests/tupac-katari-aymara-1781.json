@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tupac-katari:aymara:1781:v1",
+  "person": {
+    "canonical_name_en": "Túpac Katari",
+    "display_name_ko": "투팍 카타리"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Aymara",
+    "display_name_ko": "아이마라"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Resistance leader",
+    "role_code": "resistance_leader",
+    "role_display_name_ko": "저항 지도자",
+    "start_year": 1781,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1781,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Julián Apaza, known as Túpac Katari, led the major Aymara indigenous uprising and sieges of La Paz in 1781 and was captured and executed later that year. ATLAS uses Aymara as an editorial historical political-community label representing Katari's own side; it does not assert the existence of a single centralized sovereign Aymara state under that formal name. Spanish colonial rule is therefore not used as his representative Polity."
+  },
+  "sources": [
+    {
+      "title": "Asamblea Paceña conmemoró 266 años del nacimiento de Tupaj Katari — Asamblea Departamental de La Paz",
+      "canonical_url": "https://asamblealapaz.gob.bo/asamblea-pacena-conmemoro-266-anos-del-nacimiento-de-tupaj-katari/",
+      "citation_text": "The La Paz departmental assembly identifies Julián Apaza/Tupaj Katari as the indigenous leader who headed the principal uprising in the Aymara region in 1781 and records his capture and execution that year.",
+      "source_type": "regional_government_web"
+    },
+    {
+      "title": "La sublevación indígena en La Paz en 1781: Túpac Katari, la tormenta aymara — La Razón",
+      "canonical_url": "https://hemeroteca.larazon.bo/especiales/2022/08/06/la-sublevacion-indigena-en-la-paz-en-1781-tupac-katari-la-tormenta-aymara/",
+      "citation_text": "The Bolivian historical account documents Katari's Aymara uprising, his 1781 capture, trial and execution, and the continuation of the wider rebellion after his death.",
+      "source_type": "historical_press_feature"
+    }
+  ]
+}

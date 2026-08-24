@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:manuel-isidoro-belzu:bolivia:provisional-president:1848-1850:v1",
+  "person": {
+    "canonical_name_en": "Manuel Isidoro Belzu",
+    "display_name_ko": "마누엘 이시도로 벨수"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Bolivia",
+    "display_name_ko": "볼리비아"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Provisional President",
+    "role_code": "provisional_president",
+    "role_display_name_ko": "임시대통령",
+    "start_year": 1848,
+    "start_month": 12,
+    "start_day": 6,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1850,
+    "end_month": 8,
+    "end_day": 15,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Manuel Isidoro Belzu took power after his victory at Yamparáez on 6 December 1848. ATLAS separates this de facto/provisional phase from his constitutionally elected presidential period because Bolivia's 1851 Constitution expressly states that his constitutional term began on 15 August 1850, when he was elected constitutionally and took possession of the office."
+  },
+  "sources": [
+    {
+      "title": "Legislación promulgada durante el gobierno de Manuel Isidoro Belzu (1848-1855) — Universidad Andina Simón Bolívar",
+      "canonical_url": "https://repositorio.uasb.edu.ec/server/api/core/bitstreams/c1c273eb-c2b9-456e-802d-be30a506a309/content",
+      "citation_text": "The academic study states that Manuel Isidoro Belzu assumed the presidency of Bolivia on 6 December 1848 after the Battle of Yamparáez.",
+      "source_type": "scholarly_thesis"
+    },
+    {
+      "title": "Constitución Política de 1851 — Compendio Normativo de Leyes, Ministerio de Minería y Metalurgia de Bolivia",
+      "canonical_url": "https://mineria.gob.bo/documentos/tomo1.pdf",
+      "citation_text": "The 1851 Constitution's transitional article states that Belzu's constitutional presidential term ran from 15 August 1850, when he was constitutionally elected and took possession of office.",
+      "source_type": "government_legal_document"
+    }
+  ]
+}

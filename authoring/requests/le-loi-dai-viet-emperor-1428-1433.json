@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:le-loi:dai-viet:emperor:1428-1433:v1",
+  "person": {
+    "canonical_name_en": "Lê Lợi",
+    "display_name_ko": "레러이"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Đại Việt",
+    "display_name_ko": "대월"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1428,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1433,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the Lam Sơn victory, Lê Lợi ascended the imperial throne in 1428 as Lê Thái Tổ, restored the state name Đại Việt, and founded the Later Lê dynasty. He remained emperor until his death in 1433. ATLAS separates this sovereign reign from his earlier resistance phase under Ming occupation."
+  },
+  "sources": [
+    {
+      "title": "Di tích Lam Kinh- biểu tượng của lòng tự hào về một giai đoạn lịch sử oai hùng chống quân xâm lược — Bảo tàng Lịch sử Quốc gia",
+      "canonical_url": "https://baotanglichsu.vn/vi/Articles/3096/75073/di-tich-lam-kinh-bieu-tuong-cua-long-tu-hao-ve-mot-giai-djoan-lich-su-oai-hung-chong-quan-xam-luoc.html",
+      "citation_text": "Vietnam's National Museum of History records that Lê Lợi ascended the imperial throne in 1428, named the country Đại Việt, founded the Later Lê dynasty, and died in 1433.",
+      "source_type": "national_museum_web"
+    },
+    {
+      "title": "Vĩnh lăng của vua Lê Thái Tổ — Bảo tàng Lịch sử Quốc gia",
+      "canonical_url": "https://baotanglichsu.vn/vi/Articles/3096/4853/vinh-lang-cua-vua-le-thai-to.html",
+      "citation_text": "The National Museum records Lê Thái Tổ's accession in 1428 and his death in the sixth year of Thuận Thiên, 1433.",
+      "source_type": "national_museum_web"
+    }
+  ]
+}

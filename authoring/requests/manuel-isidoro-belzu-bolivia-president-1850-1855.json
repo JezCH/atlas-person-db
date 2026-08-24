@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:manuel-isidoro-belzu:bolivia:president:1850-1855:v1",
+  "person": {
+    "canonical_name_en": "Manuel Isidoro Belzu",
+    "display_name_ko": "마누엘 이시도로 벨수"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Bolivia",
+    "display_name_ko": "볼리비아"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1850,
+    "start_month": 8,
+    "start_day": 15,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1855,
+    "end_month": 8,
+    "end_day": 15,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bolivia's 1851 Constitution expressly dates Manuel Isidoro Belzu's constitutional presidential term from 15 August 1850. He transferred power to his elected successor and son-in-law Jorge Córdova on 15 August 1855. ATLAS therefore distinguishes this constitutional presidency from Belzu's preceding de facto/provisional rule beginning in December 1848."
+  },
+  "sources": [
+    {
+      "title": "Constitución Política de 1851 — Compendio Normativo de Leyes, Ministerio de Minería y Metalurgia de Bolivia",
+      "canonical_url": "https://mineria.gob.bo/documentos/tomo1.pdf",
+      "citation_text": "The constitutional transitional article states that Belzu's constitutional presidential term began on 15 August 1850.",
+      "source_type": "government_legal_document"
+    },
+    {
+      "title": "1855 – Jorge Córdova — Museo Virtual Bolivia",
+      "canonical_url": "https://www.museovirtualbo.com/producto/1855-jorge-cordova/",
+      "citation_text": "The Bolivian historical museum resource states that Jorge Córdova received the presidency from Manuel Isidoro Belzu on 15 August 1855.",
+      "source_type": "museum_web"
+    }
+  ]
+}
