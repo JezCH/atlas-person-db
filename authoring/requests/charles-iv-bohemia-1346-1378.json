@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "charles-iv-bohemia-1346-1378",
+  "person": {
+    "canonical_name_en": "Charles IV of Bohemia",
+    "display_name_ko": "카를 4세"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Bohemia",
+    "display_name_ko": "보헤미아 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1346,
+    "start_month": 8,
+    "start_day": 26,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 1378,
+    "end_month": 11,
+    "end_day": 29,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Charles became King of Bohemia on the death of his father John at Crécy on 26 August 1346. His formal Bohemian coronation followed in Prague on 2 September 1347, so ATLAS records accession rather than coronation as the start of the reign. He ruled until his death on 29 November 1378. This Activity intentionally represents his Bohemian kingship; his separate Roman-German and imperial offices are not substituted for the user-specified Bohemian polity."
+  },
+  "sources": [
+    {
+      "title": "Charles University - Za korunou císařskou",
+      "canonical_url": "https://iforum.cuni.cz/IFORUM-2072.html",
+      "citation_text": "Charles University account states that John of Bohemia died at Crécy on 26 August 1346 and Charles thereby became Czech king."
+    },
+    {
+      "title": "Prague Castle - St. Wenceslas Crown exhibition brochure",
+      "canonical_url": "https://www.hrad.cz/file/edee/2024/09/en_e-brochure-20240917-074437.pdf",
+      "citation_text": "Prague Castle publication records Charles IV's death on 29 November 1378 and the Bohemian crown context."
+    },
+    {
+      "title": "Charles University - Czech Coronation Jewels",
+      "canonical_url": "https://karel700.cuni.cz/KAREL-42.html",
+      "citation_text": "Charles University records his formal coronation as King of Bohemia on 2 September 1347."
+    }
+  ]
+}
