@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:faisal-bin-abdulaziz:saudi-arabia:king:1964-1975:v1",
+  "person": {
+    "canonical_name_en": "Faisal bin Abdulaziz Al Saud",
+    "display_name_ko": "파이살 빈 압둘아지즈 알사우드"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Saudi Arabia",
+    "display_name_ko": "사우디아라비아"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1964,
+    "start_month": 11,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1975,
+    "end_month": 3,
+    "end_day": 25,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Faisal bin Abdulaziz Al Saud became the third King of Saudi Arabia when allegiance was pledged to him on 1 November 1964 after King Saud's abdication. He remained king until his assassination on 25 March 1975, when Crown Prince Khalid was pledged allegiance as his successor. ATLAS records his kingship as the representative ruling Activity and does not duplicate his concurrent prime-ministerial authority under the Saudi constitutional arrangement."
+  },
+  "sources": [
+    {
+      "title": "Faisal Bin Abdulaziz Al Saud — Saudipedia",
+      "canonical_url": "https://saudipedia.com/en/faisal-bin-abdulaziz-al-saud",
+      "citation_text": "Saudipedia identifies Faisal as the third King of Saudi Arabia and records that allegiance was pledged to him on 1 November 1964 after King Saud's abdication.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "Khalid Bin Abdulaziz Al Saud — Saudipedia",
+      "canonical_url": "https://saudipedia.com/en/khalid-bin-abdulaziz-al-saud",
+      "citation_text": "Saudipedia records King Faisal's assassination on 25 March 1975 and the subsequent pledge of allegiance to Crown Prince Khalid as king.",
+      "source_type": "government_web"
+    }
+  ]
+}
