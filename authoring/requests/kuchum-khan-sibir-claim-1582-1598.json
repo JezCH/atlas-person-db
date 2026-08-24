@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:kuchum-khan:khanate-of-sibir:claim:1582-1598:v1",
+  "person": {"canonical_name_en": "Kuchum Khan", "display_name_ko": "쿠춤 칸"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Khanate of Sibir", "display_name_ko": "시비르 칸국"},
+  "activity": {
+    "relation_type": "claims_rule", "period_basis": "general_activity", "role": "Khan", "role_display_name_ko": "칸",
+    "start_year": 1582, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1598, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "After abandoning Qashliq in 1582, Kuchum retained armed followers and continued to assert his dynastic authority against Russian expansion. His forces killed Yermak in 1585, and Kuchum remained in resistance until his decisive defeat by Russian forces in 1598. ATLAS records this displaced phase as claims_rule rather than uninterrupted effective territorial rule."
+  },
+  "sources": [
+    {"title": "Sibir', Khanate of", "canonical_url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/9781118455074.wbeoe190", "citation_text": "Ostrowski records Kuchum's defeat in 1582, his forces' killing of Yermak in 1585, and his final defeat in 1598, which is conventionally treated as the official end of the Khanate of Sibir.", "source_type": "academic_encyclopedia_web"},
+    {"title": "A Life Dedicated to Independence: Kuchum Khan", "canonical_url": "https://dergipark.org.tr/en/pub/iutarih/article/976868", "citation_text": "The Turkish Journal of History study treats Kuchum's continued struggle against Russian expansion after the loss of his earlier position as a central feature of his later political career.", "source_type": "academic_journal_web"}
+  ]
+}

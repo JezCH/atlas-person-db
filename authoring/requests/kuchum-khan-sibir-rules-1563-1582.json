@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:kuchum-khan:khanate-of-sibir:khan:1563-1582:v1",
+  "person": {"canonical_name_en": "Kuchum Khan", "display_name_ko": "쿠춤 칸"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Khanate of Sibir", "display_name_ko": "시비르 칸국"},
+  "activity": {
+    "relation_type": "rules", "period_basis": "reign", "role": "Khan", "role_display_name_ko": "칸",
+    "start_year": 1563, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1582, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Kuchum Khan seized the Sibir throne in 1563 and ruled from the khanate's political center until Yermak's campaign defeated his forces and forced him to abandon Qashliq in 1582. ATLAS ends effective rules at the loss of the capital rather than extending undifferentiated territorial rule to 1598."
+  },
+  "sources": [
+    {"title": "Sibir', Khanate of", "canonical_url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/9781118455074.wbeoe190", "citation_text": "Don Ostrowski's Encyclopedia of Empire entry states that Kuchum had overthrown the Taybughid ruler by the mid-sixteenth century, was defeated by Yermak's forces in 1582, and continued resistance thereafter.", "source_type": "academic_encyclopedia_web"},
+    {"title": "KÜÇÜM HAN", "canonical_url": "https://islamansiklopedisi.org.tr/kucum-han", "citation_text": "The TDV Islam Encyclopedia identifies Kuchum as the Western Siberian khan from 1563 and discusses his rule and conflict with Russian expansion.", "source_type": "academic_encyclopedia_web"}
+  ]
+}
