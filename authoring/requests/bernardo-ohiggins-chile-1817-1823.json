@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:bernardo-ohiggins:chile:supreme-director:1817-1823:v1",
+  "person": {
+    "canonical_name_en": "Bernardo O'Higgins",
+    "display_name_ko": "베르나르도 오이긴스"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Chile",
+    "display_name_ko": "칠레"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Supreme Director",
+    "role_display_name_ko": "최고지도자",
+    "start_year": 1817,
+    "start_month": 2,
+    "start_day": 16,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1823,
+    "end_month": 1,
+    "end_day": 28,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bernardo O'Higgins assumed the office of Supreme Director of Chile on 16 February 1817 after the patriot victory at Chacabuco and remained the principal head of the Chilean state through the Patria Nueva until his resignation on 28 January 1823. ATLAS reuses the existing Chile polity rather than the colonial Kingdom of Chile because this Activity represents the patriot state and independence-era Chilean political community."
+  },
+  "sources": [
+    {
+      "title": "Período 1811-1823 — Historia Política, Biblioteca del Congreso Nacional de Chile",
+      "canonical_url": "https://www.bcn.cl/historiapolitica/hitos_periodo/detalle_periodo.html?per=1811-1823",
+      "citation_text": "The Chilean congressional history portal records O'Higgins as Supreme Director from 1817 to 1823 and states that he assumed the office on 16 February 1817 and resigned on 28 January 1823.",
+      "source_type": "government_institution_web"
+    },
+    {
+      "title": "Chile. Director Supremo (1817-1823 : O'Higgins) — Memoria Chilena",
+      "canonical_url": "https://www.memoriachilena.gob.cl/602/w3-propertyvalue-166911.html",
+      "citation_text": "Chile's National Library catalog groups the surviving official documents under O'Higgins as Director Supremo for 1817-1823, including documents issued as Supreme Director of the State of Chile.",
+      "source_type": "national_library_web"
+    }
+  ]
+}

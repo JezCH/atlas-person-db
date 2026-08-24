@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:david-ben-gurion:israel:prime-minister:1955-1963:v1",
+  "person": {
+    "canonical_name_en": "David Ben-Gurion",
+    "display_name_ko": "다비드 벤구리온"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Israel",
+    "display_name_ko": "이스라엘"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1955,
+    "start_month": 11,
+    "start_day": 3,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1963,
+    "end_month": 6,
+    "end_day": 26,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "David Ben-Gurion returned to the office of Prime Minister on 3 November 1955 at the formation of Israel's Seventh Government and served continuously through the Tenth Government. His second prime-ministerial tenure ended on 26 June 1963, when Levi Eshkol's government took office. ATLAS keeps this separate from the 1948-1954 tenure because Moshe Sharett served as Prime Minister during the intervening period."
+  },
+  "sources": [
+    {
+      "title": "Past Governments — Prime Minister's Office, Israel",
+      "canonical_url": "https://www.gov.il/apps/pmo/history/historygovernmentsen.html",
+      "citation_text": "The Israeli Prime Minister's Office records Ben-Gurion as Prime Minister from the Seventh Government beginning 3 November 1955 through the Tenth Government ending 26 June 1963.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "David Ben-Gurion — Knesset",
+      "canonical_url": "https://main.knesset.gov.il/EN/About/Pages/bg.aspx",
+      "citation_text": "The Knesset records Ben-Gurion's return to the premiership after the November 1955 elections and his final resignation from the government in June 1963.",
+      "source_type": "government_institution_web"
+    }
+  ]
+}
