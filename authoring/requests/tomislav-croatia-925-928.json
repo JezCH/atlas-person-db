@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tomislav-of-croatia:kingdom-of-croatia:king:925-928:v1",
+  "person": {
+    "canonical_name_en": "Tomislav of Croatia",
+    "display_name_ko": "토미슬라브"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Croatia",
+    "display_name_ko": "크로아티아 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 925,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 928,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tomislav is the first Croatian ruler generally recognized in modern Croatian historiography as a king. A 925 papal letter addresses him as rex, while Thomas the Archdeacon calls him dux in 914; therefore ATLAS records only the securely evidenced royal phase beginning around 925 rather than labeling his entire approximately 910-928 rule as a kingship. The end year is approximate because the Croatian Encyclopedia gives his rule only approximately to 928. This Activity does not assert that a coronation specifically occurred in 925 or at Duvno, a traditional reconstruction rejected by modern historiography."
+  },
+  "sources": [
+    {
+      "title": "Tomislav — Hrvatska enciklopedija",
+      "canonical_url": "https://www.enciklopedija.hr/clanak/tomislav",
+      "citation_text": "The Croatian Encyclopedia describes Tomislav as Croatian ruler approximately 910-928, notes that the only fully reliable datum calls him dux in 914, and explains that the 925 papal correspondence addresses him as king of the Croats, which underlies the majority view that he was the first Croatian king; it also rejects the traditional claim of a securely established 925 coronation at Duvno.",
+      "source_type": "national_encyclopedia"
+    },
+    {
+      "title": "kralj — Hrvatska enciklopedija",
+      "canonical_url": "https://enciklopedija.hr/clanak/kralj",
+      "citation_text": "The Croatian Encyclopedia notes that Croatian rulers were initially styled dux in Latin documents and that Pope John X called Tomislav rex around 925, which is why he is conventionally regarded as the first Croatian king.",
+      "source_type": "national_encyclopedia"
+    },
+    {
+      "title": "Godina obilježavanja 1100. obljetnice Hrvatskoga Kraljevstva — Ministry of Culture and Media of the Republic of Croatia",
+      "canonical_url": "https://min-kulture.gov.hr/vijesti-8/godina-obiljezavanja-1100-obljetnice-hrvatskoga-kraljevstva/godina-obiljezavanja-1100-obljetnice-hrvatskoga-kraljevstva-27747/27747",
+      "citation_text": "The Croatian Ministry of Culture and Media identifies Tomislav as the first Croatian king and treats 925 as the year connected with his royal status and the papal letter, while ATLAS follows the more cautious historiographical formulation of the Croatian Encyclopedia for chronology.",
+      "source_type": "government_web"
+    }
+  ]
+}
