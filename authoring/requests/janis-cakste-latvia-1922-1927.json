@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:janis-cakste:latvia:president:1922-1927:v1",
+  "person": {"canonical_name_en": "Jānis Čakste", "display_name_ko": "야니스 착스테"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Latvia", "display_name_ko": "라트비아"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령",
+    "start_year": 1922, "start_month": 11, "start_day": 14, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1927, "end_month": 3, "end_day": 14, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Jānis Čakste was elected the first President of Latvia on 14 November 1922 and remained in office until his death on 14 March 1927."
+  },
+  "sources": [{"title": "Jānis Čakste — President of Latvia", "canonical_url": "https://www.president.lv/lv/janis-cakste", "citation_text": "The official President of Latvia biography records Čakste's election as first president on 14 November 1922 and his death in office on 14 March 1927.", "source_type": "government_web"}]
+}
