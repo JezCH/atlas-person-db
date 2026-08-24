@@ -124,6 +124,21 @@ async function authorizeRequest(req, body, { env, verifyOidc, now }) {
   });
 }
 
+function batchFailureBody(auth, error, code) {
+  const failure = {
+    ok:false,
+    auth_method:auth.method,
+    marker:HUMAN_AUTHORING_BATCH_MARKER,
+    schema:HUMAN_AUTHORING_BATCH_SCHEMA,
+    code,
+    committed:false,
+    count:auth.batch.requests.length
+  };
+  if (Number.isInteger(error?.batchIndex)) failure.failed_index = error.batchIndex;
+  if (error?.manifestPath) failure.manifest_path = error.manifestPath;
+  return failure;
+}
+
 function createHumanAuthoringHandler({ env = process.env, clientFactory = createPostgresClient, verifyOidc = verifyGitHubActionsOidc, inspectReadiness = inspectAuthoringReadiness, createService = createHumanAuthoringService, loadCatalogs = loadHumanAuthoringCatalogs, now } = {}) {
   if (typeof clientFactory !== "function") throw new Error("clientFactory is required");
   return async function handler(req, res) {
@@ -158,46 +173,14 @@ function createHumanAuthoringHandler({ env = process.env, clientFactory = create
 
       const service = createService({ client });
       if (auth.batch) {
-        const results = [];
-        const failures = [];
-        for (let index = 0; index < auth.batch.requests.length; index += 1) {
-          const manifestPath = auth.batch.manifestPaths[index];
-          const transport = Object.freeze({
-            ...auth.transport,
-            manifest_path:manifestPath
-          });
-          try {
-            results.push(await service.apply(auth.batch.requests[index], {
-              transport,
-              allowLegacyNamuWikiOmission:auth.method === "github_oidc"
-            }));
-          } catch (error) {
-            const code = String(error?.message || "HUMAN_AUTHORING_FAILED");
-            failures.push(Object.freeze({
-              index,
-              manifest_path:manifestPath,
-              code,
-              status:statusForError(code)
-            }));
-          }
-        }
-        if (failures.length) {
-          return json(res, 409, {
-            ok:false,
-            auth_method:auth.method,
-            marker:HUMAN_AUTHORING_BATCH_MARKER,
-            schema:HUMAN_AUTHORING_BATCH_SCHEMA,
-            code:"HUMAN_AUTHORING_BATCH_PARTIAL_FAILURE",
-            committed:false,
-            count:auth.batch.requests.length,
-            succeeded_count:results.length,
-            failed_count:failures.length,
-            results,
-            failures,
-            failed_index:failures[0].index,
-            manifest_path:failures[0].manifest_path
-          });
-        }
+        const transports = auth.batch.manifestPaths.map((manifestPath) => Object.freeze({
+          ...auth.transport,
+          manifest_path:manifestPath
+        }));
+        const results = await service.applyBatch(auth.batch.requests, {
+          transports,
+          allowLegacyNamuWikiOmission:auth.method === "github_oidc"
+        });
         return json(res, 200, {
           ok:true,
           auth_method:auth.method,
@@ -217,6 +200,7 @@ function createHumanAuthoringHandler({ env = process.env, clientFactory = create
       return json(res, 200, { ok:true, auth_method:auth.method, ...outcome });
     } catch (error) {
       const code = String(error?.message || "HUMAN_AUTHORING_FAILED");
+      if (auth?.batch) return json(res, statusForError(code), batchFailureBody(auth, error, code));
       const failure = { ok:false, marker:HUMAN_AUTHORING_MARKER, code };
       if (Number.isInteger(error?.batchIndex)) failure.failed_index = error.batchIndex;
       if (error?.manifestPath) failure.manifest_path = error.manifestPath;
@@ -239,5 +223,6 @@ module.exports = Object.freeze({
   isBatchOperation,
   transportEnvelope,
   batchEnvelope,
-  authorizeRequest
+  authorizeRequest,
+  batchFailureBody
 });
