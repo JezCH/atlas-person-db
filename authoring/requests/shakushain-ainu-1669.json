@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:shakushain:ainu:chieftain:1669:v1",
+  "person": {
+    "canonical_name_en": "Shakushain",
+    "display_name_ko": "샤쿠샤인"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Ainu",
+    "display_name_ko": "아이누"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Chieftain",
+    "role_display_name_ko": "족장",
+    "start_year": 1669,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1669,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Shakushain was an Ainu chieftain from the Shibuchari area who led the large 1669 Ainu uprising against Matsumae control and increasingly disadvantageous trade. ATLAS uses Ainu as an editorial historical political-community label representing Shakushain's own side; it does not imply that a centralized sovereign Ainu state with this formal name existed. The Activity is limited to 1669, the year of his uprising leadership and death, rather than extending him to the later settlement of the conflict in 1672. Matsumae Domain is therefore not used as his representative Polity."
+  },
+  "sources": [
+    {
+      "title": "Ezochi from the Medieval Period through the Modern Times — Hokkaido Digital Museum",
+      "canonical_url": "https://hokkaido-digital-museum.jp/en/hokkaido/kaitaku/k-01/",
+      "citation_text": "Hokkaido Digital Museum explains that worsening Matsumae control and disadvantageous trade led to the War of Shakushain in 1669, after which Ainu people came under stronger Matsumae control.",
+      "source_type": "government_museum_web"
+    },
+    {
+      "title": "Hakodate City Regional Historical Archive — Esan Town History",
+      "canonical_url": "https://adeac.jp/hakodate-city/texthtml/d100050/mp000010-100050/ht004010",
+      "citation_text": "The Hakodate municipal historical archive records Shakushain's call to Ainu groups across eastern and western Ezochi and the widespread Ainu uprising in June 1669.",
+      "source_type": "municipal_archive_web"
+    },
+    {
+      "title": "Sapporo City Historical Timeline — Kanbun 9",
+      "canonical_url": "https://adeac.jp/sapporo-lib/timeline/tm000001",
+      "citation_text": "The Sapporo historical timeline records Shakushain leading the 1669 uprising and being killed later that year, supporting a 1669-only representative Activity.",
+      "source_type": "municipal_archive_web"
+    }
+  ]
+}
