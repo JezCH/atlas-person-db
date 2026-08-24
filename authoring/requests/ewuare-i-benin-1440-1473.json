@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ewuare-i:benin:1440-1473:v1",
+  "person": {
+    "canonical_name_en": "Ewuare I",
+    "display_name_ko": "에우아레 1세"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Benin",
+    "display_name_ko": "베냉 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Oba",
+    "role_display_name_ko": "오바(국왕)",
+    "start_year": 1440,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1473,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ewuare I, commonly called Ewuare the Great, was the fifteenth-century Oba of Benin credited with major military expansion, reconstruction and fortification of Benin City, and important political reforms. ATLAS preserves the culturally specific title Oba rather than flattening it to a generic king label. The conventional reign 1440-1473 is well established in museum and scholarly reference works but is retained at approximate year-level because early Benin royal chronology relies substantially on court and oral traditions rather than modern day-level documentation."
+  },
+  "sources": [
+    {
+      "title": "Kingdom of Benin — Museum of Archaeology and Anthropology, University of Cambridge",
+      "canonical_url": "https://maa.cam.ac.uk/schools/resources/african-collections-schools-resources/kingdom-benin",
+      "citation_text": "The Cambridge museum identifies Oba Ewuare's reign as 1440-1473 and credits him with rebuilding and expanding Benin and its political structures.",
+      "source_type": "museum_web"
+    },
+    {
+      "title": "Commemorative panel for the oba — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/art/collection/search/316771",
+      "citation_text": "The Metropolitan Museum describes Ewuare as the fifteenth-century Oba under whom Benin's armies were formed and the capital was massively fortified, confirming his central role as ruler of the Benin polity.",
+      "source_type": "museum_web"
+    }
+  ]
+}
