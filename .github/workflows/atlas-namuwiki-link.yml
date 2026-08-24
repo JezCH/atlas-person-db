@@ -116,9 +116,10 @@ jobs:
           RESPONSE_FILE="$RUNNER_TEMP/atlas-namuwiki-link-response.json"
           PAYLOAD="$(jq -cn \
             --arg runtime_sha "$ATLAS_RUNTIME_SHA" \
+            --arg workflow_sha "$GITHUB_SHA" \
             --arg person_id "$PERSON_ID" \
             --arg url "$NAMUWIKI_URL" \
-            '{runtime_sha:$runtime_sha,person_id:$person_id,url:$url}')"
+            '{runtime_sha:$runtime_sha,workflow_sha:$workflow_sha,person_id:$person_id,url:$url}')"
           HTTP_STATUS="$(curl --silent --show-error \
             --output "$RESPONSE_FILE" \
             --write-out '%{http_code}' \
