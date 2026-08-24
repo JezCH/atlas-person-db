@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:robert-menzies:australia:prime-minister:1939-1941:v1",
+  "person": {
+    "canonical_name_en": "Robert Menzies",
+    "display_name_ko": "로버트 멘지스"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Australia",
+    "display_name_ko": "호주"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1939,
+    "start_month": 4,
+    "start_day": 26,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1941,
+    "end_month": 8,
+    "end_day": 29,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Robert Menzies was sworn in as Prime Minister of Australia on 26 April 1939 and resigned on 29 August 1941. ATLAS records this as a separate Activity from his later 1949-1966 premiership because other prime ministers governed Australia during the intervening period. The existing Australia polity and Prime Minister role are reused, matching the established treatment of Ben Chifley."
+  },
+  "sources": [
+    {
+      "title": "Robert Menzies: fast facts — National Archives of Australia",
+      "canonical_url": "https://www.naa.gov.au/explore-collection/australias-prime-ministers/robert-menzies/fast-facts",
+      "citation_text": "The National Archives of Australia lists Menzies' first term as Prime Minister as 26 April 1939 to 29 August 1941.",
+      "source_type": "government_archive_web"
+    },
+    {
+      "title": "Robert Menzies: during office — National Archives of Australia",
+      "canonical_url": "https://www.naa.gov.au/explore-collection/australias-prime-ministers/robert-menzies/during-office",
+      "citation_text": "The National Archives states that Menzies was sworn in as Prime Minister on 26 April 1939 and served through the first part of the Second World War before resigning in August 1941.",
+      "source_type": "government_archive_web"
+    }
+  ]
+}
