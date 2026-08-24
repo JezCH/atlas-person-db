@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "muhammad-ali-jinnah-pakistan-governor-general-1947-1948",
+  "person": {
+    "canonical_name_en": "Muhammad Ali Jinnah",
+    "display_name_ko": "무함마드 알리 진나"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "무함마드 알리 진나",
+      "url": "https://namu.wiki/w/%EB%AC%B4%ED%95%A8%EB%A7%88%EB%93%9C%20%EC%95%8C%EB%A6%AC%20%EC%A7%84%EB%82%98"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Dominion of Pakistan",
+    "display_name_ko": "파키스탄 자치령"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Governor-General",
+    "role_display_name_ko": "총독",
+    "start_year": 1947,
+    "start_month": 8,
+    "start_day": 15,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1948,
+    "end_month": 9,
+    "end_day": 11,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Pakistan's National Assembly lists Muhammad Ali Jinnah as the first Governor-General from 15 August 1947 until his death on 11 September 1948. ATLAS uses Dominion of Pakistan rather than the later Islamic Republic of Pakistan because the Governor-Generalship belonged to the 1947-1956 dominion constitutional order."
+  },
+  "sources": [
+    {
+      "title": "National Assembly of Pakistan - Governor Generals",
+      "canonical_url": "https://na.gov.pk/en/print_list.php?type=governers",
+      "citation_text": "Official National Assembly list gives Jinnah's Governor-General tenure as 15 August 1947 to 11 September 1948."
+    },
+    {
+      "title": "National Assembly of Pakistan - History of Parliament",
+      "canonical_url": "https://na.gov.pk/en/content.php/content.php?id=75",
+      "citation_text": "Official parliamentary history records Jinnah being sworn in as the first Governor-General on 15 August 1947."
+    }
+  ]
+}

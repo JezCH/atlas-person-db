@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "tvrtko-i-bosnia-ban-restored-1367-1377",
+  "person": {
+    "canonical_name_en": "Tvrtko I of Bosnia",
+    "display_name_ko": "트브르트코 1세"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Banate of Bosnia",
+    "display_name_ko": "보스니아 반샤그"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Ban",
+    "role_display_name_ko": "반",
+    "start_year": 1367,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1377,
+    "end_month": 10,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tvrtko returned with Hungarian support in 1366 and progressively recovered Bosnia, while Vuk retained rival authority until late 1367. ATLAS follows the conventional regnal segmentation by recording the restored banate phase from 1367 rather than claiming an exact day for the recovery of full authority. Tvrtko's banate ended when he assumed royal dignity in October 1377."
+  },
+  "sources": [
+    {
+      "title": "ANUBiH - Royal Charter of King Tvrtko I Kotromanić",
+      "canonical_url": "https://bastina.anubih.ba/bitstreams/aa2d59a8-f8d0-4559-91c4-de3eb75ab935/download",
+      "citation_text": "Bosnian Academy study states that Tvrtko became ruler in 1353 and was crowned king in October 1377."
+    },
+    {
+      "title": "Museum of the Bosnian Kingdom - Charter Exhibition",
+      "canonical_url": "https://muzejbosanskogkraljevstva.ba/the-charter-exhibition/",
+      "citation_text": "The museum presents Tvrtko's 1367 charter explicitly in his capacity as Ban of Bosnia."
+    },
+    {
+      "title": "Hrvatska enciklopedija - Tvrtko I. Kotromanić",
+      "canonical_url": "https://www.enciklopedija.hr/clanak/tvrtko-i-kotromanic",
+      "citation_text": "Croatian Encyclopedia gives Tvrtko's banate as 1353-1377 and kingship as 1377-1391."
+    }
+  ]
+}

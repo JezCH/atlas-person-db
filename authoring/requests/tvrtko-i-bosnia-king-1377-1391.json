@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "tvrtko-i-bosnia-king-1377-1391",
+  "person": {
+    "canonical_name_en": "Tvrtko I of Bosnia",
+    "display_name_ko": "트브르트코 1세"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Bosnia",
+    "display_name_ko": "보스니아 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1377,
+    "start_month": 10,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1391,
+    "end_month": 3,
+    "end_day": 10,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tvrtko was crowned king in October 1377, elevating the medieval Bosnian state from banate to kingdom. ANUBiH treats the coronation as a fundamental change in the rank of the Bosnian state. He remained king until his death on 10 March 1391. ATLAS therefore uses Kingdom of Bosnia as a distinct polity for the royal phase rather than extending the Banate of Bosnia label across the coronation."
+  },
+  "sources": [
+    {
+      "title": "ANUBiH - Royal Charter of King Tvrtko I Kotromanić",
+      "canonical_url": "https://bastina.anubih.ba/bitstreams/aa2d59a8-f8d0-4559-91c4-de3eb75ab935/download",
+      "citation_text": "Bosnian Academy study dates Tvrtko's coronation to October 1377 and states that Bosnia thereby entered the rank of kingdoms."
+    },
+    {
+      "title": "ANUBiH - Historical Establishment of the Statehood of Bosnia and Herzegovina",
+      "canonical_url": "https://bastina.anubih.ba/bitstreams/55eb2bea-7fe3-44c9-9226-20f81c1dc43f/download",
+      "citation_text": "ANUBiH study describes Tvrtko's reign 1353-1391 and the transformation of Bosnia into a kingdom in 1377."
+    },
+    {
+      "title": "Hrvatska enciklopedija - Tvrtko I. Kotromanić",
+      "canonical_url": "https://www.enciklopedija.hr/clanak/tvrtko-i-kotromanic",
+      "citation_text": "Croatian Encyclopedia gives Tvrtko as king 1377-1391 and dates his death to 10 March 1391."
+    }
+  ]
+}
