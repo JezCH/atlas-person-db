@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gregory-xiii:papal-states:pope-sovereign:1572-1585:v1",
+  "person": {"canonical_name_en": "Gregory XIII", "display_name_ko": "그레고리오 13세"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Papal States", "display_name_ko": "교황령"},
+  "activity": {
+    "relation_type": "rules", "period_basis": "reign", "role": "Pope and Sovereign", "role_display_name_ko": "교황·세속 군주",
+    "start_year": 1572, "start_month": 5, "start_day": 13, "start_certainty": "exact", "start_calendar": "julian",
+    "end_year": 1585, "end_month": 4, "end_day": 10, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Gregory XIII's pontificate began on 13 May 1572 and ended with his death on 10 April 1585. Because this Activity represents sovereignty over the Papal States as well as the papal office, ATLAS uses Pope and Sovereign. The boundary calendars reflect the Gregorian reform promulgated during his pontificate."
+  },
+  "sources": [{"title": "Gregory XIII — The Holy See", "canonical_url": "https://www.vatican.va/content/vatican/en/holy-father/gregorio-xiii.html", "citation_text": "The Holy See records the beginning of Gregory XIII's pontificate in May 1572 and its end on 10 April 1585.", "source_type": "official_institution_web"}]
+}
