@@ -13,7 +13,8 @@ const CORRECTION_MIGRATION_PATHS = Object.freeze([
 
 const POST_STAGE2_MIGRATION_PATHS = Object.freeze([
   path.resolve(__dirname, "../db/migrations/20260822_person_politics_context_polities.sql"),
-  path.resolve(__dirname, "../db/migrations/20260823_person_polity_community_reviewed_corrections.sql")
+  path.resolve(__dirname, "../db/migrations/20260823_person_polity_community_reviewed_corrections.sql"),
+  path.resolve(__dirname, "../db/migrations/20260824_person_polity_community_final_corrections.sql")
 ]);
 
 function readMigrationPaths(migrationPaths, { readFile = fs.readFileSync } = {}) {
