@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:hafez-al-assad:syrian-arab-republic:president:1971-2000:v1",
+  "person": {"canonical_name_en": "Hafez al-Assad", "display_name_ko": "하페즈 알아사드"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Syrian Arab Republic", "display_name_ko": "시리아 아랍 공화국"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령",
+    "start_year": 1971, "start_month": 3, "start_day": 12, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 2000, "end_month": 6, "end_day": 10, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Hafez al-Assad became president of Syria in March 1971 and remained in office until his death on 10 June 2000. ATLAS uses the state's formal name Syrian Arab Republic for this presidential Activity."
+  },
+  "sources": [{"title": "Hafez al-Assad — Encyclopaedia Britannica", "canonical_url": "https://www.britannica.com/biography/Hafiz-al-Assad", "citation_text": "Britannica identifies Hafez al-Assad as president of Syria from 1971 until his death in June 2000.", "source_type": "reference_web"}]
+}

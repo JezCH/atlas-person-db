@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:bohdan-khmelnytsky:cossack-hetmanate:hetman:1648-1657:v1",
+  "person": {"canonical_name_en": "Bohdan Khmelnytsky", "display_name_ko": "보흐단 흐멜니츠키"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Cossack Hetmanate", "display_name_ko": "코사크 헤트만국"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "Hetman", "role_display_name_ko": "헤트만",
+    "start_year": 1648, "start_certainty": "exact", "start_calendar": "unspecified_historical",
+    "end_year": 1657, "end_month": 8, "end_day": 6, "end_certainty": "exact", "end_calendar": "julian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Bohdan Khmelnytsky was Hetman of the Zaporozhian Host from 1648 until his death in 1657 and founded the Hetman state. ATLAS records the Cossack Hetmanate as the represented political community rather than the Polish-Lithuanian Commonwealth against which the uprising was directed."
+  },
+  "sources": [{"title": "Khmelnytsky, Bohdan — Encyclopedia of Ukraine", "canonical_url": "https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%5CK%5CH%5CKhmelnytskyBohdan", "citation_text": "The Encyclopedia of Ukraine identifies Bohdan Khmelnytsky as Hetman of the Zaporozhian Host from 1648 to 1657 and founder of the Hetman state.", "source_type": "academic_encyclopedia_web"}]
+}

@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:koyah:kunghit-haida:chief:1787-1795:v1",
+  "person": {"canonical_name_en": "Koyah", "display_name_ko": "코야"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Kunghit Haida", "display_name_ko": "쿵히트 하이다"},
+  "activity": {
+    "relation_type": "active_in", "period_basis": "general_activity", "role": "Chief", "role_display_name_ko": "추장",
+    "start_year": 1787, "start_certainty": "approximate", "start_calendar": "gregorian",
+    "end_year": 1795, "end_certainty": "uncertain", "end_calendar": "gregorian",
+    "confidence": "likely", "chronology_status": "reviewed",
+    "notes": "Koyah was a ranking chief of the Kunghit, the southern Haida division centered around Ninstints. ATLAS does not create a centralized 'Haida Tribes' state; the Activity uses his historically specific Kunghit Haida political community and the period in which European records document his leadership."
+  },
+  "sources": [{"title": "KOYAH — Dictionary of Canadian Biography", "canonical_url": "https://www.biographi.ca/en/bio.php?BioId=36112", "citation_text": "The Dictionary of Canadian Biography identifies Koyah as a ranking chief of the Kunghit-Haidas, the southernmost Haida division, and documents his encounters during the late eighteenth century.", "source_type": "national_scholarly_biography_web"}]
+}

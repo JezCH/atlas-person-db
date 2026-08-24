@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ahmad-shah-durrani:durrani-empire:shah:1747-1772:v1",
+  "person": {"canonical_name_en": "Ahmad Shah Durrani", "display_name_ko": "아흐마드 샤 두라니"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Durrani Empire", "display_name_ko": "두라니 제국"},
+  "activity": {
+    "relation_type": "rules", "period_basis": "reign", "role": "Shah", "role_display_name_ko": "샤",
+    "start_year": 1747, "start_certainty": "exact", "start_calendar": "unspecified_historical",
+    "end_year": 1772, "end_certainty": "exact", "end_calendar": "unspecified_historical",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Ahmad Shah Durrani, also known as Ahmad Shah Abdali, was elected ruler in 1747 after Nader Shah's death and founded the Durrani polity, ruling until 1772. ATLAS uses Durrani Empire rather than a retrospective modern Afghanistan state label."
+  },
+  "sources": [{"title": "Afghanistan x. Political History — Encyclopaedia Iranica", "canonical_url": "https://www.iranicaonline.org/articles/afghanistan-x-political-history/", "citation_text": "Encyclopaedia Iranica identifies Ahmad Shah Dorrani as ruler from 1747 to 1772 and describes his election and the emergence of the Durrani state.", "source_type": "academic_encyclopedia_web"}]
+}

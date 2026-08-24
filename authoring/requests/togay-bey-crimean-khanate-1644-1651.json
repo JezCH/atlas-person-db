@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:togay-bey:crimean-khanate:or-bey:1644-1651:v1",
+  "person": {"canonical_name_en": "Togay Bey", "display_name_ko": "토가이 베이"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Crimean Khanate", "display_name_ko": "크림 칸국"},
+  "activity": {
+    "relation_type": "serves", "period_basis": "term", "role": "Or Bey", "role_display_name_ko": "오르 베이",
+    "start_year": 1644, "start_certainty": "approximate", "start_calendar": "unspecified_historical",
+    "end_year": 1651, "end_certainty": "exact", "end_calendar": "unspecified_historical",
+    "confidence": "likely", "chronology_status": "reviewed",
+    "notes": "Togay (Tuhay) Bey was a Crimean Khanate political and military figure associated with Or Qapı/Perekop and a major Crimean commander in alliance with Bohdan Khmelnytsky. He was not ruler of a generic 'Tatar Horde'; ATLAS binds him to the Crimean Khanate and records his Or Bey office conservatively from about 1644 until his death in 1651."
+  },
+  "sources": [{"title": "ТУГАЙ-БЕЙ — Encyclopedia of History of Ukraine", "canonical_url": "https://resource.history.org.ua/cgi-bin/eiu/history.exe?C21COM=S&I21DBN=EIu&P21DBN=ELIB&S21CNR=20&S21COLORTERMS=0&S21FMT=eiu_all&S21P01=0&S21P02=0&S21P03=TRN=&S21REF=10&S21STN=1&S21STR=Tuhaj_bej&Z21ID=", "citation_text": "The Institute of History of Ukraine identifies Tuhay Bey as a seventeenth-century political and military figure of the Crimean Khanate and a leading supporter of alliance with the Ukrainian Cossack state.", "source_type": "national_academic_encyclopedia_web"}]
+}

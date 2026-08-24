@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:purea:papara-tahiti:high-ranking-chiefess:1767-1768:v1",
+  "person": {"canonical_name_en": "Purea", "display_name_ko": "푸레아"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Papara (Tahiti)", "display_name_ko": "파파라(타히티)"},
+  "activity": {
+    "relation_type": "active_in", "period_basis": "general_activity", "role": "High-ranking chiefess", "role_display_name_ko": "고위 여족장",
+    "start_year": 1767, "start_certainty": "approximate", "start_calendar": "gregorian",
+    "end_year": 1768, "end_certainty": "approximate", "end_calendar": "gregorian",
+    "confidence": "likely", "chronology_status": "reviewed",
+    "notes": "Purea was a high-ranking Tahitian woman of the Papara ruling community. Early European visitors sometimes treated her as a queen of Tahiti, but Tahiti was not a single centralized monarchy under her. ATLAS therefore binds her to Papara and records the politically prominent 1767-1768 period without inventing a pan-Tahitian queenship."
+  },
+  "sources": [{"title": "Purea — South Seas Companion", "canonical_url": "https://www.paulturnbull.org/project/southseas/companion/P000411b.html", "citation_text": "The South Seas Companion describes Purea as a high-ranking Maohi woman associated with Papara and her efforts in 1767-1768 to promote her son's political status.", "source_type": "academic_web"}]
+}

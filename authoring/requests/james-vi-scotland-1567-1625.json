@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:james-vi:kingdom-of-scotland:king:1567-1625:v1",
+  "person": {"canonical_name_en": "James VI of Scotland", "display_name_ko": "제임스 6세"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Kingdom of Scotland", "display_name_ko": "스코틀랜드 왕국"},
+  "activity": {
+    "relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕",
+    "start_year": 1567, "start_month": 7, "start_day": 24, "start_certainty": "exact", "start_calendar": "julian",
+    "end_year": 1625, "end_month": 3, "end_day": 27, "end_certainty": "exact", "end_calendar": "julian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "James became King James VI of Scotland after Mary, Queen of Scots abdicated on 24 July 1567 and remained king of Scotland until his death on 27 March 1625. His accession to the English throne in 1603 created a personal union but did not terminate the separate Scottish kingship."
+  },
+  "sources": [{"title": "James VI and I (r. 1567-1625) — The Royal Family", "canonical_url": "https://www.royal.uk/james-vi-and-i-r-1567-1625", "citation_text": "The official Royal Family history gives James VI's Scottish reign as 1567 to 1625 and describes his later accession to the English throne while retaining the Scottish crown.", "source_type": "government_web"}]
+}
