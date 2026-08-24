@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:josip-broz-tito:fpry:president:1953-1963:v1",
+  "person": {"canonical_name_en": "Josip Broz Tito", "display_name_ko": "요시프 브로즈 티토"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Federal People's Republic of Yugoslavia", "display_name_ko": "유고슬라비아 연방인민공화국"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령",
+    "start_year": 1953, "start_month": 1, "start_day": 14, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1963, "end_month": 4, "end_day": 7, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Tito became President of Yugoslavia on 14 January 1953. This Activity remains under the Federal People's Republic of Yugoslavia until 7 April 1963, when the new constitution formally renamed the state the Socialist Federal Republic of Yugoslavia."
+  },
+  "sources": [
+    {"title": "Broz, Josip - Tito — Hrvatska enciklopedija", "canonical_url": "https://www.enciklopedija.hr/clanak/broz-josip-tito", "citation_text": "The Croatian Encyclopedia records Tito's election as President of the Republic in January 1953 and his continued rule until 1980.", "source_type": "reference_web"},
+    {"title": "Constituent Acts of Yugoslavia — Archives of Yugoslavia", "canonical_url": "https://www.arhivyu.rs/en/leksikon-jugoslavije/konstitutivni_akti_jugoslavije", "citation_text": "The Archives identifies the SFRY Constitution of 7 April 1963 and states that it changed the name of the state.", "source_type": "government_archive_web"}
+  ]
+}
