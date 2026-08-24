@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:david-ben-gurion:israel:prime-minister:1948-1954:v1",
+  "person": {
+    "canonical_name_en": "David Ben-Gurion",
+    "display_name_ko": "다비드 벤구리온"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Israel",
+    "display_name_ko": "이스라엘"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1948,
+    "start_month": 5,
+    "start_day": 14,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1954,
+    "end_month": 1,
+    "end_day": 26,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "David Ben-Gurion headed Israel's provisional government from the establishment of the state on 14 May 1948 and continued as Prime Minister through the first four governments. His first continuous prime-ministerial tenure ended on 26 January 1954, when Moshe Sharett became Prime Minister. ATLAS records this as a separate Activity because Ben-Gurion was out of the prime ministership until November 1955."
+  },
+  "sources": [
+    {
+      "title": "Past Governments — Prime Minister's Office, Israel",
+      "canonical_url": "https://www.gov.il/apps/pmo/history/historygovernmentsen.html",
+      "citation_text": "The Israeli Prime Minister's Office records David Ben-Gurion as prime minister of the Provisional Government beginning 14 May 1948 and through the Fourth Government ending 26 January 1954.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "David Ben-Gurion — Knesset",
+      "canonical_url": "https://main.knesset.gov.il/EN/About/Pages/bg.aspx",
+      "citation_text": "The Knesset identifies Ben-Gurion as Israel's first Prime Minister and describes his departure from government in 1953-1954 before his later return.",
+      "source_type": "government_institution_web"
+    }
+  ]
+}
