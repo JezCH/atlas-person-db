@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "tvrtko-i-bosnia-ban-first-1353-1366",
+  "person": {
+    "canonical_name_en": "Tvrtko I of Bosnia",
+    "display_name_ko": "트브르트코 1세"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Banate of Bosnia",
+    "display_name_ko": "보스니아 반샤그"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Ban",
+    "role_display_name_ko": "반",
+    "start_year": 1353,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1366,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tvrtko succeeded Stephen II as Ban of Bosnia in 1353. In February 1366 a magnate revolt expelled him and installed his brother Vuk. Because the surviving evidence does not provide a secure day-level start or deposition boundary for the full reign segment, ATLAS records the conventional 1353-1366 first banate phase at year granularity rather than inventing exact dates."
+  },
+  "sources": [
+    {
+      "title": "Hrvatska enciklopedija - Tvrtko I. Kotromanić",
+      "canonical_url": "https://www.enciklopedija.hr/clanak/tvrtko-i-kotromanic",
+      "citation_text": "Croatian Encyclopedia identifies Tvrtko as Bosnian ban from 1353 and king from 1377 to 1391."
+    },
+    {
+      "title": "Museum of the Bosnian Kingdom - Calendar of medieval Bosnia",
+      "canonical_url": "https://muzejbosanskogkraljevstva.ba/en/calendar-of-medieval-bosnia/",
+      "citation_text": "Bosnian medieval-history museum preserves dated evidence for Tvrtko's banate activity before and after the 1366-1367 conflict."
+    }
+  ]
+}
