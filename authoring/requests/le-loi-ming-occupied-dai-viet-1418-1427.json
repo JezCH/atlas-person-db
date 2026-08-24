@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:le-loi:ming-occupied-dai-viet:1418-1427:v1",
+  "person": {
+    "canonical_name_en": "Lê Lợi",
+    "display_name_ko": "레러이"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Ming-occupied Đại Việt",
+    "display_name_ko": "명 점령기 대월"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Resistance leader",
+    "role_code": "resistance_leader",
+    "role_display_name_ko": "저항 지도자",
+    "start_year": 1418,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1427,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Lê Lợi raised the Lam Sơn uprising in 1418 and led the anti-Ming war to victory in 1427. ATLAS uses Ming-occupied Đại Việt as an editorial historical political-community label for the Vietnamese side during Ming occupation; it does not imply that an independent sovereign Đại Việt state continuously existed throughout 1418-1427. The occupying Ming polity is not used as Lê Lợi's representative Polity."
+  },
+  "sources": [
+    {
+      "title": "Tài trí của vua Lê Thái Tổ trong mười năm kháng chiến chống quân Minh (1418-1427) — Bảo tàng Lịch sử Quốc gia",
+      "canonical_url": "https://baotanglichsu.vn/VI/Articles/3098/14470/tai-tri-cua-vua-le-thai-to-trong-muoi-nam-khang-chien-chong-quan-minh-1418-1427.html",
+      "citation_text": "Vietnam's National Museum of History states that Lê Lợi formally raised the Lam Sơn uprising in 1418, led the ten-year resistance against Ming forces, and secured their withdrawal at the end of 1427.",
+      "source_type": "national_museum_web"
+    },
+    {
+      "title": "Du xuân Lam Kinh – về miền địa linh tri ân bậc khai quốc — Bảo tàng Lịch sử Quốc gia",
+      "canonical_url": "https://baotanglichsu.vn/VI/Articles/3091/76211/du-xuan-lam-kinh-ve-mien-djia-linh-tri-an-bac-khai-quoc.html",
+      "citation_text": "The National Museum describes Lê Lợi's Lam Sơn uprising as a 1418-1427 struggle that expelled Ming forces and opened a new era of independence for Đại Việt.",
+      "source_type": "national_museum_web"
+    }
+  ]
+}
