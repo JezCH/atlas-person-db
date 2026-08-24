@@ -321,6 +321,7 @@ function projectSource(row, locator = null) {
 }
 
 function projectActivity(row) {
+  const polityId = row.polity_id == null ? null : String(row.polity_id);
   const polityNameEn = row.polity_name_en == null ? null : String(row.polity_name_en);
   const polityNameKo = row.polity_name_ko == null ? null : String(row.polity_name_ko);
   const relationTypeId = row.relation_type_id == null ? null : String(row.relation_type_id);
@@ -333,11 +334,11 @@ function projectActivity(row) {
   return Object.freeze({
     id: String(row.id),
     person_id: String(row.person_id),
-    polity: Object.freeze({
-      id: String(row.polity_id),
+    polity: polityId == null ? null : Object.freeze({
+      id: polityId,
       canonical_name_en: polityNameEn,
       preferred_name_ko: polityNameKo,
-      display_name: displayValue(polityNameKo, polityNameEn, String(row.polity_id))
+      display_name: displayValue(polityNameKo, polityNameEn, polityId)
     }),
     relation: relationTypeId == null ? null : Object.freeze({
       id: relationTypeId,

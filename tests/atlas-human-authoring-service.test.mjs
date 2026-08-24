@@ -87,7 +87,7 @@ test('historical boundary validation rejects year zero and day without month', (
 test('Relation has no generic default and active catalog resolution remains authoritative', async () => {
   const raw = request();
   delete raw.activity.relation_type;
-  assert.throws(() => normalizeHumanAuthoringRequest(raw), /HUMAN_AUTHORING_RELATION_TYPE_REQUIRED/);
+  assert.throws(() => normalizeHumanAuthoringRequest(raw), /HUMAN_AUTHORING_PRIMARY_POLITY_RELATION_PAIR_REQUIRED/);
   const syntacticallyValidFutureCode = normalizeHumanAuthoringRequest(request({ activity:{ ...request().activity, relation_type:'future_catalog_code' } }));
   assert.equal(syntacticallyValidFutureCode.activity.relation_type, 'future_catalog_code');
   await assert.rejects(
