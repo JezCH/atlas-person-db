@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ruder-boskovic:ragusa:scientist-diplomat:1736-1787:v1",
+  "person": {"canonical_name_en": "Ruđer Bošković", "display_name_ko": "루제르 보슈코비치"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Republic of Ragusa", "display_name_ko": "라구사 공화국"},
+  "activity": {
+    "relation_type": "active_in", "period_basis": "general_activity", "role": "Scientist and diplomat", "role_display_name_ko": "과학자·외교가",
+    "start_year": 1736, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1787, "end_month": 2, "end_day": 13, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Ruđer Bošković began publishing scientific work in 1736 and remained active as a scientist, scholar and diplomatic intermediary until his death in 1787. Although most of his career unfolded in Rome, Pavia, Milan and Paris, he was born a Ragusan and remained closely tied to Dubrovnik throughout his life, repeatedly carrying out diplomatic work for the Republic of Ragusa. ATLAS therefore does not retroactively assign him to the modern Republic of Croatia."
+  },
+  "sources": [
+    {"title": "Bošković, Ruđer Josip — Hrvatska enciklopedija", "canonical_url": "https://www.enciklopedija.hr/clanak/boskovic-rudjer-josip", "citation_text": "The Croatian Encyclopedia dates Bošković's first published scientific work to 1736 and states that throughout his life he remained attached to Dubrovnik and performed diplomatic work for it.", "source_type": "reference_web"}
+  ]
+}

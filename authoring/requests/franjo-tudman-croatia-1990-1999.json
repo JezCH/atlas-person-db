@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:franjo-tudman:croatia:president:1990-1999:v1",
+  "person": {"canonical_name_en": "Franjo Tuđman", "display_name_ko": "프라뇨 투지만"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Croatia", "display_name_ko": "크로아티아"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령",
+    "start_year": 1990, "start_month": 5, "start_day": 30, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1999, "end_month": 12, "end_day": 10, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Franjo Tuđman was elected President of the Presidency of the Socialist Republic of Croatia on 30 May 1990 and continued as president through Croatia's constitutional and independence transition until his death on 10 December 1999. ATLAS uses the continuous Croatia political community rather than splitting the same presidency across the brief SR Croatia transition and the independent republic."
+  },
+  "sources": [
+    {"title": "Former President Franjo Tuđman — President of the Republic of Croatia", "canonical_url": "https://www.predsjednik.hr/en/bivsi-predsjednici/franjo-tudman/", "citation_text": "The Croatian presidency records Tuđman's election on 30 May 1990, later direct presidential elections, and his death on 10 December 1999.", "source_type": "government_web"},
+    {"title": "Decision electing the President of the Presidency of SR Croatia — Narodne novine", "canonical_url": "https://narodne-novine.nn.hr/clanci/sluzbeni/1990_06_25_477.html", "citation_text": "The official gazette records the Croatian parliament's election of Franjo Tuđman on 30 May 1990.", "source_type": "government_gazette_web"}
+  ]
+}

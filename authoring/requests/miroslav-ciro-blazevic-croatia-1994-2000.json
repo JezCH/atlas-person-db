@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:miroslav-ciro-blazevic:croatia:head-coach:1994-2000:v1",
+  "person": {"canonical_name_en": "Miroslav Ćiro Blažević", "display_name_ko": "미로슬라브 치로 블라제비치"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Croatia", "display_name_ko": "크로아티아"},
+  "activity": {
+    "relation_type": "serves", "period_basis": "term", "role": "National football team head coach", "role_display_name_ko": "축구 국가대표팀 감독",
+    "start_year": 1994, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 2000, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Miroslav Ćiro Blažević led the Croatia national football team from 1994 through 2000, including the Euro 1996 quarter-final and Croatia's third-place finish at the 1998 FIFA World Cup. ATLAS uses Croatia as the represented political community and records the national-team coaching tenure rather than his numerous club appointments."
+  },
+  "sources": [
+    {"title": "Preminuo Miroslav Ćiro Blažević — Croatian Football Federation", "canonical_url": "https://hns.family/vijesti/25085/preminuo-miroslav-ciro-blazevic/", "citation_text": "The Croatian Football Federation states that Blažević took over the Croatian national team in 1994 and led it through 2000.", "source_type": "sports_federation_web"},
+    {"title": "Blažević, Miroslav Ćiro — Hrvatska enciklopedija", "canonical_url": "https://www.enciklopedija.hr/clanak/blazevic-miroslav-ciro", "citation_text": "The Croatian Encyclopedia records Blažević as Croatia national-team manager from 1994 to 2000 and highlights the 1998 World Cup third place.", "source_type": "reference_web"}
+  ]
+}
