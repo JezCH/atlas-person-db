@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:josip-broz-tito:dfy:prime-minister:1945:v1",
+  "person": {"canonical_name_en": "Josip Broz Tito", "display_name_ko": "요시프 브로즈 티토"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Democratic Federal Yugoslavia", "display_name_ko": "민주연방 유고슬라비아"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "Prime Minister", "role_display_name_ko": "총리",
+    "start_year": 1945, "start_month": 3, "start_day": 7, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1945, "end_month": 11, "end_day": 29, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Tito headed the joint Provisional Government of Democratic Federal Yugoslavia from its formation on 7 March 1945 until the monarchy was abolished and the Federal People's Republic of Yugoslavia was proclaimed on 29 November 1945. ATLAS separates this constitutional phase from the subsequent FPRY."
+  },
+  "sources": [
+    {"title": "Dignitaries — Archives of Yugoslavia", "canonical_url": "https://www.arhivyu.rs/en/leksikon-jugoslavije/licnosti", "citation_text": "The Archives of Yugoslavia lists Josip Broz Tito as head of government from 7 March 1945.", "source_type": "government_archive_web"},
+    {"title": "Constituent Acts of Yugoslavia — Archives of Yugoslavia", "canonical_url": "https://www.arhivyu.rs/en/leksikon-jugoslavije/konstitutivni_akti_jugoslavije", "citation_text": "The Archives documents the constitutional transformation of Yugoslavia and the later state-name changes.", "source_type": "government_archive_web"}
+  ]
+}
