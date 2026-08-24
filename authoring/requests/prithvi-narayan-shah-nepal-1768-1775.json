@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:prithvi-narayan-shah:nepal:1768-1775:v1",
+  "person": {
+    "canonical_name_en": "Prithvi Narayan Shah",
+    "display_name_ko": "프리트비 나라얀 샤"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Nepal",
+    "display_name_ko": "네팔 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1768,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1775,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After taking Kathmandu in September 1768, Prithvi Narayan Shah became the founding monarch of the unified Nepalese kingdom centered on Kathmandu and continued expanding the new state until his death in 1775. ATLAS therefore separates his 1768-1775 Nepal phase from his earlier 1743-1768 kingship of Gorkha. The unification process itself continued beyond the capture of Kathmandu, including the remaining Valley conquests, so the polity transition is represented at year level rather than with fabricated day-level precision."
+  },
+  "sources": [
+    {
+      "title": "A History of Nepal — John Whelpton, Cambridge University Press",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/history-of-nepal/unification-and-sanskritisation-1743-1885/DAEF862FA8F8FA958A092FEA357440D0",
+      "citation_text": "Whelpton records Prithvi Narayan Shah's entry into Kathmandu on 25 September 1768, the subsequent capture of Bhaktapur, and continued expansion until his death in 1775, establishing the basis of the unified Nepalese state.",
+      "source_type": "scholarly_book"
+    },
+    {
+      "title": "A History of Nepal — Key Events — Cambridge University Press",
+      "canonical_url": "https://assets.cambridge.org/052180/4701/frontmatter/0521804701_frontmatter.pdf",
+      "citation_text": "Cambridge's chronology places Prithvi Narayan Shah's Gorkha accession in 1743 and the conquest of the Kathmandu Valley in 1768-69, marking the transition to the unified Nepal phase.",
+      "source_type": "scholarly_book"
+    }
+  ]
+}
