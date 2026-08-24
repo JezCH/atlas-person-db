@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:attakullakulla:overhill-cherokee:first-beloved-man:1761-1775:v1",
+  "person": {"canonical_name_en": "Attakullakulla", "display_name_ko": "아타쿨라쿨라"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Overhill Cherokee", "display_name_ko": "오버힐 체로키"},
+  "activity": {
+    "relation_type": "active_in", "period_basis": "term", "role": "First Beloved Man", "role_display_name_ko": "수석 평화지도자",
+    "start_year": 1761, "start_certainty": "approximate", "start_calendar": "gregorian",
+    "end_year": 1775, "end_certainty": "approximate", "end_calendar": "gregorian",
+    "confidence": "likely", "chronology_status": "reviewed",
+    "notes": "Attakullakulla was a leading Overhill Cherokee diplomat and civil leader, widely identified with the First Beloved Man role. He was not monarch of a unitary 'Cherokee Tribe' state, so ATLAS uses the historically specific Overhill Cherokee political community and avoids a sovereign-king interpretation."
+  },
+  "sources": [{"title": "Attakullakulla — Tennessee Encyclopedia", "canonical_url": "https://tennesseeencyclopedia.net/entries/attakullakulla/", "citation_text": "The Tennessee Encyclopedia describes Attakullakulla as a powerful Overhill Cherokee leader and principal spokesman in the mid-eighteenth century, while distinguishing his authority from a unitary paramount kingship.", "source_type": "scholarly_encyclopedia_web"}]
+}
