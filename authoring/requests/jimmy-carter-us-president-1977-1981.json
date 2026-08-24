@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jimmy-carter:united-states:president:1977-1981:v1",
+  "person": {"canonical_name_en": "Jimmy Carter", "display_name_ko": "지미 카터"},
+  "external_references": {"namuwiki": {"status": "linked", "checked_at": "2026-08-24", "document_title": "지미 카터", "url": "https://namu.wiki/w/지미%20카터"}},
+  "polity": {"canonical_name_en": "United States", "display_name_ko": "미국"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령",
+    "start_year": 1977, "start_month": 1, "start_day": 20, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1981, "end_month": 1, "end_day": 20, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Jimmy Carter served as the 39th president of the United States from 20 January 1977 to 20 January 1981. ATLAS records his presidential term as the representative political Activity."
+  },
+  "sources": [{"title": "Jimmy Carter — Miller Center", "canonical_url": "https://millercenter.org/president/jimmy-carter", "citation_text": "The Miller Center identifies Jimmy Carter as the 39th president and gives his presidential term from 20 January 1977 to 20 January 1981.", "source_type": "university_presidential_history_web"}]
+}
