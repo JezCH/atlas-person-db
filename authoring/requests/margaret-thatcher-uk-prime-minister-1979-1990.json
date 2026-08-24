@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:margaret-thatcher:united-kingdom:prime-minister:1979-1990:v1",
+  "person": {"canonical_name_en": "Margaret Thatcher", "display_name_ko": "마거릿 대처"},
+  "external_references": {"namuwiki": {"status": "linked", "checked_at": "2026-08-24", "document_title": "마거릿 대처", "url": "https://namu.wiki/w/마거릿%20대처"}},
+  "polity": {"canonical_name_en": "United Kingdom", "display_name_ko": "영국"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "Prime Minister", "role_display_name_ko": "총리",
+    "start_year": 1979, "start_month": 5, "start_day": 4, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1990, "end_month": 11, "end_day": 28, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Margaret Thatcher served as Prime Minister of the United Kingdom from 4 May 1979 until she tendered her resignation on 28 November 1990."
+  },
+  "sources": [{"title": "Parliamentary career for Baroness Thatcher — UK Parliament", "canonical_url": "https://members.parliament.uk/member/953/career", "citation_text": "UK Parliament records Thatcher as Prime Minister, First Lord of the Treasury and Minister for the Civil Service from 4 May 1979 to 28 November 1990.", "source_type": "parliamentary_record_web"}]
+}

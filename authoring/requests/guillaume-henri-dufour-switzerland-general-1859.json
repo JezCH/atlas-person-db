@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:guillaume-henri-dufour:switzerland:general:1859:v1",
+  "person": {"canonical_name_en": "Guillaume Henri Dufour", "display_name_ko": "기욤 앙리 뒤푸르"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Switzerland", "display_name_ko": "스위스"},
+  "activity": {
+    "relation_type": "serves", "period_basis": "term", "role": "General of the Swiss Confederation", "role_display_name_ko": "스위스 연방군 총사령관",
+    "start_year": 1859, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1859, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Dufour was appointed General for a fourth time in 1859 when Switzerland mobilized during the Second Italian War of Independence. ATLAS records this as a distinct temporary generalship."
+  },
+  "sources": [{"title": "Guillaume Henri Dufour (1787–1875) — Swiss Armed Forces", "canonical_url": "https://www.vtg.admin.ch/en/guillaume-henri-dufour-1787--1875", "citation_text": "The Swiss Armed Forces records Dufour's fourth appointment as General during the 1859 mobilization.", "source_type": "government_military_history_web"}]
+}

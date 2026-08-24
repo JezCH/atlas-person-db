@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:stefan-dusan:kingdom-of-serbia:king:1331-1346:v1",
+  "person": {"canonical_name_en": "Stefan Dušan", "display_name_ko": "스테판 우로시 4세 두샨"},
+  "external_references": {"namuwiki": {"status": "linked", "checked_at": "2026-08-24", "document_title": "스테판 우로시 4세 두샨", "url": "https://namu.wiki/w/스테판%20우로시%204세%20두샨"}},
+  "polity": {"canonical_name_en": "Kingdom of Serbia", "display_name_ko": "세르비아 왕국"},
+  "activity": {
+    "relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕",
+    "start_year": 1331, "start_certainty": "exact", "start_calendar": "unspecified_historical",
+    "end_year": 1346, "end_certainty": "exact", "end_calendar": "unspecified_historical",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Stefan Dušan ruled as King of Serbia from 1331 until assuming the imperial title in 1346. ATLAS separates the kingdom phase from the subsequent Serbian Empire."
+  },
+  "sources": [{"title": "The Eternal Cycle of Power — Institute of History Belgrade", "canonical_url": "https://www.iib.ac.rs/ZR/assets/files/ZR9788677431587.G067.pdf", "citation_text": "Institute of History scholarship identifies Dušan as king from 1331 and states that he assumed the title of Tsar in 1346.", "source_type": "academic_history_pdf"}]
+}

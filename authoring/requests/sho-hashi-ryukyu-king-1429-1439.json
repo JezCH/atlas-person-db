@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sho-hashi:ryukyu-kingdom:king:1429-1439:v1",
+  "person": {"canonical_name_en": "Shō Hashi", "display_name_ko": "쇼 하시"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Ryukyu Kingdom", "display_name_ko": "류큐 왕국"},
+  "activity": {
+    "relation_type": "rules", "period_basis": "reign", "role": "King", "role_display_name_ko": "왕",
+    "start_year": 1429, "start_certainty": "exact", "start_calendar": "unspecified_historical",
+    "end_year": 1439, "end_certainty": "exact", "end_calendar": "unspecified_historical",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "In the conventional Ryukyuan chronology, Shō Hashi unified the Three Kingdoms in 1429 and ruled the Ryukyu Kingdom until 1439. ATLAS records the polity transition while noting that later official narratives may overstate the immediacy of uniform island-wide control."
+  },
+  "sources": [{"title": "Ryukyu Chronology — Japan Tourism Agency", "canonical_url": "https://www.mlit.go.jp/tagengo-db/en/R1-00872.html", "citation_text": "Japan's Tourism Agency chronology places the unification under Shō Hashi in 1429 and his reign in the early Ryukyu Kingdom.", "source_type": "government_cultural_history_web"}]
+}

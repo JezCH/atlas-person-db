@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:stefan-dusan:serbian-empire:emperor:1346-1355:v1",
+  "person": {"canonical_name_en": "Stefan Dušan", "display_name_ko": "스테판 우로시 4세 두샨"},
+  "external_references": {"namuwiki": {"status": "linked", "checked_at": "2026-08-24", "document_title": "스테판 우로시 4세 두샨", "url": "https://namu.wiki/w/스테판%20우로시%204세%20두샨"}},
+  "polity": {"canonical_name_en": "Serbian Empire", "display_name_ko": "세르비아 제국"},
+  "activity": {
+    "relation_type": "rules", "period_basis": "reign", "role": "Emperor", "role_display_name_ko": "황제",
+    "start_year": 1346, "start_certainty": "exact", "start_calendar": "unspecified_historical",
+    "end_year": 1355, "end_certainty": "exact", "end_calendar": "unspecified_historical",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "After assuming and being crowned with the imperial title in 1346, Stefan Dušan ruled the transformed Serbian state as Tsar/Emperor until his death in 1355. ATLAS records this as a distinct Serbian Empire phase."
+  },
+  "sources": [{"title": "The Eternal Cycle of Power — Institute of History Belgrade", "canonical_url": "https://www.iib.ac.rs/ZR/assets/files/ZR9788677431587.G067.pdf", "citation_text": "Institute of History scholarship states that Dušan assumed the title of Tsar in 1346 and discusses his reign through 1355.", "source_type": "academic_history_pdf"}]
+}

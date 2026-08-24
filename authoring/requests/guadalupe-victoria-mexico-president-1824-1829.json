@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:guadalupe-victoria:mexico:president:1824-1829:v1",
+  "person": {"canonical_name_en": "Guadalupe Victoria", "display_name_ko": "과달루페 빅토리아"},
+  "external_references": {"namuwiki": {"status": "linked", "checked_at": "2026-08-24", "document_title": "과달루페 빅토리아", "url": "https://namu.wiki/w/과달루페%20빅토리아"}},
+  "polity": {"canonical_name_en": "Mexico", "display_name_ko": "멕시코"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령",
+    "start_year": 1824, "start_month": 10, "start_day": 10, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1829, "end_month": 3, "end_day": 31, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Guadalupe Victoria was the first president of independent Mexico, serving from 10 October 1824 to 31 March 1829."
+  },
+  "sources": [{"title": "Guadalupe Victoria — Comisión Nacional de los Derechos Humanos", "canonical_url": "https://hist.cndh.org.mx/noticia/muere-el-general-guadalupe-victoria-heroe-de-la-independencia-nacional-primer-presidente-de", "citation_text": "Mexico's CNDH identifies Guadalupe Victoria as the first president of independent Mexico and gives his term as 10 October 1824 to 31 March 1829.", "source_type": "government_history_web"}]
+}

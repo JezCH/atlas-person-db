@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cunhambebe:tamoyo-confederation:confederation-leader:1554-1555:v1",
+  "person": {"canonical_name_en": "Cunhambebe", "display_name_ko": "쿠냠베베"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Tamoyo Confederation", "display_name_ko": "타모이오 연맹"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "general_activity", "role": "Confederation leader", "role_display_name_ko": "연맹 지도자",
+    "start_year": 1554, "start_certainty": "approximate", "start_calendar": "gregorian",
+    "end_year": 1555, "end_certainty": "approximate", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Cunhambebe was the pre-eminent Tupinambá/Tamoio leader in the indigenous confederation fighting Portuguese expansion on the São Paulo–Rio de Janeiro coast. Sources warn that the name may refer to a father and son; this record represents the senior Cunhambebe described as the confederation's leading chief and dying around 1555. ATLAS uses the actual Tamoyo Confederation rather than the broad ethnolinguistic label Tupi."
+  },
+  "sources": [{"title": "O Rio dos Navegantes — Museu de Arte do Rio", "canonical_url": "https://museudeartedorio.org.br/wp-content/uploads/2025/10/ORiodosNavegantes_Catalogo.pdf", "citation_text": "The Museu de Arte do Rio catalog identifies Cunhambebe (d. 1555) as the greatest leader during the Tamoio confederation and notes the possible father-son name duplication.", "source_type": "museum_catalog_pdf"}]
+}
