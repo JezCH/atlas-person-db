@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:bayanchur-khan:uyghur-khaganate:qaghan:747-759:v1",
+  "person": {"canonical_name_en": "Bayanchur Khan", "display_name_ko": "바얀초르 칸"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Uyghur Khaganate", "display_name_ko": "위구르 카간국"},
+  "activity": {
+    "relation_type": "rules", "period_basis": "reign", "role": "Qaghan", "role_display_name_ko": "가한",
+    "start_year": 747, "start_certainty": "exact", "start_calendar": "unspecified_historical",
+    "end_year": 759, "end_certainty": "exact", "end_calendar": "unspecified_historical",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Bayanchur Khan, also known in scholarship as Moyun Chor/Moyun Čor and by the regnal name Eletmish Bilge Qaghan, was the second qaghan of the Uyghur Khaganate. Epigraphic scholarship dates his reign to 747-759; the Tariat and Shine-Usu inscriptions preserve his reign and achievements. ATLAS uses the actual Uyghur Khaganate rather than a generic Turkic or modern Uyghur label."
+  },
+  "sources": [
+    {"title": "On bIdgWcIr in the 3rd Line of the South Side of the Shine-Usu Inscription", "canonical_url": "https://www.kci.go.kr/kciportal/landing/article.kci?arti_id=ART002366977", "citation_text": "The KCI-indexed Central Asian Studies article identifies Moyun Chor as the second kaghan of the Uighur Kaghanate and gives his reign as 747-759.", "source_type": "academic_journal_web"},
+    {"title": "Pre-Manichaean Beliefs of the Uyghurs I: Celestial and Natural Cults", "canonical_url": "https://www.cambridge.org/core/journals/harvard-theological-review/article/abs/premanichaean-beliefs-of-the-uyghurs-i-celestial-and-natural-cults/B7BBA50B0D24BEF0B8184FC9E20B6A81", "citation_text": "Harvard Theological Review identifies Bayan Chor as the second ruler of the Uyghur Qaghanate, reigning 747-759, and credits him with transforming the polity into a major steppe empire.", "source_type": "academic_journal_web"}
+  ]
+}
