@@ -286,5 +286,22 @@
     "role_ko": "타르테소스의 전승상 왕",
     "reason": "Herodotus preserves Arganthonios as a king of Tartessos who received the Phocaeans, but the same tradition attributes an extraordinary eighty-year reign and 120-year lifespan. Modern Spanish scholarship has identified strong mythical and literary elements in the Arganthonios tradition and substantially questions the historicity of the individual. ATLAS therefore preserves the Tartessos association while leaving all personal chronology unknown rather than converting the conventional 670–550 BCE reconstruction or Herodotus' longevity into verified reign dates.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "Tyrrhenus",
+    "politic_name": "Etruscan League",
+    "display_name_ko": "티레노스",
+    "politic_display_name_ko": "에트루리아 연맹",
+    "historicity": "legendary_or_unverified",
+    "historicity_display_ko": "전설·역사성 미검증",
+    "timeline_status": "excluded",
+    "date_basis": "greek_etruscan_foundation_tradition_unverified_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "에트루리아인의 전설적 지도자·연맹 창건 전승 인물",
+    "reason": "Tyrrhenus is a legendary figure in Greek and later Etruscan foundation traditions. Ancient authors preserve conflicting accounts, including the Lydian migration story, and modern scholarship does not establish him as a datable historical founder of the Etruscan League. ATLAS preserves the traditional Etruscan League association while leaving all chronology unknown.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
   }
 ]

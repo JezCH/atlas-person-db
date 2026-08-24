@@ -1,0 +1,8 @@
+{
+  "schema":"atlas-human-authoring/v1","review_status":"approved","request_id":"authoring:otto-i:holy-roman-empire:emperor:962-973:v1",
+  "person":{"canonical_name_en":"Otto I","display_name_ko":"오토 1세"},
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-24","document_title":"오토 1세","url":"https://namu.wiki/w/%EC%98%A4%ED%86%A0%201%EC%84%B8"}},
+  "polity":{"canonical_name_en":"Holy Roman Empire","display_name_ko":"신성 로마 제국"},
+  "activity":{"relation_type":"rules","period_basis":"reign","role":"Emperor","role_display_name_ko":"황제","start_year":962,"start_month":2,"start_day":2,"start_certainty":"exact","start_calendar":"unspecified_historical","end_year":973,"end_month":5,"end_day":7,"end_certainty":"exact","end_calendar":"unspecified_historical","confidence":"well_established","chronology_status":"reviewed","notes":"Otto I was crowned Roman emperor in Rome on 2 February 962 and remained emperor until his death on 7 May 973. ATLAS uses the established historical catalog identity Holy Roman Empire for the imperial phase requested by the user; this does not back-project the later formal wording of the imperial title into Otto's own titulature."},
+  "sources":[{"title":"Otto I — Encyclopaedia Britannica, 11th edition","canonical_url":"https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Otto_I.","citation_text":"The Britannica biography records Otto's imperial coronation at Rome on 2 February 962 and his death at Memleben on 7 May 973.","source_type":"web_bibliographic_reference"}]
+}
