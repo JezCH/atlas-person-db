@@ -269,5 +269,22 @@
     "role_ko": "느리 전승의 전설적 시조",
     "reason": "Eri is the ancestral progenitor in Nri and wider Igbo origin traditions. The traditions preserve conflicting supernatural, local-origin and migration narratives, and no contemporary evidence securely establishes Eri as a datable historical individual or supplies a reliable absolute chronology. ATLAS therefore preserves the traditional Nri association without treating Eri as a securely dated historical king of the formal Kingdom of Nri.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "Arganthonios",
+    "politic_name": "Tartessos",
+    "display_name_ko": "아르간토니오스",
+    "politic_display_name_ko": "타르테소스",
+    "historicity": "legendary_possible_historical_core",
+    "historicity_display_ko": "전설·역사적 핵심 가능",
+    "timeline_status": "excluded",
+    "date_basis": "herodotean_and_greco_roman_tradition_contested_historicity",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "타르테소스의 전승상 왕",
+    "reason": "Herodotus preserves Arganthonios as a king of Tartessos who received the Phocaeans, but the same tradition attributes an extraordinary eighty-year reign and 120-year lifespan. Modern Spanish scholarship has identified strong mythical and literary elements in the Arganthonios tradition and substantially questions the historicity of the individual. ATLAS therefore preserves the Tartessos association while leaving all personal chronology unknown rather than converting the conventional 670–550 BCE reconstruction or Herodotus' longevity into verified reign dates.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
   }
 ]
