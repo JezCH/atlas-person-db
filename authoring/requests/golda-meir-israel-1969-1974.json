@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:golda-meir:israel:prime-minister:1969-1974:v1",
+  "person": {"canonical_name_en": "Golda Meir", "display_name_ko": "골다 메이어"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Israel", "display_name_ko": "이스라엘"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "Prime Minister", "role_display_name_ko": "총리",
+    "start_year": 1969, "start_month": 3, "start_day": 17, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1974, "end_month": 6, "end_day": 3, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Israel's official government chronology records Golda Meir's premiership from 17 March 1969 through 3 June 1974. ATLAS stores the continuous period as one Prime Minister Activity."
+  },
+  "sources": [{"title": "Past Governments — Prime Minister's Office, Israel", "canonical_url": "https://www.gov.il/apps/pmo/history/historyGovernmentsEn.html", "citation_text": "Israel's Prime Minister's Office records Golda Meir as head of government from 17 March 1969 through 3 June 1974.", "source_type": "government_web"}]
+}
