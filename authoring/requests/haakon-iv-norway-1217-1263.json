@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:haakon-iv-of-norway:kingdom-of-norway:1217-1263:v1",
+  "person": {
+    "canonical_name_en": "Haakon IV of Norway",
+    "display_name_ko": "하콘 4세"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Norway",
+    "display_name_ko": "노르웨이 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1217,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1263,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Haakon IV Haakonsson was acclaimed king in 1217 and remained king of Norway until his death in 1263. His papal coronation in Bergen occurred later, in 1247, but ATLAS begins the reign in 1217 because Norwegian royal and historical sources treat him as king from that year. The Activity is not shortened by the later royal titles granted to his sons, because Haakon IV remained the principal king throughout his lifetime."
+  },
+  "sources": [
+    {
+      "title": "Håkon 4. Håkonsson — Store norske leksikon",
+      "canonical_url": "https://snl.no/H%C3%A5kon_4._H%C3%A5konsson",
+      "citation_text": "Store norske leksikon identifies Håkon IV Håkonsson as king of Norway from 1217 to 1263 and explains that he was acclaimed at Øyrating in 1217 and crowned in Bergen in 1247.",
+      "source_type": "national_encyclopedia_web"
+    },
+    {
+      "title": "Norges regenter: kongerekken — Det norske kongehus",
+      "canonical_url": "https://www.kongehuset.no/monarkiet/historie/kongerekken",
+      "citation_text": "The official Norwegian royal house king list gives Håkon IV Håkonsson's reign as 1217-1263.",
+      "source_type": "royal_house_web"
+    }
+  ]
+}
