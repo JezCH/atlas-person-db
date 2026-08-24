@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jorgen-jorgensen:iceland-revolution:protector:1809:v1",
+  "person": {"canonical_name_en": "Jørgen Jørgensen", "display_name_ko": "예르겐 예르겐센"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Icelandic Revolutionary Government of 1809", "display_name_ko": "1809년 아이슬란드 혁명정부"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "Protector of Iceland", "role_display_name_ko": "아이슬란드 보호자",
+    "start_year": 1809, "start_month": 6, "start_day": 26, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1809, "end_month": 8, "end_day": 22, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Jørgen Jørgensen removed Danish authority in Iceland on 26 June 1809, declared Iceland free of Danish rule, and later styled himself Protector with supreme authority. The short-lived revolutionary government exercised actual administrative and coercive authority until British intervention restored Danish government on 22 August 1809, so ATLAS treats it as a distinct revolutionary polity rather than Denmark or a mere event label."
+  },
+  "sources": [
+    {"title": "Byltingarrit Jörundar hundadagakonungs — University of Iceland", "canonical_url": "https://hi.is/frettir/byltingarrit_jorundar_hundadagakonungs", "citation_text": "The University of Iceland describes the 1809 revolution and surviving correspondence to the Protector of Iceland, including the finances of the revolutionary government.", "source_type": "university_web"},
+    {"title": "Den islandske revolution 1809 — Danmarkshistorien", "canonical_url": "https://danmarkshistorien.lex.dk/Den_islandske_revolution_1809", "citation_text": "The Danish historical reference describes the summer 1809 revolution as a brief separation of Iceland from Danish rule under Jørgen Jürgensen.", "source_type": "reference_web"}
+  ]
+}
