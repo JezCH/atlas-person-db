@@ -104,6 +104,7 @@ test('opponent-context migrations are post-Stage2, not correction-ledger migrati
   assert.equal(migrations.CORRECTION_MIGRATION_PATHS.some((entry) => entry.includes('20260822_person_politics_context_polities')), false);
   assert.ok(migrations.POST_STAGE2_MIGRATION_PATHS.some((entry) => entry.endsWith('20260822_person_politics_context_polities.sql')));
   assert.ok(migrations.POST_STAGE2_MIGRATION_PATHS.some((entry) => entry.endsWith('20260823_person_polity_community_reviewed_corrections.sql')));
+  assert.ok(migrations.POST_STAGE2_MIGRATION_PATHS.some((entry) => entry.endsWith('20260824_person_polity_community_final_corrections.sql')));
 });
 
 test('post-Stage2 migration refuses a pre-P5 schema', async () => {
@@ -139,4 +140,25 @@ test('reviewed data migration is exact-identity bound and covers the audited cor
   for (const statement of updateStatements) {
     assert.doesNotMatch(statement, /WHERE[\s\S]*?relation_type_id\s*=\s*v_opposes/i);
   }
+});
+
+test('final reviewed correction closes Lady Trieu and Yu Gwan-sun without changing canonical polity identity', () => {
+  const sql = fs.readFileSync(path.resolve(__dirname, '../db/migrations/20260824_person_polity_community_final_corrections.sql'), 'utf8');
+  for (const exactId of [
+    '1a3440db-c329-58c4-af35-fdcf488fa3fd',
+    'ea7456fa-c29d-5fac-979e-fc8c43824de4',
+    'bf322784-2ec3-5d3e-886b-654d5cf0fbf7',
+    'a4f4d4cd-d3f4-418f-8391-407eddcc954f',
+    'b411938f-dff4-4f32-9764-76237fc7bd3b',
+    '1742fd4e-6e63-4210-9081-fcb166b42d6f'
+  ]) assert.match(sql, new RegExp(exactId));
+  assert.match(sql, /Cửu Chân resistance/);
+  assert.match(sql, /구진 저항 세력/);
+  assert.match(sql, /code='active_in'/);
+  assert.match(sql, /person_politics_v2_primary_polity_relation_pair_check/);
+  assert.match(sql, /CHECK \(\(polity_id IS NULL\) = \(relation_type_id IS NULL\)\)/i);
+  assert.doesNotMatch(sql, /canonical_key\s*=\s*'Cửu Chân resistance'/i);
+  const activityUpdates = sql.match(/UPDATE\s+atlas_v2\.person_politics_v2[\s\S]*?;/gi) || [];
+  assert.ok(activityUpdates.length >= 2);
+  for (const statement of activityUpdates) assert.match(statement, /WHERE id=v_row\.id/i);
 });
