@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:shah-jahan:mughal-empire:emperor:1628-1658:v1",
+  "person": {"canonical_name_en": "Shah Jahan", "display_name_ko": "샤 자한 1세"},
+  "external_references": {"namuwiki": {"status": "linked", "checked_at": "2026-08-24", "document_title": "샤 자한 1세", "url": "https://namu.wiki/w/%EC%83%A4%20%EC%9E%90%ED%95%9C%201%EC%84%B8"}},
+  "polity": {"canonical_name_en": "Mughal Empire", "display_name_ko": "무굴 제국"},
+  "activity": {
+    "relation_type": "rules", "period_basis": "reign", "role": "Emperor", "role_display_name_ko": "황제",
+    "start_year": 1628, "start_certainty": "exact", "start_calendar": "unspecified_historical",
+    "end_year": 1658, "end_certainty": "exact", "end_calendar": "unspecified_historical",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Shah Jahan ruled the Mughal Empire from 1628 until his deposition by Aurangzeb in 1658. His survival in confinement until 1666 does not extend the sovereign reign Activity."
+  },
+  "sources": [{"title": "Shah Jahan — Encyclopaedia Britannica", "canonical_url": "https://www.britannica.com/biography/Shah-Jahan", "citation_text": "Britannica identifies Shah Jahan as Mughal emperor from 1628 to 1658 and describes his deposition and confinement by Aurangzeb.", "source_type": "reference_web"}]
+}
