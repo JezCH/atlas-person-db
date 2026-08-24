@@ -25,9 +25,14 @@ jobs:
     env:
       ATLAS_NAMUWIKI_LINK_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-namuwiki-link
       ATLAS_PERSON_READ_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-person-read
+      ATLAS_AUTHORING_READINESS_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply
       ATLAS_NAMUWIKI_LINK_AUDIENCE: atlas-person-db-namuwiki-link
 
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Parse exact command
         id: command
         shell: bash
@@ -44,6 +49,48 @@ jobs:
           NAMUWIKI_URL="${BASH_REMATCH[2]}"
           printf 'person_id=%s\n' "$PERSON_ID" >> "$GITHUB_OUTPUT"
           printf 'url=%s\n' "$NAMUWIKI_URL" >> "$GITHUB_OUTPUT"
+
+      - name: Resolve deployed runtime compatibility
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          READINESS_FILE="$RUNNER_TEMP/atlas-namuwiki-link-readiness.json"
+          DIFF_FILE="$RUNNER_TEMP/atlas-namuwiki-link-runtime-diff.txt"
+
+          curl --fail --silent --show-error \
+            "$ATLAS_AUTHORING_READINESS_ENDPOINT" > "$READINESS_FILE"
+          jq -e '
+            .ok == true
+            and (.runtime_sha | type == "string" and test("^[0-9a-f]{40}$"))
+          ' "$READINESS_FILE" >/dev/null
+
+          runtime_sha="$(jq -er '.runtime_sha' "$READINESS_FILE")"
+          git cat-file -e "${runtime_sha}^{commit}" || {
+            echo "Deployed runtime commit is unavailable in checkout: ${runtime_sha}" >&2
+            exit 1
+          }
+          git merge-base --is-ancestor "$runtime_sha" "$GITHUB_SHA" || {
+            echo "Deployed runtime is not an ancestor of NamuWiki link commit" >&2
+            exit 1
+          }
+          git diff --name-only --diff-filter=ACDMRTUXB "$runtime_sha" "$GITHUB_SHA" -- > "$DIFF_FILE"
+
+          ATLAS_RUNTIME_DIFF_FILE="$DIFF_FILE" node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import { requiresAuthoringRuntimeDeployment } from './scripts/vercel-ignore-build.mjs';
+
+          const text = fs.readFileSync(process.env.ATLAS_RUNTIME_DIFF_FILE, 'utf8').trim();
+          const paths = text ? text.split(/\r?\n/).filter(Boolean) : [];
+          if (requiresAuthoringRuntimeDeployment(paths)) {
+            console.error('NAMUWIKI_RUNTIME_CODE_DRIFT: deployment-relevant changes exist after the deployed runtime SHA');
+            for (const path of paths) console.error(`  ${path}`);
+            process.exit(1);
+          }
+          console.log(`NamuWiki link delta is deployed-runtime-safe (${paths.length} path${paths.length === 1 ? '' : 's'}).`);
+          NODE
+
+          echo "ATLAS_RUNTIME_SHA=${runtime_sha}" >> "$GITHUB_ENV"
+          echo "Deployed runtime ${runtime_sha} is compatible with NamuWiki link commit ${GITHUB_SHA}."
 
       - name: Request dedicated GitHub OIDC token
         shell: bash
@@ -68,7 +115,7 @@ jobs:
           TOKEN_FILE="$RUNNER_TEMP/atlas-namuwiki-link-oidc"
           RESPONSE_FILE="$RUNNER_TEMP/atlas-namuwiki-link-response.json"
           PAYLOAD="$(jq -cn \
-            --arg runtime_sha "$GITHUB_SHA" \
+            --arg runtime_sha "$ATLAS_RUNTIME_SHA" \
             --arg person_id "$PERSON_ID" \
             --arg url "$NAMUWIKI_URL" \
             '{runtime_sha:$runtime_sha,person_id:$person_id,url:$url}')"
