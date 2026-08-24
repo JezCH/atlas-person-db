@@ -1,5 +1,6 @@
 "use strict";
 
+// Read-only Production audit routing surface; this module performs no mutation.
 const { createAuditInventoryHandler } = require("../server/atlas-audit-inventory-handler.js");
 const { createP11BaselineBCaptureHandler } = require("../server/atlas-p11-baseline-b-capture-handler.js");
 const { createPolityReferenceAuditHandler } = require("../server/atlas-polity-reference-audit-handler.js");
