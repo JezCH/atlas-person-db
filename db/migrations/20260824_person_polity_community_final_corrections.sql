@@ -72,7 +72,7 @@ BEGIN
     IF v_row.relation_type_id IS NULL THEN
       UPDATE atlas_v2.person_politics_v2
          SET relation_type_id=v_active_in,
-             notes='ATLAS review 2026-08-24: Lady Trieu led the 248 uprising centered in Cửu Chân. The resistance community is her own-side primary polity; `active_in` avoids overstating sovereign rule, while the Rebel leader Role preserves her leadership.'
+             notes='ATLAS review 2026-08-24: Lady Trieu led the 248 uprising centered in Cửu Chân. The resistance community is her own-side primary polity. `active_in` avoids overstating sovereign rule, while the Rebel leader Role preserves her leadership.'
        WHERE id=v_row.id;
     ELSIF v_row.relation_type_id <> v_active_in THEN
       RAISE EXCEPTION 'POLITY_REVIEW_DRIFT_LADY_TRIEU_RELATION';
