@@ -38,11 +38,11 @@ function roleCodeFromLabel(value) {
 
 function roleCategoryForRelation(relationCode) {
   return ({
-    rules: "ruler",
-    claims_rule: "ruler",
-    governs: "government",
-    serves: "service",
-    active_in: "activity"
+    rules:"ruler",
+    claims_rule:"ruler",
+    governs:"government",
+    serves:"service",
+    active_in:"activity"
   })[relationCode] || "activity";
 }
 
@@ -110,9 +110,9 @@ function normalizeSources(raw) {
     const source = requiredObject(item, `HUMAN_AUTHORING_SOURCE_INVALID:${index + 1}`);
     if (source.source_id != null) {
       return Object.freeze({
-        mode: "existing",
-        source_id: requiredUuid(source.source_id, `sources[${index}].source_id`),
-        locator: requiredText(source.locator, `HUMAN_AUTHORING_SOURCE_LOCATOR_REQUIRED:${index + 1}`)
+        mode:"existing",
+        source_id:requiredUuid(source.source_id, `sources[${index}].source_id`),
+        locator:requiredText(source.locator, `HUMAN_AUTHORING_SOURCE_LOCATOR_REQUIRED:${index + 1}`)
       });
     }
     const title = requiredText(source.title, `HUMAN_AUTHORING_SOURCE_TITLE_REQUIRED:${index + 1}`);
@@ -145,7 +145,6 @@ function normalizeHumanAuthoringRequest(raw, { allowLegacyNamuWikiOmission = tru
   const roleCategory = optionalText(activity.role_category) || (roleLabel ? roleCategoryForRelation(relationCode) : null);
   const roleCode = optionalText(activity.role_code) || (roleLabel ? roleCodeFromLabel(roleLabel) : null);
   const namuwiki = normalizeNamuWikiReference(request?.external_references?.namuwiki, { allowLegacyOmission:allowLegacyNamuWikiOmission });
-
   return Object.freeze({
     requestId,
     person:Object.freeze({
@@ -177,6 +176,14 @@ function normalizeHumanAuthoringRequest(raw, { allowLegacyNamuWikiOmission = tru
     }),
     sources:Object.freeze(normalizeSources(request.sources)),
     external_references:Object.freeze({ namuwiki })
+  });
+}
+
+function prepareHumanAuthoringRequest(rawRequest, { allowLegacyNamuWikiOmission = true } = {}) {
+  return Object.freeze({
+    rawRequest,
+    request:normalizeHumanAuthoringRequest(rawRequest, { allowLegacyNamuWikiOmission }),
+    hash:manifestHash(rawRequest)
   });
 }
 
@@ -219,7 +226,6 @@ async function resolveOrCreateRole(client, activity) {
      limit 2`, [activity.role]);
   if (byName.rows.length > 1) throw new Error("HUMAN_AUTHORING_ROLE_NAME_AMBIGUOUS");
   if (byName.rows.length === 1) return Object.freeze({ id:String(byName.rows[0].id).toLowerCase(), disposition:"reused" });
-
   const roleCode = activity.role_code || roleCodeFromLabel(activity.role);
   const byCode = await client.query(`
     select r.id::text
@@ -229,7 +235,6 @@ async function resolveOrCreateRole(client, activity) {
      limit 2`, [roleCode]);
   if (byCode.rows.length > 1) throw new Error("HUMAN_AUTHORING_ROLE_CODE_AMBIGUOUS");
   if (byCode.rows.length === 1) return Object.freeze({ id:String(byCode.rows[0].id).toLowerCase(), disposition:"reused" });
-
   if (!activity.role_display_name_ko) throw new Error("HUMAN_AUTHORING_NEW_ROLE_KO_REQUIRED");
   const created = await createRole(client, { code:roleCode, source_label:activity.role, display_name_ko:activity.role_display_name_ko, category:activity.role_category });
   return Object.freeze({ id:String(created.id).toLowerCase(), disposition:created.replay ? "reused" : "created" });
@@ -239,6 +244,13 @@ async function resolveCatalogCode(client, { table, code, unresolvedCode }) {
   const result = await client.query(`select id::text,code from atlas_v2.${table} where code=$1 and is_active=true order by id::text limit 2`, [code]);
   if (result.rows.length !== 1) throw new Error(unresolvedCode);
   return Object.freeze({ id:String(result.rows[0].id).toLowerCase(), code:String(result.rows[0].code) });
+}
+
+async function resolveCatalogCodeCached(client, cache, options) {
+  if (!cache) return resolveCatalogCode(client, options);
+  const key = `${options.table}:${options.code}`;
+  if (!cache.has(key)) cache.set(key, await resolveCatalogCode(client, options));
+  return cache.get(key);
 }
 
 async function resolveOrCreateSources(client, requestId, sources) {
@@ -340,41 +352,112 @@ function outcome(requestId, replay, snapshot) {
   });
 }
 
-function createHumanAuthoringService({ client } = {}) {
+async function applyPreparedWithinTransaction(client, prepared, { transport = null, catalogCache = null } = {}) {
+  const { request, hash } = prepared;
+  const ledger = await readLedger(client, request.requestId);
+  if (ledger) {
+    if (ledger.manifest_hash !== hash) throw new Error("AUTHORING_REQUEST_ID_COLLISION");
+    if (ledger.manifest_schema !== HUMAN_AUTHORING_SCHEMA) throw new Error("AUTHORING_LEDGER_SCHEMA_MISMATCH");
+    const snapshot = await verifyReplay(client, ledger);
+    return outcome(request.requestId, true, snapshot);
+  }
+  const relation = request.activity.relation_type == null
+    ? Object.freeze({ id:null, code:null })
+    : await resolveCatalogCodeCached(client, catalogCache, { table:"person_polity_relation_types", code:request.activity.relation_type, unresolvedCode:"HUMAN_AUTHORING_RELATION_TYPE_UNRESOLVED" });
+  const periodBasis = await resolveCatalogCodeCached(client, catalogCache, { table:"period_bases", code:request.activity.period_basis, unresolvedCode:"HUMAN_AUTHORING_PERIOD_BASIS_UNRESOLVED" });
+  const person = await resolveOrCreatePerson(client, request.person);
+  const polity = request.polity == null
+    ? Object.freeze({ id:null, disposition:"none" })
+    : await resolveOrCreatePolity(client, request.polity);
+  const role = await resolveOrCreateRole(client, request.activity);
+  const sources = await resolveOrCreateSources(client, request.requestId, request.sources);
+  const payload = activityPayload({ personId:person.id, polityId:polity.id, roleId:role.id, relation, periodBasis, activity:request.activity, sources });
+  const created = await createStage2NativeActivityTx(client).create(payload, { requestId:request.requestId });
+  const snapshot = buildSnapshot({ person, polity, role, relation, periodBasis, sources, activity:created, transport, externalReferences:request.external_references });
+  await client.query(`insert into atlas_v2.authoring_manifest_runs(request_id,manifest_hash,manifest_schema,person_id,relationship_id,result_snapshot) values($1,$2,$3,$4::uuid,$5::uuid,$6::jsonb)`, [request.requestId, hash, HUMAN_AUTHORING_SCHEMA, person.id, created.id, JSON.stringify(snapshot)]);
+  return outcome(request.requestId, false, snapshot);
+}
+
+function manifestPathFromTransport(transport) {
+  return transport && typeof transport === "object" ? optionalText(transport.manifest_path) : null;
+}
+
+function annotateBatchError(error, index, transport) {
+  const target = error instanceof Error ? error : new Error(String(error || "HUMAN_AUTHORING_FAILED"));
+  if (!Number.isInteger(target.batchIndex)) target.batchIndex = index;
+  if (!target.manifestPath) target.manifestPath = manifestPathFromTransport(transport);
+  return target;
+}
+
+async function rollbackQuietly(client) {
+  try { await client.query("rollback"); } catch {}
+}
+
+async function lockRequestIds(client, requestIds) {
+  const ordered = [...requestIds].sort((a, b) => a.localeCompare(b));
+  for (const requestId of ordered) {
+    await client.query("select pg_advisory_xact_lock(hashtext($1))", [`atlas-human-authoring:${requestId}`]);
+  }
+}
+
+function createHumanAuthoringService({ client, prepare = prepareHumanAuthoringRequest, applyPrepared = applyPreparedWithinTransaction } = {}) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client is required");
+  if (typeof prepare !== "function") throw new Error("prepare is required");
+  if (typeof applyPrepared !== "function") throw new Error("applyPrepared is required");
   return Object.freeze({
     async apply(rawRequest, { transport = null, allowLegacyNamuWikiOmission = true } = {}) {
-      const request = normalizeHumanAuthoringRequest(rawRequest, { allowLegacyNamuWikiOmission });
-      const hash = manifestHash(rawRequest);
+      const prepared = prepare(rawRequest, { allowLegacyNamuWikiOmission });
       await client.query("begin isolation level serializable");
       try {
-        await client.query("select pg_advisory_xact_lock(hashtext($1))", [`atlas-human-authoring:${request.requestId}`]);
-        const ledger = await readLedger(client, request.requestId);
-        if (ledger) {
-          if (ledger.manifest_hash !== hash) throw new Error("AUTHORING_REQUEST_ID_COLLISION");
-          if (ledger.manifest_schema !== HUMAN_AUTHORING_SCHEMA) throw new Error("AUTHORING_LEDGER_SCHEMA_MISMATCH");
-          const snapshot = await verifyReplay(client, ledger);
-          await client.query("commit");
-          return outcome(request.requestId, true, snapshot);
-        }
-        const relation = request.activity.relation_type == null
-          ? Object.freeze({ id:null, code:null })
-          : await resolveCatalogCode(client, { table:"person_polity_relation_types", code:request.activity.relation_type, unresolvedCode:"HUMAN_AUTHORING_RELATION_TYPE_UNRESOLVED" });
-        const periodBasis = await resolveCatalogCode(client, { table:"period_bases", code:request.activity.period_basis, unresolvedCode:"HUMAN_AUTHORING_PERIOD_BASIS_UNRESOLVED" });
-        const person = await resolveOrCreatePerson(client, request.person);
-        const polity = request.polity == null
-          ? Object.freeze({ id:null, disposition:"none" })
-          : await resolveOrCreatePolity(client, request.polity);
-        const role = await resolveOrCreateRole(client, request.activity);
-        const sources = await resolveOrCreateSources(client, request.requestId, request.sources);
-        const payload = activityPayload({ personId:person.id, polityId:polity.id, roleId:role.id, relation, periodBasis, activity:request.activity, sources });
-        const created = await createStage2NativeActivityTx(client).create(payload, { requestId:request.requestId });
-        const snapshot = buildSnapshot({ person, polity, role, relation, periodBasis, sources, activity:created, transport, externalReferences:request.external_references });
-        await client.query(`insert into atlas_v2.authoring_manifest_runs(request_id,manifest_hash,manifest_schema,person_id,relationship_id,result_snapshot) values($1,$2,$3,$4::uuid,$5::uuid,$6::jsonb)`, [request.requestId, hash, HUMAN_AUTHORING_SCHEMA, person.id, created.id, JSON.stringify(snapshot)]);
+        await lockRequestIds(client, [prepared.request.requestId]);
+        const result = await applyPrepared(client, prepared, { transport, catalogCache:new Map() });
         await client.query("commit");
-        return outcome(request.requestId, false, snapshot);
+        return result;
       } catch (error) {
-        try { await client.query("rollback"); } catch {}
+        await rollbackQuietly(client);
+        throw error;
+      }
+    },
+
+    async applyBatch(rawRequests, { transports = null, allowLegacyNamuWikiOmission = true } = {}) {
+      if (!Array.isArray(rawRequests) || rawRequests.length === 0) throw new Error("HUMAN_AUTHORING_BATCH_REQUESTS_REQUIRED");
+      const normalizedTransports = transports == null ? rawRequests.map(() => null) : transports;
+      if (!Array.isArray(normalizedTransports) || normalizedTransports.length !== rawRequests.length) throw new Error("HUMAN_AUTHORING_BATCH_TRANSPORT_LENGTH_MISMATCH");
+
+      const prepared = [];
+      for (let index = 0; index < rawRequests.length; index += 1) {
+        try {
+          prepared.push(prepare(rawRequests[index], { allowLegacyNamuWikiOmission }));
+        } catch (error) {
+          throw annotateBatchError(error, index, normalizedTransports[index]);
+        }
+      }
+
+      const firstIndexByRequestId = new Map();
+      for (let index = 0; index < prepared.length; index += 1) {
+        const requestId = prepared[index].request.requestId;
+        if (firstIndexByRequestId.has(requestId)) {
+          throw annotateBatchError(new Error("HUMAN_AUTHORING_BATCH_DUPLICATE_REQUEST_ID"), index, normalizedTransports[index]);
+        }
+        firstIndexByRequestId.set(requestId, index);
+      }
+
+      await client.query("begin isolation level serializable");
+      try {
+        await lockRequestIds(client, prepared.map((item) => item.request.requestId));
+        const catalogCache = new Map();
+        const results = [];
+        for (let index = 0; index < prepared.length; index += 1) {
+          try {
+            results.push(await applyPrepared(client, prepared[index], { transport:normalizedTransports[index], catalogCache }));
+          } catch (error) {
+            throw annotateBatchError(error, index, normalizedTransports[index]);
+          }
+        }
+        await client.query("commit");
+        return Object.freeze(results);
+      } catch (error) {
+        await rollbackQuietly(client);
         throw error;
       }
     }
@@ -399,12 +482,15 @@ module.exports = Object.freeze({
   roleCategoryForRelation,
   normalizeNamuWikiReference,
   normalizeHumanAuthoringRequest,
+  prepareHumanAuthoringRequest,
   activityPayload,
   resolveCatalogCode,
   resolveOrCreatePerson,
   resolveOrCreatePolity,
   resolveOrCreateRole,
   resolveOrCreateSources,
+  applyPreparedWithinTransaction,
+  lockRequestIds,
   createHumanAuthoringService,
   loadHumanAuthoringCatalogs
 });
