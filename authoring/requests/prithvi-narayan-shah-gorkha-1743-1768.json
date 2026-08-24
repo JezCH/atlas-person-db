@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:prithvi-narayan-shah:gorkha:1743-1768:v1",
+  "person": {
+    "canonical_name_en": "Prithvi Narayan Shah",
+    "display_name_ko": "프리트비 나라얀 샤"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Gorkha Kingdom",
+    "display_name_ko": "고르카 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1743,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1768,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Prithvi Narayan Shah succeeded as king of Gorkha in 1743 and used the Gorkha state as the base for the long campaign to conquer the Kathmandu Valley and surrounding principalities. ATLAS separates this Gorkha phase from his later kingship of the unified Nepal polity beginning in 1768, rather than retroactively labeling his entire reign as Nepal."
+  },
+  "sources": [
+    {
+      "title": "A History of Nepal — John Whelpton, Cambridge University Press",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/history-of-nepal/unification-and-sanskritisation-1743-1885/DAEF862FA8F8FA958A092FEA357440D0",
+      "citation_text": "Whelpton states that from Prithvi Narayan Shah's accession in 1743 he fought continuously for control of the Kathmandu Valley, entering Kathmandu on 25 September 1768 and continuing the Gorkhali conquests thereafter.",
+      "source_type": "scholarly_book"
+    },
+    {
+      "title": "A History of Nepal — Key Events — Cambridge University Press",
+      "canonical_url": "https://assets.cambridge.org/052180/4701/frontmatter/0521804701_frontmatter.pdf",
+      "citation_text": "Cambridge's chronology lists 1743 as the year Prithvi Narayan Shah was crowned king of Gorkha and 1768-69 as the Gorkhali conquest of the Kathmandu Valley.",
+      "source_type": "scholarly_book"
+    }
+  ]
+}
