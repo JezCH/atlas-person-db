@@ -6,3 +6,4 @@
   "activity":{"relation_type":"governs","period_basis":"general_activity","role":"Rebel leader","role_display_name_ko":"반란 지도자","start_year":1542,"start_certainty":"approximate","start_calendar":"unspecified_historical","end_year":1543,"end_certainty":"approximate","end_calendar":"unspecified_historical","confidence":"well_established","chronology_status":"reviewed","notes":"Dacke led the Småland peasant rebellion against Gustav Vasa. ATLAS does not create a fictitious state called 'Smolandia'; it records the insurgent political community on Dacke's own side."},
   "sources":[{"title":"Nils Dacke — Svenskt biografiskt lexikon, Riksarkivet","canonical_url":"https://sok.riksarkivet.se/sbl/Artikel/15765","citation_text":"The Swedish National Archives' biographical lexicon identifies Nils Dacke as the leader of the Småland peasant uprising against Gustav Vasa in 1542–1543.","source_type":"national_biographical_reference_web"}]
 }
+
