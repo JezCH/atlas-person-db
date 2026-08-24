@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jon-sigurdsson:iceland:independence-leader:1845-1879:v1",
+  "person": {"canonical_name_en": "Jón Sigurðsson", "display_name_ko": "욘 시귀르드손"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-08-24"}},
+  "polity": {"canonical_name_en": "Iceland", "display_name_ko": "아이슬란드"},
+  "activity": {
+    "relation_type": "active_in", "period_basis": "general_activity", "role": "Independence leader", "role_display_name_ko": "독립운동 지도자",
+    "start_year": 1845, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1879, "end_month": 12, "end_day": 7, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Jón Sigurðsson entered the restored Alþingi in 1845 and became the central political leader of Iceland's nineteenth-century national freedom and self-government movement, remaining active until his death in 1879. ATLAS assigns him to Iceland, the political community he represented, rather than Denmark, the external sovereign power against which greater Icelandic self-rule was pursued."
+  },
+  "sources": [
+    {"title": "Jón Sigurðsson bicentenary resolution — Alþingi", "canonical_url": "https://www.althingi.is/altext/133/s/1200.html", "citation_text": "Alþingi records Jón's participation in the restored parliament from 1845, his repeated presidency of it, and his leading role in Iceland's independence struggle until his death in 1879.", "source_type": "government_institution_web"},
+    {"title": "Professor position connected with Jón Sigurðsson — Alþingi", "canonical_url": "https://www.althingi.is/altext/139/s/1787.html", "citation_text": "Alþingi describes Jón Sigurðsson as the leader of Icelanders in the national freedom struggle that began in the mid-nineteenth century.", "source_type": "government_institution_web"}
+  ]
+}
