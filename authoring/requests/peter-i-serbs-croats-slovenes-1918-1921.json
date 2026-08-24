@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:peter-i-serbia:kingdom-serbs-croats-slovenes:king:1918-1921:v1",
+  "person": {
+    "canonical_name_en": "Peter I of Serbia",
+    "display_name_ko": "페타르 1세"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Serbs, Croats and Slovenes",
+    "display_name_ko": "세르비아인·크로아티아인·슬로베니아인 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1918,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1921,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Peter I was the last King of Serbia and became the first king of the Kingdom of Serbs, Croats and Slovenes when the new South Slav kingdom was proclaimed on 1 December 1918. He remained king until his death on 16 August 1921. The state was not officially named the Kingdom of Yugoslavia during Peter I's reign; that renaming occurred in 1929 under Alexander I. ATLAS therefore maps the user's Yugoslavia label to the historically correct 1918-1921 polity and does not merge Peter's earlier 1903-1918 Serbian reign into this Activity."
+  },
+  "sources": [
+    {
+      "title": "The Kingdom of Serbs, Croats and Slovenes — The Royal Family of Serbia",
+      "canonical_url": "https://royalfamily.org/about-serbia/serbs-croats-and-slovenes/",
+      "citation_text": "The Royal Family of Serbia records the proclamation of the Kingdom of Serbs, Croats and Slovenes on 1 December 1918 under King Peter I.",
+      "source_type": "official_dynastic_archive_web"
+    },
+    {
+      "title": "HM King Peter I of the Serbs, Croats and Slovenes — The Royal Family of Serbia",
+      "canonical_url": "https://royalfamily.org/hm-king-peter-i-of-the-serbs-croats-and-slovenes-2/",
+      "citation_text": "The official royal-family biography identifies Peter I as king of the new South Slav kingdom and records his death on 16 August 1921.",
+      "source_type": "official_dynastic_archive_web"
+    }
+  ]
+}

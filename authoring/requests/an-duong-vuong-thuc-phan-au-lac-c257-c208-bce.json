@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:an-duong-vuong-thuc-phan:au-lac:king:c257-c208-bce:v1",
+  "person": {
+    "canonical_name_en": "An Dương Vương",
+    "display_name_ko": "안양왕"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-23",
+      "document_title": "안양왕",
+      "url": "https://namu.wiki/w/%EC%95%88%EC%96%91%EC%99%95"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Âu Lạc",
+    "display_name_ko": "어우락"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -257,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -208,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "An Dương Vương, traditionally identified by the personal name Thục Phán, is remembered as the ruler who established Âu Lạc and made Cổ Loa its political center. Archaeology strongly supports the existence of a powerful indigenous Cổ Loa polity in the third century BCE, but the ruler's biography, origin, and absolute reign dates are not independently fixed by contemporary evidence. ATLAS therefore records the conventional Vietnamese chronology of ca. 257-ca. 208 BCE with both boundaries approximate; later-source chronologies that place the fall of Âu Lạc around 179 BCE are acknowledged as an alternative and are not silently conflated into an exact date range."
+  },
+  "sources": [
+    {
+      "title": "Recent Field Investigations at Co Loa — The Origins of Ancient Vietnam",
+      "canonical_url": "https://academic.oup.com/book/2288/chapter-abstract/142412520",
+      "citation_text": "Nam C. Kim's archaeological synthesis dates the foundation of the monumental Cổ Loa capital to the third century BCE and argues for a powerful indigenous polity responsible for its construction."
+    },
+    {
+      "title": "Về An Dương Vương — Trần Quốc Vượng, Đỗ Văn Ninh",
+      "canonical_url": "https://his.ussh.vnu.edu.vn/vi/news/nguyen-thanh-dat/ve-an-duong-vuong-tran-quoc-vuong-do-van-ninh-5708.html",
+      "citation_text": "Vietnam National University historians review the textual traditions identifying An Dương Vương as Thục Phán and ruler of Âu Lạc while emphasizing the longstanding scholarly debate over his origins and historical reconstruction."
+    },
+    {
+      "title": "Nỏ thần An Dương Vương - Từ huyền thoại đến sự thật lịch sử",
+      "canonical_url": "https://baotanglichsuquocgia.vn/vi/Articles/3096/17444/no-than-an-duong-vuong-tu-huyen-thoai-djen-su-that-lich-su.html",
+      "citation_text": "The Vietnam National Museum of History distinguishes the legendary narrative from archaeological evidence and treats Cổ Loa and the Âu Lạc period associated with An Dương Vương as a historical problem illuminated by modern archaeology."
+    }
+  ]
+}

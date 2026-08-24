@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:narmer:egypt:pharaoh:3150-3125-bce:v1",
+  "person": {
+    "canonical_name_en": "Narmer",
+    "display_name_ko": "나르메르"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-23",
+      "document_title": "나르메르",
+      "url": "https://namu.wiki/w/%EB%82%98%EB%A5%B4%EB%A9%94%EB%A5%B4"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Egypt",
+    "display_name_ko": "이집트"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Pharaoh",
+    "role_display_name_ko": "파라오",
+    "start_year": -3150,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -3125,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Narmer is securely attested as an early Egyptian king associated with the final stages of the unification of Upper and Lower Egypt around 3100 BCE. His placement at the end of Dynasty 0 or beginning of Dynasty 1 and the absolute chronology of his reign remain debated. ATLAS therefore records the ca. 3150-ca. 3125 BCE temporal extent used by the Thot Egyptological ontology with both boundaries explicitly approximate, rather than treating these years as exact."
+  },
+  "sources": [
+    {
+      "title": "Narmer Palette — Discover Egypt's Monuments",
+      "canonical_url": "https://egymonuments.gov.eg/collections/narmer-palette-1/",
+      "citation_text": "Egypt's Ministry of Tourism and Antiquities dates the Narmer Palette to the First Dynasty, reign of Narmer, around 3100 BCE and describes it as depicting the unification of Upper and Lower Egypt under Narmer.",
+      "source_type": "museum_web"
+    },
+    {
+      "title": "Narmer — UCL Digital Egypt for Universities",
+      "canonical_url": "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/narmer.html",
+      "citation_text": "UCL Digital Egypt notes that most scholars regard Narmer as the first king of the First Dynasty, while some place him in Dynasty 0, and lists contemporary attestations of his name.",
+      "source_type": "academic_web"
+    },
+    {
+      "title": "Narmer — Thot: Thesauri and Ontology for Ancient Egyptian Resources",
+      "canonical_url": "https://thot.philo.ulg.ac.be/concept/thot-144",
+      "citation_text": "The Egyptological Thot ontology gives Narmer a temporal extent of 3150-3125 BCE; ATLAS adopts this as an approximate chronology rather than an exact regnal boundary.",
+      "source_type": "academic_web"
+    }
+  ]
+}

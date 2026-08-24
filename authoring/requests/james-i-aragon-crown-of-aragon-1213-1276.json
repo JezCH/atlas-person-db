@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:james-i-aragon:crown-of-aragon:king:1213-1276:v1",
+  "person": {
+    "canonical_name_en": "James I of Aragon",
+    "display_name_ko": "하이메 1세"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Crown of Aragon",
+    "display_name_ko": "아라곤 연합왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1213,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1276,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "James I of Aragon (Catalan: Jaume I), known as the Conqueror, succeeded his father in 1213 and ruled until 1276. He was king of Aragon and count of Barcelona throughout the reign, later also king of Mallorca and Valencia as those realms were conquered and incorporated into the composite monarchy. ATLAS therefore binds his single representative ruling Activity to the Crown of Aragon rather than to the Kingdom of Aragon alone, which better represents the wider political community he headed across the full reign."
+  },
+  "sources": [
+    {
+      "title": "Jaume I de Catalunya-Aragó — Gran Enciclopèdia Catalana",
+      "canonical_url": "https://www.enciclopedia.cat/gran-enciclopedia-catalana/jaume-i-de-catalunya-arago",
+      "citation_text": "The Gran Enciclopèdia Catalana identifies Jaume I the Conqueror as Count of Barcelona and King of Aragon from 1213 to 1276, as well as King of Mallorca from 1229 and Valencia from 1239.",
+      "source_type": "reference_encyclopedia"
+    },
+    {
+      "title": "Chronology — Catalunya País d'Arxius, Government of Catalonia",
+      "canonical_url": "https://patrimoni.gencat.cat/en/catalunyapaisdarxius/digital-resource/resource/chronology/",
+      "citation_text": "The Government of Catalonia describes the reign of James I the Conqueror as 1213-1276 and places his conquests of Mallorca and Valencia within the territorial expansion of the Crown of Aragon.",
+      "source_type": "government_web"
+    }
+  ]
+}

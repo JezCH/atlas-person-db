@@ -1,57 +1,115 @@
-# ATLAS Historical Person Registration SOP
+# ATLAS Historical Person Registration SOP — Lean Path v2
 
 This file is the operational source of truth for ordinary reviewed historical-person registration.
 
-The goal is to keep the safety invariants that protect `atlas_v2` while removing repeated CI, duplicate Production probes, and requeue-only pull requests.
+The rule is simple: **registration is a bounded data operation, not a repository/deployment investigation.** Keep the safety gates that protect `atlas_v2`; remove repeated discovery, repeated reads, full-dataset inspection, comparable-person chasing, unnecessary deployment checks, and retry-only pull requests.
 
-## 1. Scope
+## 1. Completion criterion
 
-Use this SOP for ordinary historical Person registration through `atlas-human-authoring/v1`.
+A registration is complete only when authoritative Production read-back confirms the intended Person and Activity.
 
-Do not use ordinary registration to add a person who is currently holding the office being modeled. Former officeholders may be registered after the modeled term is complete.
+A merged PR, a green CI check, a Vercel deployment, or an Apply workflow starting is **not** completion by itself.
 
-Historically real discontinuities are separate Activities. Never invent an exact day, month, or year merely to satisfy a manifest contract.
+## 2. Safety gates that are never removed
 
-## 2. Required historical and NamuWiki review
+Every ordinary registration keeps these invariants:
 
-Before writing or submitting a request, establish:
+- reviewed historical identity, chronology, relation, Role, Polity, and at least one real Source;
+- explicit NamuWiki review for a new `atlas-human-authoring/v1` Person: exact `linked` document or explicit `not_found`;
+- bounded Production Person duplicate check before creating a new Person;
+- normalized Person/Polity/Role identity reuse when an exact live identity exists;
+- active Relation Type and Period Basis resolution;
+- PostgreSQL `SERIALIZABLE` transaction per request;
+- semantic Activity duplicate enforcement;
+- immutable `request_id` and idempotent replay;
+- Production readiness / authorization boundaries enforced by the server;
+- authoritative Production read-back after the write.
 
-- canonical English Person name and Korean display name when the Person is new;
-- canonical English Polity name and Korean display name when the Polity is new;
-- relation type and period basis;
-- Role label/code when applicable;
-- reviewed start/end boundaries with independent certainty/calendar values;
+Historically real discontinuities are separate Activities. Never invent an exact year, month, or day merely to satisfy a request contract.
+
+## 3. The normal five-step path
+
+Ordinary registration has only five top-level stages:
+
+```text
+REVIEWED
+→ PREFLIGHT_OK
+→ SUBMITTED
+→ APPLIED
+→ VERIFIED
+```
+
+Git branches, PRs, CI jobs, workflow runs, and deployments are transport details, not additional historical-registration stages.
+
+### Step 1 — REVIEWED
+
+Establish only the facts needed to author the record:
+
+- canonical English Person name;
+- Korean display name when the Person is new;
+- Polity;
+- relation type;
+- Role when applicable;
+- period basis;
+- reviewed start/end boundaries and their certainty/calendar values;
 - evidence confidence;
 - at least one real Source;
-- the exact NamuWiki Person-document outcome: verified document title and URL, or an explicit `not_found` result.
+- NamuWiki result: exact linked Person document or explicit `not_found`.
 
-The NamuWiki check is mandatory for every new `atlas-human-authoring/v1` registration after this contract cutover. Do not guess a URL from the Korean name. Verify that the page is for the intended historical Person, including same-name and disambiguation cases. If no exact Person document is found, record `not_found`; omission is not equivalent to document absence.
+Do not expand ordinary registration into a general audit of the repository, deployment stack, or unrelated Persons.
 
-Reuse existing Person, Polity, Role, Relation Type, Period Basis, and Source identities whenever the live resolver can do so. Role identity is canonical-code based; translated display labels do not create identity.
+### Step 2 — PREFLIGHT_OK: one bounded Production pass
 
-## 3. Production duplicate check
+#### Person duplicate check
 
-Use the bounded Production Person read/search once before creating a new registration batch.
+Use the Person search surface only for the canonical name and materially distinct aliases needed to rule out a duplicate:
 
-- If the Person and intended Activity already exist, stop. Do not create another request.
-- If the Person exists but the requested Activity is new, reuse the Person and add only the missing Activity.
-- Do not repeatedly re-run the same manual duplicate search between every GitHub step unless Production state could actually have changed concurrently.
+```text
+/api/atlas-read?__atlas_read_surface=person&q=<person-name>
+```
 
-The server remains authoritative for Person identity and semantic Activity duplicate enforcement at write time.
+Rules:
 
-## 4. Request creation
+- If the intended Person and Activity already exist, stop.
+- If the Person exists but the Activity is missing, reuse the Person and author only the missing Activity.
+- Once an exact Production Person has been identified, do not keep trying additional spellings merely for reassurance.
+- Do not re-run the same search between GitHub steps unless Production could actually have changed.
 
-For ordinary reviewed historical-person registration, use `atlas-human-authoring/v1` through either the normal Admin authoring path or the reviewed GitHub fallback.
+#### Polity / Role lookup
 
-Each request must contain a stable `request_id`. A retry of the same logical request must reuse the same request and request id. Do not mint a new request id merely because a previous Production attempt failed.
+Use the bounded catalog surface:
 
-Every new human-authoring Person request must contain `external_references.namuwiki` in exactly one of these states:
+```text
+/api/atlas-read?__atlas_read_surface=catalog&kind=polity&q=<polity-name>
+/api/atlas-read?__atlas_read_surface=catalog&kind=role&q=<role-name-or-code>
+```
+
+These lookups may be performed together.
+
+If an exact identity exists, reuse it. If no exact identity exists and the reviewed historical entity is legitimate, allow Human Authoring to create the new identity.
+
+**Do not search for a comparable Person merely to discover their Polity or Role when the bounded catalog already answers the identity question.** Do not dump the full Production dataset. Do not keep searching indefinitely just because the correct new identity is absent.
+
+The server remains authoritative for final identity collision and semantic duplicate enforcement at write time.
+
+### Step 3 — SUBMITTED
+
+Use one `atlas-human-authoring/v1` request for one logical registration.
+
+Preferred transport:
+
+- use the normal Admin Human Authoring path when it is available to the operator;
+- use the reviewed GitHub manifest path only as the operational fallback when direct Admin submission is unavailable or an auditable manifest review is intentionally required.
+
+A request must use one stable `request_id`. A retry of the same logical request reuses the same request and request id.
+
+Every new Human Authoring Person request must contain exactly one NamuWiki decision at `external_references.namuwiki`:
 
 ```json
 {
   "status": "linked",
-  "checked_at": "2026-08-21",
-  "document_title": "정확한 나무위키 문서명",
+  "checked_at": "YYYY-MM-DD",
+  "document_title": "exact document title",
   "url": "https://namu.wiki/w/..."
 }
 ```
@@ -61,98 +119,142 @@ or:
 ```json
 {
   "status": "not_found",
-  "checked_at": "2026-08-21"
+  "checked_at": "YYYY-MM-DD"
 }
 ```
 
-`unknown`, omission, guessed URLs, non-NamuWiki URLs, and a `not_found` record carrying a title or URL are invalid for a new registration. Detailed field rules are documented in `authoring/NAMUWIKI_REGISTRATION_POLICY.md`.
+Do not perform a separate NamuWiki write after registration; the reviewed decision is part of the same authoring request.
 
-The normal authoring transaction stores the normalized NamuWiki decision in the existing immutable `authoring_manifest_runs.result_snapshot` together with the Person/Activity result. There is no separate NamuWiki write or registry file to maintain.
+#### GitHub fallback only
 
-## 5. Pull request validation
+When the GitHub fallback is used:
 
-A pull request that changes only `authoring/requests/*.json` uses the authoring-only integrity fast path.
+1. read latest `main` **once, immediately before creating the working branch**;
+2. create one `agent/...` branch;
+3. add exactly the required registration manifest(s), with no unrelated code/UI changes;
+4. open one PR;
+5. require the repository's mandatory `test` check;
+6. squash merge when green.
 
-The required `test` status remains mandatory. The fast path structurally validates changed manifests and, for `atlas-human-authoring/v1`, rejects a missing or invalid NamuWiki decision. It does not replay P10, P11, the full schema suite, or the human-authoring operational parity rehearsal.
+For `authoring/requests/*.json`-only work, the authoring-only integrity fast path is the expected CI path. Do not voluntarily run P10, P11, full schema rehearsal, or Human Authoring Operational Parity again unless the changed files or a concrete failure require them.
 
-If runtime code, schema, migration, workflow contract, or another non-manifest file changes, the full ATLAS Integrity suite remains mandatory.
+### Step 4 — APPLIED
 
-P10, P11, and Human Authoring Operational Parity workflows are intentionally skipped for manifest-only registration changes and still run for relevant code changes or explicit manual dispatch.
+For direct Admin authoring, the successful authoring transaction is the Apply step.
 
-## 6. Production Apply
+For the GitHub fallback, use the normal `ATLAS Authoring Apply` path after merge.
 
-After merge to `main`, `ATLAS Authoring Apply` performs the existing Production readiness, exact runtime SHA, exact authoring SHA, GitHub OIDC, P9 duplicate, and transaction-safety checks.
+For manifest-only registration:
 
-A human-authoring batch is item-isolated:
+- do not inspect Preview deployments;
+- do not poll Vercel merely because `main` changed;
+- do not wait for or diagnose a deployment unless Authoring Apply reports a concrete runtime/readiness/SHA error;
+- do not perform generic GitHub/Vercel tool discovery after the request has already reached this stage.
 
-- every manifest runs through its own `SERIALIZABLE` transaction;
-- one failed item is recorded;
-- later items in the same batch still run;
-- the overall workflow fails if any item failed, and the response contains the failed indexes, manifest paths, and error codes.
+If Apply reports a concrete runtime boundary problem, diagnose only that boundary and then resume the same request.
 
-The NamuWiki decision is persisted atomically with that request's normal authoring ledger snapshot. A failed authoring transaction therefore cannot leave a successful Person/Activity with a falsely recorded NamuWiki result from the same request.
+### Step 5 — VERIFIED
 
-## 7. Retry policy — no requeue-only PRs
+Perform one bounded Production Person read using the canonical Person name.
 
-If a manifest is correct but Production Apply failed because of a server bug, deployment timing, transient conflict, or because an earlier batch item failed:
-
-1. fix/deploy the runtime problem if one exists;
-2. use `ATLAS Authoring Apply` → `workflow_dispatch`;
-3. pass the existing `authoring/requests/<file>.json` path;
-4. retry the same immutable request.
-
-Do **not** create a fresh copy, timestamped replacement, or new request id solely to make GitHub select the request again.
-
-A requeue-only pull request is prohibited unless the reviewed request content itself must change.
-
-## 8. Final verification and completion report
-
-A registration is complete only after authoritative Production read verification confirms:
+Verify:
 
 - exactly one intended Person identity;
-- the intended Activity exists;
-- Polity, Role, relation type, period basis, and temporal boundaries match the reviewed request;
-- there is no duplicate or partial/half-written Activity;
-- the Person read surface exposes the intended explicit NamuWiki decision when the request was created under this contract.
+- intended Korean/English names;
+- intended Activity;
+- Polity;
+- Role;
+- relation type;
+- period basis;
+- temporal boundaries;
+- explicit NamuWiki decision;
+- no duplicate or partial Activity.
 
-The completion report must state:
+If the bounded Person result already exposes all required completion fields, stop. Use Person detail only when a real ambiguity or provenance-specific verification requires it.
 
-- `나무위키: 연결됨 — <document_title>` for `status: linked`;
-- `나무위키: 문서 없음` for `status: not_found`.
+Do not run additional alias queries after an exact verified row has been found merely to produce more confirmation.
 
-For `linked`, the main Person table name is expected to become the visually distinct NamuWiki hyperlink. `not_found` intentionally creates no hyperlink. The absence of a link by itself is never evidence that a NamuWiki document was checked and found absent.
+## 4. Retry policy — reuse, never requeue
 
-Do not infer registration success merely from a merged PR. Do not force-create a Person after a duplicate response; inspect the existing Production row first.
+If the request content is correct but Apply fails because of a server bug, deployment timing, transient conflict, or another batch item:
 
-## 9. Safety invariants that must not be removed
+1. fix the concrete runtime problem only if one exists;
+2. replay the same immutable request;
+3. for GitHub manifests, use `ATLAS Authoring Apply` → `workflow_dispatch` with the existing manifest path.
 
-Keep all of the following:
+Do **not** create:
 
-- PostgreSQL `SERIALIZABLE` transaction per request;
-- normalized Person/Polity/Role identity reuse;
-- canonical Role code identity;
-- active Relation Type and Period Basis resolution;
-- real Source provenance;
-- P9 semantic-key v2 duplicate enforcement;
-- immutable request ledger/idempotent replay;
-- exact GitHub OIDC, runtime SHA, and authoring SHA boundaries;
-- Production readiness checks;
-- authoritative Production read verification after write;
-- explicit NamuWiki `linked`/`not_found` decision for new human-authoring Person registrations.
+- a copied manifest;
+- a timestamped replacement;
+- a new request id;
+- a new branch/PR whose only purpose is to make the unchanged request run again.
 
-Legacy pre-cutover GitHub requests remain replayable without bulk rewriting; new or changed reviewed human-authoring manifests are subject to the current NamuWiki validation contract.
+Create a new request/version only when the reviewed historical content itself changes.
 
-## 10. Procedure summary
+## 5. Explicitly deleted from the normal registration process
 
-Ordinary registration is therefore:
+The following are **not** normal registration steps and should not be performed unless a concrete failure makes one necessary:
 
-1. historical review and exact NamuWiki Person-document check;
-2. one bounded Production duplicate check;
-3. submit `atlas-human-authoring/v1` with explicit `linked` or `not_found` NamuWiki status;
-4. for GitHub batch work, data-only PR → required manifest validation;
-5. Production Apply or normal Admin authoring transaction;
-6. authoritative Production read verification;
-7. report `나무위키: 연결됨 — <문서명>` or `나무위키: 문서 없음`;
-8. retry the same immutable request when an unchanged GitHub manifest needs another attempt.
+- repeated discovery of GitHub/Vercel tool capabilities;
+- repository-wide status inspection before every action;
+- repeated reads of `main` SHA; only the GitHub fallback write boundary needs one fresh read;
+- full Production dataset export/dump to resolve one Person, Polity, or Role;
+- searching a similar/comparable Person just to infer an identity already resolvable through catalog lookup;
+- Preview-deployment inspection for data-only registration;
+- post-merge Vercel polling when Authoring Apply has not reported a deployment problem;
+- manually re-running P10/P11/full schema/parity checks for a manifest-only PR;
+- separate NamuWiki persistence after Human Authoring;
+- repeated Production read-back with multiple spellings after the canonical row is verified;
+- requeue-only PRs for unchanged requests.
 
-No repeated P10/P11 rehearsal and no requeue-only PR are part of the normal path.
+## 6. Failure handling is narrow and local
+
+Only move backward when a concrete gate fails:
+
+- historical evidence problem → return to `REVIEWED`;
+- duplicate/identity finding changes the request → return to `REVIEWED`;
+- manifest validation failure → fix the same request/branch;
+- required `test` failure → fix the same branch;
+- runtime/readiness/SHA failure → diagnose that specific boundary, then retry the same request;
+- transient Apply failure → replay the same request;
+- Production read-back mismatch → registration remains incomplete until the concrete mismatch is resolved.
+
+Do not restart generic repository, Production, or deployment discovery because one later-stage gate failed.
+
+## 7. Practical decision rules learned from registration smoke tests
+
+- **No catalog match is not a reason to search the whole DB.** If the historically reviewed Polity/Role is genuinely new, author it normally and let the resolver enforce collisions.
+- **A comparable ruler is not an identity oracle.** Existing Persons can be useful historical references, but they are not required operational lookups for a new registration.
+- **A data-only registration is not a Vercel deployment project.** Deployment state matters only when the Apply/readiness boundary says it matters.
+- **The first successful canonical Production read is the stopping point.** Additional confirmation loops add latency without adding a new safety invariant.
+- **Transport must not dominate the task.** The task is complete historical data in Production, not branch/PR/workflow bookkeeping.
+
+## 8. Completion report
+
+Report success only after `VERIFIED`.
+
+Minimum completion report uses one of the following explicit NamuWiki outcomes:
+
+```text
+등록 완료
+Person: <English> / <Korean>
+Polity: <...>
+Role: <...>
+Period: <...>
+나무위키: 연결됨 — <document_title>
+Production read-back: VERIFIED
+```
+
+or:
+
+```text
+등록 완료
+Person: <English> / <Korean>
+Polity: <...>
+Role: <...>
+Period: <...>
+나무위키: 문서 없음
+Production read-back: VERIFIED
+```
+
+Do not infer registration success from a merged PR or deployment alone.

@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:matthaeus-schiner:prince-bishopric-of-sion:prince-bishop:1499-1522:v1",
+  "person": {
+    "canonical_name_en": "Matthäus Schiner",
+    "display_name_ko": "마테우스 시너"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Prince-Bishopric of Sion",
+    "display_name_ko": "시옹 주교후국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Prince-Bishop",
+    "role_display_name_ko": "주교후",
+    "start_year": 1499,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1522,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Matthäus Schiner became Bishop and prince-bishop of Sion in 1499 and held that office until his death in 1522. ATLAS uses the Prince-Bishopric of Sion as his primary polity because it was his own territorial power base in Valais. His cardinalate from 1511 and his formal service to the papacy and emperor, as well as his major influence on Swiss Confederate foreign policy, are historically important but are not conflated with this primary territorial-ruler Activity."
+  },
+  "sources": [
+    {
+      "title": "Schiner, Matthäus — Deutsche Biographie",
+      "canonical_url": "https://www.deutsche-biographie.de/pnd118795031.html",
+      "citation_text": "Deutsche Biographie identifies Matthäus Schiner as prince-bishop and Bishop of Sion from 1499, cardinal from 1511, and records his death in Rome in 1522.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Helvetia Sacra Register — Matthäus Schiner",
+      "canonical_url": "https://www.stiftsbezirk.ch/userdata/Stiftsbibliothek/Fachstelle%20schriftliches%20Kulturerbe/Helvetia%20Sacra/helvetiasacra-register-obere-und-oberinnen.pdf",
+      "citation_text": "The Helvetia Sacra register lists Matthäus Schiner as Bishop of Sion from 1499 to 1522 and as a Swiss cardinal from 1511 to 1522.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Diplomatie — Historisches Lexikon der Schweiz",
+      "canonical_url": "https://hls-dhs-dss.ch/articles/026460",
+      "citation_text": "The Historical Dictionary of Switzerland distinguishes Schiner's formal service to pope and emperor from his indirect role in a quasi-Confederate multilateral foreign policy, supporting separation of his Sion territorial office from wider Swiss diplomacy.",
+      "source_type": "historical_dictionary"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:an-gui:loulan-kingdom:king:77-bce:v1",
+  "person": {
+    "canonical_name_en": "An Gui",
+    "display_name_ko": "안귀"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-23"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Loulan Kingdom",
+    "display_name_ko": "누란"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -77,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -77,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "An Gui (安歸), also transmitted as Chang Gui/Changgui (嘗歸), was a Loulan prince formerly held as a Xiongnu hostage. The Book of Han distinguishes the king installed after the death recorded in 92 BCE from the later king whose death allowed the Xiongnu to return their hostage prince; it therefore does not support treating 92 BCE as An Gui's exact accession year. The Zizhi Tongjian places that later king's death, An Gui's return and accession, and the subsequent assassination by Fu Jiezi within Yuanfeng 4 (77 BCE). ATLAS therefore records An Gui's reign at year granularity as 77 BCE only rather than reproducing the unsupported 92-77 chronology found in some modern summaries."
+  },
+  "sources": [
+    {
+      "title": "Hanshu, Chapter 96A — Xiyu Zhuan",
+      "canonical_url": "https://ancient-china-books.github.io/hanshu/OEBPS/Text/096a.htm",
+      "citation_text": "The Book of Han records that after the Loulan king's death the Xiongnu returned their hostage prince, who became king; it later records his assassination in Yuanfeng 4 (77 BCE) and notes the name variant Chang Gui, while the imperial annals and Fu Jiezi biography give An Gui.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Zizhi Tongjian, Volume 23",
+      "canonical_url": "https://zh.wikisource.org/zh/%E8%B3%87%E6%B2%BB%E9%80%9A%E9%91%91/%E5%8D%B7023",
+      "citation_text": "Under Yuanfeng 4 (77 BCE), the Zizhi Tongjian records the death of the Loulan king, the Xiongnu return of their hostage An Gui, his accession as king, and his subsequent assassination by Fu Jiezi.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "China in Central Asia: The Early Stage, 125 B.C.-A.D. 23",
+      "canonical_url": "https://pahar.in/pahar/Books%20and%20Articles/Central%20Asia/1979%20China%20in%20Central%20Asia--the%20early%20stage%20125%20BC%20-%20AD%2023%20by%20Hulsewe%20s.pdf",
+      "citation_text": "A. F. P. Hulsewe's scholarly translation of Han Shu 96A identifies the Loulan king as An-kuei/Ch'ang-kuei and documents his killing by Fu Chieh-tzu in 77 BCE.",
+      "source_type": "academic_book"
+    }
+  ]
+}
