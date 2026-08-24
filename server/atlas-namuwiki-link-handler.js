@@ -10,7 +10,7 @@ const { bearerToken, requireRuntime } = require("./atlas-authoring-apply-handler
 const MARKER = "ATLAS_NAMUWIKI_LINK_V1";
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const SHA_RE = /^[0-9a-f]{40}$/;
-const ALLOWED_BODY_KEYS = new Set(["runtime_sha", "person_id", "url"]);
+const ALLOWED_BODY_KEYS = new Set(["runtime_sha", "workflow_sha", "person_id", "url"]);
 
 function json(res, status, body) {
   res.statusCode = status;
@@ -48,10 +48,12 @@ function requireNamuWikiLinkPayload(body) {
   }
   const runtimeSha = String(body?.runtime_sha || "").trim().toLowerCase();
   if (!SHA_RE.test(runtimeSha)) throw new Error("NAMUWIKI_LINK_RUNTIME_SHA_REQUIRED");
+  const workflowSha = String(body?.workflow_sha || "").trim().toLowerCase();
+  if (!SHA_RE.test(workflowSha)) throw new Error("NAMUWIKI_LINK_WORKFLOW_SHA_REQUIRED");
   const personId = String(body?.person_id || "").trim().toLowerCase();
   if (!UUID_RE.test(personId)) throw new Error("NAMUWIKI_LINK_PERSON_ID_REQUIRED");
   const externalReference = requireCanonicalNamuWikiUrl(body?.url);
-  return Object.freeze({ runtimeSha, personId, externalReference });
+  return Object.freeze({ runtimeSha, workflowSha, personId, externalReference });
 }
 
 function requestIdFor(personId, url) {
@@ -102,7 +104,7 @@ function createNamuWikiLinkHandler({
     if (!token) return json(res, 401, { ok:false, marker:MARKER, code:"NAMUWIKI_LINK_OIDC_TOKEN_REQUIRED" });
 
     try {
-      await verifyOidc(token, { expectedSha:payload.runtimeSha });
+      await verifyOidc(token, { expectedSha:payload.workflowSha });
     } catch (error) {
       return json(res, 403, { ok:false, marker:MARKER, code:String(error?.message || "NAMUWIKI_LINK_OIDC_REJECTED") });
     }
