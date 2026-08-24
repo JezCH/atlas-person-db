@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:anwar-sadat:egypt:president:1970-1981:v1",
+  "person": {"canonical_name_en": "Anwar Sadat", "display_name_ko": "안와르 사다트"},
+  "external_references": {"namuwiki": {"status": "linked", "checked_at": "2026-08-24", "document_title": "안와르 사다트", "url": "https://namu.wiki/w/%EC%95%88%EC%99%80%EB%A5%B4%20%EC%82%AC%EB%8B%A4%ED%8A%B8"}},
+  "polity": {"canonical_name_en": "Egypt", "display_name_ko": "이집트"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령",
+    "start_year": 1970, "start_month": 10, "start_day": 15, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1981, "end_month": 10, "end_day": 6, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Anwar Sadat became president of Egypt on 15 October 1970 and served until his assassination on 6 October 1981. ATLAS reuses the project's existing Egypt polity rather than creating an unnecessary regime-label duplicate."
+  },
+  "sources": [{"title": "Anwar Sadat — Encyclopaedia Britannica", "canonical_url": "https://www.britannica.com/biography/Anwar-Sadat", "citation_text": "Britannica records Sadat as president of Egypt from 1970 until his assassination on 6 October 1981.", "source_type": "reference_web"}]
+}
