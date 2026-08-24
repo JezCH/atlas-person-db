@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "mahammad-amin-rasulzade-adr-national-council-1918",
+  "person": {
+    "canonical_name_en": "Mahammad Amin Rasulzade",
+    "display_name_ko": "마하마드 아민 라술자데"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Azerbaijan Democratic Republic",
+    "display_name_ko": "아제르바이잔 민주공화국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Chairman of the Azerbaijani National Council",
+    "role_display_name_ko": "아제르바이잔 국민평의회 의장",
+    "start_year": 1918,
+    "start_month": 5,
+    "start_day": 27,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1918,
+    "end_month": 12,
+    "end_day": 7,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Rasulzade was elected chairman of the Azerbaijani National Council on 27 May 1918. The Council proclaimed the Azerbaijan Democratic Republic on 28 May. Its activity was suspended from 17 June and resumed on 16 November; Rasulzade remained the Council's chairman and opened the first Parliament on 7 December, when the parliamentary phase replaced the National Council. ATLAS binds the office to the Azerbaijan Democratic Republic as the political community constituted by the Council; the one-day pre-proclamation start reflects the actual office term rather than retroactively changing the polity's independence date."
+  },
+  "sources": [
+    {
+      "title": "Azerbaijan Democratic Republic - Azerbaijan.az",
+      "canonical_url": "https://azerbaijan.az/en/related-information/143",
+      "citation_text": "Official Azerbaijan state portal: Rasulzade elected chair of the National Council on 27 May 1918; National Council and parliamentary transition in 1918."
+    },
+    {
+      "title": "Order on the 140th anniversary of Mammad Emin Rasulzade - President of Azerbaijan",
+      "canonical_url": "https://president.az/ru/articles/view/62970/print",
+      "citation_text": "Official presidential order identifies Rasulzade as a founder of the Azerbaijan Democratic Republic and chairman of the Azerbaijan National Council."
+    }
+  ]
+}
