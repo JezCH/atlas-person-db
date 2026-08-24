@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:richard-nixon:united-states:president:1969-1974:v1",
+  "person": {"canonical_name_en": "Richard Nixon", "display_name_ko": "리처드 닉슨"},
+  "external_references": {"namuwiki": {"status": "linked", "checked_at": "2026-08-24", "document_title": "리처드 닉슨", "url": "https://namu.wiki/w/리처드%20닉슨"}},
+  "polity": {"canonical_name_en": "United States", "display_name_ko": "미국"},
+  "activity": {
+    "relation_type": "governs", "period_basis": "term", "role": "President", "role_display_name_ko": "대통령",
+    "start_year": 1969, "start_month": 1, "start_day": 20, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1974, "end_month": 8, "end_day": 9, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Richard Nixon served as the 37th president of the United States from 20 January 1969 until his resignation took effect on 9 August 1974; his 8 August address announced the resignation rather than ending the term that day."
+  },
+  "sources": [{"title": "Richard Nixon — Miller Center", "canonical_url": "https://millercenter.org/president/nixon", "citation_text": "The Miller Center gives Nixon's presidency from 20 January 1969 until his resignation on 9 August 1974.", "source_type": "university_presidential_history_web"}]
+}
