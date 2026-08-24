@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:zheng-chenggong:koxinga:tungning:founder-ruler:1661-1662:v1",
+  "person": {
+    "canonical_name_en": "Zheng Chenggong (Koxinga)",
+    "display_name_ko": "정성공"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Tungning",
+    "display_name_ko": "동녕 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Founder and ruler",
+    "role_display_name_ko": "창건자·통치자",
+    "start_year": 1661,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1662,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Zheng Chenggong (Koxinga) invaded Dutch Taiwan in 1661, established Chengtian Prefecture and Tianxing and Wannian counties as the governmental core of his anti-Qing, pro-Ming base, and forced the Dutch surrender in 1662. ATLAS uses Kingdom of Tungning as the standard retrospective polity label for the Zheng regime in Taiwan, rather than the modern polity Taiwan. Contemporary naming under Zheng Chenggong himself was not yet Dongning: Taiwan Historica records that he called the center Dongdu Mingjing and that his son Zheng Jing later changed Dongdu to Dongning. The polity label is therefore historiographical and representative, while the note preserves the contemporary naming distinction."
+  },
+  "sources": [
+    {
+      "title": "Stories of Ancient Maps — National Palace Museum",
+      "canonical_url": "https://www.npm.gov.tw/Exhibition-Content.aspx?l=2&sno=04011663",
+      "citation_text": "The National Palace Museum describes the Kingdom of Tungning as founded in Taiwan by Ming loyalist Koxinga after his defeat of the Dutch East India Company in 1662.",
+      "source_type": "government_museum_web"
+    },
+    {
+      "title": "Fort Zeelandia Historical Sites — Ministry of Culture, Taiwan",
+      "canonical_url": "https://www.moc.gov.tw/en/News_Content2.aspx?n=502&s=230246",
+      "citation_text": "Taiwan's Ministry of Culture records that Southern Ming general Zheng Chenggong invaded Taiwan in 1661, compelled the Dutch surrender in February 1662, and established a Ming-loyalist regime centered on former Dutch strongholds.",
+      "source_type": "government_web"
+    },
+    {
+      "title": "Historic Sites Building — Taiwan Historica, Academia Historica",
+      "canonical_url": "https://www.th.gov.tw/CP/104/176/",
+      "citation_text": "Taiwan Historica states that in 1661 Zheng Chenggong made Taiwan an anti-Qing restoration base, named the center Dongdu Mingjing, and established Chengtian Prefecture with Tianxing and Wannian counties; it also notes that Zheng Jing later changed Dongdu to Dongning.",
+      "source_type": "government_archive_web"
+    }
+  ]
+}
