@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:zorsines:siraces:king:49-ce:v1",
+  "person": {
+    "canonical_name_en": "Zorsines",
+    "display_name_ko": "조르시네스"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-25"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Siraces",
+    "display_name_ko": "시라케스족"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 49,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 49,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tacitus explicitly identifies Zorsines as king of the Siraces during the Bosporan conflict conventionally dated to 49 CE. No secure accession or end-of-reign dates are available. ATLAS therefore records only the securely attested 49 CE political-military activity, with role King, rather than inventing a full reign span or using the overly broad label Sarmatians."
+  },
+  "sources": [
+    {
+      "title": "Tacitus, Annals, Book XII",
+      "canonical_url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0078%3Abook%3D12",
+      "citation_text": "Tacitus calls Zorsines king of the Siraci and describes his participation and submission during the Bosporan conflict in the events of 49 CE.",
+      "source_type": "primary_source_translation"
+    }
+  ]
+}

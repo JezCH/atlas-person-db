@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cyaxares:media:king:c625-c585-bce:v1",
+  "person": {
+    "canonical_name_en": "Cyaxares",
+    "display_name_ko": "키악사레스"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-25"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Media",
+    "display_name_ko": "메디아"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -625,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -585,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Cyaxares is securely attested as a Median king, but the absolute chronology of the Median dynasty is reconstructed. Encyclopaedia Iranica gives the conventional Herodotean reconstruction c.625–585 BCE while also discussing alternatives around 620–584 BCE. ATLAS therefore stores c.625–c.585 BCE with both boundaries approximate rather than presenting them as exact accession and death dates."
+  },
+  "sources": [
+    {
+      "title": "Cyaxares — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/cyaxares-gk/",
+      "citation_text": "Iranica identifies Cyaxares as the historically attested Median king and notes that his reign extended to about 585/584 BCE under the standard reconstruction.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Media — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/media/",
+      "citation_text": "Iranica presents the conventional c.625–585 BCE reign of Cyaxares and alternative scholarly chronologies, supporting approximate rather than exact boundaries.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

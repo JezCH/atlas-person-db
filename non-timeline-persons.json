@@ -303,5 +303,22 @@
     "role_ko": "에트루리아인의 전설적 지도자·연맹 창건 전승 인물",
     "reason": "Tyrrhenus is a legendary figure in Greek and later Etruscan foundation traditions. Ancient authors preserve conflicting accounts, including the Lydian migration story, and modern scholarship does not establish him as a datable historical founder of the Etruscan League. ATLAS preserves the traditional Etruscan League association while leaving all chronology unknown.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "Aeetes",
+    "politic_name": "Colchis",
+    "display_name_ko": "아이에테스",
+    "politic_display_name_ko": "콜키스",
+    "historicity": "legendary",
+    "historicity_display_ko": "전설",
+    "timeline_status": "excluded",
+    "date_basis": "greek_argonautic_mythological_tradition",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "콜키스의 전설적 왕",
+    "reason": "Aeetes is the legendary king of Colchis in the Greek Argonautic tradition, father of Medea and keeper of the Golden Fleece. Ancient literary tradition associates him with Colchis, but no contemporary evidence securely establishes Aeetes as a datable historical ruler or provides a reliable reign chronology. ATLAS therefore preserves the Colchis association while leaving all timeline years unknown.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or mythical overlay is enabled."
   }
 ]

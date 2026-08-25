@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:teuta:ardiaean-kingdom:regent:231-228-bce:v1",
+  "person": {
+    "canonical_name_en": "Teuta",
+    "display_name_ko": "테우타"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-25",
+      "document_title": "테우타(아르디아이)",
+      "url": "https://namu.wiki/w/%ED%85%8C%EC%9A%B0%ED%83%80%28%EC%95%84%EB%A5%B4%EB%94%94%EC%95%84%EC%9D%B4%29"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Ardiaean Kingdom",
+    "display_name_ko": "아르디아이 왕국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Regent",
+    "role_display_name_ko": "섭정",
+    "start_year": -231,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -228,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Teuta was queen of the Illyrian Ardiaei and acted as regent for Pinnes after King Agron's death in 231 BCE. The First Illyrian War ended in 228 BCE and surviving reconstructions place the end of her regency around 228/227 BCE, so ATLAS uses 228 BCE as an approximate end boundary. The polity is the Ardiaean Kingdom, not generic Illyria."
+  },
+  "sources": [
+    {
+      "title": "Teuta — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548208790",
+      "citation_text": "Oxford identifies Teuta as queen of the Illyrian Ardiaei and regent for Pinnes after Agron's death in 231 BCE, and describes the Roman war of 229–228 BCE.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
