@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:abd-al-rahman-iii:caliphate-of-cordoba:caliph:929-961:v1",
+  "person": {
+    "canonical_name_en": "Abd al-Rahman III",
+    "display_name_ko": "압드 알 라흐만 3세"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Caliphate of Cordoba",
+    "display_name_ko": "코르도바 칼리파국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Caliph",
+    "role_display_name_ko": "칼리프",
+    "start_year": 929,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 961,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Abd al-Rahman III proclaimed himself caliph in 929, founding the Caliphate of Cordoba, and remained caliph until his death in 961. ATLAS records this separately from his preceding 912-929 emirate because both the polity form and sovereign title changed in 929."
+  },
+  "sources": [
+    {
+      "title": "Historical overview 2024 — National Atlas of Spain",
+      "canonical_url": "https://www.ign.es/web/resources/docs/IGNCnig/ANE/Capitulos/06_Historicaloverview_2024.pdf",
+      "citation_text": "The National Atlas of Spain dates the Caliphate of Cordoba to 929-1031 and identifies Abd al-Rahman III as the eighth emir who was proclaimed caliph in 929.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The history — Mosque-Cathedral of Cordoba",
+      "canonical_url": "https://mezquita-catedraldecordoba.es/en/descubre-el-monumento/la-historia/",
+      "citation_text": "The official Mosque-Cathedral history gives Abd al-Rahman III's caliphal period as 929-961 and states that his proclamation instituted the Caliphate of Cordoba.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
