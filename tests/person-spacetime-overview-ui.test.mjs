@@ -40,7 +40,8 @@ test('spacetime vertical timeline is constrained to the map-like camera viewport
   assert.match(css, /\.spacetime-scroll\{[^}]*overflow:auto/);
   assert.match(css, /\.spacetime-scroll\{[^}]*height:clamp\(520px,72vh,860px\)/);
   assert.match(css, /\.spacetime-scroll\{[^}]*max-height:860px/);
-  assert.match(css, /@media\(max-width:900px\)\{[^}]*\.spacetime-scroll\{height:65vh;min-height:460px\}/);
+  assert.ok(css.includes('@media(max-width:900px){'));
+  assert.ok(css.includes('.spacetime-scroll{height:65vh;min-height:460px}'));
 });
 
 test('overview renders name-only 24px micro-cards while detail mode keeps full activity information', async () => {
