@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:saif-bin-sultan:omani-empire:imam:1692-1711:v1",
+  "person": {
+    "canonical_name_en": "Saif bin Sultan",
+    "display_name_ko": "사이프 빈 술탄"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Omani Empire",
+    "display_name_ko": "오만 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Imam",
+    "role_display_name_ko": "이맘",
+    "start_year": 1692,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1711,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Saif bin Sultan was a Ya'rubid Imam of Oman during the expansion of Omani maritime power in East Africa. Sources place his accession around 1692, with some accounts tying it to his brother Bil'arab's death in 1692/93, so ATLAS marks the start year approximate. His reign ended in 1711. The existing Omani Empire polity is used for this imperial maritime phase."
+  },
+  "sources": [
+    {
+      "title": "History and Geography — Sultanate of Oman Ministry of Information",
+      "canonical_url": "https://omaninfo.om/en/pages/161/show/572",
+      "citation_text": "The Sultanate of Oman Ministry of Information identifies the reign of Imam Saif bin Sultan as the period when Omani naval power came to dominate the East African coast from Mombasa to Kilwa.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Bayt al-Na'man — Sultanate of Oman Ministry of Information",
+      "canonical_url": "https://www.omaninfo.om/mainsections/100/show/95",
+      "citation_text": "The Oman Ministry of Information associates Imam Saif bin Sultan al-Ya'rubi with the period 1692-1711.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
