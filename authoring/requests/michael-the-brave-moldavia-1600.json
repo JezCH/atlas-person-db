@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:michael-the-brave:principality-of-moldavia:voivode:1600:v1",
+  "person": {
+    "canonical_name_en": "Michael the Brave",
+    "display_name_ko": "미하이 비테아줄"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Principality of Moldavia",
+    "display_name_ko": "몰다비아 공국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Voivode",
+    "role_display_name_ko": "보이보드",
+    "start_year": 1600,
+    "start_month": 5,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1600,
+    "end_month": 9,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Michael conquered Moldavia in May 1600, displacing Ieremia Movila, and held it until the Polish-backed restoration of Ieremia in September 1600. This is recorded as a separate Moldavian rulership rather than folded into a retroactive polity called Romania."
+  },
+  "sources": [
+    {
+      "title": "History and Myth in Romanian Consciousness — Central European University Press",
+      "canonical_url": "https://books.openedition.org/ceup/9431",
+      "citation_text": "The CEU Press glossary identifies Michael the Brave as prince of Wallachia from 1593 to 1601 and briefly also ruler of Transylvania and Moldavia in 1600.",
+      "source_type": "academic_book"
+    },
+    {
+      "title": "Die evangelischen Kirchenordnungen des XVI. Jahrhunderts, Band 24 — Heidelberger Akademie der Wissenschaften",
+      "canonical_url": "https://digi.hadw-bw.de/view/eko24/0118/text_ocr",
+      "citation_text": "The scholarly edition records Michael's occupation of the Principality of Moldavia in May 1600 and the collapse of his Transylvanian position in September 1600.",
+      "source_type": "academic_edition"
+    }
+  ]
+}
