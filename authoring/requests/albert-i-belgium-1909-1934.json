@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:albert-i-of-belgium:belgium:king:1909-1934:v1",
+  "person": {
+    "canonical_name_en": "Albert I of Belgium",
+    "display_name_ko": "알베르 1세"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-26",
+      "document_title": "알베르 1세",
+      "url": "https://namu.wiki/w/%EC%95%8C%EB%B2%A0%EB%A5%B4%201%EC%84%B8"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Belgium",
+    "display_name_ko": "벨기에"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1909,
+    "start_month": 12,
+    "start_day": 23,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1934,
+    "end_month": 2,
+    "end_day": 17,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Albert I succeeded Leopold II as King of the Belgians on 23 December 1909 and remained monarch until his death in a climbing accident at Marche-les-Dames on 17 February 1934. ATLAS uses the established Belgium polity and the generic ruler role King while preserving the constitutional title King of the Belgians in this note."
+  },
+  "sources": [
+    {
+      "title": "King Albert I — The Belgian Monarchy",
+      "canonical_url": "https://www.monarchie.be/en/node/14322",
+      "citation_text": "The official Belgian monarchy chronology records Albert's succession to Leopold II on 23 December 1909 and his death on 17 February 1934.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
