@@ -1,0 +1,42 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:che-bong-nga:champa:king:1360-1390:v1",
+  "person": {
+    "canonical_name_en": "Chế Bồng Nga",
+    "display_name_ko": "쩨 봉 응아"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Champa",
+    "display_name_ko": "참파"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1360,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1390,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Chế Bồng Nga ruled Champa from 1360 until his death in 1390 and led the kingdom's late-fourteenth-century resurgence against Đại Việt. ATLAS keeps the Vietnamese name Chế Bồng Nga as canonical and does not automatically equate him with Po Binasuor, because Cham scholarship has questioned that identification."
+  },
+  "sources": [
+    {
+      "title": "Chế Bồng Nga and Po Binnasuer in Cham historical traditions — Champa research compilation",
+      "canonical_url": "https://champa.one/files/Linh%20Tinh/kauthara4.pdf",
+      "citation_text": "The Cham research discussion identifies Chế Bồng Nga as the Vijaya-based king of Champa from 1360 to 1390 and explicitly cautions against automatically identifying him with the distinct Panduranga ruler Po Binnasuer.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
