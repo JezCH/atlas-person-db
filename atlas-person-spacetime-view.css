@@ -7,7 +7,7 @@
 .spacetime-controls input,.spacetime-controls select{height:38px;border:1px solid #d8e0ea;border-radius:9px;background:#fff;padding:0 11px;color:#172033;min-width:160px}
 .spacetime-controls input{min-width:210px}
 .spacetime-controls select{min-width:120px}
-.spacetime-time-camera{display:grid;grid-template-columns:auto 34px 58px 34px 58px;align-items:center;gap:4px}
+.spacetime-time-camera{display:grid;grid-template-columns:34px 58px 34px 58px;align-items:center;gap:4px}
 .spacetime-time-camera>span{grid-column:1/-1;font-size:12px;color:#64748b;font-weight:700}
 .spacetime-time-camera button,.spacetime-time-camera output{height:38px;border:1px solid #d8e0ea;border-radius:9px;background:#fff;color:#172033;display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-size:12px;font-weight:800}
 .spacetime-time-camera button{cursor:pointer;padding:0 9px}
