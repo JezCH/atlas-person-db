@@ -17,6 +17,10 @@
   const LOG_SOFTENING_YEARS = 420;
   const MIN_CARD_HEIGHT = 48;
   const OVERVIEW_CARD_HEIGHT = 24;
+  const TIME_CAMERA_HEADER_HEIGHT = 44;
+  const TIME_CAMERA_MIN_ZOOM = 0.75;
+  const TIME_CAMERA_MAX_ZOOM = 8;
+  const TIME_CAMERA_ZOOM_STEP = 1.35;
 
   if (!reader || !model || !eraModel) {
     console.error("ATLAS spacetime view could not initialize required dependencies");
@@ -27,11 +31,16 @@
   let persons = [];
   let spatialIndex = null;
   let query = "";
-  let timelineHeightSetting = DEFAULT_TIMELINE_HEIGHT;
   let horizontalViewMode = "overview";
   let selectedKey = null;
   let resizeBound = false;
   let resizeFrame = 0;
+  let timeCameraZoom = 1;
+  let cameraScrollTop = 0;
+  let cameraScrollLeft = 0;
+  let cameraCenterOrdinal = null;
+  let currentTimelineProjection = null;
+  let pendingCameraAnchor = null;
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -83,6 +92,49 @@
       for (const activity of activities) entries.push(Object.freeze({ person, activity }));
     }
     return entries;
+  }
+
+  function clampTimeCameraZoom(value) {
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) return 1;
+    return Math.min(TIME_CAMERA_MAX_ZOOM, Math.max(TIME_CAMERA_MIN_ZOOM, numeric));
+  }
+
+  function timeCameraZoomLabel() {
+    return `${Math.round(timeCameraZoom * 100)}%`;
+  }
+
+  function cameraViewportCenterY(scroll) {
+    const usableHeight = Math.max(1, scroll.clientHeight - TIME_CAMERA_HEADER_HEIGHT);
+    return TIME_CAMERA_HEADER_HEIGHT + usableHeight / 2;
+  }
+
+  function updateCameraPosition(scroll, projection) {
+    cameraScrollTop = scroll.scrollTop;
+    cameraScrollLeft = scroll.scrollLeft;
+    if (!projection?.screenToWorldOrdinal) return;
+    const canvasY = Math.max(0, scroll.scrollTop + cameraViewportCenterY(scroll) - TIME_CAMERA_HEADER_HEIGHT);
+    cameraCenterOrdinal = projection.screenToWorldOrdinal(canvasY);
+  }
+
+  function requestTimeCameraZoom(mount, nextZoom, viewportY = null) {
+    const scroll = mount.querySelector(".spacetime-scroll");
+    if (!scroll || !currentTimelineProjection?.screenToWorldOrdinal) return;
+    const clampedZoom = clampTimeCameraZoom(nextZoom);
+    if (Math.abs(clampedZoom - timeCameraZoom) < 1e-9) return;
+
+    const rawViewportY = Number.isFinite(Number(viewportY)) ? Number(viewportY) : cameraViewportCenterY(scroll);
+    const safeViewportY = Math.min(scroll.clientHeight, Math.max(TIME_CAMERA_HEADER_HEIGHT, rawViewportY));
+    const currentCanvasY = Math.max(0, scroll.scrollTop + safeViewportY - TIME_CAMERA_HEADER_HEIGHT);
+    const anchorOrdinal = currentTimelineProjection.screenToWorldOrdinal(currentCanvasY);
+
+    pendingCameraAnchor = {
+      ordinal: anchorOrdinal,
+      viewport_y: safeViewportY,
+      scroll_left: scroll.scrollLeft
+    };
+    timeCameraZoom = clampedZoom;
+    renderInto(mount);
   }
 
   async function fetchSpatialIndex() {
@@ -277,12 +329,47 @@
     </div>`;
   }
 
+  function restoreCameraViewport(scroll, projection) {
+    if (pendingCameraAnchor?.ordinal != null && projection?.worldToScreenY) {
+      const anchorY = projection.worldToScreenY(pendingCameraAnchor.ordinal);
+      scroll.scrollLeft = pendingCameraAnchor.scroll_left;
+      scroll.scrollTop = Math.max(0, TIME_CAMERA_HEADER_HEIGHT + anchorY - pendingCameraAnchor.viewport_y);
+      pendingCameraAnchor = null;
+    } else {
+      scroll.scrollLeft = cameraScrollLeft;
+      scroll.scrollTop = cameraScrollTop;
+    }
+    updateCameraPosition(scroll, projection);
+  }
+
+  function bindCameraViewport(mount, projection) {
+    const scroll = mount.querySelector(".spacetime-scroll");
+    if (!scroll) return;
+
+    restoreCameraViewport(scroll, projection);
+    scroll.addEventListener("scroll", () => updateCameraPosition(scroll, projection), { passive: true });
+    scroll.addEventListener("wheel", (event) => {
+      if (!event.ctrlKey && !event.metaKey) return;
+      event.preventDefault();
+      const rect = scroll.getBoundingClientRect();
+      const viewportY = event.clientY - rect.top;
+      const factor = event.deltaY < 0 ? TIME_CAMERA_ZOOM_STEP : 1 / TIME_CAMERA_ZOOM_STEP;
+      requestTimeCameraZoom(mount, timeCameraZoom * factor, viewportY);
+    }, { passive: false });
+  }
+
   function renderInto(mount) {
     const allEntries = flattenActivities(persons);
     const needle = query.trim().toLocaleLowerCase("ko");
     const entries = needle ? allEntries.filter((entry) => searchable(entry).includes(needle)) : allEntries;
     const timeline = model.deriveTimelineRange(allEntries.map((entry) => entry.activity), new Date().getFullYear());
-    const timelineScale = model.createLogTimelineScale(timeline.start_year, timeline.end_year, timelineHeightSetting, LOG_SOFTENING_YEARS);
+    const timelineScale = model.createSpacetimeTimeProjection(
+      timeline.start_year,
+      timeline.end_year,
+      DEFAULT_TIMELINE_HEIGHT * timeCameraZoom,
+      LOG_SOFTENING_YEARS
+    );
+    currentTimelineProjection = timelineScale;
     const timelineHeight = timelineScale.height;
     const lookup = model.createSpatialLookup(spatialIndex);
     const placement = buildPlacement(entries, lookup, timelineScale);
@@ -300,15 +387,21 @@
     const frameModeClass = horizontalViewMode === "overview" ? " is-overview" : " is-detail";
 
     mount.innerHTML = `<section class="spacetime-toolbar card">
-      <div class="spacetime-toolbar-copy"><p class="eyebrow">PERSON SPACETIME ATLAS</p><h2>시공간 인물도</h2><p>기본 ‘전체 보기’에서는 아메리카부터 동아시아까지 모든 권역과 이름 한 줄 micro-card만 표시해 세계 분포를 빠르게 조망합니다. 정치체·기간·위치 근거는 hover와 선택 상세에서 확인하며, ‘상세 보기’에서는 기존 전체 카드를 사용합니다. 세로축은 고대 구간의 압축을 완화하면서 현재에 가까울수록 점진적으로 확대되는 완만한 로그 시간축입니다.</p></div>
+      <div class="spacetime-toolbar-copy"><p class="eyebrow">PERSON SPACETIME ATLAS</p><h2>시공간 인물도</h2><p>현재 시공간 화면 자체를 단계적으로 지도형 탐색 구조로 전환하고 있습니다. 시간축은 기존의 완만한 로그 역사 좌표를 유지하면서 독립 viewport에서 이동할 수 있고, 시간 확대 버튼 또는 Ctrl/⌘+휠로 포인터가 가리킨 연도를 고정한 채 확대·축소합니다.</p></div>
       <div class="spacetime-controls">
         <label>검색<input id="spacetimeSearch" type="search" value="${escapeHtml(query)}" placeholder="인물·정치체·역할 검색" /></label>
         <label>가로 보기<select id="spacetimeHorizontalMode"><option value="overview"${horizontalViewMode === "overview" ? " selected" : ""}>전체 보기</option><option value="detail"${horizontalViewMode === "detail" ? " selected" : ""}>상세 보기</option></select></label>
-        <label>시간축 밀도<select id="spacetimeScale"><option value="3000"${timelineHeightSetting === 3000 ? " selected" : ""}>압축</option><option value="4200"${timelineHeightSetting === 4200 ? " selected" : ""}>기본</option><option value="5600"${timelineHeightSetting === 5600 ? " selected" : ""}>확대</option></select></label>
+        <div class="spacetime-time-camera" role="group" aria-label="시간축 확대">
+          <span>시간 확대</span>
+          <button id="spacetimeTimeZoomOut" type="button" aria-label="시간축 축소">−</button>
+          <output id="spacetimeTimeZoomValue">${escapeHtml(timeCameraZoomLabel())}</output>
+          <button id="spacetimeTimeZoomIn" type="button" aria-label="시간축 확대">+</button>
+          <button id="spacetimeTimeZoomReset" type="button">100%</button>
+        </div>
       </div>
     </section>
     <section class="spacetime-status-row">
-      <span><b>${entries.length}</b> Activity</span><span><b>${placedCount}</b> 배치 구간</span><span><b>${placement.unresolvedPosition.length}</b> 위치 미확정</span><span><b>${placement.unresolvedChronology.length}</b> 연대 미확정</span><span><b>${directCount}</b> 정치체 권역</span><span><b>${placeFunctionCount}</b> 장소 기능 Polity</span><span><b>${reviewCount}</b> 기준 검토 대기</span>
+      <span><b>${entries.length}</b> Activity</span><span><b>${placedCount}</b> 배치 구간</span><span><b>${placement.unresolvedPosition.length}</b> 위치 미확정</span><span><b>${placement.unresolvedChronology.length}</b> 연대 미확정</span><span><b>${directCount}</b> 정치체 권역</span><span><b>${placeFunctionCount}</b> 장소 기능 Polity</span><span><b>${reviewCount}</b> 기준 검토 대기</span><span><b>${escapeHtml(timeCameraZoomLabel())}</b> 시간 줌</span>
     </section>
     ${(reviewCount || placement.unresolvedPosition.length) ? `<section class="spacetime-integrity-note card"><strong>근거 없는 위치는 자동 추정하지 않습니다.</strong><p>명확한 정치체는 검토된 광역 권역을 사용합니다. 다지역 정치체는 수도·왕정 중심·정치 중심 등 검토된 동시기 정치체 장소 기능을 하나의 시간 모델에서 Compile하며, 기간 공백이나 권역 충돌이 있으면 임의 좌표를 만들지 않고 ‘위치 미확정’으로 보존합니다.</p></section>` : ""}
     ${renderSelection(selectedItem)}
@@ -330,6 +423,8 @@
       <article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">CHRONOLOGY REVIEW</p><h3>연대 미확정</h3></div><strong>${placement.unresolvedChronology.length}</strong></div><p>Activity 시작·종료 연도를 둘 다 확정할 수 없는 경우 세로축에 임의 기간을 만들지 않습니다.</p>${unresolvedRows(placement.unresolvedChronology)}</article>
     </section>`;
 
+    bindCameraViewport(mount, timelineScale);
+
     mount.querySelector("#spacetimeSearch")?.addEventListener("input", (event) => {
       query = event.target.value || "";
       renderInto(mount);
@@ -343,9 +438,14 @@
       horizontalViewMode = event.target.value === "detail" ? "detail" : "overview";
       renderInto(mount);
     });
-    mount.querySelector("#spacetimeScale")?.addEventListener("change", (event) => {
-      timelineHeightSetting = Number(event.target.value) || DEFAULT_TIMELINE_HEIGHT;
-      renderInto(mount);
+    mount.querySelector("#spacetimeTimeZoomOut")?.addEventListener("click", () => {
+      requestTimeCameraZoom(mount, timeCameraZoom / TIME_CAMERA_ZOOM_STEP);
+    });
+    mount.querySelector("#spacetimeTimeZoomIn")?.addEventListener("click", () => {
+      requestTimeCameraZoom(mount, timeCameraZoom * TIME_CAMERA_ZOOM_STEP);
+    });
+    mount.querySelector("#spacetimeTimeZoomReset")?.addEventListener("click", () => {
+      requestTimeCameraZoom(mount, 1);
     });
     mount.querySelectorAll("[data-spacetime-key]").forEach((button) => {
       button.addEventListener("click", () => {
