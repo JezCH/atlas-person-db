@@ -13,8 +13,9 @@ test('NamuWiki link workflow proves deployed runtime compatibility before mutati
   assert.match(workflow, /NAMUWIKI_RUNTIME_CODE_DRIFT/);
 });
 
-test('NamuWiki link mutation uses the verified deployed runtime SHA', () => {
+test('NamuWiki link mutation keeps deployed runtime SHA distinct from signed workflow SHA', () => {
   assert.match(workflow, /echo "ATLAS_RUNTIME_SHA=\$\{runtime_sha\}" >> "\$GITHUB_ENV"/);
   assert.match(workflow, /--arg runtime_sha "\$ATLAS_RUNTIME_SHA"/);
-  assert.doesNotMatch(workflow, /--arg runtime_sha "\$GITHUB_SHA"/);
+  assert.match(workflow, /--arg workflow_sha "\$GITHUB_SHA"/);
+  assert.match(workflow, /\{runtime_sha:\$runtime_sha,workflow_sha:\$workflow_sha,person_id:\$person_id,url:\$url\}/);
 });

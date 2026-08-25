@@ -12,6 +12,7 @@ const workflow = fs.readFileSync(new URL("../.github/workflows/atlas-namuwiki-li
 const api = fs.readFileSync(new URL("../api/atlas-authoring.js", import.meta.url), "utf8");
 const vercel = JSON.parse(fs.readFileSync(new URL("../vercel.json", import.meta.url), "utf8"));
 const SHA = "a".repeat(40);
+const WORKFLOW_SHA = "b".repeat(40);
 const PERSON_ID = "da0303c2-1faf-40b8-9dc2-1325b77488d7";
 const NAMUWIKI_URL = "https://namu.wiki/w/%EC%9E%84%ED%98%B8%ED%85%9D";
 const IMMUTABLE_SUB = "repo:JezCH@281085255/atlas-person-db@1319427399:environment:production";
@@ -48,14 +49,17 @@ test("dedicated NamuWiki OIDC trust accepts only the immutable Issue-comment wor
   assert.throws(() => oidc.verifyClaims(trustedClaims({ sub:"repo:JezCH@281085255\/atlas-person-db@1319427399:ref:refs\/heads\/main" }), SHA, 1000), /SUBJECT_MISMATCH/);
 });
 
-test("dedicated payload is narrow and canonicalizes only a real namu.wiki document URL", () => {
-  const payload = handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, person_id:PERSON_ID, url:NAMUWIKI_URL });
+test("dedicated payload keeps deployed runtime SHA separate from the OIDC workflow SHA", () => {
+  const payload = handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, workflow_sha:WORKFLOW_SHA, person_id:PERSON_ID, url:NAMUWIKI_URL });
+  assert.equal(payload.runtimeSha, SHA);
+  assert.equal(payload.workflowSha, WORKFLOW_SHA);
   assert.equal(payload.personId, PERSON_ID);
   assert.equal(payload.externalReference.url, NAMUWIKI_URL);
   assert.equal(payload.externalReference.document_title, "임호텝");
-  assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, person_id:PERSON_ID, url:"https://namu.moe/w/x" }), /CANONICAL_URL_REQUIRED/);
-  assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, person_id:PERSON_ID, url:`${NAMUWIKI_URL}?from=x` }), /CANONICAL_URL_REQUIRED/);
-  assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, person_id:PERSON_ID, url:NAMUWIKI_URL, operation:"set_person_korean_name" }), /UNEXPECTED_FIELD/);
+  assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, person_id:PERSON_ID, url:NAMUWIKI_URL }), /WORKFLOW_SHA_REQUIRED/);
+  assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, workflow_sha:WORKFLOW_SHA, person_id:PERSON_ID, url:"https://namu.moe/w/x" }), /CANONICAL_URL_REQUIRED/);
+  assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, workflow_sha:WORKFLOW_SHA, person_id:PERSON_ID, url:`${NAMUWIKI_URL}?from=x` }), /CANONICAL_URL_REQUIRED/);
+  assert.throws(() => handler.requireNamuWikiLinkPayload({ runtime_sha:SHA, workflow_sha:WORKFLOW_SHA, person_id:PERSON_ID, url:NAMUWIKI_URL, operation:"set_person_korean_name" }), /UNEXPECTED_FIELD/);
 });
 
 test("automation overwrite guard blocks a different linked URL but permits replay and not_found recovery", () => {
