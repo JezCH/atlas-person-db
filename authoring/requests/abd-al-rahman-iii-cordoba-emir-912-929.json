@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:abd-al-rahman-iii:emirate-of-cordoba:emir:912-929:v1",
+  "person": {
+    "canonical_name_en": "Abd al-Rahman III",
+    "display_name_ko": "압드 알 라흐만 3세"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Emirate of Cordoba",
+    "display_name_ko": "코르도바 토후국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emir",
+    "role_display_name_ko": "에미르",
+    "start_year": 912,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 929,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Abd al-Rahman III succeeded as the final emir of the independent Emirate of Cordoba in 912. In 929 he proclaimed himself caliph, ending the emirate phase and inaugurating the Caliphate of Cordoba. ATLAS therefore keeps the emirate and caliphal phases as separate Activities rather than collapsing the full 912-961 rule into a single polity-role record."
+  },
+  "sources": [
+    {
+      "title": "Historical overview 2024 — National Atlas of Spain",
+      "canonical_url": "https://www.ign.es/web/resources/docs/IGNCnig/ANE/Capitulos/06_Historicaloverview_2024.pdf",
+      "citation_text": "The National Atlas of Spain distinguishes the independent Emirate (756-929) from the Caliphate of Cordoba (929-1031) and identifies Abd al-Rahman III as the eighth emir who was proclaimed caliph in 929.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The history — Mosque-Cathedral of Cordoba",
+      "canonical_url": "https://mezquita-catedraldecordoba.es/en/descubre-el-monumento/la-historia/",
+      "citation_text": "The official monument history records Abd al-Rahman III's proclamation as caliph in 929 and the institution of the Caliphate of Cordoba.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
