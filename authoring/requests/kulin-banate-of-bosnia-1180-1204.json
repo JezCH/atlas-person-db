@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:kulin-ban-of-bosnia:banate-of-bosnia:ban:1180-1204:v1",
+  "person": {
+    "canonical_name_en": "Kulin, Ban of Bosnia",
+    "display_name_ko": "쿨린 반"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Banate of Bosnia",
+    "display_name_ko": "보스니아 반샤그"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Ban",
+    "role_display_name_ko": "반",
+    "start_year": 1180,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1204,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kulin is securely attested as Ban of Bosnia, with the surviving source horizon conventionally framing his reign around 1180-1204. Because the Bosnian Kingdom Museum explicitly notes that the exact beginning and end are bounded by his appearance and disappearance in source material, ATLAS keeps both year boundaries approximate rather than falsely exact."
+  },
+  "sources": [
+    {
+      "title": "Ban Kulin — Museum of the Bosnian Kingdom",
+      "canonical_url": "https://muzejbosanskogkraljevstva.ba/en/ban-kulin-2/",
+      "citation_text": "The Museum of the Bosnian Kingdom describes Kulin's reign as 1180-1204 while noting that the precise temporal boundaries remain dependent on his appearance and disappearance in surviving sources.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Charter of Ban Kulin to the Ragusans in 1189 — Museum of the Bosnian Kingdom",
+      "canonical_url": "https://muzejbosanskogkraljevstva.ba/en/charter-of-ban-kulin-to-the-ragusans-in-1189/",
+      "citation_text": "The 29 August 1189 charter directly identifies Kulin as Ban of Bosnia and documents his exercise of authority over Bosnian territory.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
