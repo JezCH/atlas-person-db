@@ -35,11 +35,12 @@ test('era labels read top-to-bottom without the former upside-down rotation', as
   assert.doesNotMatch(css, /\.spacetime-era-axis>div span\{[^}]*rotate\(180deg\)/);
 });
 
-test('spacetime vertical timeline is not constrained to a nested viewport height', async () => {
+test('spacetime vertical timeline is constrained to the map-like camera viewport', async () => {
   const css = await fixture(cssUrl);
-  assert.match(css, /\.spacetime-scroll\{[^}]*max-height:none;/);
-  assert.doesNotMatch(css, /\.spacetime-scroll\{[^}]*max-height:72vh/);
-  assert.doesNotMatch(css, /@media\(max-width:900px\)\{[^}]*\.spacetime-scroll\{[^}]*75vh/);
+  assert.match(css, /\.spacetime-scroll\{[^}]*overflow:auto/);
+  assert.match(css, /\.spacetime-scroll\{[^}]*height:clamp\(520px,72vh,860px\)/);
+  assert.match(css, /\.spacetime-scroll\{[^}]*max-height:860px/);
+  assert.match(css, /@media\(max-width:900px\)\{[^}]*\.spacetime-scroll\{height:65vh;min-height:460px\}/);
 });
 
 test('overview renders name-only 24px micro-cards while detail mode keeps full activity information', async () => {
