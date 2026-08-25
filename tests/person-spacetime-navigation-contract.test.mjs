@@ -5,10 +5,15 @@ import test from 'node:test';
 const navScript = readFileSync(new URL('../atlas-main-authority-nav.js', import.meta.url), 'utf8');
 const navCss = readFileSync(new URL('../atlas-main-authority-nav.css', import.meta.url), 'utf8');
 const spacetimeCss = readFileSync(new URL('../atlas-person-spacetime-view.css', import.meta.url), 'utf8');
+const spacetimeView = readFileSync(new URL('../atlas-person-spacetime-view.js', import.meta.url), 'utf8');
 
-test('spacetime nested scroller allows vertical scroll chaining to the page', () => {
-  assert.match(spacetimeCss, /overscroll-behavior-y\s*:\s*auto/);
-  assert.doesNotMatch(spacetimeCss, /overscroll-behavior\s*:\s*contain/);
+test('spacetime owns a bounded map-like viewport once the incremental time camera is active', () => {
+  assert.match(spacetimeCss, /\.spacetime-scroll\{[^}]*overflow:auto/);
+  assert.match(spacetimeCss, /\.spacetime-scroll\{[^}]*height:clamp\(520px,72vh,860px\)/);
+  assert.match(spacetimeCss, /\.spacetime-scroll\{[^}]*overscroll-behavior:contain/);
+  assert.match(spacetimeView, /function bindCameraViewport\(/);
+  assert.match(spacetimeView, /!event\.ctrlKey && !event\.metaKey/);
+  assert.match(spacetimeView, /event\.preventDefault\(\)/);
 });
 
 test('authority navigation resets the viewport only when the domain changes', () => {
