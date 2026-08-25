@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:edward-lewis-bob-bartlett:territory-of-alaska:delegate:1945-1959:v1",
+  "person": {
+    "canonical_name_en": "Edward Lewis \"Bob\" Bartlett",
+    "display_name_ko": "밥 바틀렛"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Territory of Alaska",
+    "display_name_ko": "알래스카 준주"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Delegate to the U.S. House",
+    "role_display_name_ko": "미국 연방하원 준주대표",
+    "start_year": 1945,
+    "start_month": 1,
+    "start_day": 3,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1959,
+    "end_month": 1,
+    "end_day": 3,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bartlett served as the elected congressional Delegate from the Territory of Alaska from 3 January 1945 to Alaska statehood on 3 January 1959. This is a representative office, so ATLAS uses serves rather than a ruler relation."
+  },
+  "sources": [
+    {
+      "title": "BARTLETT, Edward Lewis (Bob) — U.S. House of Representatives: History, Art & Archives",
+      "canonical_url": "https://history.house.gov/People/Detail/9032?ret=True",
+      "citation_text": "The official congressional biography records Bartlett as Delegate from the Territory of Alaska from 3 January 1945 through 3 January 1959.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
