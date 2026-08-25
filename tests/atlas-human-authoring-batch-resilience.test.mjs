@@ -29,9 +29,10 @@ function env() {
   };
 }
 
-test('GitHub human-authoring batch records one failure and still applies later manifests', async () => {
+test('GitHub human-authoring batch failure reports atomic rollback without partial-success payloads', async () => {
   const res=responseRecorder();
-  const seen=[];
+  let singleApplyCalled=false;
+  let seen=null;
   const client={query:async()=>({rows:[],rowCount:0}),end:async()=>{}};
   const handler=createHumanAuthoringHandler({
     env:env(),
@@ -39,22 +40,20 @@ test('GitHub human-authoring batch records one failure and still applies later m
     clientFactory:async()=>client,
     inspectReadiness:async()=>({ready:true}),
     createService:()=>({
-      apply:async(request,context)=>{
-        seen.push({request_id:request.request_id,manifest_path:context.transport.manifest_path});
-        if (request.request_id === 'b') throw new Error('DUPLICATE_PERSON');
-        return {
-          marker:'ATLAS_HUMAN_AUTHORING_V1',
-          schema:'atlas-human-authoring/v1',
-          request_id:request.request_id,
-          committed:true,
-          replay:false,
-          person_id:`person-${request.request_id}`,
-          polity_id:'q',
-          role_id:null,
-          relationship_id:`activity-${request.request_id}`,
-          source_ids:['s'],
-          result:{semantic_version:'v2-relation-full-temporal'}
+      apply:async()=>{
+        singleApplyCalled=true;
+        throw new Error('batch must not fall back to per-item apply');
+      },
+      applyBatch:async(requests,context)=>{
+        seen={
+          request_ids:requests.map((request)=>request.request_id),
+          manifest_paths:context.transports.map((transport)=>transport.manifest_path),
+          allowLegacyNamuWikiOmission:context.allowLegacyNamuWikiOmission
         };
+        const error=new Error('DUPLICATE_PERSON');
+        error.batchIndex=1;
+        error.manifestPath=context.transports[1].manifest_path;
+        throw error;
       }
     })
   });
@@ -82,22 +81,23 @@ test('GitHub human-authoring batch records one failure and still applies later m
 
   assert.equal(res.statusCode,409);
   const body=JSON.parse(res.body);
-  assert.equal(body.code,'HUMAN_AUTHORING_BATCH_PARTIAL_FAILURE');
+  assert.equal(body.code,'DUPLICATE_PERSON');
+  assert.equal(body.committed,false);
   assert.equal(body.count,3);
-  assert.equal(body.succeeded_count,2);
-  assert.equal(body.failed_count,1);
-  assert.deepEqual(body.results.map((row)=>row.request_id),['a','c']);
-  assert.deepEqual(body.failures,[{
-    index:1,
-    manifest_path:'authoring/requests/b.json',
-    code:'DUPLICATE_PERSON',
-    status:409
-  }]);
   assert.equal(body.failed_index,1);
   assert.equal(body.manifest_path,'authoring/requests/b.json');
-  assert.deepEqual(seen,[
-    {request_id:'a',manifest_path:'authoring/requests/a.json'},
-    {request_id:'b',manifest_path:'authoring/requests/b.json'},
-    {request_id:'c',manifest_path:'authoring/requests/c.json'}
-  ]);
+  assert.equal(Object.hasOwn(body,'results'),false);
+  assert.equal(Object.hasOwn(body,'succeeded_count'),false);
+  assert.equal(Object.hasOwn(body,'failed_count'),false);
+  assert.equal(Object.hasOwn(body,'failures'),false);
+  assert.equal(singleApplyCalled,false);
+  assert.deepEqual(seen,{
+    request_ids:['a','b','c'],
+    manifest_paths:[
+      'authoring/requests/a.json',
+      'authoring/requests/b.json',
+      'authoring/requests/c.json'
+    ],
+    allowLegacyNamuWikiOmission:true
+  });
 });
