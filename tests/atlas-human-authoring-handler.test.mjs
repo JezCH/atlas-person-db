@@ -59,14 +59,15 @@ test('GitHub fallback envelope rejects paths outside reviewed authoring requests
   assert.throws(()=>transportEnvelope({transport_version:2,runtime_sha:RUNTIME_SHA,authoring_sha:AUTHORING_SHA,manifest_path:'tmp/request.json'}),/MANIFEST_PATH_NOT_ALLOWED/);
 });
 
-test('GitHub batch authoring authenticates, connects, and checks readiness once while preserving manifest order', async () => {
+test('GitHub batch authoring authenticates once and delegates the ordered batch to applyBatch once', async () => {
   const res=responseRecorder();
   let verifyCount=0;
   let clientFactoryCount=0;
   let readinessCount=0;
   let serviceCount=0;
+  let batchApplyCount=0;
   let endCount=0;
-  const seen=[];
+  let seen=null;
   const client={query:async()=>({rows:[],rowCount:0}),end:async()=>{endCount+=1;}};
   const handler=createHumanAuthoringHandler({
     env:env(),
@@ -77,9 +78,11 @@ test('GitHub batch authoring authenticates, connects, and checks readiness once 
       serviceCount+=1;
       assert.equal(seenClient,client);
       return {
-        apply:async(request,context)=>{
-          seen.push({request,context});
-          return {
+        apply:async()=>{ throw new Error('batch must not use single-item apply'); },
+        applyBatch:async(requests,context)=>{
+          batchApplyCount+=1;
+          seen={requests,context};
+          return requests.map((request)=>({
             marker:'ATLAS_HUMAN_AUTHORING_V1',
             schema:'atlas-human-authoring/v1',
             request_id:request.request_id,
@@ -91,7 +94,7 @@ test('GitHub batch authoring authenticates, connects, and checks readiness once 
             relationship_id:`activity-${request.request_id}`,
             source_ids:['s'],
             result:{semantic_version:'v2-relation-full-temporal'}
-          };
+          }));
         }
       };
     }
@@ -116,17 +119,19 @@ test('GitHub batch authoring authenticates, connects, and checks readiness once 
   assert.equal(response.schema,'atlas-human-authoring-batch/v1');
   assert.equal(response.committed,true);
   assert.equal(response.count,2);
-  assert.equal(response.results.length,2);
+  assert.deepEqual(response.results.map((result)=>result.request_id),['a','b']);
   assert.equal(verifyCount,1);
   assert.equal(clientFactoryCount,1);
   assert.equal(readinessCount,1);
   assert.equal(serviceCount,1);
+  assert.equal(batchApplyCount,1);
   assert.equal(endCount,1);
-  assert.deepEqual(seen.map(({request})=>request.request_id),['a','b']);
-  assert.deepEqual(seen.map(({context})=>context.transport.manifest_path),['authoring/requests/a.json','authoring/requests/b.json']);
-  assert.ok(seen.every(({context})=>context.transport.kind==='github_oidc'));
-  assert.ok(seen.every(({context})=>context.transport.runtime_sha===RUNTIME_SHA));
-  assert.ok(seen.every(({context})=>context.transport.authoring_sha===AUTHORING_SHA));
+  assert.deepEqual(seen.requests.map((request)=>request.request_id),['a','b']);
+  assert.deepEqual(seen.context.transports.map((transport)=>transport.manifest_path),['authoring/requests/a.json','authoring/requests/b.json']);
+  assert.ok(seen.context.transports.every((transport)=>transport.kind==='github_oidc'));
+  assert.ok(seen.context.transports.every((transport)=>transport.runtime_sha===RUNTIME_SHA));
+  assert.ok(seen.context.transports.every((transport)=>transport.authoring_sha===AUTHORING_SHA));
+  assert.equal(seen.context.allowLegacyNamuWikiOmission,true);
 });
 
 test('batch envelope rejects unsafe shape before any write', () => {
