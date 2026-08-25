@@ -5,13 +5,12 @@
   if (root) root.ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT = api;
 })(typeof globalThis !== "undefined" ? globalThis : this, () => {
   "use strict";
-  const PRIMARY_RELATIONS = Object.freeze(new Set(["rules", "governs", "serves", "active_in", "claims_rule"]));
   const COUNTERPARTY_RELATIONS = Object.freeze(new Set(["opposes"]));
   function text(value) { return value == null ? "" : String(value).trim(); }
   function classifyRelation(code) {
     const normalized = text(code);
-    if (PRIMARY_RELATIONS.has(normalized)) return "primary";
     if (COUNTERPARTY_RELATIONS.has(normalized)) return "counterparty";
+    if (normalized) return "primary";
     return "unclassified";
   }
   function extentForSegments(segments) {
@@ -56,5 +55,5 @@
       source_unresolved_activities: Object.freeze(Array.isArray(compiledTracks?.unresolved_activities) ? compiledTracks.unresolved_activities.slice() : [])
     });
   }
-  return Object.freeze({ PRIMARY_RELATIONS, COUNTERPARTY_RELATIONS, classifyRelation, extentForSegments, partitionTrack, partitionTracks });
+  return Object.freeze({ COUNTERPARTY_RELATIONS, classifyRelation, extentForSegments, partitionTrack, partitionTracks });
 });
