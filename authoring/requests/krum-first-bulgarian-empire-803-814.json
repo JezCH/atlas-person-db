@@ -1,0 +1,42 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:krum:first-bulgarian-empire:khan:803-814:v1",
+  "person": {
+    "canonical_name_en": "Krum",
+    "display_name_ko": "크룸"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "First Bulgarian Empire",
+    "display_name_ko": "제1차 불가리아 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khan",
+    "role_display_name_ko": "칸",
+    "start_year": 803,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 814,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Krum ruled the Bulgars from about 803 until 814. The Prosopography of the Byzantine Empire describes his 803 succession as presumptive, so ATLAS marks the accession year approximate rather than falsely exact. Khan is retained as the conventional modern ruler title while the primary Byzantine evidence itself calls him ruler/leader of the Bulgars."
+  },
+  "sources": [
+    {
+      "title": "Krum 1 — Prosopography of the Byzantine Empire",
+      "canonical_url": "https://pbe.kcl.ac.uk/data/D47/F56.htm",
+      "citation_text": "The Prosopography of the Byzantine Empire identifies Krum as ruler of the Bulgars from 803 to 814 and notes that his succession in 803 is presumptive.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
