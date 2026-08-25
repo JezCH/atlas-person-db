@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:michael-the-brave:principality-of-transylvania:governor:1599-1600:v1",
+  "person": {
+    "canonical_name_en": "Michael the Brave",
+    "display_name_ko": "미하이 비테아줄"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Principality of Transylvania",
+    "display_name_ko": "트란실바니아 공국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Governor",
+    "role_display_name_ko": "총독",
+    "start_year": 1599,
+    "start_month": 11,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1600,
+    "end_month": 9,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the 1599 conquest of Transylvania, Michael governed the principality for Emperor Rudolf II. A Heidelberg Academy scholarly edition identifies him as imperial governor of Transylvania from November 1599 and records his removal and expulsion in September 1600. ATLAS therefore uses Governor rather than retroactively treating him as ruler of a Romanian national state."
+  },
+  "sources": [
+    {
+      "title": "Die evangelischen Kirchenordnungen des XVI. Jahrhunderts, Band 24 — Heidelberger Akademie der Wissenschaften",
+      "canonical_url": "https://digi.hadw-bw.de/view/eko24/0118/text_ocr",
+      "citation_text": "The scholarly edition notes that Michael became imperial governor of Transylvania in November 1599 and was removed and expelled in September 1600.",
+      "source_type": "academic_edition"
+    }
+  ]
+}
