@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:stephen-iii-of-moldavia:principality-of-moldavia:voivode:1457-1504:v1",
+  "person": {
+    "canonical_name_en": "Stephen III of Moldavia",
+    "display_name_ko": "슈테판 3세"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-26",
+      "document_title": "슈테판 3세",
+      "url": "https://namu.wiki/w/%EC%8A%88%ED%85%8C%ED%8C%90%203%EC%84%B8"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Principality of Moldavia",
+    "display_name_ko": "몰다비아 공국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Voivode",
+    "role_display_name_ko": "보이보드",
+    "start_year": 1457,
+    "start_month": 4,
+    "start_day": 14,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1504,
+    "end_month": 7,
+    "end_day": 2,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Stephen III, known as Stephen the Great (Ștefan cel Mare), ruled Moldavia from 14 April 1457 until his death on 2 July 1504. The exact conventional dates are retained while the calendar is left unspecified rather than imposing a modern Gregorian label on fifteenth-century source chronology."
+  },
+  "sources": [
+    {
+      "title": "O PERSONALITATE PE ZI: Ștefan cel Mare, domn al Moldovei (1457-1504) — AGERPRES",
+      "canonical_url": "https://agerpres.ro/documentare/2024/06/20/o-personalitate-pe-zi-tefan-cel-mare-domn-al-moldovei-1457-1504--1320843",
+      "citation_text": "AGERPRES records Stephen the Great's 47-year rule as beginning on 14 April 1457 and his death on 2 July 1504.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
