@@ -1,0 +1,42 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:michael-the-brave:wallachia:voivode:1593-1600:v1",
+  "person": {
+    "canonical_name_en": "Michael the Brave",
+    "display_name_ko": "미하이 비테아줄"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Wallachia",
+    "display_name_ko": "왈라키아"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Voivode",
+    "role_display_name_ko": "보이보드",
+    "start_year": 1593,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1600,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Michael the Brave became ruler of Wallachia in 1593 and was displaced from effective rule during the Polish-backed installation of Simion Movila in autumn 1600. Sources differ in the precise old-style/new-style accession and displacement day conventions, so ATLAS preserves secure year-level boundaries rather than fabricating a single exact day. Romania is not used as the polity because the modern Romanian state did not yet exist."
+  },
+  "sources": [
+    {
+      "title": "430 de ani de la inceputul domniei in Tara Romaneasca a lui Mihai Viteazul — AGERPRES",
+      "canonical_url": "https://agerpres.ro/documentare/2023/08/30/fragment-de-istorie-430-de-ani-de-la-inceputul-domniei-in-ara-romaneasca-a-lui-mihai-viteazul-1593-1--1162152",
+      "citation_text": "AGERPRES, citing the Romanian Academy's Istoria romanilor, places the beginning of Michael's Wallachian rule in 1593 and describes the collapse of his three-principality rule in 1600.",
+      "source_type": "news_documentary_reference"
+    }
+  ]
+}
