@@ -266,7 +266,7 @@
     return Object.freeze({ start_year: startYear, end_year: now });
   }
 
-  function createLogTimelineScale(startYear, endYear, height = 2800, softeningYears = 180) {
+  function createSpacetimeTimeProjection(startYear, endYear, height = 2800, softeningYears = 180) {
     const startOrdinal = historicalYearToOrdinal(startYear);
     const endOrdinal = historicalYearToOrdinal(endYear);
     if (startOrdinal == null || endOrdinal == null || startOrdinal >= endOrdinal) throw new Error("INVALID_TIMELINE_RANGE");
@@ -275,19 +275,37 @@
     const span = endOrdinal - startOrdinal;
     const denominator = Math.log1p(span / softness);
 
-    function yForOrdinal(ordinal) {
+    function worldToScreenY(ordinal) {
       if (!Number.isFinite(Number(ordinal))) return null;
       const clamped = Math.min(endOrdinal, Math.max(startOrdinal, Number(ordinal)));
       const age = endOrdinal - clamped;
       return safeHeight * (1 - Math.log1p(age / softness) / denominator);
     }
 
+    function screenToWorldOrdinal(screenY) {
+      if (!Number.isFinite(Number(screenY))) return null;
+      const clampedY = Math.min(safeHeight, Math.max(0, Number(screenY)));
+      const normalized = clampedY / safeHeight;
+      const age = softness * Math.expm1((1 - normalized) * denominator);
+      return endOrdinal - age;
+    }
+
+    function yForOrdinal(ordinal) {
+      return worldToScreenY(ordinal);
+    }
+
     function yForYear(year) {
       const ordinal = historicalYearToOrdinal(year);
-      return ordinal == null ? null : yForOrdinal(ordinal);
+      return ordinal == null ? null : worldToScreenY(ordinal);
+    }
+
+    function historicalYearForScreenY(screenY) {
+      const ordinal = screenToWorldOrdinal(screenY);
+      return ordinal == null ? null : ordinalToHistoricalYear(Math.round(ordinal));
     }
 
     return Object.freeze({
+      projection_version: "spacetime-time-projection/v1",
       mode: "log_age",
       start_year: startYear,
       end_year: endYear,
@@ -295,9 +313,16 @@
       end_ordinal: endOrdinal,
       height: safeHeight,
       softening_years: softness,
+      worldToScreenY,
+      screenToWorldOrdinal,
+      historicalYearForScreenY,
       yForOrdinal,
       yForYear
     });
+  }
+
+  function createLogTimelineScale(startYear, endYear, height = 2800, softeningYears = 180) {
+    return createSpacetimeTimeProjection(startYear, endYear, height, softeningYears);
   }
 
   function adaptiveTickInterval(ageYears) {
@@ -407,6 +432,7 @@
     resolveActivityPlacement,
     deriveTimelineRange,
     buildCenturyTicks,
+    createSpacetimeTimeProjection,
     createLogTimelineScale,
     buildAdaptiveTimeTicks,
     assignLanes
