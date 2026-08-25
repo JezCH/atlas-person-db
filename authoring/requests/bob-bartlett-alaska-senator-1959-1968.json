@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:edward-lewis-bob-bartlett:state-of-alaska:us-senator:1959-1968:v1",
+  "person": {
+    "canonical_name_en": "Edward Lewis \"Bob\" Bartlett",
+    "display_name_ko": "밥 바틀렛"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "State of Alaska",
+    "display_name_ko": "알래스카주"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "United States Senator",
+    "role_display_name_ko": "미국 연방상원의원",
+    "start_year": 1959,
+    "start_month": 1,
+    "start_day": 3,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1968,
+    "end_month": 12,
+    "end_day": 11,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Upon Alaska's admission as a state on 3 January 1959, Bartlett's U.S. Senate term began for Alaska; he remained in office until his death on 11 December 1968. ATLAS treats Alaska as the represented political community and uses serves, not rules."
+  },
+  "sources": [
+    {
+      "title": "States in the Senate — Alaska Senators",
+      "canonical_url": "https://www.senate.gov/states/AK/senators.htm",
+      "citation_text": "The U.S. Senate records E. L. (Bob) Bartlett's Alaska Senate service from 3 January 1959 to 11 December 1968.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "BARTLETT, Edward Lewis (Bob) — U.S. House of Representatives: History, Art & Archives",
+      "canonical_url": "https://history.house.gov/People/Detail/9032?ret=True",
+      "citation_text": "The official congressional biography records Bartlett's Senate term beginning with Alaska statehood on 3 January 1959 and ending at his death on 11 December 1968.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
