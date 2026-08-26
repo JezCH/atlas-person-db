@@ -1,0 +1,11 @@
+{
+  "schema": "atlas-place-spatial-registry/v1",
+  "generated_at": "2026-08-26T14:52:00+09:00",
+  "policy": {
+    "identity_display_separation": "Historical Place identity and reviewed geographic evidence belong here; runtime display anchors do not.",
+    "no_guessing": "Do not infer coordinates, subregions, or canonical identity from a Person name, modern nationality, or an unreviewed place-name string.",
+    "precision_rule": "Coordinate precision may be reviewed_point only when coordinates are reviewed and backed by source references; otherwise keep precision unknown.",
+    "incremental_binding": "Existing polity-place functions may keep place_id null until a canonical Place binding is historically reviewed."
+  },
+  "places": []
+}
