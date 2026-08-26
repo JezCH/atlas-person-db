@@ -31,6 +31,20 @@ function sourceSegment(binding, overrides = {}) {
   };
 }
 
+function spatialIndexFunctionForBinding(binding) {
+  const record = spatialIndex.place_function_records.find((item) => item.polity_id === binding.polity_id);
+  assert.ok(record, `${binding.place_id}: polity ${binding.polity_id} must exist in atlas-polity-spatial-index.json`);
+  const signature = registryApi.bindingSignature(binding);
+  const matches = record.functions.filter((fn) => registryApi.bindingSignature({
+    polity_id: record.polity_id,
+    function_type: fn.function_type,
+    place_name: fn.place_name,
+    source_refs: fn.source_refs
+  }) === signature);
+  assert.equal(matches.length, 1, `${binding.place_id}: reviewed binding must match exactly one spatial-index function`);
+  return matches[0];
+}
+
 test("all reviewed C2 bindings compile from macroregion to their reviewed subregion", () => {
   for (const binding of registry.bindings) {
     const place = placeById.get(binding.place_id);
@@ -49,20 +63,24 @@ test("all reviewed C2 bindings compile from macroregion to their reviewed subreg
   }
 });
 
+test("canonical reviewed bindings are exact facts that exist in the real spatial index", () => {
+  for (const binding of registry.bindings) spatialIndexFunctionForBinding(binding);
+});
+
 test("reviewed bindings activate through the real spatial-index resolver, not only synthetic compiler inputs", () => {
   const lookup = model.createSpatialLookup(spatialIndex);
-  const fixtures = [
-    ["place-rome", "polity-roman-empire", 100, 101],
-    ["place-pella", "polity-kingdom-of-macedon", -300, -299],
-    ["place-ankara", "polity-republic-of-turkey", 1950, 1951],
-    ["place-rio-de-janeiro", "polity-second-brazilian-republic", 1940, 1941],
-    ["place-samarkand", "polity-timurid-empire", 1400, 1401]
-  ];
 
-  for (const [placeId, polityId, startYear, endYear] of fixtures) {
+  for (const binding of registry.bindings) {
+    const placeId = binding.place_id;
+    const fn = spatialIndexFunctionForBinding(binding);
+    const startYear = Number(fn.start_year);
+    assert.ok(Number.isInteger(startYear), `${placeId}: reviewed function requires a finite start year for integration coverage`);
+    const endYear = startYear === -1 ? 1 : startYear + 1;
+    if (fn.end_year != null) assert.ok(endYear <= Number(fn.end_year), `${placeId}: integration interval must remain inside reviewed function`);
+
     const resolved = model.resolveActivityPlacement({
       id: `activity-integration-${placeId}`,
-      polity: { id: polityId },
+      polity: { id: binding.polity_id },
       start: { year: startYear },
       end: { year: endYear }
     }, lookup);
@@ -111,7 +129,7 @@ test("a reviewed exact binding conflicting with the resolved macroregion fails c
 test("unreviewed compound Place strings remain at existing macroregion precision", () => {
   const compiled = spatialCompile.compilePlacementSegment({
     activity_id: "activity-compound",
-    polity_id: "polity-ottoman-empire",
+    polity_id: "6d1520e2-0aff-5063-b2b7-95eb86daf372",
     region_code: "west-asia",
     placement_basis: "polity_place_function",
     place_function_type: "capital",
