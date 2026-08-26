@@ -13,11 +13,13 @@
   const TIME_CAMERA_MAX_ZOOM = 8;
   const TIME_CAMERA_ZOOM_STEP = 1.35;
   const DETAIL_SPACE_ZOOM = 3;
+  const FOCUS_DETAIL_TIME_ZOOM = 2.2;
   const MIN_WORLD_WIDTH = 900;
   const RUNTIME_ASSETS = Object.freeze([
     ["./atlas-person-spacetime-time-projection.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_TIME_PROJECTION"],
     ["./atlas-person-spacetime-space-axis.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
     ["./atlas-person-spacetime-semantic-axis.js?v=20260826-p10", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
+    ["./atlas-person-spacetime-exploration.js?v=20260826-p11", "ATLAS_PERSON_SPACETIME_EXPLORATION"],
     ["./atlas-person-spacetime-spatial-compile.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE"],
     ["./atlas-person-spacetime-person-tracks.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
     ["./atlas-person-spacetime-political-placement.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT"],
@@ -38,6 +40,7 @@
   let query = "";
   let horizontalViewMode = "overview";
   let selectedPersonId = null;
+  let pendingFocusPersonId = null;
   let resizeBound = false;
   let resizeFrame = 0;
   let timeCameraZoom = 1;
@@ -113,6 +116,7 @@
       timeProjection: window.ATLAS_PERSON_SPACETIME_TIME_PROJECTION,
       spaceAxis: window.ATLAS_PERSON_SPACETIME_SPACE_AXIS,
       semanticAxis: window.ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS,
+      exploration: window.ATLAS_PERSON_SPACETIME_EXPLORATION,
       spatialCompile: window.ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE,
       personTracks: window.ATLAS_PERSON_SPACETIME_PERSON_TRACKS,
       politicalPlacement: window.ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT,
@@ -161,6 +165,23 @@
       scroll_left: scroll.scrollLeft
     };
     timeCameraZoom = clampedZoom;
+    renderInto(mount);
+  }
+
+  function selectPerson(mount, personId, options = {}) {
+    selectedPersonId = personId || null;
+    pendingFocusPersonId = options.focus === false ? null : selectedPersonId;
+    if (selectedPersonId && options.detail) {
+      horizontalViewMode = "detail";
+      timeCameraZoom = Math.max(timeCameraZoom, FOCUS_DETAIL_TIME_ZOOM);
+      pendingCameraAnchor = null;
+    }
+    renderInto(mount);
+  }
+
+  function clearSelection(mount) {
+    selectedPersonId = null;
+    pendingFocusPersonId = null;
     renderInto(mount);
   }
 
@@ -243,21 +264,6 @@
     return values.filter(Boolean).join("\n").toLocaleLowerCase("ko");
   }
 
-  function stableRepresentativeSegment(track) {
-    const segments = Array.isArray(track?.primary_segments) ? track.primary_segments.slice() : [];
-    if (!segments.length) return null;
-    segments.sort((a, b) => (b.end_ordinal - b.start_ordinal) - (a.end_ordinal - a.start_ordinal) || a.start_ordinal - b.start_ordinal || String(a.stable_id).localeCompare(String(b.stable_id)));
-    return segments[0];
-  }
-
-  function projectTrack(track, projection, contentWidth) {
-    const representative = stableRepresentativeSegment(track);
-    if (!representative || !Number.isFinite(representative.x_anchor)) return null;
-    const yStart = projection.yForOrdinal(representative.start_ordinal);
-    const yEnd = projection.yForOrdinal(representative.end_ordinal);
-    return { track, representative, x: representative.x_anchor * contentWidth, y: (yStart + yEnd) / 2, macroregion_code: representative.macroregion_code };
-  }
-
   function packTrackLabels(projectedTracks, regions, timelineHeight, forceAll) {
     const { labelEngine } = runtime();
     const placed = [];
@@ -300,12 +306,18 @@
     return `<div class="spacetime-unresolved-list">${visible.map((entry) => `<div class="spacetime-unresolved-row"><strong>${escapeHtml(personLabel(entry.person))}</strong><span>${escapeHtml(polityLabel(entry.activity))}</span><span>${escapeHtml(periodLabel(entry.activity))}</span><small>${escapeHtml(reasonLabel(entry.reason))}</small></div>`).join("")}${rows.length > max ? `<p class="spacetime-more">외 ${rows.length - max}건</p>` : ""}</div>`;
   }
 
+  function renderSearchResults(items, needle) {
+    if (!needle) return "";
+    const visible = items.slice(0, 8);
+    return `<section class="spacetime-search-results card" aria-label="검색 결과"><div class="spacetime-search-results-head"><strong>검색 결과</strong><span>${items.length}명${items.length > visible.length ? ` · 상위 ${visible.length}명 표시` : ""}</span></div>${visible.length ? `<div class="spacetime-search-result-list">${visible.map((item) => `<button type="button" data-spacetime-search-result="${escapeHtml(item.person_id)}"><strong>${escapeHtml(item.display_name)}</strong><span>${escapeHtml(polityLabel(item.representative?.activity))}</span><small>${escapeHtml(periodLabel(item.representative?.activity))}</small></button>`).join("")}</div>` : '<p class="spacetime-empty-inline">일치하는 위치 확정 Person track이 없습니다.</p>'}</section>`;
+  }
+
   function renderSelection(track) {
     if (!track) return "";
     const primary = track.primary_segments || [];
     const counterparties = track.counterparty_segments || [];
     const activities = primary.slice(0, 5).map((segment) => `${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`).join(" / ");
-    return `<div class="spacetime-selection" id="spacetimeSelection"><div><small>SELECTED PERSON TRACK</small><strong>${escapeHtml(track.display_name)}</strong><span>${escapeHtml(activities || "주 위치 Activity 없음")}</span></div><div><span>${primary.length}개 주 위치 구간</span><span>${counterparties.length}개 counterparty 관계는 자기 위치에서 제외</span></div></div>`;
+    return `<div class="spacetime-selection" id="spacetimeSelection"><div><small>SELECTED PERSON TRACK</small><strong>${escapeHtml(track.display_name)}</strong><span>${escapeHtml(activities || "주 위치 Activity 없음")}</span></div><div class="spacetime-selection-meta"><span>${primary.length}개 주 위치 구간</span><span>${counterparties.length}개 counterparty 관계는 자기 위치에서 제외</span></div><div class="spacetime-selection-actions" role="group" aria-label="선택 인물 탐색"><button id="spacetimePrevPerson" type="button">이전 인물</button><button id="spacetimeFocusPerson" type="button">위치로</button><button id="spacetimeDetailPerson" type="button">자세히 보기</button><button id="spacetimeNextPerson" type="button">다음 인물</button><button id="spacetimeClearPerson" type="button">선택 해제</button></div></div>`;
   }
 
   function renderDensityLegend(field, filtered) {
@@ -349,10 +361,32 @@
     updateCameraPosition(scroll, projection);
   }
 
-  function bindCameraViewport(mount, projection) {
+  function focusPersonInViewport(scroll, projection, navigationItems, personId) {
+    if (!scroll || !personId) return false;
+    const { exploration } = runtime();
+    const item = navigationItems.find((candidate) => candidate.person_id === personId);
+    if (!item) return false;
+    const target = exploration.focusScrollTarget(item,
+      { width: scroll.clientWidth, height: scroll.clientHeight },
+      { scrollWidth: scroll.scrollWidth, scrollHeight: scroll.scrollHeight },
+      { leftInset: AXIS_WIDTH, topInset: TIME_CAMERA_HEADER_HEIGHT }
+    );
+    if (!target) return false;
+    scroll.scrollLeft = target.left;
+    scroll.scrollTop = target.top;
+    updateCameraPosition(scroll, projection);
+    return true;
+  }
+
+  function bindCameraViewport(mount, projection, navigationItems) {
     const scroll = mount.querySelector(".spacetime-scroll");
     if (!scroll) return;
+    const { exploration } = runtime();
     restoreCameraViewport(scroll, projection);
+    if (pendingFocusPersonId) {
+      focusPersonInViewport(scroll, projection, navigationItems, pendingFocusPersonId);
+      pendingFocusPersonId = null;
+    }
     scroll.addEventListener("scroll", () => updateCameraPosition(scroll, projection), { passive: true });
     scroll.addEventListener("wheel", (event) => {
       if (!event.ctrlKey && !event.metaKey) return;
@@ -361,10 +395,45 @@
       const factor = event.deltaY < 0 ? TIME_CAMERA_ZOOM_STEP : 1 / TIME_CAMERA_ZOOM_STEP;
       requestTimeCameraZoom(mount, timeCameraZoom * factor, event.clientY - rect.top);
     }, { passive: false });
+    scroll.addEventListener("keydown", (event) => {
+      if (event.target !== scroll) return;
+      const command = exploration.keyboardCommand(event);
+      if (!command) return;
+      event.preventDefault();
+      if (command === "previous-person" || command === "next-person") {
+        const nextId = exploration.adjacentPersonId(navigationItems, selectedPersonId, command === "previous-person" ? -1 : 1);
+        if (nextId) selectPerson(mount, nextId, { focus: true });
+        return;
+      }
+      if (command === "focus-selected") {
+        focusPersonInViewport(scroll, projection, navigationItems, selectedPersonId);
+        return;
+      }
+      if (command === "zoom-in" || command === "zoom-out") {
+        requestTimeCameraZoom(mount, command === "zoom-in" ? timeCameraZoom * TIME_CAMERA_ZOOM_STEP : timeCameraZoom / TIME_CAMERA_ZOOM_STEP);
+        return;
+      }
+      if (command === "clear-selection") {
+        clearSelection(mount);
+        return;
+      }
+      const direction = command.endsWith("left") ? "left" : command.endsWith("right") ? "right" : command === "page-up" || command.endsWith("up") ? "up" : "down";
+      const fraction = command.startsWith("page-") ? 0.8 : 0.22;
+      const target = exploration.panTarget(
+        { left: scroll.scrollLeft, top: scroll.scrollTop },
+        { width: scroll.clientWidth, height: scroll.clientHeight },
+        { scrollWidth: scroll.scrollWidth, scrollHeight: scroll.scrollHeight },
+        direction,
+        fraction
+      );
+      scroll.scrollLeft = target.left;
+      scroll.scrollTop = target.top;
+      updateCameraPosition(scroll, projection);
+    });
   }
 
   function renderInto(mount) {
-    const { timeProjection, spaceAxis, semanticAxis, lod, density } = runtime();
+    const { timeProjection, spaceAxis, semanticAxis, exploration, lod, density } = runtime();
     const allEntries = flattenActivities(persons);
     const timeline = model.deriveTimelineRange(allEntries.map((entry) => entry.activity), new Date().getFullYear());
     const projection = timeProjection.createSemanticTimeProjection(timeline.start_year, timeline.end_year, DEFAULT_TIMELINE_HEIGHT * timeCameraZoom, LOG_SOFTENING_YEARS, timeCameraZoom);
@@ -379,7 +448,9 @@
     const regions = spaceAxis.stableRegionLayout(compiled.continuum, contentWidth);
     const spaceHeader = semanticAxis.buildSpaceHeaderPlan(compiled.continuum, contentWidth, spaceZoom);
     const timeAxis = semanticAxis.buildTimeAxisPlan(timeline, projection, timeCameraZoom);
-    const projectedTracks = visibleTracks.map((track) => projectTrack(track, projection, contentWidth)).filter(Boolean);
+    const projectedTracks = visibleTracks.map((track) => exploration.projectTrack(track, projection, contentWidth)).filter(Boolean);
+    const navigationItems = exploration.orderItems(projectedTracks);
+    const searchItems = needle ? exploration.rankSearchItems(projectedTracks, needle) : [];
     const lodWeights = lod.lodWeights({ timeZoom: timeCameraZoom, spaceZoom });
     const needsLabels = lodWeights.labels > 0.01 || Boolean(needle) || Boolean(selectedPersonId);
     const labelPack = needsLabels ? packTrackLabels(projectedTracks, regions, timelineHeight, Boolean(needle)) : { placed: [], deferred: [] };
@@ -409,13 +480,14 @@
     }).join("") : "";
 
     mount.innerHTML = `<section class="spacetime-toolbar card">
-      <div class="spacetime-toolbar-copy"><p class="eyebrow">PERSON SPACETIME ATLAS</p><h2>시공간 인물도</h2><p>하나의 연속된 역사 공간에서 Person track을 탐색합니다. 100% 세계 보기에서도 충돌 없이 배치 가능한 인물 이름은 기본으로 유지하며, 등록 인물 밀도를 배경으로 함께 보여줍니다. 확대할수록 시간축은 시대에서 세기·10년 단위로, 공간 헤더는 대권역에서 세부 지역으로 의미 해상도가 높아지고 Person 점·rail·Activity가 추가됩니다. 좌표 자체는 검색·밀도·줌에 따라 바뀌지 않으며 opposes는 자기 위치를 결정하지 않습니다.</p></div>
+      <div class="spacetime-toolbar-copy"><p class="eyebrow">PERSON SPACETIME ATLAS</p><h2>시공간 인물도</h2><p>하나의 연속된 역사 공간에서 Person track을 탐색합니다. 100% 세계 보기에서도 충돌 없이 배치 가능한 인물 이름은 기본으로 유지하며, 등록 인물 밀도를 배경으로 함께 보여줍니다. 검색 결과나 인물을 선택하면 현재 축척을 유지한 채 해당 시공간으로 이동하고, 자세히 보기에서만 공간·시간 해상도를 올립니다. 좌표 자체는 검색·밀도·줌에 따라 바뀌지 않으며 opposes는 자기 위치를 결정하지 않습니다.</p><div class="spacetime-explore-help">방향키 이동 · PageUp/PageDown 큰 이동 · Shift+↑/↓ 이전/다음 인물 · F 선택 위치 · +/- 시간 확대 · Esc 선택 해제</div></div>
       <div class="spacetime-controls">
         <label>검색<input id="spacetimeSearch" type="search" value="${escapeHtml(query)}" placeholder="인물·정치체·역할 검색" /></label>
         <label>공간 보기<select id="spacetimeHorizontalMode"><option value="overview"${horizontalViewMode === "overview" ? " selected" : ""}>전체 보기</option><option value="detail"${horizontalViewMode === "detail" ? " selected" : ""}>공간 확대</option></select></label>
         <div class="spacetime-time-camera" role="group" aria-label="시간축 확대"><span>시간 확대</span><button id="spacetimeTimeZoomOut" type="button" aria-label="시간축 축소">−</button><output id="spacetimeTimeZoomValue">${escapeHtml(timeCameraZoomLabel())}</output><button id="spacetimeTimeZoomIn" type="button" aria-label="시간축 확대">+</button><button id="spacetimeTimeZoomReset" type="button">100%</button></div>
       </div>
     </section>
+    ${renderSearchResults(searchItems, needle)}
     <section class="spacetime-status-row"><span><b>${visibleTracks.length}</b> Person track</span><span><b>${primarySegmentCount}</b> 주 위치 구간</span><span><b>${counterpartyCount}</b> counterparty 제외</span><span><b>${compiled.unresolvedPosition.length}</b> 위치 미확정</span><span><b>${compiled.unresolvedChronology.length}</b> 연대 미확정</span><span><b>${labelPack.placed.length}</b> 이름 표시</span><span><b>${labelPack.deferred.length}</b> label defer</span>${densityField ? `<span><b>${densityField.max_count}</b> 최대 cell 고유 인물</span>` : ""}<span><b>${escapeHtml(timeAxis.stage_label)}</b> 시간축</span><span><b>${escapeHtml(spaceHeader.stage_label)}</b> 공간축</span><span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> LOD</span><span><b>${escapeHtml(timeCameraZoomLabel())}</b> 시간 줌</span></section>
     ${(compiled.unresolvedPosition.length || compiled.partitioned.relation_review.length) ? `<section class="spacetime-integrity-note card"><strong>근거 없는 위치는 자동 추정하지 않습니다.</strong><p>현재 canonical spatial index가 제공하는 검토된 macroregion만 좌표로 사용합니다. 세부 Place/subregion 근거가 없으면 macroregion보다 정밀한 좌표를 만들지 않으며, counterparty인 opposes는 자기 위치 계산에서 제외합니다.</p></section>` : ""}
     ${renderDensityLegend(densityField, Boolean(needle))}
@@ -440,17 +512,47 @@
     </div></section>
     <section class="spacetime-unresolved-grid"><article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">PLACEMENT REVIEW</p><h3>위치 미확정</h3></div><strong>${compiled.unresolvedPosition.length}</strong></div><p>검토된 정치체 권역·장소 기능으로 가로 위치를 확정할 수 없어 좌표를 만들지 않은 Activity입니다.</p>${unresolvedRows(compiled.unresolvedPosition)}</article><article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">CHRONOLOGY REVIEW</p><h3>연대 미확정</h3></div><strong>${compiled.unresolvedChronology.length}</strong></div><p>Activity 시작·종료 연도를 둘 다 확정할 수 없는 경우 세로축에 임의 기간을 만들지 않습니다.</p>${unresolvedRows(compiled.unresolvedChronology)}</article></section>`;
 
-    bindCameraViewport(mount, projection);
-    mount.querySelector("#spacetimeSearch")?.addEventListener("input", (event) => {
+    bindCameraViewport(mount, projection, navigationItems);
+    const searchInput = mount.querySelector("#spacetimeSearch");
+    searchInput?.addEventListener("input", (event) => {
       query = event.target.value || "";
       renderInto(mount);
       requestAnimationFrame(() => { const input = mount.querySelector("#spacetimeSearch"); input?.focus(); input?.setSelectionRange(query.length, query.length); });
+    });
+    searchInput?.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        const first = searchItems[0];
+        if (!first) return;
+        event.preventDefault();
+        selectPerson(mount, first.person_id, { focus: true });
+      } else if (event.key === "Escape" && query) {
+        event.preventDefault();
+        query = "";
+        renderInto(mount);
+        requestAnimationFrame(() => mount.querySelector("#spacetimeSearch")?.focus());
+      }
     });
     mount.querySelector("#spacetimeHorizontalMode")?.addEventListener("change", (event) => { horizontalViewMode = event.target.value === "detail" ? "detail" : "overview"; renderInto(mount); });
     mount.querySelector("#spacetimeTimeZoomOut")?.addEventListener("click", () => requestTimeCameraZoom(mount, timeCameraZoom / TIME_CAMERA_ZOOM_STEP));
     mount.querySelector("#spacetimeTimeZoomIn")?.addEventListener("click", () => requestTimeCameraZoom(mount, timeCameraZoom * TIME_CAMERA_ZOOM_STEP));
     mount.querySelector("#spacetimeTimeZoomReset")?.addEventListener("click", () => requestTimeCameraZoom(mount, 1));
-    mount.querySelectorAll("[data-spacetime-person]").forEach((button) => button.addEventListener("click", () => { selectedPersonId = button.dataset.spacetimePerson || null; renderInto(mount); }));
+    mount.querySelectorAll("[data-spacetime-search-result]").forEach((button) => button.addEventListener("click", () => selectPerson(mount, button.dataset.spacetimeSearchResult, { focus: true })));
+    mount.querySelectorAll("[data-spacetime-person]").forEach((button) => button.addEventListener("click", () => selectPerson(mount, button.dataset.spacetimePerson, { focus: true })));
+    mount.querySelector("#spacetimePrevPerson")?.addEventListener("click", () => {
+      const personId = exploration.adjacentPersonId(navigationItems, selectedPersonId, -1);
+      if (personId) selectPerson(mount, personId, { focus: true });
+    });
+    mount.querySelector("#spacetimeNextPerson")?.addEventListener("click", () => {
+      const personId = exploration.adjacentPersonId(navigationItems, selectedPersonId, 1);
+      if (personId) selectPerson(mount, personId, { focus: true });
+    });
+    mount.querySelector("#spacetimeFocusPerson")?.addEventListener("click", () => {
+      const scroll = mount.querySelector(".spacetime-scroll");
+      focusPersonInViewport(scroll, projection, navigationItems, selectedPersonId);
+      scroll?.focus();
+    });
+    mount.querySelector("#spacetimeDetailPerson")?.addEventListener("click", () => selectPerson(mount, selectedPersonId, { focus: true, detail: true }));
+    mount.querySelector("#spacetimeClearPerson")?.addEventListener("click", () => clearSelection(mount));
   }
 
   function bindResize() {
