@@ -73,6 +73,6 @@ test("virtualized Person interactions use event delegation so scroll-created nod
 
   assert.ok(view.includes('canvas?.addEventListener("click"'));
   assert.ok(view.includes('event.target.closest?.("[data-spacetime-person]")'));
-  assert.ok(view.includes("selectPerson(mount, target.dataset.spacetimePerson, { focus: true })"));
+  assert.ok(view.includes("selectPerson(mount, target.dataset.spacetimePerson, { focus: false })"));
   assert.doesNotMatch(view, /querySelectorAll\("\[data-spacetime-person\]"\)/);
 });
