@@ -1,0 +1,65 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+
+const viewUrl = new URL("../atlas-person-spacetime-view.js", import.meta.url);
+const cssUrl = new URL("../atlas-person-spacetime-view.css", import.meta.url);
+
+async function fixture(url) {
+  return readFile(url, "utf8");
+}
+
+test("current spacetime surface loads P11 exploration in place and keeps one renderer", async () => {
+  const view = await fixture(viewUrl);
+  assert.doesNotThrow(() => new Function(view));
+  assert.ok(view.includes("atlas-person-spacetime-exploration.js?v=20260826-p11"));
+  assert.ok(view.includes("ATLAS_PERSON_SPACETIME_EXPLORATION"));
+  assert.ok(view.includes("exploration.projectTrack(track, projection, contentWidth)"));
+  assert.ok(view.includes("exploration.focusScrollTarget"));
+  assert.ok(view.includes("exploration.panTarget"));
+  assert.doesNotMatch(view, /spacetime-v2/);
+});
+
+test("search exposes explicit Person results and Enter focuses the first matching Person", async () => {
+  const view = await fixture(viewUrl);
+  const css = await fixture(cssUrl);
+  assert.ok(view.includes("renderSearchResults(searchItems, needle)"));
+  assert.ok(view.includes("data-spacetime-search-result"));
+  assert.ok(view.includes('event.key === "Enter"'));
+  assert.ok(view.includes("selectPerson(mount, first.person_id, { focus: true })"));
+  assert.ok(css.includes(".spacetime-search-results{"));
+  assert.ok(css.includes(".spacetime-search-result-list{"));
+});
+
+test("Person selection preserves zoom by default and detail is an explicit action", async () => {
+  const view = await fixture(viewUrl);
+  assert.ok(view.includes("const FOCUS_DETAIL_TIME_ZOOM = 2.2;"));
+  assert.ok(view.includes('if (selectedPersonId && options.detail) {'));
+  assert.ok(view.includes('horizontalViewMode = "detail";'));
+  assert.ok(view.includes("timeCameraZoom = Math.max(timeCameraZoom, FOCUS_DETAIL_TIME_ZOOM);"));
+  assert.ok(view.includes('id="spacetimeDetailPerson"'));
+  assert.ok(view.includes("selectPerson(mount, selectedPersonId, { focus: true, detail: true })"));
+});
+
+test("selection panel provides previous, focus, detail, next and clear exploration actions", async () => {
+  const view = await fixture(viewUrl);
+  const css = await fixture(cssUrl);
+  for (const id of ["spacetimePrevPerson", "spacetimeFocusPerson", "spacetimeDetailPerson", "spacetimeNextPerson", "spacetimeClearPerson"]) {
+    assert.ok(view.includes(`id="${id}"`));
+  }
+  assert.ok(view.includes("exploration.adjacentPersonId(navigationItems, selectedPersonId, -1)"));
+  assert.ok(view.includes("exploration.adjacentPersonId(navigationItems, selectedPersonId, 1)"));
+  assert.ok(css.includes(".spacetime-selection-actions{"));
+});
+
+test("map keyboard navigation supports panning, Person cycling, focus, zoom and selection clearing", async () => {
+  const view = await fixture(viewUrl);
+  assert.ok(view.includes('scroll.addEventListener("keydown"'));
+  assert.ok(view.includes("exploration.keyboardCommand(event)"));
+  assert.ok(view.includes('command === "previous-person" || command === "next-person"'));
+  assert.ok(view.includes('command === "focus-selected"'));
+  assert.ok(view.includes('command === "zoom-in" || command === "zoom-out"'));
+  assert.ok(view.includes('command === "clear-selection"'));
+  assert.ok(view.includes('command.startsWith("page-") ? 0.8 : 0.22'));
+  assert.ok(view.includes("Shift+↑/↓ 이전/다음 인물"));
+});
