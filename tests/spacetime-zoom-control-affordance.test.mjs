@@ -50,9 +50,13 @@ function zoomMount(current = "100%") {
   };
 }
 
-test("spacetime zoom-bound affordance is loaded by the production page", () => {
+function approximatelyEqual(actual, expected, epsilon = 1e-9) {
+  assert.ok(Math.abs(actual - expected) <= epsilon, `expected ${actual} ≈ ${expected}`);
+}
+
+test("spacetime camera control state is loaded by the production page", () => {
   assert.match(indexSource, /atlas-person-spacetime-control-state\.css\?v=20260826-zoom-bound-affordance/);
-  assert.match(indexSource, /atlas-person-spacetime-control-state\.js\?v=20260826-zoom-bounds-affordance/);
+  assert.match(indexSource, /atlas-person-spacetime-control-state\.js\?v=20260827-horizontal-camera-context/);
   assert.match(controlCss, /\.spacetime-time-camera button:disabled\{/);
 });
 
@@ -106,4 +110,31 @@ test("visible zoom bounds stay aligned with the renderer camera contract", () =>
   assert.equal(Number(minMatch[1]) * 100, 100);
   assert.equal(Number(adapterMaxMatch[1]), Number(maxMatch[1]) * 100);
   assert.match(viewSource, /id="spacetimeTimeZoomReset"[^>]*>100%<\/button>/);
+});
+
+test("overview to detail space zoom preserves the horizontal world center", () => {
+  const api = loadControlApi();
+  const viewportWidth = 1200;
+  const axisWidth = 168;
+  const overviewWorldWidth = 1030;
+  const detailWorldWidth = overviewWorldWidth * 3;
+
+  const overviewCenter = api.horizontalCenterRatio(0, viewportWidth, axisWidth, overviewWorldWidth);
+  approximatelyEqual(overviewCenter, 516 / 1030);
+
+  const detailScrollLeft = api.scrollLeftForHorizontalCenter(overviewCenter, viewportWidth, axisWidth, detailWorldWidth);
+  approximatelyEqual(detailScrollLeft, 1032);
+
+  const detailCenter = api.horizontalCenterRatio(detailScrollLeft, viewportWidth, axisWidth, detailWorldWidth);
+  approximatelyEqual(detailCenter, overviewCenter);
+});
+
+test("horizontal camera context clamps safely at world edges and non-scrollable overview", () => {
+  const api = loadControlApi();
+  assert.equal(api.scrollLeftForHorizontalCenter(0, 1200, 168, 3090), 0);
+  assert.equal(api.scrollLeftForHorizontalCenter(1, 1200, 168, 3090), 2058);
+  assert.equal(api.scrollLeftForHorizontalCenter(0.75, 1200, 168, 1030), 0);
+  assert.equal(api.horizontalCenterRatio(0, 1200, 168, 0), null);
+  assert.match(controlSource, /addEventListener\("change"[\s\S]*spacetimeHorizontalMode[\s\S]*captureHorizontalCamera/);
+  assert.match(controlSource, /Promise\.resolve\(\)\.then\(\(\) => restoreHorizontalCamera\(mount, snapshot\)\)/);
 });
