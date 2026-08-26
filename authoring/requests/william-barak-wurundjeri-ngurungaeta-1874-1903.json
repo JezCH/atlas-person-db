@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:william-barak:wurundjeri:ngurungaeta:1874-1903:v1",
+  "person": {
+    "canonical_name_en": "William Barak",
+    "display_name_ko": "윌리엄 바라크"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Wurundjeri",
+    "display_name_ko": "우룬제리"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Ngurungaeta",
+    "role_display_name_ko": "응우룽가에타",
+    "start_year": 1874,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1903,
+    "end_month": 8,
+    "end_day": 15,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "William Barak (Beruk) succeeded Simon Wonga as Ngurungaeta, the recognised Wurundjeri leader, in 1874 and remained a leading authority and spokesperson until his death on 15 August 1903. ATLAS uses the specific Wurundjeri political community rather than the broader Kulin cultural alliance supplied by the game-style source label."
+  },
+  "sources": [
+    {
+      "title": "Ancestors & Past — Wurundjeri Woi Wurrung Cultural Heritage Aboriginal Corporation",
+      "canonical_url": "https://www.wurundjeri.com.au/our-story/ancestors-past/",
+      "citation_text": "The Wurundjeri Woi Wurrung Cultural Heritage Aboriginal Corporation states that Barak succeeded Simon Wonga as Ngurungaeta of the Wurundjeri people in 1874 and records his death on 15 August 1903.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
