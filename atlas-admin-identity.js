@@ -112,16 +112,16 @@
     panel.className = "panel";
     panel.setAttribute("aria-labelledby", "human-authoring-title");
     panel.innerHTML = `
-      <div class="panel-head"><div><p class="status-label">NORMAL AUTHORING · STAGE 2 NATIVE</p><h2 id="human-authoring-title">일반 신규 인물 등록</h2><p>UUID나 JSON을 입력하지 않습니다. 기존 Person·Polity·Role은 정확히 재사용하고, 없으면 같은 트랜잭션 안에서 생성한 뒤 Relation·기간·Source provenance를 Stage 2 semantic-key v2로 저장합니다. 나무위키 문서 확인 결과도 등록 요청의 필수 항목으로 함께 저장합니다.</p></div></div>
+      <div class="panel-head"><div><p class="status-label">NORMAL AUTHORING · STAGE 2 NATIVE</p><h2 id="human-authoring-title">일반 신규 인물 등록</h2><p>UUID나 JSON을 입력하지 않습니다. 기존 Person·Polity·Role·Source는 정확한 live identity가 있으면 재사용하고, 없으면 같은 트랜잭션 안에서 생성합니다. 신규 Person 또는 나무위키 미검토 Person만 나무위키 판정이 필요하며, 이미 검토된 기존 Person은 비워두면 서버가 기존 값을 재사용합니다.</p></div></div>
       <form id="humanAuthoringForm" class="identity-form">
         <div class="identity-two"><label>인물 영문명<input id="humanPersonEn" required /></label><label>인물 한국어명 <small>신규 Person 생성 시 필수</small><input id="humanPersonKo" /></label></div>
         <div class="identity-two"><label>정치체 영문명<input id="humanPolityEn" required /></label><label>정치체 한국어명 <small>신규 Polity 생성 시 필수</small><input id="humanPolityKo" /></label></div>
         <div class="identity-two"><label>관계<select id="humanRelation" required><option value="">불러오는 중...</option></select></label><label>Period basis<select id="humanPeriodBasis" required><option value="">불러오는 중...</option></select></label></div>
         <div class="identity-two"><label>Role 영문명 <small>역할이 없으면 비움</small><input id="humanRoleEn" placeholder="예: Sultan" /></label><label>Role 한국어명 <small>신규 Role 생성 시 필수</small><input id="humanRoleKo" placeholder="예: 술탄" /></label></div>
         <h3>나무위키 확인</h3>
-        <div class="identity-two"><label>문서 확인 결과<select id="humanNamuWikiStatus" required><option value="">선택</option><option value="linked">문서 있음 · 링크 연결</option><option value="not_found">문서 없음</option></select></label><label>확인일<input id="humanNamuWikiCheckedAt" type="date" required /></label></div>
+        <div class="identity-two"><label>문서 확인 결과<select id="humanNamuWikiStatus"><option value="">기존 검토값 재사용 · 기존 Person만</option><option value="linked">문서 있음 · 링크 연결</option><option value="not_found">문서 없음</option></select></label><label>확인일<input id="humanNamuWikiCheckedAt" type="date" /></label></div>
         <div class="identity-two"><label>정확한 문서명 <small>문서 있음일 때 필수</small><input id="humanNamuWikiTitle" /></label><label>정확한 문서 URL <small>https://namu.wiki/w/...</small><input id="humanNamuWikiUrl" type="url" placeholder="https://namu.wiki/w/..." /></label></div>
-        <p class="identity-help">동명이인·동음 문서를 확인한 뒤 해당 인물의 정확한 문서만 연결합니다. 문서가 없으면 ‘문서 없음’을 명시적으로 선택합니다.</p>
+        <p class="identity-help">새 Person이거나 기존 Person에 나무위키 검토값이 없으면 반드시 실제 검색 후 linked/not_found를 선택합니다. 이미 검토된 기존 Person은 첫 옵션 그대로 두면 재검사하지 않습니다.</p>
         <h3>활동 시작</h3>
         <div class="identity-two"><label>시작 연도<input id="humanStartYear" type="number" step="1" required /></label><label>시작 월 <small>선택</small><input id="humanStartMonth" type="number" min="1" max="12" step="1" /></label></div>
         <div class="identity-two"><label>시작 일 <small>선택 · 월 입력 필요</small><input id="humanStartDay" type="number" min="1" max="31" step="1" /></label><label>시작 확실성<select id="humanStartCertainty" required>${certaintyOptions()}</select></label></div>
@@ -131,7 +131,7 @@
         <div class="identity-two"><label>종료 일 <small>선택 · 월 입력 필요</small><input id="humanEndDay" type="number" min="1" max="31" step="1" /></label><label>종료 확실성<select id="humanEndCertainty" required>${certaintyOptions()}</select></label></div>
         <label>종료 Calendar<select id="humanEndCalendar" required>${calendarOptions()}</select></label>
         <label>근거 신뢰도<select id="humanConfidence" required><option value="well_established">Well established</option><option value="likely">Likely</option><option value="speculative">Speculative</option><option value="disputed">Disputed</option><option value="unknown">Unknown</option></select></label>
-        <label>출처 제목<input id="humanSourceTitle" required /></label><label>출처 URL <small>웹 출처일 때만 입력</small><input id="humanSourceUrl" type="url" /></label><label>인용/Reference text <small>선택 · 입력 권장</small><input id="humanSourceCitation" /></label><label>활동 메모<textarea id="humanNotes" rows="3"></textarea></label>
+        <label>출처 제목<input id="humanSourceTitle" required /></label><label>출처 URL <small>웹 출처일 때만 입력 · 같은 canonical URL은 기존 Source 자동 재사용</small><input id="humanSourceUrl" type="url" /></label><label>인용/Reference text <small>선택 · 입력 권장</small><input id="humanSourceCitation" /></label><label>활동 메모<textarea id="humanNotes" rows="3"></textarea></label>
         <button class="button primary" type="submit">Person + Activity + Source 한 번에 등록</button>
       </form><pre id="humanAuthoringResult" class="result" aria-live="polite">카탈로그를 불러오는 중...</pre>`;
     identityPanel.parentNode.insertBefore(panel, identityPanel);
@@ -207,21 +207,29 @@
 
   function syncNamuWikiFields() {
     const status = value("humanNamuWikiStatus");
+    const checkedAt = document.getElementById("humanNamuWikiCheckedAt");
     const title = document.getElementById("humanNamuWikiTitle");
     const url = document.getElementById("humanNamuWikiUrl");
     const linked = status === "linked";
+    const reviewed = linked || status === "not_found";
+    if (checkedAt) {
+      checkedAt.disabled = !reviewed;
+      checkedAt.required = reviewed;
+      if (!reviewed) checkedAt.value = "";
+    }
     for (const input of [title, url]) {
       if (!input) continue;
-      input.disabled = status === "not_found";
+      input.disabled = !linked;
       input.required = linked;
-      if (status === "not_found") input.value = "";
+      if (!linked) input.value = "";
     }
   }
 
   function namuwikiReference() {
     const status = value("humanNamuWikiStatus");
+    if (!status) return null;
     const checkedAt = value("humanNamuWikiCheckedAt");
-    if (status !== "linked" && status !== "not_found") throw new Error("나무위키 문서 확인 결과를 선택해야 합니다.");
+    if (status !== "linked" && status !== "not_found") throw new Error("나무위키 문서 확인 결과가 올바르지 않습니다.");
     if (!/^\d{4}-\d{2}-\d{2}$/.test(checkedAt)) throw new Error("나무위키 확인일을 입력해야 합니다.");
     if (status === "not_found") return { status, checked_at:checkedAt };
     const documentTitle = value("humanNamuWikiTitle");
@@ -232,6 +240,8 @@
     if (url.protocol !== "https:" || url.hostname !== "namu.wiki" || !url.pathname.startsWith("/w/") || url.pathname.length <= 3) {
       throw new Error("나무위키 문서 URL은 정확한 https://namu.wiki/w/... 주소여야 합니다.");
     }
+    url.search = "";
+    url.hash = "";
     return { status, checked_at:checkedAt, document_title:documentTitle, url:url.href };
   }
 
@@ -240,11 +250,13 @@
       HUMAN_AUTHORING_NEW_PERSON_KO_REQUIRED: "신규 Person 생성에는 한국어명이 필요합니다. 기존 Person 재사용이면 비워둘 수 있습니다.",
       HUMAN_AUTHORING_NEW_POLITY_KO_REQUIRED: "신규 Polity 생성에는 한국어명이 필요합니다. 기존 Polity 재사용이면 비워둘 수 있습니다.",
       HUMAN_AUTHORING_NEW_ROLE_KO_REQUIRED: "신규 Role 생성에는 한국어명이 필요합니다. 기존 Role 재사용이면 비워둘 수 있습니다.",
-      HUMAN_AUTHORING_NAMUWIKI_REQUIRED: "나무위키 문서 확인 결과가 필요합니다.",
+      HUMAN_AUTHORING_NAMUWIKI_REQUIRED: "신규 Person 또는 나무위키 미검토 Person은 나무위키 확인 결과가 필요합니다.",
+      HUMAN_AUTHORING_NAMUWIKI_OVERWRITE_REVIEW_REQUIRED: "이미 연결된 나무위키 문서와 다른 값입니다. 자동 덮어쓰지 말고 별도 검토하세요.",
       HUMAN_AUTHORING_NAMUWIKI_STATUS_INVALID: "나무위키 결과는 문서 있음 또는 문서 없음이어야 합니다.",
       HUMAN_AUTHORING_NAMUWIKI_CHECKED_AT_INVALID: "나무위키 확인일이 올바르지 않습니다.",
       HUMAN_AUTHORING_NAMUWIKI_DOCUMENT_TITLE_REQUIRED: "나무위키 문서가 있으면 정확한 문서명이 필요합니다.",
-      HUMAN_AUTHORING_NAMUWIKI_URL_INVALID: "나무위키 문서 URL이 올바르지 않습니다."
+      HUMAN_AUTHORING_NAMUWIKI_URL_INVALID: "나무위키 문서 URL이 올바르지 않습니다.",
+      HUMAN_AUTHORING_SOURCE_CANONICAL_URL_AMBIGUOUS: "같은 Source URL이 여러 identity에 존재합니다. Source 중복 검토가 필요합니다."
     })[code] || fallback || code;
   }
 
@@ -254,11 +266,12 @@
     const output = document.getElementById("humanAuthoringResult");
     if (button) button.disabled = true;
     if (output) {
-      output.textContent = "Person · Polity · Role · Source · Activity와 나무위키 확인 결과를 하나의 트랜잭션으로 저장 중...";
+      output.textContent = "Person · Polity · Role · Source · Activity를 저장 중입니다. 기존 나무위키 검토값과 Source URL은 가능한 경우 재사용합니다...";
       output.dataset.type = "info";
     }
     try {
       const sourceUrl = value("humanSourceUrl");
+      const namuwiki = namuwikiReference();
       const payload = {
         schema: "atlas-human-authoring/v1",
         request_id: requestId(),
@@ -281,7 +294,7 @@
           canonical_url: sourceUrl || null,
           citation_text: value("humanSourceCitation") || null
         }],
-        external_references: { namuwiki: namuwikiReference() }
+        external_references: namuwiki ? { namuwiki } : {}
       };
       const response = await fetch(authoringEndpoint, {
         method: "POST",
@@ -297,7 +310,7 @@
         throw new Error(friendlyAuthoringError(code, code || `authoring failed (${response.status})`));
       }
       if (output) {
-        const namuwiki = body.external_references?.namuwiki || payload.external_references.namuwiki;
+        const savedNamuWiki = body.external_references?.namuwiki || null;
         output.textContent = [
           `등록 완료${body.replay ? " (동일 요청 재검증)" : ""}`,
           `Person UUID: ${body.person_id}`,
@@ -305,7 +318,11 @@
           body.role_id ? `Role UUID: ${body.role_id}` : "Role: 없음",
           `Activity UUID: ${body.relationship_id}`,
           `Source UUID: ${(body.source_ids || []).join(", ")}`,
-          namuwiki?.status === "linked" ? `나무위키: 연결됨 — ${namuwiki.document_title}` : "나무위키: 문서 없음"
+          savedNamuWiki?.status === "linked"
+            ? `나무위키: 연결됨 — ${savedNamuWiki.document_title}`
+            : savedNamuWiki?.status === "not_found"
+              ? "나무위키: 문서 없음"
+              : "나무위키: 기존 검토값 없음"
         ].join("\n");
         output.dataset.type = "success";
       }
