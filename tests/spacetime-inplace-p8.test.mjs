@@ -186,15 +186,17 @@ test("label engine resolves collisions horizontally or defers without ever chang
   assert.equal(constrained.deferred[0].anchor_y, 20);
 });
 
-test("semantic LOD advances density to point to label to rail to Activity", () => {
-  const densityStage = lod.lodWeights({ timeZoom: 1, spaceZoom: 1 });
+test("semantic LOD advances from a Person-readable minimum through label, rail, and Activity detail", () => {
+  const minimum = lod.lodWeights({ timeZoom: 1, spaceZoom: 1 });
   const point = lod.lodWeights({ timeZoom: 1, spaceZoom: 3 });
   const label = lod.lodWeights({ timeZoom: 1.8, spaceZoom: 1 });
   const rail = lod.lodWeights({ timeZoom: 4, spaceZoom: 3 });
   const activity = lod.lodWeights({ timeZoom: 7, spaceZoom: 3 });
-  assert.equal(densityStage.density, 1);
-  assert.equal(densityStage.points, 0);
-  assert.equal(lod.representationStage(densityStage), "density");
+  assert.ok(minimum.density > 0 && minimum.density < 0.5);
+  assert.ok(minimum.points >= 0.6);
+  assert.ok(minimum.labels >= 0.78);
+  assert.ok(minimum.points > minimum.density);
+  assert.equal(lod.representationStage(minimum), "point");
   assert.equal(lod.representationStage(point), "point");
   assert.equal(lod.representationStage(label), "label");
   assert.equal(lod.representationStage(rail), "rail");

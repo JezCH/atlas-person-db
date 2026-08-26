@@ -9,7 +9,7 @@
   const DEFAULT_TIMELINE_HEIGHT = 4200;
   const LOG_SOFTENING_YEARS = 420;
   const TIME_CAMERA_HEADER_HEIGHT = 44;
-  const TIME_CAMERA_MIN_ZOOM = 0.75;
+  const TIME_CAMERA_MIN_ZOOM = 1;
   const TIME_CAMERA_MAX_ZOOM = 8;
   const TIME_CAMERA_ZOOM_STEP = 1.35;
   const DETAIL_SPACE_ZOOM = 3;
@@ -25,7 +25,7 @@
     ["./atlas-person-spacetime-spatial-compile.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE"],
     ["./atlas-person-spacetime-person-tracks.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
     ["./atlas-person-spacetime-political-placement.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT"],
-    ["./atlas-person-spacetime-lod.js?v=20260826-p10", "ATLAS_PERSON_SPACETIME_LOD"],
+    ["./atlas-person-spacetime-lod.js?v=20260826-readable-minimum-zoom", "ATLAS_PERSON_SPACETIME_LOD"],
     ["./atlas-person-spacetime-density.js?v=20260826-p9", "ATLAS_PERSON_SPACETIME_DENSITY"],
     ["./atlas-person-spacetime-label-engine.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
   ]);
@@ -48,7 +48,7 @@
   let pendingFocusPersonId = null;
   let resizeBound = false;
   let resizeFrame = 0;
-  let timeCameraZoom = 1;
+  let timeCameraZoom = TIME_CAMERA_MIN_ZOOM;
   let cameraScrollTop = 0;
   let cameraScrollLeft = 0;
   let cameraCenterOrdinal = null;
@@ -137,7 +137,7 @@
 
   function clampTimeCameraZoom(value) {
     const numeric = Number(value);
-    if (!Number.isFinite(numeric)) return 1;
+    if (!Number.isFinite(numeric)) return TIME_CAMERA_MIN_ZOOM;
     return Math.min(TIME_CAMERA_MAX_ZOOM, Math.max(TIME_CAMERA_MIN_ZOOM, numeric));
   }
 
@@ -803,7 +803,7 @@
     mount.querySelector("#spacetimeHorizontalMode")?.addEventListener("change", (event) => { horizontalViewMode = event.target.value === "detail" ? "detail" : "overview"; renderInto(mount); });
     mount.querySelector("#spacetimeTimeZoomOut")?.addEventListener("click", () => requestTimeCameraZoom(mount, timeCameraZoom / TIME_CAMERA_ZOOM_STEP));
     mount.querySelector("#spacetimeTimeZoomIn")?.addEventListener("click", () => requestTimeCameraZoom(mount, timeCameraZoom * TIME_CAMERA_ZOOM_STEP));
-    mount.querySelector("#spacetimeTimeZoomReset")?.addEventListener("click", () => requestTimeCameraZoom(mount, 1));
+    mount.querySelector("#spacetimeTimeZoomReset")?.addEventListener("click", () => requestTimeCameraZoom(mount, TIME_CAMERA_MIN_ZOOM));
     mount.querySelectorAll("[data-spacetime-search-result]").forEach((button) => button.addEventListener("click", () => selectPerson(mount, button.dataset.spacetimeSearchResult, { focus: true })));
     mount.querySelector("#spacetimePrevPerson")?.addEventListener("click", () => {
       const personId = exploration.adjacentPersonId(navigationItems, selectedPersonId, -1);

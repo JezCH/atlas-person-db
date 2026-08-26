@@ -73,12 +73,13 @@ test("space header changes semantic detail while preserving the same stable worl
   }
 });
 
-test("overview keeps Person names visible while density remains the primary representation stage", () => {
+test("overview keeps Person points and names readable while density remains contextual", () => {
   const overview = lod.lodWeights({ timeZoom: 1, spaceZoom: 1 });
-  assert.equal(overview.density, 1);
-  assert.equal(overview.points, 0);
-  assert.ok(overview.labels >= 0.7);
-  assert.equal(lod.representationStage(overview), "density");
+  assert.ok(overview.density > 0 && overview.density < 0.5);
+  assert.ok(overview.points >= 0.6);
+  assert.ok(overview.points > overview.density);
+  assert.ok(overview.labels >= 0.78);
+  assert.equal(lod.representationStage(overview), "point");
 
   const detail = lod.lodWeights({ timeZoom: 1.8, spaceZoom: 1 });
   assert.equal(detail.density, 0);

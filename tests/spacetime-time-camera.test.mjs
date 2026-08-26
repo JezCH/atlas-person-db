@@ -19,10 +19,11 @@ test("time camera keeps the current surface while moving onto semantic time proj
   assert.doesNotMatch(viewSource, /id="spacetimeScale"/);
 });
 
-test("time camera zoom is bounded and pointer zoom requires an explicit modifier", () => {
-  assert.match(viewSource, /TIME_CAMERA_MIN_ZOOM = 0\.75/);
+test("time camera zoom is bounded by the readable minimum and pointer zoom requires an explicit modifier", () => {
+  assert.match(viewSource, /TIME_CAMERA_MIN_ZOOM = 1/);
   assert.match(viewSource, /TIME_CAMERA_MAX_ZOOM = 8/);
   assert.match(viewSource, /TIME_CAMERA_ZOOM_STEP = 1\.35/);
+  assert.match(viewSource, /Math\.max\(TIME_CAMERA_MIN_ZOOM, numeric\)/);
   assert.match(viewSource, /!event\.ctrlKey && !event\.metaKey/);
   assert.match(viewSource, /event\.preventDefault\(\)/);
   assert.match(viewSource, /pendingCameraAnchor/);

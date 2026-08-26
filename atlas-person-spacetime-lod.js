@@ -6,8 +6,8 @@
 })(typeof globalThis !== "undefined" ? globalThis : this, () => {
   "use strict";
   const DEFAULT_THRESHOLDS = Object.freeze({
-    density_fade_start: 1.05, density_fade_end: 1.8,
-    point_in_start: 1.1, point_in_full: 1.8,
+    density_fade_start: 0.75, density_fade_end: 1.2,
+    point_in_start: 0.7, point_in_full: 1.2,
     overview_label_floor: 0.78,
     label_start: 1.15, label_full: 1.8,
     point_out_start: 2.8, point_out_end: 4.6,
