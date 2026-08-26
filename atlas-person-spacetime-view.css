@@ -45,7 +45,7 @@
 .spacetime-selection-actions button{height:32px;padding:0 9px;border:1px solid #cbd7e9;border-radius:8px;background:#fff;color:#42536b;font-size:10px;font-weight:750;white-space:nowrap;cursor:pointer}
 .spacetime-selection-actions button:hover,.spacetime-selection-actions button:focus-visible{border-color:#7790b9;background:#fff;outline:none}
 #spacetimeDetailPerson{border-color:#819ac2;background:#edf3ff;color:#31527f}
-.spacetime-frame{padding:0;overflow:hidden}
+.spacetime-frame{position:relative;padding:0;overflow:hidden}
 .spacetime-scroll{position:relative;overflow:auto;height:clamp(520px,72vh,860px);max-height:860px;min-height:520px;background:#f8fafc;overscroll-behavior:contain;scrollbar-gutter:stable}
 .spacetime-scroll:focus-visible{outline:2px solid #9db1cf;outline-offset:-2px}
 .spacetime-sticky-corner{position:sticky;z-index:50;top:0;left:0;width:168px;height:44px;display:grid;grid-template-columns:82px 86px;align-items:center;text-align:center;background:#eef3f8;border-right:1px solid #cfd8e4;border-bottom:1px solid #cfd8e4;font-size:11px;font-weight:800;color:#64748b}
@@ -82,6 +82,15 @@
 .spacetime-track-rail:hover,.spacetime-track-rail.is-selected{z-index:18;width:7px;margin-left:-3.5px;background:#4f6fa2}
 .spacetime-activity-glyph{position:absolute;z-index:14;max-width:150px;height:22px;transform:translateY(-50%);padding:2px 7px;border:1px solid #cbd7e9;border-radius:6px;background:#fff;box-shadow:0 2px 7px rgba(35,50,74,.1);font-size:9px;color:#43536a;text-align:left;cursor:pointer;overflow:hidden}
 .spacetime-activity-glyph span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.spacetime-minimap{position:absolute;right:14px;bottom:14px;z-index:70;width:248px;padding:8px;border:1px solid rgba(118,137,166,.48);border-radius:11px;background:rgba(255,255,255,.94);box-shadow:0 8px 24px rgba(35,50,74,.16);box-sizing:border-box;user-select:none}
+.spacetime-minimap-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.spacetime-minimap-head strong{font-size:10px;color:#30435f}
+.spacetime-minimap-head span{font-size:8px;color:#8390a2}
+.spacetime-minimap-surface{position:relative;width:100%;height:156px;overflow:hidden;border:1px solid #d4deea;border-radius:7px;background:#f8fafc;cursor:crosshair;touch-action:none;box-sizing:border-box}
+.spacetime-minimap-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.spacetime-minimap-viewport{position:absolute;z-index:3;min-width:4px;min-height:4px;border:2px solid rgba(49,82,127,.9);background:rgba(96,124,169,.11);box-sizing:border-box;pointer-events:none}
+.spacetime-minimap-selected{position:absolute;z-index:4;width:8px;height:8px;margin:-4px 0 0 -4px;border:2px solid #fff;border-radius:50%;background:#314f7d;box-shadow:0 0 0 1px rgba(49,79,125,.65);pointer-events:none}
+.spacetime-minimap-status{display:block;margin-top:5px;font-size:8px;color:#8390a2;text-align:right;font-variant-numeric:tabular-nums}
 .spacetime-frame.is-overview .spacetime-region-head-layer.is-macro small{display:none}
 .spacetime-frame.is-overview .spacetime-region-head-layer.is-macro strong{font-size:11px}
 .spacetime-unresolved-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
@@ -98,5 +107,6 @@
 .spacetime-loading,.spacetime-error{padding:28px}
 .spacetime-loading p,.spacetime-error p{color:#6b7789}
 .spacetime-error strong{color:#a43a3a}
-@media(max-width:1100px){.spacetime-frame.is-overview .spacetime-region-head-layer.is-macro strong{font-size:10px}.spacetime-track-label{font-size:9px}.spacetime-region-head-layer.is-subregion .spacetime-region-head-band strong{font-size:8px}.spacetime-selection{grid-template-columns:1fr 1fr}.spacetime-selection-actions{grid-column:1/-1;justify-content:start}}
-@media(max-width:900px){.spacetime-toolbar{align-items:stretch;flex-direction:column}.spacetime-controls{width:100%}.spacetime-controls label{flex:1}.spacetime-controls input,.spacetime-controls select{width:100%;min-width:0}.spacetime-time-camera{flex:1;grid-template-columns:34px 58px 34px 58px}.spacetime-time-camera>span{grid-column:1/-1}.spacetime-scroll{height:65vh;min-height:460px}.spacetime-density-legend{align-items:flex-start;flex-direction:column}.spacetime-density-legend small{text-align:left}.spacetime-search-result-list button{min-width:165px}.spacetime-unresolved-grid{grid-template-columns:1fr}.spacetime-unresolved-row{grid-template-columns:1fr 1fr}.spacetime-unresolved-row small{grid-column:1/-1}.spacetime-selection{grid-template-columns:1fr}.spacetime-selection-actions{grid-column:auto;justify-content:start;overflow:auto}.spacetime-selection-meta span{white-space:normal}}
+@media(max-width:1100px){.spacetime-frame.is-overview .spacetime-region-head-layer.is-macro strong{font-size:10px}.spacetime-track-label{font-size:9px}.spacetime-region-head-layer.is-subregion .spacetime-region-head-band strong{font-size:8px}.spacetime-selection{grid-template-columns:1fr 1fr}.spacetime-selection-actions{grid-column:1/-1;justify-content:start}.spacetime-minimap{width:220px}.spacetime-minimap-surface{height:138px}}
+@media(max-width:900px){.spacetime-toolbar{align-items:stretch;flex-direction:column}.spacetime-controls{width:100%}.spacetime-controls label{flex:1}.spacetime-controls input,.spacetime-controls select{width:100%;min-width:0}.spacetime-time-camera{flex:1;grid-template-columns:34px 58px 34px 58px}.spacetime-time-camera>span{grid-column:1/-1}.spacetime-scroll{height:65vh;min-height:460px}.spacetime-density-legend{align-items:flex-start;flex-direction:column}.spacetime-density-legend small{text-align:left}.spacetime-search-result-list button{min-width:165px}.spacetime-unresolved-grid{grid-template-columns:1fr}.spacetime-unresolved-row{grid-template-columns:1fr 1fr}.spacetime-unresolved-row small{grid-column:1/-1}.spacetime-selection{grid-template-columns:1fr}.spacetime-selection-actions{grid-column:auto;justify-content:start;overflow:auto}.spacetime-selection-meta span{white-space:normal}.spacetime-minimap{right:8px;bottom:8px;width:184px;padding:6px}.spacetime-minimap-surface{height:112px}.spacetime-minimap-head span{display:none}}
+@media(max-width:560px){.spacetime-minimap{width:156px}.spacetime-minimap-surface{height:96px}.spacetime-minimap-head strong{font-size:9px}}

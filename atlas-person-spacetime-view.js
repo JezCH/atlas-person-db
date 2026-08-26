@@ -20,6 +20,7 @@
     ["./atlas-person-spacetime-space-axis.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
     ["./atlas-person-spacetime-semantic-axis.js?v=20260826-p10", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
     ["./atlas-person-spacetime-exploration.js?v=20260826-p11", "ATLAS_PERSON_SPACETIME_EXPLORATION"],
+    ["./atlas-person-spacetime-minimap.js?v=20260826-p12", "ATLAS_PERSON_SPACETIME_MINIMAP"],
     ["./atlas-person-spacetime-spatial-compile.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE"],
     ["./atlas-person-spacetime-person-tracks.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
     ["./atlas-person-spacetime-political-placement.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT"],
@@ -117,6 +118,7 @@
       spaceAxis: window.ATLAS_PERSON_SPACETIME_SPACE_AXIS,
       semanticAxis: window.ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS,
       exploration: window.ATLAS_PERSON_SPACETIME_EXPLORATION,
+      minimap: window.ATLAS_PERSON_SPACETIME_MINIMAP,
       spatialCompile: window.ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE,
       personTracks: window.ATLAS_PERSON_SPACETIME_PERSON_TRACKS,
       politicalPlacement: window.ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT,
@@ -325,6 +327,10 @@
     return `<section class="spacetime-density-legend card"><div><strong>${escapeHtml(field.legend_label)}</strong><span>최대 셀 <b>${field.max_count}</b>명 · 표시 고유 인물 <b>${field.covered_person_count}</b>명${filtered ? " · 검색 필터 적용" : ""}</span></div><small>${escapeHtml(field.interpretation_note)}</small></section>`;
   }
 
+  function renderMinimap() {
+    return `<aside class="spacetime-minimap" aria-label="전체 시공간 미니맵"><div class="spacetime-minimap-head"><strong>전체 시공간</strong><span>클릭·드래그 이동</span></div><div id="spacetimeMinimapSurface" class="spacetime-minimap-surface" aria-label="현재 전체 시공간과 카메라 범위"><canvas id="spacetimeMinimapCanvas" class="spacetime-minimap-canvas" aria-hidden="true"></canvas><div id="spacetimeMinimapViewport" class="spacetime-minimap-viewport" aria-hidden="true"></div><i id="spacetimeMinimapSelected" class="spacetime-minimap-selected" aria-hidden="true"></i></div><output id="spacetimeMinimapStatus" class="spacetime-minimap-status">현재 화면</output></aside>`;
+  }
+
   function renderRails(tracks, projection, contentWidth, opacity) {
     if (opacity <= 0.01) return "";
     return tracks.flatMap((track) => (track.primary_segments || []).map((segment) => {
@@ -376,6 +382,134 @@
     scroll.scrollTop = target.top;
     updateCameraPosition(scroll, projection);
     return true;
+  }
+
+  function updateMinimapViewport(mount, scroll, contentWidth, timelineHeight) {
+    const surface = mount.querySelector("#spacetimeMinimapSurface");
+    const viewport = mount.querySelector("#spacetimeMinimapViewport");
+    if (!surface || !viewport || !scroll) return;
+    const { minimap } = runtime();
+    const size = { width: surface.clientWidth, height: surface.clientHeight };
+    if (!(size.width > 0) || !(size.height > 0)) return;
+    const rect = minimap.viewportRect(
+      { left: scroll.scrollLeft, top: scroll.scrollTop },
+      { width: scroll.clientWidth, height: scroll.clientHeight },
+      { width: contentWidth, height: timelineHeight },
+      size,
+      { left: AXIS_WIDTH, top: TIME_CAMERA_HEADER_HEIGHT }
+    );
+    viewport.style.left = `${rect.left}px`;
+    viewport.style.top = `${rect.top}px`;
+    viewport.style.width = `${rect.width}px`;
+    viewport.style.height = `${rect.height}px`;
+    const status = mount.querySelector("#spacetimeMinimapStatus");
+    if (status) status.textContent = `현재 화면 ${Math.round(rect.width / size.width * 100)}% × ${Math.round(rect.height / size.height * 100)}%`;
+  }
+
+  function drawMinimap(mount, allProjectedTracks, activePersonIds, regions, eras, contentWidth, timelineHeight) {
+    const surface = mount.querySelector("#spacetimeMinimapSurface");
+    const canvas = mount.querySelector("#spacetimeMinimapCanvas");
+    const selectedMarker = mount.querySelector("#spacetimeMinimapSelected");
+    if (!surface || !canvas) return;
+    const { minimap } = runtime();
+    const width = surface.clientWidth;
+    const height = surface.clientHeight;
+    if (!(width > 0) || !(height > 0)) return;
+    const dpr = Math.max(1, Math.min(2, Number(window.devicePixelRatio) || 1));
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+    const context = canvas.getContext("2d");
+    if (!context) return;
+    context.setTransform(dpr, 0, 0, dpr, 0, 0);
+    context.clearRect(0, 0, width, height);
+    context.fillStyle = "#f8fafc";
+    context.fillRect(0, 0, width, height);
+    context.strokeStyle = "#d8e1ec";
+    context.lineWidth = 1;
+    for (const region of regions.slice(1)) {
+      const x = minimap.projectVerticalLine(region.left, { width: contentWidth, height: timelineHeight }, { width, height });
+      context.beginPath();
+      context.moveTo(Math.round(x) + 0.5, 0);
+      context.lineTo(Math.round(x) + 0.5, height);
+      context.stroke();
+    }
+    context.strokeStyle = "#e4e9f0";
+    for (const era of eras.slice(1)) {
+      const y = minimap.projectHorizontalLine(era.top, { width: contentWidth, height: timelineHeight }, { width, height });
+      context.beginPath();
+      context.moveTo(0, Math.round(y) + 0.5);
+      context.lineTo(width, Math.round(y) + 0.5);
+      context.stroke();
+    }
+    const points = minimap.projectItems(allProjectedTracks, { width: contentWidth, height: timelineHeight }, { width, height });
+    const filtered = activePersonIds.size < allProjectedTracks.length;
+    context.fillStyle = filtered ? "rgba(96,124,169,.18)" : "rgba(96,124,169,.52)";
+    for (const point of points) {
+      context.beginPath();
+      context.arc(point.minimap_x, point.minimap_y, 1.25, 0, Math.PI * 2);
+      context.fill();
+    }
+    if (filtered) {
+      context.fillStyle = "rgba(67,91,132,.86)";
+      for (const point of points) {
+        if (!activePersonIds.has(point.person_id)) continue;
+        context.beginPath();
+        context.arc(point.minimap_x, point.minimap_y, 1.8, 0, Math.PI * 2);
+        context.fill();
+      }
+    }
+    const selected = points.find((point) => point.person_id === selectedPersonId) || null;
+    if (selectedMarker) {
+      selectedMarker.hidden = !selected;
+      if (selected) {
+        selectedMarker.style.left = `${selected.minimap_x}px`;
+        selectedMarker.style.top = `${selected.minimap_y}px`;
+      }
+    }
+  }
+
+  function bindMinimap(mount, scroll, projection, allProjectedTracks, activePersonIds, regions, eras, contentWidth, timelineHeight) {
+    const surface = mount.querySelector("#spacetimeMinimapSurface");
+    if (!surface || !scroll) return;
+    const { minimap } = runtime();
+    drawMinimap(mount, allProjectedTracks, activePersonIds, regions, eras, contentWidth, timelineHeight);
+    updateMinimapViewport(mount, scroll, contentWidth, timelineHeight);
+    scroll.addEventListener("scroll", () => updateMinimapViewport(mount, scroll, contentWidth, timelineHeight), { passive: true });
+    let dragging = false;
+    const moveCamera = (event) => {
+      const rect = surface.getBoundingClientRect();
+      const size = { width: surface.clientWidth, height: surface.clientHeight };
+      if (!(size.width > 0) || !(size.height > 0)) return;
+      const point = minimap.localPoint({ x: event.clientX, y: event.clientY }, rect, size);
+      const target = minimap.scrollTargetForMinimapPoint(
+        point,
+        { width: scroll.clientWidth, height: scroll.clientHeight },
+        { width: contentWidth, height: timelineHeight },
+        size,
+        { left: AXIS_WIDTH, top: TIME_CAMERA_HEADER_HEIGHT }
+      );
+      scroll.scrollLeft = target.left;
+      scroll.scrollTop = target.top;
+      updateCameraPosition(scroll, projection);
+      updateMinimapViewport(mount, scroll, contentWidth, timelineHeight);
+    };
+    surface.addEventListener("pointerdown", (event) => {
+      dragging = true;
+      surface.setPointerCapture?.(event.pointerId);
+      moveCamera(event);
+    });
+    surface.addEventListener("pointermove", (event) => {
+      if (!dragging) return;
+      moveCamera(event);
+    });
+    const stopDragging = (event) => {
+      dragging = false;
+      if (surface.hasPointerCapture?.(event.pointerId)) surface.releasePointerCapture(event.pointerId);
+    };
+    surface.addEventListener("pointerup", stopDragging);
+    surface.addEventListener("pointercancel", stopDragging);
   }
 
   function bindCameraViewport(mount, projection, navigationItems) {
@@ -441,14 +575,16 @@
     const timelineHeight = projection.height;
     const compiled = compileAtlas();
     const needle = query.trim().toLocaleLowerCase("ko");
-    const visibleTracks = needle ? compiled.partitioned.tracks.filter((track) => trackSearchable(track).includes(needle)) : compiled.partitioned.tracks;
     const baseWorldWidth = Math.max(MIN_WORLD_WIDTH, Math.floor((Number(mount.clientWidth) || window.innerWidth || 1280) - AXIS_WIDTH - 2));
     const spaceZoom = horizontalViewMode === "detail" ? DETAIL_SPACE_ZOOM : 1;
     const contentWidth = baseWorldWidth * spaceZoom;
     const regions = spaceAxis.stableRegionLayout(compiled.continuum, contentWidth);
     const spaceHeader = semanticAxis.buildSpaceHeaderPlan(compiled.continuum, contentWidth, spaceZoom);
     const timeAxis = semanticAxis.buildTimeAxisPlan(timeline, projection, timeCameraZoom);
-    const projectedTracks = visibleTracks.map((track) => exploration.projectTrack(track, projection, contentWidth)).filter(Boolean);
+    const allProjectedTracks = compiled.partitioned.tracks.map((track) => exploration.projectTrack(track, projection, contentWidth)).filter(Boolean);
+    const projectedTracks = needle ? allProjectedTracks.filter((item) => trackSearchable(item.track).includes(needle)) : allProjectedTracks;
+    const visibleTracks = projectedTracks.map((item) => item.track);
+    const activePersonIds = new Set(projectedTracks.map((item) => item.person_id));
     const navigationItems = exploration.orderItems(projectedTracks);
     const searchItems = needle ? exploration.rankSearchItems(projectedTracks, needle) : [];
     const lodWeights = lod.lodWeights({ timeZoom: timeCameraZoom, spaceZoom });
@@ -480,7 +616,7 @@
     }).join("") : "";
 
     mount.innerHTML = `<section class="spacetime-toolbar card">
-      <div class="spacetime-toolbar-copy"><p class="eyebrow">PERSON SPACETIME ATLAS</p><h2>시공간 인물도</h2><p>하나의 연속된 역사 공간에서 Person track을 탐색합니다. 100% 세계 보기에서도 충돌 없이 배치 가능한 인물 이름은 기본으로 유지하며, 등록 인물 밀도를 배경으로 함께 보여줍니다. 검색 결과나 인물을 선택하면 현재 축척을 유지한 채 해당 시공간으로 이동하고, 자세히 보기에서만 공간·시간 해상도를 올립니다. 좌표 자체는 검색·밀도·줌에 따라 바뀌지 않으며 opposes는 자기 위치를 결정하지 않습니다.</p><div class="spacetime-explore-help">방향키 이동 · PageUp/PageDown 큰 이동 · Shift+↑/↓ 이전/다음 인물 · F 선택 위치 · +/- 시간 확대 · Esc 선택 해제</div></div>
+      <div class="spacetime-toolbar-copy"><p class="eyebrow">PERSON SPACETIME ATLAS</p><h2>시공간 인물도</h2><p>하나의 연속된 역사 공간에서 Person track을 탐색합니다. 100% 세계 보기에서도 충돌 없이 배치 가능한 인물 이름은 기본으로 유지하며, 등록 인물 밀도를 배경으로 함께 보여줍니다. 검색 결과나 인물을 선택하면 현재 축척을 유지한 채 해당 시공간으로 이동하고, 자세히 보기에서만 공간·시간 해상도를 올립니다. 우하단 미니맵은 같은 world 좌표를 축약해 전체 위치와 현재 화면 범위를 보여주며 클릭·드래그로 카메라만 이동합니다. 좌표 자체는 검색·밀도·줌에 따라 바뀌지 않으며 opposes는 자기 위치를 결정하지 않습니다.</p><div class="spacetime-explore-help">방향키 이동 · PageUp/PageDown 큰 이동 · Shift+↑/↓ 이전/다음 인물 · F 선택 위치 · +/- 시간 확대 · Esc 선택 해제</div></div>
       <div class="spacetime-controls">
         <label>검색<input id="spacetimeSearch" type="search" value="${escapeHtml(query)}" placeholder="인물·정치체·역할 검색" /></label>
         <label>공간 보기<select id="spacetimeHorizontalMode"><option value="overview"${horizontalViewMode === "overview" ? " selected" : ""}>전체 보기</option><option value="detail"${horizontalViewMode === "detail" ? " selected" : ""}>공간 확대</option></select></label>
@@ -509,10 +645,12 @@
         ${pointsHtml}${labelsHtml}
         ${horizontalViewMode === "detail" ? renderActivityGlyphs(visibleTracks, projection, contentWidth, lodWeights.activities) : ""}
       </div>
-    </div></section>
+    </div>${renderMinimap()}</section>
     <section class="spacetime-unresolved-grid"><article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">PLACEMENT REVIEW</p><h3>위치 미확정</h3></div><strong>${compiled.unresolvedPosition.length}</strong></div><p>검토된 정치체 권역·장소 기능으로 가로 위치를 확정할 수 없어 좌표를 만들지 않은 Activity입니다.</p>${unresolvedRows(compiled.unresolvedPosition)}</article><article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">CHRONOLOGY REVIEW</p><h3>연대 미확정</h3></div><strong>${compiled.unresolvedChronology.length}</strong></div><p>Activity 시작·종료 연도를 둘 다 확정할 수 없는 경우 세로축에 임의 기간을 만들지 않습니다.</p>${unresolvedRows(compiled.unresolvedChronology)}</article></section>`;
 
     bindCameraViewport(mount, projection, navigationItems);
+    const scroll = mount.querySelector(".spacetime-scroll");
+    bindMinimap(mount, scroll, projection, allProjectedTracks, activePersonIds, regions, eras, contentWidth, timelineHeight);
     const searchInput = mount.querySelector("#spacetimeSearch");
     searchInput?.addEventListener("input", (event) => {
       query = event.target.value || "";
@@ -547,9 +685,9 @@
       if (personId) selectPerson(mount, personId, { focus: true });
     });
     mount.querySelector("#spacetimeFocusPerson")?.addEventListener("click", () => {
-      const scroll = mount.querySelector(".spacetime-scroll");
-      focusPersonInViewport(scroll, projection, navigationItems, selectedPersonId);
-      scroll?.focus();
+      const activeScroll = mount.querySelector(".spacetime-scroll");
+      focusPersonInViewport(activeScroll, projection, navigationItems, selectedPersonId);
+      activeScroll?.focus();
     });
     mount.querySelector("#spacetimeDetailPerson")?.addEventListener("click", () => selectPerson(mount, selectedPersonId, { focus: true, detail: true }));
     mount.querySelector("#spacetimeClearPerson")?.addEventListener("click", () => clearSelection(mount));
