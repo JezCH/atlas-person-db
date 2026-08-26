@@ -30,43 +30,80 @@ function button(textContent = "") {
   };
 }
 
-test("spacetime zoom-bound affordance is loaded by the production page", () => {
-  assert.match(indexSource, /atlas-person-spacetime-control-state\.css\?v=20260826-zoom-bound-affordance/);
-  assert.match(indexSource, /atlas-person-spacetime-control-state\.js\?v=20260826-zoom-bound-affordance/);
-  assert.match(controlCss, /\.spacetime-time-camera button:disabled\{/);
-});
-
-test("minimum zoom disables controls that cannot change the camera", () => {
-  const api = loadControlApi();
+function zoomMount(current = "100%") {
   const zoomOut = button();
-  const zoomValue = button("100%");
+  const zoomValue = button(current);
+  const zoomIn = button();
   const reset = button("100%");
   const nodes = {
     "#spacetimeTimeZoomOut": zoomOut,
     "#spacetimeTimeZoomValue": zoomValue,
+    "#spacetimeTimeZoomIn": zoomIn,
     "#spacetimeTimeZoomReset": reset
   };
-  const mount = { querySelector(selector) { return nodes[selector] || null; } };
+  return {
+    mount: { querySelector(selector) { return nodes[selector] || null; } },
+    zoomOut,
+    zoomValue,
+    zoomIn,
+    reset
+  };
+}
 
-  assert.equal(api.syncZoomControlState(mount), true);
-  assert.equal(zoomOut.disabled, true);
-  assert.equal(reset.disabled, true);
-  assert.equal(zoomOut.attributes.get("aria-disabled"), "true");
-  assert.equal(reset.attributes.get("aria-disabled"), "true");
-
-  zoomValue.textContent = "135%";
-  assert.equal(api.syncZoomControlState(mount), true);
-  assert.equal(zoomOut.disabled, false);
-  assert.equal(reset.disabled, false);
-  assert.equal(zoomOut.attributes.get("aria-disabled"), "false");
+test("spacetime zoom-bound affordance is loaded by the production page", () => {
+  assert.match(indexSource, /atlas-person-spacetime-control-state\.css\?v=20260826-zoom-bound-affordance/);
+  assert.match(indexSource, /atlas-person-spacetime-control-state\.js\?v=20260826-zoom-bounds-affordance/);
+  assert.match(controlCss, /\.spacetime-time-camera button:disabled\{/);
 });
 
-test("minimum bound is derived from the rendered reset control and stays aligned with the renderer contract", () => {
+test("minimum zoom disables only controls that cannot change the camera", () => {
+  const api = loadControlApi();
+  const state = zoomMount("100%");
+
+  assert.equal(api.syncZoomControlState(state.mount), true);
+  assert.equal(state.zoomOut.disabled, true);
+  assert.equal(state.zoomIn.disabled, false);
+  assert.equal(state.reset.disabled, true);
+  assert.equal(state.zoomOut.attributes.get("aria-disabled"), "true");
+  assert.equal(state.zoomIn.attributes.get("aria-disabled"), "false");
+  assert.equal(state.reset.attributes.get("aria-disabled"), "true");
+
+  state.zoomValue.textContent = "135%";
+  assert.equal(api.syncZoomControlState(state.mount), true);
+  assert.equal(state.zoomOut.disabled, false);
+  assert.equal(state.zoomIn.disabled, false);
+  assert.equal(state.reset.disabled, false);
+});
+
+test("maximum zoom disables zoom-in while preserving zoom-out and reset", () => {
+  const api = loadControlApi();
+  const state = zoomMount("800%");
+
+  assert.equal(api.syncZoomControlState(state.mount), true);
+  assert.equal(state.zoomOut.disabled, false);
+  assert.equal(state.zoomIn.disabled, true);
+  assert.equal(state.reset.disabled, false);
+  assert.equal(state.zoomIn.attributes.get("aria-disabled"), "true");
+
+  state.zoomValue.textContent = "605%";
+  assert.equal(api.syncZoomControlState(state.mount), true);
+  assert.equal(state.zoomIn.disabled, false);
+  assert.equal(state.zoomIn.attributes.get("aria-disabled"), "false");
+});
+
+test("visible zoom bounds stay aligned with the renderer camera contract", () => {
   const api = loadControlApi();
   assert.equal(api.parsePercent("100%"), 100);
   assert.equal(api.parsePercent(" 135% "), 135);
   assert.equal(api.parsePercent("not a zoom"), null);
-  assert.match(viewSource, /const TIME_CAMERA_MIN_ZOOM = 1;/);
+
+  const minMatch = viewSource.match(/const TIME_CAMERA_MIN_ZOOM = ([\d.]+);/);
+  const maxMatch = viewSource.match(/const TIME_CAMERA_MAX_ZOOM = ([\d.]+);/);
+  const adapterMaxMatch = controlSource.match(/const MAXIMUM_PERCENT = ([\d.]+);/);
+  assert.ok(minMatch);
+  assert.ok(maxMatch);
+  assert.ok(adapterMaxMatch);
+  assert.equal(Number(minMatch[1]) * 100, 100);
+  assert.equal(Number(adapterMaxMatch[1]), Number(maxMatch[1]) * 100);
   assert.match(viewSource, /id="spacetimeTimeZoomReset"[^>]*>100%<\/button>/);
-  assert.doesNotMatch(controlSource, /TIME_CAMERA_MAX_ZOOM|800\s*%/);
 });
