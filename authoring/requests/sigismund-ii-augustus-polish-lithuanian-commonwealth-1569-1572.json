@@ -1,13 +1,13 @@
 {
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:sigismund-ii-augustus:polish-lithuanian-commonwealth:king:1569-1572:v1",
+  "request_id": "authoring:sigismund-ii-augustus:polish-lithuanian-commonwealth:king:1569-1572:v2",
   "person": {
     "canonical_name_en": "Sigismund II Augustus",
     "display_name_ko": "지그문트 2세 아우구스트"
   },
   "polity": {
-    "canonical_name_en": "Polish-Lithuanian Commonwealth",
+    "canonical_name_en": "Polish–Lithuanian Commonwealth",
     "display_name_ko": "폴란드-리투아니아 연방"
   },
   "activity": {
@@ -27,7 +27,7 @@
     "end_calendar": "julian",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "The Union of Lublin was concluded on 1 July 1569 and created the Polish-Lithuanian Commonwealth with a common monarch. Sigismund II Augustus remained its monarch until his death on 7 July 1572. ATLAS begins this Commonwealth Activity with the creation of the real union in 1569; it does not retroactively label his earlier Polish and Lithuanian rulership as rule of the Commonwealth."
+    "notes": "The Union of Lublin was concluded on 1 July 1569 and created the Polish–Lithuanian Commonwealth with a common monarch. Sigismund II Augustus remained its monarch until his death on 7 July 1572. ATLAS begins this Commonwealth Activity with the creation of the real union in 1569; it does not retroactively label his earlier Polish and Lithuanian rulership as rule of the Commonwealth."
   },
   "sources": [
     {
