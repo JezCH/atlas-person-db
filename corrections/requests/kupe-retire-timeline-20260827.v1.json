@@ -1,0 +1,21 @@
+{
+  "schema": "atlas-correction-manifest/v1.1",
+  "review_status": "approved",
+  "request_id": "correction:kupe:retire-legacy-timeline-activity:2026-08-27:v1",
+  "operations": [
+    {
+      "type": "retire_activity",
+      "relationship_id": "3d7aeb05-3aaa-5c24-8e32-e9fbef9115e8",
+      "expected": {
+        "person_id": "f2eb1ca0-b37d-5497-a40d-a5df55ee8a2c",
+        "polity_id": "769e6a5e-b49b-5fec-9a2b-fa78999763a1",
+        "role_id": "cf340c82-93c7-5b26-a4f2-9186f27bd8fe",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 900,
+        "activity_end": 1200,
+        "notes": "Traditional Polynesian navigator and ancestral figure; chronology varies widely by tradition.",
+        "legacy_source_key": "pending-records-supplement-3.json:21:9eee167489e53d5c"
+      }
+    }
+  ]
+}
