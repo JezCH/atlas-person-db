@@ -7,7 +7,9 @@ const require = createRequire(import.meta.url);
 const spatialCompile = require("../atlas-person-spacetime-spatial-compile.js");
 const registryApi = require("../atlas-place-spatial-registry.js");
 const spaceAxis = require("../atlas-person-spacetime-space-axis.js");
+const model = require("../atlas-person-spacetime-model.js");
 const registry = JSON.parse(readFileSync(new URL("../atlas-place-spatial-registry.json", import.meta.url), "utf8"));
+const spatialIndex = JSON.parse(readFileSync(new URL("../atlas-polity-spatial-index.json", import.meta.url), "utf8"));
 const continuum = spaceAxis.createSpatialContinuum();
 const placeById = registryApi.createPlaceLookup(registry);
 
@@ -44,6 +46,34 @@ test("all reviewed C2 bindings compile from macroregion to their reviewed subreg
     assert.equal(compiled.x_anchor, subregion.center_space, binding.place_id);
     assert.equal(compiled.x_min, subregion.min_space, binding.place_id);
     assert.equal(compiled.x_max, subregion.max_space, binding.place_id);
+  }
+});
+
+test("reviewed bindings activate through the real spatial-index resolver, not only synthetic compiler inputs", () => {
+  const lookup = model.createSpatialLookup(spatialIndex);
+  const fixtures = [
+    ["place-rome", "polity-roman-empire", 100, 101],
+    ["place-pella", "polity-kingdom-of-macedon", -300, -299],
+    ["place-ankara", "polity-republic-of-turkey", 1950, 1951],
+    ["place-rio-de-janeiro", "polity-second-brazilian-republic", 1940, 1941],
+    ["place-samarkand", "polity-timurid-empire", 1400, 1401]
+  ];
+
+  for (const [placeId, polityId, startYear, endYear] of fixtures) {
+    const resolved = model.resolveActivityPlacement({
+      id: `activity-integration-${placeId}`,
+      polity: { id: polityId },
+      start: { year: startYear },
+      end: { year: endYear }
+    }, lookup);
+    assert.equal(resolved.status, "placed", placeId);
+
+    const compiled = spatialCompile.compileActivityPlacement(resolved, continuum);
+    assert.equal(compiled.status, "placed", placeId);
+    assert.equal(compiled.segments.length, 1, placeId);
+    assert.equal(compiled.segments[0].place_id, placeId, placeId);
+    assert.equal(compiled.segments[0].spatial_precision, "subregion", placeId);
+    assert.equal(compiled.segments[0].subregion_code, placeById.get(placeId).subregion_code, placeId);
   }
 });
 
