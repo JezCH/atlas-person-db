@@ -19,7 +19,7 @@ jobs:
       github.event.issue.number == 431 &&
       !github.event.issue.pull_request &&
       github.actor == 'JezCH' &&
-      (startsWith(github.event.comment.body, '/namuwiki-link') || startsWith(github.event.comment.body, '/namuwiki-not-found'))
+      (startsWith(github.event.comment.body, '/namuwiki-link') || startsWith(github.event.comment.body, '/namuwiki-not-found') || startsWith(github.event.comment.body, '/namuwiki-batch'))
     runs-on: ubuntu-latest
     environment: production
     env:
@@ -33,30 +33,20 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Parse exact command
+      - name: Parse and validate exact command
         id: command
         shell: bash
         env:
           COMMENT_BODY: ${{ github.event.comment.body }}
         run: |
           set -Eeuo pipefail
-          UUID_RE='[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}'
-          STATUS=''
-          NAMUWIKI_URL=''
-          if [[ "$COMMENT_BODY" =~ ^/namuwiki-link[[:space:]]+($UUID_RE)[[:space:]]+(https://namu\.wiki/w/[^[:space:]]+)[[:space:]]*$ ]]; then
-            PERSON_ID="${BASH_REMATCH[1],,}"
-            NAMUWIKI_URL="${BASH_REMATCH[2]}"
-            STATUS='linked'
-          elif [[ "$COMMENT_BODY" =~ ^/namuwiki-not-found[[:space:]]+($UUID_RE)[[:space:]]*$ ]]; then
-            PERSON_ID="${BASH_REMATCH[1],,}"
-            STATUS='not_found'
-          else
-            echo "Invalid command. Expected either /namuwiki-link <person_uuid> <canonical_namuwiki_url> or /namuwiki-not-found <person_uuid>" >&2
-            exit 2
-          fi
-          printf 'person_id=%s\n' "$PERSON_ID" >> "$GITHUB_OUTPUT"
-          printf 'status=%s\n' "$STATUS" >> "$GITHUB_OUTPUT"
-          printf 'url=%s\n' "$NAMUWIKI_URL" >> "$GITHUB_OUTPUT"
+          COMMANDS_FILE="$RUNNER_TEMP/atlas-namuwiki-commands.json"
+          node scripts/parse-namuwiki-command.mjs "$COMMANDS_FILE"
+          jq -e 'type == "array" and length > 0 and length <= 25' "$COMMANDS_FILE" >/dev/null
+          COMMAND_COUNT="$(jq -r 'length' "$COMMANDS_FILE")"
+          echo "ATLAS_NAMUWIKI_COMMANDS_FILE=$COMMANDS_FILE" >> "$GITHUB_ENV"
+          printf 'count=%s\n' "$COMMAND_COUNT" >> "$GITHUB_OUTPUT"
+          echo "Validated ${COMMAND_COUNT} NamuWiki reference command(s) before any write."
 
       - name: Resolve deployed runtime compatibility
         shell: bash
@@ -112,89 +102,108 @@ jobs:
             | jq -er '.value' > "$TOKEN_FILE"
           test -s "$TOKEN_FILE"
 
-      - name: Apply one NamuWiki reference
-        id: apply
+      - name: Apply and verify NamuWiki references sequentially
         shell: bash
-        env:
-          PERSON_ID: ${{ steps.command.outputs.person_id }}
-          REFERENCE_STATUS: ${{ steps.command.outputs.status }}
-          NAMUWIKI_URL: ${{ steps.command.outputs.url }}
         run: |
           set -Eeuo pipefail
           TOKEN_FILE="$RUNNER_TEMP/atlas-namuwiki-link-oidc"
-          RESPONSE_FILE="$RUNNER_TEMP/atlas-namuwiki-link-response.json"
-          PAYLOAD="$(jq -cn \
-            --arg runtime_sha "$ATLAS_RUNTIME_SHA" \
-            --arg workflow_sha "$GITHUB_SHA" \
-            --arg person_id "$PERSON_ID" \
-            --arg status "$REFERENCE_STATUS" \
-            --arg url "$NAMUWIKI_URL" \
-            'if $status == "linked" then
-               {runtime_sha:$runtime_sha,workflow_sha:$workflow_sha,person_id:$person_id,url:$url}
-             else
-               {runtime_sha:$runtime_sha,workflow_sha:$workflow_sha,person_id:$person_id,status:$status}
-             end')"
-          HTTP_STATUS="$(curl --silent --show-error \
-            --output "$RESPONSE_FILE" \
-            --write-out '%{http_code}' \
-            --request POST \
-            --header 'content-type: application/json' \
-            --header "Authorization: Bearer $(cat "$TOKEN_FILE")" \
-            --data "$PAYLOAD" \
-            "$ATLAS_NAMUWIKI_LINK_ENDPOINT")"
-          cat "$RESPONSE_FILE"
-          test "$HTTP_STATUS" = "200"
-          if [[ "$REFERENCE_STATUS" = 'linked' ]]; then
-            jq -e '.ok == true and .committed == true and .external_reference.status == "linked" and (.external_reference.url | type == "string") and (.external_reference.document_title | type == "string")' "$RESPONSE_FILE" >/dev/null
-          else
-            jq -e '.ok == true and .committed == true and .external_reference.status == "not_found" and .external_reference.url == null and .external_reference.document_title == null' "$RESPONSE_FILE" >/dev/null
-          fi
-          printf 'status=%s\n' "$(jq -r '.external_reference.status' "$RESPONSE_FILE")" >> "$GITHUB_OUTPUT"
-          printf 'canonical_url=%s\n' "$(jq -r '.external_reference.url // ""' "$RESPONSE_FILE")" >> "$GITHUB_OUTPUT"
-          printf 'document_title=%s\n' "$(jq -r '.external_reference.document_title // ""' "$RESPONSE_FILE")" >> "$GITHUB_OUTPUT"
-          printf 'replay=%s\n' "$(jq -r '.replay' "$RESPONSE_FILE")" >> "$GITHUB_OUTPUT"
+          RESULTS_FILE="$RUNNER_TEMP/atlas-namuwiki-results.json"
+          printf '[]\n' > "$RESULTS_FILE"
+          echo "ATLAS_NAMUWIKI_RESULTS_FILE=$RESULTS_FILE" >> "$GITHUB_ENV"
 
-      - name: Production Person read-back
-        shell: bash
-        env:
-          PERSON_ID: ${{ steps.command.outputs.person_id }}
-          EXPECTED_STATUS: ${{ steps.apply.outputs.status }}
-          EXPECTED_URL: ${{ steps.apply.outputs.canonical_url }}
-          EXPECTED_TITLE: ${{ steps.apply.outputs.document_title }}
-        run: |
-          set -Eeuo pipefail
-          READ_FILE="$RUNNER_TEMP/atlas-namuwiki-link-readback.json"
-          curl --fail --silent --show-error \
-            --get \
-            --data-urlencode "person_id=$PERSON_ID" \
-            "$ATLAS_PERSON_READ_ENDPOINT" > "$READ_FILE"
-          cat "$READ_FILE"
-          ACTUAL_STATUS="$(jq -er '.person.external_references.namuwiki.status' "$READ_FILE")"
-          test "$ACTUAL_STATUS" = "$EXPECTED_STATUS"
-          if [[ "$EXPECTED_STATUS" = 'linked' ]]; then
-            ACTUAL_URL="$(jq -er '.person.external_references.namuwiki.url' "$READ_FILE")"
-            ACTUAL_TITLE="$(jq -er '.person.external_references.namuwiki.document_title' "$READ_FILE")"
-            test "$ACTUAL_URL" = "$EXPECTED_URL"
-            test "$ACTUAL_TITLE" = "$EXPECTED_TITLE"
-          else
-            jq -e '.person.external_references.namuwiki.url == null and .person.external_references.namuwiki.document_title == null' "$READ_FILE" >/dev/null
-          fi
+          while IFS= read -r ITEM; do
+            PERSON_ID="$(jq -r '.person_id' <<<"$ITEM")"
+            REFERENCE_STATUS="$(jq -r '.status' <<<"$ITEM")"
+            NAMUWIKI_URL="$(jq -r '.url // ""' <<<"$ITEM")"
+            echo "ATLAS_NAMUWIKI_CURRENT_PERSON_ID=$PERSON_ID" >> "$GITHUB_ENV"
+
+            RESPONSE_FILE="$RUNNER_TEMP/atlas-namuwiki-response-${PERSON_ID}.json"
+            PAYLOAD="$(jq -cn \
+              --arg runtime_sha "$ATLAS_RUNTIME_SHA" \
+              --arg workflow_sha "$GITHUB_SHA" \
+              --arg person_id "$PERSON_ID" \
+              --arg status "$REFERENCE_STATUS" \
+              --arg url "$NAMUWIKI_URL" \
+              'if $status == "linked" then
+                 {runtime_sha:$runtime_sha,workflow_sha:$workflow_sha,person_id:$person_id,url:$url}
+               else
+                 {runtime_sha:$runtime_sha,workflow_sha:$workflow_sha,person_id:$person_id,status:$status}
+               end')"
+            HTTP_STATUS="$(curl --silent --show-error \
+              --output "$RESPONSE_FILE" \
+              --write-out '%{http_code}' \
+              --request POST \
+              --header 'content-type: application/json' \
+              --header "Authorization: Bearer $(cat "$TOKEN_FILE")" \
+              --data "$PAYLOAD" \
+              "$ATLAS_NAMUWIKI_LINK_ENDPOINT")"
+            cat "$RESPONSE_FILE"
+            test "$HTTP_STATUS" = "200"
+
+            if [[ "$REFERENCE_STATUS" = 'linked' ]]; then
+              jq -e '.ok == true and .committed == true and .external_reference.status == "linked" and (.external_reference.url | type == "string") and (.external_reference.document_title | type == "string")' "$RESPONSE_FILE" >/dev/null
+            else
+              jq -e '.ok == true and .committed == true and .external_reference.status == "not_found" and .external_reference.url == null and .external_reference.document_title == null' "$RESPONSE_FILE" >/dev/null
+            fi
+
+            EXPECTED_STATUS="$(jq -r '.external_reference.status' "$RESPONSE_FILE")"
+            EXPECTED_URL="$(jq -r '.external_reference.url // ""' "$RESPONSE_FILE")"
+            EXPECTED_TITLE="$(jq -r '.external_reference.document_title // ""' "$RESPONSE_FILE")"
+            REPLAY="$(jq -r '.replay' "$RESPONSE_FILE")"
+
+            READ_FILE="$RUNNER_TEMP/atlas-namuwiki-readback-${PERSON_ID}.json"
+            curl --fail --silent --show-error \
+              --get \
+              --data-urlencode "person_id=$PERSON_ID" \
+              "$ATLAS_PERSON_READ_ENDPOINT" > "$READ_FILE"
+            cat "$READ_FILE"
+            ACTUAL_STATUS="$(jq -er '.person.external_references.namuwiki.status' "$READ_FILE")"
+            test "$ACTUAL_STATUS" = "$EXPECTED_STATUS"
+            if [[ "$EXPECTED_STATUS" = 'linked' ]]; then
+              ACTUAL_URL="$(jq -er '.person.external_references.namuwiki.url' "$READ_FILE")"
+              ACTUAL_TITLE="$(jq -er '.person.external_references.namuwiki.document_title' "$READ_FILE")"
+              test "$ACTUAL_URL" = "$EXPECTED_URL"
+              test "$ACTUAL_TITLE" = "$EXPECTED_TITLE"
+            else
+              jq -e '.person.external_references.namuwiki.url == null and .person.external_references.namuwiki.document_title == null' "$READ_FILE" >/dev/null
+            fi
+
+            RESULT="$(jq -cn \
+              --arg person_id "$PERSON_ID" \
+              --arg status "$EXPECTED_STATUS" \
+              --arg url "$EXPECTED_URL" \
+              --arg document_title "$EXPECTED_TITLE" \
+              --arg replay "$REPLAY" \
+              '{person_id:$person_id,status:$status,url:(if $url == "" then null else $url end),document_title:(if $document_title == "" then null else $document_title end),replay:$replay}')"
+            TEMP_RESULTS="${RESULTS_FILE}.tmp"
+            jq --argjson result "$RESULT" '. + [$result]' "$RESULTS_FILE" > "$TEMP_RESULTS"
+            mv "$TEMP_RESULTS" "$RESULTS_FILE"
+            echo "Verified $PERSON_ID as $EXPECTED_STATUS in Production."
+          done < <(jq -c '.[]' "$ATLAS_NAMUWIKI_COMMANDS_FILE")
+
+          test "$(jq -r 'length' "$RESULTS_FILE")" = "$(jq -r 'length' "$ATLAS_NAMUWIKI_COMMANDS_FILE")"
 
       - name: Comment verified result
         if: success()
         env:
           GH_TOKEN: ${{ github.token }}
-          PERSON_ID: ${{ steps.command.outputs.person_id }}
-          REFERENCE_STATUS: ${{ steps.apply.outputs.status }}
-          CANONICAL_URL: ${{ steps.apply.outputs.canonical_url }}
-          DOCUMENT_TITLE: ${{ steps.apply.outputs.document_title }}
-          REPLAY: ${{ steps.apply.outputs.replay }}
         run: |
           set -Eeuo pipefail
-          if [[ "$REFERENCE_STATUS" = 'linked' ]]; then
-            BODY="✅ NamuWiki link verified\n\nPerson: \`$PERSON_ID\`\nStatus: linked\nDocument: $DOCUMENT_TITLE\nURL: $CANONICAL_URL\nReplay: $REPLAY\nRun: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          COUNT="$(jq -r 'length' "$ATLAS_NAMUWIKI_RESULTS_FILE")"
+          if [[ "$COUNT" = '1' ]]; then
+            PERSON_ID="$(jq -r '.[0].person_id' "$ATLAS_NAMUWIKI_RESULTS_FILE")"
+            REFERENCE_STATUS="$(jq -r '.[0].status' "$ATLAS_NAMUWIKI_RESULTS_FILE")"
+            CANONICAL_URL="$(jq -r '.[0].url // ""' "$ATLAS_NAMUWIKI_RESULTS_FILE")"
+            DOCUMENT_TITLE="$(jq -r '.[0].document_title // ""' "$ATLAS_NAMUWIKI_RESULTS_FILE")"
+            REPLAY="$(jq -r '.[0].replay' "$ATLAS_NAMUWIKI_RESULTS_FILE")"
+            if [[ "$REFERENCE_STATUS" = 'linked' ]]; then
+              BODY="✅ NamuWiki link verified\n\nPerson: \`$PERSON_ID\`\nStatus: linked\nDocument: $DOCUMENT_TITLE\nURL: $CANONICAL_URL\nReplay: $REPLAY\nRun: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            else
+              BODY="✅ NamuWiki not-found verified\n\nPerson: \`$PERSON_ID\`\nStatus: not_found\nDocument: null\nURL: null\nReplay: $REPLAY\nRun: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            fi
           else
-            BODY="✅ NamuWiki not-found verified\n\nPerson: \`$PERSON_ID\`\nStatus: not_found\nDocument: null\nURL: null\nReplay: $REPLAY\nRun: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            LINES="$(jq -r '.[] | if .status == "linked" then "- `" + .person_id + "` — linked — " + .document_title + " — " + .url else "- `" + .person_id + "` — not_found" end' "$ATLAS_NAMUWIKI_RESULTS_FILE")"
+            BODY="✅ NamuWiki batch verified: ${COUNT}/${COUNT}\n\n${LINES}\n\nEvery item passed an exact Production read-back.\nRun: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           fi
           gh api "repos/${GITHUB_REPOSITORY}/issues/431/comments" -f body="$BODY" >/dev/null
 
@@ -204,5 +213,15 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -Eeuo pipefail
-          BODY="❌ NamuWiki reference command failed; no unverified success is accepted.\n\nRun: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          VERIFIED='0'
+          VERIFIED_LINES=''
+          if [[ -n "${ATLAS_NAMUWIKI_RESULTS_FILE:-}" && -f "$ATLAS_NAMUWIKI_RESULTS_FILE" ]]; then
+            VERIFIED="$(jq -r 'length' "$ATLAS_NAMUWIKI_RESULTS_FILE")"
+            VERIFIED_LINES="$(jq -r '.[] | "- `" + .person_id + "` — " + .status' "$ATLAS_NAMUWIKI_RESULTS_FILE")"
+          fi
+          BODY="❌ NamuWiki reference command failed. Verified before failure: ${VERIFIED}. Current person: ${ATLAS_NAMUWIKI_CURRENT_PERSON_ID:-not-started}. No unverified item is reported as successful."
+          if [[ -n "$VERIFIED_LINES" ]]; then
+            BODY="${BODY}\n\nVerified prefix:\n${VERIFIED_LINES}"
+          fi
+          BODY="${BODY}\n\nRun: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           gh api "repos/${GITHUB_REPOSITORY}/issues/431/comments" -f body="$BODY" >/dev/null
