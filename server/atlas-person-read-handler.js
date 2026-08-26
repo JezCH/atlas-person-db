@@ -6,6 +6,8 @@ const { requireDatabaseUrl, sendJson } = require("./atlas-normalized-read-handle
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const MAX_QUERY_LENGTH = 120;
+const MAX_LIST_LIMIT = 50;
+const NAMUWIKI_STATUS_VALUES = Object.freeze(["missing", "linked", "not_found"]);
 
 function requestQueryValue(req, key) {
   const direct = req?.query?.[key];
@@ -29,6 +31,14 @@ function personQueryFromRequest(req) {
   return requestQueryValue(req, "q");
 }
 
+function namuwikiStatusFromRequest(req) {
+  return requestQueryValue(req, "namuwiki_status");
+}
+
+function listLimitFromRequest(req) {
+  return requestQueryValue(req, "limit");
+}
+
 function normalizeSearchText(value) {
   return String(value || "").normalize("NFKC").trim().toLocaleLowerCase("und").replace(/\s+/gu, " ");
 }
@@ -41,6 +51,21 @@ function personMatchesQuery(person, query) {
     .map(normalizeSearchText)
     .filter(Boolean);
   return haystack.some((value) => value.includes(needle));
+}
+
+function personMatchesNamuWikiStatus(person, status) {
+  if (!status) return true;
+  const reference = person?.external_references?.namuwiki;
+  if (status === "missing") return reference == null;
+  return String(reference?.status || "") === status;
+}
+
+function parseListLimit(value) {
+  if (value == null) return null;
+  if (value === "__INVALID_MULTI__" || !/^[1-9][0-9]*$/.test(value)) return null;
+  const parsed = Number(value);
+  if (!Number.isSafeInteger(parsed) || parsed > MAX_LIST_LIMIT) return null;
+  return parsed;
 }
 
 function filteredSummary(persons) {
@@ -86,11 +111,34 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
       });
       return;
     }
-    if (requestedPersonId && requestedQuery) {
+
+    const requestedNamuWikiStatus = namuwikiStatusFromRequest(req);
+    if (requestedNamuWikiStatus === "__INVALID_MULTI__" ||
+        (requestedNamuWikiStatus != null && !NAMUWIKI_STATUS_VALUES.includes(requestedNamuWikiStatus))) {
+      sendJson(res, 400, {
+        ok: false,
+        code: "INVALID_NAMUWIKI_STATUS",
+        error: `namuwiki_status must be one of: ${NAMUWIKI_STATUS_VALUES.join(", ")}`
+      });
+      return;
+    }
+
+    const requestedLimitValue = listLimitFromRequest(req);
+    const requestedLimit = parseListLimit(requestedLimitValue);
+    if (requestedLimitValue != null && requestedLimit == null) {
+      sendJson(res, 400, {
+        ok: false,
+        code: "INVALID_LIST_LIMIT",
+        error: `limit must be an integer from 1 to ${MAX_LIST_LIMIT}`
+      });
+      return;
+    }
+
+    if (requestedPersonId && (requestedQuery || requestedNamuWikiStatus || requestedLimitValue != null)) {
       sendJson(res, 400, {
         ok: false,
         code: "PERSON_READ_MODE_CONFLICT",
-        error: "person_id and q cannot be combined"
+        error: "person_id cannot be combined with q, namuwiki_status, or limit"
       });
       return;
     }
@@ -124,8 +172,15 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
       }
 
       const data = await readPersons({ client });
-      if (requestedQuery) {
-        const filteredPersons = data.persons.filter((person) => personMatchesQuery(person, requestedQuery));
+      const hasListFilter = Boolean(requestedQuery || requestedNamuWikiStatus || requestedLimit != null);
+      if (hasListFilter) {
+        let filteredPersons = data.persons;
+        if (requestedQuery) filteredPersons = filteredPersons.filter((person) => personMatchesQuery(person, requestedQuery));
+        if (requestedNamuWikiStatus) {
+          filteredPersons = filteredPersons.filter((person) => personMatchesNamuWikiStatus(person, requestedNamuWikiStatus));
+        }
+        const matchedTotal = filteredPersons.length;
+        if (requestedLimit != null) filteredPersons = filteredPersons.slice(0, requestedLimit);
         const persons = await readListSemantics({ client, persons: filteredPersons });
         sendJson(res, 200, {
           ok: true,
@@ -134,7 +189,9 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
           mode: "list",
           ...data,
           summary: filteredSummary(persons),
-          query: requestedQuery,
+          query: requestedQuery || null,
+          ...(requestedNamuWikiStatus ? { namuwiki_status: requestedNamuWikiStatus } : {}),
+          ...(requestedLimit != null ? { limit: requestedLimit, matched_total: matchedTotal } : {}),
           persons
         });
         return;
@@ -167,9 +224,15 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
 module.exports = Object.freeze({
   UUID_PATTERN,
   MAX_QUERY_LENGTH,
+  MAX_LIST_LIMIT,
+  NAMUWIKI_STATUS_VALUES,
   personIdFromRequest,
   personQueryFromRequest,
+  namuwikiStatusFromRequest,
+  listLimitFromRequest,
   normalizeSearchText,
   personMatchesQuery,
+  personMatchesNamuWikiStatus,
+  parseListLimit,
   createPersonReadHandler
 });
