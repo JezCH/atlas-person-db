@@ -1,0 +1,42 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:illiam-dhone:isle-of-man:governor:1656-1658:v1",
+  "person": {
+    "canonical_name_en": "Illiam Dhone",
+    "display_name_ko": "일리엄 돈"
+  },
+  "polity": {
+    "canonical_name_en": "Isle of Man",
+    "display_name_ko": "맨섬"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Governor",
+    "role_display_name_ko": "총독",
+    "start_year": 1656,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 1658,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "William Christian, known in Manx as Illiam Dhone, led the Manx seizure of the island's forts in 1651 and negotiated directly with Parliamentary forces for preservation of Manx laws and liberties. He remained receiver-general and became governor in 1656. In 1658 he was accused by a new English governor of misappropriating church-land funds and left the island. ATLAS records his formal Manx governorship under the Isle of Man rather than treating him as a ruler of England or the Commonwealth."
+  },
+  "sources": [
+    {
+      "title": "Portrait of Illiam Dhone to Reveal Secrets",
+      "canonical_url": "https://manxnationalheritage.im/news/portrait-of-illiam-dhone-to-reveal-secrets/",
+      "citation_text": "Manx National Heritage identifies William Christian as Illiam Dhone, describes his leadership in the 1651 Manx uprising and negotiations preserving Manx laws and liberties, and states that he became governor in 1656 before leaving the island in 1658.",
+      "source_type": "institutional_history"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  }
+}
