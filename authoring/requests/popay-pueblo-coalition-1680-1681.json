@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:popay:pueblo-coalition:revolt-leader:1680-1681:v1",
+  "person": {
+    "canonical_name_en": "Po'pay",
+    "display_name_ko": "포파이"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Pueblo Coalition",
+    "display_name_ko": "푸에블로 연합"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Revolt Leader",
+    "role_display_name_ko": "봉기 지도자",
+    "start_year": 1680,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1681,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Po'pay, a Tewa religious leader from Ohkay Owingeh, coordinated the 1680 Pueblo Revolt and exercised cross-pueblo leadership after the Spanish expulsion. ATLAS uses Pueblo Coalition as an explicit editorial identity for the temporary multi-pueblo political-military coalition, not as a claim that the culturally diverse Pueblo peoples formed a permanent unified nation-state. Archaeological scholarship places Po'pay out of power by late 1681, so the end boundary is approximate."
+  },
+  "sources": [
+    {
+      "title": "Mission San Juan Bautista — National Park Service",
+      "canonical_url": "https://www.nps.gov/subjects/travelspanishmissions/mission-san-juan-bautista.htm",
+      "citation_text": "The National Park Service identifies Po'pay as a religious leader from Ohkay Owingeh and a major organizer of the 1680 Pueblo Revolt that expelled the Spanish from New Mexico for twelve years.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Other American Revolution: Archaeology and the Pueblo Revolt of 1680 — Harvard Peabody Museum",
+      "canonical_url": "https://peabody.harvard.edu/video-other-american-revolution-archaeology-and-pueblo-revolt-1680",
+      "citation_text": "Harvard archaeologist Matthew Liebmann describes Po'pay's coordination of the revolt across multiple Pueblo communities and notes that he was out of power by late 1681.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

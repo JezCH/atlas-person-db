@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:arthur-wellesley:united-kingdom:prime-minister:1828-1830:v1",
+  "person": {
+    "canonical_name_en": "Arthur Wellesley, 1st Duke of Wellington",
+    "display_name_ko": "아서 웰즐리"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-26",
+      "document_title": "아서 웰즐리",
+      "url": "https://namu.wiki/w/%EC%95%84%EC%84%9C%20%EC%9B%B0%EC%A6%90%EB%A6%AC"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1828,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1830,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Arthur Wellesley, 1st Duke of Wellington, served his first premiership from 1828 to 1830. The UK government's official historical page gives the term at year precision, so ATLAS preserves that precision instead of imposing disputed day-level office boundaries."
+  },
+  "sources": [
+    {
+      "title": "Arthur Wellesley, 1st Duke of Wellington — Past Prime Ministers",
+      "canonical_url": "https://www.gov.uk/government/history/past-prime-ministers/arthur-wellesley-1st-duke-of-wellington",
+      "citation_text": "The UK Government records Wellington as Prime Minister from 1828 to 1830 and again in 1834.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
