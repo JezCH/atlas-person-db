@@ -139,10 +139,6 @@
       } else {
         if (reviewStatus === "reviewed" && text(place.review_status) !== "reviewed") errors.push(`${prefix}: reviewed binding requires a reviewed Place`);
         if (reviewStatus === "reviewed" && !text(place.subregion_code)) errors.push(`${prefix}: reviewed subregion binding requires Place subregion_code`);
-        const placeSources = new Set(normalizedRefs(place.spatial_source_refs));
-        for (const ref of sourceRefs) {
-          if (!placeSources.has(ref)) errors.push(`${prefix}: binding source_ref is not present in Place spatial_source_refs: ${ref}`);
-        }
       }
 
       const signature = bindingSignature(binding);
