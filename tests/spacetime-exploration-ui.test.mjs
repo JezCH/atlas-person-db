@@ -31,6 +31,13 @@ test("search exposes explicit Person results and Enter focuses the first matchin
   assert.ok(css.includes(".spacetime-search-result-list{"));
 });
 
+test("direct canvas selection preserves the clicked camera context while navigation still focuses explicitly", async () => {
+  const view = await fixture(viewUrl);
+  assert.ok(view.includes('target.dataset.spacetimePerson, { focus: false }'));
+  assert.ok(view.includes("selectPerson(mount, first.person_id, { focus: true })"));
+  assert.ok(view.includes("selectPerson(mount, selectedPersonId, { focus: true, detail: true })"));
+});
+
 test("Person selection preserves zoom by default and detail is an explicit action", async () => {
   const view = await fixture(viewUrl);
   assert.ok(view.includes("const FOCUS_DETAIL_TIME_ZOOM = 2.2;"));
