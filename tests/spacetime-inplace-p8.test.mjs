@@ -186,28 +186,36 @@ test("label engine resolves collisions horizontally or defers without ever chang
   assert.equal(constrained.deferred[0].anchor_y, 20);
 });
 
-test("semantic LOD advances point to label to rail to Activity while density stays deferred to P9", () => {
-  const point = lod.lodWeights({ timeZoom: 1, spaceZoom: 1 });
+test("semantic LOD advances density to point to label to rail to Activity", () => {
+  const densityStage = lod.lodWeights({ timeZoom: 1, spaceZoom: 1 });
+  const point = lod.lodWeights({ timeZoom: 1, spaceZoom: 3 });
   const label = lod.lodWeights({ timeZoom: 1.8, spaceZoom: 1 });
   const rail = lod.lodWeights({ timeZoom: 4, spaceZoom: 3 });
   const activity = lod.lodWeights({ timeZoom: 7, spaceZoom: 3 });
-  assert.equal(point.density, 0);
+  assert.equal(densityStage.density, 1);
+  assert.equal(densityStage.points, 0);
+  assert.equal(lod.representationStage(densityStage), "density");
   assert.equal(lod.representationStage(point), "point");
   assert.equal(lod.representationStage(label), "label");
   assert.equal(lod.representationStage(rail), "rail");
   assert.equal(lod.representationStage(activity), "activity");
 });
 
-test("current surface is wired to the in-place Person-track pipeline and old vertical packing is gone", () => {
+test("current surface is wired through P9 density and the old vertical packing remains gone", () => {
   assert.doesNotThrow(() => new Function(viewSource));
   assert.match(viewSource, /createSemanticTimeProjection\(/);
   assert.match(viewSource, /spaceAxis\.stableRegionLayout\(compiled\.continuum, contentWidth\)/);
   assert.match(viewSource, /politicalPlacement\.partitionTracks\(compiledTracks\)/);
+  assert.match(viewSource, /atlas-person-spacetime-density\.js/);
+  assert.match(viewSource, /density\.buildDensityField\(/);
+  assert.match(viewSource, /spacetime-density-cell/);
   assert.match(viewSource, /spacetime-person-point/);
   assert.match(viewSource, /spacetime-track-label/);
   assert.doesNotMatch(viewSource, /function buildRegionMeta\(/);
   assert.doesNotMatch(viewSource, /OVERVIEW_CARD_HEIGHT/);
   assert.doesNotMatch(viewSource, /spacetime-person-card/);
+  assert.match(cssSource, /\.spacetime-density-cell\{/);
+  assert.match(cssSource, /\.spacetime-density-legend\{/);
   assert.match(cssSource, /\.spacetime-person-point\{/);
   assert.match(cssSource, /\.spacetime-track-label\{/);
   assert.doesNotMatch(cssSource, /\.spacetime-person-card/);
