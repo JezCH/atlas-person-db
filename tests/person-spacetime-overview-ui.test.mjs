@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 
 const viewUrl = new URL('../atlas-person-spacetime-view.js', import.meta.url);
 const cssUrl = new URL('../atlas-person-spacetime-view.css', import.meta.url);
+const densityUrl = new URL('../atlas-person-spacetime-density.js', import.meta.url);
 
 async function fixture(path) {
   return readFile(path, 'utf8');
@@ -49,10 +50,14 @@ test('spacetime vertical timeline remains constrained to the map-like camera vie
 test('overview renders registered-Person density first and retains Person-track detail layers for semantic zoom', async () => {
   const view = await fixture(viewUrl);
   const css = await fixture(cssUrl);
+  const density = await fixture(densityUrl);
   assert.ok(view.includes('atlas-person-spacetime-density.js'));
   assert.ok(view.includes('density.buildDensityField'));
+  assert.ok(view.includes('renderDensityLegend(densityField'));
+  assert.ok(view.includes('field.legend_label'));
   assert.ok(view.includes('spacetime-density-cell'));
-  assert.ok(view.includes('ATLAS 등록 인물 밀도'));
+  assert.ok(density.includes('ATLAS 등록 인물 밀도'));
+  assert.ok(density.includes('unique_registered_person_activity_density'));
   assert.ok(view.includes('spacetime-person-point'));
   assert.ok(view.includes('spacetime-track-label'));
   assert.ok(view.includes('renderRails(visibleTracks, projection, contentWidth, lodWeights.rails)'));
