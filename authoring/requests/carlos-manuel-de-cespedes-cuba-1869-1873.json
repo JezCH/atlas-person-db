@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:carlos-manuel-de-cespedes:cuba:president:1869-1873:v1",
+  "person": {
+    "canonical_name_en": "Carlos Manuel de Céspedes",
+    "display_name_ko": "카를로스 마누엘 데 세스페데스"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-26",
+      "document_title": "카를로스 마누엘 데 세스페데스",
+      "url": "https://namu.wiki/w/%EC%B9%B4%EB%A5%BC%EB%A1%9C%EC%8A%A4%20%EB%A7%88%EB%88%84%EC%97%98%20%EB%8D%B0%20%EC%84%B8%EC%8A%A4%ED%8E%98%EB%8D%B0%EC%8A%A4"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Cuba",
+    "display_name_ko": "쿠바"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1869,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1873,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Carlos Manuel de Céspedes initiated the Cuban independence uprising in October 1868 and became the first president of the constitutional Republic of Cuba in Arms at Guáimaro in April 1869. He was removed from the presidency in October 1873. ATLAS reuses the existing polity Cuba because the office represented the Cuban independence political community, not the Spanish colonial government; the notes preserve the more specific institutional context of the Republic of Cuba in Arms. Year-level boundaries avoid imposing a disputed day where secondary sources differ on whether the decisive Guáimaro presidential act is dated 10 or 12 April and whether his removal is given as 27 or 28 October."
+  },
+  "sources": [
+    {
+      "title": "Carlos Manuel de Céspedes, in the name of Liberty: A look at the trajectory of the Father of the Cuban nation — Études caribéennes",
+      "canonical_url": "https://journals.openedition.org/etudescaribeennes/24193",
+      "citation_text": "The peer-reviewed study treats Céspedes as the initiator and central leader of the 1868 Cuban independence struggle and the first president of the revolutionary Cuban republic.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Céspedes, Carlos Manuel de (The Elder) — Encyclopedia of Latin American History and Culture",
+      "canonical_url": "https://www.encyclopedia.com/humanities/encyclopedias-almanacs-transcripts-and-maps/cespedes-carlos-manuel-de-elder-1819-c-1874",
+      "citation_text": "The encyclopedia records that Céspedes proclaimed Cuban independence in October 1868 and was chosen president of the republic by the Guáimaro constituent assembly in April 1869.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
