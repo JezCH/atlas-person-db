@@ -1,0 +1,142 @@
+((root, factory) => {
+  "use strict";
+  const modelApi = typeof module === "object" && module.exports ? require("./atlas-person-spacetime-model.js") : root?.ATLAS_PERSON_SPACETIME_MODEL;
+  const api = factory(modelApi);
+  if (typeof module === "object" && module.exports) module.exports = api;
+  if (root) root.ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS = api;
+})(typeof globalThis !== "undefined" ? globalThis : this, (modelApi) => {
+  "use strict";
+
+  if (!modelApi) throw new Error("ATLAS_PERSON_SPACETIME_MODEL is required");
+
+  const TIME_STAGES = Object.freeze([
+    Object.freeze({ code: "era", max_zoom: 1.35, interval_years: 500, min_gap_px: 58, label: "시대·500년" }),
+    Object.freeze({ code: "long-century", max_zoom: 1.9, interval_years: 250, min_gap_px: 52, label: "장기 세기·250년" }),
+    Object.freeze({ code: "century", max_zoom: 3.2, interval_years: 100, min_gap_px: 46, label: "세기·100년" }),
+    Object.freeze({ code: "half-century", max_zoom: 5.2, interval_years: 50, min_gap_px: 42, label: "반세기·50년" }),
+    Object.freeze({ code: "quarter-century", max_zoom: 7, interval_years: 25, min_gap_px: 38, label: "25년" }),
+    Object.freeze({ code: "decade", max_zoom: Number.POSITIVE_INFINITY, interval_years: 10, min_gap_px: 34, label: "10년" })
+  ]);
+
+  function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+  }
+
+  function smoothstep(edge0, edge1, value) {
+    const t = clamp((Number(value) - edge0) / (edge1 - edge0), 0, 1);
+    return t * t * (3 - 2 * t);
+  }
+
+  function positiveZoom(value) {
+    const number = Number(value);
+    return Number.isFinite(number) && number > 0 ? number : 1;
+  }
+
+  function timeStage(timeZoom) {
+    const zoom = positiveZoom(timeZoom);
+    return TIME_STAGES.find((stage) => zoom <= stage.max_zoom) || TIME_STAGES.at(-1);
+  }
+
+  function candidateHistoricalYears(startYear, endYear, intervalYears) {
+    if (!Number.isInteger(startYear) || !Number.isInteger(endYear) || startYear === 0 || endYear === 0 || startYear > endYear) return Object.freeze([]);
+    const step = Math.max(1, Math.trunc(intervalYears));
+    const years = [];
+
+    if (startYear < 0) {
+      let year = Math.ceil(startYear / step) * step;
+      if (year === 0) year = -step;
+      while (year < 0 && year <= endYear) {
+        if (year >= startYear) years.push(year);
+        year += step;
+      }
+    }
+
+    if (endYear > 0) {
+      let year = Math.max(step, Math.ceil(Math.max(1, startYear) / step) * step);
+      if (year === 0) year = step;
+      while (year <= endYear) {
+        years.push(year);
+        year += step;
+      }
+    }
+
+    return Object.freeze([...new Set(years)].sort((a, b) => modelApi.historicalYearToOrdinal(a) - modelApi.historicalYearToOrdinal(b)));
+  }
+
+  function buildTimeAxisPlan(range, projection, timeZoom) {
+    const startYear = Number(range?.start_year);
+    const endYear = Number(range?.end_year);
+    if (!Number.isInteger(startYear) || !Number.isInteger(endYear) || startYear === 0 || endYear === 0 || startYear > endYear) {
+      throw new RangeError("time axis requires a valid historical range without year zero");
+    }
+    if (!projection?.yForYear) throw new TypeError("time axis requires projection.yForYear");
+
+    const zoom = positiveZoom(timeZoom);
+    const stage = timeStage(zoom);
+    const candidates = candidateHistoricalYears(startYear, endYear, stage.interval_years);
+    const ticks = [];
+    let previousY = Number.NEGATIVE_INFINITY;
+    for (const year of candidates) {
+      const y = Number(projection.yForYear(year));
+      if (!Number.isFinite(y)) continue;
+      if (y - previousY < stage.min_gap_px) continue;
+      const majorInterval = stage.interval_years >= 100 ? stage.interval_years * 2 : stage.interval_years * 5;
+      ticks.push(Object.freeze({
+        year,
+        ordinal: modelApi.historicalYearToOrdinal(year),
+        y,
+        label: modelApi.yearLabel(year),
+        major: Math.abs(year) % majorInterval === 0,
+        interval_years: stage.interval_years
+      }));
+      previousY = y;
+    }
+
+    const eraOpacity = 1 - 0.78 * smoothstep(1.35, 4.2, zoom);
+    return Object.freeze({
+      stage: stage.code,
+      stage_label: stage.label,
+      interval_years: stage.interval_years,
+      min_gap_px: stage.min_gap_px,
+      ticks: Object.freeze(ticks),
+      era_opacity: clamp(eraOpacity, 0.22, 1),
+      time_zoom: zoom
+    });
+  }
+
+  function buildBandGeometry(bands, width) {
+    return Object.freeze((bands || []).map((band) => Object.freeze({
+      ...band,
+      left: band.min_space * width,
+      width: (band.max_space - band.min_space) * width,
+      center_x: band.center_space * width
+    })));
+  }
+
+  function buildSpaceHeaderPlan(continuum, contentWidth, spaceZoom) {
+    if (!continuum || !Array.isArray(continuum.macroregions) || !Array.isArray(continuum.subregions)) throw new TypeError("space header requires a spatial continuum");
+    const width = Number(contentWidth);
+    if (!Number.isFinite(width) || width <= 0) throw new RangeError("space header width must be > 0");
+    const zoom = positiveZoom(spaceZoom);
+    const detailWeight = smoothstep(1.35, 2.6, zoom);
+    return Object.freeze({
+      stage: detailWeight >= 0.5 ? "subregion" : "macroregion",
+      stage_label: detailWeight >= 0.5 ? "세부 지역" : "대권역",
+      macro_opacity: clamp(1 - 0.72 * detailWeight, 0.28, 1),
+      subregion_opacity: detailWeight,
+      macroregions: buildBandGeometry(continuum.macroregions, width),
+      subregions: buildBandGeometry(continuum.subregions, width),
+      space_zoom: zoom,
+      detail_weight: detailWeight
+    });
+  }
+
+  return Object.freeze({
+    TIME_STAGES,
+    smoothstep,
+    timeStage,
+    candidateHistoricalYears,
+    buildTimeAxisPlan,
+    buildSpaceHeaderPlan
+  });
+});

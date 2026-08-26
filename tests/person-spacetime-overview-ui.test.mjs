@@ -5,6 +5,8 @@ import { readFile } from 'node:fs/promises';
 const viewUrl = new URL('../atlas-person-spacetime-view.js', import.meta.url);
 const cssUrl = new URL('../atlas-person-spacetime-view.css', import.meta.url);
 const densityUrl = new URL('../atlas-person-spacetime-density.js', import.meta.url);
+const lodUrl = new URL('../atlas-person-spacetime-lod.js', import.meta.url);
+const semanticAxisUrl = new URL('../atlas-person-spacetime-semantic-axis.js', import.meta.url);
 
 async function fixture(path) {
   return readFile(path, 'utf8');
@@ -47,10 +49,13 @@ test('spacetime vertical timeline remains constrained to the map-like camera vie
   assert.ok(css.includes('.spacetime-scroll{height:65vh;min-height:460px}'));
 });
 
-test('overview renders registered-Person density first and retains Person-track detail layers for semantic zoom', async () => {
+test('overview keeps collision-safe Person names over registered-Person density and retains detail layers', async () => {
   const view = await fixture(viewUrl);
   const css = await fixture(cssUrl);
   const density = await fixture(densityUrl);
+  const lod = await fixture(lodUrl);
+  const semanticAxis = await fixture(semanticAxisUrl);
+
   assert.ok(view.includes('atlas-person-spacetime-density.js'));
   assert.ok(view.includes('density.buildDensityField'));
   assert.ok(view.includes('renderDensityLegend(densityField'));
@@ -58,14 +63,27 @@ test('overview renders registered-Person density first and retains Person-track 
   assert.ok(view.includes('spacetime-density-cell'));
   assert.ok(density.includes('ATLAS 등록 인물 밀도'));
   assert.ok(density.includes('unique_registered_person_activity_density'));
-  assert.ok(view.includes('spacetime-person-point'));
+
+  assert.ok(lod.includes('overview_label_floor: 0.78'));
+  assert.ok(view.includes('const needsLabels = lodWeights.labels > 0.01'));
+  assert.ok(view.includes('이름 표시'));
   assert.ok(view.includes('spacetime-track-label'));
+
+  assert.ok(view.includes('atlas-person-spacetime-semantic-axis.js'));
+  assert.ok(view.includes('semanticAxis.buildTimeAxisPlan'));
+  assert.ok(view.includes('semanticAxis.buildSpaceHeaderPlan'));
+  assert.ok(view.includes('spacetime-region-head-layer is-subregion'));
+  assert.ok(semanticAxis.includes('interval_years: 500'));
+  assert.ok(semanticAxis.includes('interval_years: 10'));
+
+  assert.ok(view.includes('spacetime-person-point'));
   assert.ok(view.includes('renderRails(visibleTracks, projection, contentWidth, lodWeights.rails)'));
   assert.ok(view.includes('renderActivityGlyphs(visibleTracks, projection, contentWidth, lodWeights.activities)'));
   assert.doesNotMatch(view, /OVERVIEW_CARD_HEIGHT/);
   assert.doesNotMatch(view, /spacetime-person-card/);
   assert.ok(css.includes('.spacetime-density-cell{'));
   assert.ok(css.includes('.spacetime-density-legend{'));
+  assert.ok(css.includes('.spacetime-region-head-layer{'));
   assert.ok(css.includes('.spacetime-person-point{'));
   assert.ok(css.includes('.spacetime-track-label{'));
   assert.ok(css.includes('.spacetime-track-rail{'));

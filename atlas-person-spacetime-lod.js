@@ -8,6 +8,7 @@
   const DEFAULT_THRESHOLDS = Object.freeze({
     density_fade_start: 1.05, density_fade_end: 1.8,
     point_in_start: 1.1, point_in_full: 1.8,
+    overview_label_floor: 0.78,
     label_start: 1.15, label_full: 1.8,
     point_out_start: 2.8, point_out_end: 4.6,
     rail_time_start: 2.2, rail_time_full: 3.8,
@@ -29,16 +30,20 @@
     const density = 1 - smoothstep(t.density_fade_start, t.density_fade_end, semanticDetail);
     const pointIn = smoothstep(t.point_in_start, t.point_in_full, semanticDetail);
     const pointOut = 1 - smoothstep(t.point_out_start, t.point_out_end, timeZoom);
-    const labels = smoothstep(t.label_start, t.label_full, timeZoom);
+    const semanticLabels = smoothstep(t.label_start, t.label_full, timeZoom);
+    const baselineLabels = clamp(Number(t.overview_label_floor) || 0, 0, 1);
+    const labels = Math.max(semanticLabels, baselineLabels);
     const rails = smoothstep(t.rail_time_start, t.rail_time_full, timeZoom) * smoothstep(t.rail_space_start, t.rail_space_full, spaceZoom);
     const activities = smoothstep(t.activity_time_start, t.activity_time_full, timeZoom) * smoothstep(t.activity_space_start, t.activity_space_full, spaceZoom);
-    return Object.freeze({ density: clamp(density, 0, 1), points: clamp(pointIn * pointOut, 0, 1), labels: clamp(labels, 0, 1), rails: clamp(rails, 0, 1), activities: clamp(activities, 0, 1), time_zoom: timeZoom, space_zoom: spaceZoom, semantic_detail: semanticDetail });
+    return Object.freeze({ density: clamp(density, 0, 1), points: clamp(pointIn * pointOut, 0, 1), labels: clamp(labels, 0, 1), semantic_labels: clamp(semanticLabels, 0, 1), rails: clamp(rails, 0, 1), activities: clamp(activities, 0, 1), time_zoom: timeZoom, space_zoom: spaceZoom, semantic_detail: semanticDetail });
   }
   function representationStage(weights) {
     if ((weights?.activities || 0) >= 0.5) return "activity";
     if ((weights?.rails || 0) >= 0.5) return "rail";
-    if ((weights?.labels || 0) >= 0.5) return "label";
+    if ((weights?.density || 0) >= 0.5) return "density";
+    if ((weights?.semantic_labels || 0) >= 0.5) return "label";
     if ((weights?.points || 0) >= 0.5) return "point";
+    if ((weights?.labels || 0) >= 0.5) return "label";
     if ((weights?.density || 0) > 0) return "density";
     return "point";
   }
