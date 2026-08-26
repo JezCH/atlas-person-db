@@ -41,6 +41,9 @@ test("direct canvas selection preserves the clicked camera context while navigat
 test("selection feedback and status metrics expose their actual scopes", async () => {
   const view = await fixture(viewUrl);
   const css = await fixture(cssUrl);
+  assert.ok(view.includes("const visibleTracks = projectedTracks.map((item) => item.track);"));
+  assert.ok(view.includes("const primarySegmentCount = compiled.partitioned.tracks.reduce"));
+  assert.ok(view.includes("const counterpartyCount = compiled.partitioned.tracks.reduce"));
   assert.ok(view.includes('class="spacetime-activity-glyph${selectedPersonId === track.person_id ? " is-selected" : ""}"'));
   assert.ok(css.includes(".spacetime-activity-glyph:hover,.spacetime-activity-glyph.is-selected{"));
   assert.ok(view.includes('${needle ? "검색" : "전체"} Person track'));
