@@ -79,14 +79,14 @@ test("historical Place registry rejects runtime display-coordinate fields", () =
   assert.match(message, /display_anchor is presentation\/compile data/);
 });
 
-test("reviewed binding requires an existing reviewed Place and exact source evidence", () => {
+test("reviewed binding requires an existing reviewed Place and independent exact historical evidence", () => {
   const place = reviewedPlace({ coordinate_precision: "unknown", latitude: null, longitude: null });
   const binding = {
     place_id: "place-rome",
-    polity_id: "polity-roman-empire",
+    polity_id: "5d9a6186-bbe6-5d1a-ba93-02190ae4c417",
     function_type: "capital",
     place_name: "Rome",
-    source_refs: ["reviewed geographic source"],
+    source_refs: ["reviewed historical polity-place function source"],
     review_status: "reviewed"
   };
   const valid = { schema: registryApi.PLACE_REGISTRY_SCHEMA, places: [place], bindings: [binding] };
