@@ -371,5 +371,39 @@
     "role_ko": "마오리 전승의 항해자·시조 인물",
     "reason": "Kupe is a major ancestral navigator in Māori oral traditions, but the traditions differ substantially over his voyages, relationship to settlement, and chronology. No secure contemporary evidence establishes a datable personal activity interval. ATLAS therefore preserves the Māori traditional association while leaving all timeline years unknown rather than treating the legacy 900–1200 range as a historical Activity.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "ʻAhoʻeitu",
+    "politic_name": "Tonga",
+    "display_name_ko": "아호에이투",
+    "politic_display_name_ko": "통가",
+    "historicity": "legendary_possible_historical_core",
+    "historicity_display_ko": "전설·역사적 핵심 가능",
+    "timeline_status": "excluded",
+    "date_basis": "Tongan_oral_and_genealogical_tradition_uncertain_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "투이 통가 왕조의 전설적 초대 군주",
+    "reason": "ʻAhoʻeitu is the founding Tuʻi Tonga of Tongan oral and genealogical tradition and is explicitly given divine parentage in the origin narrative. The often-cited date around 950 CE is reconstructed from later genealogy and assumed generation lengths rather than a securely attested personal reign boundary. ATLAS therefore preserves the Tongan founding tradition while leaving all timeline years unknown.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "Achish (Abimelech)",
+    "politic_name": "Gath",
+    "display_name_ko": "아기스(아비멜렉)",
+    "politic_display_name_ko": "가드",
+    "historicity": "historical_tradition_uncertain_chronology",
+    "historicity_display_ko": "역사 전승·연대 불확실",
+    "timeline_status": "excluded",
+    "date_basis": "biblical_tradition_name_and_chronology_uncertain",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "가드의 전승상 블레셋 왕",
+    "reason": "The Samuel narrative names Achish as king of Gath in the David tradition, while the superscription of Psalm 34 calls the corresponding ruler Abimelech. Scholarship treats Abimelech variously as a title, alternate name, or textual substitution, and no secure independent personal chronology fixes this ruler's reign. ATLAS therefore preserves the Achish–Abimelech Gath tradition without assigning speculative timeline years.",
+    "map_policy": "Do not display on the historical year timeline unless a separate historical-tradition or uncertain-chronology overlay is enabled."
   }
 ]
