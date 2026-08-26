@@ -28,29 +28,29 @@
 
   const REVIEWED_PLACE_BINDINGS = Object.freeze([
     Object.freeze({
-      place_id: "place-rome", polity_id: "polity-roman-empire", function_type: "capital", place_name: "Rome",
+      place_id: "place-rome", polity_id: "5d9a6186-bbe6-5d1a-ba93-02190ae4c417", function_type: "capital", place_name: "Rome",
       macroregion_code: "europe", subregion_code: "italy",
-      source_refs: Object.freeze(["https://www.britannica.com/place/Rome", "https://www.britannica.com/place/Roman-Empire"])
+      source_refs: Object.freeze(["1911 Encyclopaedia Britannica: Constantine (emperors)"])
     }),
     Object.freeze({
-      place_id: "place-pella", polity_id: "polity-kingdom-of-macedon", function_type: "capital", place_name: "Pella",
+      place_id: "place-pella", polity_id: "2f6e890f-1704-5c76-aa94-f18d7f905e06", function_type: "capital", place_name: "Pella",
       macroregion_code: "europe", subregion_code: "balkans",
-      source_refs: Object.freeze(["https://www.britannica.com/place/Pella-ancient-city-Greece", "https://www.britannica.com/place/Macedonia-ancient-kingdom-Europe"])
+      source_refs: Object.freeze(["Hellenic Ministry of Culture, Cultural Egnatia: Pella", "Hellenic Ministry of Culture and Sports, Odysseus: Pella"])
     }),
     Object.freeze({
-      place_id: "place-ankara", polity_id: "polity-republic-of-turkey", function_type: "capital", place_name: "Ankara",
+      place_id: "place-ankara", polity_id: "28448862-277d-4738-9fb4-7f51a9e4c03a", function_type: "capital", place_name: "Ankara",
       macroregion_code: "west-asia", subregion_code: "anatolia-caucasus",
-      source_refs: Object.freeze(["https://www.britannica.com/place/Ankara", "https://www.britannica.com/place/Turkey"])
+      source_refs: Object.freeze(["Atatürk Ansiklopedisi: Ankara’nın Başkent Oluşu"])
     }),
     Object.freeze({
-      place_id: "place-rio-de-janeiro", polity_id: "polity-second-brazilian-republic", function_type: "capital", place_name: "Rio de Janeiro",
+      place_id: "place-rio-de-janeiro", polity_id: "3b8f7efc-40ae-5a33-8956-e9e852fbede4", function_type: "capital", place_name: "Rio de Janeiro",
       macroregion_code: "americas", subregion_code: "south-america",
-      source_refs: Object.freeze(["https://www.britannica.com/place/Rio-de-Janeiro-Brazil", "https://www.britannica.com/place/Brazil"])
+      source_refs: Object.freeze(["Governo do Brasil: Linha do Tempo da Independência"])
     }),
     Object.freeze({
-      place_id: "place-samarkand", polity_id: "polity-timurid-empire", function_type: "capital", place_name: "Samarkand",
+      place_id: "place-samarkand", polity_id: "6539c314-ec29-42e0-a0c2-90991fb9ffd8", function_type: "capital", place_name: "Samarkand",
       macroregion_code: "central-asia", subregion_code: "western-central-asia",
-      source_refs: Object.freeze(["https://www.britannica.com/place/Samarkand-Uzbekistan", "https://www.britannica.com/topic/Timurid-dynasty"])
+      source_refs: Object.freeze(["The Metropolitan Museum of Art: The Art of the Timurid Period (ca. 1370–1507)"])
     })
   ]);
 
