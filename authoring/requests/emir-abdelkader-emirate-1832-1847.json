@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:emir-abdelkader:emirate-of-abdelkader:emir:1832-1847:v1",
+  "person": {
+    "canonical_name_en": "Emir Abdelkader",
+    "display_name_ko": "압델카데르"
+  },
+  "polity": {
+    "canonical_name_en": "Emirate of Abdelkader",
+    "display_name_ko": "압델카데르 토후국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emir",
+    "role_display_name_ko": "에미르",
+    "start_year": 1832,
+    "start_month": 11,
+    "start_day": 27,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1847,
+    "end_month": 12,
+    "end_day": 23,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Abdelkader was formally invested by tribal allegiance as leader on 27 November 1832 and built an autonomous Algerian state resisting French conquest. His political-military sovereignty ended with his surrender to French forces on 23 December 1847. ATLAS therefore models his primary polity as the Emirate of Abdelkader, not the French colonial administration and not a retrojected modern Republic of Algeria."
+  },
+  "sources": [
+    {
+      "title": "Emir Abdelkader: investiture and Islamic values",
+      "canonical_url": "https://asjp.cerist.dz/en/downArticle/90/30/3/296685",
+      "citation_text": "A scholarly article from Emir Abdelkader University states that Abd al-Qadir was formally invested by bay'a as leader of the tribes on 27 November 1832.",
+      "source_type": "academic_article"
+    },
+    {
+      "title": "Abd el-Kader, Algeria and the French",
+      "canonical_url": "https://www.napoleon.org/en/history-of-the-two-empires/timelines/abd-el-kader-algeria-and-the-french/",
+      "citation_text": "The Fondation Napoléon chronology records Abd el-Kader's surrender to French forces on 23 December 1847.",
+      "source_type": "institutional_history"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  }
+}
