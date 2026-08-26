@@ -1,0 +1,42 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:te-rauparaha:ngati-toa:chief:1810-1840:v1",
+  "person": {
+    "canonical_name_en": "Te Rauparaha",
+    "display_name_ko": "테 라우파라하"
+  },
+  "polity": {
+    "canonical_name_en": "Ngāti Toa",
+    "display_name_ko": "응아티 토아"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Chief",
+    "role_display_name_ko": "추장",
+    "start_year": 1810,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1840,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Dictionary of New Zealand Biography identifies Te Rauparaha as a Ngāti Toa leader, floruit 1810–1840. He was not born to the highest rank but rose to leadership through military and political ability. ATLAS therefore records Ngāti Toa, not a generic 'Māori' polity, and treats 1810–1840 as an approximate leadership floruit rather than inventing a formal accession or deposition date."
+  },
+  "sources": [
+    {
+      "title": "Te Rauparaha",
+      "canonical_url": "https://teara.govt.nz/en/biographies/1t74/te-rauparaha",
+      "citation_text": "The Dictionary of New Zealand Biography at Te Ara identifies Te Rauparaha as a Ngāti Toa leader, gives a floruit of 1810–1840, and explains that he rose to leadership despite not being of the highest chiefly rank.",
+      "source_type": "national_biographical_dictionary"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  }
+}

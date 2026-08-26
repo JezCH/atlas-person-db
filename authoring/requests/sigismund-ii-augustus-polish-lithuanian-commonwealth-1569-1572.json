@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sigismund-ii-augustus:polish-lithuanian-commonwealth:king:1569-1572:v1",
+  "person": {
+    "canonical_name_en": "Sigismund II Augustus",
+    "display_name_ko": "지그문트 2세 아우구스트"
+  },
+  "polity": {
+    "canonical_name_en": "Polish-Lithuanian Commonwealth",
+    "display_name_ko": "폴란드-리투아니아 연방"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1569,
+    "start_month": 7,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 1572,
+    "end_month": 7,
+    "end_day": 7,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Union of Lublin was concluded on 1 July 1569 and created the Polish-Lithuanian Commonwealth with a common monarch. Sigismund II Augustus remained its monarch until his death on 7 July 1572. ATLAS begins this Commonwealth Activity with the creation of the real union in 1569; it does not retroactively label his earlier Polish and Lithuanian rulership as rule of the Commonwealth."
+  },
+  "sources": [
+    {
+      "title": "Union of Lublin",
+      "canonical_url": "https://agad.gov.pl/MoW/unia2C_eng.pdf",
+      "citation_text": "The Central Archives of Historical Records describes the exchange of union acts and oaths on 1 July 1569 and the king's confirmation of the Union on 4 July.",
+      "source_type": "archival_reference"
+    },
+    {
+      "title": "Sigismund II Augustus",
+      "canonical_url": "https://www.encyclopedia.com/history/encyclopedias-almanacs-transcripts-and-maps/sigismund-ii-augustus-poland-lithuania-1520-1572-ruled-1530-1572",
+      "citation_text": "The Encyclopedia of the Early Modern World identifies Sigismund II Augustus as the last Jagiellon king and treats the permanent Polish-Lithuanian Union of 1569 as the central constitutional achievement of his reign.",
+      "source_type": "reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-26",
+      "document_title": "지그문트 2세 아우구스트",
+      "url": "https://namu.wiki/w/%EC%A7%80%EA%B7%B8%EB%AC%B8%ED%8A%B8%202%EC%84%B8%20%EC%95%84%EC%9A%B0%EA%B5%AC%EC%8A%A4%ED%8A%B8"
+    }
+  }
+}

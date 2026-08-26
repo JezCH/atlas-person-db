@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:pope-urban-ii:papal-states:pope:1088-1099:v1",
+  "person": {
+    "canonical_name_en": "Pope Urban II",
+    "display_name_ko": "우르바노 2세"
+  },
+  "polity": {
+    "canonical_name_en": "Papal States",
+    "display_name_ko": "교황령"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Pope",
+    "role_display_name_ko": "교황",
+    "start_year": 1088,
+    "start_month": 3,
+    "start_day": 12,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 1099,
+    "end_month": 7,
+    "end_day": 29,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Urban II was pope from 12 March 1088 until 29 July 1099. He called the First Crusade, but ATLAS does not model the later Crusader States as a polity ruled by him: they were separate political entities established by crusaders in the eastern Mediterranean. His primary sovereign polity here is the Papal States."
+  },
+  "sources": [
+    {
+      "title": "Urban II",
+      "canonical_url": "https://www.vatican.va/content/vatican/en/holy-father/urbano-ii.html",
+      "citation_text": "The Holy See's official pontiff record identifies Urban II as the 159th pope and gives his pontificate as 12 March 1088 to 29 July 1099.",
+      "source_type": "official_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  }
+}
