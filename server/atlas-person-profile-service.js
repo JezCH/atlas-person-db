@@ -39,6 +39,23 @@ function safeDecode(value) {
 }
 
 function normalizeNamuWikiInput(value) {
+  if (value && typeof value === "object" && !Array.isArray(value)) {
+    const status = normalizeExact(value.status).toLowerCase();
+    if (status === "not_found") {
+      const documentTitle = normalizeExact(value.document_title);
+      const url = normalizeExact(value.url || value.canonical_url);
+      if (documentTitle || url) throw new Error("PERSON_NAMUWIKI_NOT_FOUND_REFERENCE_MUST_BE_EMPTY");
+      return Object.freeze({
+        provider: "namuwiki",
+        status: "not_found",
+        document_title: null,
+        url: null
+      });
+    }
+    if (status && status !== "linked") throw new Error("PERSON_NAMUWIKI_STATUS_UNSUPPORTED");
+    value = value.url || value.canonical_url || value.document_title;
+  }
+
   const text = normalizeExact(value);
   if (!text) throw new Error("PERSON_NAMUWIKI_VALUE_REQUIRED");
 
