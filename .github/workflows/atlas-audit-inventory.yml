@@ -11,6 +11,7 @@ on:
       - 'server/atlas-polity-reference-audit-handler.js'
       - 'server/atlas-audit-github-oidc.js'
       - 'scripts/build-p9-completeness-repair-plan.mjs'
+      - 'scripts/build-person-necessity-audit-export.mjs'
       - 'stage2/integration/p9-legacy-temporal-metadata-migration.v1.json'
       - 'stage2/integration/p7-explicit-person-relation-decisions-batch*.v1.json'
       - 'stage2/integration/p7-full-relation-review-dispositions.v1.json'
@@ -132,6 +133,23 @@ jobs:
             jq '.catalogs' audit-inventory-response.json > baseline-identity-catalogs.json
           fi
 
+      - name: Build complete Person necessity audit export
+        if: env.ATLAS_AUDIT_MODE == 'full_stage2_baseline'
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/build-person-necessity-audit-export.mjs \
+            --audit audit-inventory-response.json \
+            --out person-necessity-audit-inventory.json \
+            --summary person-necessity-audit-summary.json
+          jq -e '
+            .schema == "atlas-person-necessity-audit-inventory/v1" and
+            .read_only == true and
+            .production == true and
+            (.persons | length) == .counts.persons and
+            ([.persons[].activity_count] | add // 0) == .counts.activities
+          ' person-necessity-audit-inventory.json >/dev/null
+
       - name: Build deterministic P9 completeness repair plan
         if: env.ATLAS_AUDIT_MODE == 'full_stage2_baseline'
         shell: bash
@@ -200,6 +218,8 @@ jobs:
             audit-inventory-summary.json
             baseline-activity-uuids.json
             baseline-identity-catalogs.json
+            person-necessity-audit-inventory.json
+            person-necessity-audit-summary.json
             polity-reference-catalog.json
             polity-external-orphans.json
             polity-reference-audit-response.json
