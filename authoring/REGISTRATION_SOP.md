@@ -32,6 +32,8 @@ Historically real discontinuities are separate Activities. Never invent an exact
 
 Before ordinary Timeline authoring, decide whether the requested figure belongs on the historical year timeline at all.
 
+Evaluate this routing gate during SCREEN, before expensive historical/NamuWiki research for ordinary Timeline authoring.
+
 Route the figure to `non-timeline-persons.json` instead of `atlas-human-authoring/v1` when both conditions hold:
 
 - the individual is primarily legendary, mythical, genealogical/oral-tradition, or otherwise historically unverified/disputed as an individual; and
