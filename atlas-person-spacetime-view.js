@@ -478,7 +478,7 @@
       const y = minimap.projectHorizontalLine(era.top, { width: contentWidth, height: timelineHeight }, { width, height });
       context.beginPath();
       context.moveTo(0, Math.round(y) + 0.5);
-      context.lineTo(width, Math.round(y) + 0.5, height);
+      context.lineTo(width, Math.round(y) + 0.5);
       context.stroke();
     }
     const points = minimap.projectItems(allProjectedTracks, { width: contentWidth, height: timelineHeight }, { width, height });
