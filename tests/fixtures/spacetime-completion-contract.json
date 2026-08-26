@@ -15,7 +15,7 @@
     { "id": "semantic-time-projection", "required": true, "status": "locked" },
     { "id": "stable-macroregion-world-x", "required": true, "status": "locked" },
     { "id": "continuous-space-camera", "required": true, "status": "pending" },
-    { "id": "spatial-subregion-precision", "required": true, "status": "pending" },
+    { "id": "spatial-subregion-precision", "required": true, "status": "locked" },
     { "id": "spatial-place-precision", "required": true, "status": "pending" },
     { "id": "spatial-multi-place-preservation", "required": true, "status": "pending" },
     { "id": "precision-not-greater-than-evidence", "required": true, "status": "locked" },

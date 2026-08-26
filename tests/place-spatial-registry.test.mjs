@@ -5,8 +5,6 @@ import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
 const registryApi = require("../atlas-place-spatial-registry.js");
-const spaceAxis = require("../atlas-person-spacetime-space-axis.js");
-const spatialCompile = require("../atlas-person-spacetime-spatial-compile.js");
 const registry = JSON.parse(readFileSync(new URL("../atlas-place-spatial-registry.json", import.meta.url), "utf8"));
 
 function reviewedPlace(overrides = {}) {
@@ -25,11 +23,13 @@ function reviewedPlace(overrides = {}) {
   };
 }
 
-test("empty canonical registry is valid and intentionally does not invent Place bindings", () => {
+test("canonical registry validates reviewed C2 Place identities and exact bindings", () => {
   const validation = registryApi.validatePlaceRegistry(registry);
   assert.equal(validation.valid, true, validation.errors.join("\n"));
-  assert.deepEqual(registry.places, []);
-  assert.equal(registryApi.createPlaceLookup(registry).size, 0);
+  assert.equal(registry.places.length, 5);
+  assert.equal(registry.bindings.length, 5);
+  assert.equal(registryApi.createPlaceLookup(registry).size, 5);
+  assert.equal(registryApi.createReviewedBindingLookup(registry).size, 5);
 });
 
 test("reviewed Place identity can carry reviewed coordinates and a real subregion parent", () => {
@@ -79,26 +79,30 @@ test("historical Place registry rejects runtime display-coordinate fields", () =
   assert.match(message, /display_anchor is presentation\/compile data/);
 });
 
-test("C1 is evidence infrastructure only: current Production compile remains macroregion precision", () => {
-  const continuum = spaceAxis.createSpatialContinuum();
-  const segment = spatialCompile.compilePlacementSegment({
-    activity_id: "activity-example",
-    polity_id: "polity-example",
-    region_code: "europe",
-    placement_basis: "polity_place_function",
-    place_function_type: "capital",
-    place_name: "Rome",
+test("reviewed binding requires an existing reviewed Place and independent exact historical evidence", () => {
+  const place = reviewedPlace({ coordinate_precision: "unknown", latitude: null, longitude: null });
+  const binding = {
     place_id: "place-rome",
-    confidence: "well_established",
-    source_refs: ["reviewed source"],
-    start_year: 100,
-    end_year: 110
-  }, continuum);
-  const europe = continuum.bandForCode("europe");
-  assert.equal(segment.place_id, "place-rome");
-  assert.equal(segment.spatial_precision, "macroregion");
-  assert.equal(segment.subregion_code, null);
-  assert.equal(segment.x_anchor, europe.center_space);
-  assert.equal(segment.x_min, europe.min_space);
-  assert.equal(segment.x_max, europe.max_space);
+    polity_id: "5d9a6186-bbe6-5d1a-ba93-02190ae4c417",
+    function_type: "capital",
+    place_name: "Rome",
+    source_refs: ["reviewed historical polity-place function source"],
+    review_status: "reviewed"
+  };
+  const valid = { schema: registryApi.PLACE_REGISTRY_SCHEMA, places: [place], bindings: [binding] };
+  assert.equal(registryApi.validatePlaceRegistry(valid).valid, true);
+
+  const unknownPlace = { schema: registryApi.PLACE_REGISTRY_SCHEMA, places: [place], bindings: [{ ...binding, place_id: "place-missing" }] };
+  const validation = registryApi.validatePlaceRegistry(unknownPlace);
+  assert.equal(validation.valid, false);
+  assert.match(validation.errors.join("\n"), /unknown place_id place-missing/);
+});
+
+test("binding lookup is exact and does not bind a matching place_name without reviewed source refs", () => {
+  const lookup = registryApi.createReviewedBindingLookup(registry);
+  const rome = registry.bindings.find((binding) => binding.place_id === "place-rome");
+  assert.ok(rome);
+  assert.ok(lookup.has(registryApi.bindingSignature(rome)));
+  assert.equal(lookup.has(registryApi.bindingSignature({ ...rome, source_refs: ["different source"] })), false);
+  assert.equal(lookup.has(registryApi.bindingSignature({ ...rome, polity_id: "polity-example" })), false);
 });
