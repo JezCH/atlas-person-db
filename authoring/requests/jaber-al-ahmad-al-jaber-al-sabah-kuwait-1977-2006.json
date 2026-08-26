@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jaber-al-ahmad-al-jaber-al-sabah:kuwait:emir:1977-2006:v1",
+  "person": {
+    "canonical_name_en": "Jaber Al-Ahmad Al-Jaber Al-Sabah",
+    "display_name_ko": "자베르 알-아흐마드 알-자베르 알-사바"
+  },
+  "polity": {
+    "canonical_name_en": "Kuwait",
+    "display_name_ko": "쿠웨이트"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emir",
+    "role_display_name_ko": "에미르",
+    "start_year": 1977,
+    "start_month": 12,
+    "start_day": 31,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2006,
+    "end_month": 1,
+    "end_day": 15,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sheikh Jaber Al-Ahmad Al-Jaber Al-Sabah was proclaimed Emir of Kuwait on 31 December 1977 after the death of Sabah Al-Salem Al-Sabah. He remained Kuwait's ruler until his death on 15 January 2006. ATLAS records the continuous emirate reign, including the 1990-1991 Iraqi occupation, because the occupation displaced the Kuwaiti government but did not constitute Jaber's abdication or replacement as the internationally recognized Emir of Kuwait."
+  },
+  "sources": [
+    {
+      "title": "Biography of the late Amir Sheikh Jaber Al-Ahmad Al-Jaber Al-Sabah",
+      "canonical_url": "https://www.kuna.net.kw/ArticleDetails.aspx?id=1591813&language=ar",
+      "citation_text": "Kuwait News Agency records that Sheikh Jaber was proclaimed Emir on 31 December 1977 after the death of his predecessor and records his death on 15 January 2006.",
+      "source_type": "official_news_agency"
+    },
+    {
+      "title": "Late Amir Sheikh Jaber Al-Ahmad... Founder of Kuwait's economic renaissance",
+      "canonical_url": "https://www.kuna.net.kw/ArticleDetails.aspx?Language=en&id=2419023",
+      "citation_text": "Kuwait News Agency confirms that Sheikh Jaber became ruler of Kuwait on 31 December 1977 and died on 15 January 2006.",
+      "source_type": "official_news_agency"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  }
+}
