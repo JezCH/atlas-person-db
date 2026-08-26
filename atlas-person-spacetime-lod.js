@@ -40,7 +40,7 @@
   function representationStage(weights) {
     if ((weights?.activities || 0) >= 0.5) return "activity";
     if ((weights?.rails || 0) >= 0.5) return "rail";
-    if ((weights?.density || 0) >= 0.5 && (weights?.labels || 0) > 0.01) return "density+label";
+    if ((weights?.density || 0) >= 0.5) return "density";
     if ((weights?.labels || 0) >= 0.5) return "label";
     if ((weights?.points || 0) >= 0.5) return "point";
     if ((weights?.density || 0) > 0) return "density";
