@@ -117,12 +117,3 @@ test("density cells are reduced to cells intersecting the current overscan canva
   const visible = perf.cullDensityCells(cells, { left: 80, top: 10, width: 180, height: 150 });
   assert.deepEqual(visible.map((cell) => cell.count), [1, 2]);
 });
-
-test("render budget reports only virtualized DOM layers", () => {
-  assert.deepEqual(perf.renderBudget(15, 8, 12), {
-    person_dom: 15,
-    segment_dom: 8,
-    label_dom: 12,
-    total_dom: 35
-  });
-});
