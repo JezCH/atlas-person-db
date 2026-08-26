@@ -54,7 +54,7 @@ const INVENTORY_SELECT = `
         join atlas_v2.persons p on p.id=pp.person_id
         join atlas_v2.polities po on po.id=pp.polity_id
         left join atlas_v2.roles r on r.id=pp.role_id
-        join atlas_v2.period_bases pb on pb.id=pp.period_basis_id`;
+        left join atlas_v2.period_bases pb on pb.id=pp.period_basis_id`;
 
 function json(res, statusCode, body) {
   res.statusCode = statusCode;
