@@ -130,7 +130,7 @@ jobs:
             --arg status "$REFERENCE_STATUS" \
             --arg url "$NAMUWIKI_URL" \
             'if $status == "linked" then
-               {runtime_sha:$runtime_sha,workflow_sha:$workflow_sha,person_id:$person_id,status:$status,url:$url}
+               {runtime_sha:$runtime_sha,workflow_sha:$workflow_sha,person_id:$person_id,url:$url}
              else
                {runtime_sha:$runtime_sha,workflow_sha:$workflow_sha,person_id:$person_id,status:$status}
              end')"
