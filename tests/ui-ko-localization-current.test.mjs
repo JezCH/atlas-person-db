@@ -48,7 +48,7 @@ test('Main and Admin load the same localization authority before dependent prese
   const i18nIndex = html.indexOf('atlas-ui-localization.js?v=20260819-ko-r2');
   const tableIndex = html.indexOf('atlas-person-table-view.js?v=20260819-era-model-r2');
   const catalogIndex = html.indexOf('atlas-ui-authority-catalog.ko.js?v=20260819-ko-r2');
-  const navIndex = html.indexOf('atlas-main-authority-nav.js?v=20260819-ko-r2');
+  const navIndex = html.indexOf('atlas-main-authority-nav.js?v=');
   assert.ok(i18nIndex >= 0 && i18nIndex < tableIndex);
   assert.ok(catalogIndex >= 0 && catalogIndex < navIndex);
   assert.match(assetLoader, /LOCALIZATION_ASSET = "\.\/atlas-ui-localization\.js"/);

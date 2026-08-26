@@ -6,6 +6,7 @@ const navScript = readFileSync(new URL('../atlas-main-authority-nav.js', import.
 const navCss = readFileSync(new URL('../atlas-main-authority-nav.css', import.meta.url), 'utf8');
 const spacetimeCss = readFileSync(new URL('../atlas-person-spacetime-view.css', import.meta.url), 'utf8');
 const spacetimeView = readFileSync(new URL('../atlas-person-spacetime-view.js', import.meta.url), 'utf8');
+const indexHtml = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 
 test('spacetime owns a bounded map-like viewport once the incremental time camera is active', () => {
   assert.match(spacetimeCss, /\.spacetime-scroll\{[^}]*overflow:auto/);
@@ -14,6 +15,11 @@ test('spacetime owns a bounded map-like viewport once the incremental time camer
   assert.match(spacetimeView, /function bindCameraViewport\(/);
   assert.match(spacetimeView, /!event\.ctrlKey && !event\.metaKey/);
   assert.match(spacetimeView, /event\.preventDefault\(\)/);
+});
+
+test('authority navigation loads the current spacetime renderer without a stale cache key', () => {
+  assert.match(navScript, /atlas-person-spacetime-view\.js\?v=20260827-direct-selection-context/);
+  assert.match(indexHtml, /atlas-main-authority-nav\.js\?v=20260827-spacetime-direct-selection/);
 });
 
 test('authority navigation resets the viewport only when the domain changes', () => {

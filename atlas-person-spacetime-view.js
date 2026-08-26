@@ -640,7 +640,7 @@
     canvas?.addEventListener("click", (event) => {
       const target = event.target.closest?.("[data-spacetime-person]");
       if (!target || !canvas.contains(target)) return;
-      selectPerson(mount, target.dataset.spacetimePerson, { focus: true });
+      selectPerson(mount, target.dataset.spacetimePerson, { focus: false });
     });
     scroll.addEventListener("scroll", schedule, { passive: true });
     refresh();

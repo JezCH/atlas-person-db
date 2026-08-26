@@ -58,6 +58,6 @@ test('UI8 shell assets load after Person Main and before the localized authority
   const mainScript = html.indexOf('atlas-person-main.js?v=20260821-person-profile-v1');
   const shellScript = html.indexOf('atlas-responsive-shell.js?v=20260815-ui8-shell-r2');
   const catalogScript = html.indexOf('atlas-ui-authority-catalog.ko.js?v=20260819-ko-r2');
-  const navScript = html.indexOf('atlas-main-authority-nav.js?v=20260819-ko-r2');
+  const navScript = html.indexOf('atlas-main-authority-nav.js?v=');
   assert.ok(mainScript >= 0 && shellScript > mainScript && catalogScript > shellScript && navScript > catalogScript);
 });
