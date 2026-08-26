@@ -3,6 +3,7 @@
 
   const MOUNT_ID = "personSpacetimeMount";
   const BOUND_EPSILON = 0.01;
+  const MAXIMUM_PERCENT = 800;
 
   function parsePercent(value) {
     const match = String(value ?? "").match(/(-?\d+(?:\.\d+)?)\s*%/);
@@ -21,15 +22,18 @@
     if (!mount) return false;
     const zoomOut = mount.querySelector("#spacetimeTimeZoomOut");
     const zoomValue = mount.querySelector("#spacetimeTimeZoomValue");
+    const zoomIn = mount.querySelector("#spacetimeTimeZoomIn");
     const reset = mount.querySelector("#spacetimeTimeZoomReset");
-    if (!zoomOut || !zoomValue || !reset) return false;
+    if (!zoomOut || !zoomValue || !zoomIn || !reset) return false;
 
     const currentPercent = parsePercent(zoomValue.textContent);
     const minimumPercent = parsePercent(reset.textContent);
     if (currentPercent == null || minimumPercent == null) return false;
 
     const atMinimum = currentPercent <= minimumPercent + BOUND_EPSILON;
+    const atMaximum = currentPercent >= MAXIMUM_PERCENT - BOUND_EPSILON;
     setDisabled(zoomOut, atMinimum);
+    setDisabled(zoomIn, atMaximum);
     setDisabled(reset, atMinimum);
     return true;
   }
