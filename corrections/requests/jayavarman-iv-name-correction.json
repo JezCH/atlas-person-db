@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-correction-manifest/v1.3",
+  "request_id": "correction:jayavarman-iv:identity-name:20260826:v1",
+  "review_status": "approved",
+  "release_order": 540,
+  "evidence": {
+    "reason": "The existing Person UUID has the correct Khmer Empire activity window (928-941) and Koh Ker context, but the identity name was mistakenly recorded as Yasovarman IV. UNESCO identifies the Koh Ker ruler for this period as Jayavarman IV, and current NamuWiki Khmer Empire material likewise lists 자야바르만 4세 for 928-941.",
+    "pipeline_retry": "Initial Production apply run 32952117490 failed before committing this manifest because the post-Stage2 primary polity/relation CHECK attempted immediate validation against legacy one-sided rows. PR #521 changed that CHECK to staged NOT VALID enforcement with automatic validation once the legacy backlog is clean; this manifest is retriggered unchanged at the operation level after that pipeline repair.",
+    "sources": [
+      "https://whc.unesco.org/en/list/1667",
+      "https://www.unesco.org/en/articles/unesco-commends-cambodia-inscription-koh-ker-world-heritage-list",
+      "https://namu.wiki/w/%ED%81%AC%EB%A9%94%EB%A5%B4%20%EC%A0%9C%EA%B5%AD"
+    ]
+  },
+  "operations": [
+    {
+      "type": "replace_person_preferred_name",
+      "person_id": "ef6ece40-2a70-5399-b124-0c411c962d18",
+      "expected_before": {
+        "locale": "en",
+        "name": "Yasovarman IV",
+        "name_type": "canonical",
+        "is_preferred": true
+      },
+      "expected_after": {
+        "locale": "en",
+        "name": "Jayavarman IV",
+        "name_type": "canonical",
+        "is_preferred": true
+      }
+    },
+    {
+      "type": "replace_person_preferred_name",
+      "person_id": "ef6ece40-2a70-5399-b124-0c411c962d18",
+      "expected_before": {
+        "locale": "ko",
+        "name": "야소바르만 4세",
+        "name_type": "display",
+        "is_preferred": true
+      },
+      "expected_after": {
+        "locale": "ko",
+        "name": "자야바르만 4세",
+        "name_type": "display",
+        "is_preferred": true
+      }
+    }
+  ]
+}

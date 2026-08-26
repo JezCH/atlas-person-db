@@ -51,8 +51,8 @@ const INVENTORY_SELECT = `
              (select count(*)::int from atlas_v2.chronology_claims c where c.person_politics_id=pp.id) as chronology_claim_count,
              (select count(*)::int from atlas_v2.relationship_descriptions d where d.person_politics_id=pp.id) as description_count
         from atlas_v2.person_politics_v2 pp
-        join atlas_v2.persons p on p.id=pp.person_id
-        join atlas_v2.polities po on po.id=pp.polity_id
+        left join atlas_v2.persons p on p.id=pp.person_id
+        left join atlas_v2.polities po on po.id=pp.polity_id
         left join atlas_v2.roles r on r.id=pp.role_id
         left join atlas_v2.period_bases pb on pb.id=pp.period_basis_id`;
 

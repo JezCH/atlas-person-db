@@ -61,6 +61,8 @@ function canonicalNamuWikiUrl(value) {
     if (url.protocol !== "https:" || url.hostname !== "namu.wiki") return null;
     if (!url.pathname.startsWith("/w/") || url.pathname.length <= 3) return null;
     if (url.username || url.password) return null;
+    url.search = "";
+    url.hash = "";
     return url.href;
   } catch {
     return null;
@@ -79,7 +81,7 @@ function normalizeNamuWikiReference(raw, { allowLegacyOmission = true } = {}) {
   if (!validIsoDate(checkedAt)) throw new Error("HUMAN_AUTHORING_NAMUWIKI_CHECKED_AT_INVALID");
   if (status === "not_found") {
     if (reference.document_title != null || reference.url != null) throw new Error("HUMAN_AUTHORING_NAMUWIKI_NOT_FOUND_FIELDS_INVALID");
-    return Object.freeze({ status, checked_at:checkedAt });
+    return Object.freeze({ status, checked_at:checkedAt, document_title:null, url:null });
   }
   const documentTitle = requiredText(reference.document_title, "HUMAN_AUTHORING_NAMUWIKI_DOCUMENT_TITLE_REQUIRED");
   const url = canonicalNamuWikiUrl(reference.url);
@@ -263,6 +265,19 @@ async function resolveOrCreateSources(client, requestId, sources) {
       results.push(Object.freeze({ id:source.source_id, locator:source.locator, disposition:"reused" }));
       continue;
     }
+    if (source.canonical_url) {
+      const exact = await client.query(`
+        select id::text
+          from atlas_v2.sources
+         where canonical_url=$1
+         order by id::text
+         limit 2`, [source.canonical_url]);
+      if (exact.rows.length > 1) throw new Error(`HUMAN_AUTHORING_SOURCE_CANONICAL_URL_AMBIGUOUS:${index + 1}`);
+      if (exact.rows.length === 1) {
+        results.push(Object.freeze({ id:String(exact.rows[0].id).toLowerCase(), locator:source.locator, disposition:"reused" }));
+        continue;
+      }
+    }
     const sourceKey = `human-authoring:${requestId}:${index + 1}`;
     const collision = await client.query(`select id::text from atlas_v2.sources where source_key=$1 limit 1`, [sourceKey]);
     if (collision.rows.length) throw new Error(`HUMAN_AUTHORING_SOURCE_KEY_COLLISION:${index + 1}`);
@@ -275,6 +290,69 @@ async function resolveOrCreateSources(client, requestId, sources) {
     results.push(Object.freeze({ id, locator:source.locator, disposition:"created" }));
   }
   return Object.freeze(results);
+}
+
+async function currentNamuWikiReference(client, personId, { forUpdate = false } = {}) {
+  const result = await client.query(`
+    select status,checked_at::text,document_title,url
+      from atlas_v2.person_external_references
+     where person_id=$1::uuid and provider='namuwiki'${forUpdate ? " for update" : ""}`, [personId]);
+  if (result.rows.length > 1) throw new Error("HUMAN_AUTHORING_NAMUWIKI_AMBIGUOUS");
+  const row = result.rows[0];
+  if (!row) return null;
+  return Object.freeze({
+    status:String(row.status),
+    checked_at:row.checked_at == null ? null : String(row.checked_at),
+    document_title:row.document_title == null ? null : String(row.document_title),
+    url:row.url == null ? null : String(row.url)
+  });
+}
+
+function sameNamuWikiCore(left, right) {
+  return Boolean(left && right)
+    && left.status === right.status
+    && left.document_title === right.document_title
+    && left.url === right.url;
+}
+
+async function resolveNamuWikiReference(client, { requestId, person, requested, allowLegacyNamuWikiOmission = false }) {
+  const current = await currentNamuWikiReference(client, person.id, { forUpdate:true });
+  if (!requested) {
+    if (current) return current;
+    if (allowLegacyNamuWikiOmission) return null;
+    throw new Error("HUMAN_AUTHORING_NAMUWIKI_REQUIRED");
+  }
+  if (current?.status === "linked" && !sameNamuWikiCore(current, requested)) {
+    throw new Error("HUMAN_AUTHORING_NAMUWIKI_OVERWRITE_REVIEW_REQUIRED");
+  }
+  if (sameNamuWikiCore(current, requested) && current.checked_at === requested.checked_at) return current;
+
+  const before = current;
+  const saved = await client.query(`
+    insert into atlas_v2.person_external_references(person_id,provider,status,checked_at,document_title,url,updated_at)
+    values($1::uuid,'namuwiki',$2,$3::date,$4,$5,now())
+    on conflict (person_id,provider) do update
+      set status=excluded.status,
+          checked_at=excluded.checked_at,
+          document_title=excluded.document_title,
+          url=excluded.url,
+          updated_at=now()
+    returning status,checked_at::text,document_title,url`,
+    [person.id, requested.status, requested.checked_at, requested.document_title, requested.url]);
+  const after = saved.rows[0] ? Object.freeze({
+    status:String(saved.rows[0].status),
+    checked_at:String(saved.rows[0].checked_at),
+    document_title:saved.rows[0].document_title == null ? null : String(saved.rows[0].document_title),
+    url:saved.rows[0].url == null ? null : String(saved.rows[0].url)
+  }) : null;
+  if (!after || !sameNamuWikiCore(after, requested) || after.checked_at !== requested.checked_at) {
+    throw new Error("HUMAN_AUTHORING_NAMUWIKI_VERIFICATION_FAILED");
+  }
+  await client.query(`
+    insert into atlas_v2.person_profile_mutation_audits(request_id,person_id,operation,before_snapshot,after_snapshot)
+    values($1,$2::uuid,'set_person_external_reference',$3::jsonb,$4::jsonb)`,
+    [`${requestId}:namuwiki`, person.id, JSON.stringify({ external_reference:before }), JSON.stringify({ external_reference:after })]);
+  return after;
 }
 
 function activityPayload({ personId, polityId, roleId, relation, periodBasis, activity, sources }) {
@@ -352,7 +430,7 @@ function outcome(requestId, replay, snapshot) {
   });
 }
 
-async function applyPreparedWithinTransaction(client, prepared, { transport = null, catalogCache = null } = {}) {
+async function applyPreparedWithinTransaction(client, prepared, { transport = null, catalogCache = null, allowLegacyNamuWikiOmission = false } = {}) {
   const { request, hash } = prepared;
   const ledger = await readLedger(client, request.requestId);
   if (ledger) {
@@ -370,10 +448,16 @@ async function applyPreparedWithinTransaction(client, prepared, { transport = nu
     ? Object.freeze({ id:null, disposition:"none" })
     : await resolveOrCreatePolity(client, request.polity);
   const role = await resolveOrCreateRole(client, request.activity);
+  const namuwiki = await resolveNamuWikiReference(client, {
+    requestId:request.requestId,
+    person,
+    requested:request.external_references.namuwiki,
+    allowLegacyNamuWikiOmission
+  });
   const sources = await resolveOrCreateSources(client, request.requestId, request.sources);
   const payload = activityPayload({ personId:person.id, polityId:polity.id, roleId:role.id, relation, periodBasis, activity:request.activity, sources });
   const created = await createStage2NativeActivityTx(client).create(payload, { requestId:request.requestId });
-  const snapshot = buildSnapshot({ person, polity, role, relation, periodBasis, sources, activity:created, transport, externalReferences:request.external_references });
+  const snapshot = buildSnapshot({ person, polity, role, relation, periodBasis, sources, activity:created, transport, externalReferences:Object.freeze({ namuwiki }) });
   await client.query(`insert into atlas_v2.authoring_manifest_runs(request_id,manifest_hash,manifest_schema,person_id,relationship_id,result_snapshot) values($1,$2,$3,$4::uuid,$5::uuid,$6::jsonb)`, [request.requestId, hash, HUMAN_AUTHORING_SCHEMA, person.id, created.id, JSON.stringify(snapshot)]);
   return outcome(request.requestId, false, snapshot);
 }
@@ -406,11 +490,11 @@ function createHumanAuthoringService({ client, prepare = prepareHumanAuthoringRe
   if (typeof applyPrepared !== "function") throw new Error("applyPrepared is required");
   return Object.freeze({
     async apply(rawRequest, { transport = null, allowLegacyNamuWikiOmission = true } = {}) {
-      const prepared = prepare(rawRequest, { allowLegacyNamuWikiOmission });
+      const prepared = prepare(rawRequest, { allowLegacyNamuWikiOmission:true });
       await client.query("begin isolation level serializable");
       try {
         await lockRequestIds(client, [prepared.request.requestId]);
-        const result = await applyPrepared(client, prepared, { transport, catalogCache:new Map() });
+        const result = await applyPrepared(client, prepared, { transport, catalogCache:new Map(), allowLegacyNamuWikiOmission });
         await client.query("commit");
         return result;
       } catch (error) {
@@ -424,17 +508,19 @@ function createHumanAuthoringService({ client, prepare = prepareHumanAuthoringRe
       const normalizedTransports = transports == null ? rawRequests.map(() => null) : transports;
       if (!Array.isArray(normalizedTransports) || normalizedTransports.length !== rawRequests.length) throw new Error("HUMAN_AUTHORING_BATCH_TRANSPORT_LENGTH_MISMATCH");
 
-      const prepared = [];
+      const prepared = new Array(rawRequests.length).fill(null);
+      const preparationFailures = [];
       for (let index = 0; index < rawRequests.length; index += 1) {
         try {
-          prepared.push(prepare(rawRequests[index], { allowLegacyNamuWikiOmission }));
+          prepared[index] = prepare(rawRequests[index], { allowLegacyNamuWikiOmission:true });
         } catch (error) {
-          throw annotateBatchError(error, index, normalizedTransports[index]);
+          preparationFailures.push({ index, error:annotateBatchError(error, index, normalizedTransports[index]) });
         }
       }
 
       const firstIndexByRequestId = new Map();
       for (let index = 0; index < prepared.length; index += 1) {
+        if (!prepared[index]) continue;
         const requestId = prepared[index].request.requestId;
         if (firstIndexByRequestId.has(requestId)) {
           throw annotateBatchError(new Error("HUMAN_AUTHORING_BATCH_DUPLICATE_REQUEST_ID"), index, normalizedTransports[index]);
@@ -442,24 +528,35 @@ function createHumanAuthoringService({ client, prepare = prepareHumanAuthoringRe
         firstIndexByRequestId.set(requestId, index);
       }
 
-      await client.query("begin isolation level serializable");
-      try {
-        await lockRequestIds(client, prepared.map((item) => item.request.requestId));
-        const catalogCache = new Map();
-        const results = [];
-        for (let index = 0; index < prepared.length; index += 1) {
-          try {
-            results.push(await applyPrepared(client, prepared[index], { transport:normalizedTransports[index], catalogCache }));
-          } catch (error) {
-            throw annotateBatchError(error, index, normalizedTransports[index]);
-          }
+      const catalogCache = new Map();
+      const results = [];
+      const failures = [...preparationFailures];
+      for (let index = 0; index < prepared.length; index += 1) {
+        if (!prepared[index]) continue;
+        await client.query("begin isolation level serializable");
+        try {
+          await lockRequestIds(client, [prepared[index].request.requestId]);
+          const result = await applyPrepared(client, prepared[index], {
+            transport:normalizedTransports[index],
+            catalogCache,
+            allowLegacyNamuWikiOmission
+          });
+          await client.query("commit");
+          results.push(result);
+        } catch (error) {
+          await rollbackQuietly(client);
+          failures.push({ index, error:annotateBatchError(error, index, normalizedTransports[index]) });
         }
-        await client.query("commit");
-        return Object.freeze(results);
-      } catch (error) {
-        await rollbackQuietly(client);
-        throw error;
       }
+
+      if (failures.length) {
+        failures.sort((a, b) => a.index - b.index);
+        const first = failures[0].error;
+        first.batchResults = Object.freeze([...results]);
+        first.batchFailures = Object.freeze(failures.map((item) => Object.freeze({ index:item.index, code:String(item.error?.message || "HUMAN_AUTHORING_FAILED"), manifest_path:item.error?.manifestPath || null })));
+        throw first;
+      }
+      return Object.freeze(results);
     }
   });
 }
@@ -489,6 +586,8 @@ module.exports = Object.freeze({
   resolveOrCreatePolity,
   resolveOrCreateRole,
   resolveOrCreateSources,
+  currentNamuWikiReference,
+  resolveNamuWikiReference,
   applyPreparedWithinTransaction,
   lockRequestIds,
   createHumanAuthoringService,
