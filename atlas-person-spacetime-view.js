@@ -20,7 +20,8 @@
     ["./atlas-person-spacetime-spatial-compile.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE"],
     ["./atlas-person-spacetime-person-tracks.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
     ["./atlas-person-spacetime-political-placement.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT"],
-    ["./atlas-person-spacetime-lod.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_LOD"],
+    ["./atlas-person-spacetime-lod.js?v=20260826-p9", "ATLAS_PERSON_SPACETIME_LOD"],
+    ["./atlas-person-spacetime-density.js?v=20260826-p9", "ATLAS_PERSON_SPACETIME_DENSITY"],
     ["./atlas-person-spacetime-label-engine.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
   ]);
 
@@ -114,6 +115,7 @@
       personTracks: window.ATLAS_PERSON_SPACETIME_PERSON_TRACKS,
       politicalPlacement: window.ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT,
       lod: window.ATLAS_PERSON_SPACETIME_LOD,
+      density: window.ATLAS_PERSON_SPACETIME_DENSITY,
       labelEngine: window.ATLAS_PERSON_SPACETIME_LABEL_ENGINE
     };
     if (Object.values(api).some((value) => !value)) throw new Error("ATLAS_SPACETIME_RUNTIME_INCOMPLETE");
@@ -304,6 +306,11 @@
     return `<div class="spacetime-selection" id="spacetimeSelection"><div><small>SELECTED PERSON TRACK</small><strong>${escapeHtml(track.display_name)}</strong><span>${escapeHtml(activities || "주 위치 Activity 없음")}</span></div><div><span>${primary.length}개 주 위치 구간</span><span>${counterparties.length}개 counterparty 관계는 자기 위치에서 제외</span></div></div>`;
   }
 
+  function renderDensityLegend(field, filtered) {
+    if (!field) return "";
+    return `<section class="spacetime-density-legend card"><div><strong>${escapeHtml(field.legend_label)}</strong><span>최대 셀 <b>${field.max_count}</b>명 · 표시 고유 인물 <b>${field.covered_person_count}</b>명${filtered ? " · 검색 필터 적용" : ""}</span></div><small>${escapeHtml(field.interpretation_note)}</small></section>`;
+  }
+
   function renderRails(tracks, projection, contentWidth, opacity) {
     if (opacity <= 0.01) return "";
     return tracks.flatMap((track) => (track.primary_segments || []).map((segment) => {
@@ -355,7 +362,7 @@
   }
 
   function renderInto(mount) {
-    const { timeProjection, spaceAxis, lod } = runtime();
+    const { timeProjection, spaceAxis, lod, density } = runtime();
     const allEntries = flattenActivities(persons);
     const timeline = model.deriveTimelineRange(allEntries.map((entry) => entry.activity), new Date().getFullYear());
     const projection = timeProjection.createSemanticTimeProjection(timeline.start_year, timeline.end_year, DEFAULT_TIMELINE_HEIGHT * timeCameraZoom, LOG_SOFTENING_YEARS, timeCameraZoom);
@@ -370,8 +377,12 @@
     const regions = spaceAxis.stableRegionLayout(compiled.continuum, contentWidth);
     const projectedTracks = visibleTracks.map((track) => projectTrack(track, projection, contentWidth)).filter(Boolean);
     const lodWeights = lod.lodWeights({ timeZoom: timeCameraZoom, spaceZoom });
-    const labelPack = packTrackLabels(projectedTracks, regions, timelineHeight, Boolean(needle));
+    const needsLabels = lodWeights.labels > 0.01 || Boolean(needle) || Boolean(selectedPersonId);
+    const labelPack = needsLabels ? packTrackLabels(projectedTracks, regions, timelineHeight, Boolean(needle)) : { placed: [], deferred: [] };
     const labelsByPerson = new Map(labelPack.placed.map((label) => [label.person_id, label]));
+    const densityField = horizontalViewMode === "overview" && lodWeights.density > 0.01
+      ? density.buildDensityField({ tracks: visibleTracks }, projection, { width: contentWidth, height: timelineHeight })
+      : null;
     const ticks = model.buildAdaptiveTimeTicks(timeline.start_year, timeline.end_year, projection);
     const eras = buildEraBands(timeline, projection);
     const selectedTrack = compiled.partitioned.tracks.find((track) => track.person_id === selectedPersonId) || null;
@@ -379,8 +390,12 @@
     const primarySegmentCount = compiled.partitioned.tracks.reduce((sum, track) => sum + (track.primary_segments?.length || 0), 0);
     const frameModeClass = horizontalViewMode === "overview" ? " is-overview" : " is-detail";
 
+    const densityHtml = densityField ? densityField.cells.map((cell) => {
+      const opacity = lodWeights.density * (0.12 + 0.72 * cell.intensity);
+      return `<i class="spacetime-density-cell" aria-hidden="true" style="left:${cell.left}px;top:${cell.top}px;width:${cell.width}px;height:${cell.height}px;opacity:${opacity}" title="ATLAS 등록 인물 ${cell.count}명"></i>`;
+    }).join("") : "";
     const pointsHtml = lodWeights.points > 0.01 ? projectedTracks.map((item) => `<button type="button" class="spacetime-person-point${selectedPersonId === item.track.person_id ? " is-selected" : ""}" data-spacetime-person="${escapeHtml(item.track.person_id)}" style="left:${item.x}px;top:${item.y}px;opacity:${lodWeights.points}" title="${escapeHtml(item.track.display_name)}" aria-label="${escapeHtml(item.track.display_name)}"></button>`).join("") : "";
-    const labelsHtml = (lodWeights.labels > 0.01 || needle || selectedPersonId) ? projectedTracks.map((item) => {
+    const labelsHtml = needsLabels ? projectedTracks.map((item) => {
       const label = labelsByPerson.get(item.track.person_id);
       if (!label) return "";
       const forced = Boolean(needle) || selectedPersonId === item.track.person_id;
@@ -390,22 +405,24 @@
     }).join("") : "";
 
     mount.innerHTML = `<section class="spacetime-toolbar card">
-      <div class="spacetime-toolbar-copy"><p class="eyebrow">PERSON SPACETIME ATLAS</p><h2>시공간 인물도</h2><p>하나의 연속된 역사 공간에서 Person track을 탐색합니다. 100%에서는 기존 로그 시간 좌표를 그대로 유지하고 확대할수록 선형 시간 간격으로 부드럽게 전환됩니다. 가로축은 검색 결과나 밀도에 따라 움직이지 않는 9개 macroregion 연속 좌표이며, opposes는 상대 정치체 관계로만 보존되고 인물의 자기 위치를 결정하지 않습니다.</p></div>
+      <div class="spacetime-toolbar-copy"><p class="eyebrow">PERSON SPACETIME ATLAS</p><h2>시공간 인물도</h2><p>하나의 연속된 역사 공간에서 Person track을 탐색합니다. 100% 세계 보기에서는 ATLAS에 등록된 고유 인물의 검토된 Activity 시공간 밀도를 먼저 보여주고, 확대할수록 Person 점·이름·rail·Activity로 부드럽게 전환됩니다. 가로축은 검색 결과나 밀도에 따라 움직이지 않는 9개 macroregion 연속 좌표이며, opposes는 상대 정치체 관계로만 보존되고 인물의 자기 위치를 결정하지 않습니다.</p></div>
       <div class="spacetime-controls">
         <label>검색<input id="spacetimeSearch" type="search" value="${escapeHtml(query)}" placeholder="인물·정치체·역할 검색" /></label>
         <label>공간 보기<select id="spacetimeHorizontalMode"><option value="overview"${horizontalViewMode === "overview" ? " selected" : ""}>전체 보기</option><option value="detail"${horizontalViewMode === "detail" ? " selected" : ""}>공간 확대</option></select></label>
         <div class="spacetime-time-camera" role="group" aria-label="시간축 확대"><span>시간 확대</span><button id="spacetimeTimeZoomOut" type="button" aria-label="시간축 축소">−</button><output id="spacetimeTimeZoomValue">${escapeHtml(timeCameraZoomLabel())}</output><button id="spacetimeTimeZoomIn" type="button" aria-label="시간축 확대">+</button><button id="spacetimeTimeZoomReset" type="button">100%</button></div>
       </div>
     </section>
-    <section class="spacetime-status-row"><span><b>${visibleTracks.length}</b> Person track</span><span><b>${primarySegmentCount}</b> 주 위치 구간</span><span><b>${counterpartyCount}</b> counterparty 제외</span><span><b>${compiled.unresolvedPosition.length}</b> 위치 미확정</span><span><b>${compiled.unresolvedChronology.length}</b> 연대 미확정</span><span><b>${labelPack.deferred.length}</b> label defer</span><span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> LOD</span><span><b>${escapeHtml(timeCameraZoomLabel())}</b> 시간 줌</span></section>
+    <section class="spacetime-status-row"><span><b>${visibleTracks.length}</b> Person track</span><span><b>${primarySegmentCount}</b> 주 위치 구간</span><span><b>${counterpartyCount}</b> counterparty 제외</span><span><b>${compiled.unresolvedPosition.length}</b> 위치 미확정</span><span><b>${compiled.unresolvedChronology.length}</b> 연대 미확정</span><span><b>${labelPack.deferred.length}</b> label defer</span>${densityField ? `<span><b>${densityField.max_count}</b> 최대 cell 고유 인물</span>` : ""}<span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> LOD</span><span><b>${escapeHtml(timeCameraZoomLabel())}</b> 시간 줌</span></section>
     ${(compiled.unresolvedPosition.length || compiled.partitioned.relation_review.length) ? `<section class="spacetime-integrity-note card"><strong>근거 없는 위치는 자동 추정하지 않습니다.</strong><p>현재 canonical spatial index가 제공하는 검토된 macroregion만 좌표로 사용합니다. 세부 Place/subregion 근거가 없으면 macroregion보다 정밀한 좌표를 만들지 않으며, counterparty인 opposes는 자기 위치 계산에서 제외합니다.</p></section>` : ""}
+    ${renderDensityLegend(densityField, Boolean(needle))}
     ${renderSelection(selectedTrack)}
-    <section class="spacetime-frame card${frameModeClass}"><div class="spacetime-scroll${frameModeClass}" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 Person track 분포">
+    <section class="spacetime-frame card${frameModeClass}"><div class="spacetime-scroll${frameModeClass}" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 Person track 및 등록 인물 밀도 분포">
       <div class="spacetime-sticky-corner"><span>시대</span><span>연도</span></div>
       <div class="spacetime-region-head" style="width:${contentWidth}px">${regions.map((region) => `<div style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${escapeHtml(region.code)}</small></div>`).join("")}</div>
       <div class="spacetime-era-axis" style="height:${timelineHeight}px">${eras.map((era) => `<div class="person-era-${escapeHtml(era.code)}" style="top:${era.top}px;height:${era.height}px"><span>${escapeHtml(era.label)}</span></div>`).join("")}</div>
       <div class="spacetime-year-axis" style="height:${timelineHeight}px">${ticks.map((tick) => `<span style="top:${tick.y}px">${escapeHtml(tick.label)}</span>`).join("")}</div>
       <div class="spacetime-canvas" style="width:${contentWidth}px;height:${timelineHeight}px">
+        ${densityHtml}
         ${ticks.map((tick) => `<i class="spacetime-century-line" style="top:${tick.y}px"></i>`).join("")}
         ${regions.map((region) => `<i class="spacetime-region-line" style="left:${region.left}px;height:${timelineHeight}px"></i>`).join("")}
         ${horizontalViewMode === "detail" ? compiled.continuum.subregions.map((subregion) => `<i class="spacetime-subregion-line" style="left:${subregion.min_space * contentWidth}px;height:${timelineHeight}px" title="${escapeHtml(subregion.label)}"></i>`).join("") : ""}
