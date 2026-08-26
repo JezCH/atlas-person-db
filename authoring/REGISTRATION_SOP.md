@@ -28,7 +28,30 @@ Every ordinary registration keeps these invariants:
 
 Historically real discontinuities are separate Activities. Never invent an exact year, month, or day merely to satisfy a request contract.
 
-## 3. The normal four-stage path
+## 3. Legendary / mythical / unresolved-chronology routing gate
+
+Before ordinary Timeline authoring, decide whether the requested figure belongs on the historical year timeline at all.
+
+Evaluate this routing gate during SCREEN, before expensive historical/NamuWiki research for ordinary Timeline authoring.
+
+Route the figure to `non-timeline-persons.json` instead of `atlas-human-authoring/v1` when both conditions hold:
+
+- the individual is primarily legendary, mythical, genealogical/oral-tradition, or otherwise historically unverified/disputed as an individual; and
+- no defensible personal Activity or reign interval can be established independently enough for the historical year timeline.
+
+For this class of figure:
+
+- set `timeline_status=excluded`;
+- keep `activity_start` and `activity_end` null;
+- use the narrowest historically appropriate traditional Polity/community association;
+- preserve a conventional foundation/traditional year only in `traditional_year` when the tradition itself makes that year meaningful; never promote it to a verified Activity boundary;
+- never invent a broad placeholder interval merely to make the figure visible on the timeline.
+
+Examples of the established path include Hotu Matuʻa, Gilgamesh, Bjorn Ironside, Bilqis, Eri, and Kupe.
+
+This gate is **not** triggered merely because a historical Person has approximate dates. A historically defensible Person with a scholarly approximate Activity/reign window remains in normal Human Authoring with `approximate` or `uncertain` boundaries. The deciding issue is whether the *individual and personal chronology* are sufficiently historical for the year timeline.
+
+## 4. The normal four-stage path
 
 Ordinary registration has four top-level stages:
 
@@ -41,7 +64,7 @@ SCREEN
 
 Git branches, PRs, CI jobs, workflow runs, deployments, UUIDs, and internal catalog lookups are transport or implementation details, not additional historical-registration stages.
 
-## 4. Stage 1 — SCREEN: cheapest useful check first
+## 5. Stage 1 — SCREEN: cheapest useful check first
 
 Do not begin full historical research before checking whether the intended Person is already in Production.
 
@@ -67,7 +90,7 @@ Rules:
 
 This stage intentionally comes before expensive research.
 
-## 5. Stage 2 — REVIEW: research only what is actually needed
+## 6. Stage 2 — REVIEW: research only what is actually needed
 
 For a new Person, or for the missing Activity of an existing Person, establish only the facts needed to author that record:
 
@@ -102,7 +125,7 @@ If the reviewed entity is clearly legitimate and there is no exact live identity
 
 A real Source remains mandatory. When a submitted Source has an exact canonical URL already present in Production, Human Authoring reuses that Source identity instead of creating another request-specific copy. URL-less bibliographic sources remain reviewable as separate records unless an explicit existing Source identity is supplied.
 
-## 6. Stage 3 — COMMIT: one logical request, one atomic write
+## 7. Stage 3 — COMMIT: one logical request, one atomic write
 
 Use one `atlas-human-authoring/v1` request for one logical registration.
 
@@ -176,7 +199,7 @@ For `authoring/requests/*.json`-only work, the authoring-only integrity fast pat
 
 For manifest-only registration, do not inspect Preview deployments or poll Vercel unless Authoring Apply reports a concrete runtime/readiness/SHA boundary problem.
 
-## 7. Stage 4 — VERIFY: one Production read, then stop
+## 8. Stage 4 — VERIFY: one Production read, then stop
 
 Perform one bounded Production Person read using the canonical Person name.
 
@@ -197,7 +220,7 @@ If the bounded Person result exposes all required completion fields, stop. Use P
 
 Do not perform additional alias reads merely for more confirmation.
 
-## 8. Retry policy — reuse, never requeue
+## 9. Retry policy — reuse, never requeue
 
 If the logical request content is correct but Commit fails because of a server bug, deployment timing, transient conflict, or another batch item:
 
@@ -209,7 +232,7 @@ Do not create a copied manifest, timestamped replacement, new request id, or ret
 
 Create a new request/version only when the reviewed historical content itself changes.
 
-## 9. Explicitly deleted from the normal registration process
+## 10. Explicitly deleted from the normal registration process
 
 The following are not normal registration steps unless a concrete failure makes one necessary:
 
@@ -227,7 +250,7 @@ The following are not normal registration steps unless a concrete failure makes 
 - repeated Production read-back after canonical verification;
 - requeue-only PRs for unchanged requests.
 
-## 10. Failure handling is narrow and local
+## 11. Failure handling is narrow and local
 
 Only move backward when a concrete gate fails:
 
@@ -243,7 +266,7 @@ Only move backward when a concrete gate fails:
 
 Do not restart generic repository, Production, or deployment discovery because a later gate failed.
 
-## 11. Completion report
+## 12. Completion report
 
 Report success only after VERIFY.
 
