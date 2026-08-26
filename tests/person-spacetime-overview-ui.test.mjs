@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import vm from 'node:vm';
 import { readFile } from 'node:fs/promises';
 
 const viewUrl = new URL('../atlas-person-spacetime-view.js', import.meta.url);
@@ -12,6 +13,13 @@ async function fixture(path) {
   return readFile(path, 'utf8');
 }
 
+async function loadLodApi() {
+  const source = await fixture(lodUrl);
+  const context = { module: { exports: {} }, exports: {} };
+  vm.runInNewContext(source, context, { filename: 'atlas-person-spacetime-lod.js' });
+  return context.module.exports;
+}
+
 test('spacetime defaults to a stable world overview with an explicit spatial detail zoom', async () => {
   const view = await fixture(viewUrl);
   assert.match(view, /let horizontalViewMode = "overview";/);
@@ -22,6 +30,28 @@ test('spacetime defaults to a stable world overview with an explicit spatial det
   assert.match(view, /<option value="detail"[^>]*>공간 확대<\/option>/);
   assert.match(view, /const spaceZoom = horizontalViewMode === "detail" \? DETAIL_SPACE_ZOOM : 1;/);
   assert.match(view, /const contentWidth = baseWorldWidth \* spaceZoom;/);
+});
+
+test('time camera cannot leave the readable 100 percent minimum through any zoom-out entry point', async () => {
+  const view = await fixture(viewUrl);
+  assert.match(view, /const TIME_CAMERA_MIN_ZOOM = 1;/);
+  assert.match(view, /let timeCameraZoom = TIME_CAMERA_MIN_ZOOM;/);
+  assert.match(view, /return Math\.min\(TIME_CAMERA_MAX_ZOOM, Math\.max\(TIME_CAMERA_MIN_ZOOM, numeric\)\);/);
+  assert.match(view, /spacetimeTimeZoomOut[^\n]+requestTimeCameraZoom\(mount, timeCameraZoom \/ TIME_CAMERA_ZOOM_STEP\)/);
+  assert.match(view, /const factor = event\.deltaY < 0 \? TIME_CAMERA_ZOOM_STEP : 1 \/ TIME_CAMERA_ZOOM_STEP;/);
+  assert.match(view, /command === "zoom-in" \? timeCameraZoom \* TIME_CAMERA_ZOOM_STEP : timeCameraZoom \/ TIME_CAMERA_ZOOM_STEP/);
+  assert.match(view, /spacetimeTimeZoomReset[^\n]+requestTimeCameraZoom\(mount, TIME_CAMERA_MIN_ZOOM\)/);
+  assert.doesNotMatch(view, /TIME_CAMERA_MIN_ZOOM = 0\.75/);
+});
+
+test('minimum useful zoom remains Person-readable instead of density-only', async () => {
+  const lod = await loadLodApi();
+  const weights = lod.lodWeights({ timeZoom: 1, spaceZoom: 1 });
+  assert.ok(weights.points >= 0.6, `expected visible Person points at minimum zoom, got ${weights.points}`);
+  assert.ok(weights.labels >= 0.78, `expected baseline Person labels at minimum zoom, got ${weights.labels}`);
+  assert.ok(weights.density <= 0.45, `expected density to stay subordinate at minimum zoom, got ${weights.density}`);
+  assert.ok(weights.points > weights.density, 'Person points must be more prominent than density at minimum zoom');
+  assert.equal(lod.representationStage(weights), 'point');
 });
 
 test('macroregion X is owned by the stable continuum rather than result density or lane counts', async () => {
