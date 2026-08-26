@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tygyn-darkhan:kangalas-ulus:toyon:c1600-1631:v1",
+  "person": {
+    "canonical_name_en": "Tygyn Darkhan",
+    "display_name_ko": "티긴 다르한"
+  },
+  "polity": {
+    "canonical_name_en": "Kangalas Ulus",
+    "display_name_ko": "한갈라스 울루스"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Toyon",
+    "role_display_name_ko": "토욘",
+    "start_year": 1600,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1631,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "uncertain",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Tygyn Darkhan was a historically attested Sakha (Yakut) toyon of the Kangalas group whose life and authority later accumulated substantial legendary material. ATLAS does not model modern Yakutia or a unified Yakut state as his polity: A. A. Borisov's reconstruction emphasizes that no Yakut state existed in Tygyn's era and identifies him as the head of the largest Kangalas clan association, while later traditions magnified him into a ruler of all Sakha. The start boundary c. 1600 is deliberately approximate, representing the source-supported late-sixteenth/early-seventeenth-century leadership horizon rather than an invented accession year. Russian documentary evidence directly attests Tygyn fighting Ivan Galkin's detachment in 1631; he disappears from the record before the 1632 Beketov expedition and his sons subsequently appear as Kangalas toyons, so 1631 is stored as an uncertain end boundary rather than an exact death or deposition date."
+  },
+  "sources": [
+    {
+      "title": "Якутский тойон Тыгын исторический и легендарный (опыт историко-биографической реконструкции)",
+      "canonical_url": "https://zaimka.ru/borisov-tygyn/",
+      "citation_text": "A. A. Borisov reconstructs Tygyn as a real Kangalas clan leader embedded in later folklore, states that a Yakut state did not exist in his era, identifies him as head of the largest Kangalas clan association, and cites Russian documentary evidence for his armed confrontation with Ivan Galkin in 1631.",
+      "source_type": "scholarly_historical_article"
+    },
+    {
+      "title": "The genetic legacy of legendary and historical Siberian chieftains",
+      "canonical_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7567834/",
+      "citation_text": "The peer-reviewed study treats Tygyn Darkhan as the defeated toyon (chieftain) of the Kangalaszy associated with the early colonial conflict between Yakut groups and Russian Cossacks, supporting the historical Kangalas leadership identity while distinguishing it from later legend.",
+      "source_type": "peer_reviewed_article"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  }
+}
