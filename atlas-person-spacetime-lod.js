@@ -31,18 +31,19 @@
     const pointIn = smoothstep(t.point_in_start, t.point_in_full, semanticDetail);
     const pointOut = 1 - smoothstep(t.point_out_start, t.point_out_end, timeZoom);
     const semanticLabels = smoothstep(t.label_start, t.label_full, timeZoom);
-    const overviewLabels = clamp(Number(t.overview_label_floor) || 0, 0, 1) * density;
-    const labels = Math.max(semanticLabels, overviewLabels);
+    const baselineLabels = clamp(Number(t.overview_label_floor) || 0, 0, 1);
+    const labels = Math.max(semanticLabels, baselineLabels);
     const rails = smoothstep(t.rail_time_start, t.rail_time_full, timeZoom) * smoothstep(t.rail_space_start, t.rail_space_full, spaceZoom);
     const activities = smoothstep(t.activity_time_start, t.activity_time_full, timeZoom) * smoothstep(t.activity_space_start, t.activity_space_full, spaceZoom);
-    return Object.freeze({ density: clamp(density, 0, 1), points: clamp(pointIn * pointOut, 0, 1), labels: clamp(labels, 0, 1), rails: clamp(rails, 0, 1), activities: clamp(activities, 0, 1), time_zoom: timeZoom, space_zoom: spaceZoom, semantic_detail: semanticDetail });
+    return Object.freeze({ density: clamp(density, 0, 1), points: clamp(pointIn * pointOut, 0, 1), labels: clamp(labels, 0, 1), semantic_labels: clamp(semanticLabels, 0, 1), rails: clamp(rails, 0, 1), activities: clamp(activities, 0, 1), time_zoom: timeZoom, space_zoom: spaceZoom, semantic_detail: semanticDetail });
   }
   function representationStage(weights) {
     if ((weights?.activities || 0) >= 0.5) return "activity";
     if ((weights?.rails || 0) >= 0.5) return "rail";
     if ((weights?.density || 0) >= 0.5) return "density";
-    if ((weights?.labels || 0) >= 0.5) return "label";
+    if ((weights?.semantic_labels || 0) >= 0.5) return "label";
     if ((weights?.points || 0) >= 0.5) return "point";
+    if ((weights?.labels || 0) >= 0.5) return "label";
     if ((weights?.density || 0) > 0) return "density";
     return "point";
   }
