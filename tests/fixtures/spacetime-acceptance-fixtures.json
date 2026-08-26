@@ -1,0 +1,45 @@
+{
+  "schema": "atlas-spacetime-acceptance-fixtures/v1",
+  "dense_label_windows": [
+    {
+      "id": "europe-ad-1800-1950",
+      "macroregion_code": "europe",
+      "start_year": 1800,
+      "end_year": 1950,
+      "at_sufficient_zoom": {
+        "label_overlap_count": 0,
+        "historical_y_deviation_px": 0,
+        "deferred_visible_labels": 0
+      }
+    },
+    {
+      "id": "east-asia-ad-500-1900",
+      "macroregion_code": "east-asia",
+      "start_year": 500,
+      "end_year": 1900,
+      "at_sufficient_zoom": {
+        "label_overlap_count": 0,
+        "historical_y_deviation_px": 0,
+        "deferred_visible_labels": 0
+      }
+    }
+  ],
+  "coordinate_invariance": {
+    "normalized_world_coordinate_must_match_under": [
+      "search-off",
+      "search-on",
+      "selection-change",
+      "time-zoom",
+      "space-zoom",
+      "minimap-navigation"
+    ]
+  },
+  "data_parity": {
+    "unintended_person_identity_delta": 0,
+    "unintended_activity_identity_delta": 0,
+    "unintended_temporal_boundary_delta": 0,
+    "unintended_polity_delta": 0,
+    "unintended_relation_delta": 0,
+    "unintended_role_delta": 0
+  }
+}
