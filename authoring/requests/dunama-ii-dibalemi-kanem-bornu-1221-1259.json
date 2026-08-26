@@ -1,0 +1,42 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:dunama-ii-dibalemi:kanem-bornu-empire:mai:1221-1259:v1",
+  "person": {
+    "canonical_name_en": "Dunama II Dibalemi",
+    "display_name_ko": "두나마 2세 디발레미"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kanem-Bornu Empire",
+    "display_name_ko": "카넴-보르누 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Mai",
+    "role_display_name_ko": "마이",
+    "start_year": 1221,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1259,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Dunama II Dibalemi (also spelled Dabbalemi/Dibbalemi) was a major Sayfawa mai during the thirteenth-century Kanem phase of the Kanem-Bornu polity. Modern chronologies disagree substantially over his reign boundaries; 1221-1259 is a widely used reconstruction, so ATLAS records both boundaries as approximate rather than falsely exact."
+  },
+  "sources": [
+    {
+      "title": "Mai Dunama Dibbalemi — EBSCO Research Starters",
+      "canonical_url": "https://www.ebsco.com/research-starters/history/mai-dunama-dibbalemi",
+      "citation_text": "EBSCO identifies Mai Dunama Dibbalemi as ruler of Kanem and gives 1221-1259 as his reign, while broader scholarship preserves competing chronologies.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
