@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:wilhelm-ii:german-empire:german-emperor:1888-1918:v1",
+  "person": {
+    "canonical_name_en": "Wilhelm II",
+    "display_name_ko": "빌헬름 2세"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-26",
+      "document_title": "빌헬름 2세",
+      "url": "https://namu.wiki/w/%EB%B9%8C%ED%97%AC%EB%A6%84%202%EC%84%B8"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "German Empire",
+    "display_name_ko": "독일 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "German Emperor",
+    "role_display_name_ko": "독일 황제",
+    "start_year": 1888,
+    "start_month": 6,
+    "start_day": 15,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1918,
+    "end_month": 11,
+    "end_day": 9,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Wilhelm II became German Emperor on 15 June 1888 after the death of Friedrich III. The imperial monarchy collapsed in the November Revolution: Chancellor Max von Baden announced Wilhelm's abdication on 9 November 1918 and Wilhelm went into Dutch exile the next day. Wilhelm signed the formal written instrument of abdication on 28 November, but ATLAS uses 9 November as the end of his actual reign as German Emperor and records the later formal instrument in this note. His simultaneous kingship of Prussia is not duplicated here because this entry was requested for the German imperial polity."
+  },
+  "sources": [
+    {
+      "title": "Wilhelm II. — Lebendiges Museum Online, Deutsches Historisches Museum",
+      "canonical_url": "https://www.dhm.de/lemo/biografie/wilhelm-ii",
+      "citation_text": "The German Historical Museum records Wilhelm II's accession as German Emperor and King of Prussia on 15 June 1888, the announcement of his abdication on 9 November 1918, and his subsequent exile.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Die Abdankung Wilhelms II. — Lebendiges Museum Online, Deutsches Historisches Museum",
+      "canonical_url": "https://www.dhm.de/lemo/kapitel/weimarer-republik/revolution-191819/abdankung-wilhelms-ii",
+      "citation_text": "The German Historical Museum explains that Max von Baden announced Wilhelm II's abdication on 9 November 1918 and that Wilhelm signed the formal abdication instrument on 28 November.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:respendial:respendials-alans:king:c406:v1",
+  "person": {
+    "canonical_name_en": "Respendial",
+    "display_name_ko": "레스펜디알"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Respendial's Alans",
+    "display_name_ko": "레스펜디알계 알란족"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 406,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "uncertain",
+    "start_calendar": "unspecified_historical",
+    "end_year": 406,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "uncertain",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Frigeridus, preserved by Gregory of Tours, explicitly calls Respendial king of the Alans and distinguishes his following from Goar's Roman-aligned Alans. Respendial's group intervened against the Franks during the Rhine-crossing crisis conventionally dated to 406, although modern scholarship has argued for 405. ATLAS therefore records only this securely attested political-military activity at c.406, with role King, rather than inventing accession or end-of-reign dates. The polity label identifies Respendial's specific Alan following and does not conflate it with Goar's Alans or the later Vandal-Alan kingdom."
+  },
+  "sources": [
+    {
+      "title": "The Alans in Gaul — Traditio",
+      "canonical_url": "https://www.cambridge.org/core/journals/traditio/article/abs/alans-in-gaul/716284D07CCA30BD8347DB6504F75D77",
+      "citation_text": "The study cites Gregory of Tours, History 2.9, preserving Frigeridus' statement that Respendial was king of the Alans and that Goar had gone over to the Romans.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Breakdown and barbarians — The Roman West, AD 200–500",
+      "canonical_url": "https://www.cambridge.org/core/books/roman-west-ad-200500/breakdown-and-barbarians/C255258C7A4A9366BB181C0CCCD332E5",
+      "citation_text": "Cambridge discusses the Rhine crossing traditionally dated to the last day of 406 while noting the scholarly argument that it probably occurred in 405, supporting an uncertain rather than exact 406 boundary.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
