@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:muammar-gaddafi:libyan-arab-republic:rcc-chairman:1969-1977:v1",
+  "person": {
+    "canonical_name_en": "Muammar Gaddafi",
+    "display_name_ko": "무아마르 카다피"
+  },
+  "polity": {
+    "canonical_name_en": "Libyan Arab Republic",
+    "display_name_ko": "리비아 아랍 공화국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Chairman of the Revolutionary Command Council",
+    "role_display_name_ko": "혁명평의회 의장",
+    "start_year": 1969,
+    "start_month": 9,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1977,
+    "end_month": 3,
+    "end_day": 2,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Muammar Gaddafi led the 1 September 1969 overthrow of the Libyan monarchy and became chairman of the Revolutionary Command Council, the supreme political authority of the newly established Libyan Arab Republic. This Activity ends on 2 March 1977 because that constitutional transition replaced the Libyan Arab Republic with the Jamahiriya system and dissolved the RCC; it does not imply that Gaddafi's broader de facto control of Libya ended in 1977."
+  },
+  "sources": [
+    {
+      "title": "Foreign Relations of the United States, 1969-1976: Libya - Revolutionary Command Council",
+      "canonical_url": "https://history.state.gov/historicaldocuments/frus1969-76ve05p2/d74",
+      "citation_text": "The U.S. Office of the Historian identifies Muammar Qadhafi as chairman of Libya's Revolutionary Command Council and the dominant figure in the revolutionary regime established after 1969.",
+      "source_type": "official_diplomatic_record"
+    },
+    {
+      "title": "Libya: Declaration on the Establishment of the Authority of the People",
+      "canonical_url": "https://www.refworld.org/legal/decreees/natlegbod/1977/14592",
+      "citation_text": "The 2 March 1977 declaration records the constitutional establishment of the new people's-authority system, providing the exact transition boundary used to close the Libyan Arab Republic Activity.",
+      "source_type": "legal_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-26",
+      "document_title": "무아마르 카다피",
+      "url": "https://namu.wiki/w/%EB%AC%B4%EC%95%84%EB%A7%88%EB%A5%B4%20%EC%B9%B4%EB%8B%A4%ED%94%BC"
+    }
+  }
+}

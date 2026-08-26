@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:saddam-hussein:iraq:president:1979-2003:v1",
+  "person": {
+    "canonical_name_en": "Saddam Hussein",
+    "display_name_ko": "사담 후세인"
+  },
+  "polity": {
+    "canonical_name_en": "Iraq",
+    "display_name_ko": "이라크"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1979,
+    "start_month": 7,
+    "start_day": 16,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2003,
+    "end_month": 4,
+    "end_day": 9,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Saddam Hussein became President of Iraq on 16 July 1979 after Ahmed Hassan al-Bakr resigned. His presidency ended on 9 April 2003 when his government was overthrown during the U.S.-led invasion and Baghdad fell. ATLAS records the presidential office under Iraq and does not extend the Activity through Saddam's later period in hiding, detention, trial, or execution."
+  },
+  "sources": [
+    {
+      "title": "Saddam Hussein",
+      "canonical_url": "https://www.encyclopedia.com/people/history/middle-eastern-history-biographies/saddam-hussein",
+      "citation_text": "Encyclopedia.com identifies Saddam Hussein as President of Iraq from 1979 to 2003 and records that he became president on 16 July 1979 after al-Bakr's resignation.",
+      "source_type": "reference"
+    },
+    {
+      "title": "Saddam Hussein - Rise to Power",
+      "canonical_url": "https://www.encyclopedia.com/international/encyclopedias-almanacs-transcripts-and-maps/saddam-hussein",
+      "citation_text": "The reference biography records Saddam's assumption of the presidency on 16 July 1979 and his rule through the overthrow of the Baathist regime in 2003.",
+      "source_type": "reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-26",
+      "document_title": "사담 후세인",
+      "url": "https://namu.wiki/w/%EC%82%AC%EB%8B%B4%20%ED%9B%84%EC%84%B8%EC%9D%B8"
+    }
+  }
+}
