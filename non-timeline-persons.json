@@ -354,5 +354,22 @@
     "role_ko": "치모르 왕국의 전승상 군주",
     "reason": "Ñancempinco (Ñançenpinco/Nancen Pinco) is preserved in late Chimú dynastic ethnohistory as an early expansionist ruler of Chimor. Archaeological and ethnohistorical scholarship considers that a historical king of this name may underlie the tradition, but the dynastic narratives compress long spans into too few generations and do not provide a secure personal reign chronology. ATLAS therefore records the tradition without converting modern reconstructed dates into verified timeline years.",
     "map_policy": "Do not display on the historical year timeline unless a separate uncertain-chronology or historical-tradition overlay is enabled."
+  },
+  {
+    "person_name": "Taycanamo",
+    "politic_name": "Kingdom of Chimor",
+    "display_name_ko": "타이카나모",
+    "politic_display_name_ko": "치모르 왕국",
+    "historicity": "legendary_or_unverified",
+    "historicity_display_ko": "전설·역사성 미검증",
+    "timeline_status": "excluded",
+    "date_basis": "late_chimu_dynastic_foundation_tradition_unverified_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "치모르 왕국의 전설적 창건자·초대 군주",
+    "reason": "Taycanamo (often Tacaynamo in modern archaeological literature) is preserved in the anonymous 1604 Chimú dynastic tradition as the founder and first ruler of Chimor, arriving from the sea. Modern archaeological and ethnohistorical scholarship explicitly treats Taycanamo as a mythical or legendary founder and warns against reading the surviving dynastic tradition as a secure literal genealogy or chronology. ATLAS therefore preserves the traditional Kingdom of Chimor association without assigning any speculative foundation, accession, reign, or death year.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
   }
 ]
