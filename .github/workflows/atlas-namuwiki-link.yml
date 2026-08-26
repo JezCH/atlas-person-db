@@ -19,7 +19,7 @@ jobs:
       github.event.issue.number == 431 &&
       !github.event.issue.pull_request &&
       github.actor == 'JezCH' &&
-      startsWith(github.event.comment.body, '/namuwiki-link')
+      (startsWith(github.event.comment.body, '/namuwiki-link') || startsWith(github.event.comment.body, '/namuwiki-not-found'))
     runs-on: ubuntu-latest
     environment: production
     env:
@@ -41,13 +41,21 @@ jobs:
         run: |
           set -Eeuo pipefail
           UUID_RE='[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}'
-          if [[ ! "$COMMENT_BODY" =~ ^/namuwiki-link[[:space:]]+($UUID_RE)[[:space:]]+(https://namu\.wiki/w/[^[:space:]]+)[[:space:]]*$ ]]; then
-            echo "Invalid command. Expected: /namuwiki-link <person_uuid> <canonical_namuwiki_url>" >&2
+          STATUS=''
+          NAMUWIKI_URL=''
+          if [[ "$COMMENT_BODY" =~ ^/namuwiki-link[[:space:]]+($UUID_RE)[[:space:]]+(https://namu\.wiki/w/[^[:space:]]+)[[:space:]]*$ ]]; then
+            PERSON_ID="${BASH_REMATCH[1],,}"
+            NAMUWIKI_URL="${BASH_REMATCH[2]}"
+            STATUS='linked'
+          elif [[ "$COMMENT_BODY" =~ ^/namuwiki-not-found[[:space:]]+($UUID_RE)[[:space:]]*$ ]]; then
+            PERSON_ID="${BASH_REMATCH[1],,}"
+            STATUS='not_found'
+          else
+            echo "Invalid command. Expected either /namuwiki-link <person_uuid> <canonical_namuwiki_url> or /namuwiki-not-found <person_uuid>" >&2
             exit 2
           fi
-          PERSON_ID="${BASH_REMATCH[1],,}"
-          NAMUWIKI_URL="${BASH_REMATCH[2]}"
           printf 'person_id=%s\n' "$PERSON_ID" >> "$GITHUB_OUTPUT"
+          printf 'status=%s\n' "$STATUS" >> "$GITHUB_OUTPUT"
           printf 'url=%s\n' "$NAMUWIKI_URL" >> "$GITHUB_OUTPUT"
 
       - name: Resolve deployed runtime compatibility
@@ -104,11 +112,12 @@ jobs:
             | jq -er '.value' > "$TOKEN_FILE"
           test -s "$TOKEN_FILE"
 
-      - name: Apply one NamuWiki link
+      - name: Apply one NamuWiki reference
         id: apply
         shell: bash
         env:
           PERSON_ID: ${{ steps.command.outputs.person_id }}
+          REFERENCE_STATUS: ${{ steps.command.outputs.status }}
           NAMUWIKI_URL: ${{ steps.command.outputs.url }}
         run: |
           set -Eeuo pipefail
@@ -118,8 +127,13 @@ jobs:
             --arg runtime_sha "$ATLAS_RUNTIME_SHA" \
             --arg workflow_sha "$GITHUB_SHA" \
             --arg person_id "$PERSON_ID" \
+            --arg status "$REFERENCE_STATUS" \
             --arg url "$NAMUWIKI_URL" \
-            '{runtime_sha:$runtime_sha,workflow_sha:$workflow_sha,person_id:$person_id,url:$url}')"
+            'if $status == "linked" then
+               {runtime_sha:$runtime_sha,workflow_sha:$workflow_sha,person_id:$person_id,url:$url}
+             else
+               {runtime_sha:$runtime_sha,workflow_sha:$workflow_sha,person_id:$person_id,status:$status}
+             end')"
           HTTP_STATUS="$(curl --silent --show-error \
             --output "$RESPONSE_FILE" \
             --write-out '%{http_code}' \
@@ -130,15 +144,21 @@ jobs:
             "$ATLAS_NAMUWIKI_LINK_ENDPOINT")"
           cat "$RESPONSE_FILE"
           test "$HTTP_STATUS" = "200"
-          jq -e '.ok == true and .committed == true and (.external_reference.url | type == "string") and (.external_reference.document_title | type == "string")' "$RESPONSE_FILE" >/dev/null
-          printf 'canonical_url=%s\n' "$(jq -r '.external_reference.url' "$RESPONSE_FILE")" >> "$GITHUB_OUTPUT"
-          printf 'document_title=%s\n' "$(jq -r '.external_reference.document_title' "$RESPONSE_FILE")" >> "$GITHUB_OUTPUT"
+          if [[ "$REFERENCE_STATUS" = 'linked' ]]; then
+            jq -e '.ok == true and .committed == true and .external_reference.status == "linked" and (.external_reference.url | type == "string") and (.external_reference.document_title | type == "string")' "$RESPONSE_FILE" >/dev/null
+          else
+            jq -e '.ok == true and .committed == true and .external_reference.status == "not_found" and .external_reference.url == null and .external_reference.document_title == null' "$RESPONSE_FILE" >/dev/null
+          fi
+          printf 'status=%s\n' "$(jq -r '.external_reference.status' "$RESPONSE_FILE")" >> "$GITHUB_OUTPUT"
+          printf 'canonical_url=%s\n' "$(jq -r '.external_reference.url // ""' "$RESPONSE_FILE")" >> "$GITHUB_OUTPUT"
+          printf 'document_title=%s\n' "$(jq -r '.external_reference.document_title // ""' "$RESPONSE_FILE")" >> "$GITHUB_OUTPUT"
           printf 'replay=%s\n' "$(jq -r '.replay' "$RESPONSE_FILE")" >> "$GITHUB_OUTPUT"
 
       - name: Production Person read-back
         shell: bash
         env:
           PERSON_ID: ${{ steps.command.outputs.person_id }}
+          EXPECTED_STATUS: ${{ steps.apply.outputs.status }}
           EXPECTED_URL: ${{ steps.apply.outputs.canonical_url }}
           EXPECTED_TITLE: ${{ steps.apply.outputs.document_title }}
         run: |
@@ -149,22 +169,33 @@ jobs:
             --data-urlencode "person_id=$PERSON_ID" \
             "$ATLAS_PERSON_READ_ENDPOINT" > "$READ_FILE"
           cat "$READ_FILE"
-          ACTUAL_URL="$(jq -er '.person.external_references.namuwiki.url' "$READ_FILE")"
-          ACTUAL_TITLE="$(jq -er '.person.external_references.namuwiki.document_title' "$READ_FILE")"
-          test "$ACTUAL_URL" = "$EXPECTED_URL"
-          test "$ACTUAL_TITLE" = "$EXPECTED_TITLE"
+          ACTUAL_STATUS="$(jq -er '.person.external_references.namuwiki.status' "$READ_FILE")"
+          test "$ACTUAL_STATUS" = "$EXPECTED_STATUS"
+          if [[ "$EXPECTED_STATUS" = 'linked' ]]; then
+            ACTUAL_URL="$(jq -er '.person.external_references.namuwiki.url' "$READ_FILE")"
+            ACTUAL_TITLE="$(jq -er '.person.external_references.namuwiki.document_title' "$READ_FILE")"
+            test "$ACTUAL_URL" = "$EXPECTED_URL"
+            test "$ACTUAL_TITLE" = "$EXPECTED_TITLE"
+          else
+            jq -e '.person.external_references.namuwiki.url == null and .person.external_references.namuwiki.document_title == null' "$READ_FILE" >/dev/null
+          fi
 
       - name: Comment verified result
         if: success()
         env:
           GH_TOKEN: ${{ github.token }}
           PERSON_ID: ${{ steps.command.outputs.person_id }}
+          REFERENCE_STATUS: ${{ steps.apply.outputs.status }}
           CANONICAL_URL: ${{ steps.apply.outputs.canonical_url }}
           DOCUMENT_TITLE: ${{ steps.apply.outputs.document_title }}
           REPLAY: ${{ steps.apply.outputs.replay }}
         run: |
           set -Eeuo pipefail
-          BODY="✅ NamuWiki link verified\n\nPerson: \`$PERSON_ID\`\nDocument: $DOCUMENT_TITLE\nURL: $CANONICAL_URL\nReplay: $REPLAY\nRun: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          if [[ "$REFERENCE_STATUS" = 'linked' ]]; then
+            BODY="✅ NamuWiki link verified\n\nPerson: \`$PERSON_ID\`\nStatus: linked\nDocument: $DOCUMENT_TITLE\nURL: $CANONICAL_URL\nReplay: $REPLAY\nRun: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          else
+            BODY="✅ NamuWiki not-found verified\n\nPerson: \`$PERSON_ID\`\nStatus: not_found\nDocument: null\nURL: null\nReplay: $REPLAY\nRun: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          fi
           gh api "repos/${GITHUB_REPOSITORY}/issues/431/comments" -f body="$BODY" >/dev/null
 
       - name: Comment failed result
@@ -173,5 +204,5 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -Eeuo pipefail
-          BODY="❌ NamuWiki link command failed; no unverified success is accepted.\n\nRun: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          BODY="❌ NamuWiki reference command failed; no unverified success is accepted.\n\nRun: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           gh api "repos/${GITHUB_REPOSITORY}/issues/431/comments" -f body="$BODY" >/dev/null
