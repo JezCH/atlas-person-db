@@ -1,11 +1,150 @@
 {
   "schema": "atlas-place-spatial-registry/v1",
-  "generated_at": "2026-08-26T14:52:00+09:00",
+  "generated_at": "2026-08-26T16:05:00+09:00",
   "policy": {
     "identity_display_separation": "Historical Place identity and reviewed geographic evidence belong here; runtime display anchors do not.",
     "no_guessing": "Do not infer coordinates, subregions, or canonical identity from a Person name, modern nationality, or an unreviewed place-name string.",
     "precision_rule": "Coordinate precision may be reviewed_point only when coordinates are reviewed and backed by source references; otherwise keep precision unknown.",
-    "incremental_binding": "Existing polity-place functions may keep place_id null until a canonical Place binding is historically reviewed."
+    "incremental_binding": "Existing polity-place functions may keep place_id null until a canonical Place binding is historically reviewed.",
+    "binding_rule": "A reviewed source binding is exact: polity_id, function_type, place_name, and source_refs must all match. Name-only or alias-only runtime binding is forbidden."
   },
-  "places": []
+  "places": [
+    {
+      "place_id": "place-rome",
+      "canonical_name": "Rome",
+      "historical_names": ["Roma"],
+      "macroregion_code": "europe",
+      "subregion_code": "italy",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://www.britannica.com/place/Rome",
+        "https://www.britannica.com/place/Roman-Empire"
+      ],
+      "review_note": "Reviewed only to the stable Italy subregion. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-pella",
+      "canonical_name": "Pella",
+      "historical_names": [],
+      "macroregion_code": "europe",
+      "subregion_code": "balkans",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://www.britannica.com/place/Pella-ancient-city-Greece",
+        "https://www.britannica.com/place/Macedonia-ancient-kingdom-Europe"
+      ],
+      "review_note": "Reviewed only to the stable Balkans subregion. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-ankara",
+      "canonical_name": "Ankara",
+      "historical_names": [],
+      "macroregion_code": "west-asia",
+      "subregion_code": "anatolia-caucasus",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://www.britannica.com/place/Ankara",
+        "https://www.britannica.com/place/Turkey"
+      ],
+      "review_note": "Reviewed only to the stable Anatolia-Caucasus subregion. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-rio-de-janeiro",
+      "canonical_name": "Rio de Janeiro",
+      "historical_names": [],
+      "macroregion_code": "americas",
+      "subregion_code": "south-america",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://www.britannica.com/place/Rio-de-Janeiro-Brazil",
+        "https://www.britannica.com/place/Brazil"
+      ],
+      "review_note": "Reviewed only to the stable South America subregion. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-samarkand",
+      "canonical_name": "Samarkand",
+      "historical_names": [],
+      "macroregion_code": "central-asia",
+      "subregion_code": "western-central-asia",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://www.britannica.com/place/Samarkand-Uzbekistan",
+        "https://www.britannica.com/topic/Timurid-dynasty"
+      ],
+      "review_note": "Reviewed only to the stable Western Central Asia subregion. No runtime point coordinate is asserted."
+    }
+  ],
+  "bindings": [
+    {
+      "place_id": "place-rome",
+      "polity_id": "polity-roman-empire",
+      "function_type": "capital",
+      "place_name": "Rome",
+      "source_refs": [
+        "https://www.britannica.com/place/Rome",
+        "https://www.britannica.com/place/Roman-Empire"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-pella",
+      "polity_id": "polity-kingdom-of-macedon",
+      "function_type": "capital",
+      "place_name": "Pella",
+      "source_refs": [
+        "https://www.britannica.com/place/Pella-ancient-city-Greece",
+        "https://www.britannica.com/place/Macedonia-ancient-kingdom-Europe"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-ankara",
+      "polity_id": "polity-republic-of-turkey",
+      "function_type": "capital",
+      "place_name": "Ankara",
+      "source_refs": [
+        "https://www.britannica.com/place/Ankara",
+        "https://www.britannica.com/place/Turkey"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-rio-de-janeiro",
+      "polity_id": "polity-second-brazilian-republic",
+      "function_type": "capital",
+      "place_name": "Rio de Janeiro",
+      "source_refs": [
+        "https://www.britannica.com/place/Rio-de-Janeiro-Brazil",
+        "https://www.britannica.com/place/Brazil"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-samarkand",
+      "polity_id": "polity-timurid-empire",
+      "function_type": "capital",
+      "place_name": "Samarkand",
+      "source_refs": [
+        "https://www.britannica.com/place/Samarkand-Uzbekistan",
+        "https://www.britannica.com/topic/Timurid-dynasty"
+      ],
+      "review_status": "reviewed"
+    }
+  ]
 }
