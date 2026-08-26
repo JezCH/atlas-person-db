@@ -56,7 +56,7 @@ function approximatelyEqual(actual, expected, epsilon = 1e-9) {
 
 test("spacetime camera control state is loaded by the production page", () => {
   assert.match(indexSource, /atlas-person-spacetime-control-state\.css\?v=20260826-zoom-bound-affordance/);
-  assert.match(indexSource, /atlas-person-spacetime-control-state\.js\?v=20260826-zoom-bounds-affordance/);
+  assert.match(indexSource, /atlas-person-spacetime-control-state\.js\?v=20260827-horizontal-camera-context/);
   assert.match(controlCss, /\.spacetime-time-camera button:disabled\{/);
 });
 
