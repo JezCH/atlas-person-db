@@ -3,6 +3,12 @@
   const api = factory();
   if (typeof module === "object" && module.exports) module.exports = api;
   if (root) root.ATLAS_PERSON_SPACETIME_PERFORMANCE = api;
+  if (root?.document && !root.document.getElementById("atlasSpacetimePerformanceStyles")) {
+    const style = root.document.createElement("style");
+    style.id = "atlasSpacetimePerformanceStyles";
+    style.textContent = ".spacetime-canvas{contain:layout paint style}.spacetime-density-canvas{position:absolute;z-index:1;display:block;pointer-events:none}.spacetime-runtime-layer{position:absolute;inset:0;pointer-events:none;contain:layout style}.spacetime-runtime-layer button{pointer-events:auto}.spacetime-runtime-layer .spacetime-label-connector{pointer-events:none}";
+    root.document.head.appendChild(style);
+  }
 })(typeof globalThis !== "undefined" ? globalThis : this, () => {
   "use strict";
 
