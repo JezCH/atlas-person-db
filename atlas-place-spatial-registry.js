@@ -30,6 +30,19 @@
     return Number.isFinite(n) ? n : Number.NaN;
   }
 
+  function normalizedRefs(refs) {
+    return Object.freeze(Array.from(new Set((Array.isArray(refs) ? refs : []).map(text).filter(Boolean))).sort());
+  }
+
+  function bindingSignature(value) {
+    return JSON.stringify([
+      text(value?.polity_id),
+      text(value?.function_type || value?.place_function_type),
+      text(value?.place_name),
+      ...normalizedRefs(value?.source_refs || value?.historical_source_refs)
+    ]);
+  }
+
   function validatePlaceRegistry(value, continuum = spaceAxisApi.createSpatialContinuum()) {
     const errors = [];
     if (!value || typeof value !== "object" || Array.isArray(value)) {
@@ -37,8 +50,10 @@
     }
     if (value.schema !== PLACE_REGISTRY_SCHEMA) errors.push(`schema must be ${PLACE_REGISTRY_SCHEMA}`);
     if (!Array.isArray(value.places)) errors.push("places must be an array");
+    if (value.bindings != null && !Array.isArray(value.bindings)) errors.push("bindings must be an array when present");
 
     const ids = new Set();
+    const placeById = new Map();
     for (const [index, place] of (Array.isArray(value.places) ? value.places : []).entries()) {
       const prefix = `places[${index}]`;
       const placeId = text(place?.place_id);
@@ -47,13 +62,14 @@
       const subregionCode = text(place?.subregion_code) || null;
       const coordinatePrecision = text(place?.coordinate_precision) || "unknown";
       const reviewStatus = text(place?.review_status) || "provisional";
-      const sourceRefs = Array.isArray(place?.spatial_source_refs)
-        ? place.spatial_source_refs.map(text).filter(Boolean)
-        : [];
+      const sourceRefs = normalizedRefs(place?.spatial_source_refs);
 
       if (!placeId) errors.push(`${prefix}: place_id is required`);
       if (placeId && ids.has(placeId)) errors.push(`${prefix}: duplicate place_id ${placeId}`);
-      if (placeId) ids.add(placeId);
+      if (placeId) {
+        ids.add(placeId);
+        placeById.set(placeId, place);
+      }
       if (!canonicalName) errors.push(`${prefix}: canonical_name is required`);
 
       if (place?.historical_names != null && !Array.isArray(place.historical_names)) {
@@ -101,6 +117,39 @@
       }
     }
 
+    const bindingSignatures = new Set();
+    for (const [index, binding] of (Array.isArray(value.bindings) ? value.bindings : []).entries()) {
+      const prefix = `bindings[${index}]`;
+      const placeId = text(binding?.place_id);
+      const polityId = text(binding?.polity_id);
+      const functionType = text(binding?.function_type);
+      const placeName = text(binding?.place_name);
+      const sourceRefs = normalizedRefs(binding?.source_refs);
+      const reviewStatus = text(binding?.review_status) || "provisional";
+      const place = placeById.get(placeId);
+
+      if (!placeId) errors.push(`${prefix}: place_id is required`);
+      if (!polityId) errors.push(`${prefix}: polity_id is required`);
+      if (!functionType) errors.push(`${prefix}: function_type is required`);
+      if (!placeName) errors.push(`${prefix}: place_name is required`);
+      if (!Array.isArray(binding?.source_refs) || !sourceRefs.length) errors.push(`${prefix}: non-empty source_refs are required for exact binding`);
+      if (!REVIEW_STATUSES.has(reviewStatus)) errors.push(`${prefix}: invalid review_status ${reviewStatus || "(empty)"}`);
+      if (!place) {
+        errors.push(`${prefix}: unknown place_id ${placeId || "(empty)"}`);
+      } else {
+        if (reviewStatus === "reviewed" && text(place.review_status) !== "reviewed") errors.push(`${prefix}: reviewed binding requires a reviewed Place`);
+        if (reviewStatus === "reviewed" && !text(place.subregion_code)) errors.push(`${prefix}: reviewed subregion binding requires Place subregion_code`);
+        const placeSources = new Set(normalizedRefs(place.spatial_source_refs));
+        for (const ref of sourceRefs) {
+          if (!placeSources.has(ref)) errors.push(`${prefix}: binding source_ref is not present in Place spatial_source_refs: ${ref}`);
+        }
+      }
+
+      const signature = bindingSignature(binding);
+      if (bindingSignatures.has(signature)) errors.push(`${prefix}: duplicate exact binding signature`);
+      bindingSignatures.add(signature);
+    }
+
     return Object.freeze({ valid: errors.length === 0, errors: Object.freeze(errors) });
   }
 
@@ -125,9 +174,27 @@
         review_status: text(rawPlace.review_status) || "provisional",
         latitude: rawPlace.latitude == null ? null : Number(rawPlace.latitude),
         longitude: rawPlace.longitude == null ? null : Number(rawPlace.longitude),
-        spatial_source_refs: Object.freeze(Array.isArray(rawPlace.spatial_source_refs) ? rawPlace.spatial_source_refs.map(text).filter(Boolean) : [])
+        spatial_source_refs: normalizedRefs(rawPlace.spatial_source_refs)
       });
       lookup.set(place.place_id, place);
+    }
+    return lookup;
+  }
+
+  function createReviewedBindingLookup(registry, continuum = spaceAxisApi.createSpatialContinuum()) {
+    const places = createPlaceLookup(registry, continuum);
+    const lookup = new Map();
+    for (const rawBinding of registry.bindings || []) {
+      if (text(rawBinding.review_status) !== "reviewed") continue;
+      const place = places.get(text(rawBinding.place_id));
+      if (!place || place.review_status !== "reviewed" || !place.subregion_code) continue;
+      lookup.set(bindingSignature(rawBinding), Object.freeze({
+        place_id: place.place_id,
+        canonical_name: place.canonical_name,
+        macroregion_code: place.macroregion_code,
+        subregion_code: place.subregion_code,
+        spatial_source_refs: place.spatial_source_refs
+      }));
     }
     return lookup;
   }
@@ -137,7 +204,9 @@
     COORDINATE_PRECISIONS,
     REVIEW_STATUSES,
     PRESENTATION_ONLY_FIELDS,
+    bindingSignature,
     validatePlaceRegistry,
-    createPlaceLookup
+    createPlaceLookup,
+    createReviewedBindingLookup
   });
 });
