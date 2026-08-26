@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:frederick-augustus-i-of-saxony:kingdom-of-saxony:king:1806-1827:v1",
+  "person": {
+    "canonical_name_en": "Frederick Augustus I of Saxony",
+    "display_name_ko": "프리드리히 아우구스트 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Saxony",
+    "display_name_ko": "작센 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1806,
+    "start_month": 12,
+    "start_day": 20,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1827,
+    "end_month": 5,
+    "end_day": 5,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Frederick Augustus III, Elector of Saxony, became the first King of Saxony as Frederick Augustus I on 20 December 1806 after Saxony's elevation to a kingdom in the Napoleonic settlement. He remained King of Saxony until his death on 5 May 1827. This identity must not be confused with the earlier Elector Frederick Augustus I, better known as Augustus II the Strong, King of Poland."
+  },
+  "sources": [
+    {
+      "title": "Friedrich August I., der Gerechte",
+      "canonical_url": "https://www.deutsche-biographie.de/sfz56990.html",
+      "citation_text": "Neue Deutsche Biographie identifies Friedrich August as the first King of Saxony from 1806 and records his death on 5 May 1827, while describing the 1806 settlement that elevated Saxony to a kingdom.",
+      "source_type": "scholarly_reference"
+    },
+    {
+      "title": "Friedrich August I, First King of Saxony",
+      "canonical_url": "https://japanisches-palais.skd.museum/fileadmin/userfiles/Japanisches_Palais/Ausstellungen/2020/Inspiration_Handwerk/111755_IWHK_Begleitheft_Innen_20200915_3mm-Aussen_hoch_korr_1_p1-108.pdf",
+      "citation_text": "Staatliche Kunstsammlungen Dresden identifies Friedrich August I (1750-1827) as the first King of Saxony, supporting the royal identity used by ATLAS.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  }
+}
