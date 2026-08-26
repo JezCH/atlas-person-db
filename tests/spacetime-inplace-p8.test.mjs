@@ -201,20 +201,22 @@ test("semantic LOD advances density to point to label to rail to Activity", () =
   assert.equal(lod.representationStage(activity), "activity");
 });
 
-test("current surface is wired through P9 density and the old vertical packing remains gone", () => {
+test("current surface is wired through P13 virtualization and the old vertical packing remains gone", () => {
   assert.doesNotThrow(() => new Function(viewSource));
   assert.match(viewSource, /createSemanticTimeProjection\(/);
   assert.match(viewSource, /spaceAxis\.stableRegionLayout\(compiled\.continuum, contentWidth\)/);
   assert.match(viewSource, /politicalPlacement\.partitionTracks\(compiledTracks\)/);
   assert.match(viewSource, /atlas-person-spacetime-density\.js/);
   assert.match(viewSource, /density\.buildDensityField\(/);
-  assert.match(viewSource, /spacetime-density-cell/);
+  assert.match(viewSource, /spacetimeDensityCanvas/);
+  assert.match(viewSource, /performance\.cullDensityCells\(/);
+  assert.match(viewSource, /performance\.cullProjectedItems\(/);
   assert.match(viewSource, /spacetime-person-point/);
   assert.match(viewSource, /spacetime-track-label/);
+  assert.doesNotMatch(viewSource, /class="spacetime-density-cell"/);
   assert.doesNotMatch(viewSource, /function buildRegionMeta\(/);
   assert.doesNotMatch(viewSource, /OVERVIEW_CARD_HEIGHT/);
   assert.doesNotMatch(viewSource, /spacetime-person-card/);
-  assert.match(cssSource, /\.spacetime-density-cell\{/);
   assert.match(cssSource, /\.spacetime-density-legend\{/);
   assert.match(cssSource, /\.spacetime-person-point\{/);
   assert.match(cssSource, /\.spacetime-track-label\{/);

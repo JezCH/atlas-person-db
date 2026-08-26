@@ -21,6 +21,7 @@
     ["./atlas-person-spacetime-semantic-axis.js?v=20260826-p10", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
     ["./atlas-person-spacetime-exploration.js?v=20260826-p11", "ATLAS_PERSON_SPACETIME_EXPLORATION"],
     ["./atlas-person-spacetime-minimap.js?v=20260826-p12", "ATLAS_PERSON_SPACETIME_MINIMAP"],
+    ["./atlas-person-spacetime-performance.js?v=20260826-p13", "ATLAS_PERSON_SPACETIME_PERFORMANCE"],
     ["./atlas-person-spacetime-spatial-compile.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE"],
     ["./atlas-person-spacetime-person-tracks.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
     ["./atlas-person-spacetime-political-placement.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT"],
@@ -38,6 +39,9 @@
   let loadPromise = null;
   let persons = [];
   let spatialIndex = null;
+  let compiledAtlasCache = null;
+  let timelineCache = null;
+  let searchTextCache = new Map();
   let query = "";
   let horizontalViewMode = "overview";
   let selectedPersonId = null;
@@ -119,6 +123,7 @@
       semanticAxis: window.ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS,
       exploration: window.ATLAS_PERSON_SPACETIME_EXPLORATION,
       minimap: window.ATLAS_PERSON_SPACETIME_MINIMAP,
+      performance: window.ATLAS_PERSON_SPACETIME_PERFORMANCE,
       spatialCompile: window.ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE,
       personTracks: window.ATLAS_PERSON_SPACETIME_PERSON_TRACKS,
       politicalPlacement: window.ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT,
@@ -205,6 +210,9 @@
     loadPromise = Promise.all([reader.listPersons(), fetchSpatialIndex()]).then(([personResult, placement]) => {
       persons = personResult.persons || [];
       spatialIndex = placement;
+      compiledAtlasCache = null;
+      timelineCache = null;
+      searchTextCache = new Map();
       return true;
     }).catch((error) => {
       loadPromise = null;
@@ -219,6 +227,13 @@
       for (const activity of Array.isArray(person?.activity_summaries) ? person.activity_summaries : []) entries.push({ person, activity });
     }
     return entries;
+  }
+
+  function timelineRange() {
+    if (timelineCache) return timelineCache;
+    const allEntries = flattenActivities(persons);
+    timelineCache = model.deriveTimelineRange(allEntries.map((entry) => entry.activity), new Date().getFullYear());
+    return timelineCache;
   }
 
   function buildEraBands(range, scale) {
@@ -238,6 +253,7 @@
   }
 
   function compileAtlas() {
+    if (compiledAtlasCache) return compiledAtlasCache;
     const { spaceAxis, spatialCompile, personTracks, politicalPlacement } = runtime();
     const continuum = spaceAxis.createSpatialContinuum();
     const lookup = model.createSpatialLookup(spatialIndex);
@@ -254,16 +270,21 @@
     }
     const compiledTracks = personTracks.compilePersonTracks(persons, placements);
     const partitioned = politicalPlacement.partitionTracks(compiledTracks);
-    return { continuum, partitioned, unresolvedPosition, unresolvedChronology };
+    compiledAtlasCache = Object.freeze({ continuum, partitioned, unresolvedPosition, unresolvedChronology });
+    return compiledAtlasCache;
   }
 
   function trackSearchable(track) {
+    const key = track?.person_id || track?.track_id;
+    if (key && searchTextCache.has(key)) return searchTextCache.get(key);
     const values = [track.display_name, track.canonical_name_en, track.preferred_name_ko];
     for (const segment of [...(track.primary_segments || []), ...(track.counterparty_segments || []), ...(track.unclassified_segments || [])]) {
       const activity = segment.activity;
       values.push(polityLabel(activity), activity?.relation?.display_name, activity?.relation?.code, activity?.role?.display_name, activity?.role?.source_label, periodLabel(activity));
     }
-    return values.filter(Boolean).join("\n").toLocaleLowerCase("ko");
+    const searchable = values.filter(Boolean).join("\n").toLocaleLowerCase("ko");
+    if (key) searchTextCache.set(key, searchable);
+    return searchable;
   }
 
   function packTrackLabels(projectedTracks, regions, timelineHeight, forceAll) {
@@ -352,6 +373,23 @@
       const x = segment.x_anchor * contentWidth;
       return `<button type="button" class="spacetime-activity-glyph" data-spacetime-person="${escapeHtml(track.person_id)}" style="left:${x + 6}px;top:${y}px;opacity:${opacity}" title="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`)}"><span>${escapeHtml(polityLabel(segment.activity))}</span></button>`;
     })).join("");
+  }
+
+  function renderPoints(projectedTracks, opacity) {
+    if (opacity <= 0.01) return "";
+    return projectedTracks.map((item) => `<button type="button" class="spacetime-person-point${selectedPersonId === item.track.person_id ? " is-selected" : ""}" data-spacetime-person="${escapeHtml(item.track.person_id)}" style="left:${item.x}px;top:${item.y}px;opacity:${opacity}" title="${escapeHtml(item.track.display_name)}" aria-label="${escapeHtml(item.track.display_name)}"></button>`).join("");
+  }
+
+  function renderLabels(projectedTracks, labelPack, lodWeights, needle) {
+    const labelsByPerson = new Map(labelPack.placed.map((label) => [label.person_id, label]));
+    return projectedTracks.map((item) => {
+      const label = labelsByPerson.get(item.track.person_id);
+      if (!label) return "";
+      const forced = Boolean(needle) || selectedPersonId === item.track.person_id;
+      const opacity = forced ? 1 : lodWeights.labels;
+      const connector = label.connector ? `<i class="spacetime-label-connector" style="left:${label.region_left + Math.min(label.connector.x1, label.connector.x2)}px;top:${label.connector.y1}px;width:${label.connector.length}px"></i>` : "";
+      return `${connector}<button type="button" class="spacetime-track-label${selectedPersonId === item.track.person_id ? " is-selected" : ""}" data-spacetime-person="${escapeHtml(item.track.person_id)}" style="left:${label.label_x}px;top:${label.label_y}px;width:${label.width}px;opacity:${opacity}" title="${escapeHtml(item.track.display_name)}">${escapeHtml(item.track.display_name)}</button>`;
+    }).join("");
   }
 
   function restoreCameraViewport(scroll, projection) {
@@ -512,6 +550,102 @@
     surface.addEventListener("pointercancel", stopDragging);
   }
 
+  function drawDensityCanvas(mount, densityField, densityOpacity, cullRect) {
+    const canvas = mount.querySelector("#spacetimeDensityCanvas");
+    if (!canvas) return 0;
+    if (!densityField || densityOpacity <= 0.01 || !cullRect) {
+      canvas.hidden = true;
+      canvas.width = 1;
+      canvas.height = 1;
+      return 0;
+    }
+    const { performance } = runtime();
+    const width = Math.max(1, Math.ceil(cullRect.width));
+    const height = Math.max(1, Math.ceil(cullRect.height));
+    canvas.hidden = false;
+    canvas.style.left = `${cullRect.left}px`;
+    canvas.style.top = `${cullRect.top}px`;
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+    canvas.width = width;
+    canvas.height = height;
+    const context = canvas.getContext("2d");
+    if (!context) return 0;
+    context.clearRect(0, 0, width, height);
+    context.fillStyle = "#607ca9";
+    const cells = performance.cullDensityCells(densityField.cells, cullRect);
+    for (const cell of cells) {
+      context.globalAlpha = densityOpacity * (0.12 + 0.72 * cell.intensity);
+      context.fillRect(cell.left - cullRect.left, cell.top - cullRect.top, cell.width, cell.height);
+    }
+    context.globalAlpha = 1;
+    return cells.length;
+  }
+
+  function bindVirtualizedLayers(mount, scroll, state) {
+    if (!scroll) return;
+    const { performance } = runtime();
+    const world = { width: state.contentWidth, height: state.timelineHeight };
+    const forcedIds = () => selectedPersonId ? new Set([selectedPersonId]) : new Set();
+    let lastSignature = "";
+    let frame = 0;
+
+    const updateCount = (id, value) => {
+      const node = mount.querySelector(`#${id}`);
+      if (node) node.textContent = String(value);
+    };
+
+    const refresh = () => {
+      frame = 0;
+      const cullRect = performance.viewportWorldRect(
+        { left: scroll.scrollLeft, top: scroll.scrollTop },
+        { width: scroll.clientWidth, height: scroll.clientHeight },
+        world,
+        { left: AXIS_WIDTH, top: TIME_CAMERA_HEADER_HEIGHT }
+      );
+      const forced = forcedIds();
+      const pointItems = performance.cullProjectedItems(state.projectedTracks, cullRect, forced);
+      const segmentTracks = performance.cullTrackSegments(state.visibleTracks, state.projection, state.contentWidth, cullRect, forced);
+      const segmentIds = segmentTracks.flatMap((track) => (track.primary_segments || []).map((segment) => segment.stable_id || `${track.person_id}:${segment.start_ordinal}:${segment.end_ordinal}`));
+      const pointIds = pointItems.map((item) => item.person_id);
+      const signature = `${pointIds.join(",")}|${segmentIds.join(",")}|${selectedPersonId || ""}|${state.needle}|${state.lodWeights.labels}|${state.lodWeights.points}|${state.lodWeights.rails}|${state.lodWeights.activities}`;
+
+      if (signature !== lastSignature) {
+        const needsLabels = state.lodWeights.labels > 0.01 || Boolean(state.needle) || Boolean(selectedPersonId);
+        const labelPack = needsLabels ? packTrackLabels(pointItems, state.regions, state.timelineHeight, Boolean(state.needle)) : { placed: [], deferred: [] };
+        const railLayer = mount.querySelector("#spacetimeRailLayer");
+        const pointLayer = mount.querySelector("#spacetimePointLayer");
+        const labelLayer = mount.querySelector("#spacetimeLabelLayer");
+        const activityLayer = mount.querySelector("#spacetimeActivityLayer");
+        if (railLayer) railLayer.innerHTML = renderRails(segmentTracks, state.projection, state.contentWidth, state.lodWeights.rails);
+        if (pointLayer) pointLayer.innerHTML = renderPoints(pointItems, state.lodWeights.points);
+        if (labelLayer) labelLayer.innerHTML = needsLabels ? renderLabels(pointItems, labelPack, state.lodWeights, state.needle) : "";
+        if (activityLayer) activityLayer.innerHTML = state.horizontalViewMode === "detail" ? renderActivityGlyphs(segmentTracks, state.projection, state.contentWidth, state.lodWeights.activities) : "";
+        updateCount("spacetimeDomPersonCount", pointItems.length);
+        updateCount("spacetimeDomSegmentCount", segmentIds.length);
+        updateCount("spacetimeDomLabelCount", labelPack.placed.length);
+        updateCount("spacetimeDeferredLabelCount", labelPack.deferred.length);
+        lastSignature = signature;
+      }
+      const densityCells = drawDensityCanvas(mount, state.densityField, state.lodWeights.density, cullRect);
+      updateCount("spacetimeDensityCanvasCells", densityCells);
+    };
+
+    const schedule = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(refresh);
+    };
+
+    const canvas = mount.querySelector(".spacetime-canvas");
+    canvas?.addEventListener("click", (event) => {
+      const target = event.target.closest?.("[data-spacetime-person]");
+      if (!target || !canvas.contains(target)) return;
+      selectPerson(mount, target.dataset.spacetimePerson, { focus: true });
+    });
+    scroll.addEventListener("scroll", schedule, { passive: true });
+    refresh();
+  }
+
   function bindCameraViewport(mount, projection, navigationItems) {
     const scroll = mount.querySelector(".spacetime-scroll");
     if (!scroll) return;
@@ -568,8 +702,7 @@
 
   function renderInto(mount) {
     const { timeProjection, spaceAxis, semanticAxis, exploration, lod, density } = runtime();
-    const allEntries = flattenActivities(persons);
-    const timeline = model.deriveTimelineRange(allEntries.map((entry) => entry.activity), new Date().getFullYear());
+    const timeline = timelineRange();
     const projection = timeProjection.createSemanticTimeProjection(timeline.start_year, timeline.end_year, DEFAULT_TIMELINE_HEIGHT * timeCameraZoom, LOG_SOFTENING_YEARS, timeCameraZoom);
     currentTimelineProjection = projection;
     const timelineHeight = projection.height;
@@ -588,9 +721,6 @@
     const navigationItems = exploration.orderItems(projectedTracks);
     const searchItems = needle ? exploration.rankSearchItems(projectedTracks, needle) : [];
     const lodWeights = lod.lodWeights({ timeZoom: timeCameraZoom, spaceZoom });
-    const needsLabels = lodWeights.labels > 0.01 || Boolean(needle) || Boolean(selectedPersonId);
-    const labelPack = needsLabels ? packTrackLabels(projectedTracks, regions, timelineHeight, Boolean(needle)) : { placed: [], deferred: [] };
-    const labelsByPerson = new Map(labelPack.placed.map((label) => [label.person_id, label]));
     const densityField = horizontalViewMode === "overview" && lodWeights.density > 0.01
       ? density.buildDensityField({ tracks: visibleTracks }, projection, { width: contentWidth, height: timelineHeight })
       : null;
@@ -601,22 +731,8 @@
     const primarySegmentCount = compiled.partitioned.tracks.reduce((sum, track) => sum + (track.primary_segments?.length || 0), 0);
     const frameModeClass = horizontalViewMode === "overview" ? " is-overview" : " is-detail";
 
-    const densityHtml = densityField ? densityField.cells.map((cell) => {
-      const opacity = lodWeights.density * (0.12 + 0.72 * cell.intensity);
-      return `<i class="spacetime-density-cell" aria-hidden="true" style="left:${cell.left}px;top:${cell.top}px;width:${cell.width}px;height:${cell.height}px;opacity:${opacity}" title="ATLAS 등록 인물 ${cell.count}명"></i>`;
-    }).join("") : "";
-    const pointsHtml = lodWeights.points > 0.01 ? projectedTracks.map((item) => `<button type="button" class="spacetime-person-point${selectedPersonId === item.track.person_id ? " is-selected" : ""}" data-spacetime-person="${escapeHtml(item.track.person_id)}" style="left:${item.x}px;top:${item.y}px;opacity:${lodWeights.points}" title="${escapeHtml(item.track.display_name)}" aria-label="${escapeHtml(item.track.display_name)}"></button>`).join("") : "";
-    const labelsHtml = needsLabels ? projectedTracks.map((item) => {
-      const label = labelsByPerson.get(item.track.person_id);
-      if (!label) return "";
-      const forced = Boolean(needle) || selectedPersonId === item.track.person_id;
-      const opacity = forced ? 1 : lodWeights.labels;
-      const connector = label.connector ? `<i class="spacetime-label-connector" style="left:${label.region_left + Math.min(label.connector.x1, label.connector.x2)}px;top:${label.connector.y1}px;width:${label.connector.length}px"></i>` : "";
-      return `${connector}<button type="button" class="spacetime-track-label${selectedPersonId === item.track.person_id ? " is-selected" : ""}" data-spacetime-person="${escapeHtml(item.track.person_id)}" style="left:${label.label_x}px;top:${label.label_y}px;width:${label.width}px;opacity:${opacity}" title="${escapeHtml(item.track.display_name)}">${escapeHtml(item.track.display_name)}</button>`;
-    }).join("") : "";
-
     mount.innerHTML = `<section class="spacetime-toolbar card">
-      <div class="spacetime-toolbar-copy"><p class="eyebrow">PERSON SPACETIME ATLAS</p><h2>시공간 인물도</h2><p>하나의 연속된 역사 공간에서 Person track을 탐색합니다. 100% 세계 보기에서도 충돌 없이 배치 가능한 인물 이름은 기본으로 유지하며, 등록 인물 밀도를 배경으로 함께 보여줍니다. 검색 결과나 인물을 선택하면 현재 축척을 유지한 채 해당 시공간으로 이동하고, 자세히 보기에서만 공간·시간 해상도를 올립니다. 우하단 미니맵은 같은 world 좌표를 축약해 전체 위치와 현재 화면 범위를 보여주며 클릭·드래그로 카메라만 이동합니다. 좌표 자체는 검색·밀도·줌에 따라 바뀌지 않으며 opposes는 자기 위치를 결정하지 않습니다.</p><div class="spacetime-explore-help">방향키 이동 · PageUp/PageDown 큰 이동 · Shift+↑/↓ 이전/다음 인물 · F 선택 위치 · +/- 시간 확대 · Esc 선택 해제</div></div>
+      <div class="spacetime-toolbar-copy"><p class="eyebrow">PERSON SPACETIME ATLAS</p><h2>시공간 인물도</h2><p>하나의 연속된 역사 공간에서 Person track을 탐색합니다. 100% 세계 보기에서도 충돌 없이 배치 가능한 인물 이름은 기본으로 유지하며, 등록 인물 밀도를 배경으로 함께 보여줍니다. 검색 결과나 인물을 선택하면 현재 축척을 유지한 채 해당 시공간으로 이동하고, 자세히 보기에서만 공간·시간 해상도를 올립니다. 우하단 미니맵은 같은 world 좌표를 축약해 전체 위치와 현재 화면 범위를 보여주며 클릭·드래그로 카메라만 이동합니다. 화면 밖 Person DOM은 overscan 범위 밖에서 만들지 않고 density는 canvas로 그려 대규모 데이터에서도 좌표 의미를 유지한 채 렌더링 비용을 제한합니다. 좌표 자체는 검색·밀도·줌에 따라 바뀌지 않으며 opposes는 자기 위치를 결정하지 않습니다.</p><div class="spacetime-explore-help">방향키 이동 · PageUp/PageDown 큰 이동 · Shift+↑/↓ 이전/다음 인물 · F 선택 위치 · +/- 시간 확대 · Esc 선택 해제</div></div>
       <div class="spacetime-controls">
         <label>검색<input id="spacetimeSearch" type="search" value="${escapeHtml(query)}" placeholder="인물·정치체·역할 검색" /></label>
         <label>공간 보기<select id="spacetimeHorizontalMode"><option value="overview"${horizontalViewMode === "overview" ? " selected" : ""}>전체 보기</option><option value="detail"${horizontalViewMode === "detail" ? " selected" : ""}>공간 확대</option></select></label>
@@ -624,7 +740,7 @@
       </div>
     </section>
     ${renderSearchResults(searchItems, needle)}
-    <section class="spacetime-status-row"><span><b>${visibleTracks.length}</b> Person track</span><span><b>${primarySegmentCount}</b> 주 위치 구간</span><span><b>${counterpartyCount}</b> counterparty 제외</span><span><b>${compiled.unresolvedPosition.length}</b> 위치 미확정</span><span><b>${compiled.unresolvedChronology.length}</b> 연대 미확정</span><span><b>${labelPack.placed.length}</b> 이름 표시</span><span><b>${labelPack.deferred.length}</b> label defer</span>${densityField ? `<span><b>${densityField.max_count}</b> 최대 cell 고유 인물</span>` : ""}<span><b>${escapeHtml(timeAxis.stage_label)}</b> 시간축</span><span><b>${escapeHtml(spaceHeader.stage_label)}</b> 공간축</span><span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> LOD</span><span><b>${escapeHtml(timeCameraZoomLabel())}</b> 시간 줌</span></section>
+    <section class="spacetime-status-row"><span><b>${visibleTracks.length}</b> Person track</span><span><b>${primarySegmentCount}</b> 주 위치 구간</span><span><b>${counterpartyCount}</b> counterparty 제외</span><span><b>${compiled.unresolvedPosition.length}</b> 위치 미확정</span><span><b>${compiled.unresolvedChronology.length}</b> 연대 미확정</span><span><b id="spacetimeDomPersonCount">0</b> viewport Person DOM</span><span><b id="spacetimeDomSegmentCount">0</b> viewport segment DOM</span><span><b id="spacetimeDomLabelCount">0</b> 이름 표시</span><span><b id="spacetimeDeferredLabelCount">0</b> label defer</span>${densityField ? `<span><b id="spacetimeDensityCanvasCells">0</b> density canvas cell</span><span><b>${densityField.max_count}</b> 최대 cell 고유 인물</span>` : ""}<span><b>${escapeHtml(timeAxis.stage_label)}</b> 시간축</span><span><b>${escapeHtml(spaceHeader.stage_label)}</b> 공간축</span><span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> LOD</span><span><b>${escapeHtml(timeCameraZoomLabel())}</b> 시간 줌</span></section>
     ${(compiled.unresolvedPosition.length || compiled.partitioned.relation_review.length) ? `<section class="spacetime-integrity-note card"><strong>근거 없는 위치는 자동 추정하지 않습니다.</strong><p>현재 canonical spatial index가 제공하는 검토된 macroregion만 좌표로 사용합니다. 세부 Place/subregion 근거가 없으면 macroregion보다 정밀한 좌표를 만들지 않으며, counterparty인 opposes는 자기 위치 계산에서 제외합니다.</p></section>` : ""}
     ${renderDensityLegend(densityField, Boolean(needle))}
     ${renderSelection(selectedTrack)}
@@ -637,13 +753,14 @@
       <div class="spacetime-era-axis" style="height:${timelineHeight}px;opacity:${timeAxis.era_opacity}">${eras.map((era) => `<div class="person-era-${escapeHtml(era.code)}" style="top:${era.top}px;height:${era.height}px"><span>${escapeHtml(era.label)}</span></div>`).join("")}</div>
       <div class="spacetime-year-axis" data-axis-stage="${escapeHtml(timeAxis.stage)}" style="height:${timelineHeight}px">${ticks.map((tick) => `<span class="${tick.major ? "is-major" : ""}" style="top:${tick.y}px">${escapeHtml(tick.label)}</span>`).join("")}</div>
       <div class="spacetime-canvas" style="width:${contentWidth}px;height:${timelineHeight}px">
-        ${densityHtml}
+        <canvas id="spacetimeDensityCanvas" class="spacetime-density-canvas" aria-hidden="true"></canvas>
         ${ticks.map((tick) => `<i class="spacetime-century-line${tick.major ? " is-major" : ""}" style="top:${tick.y}px"></i>`).join("")}
         ${regions.map((region) => `<i class="spacetime-region-line" style="left:${region.left}px;height:${timelineHeight}px"></i>`).join("")}
         ${spaceHeader.subregions.map((subregion) => `<i class="spacetime-subregion-line" style="left:${subregion.left}px;height:${timelineHeight}px;opacity:${spaceHeader.subregion_opacity}" title="${escapeHtml(subregion.label)}"></i>`).join("")}
-        ${renderRails(visibleTracks, projection, contentWidth, lodWeights.rails)}
-        ${pointsHtml}${labelsHtml}
-        ${horizontalViewMode === "detail" ? renderActivityGlyphs(visibleTracks, projection, contentWidth, lodWeights.activities) : ""}
+        <div id="spacetimeRailLayer" class="spacetime-runtime-layer"></div>
+        <div id="spacetimePointLayer" class="spacetime-runtime-layer"></div>
+        <div id="spacetimeLabelLayer" class="spacetime-runtime-layer"></div>
+        <div id="spacetimeActivityLayer" class="spacetime-runtime-layer"></div>
       </div>
     </div>${renderMinimap()}</section>
     <section class="spacetime-unresolved-grid"><article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">PLACEMENT REVIEW</p><h3>위치 미확정</h3></div><strong>${compiled.unresolvedPosition.length}</strong></div><p>검토된 정치체 권역·장소 기능으로 가로 위치를 확정할 수 없어 좌표를 만들지 않은 Activity입니다.</p>${unresolvedRows(compiled.unresolvedPosition)}</article><article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">CHRONOLOGY REVIEW</p><h3>연대 미확정</h3></div><strong>${compiled.unresolvedChronology.length}</strong></div><p>Activity 시작·종료 연도를 둘 다 확정할 수 없는 경우 세로축에 임의 기간을 만들지 않습니다.</p>${unresolvedRows(compiled.unresolvedChronology)}</article></section>`;
@@ -651,6 +768,19 @@
     bindCameraViewport(mount, projection, navigationItems);
     const scroll = mount.querySelector(".spacetime-scroll");
     bindMinimap(mount, scroll, projection, allProjectedTracks, activePersonIds, regions, eras, contentWidth, timelineHeight);
+    bindVirtualizedLayers(mount, scroll, {
+      projectedTracks,
+      visibleTracks,
+      projection,
+      contentWidth,
+      timelineHeight,
+      regions,
+      densityField,
+      lodWeights,
+      needle,
+      horizontalViewMode
+    });
+
     const searchInput = mount.querySelector("#spacetimeSearch");
     searchInput?.addEventListener("input", (event) => {
       query = event.target.value || "";
@@ -675,7 +805,6 @@
     mount.querySelector("#spacetimeTimeZoomIn")?.addEventListener("click", () => requestTimeCameraZoom(mount, timeCameraZoom * TIME_CAMERA_ZOOM_STEP));
     mount.querySelector("#spacetimeTimeZoomReset")?.addEventListener("click", () => requestTimeCameraZoom(mount, 1));
     mount.querySelectorAll("[data-spacetime-search-result]").forEach((button) => button.addEventListener("click", () => selectPerson(mount, button.dataset.spacetimeSearchResult, { focus: true })));
-    mount.querySelectorAll("[data-spacetime-person]").forEach((button) => button.addEventListener("click", () => selectPerson(mount, button.dataset.spacetimePerson, { focus: true })));
     mount.querySelector("#spacetimePrevPerson")?.addEventListener("click", () => {
       const personId = exploration.adjacentPersonId(navigationItems, selectedPersonId, -1);
       if (personId) selectPerson(mount, personId, { focus: true });
