@@ -107,19 +107,40 @@ $$;
 
 -- The model allows an Activity to have no defensible primary polity, but it
 -- never allows only one half of the primary polity/relation pair to be present.
--- This database constraint complements the service-level validation and makes
--- the invariant durable for every write path.
+-- Production still contains legacy one-sided rows from before relation typing.
+-- Add the CHECK as NOT VALID so it immediately protects every subsequent
+-- INSERT/UPDATE without blocking unrelated corrections on those old rows.
+-- Once the legacy backlog is clean, rerunning this migration automatically
+-- validates the same constraint and upgrades it to a fully validated invariant.
 DO $$
+DECLARE
+  v_constraint_validated boolean;
+  v_has_legacy_violations boolean;
 BEGIN
-  IF NOT EXISTS (
-    SELECT 1
-      FROM pg_constraint
-     WHERE conrelid='atlas_v2.person_politics_v2'::regclass
-       AND conname='person_politics_v2_primary_polity_relation_pair_check'
-  ) THEN
+  SELECT c.convalidated
+    INTO v_constraint_validated
+    FROM pg_constraint c
+   WHERE c.conrelid='atlas_v2.person_politics_v2'::regclass
+     AND c.conname='person_politics_v2_primary_polity_relation_pair_check';
+
+  IF NOT FOUND THEN
     ALTER TABLE atlas_v2.person_politics_v2
       ADD CONSTRAINT person_politics_v2_primary_polity_relation_pair_check
-      CHECK ((polity_id IS NULL) = (relation_type_id IS NULL));
+      CHECK ((polity_id IS NULL) = (relation_type_id IS NULL)) NOT VALID;
+    v_constraint_validated := false;
+  END IF;
+
+  IF v_constraint_validated IS NOT TRUE THEN
+    SELECT EXISTS (
+      SELECT 1
+        FROM atlas_v2.person_politics_v2
+       WHERE (polity_id IS NULL) <> (relation_type_id IS NULL)
+    ) INTO v_has_legacy_violations;
+
+    IF NOT v_has_legacy_violations THEN
+      ALTER TABLE atlas_v2.person_politics_v2
+        VALIDATE CONSTRAINT person_politics_v2_primary_polity_relation_pair_check;
+    END IF;
   END IF;
 END
 $$;
