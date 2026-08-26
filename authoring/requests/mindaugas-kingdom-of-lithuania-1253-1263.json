@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mindaugas:kingdom-of-lithuania:king:1253-1263:v1",
+  "person": {
+    "canonical_name_en": "Mindaugas",
+    "display_name_ko": "민다우가스"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-26",
+      "document_title": "민다우가스",
+      "url": "https://namu.wiki/w/%EB%AF%BC%EB%8B%A4%EC%9A%B0%EA%B0%80%EC%8A%A4"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Lithuania",
+    "display_name_ko": "리투아니아 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1253,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1263,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mindaugas was crowned King of Lithuania in July 1253 with papal sanction and remained king until his assassination in 1263. ATLAS stores the boundaries at year precision because the year is secure while the precise coronation day is disputed in modern commemoration and scholarship."
+  },
+  "sources": [
+    {
+      "title": "Mindaugas — Visuotinė lietuvių enciklopedija",
+      "canonical_url": "https://www.vle.lt/straipsnis/mindaugas/",
+      "citation_text": "The Lithuanian encyclopedia records Mindaugas as king from 1253 to 1263 and notes his coronation in July 1253.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
