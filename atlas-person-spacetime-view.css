@@ -67,8 +67,11 @@
 .spacetime-year-axis span{position:absolute;right:9px;transform:translateY(-50%);font-size:10px;font-variant-numeric:tabular-nums;color:#6b778a;white-space:nowrap}
 .spacetime-year-axis span.is-major{font-weight:800;color:#42536b}
 .spacetime-year-axis[data-axis-stage="decade"] span,.spacetime-year-axis[data-axis-stage="quarter-century"] span{font-size:9px}
-.spacetime-canvas{position:absolute;left:168px;top:44px;background:#fff}
-.spacetime-density-cell{position:absolute;z-index:1;background:#607ca9;pointer-events:none;box-sizing:border-box}
+.spacetime-canvas{position:absolute;left:168px;top:44px;background:#fff;contain:layout paint style}
+.spacetime-density-canvas{position:absolute;z-index:1;display:block;pointer-events:none}
+.spacetime-runtime-layer{position:absolute;inset:0;pointer-events:none;contain:layout style}
+.spacetime-runtime-layer button{pointer-events:auto}
+.spacetime-runtime-layer .spacetime-label-connector{pointer-events:none}
 .spacetime-century-line{position:absolute;z-index:2;left:0;width:100%;height:1px;background:#edf1f6;pointer-events:none}
 .spacetime-century-line.is-major{background:#d8e1ec}
 .spacetime-region-line{position:absolute;z-index:3;top:0;width:1px;background:#d4dde9;pointer-events:none}

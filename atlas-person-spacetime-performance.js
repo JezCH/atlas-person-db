@@ -3,12 +3,6 @@
   const api = factory();
   if (typeof module === "object" && module.exports) module.exports = api;
   if (root) root.ATLAS_PERSON_SPACETIME_PERFORMANCE = api;
-  if (root?.document && !root.document.getElementById("atlasSpacetimePerformanceStyles")) {
-    const style = root.document.createElement("style");
-    style.id = "atlasSpacetimePerformanceStyles";
-    style.textContent = ".spacetime-canvas{contain:layout paint style}.spacetime-density-canvas{position:absolute;z-index:1;display:block;pointer-events:none}.spacetime-runtime-layer{position:absolute;inset:0;pointer-events:none;contain:layout style}.spacetime-runtime-layer button{pointer-events:auto}.spacetime-runtime-layer .spacetime-label-connector{pointer-events:none}";
-    root.document.head.appendChild(style);
-  }
 })(typeof globalThis !== "undefined" ? globalThis : this, () => {
   "use strict";
 
@@ -113,21 +107,6 @@
     return Object.freeze((cells || []).filter((cell) => rectIntersects({ left: cell.left, top: cell.top, width: cell.width, height: cell.height }, rectInput)));
   }
 
-  function estimateViewport(mountWidth, viewportHeight) {
-    const width = positive(mountWidth, 1280);
-    const height = clamp(positive(viewportHeight, 720) * 0.72, 520, 860);
-    return Object.freeze({ width, height });
-  }
-
-  function renderBudget(projectedCount, segmentCount, labelCount) {
-    return Object.freeze({
-      person_dom: Math.max(0, Number(projectedCount) || 0),
-      segment_dom: Math.max(0, Number(segmentCount) || 0),
-      label_dom: Math.max(0, Number(labelCount) || 0),
-      total_dom: Math.max(0, Number(projectedCount) || 0) + Math.max(0, Number(segmentCount) || 0) + Math.max(0, Number(labelCount) || 0)
-    });
-  }
-
   return Object.freeze({
     DEFAULT_OVERSCAN,
     clamp,
@@ -137,8 +116,6 @@
     cullProjectedItems,
     segmentRect,
     cullTrackSegments,
-    cullDensityCells,
-    estimateViewport,
-    renderBudget
+    cullDensityCells
   });
 });

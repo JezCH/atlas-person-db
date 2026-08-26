@@ -7,7 +7,6 @@ const cssUrl = new URL('../atlas-person-spacetime-view.css', import.meta.url);
 const densityUrl = new URL('../atlas-person-spacetime-density.js', import.meta.url);
 const lodUrl = new URL('../atlas-person-spacetime-lod.js', import.meta.url);
 const semanticAxisUrl = new URL('../atlas-person-spacetime-semantic-axis.js', import.meta.url);
-const performanceUrl = new URL('../atlas-person-spacetime-performance.js', import.meta.url);
 
 async function fixture(path) {
   return readFile(path, 'utf8');
@@ -56,7 +55,6 @@ test('overview keeps collision-safe Person names over registered-Person density 
   const density = await fixture(densityUrl);
   const lod = await fixture(lodUrl);
   const semanticAxis = await fixture(semanticAxisUrl);
-  const performance = await fixture(performanceUrl);
 
   assert.ok(view.includes('atlas-person-spacetime-density.js'));
   assert.ok(view.includes('density.buildDensityField'));
@@ -84,13 +82,14 @@ test('overview keeps collision-safe Person names over registered-Person density 
   assert.ok(view.includes('renderActivityGlyphs(segmentTracks, state.projection, state.contentWidth, state.lodWeights.activities)'));
   assert.doesNotMatch(view, /OVERVIEW_CARD_HEIGHT/);
   assert.doesNotMatch(view, /spacetime-person-card/);
+  assert.ok(css.includes('.spacetime-density-canvas{'));
+  assert.ok(css.includes('.spacetime-runtime-layer{'));
   assert.ok(css.includes('.spacetime-density-legend{'));
   assert.ok(css.includes('.spacetime-region-head-layer{'));
   assert.ok(css.includes('.spacetime-person-point{'));
   assert.ok(css.includes('.spacetime-track-label{'));
   assert.ok(css.includes('.spacetime-track-rail{'));
   assert.ok(css.includes('.spacetime-activity-glyph{'));
-  assert.ok(performance.includes('.spacetime-density-canvas'));
-  assert.ok(performance.includes('.spacetime-runtime-layer'));
+  assert.doesNotMatch(css, /\.spacetime-density-cell\{/);
   assert.doesNotMatch(css, /\.spacetime-person-card/);
 });
