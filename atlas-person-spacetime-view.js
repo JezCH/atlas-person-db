@@ -37,6 +37,7 @@
 
   let runtimePromise = null;
   let loadPromise = null;
+  let dataLoadGeneration = 0;
   let persons = [];
   let spatialIndex = null;
   let compiledAtlasCache = null;
@@ -272,7 +273,9 @@
 
   async function ensureData() {
     if (loadPromise) return loadPromise;
+    const generation = dataLoadGeneration;
     loadPromise = Promise.all([reader.listPersons(), fetchSpatialIndex()]).then(([personResult, placement]) => {
+      if (generation !== dataLoadGeneration) return false;
       persons = personResult.persons || [];
       spatialIndex = placement;
       compiledAtlasCache = null;
@@ -280,7 +283,7 @@
       searchTextCache = new Map();
       return true;
     }).catch((error) => {
-      loadPromise = null;
+      if (generation === dataLoadGeneration) loadPromise = null;
       throw error;
     });
     return loadPromise;
@@ -953,12 +956,13 @@
     bindResize();
     if (pendingViewportHorizontalRatio == null) pendingViewportHorizontalRatio = horizontalCameraRatioFromStoredGeometry();
     if (pendingViewportCameraOrdinal == null) pendingViewportCameraOrdinal = cameraCenterOrdinal;
+    dataLoadGeneration += 1;
     loadPromise = null;
     mount.innerHTML = '<section class="card spacetime-loading"><strong>시공간 인물도 준비 중</strong><p>Person track과 검토된 공간 배치 자료를 읽고 있습니다.</p></section>';
     try {
       await ensureRuntimeModules();
-      await ensureData();
-      if (document.getElementById("personSpacetimeMount") !== mount) return;
+      const loaded = await ensureData();
+      if (!loaded || document.getElementById("personSpacetimeMount") !== mount) return;
       renderInto(mount);
     } catch (error) {
       console.error(error);
