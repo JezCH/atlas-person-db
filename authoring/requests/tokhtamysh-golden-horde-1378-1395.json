@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tokhtamysh:golden-horde:1378-1395:v1",
+  "person": {
+    "canonical_name_en": "Tokhtamysh",
+    "display_name_ko": "토크타미시",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Golden Horde",
+    "display_name_ko": "킵차크 칸국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khan",
+    "role_display_name_ko": "칸",
+    "start_year": 1378,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1395,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tokhtamysh overcame the rival Jochid rulers and restored unified authority over the eastern and western Kipchak ulus beginning in 1378; Timur's campaigns broke his Golden Horde power by 1395. Some modern regnal lists use 1380 for his fully consolidated Golden Horde kingship, but ATLAS follows the historical synthesis that places the decisive unification in 1378."
+  },
+  "sources": [
+    {
+      "title": "Golden Horde — Encyclopaedia Britannica (1911)",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Golden_Horde",
+      "citation_text": "Britannica states that in 1378 Tokhtamysh ousted rivals and established himself over eastern and western Kipchak, with the restored Horde later crushed by Timur in 1395.",
+      "source_type": "reference_work"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}

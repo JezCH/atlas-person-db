@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:pontiac:odawa:1763-1766:v1",
+  "person": {
+    "canonical_name_en": "Pontiac",
+    "display_name_ko": "폰티액",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Odawa",
+    "display_name_ko": "오다와족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "War Leader",
+    "role_display_name_ko": "전쟁 지도자",
+    "start_year": 1763,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1766,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Pontiac (Obwaandi'eyaag) was an Odawa leader who organized resistance to British power around Detroit and became the best-known leader associated with the wider Great Lakes uprising. ATLAS uses the precise Odawa political community rather than treating him as ruler of all Anishinaabe peoples, and records the conflict interval 1763–1766 ending with his treaty with Sir William Johnson."
+  },
+  "sources": [
+    {
+      "title": "The Fight for Native Self-Determination — U.S. National Park Service",
+      "canonical_url": "https://www.nps.gov/articles/erosion-of-the-middle-ground.htm",
+      "citation_text": "The National Park Service describes Pontiac as an Ottawa leader associated with the Great Lakes uprising against British rule.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "1768 Boundary Line Treaty of Fort Stanwix — U.S. National Park Service",
+      "canonical_url": "https://home.nps.gov/articles/000/1768-boundary-line-treaty-of-fort-stanwix.htm",
+      "citation_text": "The National Park Service dates Pontiac's Rebellion from 1763, notes continuing conflict through 1765, and records Pontiac's treaty with Sir William Johnson in July 1766.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}

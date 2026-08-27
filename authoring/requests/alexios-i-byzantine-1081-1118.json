@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:alexios-i-komnenos:byzantine-empire:1081-1118:v1",
+  "person": {
+    "canonical_name_en": "Alexios I Komnenos",
+    "display_name_ko": "알렉시오스 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Byzantine Empire",
+    "display_name_ko": "비잔티움 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1081,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1118,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Alexios I Komnenos was Byzantine emperor from 1081 to 1118 and initiated the Komnenian recovery. ATLAS reuses the existing Byzantine Empire polity already used for other Byzantine emperors."
+  },
+  "sources": [
+    {
+      "title": "Belle Époque or crisis? (1025–1118) — The Cambridge History of the Byzantine Empire",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/cambridge-history-of-the-byzantine-empire-c5001492/belle-epoque-or-crisis-10251118/0E5DE51C482C7BD3A2F958BD5D6FEBDF",
+      "citation_text": "The Cambridge History identifies the Byzantine recovery under Alexios I Komnenos and gives his reign as 1081–1118.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "알렉시오스 1세",
+      "url": "https://namu.wiki/w/%EC%95%8C%EB%A0%89%EC%8B%9C%EC%98%A4%EC%8A%A4%201%EC%84%B8"
+    }
+  }
+}

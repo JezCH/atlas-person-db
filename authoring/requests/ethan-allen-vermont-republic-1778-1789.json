@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ethan-allen:vermont-republic:1778-1789:v1",
+  "person": {
+    "canonical_name_en": "Ethan Allen",
+    "display_name_ko": "이선 앨런",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Vermont Republic",
+    "display_name_ko": "버몬트 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "political_activity",
+    "role": "Political-Military Leader",
+    "role_display_name_ko": "정치·군사 지도자",
+    "start_year": 1778,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1789,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ethan Allen was not governor or formal head of the Vermont government. After returning from British captivity in 1778, he was a major military and political figure in Vermont, lobbying for admission to the United States and participating in the Haldimand negotiations until his death in 1789. ATLAS therefore records active_in rather than rules/governs."
+  },
+  "sources": [
+    {
+      "title": "Freedom & Unity: Ethan Allen — Vermont Historical Society",
+      "canonical_url": "https://vermonthistory.org/freedom-unity-ethan-allen",
+      "citation_text": "The Vermont Historical Society describes Allen's role in events leading to Vermont's establishment, his return after captivity, lobbying for Vermont, Haldimand negotiations, and death in 1789.",
+      "source_type": "institutional_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}
