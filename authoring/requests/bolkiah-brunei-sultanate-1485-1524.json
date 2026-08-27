@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:bolkiah:brunei-sultanate:1485-1524:v1",
+  "person": {
+    "canonical_name_en": "Bolkiah",
+    "display_name_ko": "볼키아",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Brunei Sultanate",
+    "display_name_ko": "브루나이 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1485,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1524,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sultan Bolkiah ruled Brunei from 1485 to 1524 during the period conventionally described as Brunei's golden age and major regional expansion. ATLAS uses the polity label Brunei Sultanate rather than treating 'Bruneian Empire' as a formal state title."
+  },
+  "sources": [
+    {
+      "title": "Brunei — Islam in Southeast Asia",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/islam-in-southeast-asia/brunei/F35A97322EFC8B906FFEDC7E11E6BAE3",
+      "citation_text": "The ISEAS–Yusof Ishak Institute volume describes Sultan Bolkiah's reign as 1485–1524 and treats it as the apex of Brunei's regional power.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Brunei in Brief — Government of Brunei Darussalam",
+      "canonical_url": "https://www.information.gov.bn/Media%20Document%20Library/Brunei%20Today/brunei%20in%20brief_FINAL%202.pdf",
+      "citation_text": "The Brunei government historical overview identifies the reign of Sultan Bolkiah as a period when Brunei was a dominant regional power.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}
