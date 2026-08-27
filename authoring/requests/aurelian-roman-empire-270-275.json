@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:aurelian:roman-empire:270-275:v1",
+  "person": {
+    "canonical_name_en": "Aurelian",
+    "display_name_ko": "아우렐리아누스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 270,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 275,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Aurelian was Roman emperor from 270 to 275 CE. ATLAS records his imperial reign, during which he restored Roman rule over the Palmyrene and Gallic breakaway states."
+  },
+  "sources": [
+    {
+      "title": "Aurelian, Roman emperor, c. 215–275 CE — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548657359",
+      "citation_text": "The Oxford Classical Dictionary identifies Aurelian as Roman emperor and places his accession around September 270.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Aurelian — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG140646",
+      "citation_text": "The British Museum identifies Aurelian as Roman emperor from 270 to 275.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}

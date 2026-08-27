@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:hussein-bin-talal:jordan:1952-1999:v1",
+  "person": {
+    "canonical_name_en": "Hussein bin Talal",
+    "display_name_ko": "후세인 빈 탈랄",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Jordan",
+    "display_name_ko": "요르단",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1952,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1999,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Hussein bin Talal was proclaimed King of the Hashemite Kingdom of Jordan on 11 August 1952 and remained king until his death on 7 February 1999. A Regency Council exercised the royal functions until he assumed his constitutional powers on 2 May 1953; ATLAS nevertheless records the recognized royal reign as 1952–1999."
+  },
+  "sources": [
+    {
+      "title": "Hashemite Monarchs of Jordan — Jordan Government",
+      "canonical_url": "https://jordan.gov.jo/EN/Pages/Hashemite_Monarchs_of_Jordan",
+      "citation_text": "The Jordanian government records King Hussein's reign as 1952–1999 and notes that he assumed constitutional powers in 1953 after a Regency Council.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "후세인 1세",
+      "url": "https://namu.wiki/w/%ED%9B%84%EC%84%B8%EC%9D%B8%201%EC%84%B8"
+    }
+  }
+}
