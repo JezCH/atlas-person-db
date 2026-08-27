@@ -52,8 +52,8 @@
   let cameraScrollTop = 0;
   let cameraScrollLeft = 0;
   let cameraHorizontalGeometry = null;
-  let pendingResizeHorizontalRatio = null;
-  let pendingResizeCameraOrdinal = null;
+  let pendingViewportHorizontalRatio = null;
+  let pendingViewportCameraOrdinal = null;
   let cameraCenterOrdinal = null;
   let currentTimelineProjection = null;
   let pendingCameraAnchor = null;
@@ -465,17 +465,17 @@
       scroll.scrollLeft = pendingCameraAnchor.scroll_left;
       scroll.scrollTop = Math.max(0, TIME_CAMERA_HEADER_HEIGHT + anchorY - pendingCameraAnchor.viewport_y);
       pendingCameraAnchor = null;
-    } else if (pendingResizeHorizontalRatio != null || pendingResizeCameraOrdinal != null) {
-      const restoredScrollLeft = scrollLeftForHorizontalCameraRatio(scroll, pendingResizeHorizontalRatio);
+    } else if (pendingViewportHorizontalRatio != null || pendingViewportCameraOrdinal != null) {
+      const restoredScrollLeft = scrollLeftForHorizontalCameraRatio(scroll, pendingViewportHorizontalRatio);
       scroll.scrollLeft = restoredScrollLeft == null ? cameraScrollLeft : restoredScrollLeft;
-      if (pendingResizeCameraOrdinal != null && projection?.worldToScreenY) {
-        const centerY = projection.worldToScreenY(pendingResizeCameraOrdinal);
+      if (pendingViewportCameraOrdinal != null && projection?.worldToScreenY) {
+        const centerY = projection.worldToScreenY(pendingViewportCameraOrdinal);
         scroll.scrollTop = Math.max(0, TIME_CAMERA_HEADER_HEIGHT + centerY - cameraViewportCenterY(scroll));
       } else {
         scroll.scrollTop = cameraScrollTop;
       }
-      pendingResizeHorizontalRatio = null;
-      pendingResizeCameraOrdinal = null;
+      pendingViewportHorizontalRatio = null;
+      pendingViewportCameraOrdinal = null;
     } else {
       scroll.scrollLeft = cameraScrollLeft;
       scroll.scrollTop = cameraScrollTop;
@@ -933,15 +933,15 @@
     if (resizeBound) return;
     resizeBound = true;
     window.addEventListener("resize", () => {
-      if (pendingResizeHorizontalRatio == null) pendingResizeHorizontalRatio = horizontalCameraRatioFromStoredGeometry();
-      if (pendingResizeCameraOrdinal == null) pendingResizeCameraOrdinal = cameraCenterOrdinal;
+      if (pendingViewportHorizontalRatio == null) pendingViewportHorizontalRatio = horizontalCameraRatioFromStoredGeometry();
+      if (pendingViewportCameraOrdinal == null) pendingViewportCameraOrdinal = cameraCenterOrdinal;
       cancelAnimationFrame(resizeFrame);
       resizeFrame = requestAnimationFrame(() => {
         const mount = document.getElementById("personSpacetimeMount");
         if (mount && !mount.hidden) renderInto(mount);
         else {
-          pendingResizeHorizontalRatio = null;
-          pendingResizeCameraOrdinal = null;
+          pendingViewportHorizontalRatio = null;
+          pendingViewportCameraOrdinal = null;
         }
       });
     });
@@ -951,6 +951,8 @@
     const mount = document.getElementById("personSpacetimeMount");
     if (!mount) return;
     bindResize();
+    if (pendingViewportHorizontalRatio == null) pendingViewportHorizontalRatio = horizontalCameraRatioFromStoredGeometry();
+    if (pendingViewportCameraOrdinal == null) pendingViewportCameraOrdinal = cameraCenterOrdinal;
     loadPromise = null;
     mount.innerHTML = '<section class="card spacetime-loading"><strong>시공간 인물도 준비 중</strong><p>Person track과 검토된 공간 배치 자료를 읽고 있습니다.</p></section>';
     try {
