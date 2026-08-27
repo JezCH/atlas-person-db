@@ -407,7 +407,7 @@
       const top = Math.min(y1, y2);
       const height = Math.max(2, Math.abs(y2 - y1));
       const x = segment.x_anchor * contentWidth;
-      return `<button type="button" class="spacetime-track-rail${selectedPersonId === track.person_id ? " is-selected" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" style="left:${x}px;top:${top}px;height:${height}px;opacity:${opacity}" title="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)} · ${placementBasisLabel(segment)}`)}" aria-label="${escapeHtml(track.display_name)}"></button>`;
+      return `<button type="button" class="spacetime-track-rail${selectedPersonId === track.person_id ? " is-selected" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" style="left:${x}px;top:${top}px;height:${height}px;opacity:${opacity}" title="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)} · ${placementBasisLabel(segment)}`)}" aria-label="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)} · ${placementBasisLabel(segment)}`)}"></button>`;
     })).join("");
   }
 
