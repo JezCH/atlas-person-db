@@ -53,6 +53,7 @@
   let cameraScrollLeft = 0;
   let cameraHorizontalGeometry = null;
   let pendingResizeHorizontalRatio = null;
+  let pendingResizeCameraOrdinal = null;
   let cameraCenterOrdinal = null;
   let currentTimelineProjection = null;
   let pendingCameraAnchor = null;
@@ -445,11 +446,17 @@
       scroll.scrollLeft = pendingCameraAnchor.scroll_left;
       scroll.scrollTop = Math.max(0, TIME_CAMERA_HEADER_HEIGHT + anchorY - pendingCameraAnchor.viewport_y);
       pendingCameraAnchor = null;
-    } else if (pendingResizeHorizontalRatio != null) {
+    } else if (pendingResizeHorizontalRatio != null || pendingResizeCameraOrdinal != null) {
       const restoredScrollLeft = scrollLeftForHorizontalCameraRatio(scroll, pendingResizeHorizontalRatio);
       scroll.scrollLeft = restoredScrollLeft == null ? cameraScrollLeft : restoredScrollLeft;
-      scroll.scrollTop = cameraScrollTop;
+      if (pendingResizeCameraOrdinal != null && projection?.worldToScreenY) {
+        const centerY = projection.worldToScreenY(pendingResizeCameraOrdinal);
+        scroll.scrollTop = Math.max(0, TIME_CAMERA_HEADER_HEIGHT + centerY - cameraViewportCenterY(scroll));
+      } else {
+        scroll.scrollTop = cameraScrollTop;
+      }
       pendingResizeHorizontalRatio = null;
+      pendingResizeCameraOrdinal = null;
     } else {
       scroll.scrollLeft = cameraScrollLeft;
       scroll.scrollTop = cameraScrollTop;
@@ -905,11 +912,15 @@
     resizeBound = true;
     window.addEventListener("resize", () => {
       if (pendingResizeHorizontalRatio == null) pendingResizeHorizontalRatio = horizontalCameraRatioFromStoredGeometry();
+      if (pendingResizeCameraOrdinal == null) pendingResizeCameraOrdinal = cameraCenterOrdinal;
       cancelAnimationFrame(resizeFrame);
       resizeFrame = requestAnimationFrame(() => {
         const mount = document.getElementById("personSpacetimeMount");
         if (mount && !mount.hidden) renderInto(mount);
-        else pendingResizeHorizontalRatio = null;
+        else {
+          pendingResizeHorizontalRatio = null;
+          pendingResizeCameraOrdinal = null;
+        }
       });
     });
   }
