@@ -1,0 +1,71 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "batch584_duplicate_activity_cleanup_20260827_v1",
+  "as_of": "2026-08-27",
+  "status": "REVIEWED_DUPLICATE_ACTIVITY_CLEANUP",
+  "release_order": 584,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "Production read-back after PR #584. Preserve the pre-existing reviewed Córdoba phase split for Abd al-Rahman III and the pre-existing Mehmed II second-reign Activity; retire only the overlapping Activities introduced by the current batch, with source transfer.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "retire_source_transfer_before_delete_required": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "mehmed_ii_retire_batch584_second_reign_duplicate",
+      "type": "retire_activity",
+      "activity_id": "89afbcd8-9378-4ba4-9793-c0db0b48b121",
+      "baseline_before": {
+        "person_id": "25f65f14-f78c-5f9b-a176-eedb1056d5d2",
+        "polity_id": "6d1520e2-0aff-5063-b2b7-95eb86daf372",
+        "role_id": "1a91542a-fc8f-5c4c-b4d2-f533d1af7fb8",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1451,
+        "activity_end": 1481,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true,
+      "replacement_activity_ids": [
+        "b0d35acc-9705-5b80-96bb-02616df72bcc"
+      ]
+    },
+    {
+      "case_id": "abd_al_rahman_iii_retire_continuous_overlay",
+      "type": "retire_activity",
+      "activity_id": "0afc5d25-4474-4e34-ad9c-887359af9394",
+      "baseline_before": {
+        "person_id": "9a81fac4-fa3e-4279-84bd-9105f098c996",
+        "polity_id": "62815073-7cf1-4716-a7c3-89d9ff782d07",
+        "role_id": "f9748ee8-4cb8-4481-836d-3e37d9257ca6",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 912,
+        "activity_end": 961,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true,
+      "replacement_activity_ids": [
+        "b2c3d044-3f12-4543-a378-187529d340f7",
+        "15770246-9789-4be1-86e0-1632e861673f"
+      ]
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "retire_activity_count": 2,
+    "production_mutation_authorized": false
+  }
+}
