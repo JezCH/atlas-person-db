@@ -192,3 +192,17 @@ test("keyboard zoom does not claim unavailable zoom commands at camera bounds", 
   assert.ok(guardIndex < preventIndex);
   assert.ok(reuseIndex > preventIndex);
 });
+
+
+test("modifier-wheel zoom does not claim unavailable camera-bound gestures", async () => {
+  const view = await fixture(viewUrl);
+  const wheelIndex = view.indexOf('scroll.addEventListener("wheel"');
+  const targetIndex = view.indexOf("const wheelZoomTarget = timeCameraZoom * factor;", wheelIndex);
+  const guardIndex = view.indexOf("if (Math.abs(clampTimeCameraZoom(wheelZoomTarget) - timeCameraZoom) < 1e-9) return;", wheelIndex);
+  const preventIndex = view.indexOf("event.preventDefault();", wheelIndex);
+  const requestIndex = view.indexOf("requestTimeCameraZoom(mount, wheelZoomTarget, event.clientY - rect.top);", wheelIndex);
+  assert.ok(wheelIndex >= 0);
+  assert.ok(targetIndex > wheelIndex && targetIndex < guardIndex);
+  assert.ok(guardIndex < preventIndex);
+  assert.ok(requestIndex > preventIndex);
+});

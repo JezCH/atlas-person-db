@@ -39,6 +39,9 @@ test('time camera cannot leave the readable 100 percent minimum through any zoom
   assert.match(view, /return Math\.min\(TIME_CAMERA_MAX_ZOOM, Math\.max\(TIME_CAMERA_MIN_ZOOM, numeric\)\);/);
   assert.match(view, /spacetimeTimeZoomOut[^\n]+requestTimeCameraZoom\(mount, timeCameraZoom \/ TIME_CAMERA_ZOOM_STEP\)/);
   assert.match(view, /const factor = event\.deltaY < 0 \? TIME_CAMERA_ZOOM_STEP : 1 \/ TIME_CAMERA_ZOOM_STEP;/);
+  assert.match(view, /const wheelZoomTarget = timeCameraZoom \* factor;/);
+  assert.match(view, /Math\.abs\(clampTimeCameraZoom\(wheelZoomTarget\) - timeCameraZoom\) < 1e-9/);
+  assert.match(view, /requestTimeCameraZoom\(mount, wheelZoomTarget, event\.clientY - rect\.top\);/);
   assert.match(view, /const keyboardZoomTarget = command === "zoom-in"[\s\S]*timeCameraZoom \/ TIME_CAMERA_ZOOM_STEP : null;/);
   assert.match(view, /Math\.abs\(clampTimeCameraZoom\(keyboardZoomTarget\) - timeCameraZoom\) < 1e-9/);
   assert.match(view, /requestTimeCameraZoom\(mount, keyboardZoomTarget\);/);

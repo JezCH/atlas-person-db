@@ -18,9 +18,9 @@ test('spacetime owns a bounded map-like viewport once the incremental time camer
 });
 
 test('authority navigation loads the current spacetime renderer without a stale cache key', () => {
-  assert.match(navScript, /atlas-person-spacetime-view\.js\?v=20260827-keyboard-zoom-bounds/);
+  assert.match(navScript, /atlas-person-spacetime-view\.js\?v=20260827-wheel-zoom-bounds/);
   assert.match(navScript, /atlas-person-spacetime-view\.css\?v=20260827-single-result-nav/);
-  assert.match(indexHtml, /atlas-main-authority-nav\.js\?v=20260827-spacetime-keyboard-zoom-bounds/);
+  assert.match(indexHtml, /atlas-main-authority-nav\.js\?v=20260827-spacetime-wheel-zoom-bounds/);
 });
 
 test('authority navigation resets the viewport only when the domain changes', () => {

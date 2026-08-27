@@ -759,10 +759,12 @@
     scroll.addEventListener("scroll", () => updateCameraPosition(scroll, projection), { passive: true });
     scroll.addEventListener("wheel", (event) => {
       if (!event.ctrlKey && !event.metaKey) return;
+      const factor = event.deltaY < 0 ? TIME_CAMERA_ZOOM_STEP : 1 / TIME_CAMERA_ZOOM_STEP;
+      const wheelZoomTarget = timeCameraZoom * factor;
+      if (Math.abs(clampTimeCameraZoom(wheelZoomTarget) - timeCameraZoom) < 1e-9) return;
       event.preventDefault();
       const rect = scroll.getBoundingClientRect();
-      const factor = event.deltaY < 0 ? TIME_CAMERA_ZOOM_STEP : 1 / TIME_CAMERA_ZOOM_STEP;
-      requestTimeCameraZoom(mount, timeCameraZoom * factor, event.clientY - rect.top);
+      requestTimeCameraZoom(mount, wheelZoomTarget, event.clientY - rect.top);
     }, { passive: false });
     scroll.addEventListener("keydown", (event) => {
       if (event.target !== scroll) return;
