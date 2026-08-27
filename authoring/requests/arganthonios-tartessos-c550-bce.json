@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:arganthonios:tartessos:king:c550-bce:v1",
+  "person": {
+    "canonical_name_en": "Arganthonios",
+    "display_name_ko": "아르간토니오스"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Tartessos",
+    "display_name_ko": "타르테소스"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -550,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -550,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "disputed",
+    "chronology_status": "reviewed",
+    "notes": "Herodotus presents Arganthonios as king of Tartessos and links him personally to the Phocaeans. Modern Spanish scholarship strongly questions the individual's historicity and identifies the reported eighty-year reign and 120-year lifespan as mythic or literary constructions. Other archaeological-historical work nevertheless treats Phocaean contact with Arganthonios in the sixth-century BCE Tartessian context and places the aid to threatened Phocaea around the mid-sixth century. ATLAS therefore does not use the conventional 80-year reign rail; it records only c.550 BCE as a disputed approximate point tied to the historically situated Phocaean episode."
+  },
+  "sources": [
+    {
+      "title": "Algunas notas sobre la figura de Argantonio y sus elementos míticos — Archivo Español de Arqueología",
+      "canonical_url": "https://aespa.revistas.csic.es/index.php/aespa/article/view/336",
+      "citation_text": "Padilla Monge identifies strong mythic and literary features in Arganthonios' longevity, chronology, name, and Phocaean narrative and substantially questions the historicity of the individual.",
+      "source_type": "journal_article"
+    },
+    {
+      "title": "The location of Tartessos: a fresh case for the reliability of Avienus’ Ora Maritima — Frontiers in Marine Science",
+      "canonical_url": "https://www.frontiersin.org/journals/marine-science/articles/10.3389/fmars.2024.1379920/full",
+      "citation_text": "The CSIC-led study treats Arganthonios within the historical sixth-century BCE Tartessian and Phocaean contact context and notes that he was dead by the time of the later Phocaean displacement.",
+      "source_type": "journal_article"
+    }
+  ]
+}
