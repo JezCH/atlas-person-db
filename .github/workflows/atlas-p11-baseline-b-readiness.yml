@@ -4,11 +4,13 @@ on:
   pull_request:
     paths-ignore:
       - 'authoring/requests/*.json'
+      - 'non-timeline-persons.json'
   push:
     branches:
       - main
     paths-ignore:
       - 'authoring/requests/*.json'
+      - 'non-timeline-persons.json'
   workflow_dispatch:
 
 permissions:
