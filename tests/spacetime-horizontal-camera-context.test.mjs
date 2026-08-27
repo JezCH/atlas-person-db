@@ -78,3 +78,23 @@ test("window resize restores the same normalized horizontal world center", () =>
     "resize must snapshot the normalized horizontal center before rerendering the resized world"
   );
 });
+
+
+test("window resize preserves the historical time at the viewport center", () => {
+  const oldClientHeight = 860;
+  const newClientHeight = 520;
+  const header = 44;
+  const oldViewportCenter = header + (oldClientHeight - header) / 2;
+  const newViewportCenter = header + (newClientHeight - header) / 2;
+  const oldScrollTop = 1800;
+  const centerY = oldScrollTop + oldViewportCenter - header;
+  const restoredScrollTop = header + centerY - newViewportCenter;
+  assert.equal(oldScrollTop + oldViewportCenter - header, restoredScrollTop + newViewportCenter - header);
+
+  assert.match(viewSource, /pendingResizeCameraOrdinal\s*=\s*cameraCenterOrdinal/);
+  assert.match(viewSource, /projection\.worldToScreenY\(pendingResizeCameraOrdinal\)/);
+  assert.match(viewSource, /TIME_CAMERA_HEADER_HEIGHT \+ centerY - cameraViewportCenterY\(scroll\)/);
+  const captureIndex = viewSource.indexOf("pendingResizeCameraOrdinal = cameraCenterOrdinal");
+  const rerenderIndex = viewSource.indexOf("if (mount && !mount.hidden) renderInto(mount)", captureIndex);
+  assert.ok(captureIndex >= 0 && rerenderIndex > captureIndex, "resize must capture historical center before rerender");
+});
