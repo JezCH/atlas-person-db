@@ -15,6 +15,7 @@ test('ATLAS global era boundaries have one reviewed source of truth', () => {
   assert.match(eraModel, /code: "industrial-imperial"[^\n]*range: "AD 1750 – 1913"[^\n]*start_year: 1750[^\n]*end_year: 1913/);
   assert.match(eraModel, /code: "world-wars"[^\n]*range: "AD 1914 – 1944"[^\n]*start_year: 1914[^\n]*end_year: 1944/);
   assert.match(eraModel, /code: "contemporary"[^\n]*range: "AD 1945 이후"[^\n]*start_year: 1945[^\n]*end_year: null/);
+  assert.match(eraModel, /code: "unknown"[^\n]*label: "전설, 신화, 연대미상"[^\n]*range: "연표 외 · 주요 활동연도 미상"/);
   assert.match(eraModel, /year === 0/);
 });
 
