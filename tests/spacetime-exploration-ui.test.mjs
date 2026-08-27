@@ -69,12 +69,14 @@ test("interactive segment controls expose distinct historical context in their a
   assert.ok(view.includes('aria-label="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)} · ${placementBasisLabel(segment)}`)}"'));
 });
 
-test("search filtering clears stale selection that is no longer active", async () => {
+test("active track changes clear stale selection even without a search filter", async () => {
   const view = await fixture(viewUrl);
-  assert.ok(view.includes("if (needle && selectedPersonId && !activePersonIds.has(selectedPersonId)) {"));
+  const cleanup = "if (selectedPersonId && !activePersonIds.has(selectedPersonId)) {";
+  assert.ok(view.includes(cleanup));
+  assert.ok(!view.includes("if (needle && selectedPersonId && !activePersonIds.has(selectedPersonId)) {"));
   assert.ok(view.includes("selectedPersonId = null;"));
   assert.ok(view.includes("pendingFocusPersonId = null;"));
-  const cleanupIndex = view.indexOf("if (needle && selectedPersonId && !activePersonIds.has(selectedPersonId)) {");
+  const cleanupIndex = view.indexOf(cleanup);
   assert.ok(cleanupIndex < view.indexOf("const navigationItems = exploration.orderItems(projectedTracks);"));
   assert.ok(cleanupIndex < view.indexOf("const selectedTrack = compiled.partitioned.tracks.find"));
 });
