@@ -27,7 +27,8 @@ const expectedCorrectionMigrations = [
   '20260812_correction_manifest_v1_1.sql',
   '20260813_correction_manifest_v2.sql',
   '20260815_correction_manifest_v1_2.sql',
-  '20260821_correction_manifest_v1_3.sql'
+  '20260821_correction_manifest_v1_3.sql',
+  '20260827_correction_manifest_v1_4.sql'
 ];
 
 const expectedTables = [

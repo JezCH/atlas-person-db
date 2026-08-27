@@ -1,0 +1,11 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import { createRequire } from "node:module";
+const require=createRequire(import.meta.url);
+const {MANIFEST_V1_4,MARKER_V1_4,PERSON_HISTORICITY_OPERATION,ACTIVITY_NOTES_OPERATION,requireManifest}=require("../server/atlas-correction-manifest-v1-4-service.js");
+const request=JSON.parse(fs.readFileSync(new URL("../corrections/requests/person-historicity-and-telesilla-notes-20260827.v1.json",import.meta.url),"utf8"));
+const source=fs.readFileSync(new URL("../server/atlas-correction-manifest-v1-4-service.js",import.meta.url),"utf8");
+test("v1.4 parses bounded historicity and notes corrections",()=>{const p=requireManifest(request);assert.equal(p.schema,MANIFEST_V1_4);assert.equal(MARKER_V1_4,"ATLAS_CORRECTION_MANIFEST_V1_4");assert.equal(p.operations.filter(x=>x.type===PERSON_HISTORICITY_OPERATION).length,3);assert.equal(p.operations.filter(x=>x.type===ACTIVITY_NOTES_OPERATION).length,1);assert.equal(p.operations[0].expected_after.historicity,"legendary_possible_historical_core");assert.equal(p.operations[1].expected_after.historicity,"historical_tradition_uncertain_chronology");assert.match(p.operations[3].expected_after.notes,/representative activity point/);assert.doesNotMatch(p.operations[3].expected_after.notes,/broad representative artistic window/);});
+test("v1.4 rejects no-op and Activity identity drift",()=>{const a=structuredClone(request);a.operations[0].expected_after.historicity="historical";assert.throws(()=>requireManifest(a),/CORRECTION_V14_HISTORICITY_NO_CHANGE/);const b=structuredClone(request);b.operations[3].expected_after.activity_start=-450;b.operations[3].expected_after.activity_end=-450;assert.throws(()=>requireManifest(b),/CORRECTION_V14_ACTIVITY_IDENTITY_DRIFT:activity_start/);});
+test("v1.4 SQL surface is metadata-only",()=>{assert.match(source,/update atlas_v2\.persons set historicity=\$2/);assert.match(source,/update atlas_v2\.person_politics_v2 set notes=\$2/);assert.doesNotMatch(source,/delete\s+from\s+atlas_v2\.(?:persons|person_politics_v2)/i);assert.doesNotMatch(source,/insert\s+into\s+atlas_v2\.(?:persons|person_politics_v2)/i);});

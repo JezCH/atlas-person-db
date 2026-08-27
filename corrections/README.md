@@ -1,5 +1,16 @@
 # ATLAS Correction Manifests
 
+## Current schema extensions
+
+The correction transport currently recognizes `v1`, `v1.1`, `v1.2`, `v1.3`, `v1.4`, and `v2`.
+
+`atlas-correction-manifest/v1.4` is deliberately narrow metadata correction for existing identities:
+
+- `update_person_historicity` changes only `atlas_v2.persons.historicity` under exact-before review;
+- `update_activity_notes` changes only one existing Activity's `notes` while preserving Person, Polity, and year boundaries.
+
+Both operations run in the same SERIALIZABLE, idempotent correction-ledger boundary as earlier schemas.
+
 `corrections/requests/*.json` is the reviewed entry point for correcting existing normalized ATLAS relationships after semantic audit.
 
 This is intentionally separate from `authoring/requests/*.json`:
