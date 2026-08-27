@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:oswiu:northumbria:642-670:v1",
+  "person": {
+    "canonical_name_en": "Oswiu",
+    "display_name_ko": "오스위우",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Northumbria",
+    "display_name_ko": "노섬브리아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 642,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 670,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Oswiu succeeded his brother Oswald in 642 and ruled the Northumbrian realm until his death in 670. The internal relationship between Bernicia and Deira shifted during his reign, but standard historical reference works treat 642–670 as his Northumbrian kingship; ATLAS records that conventional sovereign interval."
+  },
+  "sources": [
+    {
+      "title": "Oswio — Encyclopaedia Britannica (1911)",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Oswio",
+      "citation_text": "The Britannica article identifies Oswiu/Oswio as king of Northumbria, succeeding after Oswald's death in 642 and ruling until his death in 670.",
+      "source_type": "reference_work"
+    },
+    {
+      "title": "Oswy — Dictionary of National Biography",
+      "canonical_url": "https://en.wikisource.org/wiki/Dictionary_of_National_Biography,_1885-1900/Oswy",
+      "citation_text": "The Dictionary of National Biography describes Oswiu's accession after Oswald and his subsequent rule over the Northumbrian kingdoms until 670.",
+      "source_type": "reference_work"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}

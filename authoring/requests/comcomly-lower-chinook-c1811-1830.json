@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:comcomly:lower-chinook:c1811-1830:v1",
+  "person": {
+    "canonical_name_en": "Comcomly",
+    "display_name_ko": "콤콤리",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Lower Chinook",
+    "display_name_ko": "하류 치누크족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Chief",
+    "role_display_name_ko": "추장",
+    "start_year": 1811,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1830,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Comcomly (also Concomly) was a Lower Chinook headman and principal chief at the mouth of the Columbia River. Contemporary and regional historical sources show him as a subordinate chief in 1795–1796 and as the principal Chinook chief by the Fort Astoria era; ATLAS therefore uses c.1811–1830 as a conservative leadership interval rather than inventing an accession date. He died in the 1830 epidemic."
+  },
+  "sources": [
+    {
+      "title": "Concomly (1765?-1830?) — The Oregon Encyclopedia",
+      "canonical_url": "https://www.oregonencyclopedia.org/articles/concomly_1765_1830_/",
+      "citation_text": "The Oregon Encyclopedia identifies Concomly as the Baker's Bay Chinook headman, documents his rise in influence by the Fort Astoria era, and records his death in 1830.",
+      "source_type": "reference_work"
+    },
+    {
+      "title": "Comcomly (1760s?-1830) — HistoryLink",
+      "canonical_url": "https://www.historylink.org/File/10042",
+      "citation_text": "HistoryLink traces Comcomly from a sub-chief recorded in 1795 to the principal chief of the Chinook nation in the Fort Astoria period and records his death in 1830.",
+      "source_type": "reference_work"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}

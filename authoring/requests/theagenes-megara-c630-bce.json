@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:theagenes:megara:c630-bce:v1",
+  "person": {
+    "canonical_name_en": "Theagenes of Megara",
+    "display_name_ko": "테아게네스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Megara",
+    "display_name_ko": "메가라",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Tyrant",
+    "role_display_name_ko": "참주",
+    "start_year": -630,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -630,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Theagenes was the archaic tyrant of Megara. His chronology depends on the disputed dating of Cylon's attempted coup; Oxford places the relevant window between roughly 640 and 620 BCE, while the Harvard Center for Hellenic Studies gives a broader tyranny window around 640/630–600 BCE. ATLAS therefore records c.630 BCE as a representative point rather than inventing a precise reign duration."
+  },
+  "sources": [
+    {
+      "title": "Theagenes (1), of Megara, tyrant — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548205492",
+      "citation_text": "Oxford identifies Theagenes as tyrant of Megara and notes that the date of his tyranny depends on Cylon, placing it somewhere between about 640 and 620 BCE.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Chronological Table: Archaic Megara, 800-500 B.C. — Center for Hellenic Studies",
+      "canonical_url": "https://www-current.chs.harvard.edu/curated-article/thomas-j-figueira-chronological-table-archaic-megara-800-500-b-c/",
+      "citation_text": "The Center for Hellenic Studies chronology places Theagenes' tyranny broadly around 640/630–600 BCE and discusses the uncertainty of Cylon's date.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}

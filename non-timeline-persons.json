@@ -388,5 +388,39 @@
     "role_ko": "스타흐힌 콴의 전승상 초기 지도자·초대 셰익스",
     "reason": "Tlingit historical tradition preserves Gush X'een as an early Shtax'heen leader associated with the origin of the Sheiyksh (Shakes) chiefly title, but it does not provide a defensible personal term equivalent to the legacy 1700–1740 span. ATLAS therefore preserves the person and tradition while leaving the personal timeline unknown.",
     "map_policy": "Do not display on the historical year timeline unless a separate uncertain-chronology or historical-tradition overlay is enabled."
+  },
+  {
+    "person_name": "Sardus",
+    "politic_name": "Nuragic Sardinia",
+    "display_name_ko": "사르두스",
+    "politic_display_name_ko": "누라게 사르데냐",
+    "historicity": "mythical",
+    "historicity_display_ko": "신화",
+    "timeline_status": "excluded",
+    "date_basis": "classical_sardinian_eponymous_founder_tradition",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "누라게 사르데냐인의 신화적 시조 영웅",
+    "reason": "Sardus (Sardus Pater) is the eponymous mythological hero associated by classical tradition with the people and name of Sardinia. Nuragic civilization is archaeologically historical, but Sardus is not securely established as a historical individual and no defensible personal chronology exists.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or mythical overlay is enabled."
+  },
+  {
+    "person_name": "Yennenga",
+    "politic_name": "Mossi",
+    "display_name_ko": "옌넹가",
+    "politic_display_name_ko": "모시",
+    "historicity": "legendary_possible_historical_core",
+    "historicity_display_ko": "전설·역사적 핵심 가능",
+    "timeline_status": "excluded",
+    "date_basis": "mossi_oral_foundation_traditions_uncertain_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "모시 왕통 건국 전승의 공주·전사·시조",
+    "reason": "Yennenga is a central princess and warrior in Mossi foundation traditions and the mother of Ouedraogo, the dynastic ancestor associated with the Mossi kingdoms. Scholarship warns that early Mossi chronologies reconstructed from oral genealogies are highly conjectural and vary by centuries. ATLAS therefore preserves Yennenga as a founding-tradition figure rather than treating her as a securely dated ruler of a Mossi state.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
   }
 ]
