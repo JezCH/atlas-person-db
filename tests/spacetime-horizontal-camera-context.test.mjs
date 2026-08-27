@@ -70,10 +70,10 @@ test("window resize restores the same normalized horizontal world center", () =>
   const restoredLeft = api.scrollLeftForHorizontalCenter(ratio, newViewport, newAxis, newWorld);
   approximatelyEqual(api.horizontalCenterRatio(restoredLeft, newViewport, newAxis, newWorld), ratio);
 
-  assert.match(viewSource, /pendingResizeHorizontalRatio\s*=\s*horizontalCameraRatioFromStoredGeometry\(\)/);
-  assert.match(viewSource, /scrollLeftForHorizontalCameraRatio\(scroll, pendingResizeHorizontalRatio\)/);
+  assert.match(viewSource, /pendingViewportHorizontalRatio\s*=\s*horizontalCameraRatioFromStoredGeometry\(\)/);
+  assert.match(viewSource, /scrollLeftForHorizontalCameraRatio\(scroll, pendingViewportHorizontalRatio\)/);
   assert.ok(
-    viewSource.indexOf("pendingResizeHorizontalRatio = horizontalCameraRatioFromStoredGeometry()")
+    viewSource.indexOf("pendingViewportHorizontalRatio = horizontalCameraRatioFromStoredGeometry()")
       < viewSource.indexOf("if (mount && !mount.hidden) renderInto(mount)"),
     "resize must snapshot the normalized horizontal center before rerendering the resized world"
   );
@@ -91,10 +91,24 @@ test("window resize preserves the historical time at the viewport center", () =>
   const restoredScrollTop = header + centerY - newViewportCenter;
   assert.equal(oldScrollTop + oldViewportCenter - header, restoredScrollTop + newViewportCenter - header);
 
-  assert.match(viewSource, /pendingResizeCameraOrdinal\s*=\s*cameraCenterOrdinal/);
-  assert.match(viewSource, /projection\.worldToScreenY\(pendingResizeCameraOrdinal\)/);
+  assert.match(viewSource, /pendingViewportCameraOrdinal\s*=\s*cameraCenterOrdinal/);
+  assert.match(viewSource, /projection\.worldToScreenY\(pendingViewportCameraOrdinal\)/);
   assert.match(viewSource, /TIME_CAMERA_HEADER_HEIGHT \+ centerY - cameraViewportCenterY\(scroll\)/);
-  const captureIndex = viewSource.indexOf("pendingResizeCameraOrdinal = cameraCenterOrdinal");
+  const captureIndex = viewSource.indexOf("pendingViewportCameraOrdinal = cameraCenterOrdinal");
   const rerenderIndex = viewSource.indexOf("if (mount && !mount.hidden) renderInto(mount)", captureIndex);
   assert.ok(captureIndex >= 0 && rerenderIndex > captureIndex, "resize must capture historical center before rerender");
+});
+
+
+test("spacetime reactivation preserves semantic camera context before fresh data changes the timeline range", () => {
+  const activateIndex = viewSource.indexOf("async function activate()");
+  const horizontalCapture = viewSource.indexOf("pendingViewportHorizontalRatio = horizontalCameraRatioFromStoredGeometry()", activateIndex);
+  const ordinalCapture = viewSource.indexOf("pendingViewportCameraOrdinal = cameraCenterOrdinal", activateIndex);
+  const refreshIndex = viewSource.indexOf("loadPromise = null;", activateIndex);
+  const ensureDataIndex = viewSource.indexOf("await ensureData();", activateIndex);
+  assert.ok(activateIndex >= 0);
+  assert.ok(horizontalCapture > activateIndex && horizontalCapture < refreshIndex);
+  assert.ok(ordinalCapture > activateIndex && ordinalCapture < refreshIndex);
+  assert.ok(refreshIndex < ensureDataIndex);
+  assert.match(viewSource, /projection\.worldToScreenY\(pendingViewportCameraOrdinal\)/);
 });
