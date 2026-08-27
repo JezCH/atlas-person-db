@@ -10,7 +10,7 @@ test('ordinary and non-timeline registration data share one integrity fast path'
   assert.ok(integrity.includes("non-timeline-persons\\.json"));
   assert.match(integrity, /registration_validation/);
   assert.match(integrity, /Validate changed registration data/);
-  assert.match(integrity, /timeline_status=excluded/);
+  assert.match(integrity, /node scripts\/validate-non-timeline-persons\.mjs non-timeline-persons\.json/);
   assert.match(integrity, /Required test context passed through the registration-data fast path/);
 });
 
