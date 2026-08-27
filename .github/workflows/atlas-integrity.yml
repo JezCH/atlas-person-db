@@ -15,7 +15,7 @@ jobs:
   classify:
     runs-on: ubuntu-latest
     outputs:
-      authoring_only: ${{ steps.classify.outputs.authoring_only }}
+      registration_data_only: ${{ steps.classify.outputs.registration_data_only }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -25,19 +25,17 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          authoring_only=false
+          registration_data_only=false
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
             git diff --name-only --diff-filter=ACMRTUXB "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}" > /tmp/atlas-changed.txt
-            if [[ -s /tmp/atlas-changed.txt ]] && ! grep -Evq '^authoring/requests/[A-Za-z0-9._-]+\.json$' /tmp/atlas-changed.txt; then
-              authoring_only=true
-            fi
+            if [[ -s /tmp/atlas-changed.txt ]] && ! grep -Evq '^(authoring/requests/[A-Za-z0-9._-]+\.json|non-timeline-persons\.json)
           fi
-          echo "authoring_only=${authoring_only}" >> "$GITHUB_OUTPUT"
-          echo "authoring_only=${authoring_only}"
+          echo "registration_data_only=${registration_data_only}" >> "$GITHUB_OUTPUT"
+          echo "registration_data_only=${registration_data_only}"
 
-  manifest_validation:
+  registration_validation:
     needs: classify
-    if: needs.classify.outputs.authoring_only == 'true'
+    if: needs.classify.outputs.registration_data_only == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
@@ -47,17 +45,40 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Validate changed authoring manifests
+      - name: Validate changed registration data
         shell: bash
         run: |
           set -euo pipefail
           mapfile -t manifests < <(git diff --name-only --diff-filter=ACMRTUXB "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}" -- 'authoring/requests/*.json')
-          [[ "${#manifests[@]}" -gt 0 ]] || { echo 'No authoring manifests found in authoring-only PR.' >&2; exit 1; }
-          node scripts/validate-authoring-request-files.mjs "${manifests[@]}"
+          if [[ "${#manifests[@]}" -gt 0 ]]; then
+            node scripts/validate-authoring-request-files.mjs "${manifests[@]}"
+          fi
+
+          if git diff --name-only --diff-filter=ACMRTUXB "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}" -- | grep -qx 'non-timeline-persons.json'; then
+            node --input-type=module <<'NODE'
+            import fs from 'node:fs';
+            const path = 'non-timeline-persons.json';
+            const rows = JSON.parse(fs.readFileSync(path, 'utf8'));
+            if (!Array.isArray(rows)) throw new Error('non-timeline-persons.json must contain an array');
+            const seen = new Set();
+            for (const [index, row] of rows.entries()) {
+              if (!row || typeof row !== 'object') throw new Error(`row ${index} must be an object`);
+              for (const key of ['person_name','politic_name','display_name_ko','politic_display_name_ko','historicity']) {
+                if (typeof row[key] !== 'string' || row[key].trim() === '') throw new Error(`row ${index} missing ${key}`);
+              }
+              if (row.timeline_status !== 'excluded') throw new Error(`row ${index} must keep timeline_status=excluded`);
+              if (row.activity_start !== null || row.activity_end !== null) throw new Error(`row ${index} must not fabricate timeline Activity years`);
+              const identity = row.person_name.trim().toLowerCase();
+              if (seen.has(identity)) throw new Error(`duplicate non-timeline person_name: ${row.person_name}`);
+              seen.add(identity);
+            }
+            console.log(`Validated ${rows.length} non-timeline registration rows.`);
+            NODE
+          fi
 
   full_test:
     needs: classify
-    if: needs.classify.outputs.authoring_only != 'true'
+    if: needs.classify.outputs.registration_data_only != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     services:
@@ -127,7 +148,7 @@ jobs:
 
   test:
     name: test
-    needs: [classify, manifest_validation, full_test]
+    needs: [classify, registration_validation, full_test]
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 2
@@ -137,8 +158,132 @@ jobs:
         run: |
           set -euo pipefail
           [[ "${{ needs.classify.result }}" == "success" ]] || { echo 'Scope classification failed.' >&2; exit 1; }
-          if [[ "${{ needs.classify.outputs.authoring_only }}" == "true" ]]; then
-            [[ "${{ needs.manifest_validation.result }}" == "success" ]] || { echo 'Authoring manifest validation failed.' >&2; exit 1; }
+          if [[ "${{ needs.classify.outputs.registration_data_only }}" == "true" ]]; then
+            [[ "${{ needs.registration_validation.result }}" == "success" ]] || { echo 'Registration data validation failed.' >&2; exit 1; }
+            echo 'Required test context passed through the registration-data fast path.'
+          else
+            [[ "${{ needs.full_test.result }}" == "success" ]] || { echo 'Full integrity suite failed.' >&2; exit 1; }
+            echo 'Required test context passed through the full integrity suite.'
+          fi
+
+# Historical Baseline A P3-P9 integration/rehearsal scripts remain immutable evidence
+# in the repository and in their successful release workflows. They are intentionally
+# not replayed on every current PR after the P5-P9 Production release. That includes
+# the P9 replacement rehearsal, which requires the legacy v1 index to exist before
+# proving its removal and therefore is not a validator for the already-cut-over schema.
+# Current P10 and P11 gates run in their dedicated workflows, so a historical
+# branch-only assertion cannot force completed Production phases back to PENDING.
+ /tmp/atlas-changed.txt; then
+              registration_data_only=true
+            fi
+          fi
+          echo "registration_data_only=${registration_data_only}" >> "$GITHUB_OUTPUT"
+          echo "registration_data_only=${registration_data_only}"
+
+  manifest_validation:
+    needs: classify
+    if: needs.classify.outputs.registration_data_only == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate changed authoring manifests
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t manifests < <(git diff --name-only --diff-filter=ACMRTUXB "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}" -- 'authoring/requests/*.json')
+          [[ "${#manifests[@]}" -gt 0 ]] || { echo 'No authoring manifests found in authoring-only PR.' >&2; exit 1; }
+          node scripts/validate-authoring-request-files.mjs "${manifests[@]}"
+
+  full_test:
+    needs: classify
+    if: needs.classify.outputs.registration_data_only != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: atlas_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d atlas_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/atlas_ci
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install exact locked dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Syntax check active JavaScript
+        shell: bash
+        run: |
+          set -euo pipefail
+          find api server scripts -type f \( -name '*.js' -o -name '*.mjs' -o -name '*.cjs' \) -print0 | while IFS= read -r -d '' f; do node --check "$f"; done
+          for f in atlas-*.js admin.js app.js asset-loader.js; do test -f "$f" && node --check "$f"; done
+
+      - name: Run complete current test suite
+        id: complete-tests
+        shell: bash
+        run: |
+          set -o pipefail
+          node --test --test-reporter=tap tests/*.test.mjs 2>&1 | tee atlas-test-results.tap
+
+      - name: Upload test failure diagnostics
+        if: failure() && steps.complete-tests.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-test-failure-${{ github.sha }}
+          path: atlas-test-results.tap
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Verify current requirements source of truth
+        run: npm run test:requirements
+
+      - name: Verify current release governance
+        run: npm run test:release
+
+      - name: Verify current Stage 2 domain contract
+        run: npm run test:stage2-contract
+
+      - name: Verify runtime architecture
+        run: npm run test:runtime
+
+      - name: Rebuild current v2 schema on fresh PostgreSQL
+        run: npm run test:schema
+
+  test:
+    name: test
+    needs: [classify, registration_validation, full_test]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Enforce the correct integrity path
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "${{ needs.classify.result }}" == "success" ]] || { echo 'Scope classification failed.' >&2; exit 1; }
+          if [[ "${{ needs.classify.outputs.registration_data_only }}" == "true" ]]; then
+            [[ "${{ needs.registration_validation.result }}" == "success" ]] || { echo 'Authoring manifest validation failed.' >&2; exit 1; }
             echo 'Required test context passed through the authoring-only fast path.'
           else
             [[ "${{ needs.full_test.result }}" == "success" ]] || { echo 'Full integrity suite failed.' >&2; exit 1; }
