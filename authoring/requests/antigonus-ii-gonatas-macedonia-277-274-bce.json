@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:antigonus-ii-gonatas:macedonia:king:c277-274-bce:v1",
+  "request_id": "authoring:antigonus-ii-gonatas:macedonia:king:c277-274-bce:v2",
   "person": {
     "canonical_name_en": "Antigonus II Gonatas",
     "display_name_ko": "안티고노스 2세 고나타스",
@@ -9,7 +9,7 @@
     "historicity": "historical"
   },
   "polity": {
-    "canonical_name_en": "Macedonia",
+    "canonical_name_en": "Macedon",
     "display_name_ko": "마케도니아",
     "polity_type": "historical_polity",
     "historicity": "historical"
@@ -31,7 +31,7 @@
     "end_calendar": "unspecified_historical",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "Antigonus II Gonatas secured the Macedonian throne around 277/276 BCE. Pyrrhus occupied much of Macedonia in 274 BCE, creating a real interruption in Antigonus's rule; ATLAS therefore records this as the first of two reign Activities."
+    "notes": "Antigonus II Gonatas secured the Macedonian throne around 277/276 BCE. Pyrrhus occupied much of Macedonia in 274 BCE, creating a real interruption in Antigonus's rule; ATLAS therefore records this as the first of two reign Activities. The Production canonical Polity identity is reused as Macedon (display: 마케도니아)."
   },
   "sources": [
     {
