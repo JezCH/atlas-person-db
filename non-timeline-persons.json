@@ -354,5 +354,39 @@
     "role_ko": "가드의 전승상 블레셋 왕",
     "reason": "The Samuel narrative names Achish as king of Gath in the David tradition, while the superscription of Psalm 34 calls the corresponding ruler Abimelech. Scholarship treats Abimelech variously as a title, alternate name, or textual substitution, and no secure independent personal chronology fixes this ruler's reign. ATLAS therefore preserves the Achish–Abimelech Gath tradition without assigning speculative timeline years.",
     "map_policy": "Do not display on the historical year timeline unless a separate historical-tradition or uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "Hiawatha",
+    "politic_name": "Iroquois Confederacy",
+    "display_name_ko": "히아와타",
+    "politic_display_name_ko": "이로쿼이 연맹",
+    "historicity": "historical_tradition_uncertain_chronology",
+    "historicity_display_ko": "역사 전승·연대 불확실",
+    "timeline_status": "excluded",
+    "date_basis": "haudenosaunee_foundation_traditions_competing_chronologies",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "하우데노쇼니 연맹의 전승상 공동 창건자·정치가",
+    "reason": "Hiawatha is a central historical figure in Haudenosaunee confederacy tradition, but the League's foundation chronology is itself deeply contested, with major scholarly reconstructions placing the event in 1142, 1451, or the sixteenth century. Those dates concern the foundation tradition and cannot be converted into a defensible personal activity interval for Hiawatha. ATLAS therefore preserves the historical tradition while leaving his personal timeline unknown.",
+    "map_policy": "Do not display on the historical year timeline unless a separate uncertain-chronology or historical-tradition overlay is enabled."
+  },
+  {
+    "person_name": "Gush X'een",
+    "politic_name": "Shtax'heen Kwáan",
+    "display_name_ko": "거쉬 신",
+    "politic_display_name_ko": "스타흐힌 콴",
+    "historicity": "historical_tradition_uncertain_chronology",
+    "historicity_display_ko": "역사 전승·연대 불확실",
+    "timeline_status": "excluded",
+    "date_basis": "tlingit_oral_history_century_level_only",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "스타흐힌 콴의 전승상 초기 지도자·초대 셰익스",
+    "reason": "Tlingit oral tradition preserves Gush X'een as an early Naanya.aayí/Shtax'heen leader and the first holder of the Sheiyksh (Shakes) chiefly title. Reference literature can place him only broadly in the sixteenth century, while the first several Shakes successors have no individually dated terms. ATLAS therefore does not turn a century-level placement into a 100-year activity rail or fabricate a midpoint year.",
+    "map_policy": "Do not display on the historical year timeline unless a separate uncertain-chronology or historical-tradition overlay is enabled."
   }
 ]
