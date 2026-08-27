@@ -96,7 +96,7 @@ test('Main renders BCE/CE and unknown chronology without changing historicity', 
   assert.match(main, /return `BC \$\{Math\.abs\(value\)\}`/);
   assert.match(main, /return `AD \$\{value\}`/);
   assert.match(main, /연도 미상/);
-  assert.match(main, /활동연도가 미상이어도 역사성 분류는 유지됩니다/);
+  assert.match(main, /역사성 분류는 별도 값으로 유지됩니다/);
 });
 
 test('refresh preserves selected Person and forces authoritative detail refresh', () => {
