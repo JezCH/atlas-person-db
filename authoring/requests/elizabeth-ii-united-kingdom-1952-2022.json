@@ -1,0 +1,64 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:elizabeth-ii:united-kingdom:1952-2022:v1",
+  "person": {
+    "canonical_name_en": "Elizabeth II",
+    "display_name_ko": "엘리자베스 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Queen",
+    "role_display_name_ko": "여왕",
+    "start_year": 1952,
+    "start_month": 2,
+    "start_day": 6,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2022,
+    "end_month": 9,
+    "end_day": 8,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Elizabeth II acceded to the British throne on 6 February 1952 immediately upon the death of George VI and remained Queen of the United Kingdom until her death on 8 September 2022. ATLAS records only the United Kingdom kingship relation here rather than duplicating her separate Commonwealth-realm crowns."
+  },
+  "sources": [
+    {
+      "title": "Queen Elizabeth II's Accession and Coronation — The Royal Family",
+      "canonical_url": "https://www.royal.uk/the-queens-accession-and-coronation",
+      "citation_text": "The Royal Family records Elizabeth II's accession on 6 February 1952 upon the death of George VI.",
+      "source_type": "official_reference"
+    },
+    {
+      "title": "Queen Elizabeth II's Life and Reign — The Royal Family",
+      "canonical_url": "https://www.royal.uk/queen-elizabeth-iis-life-and-reign",
+      "citation_text": "The Royal Family summarizes Elizabeth II's more than seventy-year reign as United Kingdom head of state.",
+      "source_type": "official_reference"
+    },
+    {
+      "title": "Announcement of the death of The Queen — The Royal Family",
+      "canonical_url": "https://www.royal.uk/queens-life-and-reign-1",
+      "citation_text": "The Royal Family records the death of Queen Elizabeth II on 8 September 2022.",
+      "source_type": "official_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "엘리자베스 2세",
+      "url": "https://namu.wiki/w/%EC%97%98%EB%A6%AC%EC%9E%90%EB%B2%A0%EC%8A%A4%202%EC%84%B8"
+    }
+  }
+}

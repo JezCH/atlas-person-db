@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:edward-iv:yorkists:1460-1483:v1",
+  "person": {
+    "canonical_name_en": "Edward IV",
+    "display_name_ko": "에드워드 4세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Yorkists",
+    "display_name_ko": "요크파",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Yorkist Leader",
+    "role_display_name_ko": "요크파 지도자",
+    "start_year": 1460,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1483,
+    "end_month": 4,
+    "end_day": 9,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Edward inherited the Yorkist cause after the death of his father Richard, Duke of York, in 1460 and remained its principal dynastic and military leader through his kingship and brief exile until his death on 9 April 1483. ATLAS represents the user-specified House of York civilization as the Yorkist political faction rather than treating a dynasty itself as a sovereign polity."
+  },
+  "sources": [
+    {
+      "title": "King Edward IV — National Portrait Gallery",
+      "canonical_url": "https://www.npg.org.uk/collections/search/person/mp01427/king-edward-iv",
+      "citation_text": "The National Portrait Gallery identifies Edward IV as the first Yorkist king, describes his succession to the Yorkist cause after his father's death, and gives his reigns as 1461–1470 and 1471–1483.",
+      "source_type": "museum_reference"
+    },
+    {
+      "title": "Edward IV — The Royal Family",
+      "canonical_url": "https://www.royal.uk/edward-iv",
+      "citation_text": "The Royal Family records Edward IV's Yorkist seizure of the throne, exile in 1470, restoration in 1471, and death in 1483.",
+      "source_type": "official_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "에드워드 4세",
+      "url": "https://namu.wiki/w/%EC%97%90%EB%93%9C%EC%9B%8C%EB%93%9C%204%EC%84%B8"
+    }
+  }
+}
