@@ -10,7 +10,7 @@
     Object.freeze({ code: "world-wars", label: "세계대전", range: "AD 1914 – 1944", start_year: 1914, end_year: 1944 }),
     Object.freeze({ code: "contemporary", label: "현대", range: "AD 1945 이후", start_year: 1945, end_year: null })
   ]);
-  const UNKNOWN_ERA = Object.freeze({ code: "unknown", label: "연대 미상", range: "주요 활동연도 미상", start_year: null, end_year: null });
+  const UNKNOWN_ERA = Object.freeze({ code: "unknown", label: "전설, 신화, 연대미상", range: "연표 외 · 주요 활동연도 미상", start_year: null, end_year: null });
 
   function containsYear(era, year) {
     if (!Number.isInteger(year) || year === 0) return false;
