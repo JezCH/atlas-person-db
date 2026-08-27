@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ethan-allen:vermont-republic:brigadier-general:1778-1783:v2",
+  "person": {
+    "canonical_name_en": "Ethan Allen",
+    "display_name_ko": "이선 앨런",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Vermont Republic",
+    "display_name_ko": "버몬트 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Brigadier General",
+    "role_display_name_ko": "준장",
+    "start_year": 1778,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1783,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "After his release from British captivity in 1778, Ethan Allen returned to the independent Vermont polity. Vermont historical scholarship records that the State Assembly elected him Brigadier General and commander of Vermont's military forces and that he remained a leading military defender through the close of the Revolutionary War. ATLAS therefore models his formal Vermont service from 1778 to approximately 1783 rather than treating him as governor or sovereign ruler."
+  },
+  "sources": [
+    {
+      "title": "Proceedings — Vermont Historical Society (Ethan Allen)",
+      "canonical_url": "https://vermonthistory.org/journal/misc/EthanAllen.pdf",
+      "citation_text": "Vermont Historical Society proceedings state that after Allen returned from captivity the State Assembly elected him Brigadier General and Commander of Vermont's military forces, a role he exercised for more than five years.",
+      "source_type": "institutional_reference"
+    },
+    {
+      "title": "Freedom & Unity: Ethan Allen — Vermont Historical Society",
+      "canonical_url": "https://vermonthistory.org/freedom-unity-ethan-allen",
+      "citation_text": "The Vermont Historical Society describes Allen's return to Vermont after captivity, his political advocacy for Vermont, and his later role in negotiations over Vermont's status.",
+      "source_type": "institutional_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}
