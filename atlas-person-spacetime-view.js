@@ -718,6 +718,10 @@
     const projectedTracks = needle ? allProjectedTracks.filter((item) => trackSearchable(item.track).includes(needle)) : allProjectedTracks;
     const visibleTracks = projectedTracks.map((item) => item.track);
     const activePersonIds = new Set(projectedTracks.map((item) => item.person_id));
+    if (needle && selectedPersonId && !activePersonIds.has(selectedPersonId)) {
+      selectedPersonId = null;
+      pendingFocusPersonId = null;
+    }
     const navigationItems = exploration.orderItems(projectedTracks);
     const searchItems = needle ? exploration.rankSearchItems(projectedTracks, needle) : [];
     const lodWeights = lod.lodWeights({ timeZoom: timeCameraZoom, spaceZoom });

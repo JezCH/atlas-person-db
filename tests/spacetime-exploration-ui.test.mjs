@@ -53,6 +53,16 @@ test("selection feedback and status metrics expose their actual scopes", async (
   assert.ok(view.includes("전체 연대 미확정"));
 });
 
+test("search filtering clears stale selection that is no longer active", async () => {
+  const view = await fixture(viewUrl);
+  assert.ok(view.includes("if (needle && selectedPersonId && !activePersonIds.has(selectedPersonId)) {"));
+  assert.ok(view.includes("selectedPersonId = null;"));
+  assert.ok(view.includes("pendingFocusPersonId = null;"));
+  const cleanupIndex = view.indexOf("if (needle && selectedPersonId && !activePersonIds.has(selectedPersonId)) {");
+  assert.ok(cleanupIndex < view.indexOf("const navigationItems = exploration.orderItems(projectedTracks);"));
+  assert.ok(cleanupIndex < view.indexOf("const selectedTrack = compiled.partitioned.tracks.find"));
+});
+
 test("Person selection preserves zoom by default and detail is an explicit action", async () => {
   const view = await fixture(viewUrl);
   assert.ok(view.includes("const FOCUS_DETAIL_TIME_ZOOM = 2.2;"));
