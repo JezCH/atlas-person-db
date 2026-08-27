@@ -51,6 +51,8 @@
   let timeCameraZoom = TIME_CAMERA_MIN_ZOOM;
   let cameraScrollTop = 0;
   let cameraScrollLeft = 0;
+  let cameraHorizontalGeometry = null;
+  let pendingResizeHorizontalRatio = null;
   let cameraCenterOrdinal = null;
   let currentTimelineProjection = null;
   let pendingCameraAnchor = null;
@@ -148,6 +150,49 @@
   function cameraViewportCenterY(scroll) {
     const usableHeight = Math.max(1, scroll.clientHeight - TIME_CAMERA_HEADER_HEIGHT);
     return TIME_CAMERA_HEADER_HEIGHT + usableHeight / 2;
+  }
+
+  function horizontalCameraGeometry(scroll) {
+    const canvas = scroll?.querySelector?.(".spacetime-canvas");
+    if (!scroll || !canvas) return null;
+    const offsetWidth = Number(canvas.offsetWidth);
+    const styleWidth = Number.parseFloat(canvas.style?.width || "");
+    const worldWidth = offsetWidth > 0 ? offsetWidth : styleWidth;
+    if (!(worldWidth > 0)) return null;
+    const offsetLeft = Number(canvas.offsetLeft);
+    return {
+      viewport_width: Math.max(1, Number(scroll.clientWidth) || 0),
+      axis_width: offsetLeft > 0 ? offsetLeft : AXIS_WIDTH,
+      world_width: worldWidth
+    };
+  }
+
+  function rememberHorizontalCameraGeometry(scroll) {
+    const geometry = horizontalCameraGeometry(scroll);
+    if (geometry) cameraHorizontalGeometry = geometry;
+  }
+
+  function horizontalCameraRatioFromStoredGeometry() {
+    const controlState = window.ATLAS_PERSON_SPACETIME_CONTROL_STATE;
+    if (!cameraHorizontalGeometry || !controlState?.horizontalCenterRatio) return null;
+    return controlState.horizontalCenterRatio(
+      cameraScrollLeft,
+      cameraHorizontalGeometry.viewport_width,
+      cameraHorizontalGeometry.axis_width,
+      cameraHorizontalGeometry.world_width
+    );
+  }
+
+  function scrollLeftForHorizontalCameraRatio(scroll, ratio) {
+    const controlState = window.ATLAS_PERSON_SPACETIME_CONTROL_STATE;
+    const geometry = horizontalCameraGeometry(scroll);
+    if (!geometry || ratio == null || !controlState?.scrollLeftForHorizontalCenter) return null;
+    return controlState.scrollLeftForHorizontalCenter(
+      ratio,
+      geometry.viewport_width,
+      geometry.axis_width,
+      geometry.world_width
+    );
   }
 
   function updateCameraPosition(scroll, projection) {
@@ -400,11 +445,17 @@
       scroll.scrollLeft = pendingCameraAnchor.scroll_left;
       scroll.scrollTop = Math.max(0, TIME_CAMERA_HEADER_HEIGHT + anchorY - pendingCameraAnchor.viewport_y);
       pendingCameraAnchor = null;
+    } else if (pendingResizeHorizontalRatio != null) {
+      const restoredScrollLeft = scrollLeftForHorizontalCameraRatio(scroll, pendingResizeHorizontalRatio);
+      scroll.scrollLeft = restoredScrollLeft == null ? cameraScrollLeft : restoredScrollLeft;
+      scroll.scrollTop = cameraScrollTop;
+      pendingResizeHorizontalRatio = null;
     } else {
       scroll.scrollLeft = cameraScrollLeft;
       scroll.scrollTop = cameraScrollTop;
     }
     updateCameraPosition(scroll, projection);
+    rememberHorizontalCameraGeometry(scroll);
   }
 
   function focusPersonInViewport(scroll, projection, navigationItems, personId) {
@@ -851,8 +902,13 @@
     if (resizeBound) return;
     resizeBound = true;
     window.addEventListener("resize", () => {
+      if (pendingResizeHorizontalRatio == null) pendingResizeHorizontalRatio = horizontalCameraRatioFromStoredGeometry();
       cancelAnimationFrame(resizeFrame);
-      resizeFrame = requestAnimationFrame(() => { const mount = document.getElementById("personSpacetimeMount"); if (mount && !mount.hidden) renderInto(mount); });
+      resizeFrame = requestAnimationFrame(() => {
+        const mount = document.getElementById("personSpacetimeMount");
+        if (mount && !mount.hidden) renderInto(mount);
+        else pendingResizeHorizontalRatio = null;
+      });
     });
   }
 
