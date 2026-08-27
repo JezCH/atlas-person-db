@@ -44,6 +44,7 @@
 .spacetime-selection-actions{display:flex!important;grid-auto-flow:column;gap:5px!important;justify-content:end}
 .spacetime-selection-actions button{height:32px;padding:0 9px;border:1px solid #cbd7e9;border-radius:8px;background:#fff;color:#42536b;font-size:10px;font-weight:750;white-space:nowrap;cursor:pointer}
 .spacetime-selection-actions button:hover,.spacetime-selection-actions button:focus-visible{border-color:#7790b9;background:#fff;outline:none}
+.spacetime-selection-actions button:disabled,.spacetime-selection-actions button:disabled:hover{cursor:not-allowed;opacity:.45;border-color:#dde4ee;background:#f6f8fb;color:#8d98a8;box-shadow:none}
 #spacetimeDetailPerson{border-color:#819ac2;background:#edf3ff;color:#31527f}
 .spacetime-frame{position:relative;padding:0;overflow:hidden}
 .spacetime-scroll{position:relative;overflow:auto;height:clamp(520px,72vh,860px);max-height:860px;min-height:520px;background:#f8fafc;overscroll-behavior:contain;scrollbar-gutter:stable}
