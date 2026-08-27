@@ -49,6 +49,7 @@ test("runtime, schema, release-operation and production-workflow changes always 
     ".github/workflows/atlas-correction-apply.yml",
     ".github/workflows/atlas-audit-inventory.yml",
     ".github/workflows/atlas-authoring-apply.yml",
+    "non-timeline-persons.json",
     "migration/phase-8/scripts/live-operation.mjs"
   ]) {
     assert.equal(isSafeToSkipPath(file), false, file);
@@ -63,7 +64,8 @@ test("authoring runtime compatibility allows only proven non-authoring drift", (
     "scripts/rehearse-p10-person-duplicate-v2-revalidation.mjs",
     "tests/p10-person-duplicate-v2-revalidation.test.mjs",
     "server/atlas-duplicate-detector.js",
-    "server/atlas-duplicate-review-service.js"
+    "server/atlas-duplicate-review-service.js",
+    "non-timeline-persons.json"
   ];
   for (const file of safe) assert.equal(isSafeForDeployedAuthoringRuntimePath(file), true, file);
   assert.equal(requiresAuthoringRuntimeDeployment(safe), false);

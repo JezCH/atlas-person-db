@@ -112,11 +112,13 @@ test('GitHub apply workflow accepts only newly changed reviewed Stage 2 native v
   assert.doesNotMatch(workflowSource, /scripts\/apply-authoring-manifest\.mjs/);
 });
 
-test('GitHub apply workflow retries only transient Vercel readiness 404 and fails closed on apply errors', () => {
+test('GitHub apply workflow retries transient readiness and deployment drift, then fails closed on real apply errors', () => {
   assert.match(workflowSource, /for attempt in \$\(seq 1 60\)/);
   assert.match(workflowSource, /\[\[ "\$status" == "404" \]\]/);
   assert.match(workflowSource, /Production authoring readiness route is not live yet/);
-  assert.match(workflowSource, /sleep 10/);
+  assert.match(workflowSource, /sleep 5/);
+  assert.match(workflowSource, /Production runtime is still behind the authoring commit/);
+  assert.match(workflowSource, /AUTHORING_RUNTIME_CODE_DRIFT remained after 60 attempts/);
   assert.match(workflowSource, /Authoring readiness failed: HTTP \$\{status\}/);
   assert.match(workflowSource, /Authoring apply failed: HTTP \$\{status\}, code \$\{code\}/);
   assert.match(handlerSource, /AUTHORING_RUNTIME_SHA_MISMATCH/);

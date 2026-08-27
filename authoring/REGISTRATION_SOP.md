@@ -1,4 +1,4 @@
-# ATLAS Historical Person Registration SOP — Lean Path v4
+# ATLAS Historical Person Registration SOP — Lean Path v5
 
 This file is the operational source of truth for ordinary reviewed historical-person registration.
 
@@ -94,18 +94,27 @@ For **one new Person**, the expected shape is:
 → STOP
 ```
 
-For **multiple requested Persons**, the expected shape is:
+For **multiple requested Persons**, including a batch that mixes ordinary Timeline registrations with non-timeline figures, the expected shape is:
 
 ```text
 bounded SCREENs in parallel
 → REVIEW only surviving candidates, in parallel
-→ one manifest per logical registration
-→ all manifests on one branch / one PR
-→ one required fast-path CI
-→ one Authoring Apply batch
+→ one manifest per ordinary Timeline registration
+   + one bounded non-timeline registry edit when needed
+→ all registration data on one branch / one PR
+→ one required registration-data fast-path CI
+→ one Authoring Apply batch for Timeline manifests
+→ one Production deployment for non-timeline static data only when needed
 → canonical Production VERIFY reads in parallel
 → STOP
 ```
+
+The registration-data fast path recognizes exactly two routine data surfaces:
+
+- `authoring/requests/*.json`;
+- `non-timeline-persons.json`.
+
+A PR containing only those surfaces is still a registration-only PR. It must not trigger P10, P11, Human Authoring Operational Parity, or the full integrity suite merely because ordinary and non-timeline Persons were reviewed in the same user batch.
 
 Do **not** process a batch as repeated end-to-end single-Person pipelines unless a concrete dependency forces serialization. GitHub, CI, and Apply overhead should normally be paid once per user batch, while each logical registration still keeps its own transaction and immutable `request_id`.
 
@@ -248,17 +257,19 @@ When the GitHub fallback is used:
 
 1. read latest `main` once, immediately before creating the working branch;
 2. create one `agent/...` branch for the whole current registration batch;
-3. add only the required registration manifest(s), with no unrelated code/UI changes;
-4. open one PR containing all eligible manifests from that batch;
-5. require only the repository's mandatory authoring fast-path `test` check unless changed files or a concrete failure require more;
+3. add only the required registration data: `authoring/requests/*.json` and, when the routing gate requires it, the bounded `non-timeline-persons.json` edit; no unrelated code/UI changes;
+4. open one PR containing the whole reviewed registration batch, including mixed Timeline + non-timeline registrations;
+5. require only the repository's mandatory registration-data fast-path `test` check unless changed files or a concrete failure require more;
 6. squash merge when green;
-7. use one normal `ATLAS Authoring Apply` batch for the merged manifests.
+7. use one normal `ATLAS Authoring Apply` batch for the merged Timeline manifests; non-timeline static data is delivered by the normal Production deployment and does not block Authoring runtime compatibility.
 
 Do not repeatedly fetch `main`, reopen repository structure, rediscover available GitHub/Vercel tools, or inspect workflow source during a normal green path. Re-check a transport boundary only when mergeability, CI, Apply, or Production verification supplies a concrete reason.
 
-For `authoring/requests/*.json`-only work, the authoring-only integrity fast path is expected. Do not voluntarily rerun P10, P11, full schema rehearsal, or Human Authoring Operational Parity unless changed files or a concrete failure require them.
+For registration-data-only work — `authoring/requests/*.json`, `non-timeline-persons.json`, or a mixture of the two — the registration-data integrity fast path is expected. P10, P11, full schema rehearsal, and Human Authoring Operational Parity are intentionally skipped because these data files do not alter those lifecycle/runtime contracts.
 
-For manifest-only registration, do not inspect Preview deployments or poll Vercel unless Authoring Apply reports a concrete runtime/readiness/SHA boundary problem.
+For manifest-only registration, do not inspect Preview deployments or poll Vercel unless Authoring Apply reports a concrete runtime/readiness/SHA boundary problem. If a true Production runtime deployment is still catching up, Authoring Apply must retry that deployment race itself before failing; do not require a human to notice the race and manually rerun the same immutable request.
+
+A companion `non-timeline-persons.json` change is **not** an Authoring endpoint runtime dependency. It may still require a Vercel Production deployment so the static registry becomes visible, but Timeline DB Apply must not wait for that static deployment before using an already compatible Authoring runtime.
 
 ## 8. Stage 4 — VERIFY: one Production read, then stop
 
@@ -324,7 +335,7 @@ Only move backward when a concrete gate fails:
 - NamuWiki conflict with an existing linked document → separate link review, never silent overwrite;
 - Source canonical URL maps ambiguously → Source duplicate review;
 - manifest validation or required `test` failure → fix the same branch/request;
-- runtime/readiness/SHA failure → diagnose that boundary only;
+- runtime/readiness/SHA failure → let the bounded automatic runtime catch-up retry finish first; only diagnose if that retry exhausts;
 - transient Commit failure → replay the same request;
 - Production read-back mismatch → registration remains incomplete until that mismatch is resolved.
 
