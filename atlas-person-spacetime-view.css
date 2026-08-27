@@ -91,6 +91,7 @@
 .spacetime-minimap-head strong{font-size:10px;color:#30435f}
 .spacetime-minimap-head span{font-size:8px;color:#8390a2}
 .spacetime-minimap-surface{position:relative;width:100%;height:156px;overflow:hidden;border:1px solid #d4deea;border-radius:7px;background:#f8fafc;cursor:crosshair;touch-action:none;box-sizing:border-box}
+.spacetime-minimap-surface:focus-visible{outline:2px solid #7f97bd;outline-offset:2px}
 .spacetime-minimap-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .spacetime-minimap-viewport{position:absolute;z-index:3;min-width:4px;min-height:4px;border:2px solid rgba(49,82,127,.9);background:rgba(96,124,169,.11);box-sizing:border-box;pointer-events:none}
 .spacetime-minimap-selected{position:absolute;z-index:4;width:8px;height:8px;margin:-4px 0 0 -4px;border:2px solid #fff;border-radius:50%;background:#314f7d;box-shadow:0 0 0 1px rgba(49,79,125,.65);pointer-events:none}
