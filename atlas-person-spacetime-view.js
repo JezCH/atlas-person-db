@@ -349,7 +349,7 @@
   }
 
   function renderMinimap() {
-    return `<aside class="spacetime-minimap" aria-label="전체 시공간 미니맵"><div class="spacetime-minimap-head"><strong>전체 시공간</strong><span>클릭·드래그 이동</span></div><div id="spacetimeMinimapSurface" class="spacetime-minimap-surface" aria-label="현재 전체 시공간과 카메라 범위"><canvas id="spacetimeMinimapCanvas" class="spacetime-minimap-canvas" aria-hidden="true"></canvas><div id="spacetimeMinimapViewport" class="spacetime-minimap-viewport" aria-hidden="true"></div><i id="spacetimeMinimapSelected" class="spacetime-minimap-selected" aria-hidden="true"></i></div><output id="spacetimeMinimapStatus" class="spacetime-minimap-status">현재 화면</output></aside>`;
+    return `<aside class="spacetime-minimap" aria-label="전체 시공간 미니맵"><div class="spacetime-minimap-head"><strong>전체 시공간</strong><span>클릭·드래그·방향키 이동</span></div><div id="spacetimeMinimapSurface" class="spacetime-minimap-surface" role="group" tabindex="0" aria-label="현재 전체 시공간과 카메라 범위. 방향키로 카메라 이동"><canvas id="spacetimeMinimapCanvas" class="spacetime-minimap-canvas" aria-hidden="true"></canvas><div id="spacetimeMinimapViewport" class="spacetime-minimap-viewport" aria-hidden="true"></div><i id="spacetimeMinimapSelected" class="spacetime-minimap-selected" aria-hidden="true"></i></div><output id="spacetimeMinimapStatus" class="spacetime-minimap-status">현재 화면</output></aside>`;
   }
 
   function renderRails(tracks, projection, contentWidth, opacity) {
@@ -511,7 +511,7 @@
   function bindMinimap(mount, scroll, projection, allProjectedTracks, activePersonIds, regions, eras, contentWidth, timelineHeight) {
     const surface = mount.querySelector("#spacetimeMinimapSurface");
     if (!surface || !scroll) return;
-    const { minimap } = runtime();
+    const { minimap, exploration } = runtime();
     drawMinimap(mount, allProjectedTracks, activePersonIds, regions, eras, contentWidth, timelineHeight);
     updateMinimapViewport(mount, scroll, contentWidth, timelineHeight);
     scroll.addEventListener("scroll", () => updateMinimapViewport(mount, scroll, contentWidth, timelineHeight), { passive: true });
@@ -533,6 +533,25 @@
       updateCameraPosition(scroll, projection);
       updateMinimapViewport(mount, scroll, contentWidth, timelineHeight);
     };
+    const panCamera = (direction) => {
+      const target = exploration.panTarget(
+        { left: scroll.scrollLeft, top: scroll.scrollTop },
+        { width: scroll.clientWidth, height: scroll.clientHeight },
+        { scrollWidth: scroll.scrollWidth, scrollHeight: scroll.scrollHeight },
+        direction,
+        0.22
+      );
+      scroll.scrollLeft = target.left;
+      scroll.scrollTop = target.top;
+      updateCameraPosition(scroll, projection);
+      updateMinimapViewport(mount, scroll, contentWidth, timelineHeight);
+    };
+    surface.addEventListener("keydown", (event) => {
+      const direction = ({ ArrowLeft: "left", ArrowRight: "right", ArrowUp: "up", ArrowDown: "down" })[event.key];
+      if (!direction) return;
+      event.preventDefault();
+      panCamera(direction);
+    });
     surface.addEventListener("pointerdown", (event) => {
       dragging = true;
       surface.setPointerCapture?.(event.pointerId);
