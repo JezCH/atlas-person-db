@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:william-b-ide:california-republic:1846:v1",
+  "person": {
+    "canonical_name_en": "William B. Ide",
+    "display_name_ko": "윌리엄 B. 아이드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "California Republic",
+    "display_name_ko": "캘리포니아 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1846,
+    "start_month": 6,
+    "start_day": 14,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1846,
+    "end_month": 7,
+    "end_day": 9,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "William B. Ide served as the political head of the short-lived California Republic during the Bear Flag Revolt. ATLAS records the republic from the Sonoma seizure and declaration on 14 June 1846 until the Bear Flag was replaced by the United States flag on 9 July 1846."
+  },
+  "sources": [
+    {
+      "title": "1846 to 1854 — California State Parks",
+      "canonical_url": "https://www.parks.ca.gov/?page_id=1096",
+      "citation_text": "California State Parks states that William B. Ide served as President of the Bear Flag Republic and dates the Sonoma seizure to 14 June 1846 and the replacement of the Bear Flag by the U.S. flag to 9 July 1846.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "California's Legislature — Historical Overview",
+      "canonical_url": "https://leginfo.public.ca.gov/pdf/2017/2117_Cal_Leg2016_Sec02.pdf",
+      "citation_text": "The California Legislature's historical overview records Ide's proclamation of an independent California Republic after the seizure of Sonoma in June 1846.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}
