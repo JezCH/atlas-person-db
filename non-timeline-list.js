@@ -21,12 +21,6 @@
     return `전승상 ${primary}년경`;
   }
 
-  function hideEmptyAuthoritativeOtherGroup() {
-    const group = document.querySelector("#personMainGroups .person-group-other");
-    if (!group) return;
-    group.hidden = !group.querySelector(".person-card");
-  }
-
   function createSection() {
     const personView = document.getElementById("personMainView");
     if (!personView || document.getElementById("nonTimelineSection")) return null;
@@ -37,9 +31,9 @@
     section.innerHTML = `
       <div class="non-timeline-head">
         <div>
-          <p class="eyebrow">전설·신화 인물</p>
-          <h2>전설·신화 인물</h2>
-          <p>연대가 확정되지 않아 연도 기반 지도와 일반 활동 DB에서는 제외된 인물입니다.</p>
+          <p class="eyebrow">전설·신화·연대미상</p>
+          <h2>전설·신화·연대미상 인물</h2>
+          <p>Historicity PASS 또는 개인연대 PASS를 충족하지 못해 연도 기반 Timeline과 일반 인물표에서 제외된 인물입니다.</p>
         </div>
         <strong id="nonTimelineCount">0명</strong>
       </div>
@@ -87,7 +81,6 @@
 
       count.textContent = `${items.length}명`;
       empty.hidden = items.length !== 0;
-      hideEmptyAuthoritativeOtherGroup();
     } catch (error) {
       console.error("ATLAS non-timeline list failed", error);
       count.textContent = "확인 실패";
@@ -135,7 +128,6 @@
   `;
   document.head.appendChild(style);
 
-  window.addEventListener("atlas-person-main-rendered", hideEmptyAuthoritativeOtherGroup);
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", load, { once: true });
   else load();
 })();

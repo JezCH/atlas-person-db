@@ -134,9 +134,16 @@
 
   function groupSection({ title, description, rows, kind }) {
     return `<section class="person-group person-group-${escapeHtml(kind)}" aria-labelledby="person-group-${escapeHtml(kind)}-title">
-      <header class="person-group-head"><div><p class="eyebrow">${kind === "historical" ? "HISTORICAL PERSONS" : "OTHER / UNCERTAIN HISTORICITY"}</p><h2 id="person-group-${escapeHtml(kind)}-title">${escapeHtml(title)}</h2><p>${escapeHtml(description)}</p></div></header>
+      <header class="person-group-head"><div><p class="eyebrow">HISTORICAL TIMELINE PERSONS</p><h2 id="person-group-${escapeHtml(kind)}-title">${escapeHtml(title)}</h2><p>${escapeHtml(description)}</p></div></header>
       <div class="person-card-grid">${rows.length ? rows.map(personCard).join("") : '<p class="person-empty-state">현재 조건에 해당하는 인물이 없습니다.</p>'}</div>
     </section>`;
+  }
+
+  function timelineEligible(person) {
+    return String(person?.historicity || "").trim() === "historical"
+      && Number(person?.activity_count || 0) > 0
+      && Number.isInteger(person?.first_activity_year)
+      && Number.isInteger(person?.last_activity_year);
   }
 
   function facetLabel(item) {
@@ -180,23 +187,15 @@
   function renderGroups() {
     const list = document.getElementById("personMainGroups");
     if (!list) return 0;
-    const groups = reader.preparePersonGroups(persons, { query, sortOrder, facetFilters });
-    const rows = [...groups.historical, ...groups.other_or_uncertain];
+    const groups = reader.preparePersonGroups(persons, { query, sortOrder, facetFilters, secondaryPredicate: timelineEligible });
+    const rows = groups.historical.slice();
     const shown = rows.length;
-    const renderedGroups = [
-      groupSection({
-        title: "역사 인물",
-        description: "Person.historicity가 historical로 기록된 인물입니다. 활동연도가 미상이어도 역사성 분류는 유지됩니다.",
-        rows: groups.historical,
-        kind: "historical"
-      }),
-      groupSection({
-        title: "전설·신화·역사성 미확정 및 기타",
-        description: "historical 이외의 authoritative historicity 값을 별도 구역에 원문 그대로 표시합니다.",
-        rows: groups.other_or_uncertain,
-        kind: "other"
-      })
-    ].join("");
+    const renderedGroups = groupSection({
+      title: "역사 인물",
+      description: "Historicity PASS와 개인연대 PASS를 모두 통과해 연도 기반 Timeline에 배치된 인물입니다.",
+      rows,
+      kind: "historical"
+    });
     for (const child of [...list.children]) {
       if (child.id !== "personEraNavigator") child.remove();
     }

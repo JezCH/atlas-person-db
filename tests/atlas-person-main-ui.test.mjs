@@ -8,6 +8,8 @@ const reader = fs.readFileSync(new URL('../atlas-person-browser-reader.js', impo
 const nav = fs.readFileSync(new URL('../atlas-person-era-navigation.js', import.meta.url), 'utf8');
 const css = fs.readFileSync(new URL('../atlas-person-main.css', import.meta.url), 'utf8');
 const mobile = fs.readFileSync(new URL('../mobile-ui.js', import.meta.url), 'utf8');
+const nonTimeline = fs.readFileSync(new URL('../non-timeline-list.js', import.meta.url), 'utf8');
+const nonTimelineRows = JSON.parse(fs.readFileSync(new URL('../non-timeline-persons.json', import.meta.url), 'utf8'));
 
 test('Main loads the Person reader before the Person-centered screen module', () => {
   assert.match(html, /atlas-person-main\.css/);
@@ -19,11 +21,15 @@ test('Main loads the Person reader before the Person-centered screen module', ()
   assert.match(main, /ATLAS_PERSON_BROWSER_READER/);
 });
 
-test('Person-centered Main makes historicity an explicit primary grouping before Polity filtering', () => {
-  assert.match(main, /reader\.preparePersonGroups\(persons, \{ query, sortOrder, facetFilters \}\)/);
-  assert.match(main, /역사 인물/);
-  assert.match(main, /전설·신화·역사성 미확정 및 기타/);
-  assert.match(main, /historical 이외의 authoritative historicity 값을 별도 구역에 원문 그대로 표시합니다/);
+test('Person-centered Main renders only reviewed Timeline-eligible Persons before Polity filtering', () => {
+  assert.match(main, /function timelineEligible\(person\)/);
+  assert.match(main, /String\(person\?\.historicity \|\| ""\)\.trim\(\) === "historical"/);
+  assert.match(main, /Number\(person\?\.activity_count \|\| 0\) > 0/);
+  assert.match(main, /Number\.isInteger\(person\?\.first_activity_year\)/);
+  assert.match(main, /Number\.isInteger\(person\?\.last_activity_year\)/);
+  assert.match(main, /secondaryPredicate: timelineEligible/);
+  assert.match(main, /Historicity PASS와 개인연대 PASS를 모두 통과/);
+  assert.doesNotMatch(main, /OTHER \/ UNCERTAIN HISTORICITY|전설·신화·역사성 미확정 및 기타/);
   assert.match(reader, /partitionByHistoricity/);
   assert.match(reader, /PRIMARY_HISTORICITY_VALUE = "historical"/);
   assert.match(reader, /personMatchesFacets/);
@@ -89,11 +95,12 @@ test('Person detail renders readable names, descriptions, Person sources and use
   assert.match(main, /Person 출처/);
 });
 
-test('Main renders BCE/CE and unknown chronology without changing historicity', () => {
+test('Main keeps BCE/CE formatting while Timeline admission requires person-specific chronology', () => {
   assert.match(main, /return `BC \$\{Math\.abs\(value\)\}`/);
   assert.match(main, /return `AD \$\{value\}`/);
   assert.match(main, /연도 미상/);
-  assert.match(main, /활동연도가 미상이어도 역사성 분류는 유지됩니다/);
+  assert.match(main, /secondaryPredicate: timelineEligible/);
+  assert.doesNotMatch(main, /활동연도가 미상이어도 역사성 분류는 유지됩니다/);
 });
 
 test('refresh preserves selected Person and forces authoritative detail refresh', () => {
@@ -133,10 +140,23 @@ test('source links are restricted to HTTP(S) and user-visible strings are escape
   assert.match(main, /escapeHtml/);
 });
 
-test('Person Main CSS isolates the new layout and keeps responsive fallbacks', () => {
+test('Person Main CSS isolates the Timeline layout and keeps responsive fallbacks', () => {
   assert.match(css, /\.person-main-layout/);
-  assert.match(css, /\.person-group-other/);
+  assert.doesNotMatch(css, /\.person-group-other/);
   assert.match(css, /\.person-main-detail/);
   assert.match(css, /\.relationship-authoring-tools/);
   assert.match(css, /@media\(max-width:760px\)/);
+});
+
+test('non-timeline surface is the single visible destination for failed Timeline admission and includes Sun Wu', () => {
+  assert.match(nonTimeline, /전설·신화·연대미상 인물/);
+  assert.match(nonTimeline, /Historicity PASS 또는 개인연대 PASS/);
+  assert.doesNotMatch(nonTimeline, /hideEmptyAuthoritativeOtherGroup/);
+  const sunWu = nonTimelineRows.find((row) => row.person_name === 'Sun Wu');
+  assert.ok(sunWu);
+  assert.equal(sunWu.timeline_status, 'excluded');
+  assert.equal(sunWu.historicity, 'disputed');
+  assert.equal(sunWu.traditional_year, -506);
+  assert.equal(sunWu.activity_start, null);
+  assert.equal(sunWu.activity_end, null);
 });

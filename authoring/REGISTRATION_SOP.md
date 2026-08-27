@@ -59,6 +59,7 @@ Examples:
 - **Telesilla** — historicity PASS + an ancient chronographic floruit around 451/450 BCE → ordinary Timeline as a representative `c.451 BCE` point, not a fabricated 50-year rail.
 - **Hiawatha** — historically meaningful tradition, but no defensible person-specific interval amid competing confederacy chronologies → non-timeline.
 - **Kupe** — plausible historical core in Māori tradition, but settlement/cultural date ranges do not establish Kupe's personal Activity interval → non-timeline.
+- **Sun Wu (Sun Tzu)** — the later tradition supplies a 506 BCE military association, but modern scholarship substantially disputes the biographical sixth-century BCE individual and often treats the received `Sunzi` as a later composite/accreted text → historicity FAIL for the historical year Timeline; preserve 506 BCE only as a traditional association in non-timeline metadata.
 - a wholly mythical king with a precise traditional 20-year reign → historicity FAIL → non-timeline.
 
 Approximate dates are not themselves a reason for exclusion. A Person stays on the Timeline when both gates pass and the uncertainty can be represented honestly with `approximate`, `uncertain`, `disputed`, or a reviewed representative point.
