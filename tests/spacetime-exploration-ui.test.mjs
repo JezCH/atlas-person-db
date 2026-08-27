@@ -53,6 +53,11 @@ test("selection feedback and status metrics expose their actual scopes", async (
   assert.ok(view.includes("전체 연대 미확정"));
 });
 
+test("activity glyph accessible name identifies the Person, polity and period", async () => {
+  const view = await fixture(viewUrl);
+  assert.ok(view.includes('aria-label="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`)}"'));
+});
+
 test("search filtering clears stale selection that is no longer active", async () => {
   const view = await fixture(viewUrl);
   assert.ok(view.includes("if (needle && selectedPersonId && !activePersonIds.has(selectedPersonId)) {"));
