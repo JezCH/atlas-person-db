@@ -17,7 +17,9 @@ test("Sun Wu is promoted to historical Person classification without changing th
   assert.equal(parsed.operations[0].expected_after.historicity, "historical");
 });
 
-test("ordinary Person Main has no Other / Uncertain historicity UI", () => {
-  assert.match(main, /const rows = groups\.historical\.slice\(\)/);
-  assert.doesNotMatch(main, /OTHER \/ UNCERTAIN HISTORICITY|person-group-other|groups\.other_or_uncertain/);
+test("ordinary Person Main has one chronology UI and no separate Other / Uncertain section", () => {
+  assert.match(main, /\.\.\.groups\.historical/);
+  assert.match(main, /\.\.\.groups\.other_or_uncertain/);
+  assert.match(main, /\.\.\.visibleUnknownRegistryPersons\(\)/);
+  assert.doesNotMatch(main, /OTHER \/ UNCERTAIN HISTORICITY|person-group-other/);
 });
