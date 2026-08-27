@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:richard-seddon:new-zealand:1893-1906:v1",
+  "person": {
+    "canonical_name_en": "Richard Seddon",
+    "display_name_ko": "리처드 세던",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "New Zealand",
+    "display_name_ko": "뉴질랜드",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Premier",
+    "role_display_name_ko": "총리",
+    "start_year": 1893,
+    "start_month": 5,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1906,
+    "end_month": 6,
+    "end_day": 10,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Richard Seddon became Premier of New Zealand on 1 May 1893 and remained head of government until his death on 10 June 1906. Contemporary New Zealand usage called the office Premier; ATLAS displays the Korean functional equivalent 총리."
+  },
+  "sources": [
+    {
+      "title": "Richard Seddon — NZ History",
+      "canonical_url": "https://nzhistory.govt.nz/keyword/richard-seddon",
+      "citation_text": "New Zealand's Ministry for Culture and Heritage gives Seddon's premiership as 1 May 1893 to 10 June 1906.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "'King Dick' Seddon becomes premier — NZ History",
+      "canonical_url": "https://nzhistory.govt.nz/richard-seddon-becomes-premier",
+      "citation_text": "NZ History records Seddon's accession as premier on 1 May 1893 and his thirteen-year dominance of New Zealand politics.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}
