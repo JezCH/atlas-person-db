@@ -456,5 +456,22 @@
     "role_ko": "치모르 왕국의 전설적 창건자·초대 군주",
     "reason": "Taycanamo (often Tacaynamo in modern archaeological literature) is preserved in the anonymous 1604 Chimú dynastic tradition as the founder and first ruler of Chimor, arriving from the sea. Modern archaeological and ethnohistorical scholarship treats the account as a legendary founder tradition and cautions against converting the surviving dynastic narrative into a secure literal chronology. ATLAS therefore preserves the traditional Kingdom of Chimor association without assigning any speculative foundation, accession, reign, or death year.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "Priam",
+    "politic_name": "Troy",
+    "display_name_ko": "프리아모스",
+    "politic_display_name_ko": "트로이",
+    "historicity": "legendary",
+    "historicity_display_ko": "전설",
+    "timeline_status": "excluded",
+    "date_basis": "homeric_trojan_war_legend_without_secure_personal_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "호메로스 전승의 트로이 마지막 왕",
+    "reason": "Priam is the legendary last king of Troy in Greek epic tradition. Archaeological Troy and Late Bronze Age western Anatolia are historical realities, but no contemporary evidence securely identifies Priam as a datable historical ruler or establishes a defensible personal reign interval. ATLAS therefore preserves him as the principal Homeric Trojan king without assigning speculative Trojan War dates to his personal timeline.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-historicity overlay is enabled."
   }
 ]
