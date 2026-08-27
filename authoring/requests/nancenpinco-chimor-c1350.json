@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:nancenpinco:kingdom-of-chimor:king:c1350:v1",
+  "person": {
+    "canonical_name_en": "Ñancempinco",
+    "display_name_ko": "냔센핀코"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Chimor",
+    "display_name_ko": "치모르 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1350,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1350,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses c.1350 CE only as a representative historical activity point associated with Ñancempinco's first phase of Chimú expansion; it is not asserted as an accession year, death year, or full reign span. Ethnohistoric and archaeological scholarship considers a historical king of this name plausible, while also warning that the later dynastic tradition compresses chronology."
+  },
+  "sources": [
+    {
+      "title": "Farfan, General Pacatnamu, And The Dynastic History Of Chimor — eHRAF Archaeology",
+      "canonical_url": "https://ehrafarchaeology.yale.edu/traditions/se75/documents/026",
+      "citation_text": "The eHRAF summary states that archaeology seems to confirm the historical reality of the Chimú conquest and perhaps of a king called Ñançenpinco, while warning that the traditional dynastic chronology is not fully accurate.",
+      "source_type": "academic_database"
+    },
+    {
+      "title": "Chimú — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/humanities/encyclopedias-almanacs-transcripts-and-maps/chimu",
+      "citation_text": "The reference places Ñançenpinco's first phase of imperial expansion around 1350 CE and associates his conquests with the Jequetepeque and Santa valleys.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
