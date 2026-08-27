@@ -130,19 +130,19 @@
     syncZoomControlState(mount);
   }
 
+  let activeMount = null;
+
+  function bindCurrentMount() {
+    const mount = document.getElementById(MOUNT_ID);
+    if (mount === activeMount) return;
+    activeMount = mount || null;
+    if (mount) bindMount(mount);
+  }
+
   function install() {
-    const existing = document.getElementById(MOUNT_ID);
-    if (existing) {
-      bindMount(existing);
-      return;
-    }
+    bindCurrentMount();
     if (typeof MutationObserver !== "function") return;
-    const observer = new MutationObserver(() => {
-      const mount = document.getElementById(MOUNT_ID);
-      if (!mount) return;
-      observer.disconnect();
-      bindMount(mount);
-    });
+    const observer = new MutationObserver(bindCurrentMount);
     observer.observe(document.documentElement, { childList: true, subtree: true });
   }
 
