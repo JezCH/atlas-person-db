@@ -769,6 +769,10 @@
       const command = exploration.keyboardCommand(event);
       if (!command) return;
       if ((command === "previous-person" || command === "next-person") && navigationItems.length <= 1) return;
+      const keyboardZoomTarget = command === "zoom-in"
+        ? timeCameraZoom * TIME_CAMERA_ZOOM_STEP
+        : command === "zoom-out" ? timeCameraZoom / TIME_CAMERA_ZOOM_STEP : null;
+      if (keyboardZoomTarget != null && Math.abs(clampTimeCameraZoom(keyboardZoomTarget) - timeCameraZoom) < 1e-9) return;
       event.preventDefault();
       if (command === "previous-person" || command === "next-person") {
         const nextId = exploration.adjacentPersonId(navigationItems, selectedPersonId, command === "previous-person" ? -1 : 1);
@@ -780,7 +784,7 @@
         return;
       }
       if (command === "zoom-in" || command === "zoom-out") {
-        requestTimeCameraZoom(mount, command === "zoom-in" ? timeCameraZoom * TIME_CAMERA_ZOOM_STEP : timeCameraZoom / TIME_CAMERA_ZOOM_STEP);
+        requestTimeCameraZoom(mount, keyboardZoomTarget);
         return;
       }
       if (command === "clear-selection") {
