@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gian-galeazzo-visconti:duchy-of-milan:1395-1402:v1",
+  "person": {
+    "canonical_name_en": "Gian Galeazzo Visconti",
+    "display_name_ko": "잔 갈레아초 비스콘티",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Milan",
+    "display_name_ko": "밀라노 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Duke",
+    "role_display_name_ko": "공작",
+    "start_year": 1395,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1402,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gian Galeazzo Visconti received the ducal dignity of Milan in 1395 and remained Duke of Milan until his death in 1402. He had already unified the Visconti dominion in 1385, but ATLAS records only the clearly defined ducal reign under the Duchy of Milan."
+  },
+  "sources": [
+    {
+      "title": "Gian Galeazzo Visconti, duca di Milano — Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/gian-galeazzo-visconti-duca-di-milano_%28Dizionario-Biografico%29/",
+      "citation_text": "Treccani states that Gian Galeazzo was granted the title Duke of Milan in 1395 and died in 1402.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}

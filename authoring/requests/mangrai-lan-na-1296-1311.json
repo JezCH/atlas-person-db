@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mangrai:lan-na:c1296-c1311:v1",
+  "person": {
+    "canonical_name_en": "Mangrai",
+    "display_name_ko": "망라이",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Lan Na",
+    "display_name_ko": "란나 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1296,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1311,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Mangrai founded Chiang Mai in 1296 as the political center of his integrated Lan Na kingdom. Northern Thai chronologies differ on the exact beginning and end of his Lan Na kingship and death, so ATLAS uses c.1296–c.1311 as a conservative representative reign interval rather than asserting exact accession and death years."
+  },
+  "sources": [
+    {
+      "title": "Monuments, Sites and Cultural Landscape of Chiang Mai, Capital of Lanna — UNESCO World Heritage Centre",
+      "canonical_url": "https://whc.unesco.org/en/tentativelists/6003",
+      "citation_text": "UNESCO's Chiang Mai nomination describes King Mangrai as creating Chiang Mai in 1296 as the political center of his newly expanded and integrated Lanna Kingdom.",
+      "source_type": "institutional_reference"
+    },
+    {
+      "title": "Southeast Asian Studies — Kyoto University",
+      "canonical_url": "https://www.jstage.jst.go.jp/article/seas/2/3/2_KJ00008872599/_pdf/-char/en",
+      "citation_text": "Kyoto University scholarship identifies Mangrai the Great (1239–1311) with the formation of Lan Na and Chiang Mai.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}
