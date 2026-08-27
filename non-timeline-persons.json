@@ -388,22 +388,5 @@
     "role_ko": "스타흐힌 콴의 전승상 초기 지도자·초대 셰익스",
     "reason": "Tlingit historical tradition preserves Gush X'een as an early Shtax'heen leader associated with the origin of the Sheiyksh (Shakes) chiefly title, but it does not provide a defensible personal term equivalent to the legacy 1700–1740 span. ATLAS therefore preserves the person and tradition while leaving the personal timeline unknown.",
     "map_policy": "Do not display on the historical year timeline unless a separate uncertain-chronology or historical-tradition overlay is enabled."
-  },
-  {
-    "person_name": "Sun Wu",
-    "politic_name": "Wu",
-    "display_name_ko": "손무",
-    "politic_display_name_ko": "오나라",
-    "historicity": "disputed",
-    "historicity_display_ko": "역사성 논쟁",
-    "timeline_status": "excluded",
-    "date_basis": "shiji_traditional_biography_contested_by_early_sources_and_modern_scholarship",
-    "traditional_year": -506,
-    "traditional_year_alternative": null,
-    "activity_start": null,
-    "activity_end": null,
-    "role_ko": "전승상 오나라 장군·병법가",
-    "reason": "The later Shiji biography places Sun Wu (Sun Tzu) in the service of King Helü of Wu and associates him with the 506 BCE campaign against Chu, but earlier Spring-and-Autumn evidence does not securely attest the biographical individual. Modern scholarship widely disputes the traditional Sun Wu biography and often treats the Sunzi as a Warring States-era composite or accreted text rather than the work of a securely identifiable sixth-century BCE general. ATLAS therefore preserves 506 BCE only as a traditional association and does not treat it as a historical personal Activity.",
-    "map_policy": "Do not display on the historical year timeline unless a separate disputed-historicity or traditional overlay is enabled."
   }
 ]
