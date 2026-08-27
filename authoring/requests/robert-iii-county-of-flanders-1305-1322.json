@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:robert-iii-of-flanders:county-of-flanders:1305-1322:v1",
+  "person": {
+    "canonical_name_en": "Robert III of Flanders",
+    "display_name_ko": "로베르 3세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "County of Flanders",
+    "display_name_ko": "플란데런 백국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Count",
+    "role_display_name_ko": "백작",
+    "start_year": 1305,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1322,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Robert III, also known as Robert of Béthune, succeeded as Count of Flanders in 1305 and ruled until his death in 1322. ATLAS records the formal comital reign under the territorial polity County of Flanders."
+  },
+  "sources": [
+    {
+      "title": "Nationalmuseets Samlinger Online — Robert de Béthune coinage",
+      "canonical_url": "https://samlinger.natmus.dk/kmm/object/497700",
+      "citation_text": "The National Museum of Denmark's coin collection dates coinage of Robert de Béthune in Flanders to 1305–1322.",
+      "source_type": "museum_reference"
+    },
+    {
+      "title": "Flanders — Encyclopaedia Britannica 1911",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Flanders",
+      "citation_text": "The historical account identifies Robert of Béthune as Guy of Dampierre's successor and states that he was succeeded in 1322.",
+      "source_type": "reference_work"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}

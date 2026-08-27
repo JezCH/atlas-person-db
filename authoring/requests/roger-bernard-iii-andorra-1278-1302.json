@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:roger-bernard-iii:andorra:1278-1302:v1",
+  "person": {
+    "canonical_name_en": "Roger-Bernard III",
+    "display_name_ko": "로제 베르나르 3세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Andorra",
+    "display_name_ko": "안도라",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Co-Prince",
+    "role_display_name_ko": "공동공",
+    "start_year": 1278,
+    "start_month": 9,
+    "start_day": 8,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1302,
+    "end_month": 3,
+    "end_day": 3,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Roger-Bernard III, Count of Foix, concluded the first pariatge with the Bishop of Urgell on 8 September 1278, establishing joint sovereignty over Andorra. He remained the Foix co-ruler until his death on 3 March 1302."
+  },
+  "sources": [
+    {
+      "title": "Història d'Andorra — Govern d’Andorra",
+      "canonical_url": "https://www.govern.ad/ca/tematiques/cultura-i-esports/patrimoni-cultural/coneixer-el-patrimoni-cultural/historia-d-andorra",
+      "citation_text": "The Government of Andorra states that the 1278 and 1288 pariatges between Bishop Pere d’Urtx and Count Roger Bernat III ended the struggle over Andorran sovereignty.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "The First Pariatge of Andorra — Library of Congress",
+      "canonical_url": "https://www.loc.gov/item/2021668170/",
+      "citation_text": "The Library of Congress identifies the First Pariatge as signed on 8 September 1278 by Pere d’Urtx and Roger Bernat III and as settling their respective sovereign rights over Andorra.",
+      "source_type": "institutional_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}
