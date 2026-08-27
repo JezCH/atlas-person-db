@@ -56,7 +56,7 @@ function approximatelyEqual(actual, expected, epsilon = 1e-9) {
 
 test("spacetime camera control state is loaded by the production page", () => {
   assert.match(indexSource, /atlas-person-spacetime-control-state\.css\?v=20260826-zoom-bound-affordance/);
-  assert.match(indexSource, /atlas-person-spacetime-control-state\.js\?v=20260827-horizontal-camera-context/);
+  assert.match(indexSource, /atlas-person-spacetime-control-state\.js\?v=20260827-mount-rebind/);
   assert.match(controlCss, /\.spacetime-time-camera button:disabled\{/);
 });
 
@@ -137,4 +137,15 @@ test("horizontal camera context clamps safely at world edges and non-scrollable 
   assert.equal(api.horizontalCenterRatio(0, 1200, 168, 0), null);
   assert.match(controlSource, /addEventListener\("change"[\s\S]*spacetimeHorizontalMode[\s\S]*captureHorizontalCamera/);
   assert.match(controlSource, /Promise\.resolve\(\)\.then\(\(\) => restoreHorizontalCamera\(mount, snapshot\)\)/);
+});
+
+
+test("control state keeps watching authority-shell mount replacement", () => {
+  assert.match(controlSource, /let activeMount = null;/);
+  assert.match(controlSource, /function bindCurrentMount\(\)/);
+  assert.match(controlSource, /if \(mount === activeMount\) return;/);
+  assert.match(controlSource, /activeMount = mount \|\| null;/);
+  assert.match(controlSource, /const observer = new MutationObserver\(bindCurrentMount\)/);
+  assert.match(controlSource, /observer\.observe\(document\.documentElement, \{ childList: true, subtree: true \}\)/);
+  assert.doesNotMatch(controlSource, /observer\.disconnect\(\)/);
 });
