@@ -122,3 +122,13 @@ test("map keyboard navigation supports panning, Person cycling, focus, zoom and 
   assert.ok(view.includes('command.startsWith("page-") ? 0.8 : 0.22'));
   assert.ok(view.includes("Shift+↑/↓ 이전/다음 인물"));
 });
+
+
+test("spacetime activation refreshes Person data instead of reusing a stale resolved load promise", async () => {
+  const view = await fixture(viewUrl);
+  const activateIndex = view.indexOf("async function activate()");
+  const refreshIndex = view.indexOf("loadPromise = null;", activateIndex);
+  const ensureDataIndex = view.indexOf("await ensureData();", activateIndex);
+  assert.ok(activateIndex >= 0);
+  assert.ok(refreshIndex > activateIndex && refreshIndex < ensureDataIndex);
+});
