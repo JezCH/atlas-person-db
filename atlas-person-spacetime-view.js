@@ -335,12 +335,14 @@
     return `<section class="spacetime-search-results card" aria-label="검색 결과"><div class="spacetime-search-results-head"><strong>검색 결과</strong><span>${items.length}명${items.length > visible.length ? ` · 상위 ${visible.length}명 표시` : ""}</span></div>${visible.length ? `<div class="spacetime-search-result-list">${visible.map((item) => `<button type="button" data-spacetime-search-result="${escapeHtml(item.person_id)}"><strong>${escapeHtml(item.display_name)}</strong><span>${escapeHtml(polityLabel(item.representative?.activity))}</span><small>${escapeHtml(periodLabel(item.representative?.activity))}</small></button>`).join("")}</div>` : '<p class="spacetime-empty-inline">일치하는 위치 확정 Person track이 없습니다.</p>'}</section>`;
   }
 
-  function renderSelection(track) {
+  function renderSelection(track, navigationCount = 0) {
     if (!track) return "";
+    const canCycle = Number(navigationCount) > 1;
+    const cycleDisabled = canCycle ? "" : ' disabled aria-disabled="true"';
     const primary = track.primary_segments || [];
     const counterparties = track.counterparty_segments || [];
     const activities = primary.slice(0, 5).map((segment) => `${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`).join(" / ");
-    return `<div class="spacetime-selection" id="spacetimeSelection"><div><small>SELECTED PERSON TRACK</small><strong>${escapeHtml(track.display_name)}</strong><span>${escapeHtml(activities || "주 위치 Activity 없음")}</span></div><div class="spacetime-selection-meta"><span>${primary.length}개 주 위치 구간</span><span>${counterparties.length}개 counterparty 관계는 자기 위치에서 제외</span></div><div class="spacetime-selection-actions" role="group" aria-label="선택 인물 탐색"><button id="spacetimePrevPerson" type="button">이전 인물</button><button id="spacetimeFocusPerson" type="button">위치로</button><button id="spacetimeDetailPerson" type="button">자세히 보기</button><button id="spacetimeNextPerson" type="button">다음 인물</button><button id="spacetimeClearPerson" type="button">선택 해제</button></div></div>`;
+    return `<div class="spacetime-selection" id="spacetimeSelection"><div><small>SELECTED PERSON TRACK</small><strong>${escapeHtml(track.display_name)}</strong><span>${escapeHtml(activities || "주 위치 Activity 없음")}</span></div><div class="spacetime-selection-meta"><span>${primary.length}개 주 위치 구간</span><span>${counterparties.length}개 counterparty 관계는 자기 위치에서 제외</span></div><div class="spacetime-selection-actions" role="group" aria-label="선택 인물 탐색"><button id="spacetimePrevPerson" type="button"${cycleDisabled}>이전 인물</button><button id="spacetimeFocusPerson" type="button">위치로</button><button id="spacetimeDetailPerson" type="button">자세히 보기</button><button id="spacetimeNextPerson" type="button"${cycleDisabled}>다음 인물</button><button id="spacetimeClearPerson" type="button">선택 해제</button></div></div>`;
   }
 
   function renderDensityLegend(field, filtered) {
@@ -766,7 +768,7 @@
     <section class="spacetime-status-row"><span><b>${visibleTracks.length}</b> ${needle ? "검색" : "전체"} Person track</span><span><b>${primarySegmentCount}</b> 전체 주 위치 구간</span><span><b>${counterpartyCount}</b> 전체 counterparty 제외</span><span><b>${compiled.unresolvedPosition.length}</b> 전체 위치 미확정</span><span><b>${compiled.unresolvedChronology.length}</b> 전체 연대 미확정</span><span><b id="spacetimeDomPersonCount">0</b> viewport Person DOM</span><span><b id="spacetimeDomSegmentCount">0</b> viewport segment DOM</span><span><b id="spacetimeDomLabelCount">0</b> 이름 표시</span><span><b id="spacetimeDeferredLabelCount">0</b> label defer</span>${densityField ? `<span><b id="spacetimeDensityCanvasCells">0</b> density canvas cell</span><span><b>${densityField.max_count}</b> 최대 cell 고유 인물</span>` : ""}<span><b>${escapeHtml(timeAxis.stage_label)}</b> 시간축</span><span><b>${escapeHtml(spaceHeader.stage_label)}</b> 공간축</span><span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> LOD</span><span><b>${escapeHtml(timeCameraZoomLabel())}</b> 시간 줌</span></section>
     ${(compiled.unresolvedPosition.length || compiled.partitioned.relation_review.length) ? `<section class="spacetime-integrity-note card"><strong>근거 없는 위치는 자동 추정하지 않습니다.</strong><p>현재 canonical spatial index가 제공하는 검토된 macroregion만 좌표로 사용합니다. 세부 Place/subregion 근거가 없으면 macroregion보다 정밀한 좌표를 만들지 않으며, counterparty인 opposes는 자기 위치 계산에서 제외합니다.</p></section>` : ""}
     ${renderDensityLegend(densityField, Boolean(needle))}
-    ${renderSelection(selectedTrack)}
+    ${renderSelection(selectedTrack, navigationItems.length)}
     <section class="spacetime-frame card${frameModeClass}"><div class="spacetime-scroll${frameModeClass}" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 Person track 및 등록 인물 밀도 분포">
       <div class="spacetime-sticky-corner"><span>시대</span><span>연도<small>${escapeHtml(timeAxis.stage_label)}</small></span></div>
       <div class="spacetime-region-head" style="width:${contentWidth}px">
