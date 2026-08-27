@@ -48,7 +48,7 @@ test('UI7 exposes semantic subheaders and human-readable Main labels', () => {
   assert.match(tableView, /rules: "통치"/);
   assert.match(tableView, /reign: "재위"/);
   assert.match(tableView, /"relation 미상": "관계 미확정"/);
-  assert.match(tableView, /역사 자료에서 실재 인물로 분류된 인물입니다/);
+  assert.match(tableView, /개인 활동연대를 방어할 수 없는 인물은 모두 ‘연대 미상’에 함께 표시합니다/);
   assert.match(tableView, /historicity 값", "역사성 분류/);
 });
 

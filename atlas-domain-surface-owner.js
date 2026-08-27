@@ -4,7 +4,6 @@
   const ROOT_ID = "personDomainRoot";
   const PERSON_SURFACE_IDS = Object.freeze([
     "personMainView",
-    "nonTimelineSection",
     "relationshipAuthoringTools"
   ]);
 
