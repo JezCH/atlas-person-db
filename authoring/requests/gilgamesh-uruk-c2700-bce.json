@@ -8,10 +8,8 @@
   },
   "external_references": {
     "namuwiki": {
-      "status": "linked",
-      "checked_at": "2026-08-27",
-      "document_title": "길가메시",
-      "url": "https://namu.wiki/w/%EA%B8%B8%EA%B0%80%EB%A9%94%EC%8B%9C"
+      "status": "not_found",
+      "checked_at": "2026-08-27"
     }
   },
   "polity": {
@@ -20,7 +18,7 @@
   },
   "activity": {
     "relation_type": "rules",
-    "period_basis": "reign",
+    "period_basis": "general_activity",
     "role": "King",
     "role_display_name_ko": "왕",
     "start_year": -2700,
@@ -35,7 +33,7 @@
     "end_calendar": "unspecified_historical",
     "confidence": "likely",
     "chronology_status": "reviewed",
-    "notes": "Modern Assyriological scholarship commonly treats Gilgamesh as having a historical core as an early ruler of Uruk, while the surviving epic tradition contains extensive later mythic elaboration. Cambridge scholarship places the historical figure broadly around 2700–2650 BCE, and the Metropolitan Museum likewise places a possible historical Gilgamesh around 2700 BCE. ATLAS therefore records only c.2700 BCE as a representative approximate reign point rather than converting the broad scholarly range or the legendary king-list reign into a duration rail."
+    "notes": "ATLAS records only a representative activity point around 2700 BCE, not a fabricated reign span. The Metropolitan Museum of Art notes that Gilgamesh may have been an actual king of Uruk around 2700 BCE, while Cambridge scholarship places a historical Gilgamesh in the early third millennium BCE and distinguishes a possible historical core from later epic embellishment."
   },
   "sources": [
     {
