@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:indibilis:ilergetes:218-205-bce:v1",
+  "person": {
+    "canonical_name_en": "Indibilis",
+    "display_name_ko": "인디빌리스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ilergetes",
+    "display_name_ko": "일레르게테스족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "military_activity",
+    "role": "Chieftain",
+    "role_display_name_ko": "족장",
+    "start_year": -218,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -205,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Indibilis was the principal ruler and military leader of the Ilergetes during the Second Punic War. ATLAS uses the directly attested activity interval from his appearance in the fighting of 218 BCE through his death in the Ilergete-led revolt of 205 BCE; this is not intended as a complete formal reign. The polity is the Ilergetes rather than a generic 'Iberian Civilization'."
+  },
+  "sources": [
+    {
+      "title": "Indibilis — Paulys Realencyclopädie der classischen Altertumswissenschaft",
+      "canonical_url": "https://de.wikisource.org/wiki/RE:Indibilis",
+      "citation_text": "Friedrich Münzer identifies Indibilis as the actual ruler of the Ilergetes and notes his wider leadership among neighboring Iberian peoples.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Not so different: individual fighting techniques and battle tactics of Roman and Iberian armies within the framework of warfare in the Hellenistic Age",
+      "canonical_url": "https://www.uam.es/FyL/documento/1446794702983/Quesada-2011-Guerrilla-Ancient-Warfare.pdf",
+      "citation_text": "Fernando Quesada Sanz discusses Indibilis and Mandonius as leaders of the Ilergetes and their campaigns against Rome in 206 and 205 BCE, based on Livy and Polybius.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}

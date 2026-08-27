@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:urho-kekkonen:finland:1956-1982:v1",
+  "person": {
+    "canonical_name_en": "Urho Kekkonen",
+    "display_name_ko": "우르호 케코넨",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Finland",
+    "display_name_ko": "핀란드",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1956,
+    "start_month": 3,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1982,
+    "end_month": 1,
+    "end_day": 27,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Urho Kaleva Kekkonen served as the eighth President of the Republic of Finland from 1 March 1956 until 27 January 1982. ATLAS uses the existing Finland polity rather than creating a separate duplicate identity named 'Republic of Finland'."
+  },
+  "sources": [
+    {
+      "title": "Former Presidents of the Republic of Finland",
+      "canonical_url": "https://www.presidentti.fi/en/presidency/former-presidents-of-the-republic-of-finland/",
+      "citation_text": "The Office of the President of the Republic of Finland lists Urho Kaleva Kekkonen as President for 1956–1982.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "Suomen presidentit – tasavallan ensiaskeleita ja vallan vaiheita",
+      "canonical_url": "https://yle.fi/a/20-206254",
+      "citation_text": "Yle gives Kekkonen's presidential term as 1 March 1956 to 27 January 1982.",
+      "source_type": "public_broadcaster_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "우르호 케코넨",
+      "url": "https://namu.wiki/w/%EC%9A%B0%EB%A5%B4%ED%98%B8%20%EC%BC%80%EC%BD%94%EB%84%A8"
+    }
+  }
+}
