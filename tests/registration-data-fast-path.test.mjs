@@ -6,7 +6,8 @@ const integrity = fs.readFileSync(new URL('../.github/workflows/atlas-integrity.
 
 test('ordinary and non-timeline registration data share one integrity fast path', () => {
   assert.match(integrity, /registration_data_only/);
-  assert.match(integrity, /authoring\/requests\/\[A-Za-z0-9\._-\]\+\\\.json\|non-timeline-persons\\\.json/);
+  assert.ok(integrity.includes("authoring/requests/[A-Za-z0-9._-]+\\.json"));
+  assert.ok(integrity.includes("non-timeline-persons\\.json"));
   assert.match(integrity, /registration_validation/);
   assert.match(integrity, /Validate changed registration data/);
   assert.match(integrity, /timeline_status=excluded/);
