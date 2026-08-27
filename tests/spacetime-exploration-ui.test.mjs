@@ -206,3 +206,17 @@ test("modifier-wheel zoom does not claim unavailable camera-bound gestures", asy
   assert.ok(guardIndex < preventIndex);
   assert.ok(requestIndex > preventIndex);
 });
+
+
+test("selection-only keyboard commands stay inert when no Person is selected", async () => {
+  const view = await fixture(viewUrl);
+  const keydownIndex = view.indexOf('scroll.addEventListener("keydown"');
+  const selectionGuardIndex = view.indexOf('if ((command === "focus-selected" || command === "clear-selection") && !selectedPersonId) return;', keydownIndex);
+  const preventIndex = view.indexOf("event.preventDefault();", keydownIndex);
+  const focusIndex = view.indexOf('if (command === "focus-selected")', keydownIndex);
+  const clearIndex = view.indexOf('if (command === "clear-selection")', keydownIndex);
+  assert.ok(keydownIndex >= 0);
+  assert.ok(selectionGuardIndex > keydownIndex && selectionGuardIndex < preventIndex);
+  assert.ok(focusIndex > preventIndex);
+  assert.ok(clearIndex > preventIndex);
+});

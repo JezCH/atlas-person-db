@@ -771,6 +771,7 @@
       const command = exploration.keyboardCommand(event);
       if (!command) return;
       if ((command === "previous-person" || command === "next-person") && navigationItems.length <= 1) return;
+      if ((command === "focus-selected" || command === "clear-selection") && !selectedPersonId) return;
       const keyboardZoomTarget = command === "zoom-in"
         ? timeCameraZoom * TIME_CAMERA_ZOOM_STEP
         : command === "zoom-out" ? timeCameraZoom / TIME_CAMERA_ZOOM_STEP : null;
