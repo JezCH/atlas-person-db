@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "croesus_lydia_alias_duplicate_cleanup_20260827_v1",
+  "as_of": "2026-08-27",
+  "status": "REVIEWED_DUPLICATE_ACTIVITY_CLEANUP",
+  "release_order": 583,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "Production read-back after PR #581 found two Croesus activities with identical role and c.560–c.546 BCE chronology under polity aliases Kingdom of Lydia and Lydia. Preserve the pre-existing Kingdom of Lydia activity and retire the newly created Lydia alias activity, transferring all source links.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "retire_source_transfer_before_delete_required": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "croesus_retire_lydia_alias_duplicate",
+      "type": "retire_activity",
+      "activity_id": "565b4d6e-5a29-4179-b66e-4b4e3258c009",
+      "baseline_before": {
+        "person_id": "57d86cbf-38f3-4f07-ae51-7501d8f5f818",
+        "polity_id": "f32bdfc0-988d-4e59-97a1-c89526236676",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": -560,
+        "activity_end": -546,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true,
+      "replacement_activity_ids": [
+        "05c8c252-bbb2-468c-b3a4-01015dd87284"
+      ]
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "retire_activity_count": 1,
+    "production_mutation_authorized": false
+  }
+}
