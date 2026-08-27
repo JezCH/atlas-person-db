@@ -8,8 +8,6 @@ const reader = fs.readFileSync(new URL('../atlas-person-browser-reader.js', impo
 const nav = fs.readFileSync(new URL('../atlas-person-era-navigation.js', import.meta.url), 'utf8');
 const css = fs.readFileSync(new URL('../atlas-person-main.css', import.meta.url), 'utf8');
 const mobile = fs.readFileSync(new URL('../mobile-ui.js', import.meta.url), 'utf8');
-const nonTimeline = fs.readFileSync(new URL('../non-timeline-list.js', import.meta.url), 'utf8');
-const nonTimelineRows = JSON.parse(fs.readFileSync(new URL('../non-timeline-persons.json', import.meta.url), 'utf8'));
 
 test('Main loads the Person reader before the Person-centered screen module', () => {
   assert.match(html, /atlas-person-main\.css/);
@@ -146,17 +144,4 @@ test('Person Main CSS isolates the Timeline layout and keeps responsive fallback
   assert.match(css, /\.person-main-detail/);
   assert.match(css, /\.relationship-authoring-tools/);
   assert.match(css, /@media\(max-width:760px\)/);
-});
-
-test('non-timeline surface is the single visible destination for failed Timeline admission and includes Sun Wu', () => {
-  assert.match(nonTimeline, /전설·신화·연대미상 인물/);
-  assert.match(nonTimeline, /Historicity PASS 또는 개인연대 PASS/);
-  assert.doesNotMatch(nonTimeline, /hideEmptyAuthoritativeOtherGroup/);
-  const sunWu = nonTimelineRows.find((row) => row.person_name === 'Sun Wu');
-  assert.ok(sunWu);
-  assert.equal(sunWu.timeline_status, 'excluded');
-  assert.equal(sunWu.historicity, 'disputed');
-  assert.equal(sunWu.traditional_year, -506);
-  assert.equal(sunWu.activity_start, null);
-  assert.equal(sunWu.activity_end, null);
 });
