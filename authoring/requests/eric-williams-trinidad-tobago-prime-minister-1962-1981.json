@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:eric-williams:trinidad-and-tobago:prime-minister:1962-1981:v1",
+  "person": {
+    "canonical_name_en": "Eric Williams",
+    "display_name_ko": "에릭 윌리엄스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Trinidad and Tobago",
+    "display_name_ko": "트리니다드 토바고",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1962,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1981,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Eric Williams became Prime Minister at Trinidad and Tobago's independence in 1962 and remained in office until his death in 1981."
+  },
+  "sources": [
+    {
+      "title": "The Prime Minister — Parliament of Trinidad and Tobago",
+      "canonical_url": "https://www.ttparliament.org/members/the-prime-minister/",
+      "citation_text": "The Parliament of Trinidad and Tobago records Eric Williams as prime minister from independence in 1962 until 1981.",
+      "source_type": "government_web"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

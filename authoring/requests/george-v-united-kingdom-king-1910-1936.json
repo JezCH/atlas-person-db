@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:george-v:united-kingdom:king:1910-1936:v1",
+  "person": {
+    "canonical_name_en": "George V",
+    "display_name_ko": "조지 5세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1910,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1936,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "George V became king in May 1910 and reigned until his death in January 1936."
+  },
+  "sources": [
+    {
+      "title": "George V — The Royal Family",
+      "canonical_url": "https://www.royal.uk/george-v",
+      "citation_text": "The Royal Family biography records George V's accession in 1910 and death in 1936.",
+      "source_type": "official_royal_web"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-28",
+      "document_title": "조지 5세",
+      "url": "https://namu.wiki/w/%EC%A1%B0%EC%A7%80%205%EC%84%B8"
+    }
+  }
+}

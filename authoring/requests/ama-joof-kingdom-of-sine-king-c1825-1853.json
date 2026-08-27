@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ama-joof-gnilane-faye-joof:kingdom-of-sine:king:c1825-1853:v1",
+  "person": {
+    "canonical_name_en": "Ama Joof Gnilane Faye Joof",
+    "display_name_ko": "아마 주프 길란 파예 주프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Sine",
+    "display_name_ko": "시네 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Maad a Sinig (King)",
+    "role_display_name_ko": "마드 아 시니그(왕)",
+    "start_year": 1825,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1853,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Ama Joof Gnilane Faye Joof was Maad a Sinig, king of Sine, from approximately 1825 until his death in 1853. The accession year is treated as approximate."
+  },
+  "sources": [
+    {
+      "title": "Ama Joof Gnilane Faye Joof",
+      "canonical_url": "https://en.wikipedia.org/wiki/Ama_Joof_Gnilane_Faye_Joof",
+      "citation_text": "Biographical synthesis based on nineteenth-century and modern Senegalese historical scholarship gives his reign approximately as 1825–1853.",
+      "source_type": "encyclopedic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

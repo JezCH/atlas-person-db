@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:james-k-polk:united-states:president:1845-1849:v1",
+  "person": {
+    "canonical_name_en": "James K. Polk",
+    "display_name_ko": "제임스 K. 포크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1845,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1849,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "James K. Polk served as the eleventh President of the United States from 1845 to 1849."
+  },
+  "sources": [
+    {
+      "title": "James K. Polk — The White House",
+      "canonical_url": "https://obamawhitehouse.archives.gov/1600/presidents/jamespolk/",
+      "citation_text": "The archived White House biography identifies Polk as the 11th President and gives his 1845–1849 presidency.",
+      "source_type": "government_archive"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-28",
+      "document_title": "제임스 K. 포크",
+      "url": "https://namu.wiki/w/%EC%A0%9C%EC%9E%84%EC%8A%A4%20K.%20%ED%8F%AC%ED%81%AC"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:vasil-levski:internal-revolutionary-organisation:leader:1869-1872:v1",
+  "person": {
+    "canonical_name_en": "Vasil Levski",
+    "display_name_ko": "바실 레프스키",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Internal Revolutionary Organisation",
+    "display_name_ko": "내부 혁명 조직",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Leader and Organizer",
+    "role_display_name_ko": "지도자·조직가",
+    "start_year": 1869,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1872,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Levski built the clandestine Internal Revolutionary Organisation inside Ottoman-ruled Bulgarian lands from 1869 until his arrest in 1872. ATLAS associates him with the Bulgarian revolutionary organization rather than misclassifying him as an Ottoman political representative or a ruler of a sovereign Bulgaria."
+  },
+  "sources": [
+    {
+      "title": "Short chronicle of Levski's life — Vasil Levski National Museum, Karlovo",
+      "canonical_url": "https://vlevskimuseum-bg.org/en/short-chronicle-of-levskis-life/",
+      "citation_text": "The Vasil Levski National Museum documents his organizing tours, revolutionary committee network, arrest in 1872 and execution in 1873.",
+      "source_type": "museum_web"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

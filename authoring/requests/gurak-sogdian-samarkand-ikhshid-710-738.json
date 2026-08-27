@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gurak:sogdian-samarkand:ikhshid:c710-c738:v1",
+  "person": {
+    "canonical_name_en": "Gurak",
+    "display_name_ko": "구라크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Sogdian Samarkand",
+    "display_name_ko": "소그드계 사마르칸트",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Ikhshid (King)",
+    "role_display_name_ko": "이흐시드(왕)",
+    "start_year": 710,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 738,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "uncertain",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Gurak was installed as the Sogdian ruler of Samarkand around 710 and remained on the throne until his death in 737 or 738. ATLAS deliberately models his Samarkand polity rather than treating him as monarch of all Sogdiana."
+  },
+  "sources": [
+    {
+      "title": "Sogdiana iii. History and Archaeology — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/sogdiana-iii-history-and-archaeology/",
+      "citation_text": "Encyclopaedia Iranica discusses the early eighth-century Sogdian political setting in which Gurak ruled Samarkand.",
+      "source_type": "academic_encyclopedia"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:lucky-luciano:united-states:organized-crime:1931-1946:v1",
+  "person": {
+    "canonical_name_en": "Lucky Luciano",
+    "display_name_ko": "러키 루치아노",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Organized crime boss",
+    "role_display_name_ko": "조직범죄 두목",
+    "start_year": 1931,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1946,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Luciano became a central architect of the modern American Mafia structure in 1931, including the Commission. The interval ends with his 1946 deportation from the United States. This Activity records historically significant organized-crime activity and does not treat the American Mafia as a sovereign polity."
+  },
+  "sources": [
+    {
+      "title": "History of La Cosa Nostra — FBI",
+      "canonical_url": "https://www.fbi.gov/investigate/transnational-organized-crime/history-of-la-cosa-nostra",
+      "citation_text": "The FBI describes Luciano's rise in 1931 and his role as the first boss of the family later known as the Genovese family.",
+      "source_type": "government_history"
+    },
+    {
+      "title": "The FBI and the American Gangster, 1924-1938 — FBI",
+      "canonical_url": "https://www.fbi.gov/history/history-of-the-fbi/the-fbi-and-the-american-gangster",
+      "citation_text": "The FBI describes Luciano as establishing the Commission and helping shape the emerging New York Mafia structure.",
+      "source_type": "government_history"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-28",
+      "document_title": "러키 루치아노",
+      "url": "https://namu.wiki/w/%EB%9F%AC%ED%82%A4%20%EB%A3%A8%EC%B9%98%EC%95%84%EB%85%B8"
+    }
+  }
+}

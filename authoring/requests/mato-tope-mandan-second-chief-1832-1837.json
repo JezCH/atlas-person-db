@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mato-tope:mandan:second-chief:1832-1837:v1",
+  "person": {
+    "canonical_name_en": "Mato-tope",
+    "display_name_ko": "마토토페",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Mandan",
+    "display_name_ko": "만단",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Second Chief",
+    "role_display_name_ko": "제2추장",
+    "start_year": 1832,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1837,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mato-tope, widely known as Four Bears, was documented by George Catlin in 1832 as the Mandan 'Second Chief' and remained a major Mandan leader until his death during the 1837 smallpox epidemic. The 1832 start is a documentary leadership attestation, not a fabricated accession date."
+  },
+  "sources": [
+    {
+      "title": "Máh-to-tóh-pa, Four Bears, Second Chief, in Full Dress — Smithsonian American Art Museum",
+      "canonical_url": "https://americanart.si.edu/artwork/mah-toh-pa-four-bears-second-chief-full-dress-4064",
+      "citation_text": "The Smithsonian identifies Mato-tope/Four Bears as a Mandan second chief in Catlin's 1832 portrait.",
+      "source_type": "museum_collection"
+    },
+    {
+      "title": "Mato-Tope (The Four Bears) Mandan Chief — Smithsonian Institution",
+      "canonical_url": "https://www.si.edu/object/mato-tope-four-bears-mandan-chief-painting%3Asiris_ari_275135",
+      "citation_text": "Smithsonian collection metadata identifies Mato-Tope as a Mandan chief.",
+      "source_type": "museum_collection"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

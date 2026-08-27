@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:andrew-jackson:united-states:president:1829-1837:v1",
+  "person": {
+    "canonical_name_en": "Andrew Jackson",
+    "display_name_ko": "앤드루 잭슨",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1829,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1837,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Andrew Jackson served as the seventh President of the United States from 1829 to 1837."
+  },
+  "sources": [
+    {
+      "title": "Andrew Jackson — The White House",
+      "canonical_url": "https://trumpwhitehouse.archives.gov/about-the-white-house/presidents/andrew-jackson/",
+      "citation_text": "The archived White House biography identifies Jackson as the seventh U.S. president and gives his 1829–1837 presidency.",
+      "source_type": "government_archive"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

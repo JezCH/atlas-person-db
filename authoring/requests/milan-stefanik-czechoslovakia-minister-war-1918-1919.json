@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:milan-rastislav-stefanik:czechoslovakia:minister-of-war:1918-1919:v1",
+  "person": {
+    "canonical_name_en": "Milan Rastislav Štefánik",
+    "display_name_ko": "밀란 라스티슬라우 슈테파니크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Czechoslovakia",
+    "display_name_ko": "체코슬로바키아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Minister of War",
+    "role_display_name_ko": "전쟁장관",
+    "start_year": 1918,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1919,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After Czechoslovak independence in 1918, Štefánik served as Minister of War until his death in May 1919."
+  },
+  "sources": [
+    {
+      "title": "Slovak hero Milan Rastislav Štefánik knew the price of freedom — Slovak Ministry of Foreign and European Affairs",
+      "canonical_url": "https://www.mzv.sk/en/web/en/slovakia/history/slovak-hero-milan-rastislav-stefanik-knew-the-price-of-freedom",
+      "citation_text": "Slovakia's Foreign Ministry describes Štefánik as Minister of War in the new Czechoslovak government and records his death in 1919.",
+      "source_type": "government_history"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
