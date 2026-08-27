@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:faisal-i:iraq:1921-1933:v1",
+  "person": {
+    "canonical_name_en": "Faisal I",
+    "display_name_ko": "파이살 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Iraq",
+    "display_name_ko": "이라크",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1921,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1933,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Faisal I was King of Iraq from 1921 to 1933. ATLAS reuses the existing Iraq polity rather than creating a separate duplicate identity for the monarchical constitutional phase."
+  },
+  "sources": [
+    {
+      "title": "Faisal I of Iraq — Library of Congress",
+      "canonical_url": "https://www.loc.gov/item/2004679499/",
+      "citation_text": "The Library of Congress identifies Faisal I as King of Iraq from 1921 to 1933.",
+      "source_type": "institutional_reference"
+    },
+    {
+      "title": "Foreign Relations of the United States, 1944 — Office of the Historian",
+      "canonical_url": "https://history.state.gov/historicaldocuments/frus1944v05/d851",
+      "citation_text": "The U.S. Office of the Historian identifies Faisal I as the first King of Iraq, 1921–1933.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "파이살 1세",
+      "url": "https://namu.wiki/w/%ED%8C%8C%EC%9D%B4%EC%82%B4%201%EC%84%B8"
+    }
+  }
+}

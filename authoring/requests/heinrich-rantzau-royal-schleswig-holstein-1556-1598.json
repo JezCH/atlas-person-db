@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:heinrich-rantzau:royal-share-schleswig-holstein:1556-1598:v1",
+  "person": {
+    "canonical_name_en": "Heinrich Rantzau",
+    "display_name_ko": "하인리히 란차우",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Danish Royal Share of Schleswig-Holstein",
+    "display_name_ko": "덴마크 왕령 슐레스비히-홀슈타인",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Governor",
+    "role_display_name_ko": "총독",
+    "start_year": 1556,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1598,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Heinrich Rantzau was not sovereign Duke of Holstein. He served from 1556 to 1598 as Danish royal governor (Statthalter) of the royal share of Schleswig-Holstein. ATLAS models that actual administrative authority rather than converting the Civilization-mod label into a ducal reign."
+  },
+  "sources": [
+    {
+      "title": "Rantzau, Heinrich — Deutsche Biographie",
+      "canonical_url": "https://www.deutsche-biographie.de/pnd11898716X.html",
+      "citation_text": "Deutsche Biographie identifies Heinrich Rantzau as Danish governor of the royal share of Schleswig-Holstein from 1556 to 1598.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mehmed-ii:ottoman-empire:1444-1446:v1",
+  "person": {
+    "canonical_name_en": "Mehmed II",
+    "display_name_ko": "메흐메트 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ottoman Empire",
+    "display_name_ko": "오스만 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1444,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1446,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mehmed II's first Ottoman reign lasted from 1444 to 1446, after which Murad II resumed the throne. ATLAS preserves this first reign separately from Mehmed's later restoration."
+  },
+  "sources": [
+    {
+      "title": "Muhammad II — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG139762",
+      "citation_text": "The British Museum identifies Muhammad/Mehmed II as Ottoman sultan and records his first reign as 1444–1446.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "메흐메트 2세",
+      "url": "https://namu.wiki/w/%EB%A9%94%ED%9D%90%EB%A9%94%ED%8A%B8%202%EC%84%B8"
+    }
+  }
+}

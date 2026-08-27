@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:peter-i-of-cyprus:kingdom-of-cyprus:1359-1369:v1",
+  "person": {
+    "canonical_name_en": "Peter I of Cyprus",
+    "display_name_ko": "피에르 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Cyprus",
+    "display_name_ko": "키프로스 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1359,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1369,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Peter I of Lusignan ruled the Kingdom of Cyprus from 1359 until his death in 1369. He had already been crowned King of Cyprus in his father's lifetime in November 1358, but ATLAS uses 1359–1369 for his sole sovereign reign, following the standard regnal chronology."
+  },
+  "sources": [
+    {
+      "title": "Peter I, 1359–69 — A History of Cyprus",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/history-of-cyprus/peter-i-135969/433D1C9C6EFE77BAB71F18F7E850A3D5",
+      "citation_text": "George Hill's Cambridge history treats Peter I's Cypriot reign as 1359–1369 and notes his earlier coronation in 1358 while Hugh IV was still alive.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}

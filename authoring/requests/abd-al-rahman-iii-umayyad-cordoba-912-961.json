@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:abd-al-rahman-iii:umayyad-cordoba:912-961:v1",
+  "person": {
+    "canonical_name_en": "Abd al-Rahman III",
+    "display_name_ko": "아브드 알 라흐만 3세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Umayyad Córdoba",
+    "display_name_ko": "코르도바 후우마이야국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emir and Caliph",
+    "role_display_name_ko": "아미르·칼리파",
+    "start_year": 912,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 961,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Abd al-Rahman III ruled Umayyad Córdoba continuously from 912 to 961. He began as emir and proclaimed the caliphal title in 929. ATLAS keeps one continuous polity identity and records the combined office label rather than falsely treating the 929 constitutional-title change as a break in the underlying political community."
+  },
+  "sources": [
+    {
+      "title": "Abd-ar-Rahman — Encyclopaedia Britannica (1911)",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Abd-ar-Rahman",
+      "citation_text": "Britannica gives Abd al-Rahman III's reign as 912–961 and identifies him as the greatest and most successful of the Spanish Umayyads.",
+      "source_type": "reference_work"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "아브드 알 라흐만 3세",
+      "url": "https://namu.wiki/w/%EC%95%84%EB%B8%8C%EB%93%9C%20%EC%95%8C%20%EB%9D%BC%ED%9D%90%EB%A7%8C%203%EC%84%B8"
+    }
+  }
+}
