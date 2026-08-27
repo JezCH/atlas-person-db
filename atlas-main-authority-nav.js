@@ -138,9 +138,9 @@
   function ensureSpacetimeAssets() {
     if (window.ATLAS_PERSON_SPACETIME_VIEW) return Promise.resolve(window.ATLAS_PERSON_SPACETIME_VIEW);
     if (spacetimeAssetsPromise) return spacetimeAssetsPromise;
-    appendStylesheetOnce("./atlas-person-spacetime-view.css?v=20260827-state-visibility");
+    appendStylesheetOnce("./atlas-person-spacetime-view.css?v=20260827-minimap-keyboard");
     spacetimeAssetsPromise = loadScriptOnce("./atlas-person-spacetime-model.js?v=20260817-spacetime-v2", () => Boolean(window.ATLAS_PERSON_SPACETIME_MODEL))
-      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20260827-activity-glyph-a11y", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
+      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20260827-minimap-keyboard", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
       .then(() => window.ATLAS_PERSON_SPACETIME_VIEW)
       .catch((error) => {
         spacetimeAssetsPromise = null;
