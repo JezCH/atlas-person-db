@@ -860,10 +860,12 @@
     const searchInput = mount.querySelector("#spacetimeSearch");
     searchInput?.addEventListener("input", (event) => {
       query = event.target.value || "";
+      if (event.isComposing) return;
       renderInto(mount);
       requestAnimationFrame(() => { const input = mount.querySelector("#spacetimeSearch"); input?.focus(); input?.setSelectionRange(query.length, query.length); });
     });
     searchInput?.addEventListener("keydown", (event) => {
+      if (event.isComposing) return;
       if (event.key === "Enter") {
         const first = searchItems[0];
         if (!first) return;
