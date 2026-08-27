@@ -104,8 +104,18 @@
       script.src = src;
       script.async = false;
       script.dataset.atlasSpacetimeRuntime = src;
-      script.addEventListener("load", () => window[globalName] ? resolve(window[globalName]) : reject(new Error(`ATLAS_SPACETIME_RUNTIME_MISSING: ${globalName}`)), { once: true });
-      script.addEventListener("error", () => reject(new Error(`ATLAS_SPACETIME_RUNTIME_LOAD_FAILED: ${src}`)), { once: true });
+      script.addEventListener("load", () => {
+        if (window[globalName]) {
+          resolve(window[globalName]);
+          return;
+        }
+        script.remove?.();
+        reject(new Error(`ATLAS_SPACETIME_RUNTIME_MISSING: ${globalName}`));
+      }, { once: true });
+      script.addEventListener("error", () => {
+        script.remove?.();
+        reject(new Error(`ATLAS_SPACETIME_RUNTIME_LOAD_FAILED: ${src}`));
+      }, { once: true });
       document.body.appendChild(script);
     });
   }

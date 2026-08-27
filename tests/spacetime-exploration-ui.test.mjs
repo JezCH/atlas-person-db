@@ -220,3 +220,23 @@ test("selection-only keyboard commands stay inert when no Person is selected", a
   assert.ok(focusIndex > preventIndex);
   assert.ok(clearIndex > preventIndex);
 });
+
+
+test("runtime retry removes failed script nodes so retry can issue a fresh load", async () => {
+  const view = await fixture(viewUrl);
+  const loaderIndex = view.indexOf("function loadScriptOnce(src, globalName)");
+  const appendIndex = view.indexOf("document.body.appendChild(script);", loaderIndex);
+  const missingIndex = view.indexOf("ATLAS_SPACETIME_RUNTIME_MISSING", loaderIndex);
+  const loadFailureIndex = view.indexOf("ATLAS_SPACETIME_RUNTIME_LOAD_FAILED", loaderIndex);
+  const firstRemoveIndex = view.indexOf("script.remove?.();", loaderIndex);
+  const secondRemoveIndex = view.indexOf("script.remove?.();", firstRemoveIndex + 1);
+  assert.ok(loaderIndex >= 0);
+  assert.ok(firstRemoveIndex > loaderIndex && firstRemoveIndex < missingIndex);
+  assert.ok(secondRemoveIndex > missingIndex && secondRemoveIndex < loadFailureIndex);
+  assert.ok(appendIndex > loadFailureIndex);
+
+  const retryIndex = view.indexOf('mount.querySelector("#spacetimeRetry")');
+  assert.ok(retryIndex >= 0);
+  assert.ok(view.indexOf("runtimePromise = null;", retryIndex) > retryIndex);
+  assert.ok(view.indexOf("activate();", retryIndex) > retryIndex);
+});
