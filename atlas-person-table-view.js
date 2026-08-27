@@ -217,10 +217,8 @@
 
   function humanizePageCopy() {
     if (typeof document.querySelector !== "function") return;
-    const historical = document.querySelector(".person-group-historical .person-group-head>div>p:not(.eyebrow)");
-    if (historical) historical.textContent = "역사 자료에서 실재 인물로 분류된 인물입니다. 활동연도가 미상이어도 역사성 분류는 유지됩니다.";
-    const other = document.querySelector(".person-group-other .person-group-head>div>p:not(.eyebrow)");
-    if (other) other.textContent = "전설·신화 또는 역사성 판정이 확정되지 않은 인물을 원래 분류값에 따라 별도로 표시합니다.";
+    const primary = document.querySelector(".person-group-historical .person-group-head>div>p:not(.eyebrow)");
+    if (primary) primary.textContent = "연대가 있는 인물은 시대별로, 개인 활동연대를 방어할 수 없는 인물은 모두 ‘연대 미상’에 함께 표시합니다. 역사성 분류는 별도 값으로 유지됩니다.";
     const summary = document.querySelector(".person-main-summary span");
     if (summary) summary.textContent = String(summary.textContent || "").replace("historicity 값", "역사성 분류").replace("semantic filter", "적용된 필터");
   }
