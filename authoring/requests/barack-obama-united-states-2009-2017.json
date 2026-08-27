@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:barack-obama:united-states:2009-2017:v1",
+  "person": {
+    "canonical_name_en": "Barack Obama",
+    "display_name_ko": "버락 오바마",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 2009,
+    "start_month": 1,
+    "start_day": 20,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2017,
+    "end_month": 1,
+    "end_day": 20,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Barack Obama served as the 44th President of the United States from 20 January 2009 to 20 January 2017. He is a former, not currently serving, office-holder and therefore satisfies the ATLAS current-office exclusion rule."
+  },
+  "sources": [
+    {
+      "title": "President Barack Obama — Barack Obama Presidential Library",
+      "canonical_url": "https://obama.artifacts.archives.gov/people/16690/president-barack-obama/objects?filter=peopleFilter%3A3689",
+      "citation_text": "The Barack Obama Presidential Library, administered by the U.S. National Archives, gives Obama's presidential service as January 20, 2009 through January 20, 2017.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "버락 오바마",
+      "url": "https://namu.wiki/w/%EB%B2%84%EB%9D%BD%20%EC%98%A4%EB%B0%94%EB%A7%88"
+    }
+  }
+}
