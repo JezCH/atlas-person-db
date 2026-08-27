@@ -765,6 +765,7 @@
       if (event.target !== scroll) return;
       const command = exploration.keyboardCommand(event);
       if (!command) return;
+      if ((command === "previous-person" || command === "next-person") && navigationItems.length <= 1) return;
       event.preventDefault();
       if (command === "previous-person" || command === "next-person") {
         const nextId = exploration.adjacentPersonId(navigationItems, selectedPersonId, command === "previous-person" ? -1 : 1);

@@ -88,7 +88,7 @@ test("Person selection preserves zoom by default and detail is an explicit actio
   assert.ok(view.includes("selectPerson(mount, selectedPersonId, { focus: true, detail: true })"));
 });
 
-test("single active Person disables inert previous and next controls", async () => {
+test("single active Person disables inert previous and next controls and keyboard cycling", async () => {
   const view = await fixture(viewUrl);
   const css = await fixture(cssUrl);
   assert.ok(view.includes("function renderSelection(track, navigationCount = 0)"));
@@ -98,6 +98,10 @@ test("single active Person disables inert previous and next controls", async () 
   assert.ok(view.includes('id="spacetimeNextPerson" type="button"${cycleDisabled}'));
   assert.ok(view.includes("renderSelection(selectedTrack, navigationItems.length)"));
   assert.ok(css.includes(".spacetime-selection-actions button:disabled,.spacetime-selection-actions button:disabled:hover{"));
+  const keydownIndex = view.indexOf('scroll.addEventListener("keydown"');
+  const guardIndex = view.indexOf('if ((command === "previous-person" || command === "next-person") && navigationItems.length <= 1) return;', keydownIndex);
+  const preventDefaultIndex = view.indexOf("event.preventDefault();", keydownIndex);
+  assert.ok(keydownIndex >= 0 && guardIndex > keydownIndex && guardIndex < preventDefaultIndex);
 });
 
 test("selection panel provides previous, focus, detail, next and clear exploration actions", async () => {
