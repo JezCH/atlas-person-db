@@ -5,6 +5,7 @@ import fs from 'node:fs';
 const tableView = fs.readFileSync(new URL('../atlas-person-table-view.js', import.meta.url), 'utf8');
 const tableCss = fs.readFileSync(new URL('../atlas-person-table-view.css', import.meta.url), 'utf8');
 const geometryCss = fs.readFileSync(new URL('../atlas-person-table-alignment.css', import.meta.url), 'utf8');
+const eraNavCss = fs.readFileSync(new URL('../atlas-person-era-navigation.css', import.meta.url), 'utf8');
 const mainSource = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url), 'utf8');
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 
@@ -37,6 +38,8 @@ test('UI7 adds one derived era band while retaining the four authoritative Perso
   assert.match(tableView, /value\.toLowerCase\(\) === "historical"/);
   assert.match(tableView, /groupRowsByEra\(grid\)/);
   assert.match(tableCss, /person-era-group/);
+  assert.match(tableCss, /person-era-group\[data-atlas-era="unknown"\]\{[^}]*margin-top:22px[^}]*border-top:3px solid/);
+  assert.match(eraNavCss, /person-era-jump\.person-era-unknown\{[^}]*margin-left:14px[^}]*border-color:/);
   assert.match(geometryCss, /--person-data-columns:\s*minmax\(200px, 1\.1fr\) minmax\(165px, \.85fr\) minmax\(500px, 3\.45fr\) 76px/);
 });
 
