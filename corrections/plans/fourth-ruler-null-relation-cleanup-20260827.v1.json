@@ -1,0 +1,132 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "fourth_ruler_null_relation_rules_cleanup_20260827_v1",
+  "as_of": "2026-08-27",
+  "status": "REVIEWED_LEGACY_PRIMARY_RELATION_REPAIR",
+  "release_order": 553,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "ATLAS NamuWiki linking review 2026-08-27; exact Production Person read-back and captured Baseline A confirmed three ruler/reign Activities with non-null primary polity and null primary relation.",
+  "baseline": {
+    "deployment_sha": "2d4e30dbfa55e8d8f9c4ebeb4e14a3a1915425fd",
+    "baseline_digest": "sha256:6ca61954e05bbb5cd99d5b42823e4f6cff2b675e64c10e0eaf2ee62eb5a51ed4"
+  },
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "semantic_identity_change_forbidden": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "yongle_ming_rules",
+      "type": "rewrite_activity",
+      "activity_id": "d1630b88-d82b-5c5e-a7a1-195bf9661465",
+      "baseline_before": {
+        "person_id": "37634648-d825-557a-ba1f-4e2534f28fd8",
+        "polity_id": "756460ea-0f77-519e-9e91-43dfb694926a",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1402,
+        "activity_end": 1424,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-7.json:9:1aadd864587e4d75",
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "d1630b88-d82b-5c5e-a7a1-195bf9661465",
+        "person_id": "37634648-d825-557a-ba1f-4e2534f28fd8",
+        "polity_id": "756460ea-0f77-519e-9e91-43dfb694926a",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1402,
+        "activity_end": 1424,
+        "activity_start_detail": null,
+        "activity_end_detail": null,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-7.json:9:1aadd864587e4d75",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "pachacuti_inca_rules",
+      "type": "rewrite_activity",
+      "activity_id": "a84dd1ec-6128-5adc-b9b0-bc96b3769608",
+      "baseline_before": {
+        "person_id": "6e4f0f46-6fed-5d7b-b887-2d346aa8ad48",
+        "polity_id": "2d3fb0b3-508c-52d6-997b-8e9d18c02937",
+        "role_id": "20ab1d2b-3a8c-542e-91a8-a764a1f4693e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1438,
+        "activity_end": 1471,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement.json:29:8775fd896cf491da",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "a84dd1ec-6128-5adc-b9b0-bc96b3769608",
+        "person_id": "6e4f0f46-6fed-5d7b-b887-2d346aa8ad48",
+        "polity_id": "2d3fb0b3-508c-52d6-997b-8e9d18c02937",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "20ab1d2b-3a8c-542e-91a8-a764a1f4693e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1438,
+        "activity_end": 1471,
+        "activity_start_detail": null,
+        "activity_end_detail": null,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement.json:29:8775fd896cf491da",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "constantine_xi_byzantium_rules",
+      "type": "rewrite_activity",
+      "activity_id": "f81deab9-323e-529f-a5ec-1ff43378993b",
+      "baseline_before": {
+        "person_id": "708f56be-dc03-5182-8ab7-c2406cdb9796",
+        "polity_id": "074510f4-f2e7-5795-8cfb-2a4206fa7254",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1449,
+        "activity_end": 1453,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-8.json:2:9fa0b12e022dddcf",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "f81deab9-323e-529f-a5ec-1ff43378993b",
+        "person_id": "708f56be-dc03-5182-8ab7-c2406cdb9796",
+        "polity_id": "074510f4-f2e7-5795-8cfb-2a4206fa7254",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1449,
+        "activity_end": 1453,
+        "activity_start_detail": null,
+        "activity_end_detail": null,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-8.json:2:9fa0b12e022dddcf",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 3,
+    "production_mutation_authorized": false
+  }
+}
