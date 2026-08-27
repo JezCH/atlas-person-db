@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:valdemar-ii:kingdom-of-denmark:1202-1241:v1",
+  "person": {
+    "canonical_name_en": "Valdemar II of Denmark",
+    "display_name_ko": "발데마르 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Denmark",
+    "display_name_ko": "덴마크 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1202,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1241,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Valdemar II ruled Denmark from 1202 to 1241 and presided over the high point and subsequent contraction of medieval Danish Baltic expansion."
+  },
+  "sources": [
+    {
+      "title": "Denmark — Encyclopaedia Britannica historical article",
+      "canonical_url": "https://en.wikisource.org/wiki/Encyclop%C3%A6dia_Britannica%2C_Ninth_Edition/Denmark",
+      "citation_text": "Valdemar II ruled Denmark from 1202 to 1241 and presided over the high point and subsequent contraction of medieval Danish Baltic expansion.",
+      "source_type": "encyclopedic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

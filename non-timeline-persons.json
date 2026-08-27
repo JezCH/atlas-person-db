@@ -490,5 +490,39 @@
     "role_ko": "트로이 전쟁 전승의 아마존 여왕·전사",
     "reason": "Penthesilea is a major Amazon queen in Greek Trojan War tradition, remembered as leading Amazon warriors to aid Troy and being slain by Achilles. She is an independent mythological figure from Hippolyta but has no secure historical chronology or contemporary evidence establishing her as a datable historical ruler. ATLAS therefore preserves her as a non-timeline Amazon representative without assigning speculative Trojan War dates to her personal activity.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or mythical overlay is enabled."
+  },
+  {
+    "person_name": "Xochitl",
+    "politic_name": "Toltec Civilization",
+    "display_name_ko": "소치틀",
+    "politic_display_name_ko": "톨텍 문명",
+    "historicity": "legendary",
+    "historicity_display_ko": "전설",
+    "timeline_status": "excluded",
+    "date_basis": "late_indigenous_and_colonial_toltec_tradition_without_secure_personal_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "톨텍 전승의 여왕·여제",
+    "reason": "Xochitl appears in later Toltec historical-legendary tradition, especially accounts transmitted through Fernando de Alva Ixtlilxochitl. Her independent historical existence and the precise-looking traditional reign assigned to her cannot be securely verified, so ATLAS preserves her as a non-timeline Toltec figure without fabricating personal chronology.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-historicity overlay is enabled."
+  },
+  {
+    "person_name": "Ntare I Rushatsi Cambarantama",
+    "politic_name": "Kingdom of Burundi",
+    "display_name_ko": "은타레 1세 루샤치 캄바란타마",
+    "politic_display_name_ko": "부룬디 왕국",
+    "historicity": "legendary_or_unverified",
+    "historicity_display_ko": "전설·역사성 미검증",
+    "timeline_status": "excluded",
+    "date_basis": "burundi_foundation_tradition_with_conflicting_regnal_chronologies",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "부룬디 건국 전승의 초대 므와미",
+    "reason": "Burundian foundation traditions identify Cambarantama/Ntare Rushatsi as the first mwami, but the narratives and proposed reign dates differ substantially across traditions and later king lists. ATLAS preserves the founding figure without promoting conflicting traditional chronologies to a historical timeline.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-historicity overlay is enabled."
   }
 ]

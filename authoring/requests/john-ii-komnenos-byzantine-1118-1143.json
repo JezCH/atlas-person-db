@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:john-ii-komnenos:byzantine:1118-1143:v1",
+  "person": {
+    "canonical_name_en": "John II Komnenos",
+    "display_name_ko": "요안니스 2세 콤니노스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Byzantine Empire",
+    "display_name_ko": "동로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1118,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1143,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "John II Komnenos ruled the Byzantine Empire from 1118 to 1143 and continued the Komnenian restoration through sustained military and administrative consolidation."
+  },
+  "sources": [
+    {
+      "title": "John II Comnenus — Encyclopaedia Britannica",
+      "canonical_url": "https://www.britannica.com/biography/John-II-Comnenus",
+      "citation_text": "John II Komnenos ruled the Byzantine Empire from 1118 to 1143 and continued the Komnenian restoration through sustained military and administrative consolidation.",
+      "source_type": "encyclopedic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

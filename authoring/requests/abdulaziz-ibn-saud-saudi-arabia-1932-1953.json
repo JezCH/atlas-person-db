@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:abdulaziz-ibn-saud:saudi-arabia:1932-1953:v1",
+  "person": {
+    "canonical_name_en": "Abdulaziz Ibn Saud",
+    "display_name_ko": "압둘아지즈 이븐 사우드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Saudi Arabia",
+    "display_name_ko": "사우디아라비아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1932,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1953,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Abdulaziz Ibn Saud unified his realms as the Kingdom of Saudi Arabia in 1932 and reigned as its founding king until his death in 1953."
+  },
+  "sources": [
+    {
+      "title": "Who Is the Founder of Saudi Arabia? — Saudipedia",
+      "canonical_url": "https://saudipedia.com/en/who-is-the-founder-of-saudi-arabia",
+      "citation_text": "Abdulaziz Ibn Saud unified his realms as the Kingdom of Saudi Arabia in 1932 and reigned as its founding king until his death in 1953.",
+      "source_type": "official_encyclopedic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

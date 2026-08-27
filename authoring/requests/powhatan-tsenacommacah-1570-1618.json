@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:powhatan:tsenacommacah:c1570-1618:v1",
+  "person": {
+    "canonical_name_en": "Powhatan",
+    "display_name_ko": "포우하탄",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Tsenacommacah",
+    "display_name_ko": "체나코마카",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Paramount Chief",
+    "role_display_name_ko": "대추장",
+    "start_year": 1570,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1618,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Wahunsenacawh, commonly called Powhatan, was the paramount chief of Tsenacommacah, the Powhatan political confederacy encountered by the Jamestown settlers. His accession date is not securely fixed, so the start is approximate; his death in 1618 ends the Activity."
+  },
+  "sources": [
+    {
+      "title": "Powhatan — National Park Service",
+      "canonical_url": "https://www.nps.gov/people/powhatan.htm",
+      "citation_text": "Wahunsenacawh, commonly called Powhatan, was the paramount chief of Tsenacommacah, the Powhatan political confederacy encountered by the Jamestown settlers. His accession date is not securely fixed, so the start is approximate; his death in 1618 ends the Activity.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

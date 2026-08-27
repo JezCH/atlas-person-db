@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:merkurios:makuria:697-722:v1",
+  "person": {
+    "canonical_name_en": "Merkurios",
+    "display_name_ko": "메르쿠리오스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Makuria",
+    "display_name_ko": "마쿠리아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 697,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 722,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Merkurios ruled Makuria from 697 to about 722; inscriptions anchor the chronology and his reign is associated with Makuria's absorption of Nobatia."
+  },
+  "sources": [
+    {
+      "title": "Merkurios of Makuria — summary citing P. L. Shinnie, Ancient Nubia",
+      "canonical_url": "https://en-academic.com/dic.nsf/enwiki/964944/",
+      "citation_text": "Merkurios ruled Makuria from 697 to about 722; inscriptions anchor the chronology and his reign is associated with Makuria's absorption of Nobatia.",
+      "source_type": "scholarly_reference_summary"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

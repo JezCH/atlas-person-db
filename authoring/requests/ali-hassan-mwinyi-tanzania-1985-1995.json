@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ali-hassan-mwinyi:tanzania:1985-1995:v1",
+  "person": {
+    "canonical_name_en": "Ali Hassan Mwinyi",
+    "display_name_ko": "알리 하산 므위니",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "United Republic of Tanzania",
+    "display_name_ko": "탄자니아 연합공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1985,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1995,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ali Hassan Mwinyi served as the second President of the United Republic of Tanzania from 5 November 1985 to 23 November 1995 and oversaw a major phase of economic and political liberalization."
+  },
+  "sources": [
+    {
+      "title": "Ali Hassan Mwinyi — Office of the President of Tanzania",
+      "canonical_url": "https://www.ikulu.go.tz/index.php/administration/about_biography/3",
+      "citation_text": "Ali Hassan Mwinyi served as the second President of the United Republic of Tanzania from 5 November 1985 to 23 November 1995 and oversaw a major phase of economic and political liberalization.",
+      "source_type": "official_government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

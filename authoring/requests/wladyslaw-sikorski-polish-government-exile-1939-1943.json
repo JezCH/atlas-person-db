@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:wladyslaw-sikorski:polish-government-in-exile:1939-1943:v1",
+  "person": {
+    "canonical_name_en": "Władysław Sikorski",
+    "display_name_ko": "브와디스와프 시코르스키",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Polish Government-in-Exile",
+    "display_name_ko": "폴란드 망명정부",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1939,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1943,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Władysław Sikorski became prime minister of the Polish government-in-exile in September 1939 and remained its wartime political leader until his death in July 1943; he also served as Commander-in-Chief of the Polish Armed Forces."
+  },
+  "sources": [
+    {
+      "title": "Władysław Sikorski (1881–1943) — Institute of National Remembrance",
+      "canonical_url": "https://eng.ipn.gov.pl/en/digital-resources/exhibitions/10611%2CWladyslaw-Sikorski-18811943.html",
+      "citation_text": "Władysław Sikorski became prime minister of the Polish government-in-exile in September 1939 and remained its wartime political leader until his death in July 1943; he also served as Commander-in-Chief of the Polish Armed Forces.",
+      "source_type": "official_historical_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

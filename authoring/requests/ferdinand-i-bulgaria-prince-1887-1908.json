@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ferdinand-i-bulgaria:principality:1887-1908:v1",
+  "person": {
+    "canonical_name_en": "Ferdinand I of Bulgaria",
+    "display_name_ko": "페르디난트 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Principality of Bulgaria",
+    "display_name_ko": "불가리아 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Prince",
+    "role_display_name_ko": "공",
+    "start_year": 1887,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1908,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ferdinand ruled the Principality of Bulgaria from 1887 until the declaration of independence and elevation to a kingdom in 1908."
+  },
+  "sources": [
+    {
+      "title": "Ferdinand I of Bulgaria",
+      "canonical_url": "https://en.wikipedia.org/wiki/Ferdinand_I_of_Bulgaria",
+      "citation_text": "Ferdinand ruled the Principality of Bulgaria from 1887 until the declaration of independence and elevation to a kingdom in 1908.",
+      "source_type": "encyclopedic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-28",
+      "document_title": "페르디난트 1세(불가리아)",
+      "url": "https://namu.wiki/w/%ED%8E%98%EB%A5%B4%EB%94%94%EB%82%9C%ED%8A%B8%201%EC%84%B8(%EB%B6%88%EA%B0%80%EB%A6%AC%EC%95%84)"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:raymond-poincare:french-third-republic:1913-1920:v1",
+  "person": {
+    "canonical_name_en": "Raymond Poincaré",
+    "display_name_ko": "레몽 푸앵카레",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "French Third Republic",
+    "display_name_ko": "프랑스 제3공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1913,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1920,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Raymond Poincaré served as President of the French Republic from 18 February 1913 to 18 February 1920 and was the head of state throughout most of the First World War."
+  },
+  "sources": [
+    {
+      "title": "Raymond Poincaré — Élysée",
+      "canonical_url": "https://www.elysee.fr/en/raymond-poincare",
+      "citation_text": "Raymond Poincaré served as President of the French Republic from 18 February 1913 to 18 February 1920 and was the head of state throughout most of the First World War.",
+      "source_type": "official_government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

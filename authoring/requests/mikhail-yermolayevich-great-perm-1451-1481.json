@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mikhail-yermolayevich:great-perm:1451-1481:v1",
+  "person": {
+    "canonical_name_en": "Mikhail Yermolayevich of Great Perm",
+    "display_name_ko": "미하일 예르몰라예비치",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Principality of Great Perm",
+    "display_name_ko": "대페름 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Prince",
+    "role_display_name_ko": "공",
+    "start_year": 1451,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1481,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mikhail Yermolayevich was prince of Great Perm from 1451 to 1481. ATLAS uses the historical principality rather than treating the broader Komi ethnolinguistic community itself as a state."
+  },
+  "sources": [
+    {
+      "title": "Princes of Great Perm — historical ruler list",
+      "canonical_url": "https://wikipedia.akarpov.ru/content/wikipedia/A/%D0%92%D0%B5%D0%BB%D0%B8%D0%BA%D0%BE%D0%BF%D0%B5%D1%80%D0%BC%D1%81%D0%BA%D0%B8%D0%B5_%D0%BA%D0%BD%D1%8F%D0%B7%D1%8C%D1%8F",
+      "citation_text": "Mikhail Yermolayevich was prince of Great Perm from 1451 to 1481. ATLAS uses the historical principality rather than treating the broader Komi ethnolinguistic community itself as a state.",
+      "source_type": "historical_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:kigeli-iv-rwabugiri:rwanda:1853-1895:v1",
+  "person": {
+    "canonical_name_en": "Kigeli IV Rwabugiri",
+    "display_name_ko": "키겔리 4세 르와부기리",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Rwanda",
+    "display_name_ko": "르완다 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Mwami",
+    "role_display_name_ko": "므와미",
+    "start_year": 1853,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1895,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Kigeli IV Rwabugiri ruled Rwanda in the latter nineteenth century and is associated with a major phase of centralization and territorial consolidation. Regnal years are retained as approximate because precolonial Rwandan chronology is reconstructed."
+  },
+  "sources": [
+    {
+      "title": "Kigeli IV Rwabugiri — Royal House of Rwanda historical overview",
+      "canonical_url": "https://royalhouseofrwanda.org/images/gakondo-royal-birthday-edition-dec-20-2017.pdf",
+      "citation_text": "Kigeli IV Rwabugiri ruled Rwanda in the latter nineteenth century and is associated with a major phase of centralization and territorial consolidation. Regnal years are retained as approximate because precolonial Rwandan chronology is reconstructed.",
+      "source_type": "dynastic_historical_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

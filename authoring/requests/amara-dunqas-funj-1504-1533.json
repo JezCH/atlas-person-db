@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:amara-dunqas:funj-sultanate:1504-1533:v1",
+  "person": {
+    "canonical_name_en": "Amara Dunqas",
+    "display_name_ko": "아마라 둔카스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Funj Sultanate",
+    "display_name_ko": "푼즈 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1504,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1533,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Amara Dunqas is the first ruler and traditional founder of the Funj Sultanate centered on Sennar, ruling from 1504 to about 1533/34."
+  },
+  "sources": [
+    {
+      "title": "Amara Dunqas",
+      "canonical_url": "https://en.wikipedia.org/wiki/Amara_Dunqas",
+      "citation_text": "Amara Dunqas is the first ruler and traditional founder of the Funj Sultanate centered on Sennar, ruling from 1504 to about 1533/34.",
+      "source_type": "encyclopedic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

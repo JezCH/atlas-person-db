@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:samuel:first-bulgarian-empire:997-1014:v1",
+  "person": {
+    "canonical_name_en": "Samuel of Bulgaria",
+    "display_name_ko": "사무일",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "First Bulgarian Empire",
+    "display_name_ko": "제1차 불가리아 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Tsar",
+    "role_display_name_ko": "차르",
+    "start_year": 997,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1014,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Samuel ruled the First Bulgarian Empire as tsar from 997 until his death in 1014, during the decisive phase of the long Byzantine-Bulgarian struggle with Basil II."
+  },
+  "sources": [
+    {
+      "title": "Samuel of Bulgaria",
+      "canonical_url": "https://en.wikipedia.org/wiki/Samuel_of_Bulgaria",
+      "citation_text": "Samuel ruled the First Bulgarian Empire as tsar from 997 until his death in 1014, during the decisive phase of the long Byzantine-Bulgarian struggle with Basil II.",
+      "source_type": "encyclopedic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:narbona:dine:1822-1849:v1",
+  "person": {
+    "canonical_name_en": "Narbona",
+    "display_name_ko": "나르보나",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Diné",
+    "display_name_ko": "디네(나바호)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Navajo Leader",
+    "role_display_name_ko": "나바호 지도자",
+    "start_year": 1822,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1849,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Narbona was an influential Diné/Navajo leader rather than a centralized ruler of all Navajo people. ATLAS uses the period after the 1822 killing of prominent Navajo leaders as an approximate start for his well-documented senior leadership, ending with his death in 1849."
+  },
+  "sources": [
+    {
+      "title": "Narbona / Navajo historical context — National Park Service NRHP documentation",
+      "canonical_url": "https://npgallery.nps.gov/pdfhost/docs/NRHP/Text/66000175.pdf",
+      "citation_text": "Narbona was an influential Diné/Navajo leader rather than a centralized ruler of all Navajo people. ATLAS uses the period after the 1822 killing of prominent Navajo leaders as an approximate start for his well-documented senior leadership, ending with his death in 1849.",
+      "source_type": "government_historic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

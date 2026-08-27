@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tuskaloosa:mississippian-chiefdom:1540-point:v1",
+  "person": {
+    "canonical_name_en": "Tuskaloosa",
+    "display_name_ko": "투스칼루사",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Tuskaloosa Chiefdom",
+    "display_name_ko": "투스칼루사 정치체",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Paramount Chief",
+    "role_display_name_ko": "대추장",
+    "start_year": 1540,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1540,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tuskaloosa was the paramount chief encountered by Hernando de Soto's expedition in 1540 and is associated with the confrontation culminating at Mabila. ATLAS uses 1540 as the securely documented personal activity point and does not make him ruler of all Mississippian peoples."
+  },
+  "sources": [
+    {
+      "title": "Tuskaloosa",
+      "canonical_url": "https://en.wikipedia.org/wiki/Tuskaloosa",
+      "citation_text": "Tuskaloosa was the paramount chief encountered by Hernando de Soto's expedition in 1540 and is associated with the confrontation culminating at Mabila. ATLAS uses 1540 as the securely documented personal activity point and does not make him ruler of all Mississippian peoples.",
+      "source_type": "encyclopedic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

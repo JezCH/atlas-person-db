@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jigme-singye-wangchuck:bhutan:1972-2006:v1",
+  "person": {
+    "canonical_name_en": "Jigme Singye Wangchuck",
+    "display_name_ko": "지그메 싱게 왕축",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Bhutan",
+    "display_name_ko": "부탄 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1972,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2006,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Jigme Singye Wangchuck was the fourth Druk Gyalpo of Bhutan, reigning from 1972 until his abdication in 2006, and is closely associated with Bhutan's modernization and Gross National Happiness framework."
+  },
+  "sources": [
+    {
+      "title": "Jigme Singye Wangchuck — biographical record",
+      "canonical_url": "https://commons.wikimedia.org/wiki/Category:Jigme_Singye_Wangchuck",
+      "citation_text": "Jigme Singye Wangchuck was the fourth Druk Gyalpo of Bhutan, reigning from 1972 until his abdication in 2006, and is closely associated with Bhutan's modernization and Gross National Happiness framework.",
+      "source_type": "biographical_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
