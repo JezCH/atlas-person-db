@@ -132,3 +132,19 @@ test("spacetime activation refreshes Person data instead of reusing a stale reso
   assert.ok(activateIndex >= 0);
   assert.ok(refreshIndex > activateIndex && refreshIndex < ensureDataIndex);
 });
+
+
+test("spacetime rerenders preserve keyboard focus for stable controls and the viewport", async () => {
+  const view = await fixture(viewUrl);
+  assert.match(view, /function captureRenderFocus\(mount\)/);
+  assert.match(view, /document\.activeElement/);
+  assert.match(view, /active\.classList\?\.contains\?\.\("spacetime-scroll"\)/);
+  assert.match(view, /function restoreRenderFocus\(mount, snapshot\)/);
+  assert.match(view, /target\.focus\(\{ preventScroll: true \}\)/);
+  const renderIndex = view.indexOf("function renderInto(mount)");
+  const captureIndex = view.indexOf("const renderFocus = captureRenderFocus(mount);", renderIndex);
+  const innerHtmlIndex = view.indexOf("mount.innerHTML =", renderIndex);
+  const restoreIndex = view.indexOf("restoreRenderFocus(mount, renderFocus);", renderIndex);
+  assert.ok(renderIndex >= 0 && captureIndex > renderIndex && captureIndex < innerHtmlIndex);
+  assert.ok(restoreIndex > innerHtmlIndex, "focus must be restored only after the replacement DOM is bound");
+});

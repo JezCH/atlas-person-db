@@ -153,6 +153,25 @@
     return TIME_CAMERA_HEADER_HEIGHT + usableHeight / 2;
   }
 
+  function captureRenderFocus(mount) {
+    const active = document.activeElement;
+    if (!active || !mount?.contains?.(active)) return null;
+    if (active.id) return Object.freeze({ id: active.id, viewport: false });
+    if (active.classList?.contains?.("spacetime-scroll")) return Object.freeze({ id: null, viewport: true });
+    return null;
+  }
+
+  function restoreRenderFocus(mount, snapshot) {
+    if (!snapshot) return false;
+    const target = snapshot.id
+      ? document.getElementById(snapshot.id)
+      : snapshot.viewport ? mount?.querySelector?.(".spacetime-scroll") : null;
+    if (!target || !mount?.contains?.(target) || typeof target.focus !== "function") return false;
+    try { target.focus({ preventScroll: true }); }
+    catch { target.focus(); }
+    return true;
+  }
+
   function horizontalCameraGeometry(scroll) {
     const canvas = scroll?.querySelector?.(".spacetime-canvas");
     if (!scroll || !canvas) return null;
@@ -780,6 +799,7 @@
   }
 
   function renderInto(mount) {
+    const renderFocus = captureRenderFocus(mount);
     const { timeProjection, spaceAxis, semanticAxis, exploration, lod, density } = runtime();
     const timeline = timelineRange();
     const projection = timeProjection.createSemanticTimeProjection(timeline.start_year, timeline.end_year, DEFAULT_TIMELINE_HEIGHT * timeCameraZoom, LOG_SOFTENING_YEARS, timeCameraZoom);
@@ -905,6 +925,7 @@
     });
     mount.querySelector("#spacetimeDetailPerson")?.addEventListener("click", () => selectPerson(mount, selectedPersonId, { focus: true, detail: true }));
     mount.querySelector("#spacetimeClearPerson")?.addEventListener("click", () => clearSelection(mount));
+    restoreRenderFocus(mount, renderFocus);
   }
 
   function bindResize() {
