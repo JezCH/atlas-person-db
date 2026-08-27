@@ -25,6 +25,7 @@ test("search exposes explicit Person results, preserves IME composition, and Ent
   const css = await fixture(cssUrl);
   assert.ok(view.includes("renderSearchResults(searchItems, needle)"));
   assert.ok(view.includes("data-spacetime-search-result"));
+  assert.ok(view.includes('id="spacetimeSearchResult-${escapeHtml(item.person_id)}"'));
   assert.ok(view.includes("if (event.isComposing) return;"));
   assert.ok(view.includes('event.key === "Enter"'));
   assert.ok(view.includes("selectPerson(mount, first.person_id, { focus: true })"));
@@ -145,6 +146,7 @@ test("spacetime rerenders preserve keyboard focus for stable controls and the vi
   assert.match(view, /active\.classList\?\.contains\?\.\("spacetime-scroll"\)/);
   assert.match(view, /function restoreRenderFocus\(mount, snapshot\)/);
   assert.match(view, /target\.focus\(\{ preventScroll: true \}\)/);
+  assert.ok(view.includes('id="spacetimeSearchResult-${escapeHtml(item.person_id)}"'));
   const renderIndex = view.indexOf("function renderInto(mount)");
   const captureIndex = view.indexOf("const renderFocus = captureRenderFocus(mount);", renderIndex);
   const innerHtmlIndex = view.indexOf("mount.innerHTML =", renderIndex);

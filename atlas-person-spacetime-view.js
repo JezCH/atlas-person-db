@@ -397,7 +397,7 @@
   function renderSearchResults(items, needle) {
     if (!needle) return "";
     const visible = items.slice(0, 8);
-    return `<section class="spacetime-search-results card" aria-label="검색 결과"><div class="spacetime-search-results-head"><strong>검색 결과</strong><span>${items.length}명${items.length > visible.length ? ` · 상위 ${visible.length}명 표시` : ""}</span></div>${visible.length ? `<div class="spacetime-search-result-list">${visible.map((item) => `<button type="button" data-spacetime-search-result="${escapeHtml(item.person_id)}"><strong>${escapeHtml(item.display_name)}</strong><span>${escapeHtml(polityLabel(item.representative?.activity))}</span><small>${escapeHtml(periodLabel(item.representative?.activity))}</small></button>`).join("")}</div>` : '<p class="spacetime-empty-inline">일치하는 위치 확정 Person track이 없습니다.</p>'}</section>`;
+    return `<section class="spacetime-search-results card" aria-label="검색 결과"><div class="spacetime-search-results-head"><strong>검색 결과</strong><span>${items.length}명${items.length > visible.length ? ` · 상위 ${visible.length}명 표시` : ""}</span></div>${visible.length ? `<div class="spacetime-search-result-list">${visible.map((item) => `<button id="spacetimeSearchResult-${escapeHtml(item.person_id)}" type="button" data-spacetime-search-result="${escapeHtml(item.person_id)}"><strong>${escapeHtml(item.display_name)}</strong><span>${escapeHtml(polityLabel(item.representative?.activity))}</span><small>${escapeHtml(periodLabel(item.representative?.activity))}</small></button>`).join("")}</div>` : '<p class="spacetime-empty-inline">일치하는 위치 확정 Person track이 없습니다.</p>'}</section>`;
   }
 
   function renderSelection(track, navigationCount = 0) {
