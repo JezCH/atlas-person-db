@@ -961,8 +961,8 @@
     mount.innerHTML = '<section class="card spacetime-loading"><strong>시공간 인물도 준비 중</strong><p>Person track과 검토된 공간 배치 자료를 읽고 있습니다.</p></section>';
     try {
       await ensureRuntimeModules();
-      await ensureData();
-      if (document.getElementById("personSpacetimeMount") !== mount) return;
+      const loaded = await ensureData();
+      if (!loaded || document.getElementById("personSpacetimeMount") !== mount) return;
       renderInto(mount);
     } catch (error) {
       console.error(error);
