@@ -156,3 +156,23 @@ test("spacetime rerenders preserve keyboard focus for stable controls and the vi
   assert.ok(renderIndex >= 0 && captureIndex > renderIndex && captureIndex < innerHtmlIndex);
   assert.ok(restoreIndex > innerHtmlIndex, "focus must be restored only after the replacement DOM is bound");
 });
+
+
+test("stale reactivation fetches cannot overwrite newer spacetime data", async () => {
+  const view = await fixture(viewUrl);
+  assert.ok(view.includes("let dataLoadGeneration = 0;"));
+  const ensureIndex = view.indexOf("async function ensureData()");
+  const captureIndex = view.indexOf("const generation = dataLoadGeneration;", ensureIndex);
+  const staleGuardIndex = view.indexOf("if (generation !== dataLoadGeneration) return false;", ensureIndex);
+  const personsWriteIndex = view.indexOf("persons = personResult.persons || [];", ensureIndex);
+  assert.ok(ensureIndex >= 0 && captureIndex > ensureIndex);
+  assert.ok(staleGuardIndex > captureIndex && staleGuardIndex < personsWriteIndex);
+
+  const activateIndex = view.indexOf("async function activate()");
+  const invalidateIndex = view.indexOf("dataLoadGeneration += 1;", activateIndex);
+  const clearPromiseIndex = view.indexOf("loadPromise = null;", activateIndex);
+  const ensureDataIndex = view.indexOf("await ensureData();", activateIndex);
+  assert.ok(invalidateIndex > activateIndex && invalidateIndex < clearPromiseIndex);
+  assert.ok(clearPromiseIndex < ensureDataIndex);
+  assert.ok(view.includes("if (generation === dataLoadGeneration) loadPromise = null;"));
+});
