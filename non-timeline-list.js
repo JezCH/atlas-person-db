@@ -21,12 +21,6 @@
     return `전승상 ${primary}년경`;
   }
 
-  function hideEmptyAuthoritativeOtherGroup() {
-    const group = document.querySelector("#personMainGroups .person-group-other");
-    if (!group) return;
-    group.hidden = !group.querySelector(".person-card");
-  }
-
   function createSection() {
     const personView = document.getElementById("personMainView");
     if (!personView || document.getElementById("nonTimelineSection")) return null;
@@ -87,7 +81,6 @@
 
       count.textContent = `${items.length}명`;
       empty.hidden = items.length !== 0;
-      hideEmptyAuthoritativeOtherGroup();
     } catch (error) {
       console.error("ATLAS non-timeline list failed", error);
       count.textContent = "확인 실패";
@@ -135,7 +128,6 @@
   `;
   document.head.appendChild(style);
 
-  window.addEventListener("atlas-person-main-rendered", hideEmptyAuthoritativeOtherGroup);
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", load, { once: true });
   else load();
 })();
