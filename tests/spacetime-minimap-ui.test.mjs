@@ -50,6 +50,18 @@ test("minimap viewport follows scroll and pointer navigation changes only camera
   assert.ok(view.includes("updateCameraPosition(scroll, projection)"));
 });
 
+test("minimap is keyboard focusable and pans with the same bounded exploration math", async () => {
+  const view = await fixture(viewUrl);
+  const css = await fixture(cssUrl);
+  assert.ok(view.includes('role="group" tabindex="0"'));
+  assert.ok(view.includes("방향키로 카메라 이동"));
+  assert.ok(view.includes('surface.addEventListener("keydown"'));
+  assert.ok(view.includes('ArrowLeft: "left", ArrowRight: "right", ArrowUp: "up", ArrowDown: "down"'));
+  assert.ok(view.includes("exploration.panTarget("));
+  assert.ok(view.includes("panCamera(direction)"));
+  assert.ok(css.includes(".spacetime-minimap-surface:focus-visible{"));
+});
+
 test("minimap mirrors macroregion and era geometry and marks the selected Person", async () => {
   const view = await fixture(viewUrl);
   assert.ok(view.includes("for (const region of regions.slice(1))"));
