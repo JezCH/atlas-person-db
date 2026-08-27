@@ -371,7 +371,7 @@
       const y2 = projection.yForOrdinal(segment.end_ordinal);
       const y = (y1 + y2) / 2;
       const x = segment.x_anchor * contentWidth;
-      return `<button type="button" class="spacetime-activity-glyph${selectedPersonId === track.person_id ? " is-selected" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" style="left:${x + 6}px;top:${y}px;opacity:${opacity}" title="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`)}"><span>${escapeHtml(polityLabel(segment.activity))}</span></button>`;
+      return `<button type="button" class="spacetime-activity-glyph${selectedPersonId === track.person_id ? " is-selected" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" style="left:${x + 6}px;top:${y}px;opacity:${opacity}" title="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`)}" aria-label="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`)}"><span>${escapeHtml(polityLabel(segment.activity))}</span></button>`;
     })).join("");
   }
 
