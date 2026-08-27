@@ -47,7 +47,7 @@ For this class of figure:
 - preserve a conventional foundation/traditional year only in `traditional_year` when the tradition itself makes that year meaningful; never promote it to a verified Activity boundary;
 - never invent a broad placeholder interval merely to make the figure visible on the timeline.
 
-Examples of the established path include Hotu Matuʻa, Gilgamesh, Bjorn Ironside, Bilqis, Eri, and Kupe.
+Examples of the established path include Hotu Matuʻa, Bjorn Ironside, Bilqis, Eri, and Kupe.
 
 This gate is **not** triggered merely because a historical Person has approximate dates. A historically defensible Person with a scholarly approximate Activity/reign window remains in normal Human Authoring with `approximate` or `uncertain` boundaries. The deciding issue is whether the *individual and personal chronology* are sufficiently historical for the year timeline.
 

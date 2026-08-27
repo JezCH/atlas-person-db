@@ -1,0 +1,31 @@
+{
+  "schema": "atlas-correction-manifest/v1.1",
+  "review_status": "approved",
+  "request_id": "correction:telesilla:replace-broad-artistic-window-with-c451-point:2026-08-27:v1",
+  "operations": [
+    {
+      "type": "update_activity_interval",
+      "relationship_id": "3b687330-d584-49e8-99d4-3cdb1f412d5d",
+      "expected_before": {
+        "person_id": "a3a24796-9211-4a37-a2e0-2beae99c627d",
+        "polity_id": "2bf9b3d5-147f-4fb1-aa64-2715ed855c1a",
+        "role_id": "c83af834-d889-4c06-a5d2-d3b6950b050c",
+        "period_basis_id": "7e26c1ed-b4d9-547a-ac42-af523ec12d1b",
+        "activity_start": -500,
+        "activity_end": -450,
+        "notes": "Telesilla is modeled as a fifth-century BCE Argive lyric poet. Oxford cautions that the later story of her arming Argive women may be fabricated, so ATLAS does not create a military command; c.500–c.450 is a broad representative artistic window reflecting conflicting ancient dating traditions.",
+        "legacy_source_key": null
+      },
+      "expected_after": {
+        "person_id": "a3a24796-9211-4a37-a2e0-2beae99c627d",
+        "polity_id": "2bf9b3d5-147f-4fb1-aa64-2715ed855c1a",
+        "role_id": "c83af834-d889-4c06-a5d2-d3b6950b050c",
+        "period_basis_id": "7e26c1ed-b4d9-547a-ac42-af523ec12d1b",
+        "activity_start": -451,
+        "activity_end": -451,
+        "notes": "Telesilla is modeled as a fifth-century BCE Argive lyric poet. Oxford cautions that the later story of her arming Argive women may be fabricated, so ATLAS does not create a military command; c.500–c.450 is a broad representative artistic window reflecting conflicting ancient dating traditions.",
+        "legacy_source_key": null
+      }
+    }
+  ]
+}
