@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:zhang-fei:shu-han:general:211-221:v1",
+  "person": {
+    "canonical_name_en": "Zhang Fei",
+    "display_name_ko": "장비"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "장비",
+      "url": "https://namu.wiki/w/%EC%9E%A5%EB%B9%84"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Shu Han",
+    "display_name_ko": "촉한"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "General",
+    "role_display_name_ko": "장군",
+    "start_year": 211,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 221,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 211 as the map-level start of the Liu Bei/Shu Han territorial interval, consistent with Liu Bei and Guan Yu already in Production; Zhang Fei's service to Liu Bei began earlier. The Sanguozhi records his participation in the Yi Province conquest, later senior military appointments, promotion in 221, and death that year."
+  },
+  "sources": [
+    {
+      "title": "三國志·蜀書六 (武英殿二十四史本) — Chinese Text Project",
+      "canonical_url": "https://ctext.org/sanguozhi/36/zh",
+      "citation_text": "Sanguozhi Scroll 36 contains Zhang Fei's biography and records his service under Liu Bei and his military career.",
+      "source_type": "primary_source_web"
+    },
+    {
+      "title": "Zhang Fei (Yide) — Sanguozhi Biography, Scroll 36",
+      "canonical_url": "https://kongming.net/biographies/sanguozhi/Zhang-Fei/ZL181",
+      "citation_text": "English translation of Chen Shou's Sanguozhi biography recording Zhang Fei's long service under Liu Bei, the Yi Province campaign, later appointments, and death in 221.",
+      "source_type": "translated_primary_source_web"
+    }
+  ]
+}

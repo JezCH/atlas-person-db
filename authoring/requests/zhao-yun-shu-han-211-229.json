@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:zhao-yun:shu-han:general:211-229:v1",
+  "person": {
+    "canonical_name_en": "Zhao Yun",
+    "display_name_ko": "조운"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "조운",
+      "url": "https://namu.wiki/w/%EC%A1%B0%EC%9A%B4"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Shu Han",
+    "display_name_ko": "촉한"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "General",
+    "role_display_name_ko": "장군",
+    "start_year": 211,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 229,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 211 as the map-level start of the Liu Bei/Shu Han territorial interval, consistent with Liu Bei and Guan Yu already in Production; Zhao Yun's service to Liu Bei began earlier. The Sanguozhi records his participation in the Yi Province campaign, continued senior military service under Shu Han, and death in 229."
+  },
+  "sources": [
+    {
+      "title": "三國志·蜀書六 (武英殿二十四史本) — Chinese Text Project",
+      "canonical_url": "https://ctext.org/sanguozhi/36/zh",
+      "citation_text": "Sanguozhi Scroll 36 contains Zhao Yun's biography and records his service under Liu Bei and Shu Han.",
+      "source_type": "primary_source_web"
+    },
+    {
+      "title": "Zhao Yun (Zilong) — Sanguozhi Biography, Scroll 36",
+      "canonical_url": "https://kongming.net/biographies/sanguozhi/Zhao-Yun/JackYuan",
+      "citation_text": "English translation of Chen Shou's Sanguozhi biography recording Zhao Yun's service under Liu Bei, the Yi Province campaign, later Shu appointments, and death in 229.",
+      "source_type": "translated_primary_source_web"
+    }
+  ]
+}
