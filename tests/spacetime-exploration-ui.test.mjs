@@ -171,8 +171,10 @@ test("stale reactivation fetches cannot overwrite newer spacetime data", async (
   const activateIndex = view.indexOf("async function activate()");
   const invalidateIndex = view.indexOf("dataLoadGeneration += 1;", activateIndex);
   const clearPromiseIndex = view.indexOf("loadPromise = null;", activateIndex);
-  const ensureDataIndex = view.indexOf("await ensureData();", activateIndex);
+  const ensureDataIndex = view.indexOf("const loaded = await ensureData();", activateIndex);
+  const loadedGuardIndex = view.indexOf('if (!loaded || document.getElementById("personSpacetimeMount") !== mount) return;', activateIndex);
   assert.ok(invalidateIndex > activateIndex && invalidateIndex < clearPromiseIndex);
   assert.ok(clearPromiseIndex < ensureDataIndex);
+  assert.ok(loadedGuardIndex > ensureDataIndex);
   assert.ok(view.includes("if (generation === dataLoadGeneration) loadPromise = null;"));
 });
