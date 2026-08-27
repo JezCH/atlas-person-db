@@ -17,7 +17,7 @@ test('domain surface owner loads after authority navigation', () => {
 test('all Person-owned top-level surfaces are consolidated under one domain root', () => {
   assert.match(ownerScript, /personDomainRoot/);
   assert.match(ownerScript, /"personMainView"/);
-  assert.match(ownerScript, /"nonTimelineSection"/);
+  assert.doesNotMatch(ownerScript, /"nonTimelineSection"/);
   assert.match(ownerScript, /"relationshipAuthoringTools"/);
   assert.match(ownerScript, /root\.hidden\s*=\s*!isPersons/);
   assert.match(ownerCss, /#personDomainRoot\[hidden\]\{display:none!important\}/);
