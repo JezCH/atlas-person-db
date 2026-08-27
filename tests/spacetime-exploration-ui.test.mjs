@@ -20,13 +20,22 @@ test("current spacetime surface loads P11 exploration in place and keeps one ren
   assert.doesNotMatch(view, /spacetime-v2/);
 });
 
-test("search exposes explicit Person results and Enter focuses the first matching Person", async () => {
+test("search exposes explicit Person results, preserves IME composition, and Enter focuses the first matching Person", async () => {
   const view = await fixture(viewUrl);
   const css = await fixture(cssUrl);
   assert.ok(view.includes("renderSearchResults(searchItems, needle)"));
   assert.ok(view.includes("data-spacetime-search-result"));
+  assert.ok(view.includes("if (event.isComposing) return;"));
   assert.ok(view.includes('event.key === "Enter"'));
   assert.ok(view.includes("selectPerson(mount, first.person_id, { focus: true })"));
+  const inputHandler = view.indexOf('searchInput?.addEventListener("input"');
+  const composingGuard = view.indexOf("if (event.isComposing) return;", inputHandler);
+  const renderAfterInput = view.indexOf("renderInto(mount);", inputHandler);
+  assert.ok(inputHandler >= 0 && composingGuard > inputHandler && composingGuard < renderAfterInput);
+  const keyHandler = view.indexOf('searchInput?.addEventListener("keydown"');
+  const keyGuard = view.indexOf("if (event.isComposing) return;", keyHandler);
+  const enterBranch = view.indexOf('if (event.key === "Enter")', keyHandler);
+  assert.ok(keyHandler >= 0 && keyGuard > keyHandler && keyGuard < enterBranch);
   assert.ok(css.includes(".spacetime-search-results{"));
   assert.ok(css.includes(".spacetime-search-result-list{"));
 });
