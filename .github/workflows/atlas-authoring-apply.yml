@@ -175,19 +175,23 @@ jobs:
             git merge-base --is-ancestor "$runtime_sha" "$GITHUB_SHA" || { echo "Deployed runtime is not an ancestor of authoring commit" >&2; exit 1; }
             git diff --name-only --diff-filter=ACDMRTUXB "$runtime_sha" "$GITHUB_SHA" -- > /tmp/atlas-authoring-evidence/runtime-diff.txt
 
-            if node --input-type=module <<'NODE'
-            import fs from 'node:fs';
-            import { shouldBuildForChangedPaths } from './scripts/vercel-ignore-build.mjs';
-            const text = fs.readFileSync('/tmp/atlas-authoring-evidence/runtime-diff.txt', 'utf8').trim();
-            const paths = text ? text.split(/\r?\n/).filter(Boolean) : [];
-            if (shouldBuildForChangedPaths(paths)) {
-              console.error('AUTHORING_RUNTIME_CODE_DRIFT: deployment-relevant changes still exist after the deployed runtime SHA');
-              for (const path of paths) console.error(`  ${path}`);
-              process.exit(1);
-            }
-            console.log(`Authoring delta is deployment-safe (${paths.length} path${paths.length === 1 ? '' : 's'}).`);
-            NODE
-            then
+            set +e
+            node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import { shouldBuildForChangedPaths } from './scripts/vercel-ignore-build.mjs';
+          const text = fs.readFileSync('/tmp/atlas-authoring-evidence/runtime-diff.txt', 'utf8').trim();
+          const paths = text ? text.split(/\r?\n/).filter(Boolean) : [];
+          if (shouldBuildForChangedPaths(paths)) {
+            console.error('AUTHORING_RUNTIME_CODE_DRIFT: deployment-relevant changes still exist after the deployed runtime SHA');
+            for (const path of paths) console.error(`  ${path}`);
+            process.exit(1);
+          }
+          console.log(`Authoring delta is deployment-safe (${paths.length} path${paths.length === 1 ? '' : 's'}).`);
+          NODE
+            drift_status=$?
+            set -e
+
+            if [[ "$drift_status" == "0" ]]; then
               echo "ATLAS_RUNTIME_SHA=${runtime_sha}" >> "$GITHUB_ENV"
               echo "ATLAS_AUTHORING_BOOTSTRAP_REQUIRED=${bootstrap_required}" >> "$GITHUB_ENV"
               echo "Authoring runtime ${runtime_sha} is safe for GitHub authoring commit ${GITHUB_SHA}; bootstrap_required=${bootstrap_required}."
