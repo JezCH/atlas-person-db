@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "roger_bernard_iii_duplicate_activity_cleanup_20260827_v1",
+  "as_of": "2026-08-27",
+  "status": "REVIEWED_DUPLICATE_ACTIVITY_CLEANUP",
+  "release_order": 581,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "Production read-back after PR #575 identified duplicate Andorra Activities for Roger-Bernard III with identical polity and temporal boundaries but two role labels; retain the historically refined Co-Seigneur Activity and retire the earlier Co-Prince duplicate.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "retire_source_transfer_before_delete_required": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "roger_bernard_iii_retire_co_prince_duplicate",
+      "type": "retire_activity",
+      "activity_id": "23d05a56-473e-41bd-ab59-0ba96658e36b",
+      "baseline_before": {
+        "person_id": "640eb8de-4ff9-4185-94a4-ded37494743b",
+        "polity_id": "3c41a42b-b305-49bd-9cae-cbf3417200af",
+        "role_id": "c6f620aa-e0cf-49a6-89b5-462cdf9e9636",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1278,
+        "activity_end": 1302,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true,
+      "replacement_activity_ids": [
+        "52ce49b1-e6f2-43cd-bf86-ce60b7997899"
+      ]
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "retire_activity_count": 1,
+    "production_mutation_authorized": false
+  }
+}
