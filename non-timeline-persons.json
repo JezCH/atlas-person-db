@@ -473,5 +473,22 @@
     "role_ko": "호메로스 전승의 트로이 마지막 왕",
     "reason": "Priam is the legendary last king of Troy in Greek epic tradition. Archaeological Troy and Late Bronze Age western Anatolia are historical realities, but no contemporary evidence securely identifies Priam as a datable historical ruler or establishes a defensible personal reign interval. ATLAS therefore preserves him as the principal Homeric Trojan king without assigning speculative Trojan War dates to his personal timeline.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-historicity overlay is enabled."
+  },
+  {
+    "person_name": "Penthesilea",
+    "politic_name": "Amazons",
+    "display_name_ko": "펜테실레이아",
+    "politic_display_name_ko": "아마존족",
+    "historicity": "mythical",
+    "historicity_display_ko": "신화",
+    "timeline_status": "excluded",
+    "date_basis": "greek_trojan_war_mythological_tradition",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "트로이 전쟁 전승의 아마존 여왕·전사",
+    "reason": "Penthesilea is a major Amazon queen in Greek Trojan War tradition, remembered as leading Amazon warriors to aid Troy and being slain by Achilles. She is an independent mythological figure from Hippolyta but has no secure historical chronology or contemporary evidence establishing her as a datable historical ruler. ATLAS therefore preserves her as a non-timeline Amazon representative without assigning speculative Trojan War dates to her personal activity.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or mythical overlay is enabled."
   }
 ]
