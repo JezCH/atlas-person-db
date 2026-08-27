@@ -31,7 +31,7 @@ test('era classification uses the agreed shared ATLAS global cut points and pres
   assert.match(eraModelSource, /start_year: 1750, end_year: 1913/);
   assert.match(eraModelSource, /start_year: 1914, end_year: 1944/);
   assert.match(eraModelSource, /start_year: 1945, end_year: null/);
-  for (const label of ['고대', '고전', '중세', '근세', '산업·제국', '세계대전', '현대', '연대 미상']) {
+  for (const label of ['고대', '고전', '중세', '근세', '산업·제국', '세계대전', '현대', '전설, 신화, 연대미상']) {
     assert.match(eraModelSource, new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
   assert.match(source, /groupRowsByEra\(grid\)/);
