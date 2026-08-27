@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:nancempinco:kingdom-of-chimor:king:c1350:v1",
+  "person": {
+    "canonical_name_en": "Ñancempinco",
+    "display_name_ko": "냔센핀코"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Chimor",
+    "display_name_ko": "치모르 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1350,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1350,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Ñancempinco (Ñançenpinco/Nancen Pinco) is preserved in Chimú dynastic ethnohistory as an expansionist ruler of Chimor. Archaeological and ethnohistorical scholarship warns that the preserved dynastic genealogy compresses long spans and cannot support a fabricated full reign. Rowe's reconstruction, however, directly associates the incorporation of the Chicama valley and the first major imperial expansion with Ñancempinco around 1350 CE. ATLAS therefore records c.1350 as an approximate historical activity point, not as a complete accession-to-death reign."
+  },
+  "sources": [
+    {
+      "title": "Farfan, General Pacatnamu, And The Dynastic History Of Chimor — eHRAF Archaeology",
+      "canonical_url": "https://ehrafarchaeology.yale.edu/traditions/se75/documents/026",
+      "citation_text": "The indexed study states that the evidence perhaps confirms a historical king called Ñançenpinco while warning that traditional dynastic histories compress chronology.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Del paijanense al imperio Inca en el valle de Chicama — Universidad Nacional Mayor de San Marcos",
+      "canonical_url": "https://cybertesis.unmsm.edu.pe/backend/api/core/bitstreams/8052e1cb-5fd4-4059-8864-dd428a0ed579/content",
+      "citation_text": "The study cites Rowe (1949) for the incorporation of the Chicama valley into Chimú rule around 1350 CE during the reign of Ñancen-Pinco.",
+      "source_type": "university_research"
+    }
+  ]
+}
