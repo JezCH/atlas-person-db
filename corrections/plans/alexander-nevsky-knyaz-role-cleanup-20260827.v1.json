@@ -1,0 +1,146 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "alexander_nevsky_knyaz_role_cleanup_20260827_v1",
+  "as_of": "2026-08-27",
+  "status": "REVIEWED_ROLE_AND_DUPLICATE_ACTIVITY_CLEANUP",
+  "release_order": 582,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "Production read-back after PR #578 confirmed that the shared generic Prince role renders as 왕자, which is incorrect for the Russian ruling title князь. A dedicated Knyaz / 공 role now exists in Production. Keep the Knyaz 1236–1240 activity, retire the old Prince duplicate, and rebind only Alexander Nevsky's two remaining Novgorod terms to Knyaz.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "retire_source_transfer_before_delete_required": true,
+    "semantic_identity_change_forbidden": false,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "nevsky_retire_old_prince_1236_1240",
+      "type": "retire_activity",
+      "activity_id": "03d33aab-c32a-48cf-8153-93a04c96a1d8",
+      "baseline_before": {
+        "person_id": "b5da8bf6-699e-4ad7-801e-55d6a5f69ea9",
+        "polity_id": "c4d7101f-83e2-4327-bd3a-3fcc5a0eaad9",
+        "role_id": "0895bf90-7bb7-5a3c-a9f1-11f3c03c3aec",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1236,
+        "activity_end": 1240,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true,
+      "replacement_activity_ids": [
+        "061d653e-9d18-4a0a-984b-2c622afd8c4a"
+      ]
+    },
+    {
+      "case_id": "nevsky_rebind_1241_1256_to_knyaz",
+      "type": "rewrite_activity",
+      "activity_id": "3fe277c4-3e78-4c2f-a521-a35ffd3fc329",
+      "baseline_before": {
+        "person_id": "b5da8bf6-699e-4ad7-801e-55d6a5f69ea9",
+        "polity_id": "c4d7101f-83e2-4327-bd3a-3fcc5a0eaad9",
+        "role_id": "0895bf90-7bb7-5a3c-a9f1-11f3c03c3aec",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1241,
+        "activity_end": 1256,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "3fe277c4-3e78-4c2f-a521-a35ffd3fc329",
+        "person_id": "b5da8bf6-699e-4ad7-801e-55d6a5f69ea9",
+        "polity_id": "c4d7101f-83e2-4327-bd3a-3fcc5a0eaad9",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "dbb142b7-0611-4a04-80f1-8c67a7c322b8",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1241,
+        "activity_end": 1256,
+        "activity_start_detail": {
+          "year": 1241,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1256,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "nevsky_rebind_1258_1259_to_knyaz",
+      "type": "rewrite_activity",
+      "activity_id": "fe90c4cb-955f-44fc-823d-9ebaa2fb956c",
+      "baseline_before": {
+        "person_id": "b5da8bf6-699e-4ad7-801e-55d6a5f69ea9",
+        "polity_id": "c4d7101f-83e2-4327-bd3a-3fcc5a0eaad9",
+        "role_id": "0895bf90-7bb7-5a3c-a9f1-11f3c03c3aec",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1258,
+        "activity_end": 1259,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "fe90c4cb-955f-44fc-823d-9ebaa2fb956c",
+        "person_id": "b5da8bf6-699e-4ad7-801e-55d6a5f69ea9",
+        "polity_id": "c4d7101f-83e2-4327-bd3a-3fcc5a0eaad9",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "dbb142b7-0611-4a04-80f1-8c67a7c322b8",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1258,
+        "activity_end": 1259,
+        "activity_start_detail": {
+          "year": 1258,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1259,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "retire_activity_count": 1,
+    "rewrite_activity_count": 2,
+    "production_mutation_authorized": false
+  }
+}
