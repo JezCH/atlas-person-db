@@ -1,0 +1,35 @@
+{
+  "schema": "atlas-correction-manifest/v1.1",
+  "review_status": "approved",
+  "request_id": "correction:hiawatha-gush-xeen:retire-undated-map-rails:2026-08-27:v1",
+  "operations": [
+    {
+      "type": "retire_activity",
+      "relationship_id": "2f2a2dfe-12b3-52b7-957e-42d6f7b89f2a",
+      "expected": {
+        "person_id": "5e80cd21-07a8-5f45-83eb-a08dc5c7e37f",
+        "polity_id": "1fa78018-e3af-55c3-8b8e-1bf7ad1c4b08",
+        "role_id": "56e12539-5515-5e98-934c-6555e5a3eee5",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1450,
+        "activity_end": 1475,
+        "notes": "Traditional co-founder of the Haudenosaunee Confederacy. The activity dates are approximate and the confederacy's foundation chronology remains debated.",
+        "legacy_source_key": "pending-records-supplement.json:21:98f3172004b281de"
+      }
+    },
+    {
+      "type": "retire_activity",
+      "relationship_id": "56df9c32-4f00-4da9-a505-3d17d85f982c",
+      "expected": {
+        "person_id": "e0fe056b-3d54-4ccd-9ca1-c077c283a069",
+        "polity_id": "e5364c89-300d-4bca-9c6f-0296082e41fc",
+        "role_id": "14626de4-4d15-4199-8d11-0c299fb3082b",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1700,
+        "activity_end": 1740,
+        "notes": "Gush X'een is preserved in Tlingit historical tradition as an early Shtax'heen leader associated with the origin of the Sheiyksh (Shakes) chiefly title. The chronology is an oral-history reconstruction rather than a precisely dated documentary term, so both boundaries are approximate and confidence is likely rather than well_established.",
+        "legacy_source_key": null
+      }
+    }
+  ]
+}
