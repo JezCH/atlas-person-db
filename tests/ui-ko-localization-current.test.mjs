@@ -5,7 +5,7 @@ import fs from 'node:fs';
 const i18n = fs.readFileSync(new URL('../atlas-ui-localization.js', import.meta.url), 'utf8');
 const catalog = fs.readFileSync(new URL('../atlas-ui-authority-catalog.ko.js', import.meta.url), 'utf8');
 const nav = fs.readFileSync(new URL('../atlas-main-authority-nav.js', import.meta.url), 'utf8');
-const nonTimeline = fs.readFileSync(new URL('../non-timeline-list.js', import.meta.url), 'utf8');
+const main = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url), 'utf8');
 const nonTimelineData = JSON.parse(fs.readFileSync(new URL('../non-timeline-persons.json', import.meta.url), 'utf8'));
 const assetLoader = fs.readFileSync(new URL('../asset-loader.js', import.meta.url), 'utf8');
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
@@ -29,12 +29,11 @@ test('authority copy is externalized and includes the canonical spacetime place-
   assert.doesNotMatch(nav, /검토된 수도를 사용합니다/);
 });
 
-test('non-timeline presentation no longer maintains a hard-coded polity translation map', () => {
-  assert.doesNotMatch(nonTimeline, /const koPolities/);
-  assert.match(nonTimeline, /politic_display_name_ko/);
-  assert.match(nonTimeline, /historicity_display_ko/);
-  assert.doesNotMatch(nonTimeline, />Politic</);
-  assert.doesNotMatch(nonTimeline, /content:"Politic"/);
+test('unknown-chronology presentation reuses reviewed Korean registry labels without a standalone legend UI', () => {
+  assert.match(main, /non-timeline-persons\.json/);
+  assert.match(main, /politic_display_name_ko/);
+  assert.match(main, /historicity_display_ko/);
+  assert.doesNotMatch(html, /non-timeline-list\.js/);
   assert.ok(nonTimelineData.length > 0);
   for (const row of nonTimelineData) {
     assert.equal(typeof row.politic_display_name_ko, 'string');
