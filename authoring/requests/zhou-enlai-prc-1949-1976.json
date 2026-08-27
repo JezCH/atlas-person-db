@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:zhou-enlai:people-republic-china:1949-1976:v1",
+  "person": {
+    "canonical_name_en": "Zhou Enlai",
+    "display_name_ko": "저우언라이",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "People's Republic of China",
+    "display_name_ko": "중화인민공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Premier",
+    "role_display_name_ko": "총리",
+    "start_year": 1949,
+    "start_month": 10,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1976,
+    "end_month": 1,
+    "end_day": 8,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Zhou Enlai was appointed premier of the Government Administration Council on the founding day of the People's Republic of China, 1 October 1949, and continued as premier after the State Council replaced it in 1954 until his death on 8 January 1976. ATLAS treats this as one continuous premiership of the People's Republic of China."
+  },
+  "sources": [
+    {
+      "title": "Zhou Enlai — Ministry of Foreign Affairs of the People's Republic of China",
+      "canonical_url": "https://www.mfa.gov.cn/eng/zy/wjrw/3606_665551/202405/t20240531_11367616.html",
+      "citation_text": "The PRC Ministry of Foreign Affairs identifies Zhou Enlai as premier from the establishment of the PRC until his death and notes the 1954 transition from the Government Administration Council to the State Council.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "中华人民共和国大事记（1949年10月－2019年9月）— 中国政府网",
+      "canonical_url": "https://www.gov.cn/xinwen/2019-09/27/content_5434223.htm?allContent=",
+      "citation_text": "The Chinese government chronology records Zhou Enlai's appointment as premier on 1 October 1949 and his death on 8 January 1976.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "저우언라이",
+      "url": "https://namu.wiki/w/%EC%A0%80%EC%9A%B0%EC%96%B8%EB%9D%BC%EC%9D%B4"
+    }
+  }
+}
