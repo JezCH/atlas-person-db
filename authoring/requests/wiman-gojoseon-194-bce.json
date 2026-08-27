@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:wiman:gojoseon:bce194-point:v1",
+  "person": {
+    "canonical_name_en": "Wiman",
+    "display_name_ko": "위만",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Gojoseon",
+    "display_name_ko": "고조선",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -194,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -194,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Wiman is the historically attested founder and first king of Wiman Joseon. Modern Korean reference works conventionally place his accession around 194 BCE, but the end of his reign is not securely known. ATLAS therefore represents only the accession year as a reviewed point; the identical start/end year must not be interpreted as a one-year reign."
+  },
+  "sources": [
+    {
+      "title": "위만 — 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0041137",
+      "citation_text": "The Encyclopedia of Korean Culture identifies Wiman as the first king of Wiman Joseon and gives his reign as beginning in 194 BCE with the end unknown.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "위만조선 — 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0041138",
+      "citation_text": "The Encyclopedia of Korean Culture defines Wiman Joseon as the phase of Joseon beginning with Wiman's takeover in the early second century BCE and ending in 108 BCE.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "위만",
+      "url": "https://namu.wiki/w/%EC%9C%84%EB%A7%8C"
+    }
+  }
+}
