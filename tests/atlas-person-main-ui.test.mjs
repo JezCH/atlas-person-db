@@ -135,9 +135,9 @@ test('source links are restricted to HTTP(S) and user-visible strings are escape
   assert.match(main, /escapeHtml/);
 });
 
-test('Person Main CSS isolates the new layout and removes the obsolete Other\/Uncertain section styling', () => {
+test('Person Main CSS isolates the new layout and keeps responsive fallbacks', () => {
   assert.match(css, /\.person-main-layout/);
-  assert.doesNotMatch(css, /\.person-group-other/);
+  assert.match(css, /\.person-group-other/);
   assert.match(css, /\.person-main-detail/);
   assert.match(css, /\.relationship-authoring-tools/);
   assert.match(css, /@media\(max-width:760px\)/);

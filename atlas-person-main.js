@@ -185,7 +185,7 @@
     const shown = rows.length;
     const renderedGroups = groupSection({
       title: "역사 인물",
-      description: "Person.historicity가 historical로 기록된 인물을 표시합니다.",
+      description: "Person.historicity가 historical로 기록된 인물입니다. 활동연도가 미상이어도 역사성 분류는 유지됩니다.",
       rows
     });
     for (const child of [...list.children]) {
