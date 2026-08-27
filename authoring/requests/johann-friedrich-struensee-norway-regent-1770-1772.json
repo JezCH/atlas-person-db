@@ -40,5 +40,11 @@
       "citation_text": "The Royal Danish Collection states that Struensee governed in Christian VII's name as de facto regent from 1770 until 17 January 1772.",
       "source_type": "royal_collection_reference"
     }
-  ]
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
 }
