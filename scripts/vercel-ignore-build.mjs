@@ -33,7 +33,12 @@ const AUTHORING_RUNTIME_SAFE_PREFIXES = Object.freeze([
 
 const AUTHORING_RUNTIME_SAFE_EXACT = new Set([
   "server/atlas-duplicate-detector.js",
-  "server/atlas-duplicate-review-service.js"
+  "server/atlas-duplicate-review-service.js",
+  // This registry is served as static historical display data. It does not
+  // participate in /api/atlas-authoring or /api/atlas-authoring-apply.
+  // Vercel still builds when it changes; only Authoring runtime compatibility
+  // is allowed to proceed against the already deployed endpoint implementation.
+  "non-timeline-persons.json"
 ]);
 
 function normalizePath(value) {
