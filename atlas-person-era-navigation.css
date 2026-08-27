@@ -17,6 +17,7 @@
 .person-era-jump-list{display:flex;min-width:0;gap:6px;overflow-x:auto;overscroll-behavior-x:contain;padding:2px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
 .person-era-jump{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"label count" "range count";column-gap:7px;flex:0 0 auto;min-width:104px;min-height:42px;align-items:center;padding:6px 8px;border:1px solid #d9dee8;border-radius:9px;font:inherit;text-align:left;cursor:pointer}
 .person-era-jump:hover{filter:brightness(.985)}
+.person-era-jump.person-era-unknown{margin-left:14px;border-color:#a9b2c1;background:#eef1f5}.person-era-jump.person-era-unknown::before{content:"";position:absolute;top:4px;bottom:4px;left:-10px;width:1px;background:#c7ced9}
 .person-era-jump.is-current{outline:2px solid currentColor;outline-offset:-2px}
 .person-era-jump.is-current::after{content:"";position:absolute;right:7px;bottom:4px;left:7px;height:2px;border-radius:999px;background:currentColor;opacity:.72}
 .person-era-jump-label{grid-area:label;align-self:end;font-size:13px;font-weight:900;line-height:1.2;white-space:nowrap}
