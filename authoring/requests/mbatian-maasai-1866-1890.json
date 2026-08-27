@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mbatian:maasai:1866-1890:v1",
+  "person": {
+    "canonical_name_en": "Mbatian",
+    "display_name_ko": "음바티안",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Maasai",
+    "display_name_ko": "마사이족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "term",
+    "role": "Laibon",
+    "role_display_name_ko": "라이본",
+    "start_year": 1866,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1890,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mbatian was the pre-eminent Maasai Laibon from 1866 until his death in 1890. The National Museums of Kenya explicitly notes that a Laibon was not a conventional political office, although Mbatian wielded exceptional ritual authority and helped unite major Maa communities. ATLAS therefore records active_in rather than rules/governs."
+  },
+  "sources": [
+    {
+      "title": "Mbatian: The Story of The Great Maasai Laibon — National Museums of Kenya",
+      "canonical_url": "https://artsandculture.google.com/story/mbatian-the-story-of-the-great-maasai-laibon-national-museums-of-kenya/bAWh6e02ybc9KA",
+      "citation_text": "The National Museums of Kenya identifies Mbatian as the greatest Maasai Laibon, states that he inherited leadership in 1866 and served until 1890, and distinguishes the Laibon's ritual authority from a conventional political office.",
+      "source_type": "institutional_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}
