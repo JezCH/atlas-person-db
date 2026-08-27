@@ -125,72 +125,85 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          status=""
+          runtime_ready=false
           for attempt in $(seq 1 60); do
             status="$(curl --silent --show-error \
               --output /tmp/atlas-authoring-evidence/readiness.json \
               --write-out '%{http_code}' \
               "$ATLAS_AUTHORING_ENDPOINT")"
-            if [[ "$status" == "200" ]]; then
-              break
-            fi
+
             if [[ "$status" == "404" ]]; then
               if [[ "$attempt" == "60" ]]; then
                 cat /tmp/atlas-authoring-evidence/readiness.json >&2 || true
                 echo "Production authoring readiness route is not live yet after 60 attempts." >&2
                 exit 1
               fi
-              echo "Production authoring readiness route is not live yet (attempt ${attempt}/60); retrying in 10s."
-              sleep 10
+              echo "Production authoring readiness route is not live yet (attempt ${attempt}/60); retrying in 5s."
+              sleep 5
               continue
             fi
-            cat /tmp/atlas-authoring-evidence/readiness.json >&2 || true
-            echo "Authoring readiness failed: HTTP ${status}" >&2
-            exit 1
+
+            if [[ "$status" != "200" ]]; then
+              cat /tmp/atlas-authoring-evidence/readiness.json >&2 || true
+              echo "Authoring readiness failed: HTTP ${status}" >&2
+              exit 1
+            fi
+
+            jq -e --argjson version "$ATLAS_AUTHORING_TRANSPORT_VERSION" '
+              .ok==true
+              and .marker=="ATLAS_AUTHORING_TRANSPORT_V2"
+              and .transport_version==$version
+              and (.runtime_sha | test("^[0-9a-f]{40}$"))
+              and .readiness.p5_ready==true
+              and .readiness.core.base_tables_ready==true
+              and .readiness.core.activity_columns_ready==true
+              and .readiness.p9.old_index_present==false
+              and .readiness.p9.new_index_present==true
+              and .readiness.p9.duplicate_groups==0
+              and .readiness.person_merge.required_person_merge_lifecycle_version=="p10-v2-revalidated"
+              and (
+                (.readiness.person_merge.person_merge_lifecycle_version=="pre-p10-blocked" and .readiness.person_merge.allowed==false)
+                or
+                (.readiness.person_merge.person_merge_lifecycle_version=="p10-v2-revalidated" and .readiness.person_merge.allowed==true)
+              )
+              and (.ready==true or .bootstrap_ready==true)
+            ' /tmp/atlas-authoring-evidence/readiness.json >/dev/null
+
+            runtime_sha="$(jq -er '.runtime_sha' /tmp/atlas-authoring-evidence/readiness.json)"
+            bootstrap_required="$(jq -er 'if .ready==true then "false" elif .bootstrap_ready==true then "true" else error("AUTHORING_NOT_BOOTSTRAPPABLE") end' /tmp/atlas-authoring-evidence/readiness.json)"
+            git cat-file -e "${runtime_sha}^{commit}" || { echo "Deployed runtime commit is unavailable in checkout: ${runtime_sha}" >&2; exit 1; }
+            git merge-base --is-ancestor "$runtime_sha" "$GITHUB_SHA" || { echo "Deployed runtime is not an ancestor of authoring commit" >&2; exit 1; }
+            git diff --name-only --diff-filter=ACDMRTUXB "$runtime_sha" "$GITHUB_SHA" -- > /tmp/atlas-authoring-evidence/runtime-diff.txt
+
+            if node --input-type=module <<'NODE'
+            import fs from 'node:fs';
+            import { shouldBuildForChangedPaths } from './scripts/vercel-ignore-build.mjs';
+            const text = fs.readFileSync('/tmp/atlas-authoring-evidence/runtime-diff.txt', 'utf8').trim();
+            const paths = text ? text.split(/\r?\n/).filter(Boolean) : [];
+            if (shouldBuildForChangedPaths(paths)) {
+              console.error('AUTHORING_RUNTIME_CODE_DRIFT: deployment-relevant changes still exist after the deployed runtime SHA');
+              for (const path of paths) console.error(`  ${path}`);
+              process.exit(1);
+            }
+            console.log(`Authoring delta is deployment-safe (${paths.length} path${paths.length === 1 ? '' : 's'}).`);
+            NODE
+            then
+              echo "ATLAS_RUNTIME_SHA=${runtime_sha}" >> "$GITHUB_ENV"
+              echo "ATLAS_AUTHORING_BOOTSTRAP_REQUIRED=${bootstrap_required}" >> "$GITHUB_ENV"
+              echo "Authoring runtime ${runtime_sha} is safe for GitHub authoring commit ${GITHUB_SHA}; bootstrap_required=${bootstrap_required}."
+              runtime_ready=true
+              break
+            fi
+
+            if [[ "$attempt" == "60" ]]; then
+              echo "AUTHORING_RUNTIME_CODE_DRIFT remained after 60 attempts." >&2
+              exit 1
+            fi
+            echo "Production runtime is still behind the authoring commit (attempt ${attempt}/60); retrying in 5s."
+            sleep 5
           done
 
-          jq -e --argjson version "$ATLAS_AUTHORING_TRANSPORT_VERSION" '
-            .ok==true
-            and .marker=="ATLAS_AUTHORING_TRANSPORT_V2"
-            and .transport_version==$version
-            and (.runtime_sha | test("^[0-9a-f]{40}$"))
-            and .readiness.p5_ready==true
-            and .readiness.core.base_tables_ready==true
-            and .readiness.core.activity_columns_ready==true
-            and .readiness.p9.old_index_present==false
-            and .readiness.p9.new_index_present==true
-            and .readiness.p9.duplicate_groups==0
-            and .readiness.person_merge.required_person_merge_lifecycle_version=="p10-v2-revalidated"
-            and (
-              (.readiness.person_merge.person_merge_lifecycle_version=="pre-p10-blocked" and .readiness.person_merge.allowed==false)
-              or
-              (.readiness.person_merge.person_merge_lifecycle_version=="p10-v2-revalidated" and .readiness.person_merge.allowed==true)
-            )
-            and (.ready==true or .bootstrap_ready==true)
-          ' /tmp/atlas-authoring-evidence/readiness.json >/dev/null
-
-          runtime_sha="$(jq -er '.runtime_sha' /tmp/atlas-authoring-evidence/readiness.json)"
-          bootstrap_required="$(jq -er 'if .ready==true then "false" elif .bootstrap_ready==true then "true" else error("AUTHORING_NOT_BOOTSTRAPPABLE") end' /tmp/atlas-authoring-evidence/readiness.json)"
-          git cat-file -e "${runtime_sha}^{commit}" || { echo "Deployed runtime commit is unavailable in checkout: ${runtime_sha}" >&2; exit 1; }
-          git merge-base --is-ancestor "$runtime_sha" "$GITHUB_SHA" || { echo "Deployed runtime is not an ancestor of authoring commit" >&2; exit 1; }
-          git diff --name-only --diff-filter=ACDMRTUXB "$runtime_sha" "$GITHUB_SHA" -- > /tmp/atlas-authoring-evidence/runtime-diff.txt
-
-          node --input-type=module <<'NODE'
-          import fs from 'node:fs';
-          import { shouldBuildForChangedPaths } from './scripts/vercel-ignore-build.mjs';
-          const text = fs.readFileSync('/tmp/atlas-authoring-evidence/runtime-diff.txt', 'utf8').trim();
-          const paths = text ? text.split(/\r?\n/).filter(Boolean) : [];
-          if (shouldBuildForChangedPaths(paths)) {
-            console.error('AUTHORING_RUNTIME_CODE_DRIFT: deployment-relevant changes exist after the deployed runtime SHA');
-            for (const path of paths) console.error(`  ${path}`);
-            process.exit(1);
-          }
-          console.log(`Authoring delta is deployment-safe (${paths.length} path${paths.length === 1 ? '' : 's'}).`);
-          NODE
-
-          echo "ATLAS_RUNTIME_SHA=${runtime_sha}" >> "$GITHUB_ENV"
-          echo "ATLAS_AUTHORING_BOOTSTRAP_REQUIRED=${bootstrap_required}" >> "$GITHUB_ENV"
-          echo "Authoring runtime ${runtime_sha} is safe for GitHub authoring commit ${GITHUB_SHA}; bootstrap_required=${bootstrap_required}."
+          [[ "$runtime_ready" == "true" ]] || { echo "Authoring runtime never became ready." >&2; exit 1; }
 
       - name: Bootstrap bounded authoring schema migrations
         if: env.ATLAS_AUTHORING_SELECTED == 'true' && env.ATLAS_AUTHORING_BOOTSTRAP_REQUIRED == 'true'
