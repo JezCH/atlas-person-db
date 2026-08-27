@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gung-ye:taebong:901-918:v1",
+  "person": {
+    "canonical_name_en": "Gung Ye",
+    "display_name_ko": "궁예",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Taebong",
+    "display_name_ko": "태봉",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 901,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 918,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gung Ye founded the state conventionally called Later Goguryeo in 901, renamed it Majin in 904 and Taebong in 911, and remained its sovereign until he was overthrown in 918. ATLAS models this as one continuous Taebong polity reign rather than splitting the same political entity at its internal name changes."
+  },
+  "sources": [
+    {
+      "title": "궁예 — 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0006789",
+      "citation_text": "The Encyclopedia of Korean Culture identifies Gung Ye as the ruler of Taebong and gives his reign as 901–918.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "태봉 — 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0058942",
+      "citation_text": "The Encyclopedia of Korean Culture states that Gung Ye founded Later Goguryeo in 901, renamed it Majin in 904 and Taebong in 911, with the polity ending in 918.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "궁예",
+      "url": "https://namu.wiki/w/%EA%B6%81%EC%98%88"
+    }
+  }
+}
