@@ -1,8 +1,10 @@
-# ATLAS Historical Person Registration SOP — Lean Path v3
+# ATLAS Historical Person Registration SOP — Lean Path v4
 
 This file is the operational source of truth for ordinary reviewed historical-person registration.
 
-The rule is simple: **screen cheaply first, research only what survives the screen, commit once, verify once.** Registration is a bounded Production data operation, not a repository/deployment investigation.
+The rule is simple: **screen cheaply first, research only what survives the screen, parallelize independent review, commit once, verify once.** Registration is a bounded Production data operation, not a repository/deployment investigation.
+
+A second rule is equally important: **ordinary registration must use the already-established authoring system; it must not rediscover or re-audit that system on every Person.** Source-code inspection, workflow inspection, deployment inspection, capability discovery, schema archaeology, and repository-wide investigation are exception handling, not registration steps.
 
 ## 1. Completion criterion
 
@@ -76,6 +78,39 @@ SCREEN
 
 Git branches, PRs, CI jobs, workflow runs, deployments, UUIDs, and internal catalog lookups are transport or implementation details, not additional historical-registration stages.
 
+### 4.1 Performance invariant — no serial re-discovery
+
+The normal path is deliberately bounded.
+
+For **one new Person**, the expected shape is:
+
+```text
+1 bounded Production SCREEN
+→ historical review + NamuWiki review in parallel
+→ 1 manifest
+→ 1 PR / required fast-path CI
+→ 1 Authoring Apply
+→ 1 canonical Production VERIFY
+→ STOP
+```
+
+For **multiple requested Persons**, the expected shape is:
+
+```text
+bounded SCREENs in parallel
+→ REVIEW only surviving candidates, in parallel
+→ one manifest per logical registration
+→ all manifests on one branch / one PR
+→ one required fast-path CI
+→ one Authoring Apply batch
+→ canonical Production VERIFY reads in parallel
+→ STOP
+```
+
+Do **not** process a batch as repeated end-to-end single-Person pipelines unless a concrete dependency forces serialization. GitHub, CI, and Apply overhead should normally be paid once per user batch, while each logical registration still keeps its own transaction and immutable `request_id`.
+
+During the normal path, do not inspect implementation files merely to remember how registration works. The SOP and deployed authoring contract are already authoritative. Inspect code, workflows, migrations, Vercel state, or repository internals only after a concrete validation/runtime failure points to that boundary.
+
 ## 5. Stage 1 — SCREEN: cheapest useful check first
 
 Do not begin full historical research before checking whether the intended Person is already in Production.
@@ -93,11 +128,13 @@ Use the bounded Person search surface:
 
 Rules:
 
+- For a multi-Person user request, issue the bounded Person SCREENs concurrently rather than waiting for each Person to finish before starting the next.
 - If the intended Person and intended Activity already exist, stop. Do not research or submit anything else.
 - If the Person exists but the intended Activity is missing, reuse that Person and review only the missing Activity.
 - If the Person exists, note its current NamuWiki state. `linked` or `not_found` counts as reviewed and is reused; do not search NamuWiki again merely because a new Activity is being added.
 - If the Person is absent, continue to REVIEW.
 - Once an exact Person is identified, do not keep trying more spellings for reassurance.
+- Do not inspect comparable rulers or neighboring records merely to infer ordinary Role/Polity conventions when the requested identity is already historically clear.
 - Never dump the full Production dataset for one registration.
 
 This stage intentionally comes before expensive research.
@@ -117,9 +154,9 @@ For a new Person, or for the missing Activity of an existing Person, establish o
 - at least one real Source;
 - NamuWiki result only when the Person is new or currently unreviewed: exact `linked` Person document or explicit `not_found`.
 
-Historical research and NamuWiki research may be performed in parallel after SCREEN has established that they are necessary.
+Historical research and NamuWiki research **should be performed in parallel** after SCREEN has established that they are necessary. For a batch, review different surviving Persons in parallel as well; do not serialize independent historical/NamuWiki checks.
 
-Do not expand ordinary registration into a repository audit, deployment audit, unrelated Person comparison, or whole-DB investigation.
+Do not expand ordinary registration into a repository audit, deployment audit, unrelated Person comparison, whole-DB investigation, source-code inspection, workflow inspection, or capability discovery. Those actions require a concrete failure or ambiguity first.
 
 ### Polity / Role lookup policy
 
@@ -185,7 +222,17 @@ The Human Authoring transaction persists the NamuWiki decision to `person_extern
 
 A batch shares transport/authentication and may share read-only catalog caching, but **each logical registration has its own `SERIALIZABLE` transaction**.
 
-Therefore:
+Operationally, batching is the default whenever the user supplies multiple Persons:
+
+- create one manifest per logical registration;
+- put all eligible manifests on **one working branch and one PR**;
+- pay the required authoring-only CI cost **once**;
+- let **one Authoring Apply batch** attempt all eligible manifests;
+- verify the resulting Persons concurrently after Apply.
+
+Do not create one branch/PR/CI/Apply cycle per Person unless a concrete conflict, dependency, or user instruction requires separation.
+
+Transaction behavior remains independent inside the shared batch:
 
 - A success commits independently.
 - B success commits independently.
@@ -200,12 +247,14 @@ On retry, already committed items replay idempotently and only unresolved items 
 When the GitHub fallback is used:
 
 1. read latest `main` once, immediately before creating the working branch;
-2. create one `agent/...` branch;
+2. create one `agent/...` branch for the whole current registration batch;
 3. add only the required registration manifest(s), with no unrelated code/UI changes;
-4. open one PR;
-5. require the repository's mandatory `test` check;
+4. open one PR containing all eligible manifests from that batch;
+5. require only the repository's mandatory authoring fast-path `test` check unless changed files or a concrete failure require more;
 6. squash merge when green;
-7. use the normal `ATLAS Authoring Apply` path.
+7. use one normal `ATLAS Authoring Apply` batch for the merged manifests.
+
+Do not repeatedly fetch `main`, reopen repository structure, rediscover available GitHub/Vercel tools, or inspect workflow source during a normal green path. Re-check a transport boundary only when mergeability, CI, Apply, or Production verification supplies a concrete reason.
 
 For `authoring/requests/*.json`-only work, the authoring-only integrity fast path is expected. Do not voluntarily rerun P10, P11, full schema rehearsal, or Human Authoring Operational Parity unless changed files or a concrete failure require them.
 
@@ -213,7 +262,7 @@ For manifest-only registration, do not inspect Preview deployments or poll Verce
 
 ## 8. Stage 4 — VERIFY: one Production read, then stop
 
-Perform one bounded Production Person read using the canonical Person name.
+Perform one bounded Production Person read using the canonical Person name. For a batch, issue these canonical verification reads concurrently after Apply.
 
 Verify:
 
@@ -254,7 +303,10 @@ The following are not normal registration steps unless a concrete failure makes 
 - full Production dataset export/dump;
 - comparable-Person chasing to infer identity;
 - repeated discovery of GitHub/Vercel capabilities;
+- re-reading authoring service/workflow/migration code merely to remember the established registration contract;
 - repository-wide status inspection before every action;
+- serial end-to-end processing of independent Persons in the same user batch;
+- one branch/PR/CI/Apply cycle per Person when one batch can carry them safely;
 - repeated reads of `main` SHA;
 - Preview deployment inspection for data-only registration;
 - post-merge Vercel polling without a concrete Apply/runtime error;
@@ -276,7 +328,7 @@ Only move backward when a concrete gate fails:
 - transient Commit failure → replay the same request;
 - Production read-back mismatch → registration remains incomplete until that mismatch is resolved.
 
-Do not restart generic repository, Production, or deployment discovery because a later gate failed.
+Do not restart generic repository, Production, deployment, or tool-capability discovery because a later gate failed. Diagnose only the named failing boundary and then resume the same immutable registration flow.
 
 ## 12. Completion report
 
