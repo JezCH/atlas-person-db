@@ -32,8 +32,10 @@ test('native or mixed authoring retains the existing safe per-manifest fallback'
   assert.match(workflow, /authorization: Bearer \$\{oidc_token\}/);
 });
 
-test('authoring readiness preserves bounded route-propagation retry instead of failing on transient 404', () => {
+test('authoring readiness retries both route propagation and deployment races', () => {
   assert.match(workflow, /for attempt in \$\(seq 1 60\)/);
   assert.match(workflow, /if \[\[ "\$status" == "404" \]\]/);
-  assert.match(workflow, /retrying in 10s/);
+  assert.match(workflow, /retrying in 5s/);
+  assert.match(workflow, /AUTHORING_RUNTIME_CODE_DRIFT remained after 60 attempts/);
+  assert.match(workflow, /Production runtime is still behind the authoring commit/);
 });
