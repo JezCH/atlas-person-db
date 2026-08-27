@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-correction-manifest/v1.4",
+  "review_status": "approved",
+  "request_id": "correction:sun-wu:promote-to-historical-person-table:2026-08-27:v1",
+  "release_order": 580,
+  "operations": [
+    {
+      "type": "update_person_historicity",
+      "person_id": "d5c962df-ae2c-4e82-bafb-550989ed44b2",
+      "expected_before": {
+        "historicity": "disputed"
+      },
+      "expected_after": {
+        "historicity": "historical"
+      }
+    }
+  ]
+}
