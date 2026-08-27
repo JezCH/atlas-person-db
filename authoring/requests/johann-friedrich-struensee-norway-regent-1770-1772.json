@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:johann-friedrich-struensee:norway:regent:c1770-1772:v1",
+  "person": {
+    "canonical_name_en": "Johann Friedrich Struensee",
+    "display_name_ko": "요한 프리드리히 스트루엔세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Norway",
+    "display_name_ko": "노르웨이",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Regent",
+    "role_display_name_ko": "섭정",
+    "start_year": 1770,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1772,
+    "end_month": 1,
+    "end_day": 17,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Struensee's de facto regency operated through the composite Danish monarchy, which included Norway. ATLAS follows the existing project convention used for Christian IV and represents Denmark and Norway as separate Activities rather than creating a new Denmark-Norway Polity."
+  },
+  "sources": [
+    {
+      "title": "J. F. Struensee (1737-1772) — The Royal Danish Collection",
+      "canonical_url": "https://denkongeligesamling.dk/en/the-collection/persons/jf-struensee-1737-1772/",
+      "citation_text": "The Royal Danish Collection states that Struensee governed in Christian VII's name as de facto regent from 1770 until 17 January 1772.",
+      "source_type": "royal_collection_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:wu-ding:shang:king:c1250-c1192-bce:v1",
+  "person": {
+    "canonical_name_en": "Wu Ding",
+    "display_name_ko": "무정",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Shang",
+    "display_name_ko": "상",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -1250,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -1192,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Wu Ding is securely attested by contemporary Shang oracle-bone inscriptions. Absolute regnal chronology remains debated; ATLAS uses the Xia-Shang-Zhou Chronology Project's c.1250-1192 BCE reconstruction as an approximate reign interval, consistent with radiocarbon results centered on the mid-thirteenth to late-twelfth century BCE."
+  },
+  "sources": [
+    {
+      "title": "Radiocarbon Dating of Oracle Bones of Late Shang Period in Ancient China",
+      "canonical_url": "https://www.cambridge.org/core/journals/radiocarbon/article/radiocarbon-dating-of-oracle-bones-of-late-shang-period-in-ancient-china/38A7B64D6D538A3A7B96F912BBEE9592",
+      "citation_text": "Radiocarbon analysis of oracle bones associated with Wu Ding gives a calibrated reign range around 1254-1197 BCE and discusses the 1250-1192 BCE astronomical chronology.",
+      "source_type": "academic_journal"
+    },
+    {
+      "title": "The Veritable Records of King Sejong — Glossary: Wu Ding",
+      "canonical_url": "https://sillok.history.go.kr/eslk/glossary/glossaryList.do?pageIndex=343",
+      "citation_text": "The Korean historical glossary identifies Wu Ding (武丁, 무정) as a Shang king and one of the earliest Chinese figures confirmed by oracle-bone inscriptions.",
+      "source_type": "government_historical_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

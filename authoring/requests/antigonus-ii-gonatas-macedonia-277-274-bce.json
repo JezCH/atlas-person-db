@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:antigonus-ii-gonatas:macedonia:king:c277-274-bce:v1",
+  "person": {
+    "canonical_name_en": "Antigonus II Gonatas",
+    "display_name_ko": "안티고노스 2세 고나타스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Macedonia",
+    "display_name_ko": "마케도니아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -277,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -274,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Antigonus II Gonatas secured the Macedonian throne around 277/276 BCE. Pyrrhus occupied much of Macedonia in 274 BCE, creating a real interruption in Antigonus's rule; ATLAS therefore records this as the first of two reign Activities."
+  },
+  "sources": [
+    {
+      "title": "Antigonus (2), 'Gonatas', c. 320-239 BCE — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548062618",
+      "citation_text": "The Oxford Classical Dictionary identifies Antigonus II Gonatas as king of Macedonia from about 277/276 BCE, notes Pyrrhus's occupation of Macedonia in 274 BCE, and the removal of that threat with Pyrrhus's death in 272 BCE.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

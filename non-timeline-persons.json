@@ -524,5 +524,22 @@
     "role_ko": "부룬디 건국 전승의 초대 므와미",
     "reason": "Burundian foundation traditions identify Cambarantama/Ntare Rushatsi as the first mwami, but the narratives and proposed reign dates differ substantially across traditions and later king lists. ATLAS preserves the founding figure without promoting conflicting traditional chronologies to a historical timeline.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-historicity overlay is enabled."
+  },
+  {
+    "person_name": "Tinerfe the Great",
+    "politic_name": "Guanche Tenerife",
+    "display_name_ko": "티네르페 대왕",
+    "politic_display_name_ko": "구안체 테네리페",
+    "historicity": "legendary_or_unverified",
+    "historicity_display_ko": "전설·미검증",
+    "timeline_status": "excluded",
+    "date_basis": "post_conquest_canarian_literary_and_historiographical_tradition",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "전승상 테네리페의 멘세이(왕)",
+    "reason": "Tinerfe the Great is a post-conquest Guanche ruler tradition associated with a unified Tenerife before its division into nine menceyatos. The name Tinerfe for this ruler first appears in Antonio de Viana's 1604 literary work, and modern historians have questioned whether the individual/name is a literary invention. No defensible person-specific reign chronology can be established, so ATLAS preserves the tradition without a historical year rail.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
   }
 ]
