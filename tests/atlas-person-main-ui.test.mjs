@@ -19,13 +19,14 @@ test('Main loads the Person reader before the Person-centered screen module', ()
   assert.match(main, /ATLAS_PERSON_BROWSER_READER/);
 });
 
-test('Person-centered Main renders only the historical Person group before Polity filtering', () => {
+test('Person-centered Main renders all historicity groups in one chronology table', () => {
   assert.match(main, /reader\.preparePersonGroups\(persons, \{ query, sortOrder, facetFilters \}\)/);
-  assert.match(main, /const rows = groups\.historical\.slice\(\)/);
-  assert.match(main, /역사 인물/);
+  assert.match(main, /\.\.\.groups\.historical/);
+  assert.match(main, /\.\.\.groups\.other_or_uncertain/);
+  assert.match(main, /\.\.\.visibleUnknownRegistryPersons\(\)/);
+  assert.match(main, /개인 활동연대를 방어할 수 없는 인물은 모두 ‘연대 미상’에 함께 표시합니다/);
+  assert.match(main, /non-timeline-persons\.json/);
   assert.doesNotMatch(main, /OTHER \/ UNCERTAIN HISTORICITY/);
-  assert.doesNotMatch(main, /전설·신화·역사성 미확정 및 기타/);
-  assert.doesNotMatch(main, /groups\.other_or_uncertain/);
   assert.match(reader, /partitionByHistoricity/);
   assert.match(reader, /PRIMARY_HISTORICITY_VALUE = "historical"/);
   assert.match(reader, /personMatchesFacets/);
@@ -143,8 +144,12 @@ test('Person Main CSS isolates the new layout and keeps responsive fallbacks', (
   assert.match(css, /@media\(max-width:760px\)/);
 });
 
-test('Main no longer exposes an Other / Uncertain historicity section', () => {
+test('Main has no standalone legend table and routes uncertain people through the shared chronology table', () => {
   assert.doesNotMatch(main, /person-group-other/);
   assert.doesNotMatch(main, /OTHER \/ UNCERTAIN HISTORICITY/);
-  assert.doesNotMatch(main, /other_or_uncertain/);
+  assert.match(main, /groups\.other_or_uncertain/);
+  assert.match(main, /registry_only/);
+  assert.doesNotMatch(html, /non-timeline-list\.js/);
+  assert.doesNotMatch(html, /nonTimelineSection/);
+  assert.doesNotMatch(main, /전설·신화 인물/);
 });
