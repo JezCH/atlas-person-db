@@ -178,3 +178,17 @@ test("stale reactivation fetches cannot overwrite newer spacetime data", async (
   assert.ok(loadedGuardIndex > ensureDataIndex);
   assert.ok(view.includes("if (generation === dataLoadGeneration) loadPromise = null;"));
 });
+
+
+test("keyboard zoom does not claim unavailable zoom commands at camera bounds", async () => {
+  const view = await fixture(viewUrl);
+  const keydownIndex = view.indexOf('scroll.addEventListener("keydown"');
+  const targetIndex = view.indexOf('const keyboardZoomTarget = command === "zoom-in"', keydownIndex);
+  const guardIndex = view.indexOf('if (keyboardZoomTarget != null && Math.abs(clampTimeCameraZoom(keyboardZoomTarget) - timeCameraZoom) < 1e-9) return;', keydownIndex);
+  const preventIndex = view.indexOf("event.preventDefault();", keydownIndex);
+  const reuseIndex = view.indexOf("requestTimeCameraZoom(mount, keyboardZoomTarget);", keydownIndex);
+  assert.ok(keydownIndex >= 0);
+  assert.ok(targetIndex > keydownIndex && targetIndex < guardIndex);
+  assert.ok(guardIndex < preventIndex);
+  assert.ok(reuseIndex > preventIndex);
+});
