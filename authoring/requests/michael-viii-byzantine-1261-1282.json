@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:michael-viii-palaiologos:byzantine:1261-1282:v1",
+  "person": {
+    "canonical_name_en": "Michael VIII Palaiologos",
+    "display_name_ko": "미하일 8세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Byzantine Empire",
+    "display_name_ko": "동로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1261,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1282,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After Constantinople was recovered in 1261, Michael VIII ruled the restored Byzantine Empire until 1282 and founded the Palaiologan imperial dynasty."
+  },
+  "sources": [
+    {
+      "title": "Michael VIII Palaeologus — Encyclopaedia Britannica",
+      "canonical_url": "https://www.britannica.com/biography/Michael-VIII-Palaeologus",
+      "citation_text": "After Constantinople was recovered in 1261, Michael VIII ruled the restored Byzantine Empire until 1282 and founded the Palaiologan imperial dynasty.",
+      "source_type": "encyclopedic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-28",
+      "document_title": "미하일 8세",
+      "url": "https://namu.wiki/w/%EB%AF%B8%ED%95%98%EC%9D%BC%208%EC%84%B8"
+    }
+  }
+}

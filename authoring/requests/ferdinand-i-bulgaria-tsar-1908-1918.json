@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ferdinand-i-bulgaria:kingdom:1908-1918:v1",
+  "person": {
+    "canonical_name_en": "Ferdinand I of Bulgaria",
+    "display_name_ko": "페르디난트 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Bulgaria",
+    "display_name_ko": "불가리아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Tsar",
+    "role_display_name_ko": "차르",
+    "start_year": 1908,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1918,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Following Bulgarian independence in 1908, Ferdinand ruled as tsar of the Kingdom of Bulgaria until his abdication in 1918."
+  },
+  "sources": [
+    {
+      "title": "Ferdinand I of Bulgaria",
+      "canonical_url": "https://en.wikipedia.org/wiki/Ferdinand_I_of_Bulgaria",
+      "citation_text": "Following Bulgarian independence in 1908, Ferdinand ruled as tsar of the Kingdom of Bulgaria until his abdication in 1918.",
+      "source_type": "encyclopedic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-28",
+      "document_title": "페르디난트 1세(불가리아)",
+      "url": "https://namu.wiki/w/%ED%8E%98%EB%A5%B4%EB%94%94%EB%82%9C%ED%8A%B8%201%EC%84%B8%28%EB%B6%88%EA%B0%80%EB%A6%AC%EC%95%84%29"
+    }
+  }
+}

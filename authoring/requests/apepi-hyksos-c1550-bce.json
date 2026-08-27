@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:apepi:hyksos:c1550-bce-point:v1",
+  "person": {
+    "canonical_name_en": "Apepi",
+    "display_name_ko": "아페피",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Hyksos Fifteenth Dynasty",
+    "display_name_ko": "힉소스 제15왕조",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Pharaoh",
+    "role_display_name_ko": "파라오",
+    "start_year": -1550,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -1550,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Apepi (Apophis) is securely attested as a Hyksos Fifteenth-Dynasty ruler. The Rhind Mathematical Papyrus was copied in his 33rd regnal year, but absolute regnal boundaries remain disputed; ATLAS therefore uses a c.1550 BCE representative point rather than inventing an exact reign."
+  },
+  "sources": [
+    {
+      "title": "Apepi — British Museum Collections Online",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG52845",
+      "citation_text": "Apepi (Apophis) is securely attested as a Hyksos Fifteenth-Dynasty ruler. The Rhind Mathematical Papyrus was copied in his 33rd regnal year, but absolute regnal boundaries remain disputed; ATLAS therefore uses a c.1550 BCE representative point rather than inventing an exact reign.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:hirohito:japan:1926-1989:v1",
+  "person": {
+    "canonical_name_en": "Hirohito",
+    "display_name_ko": "히로히토",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "천황",
+    "start_year": 1926,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1989,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Hirohito, posthumously Emperor Shōwa, acceded on 25 December 1926 and remained emperor until his death on 7 January 1989. The constitutional meaning of the imperial office changed fundamentally after World War II, but the personal imperial reign remained continuous; ATLAS therefore uses the broad political-community label Japan."
+  },
+  "sources": [
+    {
+      "title": "Emperor Showa and Empress Kojun — Imperial Household Agency",
+      "canonical_url": "https://www.kunaicho.go.jp/en/learn/about/history/history11.html",
+      "citation_text": "Hirohito, posthumously Emperor Shōwa, acceded on 25 December 1926 and remained emperor until his death on 7 January 1989. The constitutional meaning of the imperial office changed fundamentally after World War II, but the personal imperial reign remained continuous; ATLAS therefore uses the broad political-community label Japan.",
+      "source_type": "official_government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

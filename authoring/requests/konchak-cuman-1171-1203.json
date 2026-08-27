@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:konchak:cuman-kipchak:1171-1203:v1",
+  "person": {
+    "canonical_name_en": "Konchak",
+    "display_name_ko": "콘차크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Cuman-Kipchak Confederation",
+    "display_name_ko": "쿠만-킵차크 연맹",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Khan",
+    "role_display_name_ko": "칸",
+    "start_year": 1171,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1203,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "The Kievan chronicle tradition records Konchak as a major Polovtsian/Cuman khan from the 1170s, while a 1203 notice provides a defensible late activity boundary. These are documented activity limits rather than a fabricated exact reign."
+  },
+  "sources": [
+    {
+      "title": "Konchak — Encyclopedia of Ukraine",
+      "canonical_url": "https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%5CK%5CO%5CKonchak.htm",
+      "citation_text": "The Kievan chronicle tradition records Konchak as a major Polovtsian/Cuman khan from the 1170s, while a 1203 notice provides a defensible late activity boundary. These are documented activity limits rather than a fabricated exact reign.",
+      "source_type": "scholarly_encyclopedia"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

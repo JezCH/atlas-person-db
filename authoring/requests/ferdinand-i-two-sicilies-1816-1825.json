@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ferdinand-i:two-sicilies:1816-1825:v1",
+  "person": {
+    "canonical_name_en": "Ferdinand I of the Two Sicilies",
+    "display_name_ko": "페르디난도 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of the Two Sicilies",
+    "display_name_ko": "양시칠리아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1816,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1825,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ferdinand I became the first king of the unified Kingdom of the Two Sicilies in 1816 and reigned until his death in 1825."
+  },
+  "sources": [
+    {
+      "title": "Ferdinand I of the Two Sicilies",
+      "canonical_url": "https://en.wikipedia.org/wiki/Ferdinand_I_of_the_Two_Sicilies",
+      "citation_text": "Ferdinand I became the first king of the unified Kingdom of the Two Sicilies in 1816 and reigned until his death in 1825.",
+      "source_type": "encyclopedic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

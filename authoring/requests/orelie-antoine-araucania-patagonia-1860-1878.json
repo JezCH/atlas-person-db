@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:orelie-antoine:araucania-patagonia:1860-1878:v1",
+  "person": {
+    "canonical_name_en": "Orélie-Antoine de Tounens",
+    "display_name_ko": "오렐리 앙투안 드 투낭",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Araucania and Patagonia",
+    "display_name_ko": "아라우카니아·파타고니아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "claims_rule",
+    "period_basis": "reign",
+    "role": "Self-proclaimed King",
+    "role_display_name_ko": "자칭 국왕",
+    "start_year": 1860,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1878,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Orélie-Antoine de Tounens proclaimed himself king of Araucanía and Patagonia in 1860 and maintained the claim until his death in 1878. ATLAS records claims_rule, not actual sovereignty or recognized rule over Mapuche communities."
+  },
+  "sources": [
+    {
+      "title": "Orélie-Antoine de Tounens",
+      "canonical_url": "https://en.wikipedia.org/wiki/Or%C3%A9lie-Antoine_de_Tounens",
+      "citation_text": "Orélie-Antoine de Tounens proclaimed himself king of Araucanía and Patagonia in 1860 and maintained the claim until his death in 1878. ATLAS records claims_rule, not actual sovereignty or recognized rule over Mapuche communities.",
+      "source_type": "encyclopedic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

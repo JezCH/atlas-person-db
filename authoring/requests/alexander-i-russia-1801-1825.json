@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:alexander-i:russian-empire:1801-1825:v1",
+  "person": {
+    "canonical_name_en": "Alexander I of Russia",
+    "display_name_ko": "알렉산드르 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Russian Empire",
+    "display_name_ko": "러시아 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1801,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1825,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Alexander I ruled the Russian Empire from 1801 to 1825 and was the Russian sovereign through the Napoleonic Wars and the post-1815 settlement."
+  },
+  "sources": [
+    {
+      "title": "Alexander I of Russia",
+      "canonical_url": "https://en.wikipedia.org/wiki/Alexander_I_of_Russia",
+      "citation_text": "Alexander I ruled the Russian Empire from 1801 to 1825 and was the Russian sovereign through the Napoleonic Wars and the post-1815 settlement.",
+      "source_type": "encyclopedic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

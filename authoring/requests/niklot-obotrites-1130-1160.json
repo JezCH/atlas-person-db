@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:niklot:obotrite-confederacy:1130-1160:v1",
+  "person": {
+    "canonical_name_en": "Niklot",
+    "display_name_ko": "니클로트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Obotrite Confederacy",
+    "display_name_ko": "오보트리트 연맹",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Prince",
+    "role_display_name_ko": "공",
+    "start_year": 1130,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1160,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Niklot became chief/prince of the Obotrite confederacy around 1130-1131 and remained its leading ruler until his death in 1160. The start is intentionally approximate."
+  },
+  "sources": [
+    {
+      "title": "Niklot",
+      "canonical_url": "https://en.wikipedia.org/wiki/Niklot",
+      "citation_text": "Niklot became chief/prince of the Obotrite confederacy around 1130-1131 and remained its leading ruler until his death in 1160. The start is intentionally approximate.",
+      "source_type": "encyclopedic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

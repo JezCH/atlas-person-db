@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:liutprand:lombard-kingdom:712-744:v1",
+  "person": {
+    "canonical_name_en": "Liutprand",
+    "display_name_ko": "리우트프란트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of the Lombards",
+    "display_name_ko": "랑고바르드 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 712,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 744,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Liutprand ruled the Lombards from 712 to 744; his long reign was marked by legal consolidation, territorial expansion, and the Donation of Sutri."
+  },
+  "sources": [
+    {
+      "title": "Liutprand, King of the Lombards — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG197079",
+      "citation_text": "Liutprand ruled the Lombards from 712 to 744; his long reign was marked by legal consolidation, territorial expansion, and the Donation of Sutri.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

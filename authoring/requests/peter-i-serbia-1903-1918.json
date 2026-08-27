@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:peter-i-of-serbia:kingdom-of-serbia:1903-1918:v1",
+  "person": {
+    "canonical_name_en": "Peter I of Serbia",
+    "display_name_ko": "페타르 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Serbia",
+    "display_name_ko": "세르비아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1903,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1918,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Peter I ruled the Kingdom of Serbia from 1903 until the creation of the Kingdom of Serbs, Croats and Slovenes in 1918. This fills the Serbian reign omitted from the existing 1918-1921 South Slav kingdom Activity."
+  },
+  "sources": [
+    {
+      "title": "HM King Peter I of the Serbs, Croats and Slovenes — The Royal Family of Serbia",
+      "canonical_url": "https://royalfamily.org/hm-king-peter-i-of-the-serbs-croats-and-slovenes-2/",
+      "citation_text": "Peter I ruled the Kingdom of Serbia from 1903 until the creation of the Kingdom of Serbs, Croats and Slovenes in 1918. This fills the Serbian reign omitted from the existing 1918-1921 South Slav kingdom Activity.",
+      "source_type": "official_dynastic_archive_web"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  }
+}
