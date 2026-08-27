@@ -85,6 +85,7 @@
 .spacetime-track-rail:hover,.spacetime-track-rail.is-selected{z-index:18;width:7px;margin-left:-3.5px;background:#4f6fa2}
 .spacetime-activity-glyph{position:absolute;z-index:14;max-width:150px;height:22px;transform:translateY(-50%);padding:2px 7px;border:1px solid #cbd7e9;border-radius:6px;background:#fff;box-shadow:0 2px 7px rgba(35,50,74,.1);font-size:9px;color:#43536a;text-align:left;cursor:pointer;overflow:hidden}
 .spacetime-activity-glyph span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.spacetime-activity-glyph:hover,.spacetime-activity-glyph.is-selected{z-index:22;border-color:#7089b7;background:#f6f9ff;box-shadow:0 4px 12px rgba(35,50,74,.16)}
 .spacetime-minimap{position:absolute;right:14px;bottom:14px;z-index:70;width:248px;padding:8px;border:1px solid rgba(118,137,166,.48);border-radius:11px;background:rgba(255,255,255,.94);box-shadow:0 8px 24px rgba(35,50,74,.16);box-sizing:border-box;user-select:none}
 .spacetime-minimap-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
 .spacetime-minimap-head strong{font-size:10px;color:#30435f}

@@ -38,6 +38,21 @@ test("direct canvas selection preserves the clicked camera context while navigat
   assert.ok(view.includes("selectPerson(mount, selectedPersonId, { focus: true, detail: true })"));
 });
 
+test("selection feedback and status metrics expose their actual scopes", async () => {
+  const view = await fixture(viewUrl);
+  const css = await fixture(cssUrl);
+  assert.ok(view.includes("const visibleTracks = projectedTracks.map((item) => item.track);"));
+  assert.ok(view.includes("const primarySegmentCount = compiled.partitioned.tracks.reduce"));
+  assert.ok(view.includes("const counterpartyCount = compiled.partitioned.tracks.reduce"));
+  assert.ok(view.includes('class="spacetime-activity-glyph${selectedPersonId === track.person_id ? " is-selected" : ""}"'));
+  assert.ok(css.includes(".spacetime-activity-glyph:hover,.spacetime-activity-glyph.is-selected{"));
+  assert.ok(view.includes('${needle ? "검색" : "전체"} Person track'));
+  assert.ok(view.includes("전체 주 위치 구간"));
+  assert.ok(view.includes("전체 counterparty 제외"));
+  assert.ok(view.includes("전체 위치 미확정"));
+  assert.ok(view.includes("전체 연대 미확정"));
+});
+
 test("Person selection preserves zoom by default and detail is an explicit action", async () => {
   const view = await fixture(viewUrl);
   assert.ok(view.includes("const FOCUS_DETAIL_TIME_ZOOM = 2.2;"));
