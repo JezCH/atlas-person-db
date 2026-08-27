@@ -58,7 +58,9 @@ test("search filtering clears stale selection that is no longer active", async (
   assert.ok(view.includes("if (needle && selectedPersonId && !activePersonIds.has(selectedPersonId)) {"));
   assert.ok(view.includes("selectedPersonId = null;"));
   assert.ok(view.includes("pendingFocusPersonId = null;"));
-  assert.ok(view.indexOf("if (needle && selectedPersonId && !activePersonIds.has(selectedPersonId)) {") < view.indexOf("const navigationItems = exploration.orderItems(projectedTracks);"));
+  const cleanupIndex = view.indexOf("if (needle && selectedPersonId && !activePersonIds.has(selectedPersonId)) {");
+  assert.ok(cleanupIndex < view.indexOf("const navigationItems = exploration.orderItems(projectedTracks);"));
+  assert.ok(cleanupIndex < view.indexOf("const selectedTrack = compiled.partitioned.tracks.find"));
 });
 
 test("Person selection preserves zoom by default and detail is an explicit action", async () => {
