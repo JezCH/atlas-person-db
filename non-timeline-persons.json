@@ -67,23 +67,6 @@
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
   },
   {
-    "person_name": "Gilgamesh",
-    "politic_name": "Uruk",
-    "display_name_ko": "길가메시",
-    "politic_display_name_ko": "우루크",
-    "historicity": "legendary_possible_historical_core",
-    "historicity_display_ko": "전설·역사적 핵심 가능",
-    "timeline_status": "excluded",
-    "date_basis": "uncertain_king_list_tradition",
-    "traditional_year": null,
-    "traditional_year_alternative": null,
-    "activity_start": null,
-    "activity_end": null,
-    "role_ko": "전설적 우루크 왕",
-    "reason": "Gilgamesh appears in the Sumerian King List and later literary traditions, but his historicity and personal chronology are not securely established.",
-    "map_policy": "Do not display on the year timeline unless a separate legendary or traditional overlay is enabled."
-  },
-  {
     "person_name": "Po Ngbe",
     "politic_name": "Olmec",
     "display_name_ko": "포 응베",
@@ -271,23 +254,6 @@
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
   },
   {
-    "person_name": "Arganthonios",
-    "politic_name": "Tartessos",
-    "display_name_ko": "아르간토니오스",
-    "politic_display_name_ko": "타르테소스",
-    "historicity": "legendary_possible_historical_core",
-    "historicity_display_ko": "전설·역사적 핵심 가능",
-    "timeline_status": "excluded",
-    "date_basis": "herodotean_and_greco_roman_tradition_contested_historicity",
-    "traditional_year": null,
-    "traditional_year_alternative": null,
-    "activity_start": null,
-    "activity_end": null,
-    "role_ko": "타르테소스의 전승상 왕",
-    "reason": "Herodotus preserves Arganthonios as a king of Tartessos who received the Phocaeans, but the same tradition attributes an extraordinary eighty-year reign and 120-year lifespan. Modern Spanish scholarship has identified strong mythical and literary elements in the Arganthonios tradition and substantially questions the historicity of the individual. ATLAS therefore preserves the Tartessos association while leaving all personal chronology unknown rather than converting the conventional 670–550 BCE reconstruction or Herodotus' longevity into verified reign dates.",
-    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
-  },
-  {
     "person_name": "Tyrrhenus",
     "politic_name": "Etruscan League",
     "display_name_ko": "티레노스",
@@ -336,23 +302,6 @@
     "activity_end": null,
     "role_ko": "하자르의 전승상 군주·유대교 개종 전승 인물",
     "reason": "Bulan (Bwl'n) appears in later Khazar Hebrew conversion traditions as a ruler associated with the royal adoption of Judaism. The conversion itself is historically important, but scholarship disputes its date, the historical layering of the conversion narratives, and even whether Bulan should be understood as qaghan or bek. ATLAS therefore preserves Bulan as a historical-tradition figure of the Khazar Khaganate without assigning a speculative reign chronology.",
-    "map_policy": "Do not display on the historical year timeline unless a separate uncertain-chronology or historical-tradition overlay is enabled."
-  },
-  {
-    "person_name": "Ñancempinco",
-    "politic_name": "Kingdom of Chimor",
-    "display_name_ko": "냔센핀코",
-    "politic_display_name_ko": "치모르 왕국",
-    "historicity": "historical_tradition_uncertain_chronology",
-    "historicity_display_ko": "역사 전승·연대 불확실",
-    "timeline_status": "excluded",
-    "date_basis": "late_chimu_dynastic_ethnohistory_uncertain_chronology",
-    "traditional_year": null,
-    "traditional_year_alternative": null,
-    "activity_start": null,
-    "activity_end": null,
-    "role_ko": "치모르 왕국의 전승상 군주",
-    "reason": "Ñancempinco (Ñançenpinco/Nancen Pinco) is preserved in late Chimú dynastic ethnohistory as an early expansionist ruler of Chimor. Archaeological and ethnohistorical scholarship considers that a historical king of this name may underlie the tradition, but the dynastic narratives compress long spans into too few generations and do not provide a secure personal reign chronology. ATLAS therefore records the tradition without converting modern reconstructed dates into verified timeline years.",
     "map_policy": "Do not display on the historical year timeline unless a separate uncertain-chronology or historical-tradition overlay is enabled."
   },
   {
