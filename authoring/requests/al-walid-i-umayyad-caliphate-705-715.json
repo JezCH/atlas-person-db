@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:al-walid-i:umayyad-caliphate:705-715:v1",
+  "person": {
+    "canonical_name_en": "Al-Walid I",
+    "display_name_ko": "알왈리드 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Umayyad Caliphate",
+    "display_name_ko": "우마이야 칼리파국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Caliph",
+    "role_display_name_ko": "칼리파",
+    "start_year": 705,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 715,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Al-Walid I, son of Abd al-Malik, was Umayyad caliph from 705 to 715. His reign coincided with the caliphate's major expansion into Transoxiana, Sind and al-Andalus. ATLAS uses the secure year-level reign because medieval sources preserve differing exact death dates."
+  },
+  "sources": [
+    {
+      "title": "Ruling Dynasties of Iran — The Oxford Handbook of Iranian History",
+      "canonical_url": "https://academic.oup.com/edited-volume/34347/chapter/291408604",
+      "citation_text": "The Oxford Handbook chronology lists Al-Walid I as Umayyad caliph from 705 to 715.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Al-Walid I — Treccani Dizionario di Storia",
+      "canonical_url": "https://www.treccani.it/enciclopedia/al-walid-i_%28Dizionario-di-Storia%29/",
+      "citation_text": "Treccani identifies al-Walid I as Marwanid Umayyad caliph and dates his reign to 705–715.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}

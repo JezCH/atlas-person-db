@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:joseph-broussard:acadian-resistance:1755-1762:v1",
+  "person": {
+    "canonical_name_en": "Joseph Broussard",
+    "display_name_ko": "조제프 브루사르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Acadian Resistance",
+    "display_name_ko": "아카디아 저항세력",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "military_activity",
+    "role": "Resistance Leader",
+    "role_display_name_ko": "저항 지도자",
+    "start_year": 1755,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1762,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Joseph Broussard dit Beausoleil was a principal leader of Acadian resistance to British rule before, during and after the Deportation. Parks Canada specifically identifies his leadership of the resistance in 1755–1762. ATLAS therefore models the Acadian resistance community rather than assigning him to the British colonial polity that he opposed."
+  },
+  "sources": [
+    {
+      "title": "Joseph Broussard dit Beausoleil (1702–1765) National Historic Person — Parks Canada",
+      "canonical_url": "https://parks.canada.ca/culture/designation/personnage-person/joseph-broussard-dit-beausoleil",
+      "citation_text": "Parks Canada identifies Broussard as a leader of the Acadian resistance and gives the core resistance-leadership interval as 1755–1762.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "The great upheaval — Fort Beauséjour–Fort Cumberland National Historic Site",
+      "canonical_url": "https://www.parks.canada.ca/lhn-nhs/nb/beausejour/culture/histoire-history/deportation",
+      "citation_text": "Parks Canada states that Acadians under Joseph Broussard known as Beausoleil resisted the British during the Deportation period.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}

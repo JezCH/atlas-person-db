@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:peter-the-apostle:roman-empire:c30-c64:v1",
+  "person": {
+    "canonical_name_en": "Peter the Apostle",
+    "display_name_ko": "사도 베드로",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "religious_activity",
+    "role": "Apostle",
+    "role_display_name_ko": "사도",
+    "start_year": 30,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 64,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Peter is a historically central first-generation leader of the Jesus movement and early Christian communities within the Roman Empire. His exact career boundaries and martyrdom date are uncertain; ATLAS uses c.30–c.64 CE as a conservative representative apostolic-activity interval rather than treating later ecclesiastical chronology as exact."
+  },
+  "sources": [
+    {
+      "title": "Peter — The Oxford Research Centre in the Humanities",
+      "canonical_url": "https://torch.ox.ac.uk/article/peter",
+      "citation_text": "Oxford discusses Simon Peter as the earliest attested bearer of the name Peter and a foundational apostolic figure in early Christianity.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Peter, St — Encyclopaedia Britannica (1911)",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Peter,_St",
+      "citation_text": "The Britannica article treats Peter as the chief of the Twelve Apostles and reviews the early textual traditions concerning his life and leadership.",
+      "source_type": "reference_work"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "베드로",
+      "url": "https://namu.wiki/w/%EB%B2%A0%EB%93%9C%EB%A1%9C"
+    }
+  }
+}

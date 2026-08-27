@@ -422,5 +422,22 @@
     "role_ko": "모시 왕통 건국 전승의 공주·전사·시조",
     "reason": "Yennenga is a central princess and warrior in Mossi foundation traditions and the mother of Ouedraogo, the dynastic ancestor associated with the Mossi kingdoms. Scholarship warns that early Mossi chronologies reconstructed from oral genealogies are highly conjectural and vary by centuries. ATLAS therefore preserves Yennenga as a founding-tradition figure rather than treating her as a securely dated ruler of a Mossi state.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "Joshua",
+    "politic_name": "Israelites",
+    "display_name_ko": "여호수아",
+    "politic_display_name_ko": "이스라엘인",
+    "historicity": "legendary_possible_historical_core",
+    "historicity_display_ko": "전설·역사적 핵심 가능",
+    "timeline_status": "excluded",
+    "date_basis": "biblical_joshua_tradition_without_secure_independent_person_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "성서 전승의 이스라엘 지도자",
+    "reason": "Joshua is the central leader of the conquest narrative in the Book of Joshua, but modern historical and archaeological scholarship does not support treating the book's unified conquest account as a straightforward record of one securely dated individual's campaigns. ATLAS therefore preserves Joshua as a major biblical tradition figure without assigning a fabricated historical reign or conquest interval.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-historicity overlay is enabled."
   }
 ]

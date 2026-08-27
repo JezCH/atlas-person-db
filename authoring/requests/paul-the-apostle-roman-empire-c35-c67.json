@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:paul-the-apostle:roman-empire:c35-c67:v1",
+  "person": {
+    "canonical_name_en": "Paul the Apostle",
+    "display_name_ko": "사도 바울로",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "religious_activity",
+    "role": "Apostle",
+    "role_display_name_ko": "사도",
+    "start_year": 35,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 67,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Paul was a historical first-century Jewish and Roman figure whose letters provide direct evidence for his missionary and community-building activity across the Roman Empire. The beginning of his apostolic career and the date of his death are not precisely fixed; ATLAS uses c.35–c.67 CE as a representative interval."
+  },
+  "sources": [
+    {
+      "title": "Paul, St — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/549686166",
+      "citation_text": "Oxford identifies Paul as a Roman citizen from Tarsus whose authentic letters document his work among early Christian communities across major Roman urban centres.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "바울로 — NamuWiki reviewed article context",
+      "canonical_url": "https://namu.wiki/w/%EB%B0%94%EC%9A%B8%EB%A1%9C",
+      "citation_text": "The linked Korean reference article identifies Paul as the first-century apostle and records the conventional approximate death date around 67 CE.",
+      "source_type": "reference_work"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "바울로",
+      "url": "https://namu.wiki/w/%EB%B0%94%EC%9A%B8%EB%A1%9C"
+    }
+  }
+}
