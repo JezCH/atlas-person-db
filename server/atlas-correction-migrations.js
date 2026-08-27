@@ -8,7 +8,8 @@ const CORRECTION_MIGRATION_PATHS = Object.freeze([
   path.resolve(__dirname, "../db/migrations/20260812_correction_manifest_v1_1.sql"),
   path.resolve(__dirname, "../db/migrations/20260813_correction_manifest_v2.sql"),
   path.resolve(__dirname, "../db/migrations/20260815_correction_manifest_v1_2.sql"),
-  path.resolve(__dirname, "../db/migrations/20260821_correction_manifest_v1_3.sql")
+  path.resolve(__dirname, "../db/migrations/20260821_correction_manifest_v1_3.sql"),
+  path.resolve(__dirname, "../db/migrations/20260827_correction_manifest_v1_4.sql")
 ]);
 
 const POST_STAGE2_MIGRATION_PATHS = Object.freeze([

@@ -34,10 +34,16 @@ Before ordinary Timeline authoring, decide whether the requested figure belongs 
 
 Evaluate this routing gate during SCREEN, before expensive historical/NamuWiki research for ordinary Timeline authoring.
 
-Route the figure to `non-timeline-persons.json` instead of `atlas-human-authoring/v1` when both conditions hold:
+Historical Timeline admission requires **both** of these independent gates to pass:
 
-- the individual is primarily legendary, mythical, genealogical/oral-tradition, or otherwise historically unverified/disputed as an individual; and
-- no defensible personal Activity or reign interval can be established independently enough for the historical year timeline.
+1. **Historicity PASS** — there is sufficient historical basis to treat the figure as an actual human individual, or at least as a historically meaningful individual with a plausible historical core rather than a purely mythical/fictional person.
+2. **Personal chronology PASS** — there is a defensible **person-specific** Activity/reign interval, narrow scholarly estimate, directly attributable event year, floruit, or representative historical point that can be drawn on the map without turning a culture-wide/period-wide date envelope into the person's own Activity rail.
+
+In compact form:
+
+`Timeline = Historicity PASS AND Personal chronology PASS`
+
+If **either** gate fails, route the figure to `non-timeline-persons.json` instead of ordinary year-Timeline authoring.
 
 For this class of figure:
 
@@ -45,11 +51,17 @@ For this class of figure:
 - keep `activity_start` and `activity_end` null;
 - use the narrowest historically appropriate traditional Polity/community association;
 - preserve a conventional foundation/traditional year only in `traditional_year` when the tradition itself makes that year meaningful; never promote it to a verified Activity boundary;
-- never invent a broad placeholder interval merely to make the figure visible on the timeline.
+- never convert a culture, settlement, dynasty, confederacy, or archaeological date range into a person's Activity interval merely to make the figure visible on the timeline;
+- do not admit a purely mythical/legendary individual merely because a later king list or tradition supplies precise-looking reign years.
 
-Examples of the established path include Hotu Matuʻa, Bjorn Ironside, Bilqis, Eri, and Kupe.
+Examples:
 
-This gate is **not** triggered merely because a historical Person has approximate dates. A historically defensible Person with a scholarly approximate Activity/reign window remains in normal Human Authoring with `approximate` or `uncertain` boundaries. The deciding issue is whether the *individual and personal chronology* are sufficiently historical for the year timeline.
+- **Telesilla** — historicity PASS + an ancient chronographic floruit around 451/450 BCE → ordinary Timeline as a representative `c.451 BCE` point, not a fabricated 50-year rail.
+- **Hiawatha** — historically meaningful tradition, but no defensible person-specific interval amid competing confederacy chronologies → non-timeline.
+- **Kupe** — plausible historical core in Māori tradition, but settlement/cultural date ranges do not establish Kupe's personal Activity interval → non-timeline.
+- a wholly mythical king with a precise traditional 20-year reign → historicity FAIL → non-timeline.
+
+Approximate dates are not themselves a reason for exclusion. A Person stays on the Timeline when both gates pass and the uncertainty can be represented honestly with `approximate`, `uncertain`, `disputed`, or a reviewed representative point.
 
 ## 4. The normal four-stage path
 

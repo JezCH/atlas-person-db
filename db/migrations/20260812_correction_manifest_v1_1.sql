@@ -16,6 +16,7 @@ ALTER TABLE atlas_v2.correction_manifest_runs
     'atlas-correction-manifest/v1.1',
     'atlas-correction-manifest/v1.2',
     'atlas-correction-manifest/v1.3',
+    'atlas-correction-manifest/v1.4',
     'atlas-correction-manifest/v2'
   ));
 

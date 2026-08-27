@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-correction-manifest/v1.4",
+  "review_status": "approved",
+  "request_id": "correction:timeline-routing-historicity-telesilla-notes:2026-08-27:v1",
+  "release_order": 570,
+  "operations": [
+    {
+      "type": "update_person_historicity",
+      "person_id": "f2eb1ca0-b37d-5497-a40d-a5df55ee8a2c",
+      "expected_before": {
+        "historicity": "historical"
+      },
+      "expected_after": {
+        "historicity": "legendary_possible_historical_core"
+      }
+    },
+    {
+      "type": "update_person_historicity",
+      "person_id": "5e80cd21-07a8-5f45-83eb-a08dc5c7e37f",
+      "expected_before": {
+        "historicity": "historical"
+      },
+      "expected_after": {
+        "historicity": "historical_tradition_uncertain_chronology"
+      }
+    },
+    {
+      "type": "update_person_historicity",
+      "person_id": "e0fe056b-3d54-4ccd-9ca1-c077c283a069",
+      "expected_before": {
+        "historicity": "historical"
+      },
+      "expected_after": {
+        "historicity": "historical_tradition_uncertain_chronology"
+      }
+    },
+    {
+      "type": "update_activity_notes",
+      "relationship_id": "3b687330-d584-49e8-99d4-3cdb1f412d5d",
+      "expected_before": {
+        "person_id": "a3a24796-9211-4a37-a2e0-2beae99c627d",
+        "polity_id": "2bf9b3d5-147f-4fb1-aa64-2715ed855c1a",
+        "activity_start": -451,
+        "activity_end": -451,
+        "notes": "Telesilla is modeled as a fifth-century BCE Argive lyric poet. Oxford cautions that the later story of her arming Argive women may be fabricated, so ATLAS does not create a military command; c.500–c.450 is a broad representative artistic window reflecting conflicting ancient dating traditions."
+      },
+      "expected_after": {
+        "person_id": "a3a24796-9211-4a37-a2e0-2beae99c627d",
+        "polity_id": "2bf9b3d5-147f-4fb1-aa64-2715ed855c1a",
+        "activity_start": -451,
+        "activity_end": -451,
+        "notes": "Ancient chronographic tradition places Telesilla's floruit around 451/450 BCE. ATLAS records c.451 BCE only as a representative activity point, not as an exact life span or full activity interval. Oxford cautions that the later story of her arming Argive women may be fabricated, so ATLAS does not create a military command."
+      }
+    }
+  ]
+}
