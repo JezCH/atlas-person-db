@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:margaret-of-anjou:lancastrians:1455-1471:v1",
+  "person": {
+    "canonical_name_en": "Margaret of Anjou",
+    "display_name_ko": "앙주의 마거릿",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Lancastrians",
+    "display_name_ko": "랭커스터파",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Lancastrian Leader",
+    "role_display_name_ko": "랭커스터파 지도자",
+    "start_year": 1455,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1471,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Margaret of Anjou became the principal political and military champion of the Lancastrian cause as Henry VI's incapacity and the Yorkist challenge drove England into the Wars of the Roses. The National Portrait Gallery explicitly describes her as leading the Lancastrian contingent. ATLAS uses c.1455–1471 as a representative leadership interval ending with the collapse of her military campaign and capture after Tewkesbury, not as a formal constitutional office."
+  },
+  "sources": [
+    {
+      "title": "Queen Margaret of Anjou — National Portrait Gallery",
+      "canonical_url": "https://www.npg.org.uk/collections/search/person/mp14596/queen-margaret-of-anjou",
+      "citation_text": "The National Portrait Gallery states that Margaret raised an army and led the Lancastrian contingent in the Wars of the Roses.",
+      "source_type": "museum_reference"
+    },
+    {
+      "title": "The Wars of the Roses — The National Archives",
+      "canonical_url": "https://www.nationalarchives.gov.uk/explore-the-collection/explore-by-time-period/medieval/the-wars-of-the-roses/",
+      "citation_text": "The National Archives documents the Lancastrian and Yorkist political-military struggle and the decisive Yorkist victory at Towton in 1461.",
+      "source_type": "government_archive"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}

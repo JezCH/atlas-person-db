@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:frederick-augustus-iii-of-saxony:kingdom-of-saxony:1904-1918:v1",
+  "person": {
+    "canonical_name_en": "Frederick Augustus III of Saxony",
+    "display_name_ko": "프리드리히 아우구스트 3세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Saxony",
+    "display_name_ko": "작센 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1904,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1918,
+    "end_month": 11,
+    "end_day": 13,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Frederick Augustus III became the last King of Saxony in 1904 after the death of his father, King George. He abdicated on 13 November 1918 during the German Revolution. ATLAS records his Saxon kingship from 1904 to the exact abdication date."
+  },
+  "sources": [
+    {
+      "title": "Friedrich August III. – Sachsens letzter König — Geschichte Sachsen",
+      "canonical_url": "https://www.geschichte.sachsen.de/friedrich-august-iii-5641.html",
+      "citation_text": "The official Saxony history portal states that Friedrich August III ascended the Saxon throne in October 1904 and abdicated on 13 November 1918.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "Nachlass Friedrich August III., König von Sachsen — Sächsisches Staatsarchiv",
+      "canonical_url": "https://www.archiv.sachsen.de/archiv/bestand.jsp?bestandid=12567&oid=12.01&syg_id=164044",
+      "citation_text": "The Saxon State Archive identifies Friedrich August III as the last Wettin king of Saxony and describes his accession in 1904 and abdication in November 1918.",
+      "source_type": "government_archive"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}

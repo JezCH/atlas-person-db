@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:otto-henry:electoral-palatinate:1556-1559:v1",
+  "person": {
+    "canonical_name_en": "Otto Henry",
+    "display_name_ko": "오토하인리히",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Electoral Palatinate",
+    "display_name_ko": "팔츠 선제후국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Elector",
+    "role_display_name_ko": "선제후",
+    "start_year": 1556,
+    "start_month": 2,
+    "start_day": 26,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1559,
+    "end_month": 2,
+    "end_day": 12,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Otto Henry (Ottheinrich) became Elector Palatine on 26 February 1556 and held the Electoral Palatinate until his death on 12 February 1559. His reign is particularly associated with the Lutheran reform of the Palatinate and Heidelberg University."
+  },
+  "sources": [
+    {
+      "title": "Medaille auf Kurfürst Ottheinrich von der Pfalz — LEO-BW",
+      "canonical_url": "https://www.leo-bw.de/de/web/guest/detail/-/Detail/details/DOKUMENT/blm_museumsobjekte/7A94CF7BD1434AA0875CF3A6F2BD2B4C/Medaille%2BMedaille%2Bauf%2BKurf%C3%BCrst%2BOttheinrich%2Bvon%2Bder%2BPfalz",
+      "citation_text": "LEO-BW identifies Ottheinrich as Elector from 26 February 1556 until his death on 12 February 1559.",
+      "source_type": "museum_reference"
+    },
+    {
+      "title": "Martin Luther in Heidelberg — Stadt Heidelberg",
+      "canonical_url": "https://www.heidelberg.de/217883.html",
+      "citation_text": "The City of Heidelberg records Elector Ottheinrich's reign as 1556–1559 and his 1556 church reform.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}
