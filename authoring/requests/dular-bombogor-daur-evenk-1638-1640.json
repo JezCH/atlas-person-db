@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:dular-bombogor:daur-evenk-confederation:chief:1638-1640:v1",
+  "person": {
+    "canonical_name_en": "Dular Bombogor",
+    "display_name_ko": "둘라르 봄보고르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Daur-Evenk Confederation",
+    "display_name_ko": "다우르-에벤키 연맹",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Chief and Resistance Leader",
+    "role_display_name_ko": "추장·저항 지도자",
+    "start_year": 1638,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1640,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Dular Bombogor was an Evenk/Solon chief who led resistance in the Amur basin against Qing expansion. Modern scholarship describes the relevant political formation as a Daur-Evenk federation (also subsumed in Manchu records under the collective Solon designation) and identifies Bombogor as its last leader, defeated and captured in 1640. ATLAS therefore does not flatten the federation into a generic timeless 'Evenks' polity."
+  },
+  "sources": [
+    {
+      "title": "Sino-Russian Borderlands and Identity Formation — Studia Orientalia Slovaca",
+      "canonical_url": "https://fphil.uniba.sk/fileadmin/fif/katedry_pracoviska/kvas/SOS_20_1/SOS_20_1_21.pdf",
+      "citation_text": "The scholarly article describes the Daur-Evenk federation, the Manchu collective designation Solon, and the defeat of its last leader Bombogor in 1640.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Bombogor (chief)",
+      "canonical_url": "https://en.wikipedia.org/wiki/Bombogor_%28chief%29",
+      "citation_text": "This biographical synthesis records the 1638 Qing campaign against Bombogor, continued Evenk resistance, and his capture and execution in 1640, citing Crossley and the Cambridge History of China.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

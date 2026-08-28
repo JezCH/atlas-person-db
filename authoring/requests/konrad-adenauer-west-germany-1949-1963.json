@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:konrad-adenauer:federal-republic-of-germany:federal-chancellor:1949-1963:v1",
+  "person": {
+    "canonical_name_en": "Konrad Adenauer",
+    "display_name_ko": "콘라트 아데나워",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Federal Republic of Germany",
+    "display_name_ko": "서독",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Federal Chancellor",
+    "role_display_name_ko": "연방총리",
+    "start_year": 1949,
+    "start_month": 9,
+    "start_day": 15,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1963,
+    "end_month": 10,
+    "end_day": 15,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Konrad Adenauer was elected the first Federal Chancellor of the Federal Republic of Germany on 15 September 1949. The Bundestag records that the Federal President accepted his resignation on 15 October 1963. ATLAS uses the state's formal name while the Korean display label '서독' distinguishes the pre-unification Federal Republic from the contemporary unified Germany in the historical map."
+  },
+  "sources": [
+    {
+      "title": "15. September 1949: Adenauer zum ersten Bundeskanzler gewählt — Deutscher Bundestag",
+      "canonical_url": "https://www.bundestag.de/dokumente/textarchiv/1949-09-15-adenauer-erster-bundeskanzler-1016592",
+      "citation_text": "The Bundestag records Adenauer's election as the first Federal Chancellor on 15 September 1949 and his 1949-1963 chancellorship.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Deutscher Bundestag, 4. Wahlperiode, 92. Sitzung",
+      "canonical_url": "https://dserver.bundestag.de/btp/04/04092.pdf",
+      "citation_text": "The Bundestag record states that on 15 October 1963 the Federal President accepted Adenauer's resignation as Federal Chancellor.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-28",
+      "document_title": "콘라트 아데나워",
+      "url": "https://namu.wiki/w/%EC%BD%98%EB%9D%BC%ED%8A%B8%20%EC%95%84%EB%8D%B0%EB%82%98%EC%9B%8C"
+    }
+  }
+}

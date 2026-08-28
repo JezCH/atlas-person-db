@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:vavlyo-nenyang:nenets-hanty-resistance:leader:c1830-1841:v1",
+  "person": {
+    "canonical_name_en": "Vavlyo Nenyang",
+    "display_name_ko": "바블료 네냥",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Nenets-Hanty Resistance",
+    "display_name_ko": "네네츠·한티 저항운동",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Resistance Leader",
+    "role_display_name_ko": "저항 지도자",
+    "start_year": 1830,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1841,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Vavlyo Nenyang, also recorded as Vauli Piettomin, was a Nenets leader whose movement mobilized poor Nenets and Khanty communities against local elites, merchants and imperial administrative exactions. The archive-based publication characterizes the movement as 1830-1840 and reproduces the January 1841 case materials concerning his capture. Because other later summaries sometimes extend the movement back into the 1820s, ATLAS uses c.1830 as an approximate start and 1841 as the terminal documented point."
+  },
+  "sources": [
+    {
+      "title": "Из истории ненецкого народа 30—40-х годов XIX в. (Движение Ваули Пиеттомина)",
+      "canonical_url": "https://www.vostlit.info/Texts/Dokumenty/Russ/XIX/1820-1840/Nenec_borba/text.htm",
+      "citation_text": "This archival publication presents the 1830-1840 movement of Vauli Piettomin of the Nenyang Nenets clan and reproduces the 1841 Western Siberian administration case records.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Ненецкий национальный округ — Большая Советская Энциклопедия",
+      "canonical_url": "https://litresp.ru/chitat/ru/%D0%91/bse-bse/boljshaya-sovetskaya-enciklopediya-ne/393",
+      "citation_text": "The encyclopedia identifies Vavlyo Nenyang as the leader of a major Nenets uprising, conventionally dated 1825-1840, demonstrating the broader chronological tradition around the same movement.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
