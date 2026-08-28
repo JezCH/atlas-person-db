@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:svatopluk-i:great-moravia:prince:870-871:v1",
+  "person": {
+    "canonical_name_en": "Svatopluk I",
+    "display_name_ko": "스바토플루크 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Great Moravia",
+    "display_name_ko": "대모라바",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Prince",
+    "role_display_name_ko": "공",
+    "start_year": 870,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 871,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Svatopluk took control of Great Moravia in 870 after Rastislav's fall. He was imprisoned by the East Franks in 871 and temporarily lost power, creating a genuine interruption that ATLAS preserves as a separate first Activity rather than flattening his rule into one continuous rail."
+  },
+  "sources": [
+    {
+      "title": "Svatopluk — Hrvatska enciklopedija",
+      "canonical_url": "https://www.enciklopedija.hr/clanak/svatopluk",
+      "citation_text": "The Croatian Encyclopedia identifies Svatopluk as ruler of Great Moravia from 870 to 894 and notes his temporary removal and restoration in 871.",
+      "source_type": "national_encyclopedia"
+    },
+    {
+      "title": "Svatopluk, principe della Grande Moravia — Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/svatopluk-principe-della-grande-moravia/",
+      "citation_text": "Treccani records Svatopluk's seizure of Moravian government in 870, imprisonment in 871, and subsequent restoration.",
+      "source_type": "academic_encyclopedia"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
