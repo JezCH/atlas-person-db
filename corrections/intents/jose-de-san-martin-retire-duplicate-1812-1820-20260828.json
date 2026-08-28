@@ -1,0 +1,17 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:jose-de-san-martin:retire-duplicate-1812-1820:20260828:v1",
+  "review_status": "approved",
+  "release_order": 110,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "57967350-2014-4743-95cd-b8f763691eb5"
+  },
+  "evidence": {
+    "reason": "Production Person read on 2026-08-28 shows two José de San Martín Activities for the same United Provinces of the Río de la Plata polity, serves relation, general_activity basis, and 1812-1820 service interval. PR #464 had already reviewed and registered Activity 37a10320-3f35-47dd-be7f-dad4dbd5e8aa as General for 1812-1820, with detailed notes tying the endpoint to the collapse of the Directorial government and distinguishing the later Peru phase. The later Activity 57967350-2014-4743-95cd-b8f763691eb5 restates the same historical service under the broader descriptive role Military and Independence Leader and does not represent a separate office or discontinuous Activity. Preserve the earlier reviewed General Activity and retire only the later duplicate.",
+    "person_id": "015bf9be-c853-4c27-922a-c502d3839af2",
+    "survivor_activity_id": "37a10320-3f35-47dd-be7f-dad4dbd5e8aa",
+    "retire_activity_id": "57967350-2014-4743-95cd-b8f763691eb5",
+    "prior_review_pr": 464
+  }
+}
