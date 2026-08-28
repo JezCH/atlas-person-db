@@ -1,52 +1,52 @@
 {
-  "schema": "atlas-human-authoring/v1",
-  "review_status": "approved",
-  "request_id": "authoring:simone-boccanegra:republic-of-genoa:doge:1356-1363:v1",
-  "person": {
-    "canonical_name_en": "Simone Boccanegra",
-    "display_name_ko": "시모네 보카네그라",
-    "person_type": "historical",
-    "historicity": "historical"
-  },
-  "polity": {
-    "canonical_name_en": "Republic of Genoa",
-    "display_name_ko": "제노바 공화국",
-    "polity_type": "historical_polity",
-    "historicity": "historical"
-  },
-  "activity": {
-    "relation_type": "governs",
-    "period_basis": "term",
-    "role": "Doge",
-    "role_display_name_ko": "도제",
-    "start_year": 1356,
-    "start_month": null,
-    "start_day": null,
-    "start_certainty": "exact",
-    "start_calendar": "unspecified_historical",
-    "end_year": 1363,
-    "end_month": null,
-    "end_day": null,
-    "end_certainty": "exact",
-    "end_calendar": "unspecified_historical",
-    "confidence": "well_established",
-    "chronology_status": "reviewed",
-    "notes": "Boccanegra returned to Genoa and resumed the dogeship in November 1356, governing until his death in 1363. This is stored as a second Activity because his first dogeship had ended in 1344."
-  },
-  "sources": [
-    {
-      "title": "Boccanegra, Simone — Treccani Dizionario di Storia",
-      "canonical_url": "https://www.treccani.it/enciclopedia/simone-boccanegra_%28Dizionario-di-Storia%29/",
-      "citation_text": "Treccani records Boccanegra's restoration to the dogeship in 1356 and his death in 1363.",
-      "source_type": "web_bibliographic_reference"
+    "schema": "atlas-human-authoring/v1",
+    "review_status": "approved",
+    "request_id": "authoring:simone-boccanegra:republic-of-genoa:doge:1356-1363:v1",
+    "person": {
+        "canonical_name_en": "Simone Boccanegra",
+        "display_name_ko": "시모네 보카네그라",
+        "person_type": "historical",
+        "historicity": "historical"
+    },
+    "polity": {
+        "canonical_name_en": "Republic of Genoa",
+        "display_name_ko": "제노바 공화국",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+    },
+    "activity": {
+        "relation_type": "governs",
+        "period_basis": "term",
+        "role": "Doge",
+        "role_display_name_ko": "도제",
+        "start_year": 1356,
+        "start_month": null,
+        "start_day": null,
+        "start_certainty": "exact",
+        "start_calendar": "unspecified_historical",
+        "end_year": 1363,
+        "end_month": null,
+        "end_day": null,
+        "end_certainty": "exact",
+        "end_calendar": "unspecified_historical",
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "notes": "Boccanegra returned to Genoa and resumed the dogeship in November 1356, governing until his death in 1363. This is stored as a second Activity because his first dogeship had ended in 1344."
+    },
+    "sources": [
+        {
+            "title": "Boccanegra, Simone — Treccani Dizionario di Storia",
+            "canonical_url": "https://www.treccani.it/enciclopedia/simone-boccanegra_%28Dizionario-di-Storia%29/",
+            "citation_text": "Treccani records Boccanegra's restoration to the dogeship in 1356 and his death in 1363.",
+            "source_type": "web_bibliographic_reference"
+        }
+    ],
+    "external_references": {
+        "namuwiki": {
+            "status": "linked",
+            "checked_at": "2026-08-28",
+            "document_title": "시몬 보카네그라",
+            "url": "https://namu.wiki/w/%EC%8B%9C%EB%AA%AC%20%EB%B3%B4%EC%B9%B4%EB%84%A4%EA%B7%B8%EB%9D%BC"
+        }
     }
-  ],
-  "external_references": {
-    "namuwiki": {
-      "status": "linked",
-      "checked_at": "2026-08-28",
-      "document_title": "시몬 보카네그라",
-      "url": "https://namu.wiki/w/%EC%8B%9C%EB%AA%AC%20%EB%B3%B4%EC%B9%B4%EB%84%A4%EA%B7%B8%EB%9D%BC"
-    }
-  }
 }

@@ -1,50 +1,50 @@
 {
-  "schema": "atlas-human-authoring/v1",
-  "review_status": "approved",
-  "request_id": "authoring:santiago-mendez:republic-of-yucatan:governor:1841-1844:v1",
-  "person": {
-    "canonical_name_en": "Santiago Méndez",
-    "display_name_ko": "산티아고 멘데스",
-    "person_type": "historical",
-    "historicity": "historical"
-  },
-  "polity": {
-    "canonical_name_en": "Republic of Yucatán",
-    "display_name_ko": "유카탄 공화국",
-    "polity_type": "historical_polity",
-    "historicity": "historical"
-  },
-  "activity": {
-    "relation_type": "governs",
-    "period_basis": "term",
-    "role": "Governor",
-    "role_display_name_ko": "주지사",
-    "start_year": 1841,
-    "start_month": null,
-    "start_day": null,
-    "start_certainty": "exact",
-    "start_calendar": "gregorian",
-    "end_year": 1844,
-    "end_month": null,
-    "end_day": null,
-    "end_certainty": "exact",
-    "end_calendar": "gregorian",
-    "confidence": "well_established",
-    "chronology_status": "reviewed",
-    "notes": "The Yucatán government chronology places Santiago Méndez in the governorship from 1840 to 1844. Because the requested polity is the independent Republic of Yucatán, ATLAS begins this Activity in 1841, when the republican separation period was in effect, rather than retrojecting the republic into his pre-separation 1840 office."
-  },
-  "sources": [
-    {
-      "title": "Cronología de los Gobernadores de Yucatán — Gobierno del Estado de Yucatán",
-      "canonical_url": "https://www.yucatan.gob.mx/?p=cronologia",
-      "citation_text": "The official Yucatán chronology lists Santiago Méndez as governor in 1840–1844 and again in 1847–1848.",
-      "source_type": "web_bibliographic_reference"
+    "schema": "atlas-human-authoring/v1",
+    "review_status": "approved",
+    "request_id": "authoring:santiago-mendez:republic-of-yucatan:governor:1841-1844:v1",
+    "person": {
+        "canonical_name_en": "Santiago Méndez",
+        "display_name_ko": "산티아고 멘데스",
+        "person_type": "historical",
+        "historicity": "historical"
+    },
+    "polity": {
+        "canonical_name_en": "Republic of Yucatán",
+        "display_name_ko": "유카탄 공화국",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+    },
+    "activity": {
+        "relation_type": "governs",
+        "period_basis": "term",
+        "role": "Governor",
+        "role_display_name_ko": "주지사",
+        "start_year": 1841,
+        "start_month": null,
+        "start_day": null,
+        "start_certainty": "exact",
+        "start_calendar": "gregorian",
+        "end_year": 1844,
+        "end_month": null,
+        "end_day": null,
+        "end_certainty": "exact",
+        "end_calendar": "gregorian",
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "notes": "The Yucatán government chronology places Santiago Méndez in the governorship from 1840 to 1844. Because the requested polity is the independent Republic of Yucatán, ATLAS begins this Activity in 1841, when the republican separation period was in effect, rather than retrojecting the republic into his pre-separation 1840 office."
+    },
+    "sources": [
+        {
+            "title": "Cronología de los Gobernadores de Yucatán — Gobierno del Estado de Yucatán",
+            "canonical_url": "https://www.yucatan.gob.mx/?p=cronologia",
+            "citation_text": "The official Yucatán chronology lists Santiago Méndez as governor in 1840–1844 and again in 1847–1848.",
+            "source_type": "web_bibliographic_reference"
+        }
+    ],
+    "external_references": {
+        "namuwiki": {
+            "status": "not_found",
+            "checked_at": "2026-08-28"
+        }
     }
-  ],
-  "external_references": {
-    "namuwiki": {
-      "status": "not_found",
-      "checked_at": "2026-08-28"
-    }
-  }
 }

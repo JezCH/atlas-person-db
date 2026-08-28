@@ -1,50 +1,50 @@
 {
-  "schema": "atlas-human-authoring/v1",
-  "review_status": "approved",
-  "request_id": "authoring:brigham-young:state-of-deseret:governor:1849-1851:v1",
-  "person": {
-    "canonical_name_en": "Brigham Young",
-    "display_name_ko": "브리검 영",
-    "person_type": "historical",
-    "historicity": "historical"
-  },
-  "polity": {
-    "canonical_name_en": "State of Deseret",
-    "display_name_ko": "데저렛 주",
-    "polity_type": "historical_polity",
-    "historicity": "historical"
-  },
-  "activity": {
-    "relation_type": "governs",
-    "period_basis": "term",
-    "role": "Governor",
-    "role_display_name_ko": "주지사",
-    "start_year": 1849,
-    "start_month": null,
-    "start_day": null,
-    "start_certainty": "exact",
-    "start_calendar": "gregorian",
-    "end_year": 1851,
-    "end_month": null,
-    "end_day": null,
-    "end_certainty": "exact",
-    "end_calendar": "gregorian",
-    "confidence": "well_established",
-    "chronology_status": "reviewed",
-    "notes": "The provisional State of Deseret began functioning in 1849 with Brigham Young as governor. Congress created Utah Territory in September 1850, and the territorial appointees took office in the following spring, ending the initial quasi-governmental Deseret executive. ATLAS records 1849–1851 rather than extending the later shadow-government revival into the same Activity."
-  },
-  "sources": [
-    {
-      "title": "Deseret — Utah History Encyclopedia / History to Go",
-      "canonical_url": "https://historytogo.utah.gov/post/deseret/",
-      "citation_text": "Utah's historical encyclopedia states that Deseret's executive branch functioned under Governor Brigham Young from 1849 until Utah territorial government took over the following spring.",
-      "source_type": "web_bibliographic_reference"
+    "schema": "atlas-human-authoring/v1",
+    "review_status": "approved",
+    "request_id": "authoring:brigham-young:state-of-deseret:governor:1849-1851:v1",
+    "person": {
+        "canonical_name_en": "Brigham Young",
+        "display_name_ko": "브리검 영",
+        "person_type": "historical",
+        "historicity": "historical"
+    },
+    "polity": {
+        "canonical_name_en": "State of Deseret",
+        "display_name_ko": "데저렛 주",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+    },
+    "activity": {
+        "relation_type": "governs",
+        "period_basis": "term",
+        "role": "Governor",
+        "role_display_name_ko": "주지사",
+        "start_year": 1849,
+        "start_month": null,
+        "start_day": null,
+        "start_certainty": "exact",
+        "start_calendar": "gregorian",
+        "end_year": 1851,
+        "end_month": null,
+        "end_day": null,
+        "end_certainty": "exact",
+        "end_calendar": "gregorian",
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "notes": "The provisional State of Deseret began functioning in 1849 with Brigham Young as governor. Congress created Utah Territory in September 1850, and the territorial appointees took office in the following spring, ending the initial quasi-governmental Deseret executive. ATLAS records 1849–1851 rather than extending the later shadow-government revival into the same Activity."
+    },
+    "sources": [
+        {
+            "title": "Deseret — Utah History Encyclopedia / History to Go",
+            "canonical_url": "https://historytogo.utah.gov/post/deseret/",
+            "citation_text": "Utah's historical encyclopedia states that Deseret's executive branch functioned under Governor Brigham Young from 1849 until Utah territorial government took over the following spring.",
+            "source_type": "web_bibliographic_reference"
+        }
+    ],
+    "external_references": {
+        "namuwiki": {
+            "status": "not_found",
+            "checked_at": "2026-08-28"
+        }
     }
-  ],
-  "external_references": {
-    "namuwiki": {
-      "status": "not_found",
-      "checked_at": "2026-08-28"
-    }
-  }
 }

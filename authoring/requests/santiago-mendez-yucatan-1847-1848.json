@@ -1,50 +1,50 @@
 {
-  "schema": "atlas-human-authoring/v1",
-  "review_status": "approved",
-  "request_id": "authoring:santiago-mendez:republic-of-yucatan:governor:1847-1848:v1",
-  "person": {
-    "canonical_name_en": "Santiago Méndez",
-    "display_name_ko": "산티아고 멘데스",
-    "person_type": "historical",
-    "historicity": "historical"
-  },
-  "polity": {
-    "canonical_name_en": "Republic of Yucatán",
-    "display_name_ko": "유카탄 공화국",
-    "polity_type": "historical_polity",
-    "historicity": "historical"
-  },
-  "activity": {
-    "relation_type": "governs",
-    "period_basis": "term",
-    "role": "Governor",
-    "role_display_name_ko": "주지사",
-    "start_year": 1847,
-    "start_month": null,
-    "start_day": null,
-    "start_certainty": "exact",
-    "start_calendar": "gregorian",
-    "end_year": 1848,
-    "end_month": null,
-    "end_day": null,
-    "end_certainty": "exact",
-    "end_calendar": "gregorian",
-    "confidence": "well_established",
-    "chronology_status": "reviewed",
-    "notes": "Santiago Méndez returned to the governorship during the Republic of Yucatán's final crisis in 1847–1848. This second term is kept separate from his earlier governorship because the intervening officeholders and political reversal were real."
-  },
-  "sources": [
-    {
-      "title": "Cronología de los Gobernadores de Yucatán — Gobierno del Estado de Yucatán",
-      "canonical_url": "https://www.yucatan.gob.mx/?p=cronologia",
-      "citation_text": "The official Yucatán chronology lists Santiago Méndez again as governor in 1847–1848.",
-      "source_type": "web_bibliographic_reference"
+    "schema": "atlas-human-authoring/v1",
+    "review_status": "approved",
+    "request_id": "authoring:santiago-mendez:republic-of-yucatan:governor:1847-1848:v1",
+    "person": {
+        "canonical_name_en": "Santiago Méndez",
+        "display_name_ko": "산티아고 멘데스",
+        "person_type": "historical",
+        "historicity": "historical"
+    },
+    "polity": {
+        "canonical_name_en": "Republic of Yucatán",
+        "display_name_ko": "유카탄 공화국",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+    },
+    "activity": {
+        "relation_type": "governs",
+        "period_basis": "term",
+        "role": "Governor",
+        "role_display_name_ko": "주지사",
+        "start_year": 1847,
+        "start_month": null,
+        "start_day": null,
+        "start_certainty": "exact",
+        "start_calendar": "gregorian",
+        "end_year": 1848,
+        "end_month": null,
+        "end_day": null,
+        "end_certainty": "exact",
+        "end_calendar": "gregorian",
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "notes": "Santiago Méndez returned to the governorship during the Republic of Yucatán's final crisis in 1847–1848. This second term is kept separate from his earlier governorship because the intervening officeholders and political reversal were real."
+    },
+    "sources": [
+        {
+            "title": "Cronología de los Gobernadores de Yucatán — Gobierno del Estado de Yucatán",
+            "canonical_url": "https://www.yucatan.gob.mx/?p=cronologia",
+            "citation_text": "The official Yucatán chronology lists Santiago Méndez again as governor in 1847–1848.",
+            "source_type": "web_bibliographic_reference"
+        }
+    ],
+    "external_references": {
+        "namuwiki": {
+            "status": "not_found",
+            "checked_at": "2026-08-28"
+        }
     }
-  ],
-  "external_references": {
-    "namuwiki": {
-      "status": "not_found",
-      "checked_at": "2026-08-28"
-    }
-  }
 }
