@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:pompey-the-great:roman-republic:general-statesman:70-48-bce:v1",
+  "person": {
+    "canonical_name_en": "Pompey the Great",
+    "display_name_ko": "그나이우스 폼페이우스 마그누스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Republic",
+    "display_name_ko": "로마 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "general_activity",
+    "role": "General and Statesman",
+    "role_display_name_ko": "장군·정치가",
+    "start_year": -70,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -48,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Pompey was a leading general and statesman of the late Roman Republic. ATLAS uses 70–48 BCE as a representative public-leadership Activity beginning with his first consulship and ending with his death after Pharsalus. This does not claim one continuous office: within the interval he held consulships in 70, 55 and 52 BCE, extraordinary military commands, and major political authority. The general_activity basis is used specifically to avoid flattening those distinct constitutional offices into a fictitious continuous consulship."
+  },
+  "sources": [
+    {
+      "title": "Pompey the Great — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG148402",
+      "citation_text": "The British Museum identifies Pompey as a Roman statesman and general of the late Republic, 106–48 BCE, and a member of the First Triumvirate.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "imperium — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548948947",
+      "citation_text": "The Oxford Classical Dictionary describes the extraordinary imperium granted to Pompey by the lex Gabinia in 67 BCE, illustrating his exceptional late-Republic military command.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-28",
+      "document_title": "그나이우스 폼페이우스 마그누스",
+      "url": "https://namu.wiki/w/%EA%B7%B8%EB%82%98%EC%9D%B4%EC%9A%B0%EC%8A%A4%20%ED%8F%BC%ED%8E%98%EC%9D%B4%EC%9A%B0%EC%8A%A4%20%EB%A7%88%EA%B7%B8%EB%88%84%EC%8A%A4"
+    }
+  }
+}

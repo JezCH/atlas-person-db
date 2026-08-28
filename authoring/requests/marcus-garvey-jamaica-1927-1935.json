@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:marcus-garvey:jamaica:political-leader-pan-africanist:1927-1935:v1",
+  "person": {
+    "canonical_name_en": "Marcus Garvey",
+    "display_name_ko": "마커스 가비",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Jamaica",
+    "display_name_ko": "자메이카",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Political Leader and Pan-Africanist",
+    "role_display_name_ko": "정치 지도자·범아프리카주의자",
+    "start_year": 1927,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1935,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After deportation from the United States, Garvey returned to Jamaica in 1927, resumed political activity, founded the People's Political Party in 1929, and remained active in Jamaica until leaving for England in 1935. This is a second Jamaican Activity because his 1916–1927 U.S. phase is a real geographical and organizational interruption."
+  },
+  "sources": [
+    {
+      "title": "Marcus Mosiah Garvey — Jamaica Information Service",
+      "canonical_url": "https://jis.gov.jm/information/heroes/marcus-mosiah-garvey/",
+      "citation_text": "Jamaica Information Service records Garvey's return to Jamaica in 1927, his 1929 People's Political Party, and his later departure for England.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "National Heroes: Marcus Mosiah Garvey — National Library of Jamaica",
+      "canonical_url": "https://nlj.gov.jm/qcontentnational-heroes/",
+      "citation_text": "The National Library of Jamaica describes Garvey's return to Jamaica, continued public activity, and departure for England in 1935.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:frederick-william-elector-of-brandenburg:electorate-of-brandenburg:elector:1640-1688:v1",
+  "person": {
+    "canonical_name_en": "Frederick William, Elector of Brandenburg",
+    "display_name_ko": "프리드리히 빌헬름 대선제후",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Electorate of Brandenburg",
+    "display_name_ko": "브란덴부르크 선제후국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Elector",
+    "role_display_name_ko": "선제후",
+    "start_year": 1640,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1688,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Frederick William, the 'Great Elector', ruled as Elector of Brandenburg from 1640 to 1688. This Person is distinct from Frederick William I of Prussia (the 'Soldier King'), who is already separately present in ATLAS. Although Frederick William also ruled Ducal Prussia and other Hohenzollern lands, the requested Activity is bound specifically to the Electorate of Brandenburg."
+  },
+  "sources": [
+    {
+      "title": "Friedrich Wilhelm, Elector of Brandenburg (the 'Great Elector') — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG69892",
+      "citation_text": "The British Museum identifies Frederick William as Elector of Brandenburg and gives his rule as 1640–1688.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Elector Frederick William, the Great Elector — Landeshauptstadt Potsdam",
+      "canonical_url": "https://www.potsdam.de/de/content/elector-frederick-william-great-elector",
+      "citation_text": "Potsdam's official city history identifies Frederick William as elector from 1640 to 1688.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

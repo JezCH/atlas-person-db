@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:marcus-garvey:jamaica:unia-founder-pan-africanist:1914-1916:v1",
+  "person": {
+    "canonical_name_en": "Marcus Garvey",
+    "display_name_ko": "마커스 가비",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Jamaica",
+    "display_name_ko": "자메이카",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "UNIA Founder and Pan-Africanist",
+    "role_display_name_ko": "UNIA 창립자·범아프리카주의 지도자",
+    "start_year": 1914,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1916,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Garvey founded the Universal Negro Improvement Association (UNIA) in Jamaica in 1914 and left for the United States in 1916. ATLAS treats Jamaica here as Garvey's own political-community context, not as the British colonial administration he opposed. Because he then spent more than a decade abroad, his Jamaican activity is split rather than drawn as one continuous 1914–1935 rail."
+  },
+  "sources": [
+    {
+      "title": "Marcus Mosiah Garvey — Jamaica Information Service",
+      "canonical_url": "https://jis.gov.jm/information/heroes/marcus-mosiah-garvey/",
+      "citation_text": "Jamaica Information Service states that Garvey founded the UNIA in Jamaica in 1914 and went to the United States in 1916.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "National Heroes: Marcus Mosiah Garvey — National Library of Jamaica",
+      "canonical_url": "https://nlj.gov.jm/qcontentnational-heroes/",
+      "citation_text": "The National Library of Jamaica records Garvey's Jamaican career, the 1914 founding of the UNIA, and his departure for the United States in 1916.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
