@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:qutalmish:great-seljuk-empire:throne-claimant:1063-1064:v1",
+  "person": {
+    "canonical_name_en": "Qutalmish",
+    "display_name_ko": "쿠탈미시",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Great Seljuk Empire",
+    "display_name_ko": "대셀주크 제국"
+  },
+  "activity": {
+    "relation_type": "claims_rule",
+    "period_basis": "general_activity",
+    "role": "Seljuk Throne Claimant",
+    "role_display_name_ko": "셀주크 왕위 주장자",
+    "start_year": 1063,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1064,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "uncertain",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Qutalmish was not a Sultan of Rum. After Tughril Beg's death he claimed the Great Seljuk throne, proclaimed his own sultanate claim and marched on Ray before being defeated by Alp Arslan and dying in the succession struggle. Sources differ in converting the terminal battle between the last days of 1063 and 1064, so ATLAS preserves a narrow 1063-1064 claim interval with an uncertain end. The later Sultanate of Rum was founded by his son Suleiman ibn Qutalmish and is not retrojected onto Qutalmish."
+  },
+  "sources": [
+    {
+      "title": "ALPARSLAN — TDV İslâm Ansiklopedisi",
+      "canonical_url": "https://islamansiklopedisi.org.tr/alparslan",
+      "citation_text": "TDV records Qutalmish as a Seljuk dynastic claimant after Tughril's death, his proclamation of sultanic authority, march on Ray, defeat by Alp Arslan and death in the succession struggle.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Süleyman Şah ve Anadolu Selçuklu Devleti'nin Kuruluşu — Belleten",
+      "canonical_url": "https://belleten.gov.tr/tam-metin/2241/tur",
+      "citation_text": "The scholarly Belleten study identifies Suleiman Shah as a son of Qutalmish and discusses Qutalmish's failed struggle against Alp Arslan, clarifying that the later Anatolian Seljuk/Rum state belongs to his son's career.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

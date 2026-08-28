@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:marquis-of-pombal:kingdom-of-portugal:chief-minister:1756-1777:v1",
+  "person": {
+    "canonical_name_en": "Marquis of Pombal",
+    "display_name_ko": "폼발 후작",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Portugal",
+    "display_name_ko": "포르투갈 왕국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Chief Minister",
+    "role_display_name_ko": "수상",
+    "start_year": 1756,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1777,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sebastião José de Carvalho e Melo, later Marquis of Pombal, became the dominant minister of Joseph I. The Portuguese Parliament describes the king as entrusting him with governance and appointing him Primeiro-Ministro; the 1756-1777 interval represents the period in which he headed the kingdom's government as Secretary of State for Internal Affairs, rather than treating his noble title itself as an office."
+  },
+  "sources": [
+    {
+      "title": "Marquês de Pombal — Assembleia da República",
+      "canonical_url": "https://www.parlamento.pt/VisitaParlamento/Paginas/BiogMarquesdePombal.aspx",
+      "citation_text": "Portugal's Parliament identifies Sebastião José de Carvalho e Melo as Marquis of Pombal, records his 1750 appointment as Secretary of State for Foreign Affairs and War, and states that Joseph I later entrusted him with governance as Primeiro-Ministro.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

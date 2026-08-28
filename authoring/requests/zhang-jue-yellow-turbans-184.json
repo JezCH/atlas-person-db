@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:zhang-jue:yellow-turbans:leader:184:v1",
+  "person": {
+    "canonical_name_en": "Zhang Jue",
+    "display_name_ko": "장각"
+  },
+  "polity": {
+    "canonical_name_en": "Yellow Turbans",
+    "display_name_ko": "황건군",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Leader of the Yellow Turbans",
+    "role_display_name_ko": "황건군 지도자",
+    "start_year": 184,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 184,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Zhang Jue (Zhang Jiao) already exists in ATLAS with a legacy Eastern Han activity. This additional Activity supplies the missing own-side political-military community: in 184 he launched and led the Yellow Turban uprising and styled himself General of Heaven. The existing Eastern Han record is retained; no deletion is performed."
+  },
+  "sources": [
+    {
+      "title": "The Yellow Turban Rebellion — Chinese Text Project Data Wiki",
+      "canonical_url": "https://ctext.org/datawiki.pl?if=gb&res=943305",
+      "citation_text": "The Chinese Text Project summary records Zhang Jiao's Taiping movement, his organization of the revolt and the outbreak of the Yellow Turban rebellion in 184.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-21",
+      "document_title": "장각",
+      "url": "https://namu.wiki/w/%EC%9E%A5%EA%B0%81"
+    }
+  }
+}

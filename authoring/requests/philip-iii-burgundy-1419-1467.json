@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philip-iii-of-burgundy:duchy-of-burgundy:duke:1419-1467:v1",
+  "person": {
+    "canonical_name_en": "Philip III of Burgundy",
+    "display_name_ko": "필리프 3세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Burgundy",
+    "display_name_ko": "부르고뉴 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Duke",
+    "role_display_name_ko": "공작",
+    "start_year": 1419,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1467,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Philip III of Burgundy, commonly known as Philip the Good, succeeded John the Fearless as Duke of Burgundy in 1419 and ruled until his death in 1467. The Activity uses the Duchy of Burgundy as the core political authority rather than flattening his many acquired Low Countries titles into a single anachronistic state."
+  },
+  "sources": [
+    {
+      "title": "Philip the Good, Duke of Burgundy — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG113615",
+      "citation_text": "The British Museum identifies Philip the Good, also Philip III, as Duke of Burgundy from 1419 to 1467 and describes the major territorial expansion of his rule.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
