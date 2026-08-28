@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sitalces:odrysian-kingdom:king:c431-424-bce:v1",
+  "person": {
+    "canonical_name_en": "Sitalces",
+    "display_name_ko": "시탈케스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Odrysian Kingdom",
+    "display_name_ko": "오드뤼사이 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -431,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -424,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sitalces, son of Teres, was king of the Odrysae and the major Thracian ruler of the early Peloponnesian War. He is securely attested as king by 431 BCE and died in 424 BCE during a campaign against the Triballi. ATLAS therefore uses c.431 BCE as an approximate accession boundary rather than treating the first secure attestation as a proven exact accession date. The user's 'Thracians Bulgaria' label is normalized to the historical Odrysian Kingdom; modern Bulgaria is only one part of the later geography of his realm."
+  },
+  "sources": [
+    {
+      "title": "Sitalces — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/550498891",
+      "citation_text": "Oxford identifies Sitalces as son of Teres and king of the Odrysae, documents his alliance with Athens at the beginning of the Peloponnesian War, and records his death in 424 BCE.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Thucydides translated into English, Book II — Columbia University Libraries",
+      "canonical_url": "https://www.columbia.edu/cu/lweb/digital/collections/cul/texts/ldpd_7914460_001/pages/ldpd_7914460_001_00000137.html",
+      "citation_text": "The Thucydides text identifies Sitalces, son of Teres, as king of Thrace in 431 BCE and describes the Odrysian state founded by his father.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-28",
+      "document_title": "시탈케스",
+      "url": "https://namu.wiki/w/%EC%8B%9C%ED%83%88%EC%BC%80%EC%8A%A4"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ching-shih:canton-pirate-confederation:leader:1807-1810:v1",
+  "person": {
+    "canonical_name_en": "Ching Shih",
+    "display_name_ko": "정일수",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Canton Pirate Confederation",
+    "display_name_ko": "광동 해적연맹",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Pirate Confederation Leader",
+    "role_display_name_ko": "해적연맹 지도자",
+    "start_year": 1807,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1810,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ching Shih (Zheng Yi Sao) already exists in ATLAS with an Activity opposing the Qing dynasty. This additional own-side Activity represents her effective command of the Canton/Guangdong pirate confederation after Zheng Yi's death in 1807 until the confederation accepted amnesty in 1810. The existing Qing opposition Activity is retained; no deletion is performed."
+  },
+  "sources": [
+    {
+      "title": "Zheng Yi Sao — World History Encyclopedia",
+      "canonical_url": "https://www.worldhistory.org/Zheng_Yi_Sao/",
+      "citation_text": "The biography describes Zheng Yi Sao taking over the pirate confederation after Zheng Yi's death in 1807 and ending her piracy through the 1810 Canton amnesty.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "History of the Pirates Who Infested the China Sea From 1807 to 1810",
+      "canonical_url": "https://hapenews.mine.nu/library/44261",
+      "citation_text": "The translated contemporary account describes the six color-flag pirate squadrons around Canton and Zheng Yi Sao's place within the confederation.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}

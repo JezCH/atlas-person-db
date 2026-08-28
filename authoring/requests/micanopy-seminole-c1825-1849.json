@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:micanopy:seminole-nation:principal-chief:c1825-1849:v1",
+  "person": {
+    "canonical_name_en": "Micanopy",
+    "display_name_ko": "미카노피",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Seminole Nation",
+    "display_name_ko": "세미놀",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Principal Chief",
+    "role_display_name_ko": "수석 추장",
+    "start_year": 1825,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1849,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Micanopy was recognized as the Seminoles' head or principal chief and was a central political figure in resistance to removal and the Second Seminole War. Seminole political authority was decentralized rather than a centralized monarchy, so 'Principal Chief' is retained rather than styling him king. Secondary accounts vary between an earlier hereditary succession date and the conventional c.1825 emergence as principal chief; ATLAS therefore marks the start approximate and ends the Activity with his death in 1849."
+  },
+  "sources": [
+    {
+      "title": "Seminole Leaders — Florida Department of State",
+      "canonical_url": "https://dos.fl.gov/florida-facts/florida-history/seminole-history/seminole-leaders/",
+      "citation_text": "Florida's Department of State identifies Micanopy as Head Chief and one of the most important Seminole chiefs, noting his resistance to removal.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "American State Papers — Capitulation of the Seminole nation",
+      "canonical_url": "https://digital.library.unt.edu/ark:/67531/metadc799664/m1/852/",
+      "citation_text": "The 1837 U.S. government record explicitly describes Micanopy as the principal chief of the Seminole nation.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Micanopy, a Seminole chief — Florida Memory",
+      "canonical_url": "https://www.floridamemory.com/items/show/24007",
+      "citation_text": "Florida Memory identifies Micanopy as Head Chief or Governor and describes his role in uniting the Seminoles in the early nineteenth century.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

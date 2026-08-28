@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:afonso-i-of-portugal:kingdom-of-portugal:king:c1139-1185:v1",
+  "person": {
+    "canonical_name_en": "Afonso I of Portugal",
+    "display_name_ko": "아폰수 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Portugal",
+    "display_name_ko": "포르투갈 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1139,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1185,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Afonso Henriques was the first King of Portugal. After the victory at Ourique in 1139 he began using the royal title Rex; recognition by Alfonso VII followed in the Treaty of Zamora in 1143 and papal recognition in 1179. Because the formation and recognition of Portuguese kingship was a process rather than a single universally accepted accession day, ATLAS uses c.1139 as an approximate start and 1185 as the secure end."
+  },
+  "sources": [
+    {
+      "title": "Afonso Henriques — Paço dos Duques / Castelo de Guimarães",
+      "canonical_url": "https://pacodosduques.gov.pt/monumentos/castelo-de-guimaraes/historia/afonso-henriques/?lang=en",
+      "citation_text": "The Portuguese monument authority identifies Afonso Henriques as the first King of Portugal, states that he began calling himself Rex after Ourique in 1139, records recognition at Zamora in 1143, and his death in 1185.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-28",
+      "document_title": "아폰수 1세",
+      "url": "https://namu.wiki/w/%EC%95%84%ED%8F%B0%EC%88%98%201%EC%84%B8"
+    }
+  }
+}
