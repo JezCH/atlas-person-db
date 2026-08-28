@@ -1,54 +1,56 @@
 {
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:jose-de-san-martin:united-provinces-rio-de-la-plata:general:1812-1820:v1",
+  "request_id": "authoring:jose-de-san-martin:united-provinces-rio-de-la-plata:independence-leader:1812-1820:v1",
   "person": {
     "canonical_name_en": "José de San Martín",
-    "display_name_ko": "호세 데 산 마르틴"
-  },
-  "external_references": {
-    "namuwiki": {
-      "status": "not_found",
-      "checked_at": "2026-08-24"
-    }
+    "display_name_ko": "호세 데 산마르틴",
+    "person_type": "historical",
+    "historicity": "historical"
   },
   "polity": {
     "canonical_name_en": "United Provinces of the Río de la Plata",
-    "display_name_ko": "리오데라플라타 연합주"
+    "display_name_ko": "리오데라플라타 연합주",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
   },
   "activity": {
     "relation_type": "serves",
     "period_basis": "general_activity",
-    "role": "General",
-    "role_display_name_ko": "장군",
+    "role": "Military and Independence Leader",
+    "role_display_name_ko": "군사·독립운동 지도자",
     "start_year": 1812,
+    "start_month": null,
+    "start_day": null,
     "start_certainty": "exact",
     "start_calendar": "gregorian",
     "end_year": 1820,
-    "end_certainty": "exact",
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
     "end_calendar": "gregorian",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "José de San Martín entered the service of the Río de la Plata revolutionary government in 1812, when the Triumvirate recognized his rank and appointed him to organize and command the Mounted Grenadiers. He subsequently commanded the Army of the North, governed Cuyo, and built the Army of the Andes under the authority of the United Provinces. In 1820 the central Directorial government collapsed; the Act of Rancagua preserved his independent emancipation command after that institutional break. ATLAS therefore uses 1812-1820 as his primary United Provinces service Activity. His later office as Protector of Peru in 1821-1822 is a distinct polity and office and is not merged into this Activity."
+    "notes": "San Martín returned to Buenos Aires in 1812, entered the service of the revolutionary government, later governed Cuyo and organized the Army of the Andes under the United Provinces. ATLAS uses `serves` rather than implying that he was head of state of the United Provinces. The endpoint c.1820 marks the transition from his Río de la Plata-based command into the Peru expedition and wider transnational liberation phase."
   },
   "sources": [
     {
       "title": "Cronología Sanmartiniana — Instituto Nacional Sanmartiniano",
       "canonical_url": "https://sanmartiniano.cultura.gob.ar/noticia/cronologia-sanmartiniana/",
-      "citation_text": "The Instituto Nacional Sanmartiniano chronology records San Martín's return to Buenos Aires and his March 1812 appointment to organize the Mounted Grenadiers, later commands, and the 1820 institutional rupture surrounding the Act of Rancagua.",
-      "source_type": "government_institution_web"
+      "citation_text": "Argentina's National Sanmartinian Institute records San Martín's return and military appointment in 1812, governorship of Cuyo in 1814, and appointment as General-in-Chief of the Army of the Andes in 1816.",
+      "source_type": "web_bibliographic_reference"
     },
     {
-      "title": "17 de agosto: Paso a la Inmortalidad del General José de San Martín — Argentina.gob.ar",
-      "canonical_url": "https://www.argentina.gob.ar/noticias/17-de-agosto-paso-la-inmortalidad-del-general-jose-de-san-martin-2",
-      "citation_text": "Argentina's official government biography describes San Martín's governorship of Cuyo, the approval of his continental plan by the United Provinces government, and formation of the Army of the Andes.",
-      "source_type": "government_web"
-    },
-    {
-      "title": "Abril: un mes decisivo en la vida del General José de San Martín y en el recuerdo de su legado — Instituto Nacional Sanmartiniano",
-      "canonical_url": "https://sanmartiniano.cultura.gob.ar/noticia/abril-un-mes-decisivo-en-la-vida-del-general-jose-de-san-martin-y-en-el-recuerdo-de-su-legado/",
-      "citation_text": "The Instituto Nacional Sanmartiniano explains the 1820 Act of Rancagua and the continuation of San Martín's emancipation command after the expiration of the central United Provinces authorities.",
-      "source_type": "government_institution_web"
+      "title": "San Martín Libertador de América — Instituto Nacional Sanmartiniano",
+      "canonical_url": "https://sanmartiniano.cultura.gob.ar/noticia/jose-de-san-martin-libertador-de-america/",
+      "citation_text": "The Institute describes his Cuyo government, formation of the Army of the Andes, and campaign plan approved by the government of the United Provinces.",
+      "source_type": "web_bibliographic_reference"
     }
-  ]
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
 }

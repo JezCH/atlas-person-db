@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:brian-boru:high-kingship-of-ireland:high-king:1002-1014:v1",
+  "person": {
+    "canonical_name_en": "Brian Boru",
+    "display_name_ko": "브리안 보루",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "High Kingship of Ireland",
+    "display_name_ko": "아일랜드 최고왕권",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "High King",
+    "role_display_name_ko": "최고왕",
+    "start_year": 1002,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1014,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Brian Boru obtained the submission of Máel Sechnaill in 1002 and became High King of Ireland, remaining the dominant high king until his death at Clontarf in 1014. ATLAS uses 'High Kingship of Ireland' rather than a modern unitary Irish state label, preserving the layered and tributary nature of medieval Irish overkingship."
+  },
+  "sources": [
+    {
+      "title": "Brian Boru's Fort — Heritage Ireland",
+      "canonical_url": "https://heritageireland.ie/unguided-sites/brian-borus-fort/",
+      "citation_text": "Heritage Ireland identifies Brian Boru as High King from 1002 until his death in 1014.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "'Emperor of the Irish': Brian Boru — Trinity College Dublin",
+      "canonical_url": "https://www.tcd.ie/library/exhibitions/boru/rise.php",
+      "citation_text": "Trinity College Dublin explains Brian's acquisition of supremacy by 1002 and the contemporary Book of Armagh styling him imperator Scotorum.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

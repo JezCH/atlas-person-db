@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:harun-al-rashid:abbasid-caliphate:caliph:786-809:v1",
+  "person": {
+    "canonical_name_en": "Harun al-Rashid",
+    "display_name_ko": "하룬 알 라시드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Abbasid Caliphate",
+    "display_name_ko": "아바스 칼리파국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Caliph",
+    "role_display_name_ko": "칼리파",
+    "start_year": 786,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 809,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Harun al-Rashid was the fifth Abbasid caliph and ruled from 786 to 809."
+  },
+  "sources": [
+    {
+      "title": "Hārūn al-Rashīd — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/harun-al-rasid/",
+      "citation_text": "Encyclopaedia Iranica identifies Harun al-Rashid as the fifth Abbasid caliph and gives his reign as 170–193 AH / 786–809 CE.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
