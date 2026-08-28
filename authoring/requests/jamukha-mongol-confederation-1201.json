@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jamukha:mongol-anti-temujin-confederation:gur-khan:1201:v1",
+  "person": {
+    "canonical_name_en": "Jamukha",
+    "display_name_ko": "자무카",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Mongol Anti-Temujin Confederation",
+    "display_name_ko": "반테무진 몽골 연합",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "claims_rule",
+    "period_basis": "general_activity",
+    "role": "Gür Khan",
+    "role_display_name_ko": "구르 칸",
+    "start_year": 1201,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1201,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Jamukha was not simply khan of a 'Khamag-Mongol Khanate'. In 1201 an assembly of major steppe lords enthroned him as Gür Khan/Universal Khan in opposition to Temüjin and Ong Khan; the ensuing campaign quickly collapsed. ATLAS therefore records the secure 1201 anti-Temüjin confederation claim as a representative point rather than assigning Jamukha a fabricated continuous Khamag-Mongol reign."
+  },
+  "sources": [
+    {
+      "title": "The Rise of the Chinggisid Dynasty — International Journal of Asian Studies",
+      "canonical_url": "https://www.cambridge.org/core/journals/international-journal-of-asian-studies/article/rise-of-the-chinggisid-dynasty-premodern-eurasian-political-order-and-culture-at-a-glance/352DF0C8B1D1ACE0767EC0E27029A8AC",
+      "citation_text": "The Cambridge article notes that in 1201 an assembly of major steppe rulers enthroned Jamuqha as Gür Khan and that his campaign against Ong Khan and Temüjin immediately failed.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-28",
+      "document_title": "자무카",
+      "url": "https://namu.wiki/w/%EC%9E%90%EB%AC%B4%EC%B9%B4"
+    }
+  }
+}

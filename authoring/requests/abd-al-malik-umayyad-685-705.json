@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:abd-al-malik-ibn-marwan:umayyad-caliphate:caliph:685-705:v1",
+  "person": {
+    "canonical_name_en": "Abd al-Malik ibn Marwan",
+    "display_name_ko": "압드 알 말리크 이븐 마르완",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Umayyad Caliphate",
+    "display_name_ko": "우마이야 칼리파국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Caliph",
+    "role_display_name_ko": "칼리파",
+    "start_year": 685,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 705,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Abd al-Malik ibn Marwan was the Marwanid Umayyad caliph from 685 to 705, reestablishing central authority after the second civil war and overseeing major administrative and monetary reforms."
+  },
+  "sources": [
+    {
+      "title": "Umayyad History — Oxford Bibliographies",
+      "canonical_url": "https://academic.oup.com/reference/62384/reference-article-abstract/555074743",
+      "citation_text": "Oxford identifies the Marwanid caliph Abd al-Malik and gives his reign as 685–705.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
