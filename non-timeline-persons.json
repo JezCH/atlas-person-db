@@ -558,5 +558,22 @@
     "role_ko": "타파이파(네 파파 칭호를 겸한 최고 추장)",
     "reason": "Salamasina is a central figure of Samoan genealogical tradition and is treated in modern scholarship as the paramount woman through whom the four papa titles were combined in the Tafa'ifa status. The traditions and scholarly reconstructions place her broadly in the pre-contact, approximately sixteenth-century past, but they do not provide a securely defensible person-specific absolute reign interval. ATLAS therefore preserves her as a Samoan historical-tradition figure while leaving all timeline years unknown rather than turning genealogical reconstruction into exact chronology. Her paramountcy concerned the western islands of Samoa; Manu'a remained politically distinct.",
     "map_policy": "Do not display on the historical year timeline unless a separate uncertain-chronology or historical-tradition overlay is enabled."
+  },
+  {
+    "person_name": "Manco Capac",
+    "politic_name": "Inca Cusco",
+    "display_name_ko": "망코 카팍",
+    "politic_display_name_ko": "잉카 쿠스코",
+    "historicity": "legendary_possible_historical_core",
+    "historicity_display_ko": "전설·역사적 핵심 가능",
+    "timeline_status": "excluded",
+    "date_basis": "inca_origin_traditions_and_later_genealogical_chronologies_without_secure_personal_absolute_dates",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "잉카 건국 전승의 초대 카팍(왕)·쿠스코 창건자",
+    "reason": "Manco Capac (Quechua Manko/Manqo Qhapaq) is the first Inca and founder of Cusco in the major Inca origin traditions recorded after the Spanish conquest. The narratives contain overtly mythical elements and later dynastic chronologies assign incompatible or reconstructed dates, while archaeology supports an early Cusco-centered Inca development without securely identifying a datable individual founder. ATLAS therefore preserves Manco Capac as a legendary founder with a possible historical core and leaves all personal timeline years unknown. The user-supplied 'Qheswa' label is not treated as a separate polity or a second Person: Qheswa/Quechua is a broader ethnolinguistic label, while this entry uses the more specific Inca Cusco founding political community and does not retroject the later Inca Empire back onto the founder tradition.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
   }
 ]
