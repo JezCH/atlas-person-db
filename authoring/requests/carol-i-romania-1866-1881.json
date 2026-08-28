@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:carol-i-of-romania:romania:domnitor:1866-1881:v1",
+  "person": {
+    "canonical_name_en": "Carol I of Romania",
+    "display_name_ko": "카롤 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Romania",
+    "display_name_ko": "루마니아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Domnitor",
+    "role_display_name_ko": "도므니토르(통치공)",
+    "start_year": 1866,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1881,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Carol I became Domnitor (ruling prince) of Romania in 1866 and held that constitutional office until the proclamation of the kingdom in 1881. ATLAS separates his princely and royal titles because the state rank changed in 1881 rather than flattening the whole 1866-1914 period into a royal reign."
+  },
+  "sources": [
+    {
+      "title": "DOCUMENTAR: 180 de ani de la naşterea lui Carol I — AGERPRES",
+      "canonical_url": "https://agerpres.ro/documentare/2019/04/18/documentar-180-de-ani-de-la-nasterea-lui-carol-i-domnitor-1866-1881-si-rege-1881-1914-al-romaniei--295150",
+      "citation_text": "AGERPRES identifies Carol I as domnitor of Romania from 1866 to 1881 and king from 1881 to 1914.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Constituţia Principatelor Unite Române din 1866 — Portal Legislativ",
+      "canonical_url": "https://legislatie.just.ro/Public/DetaliiDocument/26844",
+      "citation_text": "The 1866 constitution promulgated under Carol states that the United Romanian Principalities formed one indivisible state under the name Romania.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

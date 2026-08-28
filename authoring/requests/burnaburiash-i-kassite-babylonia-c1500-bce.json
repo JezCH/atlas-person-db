@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:burnaburiash-i:kassite-babylonia:king:c1500-bce:v1",
+  "person": {
+    "canonical_name_en": "Burnaburiash I",
+    "display_name_ko": "부르나부리아시 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kassite Babylonia",
+    "display_name_ko": "카시트 바빌로니아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -1500,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -1500,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Burnaburiash I is identified in modern scholarship as the first Kassite dynast securely known to have ruled Babylonia, but the sixteenth- and early fifteenth-century BCE Kassite chronology is extremely poorly documented. ATLAS therefore does not fabricate a multi-year reign interval and instead places a representative c.1500 BCE reign point on the timeline."
+  },
+  "sources": [
+    {
+      "title": "KASSITES — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/kassites/",
+      "citation_text": "Encyclopaedia Iranica states that the sixteenth- and fifteenth-century BCE emergence of the Kassite state is almost devoid of documentation and identifies Burnaburiash I as the first Kassite dynast who ruled Babylonia.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Mesopotamian Chronology — Livius",
+      "canonical_url": "https://www.livius.org/articles/misc/mesopotamian-chronology/",
+      "citation_text": "The chronology survey emphasizes the limits of reconstructing early Kassite Babylonian reigns before the better-dated fourteenth century BCE.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

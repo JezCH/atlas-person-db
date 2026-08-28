@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:carol-i-of-romania:kingdom-of-romania:king:1881-1914:v1",
+  "person": {
+    "canonical_name_en": "Carol I of Romania",
+    "display_name_ko": "카롤 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Romania",
+    "display_name_ko": "루마니아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1881,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1914,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After Romania was proclaimed a kingdom in 1881, Carol I became its first king and reigned until his death in 1914. The Activity begins at year granularity to avoid mixing Old Style/New Style day conversions in a record whose historical distinction is the 1881 change of state rank."
+  },
+  "sources": [
+    {
+      "title": "O PERSONALITATE PE ZI: Carol I — AGERPRES",
+      "canonical_url": "https://agerpres.ro/documentare/2019/09/24/o-personalitate-pe-zi-carol-i-primul-rege-al-romaniei-domnitor-din-1866-rege-1881-1914--376303",
+      "citation_text": "AGERPRES identifies Carol I as the first king of Romania and gives his royal reign as 1881-1914.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
