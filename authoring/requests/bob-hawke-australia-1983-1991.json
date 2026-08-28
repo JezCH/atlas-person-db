@@ -1,52 +1,52 @@
 {
-  "schema": "atlas-human-authoring/v1",
-  "review_status": "approved",
-  "request_id": "authoring:bob-hawke:australia:prime-minister:1983-1991:v1",
-  "person": {
-    "canonical_name_en": "Bob Hawke",
-    "display_name_ko": "밥 호크",
-    "person_type": "historical",
-    "historicity": "historical"
-  },
-  "polity": {
-    "canonical_name_en": "Australia",
-    "display_name_ko": "호주",
-    "polity_type": "historical_polity",
-    "historicity": "historical"
-  },
-  "activity": {
-    "relation_type": "governs",
-    "period_basis": "term",
-    "role": "Prime Minister",
-    "role_display_name_ko": "총리",
-    "start_year": 1983,
-    "start_month": 3,
-    "start_day": 11,
-    "start_certainty": "exact",
-    "start_calendar": "gregorian",
-    "end_year": 1991,
-    "end_month": 12,
-    "end_day": 20,
-    "end_certainty": "exact",
-    "end_calendar": "gregorian",
-    "confidence": "well_established",
-    "chronology_status": "reviewed",
-    "notes": "Bob Hawke served as Prime Minister of Australia from 11 March 1983 to 20 December 1991."
-  },
-  "sources": [
-    {
-      "title": "PM Transcripts — Hawke, Robert",
-      "canonical_url": "https://pmtranscripts.pmc.gov.au/release/transcript-6051",
-      "citation_text": "The Australian Prime Ministers transcripts service gives Hawke's period of service as 11 March 1983 to 20 December 1991.",
-      "source_type": "web_bibliographic_reference"
+    "schema": "atlas-human-authoring/v1",
+    "review_status": "approved",
+    "request_id": "authoring:bob-hawke:australia:prime-minister:1983-1991:v1",
+    "person": {
+        "canonical_name_en": "Bob Hawke",
+        "display_name_ko": "밥 호크",
+        "person_type": "historical",
+        "historicity": "historical"
+    },
+    "polity": {
+        "canonical_name_en": "Australia",
+        "display_name_ko": "호주",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+    },
+    "activity": {
+        "relation_type": "governs",
+        "period_basis": "term",
+        "role": "Prime Minister",
+        "role_display_name_ko": "총리",
+        "start_year": 1983,
+        "start_month": 3,
+        "start_day": 11,
+        "start_certainty": "exact",
+        "start_calendar": "gregorian",
+        "end_year": 1991,
+        "end_month": 12,
+        "end_day": 20,
+        "end_certainty": "exact",
+        "end_calendar": "gregorian",
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "notes": "Bob Hawke served as Prime Minister of Australia from 11 March 1983 to 20 December 1991."
+    },
+    "sources": [
+        {
+            "title": "PM Transcripts — Hawke, Robert",
+            "canonical_url": "https://pmtranscripts.pmc.gov.au/release/transcript-6051",
+            "citation_text": "The Australian Prime Ministers transcripts service gives Hawke's period of service as 11 March 1983 to 20 December 1991.",
+            "source_type": "web_bibliographic_reference"
+        }
+    ],
+    "external_references": {
+        "namuwiki": {
+            "status": "linked",
+            "checked_at": "2026-08-28",
+            "document_title": "밥 호크",
+            "url": "https://namu.wiki/w/%EB%B0%A5%20%ED%98%B8%ED%81%AC"
+        }
     }
-  ],
-  "external_references": {
-    "namuwiki": {
-      "status": "linked",
-      "checked_at": "2026-08-28",
-      "document_title": "밥 호크",
-      "url": "https://namu.wiki/w/%EB%B0%A5%20%ED%98%B8%ED%81%AC"
-    }
-  }
 }

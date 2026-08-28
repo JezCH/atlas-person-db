@@ -1,56 +1,56 @@
 {
-  "schema": "atlas-human-authoring/v1",
-  "review_status": "approved",
-  "request_id": "authoring:umar-ibn-al-khattab:rashidun-caliphate:caliph:634-644:v1",
-  "person": {
-    "canonical_name_en": "Umar ibn al-Khattab",
-    "display_name_ko": "우마르 이븐 알 카타브",
-    "person_type": "historical",
-    "historicity": "historical"
-  },
-  "polity": {
-    "canonical_name_en": "Rashidun Caliphate",
-    "display_name_ko": "정통 칼리파국",
-    "polity_type": "historical_polity",
-    "historicity": "historical"
-  },
-  "activity": {
-    "relation_type": "rules",
-    "period_basis": "reign",
-    "role": "Caliph",
-    "role_display_name_ko": "칼리파",
-    "start_year": 634,
-    "start_month": null,
-    "start_day": null,
-    "start_certainty": "exact",
-    "start_calendar": "unspecified_historical",
-    "end_year": 644,
-    "end_month": null,
-    "end_day": null,
-    "end_certainty": "exact",
-    "end_calendar": "unspecified_historical",
-    "confidence": "well_established",
-    "chronology_status": "reviewed",
-    "notes": "Umar ibn al-Khattab was the second Rashidun caliph and ruled from 634 to 644."
-  },
-  "sources": [
-    {
-      "title": "Umar — Oxford Centre for Islamic Studies",
-      "canonical_url": "https://www.oxcis.ac.uk/publication/umar",
-      "citation_text": "Oxford's Islamic Studies centre identifies Umar as the second caliph and gives his rule as 634–644 CE.",
-      "source_type": "web_bibliographic_reference"
+    "schema": "atlas-human-authoring/v1",
+    "review_status": "approved",
+    "request_id": "authoring:umar-ibn-al-khattab:rashidun-caliphate:caliph:634-644:v1",
+    "person": {
+        "canonical_name_en": "Umar ibn al-Khattab",
+        "display_name_ko": "우마르 이븐 알 카타브",
+        "person_type": "historical",
+        "historicity": "historical"
     },
-    {
-      "title": "Khorasan iv. The Arab Conquest and Omayyad Period — Encyclopaedia Iranica",
-      "canonical_url": "https://www.iranicaonline.org/articles/khorasan-iv-the-arab-conquest-and-omayyad-period/",
-      "citation_text": "Encyclopaedia Iranica gives Umar's caliphate as 13–23 AH / 634–644 CE.",
-      "source_type": "web_bibliographic_reference"
+    "polity": {
+        "canonical_name_en": "Rashidun Caliphate",
+        "display_name_ko": "정통 칼리파국",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+    },
+    "activity": {
+        "relation_type": "rules",
+        "period_basis": "reign",
+        "role": "Caliph",
+        "role_display_name_ko": "칼리파",
+        "start_year": 634,
+        "start_month": null,
+        "start_day": null,
+        "start_certainty": "exact",
+        "start_calendar": "unspecified_historical",
+        "end_year": 644,
+        "end_month": null,
+        "end_day": null,
+        "end_certainty": "exact",
+        "end_calendar": "unspecified_historical",
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "notes": "Umar ibn al-Khattab was the second Rashidun caliph and ruled from 634 to 644."
+    },
+    "sources": [
+        {
+            "title": "Umar — Oxford Centre for Islamic Studies",
+            "canonical_url": "https://www.oxcis.ac.uk/publication/umar",
+            "citation_text": "Oxford's Islamic Studies centre identifies Umar as the second caliph and gives his rule as 634–644 CE.",
+            "source_type": "web_bibliographic_reference"
+        },
+        {
+            "title": "Khorasan iv. The Arab Conquest and Omayyad Period — Encyclopaedia Iranica",
+            "canonical_url": "https://www.iranicaonline.org/articles/khorasan-iv-the-arab-conquest-and-omayyad-period/",
+            "citation_text": "Encyclopaedia Iranica gives Umar's caliphate as 13–23 AH / 634–644 CE.",
+            "source_type": "web_bibliographic_reference"
+        }
+    ],
+    "external_references": {
+        "namuwiki": {
+            "status": "not_found",
+            "checked_at": "2026-08-28"
+        }
     }
-  ],
-  "external_references": {
-    "namuwiki": {
-      "status": "not_found",
-      "checked_at": "2026-08-28"
-    }
-  }
 }
