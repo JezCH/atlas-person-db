@@ -1,52 +1,52 @@
 {
-  "schema": "atlas-human-authoring/v1",
-  "review_status": "approved",
-  "request_id": "authoring:stefan-dusan:serbian-empire:emperor:1346-1355:v1",
-  "person": {
-    "canonical_name_en": "Stefan Dušan",
-    "display_name_ko": "스테판 우로시 4세 두샨",
-    "person_type": "historical",
-    "historicity": "historical"
-  },
-  "polity": {
-    "canonical_name_en": "Serbian Empire",
-    "display_name_ko": "세르비아 제국",
-    "polity_type": "historical_polity",
-    "historicity": "historical"
-  },
-  "activity": {
-    "relation_type": "rules",
-    "period_basis": "reign",
-    "role": "Emperor",
-    "role_display_name_ko": "황제",
-    "start_year": 1346,
-    "start_month": null,
-    "start_day": null,
-    "start_certainty": "exact",
-    "start_calendar": "unspecified_historical",
-    "end_year": 1355,
-    "end_month": null,
-    "end_day": null,
-    "end_certainty": "exact",
-    "end_calendar": "unspecified_historical",
-    "confidence": "well_established",
-    "chronology_status": "reviewed",
-    "notes": "Stefan Dušan had ruled Serbia as king since 1331, but the requested Serbian Empire begins with his imperial coronation in 1346. ATLAS therefore records only the imperial phase here, 1346–1355, rather than merging his earlier royal title into the empire."
-  },
-  "sources": [
-    {
-      "title": "The Serbs — Orthodox Church in America",
-      "canonical_url": "https://www.oca.org/orthodoxy/the-orthodox-faith/church-history/fourteenth-century/the-serbs",
-      "citation_text": "The historical overview records Dušan's elevation and coronation as emperor in 1346 and his death in 1355.",
-      "source_type": "web_bibliographic_reference"
+    "schema": "atlas-human-authoring/v1",
+    "review_status": "approved",
+    "request_id": "authoring:stefan-dusan:serbian-empire:emperor:1346-1355:v1",
+    "person": {
+        "canonical_name_en": "Stefan Dušan",
+        "display_name_ko": "스테판 우로시 4세 두샨",
+        "person_type": "historical",
+        "historicity": "historical"
+    },
+    "polity": {
+        "canonical_name_en": "Serbian Empire",
+        "display_name_ko": "세르비아 제국",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+    },
+    "activity": {
+        "relation_type": "rules",
+        "period_basis": "reign",
+        "role": "Emperor",
+        "role_display_name_ko": "황제",
+        "start_year": 1346,
+        "start_month": null,
+        "start_day": null,
+        "start_certainty": "exact",
+        "start_calendar": "unspecified_historical",
+        "end_year": 1355,
+        "end_month": null,
+        "end_day": null,
+        "end_certainty": "exact",
+        "end_calendar": "unspecified_historical",
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "notes": "Stefan Dušan had ruled Serbia as king since 1331, but the requested Serbian Empire begins with his imperial coronation in 1346. ATLAS therefore records only the imperial phase here, 1346–1355, rather than merging his earlier royal title into the empire."
+    },
+    "sources": [
+        {
+            "title": "The Serbs — Orthodox Church in America",
+            "canonical_url": "https://www.oca.org/orthodoxy/the-orthodox-faith/church-history/fourteenth-century/the-serbs",
+            "citation_text": "The historical overview records Dušan's elevation and coronation as emperor in 1346 and his death in 1355.",
+            "source_type": "web_bibliographic_reference"
+        }
+    ],
+    "external_references": {
+        "namuwiki": {
+            "status": "linked",
+            "checked_at": "2026-08-28",
+            "document_title": "스테판 우로시 4세 두샨",
+            "url": "https://namu.wiki/w/%EC%8A%A4%ED%85%8C%ED%8C%90%20%EC%9A%B0%EB%A1%9C%EC%8B%9C%204%EC%84%B8%20%EB%91%90%EC%83%A8"
+        }
     }
-  ],
-  "external_references": {
-    "namuwiki": {
-      "status": "linked",
-      "checked_at": "2026-08-28",
-      "document_title": "스테판 우로시 4세 두샨",
-      "url": "https://namu.wiki/w/%EC%8A%A4%ED%85%8C%ED%8C%90%20%EC%9A%B0%EB%A1%9C%EC%8B%9C%204%EC%84%B8%20%EB%91%90%EC%83%A8"
-    }
-  }
 }
