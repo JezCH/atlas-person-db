@@ -38,5 +38,13 @@
       "citation_text": "The Chinese Text Project summary records Zhang Jiao's Taiping movement, his organization of the revolt and the outbreak of the Yellow Turban rebellion in 184.",
       "source_type": "web_bibliographic_reference"
     }
-  ]
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-21",
+      "document_title": "장각",
+      "url": "https://namu.wiki/w/%EC%9E%A5%EA%B0%81"
+    }
+  }
 }
