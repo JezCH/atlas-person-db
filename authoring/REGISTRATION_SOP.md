@@ -1,4 +1,4 @@
-# ATLAS Historical Person Registration SOP — Lean Path v5
+# ATLAS Historical Person Registration SOP — Lean Path v6
 
 This file is the operational source of truth for ordinary reviewed historical-person registration.
 
@@ -120,6 +120,32 @@ Do **not** process a batch as repeated end-to-end single-Person pipelines unless
 
 During the normal path, do not inspect implementation files merely to remember how registration works. The SOP and deployed authoring contract are already authoritative. Inspect code, workflows, migrations, Vercel state, or repository internals only after a concrete validation/runtime failure points to that boundary.
 
+### 4.2 Batch compilation invariant — build once, write once
+
+After SCREEN and REVIEW finish for a multi-Person request, compile the surviving registrations as one in-memory batch before touching Git.
+
+The batch compilation preflight must confirm:
+
+- every Timeline candidate has one complete reviewed Human Authoring manifest;
+- only already-supported Relation Type and Period Basis codes are used unless a bounded catalog lookup has explicitly resolved a new ambiguity;
+- every new Person has its reviewed NamuWiki decision;
+- when an existing Person already has a reviewed live NamuWiki value, copy that exact live value into the GitHub manifest if the current repository validator requires the field; **do not re-search NamuWiki**;
+- all non-timeline additions are folded into one bounded replacement of `non-timeline-persons.json`;
+- no excluded candidate produces a placeholder manifest merely to keep batch cardinality aligned.
+
+For the GitHub fallback, materialize the compiled batch with Git objects:
+
+```text
+create blobs concurrently
+→ create one tree based on current main
+→ create one commit
+→ move one working-branch ref
+```
+
+Do not create one GitHub Contents commit per manifest. That serial network overhead adds no historical, validation, transactional, or audit safety and is therefore removed from the normal batch path.
+
+This optimization changes only transport materialization. SCREEN, REVIEW, mandatory sources, NamuWiki review/reuse, CI, Authoring Apply, transaction boundaries, and Production VERIFY are unchanged.
+
 ## 5. Stage 1 — SCREEN: cheapest useful check first
 
 Do not begin full historical research before checking whether the intended Person is already in Production.
@@ -223,7 +249,7 @@ or:
 }
 ```
 
-For an existing Person whose Production NamuWiki state is already `linked` or `not_found`, omit the new NamuWiki decision. The server reuses the existing reviewed value. A different value never silently overwrites an existing linked document; it requires separate review.
+For an existing Person whose Production NamuWiki state is already `linked` or `not_found`, the historical review reuses that live value and **does not perform a new NamuWiki search**. The Human Authoring server can reuse the existing reviewed value. However, while the repository fast validator still requires `external_references.namuwiki` on every changed Human Authoring manifest, the GitHub fallback must copy the exact live reviewed value into that manifest as validation metadata. A different value never silently overwrites an existing linked document; it requires separate review.
 
 The Human Authoring transaction persists the NamuWiki decision to `person_external_references`; it is not merely authoring-ledger metadata. Do not perform a separate NamuWiki write after a successful registration.
 
@@ -257,11 +283,12 @@ When the GitHub fallback is used:
 
 1. read latest `main` once, immediately before creating the working branch;
 2. create one `agent/...` branch for the whole current registration batch;
-3. add only the required registration data: `authoring/requests/*.json` and, when the routing gate requires it, the bounded `non-timeline-persons.json` edit; no unrelated code/UI changes;
-4. open one PR containing the whole reviewed registration batch, including mixed Timeline + non-timeline registrations;
-5. require only the repository's mandatory registration-data fast-path `test` check unless changed files or a concrete failure require more;
-6. squash merge when green;
-7. use one normal `ATLAS Authoring Apply` batch for the merged Timeline manifests; non-timeline static data is delivered by the normal Production deployment and does not block Authoring runtime compatibility.
+3. compile all reviewed registration files first, then create their Git blobs concurrently, one tree on the current-main base tree, and one commit for the batch;
+4. include only the required registration data: `authoring/requests/*.json` and, when the routing gate requires it, the single bounded `non-timeline-persons.json` edit; no unrelated code/UI changes;
+5. open one PR containing the whole reviewed registration batch, including mixed Timeline + non-timeline registrations;
+6. require only the repository's mandatory registration-data fast-path `test` check unless changed files or a concrete failure require more;
+7. squash merge when green;
+8. use one normal `ATLAS Authoring Apply` batch for the merged Timeline manifests; non-timeline static data is delivered by the normal Production deployment and does not block Authoring runtime compatibility.
 
 Do not repeatedly fetch `main`, reopen repository structure, rediscover available GitHub/Vercel tools, or inspect workflow source during a normal green path. Re-check a transport boundary only when mergeability, CI, Apply, or Production verification supplies a concrete reason.
 
@@ -323,7 +350,8 @@ The following are not normal registration steps unless a concrete failure makes 
 - post-merge Vercel polling without a concrete Apply/runtime error;
 - separate NamuWiki persistence after Human Authoring;
 - repeated Production read-back after canonical verification;
-- requeue-only PRs for unchanged requests.
+- requeue-only PRs for unchanged requests;
+- serial GitHub Contents commits for each manifest in a multi-file batch when one Git tree commit can carry the same reviewed data.
 
 ## 11. Failure handling is narrow and local
 
