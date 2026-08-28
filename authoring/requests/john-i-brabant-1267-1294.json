@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:john-i-of-brabant:duchy-of-brabant:duke:1267-1294:v1",
+  "person": {
+    "canonical_name_en": "John I of Brabant",
+    "display_name_ko": "얀 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Brabant",
+    "display_name_ko": "브라반트 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Duke",
+    "role_display_name_ko": "공작",
+    "start_year": 1267,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1294,
+    "end_month": 5,
+    "end_day": 3,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "John I (Jan I) was recognized as Duke of Brabant in 1267 after Henry IV's abdication. DBNL records his Brabant dukedom from 1267 and his death on 3 May 1294. He also acquired Limburg after 1288, but this Activity models the requested Duchy of Brabant."
+  },
+  "sources": [
+    {
+      "title": "Jan I — Nieuw Nederlandsch biografisch woordenboek, DBNL",
+      "canonical_url": "https://www.dbnl.org/tekst/molh003nieu10_01/molh003nieu10_01_0630.php",
+      "citation_text": "DBNL records Jan I as Duke of Brabant from 1267, Duke of Brabant and Limburg after 1288, and gives his death on 3 May 1294.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "John the Victorious — Numista ruler catalogue",
+      "canonical_url": "https://en.numista.com/catalogue/ruler.php?id=4470",
+      "citation_text": "Numismatic catalogue references John I as Duke of Brabant for 1267–1294 and documents coins bearing the ducal Brabant title.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

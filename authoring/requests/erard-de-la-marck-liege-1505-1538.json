@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:erard-de-la-marck:prince-bishopric-of-liege:prince-bishop:1505-1538:v1",
+  "person": {
+    "canonical_name_en": "Érard de la Marck",
+    "display_name_ko": "에라르 드 라 마르크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Prince-Bishopric of Liège",
+    "display_name_ko": "리에주 주교후국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Prince-Bishop",
+    "role_display_name_ko": "주교후",
+    "start_year": 1505,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1538,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Érard de la Marck governed the Prince-Bishopric of Liège as prince-bishop from 1505 to 1538. ATLAS records the sovereign prince-episcopal office as a term rather than converting it into a hereditary royal reign."
+  },
+  "sources": [
+    {
+      "title": "Le cardinal de la Marck, prince-évêque de Liége (1505-1538) — Université de Liège ORBi",
+      "canonical_url": "https://orbi.uliege.be/handle/2268/315735",
+      "citation_text": "The University of Liège repository identifies Érard de la Marck as prince-bishop of Liège for 1505–1538.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

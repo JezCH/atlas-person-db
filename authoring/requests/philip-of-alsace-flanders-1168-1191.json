@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philip-of-alsace:county-of-flanders:count:1168-1191:v1",
+  "person": {
+    "canonical_name_en": "Philip of Alsace",
+    "display_name_ko": "필리프 드 알자스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "County of Flanders",
+    "display_name_ko": "플랑드르 백국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Count",
+    "role_display_name_ko": "백작",
+    "start_year": 1168,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1191,
+    "end_month": 6,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Philip of Alsace (Filips van de Elzas) became sole Count of Flanders after the death of his father Thierry in 1168 and ruled until his death at Acre on 1 June 1191. Earlier co-government while his father was alive is not expanded into a separate Activity in this requested Flanders representation."
+  },
+  "sources": [
+    {
+      "title": "Stamboom der graven van Vlaanderen — Ghent University Open Journals",
+      "canonical_url": "https://openjournals.ugent.be/gt/article/68763/galley/193007/view/",
+      "citation_text": "The Ghent historical genealogy lists Filips van den Elzas as Count of Flanders 1168–1191 and records his death at Acre on 1 June 1191.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Diplomata Belgica record 8193 — Philip of Alsace",
+      "canonical_url": "https://www.diplomata-belgica.be/charter_details_en.php?dibe_id=8193",
+      "citation_text": "Diplomata Belgica identifies Philip of Alsace as count in the principality of Flanders in a charter scholarly-dated to 1168.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

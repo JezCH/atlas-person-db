@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:william-i-of-hainaut:county-of-hainaut:count:1304-1337:v1",
+  "person": {
+    "canonical_name_en": "William I of Hainaut",
+    "display_name_ko": "기욤 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "County of Hainaut",
+    "display_name_ko": "에노 백국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Count",
+    "role_display_name_ko": "백작",
+    "start_year": 1304,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1337,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "William of Avesnes ruled Hainaut as William I from 1304 to 1337. He simultaneously held Holland as William III and Zeeland as William II; this Activity intentionally models only the County of Hainaut requested here."
+  },
+  "sources": [
+    {
+      "title": "Sterling with Lozenge — William I of Avesnes, County of Hainaut — Numista",
+      "canonical_url": "https://en.numista.com/95644",
+      "citation_text": "The numismatic catalogue, citing specialist Hainaut coinage references, identifies William I as Count of Hainaut for 1304–1337 and preserves his contemporary comital titulature.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
