@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jose-marti:cuba:cuban-revolutionary-party-delegate:1892-1895:v1",
+  "person": {
+    "canonical_name_en": "José Martí",
+    "display_name_ko": "호세 마르티",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Cuba",
+    "display_name_ko": "쿠바",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "political_activity",
+    "role": "Delegate of the Cuban Revolutionary Party",
+    "role_display_name_ko": "쿠바 혁명당 대표",
+    "start_year": 1892,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1895,
+    "end_month": 5,
+    "end_day": 19,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "José Martí founded and led the Cuban Revolutionary Party as its elected Delegate and organized the renewed Cuban war for independence. ATLAS deliberately reuses the existing Cuba polity as the own-side Cuban independence political community, following the same editorial principle already used for Carlos Manuel de Céspedes; this Activity does not treat Martí as an officeholder of the Spanish colonial administration or as a head of an already independent Republic of Cuba. The start is recorded at year granularity because sources securely place the party's organization and Martí's leadership in 1892, while the Activity ends exactly with his death in combat at Dos Ríos on 19 May 1895."
+  },
+  "sources": [
+    {
+      "title": "José Martí — World of 1898, Library of Congress",
+      "canonical_url": "https://guides.loc.gov/world-of-1898/jose-marti",
+      "citation_text": "The Library of Congress identifies Martí as the organizer of the second Cuban independence struggle, states that he founded the Cuban Revolutionary Party in 1892, and records his death in Cuba in 1895.",
+      "source_type": "government_research_guide"
+    },
+    {
+      "title": "What's True and What's Apocryphal — Library of Congress Information Bulletin",
+      "canonical_url": "https://www.loc.gov/loc/lcib/9521/marti.html",
+      "citation_text": "The Library of Congress bulletin describes Martí's organization of the Cuban Revolutionary Party, its elected Delegate leadership, and his role in reviving the Cuban separatist movement.",
+      "source_type": "government_research_article"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
