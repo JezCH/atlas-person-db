@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:terwa-koyo:kawesqar:community-leader:1949-1953:v1",
+  "person": {
+    "canonical_name_en": "Terwa Koyo",
+    "display_name_ko": "테르와 코요",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kawésqar",
+    "display_name_ko": "카웨스카르",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Community Leader",
+    "role_display_name_ko": "공동체 지도자",
+    "start_year": 1949,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1953,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Terwa Koyo was the Kawésqar name of Lautaro Edén Wellington. After education and service in Chilean institutions he returned to Puerto Edén in 1949, exercised notable leadership and organizational influence among Kawésqar residents, then abandoned military life and returned to nomadism with many young community members following him. He died in a canoe wreck in 1953. ATLAS does not label him a hereditary chief or sovereign ruler; the Activity represents documented modern Kawésqar community leadership."
+  },
+  "sources": [
+    {
+      "title": "Informe de la Comisión Verdad Histórica y Nuevo Trato con los Pueblos Indígenas — Memoria Chilena",
+      "canonical_url": "https://www.memoriachilena.gob.cl/602/articles-122901_recurso_6.pdf",
+      "citation_text": "The Chilean historical commission report describes Lautaro Edén Wellington/Terwa Koyo, his 1949 return to Puerto Edén, his influence over Kawésqar people and return to nomadic life.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Kawésqar — historical summary citing José Emperaire",
+      "canonical_url": "https://fr.wikipedia.org/wiki/Kaw%C3%A9sqar",
+      "citation_text": "The summary based on José Emperaire records Terwa Koyo as a highly admired Kawésqar figure whose community accepted his leadership and who died in 1953.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ermesinde-of-luxembourg:county-of-luxembourg:countess:1197-1247:v1",
+  "person": {
+    "canonical_name_en": "Ermesinde of Luxembourg",
+    "display_name_ko": "에르메신데",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "County of Luxembourg",
+    "display_name_ko": "룩셈부르크 백국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Countess",
+    "role_display_name_ko": "여백작",
+    "start_year": 1197,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1247,
+    "end_month": 2,
+    "end_day": 12,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ermesinde recovered and succeeded to the County of Luxembourg in 1197 and governed it until her death on 12 February 1247. The user's 'Duchy of Luxembourg' label is anachronistic for her reign: Luxembourg remained a county until its elevation to a duchy in 1354."
+  },
+  "sources": [
+    {
+      "title": "Ermesinde de Luxembourg — Connaître la Wallonie",
+      "canonical_url": "https://connaitrelawallonie.wallonie.be/wallons-marquants/dictionnaire-des-wallons/ermesinde-de-luxembourg",
+      "citation_text": "The Walloon historical reference records Ermesinde's recovery of Luxembourg and her death on 12 February 1247.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Possessions de la maison de Luxembourg en 1139 — Connaître la Wallonie",
+      "canonical_url": "https://connaitrelawallonie.wallonie.be/histoire-et-symboles/histoire/atlas-historique/possessions-de-la-maison-de-luxembourg-en-1139",
+      "citation_text": "The historical atlas states that Ermesinde obtained succession in 1197 and administered the County of Luxembourg until 1247.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
