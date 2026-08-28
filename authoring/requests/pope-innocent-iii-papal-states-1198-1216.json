@@ -1,50 +1,50 @@
 {
-  "schema": "atlas-human-authoring/v1",
-  "review_status": "approved",
-  "request_id": "authoring:pope-innocent-iii:papal-states:pope:1198-1216:v1",
-  "person": {
-    "canonical_name_en": "Pope Innocent III",
-    "display_name_ko": "인노첸시오 3세",
-    "person_type": "historical",
-    "historicity": "historical"
-  },
-  "polity": {
-    "canonical_name_en": "Papal States",
-    "display_name_ko": "교황령",
-    "polity_type": "historical_polity",
-    "historicity": "historical"
-  },
-  "activity": {
-    "relation_type": "rules",
-    "period_basis": "term",
-    "role": "Pope",
-    "role_display_name_ko": "교황",
-    "start_year": 1198,
-    "start_month": null,
-    "start_day": null,
-    "start_certainty": "exact",
-    "start_calendar": "unspecified_historical",
-    "end_year": 1216,
-    "end_month": null,
-    "end_day": null,
-    "end_certainty": "exact",
-    "end_calendar": "unspecified_historical",
-    "confidence": "well_established",
-    "chronology_status": "reviewed",
-    "notes": "Innocent III's pontificate ran from 1198 to 1216. Because the papacy also exercised temporal sovereignty over the Papal States, ATLAS uses the Papal States as the requested polity while retaining 'Pope' as the historical office rather than inventing a secular royal title."
-  },
-  "sources": [
-    {
-      "title": "Innocent III — The Holy See",
-      "canonical_url": "https://www.vatican.va/content/vatican/ar/holy-father/innocenzo-iii.html",
-      "citation_text": "The Holy See records Innocent III as pope from 1198 until 16 July 1216.",
-      "source_type": "web_bibliographic_reference"
+    "schema": "atlas-human-authoring/v1",
+    "review_status": "approved",
+    "request_id": "authoring:pope-innocent-iii:papal-states:pope:1198-1216:v1",
+    "person": {
+        "canonical_name_en": "Pope Innocent III",
+        "display_name_ko": "인노첸시오 3세",
+        "person_type": "historical",
+        "historicity": "historical"
+    },
+    "polity": {
+        "canonical_name_en": "Papal States",
+        "display_name_ko": "교황령",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+    },
+    "activity": {
+        "relation_type": "rules",
+        "period_basis": "term",
+        "role": "Pope",
+        "role_display_name_ko": "교황",
+        "start_year": 1198,
+        "start_month": null,
+        "start_day": null,
+        "start_certainty": "exact",
+        "start_calendar": "unspecified_historical",
+        "end_year": 1216,
+        "end_month": null,
+        "end_day": null,
+        "end_certainty": "exact",
+        "end_calendar": "unspecified_historical",
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "notes": "Innocent III's pontificate ran from 1198 to 1216. Because the papacy also exercised temporal sovereignty over the Papal States, ATLAS uses the Papal States as the requested polity while retaining 'Pope' as the historical office rather than inventing a secular royal title."
+    },
+    "sources": [
+        {
+            "title": "Innocent III — The Holy See",
+            "canonical_url": "https://www.vatican.va/content/vatican/ar/holy-father/innocenzo-iii.html",
+            "citation_text": "The Holy See records Innocent III as pope from 1198 until 16 July 1216.",
+            "source_type": "web_bibliographic_reference"
+        }
+    ],
+    "external_references": {
+        "namuwiki": {
+            "status": "not_found",
+            "checked_at": "2026-08-28"
+        }
     }
-  ],
-  "external_references": {
-    "namuwiki": {
-      "status": "not_found",
-      "checked_at": "2026-08-28"
-    }
-  }
 }

@@ -1,50 +1,50 @@
 {
-  "schema": "atlas-human-authoring/v1",
-  "review_status": "approved",
-  "request_id": "authoring:hermann-von-salza:teutonic-order:grand-master:c1209-1239:v1",
-  "person": {
-    "canonical_name_en": "Hermann von Salza",
-    "display_name_ko": "헤르만 폰 잘차",
-    "person_type": "historical",
-    "historicity": "historical"
-  },
-  "polity": {
-    "canonical_name_en": "Teutonic Order",
-    "display_name_ko": "튜턴 기사단",
-    "polity_type": "historical_polity",
-    "historicity": "historical"
-  },
-  "activity": {
-    "relation_type": "governs",
-    "period_basis": "term",
-    "role": "Grand Master",
-    "role_display_name_ko": "총장",
-    "start_year": 1209,
-    "start_month": null,
-    "start_day": null,
-    "start_certainty": "approximate",
-    "start_calendar": "unspecified_historical",
-    "end_year": 1239,
-    "end_month": null,
-    "end_day": null,
-    "end_certainty": "exact",
-    "end_calendar": "unspecified_historical",
-    "confidence": "well_established",
-    "chronology_status": "reviewed",
-    "notes": "Hermann von Salza served as Grand Master during the Teutonic Order's decisive expansion. The Order's own historical list places him in office from 1209 to 1239, while some modern references use 1210 as the conventional start; ATLAS therefore marks 1209 approximate and 1239 secure."
-  },
-  "sources": [
-    {
-      "title": "Hochmeisters of the Teutonic Order",
-      "canonical_url": "https://teutonicorder.org/hochmeisters",
-      "citation_text": "The Teutonic Order's historical list places Hermann von Salza as Grand Master from 1209 to 1239.",
-      "source_type": "web_bibliographic_reference"
+    "schema": "atlas-human-authoring/v1",
+    "review_status": "approved",
+    "request_id": "authoring:hermann-von-salza:teutonic-order:grand-master:c1209-1239:v1",
+    "person": {
+        "canonical_name_en": "Hermann von Salza",
+        "display_name_ko": "헤르만 폰 잘차",
+        "person_type": "historical",
+        "historicity": "historical"
+    },
+    "polity": {
+        "canonical_name_en": "Teutonic Order",
+        "display_name_ko": "튜턴 기사단",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+    },
+    "activity": {
+        "relation_type": "governs",
+        "period_basis": "term",
+        "role": "Grand Master",
+        "role_display_name_ko": "총장",
+        "start_year": 1209,
+        "start_month": null,
+        "start_day": null,
+        "start_certainty": "approximate",
+        "start_calendar": "unspecified_historical",
+        "end_year": 1239,
+        "end_month": null,
+        "end_day": null,
+        "end_certainty": "exact",
+        "end_calendar": "unspecified_historical",
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "notes": "Hermann von Salza served as Grand Master during the Teutonic Order's decisive expansion. The Order's own historical list places him in office from 1209 to 1239, while some modern references use 1210 as the conventional start; ATLAS therefore marks 1209 approximate and 1239 secure."
+    },
+    "sources": [
+        {
+            "title": "Hochmeisters of the Teutonic Order",
+            "canonical_url": "https://teutonicorder.org/hochmeisters",
+            "citation_text": "The Teutonic Order's historical list places Hermann von Salza as Grand Master from 1209 to 1239.",
+            "source_type": "web_bibliographic_reference"
+        }
+    ],
+    "external_references": {
+        "namuwiki": {
+            "status": "not_found",
+            "checked_at": "2026-08-28"
+        }
     }
-  ],
-  "external_references": {
-    "namuwiki": {
-      "status": "not_found",
-      "checked_at": "2026-08-28"
-    }
-  }
 }
