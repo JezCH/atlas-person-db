@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:jose-marti:cuba:cuban-revolutionary-party-delegate:1892-1895:v1",
+  "request_id": "authoring:jose-marti:cuba:cuban-revolutionary-party-delegate:1892-1895:v2",
   "person": {
     "canonical_name_en": "José Martí",
     "display_name_ko": "호세 마르티",
@@ -16,7 +16,7 @@
   },
   "activity": {
     "relation_type": "active_in",
-    "period_basis": "political_activity",
+    "period_basis": "general_activity",
     "role": "Delegate of the Cuban Revolutionary Party",
     "role_display_name_ko": "쿠바 혁명당 대표",
     "start_year": 1892,
@@ -31,7 +31,7 @@
     "end_calendar": "gregorian",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "José Martí founded and led the Cuban Revolutionary Party as its elected Delegate and organized the renewed Cuban war for independence. ATLAS deliberately reuses the existing Cuba polity as the own-side Cuban independence political community, following the same editorial principle already used for Carlos Manuel de Céspedes; this Activity does not treat Martí as an officeholder of the Spanish colonial administration or as a head of an already independent Republic of Cuba. The start is recorded at year granularity because sources securely place the party's organization and Martí's leadership in 1892, while the Activity ends exactly with his death in combat at Dos Ríos on 19 May 1895."
+    "notes": "José Martí founded and led the Cuban Revolutionary Party as its elected Delegate and organized the renewed Cuban war for independence. ATLAS deliberately reuses the existing Cuba polity as the own-side Cuban independence political community, following the same editorial principle already used for Carlos Manuel de Céspedes; this Activity does not treat Martí as an officeholder of the Spanish colonial administration or as a head of an already independent Republic of Cuba. The start is recorded at year granularity because sources securely place the party's organization and Martí's leadership in 1892, while the Activity ends exactly with his death in combat at Dos Ríos on 19 May 1895. The catalog binding uses the existing general_activity period basis because no dedicated political_activity basis exists in the current Production catalog."
   },
   "sources": [
     {
