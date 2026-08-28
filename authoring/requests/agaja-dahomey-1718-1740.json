@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:agaja:kingdom-of-dahomey:king:1718-1740:v1",
+  "person": {
+    "canonical_name_en": "Agaja",
+    "display_name_ko": "아가자",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Dahomey",
+    "display_name_ko": "다호메이 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1718,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1740,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1718-1740 for Agaja's reign following the academic chronology used by David Ross in History in Africa. Agaja conquered Allada and Whydah and greatly expanded Dahomey. Some later summaries circulate alternative accession dates; the reviewed Activity deliberately follows the cited scholarly chronology rather than mixing incompatible king lists."
+  },
+  "sources": [
+    {
+      "title": "Robert Norris, Agaja, and the Dahomean Conquest of Allada and Whydah — History in Africa",
+      "canonical_url": "https://www.cambridge.org/core/journals/history-in-africa/article/abs/robert-norris-agaja-and-the-dahomean-conquest-of-allada-and-whydah/177F597ACE9325AAAEBFA54FCE7343EA",
+      "citation_text": "David Ross's History in Africa article identifies Agaja's career and reign as 1718-1740 and discusses his conquest of Allada and Whydah.",
+      "source_type": "academic_journal"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

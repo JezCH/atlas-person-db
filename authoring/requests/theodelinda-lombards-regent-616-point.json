@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:theodelinda:kingdom-of-the-lombards:regent:616-point:v1",
+  "person": {
+    "canonical_name_en": "Theodelinda",
+    "display_name_ko": "테오델린다",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of the Lombards",
+    "display_name_ko": "롬바르드 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Regent",
+    "role_display_name_ko": "섭정",
+    "start_year": 616,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 616,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After King Agilulf died in 616, Theodelinda acted as regent for her young son Adaloald. The surviving evidence securely fixes the beginning of the regency but not one universally defensible terminal year, so ATLAS records the accession-to-regency event as a 616 representative point rather than inventing a long exact rail. The identical start/end year does not mean a one-year regency."
+  },
+  "sources": [
+    {
+      "title": "Theodelind, queen of the Lombards — Epistolae, Columbia University",
+      "canonical_url": "https://epistolae.ctl.columbia.edu/woman/14.html",
+      "citation_text": "Columbia's Epistolae project states that after Agilulf's death Theodelinda was regent for her young son Adaloald.",
+      "source_type": "academic_database"
+    },
+    {
+      "title": "Letter from King Sisebut of the Visigoths to Adaloald and Theodelind (616-620) — Epistolae",
+      "canonical_url": "https://epistolae.ctl.columbia.edu/letter/44.html",
+      "citation_text": "A translated contemporary royal letter from 616-620 addresses Adaloald as king of the Lombards and Theodelinda as queen, independently placing her in the post-616 Lombard government.",
+      "source_type": "primary_source_translation"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

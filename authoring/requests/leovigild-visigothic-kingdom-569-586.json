@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:leovigild:visigothic-kingdom:king:569-586:v1",
+  "person": {
+    "canonical_name_en": "Leovigild",
+    "display_name_ko": "레오비길드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Visigothic Kingdom",
+    "display_name_ko": "서고트 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 569,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 586,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The British Museum dates Leovigild's rule as king of the Visigoths to 569-586. He consolidated Visigothic authority in Hispania, fought Byzantine holdings, and annexed the Suevic kingdom in 585."
+  },
+  "sources": [
+    {
+      "title": "Leovigild — British Museum Collections Online",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG199557",
+      "citation_text": "The British Museum identifies Leovigild as king of the Visigoths and dates his rule to AD 569-586.",
+      "source_type": "museum_authority_record"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

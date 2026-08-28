@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:svatopluk-i:great-moravia:prince:871-894:v1",
+  "person": {
+    "canonical_name_en": "Svatopluk I",
+    "display_name_ko": "스바토플루크 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Great Moravia",
+    "display_name_ko": "대모라바",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Prince",
+    "role_display_name_ko": "공",
+    "start_year": 871,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 894,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After returning in 871, Svatopluk defeated the Frankish administration and resumed government of Great Moravia, remaining ruler until his death in 894. This Activity is kept separate from the 870-871 first rule because his deposition and imprisonment were historically real."
+  },
+  "sources": [
+    {
+      "title": "Svatopluk — Hrvatska enciklopedija",
+      "canonical_url": "https://www.enciklopedija.hr/clanak/svatopluk",
+      "citation_text": "The Croatian Encyclopedia records Svatopluk's restoration after his brief 871 removal and his rule until 894.",
+      "source_type": "national_encyclopedia"
+    },
+    {
+      "title": "Svatopluk, principe della Grande Moravia — Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/svatopluk-principe-della-grande-moravia/",
+      "citation_text": "Treccani describes Svatopluk's restored rule after 871 and his successful defense and expansion of Great Moravia.",
+      "source_type": "academic_encyclopedia"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
