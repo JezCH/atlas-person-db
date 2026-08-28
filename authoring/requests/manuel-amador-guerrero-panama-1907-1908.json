@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:manuel-amador-guerrero:republic-of-panama:president:1907-1908:v1",
+  "person": {
+    "canonical_name_en": "Manuel Amador Guerrero",
+    "display_name_ko": "마누엘 아마도르 게레로",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Panama",
+    "display_name_ko": "파나마 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1907,
+    "start_month": 12,
+    "start_day": 27,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1908,
+    "end_month": 9,
+    "end_day": 30,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the temporary exercise of presidential authority by First Designate José Domingo de Obaldía in 1907, Manuel Amador Guerrero resumed the presidency on 27 December 1907 and served through 30 September 1908. The next elected president took office on 1 October 1908."
+  },
+  "sources": [
+    {
+      "title": "Presidentes y encargados de la Presidencia 1904-1964 — Asamblea Nacional de Panamá",
+      "canonical_url": "https://repositorio.asamblea.gob.pa/bitstream/handle/001/1968/1965_LNB_1965_110_LNB.pdf?isAllowed=y&sequence=1",
+      "citation_text": "The National Assembly historical list records Amador's resumed presidency from 27 December 1907 to 30 September 1908 and José Domingo de Obaldía's elected presidency beginning 1 October 1908.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

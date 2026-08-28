@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:burebista:kingdom-of-dacia:king:82-44-bce:v1",
+  "person": {
+    "canonical_name_en": "Burebista",
+    "display_name_ko": "부레비스타",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Dacia",
+    "display_name_ko": "다키아 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -82,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "uncertain",
+    "start_calendar": "unspecified_historical",
+    "end_year": -44,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Burebista unified a large Dacian-Getic kingdom in the first century BCE. Ancient and modern reconstructions do not securely fix his accession: a traditional high chronology associates the beginning with 82 BCE, while some modern reconstructions place it later. His assassination is correlated with Caesar's death in 44 BCE. ATLAS therefore retains the conventional c.82–44 BCE reign only with an uncertain start and approximate end, rather than presenting both boundaries as exact."
+  },
+  "sources": [
+    {
+      "title": "The History of Transylvania — The Dacian Kingdom",
+      "canonical_url": "https://mek.oszk.hu/03400/03407/html/10.html",
+      "citation_text": "András Mócsy's historical synthesis discusses the uncertain beginning of Burebista's rule, the possible long reign, the 48 BCE Dionysiopolis inscription, and the correlation of Burebista's assassination with Caesar's in 44 BCE.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

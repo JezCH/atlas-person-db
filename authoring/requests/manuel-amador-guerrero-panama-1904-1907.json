@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:manuel-amador-guerrero:republic-of-panama:president:1904-1907:v1",
+  "person": {
+    "canonical_name_en": "Manuel Amador Guerrero",
+    "display_name_ko": "마누엘 아마도르 게레로",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Panama",
+    "display_name_ko": "파나마 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1904,
+    "start_month": 2,
+    "start_day": 20,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1907,
+    "end_month": 6,
+    "end_day": 23,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Manuel Amador Guerrero became the first constitutional President of the Republic of Panama on 20 February 1904. ATLAS splits the exercise of the presidency because Panama's official historical presidential list records José Domingo de Obaldía serving as Primer Designado from 24 June to 26 December 1907 while Amador was absent."
+  },
+  "sources": [
+    {
+      "title": "30 de junio – Natalicio de Manuel Amador Guerrero — Órgano Judicial de Panamá",
+      "canonical_url": "https://www.organojudicial.gob.pa/cendoj/noticias/30-de-junio-natalicio-de-manuel-amador-guerrero-medico-estadista-y-arquitecto-de-una-nacion",
+      "citation_text": "Panama's Judicial Branch identifies Manuel Amador Guerrero as the first constitutional president and records his assumption of office on 20 February 1904.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Presidentes y encargados de la Presidencia 1904-1964 — Asamblea Nacional de Panamá",
+      "canonical_url": "https://repositorio.asamblea.gob.pa/bitstream/handle/001/1968/1965_LNB_1965_110_LNB.pdf?isAllowed=y&sequence=1",
+      "citation_text": "The National Assembly historical list records Amador as President from 20 February 1904 to 23 June 1907, followed by José Domingo de Obaldía as Primer Designado until 26 December 1907.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

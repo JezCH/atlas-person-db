@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:attalus-i-soter:kingdom-of-pergamon:king:241-197-bce:v1",
+  "person": {
+    "canonical_name_en": "Attalus I Soter",
+    "display_name_ko": "아탈로스 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Pergamon",
+    "display_name_ko": "페르가몬 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -241,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -197,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The custom-civilization label 'Pergamon (Attalus)' refers specifically to Attalus I Soter. The British Museum identifies him as ruler of Pergamum from 241 to 197 BCE, taking the royal title around 230 BCE. ATLAS records the full rulership interval rather than starting only when he adopted the title basileus."
+  },
+  "sources": [
+    {
+      "title": "Attalus I Soter — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG86495",
+      "citation_text": "The British Museum identifies Attalus I Soter as ruler of Pergamum from 241 to 197 BCE, taking the title of king around 230 BCE.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Pergamon (Attalus) — Civilization V Customisation Wiki",
+      "canonical_url": "https://civilization-v-customisation.fandom.com/wiki/Pergamon_%28Attalus%29",
+      "citation_text": "The cited custom civilization explicitly identifies its leader 'Attalus' as Attalus I and describes his 241–197 BCE rule.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
