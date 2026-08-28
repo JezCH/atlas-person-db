@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:harun-al-rashid:retire-legacy-duplicate-786-809:20260828:v1",
+  "review_status": "approved",
+  "release_order": 100,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "fccc9f1f-0d1b-5f52-a0fa-f6e2ce1d950b"
+  },
+  "evidence": {
+    "reason": "Production Person read on 2026-08-28 shows two Harun al-Rashid Activities for the same Abbasid Caliphate, Caliph role, reign basis, and 786-809 interval. Preserve Activity 8bb90698-5f36-4827-acdd-27b1f82ec48e because it has the explicit rules relation and reviewed full temporal metadata (year granularity, exact certainty, unspecified_historical calendar, well_established confidence). Retire only legacy Activity fccc9f1f-0d1b-5f52-a0fa-f6e2ce1d950b, which has null relation and null temporal metadata and confidence legacy_asserted. No replacement Activity is required.",
+    "person_id": "a32487f7-b1cc-588a-a665-0fc713731d7b",
+    "survivor_activity_id": "8bb90698-5f36-4827-acdd-27b1f82ec48e",
+    "retire_activity_id": "fccc9f1f-0d1b-5f52-a0fa-f6e2ce1d950b"
+  }
+}
