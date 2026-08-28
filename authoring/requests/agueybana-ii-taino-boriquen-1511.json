@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:agueybana-ii:taino-boriquen:resistance-leader:1511:v1",
+  "person": {
+    "canonical_name_en": "Agüeybaná II",
+    "display_name_ko": "아궤이바나 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Taíno Boriquén",
+    "display_name_ko": "타이노 보리켄",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Cacique and Resistance Leader",
+    "role_display_name_ko": "카시케·저항 지도자",
+    "start_year": 1511,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1511,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Agüeybaná II, known as El Bravo, succeeded the elder Agüeybaná in the principal Taíno leadership of Boriquén and led the general uprising against Spanish colonization in 1511. Modern Puerto Rican historical scholarship cautions that the traditional story of his death in the Battle of Yagüecas is not securely documented. ATLAS therefore records the securely attributable 1511 resistance activity without inventing a death date or converting Spanish colonial rule into his polity."
+  },
+  "sources": [
+    {
+      "title": "Rebelión de los taínos de Boriquén, enero de 1511 — EnciclopediaPR",
+      "canonical_url": "https://enciclopediapr.org/content/rebelion-de-los-tainos-de-boriquen-3-de-enero-de-1511/",
+      "citation_text": "Puerto Rican historian Francisco Moscoso describes Agüeybaná II succeeding Agüeybaná the Elder, organizing the general Taíno uprising, and notes that the traditional account of his death in 1511 is not securely documented.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Guerra y despojo de los taínos, 1511-1512 — Academia Puertorriqueña de la Historia",
+      "canonical_url": "https://academiaprhistoria.org/guerra-y-despojo-de-los-tainos1511-1512/",
+      "citation_text": "The Puerto Rican Academy of History article states that Taínos of Boriquén led by Agüeybaná II began war against the conquistadors in January 1511.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

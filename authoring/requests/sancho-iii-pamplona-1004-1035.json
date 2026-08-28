@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sancho-iii-of-pamplona:kingdom-of-pamplona:king:1004-1035:v1",
+  "person": {
+    "canonical_name_en": "Sancho III of Pamplona",
+    "display_name_ko": "산초 3세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Pamplona",
+    "display_name_ko": "팜플로나 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1004,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1035,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sancho III 'the Great' is often retrospectively described as King of Navarre, but his contemporary core kingdom was the Kingdom of Pamplona; the Navarra name became the formal royal designation later. The Government of Navarre's historical publication gives his reign as 1004–1035, so ATLAS uses Kingdom of Pamplona for the polity while preserving the user's Navarre identification as the later conventional association."
+  },
+  "sources": [
+    {
+      "title": "Sancho III el Mayor de Pamplona — Dirección General de Cultura, Gobierno de Navarra",
+      "canonical_url": "https://www.culturanavarra.es/es/sancho-iii-el-mayor-de-pamplona",
+      "citation_text": "The Government of Navarre cultural institution presents Sancho III el Mayor as king of Pamplona and frames his reign as 1004–1035.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Del reino de Pamplona al reino de Navarra — Gobierno de Navarra",
+      "canonical_url": "https://www.navarra.es/NR/rdonlyres/DD5BF400-9F73-4DD1-AE4F-E3E30455FF03/213865/13_Rucquoi_PV_2533.pdf",
+      "citation_text": "This Government of Navarre historical study explicitly treats Sancho III's reign as 1004–1035 within the Kingdom of Pamplona and the later transition to the Kingdom of Navarre.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-28",
+      "document_title": "안초 3세",
+      "url": "https://namu.wiki/w/%EC%95%88%EC%B4%88%203%EC%84%B8"
+    }
+  }
+}
