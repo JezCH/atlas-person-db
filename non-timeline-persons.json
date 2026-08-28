@@ -575,5 +575,22 @@
     "role_ko": "잉카 건국 전승의 초대 카팍(왕)·쿠스코 창건자",
     "reason": "Manco Capac (Quechua Manko/Manqo Qhapaq) is the first Inca and founder of Cusco in the major Inca origin traditions recorded after the Spanish conquest. The narratives contain overtly mythical elements and later dynastic chronologies assign incompatible or reconstructed dates, while archaeology supports an early Cusco-centered Inca development without securely identifying a datable individual founder. ATLAS therefore preserves Manco Capac as a legendary founder with a possible historical core and leaves all personal timeline years unknown. The user-supplied 'Qheswa' label is not treated as a separate polity or a second Person: Qheswa/Quechua is a broader ethnolinguistic label, while this entry uses the more specific Inca Cusco founding political community and does not retroject the later Inca Empire back onto the founder tradition.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "Beowulf",
+    "politic_name": "Geats",
+    "display_name_ko": "베오울프",
+    "politic_display_name_ko": "기트족",
+    "historicity": "legendary",
+    "historicity_display_ko": "전설",
+    "timeline_status": "excluded",
+    "date_basis": "old_english_epic_tradition_without_independent_person_historicity_or_secure_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "기트족의 전설적 영웅·왕",
+    "reason": "Beowulf is the eponymous hero of the Old English epic, where he is portrayed first as a Geatish prince and warrior and later as king of the Geats. The poem preserves historically grounded Scandinavian settings and includes figures such as Hygelac who are independently attested, but Beowulf himself is not securely identified in contemporary or independent historical evidence; modern scholarship can even treat his royal biography as poetic construction. ATLAS therefore preserves Beowulf as a legendary Geatish ruler-hero without assigning the poem's fifty-year kingship or sixth-century setting as a historical personal chronology.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-historicity overlay is enabled."
   }
 ]

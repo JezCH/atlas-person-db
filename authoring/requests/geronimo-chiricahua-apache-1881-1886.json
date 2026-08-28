@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:geronimo:chiricahua-apache:war-leader:1881-1886:v1",
+  "person": {
+    "canonical_name_en": "Geronimo",
+    "display_name_ko": "제로니모",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Chiricahua Apache",
+    "display_name_ko": "치리카후아 아파치",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "War Leader",
+    "role_display_name_ko": "전쟁 지도자",
+    "start_year": 1881,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1886,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Geronimo (Goyakla/Goyathlay) was a Bedonkohe Chiricahua medicine man and renowned war leader, not a hereditary or formal chief of all Apache peoples. ATLAS therefore binds him to the narrower Chiricahua Apache political community and records the defining 1881-1886 resistance cycle from his 1881 breakout through the final surrender, rather than calling him sovereign ruler of a generic Apache polity."
+  },
+  "sources": [
+    {
+      "title": "The Apache Wars Part II: Geronimo — U.S. National Park Service",
+      "canonical_url": "https://www.nps.gov/chir/learn/historyculture/apache-wars-geronimo.htm",
+      "citation_text": "The National Park Service identifies Geronimo as a Bedonkohe Chiricahua medicine man who became a brilliant war leader, explicitly distinguishing him from a formal chief.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Buffalo Soldiers, Geronimo, and Wounded Knee — Smithsonian National Museum of American History",
+      "canonical_url": "https://americanhistory.si.edu/explore/exhibitions/price-of-freedom/online/western-indian-wars/buffalo-soldiers-geronimo-and-wounded-knee",
+      "citation_text": "The Smithsonian records Geronimo's 1881 escape and continued resistance until his final surrender in 1886.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

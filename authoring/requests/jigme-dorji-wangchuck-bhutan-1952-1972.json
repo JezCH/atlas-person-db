@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jigme-dorji-wangchuck:kingdom-of-bhutan:king:1952-1972:v1",
+  "person": {
+    "canonical_name_en": "Jigme Dorji Wangchuck",
+    "display_name_ko": "지그메 도르지 왕축",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Bhutan",
+    "display_name_ko": "부탄 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1952,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1972,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Jigme Dorji Wangchuck was the Third Druk Gyalpo of Bhutan and reigned from 1952 until his death in 1972. Bhutanese government sources identify his reign as the period in which the kingdom opened further to the outside world and undertook major political, social and institutional modernization."
+  },
+  "sources": [
+    {
+      "title": "Press Release — Memorial service for His Majesty the Late Third Druk Gyalpo",
+      "canonical_url": "https://www.mfa.gov.bt/press-release-442/",
+      "citation_text": "Bhutan's Ministry of Foreign Affairs identifies Jigme Dorji Wangchuck as the Third Druk Gyalpo, records his death in 1972, and summarizes the reforms and international opening of his reign.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Royal Civil Service Commission Bhutan — Bhutan socio-political institutions examination paper",
+      "canonical_url": "https://rcsc.gov.bt/wp-content/uploads/2025/02/Paper-III-2011.pdf",
+      "citation_text": "The Royal Civil Service Commission explicitly identifies the Third King Jigme Dorji Wangchuck with the reign period 1952-1972.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
