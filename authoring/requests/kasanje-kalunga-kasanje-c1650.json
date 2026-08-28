@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:kasanje-kalunga-ka-kinguri:kingdom-of-kasanje:kinguri:c1650:v1",
+  "person": {
+    "canonical_name_en": "Kasanje Kalunga ka Kinguri",
+    "display_name_ko": "카산제 칼룽가 카 킹구리",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Kasanje",
+    "display_name_ko": "카산제 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Kinguri",
+    "role_display_name_ko": "킹구리(왕)",
+    "start_year": 1650,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1650,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Kasanje Kalunga is a historically attested mid-seventeenth-century ruler of the Imbangala Kingdom of Kasanje. Joseph C. Miller's analysis of Kasanje king lists warns that orally preserved dynastic sequences are unsafe for constructing precise reign chronologies, while Cavazzi's near-contemporary account identifies a 'Jaga Kasanje Kalunga' whom Miller equates with Kasanje Kalunga ka Kilombo. ATLAS therefore does not fabricate a multi-decade exact reign and uses c.1650 as a representative rulership point. The title Kinguri is retained as the local royal office."
+  },
+  "sources": [
+    {
+      "title": "Kings, Lists, and History in Kasanje — Joseph C. Miller, History in Africa",
+      "canonical_url": "https://www.cambridge.org/core/journals/history-in-africa/article/abs/kings-lists-and-history-in-kasanje/A1E0485E67F987CC2CD47BF3479404C9",
+      "citation_text": "Miller cautions against deriving precise chronology from Kasanje's orally preserved king lists and identifies Cavazzi's 'Jaga Kasanje Kalunga' with the ruler Kasanje Kalunga ka Kilombo.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Cavazzi, Missione Evangelica — Book 3, Chapter 1, annotated by John K. Thornton",
+      "canonical_url": "https://www.bu.edu/afam/people/faculty/john-thornton/cavazzi-missione-evangelica-2/book-3-chapter-1/",
+      "citation_text": "Thornton's annotations identify the mid-seventeenth-century Kasanje ruler as Kasanje Kalunga ka Kinguri and discuss the perpetual-title naming system.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

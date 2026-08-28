@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:kayqubad-i:sultanate-of-rum:sultan:1220-1237:v1",
+  "person": {
+    "canonical_name_en": "Kayqubad I",
+    "display_name_ko": "카이쿠바드 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Sultanate of Rum",
+    "display_name_ko": "룸 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1220,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1237,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ala al-Din Kayqubad I was Sultan of Rum from 1220 to 1237. ATLAS normalizes the user-supplied 'Seljuk Sultanate of Rum' to the standard historical polity label Sultanate of Rum."
+  },
+  "sources": [
+    {
+      "title": "KEYKUBAD I — TDV İslâm Ansiklopedisi",
+      "canonical_url": "https://islamansiklopedisi.org.tr/keykubad-i",
+      "citation_text": "The TDV İslâm Ansiklopedisi identifies Alaeddin Keykubad I as Anatolian Seljuk sultan from 1220 to 1237.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "SALJUQS iii. SALJUQS OF RUM — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/saljuqs-iii/",
+      "citation_text": "Encyclopaedia Iranica gives Ala al-Din Kayqubad I's reign as 1220-1237.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-28",
+      "document_title": "카이쿠바드 1세",
+      "url": "https://namu.wiki/w/%EC%B9%B4%EC%9D%B4%EC%BF%A0%EB%B0%94%EB%93%9C%201%EC%84%B8"
+    }
+  }
+}

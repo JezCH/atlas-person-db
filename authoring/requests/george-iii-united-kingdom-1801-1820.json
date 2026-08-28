@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:george-iii:united-kingdom:king:1801-1820:v1",
+  "person": {
+    "canonical_name_en": "George III",
+    "display_name_ko": "조지 3세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1801,
+    "start_month": 1,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1820,
+    "end_month": 1,
+    "end_day": 29,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "George III had reigned over Great Britain and Ireland since 1760, but the requested United Kingdom polity did not exist until the Acts of Union took effect on 1 January 1801, creating the United Kingdom of Great Britain and Ireland. ATLAS therefore begins this United Kingdom Activity on 1 January 1801 and ends it with George III's death on 29 January 1820. His pre-1801 Great Britain/Ireland and Hanoverian titles are not folded into this Activity."
+  },
+  "sources": [
+    {
+      "title": "An Act for the Union of Great Britain and Ireland — UK Parliament",
+      "canonical_url": "https://www.parliament.uk/about/living-heritage/evolutionofparliament/legislativescrutiny/parliamentandireland/collections/ireland/act-of-union-1800/",
+      "citation_text": "UK Parliament states that the Union took effect on 1 January 1801 and created the United Kingdom of Great Britain and Ireland.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "George III (r. 1760-1820) — The Royal Family",
+      "canonical_url": "https://www.royal.uk/george-iii",
+      "citation_text": "The Royal Family records George III's reign and his death at Windsor Castle on 29 January 1820.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-28",
+      "document_title": "조지 3세",
+      "url": "https://namu.wiki/w/%EC%A1%B0%EC%A7%80%203%EC%84%B8"
+    }
+  }
+}
