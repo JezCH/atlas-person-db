@@ -1,56 +1,56 @@
 {
-  "schema": "atlas-human-authoring/v1",
-  "review_status": "approved",
-  "request_id": "authoring:jose-de-san-martin:united-provinces-rio-de-la-plata:independence-leader:1812-1820:v1",
-  "person": {
-    "canonical_name_en": "José de San Martín",
-    "display_name_ko": "호세 데 산마르틴",
-    "person_type": "historical",
-    "historicity": "historical"
-  },
-  "polity": {
-    "canonical_name_en": "United Provinces of the Río de la Plata",
-    "display_name_ko": "리오데라플라타 연합주",
-    "polity_type": "historical_polity",
-    "historicity": "historical"
-  },
-  "activity": {
-    "relation_type": "serves",
-    "period_basis": "general_activity",
-    "role": "Military and Independence Leader",
-    "role_display_name_ko": "군사·독립운동 지도자",
-    "start_year": 1812,
-    "start_month": null,
-    "start_day": null,
-    "start_certainty": "exact",
-    "start_calendar": "gregorian",
-    "end_year": 1820,
-    "end_month": null,
-    "end_day": null,
-    "end_certainty": "approximate",
-    "end_calendar": "gregorian",
-    "confidence": "well_established",
-    "chronology_status": "reviewed",
-    "notes": "San Martín returned to Buenos Aires in 1812, entered the service of the revolutionary government, later governed Cuyo and organized the Army of the Andes under the United Provinces. ATLAS uses `serves` rather than implying that he was head of state of the United Provinces. The endpoint c.1820 marks the transition from his Río de la Plata-based command into the Peru expedition and wider transnational liberation phase."
-  },
-  "sources": [
-    {
-      "title": "Cronología Sanmartiniana — Instituto Nacional Sanmartiniano",
-      "canonical_url": "https://sanmartiniano.cultura.gob.ar/noticia/cronologia-sanmartiniana/",
-      "citation_text": "Argentina's National Sanmartinian Institute records San Martín's return and military appointment in 1812, governorship of Cuyo in 1814, and appointment as General-in-Chief of the Army of the Andes in 1816.",
-      "source_type": "web_bibliographic_reference"
+    "schema": "atlas-human-authoring/v1",
+    "review_status": "approved",
+    "request_id": "authoring:jose-de-san-martin:united-provinces-rio-de-la-plata:independence-leader:1812-1820:v1",
+    "person": {
+        "canonical_name_en": "José de San Martín",
+        "display_name_ko": "호세 데 산마르틴",
+        "person_type": "historical",
+        "historicity": "historical"
     },
-    {
-      "title": "San Martín Libertador de América — Instituto Nacional Sanmartiniano",
-      "canonical_url": "https://sanmartiniano.cultura.gob.ar/noticia/jose-de-san-martin-libertador-de-america/",
-      "citation_text": "The Institute describes his Cuyo government, formation of the Army of the Andes, and campaign plan approved by the government of the United Provinces.",
-      "source_type": "web_bibliographic_reference"
+    "polity": {
+        "canonical_name_en": "United Provinces of the Río de la Plata",
+        "display_name_ko": "리오데라플라타 연합주",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+    },
+    "activity": {
+        "relation_type": "serves",
+        "period_basis": "general_activity",
+        "role": "Military and Independence Leader",
+        "role_display_name_ko": "군사·독립운동 지도자",
+        "start_year": 1812,
+        "start_month": null,
+        "start_day": null,
+        "start_certainty": "exact",
+        "start_calendar": "gregorian",
+        "end_year": 1820,
+        "end_month": null,
+        "end_day": null,
+        "end_certainty": "approximate",
+        "end_calendar": "gregorian",
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "notes": "San Martín returned to Buenos Aires in 1812, entered the service of the revolutionary government, later governed Cuyo and organized the Army of the Andes under the United Provinces. ATLAS uses `serves` rather than implying that he was head of state of the United Provinces. The endpoint c.1820 marks the transition from his Río de la Plata-based command into the Peru expedition and wider transnational liberation phase."
+    },
+    "sources": [
+        {
+            "title": "Cronología Sanmartiniana — Instituto Nacional Sanmartiniano",
+            "canonical_url": "https://sanmartiniano.cultura.gob.ar/noticia/cronologia-sanmartiniana/",
+            "citation_text": "Argentina's National Sanmartinian Institute records San Martín's return and military appointment in 1812, governorship of Cuyo in 1814, and appointment as General-in-Chief of the Army of the Andes in 1816.",
+            "source_type": "web_bibliographic_reference"
+        },
+        {
+            "title": "San Martín Libertador de América — Instituto Nacional Sanmartiniano",
+            "canonical_url": "https://sanmartiniano.cultura.gob.ar/noticia/jose-de-san-martin-libertador-de-america/",
+            "citation_text": "The Institute describes his Cuyo government, formation of the Army of the Andes, and campaign plan approved by the government of the United Provinces.",
+            "source_type": "web_bibliographic_reference"
+        }
+    ],
+    "external_references": {
+        "namuwiki": {
+            "status": "not_found",
+            "checked_at": "2026-08-28"
+        }
     }
-  ],
-  "external_references": {
-    "namuwiki": {
-      "status": "not_found",
-      "checked_at": "2026-08-28"
-    }
-  }
 }
