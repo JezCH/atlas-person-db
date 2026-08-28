@@ -25,13 +25,13 @@
     "start_certainty": "exact",
     "start_calendar": "unspecified_historical",
     "end_year": 1294,
-    "end_month": 5,
-    "end_day": 3,
+    "end_month": null,
+    "end_day": null,
     "end_certainty": "exact",
     "end_calendar": "unspecified_historical",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "John I (Jan I) was recognized as Duke of Brabant in 1267 after Henry IV's abdication. DBNL records his Brabant dukedom from 1267 and his death on 3 May 1294. He also acquired Limburg after 1288, but this Activity models the requested Duchy of Brabant."
+    "notes": "John I (Jan I) was recognized as Duke of Brabant in 1267 after Henry IV's abdication and ruled until his death in 1294. He also acquired Limburg after 1288, but this Activity models the requested Duchy of Brabant. Secondary references disagree on the exact day of his death in May 1294, so ATLAS stores only the secure year."
   },
   "sources": [
     {

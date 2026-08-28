@@ -25,13 +25,13 @@
     "start_certainty": "exact",
     "start_calendar": "unspecified_historical",
     "end_year": 1191,
-    "end_month": 6,
-    "end_day": 1,
+    "end_month": null,
+    "end_day": null,
     "end_certainty": "exact",
     "end_calendar": "unspecified_historical",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "Philip of Alsace (Filips van de Elzas) became sole Count of Flanders after the death of his father Thierry in 1168 and ruled until his death at Acre on 1 June 1191. Earlier co-government while his father was alive is not expanded into a separate Activity in this requested Flanders representation."
+    "notes": "Philip of Alsace (Filips van de Elzas) became sole Count of Flanders after the death of his father Thierry in 1168 and ruled until his death during the Third Crusade in 1191. Earlier co-government while his father was alive is not expanded into a separate Activity in this requested Flanders representation. Because secondary references disagree on the exact day of death, ATLAS stores only the secure year 1191."
   },
   "sources": [
     {
