@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:kairouane:grenada-kalinago:chief:1649-c1650:v1",
+  "person": {
+    "canonical_name_en": "Kaïrouane",
+    "display_name_ko": "카이루아네",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Grenada Kalinago",
+    "display_name_ko": "그레나다 칼리나고",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Chief",
+    "role_display_name_ko": "추장",
+    "start_year": 1649,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1650,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Kaïrouane (also Kaierouane/Kairouane) is directly attested as the principal Indigenous chief on Grenada during the opening of French colonization in 1649–1650. Modern ethnohistorical work notes that Grenada then contained both Island Carib (Kalinago/Caraïbe) and mainland Kalina/Galibi communities, and identifies Kaierouane himself as Kalina while acting as the island-wide chieftain. ATLAS keeps the user's Kalinago framing in the normalized label 'Grenada Kalinago' but does not generalize his authority to all Kalinago of the Lesser Antilles. The endpoint is approximate because later traditions about the Leapers' Hill deaths vary between 1650 and 1651 and Kaïrouane disappears from the record."
+  },
+  "sources": [
+    {
+      "title": "Histoire de l’isle de Grenade en Amérique: 1649–1659 — introduction by Jacques Petitjean Roget",
+      "canonical_url": "https://classiques.uqam.ca/contemporains/petitjean_roget_jacques/histoire_de_grenade/histoire_de_grenade_intro.html",
+      "citation_text": "The annotated introduction to the 1659 Grenada account identifies Kaierouane as captain of the Indigenous people of Grenada during the French occupation beginning in 1649.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Antropológica 97–98: documentary evidence for Kalina and Island Caribs on Grenada",
+      "canonical_url": "https://biblat.unam.mx/hevila/AntropologicaCaracas/2002/no97-98/3.pdf",
+      "citation_text": "The ethnohistorical study states that Grenada was shared by Island and Mainland Caribs and that Kaierouane, a Kalina Indian, was the single chieftain over the Indigenous communities of the island.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
