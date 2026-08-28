@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:beibulat-taimiev:chechnya:military-political-leader:1806-1831:v1",
+  "person": {
+    "canonical_name_en": "Beibulat Taimiev",
+    "display_name_ko": "베이불라트 타이미예프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Chechnya",
+    "display_name_ko": "체첸",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Military-Political Leader",
+    "role_display_name_ko": "군사·정치 지도자",
+    "start_year": 1806,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1831,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Beibulat Taimiev was a Chechen military-political leader active during the first third of the nineteenth century. The Chechen Academy of Sciences notes that his name first appears in Russian documents in 1806, is regularly attested from 1808, and that he became a widely recognized military-political leader of Chechnya; official Chechen archival material documents his killing in 1831. The user's broad 'Vainakhs' label is narrowed to Chechnya because his documented political leadership was specifically Chechen, not sovereign rule over all Vainakh peoples. The start is therefore approximate rather than treated as an exact accession."
+  },
+  "sources": [
+    {
+      "title": "Страницы истории Чечни: Имам Мансур и Бей-Булат Таймиев — Академия наук Чеченской Республики",
+      "canonical_url": "https://anchr.ru/ch/2020/01/stranicy-istorii-chechni-konec-hvi-pervaya-tret-hih-vv-imam-mansur-i-bej-bulat-tajmiev/",
+      "citation_text": "The Academy of Sciences of the Chechen Republic describes Beibulat Taimiev as a military-political leader of Chechnya, first appearing in Russian documents in 1806 and regularly from 1808.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Гибель Бейбулата — Архивное управление Правительства Чеченской Республики",
+      "canonical_url": "https://arhiv-chr.ru/deyatelnost/publikatsii/63-gibel-bejbulata",
+      "citation_text": "The official Chechen archival authority publishes the 1831 investigative report documenting the killing of the Chechen elder Beibulat.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:raden-patah:demak-sultanate:sultan:1475-1518:v1",
+  "person": {
+    "canonical_name_en": "Raden Patah",
+    "display_name_ko": "라덴 파타",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Demak Sultanate",
+    "display_name_ko": "드막 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1475,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1518,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Raden Patah is traditionally identified as the founder and first ruler of the Demak Sultanate. Indonesia's official tourism portal gives the conventional span 1475-1518 while explicitly framing the foundation attribution and genealogy as traditional. ATLAS therefore preserves that conventional reign span with approximate boundaries rather than presenting it as a fully contemporary exact chronology."
+  },
+  "sources": [
+    {
+      "title": "Demak — Indonesia Travel",
+      "canonical_url": "https://www.indonesia.travel/id/id/destination/java/central-java/demak",
+      "citation_text": "Indonesia's official tourism portal attributes the foundation of the Demak Sultanate to Raden Patah and gives the conventional dates 1475-1518, while noting the traditional character of his genealogy.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
