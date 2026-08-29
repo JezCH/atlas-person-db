@@ -126,6 +126,25 @@ function normalizeSources(raw) {
   });
 }
 
+function automaticHumanRequestId(raw) {
+  const request = requiredObject(raw, "HUMAN_AUTHORING_REQUEST_OBJECT_REQUIRED");
+  const payload = { ...request };
+  delete payload.request_id;
+  return `human-v6.1:${manifestHash(payload).slice(0, 40)}`;
+}
+
+function withResolvedHumanRequestId(raw) {
+  const request = requiredObject(raw, "HUMAN_AUTHORING_REQUEST_OBJECT_REQUIRED");
+  const explicit = optionalText(request.request_id);
+  if (explicit) return Object.freeze({ request, request_id:explicit, generated:false });
+  const requestId = automaticHumanRequestId(request);
+  return Object.freeze({
+    request:Object.freeze({ ...request, request_id:requestId }),
+    request_id:requestId,
+    generated:true
+  });
+}
+
 function normalizeHumanAuthoringRequest(raw, { allowLegacyNamuWikiOmission = true } = {}) {
   const request = requiredObject(raw, "HUMAN_AUTHORING_REQUEST_OBJECT_REQUIRED");
   if (request.schema !== HUMAN_AUTHORING_SCHEMA) throw new Error("HUMAN_AUTHORING_SCHEMA_REQUIRED");
@@ -182,10 +201,12 @@ function normalizeHumanAuthoringRequest(raw, { allowLegacyNamuWikiOmission = tru
 }
 
 function prepareHumanAuthoringRequest(rawRequest, { allowLegacyNamuWikiOmission = true } = {}) {
+  const resolved = withResolvedHumanRequestId(rawRequest);
   return Object.freeze({
-    rawRequest,
-    request:normalizeHumanAuthoringRequest(rawRequest, { allowLegacyNamuWikiOmission }),
-    hash:manifestHash(rawRequest)
+    rawRequest:resolved.request,
+    request:normalizeHumanAuthoringRequest(resolved.request, { allowLegacyNamuWikiOmission }),
+    hash:manifestHash(resolved.request),
+    requestIdGenerated:resolved.generated
   });
 }
 
@@ -503,6 +524,87 @@ function createHumanAuthoringService({ client, prepare = prepareHumanAuthoringRe
       }
     },
 
+    async preflightBatch(rawRequests, { transports = null, allowLegacyNamuWikiOmission = true } = {}) {
+      if (!Array.isArray(rawRequests) || rawRequests.length === 0) throw new Error("HUMAN_AUTHORING_BATCH_REQUESTS_REQUIRED");
+      const normalizedTransports = transports == null ? rawRequests.map(() => null) : transports;
+      if (!Array.isArray(normalizedTransports) || normalizedTransports.length !== rawRequests.length) throw new Error("HUMAN_AUTHORING_BATCH_TRANSPORT_LENGTH_MISMATCH");
+
+      const prepared = new Array(rawRequests.length).fill(null);
+      const results = new Array(rawRequests.length).fill(null);
+      const firstIndexByRequestId = new Map();
+
+      for (let index = 0; index < rawRequests.length; index += 1) {
+        try {
+          const item = prepare(rawRequests[index], { allowLegacyNamuWikiOmission:true });
+          const requestId = item.request.requestId;
+          if (firstIndexByRequestId.has(requestId)) {
+            results[index] = Object.freeze({
+              index,
+              manifest_path:manifestPathFromTransport(normalizedTransports[index]),
+              request_id:requestId,
+              request_id_generated:item.requestIdGenerated === true,
+              status:"BLOCKED",
+              code:"HUMAN_AUTHORING_BATCH_DUPLICATE_REQUEST_ID"
+            });
+            continue;
+          }
+          firstIndexByRequestId.set(requestId, index);
+          prepared[index] = item;
+        } catch (error) {
+          results[index] = Object.freeze({
+            index,
+            manifest_path:manifestPathFromTransport(normalizedTransports[index]),
+            request_id:null,
+            request_id_generated:false,
+            status:"BLOCKED",
+            code:String(error?.message || "HUMAN_AUTHORING_FAILED")
+          });
+        }
+      }
+
+      const catalogCache = new Map();
+      for (let index = 0; index < prepared.length; index += 1) {
+        const item = prepared[index];
+        if (!item) continue;
+        await client.query("begin isolation level serializable");
+        try {
+          await lockRequestIds(client, [item.request.requestId]);
+          const outcome = await applyPrepared(client, item, {
+            transport:normalizedTransports[index],
+            catalogCache,
+            allowLegacyNamuWikiOmission
+          });
+          await rollbackQuietly(client);
+          results[index] = Object.freeze({
+            index,
+            manifest_path:manifestPathFromTransport(normalizedTransports[index]),
+            request_id:outcome.request_id,
+            request_id_generated:item.requestIdGenerated === true,
+            status:outcome.replay === true ? "ALREADY_PRESENT" : "READY",
+            code:null,
+            person_id:outcome.replay === true ? outcome.person_id : null,
+            polity_id:outcome.replay === true ? outcome.polity_id : null,
+            role_id:outcome.replay === true ? outcome.role_id : null,
+            relationship_id:outcome.replay === true ? outcome.relationship_id : null,
+            relation_type_id:outcome.replay === true ? outcome.result?.entities?.relation_type?.id ?? null : null,
+            period_basis_id:outcome.replay === true ? outcome.result?.entities?.period_basis?.id ?? null : null,
+            external_references:outcome.replay === true ? outcome.external_references : null
+          });
+        } catch (error) {
+          await rollbackQuietly(client);
+          results[index] = Object.freeze({
+            index,
+            manifest_path:manifestPathFromTransport(normalizedTransports[index]),
+            request_id:item.request.requestId,
+            request_id_generated:item.requestIdGenerated === true,
+            status:"BLOCKED",
+            code:String(error?.message || "HUMAN_AUTHORING_FAILED")
+          });
+        }
+      }
+      return Object.freeze(results);
+    },
+
     async applyBatch(rawRequests, { transports = null, allowLegacyNamuWikiOmission = true } = {}) {
       if (!Array.isArray(rawRequests) || rawRequests.length === 0) throw new Error("HUMAN_AUTHORING_BATCH_REQUESTS_REQUIRED");
       const normalizedTransports = transports == null ? rawRequests.map(() => null) : transports;
@@ -519,18 +621,22 @@ function createHumanAuthoringService({ client, prepare = prepareHumanAuthoringRe
       }
 
       const firstIndexByRequestId = new Map();
+      const duplicateFailures = [];
       for (let index = 0; index < prepared.length; index += 1) {
         if (!prepared[index]) continue;
         const requestId = prepared[index].request.requestId;
         if (firstIndexByRequestId.has(requestId)) {
-          throw annotateBatchError(new Error("HUMAN_AUTHORING_BATCH_DUPLICATE_REQUEST_ID"), index, normalizedTransports[index]);
+          const error = annotateBatchError(new Error("HUMAN_AUTHORING_BATCH_DUPLICATE_REQUEST_ID"), index, normalizedTransports[index]);
+          duplicateFailures.push({ index, error });
+          prepared[index] = null;
+          continue;
         }
         firstIndexByRequestId.set(requestId, index);
       }
 
       const catalogCache = new Map();
       const results = [];
-      const failures = [...preparationFailures];
+      const failures = [...preparationFailures, ...duplicateFailures];
       for (let index = 0; index < prepared.length; index += 1) {
         if (!prepared[index]) continue;
         await client.query("begin isolation level serializable");
@@ -578,6 +684,8 @@ module.exports = Object.freeze({
   roleCodeFromLabel,
   roleCategoryForRelation,
   normalizeNamuWikiReference,
+  automaticHumanRequestId,
+  withResolvedHumanRequestId,
   normalizeHumanAuthoringRequest,
   prepareHumanAuthoringRequest,
   activityPayload,

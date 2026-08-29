@@ -1,4 +1,4 @@
-# ATLAS Historical Person Registration SOP — Lean Path v6
+# ATLAS Historical Person Registration SOP — Lean Path v6.1
 
 This file is the operational source of truth for ordinary reviewed historical-person registration.
 
@@ -87,10 +87,11 @@ For **one new Person**, the expected shape is:
 ```text
 1 bounded Production SCREEN
 → historical review + NamuWiki review in parallel
+→ deterministic request_id + Production preflight
 → 1 manifest
 → 1 PR / required fast-path CI
 → 1 Authoring Apply
-→ 1 canonical Production VERIFY
+→ automatic canonical Production VERIFY
 → STOP
 ```
 
@@ -99,13 +100,15 @@ For **multiple requested Persons**, including a batch that mixes ordinary Timeli
 ```text
 bounded SCREENs in parallel
 → REVIEW only surviving candidates, in parallel
+→ deterministic request_ids + one Production preflight batch
+→ BLOCKED items are isolated; READY items continue
 → one manifest per ordinary Timeline registration
    + one bounded non-timeline registry edit when needed
 → all registration data on one branch / one PR
 → one required registration-data fast-path CI
-→ one Authoring Apply batch for Timeline manifests
+→ one item-isolated Authoring Apply batch for READY Timeline manifests
 → one Production deployment for non-timeline static data only when needed
-→ canonical Production VERIFY reads in parallel
+→ automatic canonical Production VERIFY reads in parallel
 → STOP
 ```
 
@@ -120,11 +123,11 @@ Do **not** process a batch as repeated end-to-end single-Person pipelines unless
 
 During the normal path, do not inspect implementation files merely to remember how registration works. The SOP and deployed authoring contract are already authoritative. Inspect code, workflows, migrations, Vercel state, or repository internals only after a concrete validation/runtime failure points to that boundary.
 
-### 4.2 Batch compilation invariant — build once, write once
+### 4.2 Batch compilation + Production preflight invariant — build once, probe once, write once
 
 After SCREEN and REVIEW finish for a multi-Person request, compile the surviving registrations as one in-memory batch before touching Git.
 
-The batch compilation preflight must confirm:
+The local batch compilation preflight must confirm:
 
 - every Timeline candidate has one complete reviewed Human Authoring manifest;
 - only already-supported Relation Type and Period Basis codes are used unless a bounded catalog lookup has explicitly resolved a new ambiguity;
@@ -145,6 +148,14 @@ create blobs concurrently
 Do not create one GitHub Contents commit per manifest. That serial network overhead adds no historical, validation, transactional, or audit safety and is therefore removed from the normal batch path.
 
 This optimization changes only transport materialization. SCREEN, REVIEW, mandatory sources, NamuWiki review/reuse, CI, Authoring Apply, transaction boundaries, and Production VERIFY are unchanged.
+
+Before the GitHub fallback batch is committed, run one authoritative Production `preflight_batch` through the same Human Authoring resolver used for the real write. The preflight executes every candidate inside a SERIALIZABLE transaction and always rolls it back. Each candidate is classified independently as:
+
+- `READY` — the exact reviewed request can be committed;
+- `ALREADY_PRESENT` — the immutable request is already committed and only read-back verification is needed;
+- `BLOCKED` — request-id collision, identity ambiguity, unresolved catalog entry, semantic duplicate, NamuWiki overwrite conflict, or another concrete authoring error.
+
+A BLOCKED candidate must not prevent unrelated READY candidates from being applied.
 
 ## 5. Stage 1 — SCREEN: cheapest useful check first
 
@@ -213,6 +224,8 @@ A real Source remains mandatory. When a submitted Source has an exact canonical 
 
 Use one `atlas-human-authoring/v1` request for one logical registration.
 
+For new Human Authoring requests, `request_id` is optional at the reviewed-data surface. If omitted, the server and repository validator deterministically derive the same id as `human-v6.1:<sha256-prefix>` from the stable reviewed payload with `request_id` excluded. Identical reviewed payloads therefore replay under the same id automatically; materially changed payloads receive a different id. Existing explicit request ids remain valid and are never rewritten.
+
 Preferred transport:
 
 - normal Admin Human Authoring when available;
@@ -269,13 +282,14 @@ Do not create one branch/PR/CI/Apply cycle per Person unless a concrete conflict
 
 Transaction behavior remains independent inside the shared batch:
 
+- Production preflight first removes known BLOCKED items from the write set.
 - A success commits independently.
 - B success commits independently.
 - C failure rolls back C only.
 - D is still attempted and may commit.
-- the batch reports failure after all eligible items have been attempted.
+- the batch reports partial failure after all eligible items have been attempted, including the successful result rows and failed indexes.
 
-On retry, already committed items replay idempotently and only unresolved items need new work.
+On retry, already committed items replay idempotently and only unresolved items need new work. No successful item needs a retry-only PR.
 
 ### GitHub fallback only
 
@@ -298,9 +312,11 @@ For manifest-only registration, do not inspect Preview deployments or poll Verce
 
 A companion `non-timeline-persons.json` change is **not** an Authoring endpoint runtime dependency. It may still require a Vercel Production deployment so the static registry becomes visible, but Timeline DB Apply must not wait for that static deployment before using an already compatible Authoring runtime.
 
-## 8. Stage 4 — VERIFY: one Production read, then stop
+## 8. Stage 4 — VERIFY: automatic Production read-back, then stop
 
-Perform one bounded Production Person read using the canonical Person name. For a batch, issue these canonical verification reads concurrently after Apply.
+The Authoring Apply workflow performs one authoritative Production Person-detail read for every newly committed or ALREADY_PRESENT Human Authoring result. It verifies the Person identity, exact Activity id, Polity, Relation Type, Role, Period Basis, temporal boundaries, and reviewed NamuWiki state against the manifest.
+
+Manual canonical Person read-back is only a fallback when the automatic verifier reports a mismatch or when an operator needs provenance-specific detail.
 
 Verify:
 

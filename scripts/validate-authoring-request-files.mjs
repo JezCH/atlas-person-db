@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -17,6 +18,27 @@ function fail(file, message) {
 
 function nonEmptyString(value) {
   return typeof value === 'string' && value.trim().length > 0;
+}
+
+function stable(value) {
+  if (Array.isArray(value)) return value.map(stable);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.keys(value).sort().map((key) => [key, stable(value[key])]));
+  }
+  return value;
+}
+
+function automaticHumanRequestId(manifest) {
+  const payload = { ...manifest };
+  delete payload.request_id;
+  const hash = crypto.createHash('sha256').update(JSON.stringify(stable(payload))).digest('hex');
+  return `human-v6.1:${hash.slice(0, 40)}`;
+}
+
+function resolvedRequestId(file, manifest) {
+  if (nonEmptyString(manifest.request_id)) return manifest.request_id.trim();
+  if (manifest.schema === HUMAN_SCHEMA) return automaticHumanRequestId(manifest);
+  fail(file, 'request_id is required');
 }
 
 function historicalYear(value) {
@@ -88,7 +110,6 @@ function validateBoundary(file, activity, prefix) {
 
 function validateHuman(file, manifest) {
   if (manifest.review_status !== 'approved') fail(file, 'review_status must be approved');
-  if (!nonEmptyString(manifest.request_id)) fail(file, 'request_id is required');
   if (!nonEmptyString(manifest?.person?.canonical_name_en)) fail(file, 'person.canonical_name_en is required');
   if (!nonEmptyString(manifest?.polity?.canonical_name_en)) fail(file, 'polity.canonical_name_en is required');
   const activity = manifest?.activity;
@@ -162,9 +183,12 @@ for (const file of files) {
   else if (manifest.schema === NATIVE_SCHEMA) validateNative(file, manifest);
   else fail(file, `unsupported schema ${String(manifest.schema || '')}`);
 
-  const requestId = String(manifest.request_id);
-  if (requestIds.has(requestId)) fail(file, `duplicate request_id also used by ${requestIds.get(requestId)}`);
+  const requestId = resolvedRequestId(file, manifest);
+  if (requestIds.has(requestId)) fail(file, `duplicate effective request_id also used by ${requestIds.get(requestId)}`);
   requestIds.set(requestId, file);
+  if (!nonEmptyString(manifest.request_id) && manifest.schema === HUMAN_SCHEMA) {
+    console.log(`[request_id] ${manifest.person.canonical_name_en}: generated ${requestId}`);
+  }
 
   const key = semanticKey(manifest);
   if (key) {

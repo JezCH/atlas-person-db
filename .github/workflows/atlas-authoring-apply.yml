@@ -34,6 +34,7 @@ jobs:
     env:
       ATLAS_AUTHORING_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply
       ATLAS_HUMAN_AUTHORING_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring
+      ATLAS_PERSON_READ_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-read
       ATLAS_AUTHORING_AUDIENCE: atlas-person-db-authoring
       ATLAS_AUTHORING_TRANSPORT_VERSION: '2'
     steps:
@@ -86,7 +87,7 @@ jobs:
             elif [[ "$schema" == "atlas-human-authoring/v1" ]]; then
               jq -e '
                 .review_status == "approved"
-                and (.request_id | type == "string" and length > 0)
+                and ((.request_id == null) or (.request_id | type == "string" and length > 0))
                 and (.person.canonical_name_en | type == "string" and length > 0)
                 and (.polity.canonical_name_en | type == "string" and length > 0)
                 and (.activity.relation_type | IN("rules","governs","serves","active_in","opposes","claims_rule"))
@@ -282,28 +283,28 @@ jobs:
 
           if [[ "$all_human" == "true" && "${#manifests[@]}" -gt 0 ]]; then
             oidc_token="$(request_oidc)"
-            response="/tmp/atlas-authoring-evidence/responses/human-authoring-batch.json"
             manifest_paths="$(printf '%s\n' "${manifests[@]}" | jq -R . | jq -s .)"
             requests="$(jq -s '.' "${manifests[@]}")"
-            payload="$(jq -cn \
+
+            preflight_response="/tmp/atlas-authoring-evidence/responses/human-authoring-preflight.json"
+            preflight_payload="$(jq -cn \
               --argjson transport_version "$ATLAS_AUTHORING_TRANSPORT_VERSION" \
               --arg runtime_sha "$ATLAS_RUNTIME_SHA" \
               --arg authoring_sha "$GITHUB_SHA" \
               --argjson manifest_paths "$manifest_paths" \
               --argjson requests "$requests" \
-              '{operation:"apply_batch",transport_version:$transport_version,runtime_sha:$runtime_sha,authoring_sha:$authoring_sha,manifest_paths:$manifest_paths,requests:$requests}')"
-            status="$(curl --silent --show-error \
-              --output "$response" \
+              '{operation:"preflight_batch",transport_version:$transport_version,runtime_sha:$runtime_sha,authoring_sha:$authoring_sha,manifest_paths:$manifest_paths,requests:$requests}')"
+            preflight_status="$(curl --silent --show-error \
+              --output "$preflight_response" \
               --write-out '%{http_code}' \
               --request POST \
               -H 'content-type: application/json' \
               -H "authorization: Bearer ${oidc_token}" \
-              --data "$payload" \
+              --data "$preflight_payload" \
               "$ATLAS_HUMAN_AUTHORING_ENDPOINT")"
-            if [[ "$status" != "200" ]]; then
-              cat "$response" >&2 || true
-              code="$(jq -r '.code // "UNKNOWN"' "$response" 2>/dev/null || printf 'UNKNOWN')"
-              echo "Human authoring batch apply failed: HTTP ${status}, code ${code}" >&2
+            if [[ "$preflight_status" != "200" ]]; then
+              cat "$preflight_response" >&2 || true
+              echo "Human authoring preflight failed: HTTP ${preflight_status}" >&2
               exit 1
             fi
             jq -e --argjson count "${#manifests[@]}" '
@@ -311,17 +312,177 @@ jobs:
               and .auth_method=="github_oidc"
               and .marker=="ATLAS_HUMAN_AUTHORING_BATCH_V1"
               and .schema=="atlas-human-authoring-batch/v1"
-              and .committed==true
+              and .operation=="preflight_batch"
+              and .committed==false
               and .count==$count
               and (.results | type=="array" and length==$count)
-              and all(.results[];
-                .marker=="ATLAS_HUMAN_AUTHORING_V1"
-                and .schema=="atlas-human-authoring/v1"
-                and .committed==true
-                and .result.semantic_version=="v2-relation-full-temporal"
-              )
-            ' "$response" >/dev/null
-            jq . "$response"
+              and all(.results[]; .status | IN("READY","ALREADY_PRESENT","BLOCKED"))
+            ' "$preflight_response" >/dev/null
+            jq . "$preflight_response"
+
+            blocked_count="$(jq -r '.blocked_count' "$preflight_response")"
+            ready_count="$(jq -r '.ready_count' "$preflight_response")"
+            already_present_count="$(jq -r '.already_present_count' "$preflight_response")"
+            ready_indexes="$(jq -c '[.results[] | select(.status=="READY") | .index]' "$preflight_response")"
+            ready_paths="$(jq -cn --argjson all "$manifest_paths" --argjson indexes "$ready_indexes" '$indexes | map($all[.])')"
+            ready_requests="$(jq -cn --argjson all "$requests" --argjson indexes "$ready_indexes" '$indexes | map($all[.])')"
+
+            verify_queue="/tmp/atlas-authoring-evidence/verify-queue.jsonl"
+            : > "$verify_queue"
+            jq -c '.results[]
+              | select(.status=="ALREADY_PRESENT")
+              | {
+                  manifest_path,
+                  request_id,
+                  person_id,
+                  relationship_id,
+                  source:"preflight_replay"
+                }' "$preflight_response" >> "$verify_queue"
+
+            apply_failed=false
+            if [[ "$ready_count" -gt 0 ]]; then
+              response="/tmp/atlas-authoring-evidence/responses/human-authoring-batch.json"
+              payload="$(jq -cn \
+                --argjson transport_version "$ATLAS_AUTHORING_TRANSPORT_VERSION" \
+                --arg runtime_sha "$ATLAS_RUNTIME_SHA" \
+                --arg authoring_sha "$GITHUB_SHA" \
+                --argjson manifest_paths "$ready_paths" \
+                --argjson requests "$ready_requests" \
+                '{operation:"apply_batch",transport_version:$transport_version,runtime_sha:$runtime_sha,authoring_sha:$authoring_sha,manifest_paths:$manifest_paths,requests:$requests}')"
+              status="$(curl --silent --show-error \
+                --output "$response" \
+                --write-out '%{http_code}' \
+                --request POST \
+                -H 'content-type: application/json' \
+                -H "authorization: Bearer ${oidc_token}" \
+                --data "$payload" \
+                "$ATLAS_HUMAN_AUTHORING_ENDPOINT")"
+
+              if [[ "$status" == "200" ]]; then
+                jq -e --argjson count "$ready_count" '
+                  .ok==true
+                  and .auth_method=="github_oidc"
+                  and .marker=="ATLAS_HUMAN_AUTHORING_BATCH_V1"
+                  and .schema=="atlas-human-authoring-batch/v1"
+                  and .operation=="apply_batch"
+                  and .committed==true
+                  and .partial_commit==false
+                  and .succeeded_count==$count
+                  and .failed_count==0
+                  and (.results | type=="array" and length==$count)
+                  and all(.results[];
+                    .marker=="ATLAS_HUMAN_AUTHORING_V1"
+                    and .schema=="atlas-human-authoring/v1"
+                    and .committed==true
+                    and .result.semantic_version=="v2-relation-full-temporal"
+                  )
+                ' "$response" >/dev/null
+              elif [[ "$status" == "409" ]]; then
+                jq -e '
+                  .ok==false
+                  and .code=="HUMAN_AUTHORING_BATCH_PARTIAL_FAILURE"
+                  and (.results | type=="array")
+                  and (.failures | type=="array" and length>0)
+                ' "$response" >/dev/null
+                apply_failed=true
+              else
+                cat "$response" >&2 || true
+                code="$(jq -r '.code // "UNKNOWN"' "$response" 2>/dev/null || printf 'UNKNOWN')"
+                echo "Human authoring batch apply failed: HTTP ${status}, code ${code}" >&2
+                exit 1
+              fi
+              jq . "$response"
+
+              jq -c --slurpfile preflight "$preflight_response" '
+                .results[] as $result
+                | ($preflight[0].results[] | select(.request_id==$result.request_id)) as $pf
+                | {
+                    manifest_path:$pf.manifest_path,
+                    request_id:$result.request_id,
+                    person_id:$result.person_id,
+                    relationship_id:$result.relationship_id,
+                    source:"apply"
+                  }
+              ' "$response" >> "$verify_queue"
+            fi
+
+            verify_failed=false
+            while IFS= read -r item; do
+              [[ -n "$item" ]] || continue
+              manifest_path="$(jq -r '.manifest_path' <<<"$item")"
+              person_id="$(jq -r '.person_id' <<<"$item")"
+              relationship_id="$(jq -r '.relationship_id' <<<"$item")"
+              request_id="$(jq -r '.request_id' <<<"$item")"
+              readback="/tmp/atlas-authoring-evidence/responses/readback-${request_id//[:\/]/_}.json"
+              read_status="$(curl --silent --show-error \
+                --output "$readback" \
+                --write-out '%{http_code}' \
+                "${ATLAS_PERSON_READ_ENDPOINT}?__atlas_read_surface=person&person_id=${person_id}")"
+              if [[ "$read_status" != "200" ]]; then
+                echo "Production read-back failed for ${request_id}: HTTP ${read_status}" >&2
+                verify_failed=true
+                continue
+              fi
+              if ! jq -e \
+                --slurpfile manifest "$manifest_path" \
+                --arg person_id "$person_id" \
+                --arg relationship_id "$relationship_id" '
+                  $manifest[0] as $m
+                  | .ok==true
+                  and .mode=="detail"
+                  and .person.id==$person_id
+                  and any(.person.activities[];
+                    .id==$relationship_id
+                    and (.polity.canonical_name_en // null)==($m.polity.canonical_name_en // null)
+                    and (.relation.code // null)==($m.activity.relation_type // null)
+                    and (.period_basis.code // null)==($m.activity.period_basis // null)
+                    and .start.year==$m.activity.start_year
+                    and (.start.month // null)==($m.activity.start_month // null)
+                    and (.start.day // null)==($m.activity.start_day // null)
+                    and (.start.certainty // null)==($m.activity.start_certainty // null)
+                    and (.start.calendar // null)==($m.activity.start_calendar // "unspecified_historical")
+                    and .end.year==$m.activity.end_year
+                    and (.end.month // null)==($m.activity.end_month // null)
+                    and (.end.day // null)==($m.activity.end_day // null)
+                    and (.end.certainty // null)==($m.activity.end_certainty // null)
+                    and (.end.calendar // null)==($m.activity.end_calendar // "unspecified_historical")
+                    and (
+                      if ($m.activity.role // null)==null then .role==null
+                      else (.role.source_label // .role.canonical_name_en // null)==$m.activity.role
+                      end
+                    )
+                  )
+                  and (
+                    (.person.external_references.namuwiki.status // null)==($m.external_references.namuwiki.status // null)
+                    and (.person.external_references.namuwiki.document_title // null)==($m.external_references.namuwiki.document_title // null)
+                    and (.person.external_references.namuwiki.url // null)==($m.external_references.namuwiki.url // null)
+                  )
+                ' "$readback" >/dev/null; then
+                echo "Production read-back mismatch for ${request_id}" >&2
+                cat "$readback" >&2 || true
+                verify_failed=true
+                continue
+              fi
+              echo "Production read-back VERIFIED: ${request_id}"
+            done < "$verify_queue"
+
+            final_failed=false
+            if [[ "$blocked_count" -gt 0 ]]; then
+              echo "Preflight blocked ${blocked_count} request(s); READY/ALREADY_PRESENT items were still completed and verified." >&2
+              jq -c '.results[] | select(.status=="BLOCKED")' "$preflight_response" >&2
+              final_failed=true
+            fi
+            if [[ "$apply_failed" == "true" ]]; then
+              echo 'One or more READY requests failed during isolated apply; successful items were retained and verified.' >&2
+              final_failed=true
+            fi
+            if [[ "$verify_failed" == "true" ]]; then
+              echo 'One or more Production read-back checks failed.' >&2
+              final_failed=true
+            fi
+
+            echo "Human Authoring v6.1 summary: READY=${ready_count}, ALREADY_PRESENT=${already_present_count}, BLOCKED=${blocked_count}"
+            [[ "$final_failed" == "false" ]] || exit 1
             exit 0
           fi
 
