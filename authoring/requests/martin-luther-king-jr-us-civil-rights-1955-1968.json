@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Martin Luther King Jr.",
+    "display_name_ko": "마틴 루터 킹 주니어",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Civil rights movement leader",
+    "role_display_name_ko": "시민권운동 지도자",
+    "start_year": 1955,
+    "start_month": 12,
+    "start_day": 5,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1968,
+    "end_month": 4,
+    "end_day": 4,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Martin Luther King Jr. emerged as a major civil rights leader when Montgomery's Black community leaders formed the Montgomery Improvement Association on 5 December 1955 and elected him president. He subsequently became a national leader of the nonviolent civil rights movement, including as president of the Southern Christian Leadership Conference from 1957, and remained publicly active in civil rights and social-justice campaigns until his assassination on 4 April 1968. ATLAS uses the United States as the political context with active_in rather than a governance relation, because King sought reform and equal citizenship within the United States rather than ruling a separate polity."
+  },
+  "sources": [
+    {
+      "title": "MIA forms; elects King president — The Martin Luther King, Jr. Research and Education Institute",
+      "canonical_url": "https://kinginstitute.stanford.edu/mia-forms-elects-king-president",
+      "citation_text": "The Stanford King Institute records that the Montgomery Improvement Association was formed on 5 December 1955 and elected Martin Luther King Jr. as president.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Martin Luther King Jr. – Facts — NobelPrize.org",
+      "canonical_url": "https://www.nobelprize.org/prizes/peace/1964/king/",
+      "citation_text": "The Nobel Prize biography identifies King as a leader of the Southern Christian Leadership Conference and a leading nonviolent campaigner for African American civil rights, and records his death on 4 April 1968.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Assassination of Martin Luther King, Jr. — The Martin Luther King, Jr. Research and Education Institute",
+      "canonical_url": "https://kinginstitute.stanford.edu/assassination-martin-luther-king-jr",
+      "citation_text": "The Stanford King Institute records King's assassination in Memphis on 4 April 1968.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Girolamo Savonarola",
+    "display_name_ko": "지롤라모 사보나롤라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Florence",
+    "display_name_ko": "피렌체 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "De facto political-religious leader",
+    "role_display_name_ko": "사실상 정치·종교 지도자",
+    "start_year": 1494,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1498,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the expulsion of the Medici in 1494, Girolamo Savonarola became the dominant informal political and religious leader of the restored Florentine republic. He held no formal princely or republican magistracy, but his preaching and followers strongly shaped the new popular constitution and civic programme. ATLAS therefore reuses the Republic of Florence polity and records de facto political-religious leadership rather than inventing a separate sovereign polity called a 'Theocratic Republic of Florence'. His political power collapsed in spring 1498; he was executed on 23 May 1498."
+  },
+  "sources": [
+    {
+      "title": "Exhibition Galleries — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/exhibitions/listings/2021/medici-portraits-and-politics/exhibition-galleries",
+      "citation_text": "The Metropolitan Museum of Art describes the first republican government after the Medici exile as led by the Dominican preacher Girolamo Savonarola and notes his execution in 1498.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Apocalyptic Hope’s Appeal: Machiavelli and Savonarola — Cambridge University Press",
+      "canonical_url": "https://www.cambridge.org/core/books/apocalypse-without-god/apocalyptic-hopes-appeal-machiavelli-and-savonarola/1C57AEB7CF7BEF418B67988775AB20C9",
+      "citation_text": "Cambridge scholarship describes Savonarola as a central political force after the fall of the Medici in 1494, strongly influencing the adoption and religious interpretation of Florence's republican reforms while cautioning against treating him as the formal author of the constitution.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}
