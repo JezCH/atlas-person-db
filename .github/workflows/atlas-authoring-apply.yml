@@ -272,6 +272,92 @@ jobs:
               "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_AUTHORING_AUDIENCE}" | jq -er '.value'
           }
 
+          refresh_runtime_sha() {
+            local readiness status runtime_sha
+            readiness="/tmp/atlas-authoring-evidence/readiness-refresh.json"
+            status="$(curl --silent --show-error \
+              --output "$readiness" \
+              --write-out '%{http_code}' \
+              "$ATLAS_AUTHORING_ENDPOINT")"
+            [[ "$status" == "200" ]] || {
+              cat "$readiness" >&2 || true
+              echo "Runtime refresh readiness failed: HTTP ${status}" >&2
+              return 1
+            }
+            jq -e --argjson version "$ATLAS_AUTHORING_TRANSPORT_VERSION" '
+              .ok==true
+              and .marker=="ATLAS_AUTHORING_TRANSPORT_V2"
+              and .transport_version==$version
+              and (.runtime_sha | test("^[0-9a-f]{40}$"))
+              and .readiness.p5_ready==true
+              and .readiness.core.base_tables_ready==true
+              and .readiness.core.activity_columns_ready==true
+              and .readiness.p9.old_index_present==false
+              and .readiness.p9.new_index_present==true
+              and .readiness.p9.duplicate_groups==0
+              and (.ready==true or .bootstrap_ready==true)
+            ' "$readiness" >/dev/null
+            runtime_sha="$(jq -er '.runtime_sha' "$readiness")"
+            git cat-file -e "${runtime_sha}^{commit}" || {
+              echo "Refreshed runtime commit is unavailable in checkout: ${runtime_sha}" >&2
+              return 1
+            }
+            git merge-base --is-ancestor "$runtime_sha" "$GITHUB_SHA" || {
+              echo "Refreshed runtime is not an ancestor of authoring commit." >&2
+              return 1
+            }
+            git diff --name-only --diff-filter=ACDMRTUXB "$runtime_sha" "$GITHUB_SHA" -- > /tmp/atlas-authoring-evidence/runtime-refresh-diff.txt
+            node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import { shouldBuildForChangedPaths } from './scripts/vercel-ignore-build.mjs';
+          const text = fs.readFileSync('/tmp/atlas-authoring-evidence/runtime-refresh-diff.txt', 'utf8').trim();
+          const paths = text ? text.split(/\r?\n/).filter(Boolean) : [];
+          if (shouldBuildForChangedPaths(paths)) {
+            console.error('AUTHORING_RUNTIME_CODE_DRIFT after runtime refresh');
+            for (const path of paths) console.error(`  ${path}`);
+            process.exit(1);
+          }
+          NODE
+            export ATLAS_RUNTIME_SHA="$runtime_sha"
+            echo "Refreshed Authoring runtime SHA: ${ATLAS_RUNTIME_SHA}" >&2
+          }
+
+          post_human_batch() {
+            local operation="$1"
+            local paths_json="$2"
+            local requests_json="$3"
+            local response="$4"
+            local status code oidc_token payload
+            for attempt in 1 2 3; do
+              oidc_token="$(request_oidc)"
+              payload="$(jq -cn \
+                --arg operation "$operation" \
+                --argjson transport_version "$ATLAS_AUTHORING_TRANSPORT_VERSION" \
+                --arg runtime_sha "$ATLAS_RUNTIME_SHA" \
+                --arg authoring_sha "$GITHUB_SHA" \
+                --argjson manifest_paths "$paths_json" \
+                --argjson requests "$requests_json" \
+                '{operation:$operation,transport_version:$transport_version,runtime_sha:$runtime_sha,authoring_sha:$authoring_sha,manifest_paths:$manifest_paths,requests:$requests}')"
+              status="$(curl --silent --show-error \
+                --output "$response" \
+                --write-out '%{http_code}' \
+                --request POST \
+                -H 'content-type: application/json' \
+                -H "authorization: Bearer ${oidc_token}" \
+                --data "$payload" \
+                "$ATLAS_HUMAN_AUTHORING_ENDPOINT")"
+              code="$(jq -r '.code // ""' "$response" 2>/dev/null || true)"
+              if [[ "$status" == "400" && "$code" == "AUTHORING_RUNTIME_SHA_MISMATCH" && "$attempt" -lt 3 ]]; then
+                echo "Production alias changed between Authoring phases; refreshing runtime SHA and retrying immutable ${operation} (attempt ${attempt}/3)." >&2
+                refresh_runtime_sha
+                continue
+              fi
+              printf '%s' "$status"
+              return 0
+            done
+            return 1
+          }
+
           mapfile -t manifests < /tmp/atlas-manifests.txt
           all_human=true
           for manifest in "${manifests[@]}"; do
@@ -282,26 +368,11 @@ jobs:
           done
 
           if [[ "$all_human" == "true" && "${#manifests[@]}" -gt 0 ]]; then
-            oidc_token="$(request_oidc)"
             manifest_paths="$(printf '%s\n' "${manifests[@]}" | jq -R . | jq -s .)"
             requests="$(jq -s '.' "${manifests[@]}")"
 
             preflight_response="/tmp/atlas-authoring-evidence/responses/human-authoring-preflight.json"
-            preflight_payload="$(jq -cn \
-              --argjson transport_version "$ATLAS_AUTHORING_TRANSPORT_VERSION" \
-              --arg runtime_sha "$ATLAS_RUNTIME_SHA" \
-              --arg authoring_sha "$GITHUB_SHA" \
-              --argjson manifest_paths "$manifest_paths" \
-              --argjson requests "$requests" \
-              '{operation:"preflight_batch",transport_version:$transport_version,runtime_sha:$runtime_sha,authoring_sha:$authoring_sha,manifest_paths:$manifest_paths,requests:$requests}')"
-            preflight_status="$(curl --silent --show-error \
-              --output "$preflight_response" \
-              --write-out '%{http_code}' \
-              --request POST \
-              -H 'content-type: application/json' \
-              -H "authorization: Bearer ${oidc_token}" \
-              --data "$preflight_payload" \
-              "$ATLAS_HUMAN_AUTHORING_ENDPOINT")"
+            preflight_status="$(post_human_batch "preflight_batch" "$manifest_paths" "$requests" "$preflight_response")"
             if [[ "$preflight_status" != "200" ]]; then
               cat "$preflight_response" >&2 || true
               echo "Human authoring preflight failed: HTTP ${preflight_status}" >&2
@@ -342,21 +413,7 @@ jobs:
             apply_failed=false
             if [[ "$ready_count" -gt 0 ]]; then
               response="/tmp/atlas-authoring-evidence/responses/human-authoring-batch.json"
-              payload="$(jq -cn \
-                --argjson transport_version "$ATLAS_AUTHORING_TRANSPORT_VERSION" \
-                --arg runtime_sha "$ATLAS_RUNTIME_SHA" \
-                --arg authoring_sha "$GITHUB_SHA" \
-                --argjson manifest_paths "$ready_paths" \
-                --argjson requests "$ready_requests" \
-                '{operation:"apply_batch",transport_version:$transport_version,runtime_sha:$runtime_sha,authoring_sha:$authoring_sha,manifest_paths:$manifest_paths,requests:$requests}')"
-              status="$(curl --silent --show-error \
-                --output "$response" \
-                --write-out '%{http_code}' \
-                --request POST \
-                -H 'content-type: application/json' \
-                -H "authorization: Bearer ${oidc_token}" \
-                --data "$payload" \
-                "$ATLAS_HUMAN_AUTHORING_ENDPOINT")"
+              status="$(post_human_batch "apply_batch" "$ready_paths" "$ready_requests" "$response")"
 
               if [[ "$status" == "200" ]]; then
                 jq -e --argjson count "$ready_count" '
