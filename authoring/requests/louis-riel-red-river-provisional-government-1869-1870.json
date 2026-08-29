@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Louis Riel",
+    "display_name_ko": "루이 리엘",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Red River Provisional Government",
+    "display_name_ko": "레드리버 임시정부",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1869,
+    "start_month": 12,
+    "start_day": 27,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1870,
+    "end_month": 8,
+    "end_day": 24,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Red River provisional government was formed on 8 December 1869 under John Bruce. Louis Riel replaced Bruce as president on 27 December. Manitoba entered Confederation on 15 July 1870, but the provisional authority remained in place during the transition; Riel vacated Upper Fort Garry on 24 August as the Wolseley expedition arrived. ATLAS therefore ends his de facto presidential authority on 24 August rather than retroactively assigning him to the Canadian government."
+  },
+  "sources": [
+    {
+      "title": "A Chronology of Events in the Life of Louis Riel — Province of Manitoba",
+      "canonical_url": "https://www.gov.mb.ca/chc/louis_riel/life_events.html",
+      "citation_text": "The Province of Manitoba records the provisional government formed on 8 December 1869, Riel replacing John Bruce as president on 27 December, the Manitoba Act taking effect 15 July 1870, and Riel vacating Upper Fort Garry on 24 August.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Métis provisional government (1869–70) — Dictionary of Canadian Biography",
+      "canonical_url": "https://www.biographi.ca/en/topics/topic-match-list.php?id=1602",
+      "citation_text": "The Dictionary of Canadian Biography describes the Métis provisional government as directed by Louis Riel and notes its negotiation of the terms of union with Canada.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

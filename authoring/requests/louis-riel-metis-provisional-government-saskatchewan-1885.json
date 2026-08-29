@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Louis Riel",
+    "display_name_ko": "루이 리엘",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Métis Provisional Government of Saskatchewan",
+    "display_name_ko": "서스캐처원 메티스 임시정부",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Political leader of the Métis resistance",
+    "role_display_name_ko": "메티스 저항운동 정치지도자",
+    "start_year": 1885,
+    "start_month": 3,
+    "start_day": 19,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1885,
+    "end_month": 5,
+    "end_day": 15,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "On 19 March 1885 the Métis at Batoche formed a provisional government associated with Riel's movement. The formal council, the Exovedate, consisted of fifteen councillors and Riel himself was not a member; contemporary biographical scholarship nevertheless identifies him as the undisputed political leader, with Gabriel Dumont as military leader. ATLAS therefore does not falsely label Riel 'President' of the 1885 Exovedate. The interval ends with Riel's surrender on 15 May after the fall of Batoche."
+  },
+  "sources": [
+    {
+      "title": "RIEL, LOUIS (1844–85) — Dictionary of Canadian Biography",
+      "canonical_url": "https://www.biographi.ca/en/bio/5796?revision_id=30872",
+      "citation_text": "The Dictionary of Canadian Biography records the provisional government formed on 19 March 1885, states that Riel was not a member of the Exovedate, and nevertheless calls him the undisputed leader of the movement while Dumont was its military head.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Canadian Military Heritage, Volume III, 1872–2000 — Government of Canada",
+      "canonical_url": "https://www.canada.ca/content/dam/themes/defence/caf/militaryhistory/dhh/general/book-2000-military-heritage-3-en.pdf",
+      "citation_text": "The Government of Canada military history records that on 19 March 1885 the Métis formed a provisional government led by Riel at Batoche.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Métis resistance (1885) — Dictionary of Canadian Biography",
+      "canonical_url": "https://www.biographi.ca/en/topics/topic-match-list.php?id=1436",
+      "citation_text": "The Dictionary of Canadian Biography records the fall of Batoche and Louis Riel's surrender on 15 May 1885.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

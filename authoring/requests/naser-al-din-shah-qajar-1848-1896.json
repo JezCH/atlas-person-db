@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Naser al-Din Shah Qajar",
+    "display_name_ko": "나세르 앗딘 샤 카자르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Qajar Dynasty",
+    "display_name_ko": "카자르 왕조",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Shah",
+    "role_display_name_ko": "샤",
+    "start_year": 1848,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1896,
+    "end_month": 5,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Naser al-Din Shah Qajar succeeded Mohammad Shah in 1848 and ruled Qajar Iran until his assassination on 1 May 1896. ATLAS keeps the accession boundary at year granularity because the exact accession/coronation sequence is represented inconsistently across modern summaries, while the reign years 1848–1896 and death date are secure."
+  },
+  "sources": [
+    {
+      "title": "Chronology of Iranian History Part 2 — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/chronology-of-iranian-history-part-2/",
+      "citation_text": "Encyclopaedia Iranica records Mohammad Shah's death and the accession of Naser al-Din Shah in 1848.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "HISTORIOGRAPHY viii. QAJAR PERIOD — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/historiography-viii/",
+      "citation_text": "Encyclopaedia Iranica identifies Naser al-Din Shah's reign as 1848–1896.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}
