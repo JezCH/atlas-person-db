@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Augusto Pinochet",
+    "display_name_ko": "아우구스토 피노체트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Chile",
+    "display_name_ko": "칠레",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "아우구스토 피노체트",
+      "url": "https://namu.wiki/w/%EC%95%84%EC%9A%B0%EA%B5%AC%EC%8A%A4%ED%86%A0%20%ED%94%BC%EB%85%B8%EC%B2%B4%ED%8A%B8"
+    }
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President of Government Junta",
+    "role_display_name_ko": "군사정부평의회 의장",
+    "start_year": 1973,
+    "start_month": 9,
+    "start_day": 11,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1974,
+    "end_month": 6,
+    "end_day": 26,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Decree Law No. 1 constituted the Chilean Government Junta on 11 September 1973 and designated Augusto Pinochet as its president. ATLAS separates this initial junta presidency from the later personal executive titles rather than labeling the entire 1973–1990 period as one undifferentiated presidency."
+  },
+  "sources": [
+    {
+      "title": "Decreto Ley N° 1 — Acta de Constitución de la Junta de Gobierno, Biblioteca del Congreso Nacional de Chile",
+      "canonical_url": "https://nuevo.leychile.cl/navegar?idNorma=237897",
+      "citation_text": "Decree Law No. 1, dated 11 September 1973, constituted the Government Junta and designated General Augusto Pinochet as President of the Junta from that date.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "El Golpe de Estado y sus consecuencias para la memoria histórica — Biblioteca del Congreso Nacional de Chile",
+      "canonical_url": "https://www.bcn.cl/conmemoracion50-septiembre-1973/golpe_estado.html",
+      "citation_text": "The Chilean congressional library records Pinochet becoming Supreme Chief of the Nation in late June 1974 and assuming the title President of the Republic on 17 December 1974.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Augusto Pinochet Ugarte (1915-2006) — Memoria Chilena, Biblioteca Nacional de Chile",
+      "canonical_url": "https://www.memoriachilena.gob.cl/602/w3-article-31395.html",
+      "citation_text": "Chile's National Library records Pinochet as head of the military regime after the 11 September 1973 coup, President from December 1974, and handing presidential power to Patricio Aylwin on 11 March 1990.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
