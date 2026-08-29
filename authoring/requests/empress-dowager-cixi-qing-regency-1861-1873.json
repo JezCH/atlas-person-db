@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Empress Dowager Cixi",
+    "display_name_ko": "서태후",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Qing Dynasty",
+    "display_name_ko": "청나라",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-29",
+      "document_title": "서태후",
+      "url": "https://namu.wiki/w/%EC%84%9C%ED%83%9C%ED%9B%84"
+    }
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Regent",
+    "role_display_name_ko": "섭정",
+    "start_year": 1861,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1873,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Cixi became one of the central regents for the child Tongzhi Emperor after the 1861 palace coup. ATLAS ends this first regency interval in 1873, when Tongzhi began personal rule, rather than treating Cixi as a continuously reigning monarch."
+  },
+  "sources": [
+    {
+      "title": "Daniel Barish, Learning to Rule: Court Education and the Remaking of the Qing State, 1861–1912 — review in The American Historical Review",
+      "canonical_url": "https://academic.oup.com/ahr/article-abstract/129/3/1215/7745084",
+      "citation_text": "The review identifies the Tongzhi reign from 1861 to 1874 as dominated by the regency of Empress Dowagers Cixi and Ci'an together with Prince Gong, and notes Cixi's establishment of a legitimate political role as regent.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Library of Congress Chinese cataloging policy — Cixi",
+      "canonical_url": "https://www.loc.gov/catdir/pinyin/romx311.pdf",
+      "citation_text": "The Library of Congress authority heading identifies Cixi as Empress dowager of China, 1835–1908.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
