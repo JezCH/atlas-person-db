@@ -34,8 +34,17 @@ function statusForError(code) {
   return 500;
 }
 
+function batchOperation(body) {
+  const operation = String(body?.operation || "").trim();
+  return operation === "apply_batch" || operation === "preflight_batch" ? operation : null;
+}
+
 function isBatchOperation(body) {
-  return String(body?.operation || "").trim() === "apply_batch";
+  return batchOperation(body) != null;
+}
+
+function isPreflightBatchOperation(body) {
+  return batchOperation(body) === "preflight_batch";
 }
 
 function transportEnvelope(body) {
@@ -125,15 +134,31 @@ async function authorizeRequest(req, body, { env, verifyOidc, now }) {
 }
 
 function batchFailureBody(auth, error, code) {
+  const results = Array.isArray(error?.batchResults) ? error.batchResults : [];
+  const failures = Array.isArray(error?.batchFailures) ? error.batchFailures : [];
+  const partial = results.length > 0 || failures.length > 0;
   const failure = {
     ok:false,
     auth_method:auth.method,
     marker:HUMAN_AUTHORING_BATCH_MARKER,
     schema:HUMAN_AUTHORING_BATCH_SCHEMA,
-    code,
+    code:partial ? "HUMAN_AUTHORING_BATCH_PARTIAL_FAILURE" : code,
+    first_error_code:partial ? code : null,
     committed:false,
+    partial_commit:results.length > 0,
     count:auth.batch.requests.length
   };
+  if (partial) {
+    failure.succeeded_count = results.length;
+    failure.failed_count = failures.length;
+    failure.results = results;
+    failure.failures = failures.map((item) => Object.freeze({
+      index:item.index,
+      manifest_path:item.manifest_path || null,
+      code:item.code,
+      status:statusForError(item.code)
+    }));
+  }
   if (Number.isInteger(error?.batchIndex)) failure.failed_index = error.batchIndex;
   if (error?.manifestPath) failure.manifest_path = error.manifestPath;
   return failure;
@@ -177,6 +202,29 @@ function createHumanAuthoringHandler({ env = process.env, clientFactory = create
           ...auth.transport,
           manifest_path:manifestPath
         }));
+        if (isPreflightBatchOperation(body)) {
+          const results = await service.preflightBatch(auth.batch.requests, {
+            transports,
+            allowLegacyNamuWikiOmission:auth.method === "github_oidc"
+          });
+          const counts = results.reduce((acc, item) => {
+            acc[item.status] = (acc[item.status] || 0) + 1;
+            return acc;
+          }, { READY:0, ALREADY_PRESENT:0, BLOCKED:0 });
+          return json(res, 200, {
+            ok:true,
+            auth_method:auth.method,
+            marker:HUMAN_AUTHORING_BATCH_MARKER,
+            schema:HUMAN_AUTHORING_BATCH_SCHEMA,
+            operation:"preflight_batch",
+            committed:false,
+            count:results.length,
+            ready_count:counts.READY,
+            already_present_count:counts.ALREADY_PRESENT,
+            blocked_count:counts.BLOCKED,
+            results
+          });
+        }
         const results = await service.applyBatch(auth.batch.requests, {
           transports,
           allowLegacyNamuWikiOmission:auth.method === "github_oidc"
@@ -186,9 +234,14 @@ function createHumanAuthoringHandler({ env = process.env, clientFactory = create
           auth_method:auth.method,
           marker:HUMAN_AUTHORING_BATCH_MARKER,
           schema:HUMAN_AUTHORING_BATCH_SCHEMA,
+          operation:"apply_batch",
           committed:true,
+          partial_commit:false,
           count:results.length,
-          results
+          succeeded_count:results.length,
+          failed_count:0,
+          results,
+          failures:[]
         });
       }
 
@@ -220,7 +273,9 @@ module.exports = Object.freeze({
   createHumanAuthoringHandler,
   parseBody,
   statusForError,
+  batchOperation,
   isBatchOperation,
+  isPreflightBatchOperation,
   transportEnvelope,
   batchEnvelope,
   authorizeRequest,
