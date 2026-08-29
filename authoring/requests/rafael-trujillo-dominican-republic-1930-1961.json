@@ -1,0 +1,64 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:rafael-trujillo:dominican-republic:dictator:1930-1961:v1",
+  "person": {
+    "canonical_name_en": "Rafael Trujillo",
+    "display_name_ko": "라파엘 트루히요",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Dominican Republic",
+    "display_name_ko": "도미니카 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Dictator",
+    "role_display_name_ko": "독재자",
+    "start_year": 1930,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1961,
+    "end_month": 5,
+    "end_day": 30,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Rafael Trujillo exercised de facto dictatorial rule over the Dominican Republic from 1930 until his assassination on 30 May 1961. He formally held the presidency in 1930–1938 and 1942–1952, but retained direct control over the military and decisive state power while compliant presidents served in the intervening periods. ATLAS therefore models the user's requested leadership as one continuous de_facto_rule Activity rather than falsely extending a continuous formal presidency. The Dominican Republic is a Caribbean state; the user's 'Central America' wording is not retained as a geographic classification."
+  },
+  "sources": [
+    {
+      "title": "Dominican Republic and Haiti: Country Studies — Library of Congress",
+      "canonical_url": "https://tile.loc.gov/storage-services/master/frd/frdcstdy/do/dominicanrepubli00metz/dominicanrepubli00metz.pdf",
+      "citation_text": "The Library of Congress country study defines the Trujillo Era as 1930–61 and notes that Trujillo formally held the presidency only in 1930–1938 and 1942–1952 while retaining direct military control throughout his rule.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Foreign Relations of the United States, 1958–1960, Dominican Republic — Office of the Historian",
+      "canonical_url": "https://history.state.gov/historicaldocuments/frus1958-60v05/d305",
+      "citation_text": "The U.S. Department of State records that Generalissimo Rafael Trujillo had ruled the Dominican Republic since 1930 and characterizes his rule as dictatorial.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Foreign Relations of the United States, 1961–1963, Editorial Note — Office of the Historian",
+      "canonical_url": "https://history.state.gov/historicaldocuments/frus1961-63v12/d308",
+      "citation_text": "The State Department records Trujillo's assassination on 30 May 1961 as ending more than thirty years of rule in the Dominican Republic.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-29",
+      "document_title": "라파엘 트루히요",
+      "url": "https://namu.wiki/w/%EB%9D%BC%ED%8C%8C%EC%97%98%20%ED%8A%B8%EB%A3%A8%ED%9E%88%EC%9A%94"
+    }
+  }
+}

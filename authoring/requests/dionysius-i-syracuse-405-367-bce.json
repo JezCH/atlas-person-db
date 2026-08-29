@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:dionysius-i-of-syracuse:syracuse:tyrant:405-367-bce:v1",
+  "person": {
+    "canonical_name_en": "Dionysius I of Syracuse",
+    "display_name_ko": "디오니시오스 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Syracuse",
+    "display_name_ko": "시라쿠사",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Tyrant",
+    "role_display_name_ko": "참주",
+    "start_year": -405,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -367,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Dionysius I seized effective control of Syracuse in 405 BCE after securing election as general plenipotentiary and establishing a personal tyranny. He remained ruler until his death in 367 BCE. ATLAS uses the historically appropriate role Tyrant rather than King, and binds the Activity to Syracuse rather than projecting his wider Sicilian sphere of influence as a separate empire."
+  },
+  "sources": [
+    {
+      "title": "Dionysius (1) I, Syracusan despot — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548724807",
+      "citation_text": "The Oxford Classical Dictionary describes Dionysius I's seizure of control at Syracuse in 405 BCE and his rule until his death in 367 BCE.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "tyranny — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548214795",
+      "citation_text": "The Oxford Classical Dictionary identifies Dionysius I among the military dictators or tyrants of Syracuse.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-29"
+    }
+  }
+}
