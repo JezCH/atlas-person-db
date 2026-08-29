@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Amda Seyon I",
+    "display_name_ko": "암다 세욘 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ethiopian Empire",
+    "display_name_ko": "에티오피아 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1314,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1344,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Amda Seyon I (also rendered Amda Tsiyon/Tseyon) is securely documented as a Solomonic emperor of Ethiopia reigning from 1314 to 1344. ATLAS reuses the existing Ethiopian Empire polity used for other Solomonic emperors."
+  },
+  "sources": [
+    {
+      "title": "King Amda Tsiyon (r.1314-1344) territorial expansion to the kingdom of Hadiya, South West Ethiopia",
+      "canonical_url": "https://www.tandfonline.com/doi/full/10.1080/23311983.2022.2139795",
+      "citation_text": "Peer-reviewed historical study identifying Amda Tsiyon as ruler from 1314 to 1344 and examining his campaigns and expansion.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Fǝtḥa Nägäśt and First Attempts at Codifying Law — Ethiopian Legal History, Springer",
+      "canonical_url": "https://link.springer.com/chapter/10.1007/978-3-032-26065-9_5",
+      "citation_text": "The chapter explicitly identifies the reign of Emperor Amda Seyon I as 1314–1344.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-29"
+    }
+  }
+}

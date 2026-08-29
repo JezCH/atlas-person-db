@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Hussein bin Ali, Sharif of Mecca",
+    "display_name_ko": "샤리프 후세인",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Hejaz",
+    "display_name_ko": "헤자즈 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1916,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1924,
+    "end_month": 10,
+    "end_day": 3,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Hussein bin Ali, Sharif of Mecca, became the Hashemite monarch of the Hejaz in 1916 during the Arab Revolt. Contemporary and scholarly sources distinguish his broader 'King of the Arabs' claim from the internationally recognized kingship of the Hejaz. He abdicated in favour of his son Ali on 3 October 1924."
+  },
+  "sources": [
+    {
+      "title": "Husayn ibn Ali, King of Hejaz — 1914-1918 Online",
+      "canonical_url": "https://encyclopedia.1914-1918-online.net/article/husayn-ibn-ali-king-of-hejaz/",
+      "citation_text": "Scholarly First World War encyclopedia entry on Husayn's 1916 royal proclamation and his position as King of the Hejaz.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Arabia: Situation 1924; Wahabi attack on Hedjaz; Abdication of King Hussein — Qatar Digital Library",
+      "canonical_url": "https://www.qdl.qa/en/archive/81055/vdc_100060670085.0x0000b0",
+      "citation_text": "Contemporary British archival report records the 3 October 1924 discussions and King Hussein's abdication in favour of Amir Ali.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-29"
+    }
+  }
+}

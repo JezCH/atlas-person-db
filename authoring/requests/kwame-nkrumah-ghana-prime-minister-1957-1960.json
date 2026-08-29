@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Kwame Nkrumah",
+    "display_name_ko": "콰메 은크루마",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ghana",
+    "display_name_ko": "가나",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1957,
+    "start_month": 3,
+    "start_day": 6,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1960,
+    "end_month": 7,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kwame Nkrumah served as Prime Minister of independent Ghana from independence on 6 March 1957 until the republican constitution came into force on 1 July 1960, when the prime-ministerial system was replaced by an executive presidency."
+  },
+  "sources": [
+    {
+      "title": "Application of Ghana for Admission to Membership in the United Nations — United Nations General Assembly A/3566",
+      "canonical_url": "https://digitallibrary.un.org/record/842742/files/A_3566-EN.pdf",
+      "citation_text": "Ghana's 6 March 1957 UN membership application is signed by Kwame Nkrumah as Prime Minister and Minister responsible for External Affairs of Ghana.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Constitution of the Republic of Ghana, 1960 — GhaLII",
+      "canonical_url": "https://ghalii.org/akn/gh/act/1960/constitution/eng%401965-12-31",
+      "citation_text": "The 1960 Constitution commenced on 1 July 1960 and established the President as Ghana's head of state and executive authority, appointing Kwame Nkrumah as first President.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-29"
+    }
+  }
+}
