@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Eleftherios Venizelos",
+    "display_name_ko": "엘레프테리오스 베니젤로스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-29",
+      "document_title": "엘레프테리오스 베니젤로스",
+      "url": "https://namu.wiki/w/%EC%97%98%EB%A0%88%ED%94%84%ED%85%8C%EB%A6%AC%EC%98%A4%EC%8A%A4%20%EB%B2%A0%EB%8B%88%EC%A0%A4%EB%A1%9C%EC%8A%A4"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Greece",
+    "display_name_ko": "그리스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1917,
+    "start_month": 6,
+    "start_day": 14,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1920,
+    "end_month": 11,
+    "end_day": 4,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the National Schism was resolved in his favour, Venizelos became undisputed Prime Minister of Greece from 14 June 1917 until 4 November 1920."
+  },
+  "sources": [
+    {
+      "title": "Hellenic Governments from 1909 to the present day — Secretariat General for Legal and Parliamentary Affairs",
+      "canonical_url": "https://gslegal.gov.gr/en/thegovernment/historical-information/?sort=time",
+      "citation_text": "The Greek Secretariat General lists Eleftherios Venizelos's successive premierships and exact government boundaries from 1910 through 1933.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Biography — National Research Foundation Eleftherios K. Venizelos",
+      "canonical_url": "https://www.venizelos-foundation.gr/en/eleftherios-venizelos/biography/",
+      "citation_text": "The Venizelos Foundation identifies his repeated premierships, National Schism leadership, wartime government, and later return to office.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
