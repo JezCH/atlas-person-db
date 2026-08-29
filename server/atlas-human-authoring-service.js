@@ -583,7 +583,12 @@ function createHumanAuthoringService({ client, prepare = prepareHumanAuthoringRe
             status:outcome.replay === true ? "ALREADY_PRESENT" : "READY",
             code:null,
             person_id:outcome.replay === true ? outcome.person_id : null,
-            relationship_id:outcome.replay === true ? outcome.relationship_id : null
+            polity_id:outcome.replay === true ? outcome.polity_id : null,
+            role_id:outcome.replay === true ? outcome.role_id : null,
+            relationship_id:outcome.replay === true ? outcome.relationship_id : null,
+            relation_type_id:outcome.replay === true ? outcome.result?.entities?.relation_type?.id ?? null : null,
+            period_basis_id:outcome.replay === true ? outcome.result?.entities?.period_basis?.id ?? null : null,
+            external_references:outcome.replay === true ? outcome.external_references : null
           });
         } catch (error) {
           await rollbackQuietly(client);
