@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Baldwin III of Jerusalem",
+    "display_name_ko": "보두앵 3세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Jerusalem",
+    "display_name_ko": "예루살렘 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1143,
+    "start_month": 12,
+    "start_day": 25,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 1163,
+    "end_month": 2,
+    "end_day": 10,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Baldwin III was crowned King of Jerusalem on 25 December 1143 and remained king until his death on 10 February 1163. His mother Melisende was his co-ruler and the dominant governing authority during his minority; after their conflict in 1152 Baldwin secured effective sole rule. ATLAS therefore keeps one continuous royal reign and records the joint-rule phase in the note rather than inventing a second kingship."
+  },
+  "sources": [
+    {
+      "title": "Women in the Crusader States: The Queens of Jerusalem (1100-1190) — Cambridge Core",
+      "canonical_url": "https://www.cambridge.org/core/journals/studies-in-church-history-subsidia/article/women-in-the-crusader-states-the-queens-of-jerusalem-11001190/E7198BD7B384CC7E2380A46B3F14CFF1",
+      "citation_text": "The study establishes Baldwin III's accession after Fulk's death, his joint rule with Melisende, the 1152 political break with his mother, and the generally accepted death date of 10 February 1163.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Elephant of Christ: Reynald of Châtillon — Cambridge Core",
+      "canonical_url": "https://www.cambridge.org/core/journals/studies-in-church-history/article/abs/elephant-of-christ-reynald-of-chatillon/46A9413AA86AF8D29B31C55552681D68",
+      "citation_text": "The study notes that Baldwin III was crowned on Christmas Day 1143 and uses that date to calculate his regnal years.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}
