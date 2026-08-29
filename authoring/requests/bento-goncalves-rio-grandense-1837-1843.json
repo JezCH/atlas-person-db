@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:bento-goncalves:rio-grandense-republic:president:1837-1843:v1",
+  "person": {
+    "canonical_name_en": "Bento Gonçalves",
+    "display_name_ko": "벤투 곤살베스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Rio-Grandense Republic",
+    "display_name_ko": "히우그란덴시 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1837,
+    "start_month": 12,
+    "start_day": 16,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1843,
+    "end_month": 8,
+    "end_day": 4,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bento Gonçalves had been designated president after the Rio-Grandense Republic was proclaimed in 1836, but his capture during the campaign meant that José Gomes de Vasconcelos Jardim exercised the government in his absence. After escaping imprisonment, Gonçalves was formally invested with supreme republican authority at Piratini on 16 December 1837. He resigned the presidency on 4 August 1843. ATLAS therefore uses the period of his actual presidency, 1837-12-16 to 1843-08-04, rather than treating his imprisonment as uninterrupted personal rule. The polity is the secessionist Rio-Grandense Republic, not the Empire of Brazil."
+  },
+  "sources": [
+    {
+      "title": "Turismo no Rio Grande do Sul — Piratini",
+      "canonical_url": "https://www.turismo.rs.gov.br/turismo/municipio/visualizar/250",
+      "citation_text": "The Rio Grande do Sul state tourism history records that Bento Gonçalves arrived in Piratini after escaping prison and on 16 December was invested with the supreme power of the Republic.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Surprising Survival of Constitutionalism in the Caudillo Republic of Rio Grande do Sul, Brazil, 1836–1845 — The Historical Journal",
+      "canonical_url": "https://www.cambridge.org/core/journals/historical-journal/article/surprising-survival-of-constitutionalism-in-the-caudillo-republic-of-rio-grande-do-sul-brazil-18361845/60C2CD6345DE95C7A4408A0782160006",
+      "citation_text": "The Historical Journal states that Bento Gonçalves resigned the presidency in August 1843 and was succeeded by José Gomes de Vasconcelos Jardim.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Manifesto do Presidente da Republica Rio-Grandense em nome de seus constituintes — Biblioteca Brasiliana Guita e José Mindlin",
+      "canonical_url": "https://digital.bbm.usp.br/handle/bbm/7479",
+      "citation_text": "The 1838 independence manifesto is catalogued as signed by Bento Gonçalves da Silva in his capacity as President of the Rio-Grandense Republic.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-29"
+    }
+  }
+}
