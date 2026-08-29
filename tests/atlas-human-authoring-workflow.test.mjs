@@ -14,11 +14,16 @@ test('reviewed GitHub fallback accepts human-readable requests without weakening
   assert.match(workflow, /\.activity\.relation_type_id \| type == "string"/);
 });
 
-test('all-human authoring batches use one OIDC envelope and one HTTP request', () => {
-  assert.match(workflow, /operation:"apply_batch"/);
+test('all-human authoring batches preflight then apply through the runtime-race-safe batch helper', () => {
+  assert.match(workflow, /post_human_batch\(\)/);
+  assert.match(workflow, /post_human_batch "preflight_batch"/);
+  assert.match(workflow, /post_human_batch "apply_batch"/);
   assert.match(workflow, /manifest_paths:\$manifest_paths/);
   assert.match(workflow, /requests:\$requests/);
   assert.match(workflow, /oidc_token="\$\(request_oidc\)"/);
+  assert.match(workflow, /AUTHORING_RUNTIME_SHA_MISMATCH/);
+  assert.match(workflow, /refresh_runtime_sha/);
+  assert.match(workflow, /for attempt in 1 2 3/);
   assert.match(workflow, /ATLAS_HUMAN_AUTHORING_BATCH_V1/);
   assert.match(workflow, /atlas-human-authoring-batch\/v1/);
   assert.match(workflow, /all\(\.results\[\];/);
