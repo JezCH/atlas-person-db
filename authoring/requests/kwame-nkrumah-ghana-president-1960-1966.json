@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Kwame Nkrumah",
+    "display_name_ko": "콰메 은크루마",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ghana",
+    "display_name_ko": "가나",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1960,
+    "start_month": 7,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1966,
+    "end_month": 2,
+    "end_day": 24,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The 1960 Constitution made Kwame Nkrumah the first President of Ghana when the republic began on 1 July 1960. His presidency ended with the military-police coup of 24 February 1966."
+  },
+  "sources": [
+    {
+      "title": "Constitution of the Republic of Ghana, 1960 — GhaLII",
+      "canonical_url": "https://ghalii.org/akn/gh/act/1960/constitution/eng%401965-12-31",
+      "citation_text": "The Constitution commenced on 1 July 1960 and expressly appointed Kwame Nkrumah as first President of Ghana.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Ghana Background Note — U.S. Department of State",
+      "canonical_url": "https://2009-2017.state.gov/outofdate/bgn/ghana/85076.htm",
+      "citation_text": "The U.S. Department of State historical background records the republican constitution of 1 July 1960 and the overthrow of Nkrumah's government on 24 February 1966.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-29"
+    }
+  }
+}
