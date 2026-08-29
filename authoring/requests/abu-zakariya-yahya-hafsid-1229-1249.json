@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:abu-zakariya-yahya:hafsid-sultanate:sultan:1229-1249:v1",
+  "person": {
+    "canonical_name_en": "Abu Zakariya Yahya",
+    "display_name_ko": "아부 자카리야 야흐야",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Hafsid Sultanate",
+    "display_name_ko": "하프스 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1229,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1249,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Abu Zakariya Yahya established independent Hafsid rule in Ifriqiya in 1229 after repudiating Almohad authority and ruled until his death in 1249. Tunis was the political capital of the Hafsid state. Contemporary titulature evolved during his reign: he initially used amir and later adopted Amir al-Mu'minin, while modern dynastic and numismatic references commonly style him Sultan. ATLAS therefore uses Sultan as the normalized ruler role for the full 1229–1249 Hafsid reign rather than splitting a single continuous rule solely over titulature."
+  },
+  "sources": [
+    {
+      "title": "The Making of a Mediterranean Emirate: Ifriqiya and Its Andalusis, 1200-1400",
+      "canonical_url": "https://www.jstor.org/stable/j.ctt3fhqt3",
+      "citation_text": "The scholarly monograph identifies the Hafsid ruler Abu Zakariya Yahya with a reign of 1229–1249 and locates the succession in Tunis.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Western North Africa (The Maghrib), 1000–1400 A.D. — The Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/toah/ht/07/afw.html",
+      "citation_text": "The Met chronology dates Hafsid rule in eastern North Africa from 1229 and identifies Tunis as the Hafsid capital.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Dinar - Abu Zakariya' Yahya I — Numista",
+      "canonical_url": "https://en.numista.com/75933",
+      "citation_text": "The numismatic catalogue identifies Abu Zakariya Yahya as Hafsid Sultan, 1229–1249.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-29"
+    }
+  }
+}
