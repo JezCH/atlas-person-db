@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Empress Dowager Cixi",
+    "display_name_ko": "서태후",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Qing Dynasty",
+    "display_name_ko": "청나라",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-29",
+      "document_title": "서태후",
+      "url": "https://namu.wiki/w/%EC%84%9C%ED%83%9C%ED%9B%84"
+    }
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "De facto ruler",
+    "role_display_name_ko": "실권 통치자",
+    "start_year": 1898,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1908,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Cixi had been in semi-retirement after Guangxu's assumption of direct rule in 1889. Following the 1898 coup that terminated Guangxu's reform government, she again exercised overriding political authority until her death in 1908. ATLAS therefore records this as de facto rule rather than imperial reign."
+  },
+  "sources": [
+    {
+      "title": "University of California eScholarship study of Cixi and late Qing court politics",
+      "canonical_url": "https://escholarship.org/content/qt7m334241/qt7m334241_noSplash_fca2d105ae40a3c34606c2d304f86f78.pdf",
+      "citation_text": "The study records Cixi's renewed regency after Guangxu's accession in 1875, her sole regency after Ci'an's death in 1881, Guangxu's direct rule beginning in 1889, and a third regency after the 1898 coup lasting until 1908.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Library of Congress Chinese cataloging policy — Cixi",
+      "canonical_url": "https://www.loc.gov/catdir/pinyin/romx311.pdf",
+      "citation_text": "The Library of Congress authority heading identifies Cixi as Empress dowager of China, 1835–1908.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

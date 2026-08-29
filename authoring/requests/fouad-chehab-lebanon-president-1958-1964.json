@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Fouad Chehab",
+    "display_name_ko": "푸아드 체하브",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Lebanon",
+    "display_name_ko": "레바논",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1958,
+    "start_month": 9,
+    "start_day": 23,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1964,
+    "end_month": 9,
+    "end_day": 22,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Fouad Chehab took the constitutional oath as President of Lebanon on 23 September 1958 and served through 22 September 1964. The Lebanese Presidency gives these exact mandate dates."
+  },
+  "sources": [
+    {
+      "title": "Presidency of the Lebanese Republic — Fouad Chehab",
+      "canonical_url": "https://presidency.gov.lb/presidency/allwaa-fuad-shhab",
+      "citation_text": "The official Lebanese Presidency records Fouad Chehab's presidential mandate as 23 September 1958 through 22 September 1964.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Foreign Relations of the United States, 1958–1960, Lebanon and Jordan, Volume XI, Editorial Note 328",
+      "canonical_url": "https://history.state.gov/historicaldocuments/frus1958-60v11/d328",
+      "citation_text": "The U.S. Office of the Historian records General Fuad Chehab taking the oath of office as President of Lebanon on 23 September 1958.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-29",
+      "document_title": "푸아드 체하브",
+      "url": "https://namu.wiki/w/%ED%91%B8%EC%95%84%EB%93%9C%20%EC%B2%B4%ED%95%98%EB%B8%8C"
+    }
+  }
+}
