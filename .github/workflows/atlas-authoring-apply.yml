@@ -319,7 +319,7 @@ jobs:
           }
           NODE
             export ATLAS_RUNTIME_SHA="$runtime_sha"
-            echo "Refreshed Authoring runtime SHA: ${ATLAS_RUNTIME_SHA}"
+            echo "Refreshed Authoring runtime SHA: ${ATLAS_RUNTIME_SHA}" >&2
           }
 
           post_human_batch() {
@@ -348,7 +348,7 @@ jobs:
                 "$ATLAS_HUMAN_AUTHORING_ENDPOINT")"
               code="$(jq -r '.code // ""' "$response" 2>/dev/null || true)"
               if [[ "$status" == "400" && "$code" == "AUTHORING_RUNTIME_SHA_MISMATCH" && "$attempt" -lt 3 ]]; then
-                echo "Production alias changed between Authoring phases; refreshing runtime SHA and retrying immutable ${operation} (attempt ${attempt}/3)."
+                echo "Production alias changed between Authoring phases; refreshing runtime SHA and retrying immutable ${operation} (attempt ${attempt}/3)." >&2
                 refresh_runtime_sha
                 continue
               fi
