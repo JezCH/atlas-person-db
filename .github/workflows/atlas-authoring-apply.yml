@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'authoring/requests/*.json'
+      - '.github/workflows/atlas-authoring-apply.yml'
   workflow_dispatch:
     inputs:
       manifest:
@@ -58,6 +59,13 @@ jobs:
             printf '%s\n' "${{ inputs.manifest }}" > /tmp/atlas-candidates.txt
           else
             git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}" -- 'authoring/requests/*.json' > /tmp/atlas-candidates.txt
+            if [[ ! -s /tmp/atlas-candidates.txt ]] && git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- | grep -qx '.github/workflows/atlas-authoring-apply.yml'; then
+              recovery_commit="$(git log -1 --format=%H "${{ github.event.before }}" -- 'authoring/requests/*.json')"
+              if [[ -n "$recovery_commit" ]]; then
+                git diff --name-only --diff-filter=AM "${recovery_commit}^" "$recovery_commit" -- 'authoring/requests/*.json' > /tmp/atlas-candidates.txt
+                echo "Workflow recovery selected the most recent immutable authoring batch from ${recovery_commit}."
+              fi
+            fi
           fi
 
           while IFS= read -r manifest; do
