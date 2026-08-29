@@ -44,3 +44,10 @@ test('authoring readiness retries both route propagation and deployment races', 
   assert.match(workflow, /AUTHORING_RUNTIME_CODE_DRIFT remained after 60 attempts/);
   assert.match(workflow, /Production runtime is still behind the authoring commit/);
 });
+
+test('authoring workflow fixes recover the most recent immutable batch without copying manifests', () => {
+  assert.match(workflow, /\.github\/workflows\/atlas-authoring-apply\.yml/);
+  assert.match(workflow, /recovery_commit="\$\(git log -1 --format=%H/);
+  assert.match(workflow, /git diff --name-only --diff-filter=AM "\$\{recovery_commit\}\^" "\$recovery_commit"/);
+  assert.match(workflow, /Workflow recovery selected the most recent immutable authoring batch/);
+});
