@@ -28,6 +28,8 @@ test('all-human authoring batches preflight then apply through the runtime-race-
   assert.match(workflow, /atlas-human-authoring-batch\/v1/);
   assert.match(workflow, /all\(\.results\[\];/);
   assert.match(workflow, /\.result\.semantic_version=="v2-relation-full-temporal"/);
+  assert.match(workflow, /role\.source_label \/\/ \.role\.canonical_name_en \/\/ ""\) \| ascii_downcase/);
+  assert.match(workflow, /\(\$m\.activity\.role \/\/ ""\) \| ascii_downcase/);
 });
 
 test('native or mixed authoring retains the existing safe per-manifest fallback', () => {
