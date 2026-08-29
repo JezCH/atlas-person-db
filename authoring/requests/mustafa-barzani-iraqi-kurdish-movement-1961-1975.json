@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Mustafa Barzani",
+    "display_name_ko": "무스타파 바르자니",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-29"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Iraqi Kurdish National Movement",
+    "display_name_ko": "이라크 쿠르드 민족운동",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Kurdish nationalist leader",
+    "role_display_name_ko": "쿠르드 민족운동 지도자",
+    "start_year": 1961,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1975,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS does not assign Barzani to the Iraqi state as his displayed political community for this anti-central-government struggle. From 1961 through the collapse of the insurgency in 1975 he was the preeminent leader of the Iraqi Kurdish movement seeking Kurdish national rights and autonomy. 'Iraqi Kurdish National Movement' is an explicit editorial political-community label, not a claim that an independent state named Kurdistan existed throughout this interval."
+  },
+  "sources": [
+    {
+      "title": "BĀRZĀNĪ — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/barzani-the-name-of-a-kurdish-tribe-from-barzan-a-town-in-the-former-hakkari-bahdinan-territory-of-northeastern-iraq/",
+      "citation_text": "Encyclopaedia Iranica records Mustafa Barzani's service as one of four generals in the army of the Mahabad Republic and his central leadership in the Iraqi Kurdish conflict beginning in 1961.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Kurdish Problem — Foreign Relations of the United States, 1969–1976",
+      "canonical_url": "https://history.state.gov/historicaldocuments/frus1969-76ve04/d321",
+      "citation_text": "The U.S. Office of the Historian describes Barzani as military commander of the Mahabad Republic in 1946 and the preeminent leader of Kurdish efforts for autonomy within Iraq, leading the Kurdish military effort from 1961.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

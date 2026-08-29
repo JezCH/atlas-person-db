@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Eleftherios Venizelos",
+    "display_name_ko": "엘레프테리오스 베니젤로스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-29",
+      "document_title": "엘레프테리오스 베니젤로스",
+      "url": "https://namu.wiki/w/%EC%97%98%EB%A0%88%ED%94%84%ED%85%8C%EB%A6%AC%EC%98%A4%EC%8A%A4%20%EB%B2%A0%EB%8B%88%EC%A0%A4%EB%A1%9C%EC%8A%A4"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Provisional Government of National Defence",
+    "display_name_ko": "국방 임시정부",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Head of Provisional Government",
+    "role_display_name_ko": "임시정부 수반",
+    "start_year": 1916,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1917,
+    "end_month": 6,
+    "end_day": 14,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "During the National Schism, Venizelos headed the rival Provisional Government of National Defence based in Thessaloniki, exercising authority over northern Greece, Crete and parts of the Aegean. ATLAS keeps this polity separate from the contemporaneous royal government in Athens. The start is stored at year granularity because modern sources present September 1916 dates under differing calendar conventions."
+  },
+  "sources": [
+    {
+      "title": "Timeline of Eleftherios Venizelos — National Research Foundation Eleftherios K. Venizelos",
+      "canonical_url": "https://timeline.venizelos-foundation.gr/en/timeline/",
+      "citation_text": "The Foundation records Venizelos moving to Thessaloniki in September 1916, forming a revolutionary government that exercised authority over northern Greece, Crete and the eastern Aegean islands until national reunification in 1917.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Biography — National Research Foundation Eleftherios K. Venizelos",
+      "canonical_url": "https://www.venizelos-foundation.gr/en/eleftherios-venizelos/biography/",
+      "citation_text": "The Venizelos Foundation identifies his repeated premierships, National Schism leadership, wartime government, and later return to office.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}

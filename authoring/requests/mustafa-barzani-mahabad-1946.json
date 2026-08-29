@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Mustafa Barzani",
+    "display_name_ko": "무스타파 바르자니",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-29"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Mahabad",
+    "display_name_ko": "마하바드 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "general_activity",
+    "role": "Military commander",
+    "role_display_name_ko": "군 지휘관",
+    "start_year": 1946,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1946,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After retreating from Iraq into Iran, Mustafa Barzani and his followers joined the armed forces of the short-lived Kurdish Republic at Mahabad in 1946. Contemporary retrospective U.S. documentation and Encyclopaedia Iranica identify him as a senior military commander/general of the republic."
+  },
+  "sources": [
+    {
+      "title": "BĀRZĀNĪ — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/barzani-the-name-of-a-kurdish-tribe-from-barzan-a-town-in-the-former-hakkari-bahdinan-territory-of-northeastern-iraq/",
+      "citation_text": "Encyclopaedia Iranica records Mustafa Barzani's service as one of four generals in the army of the Mahabad Republic and his central leadership in the Iraqi Kurdish conflict beginning in 1961.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Kurdish Problem — Foreign Relations of the United States, 1969–1976",
+      "canonical_url": "https://history.state.gov/historicaldocuments/frus1969-76ve04/d321",
+      "citation_text": "The U.S. Office of the Historian describes Barzani as military commander of the Mahabad Republic in 1946 and the preeminent leader of Kurdish efforts for autonomy within Iraq, leading the Kurdish military effort from 1961.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ]
+}
