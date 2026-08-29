@@ -513,7 +513,9 @@ jobs:
                     and (.end.calendar // null)==($m.activity.end_calendar // "unspecified_historical")
                     and (
                       if ($m.activity.role // null)==null then .role==null
-                      else (.role.source_label // .role.canonical_name_en // null)==$m.activity.role
+                      else
+                        ((.role.source_label // .role.canonical_name_en // "") | ascii_downcase)
+                        == (($m.activity.role // "") | ascii_downcase)
                       end
                     )
                   )
