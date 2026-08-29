@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:chukwuemeka-odumegwu-ojukwu:republic-of-biafra:head-of-state:1967-1970:v1",
+  "person": {
+    "canonical_name_en": "Chukwuemeka Odumegwu Ojukwu",
+    "display_name_ko": "추쿠에메카 오두메구 오주쿠",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Biafra",
+    "display_name_ko": "비아프라 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Head of State and Commander-in-Chief",
+    "role_display_name_ko": "국가원수·군 최고사령관",
+    "start_year": 1967,
+    "start_month": 5,
+    "start_day": 30,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1970,
+    "end_month": 1,
+    "end_day": 11,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Lieutenant Colonel Chukwuemeka Odumegwu Ojukwu, then military governor of Nigeria's Eastern Region, proclaimed the independent Republic of Biafra on 30 May 1967 and became its head of state and commander-in-chief. Contemporary and Nigerian historical sources show that he remained Biafra's leader until he left the remaining Biafran enclave for exile in the early hours of 11 January 1970, after which Philip Effiong assumed the final leadership and negotiated surrender. ATLAS therefore uses the political office Head of State and Commander-in-Chief rather than his military rank 'Colonel' as the Role."
+  },
+  "sources": [
+    {
+      "title": "Foreign Relations of the United States, 1964–1968, Volume XXIV, Africa, Document 386 — Office of the Historian",
+      "canonical_url": "https://history.state.gov/historicaldocuments/frus1964-68v24/d386",
+      "citation_text": "A U.S. State Department telegram dated 30 May 1967 records that the Military Governor of Eastern Nigeria formally proclaimed the sovereign independent Republic of Biafra that day.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Gowon — National Library of Nigeria Repository",
+      "canonical_url": "https://nigeriareposit.nln.gov.ng/bitstreams/891f71f7-8de8-49d7-ab08-8bed1711c78f/download",
+      "citation_text": "The Nigerian historical account states that Ojukwu held his final cabinet meeting on 10 January 1970 and flew out of Biafra at 3:00 a.m. on 11 January, leaving Philip Effiong to administer Biafra.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Ikemba Chukwuemeka Odumegwu Ojukwu — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG213720",
+      "citation_text": "The British Museum identifies Ojukwu as the Nigerian military leader and politician who was head of the secessionist state of Biafra during the Nigerian civil war.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-29"
+    }
+  }
+}
