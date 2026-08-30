@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:roger-ii-of-sicily:duchy-of-apulia-and-calabria:duke:1128-1130:v1",
+  "person": {
+    "canonical_name_en": "Roger II of Sicily",
+    "display_name_ko": "루제루 2세"
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Apulia and Calabria",
+    "display_name_ko": "아풀리아·칼라브리아 공국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Duke",
+    "role_display_name_ko": "공작",
+    "start_year": 1128,
+    "start_month": 8,
+    "start_day": 22,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 1130,
+    "end_month": 12,
+    "end_day": 25,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Pope Honorius II invested Roger II with the Duchy of Apulia, Calabria and Sicily at Benevento on 22 August 1128. Roger retained the ducal authority until the creation and coronation of the Kingdom of Sicily in 1130. ATLAS records this mainland ducal rule separately from his County of Sicily and royal Activities."
+  },
+  "sources": [
+    {
+      "title": "RUGGERO II, re di Sicilia — Dizionario Biografico degli Italiani, Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/ruggero-ii-re-di-sicilia_(Dizionario-Biografico)/",
+      "citation_text": "Treccani states that on 22 August 1128 Roger was invested with the Duchy of Apulia, Calabria and Sicily by Pope Honorius II.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Alexander of Telese’s Encomium of Capua and the Formation of the Kingdom of Sicily — University of Manchester",
+      "canonical_url": "https://pure.manchester.ac.uk/ws/portalfiles/portal/47249890/Oldfield_History_revised_.pdf",
+      "citation_text": "Paul Oldfield notes that Roger formally acquired the mainland title Duke of Apulia in 1128, before claiming the royal title in 1130.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "루제루 2세",
+      "url": "https://namu.wiki/w/%EB%A3%A8%EC%A0%9C%EB%A3%A8%202%EC%84%B8"
+    }
+  }
+}
