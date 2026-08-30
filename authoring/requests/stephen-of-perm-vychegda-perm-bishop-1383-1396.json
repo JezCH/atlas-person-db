@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Stephen of Perm",
+    "display_name_ko": "페름의 스테판",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Vychegda Perm",
+    "display_name_ko": "비체그다 페름",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "term",
+    "role": "Bishop of Perm",
+    "role_display_name_ko": "페름 주교",
+    "start_year": 1383,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1396,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Stephen of Perm was a missionary and the first bishop of Perm, working among the Komi of the Vychegda Perm region. ATLAS does not treat him as a ruler of the later Principality of Great Perm: his historical association is with Vychegda Perm, and this Activity records his episcopal leadership from 1383 until his death in 1396 rather than a secular reign."
+  },
+  "sources": [
+    {
+      "title": "Stephen of Perm and the State-Church Relationship in Fourteenth-century Moscow",
+      "canonical_url": "https://src-h.slav.hokudai.ac.jp/publictn/slavic-studies/67/Itami%20Soihiro.pdf",
+      "citation_text": "Soichiro Itami identifies Stephen's mission as directed to the Komi inhabitants of the Vychegda Perm region, notes his creation of the Old Permic script, and states that he was appointed the first bishop of Perm in 1383; the study dates him to c. 1345-1396.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}
