@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Plenty Coups",
+    "display_name_ko": "플렌티 쿱스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Crow Nation",
+    "display_name_ko": "크로우족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Principal Chief",
+    "role_display_name_ko": "수석 추장",
+    "start_year": 1876,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1932,
+    "end_month": 3,
+    "end_day": 3,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The National Park Service states that Plenty Coups, born in 1848, had been made a Crow chief by age 28, so ATLAS uses c.1876 as a representative beginning rather than inventing an exact installation date. The Smithsonian identifies him as the last traditional principal chief of all three Apsáalooke (Crow) bands. He continued to defend Crow political and land interests until his death on 3 March 1932."
+  },
+  "sources": [
+    {
+      "title": "Chief Plenty Coups — National Park Service",
+      "canonical_url": "https://www.nps.gov/bica/learn/historyculture/chief-plenty-coups.htm",
+      "citation_text": "The National Park Service states that Plenty Coups was made a Crow chief by age 28, remained a major political leader defending Crow lands, and died in 1932.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Plenty Coups — National Museum of the American Indian, Smithsonian Institution",
+      "canonical_url": "https://americanindian.si.edu/collections-search/edan-record/ead_component%3Asova-nmai-ac-001-033-ref248?view=grid",
+      "citation_text": "The Smithsonian identifies Plenty Coups as the last traditional principal chief of all three Apsáalooke (Crow) bands and records his life as approximately 1848–1932.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

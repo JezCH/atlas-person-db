@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Hendrik Verwoerd",
+    "display_name_ko": "헨드릭 페르부르트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Union of South Africa",
+    "display_name_ko": "남아프리카 연방",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1958,
+    "start_month": 9,
+    "start_day": 2,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1961,
+    "end_month": 5,
+    "end_day": 31,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Hendrik Verwoerd became Prime Minister of the Union of South Africa on 2 September 1958. This Activity ends with the constitutional establishment of the Republic of South Africa on 31 May 1961. His premiership continued without personal interruption under the republican constitution and is recorded in a second Activity."
+  },
+  "sources": [
+    {
+      "title": "Hendrik Verwoerd becomes Prime Minister — South African History Online",
+      "canonical_url": "https://sahistory.org.za/dated-event/hendrik-verwoerd-becomes-prime-minister",
+      "citation_text": "South African History Online records Hendrik Verwoerd assuming office as Prime Minister on 2 September 1958, the establishment of the Republic of South Africa on 31 May 1961, and his assassination on 6 September 1966.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Hendrik Frensch Verwoerd — South African History Online",
+      "canonical_url": "https://sahistory.org.za/people/hendrik-frensch-verwoerd",
+      "citation_text": "South African History Online identifies Verwoerd as Prime Minister from 1958 and a central architect of apartheid.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "헨드릭 페르부르트",
+      "url": "https://namu.wiki/w/%ED%97%A8%EB%93%9C%EB%A6%AD%20%ED%8E%98%EB%A5%B4%EB%B6%80%EB%A5%B4%ED%8A%B8"
+    }
+  }
+}

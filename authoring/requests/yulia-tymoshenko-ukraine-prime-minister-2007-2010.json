@@ -1,0 +1,73 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Yulia Tymoshenko",
+    "display_name_ko": "율리야 티모셴코",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ukraine",
+    "display_name_ko": "우크라이나",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 2007,
+    "start_month": 12,
+    "start_day": 18,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2010,
+    "end_month": 3,
+    "end_day": 4,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Verkhovna Rada appointed Tymoshenko Prime Minister on 18 December 2007. Parliament dismissed her government by no-confidence vote on 3 March 2010 and Tymoshenko vacated the premier's post on 4 March, with Oleksandr Turchynov performing the duties. A separate Verkhovna Rada resolution formally released her from the office on 11 March; ATLAS uses 4 March as the end of her effective premiership and documents the later formal cleanup here."
+  },
+  "sources": [
+    {
+      "title": "Decree No. 144/2005 appointing Yulia Tymoshenko Prime Minister — Verkhovna Rada legislation database",
+      "canonical_url": "https://zakon.rada.gov.ua/laws/show/144/2005",
+      "citation_text": "The official Ukrainian legislation database records Yulia Tymoshenko's appointment as Prime Minister on 4 February 2005.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Presidential Decree No. 1234/2005 ending Tymoshenko's premiership",
+      "canonical_url": "https://www.president.gov.ua/documents/12342005-3005",
+      "citation_text": "The President of Ukraine terminated Tymoshenko's powers as Prime Minister on 8 September 2005.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Resolution No. 7-VI appointing Tymoshenko Prime Minister — Verkhovna Rada legislation database",
+      "canonical_url": "https://zakon.rada.gov.ua/laws/show/7-17",
+      "citation_text": "The Verkhovna Rada appointed Yulia Tymoshenko Prime Minister on 18 December 2007, effective immediately.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Tymoshenko vacates premier's post — Interfax-Ukraine",
+      "canonical_url": "https://en.interfax.com.ua/news/general/33588.html",
+      "citation_text": "Interfax-Ukraine reported on 4 March 2010 that Tymoshenko had vacated the Prime Minister's post after the 3 March no-confidence dismissal of her government.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Resolution No. 1964-VI formally releasing Tymoshenko — Verkhovna Rada legislation database",
+      "canonical_url": "https://zakon.rada.gov.ua/laws/show/1964-VI",
+      "citation_text": "The Verkhovna Rada formally released Tymoshenko from the office of Prime Minister on 11 March 2010; ATLAS notes this legal cleanup after she had already ceased performing the office on 4 March.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

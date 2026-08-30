@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Omar Mukhtar",
+    "display_name_ko": "오마르 무크타르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Libyan Anti-Colonial Resistance",
+    "display_name_ko": "리비아 반식민 저항운동",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Resistance leader",
+    "role_display_name_ko": "저항 지도자",
+    "start_year": 1923,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1931,
+    "end_month": 9,
+    "end_day": 16,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "In 1923 Idris al-Senussi entrusted Omar Mukhtar with leading the anti-colonial resistance in Cyrenaica. He remained the principal guerrilla leader until his capture and execution by the Italian colonial authorities on 16 September 1931. ATLAS does not assign him to Italian Libya as his own polity; `Libyan Anti-Colonial Resistance` is an explicit editorial political-community label for the side he led, not a claim that he headed a sovereign Libyan state."
+  },
+  "sources": [
+    {
+      "title": "Omar al-Mukhtar, leader of anticolonial resistance in Libya — Museum With No Frontiers",
+      "canonical_url": "https://sharinghistory.museumwnf.org/database_item.php?id=object%3Bawe%3Bit%3B84%3Ben",
+      "citation_text": "Museum With No Frontiers states that in 1923 Idris al-Senussi charged Omar al-Mukhtar with leading Libyan anti-colonial resistance and that he led the anti-Italian guerrillas until his capture and execution in 1931.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Omar el Mokhtar — Egypt State Information Service",
+      "canonical_url": "https://africa.sis.gov.eg/english/figures/politics/omar-el-mokhtar/",
+      "citation_text": "Egypt's State Information Service describes Omar Mukhtar as a Libyan national hero and a leading organizer and coordinator of resistance after 1923.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "오마르 무크타르",
+      "url": "https://namu.wiki/w/%EC%98%A4%EB%A7%88%EB%A5%B4%20%EB%AC%B4%ED%81%AC%ED%83%80%EB%A5%B4"
+    }
+  }
+}
