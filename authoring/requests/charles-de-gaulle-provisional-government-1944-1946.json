@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:charles-de-gaulle:french-republic:head-provisional-government:1944-1946:v1",
+  "person":{"canonical_name_en":"Charles de Gaulle","display_name_ko":"샤를 드골"},
+  "polity":{"canonical_name_en":"French Republic","display_name_ko":"프랑스 공화국"},
+  "activity":{
+    "relation_type":"governs","period_basis":"term","role":"Head of Provisional Government","role_display_name_ko":"임시정부 수반",
+    "start_year":1944,"start_month":9,"start_day":9,"start_certainty":"exact","start_calendar":"gregorian",
+    "end_year":1946,"end_month":1,"end_day":20,"end_certainty":"exact","end_calendar":"gregorian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"A national-unity Provisional Government of the French Republic headed by Charles de Gaulle was formed on 9 September 1944. De Gaulle resigned as President of the Provisional Government on 20 January 1946. ATLAS binds this government leadership to the French Republic polity rather than treating the provisional government itself as a separate territorial polity."
+  },
+  "sources":[{"title":"Charles de Gaulle — Élysée","canonical_url":"https://www.elysee.fr/en/charles-de-gaulle","citation_text":"The Élysée chronology records a provisional national-unity government headed by de Gaulle on 9 September 1944 and his resignation as President of the Provisional Government on 20 January 1946.","source_type":"government_web"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-25","document_title":"샤를 드골","url":"https://namu.wiki/w/%EC%83%A4%EB%A5%BC%20%EB%93%9C%EA%B3%A8"}}
+}

@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:frederick-i-of-denmark:norway:king:1524-1533:v1",
+  "person":{"canonical_name_en":"Frederick I of Denmark","display_name_ko":"프레데리크 1세"},
+  "polity":{"canonical_name_en":"Norway","display_name_ko":"노르웨이"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"King","role_display_name_ko":"왕",
+    "start_year":1524,"start_certainty":"exact","start_calendar":"unspecified_historical",
+    "end_year":1533,"end_certainty":"exact","end_calendar":"unspecified_historical",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"The Norwegian Council elected Frederick I king in 1524, one year after his Danish accession. He remained King of Norway until his death in 1533. ATLAS therefore separates the Norwegian 1524-1533 kingship from Denmark and from his Schleswig-Holstein rule."
+  },
+  "sources":[{"title":"Frederik 1. – konge 1524–1533 — Store norske leksikon","canonical_url":"https://snl.no/Frederik_1.","citation_text":"Store norske leksikon states that Frederick I was King of Denmark in 1523-1533 and King of Norway in 1524-1533, after the Norwegian Council elected him in 1524.","source_type":"academic_reference"}],
+  "external_references":{"namuwiki":{"status":"not_found","checked_at":"2026-08-30"}}
+}

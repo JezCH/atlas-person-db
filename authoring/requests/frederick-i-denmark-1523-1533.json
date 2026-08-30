@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:frederick-i-of-denmark:denmark:king:1523-1533:v1",
+  "person":{"canonical_name_en":"Frederick I of Denmark","display_name_ko":"프레데리크 1세"},
+  "polity":{"canonical_name_en":"Denmark","display_name_ko":"덴마크"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"King","role_display_name_ko":"왕",
+    "start_year":1523,"start_certainty":"exact","start_calendar":"unspecified_historical",
+    "end_year":1533,"end_certainty":"exact","end_calendar":"unspecified_historical",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Frederick I was elected King of Denmark in 1523 and ruled until his death in 1533. This Danish kingship is distinct from both his Schleswig-Holstein co-ducal rule and his Norwegian kingship."
+  },
+  "sources":[{"title":"Kongerækken — Frederik 1. — Det danske Kongehus","canonical_url":"https://www.kongehuset.dk/monarkiet-i-danmark/kongerakken","citation_text":"The Danish Royal House lists Frederik I as King of Denmark from 1523 to 1533 and also identifies him as king of Norway.","source_type":"government_web"}],
+  "external_references":{"namuwiki":{"status":"not_found","checked_at":"2026-08-30"}}
+}

@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:zayed-bin-sultan-al-nahyan:abu-dhabi:ruler:1966-2004:v1",
+  "person":{"canonical_name_en":"Zayed bin Sultan Al Nahyan","display_name_ko":"자이드 빈 술탄 알나얀"},
+  "polity":{"canonical_name_en":"Abu Dhabi","display_name_ko":"아부다비","polity_type":"historical_polity","historicity":"historical"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"Ruler","role_display_name_ko":"통치자",
+    "start_year":1966,"start_month":8,"start_day":6,"start_certainty":"exact","start_calendar":"gregorian",
+    "end_year":2004,"end_month":11,"end_day":2,"end_certainty":"exact","end_calendar":"gregorian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Sheikh Zayed bin Sultan Al Nahyan became Ruler of Abu Dhabi on 6 August 1966 and remained ruler until his death on 2 November 2004. ATLAS records this constituent-emirate rulership separately from his concurrent 1971-2004 presidency of the United Arab Emirates."
+  },
+  "sources":[{"title":"Founders of the Union — The Official Platform of the UAE Government","canonical_url":"https://u.ae/en/about-uae/founders-of-the-union","citation_text":"The UAE Government states that Sheikh Zayed succeeded as Ruler of Abu Dhabi on 6 August 1966 and served as Ruler from 1966 to 2004, while separately serving as first President of the UAE from 1971.","source_type":"government_web"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-24","document_title":"자이드 빈 술탄 알나얀","url":"https://namu.wiki/w/%EC%9E%90%EC%9D%B4%EB%93%9C%20%EB%B9%88%20%EC%88%A0%ED%83%84%20%EC%95%8C%EB%82%98%EC%96%80"}}
+}
