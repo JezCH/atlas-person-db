@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:rajendra-chola-i:chola-empire:co-emperor:1012-1014:v1",
+  "person": {
+    "canonical_name_en": "Rajendra Chola I",
+    "display_name_ko": "라젠드라 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Chola Empire",
+    "display_name_ko": "촐라 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Co-Emperor",
+    "role_display_name_ko": "공동 황제",
+    "start_year": 1012,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1014,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Rajendra Chola I was formally associated with his father Rajaraja I in royal government from 1012 and ruled as co-regent until Rajaraja's death in 1014, when Rajendra became sole emperor. ATLAS records the 1012-1014 joint rule separately from the existing 1014-1044 sole imperial reign."
+  },
+  "sources": [
+    {
+      "title": "Rajendra Chola I (1012–1044 CE) in South India — Indian Historical Review",
+      "canonical_url": "https://journals.sagepub.com/doi/10.1177/03769836261448402",
+      "citation_text": "The peer-reviewed Indian Historical Review study dates Rajendra Chola I's reign from 1012 to 1044, overlapping Rajaraja I's final years before Rajendra's sole accession.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "South Indian Inscriptions, Volume III — introduction",
+      "canonical_url": "https://www.whatisindia.com/inscriptions/south_indian_inscriptions/volume_3/introduction2.html",
+      "citation_text": "The published South Indian Inscriptions introduction states that Rajendra's reign commenced in 1012 and that during the first three years he ruled as co-regent with his father.",
+      "source_type": "epigraphic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-23",
+      "document_title": "라젠드라 1세",
+      "url": "https://namu.wiki/w/%EB%9D%BC%EC%A0%A0%EB%93%9C%EB%9D%BC%201%EC%84%B8"
+    }
+  }
+}
