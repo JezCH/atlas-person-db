@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Emperor Shizong of Jin",
+    "display_name_ko": "금 세종",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Jin Dynasty",
+    "display_name_ko": "금나라",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1161,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1189,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Chinese Text Project/CBDB data records Jin Shizong's reign from 27 October 1161 to January 1189. ATLAS stores the year-level interval."
+  },
+  "sources": [
+    {
+      "title": "金世宗 Jin Shi Zong — Chinese Text Project",
+      "canonical_url": "https://ctext.org/datawiki.pl?if=en&res=502379",
+      "citation_text": "Chinese Text Project records Emperor Shizong of Jin as ruling from 1161 to 1189.",
+      "source_type": "scholarly_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

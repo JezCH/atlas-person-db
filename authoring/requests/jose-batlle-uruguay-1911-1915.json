@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "José Batlle y Ordóñez",
+    "display_name_ko": "호세 바트예 이 오르도녜스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Uruguay",
+    "display_name_ko": "우루과이",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1911,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1915,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Batlle y Ordóñez served a second presidency from 1911 to 1915."
+  },
+  "sources": [
+    {
+      "title": "Primeros años del Siglo — Batllismo, Uruguay Educa",
+      "canonical_url": "https://uruguayeduca.anep.edu.uy/sites/default/files/exelearning/06-2026/14279/primeros_aos_del_siglo__batllismo.html",
+      "citation_text": "Uruguay Educa explicitly identifies Batlle's second presidency as 1911–1915.",
+      "source_type": "government_education_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

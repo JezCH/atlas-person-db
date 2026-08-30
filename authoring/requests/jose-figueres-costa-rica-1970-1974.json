@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "José Figueres Ferrer",
+    "display_name_ko": "호세 피게레스 페레르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Costa Rica",
+    "display_name_ko": "코스타리카",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1970,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1974,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Figueres returned for another elected presidential term from 1970 to 1974."
+  },
+  "sources": [
+    {
+      "title": "Expresidencias — Presidencia de Costa Rica",
+      "canonical_url": "https://presidencia.gobiernocarlosalvarado.cr/sobre-casa-presidencial/expresidencias/",
+      "citation_text": "The Costa Rican Presidency lists José Figueres Ferrer as president from 1970 to 1974.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

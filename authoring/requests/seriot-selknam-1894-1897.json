@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Seriot",
+    "display_name_ko": "세리오트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Selk'nam",
+    "display_name_ko": "셀크남",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Selk'nam leader",
+    "role_display_name_ko": "셀크남 지도자",
+    "start_year": 1894,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1897,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Ethnohistorical records identify Seriot (also rendered Scriöt/Chestriote/Capelo) as a leader of a southern Selk'nam group in the mid-1890s; reports place his death in 1897. ATLAS avoids treating this as a formal state reign."
+  },
+  "sources": [
+    {
+      "title": "Restitution processes at the Museum of La Plata",
+      "canonical_url": "https://www.researchgate.net/publication/279217644_Restitution_processes_at_the_Museum_of_La_Plata",
+      "citation_text": "Ethnohistorical scholarship cites Seriot/Capelo as leader of a southern Selk'nam group and records his killing in 1897.",
+      "source_type": "scholarly_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}
