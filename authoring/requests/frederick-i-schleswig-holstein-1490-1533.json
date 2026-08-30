@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Frederick I of Denmark",
+    "display_name_ko": "프레데리크 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Duchies of Schleswig and Holstein",
+    "display_name_ko": "슐레스비히·홀슈타인 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Co-Duke",
+    "role_display_name_ko": "공동 공작",
+    "start_year": 1490,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1533,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Frederick, later King Frederick I of Denmark and Norway, and his elder brother John were jointly accepted as dukes of Schleswig and Holstein in 1482 while Frederick was still a minor. In 1490 the ducal lands and revenues were partitioned; Frederick chose the Gottorp share and thereafter exercised personal ducal rule from Gottorf while the constitutional unity of Schleswig and Holstein and several common institutions were maintained under the co-dukes. ATLAS therefore begins his direct Schleswig-Holstein leadership in 1490 and records him as Co-Duke rather than treating the duchies as a unitary modern state."
+  },
+  "sources": [
+    {
+      "title": "Friedrich I. von Dänemark — Deutsche Biographie",
+      "canonical_url": "https://www.deutsche-biographie.de/gnd119187620.html",
+      "citation_text": "Neue Deutsche Biographie identifies Frederick I as Duke of Schleswig-Holstein and later King of Denmark-Norway, explaining the 1482 joint homage and the 1490 partition in which Frederick chose the Gottorp share while common institutions of the duchies remained joint.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "From Margrethe to Frederik: Danish history as told by royal lines — University of Copenhagen",
+      "canonical_url": "https://manuscript.ku.dk/motm/from-margrethe-to-frederik",
+      "citation_text": "The University of Copenhagen reproduces an early-modern chronicle identifying Frederik I as Duke in Schleswig and Holstein before he succeeded to the Danish crown.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "William Walker",
+    "display_name_ko": "윌리엄 워커",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Sonora",
+    "display_name_ko": "소노라 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Self-proclaimed President",
+    "role_display_name_ko": "자칭 대통령",
+    "start_year": 1854,
+    "start_month": 1,
+    "start_day": 18,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1854,
+    "end_month": 5,
+    "end_day": 8,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "On 18 January 1854 William Walker issued Decree No. 1 in the name of the Republic of Sonora and signed it as President of Sonora, transforming his earlier filibuster Republic of Lower California into a claimed two-state republic of Sonora and Lower California. The regime was never recognized by Mexico or internationally and never established effective control over Sonora itself; its actual base remained in Baja California. Walker crossed the United States border with his remaining followers and surrendered to U.S. authorities on 8 May 1854. ATLAS therefore labels the office Self-proclaimed President and the polity as a short-lived unrecognized filibuster regime, not a legitimate Mexican successor state."
+  },
+  "sources": [
+    {
+      "title": "Walker's Expedition to Nicaragua; a History of the Central American War; and the Sonora and Kinney Expeditions",
+      "canonical_url": "https://upload.wikimedia.org/wikipedia/commons/4/40/Walker%27s_expedition_to_Nicargua%3B_a_history_of_the_Central_American_war%3B_and_the_Sonora_and_Kinney_expeditions%2C_including_all_the_recent_diplomatic_correspondence_%28IA_bub_gb_CAQOAAAAIAAJ%29.pdf",
+      "citation_text": "The contemporary published account reproduces Walker's Republic of Sonora Decree No. 1 dated 18 January 1854 and signed 'WM. WALKER, President of Sonora.'",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Walker, William (1824–1860) — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/humanities/encyclopedias-almanacs-transcripts-and-maps/walker-william-1824-1860",
+      "citation_text": "The biographical encyclopedia records Walker's self-proclaimed Republic of Sonora in January 1854 and his crossing of the U.S. border with his remaining followers on 8 May 1854.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "윌리엄 워커",
+      "url": "https://namu.wiki/w/%EC%9C%8C%EB%A6%AC%EC%97%84%20%EC%9B%8C%EC%BB%A4"
+    }
+  }
+}

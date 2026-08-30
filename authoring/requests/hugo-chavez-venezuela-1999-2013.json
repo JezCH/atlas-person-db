@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Hugo Chávez",
+    "display_name_ko": "우고 차베스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Venezuela",
+    "display_name_ko": "베네수엘라",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1999,
+    "start_month": 2,
+    "start_day": 2,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2013,
+    "end_month": 3,
+    "end_day": 5,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Hugo Chávez served as President of Venezuela from 2 February 1999 until his death on 5 March 2013. The country adopted the constitutional name Bolivarian Republic of Venezuela during his first year in office; ATLAS uses the stable polity label Venezuela rather than splitting one presidency solely for the state's formal-name change. Chávez was briefly removed from effective control during the April 2002 coup attempt but was restored within days, and standard presidential chronologies treat his mandate as continuous from 1999 to 2013."
+  },
+  "sources": [
+    {
+      "title": "Hugo Chávez Frías — CIDOB",
+      "canonical_url": "https://www.cidob.org/lider-politico/hugo-chavez-frias",
+      "citation_text": "CIDOB records Hugo Chávez as President of Venezuela from 2 February 1999 to 5 March 2013.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Venezuela conmemora los 68 años del nacimiento del comandante Hugo Chávez Frías — Ministerio del Poder Popular para la Cultura",
+      "canonical_url": "https://www.mincultura.gob.ve/noticias/venezuela-conmemora-los-68-anos-del-nacimiento-del-comandante-hugo-chavez-frias-maximo-lider-de-la-revolucion-bolivariana/",
+      "citation_text": "The Venezuelan Ministry of Culture records Chávez taking office on 2 February 1999 and describes the April 2002 coup episode.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "우고 차베스",
+      "url": "https://namu.wiki/w/%EC%9A%B0%EA%B3%A0%20%EC%B0%A8%EB%B2%A0%EC%8A%A4"
+    }
+  }
+}
