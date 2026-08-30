@@ -1,0 +1,19 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:charles-de-gaulle:french-republic:prime-minister:1958-1959:v1",
+  "person":{"canonical_name_en":"Charles de Gaulle","display_name_ko":"샤를 드골"},
+  "polity":{"canonical_name_en":"French Republic","display_name_ko":"프랑스 공화국"},
+  "activity":{
+    "relation_type":"governs","period_basis":"term","role":"Prime Minister","role_display_name_ko":"총리",
+    "start_year":1958,"start_month":6,"start_day":1,"start_certainty":"exact","start_calendar":"gregorian",
+    "end_year":1959,"end_month":1,"end_day":8,"end_certainty":"exact","end_calendar":"gregorian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"The National Assembly invested Charles de Gaulle as President of the Council on 1 June 1958. He headed the government through the constitutional transition until he assumed the Presidency of the Republic on 8 January 1959. ATLAS normalizes President of the Council to the generic Prime Minister role and keeps this term separate from his 1959-1969 presidency."
+  },
+  "sources":[
+    {"title":"The Constitution of 27 October 1946 — Élysée","canonical_url":"https://www.elysee.fr/en/french-presidency/the-constitution-of-27-october-1946","citation_text":"The Élysée states that the National Assembly invested Charles de Gaulle as President of the Council on 1 June 1958.","source_type":"government_web"},
+    {"title":"The inauguration of Charles de Gaulle — Élysée","canonical_url":"https://www.elysee.fr/en/french-presidency/the-inauguration-of-charles-de-gaulle","citation_text":"The Élysée records the transfer of presidential powers to de Gaulle on 8 January 1959.","source_type":"government_web"}
+  ],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-25","document_title":"샤를 드골","url":"https://namu.wiki/w/%EC%83%A4%EB%A5%BC%20%EB%93%9C%EA%B3%A8"}}
+}

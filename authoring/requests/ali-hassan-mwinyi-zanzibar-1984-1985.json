@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:ali-hassan-mwinyi:zanzibar:president:1984-1985:v1",
+  "person":{"canonical_name_en":"Ali Hassan Mwinyi","display_name_ko":"알리 하산 므위니"},
+  "polity":{"canonical_name_en":"Zanzibar","display_name_ko":"잔지바르","polity_type":"historical_polity","historicity":"historical"},
+  "activity":{
+    "relation_type":"governs","period_basis":"term","role":"President","role_display_name_ko":"대통령",
+    "start_year":1984,"start_certainty":"exact","start_calendar":"gregorian",
+    "end_year":1985,"end_certainty":"exact","end_calendar":"gregorian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Ali Hassan Mwinyi was elected President of Zanzibar in 1984 and served in that office before becoming President of the United Republic of Tanzania on 5 November 1985. ATLAS records the Zanzibar presidency as a distinct constituent-polity Activity rather than folding it into his later Tanzanian presidency."
+  },
+  "sources":[{"title":"Ali Hassan Mwinyi — Office of the President of Tanzania","canonical_url":"https://www.ikulu.go.tz/index.php/administration/about_biography/3","citation_text":"The official Tanzanian presidential biography states that Mwinyi was elected President of Zanzibar in 1984 and became President of the United Republic of Tanzania on 5 November 1985.","source_type":"government_web"}],
+  "external_references":{"namuwiki":{"status":"not_found","checked_at":"2026-08-28"}}
+}

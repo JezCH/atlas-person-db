@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:zog-i:albanian-republic:president:1925-1928:v1",
+  "person":{"canonical_name_en":"Zog I","display_name_ko":"조구 1세"},
+  "polity":{"canonical_name_en":"Albanian Republic","display_name_ko":"알바니아 공화국","polity_type":"historical_polity","historicity":"historical"},
+  "activity":{
+    "relation_type":"governs","period_basis":"term","role":"President","role_display_name_ko":"대통령",
+    "start_year":1925,"start_month":1,"start_day":31,"start_certainty":"exact","start_calendar":"gregorian",
+    "end_year":1928,"end_month":9,"end_day":1,"end_certainty":"exact","end_calendar":"gregorian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Ahmet Zogu was elected President of the Albanian Republic on 31 January 1925. On 1 September 1928 Albania was proclaimed a monarchy and he became King Zog I. ATLAS therefore records the republican presidency separately from his existing 1928-1939 royal reign."
+  },
+  "sources":[{"title":"The History Of The Institution — President of the Republic of Albania","canonical_url":"https://president.al/the-history-of-the-institution/?lang=en","citation_text":"The Albanian Presidency states that Ahmet Zogu was elected President of the Republic on 31 January 1925 and became King when Albania was proclaimed a monarchy on 1 September 1928.","source_type":"government_web"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-27","document_title":"조구 1세","url":"https://namu.wiki/w/%EC%A1%B0%EA%B5%AC%201%EC%84%B8"}}
+}

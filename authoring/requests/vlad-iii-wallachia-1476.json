@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:vlad-iii:wallachia:voivode:1476:v1",
+  "person":{"canonical_name_en":"Vlad III","display_name_ko":"블라드 3세"},
+  "polity":{"canonical_name_en":"Wallachia","display_name_ko":"왈라키아"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"Voivode","role_display_name_ko":"보이보드",
+    "start_year":1476,"start_certainty":"exact","start_calendar":"unspecified_historical",
+    "end_year":1476,"end_certainty":"exact","end_calendar":"unspecified_historical",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Vlad III regained the Wallachian throne for a third and final time in late 1476 before being killed soon afterward. ATLAS keeps this restoration separate from the 1456-1462 reign."
+  },
+  "sources":[{"title":"Counting the Stakes: A Reassessment of Vlad III Dracula’s Practice of Collective Impalements in Fifteenth-Century South-eastern Europe","canonical_url":"https://www.cambridge.org/core/journals/transactions-of-the-royal-historical-society/article/counting-the-stakes-a-reassessment-of-vlad-iii-draculas-practice-of-collective-impalements-in-fifteenthcentury-southeastern-europe/F1B68C737C004D494BBE3B8B9B5E0FF7","citation_text":"The Royal Historical Society article describes Vlad III as the three-time voivode of Wallachia in 1448, 1456-1462, and 1476.","source_type":"academic_reference"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-27","document_title":"블라드 3세","url":"https://namu.wiki/w/%EB%B8%94%EB%9D%BC%EB%93%9C%203%EC%84%B8"}}
+}
