@@ -1,0 +1,187 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "indira_gandhi_thomas_jefferson_exact_dates_20260830_v1",
+  "as_of": "2026-08-30",
+  "status": "REVIEWED_EXACT_DATE_AND_RELATION_REPAIR",
+  "release_order": 560,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User-requested ATLAS refinement on 2026-08-30; PM India official former-prime-minister chronology and U.S. Senate inaugural chronology; exact legacy target snapshots captured by Correction Apply runs #48 and #49.",
+  "baseline": {
+    "deployment_sha": "97332ea38d32bbb794f580eaf7ea093e1e91d90a",
+    "baseline_digest": "sha256:141869c9dad01f46e16f90c19a4336063528146997f55c98ef91251ccc45cdd9"
+  },
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "semantic_identity_change_forbidden": false,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "indira_official_source": "https://www.pmindia.gov.in/en/former-prime-ministers/",
+    "indira_first_term": "1966-01-24 to 1977-03-24",
+    "indira_second_term": "1980-01-14 to 1984-10-31",
+    "jefferson_inauguration_source": "https://www.inaugural.senate.gov/4th-inaugural-ceremonies/",
+    "jefferson_successor_source": "https://www.inaugural.senate.gov/6th-inaugural-ceremonies/",
+    "correction_run_first_indira": 33288566464,
+    "correction_run_second_indira": 33288886379,
+    "note": "The preceding metadata-only Indira corrections failed in dry-run because legacy relation_type_id was null and the database requires a valid primary polity/relation pair. No mutation committed. The exact snapshots from those failed dry-runs are used to design this atomic relation+date rewrite."
+  },
+  "operations": [
+    {
+      "case_id": "indira_gandhi_first_term_exact_dates_and_governs",
+      "type": "rewrite_activity",
+      "activity_id": "acd18f4e-e74d-568a-b024-5ebbfc51fa3d",
+      "baseline_before": {
+        "person_id": "35f0004f-28fc-5227-9977-3414849f0c1c",
+        "polity_id": "00ec4b0c-6002-5791-825c-43465632102d",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1966,
+        "activity_end": 1977,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement.json:4:bd2cbbad720104de",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "acd18f4e-e74d-568a-b024-5ebbfc51fa3d",
+        "person_id": "35f0004f-28fc-5227-9977-3414849f0c1c",
+        "polity_id": "00ec4b0c-6002-5791-825c-43465632102d",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1966,
+        "activity_end": 1977,
+        "activity_start_detail": {
+          "year": 1966,
+          "month": 1,
+          "day": 24,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1977,
+          "month": 3,
+          "day": 24,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": "pending-records-supplement.json:4:bd2cbbad720104de",
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Indira Gandhi served her first term as Prime Minister of India from 24 January 1966 to 24 March 1977, according to the official Prime Minister of India former-prime-ministers chronology.",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "indira_gandhi_second_term_exact_dates_and_governs",
+      "type": "rewrite_activity",
+      "activity_id": "97cc4fc9-9714-5373-97de-e8b4428be58b",
+      "baseline_before": {
+        "person_id": "35f0004f-28fc-5227-9977-3414849f0c1c",
+        "polity_id": "00ec4b0c-6002-5791-825c-43465632102d",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1980,
+        "activity_end": 1984,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement.json:5:3d1264d7d1aeeaf6",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "97cc4fc9-9714-5373-97de-e8b4428be58b",
+        "person_id": "35f0004f-28fc-5227-9977-3414849f0c1c",
+        "polity_id": "00ec4b0c-6002-5791-825c-43465632102d",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2b09d0ae-3176-56b7-a2b5-64f611f4edd7",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1980,
+        "activity_end": 1984,
+        "activity_start_detail": {
+          "year": 1980,
+          "month": 1,
+          "day": 14,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1984,
+          "month": 10,
+          "day": 31,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": "pending-records-supplement.json:5:3d1264d7d1aeeaf6",
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Indira Gandhi returned as Prime Minister of India on 14 January 1980 and served until her assassination on 31 October 1984, according to the official Prime Minister of India former-prime-ministers chronology.",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "thomas_jefferson_presidency_exact_dates",
+      "type": "rewrite_activity",
+      "activity_id": "37dac9e4-9c4a-43e8-a2e7-e9f7473f33b7",
+      "baseline_before": {
+        "person_id": "9a8b1eb4-0954-4d27-9ead-3854f794a582",
+        "polity_id": "7d09bc56-1ea0-515e-a3e7-9863361b6f15",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1801,
+        "activity_end": 1809,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "37dac9e4-9c4a-43e8-a2e7-e9f7473f33b7",
+        "person_id": "9a8b1eb4-0954-4d27-9ead-3854f794a582",
+        "polity_id": "7d09bc56-1ea0-515e-a3e7-9863361b6f15",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1801,
+        "activity_end": 1809,
+        "activity_start_detail": {
+          "year": 1801,
+          "month": 3,
+          "day": 4,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1809,
+          "month": 3,
+          "day": 4,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Thomas Jefferson became the third President of the United States on 4 March 1801. James Madison was sworn in as his successor on 4 March 1809; ATLAS therefore records Jefferson's presidency as 1801-03-04 through 1809-03-04.",
+        "add_source_links": []
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 3,
+    "production_mutation_authorized": false
+  }
+}
