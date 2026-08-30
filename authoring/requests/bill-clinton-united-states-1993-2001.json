@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Bill Clinton",
+    "display_name_ko": "빌 클린턴",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1993,
+    "start_month": 1,
+    "start_day": 20,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2001,
+    "end_month": 1,
+    "end_day": 20,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bill Clinton served as the 42nd President of the United States for two terms, from his first inauguration on 20 January 1993 through 20 January 2001."
+  },
+  "sources": [
+    {
+      "title": "William J. Clinton Presidential Library and Museum",
+      "canonical_url": "https://www.clintonlibrary.gov/",
+      "citation_text": "The Clinton Presidential Library states that Bill Clinton served as the 42nd President of the United States from 1993 until 2001.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Permanent Exhibits - The Inauguration",
+      "canonical_url": "https://www.clintonlibrary.gov/museum/permanent-exhibits",
+      "citation_text": "The Clinton Presidential Library records that President Clinton was inaugurated on January 20, 1993.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "President Bill Clinton Photo Gallery",
+      "canonical_url": "https://www.clintonlibrary.gov/galleries/president-bill-clinton-photo-gallery",
+      "citation_text": "The Clinton Presidential Library identifies January 20, 2001 as Clinton's final day as President.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "빌 클린턴",
+      "url": "https://namu.wiki/w/%EB%B9%8C%20%ED%81%B4%EB%A6%B0%ED%84%B4"
+    }
+  }
+}
