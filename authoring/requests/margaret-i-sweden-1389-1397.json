@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:margaret-i:sweden:regent:1389-1397:v1",
+  "person":{"canonical_name_en":"Margaret I","display_name_ko":"마르그레테 1세"},
+  "polity":{"canonical_name_en":"Sweden","display_name_ko":"스웨덴"},
+  "activity":{
+    "relation_type":"governs","period_basis":"term","role":"Regent","role_display_name_ko":"섭정",
+    "start_year":1389,"start_certainty":"exact","start_calendar":"unspecified_historical",
+    "end_year":1397,"end_certainty":"exact","end_calendar":"unspecified_historical",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Margaret became the dominant ruler of Sweden after defeating and capturing Albert of Mecklenburg in 1389 and was formally installed as Swedish regent that year. ATLAS records the Swedish pre-Kalmar phase through 1397, when the existing Kalmar Union Activity begins."
+  },
+  "sources":[{"title":"Margrete 1. — Lex","canonical_url":"https://lex.dk/Margrete_1.","citation_text":"Lex states that Margaret exercised governing power in Sweden from 1389 to 1412 and was formally installed as Swedish regent in October 1389.","source_type":"academic_reference"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-27","document_title":"마르그레테 1세","url":"https://namu.wiki/w/%EB%A7%88%EB%A5%B4%EA%B7%B8%EB%A0%88%ED%85%8C%201%EC%84%B8"}}
+}
