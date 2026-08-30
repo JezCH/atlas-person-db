@@ -1,0 +1,83 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "daniel_oconnell_ireland_political_community_20260830_v1",
+  "as_of": "2026-08-30",
+  "status": "REVIEWED_POLITICAL_COMMUNITY_REPAIR",
+  "release_order": 565,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User-requested ATLAS political-community correction on 2026-08-30; Government of Ireland commemoration evidence; preserve Daniel O'Connell Activity identity while replacing the higher-order United Kingdom primary polity with his own Irish political community.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "semantic_identity_change_forbidden": false,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "official_source": "https://www.gov.ie/en/department-of-the-taoiseach/speeches/speech-by-taoiseach-miche%C3%A1l-martin-state-commemoration-to-mark-250th-anniversary-of-birth-of-daniel-oconnell/",
+    "reviewed_polity": "Ireland",
+    "reviewed_polity_id": "c9490230-d6cb-4f6b-a3ed-8baa0248c37e",
+    "rationale": "The Government of Ireland describes O'Connell as an Irish leader whose Catholic Association mobilized the Irish people and whose Repeal campaign expressed Irish self-government. Under ATLAS political-community rules, the legal sovereign United Kingdom is not used as the primary polity merely because Ireland was within the Union.",
+    "preserve_activity_uuid": "acec613f-b3e2-4b48-96e9-d5bf216261e2",
+    "no_activity_retirement": true
+  },
+  "operations": [
+    {
+      "case_id": "daniel_oconnell_primary_polity_united_kingdom_to_ireland",
+      "type": "rewrite_activity",
+      "activity_id": "acec613f-b3e2-4b48-96e9-d5bf216261e2",
+      "baseline_before": {
+        "person_id": "627b6aac-ca0d-4975-8b40-ae77c357f4bf",
+        "polity_id": "08c06b79-58de-508a-9ace-2948baa9e9e6",
+        "role_id": "d95a237d-d2cc-4747-9765-38267836ca84",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1823,
+        "activity_end": 1847,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "acec613f-b3e2-4b48-96e9-d5bf216261e2",
+        "person_id": "627b6aac-ca0d-4975-8b40-ae77c357f4bf",
+        "polity_id": "c9490230-d6cb-4f6b-a3ed-8baa0248c37e",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "d95a237d-d2cc-4747-9765-38267836ca84",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1823,
+        "activity_end": 1847,
+        "activity_start_detail": {
+          "year": 1823,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1847,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "O'Connell's representative mass-political reform activity is anchored to the Catholic Association campaign from the early 1820s through his death in 1847. ATLAS assigns this Activity to Ireland as O'Connell's own national-political community: his Catholic Emancipation and Repeal movements mobilized the Irish public and sought Irish self-government, while the United Kingdom remains the contemporaneous sovereign-state context rather than the primary political-community label.",
+        "add_source_links": []
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "production_mutation_authorized": false
+  }
+}
