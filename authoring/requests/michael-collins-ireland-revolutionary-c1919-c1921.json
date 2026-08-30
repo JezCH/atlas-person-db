@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:michael-collins:ireland:revolutionary-leader:c1919-c1921:v1",
+  "person": {
+    "canonical_name_en": "Michael Collins",
+    "display_name_ko": "마이클 콜린스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ireland",
+    "display_name_ko": "아일랜드",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Revolutionary leader",
+    "role_display_name_ko": "혁명 지도자",
+    "start_year": 1919,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1921,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Collins was a leading Irish revolutionary and intelligence organizer during the War of Independence. ATLAS represents this pre-government revolutionary phase under the Irish political community Ireland rather than the United Kingdom, while preserving his separate 1922 Provisional Government of Ireland chairmanship as a distinct Activity."
+  },
+  "sources": [
+    {
+      "title": "Michael Collins's intelligence war — National Library of Ireland catalogue",
+      "canonical_url": "https://catalogue.nli.ie/Record/vtls000246993",
+      "citation_text": "The National Library of Ireland catalogue identifies Collins as a revolutionary in Ireland and treats the 1919-1921 War of Independence as the core period of his intelligence-war activity.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}
