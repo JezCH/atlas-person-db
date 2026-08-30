@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Süngülüg Khagan",
+    "display_name_ko": "슝귈뤼그 카간",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Qocho",
+    "display_name_ko": "고창회골",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khagan",
+    "role_display_name_ko": "카간",
+    "start_year": 984,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 996,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "The Qocho ruler earlier attested as Arslan Bilgä Tengri ilig adopted or is recorded under the title Süngülüg Khagan in 984. Ruler lists then place Bügü Bilgä Tengri ilig as his successor in 996. The personal naming conventions of early Qocho rulers are title-heavy and the source base is fragmentary, so ATLAS uses the user-supplied historical regnal form Süngülüg Khagan, records 984–996, and lowers assertion confidence to likely rather than pretending a modern-style personal name is certain."
+  },
+  "sources": [
+    {
+      "title": "Qocho — historical synthesis",
+      "canonical_url": "https://www.wikizero.net/wiki/en/Qocho",
+      "citation_text": "The ruler chronology records Arslan Bilgä Tengri ilig becoming Süngülüg Khagan in 984 and being succeeded by Bügü Bilgä Tengri ilig in 996.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "ئوتتۇرا ئەسىر ئۇيغۇر جەمئىيىتى — early Qocho ruler titles",
+      "canonical_url": "https://www.uyghur-archive.com/bashlan/powsit/2015/12_13/13616.html",
+      "citation_text": "The Uyghur-language historical compilation lists the early Qocho ruler title Arslan Bilgä Tengri ilig Süngülüg Qaghan in the 980s and the succeeding Bügü Bilgä Tengri ilig in 996.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

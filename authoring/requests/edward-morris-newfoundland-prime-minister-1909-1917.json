@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Edward Morris, 1st Baron Morris",
+    "display_name_ko": "에드워드 모리스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Dominion of Newfoundland",
+    "display_name_ko": "뉴펀들랜드 자치령",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1909,
+    "start_month": 3,
+    "start_day": 2,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1917,
+    "end_month": 12,
+    "end_day": 31,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sir Edward Patrick Morris served as Prime Minister of the Dominion of Newfoundland from 2 March 1909 through 31 December 1917. He was later created Baron Morris in 1918; ATLAS uses the stable biographical canonical name while recording the office and polity appropriate to his premiership."
+  },
+  "sources": [
+    {
+      "title": "The Politics of War — Newfoundland and Labrador Heritage",
+      "canonical_url": "https://www.heritage.nl.ca/first-world-war/articles/the-politics-of-war.php",
+      "citation_text": "Newfoundland and Labrador Heritage identifies Sir Edward Morris as prime minister from 1909 to 1917.",
+      "source_type": "institutional_history"
+    },
+    {
+      "title": "Dominion of Newfoundland — NZHistory",
+      "canonical_url": "https://nzhistory.govt.nz/node/14392",
+      "citation_text": "NZHistory lists Edward Morris as head of government of the Dominion of Newfoundland from 2 March 1909 to 31 December 1917.",
+      "source_type": "government_history"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

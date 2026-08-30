@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Abd Allah al-Mahdi Billah",
+    "display_name_ko": "압둘라 알마흐디",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Fatimid Caliphate",
+    "display_name_ko": "파티마 칼리파국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Caliph-Imam",
+    "role_display_name_ko": "칼리파·이맘",
+    "start_year": 909,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 934,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Abd Allah al-Mahdi Billah founded the Fatimid Caliphate in 909 and ruled as its first Isma'ili imam-caliph until 934. The user offered either al-Mahdi or al-Mu'izz as the civilization's representative; ATLAS selects al-Mahdi because the request permits either and his reign is the founding reign of the Fatimid state. This does not imply that al-Mu'izz, who later conquered Egypt and presided over a major expansion, lacks independent registration value."
+  },
+  "sources": [
+    {
+      "title": "UBEYDULLAH el-MEHDÎ — TDV İslâm Ansiklopedisi",
+      "canonical_url": "https://islamansiklopedisi.org.tr/ubeydullah-el-mehdi",
+      "citation_text": "The TDV Encyclopedia of Islam identifies al-Mahdi as the founder of the Fatimids and the first openly recognized Isma'ili imam, ruling from 909 to 934.",
+      "source_type": "academic_encyclopedia"
+    },
+    {
+      "title": "A History of Shiʿi Islam",
+      "canonical_url": "https://library.oapen.org/bitstream/handle/20.500.12657/101408/9780755613151.pdf?isAllowed=y&sequence=1",
+      "citation_text": "Farhad Daftary's history identifies the establishment of the Fatimid caliphate in 909 under Abd Allah al-Mahdi and gives his reign as 909–934.",
+      "source_type": "academic_book"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "압둘라 알마흐디",
+      "url": "https://namu.wiki/w/%EC%95%95%EB%91%98%EB%9D%BC%20%EC%95%8C%EB%A7%88%ED%9D%90%EB%94%94"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Shulgi",
+    "display_name_ko": "슐기",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Third Dynasty of Ur",
+    "display_name_ko": "우르 제3왕조",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -2094,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -2047,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Shulgi was the second king of the Third Dynasty of Ur. Museum collections conventionally date his reign to approximately 2094–2047 BCE; because absolute third-millennium BCE chronology is reconstructed, ATLAS marks both boundaries approximate rather than presenting the conventional dates as modern-calendar precision."
+  },
+  "sources": [
+    {
+      "title": "Tablet, ruler Shulgi — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/object/W_1927-0527-33",
+      "citation_text": "The British Museum identifies Shulgi as ruler of the Third Dynasty of Ur and dates the object to his conventional reign, 2094–2047 BCE.",
+      "source_type": "museum_reference"
+    },
+    {
+      "title": "Fragmentary statue of King Shulgi of Ur — Metropolitan Museum of Art",
+      "canonical_url": "https://www.metmuseum.org/art/collection/search/328189",
+      "citation_text": "The Metropolitan Museum identifies Shulgi as king of Ur and dates his reign context to ca. 2094–2047 BCE.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "슐기",
+      "url": "https://namu.wiki/w/%EC%8A%90%EA%B8%B0"
+    }
+  }
+}

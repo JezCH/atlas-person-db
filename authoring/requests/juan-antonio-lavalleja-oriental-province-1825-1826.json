@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Juan Antonio Lavalleja",
+    "display_name_ko": "후안 안토니오 라바예하",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Oriental Province",
+    "display_name_ko": "동방주",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Governor and Captain General",
+    "role_display_name_ko": "총독 겸 총사령관",
+    "start_year": 1825,
+    "start_month": 8,
+    "start_day": 22,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1826,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "On 22 August 1825 the provisional authorities of the Oriental Province unanimously designated Juan Antonio Lavalleja Governor and Captain General. The government then declared independence from Portuguese-Brazilian rule on 25 August. Modern scholarship notes that Lavalleja delegated political command to Joaquín Suárez in mid-1826, so ATLAS leaves the 1826 endpoint approximate rather than inventing a day. The polity is the contemporary Oriental Province, not a retrojected fully constituted Oriental Republic of Uruguay, which emerged from the 1828 settlement and 1830 constitution."
+  },
+  "sources": [
+    {
+      "title": "Sesión Solemne 25 de Agosto de 2011 — Junta Departamental de Maldonado",
+      "canonical_url": "https://www.juntamaldonado.gub.uy/index.php/documentos/versiones-taquigraficas/versiones-2011/ago2511",
+      "citation_text": "The official departmental record states that on 22 August 1825 the provisional government unanimously designated Lavalleja Governor and Captain General of the province.",
+      "source_type": "government_record"
+    },
+    {
+      "title": "Disputa política, emigración y asilo en el Río de la Plata",
+      "canonical_url": "https://www.scielo.br/j/tem/a/BRJkYpfsngDs57bwZsqN9CM/",
+      "citation_text": "Recent scholarship describes Lavalleja as provisional governor and captain general of the Oriental Province and notes that he delegated political command to Joaquín Suárez in mid-1826.",
+      "source_type": "academic_article"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}
