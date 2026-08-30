@@ -6,10 +6,6 @@
   "release_order": 565,
   "contract": "stage2/contracts/correction-v2-current.v1.json",
   "decision_authority": "User-requested ATLAS political-community correction on 2026-08-30; Government of Ireland commemoration evidence; preserve Daniel O'Connell Activity identity while replacing the higher-order United Kingdom primary polity with his own Irish political community.",
-  "baseline": {
-    "deployment_sha": "99b397c7553202360de99875eff32834f548e3a3",
-    "baseline_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
-  },
   "execution_rules": {
     "exact_live_before_snapshot_required": true,
     "preserve_all_existing_normalized_source_links_and_locators": true,
