@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:qin-shi-huang:qin:king:246-221-bce:v1",
+  "person":{"canonical_name_en":"Qin Shi Huang","display_name_ko":"진시황"},
+  "polity":{"canonical_name_en":"Qin","display_name_ko":"진나라"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"King","role_display_name_ko":"왕",
+    "start_year":-246,"start_certainty":"exact","start_calendar":"unspecified_historical",
+    "end_year":-221,"end_certainty":"exact","end_calendar":"unspecified_historical",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Ying Zheng ruled the state of Qin as King Zheng from 246 BCE until completing the conquest of the rival states in 221 BCE, when he adopted the imperial title Qin Shi Huang. ATLAS separates the pre-imperial Qin kingship from the existing 221-210 BCE imperial Activity."
+  },
+  "sources":[{"title":"秦王政 — Chinese Text Project Dictionary","canonical_url":"https://ctext.org/dictionary.pl?did=3826&if=en","citation_text":"The Chinese Text Project identifies Ying Zheng as King Zheng of Qin, ruling Qin from 246 to 221 BCE before becoming the First Emperor after unification.","source_type":"research_database"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-21","document_title":"시황제","url":"https://namu.wiki/w/%EC%8B%9C%ED%99%A9%EC%A0%9C"}}
+}

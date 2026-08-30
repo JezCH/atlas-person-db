@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:charles-iv-of-bohemia:holy-roman-empire:emperor:1355-1378:v1",
+  "person":{"canonical_name_en":"Charles IV of Bohemia","display_name_ko":"카를 4세"},
+  "polity":{"canonical_name_en":"Holy Roman Empire","display_name_ko":"신성 로마 제국"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"Holy Roman Emperor","role_display_name_ko":"신성 로마 황제",
+    "start_year":1355,"start_certainty":"exact","start_calendar":"unspecified_historical",
+    "end_year":1378,"end_certainty":"exact","end_calendar":"unspecified_historical",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Charles IV was crowned Holy Roman Emperor in Rome in 1355 and held the imperial office until his death in 1378. ATLAS records this imperial Activity separately from his existing 1346-1378 kingship of Bohemia."
+  },
+  "sources":[{"title":"Karl IV. — Deutsche Biographie","canonical_url":"https://www.deutsche-biographie.de/gnd118560085.html?language=en","citation_text":"Deutsche Biographie identifies Charles IV as Roman-German emperor and records his imperial coronation in Rome in 1355; he died in 1378.","source_type":"academic_reference"}],
+  "external_references":{"namuwiki":{"status":"not_found","checked_at":"2026-08-24"}}
+}
