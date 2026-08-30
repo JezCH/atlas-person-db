@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:otto-i:kingdom-of-italy:king:951-973:v1",
+  "person": {
+    "canonical_name_en": "Otto I",
+    "display_name_ko": "오토 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Italy",
+    "display_name_ko": "이탈리아 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 951,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 973,
+    "end_month": 5,
+    "end_day": 7,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "During his first Italian campaign in 951 Otto I acquired the Lombard/Italian kingship and retained it alongside his German kingship and, from 962, the imperial crown. ATLAS records the Kingdom of Italy as a separate concurrent Polity Activity."
+  },
+  "sources": [
+    {
+      "title": "Liudolfinger — Deutsche Biographie",
+      "canonical_url": "https://www.deutsche-biographie.de/sfz51986.html",
+      "citation_text": "Deutsche Biographie states that Otto acquired rule over Upper Italy and the title rex Langobardorum on his first Italian campaign in 951, before receiving the imperial crown in 962.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Magdeburg: Otto I. 936–973 — Staatliche Museen zu Berlin, Münzkabinett",
+      "canonical_url": "https://ikmk.smb.museum/object?id=18202365",
+      "citation_text": "The Berlin Coin Cabinet identifies Otto I as king from 936, King of Italy from 951, and emperor from 962.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "오토 1세",
+      "url": "https://namu.wiki/w/%EC%98%A4%ED%86%A0%201%EC%84%B8"
+    }
+  }
+}

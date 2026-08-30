@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:otto-i:east-francia:king:936-973:v1",
+  "person": {
+    "canonical_name_en": "Otto I",
+    "display_name_ko": "오토 1세"
+  },
+  "polity": {
+    "canonical_name_en": "East Francia",
+    "display_name_ko": "동프랑크 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 936,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 973,
+    "end_month": 5,
+    "end_day": 7,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Otto I succeeded Henry I as king of the East Frankish/German realm in 936 and retained that kingship until his death on 7 May 973. ATLAS records this royal authority separately from his later Italian kingship and 962-973 imperial Activity."
+  },
+  "sources": [
+    {
+      "title": "Otto I. — Deutsche Biographie",
+      "canonical_url": "https://www.deutsche-biographie.de/sfz74082.html",
+      "citation_text": "Deutsche Biographie identifies Otto I as German king from 936 and Roman emperor from 962 until his death in 973.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "The establishment of the Holy Roman Empire — Deutschlandmuseum",
+      "canonical_url": "https://www.deutschlandmuseum.de/en/history/calendar/962-02-02-the-establishment-of-the-holy-roman-empire/",
+      "citation_text": "The Deutschlandmuseum describes Otto as elected King of East Francia before his imperial coronation in 962.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "오토 1세",
+      "url": "https://namu.wiki/w/%EC%98%A4%ED%86%A0%201%EC%84%B8"
+    }
+  }
+}
