@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:commodus:roman-empire:co-emperor:177-180:v1",
+  "person": {
+    "canonical_name_en": "Commodus",
+    "display_name_ko": "콤모두스"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Co-Emperor",
+    "role_display_name_ko": "공동 황제",
+    "start_year": 177,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 180,
+    "end_month": 3,
+    "end_day": 17,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Commodus was elevated to Augustus and became co-ruler with Marcus Aurelius in 177. He remained co-emperor until Marcus Aurelius died on 17 March 180, when Commodus became sole emperor. ATLAS records this joint imperial phase separately from the existing 180-192 sole reign."
+  },
+  "sources": [
+    {
+      "title": "Commodus, Lucius Aurelius, Roman emperor, 180–192 CE — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548753953",
+      "citation_text": "The Oxford Classical Dictionary states that Commodus was Augustus and co-ruler in 177 and became sole emperor on the death of Marcus Aurelius on 17 March 180.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-21",
+      "document_title": "콤모두스",
+      "url": "https://namu.wiki/w/%EC%BD%A4%EB%AA%A8%EB%91%90%EC%8A%A4"
+    }
+  }
+}
