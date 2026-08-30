@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Dharmapala of Bengal",
+    "display_name_ko": "다르마팔라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Pala Empire",
+    "display_name_ko": "팔라 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 770,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 810,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Dharmapala was the second Pala ruler and is conventionally dated to approximately 770-810. Pala regnal chronology is disputed because inscriptions often give regnal years without a fixed calendar era; published reconstructions vary, so both boundaries are explicitly approximate."
+  },
+  "sources": [
+    {
+      "title": "Major dynasties of north India (647-1200 CE)",
+      "canonical_url": "https://ebooks.inflibnet.ac.in/icp01/chapter/major-dynasties-of-north-india-647-1200-ce/",
+      "citation_text": "INFLIBNET's historical survey gives Dharmapala's reign as 770-810 CE and describes his expansion of Pala power.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Places of Interest | Bhagalpur | India",
+      "canonical_url": "https://s3c52f1bd66cc19d05628bd8bf27af3ad6.s3waas.gov.in/places-of-interest/",
+      "citation_text": "The Government of India district site identifies Dharmapala as the Pala king dated 770-810 A.D. and founder of Vikramshila.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}
