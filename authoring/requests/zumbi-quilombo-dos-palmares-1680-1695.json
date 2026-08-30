@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Zumbi dos Palmares",
+    "display_name_ko": "줌비 두스 파우마레스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Quilombo dos Palmares",
+    "display_name_ko": "팔마레스 킬롬부",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1680,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1695,
+    "end_month": 11,
+    "end_day": 20,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Brazil's Fundação Cultural Palmares states that after rejecting Ganga Zumba's peace settlement, Zumbi became the new king of Palmares in 1680. The main settlement at Macaco fell in 1694, but Zumbi and surviving Palmarino resistance continued until his death on 20 November 1695. ATLAS therefore associates Zumbi with the autonomous Quilombo dos Palmares political community rather than Portuguese Brazil."
+  },
+  "sources": [
+    {
+      "title": "Dandara e Zumbi — Fundação Cultural Palmares",
+      "canonical_url": "https://www.gov.br/palmares/pt-br/departamentos/protecao-preservacao-e-articulacao/serra-da-barriga-1/dandara-e-zumbi/",
+      "citation_text": "Brazil's Fundação Cultural Palmares states that Zumbi rejected Ganga Zumba's peace agreement and became the new king of Palmares in 1680; Palmares' capital fell in 1694.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "20 de novembro — Fundação Cultural Palmares",
+      "canonical_url": "https://www.gov.br/palmares/pt-br/departamentos/protecao-preservacao-e-articulacao/serra-da-barriga-1/20-de-novembro",
+      "citation_text": "Fundação Cultural Palmares identifies Zumbi as leader of Quilombo dos Palmares and records his death on 20 November 1695.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Quilombo — Fundação Cultural Palmares",
+      "canonical_url": "https://www.gov.br/palmares/pt-br/departamentos/protecao-preservacao-e-articulacao/serra-da-barriga-1/quilombo",
+      "citation_text": "Fundação Cultural Palmares describes Quilombo dos Palmares as an autonomous state that resisted attacks for nearly a century.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

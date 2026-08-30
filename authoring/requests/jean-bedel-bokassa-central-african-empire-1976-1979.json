@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Jean-Bédel Bokassa",
+    "display_name_ko": "장베델 보카사",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Central African Empire",
+    "display_name_ko": "중앙아프리카 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1976,
+    "start_month": 12,
+    "start_day": 4,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1979,
+    "end_month": 9,
+    "end_day": 20,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bokassa transformed the Central African Republic into the Central African Empire on 4 December 1976 and ruled as Emperor Bokassa I. His lavish coronation occurred one year later, on 4 December 1977, but the imperial title and polity date from 1976. The British Museum records his overthrow on 20 September 1979, after which the republic was restored."
+  },
+  "sources": [
+    {
+      "title": "Jean-Bédel Bokassa — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG181459",
+      "citation_text": "The British Museum records Bokassa as military ruler of the Central African Republic from 1 January 1966 and Emperor of the Central African Empire from 4 December 1976 until his overthrow on 20 September 1979.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Jean-Bedel Bokassa, ruler of Central African Empire, crowns himself — South African History Online",
+      "canonical_url": "https://sahistory.org.za/dated-event/jean-bedel-bokassa-ruler-central-african-empire-crowns-himself",
+      "citation_text": "South African History Online records Bokassa as head of state of the Central African Republic from 1 January 1966 to 4 December 1976, after which he declared the Central African Empire.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "장베델 보카사",
+      "url": "https://namu.wiki/w/%EC%9E%A5%EB%B2%A0%EB%8D%B8%20%EB%B3%B4%EC%B9%B4%EC%82%AC"
+    }
+  }
+}
