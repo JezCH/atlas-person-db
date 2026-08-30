@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:victor-emmanuel-ii:kingdom-of-sardinia:king:1849-1861:v1",
+  "person":{"canonical_name_en":"Victor Emmanuel II","display_name_ko":"비토리오 에마누엘레 2세"},
+  "polity":{"canonical_name_en":"Kingdom of Sardinia","display_name_ko":"사르데냐 왕국","polity_type":"historical_polity","historicity":"historical"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"King","role_display_name_ko":"왕",
+    "start_year":1849,"start_certainty":"exact","start_calendar":"gregorian",
+    "end_year":1861,"end_certainty":"exact","end_calendar":"gregorian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Victor Emmanuel II became King of Sardinia in 1849 after Charles Albert abdicated and remained king of the Sardinian-Piedmontese monarchy until the Kingdom of Italy was proclaimed in 1861. ATLAS separates this pre-unification kingship from his 1861-1878 kingship of Italy."
+  },
+  "sources":[{"title":"Victor-Emmanuel II — Ministère des Armées","canonical_url":"https://www.defense.gouv.fr/chemins-memoire/histoire-memoires/personnalites/personnalites-lettre-n-lettre-w/victor-emmanuel-ii","citation_text":"The French Ministry of the Armed Forces identifies Victor Emmanuel II as King of Sardinia from 1849 before becoming the first King of Italy in 1861.","source_type":"government_web"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-27","document_title":"비토리오 에마누엘레 2세","url":"https://namu.wiki/w/%EB%B9%84%ED%86%A0%EB%A6%AC%EC%98%A4%20%EC%97%90%EB%A7%88%EB%88%84%EC%97%98%EB%A0%88%202%EC%84%B8"}}
+}
