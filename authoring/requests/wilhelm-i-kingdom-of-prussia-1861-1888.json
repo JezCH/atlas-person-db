@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:wilhelm-i:kingdom-of-prussia:king:1861-1888:v1",
+  "person":{"canonical_name_en":"Wilhelm I","display_name_ko":"빌헬름 1세"},
+  "polity":{"canonical_name_en":"Kingdom of Prussia","display_name_ko":"프로이센 왕국"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"King","role_display_name_ko":"왕",
+    "start_year":1861,"start_certainty":"exact","start_calendar":"gregorian",
+    "end_year":1888,"end_certainty":"exact","end_calendar":"gregorian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Wilhelm I was King of Prussia from 1861 to 1888 while also serving as German Emperor from 1871. Because Prussia and the German Empire are distinct Polities in ATLAS, the Prussian kingship is recorded as its own concurrent Activity."
+  },
+  "sources":[{"title":"Wilhelm I — Otto-von-Bismarck-Stiftung","canonical_url":"https://www.bismarck-biografie.de/en/personen/wilhelm-i-kaiser","citation_text":"The Otto von Bismarck Foundation identifies Wilhelm I as King of Prussia from 1861 to 1888 and German Emperor from 1871 to 1888.","source_type":"institutional_history"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-24","document_title":"빌헬름 1세","url":"https://namu.wiki/w/%EB%B9%8C%ED%97%AC%EB%A6%84%201%EC%84%B8"}}
+}
