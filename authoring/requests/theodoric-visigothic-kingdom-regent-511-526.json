@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:theodoric-the-great:visigothic-kingdom:regent:511-526:v1",
+  "person": {
+    "canonical_name_en": "Theodoric the Great",
+    "display_name_ko": "테오도리크 대왕"
+  },
+  "polity": {
+    "canonical_name_en": "Visigothic Kingdom",
+    "display_name_ko": "서고트 왕국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Regent",
+    "role_display_name_ko": "섭정",
+    "start_year": 511,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 526,
+    "end_month": 8,
+    "end_day": 30,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the fall of Gesalec, Theodoric the Great took control of the Visigothic kingdom in 511 during the minority of his grandson Amalaric. Modern scholarship describes him as Amalaric's senior king or regent, with actual government exercised through Ostrogothic agents. His authority ended with his death on 30 August 526, after which Amalaric ruled independently. ATLAS records this Visigothic regency separately from Theodoric's existing Ostrogothic Kingdom kingship."
+  },
+  "sources": [
+    {
+      "title": "The regnal years of Amalaric: revisiting the sources — Universidade de Lisboa",
+      "canonical_url": "https://repositorio.ulisboa.pt/entities/publication/3890a343-0850-42bb-b54a-133792d67da3",
+      "citation_text": "The 2023 study states that in 511 the child Amalaric became king of the Visigoths with the Ostrogothic king Theoderic acting as his senior king or regent, a situation generally treated as lasting until Theoderic's death in 526.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Marius of Avenches, the Excerpta Valesiana, and the Death of Boethius — Traditio",
+      "canonical_url": "https://www.cambridge.org/core/journals/traditio/article/abs/marius-of-avenches-the-excerpta-valesiana-and-the-death-of-boethius/B88FBB22FA90E86AEF9A510CA4D5CE74",
+      "citation_text": "The Cambridge-published study gives Theoderic's death as 30 August 526.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-23",
+      "document_title": "테오도리크 대왕",
+      "url": "https://namu.wiki/w/%ED%85%8C%EC%98%A4%EB%8F%84%EB%A6%AC%ED%81%AC%20%EB%8C%80%EC%99%95"
+    }
+  }
+}
