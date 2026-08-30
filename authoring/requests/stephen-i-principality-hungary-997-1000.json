@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:stephen-i-of-hungary:principality-of-hungary:grand-prince:997-1000:v1",
+  "person": {
+    "canonical_name_en": "Stephen I of Hungary",
+    "display_name_ko": "이슈트반 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Principality of Hungary",
+    "display_name_ko": "헝가리 대공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Grand Prince",
+    "role_display_name_ko": "대공",
+    "start_year": 997,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1000,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Stephen succeeded Géza as prince of the Hungarians in 997 and ruled the pre-kingdom Hungarian polity until his coronation around 1000/1001. ATLAS records 997-c.1000 as a separate Grand Principality phase and keeps the existing royal Activity beginning around 1000 distinct."
+  },
+  "sources": [
+    {
+      "title": "Hungary — National Széchényi Library / Hungarian Electronic Library",
+      "canonical_url": "https://mek.oszk.hu/02000/02085/02085.pdf",
+      "citation_text": "The Hungarian historical reference list gives Saint Stephen I as Prince from 997 to 1000 and King from 1000 to 1038.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "이슈트반 1세",
+      "url": "https://namu.wiki/w/%EC%9D%B4%EC%8A%88%ED%8A%B8%EB%B0%98%201%EC%84%B8"
+    }
+  }
+}
