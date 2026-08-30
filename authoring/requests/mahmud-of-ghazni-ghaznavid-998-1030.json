@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Mahmud of Ghazni",
+    "display_name_ko": "술탄 마흐무드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ghaznavid Empire",
+    "display_name_ko": "가즈니 왕조",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 998,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1030,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mahmud ibn Sebüktegin became the first fully independent ruler of the Ghaznavid dynasty and reigned from 998 until his death in 1030, building a major military empire from eastern Iran and Central Asia into the Punjab. ATLAS uses the familiar canonical form Mahmud of Ghazni and the Ghaznavid Empire polity."
+  },
+  "sources": [
+    {
+      "title": "MAḤMUD B. SEBÜKTEGIN — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/mahmud-b-sebuktegin/",
+      "citation_text": "Encyclopaedia Iranica identifies Mahmud as the first fully independent ruler of the Ghaznavid dynasty and gives his reign as 998–1030.",
+      "source_type": "academic_encyclopedia"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "술탄 마흐무드",
+      "url": "https://namu.wiki/w/%EC%88%A0%ED%83%84%20%EB%A7%88%ED%9D%90%EB%AC%B4%EB%93%9C"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Anne of Brittany",
+    "display_name_ko": "안 드 브르타뉴",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Brittany",
+    "display_name_ko": "브르타뉴 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Duchess",
+    "role_display_name_ko": "여공작",
+    "start_year": 1488,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1514,
+    "end_month": 1,
+    "end_day": 9,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Anne succeeded her father Francis II as ruler of the Duchy of Brittany in 1488 and remained Duchess in her own right until her death on 9 January 1514, even while twice serving as queen of France. ATLAS therefore associates this Activity with her hereditary Duchy of Brittany rather than reducing her to a French queen-consort role."
+  },
+  "sources": [
+    {
+      "title": "Anne of Brittany, Queen of France — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG64562",
+      "citation_text": "The British Museum identifies Anne as Duchess of Brittany and states that she succeeded her father as ruler of the duchy in 1488.",
+      "source_type": "museum_reference"
+    },
+    {
+      "title": "Anne de Bretagne : de l'icône au document — Archives départementales du Morbihan",
+      "canonical_url": "https://patrimoines-archives.morbihan.fr/decouvrir/instants-dhistoire/zoom-sur-un-personnage/anne-de-bretagne-de-licone-au-document",
+      "citation_text": "The Morbihan departmental archives state that Anne headed the Duchy of Brittany from her father's death in 1488 and died on 9 January 1514.",
+      "source_type": "government_archive"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "안 드 브르타뉴",
+      "url": "https://namu.wiki/w/%EC%95%88%20%EB%93%9C%20%EB%B8%8C%EB%A5%B4%ED%83%80%EB%89%B4"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Aung San",
+    "display_name_ko": "아웅 산",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "State of Burma",
+    "display_name_ko": "버마국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Minister of War",
+    "role_display_name_ko": "전쟁장관",
+    "start_year": 1943,
+    "start_month": 8,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1945,
+    "end_month": 3,
+    "end_day": 27,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Aung San served as Minister of War in the Japanese-backed State of Burma proclaimed on 1 August 1943 under Ba Maw. He was not the head of state: Ba Maw held that position. Aung San increasingly regarded the Japanese-sponsored independence as a sham and became a principal organizer of the anti-fascist resistance; on 27 March 1945 the Burma National Army turned against Japan. ATLAS therefore records Aung San as a minister serving the State of Burma rather than falsely treating the custom-civilization leader slot as national rulership."
+  },
+  "sources": [
+    {
+      "title": "Buil Khyup On Chan — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/people/history/historians-miscellaneous-biographies/buil-khyup-chan",
+      "citation_text": "The biographical reference records Aung San as minister of war in Ba Maw's government when Japanese-sponsored Burmese independence was proclaimed in 1943 and describes his later leadership of the anti-Japanese resistance.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Journeys back along the roads to Mandalay, Imphal and Kohima",
+      "canonical_url": "https://www.tandfonline.com/doi/abs/10.1080/02684527.2021.1903674",
+      "citation_text": "The scholarly review identifies Aung San as Ba Maw's former minister of war and records the Burma National Army's open break with Japan on 27 March 1945.",
+      "source_type": "academic_article"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "아웅 산",
+      "url": "https://namu.wiki/w/%EC%95%84%EC%9B%85%20%EC%82%B0"
+    }
+  }
+}

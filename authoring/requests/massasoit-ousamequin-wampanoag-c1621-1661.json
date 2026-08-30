@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Massasoit Ousamequin",
+    "display_name_ko": "마사소이트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Wampanoag Confederacy",
+    "display_name_ko": "왐파노아그 연맹",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Great Sachem",
+    "role_display_name_ko": "대추장",
+    "start_year": 1621,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1661,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ousamequin, commonly known by the title Massasoit ('Great Sachem'), was the leading sachem of the Wampanoag confederacy when Plymouth colonists arrived. He concluded the 1621 peace alliance with Plymouth and remained the principal leader until his death in 1661, after which his son Wamsutta succeeded him. Because no secure accession date is established here, ATLAS uses c.1621—the first well-attested diplomatic year—as the approximate activity start rather than inventing a coronation or installation date."
+  },
+  "sources": [
+    {
+      "title": "The Wampanoag — Roger Williams National Memorial, National Park Service",
+      "canonical_url": "https://home.nps.gov/rowi/learn/historyculture/wampanoag.htm",
+      "citation_text": "The National Park Service states that the Wampanoag were led by Massasoit Ousamequin, explains that Massasoit means Great Sachem, and describes his alliance with the English.",
+      "source_type": "government_history"
+    },
+    {
+      "title": "Massasoit — World History Encyclopedia",
+      "canonical_url": "https://www.worldhistory.org/Massasoit/",
+      "citation_text": "The reference chronology records the 1621 Wampanoag-Plymouth treaty and Massasoit's death and succession in 1661.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Louis Olivier Bancoult",
+    "display_name_ko": "루이 올리비에 방쿨트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Chagossian Community",
+    "display_name_ko": "차고스인 공동체",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Chagossian rights leader",
+    "role_display_name_ko": "차고스인 권리운동 지도자",
+    "start_year": 1983,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1983,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Chagos Refugees Group traces its establishment to 1983 by Charlesia Alexis, Lisette Talate, Rita Élysée Bancoult and her son Olivier Bancoult. Bancoult later became the group's leader and an elected representative of the Chagossian community in Mauritius, a status he stated before the UK House of Commons in 2008 and has continued to hold in later rights campaigns. ATLAS uses 1983 only as a representative foundation point for his long-running public leadership, not as an assertion that his activism ended that year. `Chagossian Community` is an editorial own-community label, not a claim that Bancoult governed the Chagos Archipelago as a sovereign state."
+  },
+  "sources": [
+    {
+      "title": "Our History — Chagos Refugees Group",
+      "canonical_url": "https://thechagosrefugeesgroup.com/our-history/",
+      "citation_text": "The Chagos Refugees Group states that the organization was established in 1983 by Charlesia Alexis, Lisette Talate, Rita Élysée Bancoult and Olivier Bancoult.",
+      "source_type": "organization_history"
+    },
+    {
+      "title": "Foreign Affairs Committee evidence, 23 January 2008 — UK Parliament",
+      "canonical_url": "https://publications.parliament.uk/pa/cm200708/cmselect/cmfaff/147/8012302.htm",
+      "citation_text": "In evidence to Parliament, Louis Olivier Bancoult identified himself as leader of the Chagos Refugee Group and elected representative of the Chagossian community in Mauritius.",
+      "source_type": "government_record"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

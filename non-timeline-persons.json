@@ -677,5 +677,22 @@
     "role_ko": "전승상 스리 크세트라 건국왕",
     "reason": "Duttabaung is the legendary king said in Burmese royal chronicles to have founded Sri Ksetra. Sri Ksetra and Pyu urban civilization are archaeologically historical, but no secure contemporary evidence identifies Duttabaung as a historical individual, and the traditional royal chronology cannot be reconciled confidently with the archaeological chronology. ATLAS therefore preserves the traditional Sri Ksetra association while excluding him from year-based timeline queries.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "Tariácuri",
+    "politic_name": "Purépecha polity of Lake Pátzcuaro",
+    "display_name_ko": "타리아쿠리",
+    "politic_display_name_ko": "파츠쿠아로 호수 푸레페차 정치체",
+    "historicity": "legendary_possible_historical_core",
+    "historicity_display_ko": "전설·역사적 핵심 가능",
+    "timeline_status": "excluded",
+    "date_basis": "relacion_de_michoacan_early_colonial_dynastic_tradition_without_secure_personal_absolute_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "전승상 파츠쿠아로 군주·푸레페차 통합자",
+    "reason": "Tariácuri is the central ancestral ruler in the early-colonial Relación de Michoacán and is associated by modern archaeological interpretation with the emergence and consolidation of the Purépecha/Tarascan polity around Lake Pátzcuaro. Mexico's INAH explicitly calls him a mythical ruler in its public archaeological description, while scholarship treats the narrative as an indigenous dynastic tradition recorded after the conquest and debates the reconstruction of the early state. ATLAS therefore preserves Tariácuri as a legendary figure with a possible historical core but does not convert later conventional ranges such as c.1350–1390 into a secure personal reign chronology.",
+    "map_policy": "Do not display on the historical year timeline unless the separate legendary, traditional, or uncertain-chronology overlay is enabled."
   }
 ]
