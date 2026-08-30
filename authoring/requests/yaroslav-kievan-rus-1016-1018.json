@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:yaroslav-the-wise:kievan-rus:grand-prince:1016-1018:v1",
+  "person":{"canonical_name_en":"Yaroslav the Wise","display_name_ko":"야로슬라프 1세"},
+  "polity":{"canonical_name_en":"Kievan Rus'","display_name_ko":"키이우 루스"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"Grand Prince","role_display_name_ko":"대공",
+    "start_year":1016,"start_certainty":"exact","start_calendar":"unspecified_historical",
+    "end_year":1018,"end_certainty":"exact","end_calendar":"unspecified_historical",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Yaroslav defeated Sviatopolk at Liubech and assumed the Kyivan throne in 1016. He was driven from Kyiv in 1018, then regained the throne in 1019. ATLAS therefore records the 1016-1018 first reign as a separate Activity from the existing 1019-1054 restored reign."
+  },
+  "sources":[{"title":"Yaroslav the Wise — Internet Encyclopedia of Ukraine","canonical_url":"https://www.encyclopediaofukraine.com/display.asp?linkpath=pagesY%5C%5CA%5C%5CYaroslavtheWise","citation_text":"The Internet Encyclopedia of Ukraine states that Yaroslav assumed the Kyivan grand-princely title after defeating Sviatopolk, was driven from Kyiv in 1018, and regained the throne in 1019.","source_type":"academic_reference"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-26","document_title":"야로슬라프 1세","url":"https://namu.wiki/w/%EC%95%BC%EB%A1%9C%EC%8A%AC%EB%9D%BC%ED%94%84%201%EC%84%B8"}}
+}

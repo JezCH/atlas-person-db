@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:ivan-iv:grand-duchy-of-moscow:grand-prince:1533-1547:v1",
+  "person":{"canonical_name_en":"Ivan IV","display_name_ko":"이반 4세"},
+  "polity":{"canonical_name_en":"Grand Duchy of Moscow","display_name_ko":"모스크바 대공국","polity_type":"historical_polity","historicity":"historical"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"Grand Prince","role_display_name_ko":"대공",
+    "start_year":1533,"start_certainty":"exact","start_calendar":"unspecified_historical",
+    "end_year":1547,"end_certainty":"exact","end_calendar":"unspecified_historical",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Ivan IV became Grand Prince of Moscow in 1533 and retained that title until his coronation as the first Tsar of Russia in 1547. ATLAS separates this Muscovite grand-princely reign from the existing 1547-1584 Tsardom of Russia Activity."
+  },
+  "sources":[{"title":"Ivan IV Vasilyevich the Terrible — Moscow Kremlin Museums","canonical_url":"https://collectiononline.kreml.ru/entity/PERSON/14","citation_text":"The Moscow Kremlin Museums biography identifies Ivan IV as Grand Prince of Moscow from 1533 to 1547 and Tsar from 1547 to 1584.","source_type":"museum_reference"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-27","document_title":"이반 4세","url":"https://namu.wiki/w/%EC%9D%B4%EB%B0%98%204%EC%84%B8"}}
+}

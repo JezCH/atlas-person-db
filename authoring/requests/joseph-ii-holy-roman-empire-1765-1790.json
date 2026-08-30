@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:joseph-ii:holy-roman-empire:emperor:1765-1790:v1",
+  "person":{"canonical_name_en":"Joseph II","display_name_ko":"요제프 2세"},
+  "polity":{"canonical_name_en":"Holy Roman Empire","display_name_ko":"신성 로마 제국"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"Holy Roman Emperor","role_display_name_ko":"신성 로마 황제",
+    "start_year":1765,"start_certainty":"exact","start_calendar":"gregorian",
+    "end_year":1790,"end_certainty":"exact","end_calendar":"gregorian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Joseph II became Holy Roman Emperor in 1765 and remained emperor until his death in 1790. ATLAS records this imperial office separately from his existing Habsburg Monarchy co-regency (1765-1780) and sole rule (1780-1790)."
+  },
+  "sources":[{"title":"Joseph II — Die Welt der Habsburger","canonical_url":"https://www.habsburger.net/en/persons/habsburg-emperor/joseph-ii","citation_text":"The Habsburg history portal identifies Joseph II as Emperor of the Holy Roman Empire from 1765 to 1790, while separately listing his co-regency and sole rule in the Habsburg Monarchy.","source_type":"institutional_history"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-24","document_title":"요제프 2세","url":"https://namu.wiki/w/%EC%9A%94%EC%A0%9C%ED%94%84%202%EC%84%B8"}}
+}
