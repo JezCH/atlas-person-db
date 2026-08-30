@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Vladislav Ardzinba",
+    "display_name_ko": "블라디슬라프 아르진바",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Abkhazia",
+    "display_name_ko": "압하지야 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1994,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2005,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ardzinba became the first president of the de facto Republic of Abkhazia in 1994 and remained president until 2005. ATLAS records the polity descriptively without implying universal international recognition."
+  },
+  "sources": [
+    {
+      "title": "The International Legal Status of the Republic of Abkhazia",
+      "canonical_url": "https://abkhazworld.com/aw/Pdf/2014-libre.pdf",
+      "citation_text": "Abkhaz institutional material identifies Vladislav Ardzinba as the republic's first president in the post-war constitutional period.",
+      "source_type": "government_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

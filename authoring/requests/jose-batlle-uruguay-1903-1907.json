@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "José Batlle y Ordóñez",
+    "display_name_ko": "호세 바트예 이 오르도녜스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Uruguay",
+    "display_name_ko": "우루과이",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1903,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1907,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Batlle y Ordóñez served his first presidency from 1903 to 1907."
+  },
+  "sources": [
+    {
+      "title": "Primeros años del Siglo — Batllismo, Uruguay Educa",
+      "canonical_url": "https://uruguayeduca.anep.edu.uy/sites/default/files/exelearning/06-2026/14279/primeros_aos_del_siglo__batllismo.html",
+      "citation_text": "Uruguay Educa records José Batlle y Ordóñez's first presidency beginning in 1903 and the historical record gives the term as 1903–1907.",
+      "source_type": "government_education_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

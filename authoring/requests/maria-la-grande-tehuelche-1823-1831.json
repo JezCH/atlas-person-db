@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "María la Grande",
+    "display_name_ko": "마리아 라 그란데",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Tehuelche",
+    "display_name_ko": "테우엘체",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Cacica",
+    "role_display_name_ko": "여성 추장(카시카)",
+    "start_year": 1823,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1831,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Argentina's government describes María as the most powerful Tehuelche cacica of the region and documents her exercising leadership in 1823 and again in 1831. ATLAS uses this conservative directly attested window, not an invented full reign or death-based tenure."
+  },
+  "sources": [
+    {
+      "title": "María 'La grande' y Antonio Rivero — Argentina.gob.ar",
+      "canonical_url": "https://www.argentina.gob.ar/node/367746",
+      "citation_text": "Argentina's government describes María as a powerful Tehuelche cacica and documents her leadership in 1823 and 1831.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

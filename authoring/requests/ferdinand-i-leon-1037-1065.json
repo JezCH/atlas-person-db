@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Ferdinand I of León",
+    "display_name_ko": "페르난도 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of León",
+    "display_name_ko": "레온 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King of León",
+    "role_display_name_ko": "레온 국왕",
+    "start_year": 1037,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1065,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ferdinand became king of León after Bermudo III's death in 1037 and reigned until his death in 1065. His coronation followed in 1038, but ATLAS records the conventional regnal interval."
+  },
+  "sources": [
+    {
+      "title": "Ferdinand I of León",
+      "canonical_url": "https://en.wikipedia.org/wiki/Ferdinand_I_of_Le%C3%B3n",
+      "citation_text": "Modern reference chronology gives Ferdinand I's reign as King of León from 1037 to 1065.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

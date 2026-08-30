@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Bogd Khan",
+    "display_name_ko": "복드 칸",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Bogd Khanate of Mongolia",
+    "display_name_ko": "복드 칸국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Bogd Khan",
+    "role_display_name_ko": "복드 칸",
+    "start_year": 1911,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1919,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The 8th Jebtsundamba Khutuktu was proclaimed the theocratic monarch of independent Mongolia on 29 December 1911 and reigned until Chinese abolition of the autonomy in 1919."
+  },
+  "sources": [
+    {
+      "title": "Bogd Khaan — Bogd Khaan Palace Museum",
+      "canonical_url": "https://bogdkhaanpalacemuseum.mn/en/about-us/",
+      "citation_text": "The Bogd Khaan Palace Museum states that the 8th Bogd Jebtsundamba reigned the Bogd Khaanate from 1911 to 1919.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "복드 칸",
+      "url": "https://namu.wiki/w/%EB%B3%B5%EB%93%9C%20%EC%B9%B8"
+    }
+  }
+}

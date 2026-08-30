@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Álvaro Uribe Vélez",
+    "display_name_ko": "알바로 우리베",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Colombia",
+    "display_name_ko": "콜롬비아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 2002,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2010,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Uribe served two consecutive presidential terms beginning in 2002 after winning reelection in 2006; ATLAS records the continuous presidential tenure through 2010."
+  },
+  "sources": [
+    {
+      "title": "Presidencia de la República de Colombia — Álvaro Uribe Vélez",
+      "canonical_url": "https://historico.presidencia.gov.co/asiescolombia/presidentes/69.htm",
+      "citation_text": "The Colombian Presidency archive records Uribe's 2002–2006 presidency and his 2006 reelection.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

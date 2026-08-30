@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Billy Hughes",
+    "display_name_ko": "빌리 휴스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Australia",
+    "display_name_ko": "호주",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1915,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1923,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "William Morris 'Billy' Hughes served as Prime Minister of Australia from 27 October 1915 to 9 February 1923."
+  },
+  "sources": [
+    {
+      "title": "William Hughes: during office — National Archives of Australia",
+      "canonical_url": "https://www.naa.gov.au/explore-collection/australias-prime-ministers/william-hughes/during-office",
+      "citation_text": "The National Archives of Australia documents William Hughes's prime-ministerial period from 1915 to 1923.",
+      "source_type": "government_archive_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

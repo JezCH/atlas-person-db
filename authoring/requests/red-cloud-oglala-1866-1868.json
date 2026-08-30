@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Red Cloud",
+    "display_name_ko": "레드 클라우드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Oglala Lakota",
+    "display_name_ko": "오글랄라 라코타",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "War leader",
+    "role_display_name_ko": "전쟁 지도자",
+    "start_year": 1866,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1868,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Red Cloud was a principal Oglala Lakota leader in the conflict known as Red Cloud's War, culminating in the 1868 Fort Laramie settlement. ATLAS records the securely bounded war-leadership episode rather than inventing a formal lifelong chiefly tenure."
+  },
+  "sources": [
+    {
+      "title": "1868 Treaty Field Area — U.S. National Park Service",
+      "canonical_url": "https://www.nps.gov/places/1868-treaty-field-area.htm",
+      "citation_text": "The National Park Service describes Red Cloud's leadership and the conflict culminating in the 1868 treaty.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

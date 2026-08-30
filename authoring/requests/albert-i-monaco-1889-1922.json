@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Albert I, Prince of Monaco",
+    "display_name_ko": "알베르 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Monaco",
+    "display_name_ko": "모나코",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sovereign Prince",
+    "role_display_name_ko": "모나코 공",
+    "start_year": 1889,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1922,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Albert I was the sovereign Prince of Monaco from 1889 until his death in 1922 and is especially associated with oceanographic and scientific patronage."
+  },
+  "sources": [
+    {
+      "title": "Albert I, Prince of Monaco",
+      "canonical_url": "https://en.wikipedia.org/wiki/Albert_I,_Prince_of_Monaco",
+      "citation_text": "Reference chronology records Albert I as Sovereign Prince of Monaco from 1889 to 1922.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "알베르 1세(모나코)",
+      "url": "https://namu.wiki/w/%EC%95%8C%EB%B2%A0%EB%A5%B4%201%EC%84%B8(%EB%AA%A8%EB%82%98%EC%BD%94)"
+    }
+  }
+}

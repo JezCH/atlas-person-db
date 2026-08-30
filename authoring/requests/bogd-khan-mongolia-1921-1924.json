@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Bogd Khan",
+    "display_name_ko": "복드 칸",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Bogd Khanate of Mongolia",
+    "display_name_ko": "복드 칸국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Bogd Khan under limited monarchy",
+    "role_display_name_ko": "제한군주제 복드 칸",
+    "start_year": 1921,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1924,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After restoration in 1921, Bogd Khan served as khan under a limited monarchy with religious responsibilities until his death in 1924."
+  },
+  "sources": [
+    {
+      "title": "Bogd Khaan — Bogd Khaan Palace Museum",
+      "canonical_url": "https://bogdkhaanpalacemuseum.mn/en/about-us/",
+      "citation_text": "The museum records Bogd Khaan as khan under a limited monarchy from 1921 to 1924.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "복드 칸",
+      "url": "https://namu.wiki/w/%EB%B3%B5%EB%93%9C%20%EC%B9%B8"
+    }
+  }
+}

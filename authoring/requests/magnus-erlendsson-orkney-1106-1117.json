@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Magnus Erlendsson",
+    "display_name_ko": "마그누스 에를렌드손",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Earldom of Orkney",
+    "display_name_ko": "오크니 백작령",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Earl of Orkney",
+    "role_display_name_ko": "오크니 백작",
+    "start_year": 1106,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1117,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Magnus Erlendsson is conventionally placed as Earl of Orkney from 1106 to about 1117. The detailed chronology is saga-dependent, so ATLAS records the conventional interval with approximate boundaries rather than false day-level precision."
+  },
+  "sources": [
+    {
+      "title": "Magnus Erlendsson, Earl of Orkney",
+      "canonical_url": "https://en.wikipedia.org/wiki/Magnus_Erlendsson%2C_Earl_of_Orkney",
+      "citation_text": "Conventional modern chronology places Magnus as Earl of Orkney from 1106 to about 1117.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

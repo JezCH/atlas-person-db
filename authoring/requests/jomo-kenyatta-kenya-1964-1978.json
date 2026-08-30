@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Jomo Kenyatta",
+    "display_name_ko": "조모 케냐타",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kenya",
+    "display_name_ko": "케냐",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1964,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1978,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "When Kenya became a republic in 1964, Kenyatta became its first president and served until his death in 1978."
+  },
+  "sources": [
+    {
+      "title": "Former Presidents — Presidential Library & Museum of Kenya",
+      "canonical_url": "https://uhuru.presidentiallibrary.go.ke/former-presidents/",
+      "citation_text": "Kenya's Presidential Library identifies Jomo Kenyatta as first President from 1964 to 1978.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "조모 케냐타",
+      "url": "https://namu.wiki/w/%EC%A1%B0%EB%AA%A8%20%EC%BC%80%EB%83%90%ED%83%80"
+    }
+  }
+}
