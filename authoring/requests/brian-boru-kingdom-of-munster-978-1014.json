@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:brian-boru:kingdom-of-munster:king:978-1014:v1",
+  "person":{"canonical_name_en":"Brian Boru","display_name_ko":"브리안 보루"},
+  "polity":{"canonical_name_en":"Kingdom of Munster","display_name_ko":"먼스터 왕국","polity_type":"historical_polity","historicity":"historical"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"King","role_display_name_ko":"왕",
+    "start_year":978,"start_certainty":"exact","start_calendar":"unspecified_historical",
+    "end_year":1014,"end_certainty":"exact","end_calendar":"unspecified_historical",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Brian Boru established himself as his brother Mathgamain's successor after defeating and killing Máel Muad at Belach Lechta in 978 and remained king of Munster until his death in 1014. ATLAS records this provincial kingship separately from his existing High Kingship of Ireland beginning in 1002."
+  },
+  "sources":[{"title":"Brian Bórama (Bóruma, Boru) — Dictionary of Irish Biography","canonical_url":"https://www.dib.ie/index.php/biography/brian-borama-boruma-boru-a0954","citation_text":"The Dictionary of Irish Biography states that Brian's victory over Máel Muad in 978 established him as his brother's successor and repeatedly identifies him as the Munster king before his later high kingship.","source_type":"academic_reference"}],
+  "external_references":{"namuwiki":{"status":"not_found","checked_at":"2026-08-28"}}
+}
