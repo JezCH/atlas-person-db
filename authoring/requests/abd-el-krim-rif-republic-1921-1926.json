@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Abd el-Krim",
+    "display_name_ko": "압드 엘 크림",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of the Rif",
+    "display_name_ko": "리프 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1921,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1926,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Abd el-Krim was the principal leader of the Riffian state-building project conventionally known as the Republic of the Rif, established in September 1921 and defeated by the joint Spanish-French campaign in 1926. The polity is recorded as his own political community rather than the Spanish or French colonial authorities he fought."
+  },
+  "sources": [
+    {
+      "title": "Catalans and Rifis during the Wilsonian Moment: The Quest for Self-Determination in the Post-Versailles World",
+      "canonical_url": "https://www.cambridge.org/core/journals/contemporary-european-history/article/catalans-and-rifis-during-the-wilsonian-moment-the-quest-for-selfdetermination-in-the-postversailles-world/A651CE91DF9FDE52565EDDD897020309",
+      "citation_text": "Cambridge scholarship identifies Muhammad ibn Abd al-Karim El-Khattabi (Abd el-Krim) as the leader who proclaimed the Rif Republic and describes the Rif state-building project.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "War on the Colonial Borderland, 1919-1926",
+      "canonical_url": "https://academic.oup.com/stanford-scholarship-online/book/15715/chapter-abstract/170506707",
+      "citation_text": "Sasha D. Pack describes Abd el-Krim as building a Riffian independence army and republic during the Rif War, defeated by 1926.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}
