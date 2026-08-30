@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Ramon Magsaysay",
+    "display_name_ko": "라몬 막사이사이",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Philippines",
+    "display_name_ko": "필리핀",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1953,
+    "start_month": 12,
+    "start_day": 30,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1957,
+    "end_month": 3,
+    "end_day": 17,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ramon Magsaysay served as President of the Philippines from 30 December 1953 until his death in the Mount Manunggal plane crash on 17 March 1957."
+  },
+  "sources": [
+    {
+      "title": "Presidential Communications Office — Magsaysay administration record",
+      "canonical_url": "https://pco.gov.ph/test-only-cab-sec-current-and-former/",
+      "citation_text": "The Philippine Presidential Communications Office lists Ramon Magsaysay as President from 12/30/1953 to 03/17/1957.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "라몬 막사이사이",
+      "url": "https://namu.wiki/w/%EB%9D%BC%EB%AA%AC%20%EB%A7%89%EC%82%AC%EC%9D%B4%EC%82%AC%EC%9D%B4"
+    }
+  }
+}

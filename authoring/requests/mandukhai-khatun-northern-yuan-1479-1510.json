@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Mandukhai Khatun",
+    "display_name_ko": "만두카이 카툰",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Northern Yuan",
+    "display_name_ko": "북원",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Khatun and regent",
+    "role_display_name_ko": "카툰·섭정",
+    "start_year": 1479,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1510,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After Manduul Khan's death, Mandukhai elevated the young Batumongke (Dayan Khan) and became the central queen-regent and military-political partner in the Northern Yuan reunification. ATLAS uses c.1479-c.1510 as a representative leadership window rather than claiming an uninterrupted formally defined regency with exact accession boundaries."
+  },
+  "sources": [
+    {
+      "title": "Mandukhai",
+      "canonical_url": "https://en.wikipedia.org/wiki/Mandukhai",
+      "citation_text": "The biographical record identifies Mandukhai as Khatun of the Mongols/Northern Yuan and as the political partner who helped Dayan Khan reunite the Mongols, with her life ending in 1510.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Northern Yuan dynasty — Restoration",
+      "canonical_url": "https://en.wikipedia.org/wiki/Northern_Yuan_dynasty",
+      "citation_text": "The Northern Yuan historical sequence describes Mandukhai's elevation of Batumongke as Dayan Khan and their campaigns to restore central authority.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

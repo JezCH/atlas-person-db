@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Antonio Canales Rosillo",
+    "display_name_ko": "안토니오 카날레스 로시요",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of the Rio Grande",
+    "display_name_ko": "리오그란데 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Secretary of War and Commander-in-Chief",
+    "role_display_name_ko": "전쟁장관·군 총사령관",
+    "start_year": 1840,
+    "start_month": 1,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1840,
+    "end_month": 11,
+    "end_day": 6,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Canales Rosillo was not president of the Republic of the Rio Grande. The republic selected Jesús Cárdenas as president and appointed Canales secretary of war and commander-in-chief. ATLAS therefore records his actual military-government office rather than treating him as sovereign leader."
+  },
+  "sources": [
+    {
+      "title": "Canales Rosillo, Antonio",
+      "canonical_url": "https://www.tshaonline.org/handbook/entries/canales-rosillo-antonio",
+      "citation_text": "The Texas State Historical Association states that in January 1840 Jesús Cárdenas was selected president while Antonio Canales was appointed secretary of war and commander in chief.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Republic of the Rio Grande",
+      "canonical_url": "https://www.tshaonline.org/handbook/entries/republic-of-the-rio-grande",
+      "citation_text": "TSHA lists Jesús de Cárdenas as president and Antonio Canales Rosillo as commander-in-chief of the republic's army.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

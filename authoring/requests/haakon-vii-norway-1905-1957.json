@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Haakon VII",
+    "display_name_ko": "호콘 7세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Norway",
+    "display_name_ko": "노르웨이",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1905,
+    "start_month": 11,
+    "start_day": 18,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1957,
+    "end_month": 9,
+    "end_day": 21,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Storting elected Prince Carl as King of Norway on 18 November 1905; he took the name Haakon VII and remained king until his death on 21 September 1957. His wartime exile did not interrupt the kingship."
+  },
+  "sources": [
+    {
+      "title": "King Haakon VII (1872-1957)",
+      "canonical_url": "https://www.royalcourt.no/artikkel.html?sek=28571&tid=28678",
+      "citation_text": "The Royal House of Norway records Haakon's election by the Storting on 18 November 1905 and his death on 21 September 1957.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

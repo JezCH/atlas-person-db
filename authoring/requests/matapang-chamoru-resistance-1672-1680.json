@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Matå'pang",
+    "display_name_ko": "마타팡",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "CHamoru",
+    "display_name_ko": "차모로",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Maga'låhi and resistance leader",
+    "role_display_name_ko": "마가랄히·저항 지도자",
+    "start_year": 1672,
+    "start_month": 4,
+    "start_day": 2,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1680,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Matå'pang was a maga'låhi from Tomhom and a historical CHamoru leader remembered for resisting Spanish colonial rule. His representative military-activity window begins with the 2 April 1672 San Vitores confrontation and ends with his death during the suppression campaign in 1680. CHamoru is used as his represented political community, not the Spanish colonial authority he fought."
+  },
+  "sources": [
+    {
+      "title": "Matå’pang: Matapang",
+      "canonical_url": "https://www.guampedia.com/chiefs-matapang-matapang/",
+      "citation_text": "Guampedia identifies Maga'låhi Matå'pang of Tomhom as a CHamoru historical figure and resistance leader, records the 2 April 1672 confrontation, and states that he died in 1680.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Matå’pang: Evolution of the Term",
+      "canonical_url": "https://www.guampedia.com/matapang-evolution-of-the-term/",
+      "citation_text": "Guampedia describes Matå'pang as a seventeenth-century historical Chamorro maga'låhi who continued fighting Spanish colonization until his death in 1680.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

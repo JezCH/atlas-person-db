@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Ahmad Tejan Kabbah",
+    "display_name_ko": "아흐마드 테잔 카바",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Sierra Leone",
+    "display_name_ko": "시에라리온 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1996,
+    "start_month": 3,
+    "start_day": 29,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1997,
+    "end_month": 5,
+    "end_day": 25,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kabbah's first elected presidency ended when the Armed Forces Revolutionary Council coup removed his government on 25 May 1997. ATLAS preserves the interruption rather than drawing a false continuous 1996-2007 term."
+  },
+  "sources": [
+    {
+      "title": "Ahmad Tejan Kabbah",
+      "canonical_url": "https://commonwealthoralhistories.org/explandict/ahmad-tejan-kabbah/",
+      "citation_text": "The Commonwealth Oral History Project identifies Ahmad Tejan Kabbah as President of Sierra Leone in 1996-97 and 1998-2007.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "UNOMSIL Background",
+      "canonical_url": "https://peacekeeping.un.org/sites/default/files/past/unomsil/UnomsilB.htm",
+      "citation_text": "United Nations peacekeeping history records that Kabbah was returned to office on 10 March 1998 after the military junta was expelled.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

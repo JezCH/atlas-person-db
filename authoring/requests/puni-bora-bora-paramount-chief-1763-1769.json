@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Puni",
+    "display_name_ko": "푸니",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Bora Bora",
+    "display_name_ko": "보라보라",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Ari'i Rahi (paramount chief)",
+    "role_display_name_ko": "아리이 라히(최고 추장)",
+    "start_year": 1763,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1769,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Puni (Teihotu Matarua) was the great chief of Bora Bora whose forces conquered Raiatea after a multi-year campaign and whose dominance is independently attested when Cook reached the Leeward Islands in 1769. ATLAS uses c.1763-c.1769 as a defensible evidence window, not as a fabricated complete reign. The polity is Bora Bora rather than back-projecting the later nineteenth-century formal Kingdom of Bora Bora."
+  },
+  "sources": [
+    {
+      "title": "The Polynesian 'Prince' Who Took 18th-Century England by Storm",
+      "canonical_url": "https://www.smithsonianmag.com/history/polynesian-prince-who-took-18th-century-england-storm-180978618/",
+      "citation_text": "Smithsonian Magazine describes the conquest of Raiatea around 1763 by Bora Bora invaders under the great chief Puni.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "ANA'ITE Polynesian scientific digital library — Teihotu Matarua dit Puni",
+      "canonical_url": "https://anaite.upf.pf/s/anaite/media/51579",
+      "citation_text": "University of French Polynesia material identifies Teihotu Matarua, called Puni, as a major Bora Bora warrior whose eighteenth-century campaigns subjugated Raiatea and most Leeward Islands.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

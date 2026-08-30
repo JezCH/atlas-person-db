@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Theresa May",
+    "display_name_ko": "테레사 메이",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 2016,
+    "start_month": 7,
+    "start_day": 13,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2019,
+    "end_month": 7,
+    "end_day": 24,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Theresa May became Prime Minister on 13 July 2016 and served until 24 July 2019, when she tendered her resignation and Boris Johnson formed a new administration."
+  },
+  "sources": [
+    {
+      "title": "History of The Rt Hon Theresa May",
+      "canonical_url": "https://www.gov.uk/government/history/past-prime-ministers/theresa-may",
+      "citation_text": "GOV.UK records Theresa May as Prime Minister from 13 July 2016 until 24 July 2019.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Theresa May's final speech as Prime Minister: 24 July 2019",
+      "canonical_url": "https://www.gov.uk/government/speeches/theresa-mays-final-speech-as-prime-minister-24-july-2019",
+      "citation_text": "The official final speech records May's resignation on 24 July 2019.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "테레사 메이",
+      "url": "https://namu.wiki/w/%ED%85%8C%EB%A0%88%EC%82%AC%20%EB%A9%94%EC%9D%B4"
+    }
+  }
+}

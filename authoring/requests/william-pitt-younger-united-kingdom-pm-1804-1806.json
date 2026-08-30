@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "William Pitt the Younger",
+    "display_name_ko": "윌리엄 피트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "United Kingdom",
+    "display_name_ko": "영국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1804,
+    "start_month": 5,
+    "start_day": 10,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1806,
+    "end_month": 1,
+    "end_day": 23,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Pitt returned to head a second ministry in May 1804 and remained Prime Minister until his death on 23 January 1806. The genuine 1801-1804 out-of-office interval is preserved."
+  },
+  "sources": [
+    {
+      "title": "History of William Pitt 'The Younger'",
+      "canonical_url": "https://www.gov.uk/government/history/past-prime-ministers/william-pitt",
+      "citation_text": "GOV.UK records Pitt's premierships in 1783-1801 and 1804-1806 and the Act of Union that created the United Kingdom.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "William Pitt the Younger (Whig/Tory 1783-1801, 1804-1806)",
+      "canonical_url": "https://history.blog.gov.uk/2015/09/16/william-pitt-the-younger-whigtory-1783-1801-1804-1806/",
+      "citation_text": "The UK History of Government account records the 1 January 1801 union, Pitt's resignation on 14 March 1801, and his return in May 1804.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "윌리엄 피트(1759)",
+      "url": "https://namu.wiki/w/%EC%9C%8C%EB%A6%AC%EC%97%84%20%ED%94%BC%ED%8A%B8%281759%29"
+    }
+  }
+}
