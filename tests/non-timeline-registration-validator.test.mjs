@@ -14,4 +14,9 @@ test('non-timeline validator enforces excluded timeline and null activity bounda
   assert.match(validator, /timeline_status !== 'excluded'/);
   assert.match(validator, /row\.activity_start !== null \|\| row\.activity_end !== null/);
   assert.match(validator, /duplicate non-timeline person_name/);
+  for (const key of ['historicity_display_ko','date_basis','role_ko','reason','map_policy']) {
+    assert.match(validator, new RegExp(key));
+  }
+  assert.match(validator, /traditional_year_alternative/);
+  assert.match(validator, /cannot set traditional_year_alternative without traditional_year/);
 });

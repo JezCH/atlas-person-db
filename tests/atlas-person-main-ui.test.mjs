@@ -24,7 +24,7 @@ test('Person-centered Main renders all historicity groups in one chronology tabl
   assert.match(main, /\.\.\.groups\.historical/);
   assert.match(main, /\.\.\.groups\.other_or_uncertain/);
   assert.match(main, /\.\.\.visibleUnknownRegistryPersons\(\)/);
-  assert.match(main, /개인 활동연대를 방어할 수 없는 인물은 모두 ‘연대 미상’에 함께 표시합니다/);
+  assert.match(main, /개인 활동연대를 방어할 수 없는 인물은 모두 ‘전설, 신화, 연대미상’에 함께 표시합니다/);
   assert.match(main, /non-timeline-persons\.json/);
   assert.doesNotMatch(main, /OTHER \/ UNCERTAIN HISTORICITY/);
   assert.match(reader, /partitionByHistoricity/);
@@ -147,7 +147,10 @@ test('Person Main CSS isolates the new layout and keeps responsive fallbacks', (
 test('Main has no standalone legend table and routes uncertain people through the shared chronology table', () => {
   assert.doesNotMatch(main, /person-group-other/);
   assert.doesNotMatch(main, /OTHER \/ UNCERTAIN HISTORICITY/);
-  assert.match(main, /groups\.other_or_uncertain/);
+  assert.match(main, /groups\.other_or_uncertain\.map\(withUnknownRegistryContext\)/);
+  assert.match(main, /function unknownRegistryRowForPerson/);
+  assert.match(main, /function withUnknownRegistryContext/);
+  assert.match(main, /registry_context_for_first_class/);
   assert.match(main, /registry_only/);
   assert.doesNotMatch(html, /non-timeline-list\.js/);
   assert.doesNotMatch(html, /nonTimelineSection/);

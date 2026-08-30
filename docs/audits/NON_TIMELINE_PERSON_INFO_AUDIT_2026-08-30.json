@@ -1,0 +1,385 @@
+{
+  "audit_date": "2026-08-30",
+  "basis_main_sha": "ca8ccf7e0647c712da57f8abee8980d898e93730",
+  "scope": {
+    "registry": "non-timeline-persons.json",
+    "registry_rows": 41,
+    "first_class_unknown_persons": [
+      "Gush X'een",
+      "Kupe",
+      "Hiawatha"
+    ],
+    "first_class_registry_overlaps": [
+      "Gush X'een",
+      "Kupe",
+      "Hiawatha"
+    ]
+  },
+  "policy": {
+    "timeline_gate": "Historicity PASS and defensible person-specific chronology PASS are both required.",
+    "unknown_boundaries": "activity_start and activity_end remain null. Culture-, dynasty-, settlement-, saga- or genealogy-wide ranges are not promoted to personal Activity years.",
+    "deletion": "No Person was deleted."
+  },
+  "summary": {
+    "timeline_promotions": 0,
+    "missing_required_display_fields_before": {
+      "role_ko": [
+        "Dido"
+      ]
+    },
+    "missing_required_display_fields_after": {},
+    "registry_rows_with_deliberate_null_activity_boundaries": 41,
+    "first_class_overlap_display_context_recovered": 3
+  },
+  "corrections": [
+    {
+      "person_name": "Dido",
+      "action": "filled_role_ko",
+      "value": "카르타고의 전설적 건국자·초대 여왕"
+    },
+    {
+      "person_name": "Po Ngbe",
+      "action": "clarified_fringe_claim_label_and_role",
+      "historicity_display_ko": "비주류 해독 주장·역사성 미검증",
+      "role_ko": "비주류 해독 주장상의 올멕 군주"
+    },
+    {
+      "person_name": "Sardus",
+      "action": "clarified_mythic_religious_role",
+      "role_ko": "사르데냐의 신화적 시조·수호신"
+    },
+    {
+      "person_name": "Gudit",
+      "action": "clarified_historical_core_vs_identity_uncertainty",
+      "date_basis": "tenth_century_external_reports_plus_later_gudit_traditions_identity_uncertain"
+    },
+    {
+      "person_name": "Kupe",
+      "action": "recover_registry_polity_role_context_for_first_class_card"
+    },
+    {
+      "person_name": "Hiawatha",
+      "action": "recover_registry_polity_role_context_for_first_class_card"
+    },
+    {
+      "person_name": "Gush X'een",
+      "action": "recover_registry_polity_role_context_for_first_class_card"
+    }
+  ],
+  "borderline_routing_review": [
+    {
+      "person_name": "Bulan",
+      "decision": "keep_non_timeline",
+      "reason": "Conversion date and Bulan's office remain disputed; no secure person-specific reign interval."
+    },
+    {
+      "person_name": "Salamasina",
+      "decision": "keep_non_timeline",
+      "reason": "Genealogical reconstructions place her broadly in the late pre-contact period but do not supply a secure absolute personal interval."
+    },
+    {
+      "person_name": "Tróndur í Gøtu",
+      "decision": "keep_non_timeline",
+      "reason": "The conventional life chronology depends heavily on the later Færeyinga saga; no independent person-specific interval was promoted."
+    },
+    {
+      "person_name": "Gudit",
+      "decision": "keep_non_timeline",
+      "reason": "A tenth-century hostile queen is independently evidenced, but identification of that queen with the later Gudit/Yodit tradition remains materially disputed."
+    },
+    {
+      "person_name": "Tariácuri",
+      "decision": "keep_non_timeline",
+      "reason": "The archaeological Tariácuri phase is a regional phase, not the ruler's personal interval; the ruler chronology remains dependent on early-colonial dynastic tradition."
+    }
+  ],
+  "rows": [
+    {
+      "person_name": "Dido",
+      "display_name_ko": "디도",
+      "historicity": "legendary",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Hippolyta",
+      "display_name_ko": "히폴리타",
+      "historicity": "mythical",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Ragnar Lodbrok",
+      "display_name_ko": "라그나르 로드브로크",
+      "historicity": "legendary_or_composite",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Bjorn Ironside",
+      "display_name_ko": "비요른 아이언사이드",
+      "historicity": "legendary_possible_historical_core",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Po Ngbe",
+      "display_name_ko": "포 응베",
+      "historicity": "legendary_or_unverified",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Minos",
+      "display_name_ko": "미노스",
+      "historicity": "legendary",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Agamemnon",
+      "display_name_ko": "아가멤논",
+      "historicity": "legendary",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Yu the Great",
+      "display_name_ko": "우왕",
+      "historicity": "legendary_possible_historical_core",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Dayang Kalangitan",
+      "display_name_ko": "다양 칼랑이탄",
+      "historicity": "historical_tradition_uncertain_chronology",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Hotu Matu'a",
+      "display_name_ko": "호투 마투아",
+      "historicity": "legendary_possible_historical_core",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Bilqis",
+      "display_name_ko": "빌키스",
+      "historicity": "legendary",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Dangun Wanggeom",
+      "display_name_ko": "단군왕검",
+      "historicity": "legendary_founder_tradition",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Moses",
+      "display_name_ko": "모세",
+      "historicity": "legendary_possible_historical_core",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Abraham",
+      "display_name_ko": "아브라함",
+      "historicity": "legendary_or_unverified",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Eri",
+      "display_name_ko": "에리",
+      "historicity": "legendary_or_unverified",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Tyrrhenus",
+      "display_name_ko": "티레노스",
+      "historicity": "legendary_or_unverified",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Aeetes",
+      "display_name_ko": "아이에테스",
+      "historicity": "legendary",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Bulan",
+      "display_name_ko": "불란",
+      "historicity": "historical_tradition_uncertain_chronology",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Kupe",
+      "display_name_ko": "쿠페",
+      "historicity": "legendary_possible_historical_core",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "ʻAhoʻeitu",
+      "display_name_ko": "아호에이투",
+      "historicity": "legendary_possible_historical_core",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Achish (Abimelech)",
+      "display_name_ko": "아기스(아비멜렉)",
+      "historicity": "historical_tradition_uncertain_chronology",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Hiawatha",
+      "display_name_ko": "히아와타",
+      "historicity": "historical_tradition_uncertain_chronology",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Gush X'een",
+      "display_name_ko": "거쉬 신",
+      "historicity": "historical_tradition_uncertain_chronology",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Sardus",
+      "display_name_ko": "사르두스",
+      "historicity": "mythical",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Yennenga",
+      "display_name_ko": "옌넹가",
+      "historicity": "legendary_possible_historical_core",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Joshua",
+      "display_name_ko": "여호수아",
+      "historicity": "legendary_possible_historical_core",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Taycanamo",
+      "display_name_ko": "타이카나모",
+      "historicity": "legendary_or_unverified",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Priam",
+      "display_name_ko": "프리아모스",
+      "historicity": "legendary",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Penthesilea",
+      "display_name_ko": "펜테실레이아",
+      "historicity": "mythical",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Xochitl",
+      "display_name_ko": "소치틀",
+      "historicity": "legendary",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Ntare I Rushatsi Cambarantama",
+      "display_name_ko": "은타레 1세 루샤치 캄바란타마",
+      "historicity": "legendary_or_unverified",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Tinerfe the Great",
+      "display_name_ko": "티네르페 대왕",
+      "historicity": "legendary_or_unverified",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Salamasina",
+      "display_name_ko": "살라마시나",
+      "historicity": "historical_tradition_uncertain_chronology",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Manco Capac",
+      "display_name_ko": "망코 카팍",
+      "historicity": "legendary_possible_historical_core",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Beowulf",
+      "display_name_ko": "베오울프",
+      "historicity": "legendary",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "U Kix Chan",
+      "display_name_ko": "우 키시 찬",
+      "historicity": "legendary_or_unverified",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Tróndur í Gøtu",
+      "display_name_ko": "트론두르 이 괴투",
+      "historicity": "historical_tradition_uncertain_chronology",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Gwendolen",
+      "display_name_ko": "그웬돌렌",
+      "historicity": "legendary",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Gudit",
+      "display_name_ko": "구디트",
+      "historicity": "historical_core_uncertain_tradition",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Duttabaung",
+      "display_name_ko": "두타바웅",
+      "historicity": "legendary_possible_historical_core",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    },
+    {
+      "person_name": "Tariácuri",
+      "display_name_ko": "타리아쿠리",
+      "historicity": "legendary_possible_historical_core",
+      "status": "complete_after_audit",
+      "chronology": "unknown_by_policy"
+    }
+  ]
+}

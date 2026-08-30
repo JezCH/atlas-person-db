@@ -139,6 +139,25 @@
     };
   }
 
+  function unknownRegistryRowForPerson(person) {
+    const keys = new Set(personIdentityKeys(person));
+    if (!keys.size) return null;
+    return unknownChronologyRegistry.find((row) => registryIdentityKeys(row).some((key) => keys.has(key))) || null;
+  }
+
+  function withUnknownRegistryContext(person) {
+    if (!person || String(person.historicity || "") === "historical") return person;
+    if (Array.isArray(person.activity_summaries) && person.activity_summaries.length) return person;
+    const row = unknownRegistryRowForPerson(person);
+    if (!row) return person;
+    const context = registryPerson(row).activity_summaries[0];
+    return {
+      ...person,
+      historicity_display_ko: row.historicity_display_ko || person.historicity_display_ko || null,
+      activity_summaries: [{ ...context, registry_context_for_first_class: true }]
+    };
+  }
+
   function visibleUnknownRegistryPersons() {
     if (facetFilters.polity_id) return [];
     const firstClassNames = new Set(persons.flatMap(personIdentityKeys));
@@ -272,13 +291,13 @@
     const groups = reader.preparePersonGroups(persons, { query, sortOrder, facetFilters });
     const rows = [
       ...groups.historical,
-      ...groups.other_or_uncertain,
+      ...groups.other_or_uncertain.map(withUnknownRegistryContext),
       ...visibleUnknownRegistryPersons()
     ].sort((left, right) => reader.comparePersons(left, right, sortOrder));
     const shown = rows.length;
     const renderedGroups = groupSection({
       title: "인물",
-      description: "연대가 있는 인물은 시대별로, 개인 활동연대를 방어할 수 없는 인물은 모두 ‘연대 미상’에 함께 표시합니다. 역사성 분류는 별도 값으로 유지됩니다.",
+      description: "연대가 있는 인물은 시대별로, 개인 활동연대를 방어할 수 없는 인물은 모두 ‘전설, 신화, 연대미상’에 함께 표시합니다. 역사성 분류는 별도 값으로 유지됩니다.",
       rows
     });
     for (const child of [...list.children]) {

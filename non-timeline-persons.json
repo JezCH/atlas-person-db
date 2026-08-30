@@ -13,7 +13,8 @@
     "activity_start": null,
     "activity_end": null,
     "reason": "Dido is a legendary founder associated by tradition with the foundation of Carthage in 814/813 BCE. Her personal reign and death dates are not securely known, so she is excluded from year-based map queries.",
-    "map_policy": "Do not display on the year timeline unless a separate legendary/traditional overlay is enabled."
+    "map_policy": "Do not display on the year timeline unless a separate legendary/traditional overlay is enabled.",
+    "role_ko": "카르타고의 전설적 건국자·초대 여왕"
   },
   {
     "person_name": "Hippolyta",
@@ -72,14 +73,14 @@
     "display_name_ko": "포 응베",
     "politic_display_name_ko": "올멕",
     "historicity": "legendary_or_unverified",
-    "historicity_display_ko": "전설·미검증",
+    "historicity_display_ko": "비주류 해독 주장·역사성 미검증",
     "timeline_status": "excluded",
     "date_basis": "non_mainstream_inscription_claim",
     "traditional_year": null,
     "traditional_year_alternative": null,
     "activity_start": null,
     "activity_end": null,
-    "role_ko": "전승상 올멕 군주",
+    "role_ko": "비주류 해독 주장상의 올멕 군주",
     "reason": "Po Ngbe is reported in a non-mainstream interpretation of alleged Olmec inscriptions as a ruler in Guerrero between about 900 and 600 BCE. The reading and the individual's historicity are not accepted as secure by mainstream Olmec scholarship.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or unverified overlay is enabled."
   },
@@ -402,7 +403,7 @@
     "traditional_year_alternative": null,
     "activity_start": null,
     "activity_end": null,
-    "role_ko": "누라게 사르데냐인의 신화적 시조 영웅",
+    "role_ko": "사르데냐의 신화적 시조·수호신",
     "reason": "Sardus (Sardus Pater) is the eponymous mythological hero associated by classical tradition with the people and name of Sardinia. Nuragic civilization is archaeologically historical, but Sardus is not securely established as a historical individual and no defensible personal chronology exists.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or mythical overlay is enabled."
   },
@@ -652,13 +653,13 @@
     "historicity": "historical_core_uncertain_tradition",
     "historicity_display_ko": "역사적 핵심 가능·전승 혼재",
     "timeline_status": "excluded",
-    "date_basis": "tenth_century_queen_traditions_and_external_reports_with_conflicting_later_chronologies",
+    "date_basis": "tenth_century_external_reports_plus_later_gudit_traditions_identity_uncertain",
     "traditional_year": null,
     "traditional_year_alternative": null,
     "activity_start": null,
     "activity_end": null,
     "role_ko": "전승상 에티오피아의 여왕·악숨 정복자",
-    "reason": "Medieval and later Ethiopian traditions preserve Gudit/Yodit as a queen who seized power and devastated Aksum, and some modern scholarship argues for a historical tenth-century queen behind the traditions. However, the specific identification of Gudit as a Jewish/Beta Israel queen of a Kingdom of Semien and the traditional 40-year reign chronologies are not securely established and conflict across sources. ATLAS therefore does not encode 'Semien led by Gudit' as a historical polity-reign fact and keeps her outside the year timeline.",
+    "reason": "Independent medieval evidence supports the activity of a powerful non-Christian queen who attacked the Aksumite Christian polity in the later tenth century, while later Ethiopian traditions preserve the figure as Gudit/Yodit. Scholarship differs on how securely the independently attested queen can be identified with the legendary Gudit cycle, and her origin, religion, polity and exact personal reign remain disputed. ATLAS therefore preserves a probable historical core without turning the contested identification or later 40-year reign traditions into a year-based personal Activity.",
     "map_policy": "Do not display on the historical year timeline unless the separate legendary, traditional, or uncertain-chronology overlay is enabled."
   },
   {
