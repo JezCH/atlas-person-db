@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:roger-ii-of-sicily:county-of-sicily:count:1105-1130:v1",
+  "person": {
+    "canonical_name_en": "Roger II of Sicily",
+    "display_name_ko": "루제루 2세"
+  },
+  "polity": {
+    "canonical_name_en": "County of Sicily",
+    "display_name_ko": "시칠리아 백국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Count",
+    "role_display_name_ko": "백작",
+    "start_year": 1105,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1130,
+    "end_month": 12,
+    "end_day": 25,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Roger II became the sole heir of the County of Sicily after his elder brother Simon died in 1105. During his minority the county was governed under the regency of his mother Adelaide, but Roger held the comital title continuously. This Activity ends with his coronation as King of Sicily on 25 December 1130."
+  },
+  "sources": [
+    {
+      "title": "RUGGERO II, re di Sicilia — Dizionario Biografico degli Italiani, Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/ruggero-ii-re-di-sicilia_(Dizionario-Biografico)/",
+      "citation_text": "Treccani records Simon's death on 28 September 1105, after which Roger became the sole heir of the County of Sicily under his mother's guardianship, and describes the county's government during his minority.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "루제루 2세",
+      "url": "https://namu.wiki/w/%EB%A3%A8%EC%A0%9C%EB%A3%A8%202%EC%84%B8"
+    }
+  }
+}
