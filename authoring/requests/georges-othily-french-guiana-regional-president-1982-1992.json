@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Georges Othily",
+    "display_name_ko": "조르주 오틸리",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "French Guiana",
+    "display_name_ko": "프랑스령 기아나",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President of the Regional Council",
+    "role_display_name_ko": "지역의회 의장",
+    "start_year": 1982,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1992,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Georges Othily presided over the Regional Council of French Guiana from 1982 to 1992. ATLAS uses the territorial political community French Guiana because the requested civilization pack represents the territory rather than metropolitan France."
+  },
+  "sources": [
+    {
+      "title": "OTHILY Georges",
+      "canonical_url": "https://cths.fr/an/savant.php?id=124891",
+      "citation_text": "The Comité des travaux historiques et scientifiques records Georges Othily as president of the Regional Council of French Guiana from 1982 to 1992.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Disparition de Georges Othily",
+      "canonical_url": "https://www.ctguyane.fr/disparition-de-georges-othily-reaction-president-rodolphe-alexandre/",
+      "citation_text": "The Collectivité Territoriale de Guyane likewise records Othily as president of the Region from 1982 to 1992.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

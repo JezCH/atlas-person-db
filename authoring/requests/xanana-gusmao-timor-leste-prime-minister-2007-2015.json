@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Xanana Gusmão",
+    "display_name_ko": "샤나나 구스망",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Timor-Leste",
+    "display_name_ko": "동티모르",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 2007,
+    "start_month": 8,
+    "start_day": 8,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2015,
+    "end_month": 2,
+    "end_day": 16,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gusmão was sworn in as Prime Minister on 8 August 2007, continued after the 2012 election, and stepped down before the Sixth Constitutional Government took office on 16 February 2015. His separate current premiership beginning in 2023 is not fabricated into this closed-boundary Activity; the present human-authoring schema requires an end year and cannot yet encode an open-ended current term."
+  },
+  "sources": [
+    {
+      "title": "Biography - Kay Rala Xanana Gusmão",
+      "canonical_url": "https://timor-leste.gov.tl/?lang=en&p=32776",
+      "citation_text": "The Government of Timor-Leste records Gusmão's election and swearing-in as President on 20 May 2002, service through May 2007, and his August 2007 swearing-in as Prime Minister, with his decision to step down before the Sixth Constitutional Government in February 2015.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Succession of Governments, general elections and legislatures",
+      "canonical_url": "https://timor-leste.gov.tl/?lang=en&p=1602",
+      "citation_text": "The Government of Timor-Leste records the presidential mandate beginning 20 May 2002 and the Fourth Constitutional Government under Xanana Gusmão beginning 8 August 2007.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

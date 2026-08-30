@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Ranjit Singh",
+    "display_name_ko": "란지트 싱",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Sikh Empire",
+    "display_name_ko": "시크 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Maharaja",
+    "role_display_name_ko": "마하라자",
+    "start_year": 1801,
+    "start_month": 4,
+    "start_day": 12,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1839,
+    "end_month": 6,
+    "end_day": 27,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ranjit Singh founded and ruled the Sikh state of Punjab. The user's broad 'Punjab' label is normalized to Sikh Empire, the historical polity that he consolidated and ruled as Maharaja."
+  },
+  "sources": [
+    {
+      "title": "Ranjit Singh",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG114143",
+      "citation_text": "The British Museum identifies Ranjit Singh as founder and maharaja, 1801-1839, of the Sikh kingdom of the Punjab.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Ranjit Singh",
+      "canonical_url": "https://en.wikipedia.org/wiki/Ranjit_Singh",
+      "citation_text": "The standard regnal chronology gives his coronation on 12 April 1801 and death on 27 June 1839.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

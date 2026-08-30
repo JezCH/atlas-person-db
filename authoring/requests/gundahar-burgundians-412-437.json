@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Gundahar",
+    "display_name_ko": "군다하르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of the Burgundians",
+    "display_name_ko": "부르군트 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 412,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 437,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gundahar is a historical Burgundian king underlying the later Gunther/Gunnar heroic tradition. He is securely attested as king by 412, but that year is a first-attestation anchor rather than a known accession date; his death and the destruction of the Rhine kingdom are dated 437 or 438. ATLAS therefore uses c.412-c.437 with both boundaries approximate."
+  },
+  "sources": [
+    {
+      "title": "Gundahar",
+      "canonical_url": "https://www.deutsche-biographie.de/sfz98712.html?language=en",
+      "citation_text": "Deutsche Biographie identifies Gundahar as King of the Burgundians, attested in 412 and killed in 437 or 438, while distinguishing the historical core from later Nibelungen legend.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

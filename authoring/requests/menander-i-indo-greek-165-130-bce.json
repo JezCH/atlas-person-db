@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Menander I",
+    "display_name_ko": "메난드로스 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Indo-Greek Kingdom",
+    "display_name_ko": "인도-그리스 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": -165,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -130,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Menander I was the most prominent Indo-Greek king in the Indian territories. Encyclopaedia Iranica uses 165-130 BCE but emphasizes that Indo-Greek succession chronology rests heavily on numismatic reconstruction; ATLAS therefore keeps both boundaries approximate."
+  },
+  "sources": [
+    {
+      "title": "INDO-GREEK DYNASTY",
+      "canonical_url": "https://www.iranicaonline.org/articles/indo-greek-dynasty/",
+      "citation_text": "Encyclopaedia Iranica identifies Menander I as the most important Greek king in Indian territories and dates him 165-130 BCE, while noting the numismatic basis of Indo-Greek chronology.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

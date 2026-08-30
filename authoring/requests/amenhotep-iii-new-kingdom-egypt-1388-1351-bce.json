@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Amenhotep III",
+    "display_name_ko": "아멘호테프 3세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "New Kingdom of Egypt",
+    "display_name_ko": "이집트 신왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Pharaoh",
+    "role_display_name_ko": "파라오",
+    "start_year": -1388,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -1351,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Amenhotep III was an Eighteenth Dynasty pharaoh. UCL Digital Egypt dates him about 1388-1351/50 BCE; both boundaries are therefore represented as approximate."
+  },
+  "sources": [
+    {
+      "title": "Amenhotep III",
+      "canonical_url": "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/amenhotepiii.html",
+      "citation_text": "UCL Digital Egypt identifies Amenhotep III as a major Eighteenth Dynasty king and dates his reign about 1388-1351/50 BCE.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}
