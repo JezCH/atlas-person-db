@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "First Rutbil of Zabulistan",
+    "display_name_ko": "자불리스탄의 초대 루트빌",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Zunbil Dynasty",
+    "display_name_ko": "준빌 왕조",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Founder and ruler",
+    "role_display_name_ko": "창건 군주",
+    "start_year": 680,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 680,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The ruler conventionally called the first Rutbil of Zabulistan was the elder brother of the Kabul ruler Khorasan Tegin Shah and established an independent kingdom in Zabul after about 680 CE. 'Rutbil' (linked to the Turkic title iltäbär) is a title used by Arabic sources, not a securely known personal name; the individual's personal name is unknown. ATLAS therefore uses the explicit descriptor 'First Rutbil of Zabulistan' rather than pretending Rutbil is a personal name. The c.680 Activity is a representative foundation point only, not an asserted one-year reign or a complete reign interval."
+  },
+  "sources": [
+    {
+      "title": "The Rutbils of Zabulistan and the 'Emperor of Rome' — University of Vienna exhibition catalogue",
+      "canonical_url": "https://data1.geo.univie.ac.at/projects/dasantlitzdesfremden/showcases/showcase15%3Flanguage%3Den.html",
+      "citation_text": "The University of Vienna catalogue states that the first Rutbil, elder brother of Khorasan Tegin Shah, declared independence after 680 CE and founded his own kingdom in Zabul; it also explains that Rutbil corresponds to the title iltäbär and that personal names of these rulers are unknown.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Zunbils (Rutbil) — Civilization V Customisation Wiki",
+      "canonical_url": "https://civilization-v-customisation.fandom.com/wiki/The_Zunbils_%28Rutbil%29",
+      "citation_text": "The custom civilization supplied by the user identifies its leader as Rutbil and presents him as founder of the Zunbil dynasty; ATLAS corrects the mod's name-like treatment of the title using the historical source.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

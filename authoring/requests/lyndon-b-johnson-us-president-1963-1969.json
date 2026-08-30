@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Lyndon B. Johnson",
+    "display_name_ko": "린든 B. 존슨",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1963,
+    "start_month": 11,
+    "start_day": 22,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1969,
+    "end_month": 1,
+    "end_day": 20,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Lyndon B. Johnson succeeded to the presidency on 22 November 1963 after President John F. Kennedy's assassination, won election in his own right in 1964, and served until Richard Nixon's inauguration on 20 January 1969."
+  },
+  "sources": [
+    {
+      "title": "Swearing In of Lyndon Baines Johnson — U.S. Senate Inaugural Ceremonies",
+      "canonical_url": "https://www.inaugural.senate.gov/swearing-in-of-lyndon-baines-johnson/",
+      "citation_text": "The U.S. Senate records Johnson becoming the 36th President and taking the oath on 22 November 1963.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Lying in State or in Honor — U.S. Senate",
+      "canonical_url": "https://www.senate.gov/pagelayout/history/three_column_table/MemorialFuneralServicesCapitolRotunda.htm",
+      "citation_text": "The Senate records Johnson as President from 22 November 1963 to 20 January 1969.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "린든 B. 존슨",
+      "url": "https://namu.wiki/w/%EB%A6%B0%EB%93%A0%20B.%20%EC%A1%B4%EC%8A%A8"
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "J. Robert Oppenheimer",
+    "display_name_ko": "줄리어스 로버트 오펜하이머",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "general_activity",
+    "role": "Director of Los Alamos Laboratory",
+    "role_display_name_ko": "로스앨러모스 연구소장",
+    "start_year": 1943,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1945,
+    "end_month": 10,
+    "end_day": 16,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "J. Robert Oppenheimer became the first director of the Los Alamos Laboratory, the central bomb-design laboratory of the Manhattan Project, in 1943. He resigned as director on 16 October 1945 after the end of the war. ATLAS records this as scientific service to the United States rather than political governance."
+  },
+  "sources": [
+    {
+      "title": "The Army and the Origins of the Nuclear Security Enterprise — U.S. Department of Energy",
+      "canonical_url": "https://www.energy.gov/nnsa/articles/army-and-origins-nuclear-security-enterprise",
+      "citation_text": "The U.S. Department of Energy identifies J. Robert Oppenheimer as the first director of the Los Alamos Laboratory and describes Los Alamos operations beginning in 1943.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Administrative Organization — Manhattan District History, Los Alamos",
+      "canonical_url": "https://www.osti.gov/opennet/manhattan-project-history/publications/LANLMDHProjectYPart2.pdf",
+      "citation_text": "The Manhattan District History records that Norris Bradbury accepted the directorship after Oppenheimer's resignation in October 1945.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Oppenheimer Replies — Bulletin of the Atomic Scientists",
+      "canonical_url": "https://thebulletin.org/premium/2023-07/oppenheimer-replies/",
+      "citation_text": "Oppenheimer's own account states that he resigned as Director of Los Alamos on 16 October 1945.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "줄리어스 로버트 오펜하이머",
+      "url": "https://namu.wiki/w/%EC%A4%84%EB%A6%AC%EC%96%B4%EC%8A%A4%20%EB%A1%9C%EB%B2%84%ED%8A%B8%20%EC%98%A4%ED%8E%9C%ED%95%98%EC%9D%B4%EB%A8%B8"
+    }
+  }
+}
