@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:georges-clemenceau:french-republic:prime-minister:1906-1909:v1",
+  "person": {"canonical_name_en":"Georges Clemenceau","display_name_ko":"조르주 클레망소"},
+  "polity": {"canonical_name_en":"French Republic","display_name_ko":"프랑스 공화국"},
+  "activity": {
+    "relation_type":"governs","period_basis":"term","role":"Prime Minister","role_display_name_ko":"총리",
+    "start_year":1906,"start_month":10,"start_day":25,"start_certainty":"exact","start_calendar":"gregorian",
+    "end_year":1909,"end_month":7,"end_day":20,"end_certainty":"exact","end_calendar":"gregorian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Georges Clemenceau first served as President of the Council (normalized by ATLAS as Prime Minister) from 25 October 1906 to 20 July 1909. This is a separate first premiership and must not be merged with his later 1917-1920 government."
+  },
+  "sources":[{"title":"Clemenceau au gouvernement — Sénat","canonical_url":"https://www.senat.fr/connaitre-le-senat/lhistoire-du-senat/dossiers-dhistoire/le-24-novembre-1929-mourait-georges-clemenceau/clemenceau-au-gouvernement.html","citation_text":"The French Senate records Clemenceau as President of the Council and Interior Minister from 25 October 1906 to 20 July 1909, distinct from his 1917-1920 premiership.","source_type":"government_web"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-27","document_title":"조르주 클레망소","url":"https://namu.wiki/w/%EC%A1%B0%EB%A5%B4%EC%A3%BC%20%ED%81%B4%EB%A0%88%EB%A7%9D%EC%86%8C"}}
+}
