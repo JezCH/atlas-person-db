@@ -1,0 +1,23 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:indira-gandhi:second-term:temporal-metadata:20260830:v1",
+  "review_status": "approved",
+  "release_order": 110,
+  "operation": {
+    "type": "update_activity_temporal_metadata",
+    "relationship_id": "97cc4fc9-9714-5373-97de-e8b4428be58b",
+    "after": {
+      "activity_start_granularity": "year",
+      "activity_start_certainty": "exact",
+      "activity_start_calendar": "gregorian",
+      "activity_end_granularity": "year",
+      "activity_end_certainty": "exact",
+      "activity_end_calendar": "gregorian"
+    }
+  },
+  "evidence": {
+    "reason": "Production Person read on 2026-08-30 shows Indira Gandhi's second India prime-minister Activity stores only 1980-1984 with all six temporal metadata fields null. The Prime Minister of India official former-prime-ministers page gives the exact term as 14 January 1980 to 31 October 1984. This bounded first correction completes the existing year-level boundary tuples without yet inventing month/day columns; a reviewed Correction v2 rewrite will subsequently add the exact day boundaries and normalized governs relation while preserving the same Activity UUID and provenance.",
+    "person_id": "35f0004f-28fc-5227-9977-3414849f0c1c",
+    "official_source": "https://www.pmindia.gov.in/en/former-prime-ministers/"
+  }
+}
