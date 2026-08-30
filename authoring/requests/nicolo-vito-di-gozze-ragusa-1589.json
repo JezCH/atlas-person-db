@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Nicolò Vito di Gozze",
+    "display_name_ko": "니콜로 비토 디 고체",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Ragusa",
+    "display_name_ko": "라구사 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Rector",
+    "role_display_name_ko": "렉터(공화국 수반)",
+    "start_year": 1589,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1589,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Nicolò Vito di Gozze, also known as Nikola Vitov Gučetić, first became Rector (knez) of the Republic of Ragusa in 1589 and was elected six more times before his death in 1610. This Activity records only the securely dated first rectorate year rather than falsely modeling 1589-1610 as one continuous rule."
+  },
+  "sources": [
+    {
+      "title": "Gučetić, Nikola Vitov - Hrvatska enciklopedija",
+      "canonical_url": "https://enciklopedija.hr/Clanak/gucetic-nikola-vitov?handler=ButtonSnimi",
+      "citation_text": "The Croatian Encyclopedia states that Nikola Vitov Gučetić entered the Senate and first became Rector of Dubrovnik in 1589, later being elected Rector six more times.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Louis XI",
+    "display_name_ko": "루이 11세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of France",
+    "display_name_ko": "프랑스 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1461,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1483,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Louis XI was King of France from 1461 until his death in 1483. The existing normalized Kingdom of France polity is intentionally reused rather than creating a generic modern France identity."
+  },
+  "sources": [
+    {
+      "title": "Louis XI (1423-1483 ; roi de France)",
+      "canonical_url": "https://catalogue.bnf.fr/ark:/12148/cb121082243",
+      "citation_text": "The Bibliothèque nationale de France authority record identifies Louis XI as King of France from 1461 to 1483.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "루이 11세",
+      "url": "https://namu.wiki/w/%EB%A3%A8%EC%9D%B4%2011%EC%84%B8"
+    }
+  }
+}
