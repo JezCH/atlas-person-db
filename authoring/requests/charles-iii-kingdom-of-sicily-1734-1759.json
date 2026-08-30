@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:charles-iii-of-spain:kingdom-of-sicily:king:1734-1759:v1",
+  "person":{"canonical_name_en":"Charles III of Spain","display_name_ko":"카를로스 3세"},
+  "polity":{"canonical_name_en":"Kingdom of Sicily","display_name_ko":"시칠리아 왕국"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"King","role_display_name_ko":"왕",
+    "start_year":1734,"start_certainty":"exact","start_calendar":"gregorian",
+    "end_year":1759,"end_certainty":"exact","end_calendar":"gregorian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Charles of Bourbon acquired Sicily together with Naples in 1734 and ruled the separate Kingdom of Sicily until 1759, when he transferred the Italian crowns before succeeding in Spain. ATLAS records Sicily separately from Naples and Spain."
+  },
+  "sources":[{"title":"Carlos de Borbón, un monarca entre Nápoles y España — Museo Nacional del Prado","canonical_url":"https://www.museodelprado.es/actualidad/exposicion/instalacion-temporal-carlos-de-borbon-un-monarca/cf1bd474-9110-4e49-be3d-e01fe4fbc5d3","citation_text":"The Prado states that Charles received the Kingdom of Naples and Sicily in 1734 and abdicated those crowns in 1759 before succeeding in Spain.","source_type":"museum_reference"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-28","document_title":"카를로스 3세","url":"https://namu.wiki/w/%EC%B9%B4%EB%A5%BC%EB%A1%9C%EC%8A%A4%203%EC%84%B8"}}
+}
