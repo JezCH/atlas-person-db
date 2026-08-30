@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Vasil Levski",
+    "display_name_ko": "바실 레프스키",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Bulgaria",
+    "display_name_ko": "불가리아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Revolutionary organizer",
+    "role_display_name_ko": "혁명 조직가",
+    "start_year": 1869,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1872,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Levski organized an internal revolutionary network in the Bulgarian lands from 1869 through his capture in December 1872. ATLAS represents his own Bulgarian political community rather than the Ottoman Empire he sought to overthrow; Bulgaria here is the contemporaneous Bulgarian national-political community, not a claim that an independent Bulgarian state already existed."
+  },
+  "sources": [
+    {
+      "title": "Short chronicle of Levski’s life",
+      "canonical_url": "https://vlevskimuseum-bg.org/en/short-chronicle-of-levskis-life/",
+      "citation_text": "The Vasil Levski National Museum records his organizing tours from 1869, establishment of the internal revolutionary structure, and capture on 27 December 1872.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Documentary heritage",
+      "canonical_url": "https://vlevskimuseum-bg.org/en/documentary-heritage/",
+      "citation_text": "The Vasil Levski National Museum describes documentary evidence for his organizational and political work and the BRCC program for liberation of the Bulgarian people.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

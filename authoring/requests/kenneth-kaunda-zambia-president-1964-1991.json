@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Kenneth Kaunda",
+    "display_name_ko": "케네스 카운다",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Zambia",
+    "display_name_ko": "잠비아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1964,
+    "start_month": 10,
+    "start_day": 24,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1991,
+    "end_month": 11,
+    "end_day": 2,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kenneth Kaunda became the first President of independent Zambia on 24 October 1964 and served until the democratic transfer of power in November 1991."
+  },
+  "sources": [
+    {
+      "title": "Kenneth Kaunda Bio",
+      "canonical_url": "https://www.cabinet.gov.zm/newsite/wp-content/uploads/2024/05/Kenneth-Kaunda-bio.pdf",
+      "citation_text": "Zambia's Cabinet Office identifies Kaunda as the first President of Zambia from 1964 to 1991 and states that he became president on independence day, 24 October 1964.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Presidents — Cabinet Office Zambia",
+      "canonical_url": "https://www.cabinet.gov.zm/?page_id=430",
+      "citation_text": "The Zambian Cabinet Office lists Kenneth Kaunda as the first president, serving from 1964 to 1991.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

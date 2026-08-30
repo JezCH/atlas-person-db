@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Tenoch",
+    "display_name_ko": "테노치",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Mexico-Tenochtitlan",
+    "display_name_ko": "멕시코-테노치티틀란",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Mexica leader",
+    "role_display_name_ko": "멕시카 지도자",
+    "start_year": 1325,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1363,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tenoch is modeled as an early Mexica leader associated with the foundation and consolidation of Mexico-Tenochtitlan, not as a tlatoani. INAH identifies Tenoch as the leader who consolidated the Mexica state and associates his death with 1363; Acamapichtli belongs to the later dynastic tlatoani sequence. The c.1325-c.1363 interval is therefore explicitly approximate."
+  },
+  "sources": [
+    {
+      "title": "De Cholula cubierta de ceniza a la muerte de Tenoch",
+      "canonical_url": "https://www.inah.gob.mx/boletines/de-cholula-cubierta-de-ceniza-a-la-muerte-de-tenoch-las-erupciones-pasadas-del-popocatepetl",
+      "citation_text": "INAH describes Tenoch as the leader who consolidated the Mexica state and links his death to the year 1363.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Mexica (1200 CE–1521 CE)",
+      "canonical_url": "https://lugares.inah.gob.mx/en/pagina-de-elemento/1997",
+      "citation_text": "INAH places the foundation of Mexico-Tenochtitlan in 1325 within the Mexica historical sequence.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

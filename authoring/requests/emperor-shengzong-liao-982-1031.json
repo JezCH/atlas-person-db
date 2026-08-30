@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Emperor Shengzong of Liao",
+    "display_name_ko": "요 성종",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Liao dynasty",
+    "display_name_ko": "요",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 982,
+    "start_month": 10,
+    "start_day": 14,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1031,
+    "end_month": 6,
+    "end_day": 25,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Yelü Longxu, temple name Shengzong, ruled the Liao dynasty from 14 October 982 until his death on 25 June 1031. The user label 'Great Liao' is normalized to Liao dynasty because the official dynastic name changed back to Great Khitan in 983 during Shengzong's reign; a single stable Liao polity avoids falsely applying 'Great Liao' to the whole reign."
+  },
+  "sources": [
+    {
+      "title": "遼聖宗 Liao Sheng Zong",
+      "canonical_url": "https://ctext.org/datawiki.pl?if=en&res=597513",
+      "citation_text": "The Chinese Text Project records Yelü Longxu (Liao Shengzong) as ruling from 14 October 982 to 25 June 1031, based on the History of Liao.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "遼 Liao",
+      "canonical_url": "https://ctext.org/datawiki.pl?if=en&res=792872",
+      "citation_text": "The Chinese Text Project identifies the dynasty as Liao/Khitan and notes the changes between the Great Liao and Great Khitan state names.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "성종(요)",
+      "url": "https://namu.wiki/w/%EC%84%B1%EC%A2%85%28%EC%9A%94%29"
+    }
+  }
+}

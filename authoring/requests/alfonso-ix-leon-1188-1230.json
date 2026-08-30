@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Alfonso IX of León",
+    "display_name_ko": "알폰소 9세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of León",
+    "display_name_ko": "레온 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1188,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1230,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Alfonso IX ruled the Kingdom of León from 1188 until his death on 24 September 1230. ATLAS stores the secure year-level reign without inventing finer accession precision from conflicting medieval dating conventions."
+  },
+  "sources": [
+    {
+      "title": "Alfonso IX of León",
+      "canonical_url": "https://en.wikipedia.org/wiki/Alfonso_IX_of_Le%C3%B3n",
+      "citation_text": "Standard biographical chronology identifies Alfonso IX as king of León from 1188 to 1230.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

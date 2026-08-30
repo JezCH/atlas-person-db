@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Peter II of Yugoslavia",
+    "display_name_ko": "페타르 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Yugoslavia",
+    "display_name_ko": "유고슬라비아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1934,
+    "start_month": 10,
+    "start_day": 9,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1945,
+    "end_month": 11,
+    "end_day": 29,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Peter II became king after Alexander I's assassination on 9 October 1934, initially under a regency because he was a minor. The monarchy continued in exile after the Axis invasion until the Yugoslav constituent assembly abolished it on 29 November 1945."
+  },
+  "sources": [
+    {
+      "title": "Peter II of Yugoslavia",
+      "canonical_url": "https://en.wikipedia.org/wiki/Peter_II_of_Yugoslavia",
+      "citation_text": "The standard biographical chronology records Peter II's kingship from 9 October 1934 until the abolition of the Yugoslav monarchy on 29 November 1945.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "페타르 2세",
+      "url": "https://namu.wiki/w/%ED%8E%98%ED%83%80%EB%A5%B4%202%EC%84%B8"
+    }
+  }
+}

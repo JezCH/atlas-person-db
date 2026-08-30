@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Jeon Bong-jun",
+    "display_name_ko": "전봉준",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Joseon",
+    "display_name_ko": "조선",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Donghak Peasant Army leader",
+    "role_display_name_ko": "동학농민군 지도자",
+    "start_year": 1894,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1894,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Jeon Bong-jun was the principal commander of the Donghak Peasant Movement in 1894. His own political frame sought reform of Joseon and resistance to corrupt officials and foreign military encroachment, so ATLAS binds him to Joseon rather than to Japan or another external power. The one-year Activity represents the uprising, not his lifespan."
+  },
+  "sources": [
+    {
+      "title": "전봉준 — 한국사연대기",
+      "canonical_url": "https://contents.history.go.kr/front/kc/printViewPopup.do?levelId=kc_n404700",
+      "citation_text": "The National Institute of Korean History identifies Jeon Bong-jun as the supreme leader and commander of the Donghak peasant forces in 1894.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "전봉준 공초",
+      "canonical_url": "https://contents.history.go.kr/front/hm/view.do?levelId=hm_117_0060",
+      "citation_text": "The National Institute of Korean History presents Jeon Bong-jun's interrogation record, including his account of the uprising and opposition to Japanese troops' encroachment.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "전봉준",
+      "url": "https://namu.wiki/w/%EC%A0%84%EB%B4%89%EC%A4%80"
+    }
+  }
+}
