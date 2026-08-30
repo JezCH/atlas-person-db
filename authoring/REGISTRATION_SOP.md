@@ -1,8 +1,8 @@
-# ATLAS Historical Person Registration SOP — Lean Path v6.1
+# ATLAS Historical Person Registration SOP — Lean Path v6.2
 
 This file is the operational source of truth for ordinary reviewed historical-person registration.
 
-The rule is simple: **screen cheaply first, research only what survives the screen, parallelize independent review, commit once, verify once.** Registration is a bounded Production data operation, not a repository/deployment investigation.
+The rule is simple: **screen cheaply first, classify the route once, research only what survives the screen, parallelize independent review, commit once, verify once.** Registration is a bounded Production data operation, not a repository/deployment investigation.
 
 A second rule is equally important: **ordinary registration must use the already-established authoring system; it must not rediscover or re-audit that system on every Person.** Source-code inspection, workflow inspection, deployment inspection, capability discovery, schema archaeology, and repository-wide investigation are exception handling, not registration steps.
 
@@ -78,6 +78,8 @@ SCREEN
 
 Git branches, PRs, CI jobs, workflow runs, deployments, UUIDs, and internal catalog lookups are transport or implementation details, not additional historical-registration stages.
 
+For operator/user reporting, keep the process visible as these four stages. Do not narrate transport internals as if they were extra historical-review stages unless a concrete failure makes them relevant.
+
 ### 4.1 Performance invariant — no serial re-discovery
 
 The normal path is deliberately bounded.
@@ -95,21 +97,29 @@ For **one new Person**, the expected shape is:
 → STOP
 ```
 
-For **multiple requested Persons**, including a batch that mixes ordinary Timeline registrations with non-timeline figures, the expected shape is:
+For **multiple requested Persons**, including a batch that mixes ordinary Timeline registrations, existing records, correction cases, non-timeline figures, exclusions, and open-ended current terms, the expected shape is:
 
 ```text
 bounded SCREENs in parallel
-→ REVIEW only surviving candidates, in parallel
+→ classify every requested item exactly once as one of:
+   COMPLETE_EXISTING
+   ORDINARY_TIMELINE
+   NON_TIMELINE
+   EXCLUDE
+   NEEDS_CORRECTION
+   DEFERRED_OPEN_ENDED
+→ REVIEW only ORDINARY_TIMELINE + NON_TIMELINE survivors, in parallel
+→ compile one normal registration batch
 → deterministic request_ids + one Production preflight batch
 → BLOCKED items are isolated; READY items continue
 → one manifest per ordinary Timeline registration
    + one bounded non-timeline registry edit when needed
-→ all registration data on one branch / one PR
+→ all normal registration data on one branch / one PR
 → one required registration-data fast-path CI
 → one item-isolated Authoring Apply batch for READY Timeline manifests
-→ one Production deployment for non-timeline static data only when needed
 → automatic canonical Production VERIFY reads in parallel
-→ STOP
+→ STOP normal registration lane
+→ process NEEDS_CORRECTION separately through the correction lane only when required
 ```
 
 The registration-data fast path recognizes exactly two routine data surfaces:
@@ -157,6 +167,23 @@ Before the GitHub fallback batch is committed, run one authoritative Production 
 
 A BLOCKED candidate must not prevent unrelated READY candidates from being applied.
 
+
+### 4.3 SCREEN routing invariant — classify once, then stay in lane
+
+Every requested item receives exactly one initial route after bounded Production screening and the minimum historical identity check needed to understand the request:
+
+- `COMPLETE_EXISTING` — the intended Person and intended Activity already exist correctly. Stop for that item.
+- `ORDINARY_TIMELINE` — a new Person or missing non-conflicting Activity can be authored through normal Human Authoring.
+- `NON_TIMELINE` — the figure passes the project inclusion gate but not the historical Timeline gate; route to `non-timeline-persons.json`.
+- `EXCLUDE` — fictional, generic-title-only, unsupported identity, or otherwise outside the reviewed project inclusion criteria. Report the exclusion; do not create placeholder data.
+- `NEEDS_CORRECTION` — the Person/Activity already exists but the requested change would alter its semantic identity, primary Polity, chronology, relation, Role, or another authoritative field. Do **not** create a competing Activity to simulate a correction.
+- `DEFERRED_OPEN_ENDED` — the requested Activity is genuinely ongoing/current and the current authoring contract cannot represent an open end without fabricating an end boundary. Do not invent a terminal year.
+
+This routing decision is a performance and safety boundary. Once an item is classified as `NEEDS_CORRECTION` or `DEFERRED_OPEN_ENDED`, it leaves the ordinary registration batch. Do not continue ordinary manifest authoring for that item merely to keep the whole user list on one path.
+
+Completed earlier Activities for the same Person may still proceed normally even when a separate current term is `DEFERRED_OPEN_ENDED`.
+
+
 ## 5. Stage 1 — SCREEN: cheapest useful check first
 
 Do not begin full historical research before checking whether the intended Person is already in Production.
@@ -175,8 +202,10 @@ Use the bounded Person search surface:
 Rules:
 
 - For a multi-Person user request, issue the bounded Person SCREENs concurrently rather than waiting for each Person to finish before starting the next.
-- If the intended Person and intended Activity already exist, stop. Do not research or submit anything else.
-- If the Person exists but the intended Activity is missing, reuse that Person and review only the missing Activity.
+- If the intended Person and intended Activity already exist correctly, classify `COMPLETE_EXISTING` and stop. Do not research or submit anything else.
+- If the Person exists but the intended Activity is genuinely missing and does not conflict with an existing semantic Activity, classify `ORDINARY_TIMELINE`, reuse that Person, and review only the missing Activity.
+- If the Person exists and the user's request actually requires changing an existing Activity's Polity, relation, Role, chronology, notes with semantic significance, or other authoritative identity-bearing field, classify `NEEDS_CORRECTION`. Do not add a second overlapping Activity as a workaround.
+- If the requested term is ongoing and the active authoring contract requires a closed end boundary, classify that term `DEFERRED_OPEN_ENDED`. Never substitute the current year, an expected election year, or another guessed endpoint.
 - If the Person exists, note its current NamuWiki state. `linked` or `not_found` counts as reviewed and is reused; do not search NamuWiki again merely because a new Activity is being added.
 - If the Person is absent, continue to REVIEW.
 - Once an exact Person is identified, do not keep trying more spellings for reassurance.
@@ -215,6 +244,8 @@ Therefore manual catalog lookup is **not a mandatory standalone step** for every
 - a naming/canonicalization decision actually needs operator review.
 
 If the reviewed entity is clearly legitimate and there is no exact live identity, let Human Authoring create it. Do not search for a comparable ruler merely to infer a Polity or Role.
+
+For a **correction** whose reviewed target Polity does not yet exist, do not manufacture an unrelated Person Activity merely to obtain a Polity UUID. Prefer a supported reviewed identity-authoring path or an atomic correction path that can bind the new Polity safely. A prerequisite ordinary Activity may create the Polity only when that Activity is independently historically warranted and already belongs in the user's reviewed work; record the dependency explicitly. If no safe identity path exists, keep the correction blocked rather than inventing data.
 
 ### Source reuse policy
 
@@ -270,13 +301,13 @@ The Human Authoring transaction persists the NamuWiki decision to `person_extern
 
 A batch shares transport/authentication and may share read-only catalog caching, but **each logical registration has its own `SERIALIZABLE` transaction**.
 
-Operationally, batching is the default whenever the user supplies multiple Persons:
+Operationally, batching is the default whenever the user supplies multiple Persons **within the same route**:
 
 - create one manifest per logical registration;
 - put all eligible manifests on **one working branch and one PR**;
 - pay the required authoring-only CI cost **once**;
 - let **one Authoring Apply batch** attempt all eligible manifests;
-- verify the resulting Persons concurrently after Apply.
+- accept the workflow's automatic canonical Production read-back as the normal final VERIFY; do not immediately re-query every successful item manually.
 
 Do not create one branch/PR/CI/Apply cycle per Person unless a concrete conflict, dependency, or user instruction requires separation.
 
@@ -316,7 +347,9 @@ A companion `non-timeline-persons.json` change is **not** an Authoring endpoint 
 
 The Authoring Apply workflow performs one authoritative Production Person-detail read for every newly committed or ALREADY_PRESENT Human Authoring result. It verifies the Person identity, exact Activity id, Polity, Relation Type, Role, Period Basis, temporal boundaries, and reviewed NamuWiki state against the manifest.
 
-Manual canonical Person read-back is only a fallback when the automatic verifier reports a mismatch or when an operator needs provenance-specific detail.
+Manual canonical Person read-back is only a fallback when the automatic verifier reports a mismatch, the workflow did not produce authoritative verification, the user explicitly requests a fresh full audit, or an operator needs provenance-specific detail.
+
+A successful Authoring Apply verification is not followed by a second full manual batch read merely for reassurance. The first authoritative canonical verification is sufficient.
 
 Verify:
 
@@ -365,7 +398,7 @@ The following are not normal registration steps unless a concrete failure makes 
 - Preview deployment inspection for data-only registration;
 - post-merge Vercel polling without a concrete Apply/runtime error;
 - separate NamuWiki persistence after Human Authoring;
-- repeated Production read-back after canonical verification;
+- repeated Production read-back after canonical verification, including a second full batch read immediately after successful automatic Apply verification;
 - requeue-only PRs for unchanged requests;
 - serial GitHub Contents commits for each manifest in a multi-file batch when one Git tree commit can carry the same reviewed data.
 
@@ -381,7 +414,9 @@ Only move backward when a concrete gate fails:
 - manifest validation or required `test` failure → fix the same branch/request;
 - runtime/readiness/SHA failure → let the bounded automatic runtime catch-up retry finish first; only diagnose if that retry exhausts;
 - transient Commit failure → replay the same request;
-- Production read-back mismatch → registration remains incomplete until that mismatch is resolved.
+- Production read-back mismatch → registration remains incomplete until that mismatch is resolved;
+- existing Activity requires semantic replacement → leave ordinary registration and use the bounded correction lane;
+- current/open-ended Activity cannot be represented by the active contract → record `DEFERRED_OPEN_ENDED`, do not fabricate an end boundary, and continue unrelated completed Activities.
 
 Do not restart generic repository, Production, deployment, or tool-capability discovery because a later gate failed. Diagnose only the named failing boundary and then resume the same immutable registration flow.
 
@@ -399,4 +434,6 @@ Period: <...>
 Production read-back: VERIFIED
 ```
 
-The stopping rule is strict: **first authoritative canonical Production verification completes the registration.**
+The stopping rule is strict: **first authoritative canonical Production verification completes the registration.** A second manual verification pass is not part of the normal path.
+
+For a mixed user batch, the final report should distinguish `COMPLETE_EXISTING`, newly `VERIFIED`, `NON_TIMELINE`, `EXCLUDE`, `NEEDS_CORRECTION`, and `DEFERRED_OPEN_ENDED` items without forcing them through one artificial workflow.
