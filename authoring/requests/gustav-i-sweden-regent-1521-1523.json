@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gustav-i:sweden:regent:1521-1523:v1",
+  "person": {
+    "canonical_name_en": "Gustav I",
+    "display_name_ko": "구스타브 1세 바사"
+  },
+  "polity": {
+    "canonical_name_en": "Sweden",
+    "display_name_ko": "스웨덴"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Regent",
+    "role_display_name_ko": "섭정",
+    "start_year": 1521,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1523,
+    "end_month": 6,
+    "end_day": 6,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gustav Eriksson Vasa was recognized as riksföreståndare (Regent/Lord Protector of the Realm) in 1521 during the war against Christian II. He held that office until 6 June 1523, when he was elected King of Sweden. ATLAS records the regency separately from his existing 1523-1560 kingship."
+  },
+  "sources": [
+    {
+      "title": "När Sverige blev Sverige — Historiska museet",
+      "canonical_url": "https://historiska.se/utforska-historien/kunskapsbank/nar-sverige-blev-sverige/",
+      "citation_text": "The Swedish History Museum lists Gustav Vasa as riksföreståndare from 1521 to 1523 and then as king from 1523 to 1560.",
+      "source_type": "museum_reference"
+    },
+    {
+      "title": "Sverige 1523 — Riksarkivet",
+      "canonical_url": "https://webbutik.riksarkivet.se/en/products/books/sverige-1523.html",
+      "citation_text": "The Swedish National Archives states that the regent Gustav Eriksson Vasa was elected King of Sweden at Strängnäs on 6 June 1523.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}
