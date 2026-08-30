@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:nicolo-vito-di-gozze:republic-of-ragusa:rector:1609-06:v1",
+  "person": {
+    "canonical_name_en": "Nicolò Vito di Gozze",
+    "display_name_ko": "니콜로 비토 디 고체"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Ragusa",
+    "display_name_ko": "라구사 공화국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Rector",
+    "role_display_name_ko": "렉터(공화국 수반)",
+    "start_year": 1609,
+    "start_month": 6,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1609,
+    "end_month": 6,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Nicolò Vito di Gozze (Nikola Vitov Gučetić) was elected Rector (knez) of the Republic of Ragusa for a one-month term in 1609-06. Ragusan rectors served short rotating terms, so ATLAS records this election as a separate month-level Activity rather than merging his seven rectorships into a continuous reign."
+  },
+  "sources": [
+    {
+      "title": "Kasnorenesansni filozof Nikola Vitov Gučetić — Ivica Martinović",
+      "canonical_url": "https://www.scribd.com/doc/258159254/Kasnorenesansni-Filozof-Nikola-Vitov-Gucetic",
+      "citation_text": "Ivica Martinović's 1997 scholarly study lists Gučetić's seven rectorships by month: October 1589, November 1593, June 1596, April 1600, April 1603, March 1606, and June 1609.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "GUČETIĆ, Nikola Vitov — Hrvatski biografski leksikon",
+      "canonical_url": "https://hbl.lzmk.hr/clanak/gucetic-nikola-vitov",
+      "citation_text": "The Croatian Biographical Lexicon confirms that Nikola Vitov Gučetić was elected Rector of the Republic of Ragusa seven times.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}
