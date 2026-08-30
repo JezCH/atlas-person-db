@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Fulgencio Batista",
+    "display_name_ko": "풀헨시오 바티스타",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Cuba",
+    "display_name_ko": "쿠바",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Military ruler",
+    "role_display_name_ko": "군사 통치자",
+    "start_year": 1952,
+    "start_month": 3,
+    "start_day": 10,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1959,
+    "end_month": 1,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Batista seized power in the 10 March 1952 coup before formally assuming the presidency on 4 April. ATLAS therefore models the whole second regime as de facto military rule from the coup through his flight from Cuba on 1 January 1959, rather than presenting the coup phase as an ordinary constitutional presidential term."
+  },
+  "sources": [
+    {
+      "title": "Historical Documents - Cuba",
+      "canonical_url": "https://history.state.gov/historicaldocuments/frus1952-54v04/d107",
+      "citation_text": "The U.S. State Department records Batista's 1940 presidency, retirement at the end of his term in 1944, and seizure of power by army coup in 1952.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Editorial Note on the 1952 Cuban coup",
+      "canonical_url": "https://history.state.gov/historicaldocuments/frus1952-54v04/d325",
+      "citation_text": "The U.S. State Department records Batista's coup on 10 March 1952 and notes that he became President on 4 April 1952.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Fulgencio Batista",
+      "canonical_url": "https://en.wikipedia.org/wiki/Fulgencio_Batista",
+      "citation_text": "The standard office chronology records the elected presidency from 10 October 1940 to 10 October 1944 and his second period of rule ending 1 January 1959.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

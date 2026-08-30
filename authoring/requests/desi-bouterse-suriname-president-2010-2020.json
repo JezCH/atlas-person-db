@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Dési Bouterse",
+    "display_name_ko": "데시 바우테르서",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Suriname",
+    "display_name_ko": "수리남",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 2010,
+    "start_month": 8,
+    "start_day": 12,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2020,
+    "end_month": 7,
+    "end_day": 16,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bouterse returned to national leadership through parliamentary election to the presidency in 2010 and served two consecutive presidential terms until 16 July 2020. This is kept distinct from his earlier military rule."
+  },
+  "sources": [
+    {
+      "title": "Desi Bouterse, a dictator convicted of murder who twice ruled Suriname, has died at 79",
+      "canonical_url": "https://apnews.com/article/fe5300461c2239c7bbdb6b5272660ed0",
+      "citation_text": "Associated Press describes Bouterse as the leader of the 1980 coup and de facto ruler during the military period, later elected President in 2010 and 2015.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Dési Bouterse",
+      "canonical_url": "https://en.wikipedia.org/wiki/D%C3%A9si_Bouterse",
+      "citation_text": "The standard office chronology records the National Military Council chairmanship from 25 February 1980 to 27 November 1987 and the elected presidency from 12 August 2010 to 16 July 2020.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

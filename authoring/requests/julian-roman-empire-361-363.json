@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Julian",
+    "display_name_ko": "율리아누스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 361,
+    "start_month": 11,
+    "start_day": 3,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 363,
+    "end_month": 6,
+    "end_day": 26,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Julian became sole Roman emperor after Constantius II's death on 3 November 361 and died during the Persian campaign on 26 June 363. ATLAS uses the sole-autocrat interval rather than his earlier Caesarship."
+  },
+  "sources": [
+    {
+      "title": "JULIAN",
+      "canonical_url": "https://www.iranicaonline.org/articles/julian-flavius-claudius-iulianus-roman-emperor/",
+      "citation_text": "Encyclopaedia Iranica identifies Julian as Roman emperor, autocrat from 3 November 361, and records his death on 26 June 363.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Michael Collins",
+    "display_name_ko": "마이클 콜린스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Provisional Government of Ireland",
+    "display_name_ko": "아일랜드 임시정부",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Chairman of the Provisional Government",
+    "role_display_name_ko": "임시정부 의장",
+    "start_year": 1922,
+    "start_month": 1,
+    "start_day": 16,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1922,
+    "end_month": 8,
+    "end_day": 22,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Collins chaired the Irish Provisional Government from 16 January 1922 until his death on 22 August 1922. The Irish Free State was not established until 6 December 1922, after his death, so ATLAS does not back-project that later state over his chairmanship."
+  },
+  "sources": [
+    {
+      "title": "Michael Collins, Chairman Provisional Government",
+      "canonical_url": "https://catalogue.nli.ie/Record/vtls000508521/StaffViewMARC",
+      "citation_text": "The National Library of Ireland identifies the Chairman of the Provisional Government as a transitional post established in January 1922 and states that Collins held it from 16 January to his death on 22 August 1922.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

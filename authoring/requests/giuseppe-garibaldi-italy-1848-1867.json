@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Giuseppe Garibaldi",
+    "display_name_ko": "주세페 가리발디",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Italy",
+    "display_name_ko": "이탈리아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Revolutionary and military leader",
+    "role_display_name_ko": "혁명가·군사 지도자",
+    "start_year": 1848,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1867,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Garibaldi's representative Italian national-unification Activity begins with his return to Italy for the 1848 revolutions and ends with his last major armed attempt directed at Rome in 1867. This captures his long Risorgimento leadership without treating him as sovereign of a state he did not rule. His 1870-71 service in France is outside this Italy-specific Activity."
+  },
+  "sources": [
+    {
+      "title": "Garibaldi, Giuseppe",
+      "canonical_url": "https://www.treccani.it/enciclopedia/giuseppe-garibaldi/",
+      "citation_text": "Treccani describes Garibaldi's return to Italy in 1848, command in the Roman Republic, campaigns of 1859, the Expedition of the Thousand in 1860, and further campaigns through the 1867 attempt on Rome, identifying him as one of the principal makers of the Italian Risorgimento.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

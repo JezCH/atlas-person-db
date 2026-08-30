@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Forbes Burnham",
+    "display_name_ko": "포브스 버넘",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Guyana",
+    "display_name_ko": "가이아나",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1980,
+    "start_month": 10,
+    "start_day": 6,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1985,
+    "end_month": 8,
+    "end_day": 6,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Burnham became executive President under the 1980 constitution and remained President until his death on 6 August 1985."
+  },
+  "sources": [
+    {
+      "title": "Guyana (12/07)",
+      "canonical_url": "https://2009-2017.state.gov/outofdate/bgn/guyana/96704.htm",
+      "citation_text": "The U.S. State Department historical background states that Forbes Burnham ruled Guyana from December 1964 until August 1985, first as prime minister and, after the 1980 constitution, as executive president.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Forbes Burnham",
+      "canonical_url": "https://en.wikipedia.org/wiki/Forbes_Burnham",
+      "citation_text": "The standard office chronology records independent Guyana's prime-ministerial phase from 26 May 1966 to 6 October 1980 and the presidency from 6 October 1980 to 6 August 1985.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

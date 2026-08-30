@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Ramesses III",
+    "display_name_ko": "람세스 3세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "New Kingdom of Egypt",
+    "display_name_ko": "이집트 신왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Pharaoh",
+    "role_display_name_ko": "파라오",
+    "start_year": -1183,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -1152,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ramesses III was a Twentieth Dynasty pharaoh. UCL Digital Egypt gives his reign approximately as 1183/82-1152/51 BCE, so ATLAS uses c.1183-c.1152 BCE with both boundaries explicitly approximate rather than choosing one side of the Egyptological alternatives as exact."
+  },
+  "sources": [
+    {
+      "title": "king Ramesses III",
+      "canonical_url": "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/ramsesiii.html",
+      "citation_text": "UCL Digital Egypt identifies Ramesses III as king of the Twentieth Dynasty and dates him about 1183/82-1152/51 BCE.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

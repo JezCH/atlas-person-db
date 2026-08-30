@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Robert of Naples",
+    "display_name_ko": "로베르 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Naples",
+    "display_name_ko": "나폴리 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1309,
+    "start_month": 5,
+    "start_day": 5,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1343,
+    "end_month": 1,
+    "end_day": 20,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Robert of Anjou, commonly called Robert the Wise, succeeded Charles II in 1309 and ruled the mainland Angevin kingdom centered on Naples until his death on 20 January 1343. ATLAS normalizes the polity to Kingdom of Naples, avoiding the period's competing formal Sicilian royal titulature."
+  },
+  "sources": [
+    {
+      "title": "ROBERTO d’Angiò, re di Sicilia-Napoli",
+      "canonical_url": "https://www.treccani.it/enciclopedia/roberto-d-angio-re-di-sicilia-napoli_%28Dizionario-Biografico%29/",
+      "citation_text": "Treccani identifies Robert of Anjou as the Angevin ruler succeeding in 1309 and records his death on 20 January 1343.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Robert, King of Naples",
+      "canonical_url": "https://en.wikipedia.org/wiki/Robert%2C_King_of_Naples",
+      "citation_text": "The standard regnal chronology gives Robert's reign as 5 May 1309 to 20 January 1343.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}
