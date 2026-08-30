@@ -1,0 +1,31 @@
+{
+  "schema": "atlas-correction-manifest/v1.3",
+  "request_id": "correction:abd-el-krim:ko-name:20260830:v1",
+  "review_status": "approved",
+  "release_order": 701,
+  "evidence": {
+    "reason": "The existing Abd el-Krim Person and Republic of the Rif Activity are correct, but the Korean preferred name is recorded as 압드 엘 크림. Current Korean reference usage and the verified NamuWiki independent document use 아브드 엘 크림.",
+    "sources": [
+      "https://ko.wikipedia.org/wiki/%EC%95%84%EB%B8%8C%EB%93%9C_%EC%97%98_%ED%81%AC%EB%A6%BC",
+      "https://namu.wiki/w/%EC%95%84%EB%B8%8C%EB%93%9C%20%EC%97%98%20%ED%81%AC%EB%A6%BC"
+    ]
+  },
+  "operations": [
+    {
+      "type": "replace_person_preferred_name",
+      "person_id": "d8063cb7-4f80-41b9-b787-49239f1f18cc",
+      "expected_before": {
+        "locale": "ko",
+        "name": "압드 엘 크림",
+        "name_type": "display",
+        "is_preferred": true
+      },
+      "expected_after": {
+        "locale": "ko",
+        "name": "아브드 엘 크림",
+        "name_type": "display",
+        "is_preferred": true
+      }
+    }
+  ]
+}
