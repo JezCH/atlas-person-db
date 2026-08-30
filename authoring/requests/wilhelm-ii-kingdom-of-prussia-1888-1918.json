@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:wilhelm-ii:kingdom-of-prussia:king:1888-1918:v1",
+  "person":{"canonical_name_en":"Wilhelm II","display_name_ko":"빌헬름 2세"},
+  "polity":{"canonical_name_en":"Kingdom of Prussia","display_name_ko":"프로이센 왕국"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"King","role_display_name_ko":"왕",
+    "start_year":1888,"start_month":6,"start_day":15,"start_certainty":"exact","start_calendar":"gregorian",
+    "end_year":1918,"end_month":11,"end_day":9,"end_certainty":"exact","end_calendar":"gregorian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Wilhelm II became both German Emperor and King of Prussia on 15 June 1888. ATLAS records the Prussian kingship separately because the Kingdom of Prussia remained a distinct constituent monarchy within the German Empire. The Activity ends with the collapse of monarchical authority on 9 November 1918, matching the effective endpoint used for his imperial reign."
+  },
+  "sources":[{"title":"Wilhelm II — Deutsches Historisches Museum","canonical_url":"https://www.dhm.de/lemo/biografie/wilhelm-ii","citation_text":"The Deutsches Historisches Museum identifies Wilhelm II as German Emperor and King of Prussia from his accession on 15 June 1888 until the November Revolution of 1918.","source_type":"museum_reference"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-26","document_title":"빌헬름 2세","url":"https://namu.wiki/w/%EB%B9%8C%ED%97%AC%EB%A6%84%202%EC%84%B8"}}
+}

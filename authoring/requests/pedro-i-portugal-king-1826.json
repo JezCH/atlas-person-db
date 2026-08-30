@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:pedro-i-of-brazil:kingdom-of-portugal:king:1826:v1",
+  "person":{"canonical_name_en":"Pedro I of Brazil","display_name_ko":"페드루 1세"},
+  "polity":{"canonical_name_en":"Kingdom of Portugal","display_name_ko":"포르투갈 왕국"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"King","role_display_name_ko":"왕",
+    "start_year":1826,"start_certainty":"exact","start_calendar":"gregorian",
+    "end_year":1826,"end_certainty":"exact","end_calendar":"gregorian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Pedro I of Brazil briefly succeeded to the Portuguese crown in 1826 as Pedro IV before abdicating in favor of his daughter Maria. ATLAS records this as a separate Kingdom of Portugal sovereign Activity rather than folding it into his Brazilian imperial reign."
+  },
+  "sources":[{"title":"D. PEDRO I do Brasil, IV de Portugal — CESEM/NOVA FCSH","canonical_url":"https://dicionario-biografico.caravelas.fcsh.unl.pt/node/20","citation_text":"The CESEM/NOVA FCSH biographical dictionary identifies Pedro I of Brazil as Pedro IV of Portugal and states that he briefly reigned in Portugal in 1826 before abdicating for his daughter.","source_type":"academic_reference"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-24","document_title":"페드루 1세(브라질)","url":"https://namu.wiki/w/%ED%8E%98%EB%93%9C%EB%A3%A8%201%EC%84%B8%28%EB%B8%8C%EB%9D%BC%EC%A7%88%29"}}
+}

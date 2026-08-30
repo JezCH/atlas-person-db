@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:philip-iv-of-spain:kingdom-of-portugal:king:1621-1640:v1",
+  "person":{"canonical_name_en":"Philip IV of Spain","display_name_ko":"펠리페 4세"},
+  "polity":{"canonical_name_en":"Kingdom of Portugal","display_name_ko":"포르투갈 왕국"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"King","role_display_name_ko":"왕",
+    "start_year":1621,"start_certainty":"exact","start_calendar":"gregorian",
+    "end_year":1640,"end_certainty":"exact","end_calendar":"gregorian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Philip IV of Spain also ruled the Kingdom of Portugal as Philip III from 1621 until the Portuguese Restoration of 1640. ATLAS already models the Portuguese crown separately for Philip II, so this concurrent Portuguese kingship is likewise recorded as a distinct Activity rather than hidden inside the composite Spanish Monarchy relation."
+  },
+  "sources":[{"title":"Philip IV, King of Spain — British Museum","canonical_url":"https://www.britishmuseum.org/collection/term/BIOG41828","citation_text":"The British Museum identifies Philip IV as King of Spain from 1621 to 1665 and King of Portugal, as Philip III, from 1621 to 1640.","source_type":"museum_reference"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-27","document_title":"펠리페 4세","url":"https://namu.wiki/w/%ED%8E%A0%EB%A6%AC%ED%8E%98%204%EC%84%B8"}}
+}

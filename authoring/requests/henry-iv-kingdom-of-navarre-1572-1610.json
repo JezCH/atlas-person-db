@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:henry-iv-of-france:kingdom-of-navarre:king:1572-1610:v1",
+  "person":{"canonical_name_en":"Henry IV of France","display_name_ko":"앙리 4세"},
+  "polity":{"canonical_name_en":"Kingdom of Navarre","display_name_ko":"나바라 왕국","polity_type":"historical_polity","historicity":"historical"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"King","role_display_name_ko":"왕",
+    "start_year":1572,"start_certainty":"exact","start_calendar":"gregorian",
+    "end_year":1610,"end_certainty":"exact","end_calendar":"gregorian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Henry IV of France had already ruled Navarre from 1572 as Henry III of Navarre before succeeding to the French throne in 1589. The Navarre kingship continued until his death in 1610 and is a distinct concurrent Polity Activity from his French reign."
+  },
+  "sources":[{"title":"Henri IV, King of France and Navarre — British Museum","canonical_url":"https://www.britishmuseum.org/collection/term/BIOG31237","citation_text":"The British Museum records Henry as ruler of Navarre from 1572 before becoming King of France in 1589.","source_type":"museum_reference"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-27","document_title":"앙리 4세","url":"https://namu.wiki/w/%EC%95%99%EB%A6%AC%204%EC%84%B8"}}
+}

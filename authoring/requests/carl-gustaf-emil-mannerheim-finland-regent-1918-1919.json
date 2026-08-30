@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:carl-gustaf-emil-mannerheim:finland:regent:1918-1919:v1",
+  "person":{"canonical_name_en":"Carl Gustaf Emil Mannerheim","display_name_ko":"칼 구스타프 에밀 만네르헤임"},
+  "polity":{"canonical_name_en":"Finland","display_name_ko":"핀란드"},
+  "activity":{
+    "relation_type":"governs","period_basis":"term","role":"Regent","role_display_name_ko":"섭정",
+    "start_year":1918,"start_month":12,"start_day":12,"start_certainty":"exact","start_calendar":"gregorian",
+    "end_year":1919,"end_month":7,"end_day":27,"end_certainty":"exact","end_calendar":"gregorian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Mannerheim was elected Regent of Finland on 12 December 1918 and held the head-of-state office until 27 July 1919. This Activity is separate from his later 1944-1946 presidency."
+  },
+  "sources":[{"title":"MANNERHEIM — Regent","canonical_url":"https://www.mannerheim.fi/07_vhoit/e_valtho.htm","citation_text":"The Mannerheim site records his regency from 12 December 1918 until 27 July 1919.","source_type":"institutional_history"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-27","document_title":"칼 구스타프 에밀 만네르헤임","url":"https://namu.wiki/w/%EC%B9%BC%20%EA%B5%AC%EC%8A%A4%ED%83%80%ED%94%84%20%EC%97%90%EB%B0%80%20%EB%A7%8C%EB%84%A4%EB%A5%B4%ED%97%A4%EC%9E%84"}}
+}

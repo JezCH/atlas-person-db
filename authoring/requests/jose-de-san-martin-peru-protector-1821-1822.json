@@ -1,0 +1,19 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:jose-de-san-martin:peru:protector:1821-1822:v1",
+  "person":{"canonical_name_en":"José de San Martín","display_name_ko":"호세 데 산 마르틴"},
+  "polity":{"canonical_name_en":"Peru","display_name_ko":"페루"},
+  "activity":{
+    "relation_type":"governs","period_basis":"term","role":"Protector of Peru","role_display_name_ko":"페루 보호자",
+    "start_year":1821,"start_month":8,"start_day":3,"start_certainty":"exact","start_calendar":"gregorian",
+    "end_year":1822,"end_month":9,"end_day":20,"end_certainty":"exact","end_calendar":"gregorian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"José de San Martín assumed supreme political and military command of the free departments of Peru under the title Protector on 3 August 1821 and resigned before the Constituent Congress on 20 September 1822. This is a distinct Peruvian governing Activity from his earlier service to the United Provinces of the Río de la Plata."
+  },
+  "sources":[
+    {"title":"Decreto Supremo N.° 1-1821-RE — Ministerio de Relaciones Exteriores del Perú","canonical_url":"https://www.gob.pe/institucion/rree/normas-legales/6472510-1-1821-re","citation_text":"The decree of 3 August 1821 unites supreme political and military command in San Martín under the title Protector.","source_type":"primary_document"},
+    {"title":"Presidentes y Gobernantes de la República del Perú — Congreso de la República","canonical_url":"https://www3.congreso.gob.pe/biblioteca/presidentes/1821-1850/","citation_text":"The Peruvian Congress lists José de San Martín as Protector from 3 August 1821 to 20 September 1822.","source_type":"government_web"}
+  ],
+  "external_references":{"namuwiki":{"status":"not_found","checked_at":"2026-08-28"}}
+}

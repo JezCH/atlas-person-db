@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:james-vi-of-scotland:kingdom-of-ireland:king:1603-1625:v1",
+  "person":{"canonical_name_en":"James VI of Scotland","display_name_ko":"제임스 6세"},
+  "polity":{"canonical_name_en":"Kingdom of Ireland","display_name_ko":"아일랜드 왕국","polity_type":"historical_polity","historicity":"historical"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"King","role_display_name_ko":"왕",
+    "start_year":1603,"start_month":3,"start_day":24,"start_certainty":"exact","start_calendar":"julian",
+    "end_year":1625,"end_month":3,"end_day":27,"end_certainty":"exact","end_calendar":"julian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"James VI of Scotland also became monarch of the separate Kingdom of Ireland in 1603 as James I and remained king until 1625. ATLAS records the Irish crown separately because Ireland remained a distinct kingdom under the same monarch rather than being the same Polity as England or Scotland."
+  },
+  "sources":[{"title":"James I — Kingdom of Ireland reign — History of Parliament","canonical_url":"https://peerages.historyofparliamentonline.org/reigns/37","citation_text":"The History of Parliament peerage database identifies James I as monarch of the Kingdom of Ireland from 24 March 1603 until 27 March 1625.","source_type":"research_database"}],
+  "external_references":{"namuwiki":{"status":"not_found","checked_at":"2026-08-24"}}
+}

@@ -1,0 +1,19 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:napoleon-iii:french-second-republic:president:1848-1852:v1",
+  "person":{"canonical_name_en":"Napoleon III","display_name_ko":"나폴레옹 3세"},
+  "polity":{"canonical_name_en":"French Second Republic","display_name_ko":"프랑스 제2공화국","polity_type":"historical_polity","historicity":"historical"},
+  "activity":{
+    "relation_type":"governs","period_basis":"term","role":"President","role_display_name_ko":"대통령",
+    "start_year":1848,"start_certainty":"exact","start_calendar":"gregorian",
+    "end_year":1852,"end_certainty":"exact","end_calendar":"gregorian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Louis-Napoléon Bonaparte was elected President of the French Second Republic in December 1848 and remained the republican head of state until the Second Empire was established in 1852. ATLAS keeps this presidency separate from his 1852-1870 imperial reign as Napoleon III."
+  },
+  "sources":[
+    {"title":"The Constitution of 4 November 1848 — Élysée","canonical_url":"https://www.elysee.fr/en/french-presidency/the-constitution-of-4-november-1848","citation_text":"The Élysée records Louis-Napoléon Bonaparte as the elected head of state of the Second Republic beginning in December 1848.","source_type":"government_web"},
+    {"title":"The Constitution of 14 January 1852 and its modifications — Élysée","canonical_url":"https://www.elysee.fr/en/french-presidency/the-constitution-of-14-january-1852-and-its-modifications","citation_text":"The Élysée explains the 1852 presidential constitutional order and its conversion into the Second Empire.","source_type":"government_web"}
+  ],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-24","document_title":"나폴레옹 3세","url":"https://namu.wiki/w/%EB%82%98%ED%8F%B4%EB%A0%88%EC%98%B9%203%EC%84%B8"}}
+}
