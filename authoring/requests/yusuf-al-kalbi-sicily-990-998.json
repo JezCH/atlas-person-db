@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Yusuf al-Kalbi",
+    "display_name_ko": "유수프 알칼비",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Emirate of Sicily",
+    "display_name_ko": "시칠리아 토후국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emir of Sicily",
+    "role_display_name_ko": "시칠리아 아미르",
+    "start_year": 990,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 998,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Abu'l-Futuh Yusuf ibn Abdallah al-Kalbi governed Muslim Sicily from 990 until illness forced the transfer of effective authority in 998. ATLAS uses the Sicilian emirate as the immediate polity while noting the Kalbids' Fatimid-viceroyal context."
+  },
+  "sources": [
+    {
+      "title": "The Kalbids of Sicily: Stalwarts of Fatimid Ifriqiya",
+      "canonical_url": "https://www.jstor.org/stable/10.3366/jj.15478407.9",
+      "citation_text": "Modern scholarship describes the Kalbids as the governing dynasty of Muslim Sicily and as Fatimid viceroys.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Kalbids",
+      "canonical_url": "https://en.wikipedia.org/wiki/Kalbids",
+      "citation_text": "The standard dynastic chronology lists Abu'l-Futuh Yusuf ibn Abdallah al-Kalbi as ruler from 990 to 998.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

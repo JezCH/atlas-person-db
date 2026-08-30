@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Vsevolod III Yurievich",
+    "display_name_ko": "프세볼로트 3세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Grand Principality of Vladimir",
+    "display_name_ko": "블라디미르 대공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Grand Prince",
+    "role_display_name_ko": "대공",
+    "start_year": 1176,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1212,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Vsevolod III, known as Vsevolod the Big Nest, ruled Vladimir from 1176 until his death in 1212. ATLAS uses the Vladimir grand-princely polity rather than conflating it with his dynasty's other Rus' territories."
+  },
+  "sources": [
+    {
+      "title": "Grand Prince",
+      "canonical_url": "https://www.encyclopedia.com/history/encyclopedias-almanacs-transcripts-and-maps/grand-prince",
+      "citation_text": "The Columbia Encyclopedia notes that Vsevolod 'the Big Nest' ruled Vladimir-Suzdal from 1176 to 1212 and systematically used the grand-princely title.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

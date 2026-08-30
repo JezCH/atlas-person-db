@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Antonio de Mendoza",
+    "display_name_ko": "안토니오 데 멘도사",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Viceroyalty of New Spain",
+    "display_name_ko": "누에바에스파냐 부왕령",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Viceroy",
+    "role_display_name_ko": "부왕",
+    "start_year": 1535,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1550,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Antonio de Mendoza was the first viceroy of New Spain, serving from 1535 to 1550. ATLAS keeps this colonial vice-regal office distinct from his later Peruvian viceroyalty."
+  },
+  "sources": [
+    {
+      "title": "Antonio de Mendoza",
+      "canonical_url": "https://www.nps.gov/coro/learn/historyculture/antonio-de-mendoza.htm",
+      "citation_text": "The U.S. National Park Service identifies Antonio de Mendoza as the first viceroy of New Spain and gives his tenure as 1535–1550.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Nominoe",
+    "display_name_ko": "노미노에",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Brittany",
+    "display_name_ko": "브르타뉴",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Duke and ruler of Brittany",
+    "role_display_name_ko": "브르타뉴 공작·통치자",
+    "start_year": 831,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 851,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Nominoe was placed at the head of Brittany in 831 and later broke from West Frankish tutelage, laying foundations for an independent Breton polity. ATLAS does not label him an undisputed king because contemporary titulature is more complex."
+  },
+  "sources": [
+    {
+      "title": "Les Bretons de Nominoë",
+      "canonical_url": "https://www.persee.fr/doc/abpo_0399-0826_1991_num_98_4_3412_t1_0453_0000_1",
+      "citation_text": "The Persée review notes that Louis the Pious placed Nominoe at the head of Brittany in 831 and that he later broke from Charles the Bald's tutelage.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Nominoë",
+      "canonical_url": "https://www.larousse.fr/archives/histoire_de_france/page/882",
+      "citation_text": "Larousse describes Nominoe as the first duke and political leader of Brittany.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

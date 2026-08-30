@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Fa Ngum",
+    "display_name_ko": "파응움",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Lan Xang",
+    "display_name_ko": "란쌍 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1353,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1373,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Fa Ngum founded Lan Xang in 1353. Sources vary between 1372 and 1373 for his deposition or exile, so ATLAS keeps the end boundary approximate rather than forcing false precision."
+  },
+  "sources": [
+    {
+      "title": "Fa Ngum",
+      "canonical_url": "https://www.larousse.fr/encyclopedie/personnage/Fa_Ngum/119026",
+      "citation_text": "Larousse identifies Fa Ngum as founder of Lan Xang and dates the kingdom's creation to 1353.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Fa Ngum",
+      "canonical_url": "https://en.wikipedia.org/wiki/Fa_Ngum",
+      "citation_text": "Standard modern chronology places Fa Ngum's reign from 1353 into the early 1370s, with deposition or exile conventionally dated 1372/1373.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

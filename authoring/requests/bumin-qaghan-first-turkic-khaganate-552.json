@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Bumin Qaghan",
+    "display_name_ko": "부민 카간",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "First Turkic Khaganate",
+    "display_name_ko": "돌궐 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Qaghan",
+    "role_display_name_ko": "카간",
+    "start_year": 552,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 552,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bumin defeated the Rouran in 552, proclaimed Göktürk independence and founded the First Turkic Khaganate, dying in the same year. ATLAS records the one-year reign without inventing a longer interval."
+  },
+  "sources": [
+    {
+      "title": "Bumin Kağan",
+      "canonical_url": "https://turkdunyasiansiklopedisi.gov.tr/detay/6715/Bumin-Ka%C4%9Fan",
+      "citation_text": "The Turkish World Encyclopedia states that Bumin defeated the Rouran and proclaimed the independence of the First Göktürk state in 552.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "이리가한",
+      "url": "https://namu.wiki/w/%EC%9D%B4%EB%A6%AC%EA%B0%80%ED%95%9C"
+    }
+  }
+}
