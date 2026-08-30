@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Euric",
+    "display_name_ko": "에우리크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Visigothic Kingdom",
+    "display_name_ko": "서고트 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 466,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 484,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Euric ruled the Visigoths from 466 until his death in 484, during which the Visigothic kingdom expanded substantially in southern Gaul and Iberia."
+  },
+  "sources": [
+    {
+      "title": "Euric",
+      "canonical_url": "https://www.encyclopedia.com/reference/encyclopedias-almanacs-transcripts-and-maps/euric",
+      "citation_text": "The Columbia Encyclopedia identifies Euric as king of the Visigoths from 466 to about 484 and notes the kingdom's major expansion under him.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "에우리크",
+      "url": "https://namu.wiki/w/%EC%97%90%EC%9A%B0%EB%A6%AC%ED%81%AC"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Leopold II",
+    "display_name_ko": "레오폴드 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Congo Free State",
+    "display_name_ko": "콩고 자유국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sovereign",
+    "role_display_name_ko": "주권자",
+    "start_year": 1885,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1908,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Leopold II simultaneously ruled the Congo Free State as its sovereign from international recognition in 1885 until its transfer to Belgium in 1908. This Activity is separate from his Belgian kingship."
+  },
+  "sources": [
+    {
+      "title": "King Leopold II",
+      "canonical_url": "https://www.monarchie.be/en/royal-family/history/king-leopold-ii",
+      "citation_text": "The Belgian Monarchy records recognition of the Congo Free State in 1885 with Leopold II as sovereign and its transfer to Belgium in 1908.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "레오폴드 2세",
+      "url": "https://namu.wiki/w/%EB%A0%88%EC%98%A4%ED%8F%B4%EB%93%9C%202%EC%84%B8"
+    }
+  }
+}

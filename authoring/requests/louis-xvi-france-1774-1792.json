@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Louis XVI",
+    "display_name_ko": "루이 16세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of France",
+    "display_name_ko": "프랑스 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1774,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1792,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Louis XVI inherited the French throne in 1774 and remained monarch until the monarchy was abolished in September 1792. ATLAS ends the reign with the fall of the monarchy rather than his execution in 1793."
+  },
+  "sources": [
+    {
+      "title": "Louis XVI",
+      "canonical_url": "https://en.chateauversailles.fr/discover/history/great-characters/louis-xvi",
+      "citation_text": "The Palace of Versailles records that Louis XVI inherited the throne in 1774 and describes the collapse of the monarchy during the Revolution.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "루이 16세",
+      "url": "https://namu.wiki/w/%EB%A3%A8%EC%9D%B4%2016%EC%84%B8"
+    }
+  }
+}

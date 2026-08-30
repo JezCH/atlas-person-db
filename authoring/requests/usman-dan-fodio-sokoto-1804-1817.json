@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Usman dan Fodio",
+    "display_name_ko": "우스만 단 포디오",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Sokoto Caliphate",
+    "display_name_ko": "소코토 칼리파국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Caliph",
+    "role_display_name_ko": "칼리프",
+    "start_year": 1804,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1817,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Usman dan Fodio founded the Sokoto Caliphate through the jihad beginning in 1804 and remained its supreme religious-political leader until his death in 1817."
+  },
+  "sources": [
+    {
+      "title": "Religion — The Sokoto Caliphate",
+      "canonical_url": "https://sokotostate.gov.ng/history-of-sokoto/religion/",
+      "citation_text": "Sokoto State records that Usman dan Fodio founded the Sokoto Caliphate in 1804 and that followers pledged allegiance to him as Commander of the Faithful.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Ousmane dan Fodio",
+      "canonical_url": "https://www.larousse.fr/encyclopedie/personnage/Ousmane_dan_Fodio/136618",
+      "citation_text": "Larousse identifies Usman dan Fodio as founder of the Sokoto Fulani empire and dates his life to 1754–1817.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

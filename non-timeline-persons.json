@@ -763,5 +763,22 @@
     "role_ko": "욤스비킹 전승상의 창건자·지도자",
     "reason": "Pálnatóki is a major founder-leader in the later Jómsvíkinga saga tradition, but modern medieval scholarship treats his historicity as very doubtful and no defensible person-specific reign or activity chronology can be established. ATLAS therefore preserves the tradition outside the historical year timeline rather than inventing dates.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "Emperor Jimmu",
+    "politic_name": "Japan",
+    "display_name_ko": "진무 천황",
+    "politic_display_name_ko": "일본",
+    "historicity": "legendary",
+    "historicity_display_ko": "전설",
+    "timeline_status": "excluded",
+    "date_basis": "traditional_imperial_chronology",
+    "traditional_year": -660,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "전승상 일본 초대 천황",
+    "reason": "Jimmu is the legendary first emperor in Japanese imperial tradition. The conventional accession year of 660 BCE belongs to later traditional chronology and is not accepted as secure historical chronology; ATLAS preserves the traditional association without treating it as a verified personal Activity interval.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or traditional overlay is enabled."
   }
 ]

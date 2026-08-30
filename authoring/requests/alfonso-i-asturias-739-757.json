@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Alfonso I of Asturias",
+    "display_name_ko": "알폰소 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Asturias",
+    "display_name_ko": "아스투리아스 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 739,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 757,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Alfonso I, traditionally called 'the Catholic', ruled Asturias from 739 until his death in 757."
+  },
+  "sources": [
+    {
+      "title": "Alphonso I of Spain",
+      "canonical_url": "https://www.studylight.org/encyclopedias/eng/bri/a/alphonso-i-of-spain.html",
+      "citation_text": "The Encyclopaedia Britannica entry gives Alfonso I's Asturian reign as 739–757.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Moshoeshoe I",
+    "display_name_ko": "모쇼에쇼에 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Basotho Kingdom",
+    "display_name_ko": "바소토 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1822,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1870,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Moshoeshoe I united the Basotho political community and founded the polity that became Lesotho. ATLAS uses the historical Basotho Kingdom rather than back-projecting the later independent-state name Lesotho across the whole nineteenth-century reign."
+  },
+  "sources": [
+    {
+      "title": "About Lesotho",
+      "canonical_url": "https://www.gov.ls/about-lesotho/",
+      "citation_text": "The Government of Lesotho states that Moshoeshoe I united the land under one rule in 1822.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Basotho Remember King Moshoeshoe I",
+      "canonical_url": "https://www.gov.ls/uncategorized/basotho-remember-moshoeshoe-i/",
+      "citation_text": "The Government of Lesotho records Moshoeshoe's leadership from 1822 and his death in 1870.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}
