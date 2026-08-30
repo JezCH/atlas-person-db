@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Catherine I of Russia",
+    "display_name_ko": "예카테리나 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Russian Empire",
+    "display_name_ko": "러시아 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Empress Regnant",
+    "role_display_name_ko": "여제",
+    "start_year": 1725,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1727,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Catherine I succeeded Peter the Great as the sovereign empress of the Russian Empire in 1725 and reigned until her death in 1727. ATLAS uses the role 'Empress Regnant / 여제' to distinguish her sovereign rule from an empress-consort role. Year granularity avoids silently mixing Old Style and converted New Style dates."
+  },
+  "sources": [
+    {
+      "title": "Catherine I — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/people/history/russian-soviet-and-cis-history-biographies/catherine-i",
+      "citation_text": "The encyclopedia identifies Catherine I as Empress of Russia from 1725 to 1727 and successor to Peter the Great.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "예카테리나 1세",
+      "url": "https://namu.wiki/w/%EC%98%88%EC%B9%B4%ED%85%8C%EB%A6%AC%EB%82%98%201%EC%84%B8"
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Kim Gu",
+    "display_name_ko": "김구",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Provisional Government of the Republic of Korea",
+    "display_name_ko": "대한민국 임시정부",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Chairman",
+    "role_display_name_ko": "주석",
+    "start_year": 1940,
+    "start_month": 10,
+    "start_day": 9,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1947,
+    "end_month": 3,
+    "end_day": 3,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "On 9 October 1940 the Korean Provisional Assembly elected Kim Gu chairman under the revised Provisional Constitution. The chair represented the Provisional Government and held supreme command of its armed forces. After liberation, the Provisional Government was not recognized as Korea's sovereign government by the occupation authorities, although its organization and titles continued in Korean nationalist politics. On 3 March 1947 the National Assembly aligned with the provisional-government succession framework selected Syngman Rhee as chairman and Kim Gu as vice-chairman; ATLAS uses that formal leadership transition as the endpoint and does not imply sovereign governmental control over occupied Korea after 1945."
+  },
+  "sources": [
+    {
+      "title": "국무위원회 주석 선거 · 국무위원 선거 · 임시정부 포유문(1940.10.) — 국사편찬위원회",
+      "canonical_url": "https://db.history.go.kr/item/level.do?levelId=ij_008_0050_00010",
+      "citation_text": "The National Institute of Korean History records that on 9 October 1940 the Provisional Assembly elected Kim Gu chairman under the revised constitution.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "대한민국임시정부자료집 — 중경시대 해설, 국사편찬위원회",
+      "canonical_url": "https://db.history.go.kr/modern/level.do?levelId=ij_008_%241exp",
+      "citation_text": "The National Institute of Korean History explains that the 1940 chairman represented the government and exercised command authority comparable to a head of state.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "국민의회, 임정주석에 이승만·부주석에 김구 추대 — 국사편찬위원회",
+      "canonical_url": "https://db.history.go.kr/id/dh_004_1947_03_03_0040",
+      "citation_text": "The National Institute of Korean History records the 3 March 1947 leadership reorganization selecting Syngman Rhee as chairman and Kim Gu as vice-chairman.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "김구",
+      "url": "https://namu.wiki/w/%EA%B9%80%EA%B5%AC"
+    }
+  }
+}
