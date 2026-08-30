@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:tiglath-pileser-iii:babylonia:king:729-727-bce:v1",
+  "person":{"canonical_name_en":"Tiglath-Pileser III","display_name_ko":"티글라트-필레세르 3세"},
+  "polity":{"canonical_name_en":"Babylonia","display_name_ko":"바빌로니아","polity_type":"historical_polity","historicity":"historical"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"King of Babylon","role_display_name_ko":"바빌론 왕",
+    "start_year":-729,"start_certainty":"exact","start_calendar":"unspecified_historical",
+    "end_year":-727,"end_certainty":"exact","end_calendar":"unspecified_historical",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Tiglath-Pileser III defeated Mukin-zeri and assumed the kingship of Babylon in 729 BCE. He retained the Babylonian crown for the remainder of his reign while simultaneously ruling Assyria. ATLAS records this Babylonian kingship separately from his existing Neo-Assyrian Empire Activity."
+  },
+  "sources":[{"title":"Tiglath-pileser III, king of Assyria — Assyrian Empire Builders (ORACC)","canonical_url":"https://oracc.museum.upenn.edu/saao/aebp/Essentials/Kings/Tiglath-pileserIII/index.html","citation_text":"ORACC states that Tiglath-Pileser III took the crown of Babylon in 729 BCE and for the remainder of his reign ruled as both king of Assyria and king of Babylon.","source_type":"academic_reference"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-21","document_title":"티글라트-필레세르 3세","url":"https://namu.wiki/w/%ED%8B%B0%EA%B8%80%EB%9D%BC%ED%8A%B8-%ED%95%84%EB%A0%88%EC%84%B8%EB%A5%B4%203%EC%84%B8"}}
+}

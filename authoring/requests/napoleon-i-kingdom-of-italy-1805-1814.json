@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:napoleon-i:kingdom-of-italy:king:1805-1814:v1",
+  "person":{"canonical_name_en":"Napoleon I","display_name_ko":"나폴레옹 1세"},
+  "polity":{"canonical_name_en":"Kingdom of Italy","display_name_ko":"이탈리아 왕국"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"King","role_display_name_ko":"왕",
+    "start_year":1805,"start_certainty":"exact","start_calendar":"gregorian",
+    "end_year":1814,"end_certainty":"exact","end_calendar":"gregorian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Napoleon I assumed the throne of the Kingdom of Italy in 1805 and remained King of Italy until the kingdom collapsed in April 1814. ATLAS records this Italian crown separately from his French imperial reign."
+  },
+  "sources":[{"title":"Regno d'Italia, 1805–1814 — Lombardia Beni Culturali","canonical_url":"https://www.lombardiabeniculturali.it/istituzioni/schede/8000364/","citation_text":"Lombardia Beni Culturali states that the Italian Republic became the hereditary Kingdom of Italy in March 1805, Napoleon assumed its throne and was crowned in Milan on 26 May, and the kingdom ceased in April 1814.","source_type":"government_cultural_heritage"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-24","document_title":"나폴레옹 1세","url":"https://namu.wiki/w/%EB%82%98%ED%8F%B4%EB%A0%88%EC%98%B9%201%EC%84%B8"}}
+}
