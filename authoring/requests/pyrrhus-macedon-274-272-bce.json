@@ -1,0 +1,19 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:pyrrhus-of-epirus:macedon:king:274-272-bce:v1",
+  "person":{"canonical_name_en":"Pyrrhus of Epirus","display_name_ko":"피로스 1세"},
+  "polity":{"canonical_name_en":"Macedon","display_name_ko":"마케도니아"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"King","role_display_name_ko":"왕",
+    "start_year":-274,"start_certainty":"exact","start_calendar":"unspecified_historical",
+    "end_year":-272,"end_certainty":"exact","end_calendar":"unspecified_historical",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Pyrrhus invaded Macedonia again in 274 BCE, defeated Antigonus Gonatas and took control of much of Macedonia and Thessaly. He retained this Macedonian kingship until his death in 272 BCE. ATLAS records it as a second, separate Macedonian Activity."
+  },
+  "sources":[
+    {"title":"Macedonia and Greece — Cambridge Ancient History","canonical_url":"https://www.cambridge.org/core/books/abs/cambridge-ancient-history/macedonia-and-greece/2BE598C7FC8FA33D46A8C446045CD505","citation_text":"The Cambridge Ancient History describes Pyrrhus's invasion in 274 BCE, Antigonus's flight, and Pyrrhus's control of Macedonia and Thessaly.","source_type":"academic_reference"},
+    {"title":"Antigonus Gonatas — Oxford Classical Dictionary","canonical_url":"https://academic.oup.com/edited-volume/61673/chapter-abstract/548062618","citation_text":"Oxford records that Pyrrhus occupied western Macedonia and Thessaly in 274 BCE and that his death in 272 ended the threat to Antigonus.","source_type":"academic_reference"}
+  ],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-21","document_title":"피로스 1세","url":"https://namu.wiki/w/%ED%94%BC%EB%A1%9C%EC%8A%A4%201%EC%84%B8"}}
+}
