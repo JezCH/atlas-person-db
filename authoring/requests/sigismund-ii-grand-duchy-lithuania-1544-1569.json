@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:sigismund-ii-augustus:grand-duchy-of-lithuania:grand-duke:1544-1569:v1",
+  "person":{"canonical_name_en":"Sigismund II Augustus","display_name_ko":"지그문트 2세 아우구스트"},
+  "polity":{"canonical_name_en":"Grand Duchy of Lithuania","display_name_ko":"리투아니아 대공국"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"Grand Duke","role_display_name_ko":"대공",
+    "start_year":1544,"start_certainty":"exact","start_calendar":"julian",
+    "end_year":1569,"end_month":7,"end_day":1,"end_certainty":"exact","end_calendar":"julian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"Sigismund Augustus began exercising rule in the Grand Duchy of Lithuania in 1544. ATLAS records the separate Lithuanian grand-ducal phase through the Union of Lublin on 1 July 1569, after which the existing Polish-Lithuanian Commonwealth Activity represents his union-level rule."
+  },
+  "sources":[{"title":"Important dates — Palace of the Grand Dukes of Lithuania","canonical_url":"https://www.valdovurumai.lt/en/palace-history/i/5363/important-dates/","citation_text":"The National Museum–Palace of the Grand Dukes of Lithuania identifies Sigismund Augustus as Grand Duke of Lithuania from 1544 to 1572 and King of Poland from 1548.","source_type":"museum_reference"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-26","document_title":"지그문트 2세 아우구스트","url":"https://namu.wiki/w/%EC%A7%80%EA%B7%B8%EB%AC%B8%ED%8A%B8%202%EC%84%B8%20%EC%95%84%EC%9A%B0%EA%B5%AC%EC%8A%A4%ED%8A%B8"}}
+}

@@ -1,0 +1,16 @@
+{
+  "schema":"atlas-human-authoring/v1",
+  "review_status":"approved",
+  "request_id":"authoring:henry-viii:kingdom-of-ireland:king:1542-1547:v1",
+  "person":{"canonical_name_en":"Henry VIII","display_name_ko":"헨리 8세"},
+  "polity":{"canonical_name_en":"Kingdom of Ireland","display_name_ko":"아일랜드 왕국"},
+  "activity":{
+    "relation_type":"rules","period_basis":"reign","role":"King","role_display_name_ko":"왕",
+    "start_year":1542,"start_certainty":"exact","start_calendar":"julian",
+    "end_year":1547,"end_certainty":"exact","end_calendar":"julian",
+    "confidence":"well_established","chronology_status":"reviewed",
+    "notes":"The Crown of Ireland Act 1542 created the title King of Ireland for Henry VIII and his successors. Henry retained the Irish crown until his death in 1547. ATLAS records this kingdom separately from his existing kingship of England."
+  },
+  "sources":[{"title":"The United Kingdom and independence — House of Commons Library","canonical_url":"https://commonslibrary.parliament.uk/research-briefings/cbp-10649/","citation_text":"The House of Commons Library states that the Crown of Ireland Act 1542 created the title King of Ireland for Henry VIII and his successors.","source_type":"government_reference"}],
+  "external_references":{"namuwiki":{"status":"linked","checked_at":"2026-08-25","document_title":"헨리 8세","url":"https://namu.wiki/w/%ED%97%A8%EB%A6%AC%208%EC%84%B8"}}
+}
