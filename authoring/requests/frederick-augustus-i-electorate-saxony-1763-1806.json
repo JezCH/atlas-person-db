@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:frederick-augustus-i-of-saxony:electorate-of-saxony:elector:1763-1806:v1",
+  "person": {
+    "canonical_name_en": "Frederick Augustus I of Saxony",
+    "display_name_ko": "프리드리히 아우구스트 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Electorate of Saxony",
+    "display_name_ko": "작센 선제후국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Elector",
+    "role_display_name_ko": "선제후",
+    "start_year": 1763,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1806,
+    "end_month": 12,
+    "end_day": 20,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Frederick Augustus III succeeded as Elector of Saxony in 1763. A regency administered Saxony during his minority, but his electoral reign remained continuous. On 20 December 1806 Saxony became a kingdom and he became King Frederick Augustus I. ATLAS therefore separates the Electorate of Saxony phase from the existing Kingdom of Saxony Activity."
+  },
+  "sources": [
+    {
+      "title": "Frederick Augustus I and III, Elector and King of Saxony and Grand Duke of Warsaw — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG69868",
+      "citation_text": "The British Museum identifies Frederick Augustus as Elector of Saxony from 1763 to 1806, before he became King of Saxony.",
+      "source_type": "museum_reference"
+    },
+    {
+      "title": "Wettiner — Deutsche Biographie",
+      "canonical_url": "https://www.deutsche-biographie.de/sfz135137.html",
+      "citation_text": "Deutsche Biographie identifies Friedrich August III, later King Friedrich August I, as ruling from 1763 and describes Saxony's elevation to a kingdom in 1806.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  }
+}
