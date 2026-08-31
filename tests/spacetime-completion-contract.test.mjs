@@ -18,7 +18,7 @@ test("completion contract records the readable-scale architecture without claimi
   assert.equal(contract.foundation_track.sufficient_for_final_completion, false);
   assert.equal(contract.readable_scale.minimum_zoom_percent, 500);
   assert.equal(contract.readable_scale.default_zoom_percent, 500);
-  assert.equal(contract.readable_scale.global_extent_compression, 0.82);
+  assert.equal(contract.readable_scale.global_extent_compression, 0.78);
   assert.equal(contract.readable_scale.local_density_compression_allowed, false);
   assert.match(contractDoc, /500%/);
   assert.match(contractDoc, /uniform/i);
@@ -70,7 +70,7 @@ test("coordinate invariance uses one global camera zoom", () => {
     "search-off","search-on","selection-change","global-camera-zoom","minimap-navigation"
   ]);
   assert.equal(fixtures.readable_scale.minimum_zoom_percent, 500);
-  assert.equal(fixtures.readable_scale.global_extent_compression, 0.82);
+  assert.equal(fixtures.readable_scale.global_extent_compression, 0.78);
   assert.equal(fixtures.readable_scale.local_density_compression_allowed, false);
 });
 
