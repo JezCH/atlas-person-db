@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Nursultan Nazarbayev",
+    "display_name_ko": "누르술탄 나자르바예프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Kazakhstan",
+    "display_name_ko": "카자흐스탄 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1991,
+    "start_month": 12,
+    "start_day": 10,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2019,
+    "end_month": 3,
+    "end_day": 20,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "On 10 December 1991 the Kazakh SSR was renamed the Republic of Kazakhstan and Nazarbayev was inaugurated as its president; independence followed on 16 December. His resignation announced on 19 March 2019 took effect with the presidential succession on 20 March 2019."
+  },
+  "sources": [
+    {
+      "title": "First President of the Republic of Kazakhstan — official biography",
+      "canonical_url": "https://nazarbayev.kz/en/first-president-republic-kazakhstan-elbasy",
+      "citation_text": "The official First President site records Nazarbayev's nationwide election on 1 December 1991 and his role as the first President of Kazakhstan.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Political activity — Library of the First President of the Republic of Kazakhstan",
+      "canonical_url": "https://presidentlib.kz/en/node/3933",
+      "citation_text": "The official political chronology states that Nazarbayev became President of the Republic of Kazakhstan in December 1991 and resigned on 19 March 2019, with First President status from 20 March.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

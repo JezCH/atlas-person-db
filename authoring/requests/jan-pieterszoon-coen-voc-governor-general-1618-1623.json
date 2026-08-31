@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Jan Pieterszoon Coen",
+    "display_name_ko": "얀 피터르스존 쿤",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Dutch East India Company (VOC)",
+    "display_name_ko": "네덜란드 동인도 회사(VOC)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Governor-General of the Dutch East Indies",
+    "role_display_name_ko": "네덜란드령 동인도 총독",
+    "start_year": 1618,
+    "start_month": 4,
+    "start_day": 30,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1623,
+    "end_month": 2,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Coen's governor-generalship was an executive office of the VOC's Asian territorial system. ATLAS represents the VOC as the political-corporate authority requested by the user and stores his two non-continuous terms separately."
+  },
+  "sources": [
+    {
+      "title": "Jan Pieterszoon Coen — biographical office chronology",
+      "canonical_url": "https://en.wikipedia.org/wiki/Jan_Pieterszoon_Coen",
+      "citation_text": "The office chronology records Coen's two terms as Governor-General of the Dutch East Indies: 30 April 1618–1 February 1623 and 30 September 1627–21 September 1629.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

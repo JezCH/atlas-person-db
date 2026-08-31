@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Peter Stuyvesant",
+    "display_name_ko": "페터르 스튀베산트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "New Netherland",
+    "display_name_ko": "뉴네덜란드",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Director-General",
+    "role_display_name_ko": "총독",
+    "start_year": 1647,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1664,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Dutch West India Company appointed Peter Stuyvesant to lead New Netherland in 1647. He remained Director-General until the English seizure and surrender of New Netherland in 1664. ATLAS uses year granularity because contemporary Dutch/English calendar conventions produce variant exact-day renderings in modern sources."
+  },
+  "sources": [
+    {
+      "title": "The Rise and Fall of New Netherland — U.S. National Park Service",
+      "canonical_url": "https://www.nps.gov/mava/learn/historyculture/new-netherland.htm",
+      "citation_text": "The National Park Service records Peter Stuyvesant as Director-General of New Netherland from 1647 to 1664.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
