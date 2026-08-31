@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Kim Dae-jung",
+    "display_name_ko": "김대중",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "South Korea",
+    "display_name_ko": "대한민국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1998,
+    "start_month": 2,
+    "start_day": 25,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2003,
+    "end_month": 2,
+    "end_day": 24,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kim Dae-jung served as the 15th President of the Republic of Korea from 25 February 1998 through 24 February 2003."
+  },
+  "sources": [
+    {
+      "title": "대통령전시관 — 대통령의 서명 — 국가기록원",
+      "canonical_url": "https://theme.archives.go.kr/next/imp/sub1_02_02.do",
+      "citation_text": "The National Archives of Korea identifies Kim Dae-jung as the 15th President, 1998–2003.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "2011 대통령기록물 기술서집 — 대통령기록관",
+      "canonical_url": "https://dams.pa.go.kr/dams/DOCUMENT/2011/07/08/DOC/SRC/0104201107085549100055491017524.PDF",
+      "citation_text": "The Presidential Archives finding aid records the Kim Dae-jung presidential office structure from 25 February 1998 to 24 February 2003.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

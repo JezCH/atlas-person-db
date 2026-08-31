@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Tulloowak",
+    "display_name_ko": "툴루왁",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Inughuit (Polar Inuit)",
+    "display_name_ko": "이누흐이트(극지 이누이트)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Chief",
+    "role_display_name_ko": "추장",
+    "start_year": 1818,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1818,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "John Ross's 1818 Baffin Bay expedition recorded that the northern Greenland Inuit encountered by the expedition named Tulloowak when asked for their chief. ATLAS uses a single 1818 attestation point rather than inventing a reign interval. The community is represented as Inughuit (Polar Inuit), the modern identification of the far-north Greenland group encountered by Ross, rather than the broader mod label 'Kalaallit of Western Greenland'."
+  },
+  "sources": [
+    {
+      "title": "John Ross, A Voyage of Discovery... for Exploring Baffin's Bay (1819)",
+      "canonical_url": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Voyage_of_Discovery%2C_made_under_the_orders_of_the_Admiraity_in_His_Majesty%E2%80%99s_Ships_Isabella_and_Alexander_for_the_purpose_of_Exploring_Baffin%E2%80%99s_Bay_and_Inquiring_into_the_probability_of_a_%28IA_dli.granth.86392%29.pdf",
+      "citation_text": "Ross records that, when asked whether they had a chief, the northern Greenlanders answered affirmatively and gave the name Tulloowak.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

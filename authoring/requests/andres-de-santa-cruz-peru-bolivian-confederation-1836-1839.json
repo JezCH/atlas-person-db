@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Andrés de Santa Cruz",
+    "display_name_ko": "안드레스 데 산타 크루스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Peru–Bolivian Confederation",
+    "display_name_ko": "페루-볼리비아 연합",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Supreme Protector",
+    "role_display_name_ko": "최고 보호자",
+    "start_year": 1836,
+    "start_month": 10,
+    "start_day": 28,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1839,
+    "end_month": 2,
+    "end_day": 20,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Santa Cruz decreed the establishment of the Peru–Bolivian Confederation on 28 October 1836 and exercised the confederation's supreme executive authority, later formalized by the Pact of Tacna. The Activity ends with his resignation on 20 February 1839."
+  },
+  "sources": [
+    {
+      "title": "Archivo Digital de la Legislación del Perú — Confederation constitutional documents",
+      "canonical_url": "https://www.leyes.congreso.gob.pe/Documentos/Constituciones/Ecpb1836.pdf",
+      "citation_text": "Peruvian congressional constitutional records preserve the legal instruments establishing the Peru–Bolivian Confederation under Santa Cruz's protectorate.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

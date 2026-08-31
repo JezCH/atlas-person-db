@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Donduk Kuular",
+    "display_name_ko": "돈두크 쿠울라르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Tuvan People's Republic",
+    "display_name_ko": "투바 인민공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Chairman of the Council of Ministers",
+    "role_display_name_ko": "각료회의 의장",
+    "start_year": 1925,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1929,
+    "end_month": 1,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Donduk Kuular served as chairman of the Council of Ministers, effectively prime minister, from 1925 until the Soviet-backed political overthrow of his government in January 1929. ATLAS does not inflate this office into an unqualified sole head-of-state reign."
+  },
+  "sources": [
+    {
+      "title": "Donduk Kuular — biographical reference and cited historical literature",
+      "canonical_url": "https://en.wikipedia.org/wiki/Donduk_Kuular",
+      "citation_text": "The biographical reference, citing Smele and specialist literature on Tuva, records Kuular as chairman of the Council of Ministers from 1925 to 1929 and his removal in the 1929 coup.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

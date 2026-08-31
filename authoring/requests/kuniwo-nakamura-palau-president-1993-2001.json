@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Kuniwo Nakamura",
+    "display_name_ko": "쿠니오 나카무라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Palau",
+    "display_name_ko": "팔라우",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1993,
+    "start_month": 1,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2001,
+    "end_month": 1,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kuniwo Nakamura served two consecutive presidential terms from January 1993 through January 2001. Palauan government and national museum sources sometimes label these by election/calendar years as 1992–2000 or January 1993–January 2001; ATLAS uses the inauguration-month framing from the Belau National Museum."
+  },
+  "sources": [
+    {
+      "title": "President's Exhibit — Belau National Museum",
+      "canonical_url": "https://palaunationalmuseum.pw/presidents-exhibit/",
+      "citation_text": "The Belau National Museum lists President Kuniwo Nakamura's two terms as January 1993–January 1997 and January 1997–January 2001.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

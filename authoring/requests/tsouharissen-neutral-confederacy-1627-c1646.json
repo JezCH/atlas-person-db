@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Tsouharissen",
+    "display_name_ko": "추하리센",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Neutral Confederacy (Chonnonton)",
+    "display_name_ko": "중립 연맹(촌논톤)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Paramount Chief",
+    "role_display_name_ko": "대추장",
+    "start_year": 1627,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1646,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "A 1627 report described Tsouharissen as chief of the whole Neutral nation. Archaeological and ethnohistorical scholarship characterizes him as a paramount warrior-priest-chief over roughly ten constituent groups. The 1627 start is an explicit attestation point, not a claimed accession date; his death is placed around 1646."
+  },
+  "sources": [
+    {
+      "title": "Tsouharissen's Chiefdom: An Early Historic 17th Century Neutral Iroquoian Ranked Society",
+      "canonical_url": "https://canadianarchaeology.com/fr/node/9768",
+      "citation_text": "The Canadian Journal of Archaeology abstract describes Tsouharissen as the paramount warrior-priest-chief of a ranked Neutral Iroquoian chiefdom and dates its florescence to his lifetime.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

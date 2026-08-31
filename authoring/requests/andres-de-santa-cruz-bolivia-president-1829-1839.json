@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Andrés de Santa Cruz",
+    "display_name_ko": "안드레스 데 산타 크루스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Bolivia",
+    "display_name_ko": "볼리비아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1829,
+    "start_month": 5,
+    "start_day": 24,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1839,
+    "end_month": 2,
+    "end_day": 20,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Santa Cruz was installed as President of Bolivia on 24 May 1829 and remained the Bolivian president while simultaneously constructing and protecting the Peru–Bolivian Confederation. His Bolivian presidency is retained as a separate concurrent Activity rather than being lost behind the confederation role."
+  },
+  "sources": [
+    {
+      "title": "Aspectos Históricos — Instituto Nacional de Estadística de Bolivia",
+      "canonical_url": "https://www.ine.gob.bo/index.php/bolivia/aspectos-historicos/",
+      "citation_text": "Bolivia's National Institute of Statistics states that Santa Cruz arrived in May 1829 and was installed as President on 24 May.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
