@@ -10,12 +10,12 @@ The readable camera floor is **500%**.
 - default zoom: 500%
 - maximum zoom: 800%
 - X and Y use the same global camera zoom
-- the physical world extent applies one shared compression factor: **0.82**
+- the physical world extent applies one shared compression factor: **0.78**
 - local density-based compression is forbidden
 - a sparse region or era may not be folded independently
 - no runtime, UI, test, or compatibility path may expose a scale below 500%
 
-The 0.82 factor is presentation compression only. It applies uniformly to the whole X and Y extent and never changes normalized historical coordinates.
+The 0.78 factor is presentation compression only. It applies uniformly to the whole X and Y extent and never changes normalized historical coordinates. The readable label geometry keeps the 10px font and existing text-width budget while using a 19px label box and a 2px collision gap.
 
 ## Architecture
 
@@ -81,4 +81,4 @@ DOM size scales with viewport + overscan, not total DB size. Minimap may retain 
 - `tests/spacetime-completion-contract.test.mjs`
 - `tests/spacetime-readable-scale-contract.test.mjs`
 
-Changing the 500% floor, 0.82 shared compression, or prohibition on local compression requires explicit review.
+Changing the 500% floor, 0.78 shared compression, or prohibition on local compression requires explicit review.
