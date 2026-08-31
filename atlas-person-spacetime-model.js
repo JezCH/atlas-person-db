@@ -291,10 +291,6 @@
     return Object.freeze(ticks);
   }
 
-  return Object.freeze({ ...item, lane });
-    }));
-  }
-
   return Object.freeze({
     SPATIAL_INDEX_SCHEMA,
     REGION_DEFINITIONS,
