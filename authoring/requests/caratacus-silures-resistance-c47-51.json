@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Caratacus",
+    "display_name_ko": "카라타쿠스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Silures",
+    "display_name_ko": "실루레스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Resistance leader",
+    "role_display_name_ko": "대로마 저항 지도자",
+    "start_year": 47,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 51,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Caratacus was not securely a hereditary king of the Silures. After the Roman invasion of AD 43 he escaped west and renewed resistance among the Silures; under governor Ostorius Scapula (from 47) he became the leading anti-Roman commander, before defeat and capture in AD 51. ATLAS therefore records active_in with a resistance-leader role rather than 'King of the Silures'."
+  },
+  "sources": [
+    {
+      "title": "Caratacus — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548508633",
+      "citation_text": "The Oxford Classical Dictionary states that Caratacus escaped west to the Silures, renewed hostilities against Ostorius Scapula, and was defeated and surrendered to Rome in 51.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Caratacus — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG182601",
+      "citation_text": "The British Museum identifies Caratacus as an Iron Age ruler and resistance leader who was finally defeated about AD 51.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

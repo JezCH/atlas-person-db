@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Barghash bin Said",
+    "display_name_ko": "바르가시 빈 사이드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Sultanate of Zanzibar",
+    "display_name_ko": "잔지바르 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1870,
+    "start_month": 10,
+    "start_day": 7,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1888,
+    "end_month": 3,
+    "end_day": 26,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Barghash bin Said succeeded Majid bin Said on 7 October 1870 and ruled the Sultanate of Zanzibar until his death on 26 March 1888."
+  },
+  "sources": [
+    {
+      "title": "Sultans of Zanzibar — Zanzibar Royal Family",
+      "canonical_url": "https://www.zanzibarroyalfamily.org/current.php",
+      "citation_text": "The Zanzibar royal chronology lists Barghash bin Said as Sultan from 7 October 1870 to 26 March 1888.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Barghash bin Said coin record — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/object/W_As1926-0410-33-e",
+      "citation_text": "The British Museum identifies the coin as minted during Barghash bin Said's reign and gives his rule as 7 October 1870 to 26 March 1888.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

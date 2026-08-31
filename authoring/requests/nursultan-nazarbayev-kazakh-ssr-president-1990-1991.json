@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Nursultan Nazarbayev",
+    "display_name_ko": "누르술탄 나자르바예프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kazakh Soviet Socialist Republic",
+    "display_name_ko": "카자흐 소비에트 사회주의 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1990,
+    "start_month": 4,
+    "start_day": 24,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1991,
+    "end_month": 12,
+    "end_day": 10,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Supreme Council created the presidency of the Kazakh SSR and elected Nazarbayev on 24 April 1990. This Activity ends on 10 December 1991, when the Kazakh SSR was renamed the Republic of Kazakhstan; his presidency continued without interruption under the new state name."
+  },
+  "sources": [
+    {
+      "title": "Political activity — Library of the First President of the Republic of Kazakhstan",
+      "canonical_url": "https://presidentlib.kz/en/node/3933",
+      "citation_text": "The First President's Library records Nazarbayev as President of the Kazakh SSR from April 1990 and President of the Republic of Kazakhstan from December 1991.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

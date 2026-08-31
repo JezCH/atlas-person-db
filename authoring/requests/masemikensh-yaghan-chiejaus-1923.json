@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Masémikensh",
+    "display_name_ko": "마세미켄시",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Yaghan",
+    "display_name_ko": "야간족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Teacher and ceremonial leader",
+    "role_display_name_ko": "교사·의례 지도자",
+    "start_year": 1923,
+    "start_month": 4,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1923,
+    "end_month": 4,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Masémikensh was not a political ruler of all Yaghan people. Chilean cultural and ethnographic sources identify him as the Yaghan teacher who directed the final recorded Chiejaus initiation ceremony at Assif/Puerto Mejillones on Navarino Island in April 1923. ATLAS therefore uses active_in rather than rules."
+  },
+  "sources": [
+    {
+      "title": "Memoria Chilena — Los Yámana / último Chiejaus",
+      "canonical_url": "https://www.memoriachilena.gob.cl/archivos2/pdfs/MC0001754.pdf",
+      "citation_text": "The Chilean National Library source states that the final Chiejaus was held at Assif in April 1923 and directed by Masémikensh, described as the last Yámana teacher.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

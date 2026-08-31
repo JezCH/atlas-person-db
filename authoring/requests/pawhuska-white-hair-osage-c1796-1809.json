@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Pawhuska (White Hair I)",
+    "display_name_ko": "파후스카(화이트 헤어 1세)",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Osage",
+    "display_name_ko": "오세이지",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Head Chief of the Big Osage",
+    "role_display_name_ko": "대 오세이지 수석 추장",
+    "start_year": 1796,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1809,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Pawhuska, also known as White Hair, was the head chief of the Big Osage band. The title/name was later inherited by other Osage leaders, so ATLAS disambiguates this individual as White Hair I. Evidence indicates that he consolidated leadership after Clermont's death around 1795–1796; his death is recorded in 1809. He should not be treated as the sole ruler of every Osage division."
+  },
+  "sources": [
+    {
+      "title": "Thomas Jefferson to White Hair and Others, 12 July 1804 — Founders Online",
+      "canonical_url": "https://founders.archives.gov/documents/Jefferson/01-44-02-0056",
+      "citation_text": "Founders Online identifies White Hair, or Pawhuska, as head chief of the Big Osage band and notes that he assumed leadership with Pierre Chouteau's support during the 1790s.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Nikola Gruevski",
+    "display_name_ko": "니콜라 그루에프스키",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Macedonia",
+    "display_name_ko": "마케도니아 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 2006,
+    "start_month": 8,
+    "start_day": 27,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2016,
+    "end_month": 1,
+    "end_day": 18,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gruevski served as prime minister from 27 August 2006 to 18 January 2016. The polity is Republic of Macedonia, not North Macedonia: the constitutional state name changed to Republic of North Macedonia only in 2019, after his premiership."
+  },
+  "sources": [
+    {
+      "title": "Macedonia (11/09/11) — U.S. Department of State",
+      "canonical_url": "https://2009-2017.state.gov/outofdate/bgn/macedonia/191092.htm",
+      "citation_text": "The U.S. Department of State records the VMRO-DPMNE-led government under Prime Minister Nikola Gruevski taking office after the 2006 parliamentary elections.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Nikola Gruevski — biographical office chronology",
+      "canonical_url": "https://en.wikipedia.org/wiki/Nikola_Gruevski",
+      "citation_text": "The biographical office chronology records Gruevski's prime-ministerial term as 27 August 2006 to 18 January 2016.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
