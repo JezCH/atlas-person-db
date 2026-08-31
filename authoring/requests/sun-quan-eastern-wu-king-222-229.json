@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sun-quan:eastern-wu:king:222-229:v1",
+  "person": {
+    "canonical_name_en": "Sun Quan",
+    "display_name_ko": "손권"
+  },
+  "polity": {
+    "canonical_name_en": "Eastern Wu",
+    "display_name_ko": "동오"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 222,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 229,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sun Quan held the title King of Wu from 222 and established an independent Wu kingdom after breaking with Cao Wei later that year. In 229 he adopted the imperial title. ATLAS therefore records the 222-229 royal phase separately from his existing 229-252 imperial Activity."
+  },
+  "sources": [
+    {
+      "title": "Empire of Wu 吳 (222/229-280) — ChinaKnowledge.de",
+      "canonical_url": "https://www.chinaknowledge.de/History/Division/wu.html",
+      "citation_text": "Ulrich Theobald's ChinaKnowledge history states that Sun Quan became King of Wu in 222 and adopted the title of emperor in 229.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-21",
+      "document_title": "손권",
+      "url": "https://namu.wiki/w/%EC%86%90%EA%B6%8C"
+    }
+  }
+}
