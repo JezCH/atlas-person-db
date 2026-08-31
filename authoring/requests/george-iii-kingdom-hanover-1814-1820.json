@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:george-iii:kingdom-of-hanover:king:1814-1820:v1",
+  "person": {
+    "canonical_name_en": "George III",
+    "display_name_ko": "조지 3세"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Hanover",
+    "display_name_ko": "하노버 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1814,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1820,
+    "end_month": 1,
+    "end_day": 29,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "In 1814 the restored Hanoverian state was elevated from an electorate to the Kingdom of Hanover and George III assumed the royal title. He remained King of Hanover until his death on 29 January 1820. ATLAS keeps this crown separate from his concurrent United Kingdom kingship and from the pre-1814 electoral phases."
+  },
+  "sources": [
+    {
+      "title": "Georg III. — Neue Deutsche Biographie",
+      "canonical_url": "https://www.deutsche-biographie.de/sfz57020.html",
+      "citation_text": "The Neue Deutsche Biographie identifies George III as Elector and, from 1814, King of Hanover, and gives his death on 29 January 1820.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Vier Kutschen, ein Königreich. Hannover 1814-1866 — Hannover.de",
+      "canonical_url": "https://herrenhaeuser-gaerten.hannover.de/Museum-Schloss-Herrenhausen/Aktuelles-aus-dem-Museum/Vier-Kutschen%2C-ein-K%C3%B6nigreich.-Hannover-1814-1866",
+      "citation_text": "The Hannover historical museum page states that the Kingdom of Hanover existed from 1814 to 1866.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-28",
+      "document_title": "조지 3세",
+      "url": "https://namu.wiki/w/%EC%A1%B0%EC%A7%80%203%EC%84%B8"
+    }
+  }
+}

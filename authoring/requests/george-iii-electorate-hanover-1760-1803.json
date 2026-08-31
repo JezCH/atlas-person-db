@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:george-iii:electorate-of-hanover:elector:1760-1803:v1",
+  "person": {
+    "canonical_name_en": "George III",
+    "display_name_ko": "조지 3세"
+  },
+  "polity": {
+    "canonical_name_en": "Electorate of Hanover",
+    "display_name_ko": "하노버 선제후국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Elector",
+    "role_display_name_ko": "선제후",
+    "start_year": 1760,
+    "start_month": 10,
+    "start_day": 25,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1803,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "George III inherited the Hanoverian electorate in 1760 together with the British and Irish crowns. ATLAS ends this first effective Hanoverian ruling phase in 1803, when French forces occupied the Electorate and its governmental order was displaced. The Hanoverian title was not treated as proof of uninterrupted effective rule through the occupation; restoration is recorded separately."
+  },
+  "sources": [
+    {
+      "title": "Georg III. — Neue Deutsche Biographie",
+      "canonical_url": "https://www.deutsche-biographie.de/sfz57020.html",
+      "citation_text": "The Neue Deutsche Biographie identifies George III as Elector and later King of Hanover and records the French occupation before Hanover was freed again in 1813.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Hannover von 1777 bis 1821 — Hannover.de",
+      "canonical_url": "https://www.hannover.de/Kultur-Freizeit/Geschichte-Geschichten/Echt-hann%C3%B6versch/Historisches-aus-Hannover/Stadtgeschichte-in-der-Station-Waterloo/Hannover-von-1777-bis-1821",
+      "citation_text": "The City of Hannover chronology states that French troops occupied the Electorate and city of Hanover in 1803 for a decade.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-28",
+      "document_title": "조지 3세",
+      "url": "https://namu.wiki/w/%EC%A1%B0%EC%A7%80%203%EC%84%B8"
+    }
+  }
+}

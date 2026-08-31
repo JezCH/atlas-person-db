@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:haile-selassie-i:ethiopian-empire:king:1928-1930:v1",
+  "person": {
+    "canonical_name_en": "Haile Selassie I",
+    "display_name_ko": "하일레 셀라시에 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Ethiopian Empire",
+    "display_name_ko": "에티오피아 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1928,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1930,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "While continuing as regent and heir under Empress Zewditu, Ras Tafari was crowned negus (king) in 1928. A 1929 United States-Ethiopia treaty styles him 'King Tafari, Heir Apparent to the Throne and Regent Plenipotentiary of the Empire of Ethiopia.' ATLAS therefore records this concurrent royal title separately from his 1916-1930 regency and ends it with his accession as emperor in 1930."
+  },
+  "sources": [
+    {
+      "title": "Haile Selassie — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/people/history/african-history-biographies/haile-selassie",
+      "citation_text": "The biography states that Ras Tafari was named king in 1928 while remaining regent and became emperor in 1930.",
+      "source_type": "reference_work"
+    },
+    {
+      "title": "Treaty of Conciliation, United States–Ethiopia, 1929 — Library of Congress",
+      "canonical_url": "https://tile.loc.gov/storage-services/service/ll/lltreaties/lltreaties-ustbv007/lltreaties-ustbv007.pdf",
+      "citation_text": "The 1929 treaty formally styles him 'His Majesty, King Tafari, Heir Apparent to the Throne and Regent Plenipotentiary of the Empire of Ethiopia.'",
+      "source_type": "primary_source"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "하일레 셀라시에",
+      "url": "https://namu.wiki/w/%ED%95%98%EC%9D%BC%EB%A0%88%20%EC%85%80%EB%9D%BC%EC%8B%9C%EC%97%90"
+    }
+  }
+}
