@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Orhan",
+    "display_name_ko": "오르한",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ottoman Empire",
+    "display_name_ko": "오스만 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Bey",
+    "role_display_name_ko": "베이",
+    "start_year": 1324,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1362,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Orhan succeeded Osman I around 1324 and ruled the early Ottoman polity until 1362. ATLAS uses the contemporary-style title Bey rather than retrojecting the later imperial title Sultan."
+  },
+  "sources": [
+    {
+      "title": "ORHAN — TDV İslâm Ansiklopedisi",
+      "canonical_url": "https://islamansiklopedisi.org.tr/orhan",
+      "citation_text": "The TDV İslâm Ansiklopedisi biography by Halil İnalcık dates Orhan's rule from 1324 to 1362.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-31",
+      "document_title": "오르한",
+      "url": "https://namu.wiki/w/%EC%98%A4%EB%A5%B4%ED%95%9C"
+    }
+  }
+}

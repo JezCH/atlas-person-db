@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Iyasu I",
+    "display_name_ko": "이야스 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ethiopian Empire",
+    "display_name_ko": "에티오피아 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1682,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1706,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Iyasu I, commonly called Iyasu the Great, reigned as Emperor of Ethiopia from 1682 until his death in 1706. ATLAS keeps year-level boundaries rather than asserting a calendar system for converted day-level dates."
+  },
+  "sources": [
+    {
+      "title": "Iyasu I",
+      "canonical_url": "https://en.wikipedia.org/wiki/Iyasu_I",
+      "citation_text": "The biographical chronology gives Iyasu I's Ethiopian imperial reign as 1682–1706.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

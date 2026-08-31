@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "William III",
+    "display_name_ko": "윌리엄 3세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Scotland",
+    "display_name_ko": "스코틀랜드 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1689,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1702,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Scottish crown was offered to William and Mary in 1689. William, styled William II in Scotland, remained King of Scotland until his death in 1702."
+  },
+  "sources": [
+    {
+      "title": "William II and III (r. 1689–1702) and Mary II (r. 1689–1694)",
+      "canonical_url": "https://www.royal.uk/william-ii-and-iii-r-1689-1702-and-mary-ii-r1689-1694",
+      "citation_text": "The Royal Family's Scotland biography gives William's Scottish reign as 1689–1702.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-31",
+      "document_title": "윌리엄 3세",
+      "url": "https://namu.wiki/w/%EC%9C%8C%EB%A6%AC%EC%97%84%203%EC%84%B8"
+    }
+  }
+}

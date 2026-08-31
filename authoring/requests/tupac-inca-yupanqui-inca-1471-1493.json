@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Túpac Inca Yupanqui",
+    "display_name_ko": "투팍 잉카 유판키",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Inca Empire",
+    "display_name_ko": "잉카 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sapa Inca",
+    "role_display_name_ko": "사파 잉카",
+    "start_year": 1471,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1493,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Túpac Inca Yupanqui succeeded Pachacuti and is conventionally assigned a reign around 1471–1493. Reconstructed Inca chronologies vary slightly, so ATLAS marks both boundaries approximate."
+  },
+  "sources": [
+    {
+      "title": "Topa Inca Yupanqui",
+      "canonical_url": "https://en.wikipedia.org/wiki/Topa_Inca_Yupanqui",
+      "citation_text": "The conventional imperial chronology places Túpac Inca Yupanqui's reign around 1471–1493.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

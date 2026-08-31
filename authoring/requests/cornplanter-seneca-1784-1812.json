@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Cornplanter",
+    "display_name_ko": "콘플랜터",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Seneca Nation",
+    "display_name_ko": "세네카족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Chief and diplomat",
+    "role_display_name_ko": "추장·외교 지도자",
+    "start_year": 1784,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1812,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Cornplanter was a Seneca chief and diplomat. ATLAS uses 1784–1812 as a documented diplomatic-leadership interval during which he worked to maintain peace and represented Seneca interests; it is not presented as a fabricated formal hereditary reign."
+  },
+  "sources": [
+    {
+      "title": "Cornplanter State Forest — Pennsylvania DCNR",
+      "canonical_url": "https://www.pa.gov/agencies/dcnr/recreation/where-to-go/state-forests/find-a-forest/cornplanter",
+      "citation_text": "Pennsylvania DCNR describes Chief Cornplanter as a famous Seneca leader who helped maintain peace between the United States and the Iroquois from 1784 to 1812.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
