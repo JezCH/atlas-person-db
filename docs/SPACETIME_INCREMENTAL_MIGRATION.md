@@ -10,7 +10,7 @@ The current `시공간 인물도` remains the single supported renderer. The rea
 
 - minimum/default camera zoom = 500%; maximum = 800%;
 - one camera zoom controls X and Y;
-- one shared physical extent compression factor = 0.82;
+- one shared physical extent compression factor = 0.78;
 - no local density-based region or era compression;
 - historical Y never moves to resolve labels;
 - search/filter never changes normalized coordinates;
@@ -24,7 +24,7 @@ The current `시공간 인물도` remains the single supported renderer. The rea
 1. Lock 500% readable-scale contract.
 2. Replace low-scale semantic/log time projection with uniform time projection.
 3. Unify time and space zoom into one 2D camera.
-4. Apply the same 0.82 extent compression to X and Y.
+4. Apply the same 0.78 extent compression to X and Y.
 5. Remove overview/detail selector and all below-floor entry points.
 6. Remove density and point low-scale rendering.
 7. Remove obsolete log/adaptive tick/lane APIs.
