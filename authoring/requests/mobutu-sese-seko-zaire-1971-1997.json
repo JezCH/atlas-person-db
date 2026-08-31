@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Mobutu Sese Seko",
+    "display_name_ko": "모부투 세세 세코",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Zaire",
+    "display_name_ko": "자이르 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1971,
+    "start_month": 10,
+    "start_day": 27,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1997,
+    "end_month": 5,
+    "end_day": 16,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Democratic Republic of the Congo was officially renamed the Republic of Zaire on 27 October 1971 while Mobutu remained president. He relinquished effective power and fled Kinshasa on 16 May 1997 as his regime collapsed. ATLAS splits the same continuous personal rule at the constitutional state-name change so that Congo and Zaire remain distinct historical polity Activities."
+  },
+  "sources": [
+    {
+      "title": "Congo, Democratic Republic of the",
+      "canonical_url": "https://2009-2017.state.gov/s/cpr/rls/91592.htm",
+      "citation_text": "The U.S. Department of State records the official change of the country's name to the Republic of Zaire on 27 October 1971.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Zaire's Mobutu Cedes Power, Flees Capital",
+      "canonical_url": "https://www.washingtonpost.com/archive/politics/1997/05/17/zaires-mobutu-cedes-power-flees-capital/e6580be5-baa9-44a3-ac3e-41323f26ac91/",
+      "citation_text": "The Washington Post reported on 16 May 1997 that Mobutu fled Kinshasa and his government announced that he had relinquished power.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

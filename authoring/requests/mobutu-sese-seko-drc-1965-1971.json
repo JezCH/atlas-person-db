@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Mobutu Sese Seko",
+    "display_name_ko": "모부투 세세 세코",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Democratic Republic of the Congo",
+    "display_name_ko": "콩고 민주 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1965,
+    "start_month": 11,
+    "start_day": 25,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1971,
+    "end_month": 10,
+    "end_day": 26,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mobutu seized power in the 25 November 1965 coup and assumed presidential authority over the Democratic Republic of the Congo. ATLAS ends this Activity on 26 October 1971 because the state was officially renamed the Republic of Zaire on 27 October 1971; his rule itself continued without interruption."
+  },
+  "sources": [
+    {
+      "title": "Circular Telegram From the Department of State to All African Posts, November 26, 1965",
+      "canonical_url": "https://history.state.gov/historicaldocuments/frus1964-68v23/d456",
+      "citation_text": "The U.S. Department of State records that Mobutu staged the coup on 25 November 1965, deposed President Kasavubu and Prime Minister Kimba, and assumed presidential prerogatives.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Congo, Democratic Republic of the",
+      "canonical_url": "https://2009-2017.state.gov/s/cpr/rls/91592.htm",
+      "citation_text": "The U.S. Department of State records that the country's name was officially changed to the Republic of Zaire on 27 October 1971.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

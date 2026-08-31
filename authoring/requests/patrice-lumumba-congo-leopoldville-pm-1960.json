@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Patrice Lumumba",
+    "display_name_ko": "파트리스 루뭄바",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of the Congo (Léopoldville)",
+    "display_name_ko": "콩고 공화국(레오폴드빌)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1960,
+    "start_month": 6,
+    "start_day": 30,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1960,
+    "end_month": 9,
+    "end_day": 5,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Patrice Lumumba was appointed prime minister shortly before independence and headed the government of the independent Republic of the Congo from independence on 30 June 1960 until President Joseph Kasavubu dismissed him on 5 September 1960. ATLAS begins the sovereign-state Activity on independence day rather than back-projecting the Republic before independence."
+  },
+  "sources": [
+    {
+      "title": "Persons — Foreign Relations of the United States, 1958–1960, Africa, Volume XIV",
+      "canonical_url": "https://history.state.gov/historicaldocuments/frus1958-60v14/persons",
+      "citation_text": "The U.S. Department of State Office of the Historian identifies Patrice Lumumba as Prime Minister of the Republic of the Congo from June to September 1960 and notes his dismissal in September.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Congo, Decolonization, and the Cold War, 1960–1965",
+      "canonical_url": "https://history.state.gov/milestones/1961-1968/congo-decolonization",
+      "citation_text": "The Office of the Historian states that the former Belgian Congo became independent on 30 June 1960 and that President Kasavubu dismissed Lumumba on 5 September 1960.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
