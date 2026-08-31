@@ -1,0 +1,78 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "abdulaziz_nejd_note_after_hejaz_split_20260831_v1",
+  "as_of": "2026-08-31",
+  "status": "REVIEWED_POST_SPLIT_NOTE_CORRECTION",
+  "release_order": 570,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "ATLAS multiple-polity audit batch 22: the separate Kingdom of Hejaz 1926-1927 Activity is now Production VERIFIED, so the older Nejd note must no longer claim that the Hejaz crown is preserved only in notes.",
+  "baseline": {
+    "deployment_sha": "ae3d4bf16af65f78395907873221b081bc9d52d6"
+  },
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "semantic_identity_change_forbidden": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "abdulaziz_nejd_note_after_hejaz_split",
+      "type": "rewrite_activity",
+      "activity_id": "bb9d4eb6-7bb4-4808-b12a-7cceb1903bef",
+      "baseline_before": {
+        "person_id": "87eff9f3-3b7b-4532-913e-db51a7b272d7",
+        "polity_id": "dfea8994-f42d-4b3b-99ac-e3c2b4a1cada",
+        "role_id": "1a91542a-fc8f-5c4c-b4d2-f533d1af7fb8",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1921,
+        "activity_end": 1927,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "bb9d4eb6-7bb4-4808-b12a-7cceb1903bef",
+        "person_id": "87eff9f3-3b7b-4532-913e-db51a7b272d7",
+        "polity_id": "dfea8994-f42d-4b3b-99ac-e3c2b4a1cada",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "1a91542a-fc8f-5c4c-b4d2-f533d1af7fb8",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1921,
+        "activity_end": 1927,
+        "activity_start_detail": {
+          "year": 1921,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1927,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Abdulaziz assumed the title Sultan of Nejd in 1921. After conquering the Hejaz he also became King of the Hejaz in 1926 while retaining the Nejd sultanate; that distinct Hejaz kingship is recorded in a separate ATLAS Activity. In 1927 Nejd itself was elevated to a kingdom, ending the sultanic phase and transitioning to the composite Kingdom of Hejaz and Nejd.",
+        "add_source_links": []
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "production_mutation_authorized": false
+  }
+}
