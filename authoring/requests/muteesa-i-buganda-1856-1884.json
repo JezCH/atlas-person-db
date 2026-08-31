@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Muteesa I of Buganda",
+    "display_name_ko": "무테사 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Buganda",
+    "display_name_ko": "부간다 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Kabaka",
+    "role_display_name_ko": "카바카",
+    "start_year": 1856,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1884,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Muteesa I, Mukaabya Walugembe Kayiira, was the 30th Kabaka of Buganda and reigned from 1856 until his death in 1884."
+  },
+  "sources": [
+    {
+      "title": "Brief History of the Kingdom of Buganda — Buganda Kingdom",
+      "canonical_url": "https://buganda.or.ug/wp-content/uploads/2025/04/Final-Print-BRIEF-HISTORY-OF-THE-KINGDOM-OF-BUGANDA-3.pdf",
+      "citation_text": "The official Buganda historical publication lists Mukaabya Muteesa I as Kabaka from 1856 to 1884.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

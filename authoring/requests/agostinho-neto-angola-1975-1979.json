@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Agostinho Neto",
+    "display_name_ko": "아고스티뉴 네투",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "People's Republic of Angola",
+    "display_name_ko": "앙골라 인민공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1975,
+    "start_month": 11,
+    "start_day": 11,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1979,
+    "end_month": 9,
+    "end_day": 10,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Agostinho Neto proclaimed Angola's independence on 11 November 1975 and became the first President of the People's Republic of Angola. His term ended with his death on 10 September 1979."
+  },
+  "sources": [
+    {
+      "title": "10 de Setembro — O Presidente Neto morreu há 46 anos — Vice-Presidency of Angola",
+      "canonical_url": "https://vicepresidente.gov.ao/web/noticias/10-de-setembro-or-presidente-neto-morreu-ha-46-anos",
+      "citation_text": "The Angolan Vice-Presidency identifies Neto as the first President, links his presidency to independence on 11 November 1975, and records his death on 10 September 1979.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

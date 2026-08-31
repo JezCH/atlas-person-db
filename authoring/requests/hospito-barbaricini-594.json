@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Hospito",
+    "display_name_ko": "호스피토",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Barbaricini",
+    "display_name_ko": "바르바리키니",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Dux",
+    "role_display_name_ko": "둑스",
+    "start_year": 594,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 594,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Pope Gregory I addressed a letter in 594 to Hospito as 'Duke of the Barbaricini'. ATLAS records 594 only as a representative attestation point for Hospito's political leadership, not as a fabricated full reign interval, and uses the historically attested Barbaricini community rather than the broader geographic label Barbagia."
+  },
+  "sources": [
+    {
+      "title": "Gregory the Great, Book IV, Letter XXIII: To Hospito, Duke of the Barbaricini",
+      "canonical_url": "https://www.newadvent.org/fathers/360204023.htm",
+      "citation_text": "Gregory I's 594 letter is explicitly addressed to Hospito as Duke of the Barbaricini and praises his Christian allegiance among his people.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

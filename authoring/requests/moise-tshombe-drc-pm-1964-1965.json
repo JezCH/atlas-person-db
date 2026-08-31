@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Moïse Tshombe",
+    "display_name_ko": "모이즈 촘베",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Democratic Republic of the Congo",
+    "display_name_ko": "콩고 민주 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1964,
+    "start_month": 8,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1965,
+    "end_month": 10,
+    "end_day": 13,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tshombe's continuous premiership is represented under the Democratic Republic of the Congo from the 1 August 1964 constitutional state-name change until President Joseph Kasa-Vubu dismissed him on 13 October 1965."
+  },
+  "sources": [
+    {
+      "title": "Moïse Tshombe — Dictionary of African Biography reference record",
+      "canonical_url": "https://www.wikidata.org/wiki/Q334830",
+      "citation_text": "The biographical authority record cites the Dictionary of African Biography and records Tshombe's premiership from 10 July 1964 to 13 October 1965.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Constitution of the Democratic Republic of the Congo (1964)",
+      "canonical_url": "https://en.wikisource.org/wiki/Translation:Constitution_of_the_Democratic_Republic_of_the_Congo_(1964)",
+      "citation_text": "The constitution establishing the Democratic Republic of the Congo was promulgated on 1 August 1964 and bears Tshombe's signature as Prime Minister.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

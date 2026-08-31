@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Joaquim Chissano",
+    "display_name_ko": "조아킹 시사누",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Mozambique",
+    "display_name_ko": "모잠비크",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1986,
+    "start_month": 11,
+    "start_day": 6,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2005,
+    "end_month": 2,
+    "end_day": 2,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Joaquim Chissano succeeded to the Mozambican presidency after Samora Machel's death and served from 6 November 1986 until Armando Guebuza took office on 2 February 2005."
+  },
+  "sources": [
+    {
+      "title": "Joaquim Chissano — CIDOB",
+      "canonical_url": "https://www.cidob.org/en/lider-politico/joaquim-chissano",
+      "citation_text": "CIDOB records Joaquim Chissano as President of Mozambique from 6 November 1986 to 2 February 2005.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

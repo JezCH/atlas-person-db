@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Radama I",
+    "display_name_ko": "라다마 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Merina",
+    "display_name_ko": "메리나 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1810,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1828,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Radama I succeeded Andrianampoinimerina in 1810 and reigned until his death in 1828. ATLAS binds the reign to the Merina kingdom, whose power he greatly expanded across Madagascar, rather than retroactively treating all unconquered parts of the island as direct rule from the start."
+  },
+  "sources": [
+    {
+      "title": "Radama Ier — Encyclopédie Larousse",
+      "canonical_url": "https://www.larousse.fr/encyclopedie/personnage/Radama_I_er/140148",
+      "citation_text": "Larousse identifies Radama I as the Merina ruler who reigned from 1810 to 1828 and expanded the kingdom across much of Madagascar.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

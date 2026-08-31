@@ -780,5 +780,39 @@
     "role_ko": "전승상 일본 초대 천황",
     "reason": "Jimmu is the legendary first emperor in Japanese imperial tradition. The conventional accession year of 660 BCE belongs to later traditional chronology and is not accepted as secure historical chronology; ATLAS preserves the traditional association without treating it as a verified personal Activity interval.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or traditional overlay is enabled."
+  },
+  {
+    "person_name": "Isingoma Mpuga Rukidi I",
+    "politic_name": "Kingdom of Bunyoro-Kitara",
+    "display_name_ko": "이싱고마 음푸가 루키디 1세",
+    "politic_display_name_ko": "부뇨로-키타라 왕국",
+    "historicity": "historical_tradition_uncertain_chronology",
+    "historicity_display_ko": "역사 전승·연대 불확실",
+    "timeline_status": "excluded",
+    "date_basis": "bunyoro_babiito_dynastic_tradition_uncertain_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "부뇨로-키타라의 전승상 초대 바비토 왕(오무카마)",
+    "reason": "Bunyoro dynastic tradition remembers Isingoma Mpuga Rukidi I as the first Babiito ruler, but published and official reconstructions place him in materially different centuries and the Bunyoro-Kitara historical account itself cautions that precise dates for the early dynasties are conjectural. ATLAS therefore preserves the dynastic association without fabricating a person-specific reign interval.",
+    "map_policy": "Do not display on the historical year timeline unless a separate historical-tradition or uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "Tin Hinan",
+    "politic_name": "Ahaggar Tuareg",
+    "display_name_ko": "틴 히난",
+    "politic_display_name_ko": "아하가르 투아레그",
+    "historicity": "legendary_possible_historical_core",
+    "historicity_display_ko": "전설·역사적 핵심 가능",
+    "timeline_status": "excluded",
+    "date_basis": "tuareg_oral_tradition_and_abalessa_tomb_association",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "아하가르 투아레그 전승의 여왕·시조 인물",
+    "reason": "Tin Hinan is remembered in Tuareg tradition as an ancestral queen associated with the Ahaggar. The elite female burial at Abalessa is archaeological evidence for a late-antique high-status woman, but identifying that burial with the named Tin Hinan remains traditional and does not establish a defensible person-specific reign interval. ATLAS preserves the traditional association while leaving all timeline years unknown.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
   }
 ]
