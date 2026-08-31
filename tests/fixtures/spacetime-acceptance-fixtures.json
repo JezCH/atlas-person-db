@@ -1,5 +1,12 @@
 {
-  "schema": "atlas-spacetime-acceptance-fixtures/v1",
+  "schema": "atlas-spacetime-acceptance-fixtures/v2",
+  "readable_scale": {
+    "minimum_zoom_percent": 500,
+    "default_zoom_percent": 500,
+    "maximum_zoom_percent": 800,
+    "global_extent_compression": 0.82,
+    "local_density_compression_allowed": false
+  },
   "dense_label_windows": [
     {
       "id": "europe-ad-1800-1950",
@@ -29,8 +36,7 @@
       "search-off",
       "search-on",
       "selection-change",
-      "time-zoom",
-      "space-zoom",
+      "global-camera-zoom",
       "minimap-navigation"
     ]
   },

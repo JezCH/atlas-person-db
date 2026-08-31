@@ -4,41 +4,40 @@ Status: active implementation contract
 
 ## Goal
 
-The current `시공간 인물도` remains the single supported surface while its renderer is replaced subsystem by subsystem. We do **not** maintain a long-lived parallel `/spacetime-v2` surface and do not wait for one final all-at-once cutover.
+The current `시공간 인물도` remains the single supported renderer. The readable surface starts at **500%** and never exposes a lower scale.
 
-Every merged step must leave the current spacetime surface usable.
+## Locked invariants
 
-## Invariants
+- minimum/default camera zoom = 500%; maximum = 800%;
+- one camera zoom controls X and Y;
+- one shared physical extent compression factor = 0.82;
+- no local density-based region or era compression;
+- historical Y never moves to resolve labels;
+- search/filter never changes normalized coordinates;
+- missing precision stays unresolved;
+- `opposes` never drives primary placement;
+- Person identity and Activity segments remain distinct;
+- year zero remains invalid.
 
-- Historical time anchors are never moved to solve label collisions.
-- Historical facts stay in Authoring; derived screen/layout values are Runtime concerns.
-- Search and filtering must not redefine stable world coordinates.
-- Missing spatial precision stays unresolved instead of being invented.
-- `opposes` must not determine primary person placement.
-- Person identity and Activity segments remain distinct concepts.
-- World overview is not required to render every name at once; semantic LOD replaces unreadable overlap.
-- Year zero remains invalid.
+## Current replacement order
 
-## Incremental replacement order
+1. Lock 500% readable-scale contract.
+2. Replace low-scale semantic/log time projection with uniform time projection.
+3. Unify time and space zoom into one 2D camera.
+4. Apply the same 0.82 extent compression to X and Y.
+5. Remove overview/detail selector and all below-floor entry points.
+6. Remove density and point low-scale rendering.
+7. Remove obsolete log/adaptive tick/lane APIs.
+8. Compact common padding, gutters, axes, rails, and labels uniformly.
+9. Update tests and acceptance fixtures.
+10. Remove dead files and stale cache references.
+11. Run complete CI and browser visual verification.
+12. Merge only after checks pass, then verify exact Production SHA.
 
-0. Preserve baseline/regression windows.
-1. Centralize reversible world-time ↔ screen-Y projection without changing current output.
-2. Move the existing time axis onto camera state and pointer-centered time zoom.
-3. Replace fixed nine-column screen placement with stable world-X macroregion bands.
-4. Add subregion / reviewed Place-derived spatial compile.
-5. Compile Person tracks and render Activity changes as track segments.
-6. Enforce relation-aware placement semantics.
-7. Replace always-on overview labels with semantic LOD.
-8. Retire legacy overview label packing when the new label controller lands.
-9. Add overview density rendering.
-10. Add semantic spatial/time headers.
-11. Improve search, selection, Meanwhile, and inspector interactions.
-12. Add minimap/navigation context.
-13. Add culling/virtualization and Canvas/WebGL only where measurement justifies it.
-14. Audit and remove remaining legacy rendering paths.
+## Forbidden shortcuts
 
-## Step acceptance rule
+Do not shrink Oceania because it is sparse, stretch Europe because it is dense, compress ancient eras because fewer Persons exist, maintain a hidden 100% compatibility branch, keep dead density/point/log code, or change historical coordinates to make labels fit.
 
-A step is complete only when its tests pass and the current surface can continue to render the same historical data. Compatibility adapters may exist temporarily, but a second long-lived renderer is not allowed.
+## Acceptance
 
-The previous concept of “build v2 separately → compare v1/v2 → final cutover” is superseded by this contract.
+The final cleanup gate requires repository-wide evidence that no reachable below-500 renderer remains and that Person/Activity semantics are unchanged.

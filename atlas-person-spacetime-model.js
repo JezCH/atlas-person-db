@@ -266,111 +266,6 @@
     return Object.freeze({ start_year: startYear, end_year: now });
   }
 
-  function createSpacetimeTimeProjection(startYear, endYear, height = 2800, softeningYears = 180) {
-    const startOrdinal = historicalYearToOrdinal(startYear);
-    const endOrdinal = historicalYearToOrdinal(endYear);
-    if (startOrdinal == null || endOrdinal == null || startOrdinal >= endOrdinal) throw new Error("INVALID_TIMELINE_RANGE");
-    const safeHeight = Number.isFinite(Number(height)) && Number(height) > 0 ? Number(height) : 2800;
-    const softness = Number.isFinite(Number(softeningYears)) && Number(softeningYears) > 0 ? Number(softeningYears) : 180;
-    const span = endOrdinal - startOrdinal;
-    const denominator = Math.log1p(span / softness);
-
-    function worldToScreenY(ordinal) {
-      if (!Number.isFinite(Number(ordinal))) return null;
-      const clamped = Math.min(endOrdinal, Math.max(startOrdinal, Number(ordinal)));
-      const age = endOrdinal - clamped;
-      return safeHeight * (1 - Math.log1p(age / softness) / denominator);
-    }
-
-    function screenToWorldOrdinal(screenY) {
-      if (!Number.isFinite(Number(screenY))) return null;
-      const clampedY = Math.min(safeHeight, Math.max(0, Number(screenY)));
-      const normalized = clampedY / safeHeight;
-      const age = softness * Math.expm1((1 - normalized) * denominator);
-      return endOrdinal - age;
-    }
-
-    function yForOrdinal(ordinal) {
-      return worldToScreenY(ordinal);
-    }
-
-    function yForYear(year) {
-      const ordinal = historicalYearToOrdinal(year);
-      return ordinal == null ? null : worldToScreenY(ordinal);
-    }
-
-    function historicalYearForScreenY(screenY) {
-      const ordinal = screenToWorldOrdinal(screenY);
-      return ordinal == null ? null : ordinalToHistoricalYear(Math.round(ordinal));
-    }
-
-    return Object.freeze({
-      projection_version: "spacetime-time-projection/v1",
-      mode: "log_age",
-      start_year: startYear,
-      end_year: endYear,
-      start_ordinal: startOrdinal,
-      end_ordinal: endOrdinal,
-      height: safeHeight,
-      softening_years: softness,
-      worldToScreenY,
-      screenToWorldOrdinal,
-      historicalYearForScreenY,
-      yForOrdinal,
-      yForYear
-    });
-  }
-
-  function createLogTimelineScale(startYear, endYear, height = 2800, softeningYears = 180) {
-    return createSpacetimeTimeProjection(startYear, endYear, height, softeningYears);
-  }
-
-  function adaptiveTickInterval(ageYears) {
-    if (ageYears > 3500) return 500;
-    if (ageYears > 2200) return 250;
-    if (ageYears > 1200) return 100;
-    if (ageYears > 500) return 50;
-    if (ageYears > 180) return 25;
-    if (ageYears > 70) return 10;
-    return 5;
-  }
-
-  function alignedHistoricalYear(year, interval) {
-    if (!Number.isInteger(year) || year === 0) return false;
-    return Math.abs(year) % interval === 0;
-  }
-
-  function buildAdaptiveTimeTicks(startYear, endYear, scale, minPixelGap = 18) {
-    const startOrdinal = historicalYearToOrdinal(startYear);
-    const endOrdinal = historicalYearToOrdinal(endYear);
-    if (startOrdinal == null || endOrdinal == null || startOrdinal > endOrdinal || !scale?.yForYear) return Object.freeze([]);
-    const candidates = new Map();
-    const add = (year, intervalYears, terminal = false) => {
-      if (!Number.isInteger(year) || year === 0) return;
-      candidates.set(year, { year, interval_years: intervalYears, terminal });
-    };
-    add(startYear, adaptiveTickInterval(endOrdinal - startOrdinal), false);
-    for (let ordinal = startOrdinal; ordinal <= endOrdinal; ordinal += 1) {
-      const year = ordinalToHistoricalYear(ordinal);
-      const age = endOrdinal - ordinal;
-      const interval = adaptiveTickInterval(age);
-      if (alignedHistoricalYear(year, interval)) add(year, interval, false);
-    }
-    add(endYear, 0, true);
-    const sorted = [...candidates.values()].sort((left, right) => historicalYearToOrdinal(left.year) - historicalYearToOrdinal(right.year));
-    const ticks = [];
-    let lastY = Number.NEGATIVE_INFINITY;
-    for (const candidate of sorted) {
-      const y = scale.yForYear(candidate.year);
-      if (!Number.isFinite(y)) continue;
-      const isBoundary = candidate.year === startYear || candidate.year === endYear;
-      if (!isBoundary && y - lastY < minPixelGap) continue;
-      ticks.push(Object.freeze({ ...candidate, ordinal: historicalYearToOrdinal(candidate.year), label: yearLabel(candidate.year), y }));
-      lastY = y;
-    }
-    return Object.freeze(ticks);
-  }
-
   function buildCenturyTicks(startYear, endYear) {
     const startOrdinal = historicalYearToOrdinal(startYear);
     const endOrdinal = historicalYearToOrdinal(endYear);
@@ -396,29 +291,6 @@
     return Object.freeze(ticks);
   }
 
-  function assignLanes(items, minimumGap = 6) {
-    const sorted = (items || []).slice().sort((left, right) => {
-      const leftTop = Number(left.visual_top ?? left.top ?? 0);
-      const rightTop = Number(right.visual_top ?? right.top ?? 0);
-      const leftBottom = Number(left.visual_bottom ?? left.bottom ?? leftTop);
-      const rightBottom = Number(right.visual_bottom ?? right.bottom ?? rightTop);
-      return leftTop - rightTop || leftBottom - rightBottom || text(left.stable_id).localeCompare(text(right.stable_id));
-    });
-    const laneEnds = [];
-    return Object.freeze(sorted.map((item) => {
-      const top = Number(item.visual_top ?? item.top ?? 0);
-      const bottom = Number(item.visual_bottom ?? item.bottom ?? top);
-      let lane = laneEnds.findIndex((end) => top >= end + minimumGap);
-      if (lane < 0) {
-        lane = laneEnds.length;
-        laneEnds.push(bottom);
-      } else {
-        laneEnds[lane] = bottom;
-      }
-      return Object.freeze({ ...item, lane });
-    }));
-  }
-
   return Object.freeze({
     SPATIAL_INDEX_SCHEMA,
     REGION_DEFINITIONS,
@@ -431,10 +303,6 @@
     createSpatialLookup,
     resolveActivityPlacement,
     deriveTimelineRange,
-    buildCenturyTicks,
-    createSpacetimeTimeProjection,
-    createLogTimelineScale,
-    buildAdaptiveTimeTicks,
-    assignLanes
+    buildCenturyTicks
   });
 });

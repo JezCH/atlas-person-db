@@ -1,9 +1,16 @@
 {
-  "schema": "atlas-spacetime-completion-contract/v1",
+  "schema": "atlas-spacetime-completion-contract/v2",
   "foundation_track": {
     "name": "P1-P14",
     "status": "completed",
     "sufficient_for_final_completion": false
+  },
+  "readable_scale": {
+    "minimum_zoom_percent": 500,
+    "default_zoom_percent": 500,
+    "maximum_zoom_percent": 800,
+    "global_extent_compression": 0.82,
+    "local_density_compression_allowed": false
   },
   "final_completion_rule": {
     "required_capability_status": "locked",
@@ -11,25 +18,115 @@
     "allow_pending_required_capabilities": false
   },
   "capabilities": [
-    { "id": "single-production-renderer", "required": true, "status": "locked" },
-    { "id": "semantic-time-projection", "required": true, "status": "locked" },
-    { "id": "stable-macroregion-world-x", "required": true, "status": "locked" },
-    { "id": "continuous-space-camera", "required": true, "status": "pending" },
-    { "id": "spatial-subregion-precision", "required": true, "status": "locked" },
-    { "id": "spatial-place-precision", "required": true, "status": "pending" },
-    { "id": "spatial-multi-place-preservation", "required": true, "status": "pending" },
-    { "id": "precision-not-greater-than-evidence", "required": true, "status": "locked" },
-    { "id": "search-coordinate-invariance", "required": true, "status": "locked" },
-    { "id": "zoom-coordinate-invariance", "required": true, "status": "locked" },
-    { "id": "opposes-counterparty-only", "required": true, "status": "locked" },
-    { "id": "label-historical-y-invariance", "required": true, "status": "locked" },
-    { "id": "dense-label-zero-overlap", "required": true, "status": "pending" },
-    { "id": "dense-label-zero-deferred-at-sufficient-zoom", "required": true, "status": "pending" },
-    { "id": "person-inspector-evidence", "required": true, "status": "pending" },
-    { "id": "meanwhile-active-activity", "required": true, "status": "pending" },
-    { "id": "fit-world-camera", "required": true, "status": "pending" },
-    { "id": "minimap-global-context", "required": true, "status": "locked" },
-    { "id": "viewport-scalability", "required": true, "status": "locked" },
-    { "id": "data-parity", "required": true, "status": "pending" }
+    {
+      "id": "single-production-renderer",
+      "required": true,
+      "status": "locked"
+    },
+    {
+      "id": "uniform-time-projection",
+      "required": true,
+      "status": "locked"
+    },
+    {
+      "id": "stable-macroregion-world-x",
+      "required": true,
+      "status": "locked"
+    },
+    {
+      "id": "unified-global-camera",
+      "required": true,
+      "status": "locked"
+    },
+    {
+      "id": "minimum-readable-scale-floor",
+      "required": true,
+      "status": "locked"
+    },
+    {
+      "id": "uniform-global-extent-compression",
+      "required": true,
+      "status": "locked"
+    },
+    {
+      "id": "spatial-subregion-precision",
+      "required": true,
+      "status": "locked"
+    },
+    {
+      "id": "spatial-place-precision",
+      "required": true,
+      "status": "pending"
+    },
+    {
+      "id": "spatial-multi-place-preservation",
+      "required": true,
+      "status": "pending"
+    },
+    {
+      "id": "precision-not-greater-than-evidence",
+      "required": true,
+      "status": "locked"
+    },
+    {
+      "id": "search-coordinate-invariance",
+      "required": true,
+      "status": "locked"
+    },
+    {
+      "id": "zoom-coordinate-invariance",
+      "required": true,
+      "status": "locked"
+    },
+    {
+      "id": "opposes-counterparty-only",
+      "required": true,
+      "status": "locked"
+    },
+    {
+      "id": "label-historical-y-invariance",
+      "required": true,
+      "status": "locked"
+    },
+    {
+      "id": "dense-label-zero-overlap",
+      "required": true,
+      "status": "pending"
+    },
+    {
+      "id": "dense-label-zero-deferred-at-sufficient-zoom",
+      "required": true,
+      "status": "pending"
+    },
+    {
+      "id": "person-inspector-evidence",
+      "required": true,
+      "status": "pending"
+    },
+    {
+      "id": "meanwhile-active-activity",
+      "required": true,
+      "status": "pending"
+    },
+    {
+      "id": "minimum-readable-camera-reset",
+      "required": true,
+      "status": "locked"
+    },
+    {
+      "id": "minimap-global-context",
+      "required": true,
+      "status": "locked"
+    },
+    {
+      "id": "viewport-scalability",
+      "required": true,
+      "status": "locked"
+    },
+    {
+      "id": "data-parity",
+      "required": true,
+      "status": "pending"
+    }
   ]
 }

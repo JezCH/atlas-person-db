@@ -9,12 +9,9 @@
 
   if (!modelApi) throw new Error("ATLAS_PERSON_SPACETIME_MODEL is required");
 
+  const MIN_SUPPORTED_ZOOM = 5;
   const TIME_STAGES = Object.freeze([
-    Object.freeze({ code: "era", max_zoom: 1.35, interval_years: 500, min_gap_px: 58, label: "시대·500년" }),
-    Object.freeze({ code: "long-century", max_zoom: 1.9, interval_years: 250, min_gap_px: 52, label: "장기 세기·250년" }),
-    Object.freeze({ code: "century", max_zoom: 3.2, interval_years: 100, min_gap_px: 46, label: "세기·100년" }),
-    Object.freeze({ code: "half-century", max_zoom: 5.2, interval_years: 50, min_gap_px: 42, label: "반세기·50년" }),
-    Object.freeze({ code: "quarter-century", max_zoom: 7, interval_years: 25, min_gap_px: 38, label: "25년" }),
+    Object.freeze({ code: "quarter-century", max_zoom: 6.5, interval_years: 25, min_gap_px: 38, label: "25년" }),
     Object.freeze({ code: "decade", max_zoom: Number.POSITIVE_INFINITY, interval_years: 10, min_gap_px: 34, label: "10년" })
   ]);
 
@@ -27,13 +24,15 @@
     return t * t * (3 - 2 * t);
   }
 
-  function positiveZoom(value) {
-    const number = Number(value);
-    return Number.isFinite(number) && number > 0 ? number : 1;
+  function readableZoom(value) {
+    const zoom = Number(value);
+    if (!Number.isFinite(zoom)) return MIN_SUPPORTED_ZOOM;
+    if (zoom < MIN_SUPPORTED_ZOOM) throw new RangeError(`zoom must be >= ${MIN_SUPPORTED_ZOOM}`);
+    return zoom;
   }
 
-  function timeStage(timeZoom) {
-    const zoom = positiveZoom(timeZoom);
+  function timeStage(zoomInput) {
+    const zoom = readableZoom(zoomInput);
     return TIME_STAGES.find((stage) => zoom <= stage.max_zoom) || TIME_STAGES.at(-1);
   }
 
@@ -63,7 +62,7 @@
     return Object.freeze([...new Set(years)].sort((a, b) => modelApi.historicalYearToOrdinal(a) - modelApi.historicalYearToOrdinal(b)));
   }
 
-  function buildTimeAxisPlan(range, projection, timeZoom) {
+  function buildTimeAxisPlan(range, projection, zoomInput) {
     const startYear = Number(range?.start_year);
     const endYear = Number(range?.end_year);
     if (!Number.isInteger(startYear) || !Number.isInteger(endYear) || startYear === 0 || endYear === 0 || startYear > endYear) {
@@ -71,7 +70,7 @@
     }
     if (!projection?.yForYear) throw new TypeError("time axis requires projection.yForYear");
 
-    const zoom = positiveZoom(timeZoom);
+    const zoom = readableZoom(zoomInput);
     const stage = timeStage(zoom);
     const candidates = candidateHistoricalYears(startYear, endYear, stage.interval_years);
     const ticks = [];
@@ -80,7 +79,7 @@
       const y = Number(projection.yForYear(year));
       if (!Number.isFinite(y)) continue;
       if (y - previousY < stage.min_gap_px) continue;
-      const majorInterval = stage.interval_years >= 100 ? stage.interval_years * 2 : stage.interval_years * 5;
+      const majorInterval = stage.interval_years * 5;
       ticks.push(Object.freeze({
         year,
         ordinal: modelApi.historicalYearToOrdinal(year),
@@ -92,15 +91,15 @@
       previousY = y;
     }
 
-    const eraOpacity = 1 - 0.78 * smoothstep(1.35, 4.2, zoom);
+    const eraOpacity = 1 - 0.58 * smoothstep(MIN_SUPPORTED_ZOOM, 8, zoom);
     return Object.freeze({
       stage: stage.code,
       stage_label: stage.label,
       interval_years: stage.interval_years,
       min_gap_px: stage.min_gap_px,
       ticks: Object.freeze(ticks),
-      era_opacity: clamp(eraOpacity, 0.22, 1),
-      time_zoom: zoom
+      era_opacity: clamp(eraOpacity, 0.32, 1),
+      zoom
     });
   }
 
@@ -113,25 +112,23 @@
     })));
   }
 
-  function buildSpaceHeaderPlan(continuum, contentWidth, spaceZoom) {
+  function buildSpaceHeaderPlan(continuum, contentWidth) {
     if (!continuum || !Array.isArray(continuum.macroregions) || !Array.isArray(continuum.subregions)) throw new TypeError("space header requires a spatial continuum");
     const width = Number(contentWidth);
     if (!Number.isFinite(width) || width <= 0) throw new RangeError("space header width must be > 0");
-    const zoom = positiveZoom(spaceZoom);
-    const detailWeight = smoothstep(1.35, 2.6, zoom);
     return Object.freeze({
-      stage: detailWeight >= 0.5 ? "subregion" : "macroregion",
-      stage_label: detailWeight >= 0.5 ? "세부 지역" : "대권역",
-      macro_opacity: clamp(1 - 0.72 * detailWeight, 0.28, 1),
-      subregion_opacity: detailWeight,
+      stage: "subregion",
+      stage_label: "세부 지역",
+      macro_opacity: 0.38,
+      subregion_opacity: 1,
       macroregions: buildBandGeometry(continuum.macroregions, width),
       subregions: buildBandGeometry(continuum.subregions, width),
-      space_zoom: zoom,
-      detail_weight: detailWeight
+      minimum_zoom: MIN_SUPPORTED_ZOOM
     });
   }
 
   return Object.freeze({
+    MIN_SUPPORTED_ZOOM,
     TIME_STAGES,
     smoothstep,
     timeStage,

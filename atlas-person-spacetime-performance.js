@@ -103,10 +103,6 @@
     return Object.freeze(result);
   }
 
-  function cullDensityCells(cells, rectInput) {
-    return Object.freeze((cells || []).filter((cell) => rectIntersects({ left: cell.left, top: cell.top, width: cell.width, height: cell.height }, rectInput)));
-  }
-
   return Object.freeze({
     DEFAULT_OVERSCAN,
     clamp,
@@ -115,7 +111,6 @@
     rectIntersects,
     cullProjectedItems,
     segmentRect,
-    cullTrackSegments,
-    cullDensityCells
+    cullTrackSegments
   });
 });

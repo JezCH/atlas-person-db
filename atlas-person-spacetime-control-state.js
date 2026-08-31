@@ -39,49 +39,6 @@
     return Math.min(maxScroll, Math.max(0, target));
   }
 
-  function canvasWorldWidth(canvas) {
-    if (!canvas) return 0;
-    const offsetWidth = Number(canvas.offsetWidth);
-    if (offsetWidth > 0) return offsetWidth;
-    const styleWidth = Number.parseFloat(canvas.style?.width || "");
-    if (styleWidth > 0) return styleWidth;
-    const rectWidth = Number(canvas.getBoundingClientRect?.().width);
-    return rectWidth > 0 ? rectWidth : 0;
-  }
-
-  function horizontalAxisWidth(mount, canvas) {
-    const canvasOffset = Number(canvas?.offsetLeft);
-    if (canvasOffset > 0) return canvasOffset;
-    const stickyWidth = Number(mount?.querySelector?.(".spacetime-sticky-corner")?.offsetWidth);
-    return stickyWidth > 0 ? stickyWidth : 0;
-  }
-
-  function captureHorizontalCamera(mount) {
-    const scroll = mount?.querySelector?.(".spacetime-scroll");
-    const canvas = mount?.querySelector?.(".spacetime-canvas");
-    if (!scroll || !canvas) return null;
-    const worldWidth = canvasWorldWidth(canvas);
-    if (!(worldWidth > 0)) return null;
-    const axisWidth = horizontalAxisWidth(mount, canvas);
-    const ratio = horizontalCenterRatio(scroll.scrollLeft, scroll.clientWidth, axisWidth, worldWidth);
-    return ratio == null ? null : { ratio };
-  }
-
-  function restoreHorizontalCamera(mount, snapshot) {
-    if (!snapshot || snapshot.ratio == null) return false;
-    const scroll = mount?.querySelector?.(".spacetime-scroll");
-    const canvas = mount?.querySelector?.(".spacetime-canvas");
-    if (!scroll || !canvas) return false;
-    const worldWidth = canvasWorldWidth(canvas);
-    if (!(worldWidth > 0)) return false;
-    const axisWidth = horizontalAxisWidth(mount, canvas);
-    scroll.scrollLeft = scrollLeftForHorizontalCenter(snapshot.ratio, scroll.clientWidth, axisWidth, worldWidth);
-    if (typeof window.Event === "function" && typeof scroll.dispatchEvent === "function") {
-      scroll.dispatchEvent(new window.Event("scroll"));
-    }
-    return true;
-  }
-
   function setDisabled(button, disabled) {
     if (!button) return;
     button.disabled = Boolean(disabled);
@@ -90,10 +47,10 @@
 
   function syncZoomControlState(mount) {
     if (!mount) return false;
-    const zoomOut = mount.querySelector("#spacetimeTimeZoomOut");
-    const zoomValue = mount.querySelector("#spacetimeTimeZoomValue");
-    const zoomIn = mount.querySelector("#spacetimeTimeZoomIn");
-    const reset = mount.querySelector("#spacetimeTimeZoomReset");
+    const zoomOut = mount.querySelector("#spacetimeCameraZoomOut");
+    const zoomValue = mount.querySelector("#spacetimeCameraZoomValue");
+    const zoomIn = mount.querySelector("#spacetimeCameraZoomIn");
+    const reset = mount.querySelector("#spacetimeCameraZoomReset");
     if (!zoomOut || !zoomValue || !zoomIn || !reset) return false;
 
     const currentPercent = parsePercent(zoomValue.textContent);
@@ -108,15 +65,6 @@
     return true;
   }
 
-  function bindHorizontalModeContext(mount) {
-    mount.addEventListener("change", (event) => {
-      if (event.target?.id !== "spacetimeHorizontalMode") return;
-      const snapshot = captureHorizontalCamera(mount);
-      if (!snapshot) return;
-      Promise.resolve().then(() => restoreHorizontalCamera(mount, snapshot));
-    }, true);
-  }
-
   function bindMount(mount) {
     if (!mount) return;
     if (mount.dataset.atlasSpacetimeZoomBoundState === "1") {
@@ -124,7 +72,6 @@
       return;
     }
     mount.dataset.atlasSpacetimeZoomBoundState = "1";
-    bindHorizontalModeContext(mount);
     const observer = new MutationObserver(() => syncZoomControlState(mount));
     observer.observe(mount, { childList: true, subtree: true, characterData: true });
     syncZoomControlState(mount);
@@ -153,8 +100,6 @@
     parsePercent,
     horizontalCenterRatio,
     scrollLeftForHorizontalCenter,
-    captureHorizontalCamera,
-    restoreHorizontalCamera,
     syncZoomControlState
   });
 })();
