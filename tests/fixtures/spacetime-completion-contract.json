@@ -9,7 +9,7 @@
     "minimum_zoom_percent": 500,
     "default_zoom_percent": 500,
     "maximum_zoom_percent": 800,
-    "global_extent_compression": 0.82,
+    "global_extent_compression": 0.78,
     "local_density_compression_allowed": false
   },
   "final_completion_rule": {

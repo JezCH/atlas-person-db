@@ -8,15 +8,23 @@ const rootUrl = new URL("../", import.meta.url);
 const view = readFileSync(new URL("../atlas-person-spacetime-view.js", import.meta.url), "utf8");
 const css = readFileSync(new URL("../atlas-person-spacetime-view.css", import.meta.url), "utf8");
 const control = readFileSync(new URL("../atlas-person-spacetime-control-state.js", import.meta.url), "utf8");
+const labelEngine = require("../atlas-person-spacetime-label-engine.js");
 
 test("spacetime minimum and default scale are structurally locked to 500 percent", () => {
   assert.match(view, /const CAMERA_MIN_ZOOM = 5;/);
   assert.match(view, /const CAMERA_MAX_ZOOM = 8;/);
   assert.match(view, /let cameraZoom = CAMERA_MIN_ZOOM;/);
-  assert.match(view, /const GLOBAL_EXTENT_COMPRESSION = 0\.82;/);
+  assert.match(view, /const GLOBAL_EXTENT_COMPRESSION = 0\.78;/);
   assert.match(view, /id="spacetimeCameraZoomReset"[^>]*>500%<\/button>/);
   assert.match(view, /return Math\.min\(CAMERA_MAX_ZOOM, Math\.max\(CAMERA_MIN_ZOOM, numeric\)\);/);
   assert.doesNotMatch(view, /100%/);
+});
+
+test("reviewed compact label geometry preserves text readability while reducing collision waste", () => {
+  assert.equal(labelEngine.DEFAULT_LABEL_HEIGHT, 19);
+  assert.equal(labelEngine.DEFAULT_HORIZONTAL_GAP, 2);
+  assert.equal(labelEngine.DEFAULT_MAX_LABEL_WIDTH, 156);
+  assert.match(css, /\.spacetime-track-label\{[^}]*height:19px[^}]*padding:0 5px[^}]*font-size:10px[^}]*line-height:16px/);
 });
 
 test("one global camera zoom owns both horizontal and vertical extent", () => {

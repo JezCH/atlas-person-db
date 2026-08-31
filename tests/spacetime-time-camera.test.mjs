@@ -10,7 +10,7 @@ const view = readFileSync(new URL("../atlas-person-spacetime-view.js", import.me
 const css = readFileSync(new URL("../atlas-person-spacetime-view.css", import.meta.url), "utf8");
 
 test("time projection is globally linear at every supported camera zoom", () => {
-  const projection = timeProjection.createUniformTimeProjection(-3000, 2026, 17220, 5);
+  const projection = timeProjection.createUniformTimeProjection(-3000, 2026, 16380, 5);
   assert.equal(projection.mode, "linear_time");
   assert.equal(projection.zoom, 5);
   for (const [a,b,c] of [[1800,1900,2000],[-300,-200,-100]]) {
@@ -41,8 +41,8 @@ test("pointer anchored zoom preserves historical Y", () => {
   const header = 40;
   const viewportY = 320;
   const ordinal = model.historicalYearToOrdinal(1919);
-  const oldProjection = timeProjection.createUniformTimeProjection(-3000, 2026, 4200 * 5 * 0.82, 5);
-  const newProjection = timeProjection.createUniformTimeProjection(-3000, 2026, 4200 * 6.25 * 0.82, 6.25);
+  const oldProjection = timeProjection.createUniformTimeProjection(-3000, 2026, 4200 * 5 * 0.78, 5);
+  const newProjection = timeProjection.createUniformTimeProjection(-3000, 2026, 4200 * 6.25 * 0.78, 6.25);
   const oldTop = header + oldProjection.worldToScreenY(ordinal) - viewportY;
   const newTop = header + newProjection.worldToScreenY(ordinal) - viewportY;
   assert.ok(Math.abs(oldProjection.screenToWorldOrdinal(oldTop + viewportY - header) - ordinal) < 1e-8);

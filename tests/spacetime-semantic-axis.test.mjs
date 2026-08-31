@@ -11,7 +11,7 @@ const semanticAxis = require("../atlas-person-spacetime-semantic-axis.js");
 const RANGE = Object.freeze({ start_year: -3000, end_year: 2026 });
 
 function projectionFor(zoom) {
-  return timeProjection.createUniformTimeProjection(RANGE.start_year, RANGE.end_year, 4200 * zoom * 0.82, zoom);
+  return timeProjection.createUniformTimeProjection(RANGE.start_year, RANGE.end_year, 4200 * zoom * 0.78, zoom);
 }
 
 test("readable-scale time axis starts at quarter-century detail and advances to decades", () => {
