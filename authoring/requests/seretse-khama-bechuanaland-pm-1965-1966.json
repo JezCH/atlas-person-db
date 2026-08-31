@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Seretse Khama",
+    "display_name_ko": "세레체 카마",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Bechuanaland Protectorate",
+    "display_name_ko": "베추아날란드 보호령",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1965,
+    "start_month": 3,
+    "start_day": 3,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1966,
+    "end_month": 9,
+    "end_day": 30,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Seretse Khama served as the first Prime Minister of self-governing Bechuanaland from March 1965 until independence on 30 September 1966, when he became President of Botswana. The two offices are stored as separate Activities."
+  },
+  "sources": [
+    {
+      "title": "Seretse Khama — Encyclopaedia Britannica",
+      "canonical_url": "https://www.britannica.com/biography/Seretse-Khama",
+      "citation_text": "Britannica describes Khama as Bechuanaland's prime minister before independence and the first president of Botswana.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-31",
+      "document_title": "세레체 카마",
+      "url": "https://namu.wiki/w/%EC%84%B8%EB%A0%88%EC%B2%B4%20%EC%B9%B4%EB%A7%88"
+    }
+  }
+}

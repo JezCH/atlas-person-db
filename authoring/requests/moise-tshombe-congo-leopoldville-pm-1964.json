@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Moïse Tshombe",
+    "display_name_ko": "모이즈 촘베",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of the Congo (Léopoldville)",
+    "display_name_ko": "콩고 공화국(레오폴드빌)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1964,
+    "start_month": 7,
+    "start_day": 10,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1964,
+    "end_month": 7,
+    "end_day": 31,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tshombe became prime minister on 10 July 1964. ATLAS closes this first segment on 31 July because the Luluabourg Constitution promulgated on 1 August 1964 established the state name Democratic Republic of the Congo; his premiership itself continued without interruption."
+  },
+  "sources": [
+    {
+      "title": "Foreign Relations of the United States, 1964–1968, Volume XXIII, Congo, Document 253",
+      "canonical_url": "https://history.state.gov/historicaldocuments/frus1964-68v23/d253",
+      "citation_text": "The Department of State record discusses Tshombe's return from exile and formation of a national government in 1964.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Constitution of the Democratic Republic of the Congo (1964)",
+      "canonical_url": "https://en.wikisource.org/wiki/Translation:Constitution_of_the_Democratic_Republic_of_the_Congo_(1964)",
+      "citation_text": "The Luluabourg Constitution states that it entered into force on promulgation at Léopoldville on 1 August 1964.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

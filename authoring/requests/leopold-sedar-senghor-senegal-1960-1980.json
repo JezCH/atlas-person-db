@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Léopold Sédar Senghor",
+    "display_name_ko": "레오폴 세다르 상고르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Senegal",
+    "display_name_ko": "세네갈",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1960,
+    "start_month": 9,
+    "start_day": 6,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1980,
+    "end_month": 12,
+    "end_day": 31,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Senghor became the first President of independent Senegal in September 1960 and voluntarily resigned at the end of 1980, with Abdou Diouf succeeding him on 1 January 1981."
+  },
+  "sources": [
+    {
+      "title": "Léopold Sédar Senghor — Presidency of Senegal",
+      "canonical_url": "https://www.presidence.sn/en/presidence/leopold-sedar-senghor/",
+      "citation_text": "The Presidency of Senegal identifies Senghor as the first president, elected in September 1960, and records his resignation in December 1980.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

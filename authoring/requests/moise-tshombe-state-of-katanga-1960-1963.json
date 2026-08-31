@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Moïse Tshombe",
+    "display_name_ko": "모이즈 촘베",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "State of Katanga",
+    "display_name_ko": "카탕가국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1960,
+    "start_month": 7,
+    "start_day": 11,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1963,
+    "end_month": 1,
+    "end_day": 21,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Moïse Tshombe led the secessionist State of Katanga as president from its declaration of independence on 11 July 1960 until Katanga's secession ended on 21 January 1963."
+  },
+  "sources": [
+    {
+      "title": "Foreign Relations of the United States, 1958–1960, Africa, Volume XIV, Document 114",
+      "canonical_url": "https://history.state.gov/historicaldocuments/frus1958-60v14/d114",
+      "citation_text": "The U.S. Department of State record documents Tshombe, president of Katanga's provincial government, and Katanga's 11 July 1960 declaration of independence.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Foreign Relations of the United States, 1961–1963, Volume XX, Congo Crisis, Document 76",
+      "canonical_url": "https://history.state.gov/historicaldocuments/frus1961-63v20/d76",
+      "citation_text": "The Department of State record identifies Tshombe as Katangan President during the secession.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

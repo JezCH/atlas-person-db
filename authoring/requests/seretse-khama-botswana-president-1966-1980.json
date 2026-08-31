@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Seretse Khama",
+    "display_name_ko": "세레체 카마",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Botswana",
+    "display_name_ko": "보츠와나",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1966,
+    "start_month": 9,
+    "start_day": 30,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1980,
+    "end_month": 7,
+    "end_day": 13,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Khama was sworn in as Botswana's first President at independence on 30 September 1966 and remained in office until his death on 13 July 1980."
+  },
+  "sources": [
+    {
+      "title": "Botswana celebrates 50 years of independence — DailyNews, Government of Botswana",
+      "canonical_url": "https://dailynews.gov.bw/news-detail/31255",
+      "citation_text": "Botswana government reporting identifies 30 September 1966 as independence day and Seretse Khama as the country's first President.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-31",
+      "document_title": "세레체 카마",
+      "url": "https://namu.wiki/w/%EC%84%B8%EB%A0%88%EC%B2%B4%20%EC%B9%B4%EB%A7%88"
+    }
+  }
+}

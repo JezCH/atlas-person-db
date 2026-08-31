@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Hamid Idris Awate",
+    "display_name_ko": "하미드 이드리스 아와테",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Eritrea",
+    "display_name_ko": "에리트레아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Independence guerrilla leader",
+    "role_display_name_ko": "독립 게릴라 지도자",
+    "start_year": 1961,
+    "start_month": 9,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1962,
+    "end_month": 5,
+    "end_day": 28,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Hamid Idris Awate is commemorated in Eritrean historiography as the commander who launched the armed independence struggle on 1 September 1961. He remained a guerrilla leader until his death on 28 May 1962. ATLAS uses Eritrea as the represented political community rather than Ethiopia, the state against which the independence movement fought."
+  },
+  "sources": [
+    {
+      "title": "Hamed Idris Awate and the Launch of the Armed Struggle for Liberation — Eritrea Ministry of Information",
+      "canonical_url": "https://shabait.com/2010/08/20/hamed-idris-awate-and-the-launch-of-the-armed-struggle-for-liberation/",
+      "citation_text": "The Eritrean Ministry of Information identifies Awate with the launch of armed struggle on 1 September 1961 and describes his leadership in the liberation movement.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
