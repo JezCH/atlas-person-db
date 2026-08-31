@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Norodom Sihanouk",
+    "display_name_ko": "노로돔 시아누크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Cambodia",
+    "display_name_ko": "캄보디아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Head of State",
+    "role_display_name_ko": "국가원수",
+    "start_year": 1993,
+    "start_month": 6,
+    "start_day": 14,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1993,
+    "end_month": 9,
+    "end_day": 24,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sihanouk served as transitional Head of State after the 1993 settlement until the monarchy was formally restored on 24 September 1993."
+  },
+  "sources": [
+    {
+      "title": "Norodom Sihanouk — heads of state chronology",
+      "canonical_url": "https://en.wikipedia.org/wiki/Norodom_Sihanouk",
+      "citation_text": "The chronology records Sihanouk's first kingship, head-of-state tenure, Democratic Kampuchea state-presidium role, 1993 transitional headship, and second kingship.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

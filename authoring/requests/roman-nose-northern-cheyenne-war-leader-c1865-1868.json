@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Roman Nose (Woqini)",
+    "display_name_ko": "로만 노즈(워키니)",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Northern Cheyenne",
+    "display_name_ko": "북부 샤이엔",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Warrior and war leader",
+    "role_display_name_ko": "전사·전쟁 지도자",
+    "start_year": 1865,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1868,
+    "end_month": 9,
+    "end_day": 17,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Woqini, commonly rendered Roman Nose or Hook Nose, was a Northern Cheyenne warrior and war leader, not a civil chief of the Cheyenne nation. He led war parties during the Plains conflicts and was killed at Beecher Island on 17 September 1868."
+  },
+  "sources": [
+    {
+      "title": "Roman Nose (Cheyenne Warrior) — World History Encyclopedia",
+      "canonical_url": "https://www.worldhistory.org/Roman_Nose_%28Cheyenne_Warrior%29/",
+      "citation_text": "The reference identifies Woqini/Roman Nose as a Northern Cheyenne warrior and war leader, explicitly noting that he was not a chief, and records his death on 17 September 1868.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

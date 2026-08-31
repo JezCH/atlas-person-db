@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Babullah of Ternate",
+    "display_name_ko": "바불라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Sultanate of Ternate",
+    "display_name_ko": "테르나테 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1570,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1583,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Babullah succeeded Hairun in 1570 and ruled Ternate until 1583, expelling the Portuguese from their Ternate fortress during his reign."
+  },
+  "sources": [
+    {
+      "title": "Babullah of Ternate",
+      "canonical_url": "https://en.wikipedia.org/wiki/Babullah_of_Ternate",
+      "citation_text": "The ruler chronology gives Babullah's reign as Sultan of Ternate from 1570 to 1583.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Suharto",
+    "display_name_ko": "수하르토",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Indonesia",
+    "display_name_ko": "인도네시아 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Acting President",
+    "role_display_name_ko": "대통령 권한대행",
+    "start_year": 1967,
+    "start_month": 3,
+    "start_day": 12,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1968,
+    "end_month": 3,
+    "end_day": 27,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The MPRS removed Sukarno and appointed Suharto acting president on 12 March 1967. He remained acting president until his formal election and inauguration on 27 March 1968."
+  },
+  "sources": [
+    {
+      "title": "Acting presidency of Suharto",
+      "canonical_url": "https://en.wikipedia.org/wiki/Acting_presidency_of_Suharto",
+      "citation_text": "The transition chronology gives Suharto's acting presidency as 12 March 1967 to 27 March 1968.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

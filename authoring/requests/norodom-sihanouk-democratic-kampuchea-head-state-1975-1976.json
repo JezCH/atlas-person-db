@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Norodom Sihanouk",
+    "display_name_ko": "노로돔 시아누크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Democratic Kampuchea",
+    "display_name_ko": "민주 캄푸치아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "President of the State Presidium",
+    "role_display_name_ko": "국가주석부 주석(명목상 국가원수)",
+    "start_year": 1975,
+    "start_month": 4,
+    "start_day": 17,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1976,
+    "end_month": 4,
+    "end_day": 2,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "This was a formal but largely nominal head-of-state position under the Khmer Rouge. ATLAS uses serves rather than governs to avoid overstating Sihanouk's actual political control."
+  },
+  "sources": [
+    {
+      "title": "Norodom Sihanouk — heads of state chronology",
+      "canonical_url": "https://en.wikipedia.org/wiki/Norodom_Sihanouk",
+      "citation_text": "The chronology records Sihanouk's first kingship, head-of-state tenure, Democratic Kampuchea state-presidium role, 1993 transitional headship, and second kingship.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

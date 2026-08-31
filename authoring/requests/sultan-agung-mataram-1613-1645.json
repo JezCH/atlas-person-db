@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Sultan Agung",
+    "display_name_ko": "술탄 아궁",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Mataram Sultanate",
+    "display_name_ko": "마타람 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1613,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1645,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sultan Agung ruled Mataram from 1613 to 1645, the period of the sultanate's greatest territorial power."
+  },
+  "sources": [
+    {
+      "title": "The Reign of Sultan Agung of Mataram, 1613–1645 — JSTOR/Brill",
+      "canonical_url": "https://www.jstor.org/content/oa_chapter_monograph/10.1163/j.ctt1w8h12p.6",
+      "citation_text": "The scholarly chapter explicitly treats the reign of Sultan Agung of Mataram as 1613–1645.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
