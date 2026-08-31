@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:john-i-of-brabant:duchy-of-limburg:duke:1288-1294:v1",
+  "person": {
+    "canonical_name_en": "John I of Brabant",
+    "display_name_ko": "얀 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Limburg",
+    "display_name_ko": "림뷔르흐 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Duke",
+    "role_display_name_ko": "공작",
+    "start_year": 1288,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1294,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "John I of Brabant won the Limburg succession conflict at the Battle of Worringen in 1288 and thereafter held the Duchy of Limburg in addition to Brabant. ATLAS records this as a separate concurrent sovereign Activity because Limburg remained a distinct duchy and title. The record remains at year granularity because secondary references differ on exact transition and death-day details."
+  },
+  "sources": [
+    {
+      "title": "Introduction — Medieval Dutch Literature in its European Context",
+      "canonical_url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/1B0D45C560DF1DDD0A19113DD6710DA7/9780511553967int_p1-8_CBO.pdf/introduction.pdf",
+      "citation_text": "Cambridge University Press states that John I's victory at Worringen in 1288 settled the Limburg succession war in his favor and that he acquired the duchy of Limburg.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Brabant: Herzogtum — Deutsche Digitale Bibliothek",
+      "canonical_url": "https://www.deutsche-digitale-bibliothek.de/item/XHZEQD6FHMLAPLDD2GX5HP75KNTOROO2",
+      "citation_text": "The German Digital Library identifies Johann I as Duke of Brabant from 1268-1294 and, from 1288, also Duke of Limburg.",
+      "source_type": "institutional_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
