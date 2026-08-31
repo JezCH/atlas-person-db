@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:muammar-gaddafi:libyan-arab-jamahiriya:leader-of-revolution:1979-2011:v1",
+  "person": {
+    "canonical_name_en": "Muammar Gaddafi",
+    "display_name_ko": "무아마르 카다피"
+  },
+  "polity": {
+    "canonical_name_en": "Libyan Arab Jamahiriya",
+    "display_name_ko": "리비아 아랍 자마히리야",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Leader of the Revolution",
+    "role_display_name_ko": "혁명 지도자",
+    "start_year": 1979,
+    "start_month": 3,
+    "start_day": 2,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2011,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gaddafi resigned his formal GPC post on 2 March 1979 but retained ultimate political authority as the 'Leader of the Revolution'. The Jamahiriya's formal institutions did not remove his de facto supremacy. ATLAS therefore preserves a separate 1979-2011 de facto ruling Activity and ends it with the overthrow of the Gaddafi regime during the 2011 civil war, rather than with his earlier formal resignation."
+  },
+  "sources": [
+    {
+      "title": "Libya: A Country Study — Library of Congress / Federal Research Division",
+      "canonical_url": "https://tile.loc.gov/storage-services/master/frd/frdcstdy/li/libyacountrystud00metz_0/libyacountrystud00metz_0.pdf",
+      "citation_text": "The country study states that Qadhafi relinquished his formal governmental position in 1979, thereafter used the title Leader of the Revolution, and nevertheless remained the country's dominant political authority.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "Libya after Qaddafi: Lessons and Implications for the Future — RAND / Library of Congress",
+      "canonical_url": "https://www.loc.gov/item/2024739040/",
+      "citation_text": "The Library of Congress catalog summary describes the 2011 rebel overthrow of longstanding Libyan dictator Muammar Qaddafi and the post-Qaddafi transition.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-26",
+      "document_title": "무아마르 카다피",
+      "url": "https://namu.wiki/w/%EB%AC%B4%EC%95%84%EB%A7%88%EB%A5%B4%20%EC%B9%B4%EB%8B%A4%ED%94%BC"
+    }
+  }
+}

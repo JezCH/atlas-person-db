@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:george-iii:electorate-of-hanover:elector:1813-1814:v1",
+  "person": {
+    "canonical_name_en": "George III",
+    "display_name_ko": "조지 3세"
+  },
+  "polity": {
+    "canonical_name_en": "Electorate of Hanover",
+    "display_name_ko": "하노버 선제후국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Elector",
+    "role_display_name_ko": "선제후",
+    "start_year": 1813,
+    "start_month": 11,
+    "start_day": 4,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1814,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the French withdrawal, the Duke of Cumberland formally retook Hanover on 4 November 1813 on behalf of his father George III and the Hanoverian governmental order was restored. ATLAS records this short restored electoral phase separately. It ends in 1814 when the former electorate was elevated to the Kingdom of Hanover."
+  },
+  "sources": [
+    {
+      "title": "Stadtchronik Hannover — Stadtarchiv Hannover",
+      "canonical_url": "https://www.hannover.de/content/download/742032/file/Chronik%201%20bis%201988.pdf",
+      "citation_text": "The Hannover city chronicle records that on 4 November 1813 the Duke of Cumberland took possession of Hanover again for his father George III, and that in 1814 Hanover was elevated to a kingdom.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "Hannover von 1777 bis 1821 — Hannover.de",
+      "canonical_url": "https://www.hannover.de/Kultur-Freizeit/Geschichte-Geschichten/Echt-hann%C3%B6versch/Historisches-aus-Hannover/Stadtgeschichte-in-der-Station-Waterloo/Hannover-von-1777-bis-1821",
+      "citation_text": "The City of Hannover chronology records the decade of French occupation beginning in 1803 and the elevation of Hanover to a kingdom in 1814.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-28",
+      "document_title": "조지 3세",
+      "url": "https://namu.wiki/w/%EC%A1%B0%EC%A7%80%203%EC%84%B8"
+    }
+  }
+}
