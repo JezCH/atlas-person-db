@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Nobusuke Kishi",
+    "display_name_ko": "기시 노부스케",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "내각총리대신",
+    "start_year": 1957,
+    "start_month": 2,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1960,
+    "end_month": 7,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "JACAR records Kishi as Prime Minister from February 1957 to July 1960. This major later political office is retained separately from his Manchukuo bureaucratic career."
+  },
+  "sources": [
+    {
+      "title": "Kishi Nobusuke — Japan Center for Asian Historical Records",
+      "canonical_url": "https://www.jacar.archives.go.jp/aj/meta/term-en/00000072",
+      "citation_text": "JACAR records Kishi's Manchukuo appointments from October 1936 through October 1939, followed later by his service as Prime Minister of Japan from February 1957 to July 1960.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

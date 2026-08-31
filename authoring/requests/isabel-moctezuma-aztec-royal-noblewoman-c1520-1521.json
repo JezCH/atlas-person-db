@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Isabel Moctezuma",
+    "display_name_ko": "이사벨 목테수마",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Aztec Triple Alliance",
+    "display_name_ko": "아즈텍 삼국동맹",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Mexica princess (cihuapilli) and royal consort",
+    "role_display_name_ko": "멕시카 왕녀·왕실 배우자",
+    "start_year": 1520,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1521,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tecuichpo Ixcaxochitzin, later baptized Isabel Moctezuma, was a daughter of Moctezuma II and belonged to the Mexica ruling elite. She was successively connected by marriage to Cuitláhuac and Cuauhtémoc during the final crisis of Tenochtitlan, but she was not an independent huey tlatoani or sovereign ruler. ATLAS therefore uses active_in rather than rules."
+  },
+  "sources": [
+    {
+      "title": "Tecuichpo Ixcaxochitzin, precursora de la emancipación de los indígenas — Secretaría de Educación Pública, Mexico",
+      "canonical_url": "https://educacionbasica.sep.gob.mx/tecuichpo-ixcaxochitzin-precursora-de-la-emancipacion-de-los-indigenas/",
+      "citation_text": "Mexico's Secretariat of Public Education identifies Tecuichpo/Isabel Moctezuma as a daughter of Moctezuma Xocoyotzin and member of the Mexica royal elite who lived through the fall of Tenochtitlan.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

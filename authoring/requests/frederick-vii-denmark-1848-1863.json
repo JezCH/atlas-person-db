@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Frederick VII of Denmark",
+    "display_name_ko": "프레데리크 7세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Denmark",
+    "display_name_ko": "덴마크 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1848,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1863,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Danish Royal House gives Frederick VII's reign as 1848–1863. He was the last monarch of the senior Oldenburg line and reigned through Denmark's transition from absolute to constitutional monarchy in 1849. ATLAS preserves year granularity because the official royal chronology is expressed by regnal years."
+  },
+  "sources": [
+    {
+      "title": "The Royal Lineage — The Danish Royal House",
+      "canonical_url": "https://www.kongehuset.dk/en/the-monarchy-in-denmark/the-royal-lineage",
+      "citation_text": "The Danish Royal House lists Frederik VII as King of Denmark from 1848 to 1863.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

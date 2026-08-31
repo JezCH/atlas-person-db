@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Hamad Pasha al-Sufi",
+    "display_name_ko": "하마드 파샤 알수피",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Tarabin Bedouin",
+    "display_name_ko": "타라빈 베두인",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Sheikh and Ottoman-allied war leader",
+    "role_display_name_ko": "셰이크·오스만군 협력 전쟁 지도자",
+    "start_year": 1915,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1915,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Al-Sufi was a sheikh of the Nijmat sub-tribe of the Tarabin, not a ruler of all Bedouins. He led about 1,500 Bedouin fighters from Tarabin and allied Negev tribes in support of the Ottoman attack on the Suez Canal during the First World War. Because a defensible tenure as sheikh cannot be calendrically bounded, ATLAS records the securely attested 1915 military episode as a representative activity point."
+  },
+  "sources": [
+    {
+      "title": "Negev Bedouin — historical summary and cited scholarship",
+      "canonical_url": "https://en.wikipedia.org/wiki/Negev_Bedouin",
+      "citation_text": "The historical summary, citing scholarship on Ottoman and Mandatory Palestine, identifies Hamad Pasha al-Sufi as sheikh of the Nijmat sub-tribe of the Tarabin and leader of 1,500 Bedouin fighters in the Ottoman Suez Canal offensive.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Rethinking the Bedouin in Ottoman Southern Palestine",
+      "canonical_url": "https://www.scribd.com/document/401729406/Amara-RETHINKING-THE-BEDOUIN-IN-OTTOMAN-SOUTHERN-PALESTINE-pdf",
+      "citation_text": "The scholarly article discusses Hammad al-Sufi among the Tarabin sheikhs in Ottoman southern Palestine and his role in tribal politics.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Murray MacLehose",
+    "display_name_ko": "머리 맥리호스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "British Hong Kong",
+    "display_name_ko": "영국령 홍콩",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Governor",
+    "role_display_name_ko": "총독",
+    "start_year": 1971,
+    "start_month": 11,
+    "start_day": 19,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1982,
+    "end_month": 5,
+    "end_day": 8,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "MacLehose assumed duty as Governor on 19 November 1971 and left office on 8 May 1982, after four successive terms. ATLAS uses British Hong Kong rather than an anachronistic sovereign 'Hong Kong' polity."
+  },
+  "sources": [
+    {
+      "title": "Recording Hong Kong — 1970s, Government Records Service",
+      "canonical_url": "https://www.grs.gov.hk/ws/rhk/en/1970s.html",
+      "citation_text": "The Hong Kong Government Records Service records MacLehose's assumption of duties as Governor on 19 November 1971.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Hong Kong Legislative Council Official Report, 28 April 1982",
+      "canonical_url": "https://www.legco.gov.hk/yr81-82/english/lc_sitg/hansard/h820428.pdf",
+      "citation_text": "The Legislative Council farewell proceedings document MacLehose's retirement at the end of his governorship in May 1982.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

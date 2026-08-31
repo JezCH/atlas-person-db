@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Manuel L. Quezon",
+    "display_name_ko": "마누엘 L. 케손",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Commonwealth of the Philippines",
+    "display_name_ko": "필리핀 자치령",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1935,
+    "start_month": 11,
+    "start_day": 15,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1944,
+    "end_month": 8,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Quezon took office as the first President of the Commonwealth of the Philippines on 15 November 1935 and remained constitutional president, including during the wartime government-in-exile, until his death on 1 August 1944."
+  },
+  "sources": [
+    {
+      "title": "Blue book of the inauguration of the Commonwealth of the Philippines — Philippine eLib",
+      "canonical_url": "https://www.elib.gov.ph/details.php?uid=d273208dc5bea5c34816c4910ca4276f",
+      "citation_text": "The Philippine eLib catalog records the inauguration of the Commonwealth and induction of Manuel L. Quezon as first president on 15 November 1935.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Executive Order No. 9-W, 2 February 1944 — Supreme Court E-Library",
+      "canonical_url": "https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/5/42886",
+      "citation_text": "A wartime executive order issued in Washington in February 1944 documents Quezon continuing to exercise the presidency of the Commonwealth shortly before his death.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

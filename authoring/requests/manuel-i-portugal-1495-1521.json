@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Manuel I of Portugal",
+    "display_name_ko": "마누엘 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Portugal",
+    "display_name_ko": "포르투갈 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1495,
+    "start_month": 10,
+    "start_day": 25,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1521,
+    "end_month": 12,
+    "end_day": 13,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Manuel I ascended the Portuguese throne on 25 October 1495 and reigned until his death on 13 December 1521."
+  },
+  "sources": [
+    {
+      "title": "Dom Manuel I (1469–1521) — Encyclopaedia of Portuguese Expansion",
+      "canonical_url": "https://eve.fcsh.unl.pt/en/people/dom-manuel-i-1469-1521",
+      "citation_text": "The scholarly encyclopedia states that Manuel ascended the throne on 25 October 1495 and died on 13 December 1521.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

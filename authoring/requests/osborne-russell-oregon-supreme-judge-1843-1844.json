@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Osborne Russell",
+    "display_name_ko": "오즈번 러셀",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Provisional Government of Oregon",
+    "display_name_ko": "오리건 임시정부",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Supreme Judge",
+    "role_display_name_ko": "최고판사",
+    "start_year": 1843,
+    "start_month": 10,
+    "start_day": 2,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1844,
+    "end_month": 5,
+    "end_day": 14,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Russell served as the presiding Supreme Judge of Oregon's Provisional Government before entering the second Executive Committee. The Civ label 'Cascadia' is not used because Cascadia is a later bioregional/political concept rather than the historical polity Russell served."
+  },
+  "sources": [
+    {
+      "title": "Petitions to Congress, 1838–1845 — Oregon Encyclopedia",
+      "canonical_url": "https://www.oregonencyclopedia.org/articles/petitions-to-congress-1838-1843/",
+      "citation_text": "The Oregon Encyclopedia identifies Osborne Russell as a member of the Provisional Government's executive branch in 1845 and signer of the June 1845 petition to Congress.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
