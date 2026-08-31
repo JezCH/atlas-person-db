@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Frederick II, Holy Roman Emperor",
+    "display_name_ko": "프리드리히 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Sicily",
+    "display_name_ko": "시칠리아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1198,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1250,
+    "end_month": 12,
+    "end_day": 13,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Frederick was crowned King of Sicily as a child in 1198 and remained Sicilian king until his death. ATLAS preserves this major separate polity rather than recording only his later imperial office."
+  },
+  "sources": [
+    {
+      "title": "Frederick II of Hohenstaufen (1208–1250)",
+      "canonical_url": "https://www.mdpi.com/2673-8392/1/3/55",
+      "citation_text": "The study records Frederick II as King of Sicily, King of Germany, King of Jerusalem, and Holy Roman Emperor; it gives his independent Sicilian rule through 1250 and imperial rule from 1220 to 1250.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

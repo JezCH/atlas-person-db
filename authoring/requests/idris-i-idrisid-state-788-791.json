@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Idris I of Morocco",
+    "display_name_ko": "이드리스 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Idrisid State",
+    "display_name_ko": "이드리스 왕조국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emir",
+    "role_display_name_ko": "아미르",
+    "start_year": 788,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 791,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Idris ibn Abd Allah founded the Idrisid political state in northern Morocco and ruled from 788 until his death in 791. ATLAS uses a polity label for the Idrisid state rather than treating the dynasty name alone as a government/regime object."
+  },
+  "sources": [
+    {
+      "title": "Idris I of Morocco",
+      "canonical_url": "https://en.wikipedia.org/wiki/Idris_I_of_Morocco",
+      "citation_text": "The biographical chronology identifies Idris I as founder of the Idrisid dynasty/state and gives his reign as 788–791.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

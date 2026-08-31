@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Sima Yan",
+    "display_name_ko": "사마염",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Western Jin Dynasty",
+    "display_name_ko": "서진",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 266,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 290,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sima Yan, Emperor Wu, founded the Jin imperial dynasty in 266 and reigned until 290. ATLAS uses Western Jin to distinguish it from the already-existing Jurchen Jin Dynasty (금나라)."
+  },
+  "sources": [
+    {
+      "title": "Jin: Emperors: 266–316 — Archontology",
+      "canonical_url": "https://www.archontology.org/nations/china/jin/00_266_316_s.php",
+      "citation_text": "The chronology gives Sima Yan's imperial reign from 8 February 266 to 16 May 290.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

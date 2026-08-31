@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Washakie",
+    "display_name_ko": "와샤키",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Eastern Shoshone",
+    "display_name_ko": "동부 쇼쇼니",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Chief and principal representative",
+    "role_display_name_ko": "추장·대표 지도자",
+    "start_year": 1863,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1900,
+    "end_month": 2,
+    "end_day": 20,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Washakie's accession as chief cannot be fixed to a defensible single date. ATLAS therefore begins the mapped leadership interval with the 1863 Fort Bridger treaty, where he is documented among Eastern Shoshone leaders, and continues through his death in 1900. This is not intended as a fabricated formal reign beginning in 1863."
+  },
+  "sources": [
+    {
+      "title": "Coming to Wind River: The Eastern Shoshone Treaties of 1863 and 1868 — WyoHistory.org",
+      "canonical_url": "https://www.wyohistory.org/encyclopedia/coming-wind-river-eastern-shoshone-treaties-1863-and-1868",
+      "citation_text": "The Wyoming historical account documents Washakie as a rising Eastern Shoshone leader and as a signatory/leader in the Fort Bridger treaty negotiations of 1863 and 1868.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Chief Washakie — Wyoming History Day",
+      "canonical_url": "https://www.wyominghistoryday.org/theme-topics/chief-washakie",
+      "citation_text": "The Wyoming history resource describes Washakie's rise as a leading Shoshone warrior and chief and gives his death in 1900.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

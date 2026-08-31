@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Domenico Selvo",
+    "display_name_ko": "도메니코 셀보",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Venice",
+    "display_name_ko": "베네치아 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Doge",
+    "role_display_name_ko": "도제",
+    "start_year": 1071,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1084,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Domenico Selvo was elected doge in 1071 and was deposed after the Venetian defeat against the Normans in late 1084."
+  },
+  "sources": [
+    {
+      "title": "SILVO, Domenico — Dizionario Biografico degli Italiani, Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/domenico-silvo_%28Dizionario-Biografico%29/",
+      "citation_text": "Treccani records Selvo's election as doge in 1071 and his deposition in 1084.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

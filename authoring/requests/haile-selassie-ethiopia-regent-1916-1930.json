@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:haile-selassie-i:ethiopian-empire:regent:1916-1930:v1",
+  "person": {
+    "canonical_name_en": "Haile Selassie I",
+    "display_name_ko": "하일레 셀라시에 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Ethiopian Empire",
+    "display_name_ko": "에티오피아 제국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Regent",
+    "role_display_name_ko": "섭정",
+    "start_year": 1916,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1930,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ras Tafari Makonnen, later Haile Selassie I, was appointed regent and heir to the Ethiopian throne in 1916 when Zewditu became empress. He exercised the regency until Zewditu's death in 1930, after which he succeeded to the imperial throne. ATLAS records this pre-imperial governing phase separately from his interrupted 1930-1936 and restored 1941-1974 imperial reigns."
+  },
+  "sources": [
+    {
+      "title": "Haile Selassie — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/people/history/african-history-biographies/haile-selassie",
+      "citation_text": "The biography states that Ras Tafari was appointed regent and heir to the throne in 1916 and became emperor after Zewditu died in 1930.",
+      "source_type": "reference_work"
+    },
+    {
+      "title": "Rastafarian Perceptions of the Christian Burial of Emperor Ḥaylä Śǝllase I — Library of Congress hosted volume",
+      "canonical_url": "https://tile.loc.gov/storage-services/master/gdc/gdcebookspublic/20/22/00/19/51/2022001951/2022001951.pdf",
+      "citation_text": "The scholarly volume states that Tafari Makonnen was appointed regent and throne successor in 1916 and was enthroned and crowned emperor on 2 November 1930.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "하일레 셀라시에",
+      "url": "https://namu.wiki/w/%ED%95%98%EC%9D%BC%EB%A0%88%20%EC%85%80%EB%9D%BC%EC%8B%9C%EC%97%90"
+    }
+  }
+}
