@@ -831,5 +831,22 @@
     "role_ko": "게일계 전승의 왕·우이 닐 왕조 시조",
     "reason": "Niall Noígíallach is plausibly based on a historical fifth-century ruler and became the eponymous ancestor of the Uí Néill, but the surviving narrative and regnal traditions are late and politically shaped. Modern scholarship places his floruit roughly in the middle of the fifth century by generation-counting and explicitly cautions that there is no strong reason to think he ruled more than an ordinary túath. ATLAS therefore does not portray him as a historically verified High King ruling all Gaels and does not promote later traditional reign years to the historical timeline.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary, dynastic-tradition or uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "King Arthur",
+    "politic_name": "Britons",
+    "display_name_ko": "아서 왕",
+    "politic_display_name_ko": "브리튼인",
+    "historicity": "legendary_possible_historical_core",
+    "historicity_display_ko": "전설·역사적 핵심 가능",
+    "timeline_status": "excluded",
+    "date_basis": "post_roman_british_legend_and_late_medieval_sources",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "브리튼 전승의 왕·전사 지도자",
+    "reason": "Arthur is central to later British and Welsh tradition, and some narratives place a war leader of this name among the post-Roman Britons of the late fifth or early sixth century. However, the principal narrative sources are centuries later and most modern historians do not regard the literary King Arthur as a securely historical person. ATLAS therefore does not create a historical 'Great Britain' polity or assign a fabricated reign interval.",
+    "map_policy": "Do not display on the historical year timeline unless a legendary, mythic, or uncertain-chronology overlay is enabled."
   }
 ]

@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Sri Jayanasa",
+    "display_name_ko": "스리 자야나사",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Srivijaya",
+    "display_name_ko": "스리위자야",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Dapunta Hyang (ruler)",
+    "role_display_name_ko": "다푼타 향(통치자)",
+    "start_year": 684,
+    "start_month": 3,
+    "start_day": 23,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 684,
+    "end_month": 3,
+    "end_day": 23,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sri Jayanasa is directly named in the Talang Tuwo inscription dated 23 March 684 as the ruler who ordered the Śrīkṣetra garden. Broader reign ranges proposed in secondary literature are less secure, so ATLAS uses this exact inscriptional attestation point rather than fabricating a full reign."
+  },
+  "sources": [
+    {
+      "title": "Rereading Intellectual Autonomy in the Evolution of Old Sumatran Scripts — TRAJECTORIA / National Museum of Ethnology Japan",
+      "canonical_url": "https://trajectoria.minpaku.ac.jp/articles/2026/vol07/03.html",
+      "citation_text": "The study identifies Jayanāśa as Śrīvijaya's ruler in the Talang Tuwo inscription of 684 CE.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Shin Sawbu",
+    "display_name_ko": "신 사우부",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Hanthawaddy Kingdom",
+    "display_name_ko": "한따와디 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Queen Regnant",
+    "role_display_name_ko": "여왕",
+    "start_year": 1454,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1471,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Shin Sawbu became queen regnant of Hanthawaddy around January 1454 and reigned until 1471. The Civ label 'Pegu Empire' is normalized to the historical Hanthawaddy Kingdom."
+  },
+  "sources": [
+    {
+      "title": "Shin Sawbu",
+      "canonical_url": "https://en.wikipedia.org/wiki/Shin_Sawbu",
+      "citation_text": "The monarch chronology records Shin Sawbu as queen regnant of Hanthawaddy from 1454 to 1471.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Albrecht von Wallenstein",
+    "display_name_ko": "알브레히트 폰 발렌슈타인",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Principality of Friedland",
+    "display_name_ko": "프리들란트 공국(후국)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Prince",
+    "role_display_name_ko": "후작",
+    "start_year": 1624,
+    "start_month": 3,
+    "start_day": 12,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1627,
+    "end_month": 1,
+    "end_day": 3,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Wallenstein was not ruler of Bohemia. His confiscated northern-Bohemian territories were constituted as the Principality of Friedland in 1624; ATLAS models his actual territorial rule instead of the Civ shorthand 'Bohemia'."
+  },
+  "sources": [
+    {
+      "title": "Albrecht von Wallenstein — Catholic Encyclopedia",
+      "canonical_url": "https://www.newadvent.org/cathen/15538b.htm",
+      "citation_text": "The reference states that Ferdinand raised Wallenstein's Friedland territories to a principality in 1624.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

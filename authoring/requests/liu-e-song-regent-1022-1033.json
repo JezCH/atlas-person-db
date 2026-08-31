@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Liu E",
+    "display_name_ko": "유아",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Song Dynasty",
+    "display_name_ko": "송나라",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Empress Dowager and Regent",
+    "role_display_name_ko": "황태후·섭정",
+    "start_year": 1022,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1033,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Civ mod's leader 'Liu' is Empress Liu E (Empress Zhangxian Mingsu). After Emperor Zhenzong's death in 1022 she governed as empress dowager and regent for the young Renzong until her death in 1033. She was not a Song emperor in her own right."
+  },
+  "sources": [
+    {
+      "title": "Chronicles of Changes: The Transforming Image of Empress Liu in the Northern Song [1033-1089] — University of Virginia",
+      "canonical_url": "https://libraetd.lib.virginia.edu/public_view/4t64gp72r",
+      "citation_text": "The University of Virginia history thesis identifies Empress Liu (969–1033) as the first Song empress regent and gives her regency as 1022–1033.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

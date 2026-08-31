@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Brusi Sigurdsson",
+    "display_name_ko": "브루시 시구르드손",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Earldom of Orkney",
+    "display_name_ko": "오크니 백작령",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Joint Earl",
+    "role_display_name_ko": "공동 백작",
+    "start_year": 1014,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1030,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Brusi was one of the joint Earls of Orkney from 1014 and died in the early 1030s. The Civ label 'Shetland' is too narrow: the historical office was the Earldom of Orkney, which also exercised authority in the Northern Isles."
+  },
+  "sources": [
+    {
+      "title": "Brusi Sigurdsson",
+      "canonical_url": "https://en.wikipedia.org/wiki/Brusi_Sigurdsson",
+      "citation_text": "The biography records Brusi as joint Earl of Orkney from 1014 until the early 1030s and notes that the main narrative evidence comes from Orkneyinga saga.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

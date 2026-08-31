@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Klemens von Metternich",
+    "display_name_ko": "클레멘스 폰 메테르니히",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Austrian Empire",
+    "display_name_ko": "오스트리아 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "State Chancellor",
+    "role_display_name_ko": "국무재상",
+    "start_year": 1821,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1848,
+    "end_month": 3,
+    "end_day": 13,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Metternich was not the monarch of the Austrian Empire. He served as State Chancellor from 1821 until his fall during the March Revolution in 1848; ATLAS therefore uses serves rather than rules."
+  },
+  "sources": [
+    {
+      "title": "The Metternich Era — Federal Chancellery of Austria",
+      "canonical_url": "https://www.bundeskanzleramt.gv.at/en/federal-chancellery/visit-us/history/the-metternich-era.html?lang=en",
+      "citation_text": "Austria's Federal Chancellery states that Metternich was Foreign Minister from 1809 to 1848 and State Chancellor from 1821.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Albrecht von Wallenstein",
+    "display_name_ko": "알브레히트 폰 발렌슈타인",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Friedland",
+    "display_name_ko": "프리들란트 공작령",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Duke",
+    "role_display_name_ko": "공작",
+    "start_year": 1627,
+    "start_month": 1,
+    "start_day": 4,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1634,
+    "end_month": 2,
+    "end_day": 25,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Principality of Friedland was elevated to a duchy on 4 January 1627. Wallenstein ruled it until his assassination on 25 February 1634."
+  },
+  "sources": [
+    {
+      "title": "Friedland und Sagan: Albrecht von Wallenstein — Staatliche Museen zu Berlin",
+      "canonical_url": "https://ikmk.smb.museum/object?id=18301472&lang=en",
+      "citation_text": "The Berlin Münzkabinett identifies Wallenstein as Duke of Friedland (1625–1634) and documents the Duchy of Friedland's sovereign coinage in 1627.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

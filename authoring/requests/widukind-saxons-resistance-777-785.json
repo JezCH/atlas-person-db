@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Widukind",
+    "display_name_ko": "비두킨트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Saxons",
+    "display_name_ko": "색슨족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Saxon resistance leader",
+    "role_display_name_ko": "색슨 저항 지도자",
+    "start_year": 777,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 785,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Widukind is first explicitly mentioned in 777 and led major Saxon resistance against Charlemagne from 778. His surrender and baptism in 785 close the securely documented resistance phase. Later traditions calling him a duke are not used as the primary role."
+  },
+  "sources": [
+    {
+      "title": "1911 Encyclopædia Britannica — Widukind",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Widukind_%28leader%29",
+      "citation_text": "The reference first mentions Widukind in 777, describes his leadership of Saxon resistance, and records his submission and baptism in 785.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

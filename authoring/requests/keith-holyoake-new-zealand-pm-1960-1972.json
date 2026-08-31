@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Keith Holyoake",
+    "display_name_ko": "키스 홀리오크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "New Zealand",
+    "display_name_ko": "뉴질랜드",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1960,
+    "start_month": 12,
+    "start_day": 12,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1972,
+    "end_month": 2,
+    "end_day": 7,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Holyoake returned after Walter Nash's government and served continuously until 7 February 1972."
+  },
+  "sources": [
+    {
+      "title": "Keith Holyoake — NZHistory",
+      "canonical_url": "https://nzhistory.govt.nz/keyword/keith-holyoake",
+      "citation_text": "NZHistory lists Holyoake's second premiership as 12 December 1960 to 7 February 1972.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
