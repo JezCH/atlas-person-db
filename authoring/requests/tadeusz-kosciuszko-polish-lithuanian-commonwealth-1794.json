@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Tadeusz Kościuszko",
+    "display_name_ko": "타데우시 코시치우슈코",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Polish–Lithuanian Commonwealth",
+    "display_name_ko": "폴란드-리투아니아 연방",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Naczelnik (Supreme Commander of the National Armed Force)",
+    "role_display_name_ko": "나첼니크(국가무력 최고사령관)",
+    "start_year": 1794,
+    "start_month": 3,
+    "start_day": 24,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1794,
+    "end_month": 10,
+    "end_day": 10,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kościuszko was not king of the Commonwealth. On 24 March 1794 he became Naczelnik, the single supreme leader of the insurrection with full civil and military authority. His effective command ended when he was wounded and captured at Maciejowice on 10 October 1794."
+  },
+  "sources": [
+    {
+      "title": "Naczelnik — Muzeum Historii Polski",
+      "canonical_url": "https://kosciuszko.muzhp.pl/naczelnik",
+      "citation_text": "The Museum of Polish History states that Kościuszko swore the uprising oath on 24 March 1794, became its sole supreme leader with full civil and military authority, and was captured after the Battle of Maciejowice on 10 October 1794.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

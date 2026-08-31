@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Walter Ulbricht",
+    "display_name_ko": "발터 울브리히트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "German Democratic Republic",
+    "display_name_ko": "동독",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "SED First Secretary and de facto leader",
+    "role_display_name_ko": "SED 제1서기·사실상 최고지도자",
+    "start_year": 1950,
+    "start_month": 7,
+    "start_day": 25,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1971,
+    "end_month": 5,
+    "end_day": 3,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ulbricht held the decisive political authority in the GDR as head of the SED from 1950 until he was replaced by Erich Honecker on 3 May 1971. This Activity represents de facto political leadership rather than a constitutional head-of-state office."
+  },
+  "sources": [
+    {
+      "title": "Walter Ulbricht — Bundesstiftung zur Aufarbeitung der SED-Diktatur",
+      "canonical_url": "https://www.bundesstiftung-aufarbeitung.de/de/recherche/kataloge-datenbanken/biographische-datenbanken/walter-ernst-paul-ulbricht",
+      "citation_text": "The Federal Foundation identifies Ulbricht as the dominant GDR politician, SED leader until May 1971, and Chairman of the State Council from 1960 until his death in 1973.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "document_title": "발터 울브리히트",
+      "url": "https://namu.wiki/w/%EB%B0%9C%ED%84%B0%20%EC%9A%B8%EB%B8%8C%EB%A6%AC%ED%9E%88%ED%8A%B8",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

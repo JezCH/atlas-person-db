@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Bayan I",
+    "display_name_ko": "바얀 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Avar Khaganate",
+    "display_name_ko": "아바르 카간국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khagan",
+    "role_display_name_ko": "카간",
+    "start_year": 562,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 602,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Bayan is the first securely named khagan of the European Avars. Scholarship commonly places the beginning of his rule around 562–565; ATLAS uses c.562 as an approximate start and 602 as the traditional end at his death."
+  },
+  "sources": [
+    {
+      "title": "Early nomads of the Eastern Steppe and their tentative connections in the West",
+      "canonical_url": "https://www.researchgate.net/publication/341217168_Early_nomads_of_the_Eastern_Steppe_and_their_tentative_connections_in_the_West",
+      "citation_text": "The historical-linguistic study identifies Bayan as the first khagan of the Avars and gives his reign as 562–602.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

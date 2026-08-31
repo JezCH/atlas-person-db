@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Tembinok'",
+    "display_name_ko": "템비노크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "State of Abemama",
+    "display_name_ko": "아베마마국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Uea (High Chief/King)",
+    "role_display_name_ko": "우에아(대추장·왕)",
+    "start_year": 1878,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1891,
+    "end_month": 11,
+    "end_day": 10,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tembinok' is the form used by Robert Louis Stevenson for Tem Binoka/Binoka. He succeeded his father in 1878 and ruled the centralized State of Abemama, including Abemama, Kuria and Aranuka, until his death on 10 November 1891."
+  },
+  "sources": [
+    {
+      "title": "Series N, Section 2: The would-be Empire Builder — University of Adelaide",
+      "canonical_url": "https://digital.library.adelaide.edu.au/items/17082000-7158-4695-816f-58560f1edbf1",
+      "citation_text": "The University of Adelaide archival description states that King Tem Binoka of Apemama took over from his father in 1878 and ruled until 1891.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "In the South Seas — Robert Louis Stevenson",
+      "canonical_url": "https://www.gutenberg.org/cache/epub/464/pg464-images.html",
+      "citation_text": "Stevenson's first-hand account describes Tembinok' as the monarch of Apemama and explains how his father and uncle established the centralized monarchy he inherited.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

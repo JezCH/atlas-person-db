@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Rakai Pikatan",
+    "display_name_ko": "라카이 피카탄",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Medang Kingdom",
+    "display_name_ko": "메당 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 842,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 855,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Rakai Pikatan's exact accession is debated. Epigraphic scholarship shows that he was already king by 842 (possibly a few years earlier), while later inscriptional chronology places the succession to Rakai Kayuwangi around 855 and a 856 inscription already reflects the transition. ATLAS therefore uses c.842–c.855 rather than presenting a falsely precise reign."
+  },
+  "sources": [
+    {
+      "title": "King Sanjaya and His Successors — Cornell University",
+      "canonical_url": "https://ecommons.cornell.edu/server/api/core/bitstreams/6d917df8-d0c2-4f96-b07f-28b1d90bdaa4/content",
+      "citation_text": "The study argues from the 842 Sri Kahulunan charter that Rakai Pikatan must already have been king by 842.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Reliefs of Ramayana and Kṛṣṇa Story at Lara Jonggrang Temple and Reign Shift of the Ancient Mataram in 9th Century AD — Berkala Arkeologi",
+      "canonical_url": "https://berkalaarkeologi.kemdikbud.go.id/index.php/berkalaarkeologi/article/download/478/538/2792",
+      "citation_text": "The Indonesian archaeological study notes that by the 856 Śivagṛha context Rakai Pikatan was no longer reigning and uses Wanua Tengah III in reconstructing the succession.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
