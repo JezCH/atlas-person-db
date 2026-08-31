@@ -2,13 +2,22 @@
 
 Status: authoritative completion gate for the current Production `시공간 인물도`.
 
-## Purpose
+## Readable-scale decision
 
-P1–P14 established the in-place foundation renderer: semantic time projection, stable macroregion world geometry, Person tracks, political placement semantics, semantic LOD, Y-stable labels, unique-Person density, semantic axes, exploration controls, minimap, viewport virtualization, and legacy cleanup.
+The readable camera floor is **500%**.
 
-**Finishing P1–P14 does not mean the original ATLAS Spacetime Landscape product goal is complete.** Final completion is reached only when every required capability in `tests/fixtures/spacetime-completion-contract.json` is `locked` and every acceptance fixture passes.
+- minimum zoom: 500%
+- default zoom: 500%
+- maximum zoom: 800%
+- X and Y use the same global camera zoom
+- the physical world extent applies one shared compression factor: **0.82**
+- local density-based compression is forbidden
+- a sparse region or era may not be folded independently
+- no runtime, UI, test, or compatibility path may expose a scale below 500%
 
-## Non-negotiable architecture
+The 0.82 factor is presentation compression only. It applies uniformly to the whole X and Y extent and never changes normalized historical coordinates.
+
+## Architecture
 
 ```text
 Person / Activity
@@ -17,101 +26,59 @@ Person / Activity
   -> Precision-aware Spatial Compile
   -> Person Track Compiler
   -> Stable Spacetime World
-  -> 2D Camera
-  -> Semantic LOD
-  -> density / point / label / rail / Activity
+  -> Unified 2D Camera (500%-800%)
+  -> readable labels + Person rails -> Activity detail
 ```
 
-Camera and LOD may change presentation. They must never invent, upgrade, or mutate historical coordinates.
+Camera and presentation may change extent. They must never invent, upgrade, locally warp, or mutate historical coordinates.
 
-## Historical-spatial precision rule
+## Precision
 
-Compiled precision may never exceed reviewed evidence.
-
-- reviewed Place evidence may compile to a Place point;
-- reviewed subregion evidence may compile to a subregion range;
-- reviewed macroregion evidence may compile only to a macroregion range;
-- conflicting or missing evidence remains unresolved;
-- a display anchor is presentation data and is never historical evidence.
-
-A broad range may have a deterministic display anchor for rendering, but that anchor must remain explicitly distinguishable from the historical precision range.
+Reviewed Place evidence may compile to a Place point; reviewed subregion evidence to a subregion range; reviewed macroregion evidence only to a macroregion range. Conflicting or missing evidence remains unresolved. Display anchors are presentation data, never historical evidence.
 
 ## Stable-world invariants
 
-The same historical record must keep the same normalized world coordinate under:
-
-- search on/off;
-- different search terms;
-- selection changes;
-- time zoom;
-- space zoom;
-- minimap navigation.
-
-`opposes` is a political counterparty relationship and must never determine the Person's own spatial placement.
+Normalized world coordinates remain identical under search, selection, global camera zoom, and minimap navigation. `opposes` never determines primary Person placement.
 
 ## Time invariant
 
-Historical Y is derived from historical time only. Labels may move horizontally or defer, but must never move a Person to a different historical Y.
+Historical Y is derived from historical time only. The supported readable surface uses a **uniform linear time projection**. There is no low-scale logarithmic overview and no era-specific density compression. Labels may move horizontally or defer, never vertically.
 
-World overview may use compressed time, while sufficiently local time zoom approaches a linear projection continuously and reversibly.
+## Space invariant
 
-## Spatial semantic hierarchy
+Macroregions remain equal stable bands in normalized world space. Subregions are fixed historical/geographic subdivisions. Person density must not resize Europe, Oceania, East Asia, or any other region.
 
-The final spatial experience is one continuous world, not separate region screens or dynamically resized result columns.
+## Interaction
 
-Semantic detail progresses through:
+The Production surface must provide continuous two-axis camera behavior at 500%-800%, pointer-centered zoom, Person search/focus, minimap context, inspector evidence, Meanwhile exploration, and reset to 500%.
 
-`macroregion -> subregion -> reviewed Place`
-
-Headers may cross-fade as detail increases, but the underlying normalized Person coordinate may not jump merely because a header level changes.
-
-## Interaction completion
-
-Final completion requires all of the following on the same Production surface:
-
-- continuous horizontal and vertical camera behavior;
-- Person search and focus without geometry mutation;
-- minimap with whole-world context and current viewport;
-- Person inspector exposing Activity, placement basis, precision, confidence, and sources;
-- Meanwhile exploration based on active ATLAS Activities at a selected historical moment;
-- Fit World / equivalent camera reset behavior.
+A Fit World action that produces a scale below 500% is prohibited.
 
 ## Dense-label acceptance
 
-The permanent dense windows are:
-
-1. Europe, AD 1800–1950;
+Permanent dense windows:
+1. Europe, AD 1800–1950.
 2. East Asia, AD 500–1900.
 
-At a documented sufficient zoom, every finite visible Person in each fixture must have:
+At sufficient zoom: label overlap count = 0, historical Y deviation = 0 px, deferred visible labels = 0. Reducing below 500% is never an acceptance strategy.
 
-- label overlap count = 0;
-- historical Y deviation = 0 px;
-- deferred visible labels = 0.
+## Legacy prohibition
 
-Overview is allowed to defer labels when capacity is physically insufficient; sufficient zoom is not.
+The following may not return: overview/detail mode selector, density overview renderer, Person point-only renderer, logarithmic time overview, adaptive low-scale ticks, retired lane assignment, 100% reset, any below-500 camera entry, or local region/time compression.
 
 ## Data parity
 
-Completion must not silently change Person or Activity identity or historical semantics. Final parity requires zero unintended delta for:
-
-- Person identity/count;
-- Activity identity/count;
-- start/end temporal boundaries;
-- Polity;
-- relation;
-- role.
-
-Spatial changes are allowed only when they are a reviewed precision upgrade or an explicit correction supported by evidence.
+Zero unintended delta for Person identity, Activity identity, temporal boundaries, Polity, relation, and role.
 
 ## Performance
 
-Runtime DOM size must scale primarily with `viewport + overscan`, not total database size. Whole-world context may be retained in compact data/Canvas structures such as the minimap and density layer.
+DOM size scales with viewport + overscan, not total DB size. Minimap may retain compact whole-world context. Density canvas is not part of the Production renderer.
 
 ## Source of truth
 
-- Machine-readable completion state: `tests/fixtures/spacetime-completion-contract.json`
-- Permanent acceptance fixtures: `tests/fixtures/spacetime-acceptance-fixtures.json`
-- Contract tests: `tests/spacetime-completion-contract.test.mjs`
+- `tests/fixtures/spacetime-completion-contract.json`
+- `tests/fixtures/spacetime-acceptance-fixtures.json`
+- `tests/spacetime-completion-contract.test.mjs`
+- `tests/spacetime-readable-scale-contract.test.mjs`
 
-Changing a completion requirement requires an explicit reviewed contract change. A passing implementation test may not silently delete or weaken a product requirement.
+Changing the 500% floor, 0.82 shared compression, or prohibition on local compression requires explicit review.
