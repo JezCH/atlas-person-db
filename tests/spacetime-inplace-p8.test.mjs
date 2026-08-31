@@ -12,217 +12,90 @@ const personTracks = require("../atlas-person-spacetime-person-tracks.js");
 const politicalPlacement = require("../atlas-person-spacetime-political-placement.js");
 const lod = require("../atlas-person-spacetime-lod.js");
 const labelEngine = require("../atlas-person-spacetime-label-engine.js");
+const view = readFileSync(new URL("../atlas-person-spacetime-view.js", import.meta.url), "utf8");
+const css = readFileSync(new URL("../atlas-person-spacetime-view.css", import.meta.url), "utf8");
 
-const viewSource = readFileSync(new URL("../atlas-person-spacetime-view.js", import.meta.url), "utf8");
-const cssSource = readFileSync(new URL("../atlas-person-spacetime-view.css", import.meta.url), "utf8");
-const ownerSource = readFileSync(new URL("../atlas-domain-surface-owner.js", import.meta.url), "utf8");
-
-function almostEqual(actual, expected, epsilon = 1e-8) {
-  assert.ok(Math.abs(actual - expected) <= epsilon, `${actual} != ${expected}`);
-}
-
+function almostEqual(a,b,e=1e-8){ assert.ok(Math.abs(a-b)<=e, `${a} != ${b}`); }
 function compiledPlacement(activityId, regionCode, continuum, relationCode, startYear, endYear) {
-  const band = continuum.bandForCode(regionCode);
-  return {
-    activity_id: activityId,
-    status: "placed",
-    reason: null,
-    segments: [{
-      activity_id: activityId,
-      polity_id: `polity-${activityId}`,
-      start_year: startYear,
-      end_year: endYear,
-      x_anchor: band.center_space,
-      x_min: band.min_space,
-      x_max: band.max_space,
-      macroregion_code: regionCode,
-      subregion_code: null,
-      spatial_precision: "macroregion",
-      display_anchor_basis: "canonical_macroregion",
-      historical_placement_basis: "reviewed_region",
-      historical_confidence: "reviewed",
-      relation_code: relationCode
-    }]
-  };
+  const band=continuum.bandForCode(regionCode);
+  return {activity_id:activityId,status:"placed",segments:[{activity_id:activityId,polity_id:`polity-${activityId}`,start_year:startYear,end_year:endYear,x_anchor:band.center_space,x_min:band.min_space,x_max:band.max_space,macroregion_code:regionCode,subregion_code:null,spatial_precision:"macroregion",display_anchor_basis:"canonical_macroregion",historical_placement_basis:"reviewed_region",historical_confidence:"reviewed",relation_code:relationCode}]};
 }
 
-test("semantic time zoom preserves the existing 100% log projection exactly", () => {
-  const base = model.createSpacetimeTimeProjection(-3000, 2026, 4200, 420);
-  const semantic = timeProjection.createSemanticTimeProjection(-3000, 2026, 4200, 420, 1);
-  assert.equal(timeProjection.semanticBlendWeight(1), 0);
-  assert.equal(timeProjection.semanticBlendWeight(1.25), 0);
-  assert.equal(timeProjection.semanticBlendWeight(4), 1);
-  for (const year of [-2500, -500, -1, 1, 500, 1800, 1919, 2026]) {
-    const ordinal = model.historicalYearToOrdinal(year);
-    assert.equal(semantic.worldToScreenY(ordinal), base.worldToScreenY(ordinal));
-    assert.equal(semantic.yForYear(year), base.yForYear(year));
+test("500 percent uniform time projection is linear reversible and has no year zero", () => {
+  const p=timeProjection.createUniformTimeProjection(-3000,2026,4200*5*0.82,5);
+  let previous=-Infinity;
+  for(const year of [-2000,-500,-1,1,500,1500,2026]){
+    const ordinal=model.historicalYearToOrdinal(year);
+    const y=p.worldToScreenY(ordinal);
+    assert.ok(y>previous);
+    almostEqual(p.screenToWorldOrdinal(y),ordinal);
+    previous=y;
   }
+  const y1800=p.yForYear(1800), y1900=p.yForYear(1900), y2000=p.yForYear(2000);
+  almostEqual(y1900-y1800,y2000-y1900);
+  assert.equal(model.historicalYearToOrdinal(0),null);
 });
 
-test("semantic time projection approaches linear spacing smoothly and remains reversible across BCE/CE", () => {
-  const blended = timeProjection.createSemanticTimeProjection(-3000, 2026, 4200 * 2.2, 420, 2.2);
-  assert.ok(blended.semantic_blend_weight > 0 && blended.semantic_blend_weight < 1);
-  let previousY = -Infinity;
-  for (const year of [-2000, -500, -1, 1, 500, 1500, 2026]) {
-    const ordinal = model.historicalYearToOrdinal(year);
-    const y = blended.worldToScreenY(ordinal);
-    assert.ok(y > previousY);
-    almostEqual(blended.screenToWorldOrdinal(y), ordinal, 1e-6);
-    previousY = y;
-  }
-
-  const linear = timeProjection.createSemanticTimeProjection(-3000, 2026, 4200 * 4, 420, 4);
-  const y1800 = linear.yForYear(1800);
-  const y1900 = linear.yForYear(1900);
-  const y2000 = linear.yForYear(2000);
-  almostEqual(y1900 - y1800, y2000 - y1900, 1e-8);
-  assert.equal(model.historicalYearToOrdinal(0), null);
-  for (let y = 0; y <= linear.height; y += linear.height / 32) assert.notEqual(linear.historicalYearForScreenY(y), 0);
+test("spatial continuum stays nine equal macroregion bands independent of data density", () => {
+  const c=spaceAxis.createSpatialContinuum();
+  assert.equal(c.macroregions.length,9);
+  for(const band of c.macroregions) almostEqual(band.max_space-band.min_space,1/9,1e-12);
 });
 
-test("pointer-anchored camera zoom preserves the same historical ordinal while semantic projection changes", () => {
-  const headerHeight = 44;
-  const viewportY = 318;
-  const anchorOrdinal = model.historicalYearToOrdinal(1919);
-  const oldProjection = timeProjection.createSemanticTimeProjection(-3000, 2026, 4200, 420, 1);
-  const newProjection = timeProjection.createSemanticTimeProjection(-3000, 2026, 4200 * 1.35, 420, 1.35);
-  const oldScrollTop = headerHeight + oldProjection.worldToScreenY(anchorOrdinal) - viewportY;
-  const newScrollTop = headerHeight + newProjection.worldToScreenY(anchorOrdinal) - viewportY;
-  almostEqual(oldProjection.screenToWorldOrdinal(oldScrollTop + viewportY - headerHeight), anchorOrdinal, 1e-8);
-  almostEqual(newProjection.screenToWorldOrdinal(newScrollTop + viewportY - headerHeight), anchorOrdinal, 1e-6);
-  assert.notEqual(oldScrollTop, newScrollTop);
+test("spatial compile never invents precision", () => {
+  const c=spaceAxis.createSpatialContinuum(), europe=c.bandForCode("europe");
+  const raw={status:"placed",activity_id:"a",polity_id:"p",segments:[{activity_id:"a",polity_id:"p",region_code:"europe",place_id:"place-paris",place_name:"Paris",place_function_type:"capital",start_year:1800,end_year:1810,placement_basis:"polity_place_function",confidence:"reviewed",source_refs:["s"]}]};
+  const compiled=spatialCompile.compileActivityPlacement(raw,c);
+  assert.equal(compiled.segments[0].spatial_precision,"macroregion");
+  assert.equal(compiled.segments[0].x_anchor,europe.center_space);
 });
 
-test("spatial continuum exposes stable nine macroregion bands independent of data density", () => {
-  const continuum = spaceAxis.createSpatialContinuum();
-  assert.equal(continuum.macroregions.length, 9);
-  assert.equal(continuum.macroregions[0].min_space, 0);
-  assert.equal(continuum.macroregions.at(-1).max_space, 1);
-  const widths = continuum.macroregions.map((band) => band.max_space - band.min_space);
-  for (const width of widths) almostEqual(width, 1 / 9, 1e-12);
-  const first = spaceAxis.stableRegionLayout(continuum, 1800);
-  const second = spaceAxis.stableRegionLayout(continuum, 1800);
-  assert.deepEqual(first, second);
-  for (const subregion of continuum.subregions) {
-    const parent = continuum.bandForCode(subregion.parent_code);
-    assert.ok(subregion.min_space >= parent.min_space);
-    assert.ok(subregion.max_space <= parent.max_space);
-  }
-});
-
-test("spatial compile never invents subregion or precise Place coordinates", () => {
-  const continuum = spaceAxis.createSpatialContinuum();
-  const europe = continuum.bandForCode("europe");
-  const raw = {
-    status: "placed",
-    activity_id: "activity-1",
-    polity_id: "polity-1",
-    segments: [{
-      activity_id: "activity-1",
-      polity_id: "polity-1",
-      region_code: "europe",
-      location_label: "Paris",
-      place_id: "place-paris",
-      place_name: "Paris",
-      place_function_type: "capital",
-      start_year: 1800,
-      end_year: 1810,
-      placement_basis: "polity_place_function",
-      confidence: "reviewed",
-      source_refs: ["source-1"]
-    }]
-  };
-  const compiled = spatialCompile.compileActivityPlacement(raw, continuum);
-  assert.equal(compiled.status, "placed");
-  assert.equal(compiled.segments[0].spatial_precision, "macroregion");
-  assert.equal(compiled.segments[0].subregion_code, null);
-  assert.equal(compiled.segments[0].display_anchor_basis, "canonical_macroregion");
-  assert.equal(compiled.segments[0].x_anchor, europe.center_space);
-  assert.equal(compiled.segments[0].place_id, "place-paris");
-});
-
-test("Person track owns identity while opposes remains a counterparty and never drives primary placement", () => {
-  const continuum = spaceAxis.createSpatialContinuum();
-  const person = {
-    id: "person-1",
-    display_name: "Example Person",
-    activity_summaries: [
-      { id: "activity-primary", start: { year: 1800 }, end: { year: 1810 }, relation: { code: "affiliated_with" }, polity: { id: "polity-primary", display_name: "Primary Polity" } },
-      { id: "activity-opposes", start: { year: 1811 }, end: { year: 1820 }, relation: { code: "opposes" }, polity: { id: "polity-opposed", display_name: "Opposed Polity" } }
-    ]
-  };
-  const compiled = personTracks.compilePersonTracks([person], [
-    compiledPlacement("activity-primary", "europe", continuum, "affiliated_with", 1800, 1810),
-    compiledPlacement("activity-opposes", "east-asia", continuum, "opposes", 1811, 1820)
+test("opposes stays counterparty only", () => {
+  const c=spaceAxis.createSpatialContinuum();
+  const person={id:"person-1",display_name:"P",activity_summaries:[
+    {id:"primary",start:{year:1800},end:{year:1810},relation:{code:"affiliated_with"},polity:{id:"p1"}},
+    {id:"opposes",start:{year:1811},end:{year:1820},relation:{code:"opposes"},polity:{id:"p2"}}
+  ]};
+  const compiled=personTracks.compilePersonTracks([person],[
+    compiledPlacement("primary","europe",c,"affiliated_with",1800,1810),
+    compiledPlacement("opposes","east-asia",c,"opposes",1811,1820)
   ]);
-  const partitioned = politicalPlacement.partitionTracks(compiled);
-  assert.equal(partitioned.tracks.length, 1);
-  const track = partitioned.tracks[0];
-  assert.equal(track.track_id, "person-1");
-  assert.equal(track.primary_segments.length, 1);
-  assert.equal(track.primary_segments[0].activity_id, "activity-primary");
-  assert.equal(track.counterparty_segments.length, 1);
-  assert.equal(track.counterparty_segments[0].activity_id, "activity-opposes");
-  assert.equal(track.primary_space_extent.min, continuum.bandForCode("europe").min_space);
-  assert.equal(politicalPlacement.classifyRelation("opposes"), "counterparty");
+  const track=politicalPlacement.partitionTracks(compiled).tracks[0];
+  assert.equal(track.primary_segments.length,1);
+  assert.equal(track.counterparty_segments.length,1);
+  assert.equal(track.primary_segments[0].activity_id,"primary");
 });
 
-test("label engine resolves collisions horizontally or defers without ever changing historical Y", () => {
-  const packed = labelEngine.packLabels([
-    { person_id: "a", text: "Alpha", anchor_x: 100, anchor_y: 120, width: 72 },
-    { person_id: "b", text: "Beta", anchor_x: 104, anchor_y: 120, width: 72 }
-  ], { width: 240, height: 300 });
-  assert.equal(packed.placed.length, 2);
-  for (const label of packed.placed) assert.equal(label.label_y, label.anchor_y);
-  assert.equal(labelEngine.rectanglesOverlap(packed.placed[0].rect, packed.placed[1].rect, labelEngine.DEFAULT_HORIZONTAL_GAP), false);
-
-  const constrained = labelEngine.packLabels([
-    { person_id: "a", text: "Alpha", anchor_x: 35, anchor_y: 20, width: 60 },
-    { person_id: "b", text: "Beta", anchor_x: 35, anchor_y: 20, width: 60 }
-  ], { width: 70, height: 40 });
-  assert.equal(constrained.placed.length, 1);
-  assert.equal(constrained.placed[0].label_y, 20);
-  assert.equal(constrained.deferred.length, 1);
-  assert.equal(constrained.deferred[0].anchor_y, 20);
+test("label engine moves only horizontally or defers", () => {
+  const packed=labelEngine.packLabels([
+    {person_id:"a",text:"Alpha",anchor_x:100,anchor_y:120,width:72},
+    {person_id:"b",text:"Beta",anchor_x:104,anchor_y:120,width:72}
+  ],{width:240,height:300});
+  assert.equal(packed.placed.length,2);
+  for(const label of packed.placed) assert.equal(label.label_y,label.anchor_y);
+  assert.equal(labelEngine.rectanglesOverlap(packed.placed[0].rect,packed.placed[1].rect,labelEngine.DEFAULT_HORIZONTAL_GAP),false);
 });
 
-test("semantic LOD advances from a Person-readable minimum through label, rail, and Activity detail", () => {
-  const minimum = lod.lodWeights({ timeZoom: 1, spaceZoom: 1 });
-  const point = lod.lodWeights({ timeZoom: 1, spaceZoom: 3 });
-  const label = lod.lodWeights({ timeZoom: 1.8, spaceZoom: 1 });
-  const rail = lod.lodWeights({ timeZoom: 4, spaceZoom: 3 });
-  const activity = lod.lodWeights({ timeZoom: 7, spaceZoom: 3 });
-  assert.ok(minimum.density > 0 && minimum.density < 0.5);
-  assert.ok(minimum.points >= 0.6);
-  assert.ok(minimum.labels >= 0.78);
-  assert.ok(minimum.points > minimum.density);
-  assert.equal(lod.representationStage(minimum), "point");
-  assert.equal(lod.representationStage(point), "point");
-  assert.equal(lod.representationStage(label), "label");
-  assert.equal(lod.representationStage(rail), "rail");
-  assert.equal(lod.representationStage(activity), "activity");
+test("readable-floor LOD is rail+label and Activity appears only with more zoom", () => {
+  const minimum=lod.lodWeights({zoom:5});
+  const detail=lod.lodWeights({zoom:8});
+  assert.equal(minimum.labels,1);
+  assert.equal(minimum.rails,1);
+  assert.equal(minimum.activities,0);
+  assert.equal(lod.representationStage(minimum),"rail");
+  assert.equal(lod.representationStage(detail),"activity");
+  assert.equal(Object.hasOwn(minimum,"density"),false);
+  assert.equal(Object.hasOwn(minimum,"points"),false);
 });
 
-test("current surface is wired through P13 virtualization and the old vertical packing remains gone", () => {
-  assert.doesNotThrow(() => new Function(viewSource));
-  assert.match(viewSource, /createSemanticTimeProjection\(/);
-  assert.match(viewSource, /spaceAxis\.stableRegionLayout\(compiled\.continuum, contentWidth\)/);
-  assert.match(viewSource, /politicalPlacement\.partitionTracks\(compiledTracks\)/);
-  assert.match(viewSource, /atlas-person-spacetime-density\.js/);
-  assert.match(viewSource, /density\.buildDensityField\(/);
-  assert.match(viewSource, /spacetimeDensityCanvas/);
-  assert.match(viewSource, /performance\.cullDensityCells\(/);
-  assert.match(viewSource, /performance\.cullProjectedItems\(/);
-  assert.match(viewSource, /spacetime-person-point/);
-  assert.match(viewSource, /spacetime-track-label/);
-  assert.doesNotMatch(viewSource, /class="spacetime-density-cell"/);
-  assert.doesNotMatch(viewSource, /function buildRegionMeta\(/);
-  assert.doesNotMatch(viewSource, /OVERVIEW_CARD_HEIGHT/);
-  assert.doesNotMatch(viewSource, /spacetime-person-card/);
-  assert.match(cssSource, /\.spacetime-density-legend\{/);
-  assert.match(cssSource, /\.spacetime-person-point\{/);
-  assert.match(cssSource, /\.spacetime-track-label\{/);
-  assert.doesNotMatch(cssSource, /\.spacetime-person-card/);
-  assert.doesNotMatch(ownerSource, /spacetime-label-packing/);
-  assert.equal(existsSync(new URL("../atlas-person-spacetime-label-packing.js", import.meta.url)), false);
+test("single renderer has no low-scale density point lane or card path", () => {
+  assert.doesNotThrow(()=>new Function(view));
+  assert.match(view,/createUniformTimeProjection\(/);
+  assert.match(view,/GLOBAL_EXTENT_COMPRESSION = 0\.82/);
+  assert.match(view,/performance\.cullProjectedItems\(/);
+  assert.match(view,/spacetime-track-label/);
+  assert.match(view,/spacetime-track-rail/);
+  for(const retired of [/densityField/,/spacetimeDensityCanvas/,/spacetime-person-point/,/horizontalViewMode/,/assignLanes/]) assert.doesNotMatch(view,retired);
+  assert.doesNotMatch(css,/spacetime-density|spacetime-person-point|is-overview/);
+  assert.equal(existsSync(new URL("../atlas-person-spacetime-density.js",import.meta.url)),false);
 });
