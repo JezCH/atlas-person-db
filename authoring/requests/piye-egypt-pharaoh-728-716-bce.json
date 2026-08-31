@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:piye:egypt:pharaoh:728-716-bce:v1",
+  "person": {
+    "canonical_name_en": "Piye",
+    "display_name_ko": "피이"
+  },
+  "polity": {
+    "canonical_name_en": "Egypt",
+    "display_name_ko": "이집트"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Pharaoh",
+    "role_display_name_ko": "파라오",
+    "start_year": -728,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -716,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Piye was already king of Kush when he extended Kushite control over Egypt. His major northern campaign is conventionally placed around 728 BCE, after which he held pharaonic authority as an early Twenty-fifth Dynasty ruler while retaining his Kushite kingship. The exact extent and continuity of direct control across all regions of Egypt are debated, so ATLAS uses c.728-c.716 BCE with approximate boundaries and records this Egyptian pharaonic Activity separately from his existing Kingdom of Kush reign."
+  },
+  "sources": [
+    {
+      "title": "King Piye and the Kushite control of Egypt — British Museum / Smarthistory",
+      "canonical_url": "https://smarthistory.org/king-piye-kushite-egypt/",
+      "citation_text": "The British Museum account identifies Piye as a Kushite ruler who laid the foundations of Egypt's Twenty-fifth Dynasty, seized Upper Egypt early in his reign, and defeated the northern coalition in a major campaign in 728 BCE.",
+      "source_type": "museum_reference"
+    },
+    {
+      "title": "King Piy — UCL Digital Egypt for Universities",
+      "canonical_url": "https://www.ucl.ac.uk/museums-static/digitalegypt/chronology/piy.html",
+      "citation_text": "UCL identifies Piye as the first Napatan king to rule over Egypt and notes that the extent of his control after the conquest is not completely certain.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-21",
+      "document_title": "피이(쿠시)",
+      "url": "https://namu.wiki/w/%ED%94%BC%EC%9D%B4(%EC%BF%A0%EC%8B%9C)"
+    }
+  }
+}
