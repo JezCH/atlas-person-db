@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Francis Ona",
+    "display_name_ko": "프랜시스 오나",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Bougainville Independence Movement",
+    "display_name_ko": "부건빌 독립운동",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Independence leader and BRA supreme commander",
+    "role_display_name_ko": "독립운동 지도자·BRA 최고사령관",
+    "start_year": 1988,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1998,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ona led the landowner resistance that escalated into the Bougainville Revolutionary Army and became the key secessionist leader of the 1988–1998 conflict. ATLAS assigns him to the Bougainville independence political community rather than Papua New Guinea, consistent with the project's resistance/independence polity rule. The entry does not model his later self-proclaimed kingship of Me'ekamui as an ordinary sovereign reign."
+  },
+  "sources": [
+    {
+      "title": "Bougainville — Chapter 2, Parliament of Australia",
+      "canonical_url": "https://www.aph.gov.au/Parliamentary_Business/Committees/House_of_Representatives_Committees/Reports/jfadt/bougainville/bv_chap2",
+      "citation_text": "The Australian Parliament history describes Ona as the leader of the secessionist movement, his 1990 declaration of independence, and the Republic of Me'ekamui claim.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Francis Ona, a leader of the Bougainville Revolutionary Army — Australian War Memorial",
+      "canonical_url": "https://www.awm.gov.au/collection/C1085685",
+      "citation_text": "The Australian War Memorial identifies Francis Ona as a Bougainville Revolutionary Army leader who led the first operations against the Panguna mine in late 1988 and remained a key Bougainville separatist figure.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

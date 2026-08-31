@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Sultan Hasanuddin",
+    "display_name_ko": "술탄 하사누딘",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Sultanate of Gowa",
+    "display_name_ko": "고와 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1653,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1669,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Hasanuddin was the sixteenth ruler of Gowa and the last independent ruler before Gowa's subjugation in the Makassar War. Scholarly regnal lists place his reign in 1653–1669; exact abdication dates vary across modern renderings, so ATLAS preserves year granularity."
+  },
+  "sources": [
+    {
+      "title": "A Chain of Kings: The Makassarese Chronicles of Gowa and Talloq",
+      "canonical_url": "https://brill.com/display/book/9789004254008/9789004254008_webready_content_text.pdf",
+      "citation_text": "The scholarly reign list gives Sultan Hasanuddin as ruler of Gowa from 1653 to 1669.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Tentang Gowa — Pemerintah Kabupaten Gowa",
+      "canonical_url": "https://gowakab.go.id/site/tentang-gowa/",
+      "citation_text": "The official Gowa government history identifies Sultan Hasanuddin as the sixteenth ruler of Gowa and describes his leadership during the conflict with the VOC.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
