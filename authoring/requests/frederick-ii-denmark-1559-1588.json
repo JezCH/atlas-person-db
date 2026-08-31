@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Frederick II of Denmark",
+    "display_name_ko": "프레데리크 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Denmark",
+    "display_name_ko": "덴마크",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1559,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1588,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Frederick II became King of Denmark in 1559 and reigned until 1588. His concurrent Norwegian kingship is recorded as a separate Activity, following ATLAS's existing Denmark/Norway modelling."
+  },
+  "sources": [
+    {
+      "title": "Frederick II — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/biog147716",
+      "citation_text": "The British Museum identifies Frederick II as King of Denmark and Norway and gives his reign as 1559–1588.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

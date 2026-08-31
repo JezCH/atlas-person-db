@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "William III",
+    "display_name_ko": "윌리엄 3세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Ireland",
+    "display_name_ko": "아일랜드 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1689,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1702,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "William III held the Irish crown from 1689 until his death in 1702. ATLAS records Ireland as its own historical polity rather than folding all of William's crowns into an 'Anglo-Dutch Union'."
+  },
+  "sources": [
+    {
+      "title": "William III of England",
+      "canonical_url": "https://en.wikipedia.org/wiki/William_III_of_England",
+      "citation_text": "The biographical chronology records William as King of England, Scotland and Ireland from 1689 until 1702.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-31",
+      "document_title": "윌리엄 3세",
+      "url": "https://namu.wiki/w/%EC%9C%8C%EB%A6%AC%EC%97%84%203%EC%84%B8"
+    }
+  }
+}

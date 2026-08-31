@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Alexios II of Trebizond",
+    "display_name_ko": "알렉시오스 2세 메가스 콤니노스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Empire of Trebizond",
+    "display_name_ko": "트라페준타 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1297,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1330,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Alexios II Megas Komnenos ruled the Empire of Trebizond from 1297 to 1330, a period associated with major prosperity in the empire."
+  },
+  "sources": [
+    {
+      "title": "Trebizond, Empire of",
+      "canonical_url": "https://www.encyclopedia.com/reference/encyclopedias-almanacs-transcripts-and-maps/trebizond-empire",
+      "citation_text": "The Columbia Encyclopedia entry identifies Alexius II as ruler of Trebizond from 1297 to 1330.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
