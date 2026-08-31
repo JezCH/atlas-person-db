@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Karl Renner",
+    "display_name_ko": "카를 레너",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Austria",
+    "display_name_ko": "오스트리아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Federal President",
+    "role_display_name_ko": "연방대통령",
+    "start_year": 1945,
+    "start_month": 12,
+    "start_day": 20,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1950,
+    "end_month": 12,
+    "end_day": 31,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Karl Renner was elected Federal President on 20 December 1945 and remained in office until his death on 31 December 1950."
+  },
+  "sources": [
+    {
+      "title": "Bisherige Amtsinhaber — Karl Renner",
+      "canonical_url": "https://www.bundespraesident.at/aktuelles/detail/bisherige-amtsinhaber",
+      "citation_text": "The Austrian Federal President's official history lists Karl Renner as Federal President from 1945 to 1950.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

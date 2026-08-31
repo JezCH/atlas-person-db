@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Mago I of Carthage",
+    "display_name_ko": "마고 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Carthage",
+    "display_name_ko": "카르타고",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Ruler",
+    "role_display_name_ko": "통치자",
+    "start_year": -550,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -530,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Mago I is conventionally placed as a leading Carthaginian ruler around 550–530 BCE. Early Carthaginian constitutional titles are not securely equivalent to a later hereditary kingship, so ATLAS uses the neutral role 'Ruler' and approximate boundaries."
+  },
+  "sources": [
+    {
+      "title": "Mago I of Carthage",
+      "canonical_url": "https://en.wikipedia.org/wiki/Mago_I_of_Carthage",
+      "citation_text": "The conventional chronology places Mago I's rule in Carthage around 550–530 BCE; the exact constitutional character of the office is debated.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

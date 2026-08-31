@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Somerled",
+    "display_name_ko": "소머레드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of the Isles",
+    "display_name_ko": "군도 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1158,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1164,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Somerled emerged as the dominant ruler of the Isles in the mid-12th century. ATLAS uses c.1158 as an approximate beginning of his kingship and 1164, the year of his death, as the end; this does not imply a precisely attested coronation in 1158."
+  },
+  "sources": [
+    {
+      "title": "Somerled",
+      "canonical_url": "https://en.wikipedia.org/wiki/Somerled",
+      "citation_text": "The biographical chronology describes Somerled as King of the Isles, with a reign conventionally dated about 1158 to his death in 1164.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
