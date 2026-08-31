@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:abdulaziz-ibn-saud:kingdom-of-hejaz:king:1926-1927:v1",
+  "person": {
+    "canonical_name_en": "Abdulaziz Ibn Saud",
+    "display_name_ko": "압둘아지즈 이븐 사우드"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Hejaz",
+    "display_name_ko": "히자즈 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1926,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1927,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Abdulaziz was proclaimed King of the Hejaz in January 1926 while simultaneously remaining Sultan of Nejd and its Dependencies. Contemporary records explicitly state that Hejaz administration was to remain separate from Nejd. In 1927 Nejd was elevated to a kingdom and his dual titles were reorganized under the composite Kingdom of Hejaz and Nejd. ATLAS therefore records the 1926-1927 Hejaz kingship as a distinct Activity between the conquest of Hejaz and the 1927 composite-monarchy transition."
+  },
+  "sources": [
+    {
+      "title": "List of Titles of King Abdulaziz — Saudipedia",
+      "canonical_url": "https://saudipedia.com/en/list-of-titles-of-king-abdulaziz",
+      "citation_text": "Saudipedia states that Abdulaziz became King of the Hejaz and Sultan of Najd and its Dependencies in 1926, then King of the Hejaz, Najd and its Dependencies in 1927.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "File 87/1926 Pt 1 'Arabia: Bin Saud; Title; Recognition as King of the Hedjaz' — Qatar Digital Library",
+      "canonical_url": "https://qdl.qa/en/archive/81055/vdc_100079351205.0x000067",
+      "citation_text": "A January 1926 British India Office record reports Ibn Saud's election as King of the Hejaz, his title as King of the Hejaz and Sultan of Nejd and its Dependencies, and his declaration that Hejaz administration would remain separate from Nejd.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
