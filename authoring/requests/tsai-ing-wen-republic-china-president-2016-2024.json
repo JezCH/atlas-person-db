@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Tsai Ing-wen",
+    "display_name_ko": "차이잉원",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of China",
+    "display_name_ko": "중화민국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "총통",
+    "start_year": 2016,
+    "start_month": 5,
+    "start_day": 20,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2024,
+    "end_month": 5,
+    "end_day": 20,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tsai Ing-wen served two consecutive presidential terms from 20 May 2016 to 20 May 2024. ATLAS uses the constitutional polity Republic of China rather than the informal shorthand 'Taiwan'."
+  },
+  "sources": [
+    {
+      "title": "Tsai Ing-wen (14th–15th terms) — Office of the President, Republic of China (Taiwan)",
+      "canonical_url": "https://english.president.gov.tw/Page/646",
+      "citation_text": "The Presidential Office gives Tsai Ing-wen's term in office as 20 May 2016 to 20 May 2024.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

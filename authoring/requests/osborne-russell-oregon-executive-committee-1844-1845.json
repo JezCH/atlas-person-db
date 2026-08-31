@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Osborne Russell",
+    "display_name_ko": "오즈번 러셀",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Provisional Government of Oregon",
+    "display_name_ko": "오리건 임시정부",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Executive Committee member",
+    "role_display_name_ko": "집행위원",
+    "start_year": 1844,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1845,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Russell was one of the three members of the second Executive Committee, the collective executive of the Provisional Government of Oregon. Sources differ on the exact handover date in 1845, so ATLAS preserves year granularity rather than inventing a day-level boundary."
+  },
+  "sources": [
+    {
+      "title": "Petitions to Congress, 1838–1845 — Oregon Encyclopedia",
+      "canonical_url": "https://www.oregonencyclopedia.org/articles/petitions-to-congress-1838-1843/",
+      "citation_text": "The Oregon Encyclopedia identifies Osborne Russell as a member of the Provisional Government's executive branch in 1845 and signer of the June 1845 petition to Congress.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

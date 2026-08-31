@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Joseph Jenkins Roberts",
+    "display_name_ko": "조지프 젱킨스 로버츠",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Liberia",
+    "display_name_ko": "라이베리아 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1872,
+    "start_month": 1,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1876,
+    "end_month": 1,
+    "end_day": 3,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Roberts returned to the presidency after the 1871 political crisis and served again from 1 January 1872 to 3 January 1876."
+  },
+  "sources": [
+    {
+      "title": "Joseph Jenkins Roberts (1809–1876) — Library of Virginia",
+      "canonical_url": "https://www.lva.virginia.gov/collections/educator-resources/online-classroom/stc/people/joseph-jenkins-roberts-%281809-1876%29",
+      "citation_text": "The Library of Virginia records Roberts as Liberia's first Black governor before independence and as president twice, 1848–1856 and 1872–1876.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

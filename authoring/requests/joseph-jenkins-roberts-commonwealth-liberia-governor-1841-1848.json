@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Joseph Jenkins Roberts",
+    "display_name_ko": "조지프 젱킨스 로버츠",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Commonwealth of Liberia",
+    "display_name_ko": "라이베리아 코먼웰스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Governor",
+    "role_display_name_ko": "총독",
+    "start_year": 1841,
+    "start_month": 9,
+    "start_day": 3,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1848,
+    "end_month": 1,
+    "end_day": 3,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Roberts succeeded Thomas Buchanan as governor in 1841 and governed the pre-independence Commonwealth of Liberia until the presidential office of the independent republic began on 3 January 1848."
+  },
+  "sources": [
+    {
+      "title": "Joseph Jenkins Roberts (1809–1876) — Library of Virginia",
+      "canonical_url": "https://www.lva.virginia.gov/collections/educator-resources/online-classroom/stc/people/joseph-jenkins-roberts-%281809-1876%29",
+      "citation_text": "The Library of Virginia records Roberts as Liberia's first Black governor before independence and as president twice, 1848–1856 and 1872–1876.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

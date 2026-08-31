@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Nobusuke Kishi",
+    "display_name_ko": "기시 노부스케",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Manchukuo",
+    "display_name_ko": "만주국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Senior industrial-economic administrator",
+    "role_display_name_ko": "산업·경제 고위 관료",
+    "start_year": 1936,
+    "start_month": 10,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1939,
+    "end_month": 10,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kishi was not the ruler of Manchukuo. He served successively as General Manager of the Department of Business, Deputy Manager of the Department of Industry, and Deputy Director of the General Affairs Agency, becoming a central architect of Manchukuo's planned industrial economy. ATLAS therefore uses serves rather than governs or rules."
+  },
+  "sources": [
+    {
+      "title": "Kishi Nobusuke — Japan Center for Asian Historical Records",
+      "canonical_url": "https://www.jacar.archives.go.jp/aj/meta/term-en/00000072",
+      "citation_text": "JACAR records Kishi's Manchukuo appointments from October 1936 through October 1939, followed later by his service as Prime Minister of Japan from February 1957 to July 1960.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

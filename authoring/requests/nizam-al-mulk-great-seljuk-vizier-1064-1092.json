@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Nizam al-Mulk",
+    "display_name_ko": "니잠 알물크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Great Seljuk Empire",
+    "display_name_ko": "대셀주크 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Vizier",
+    "role_display_name_ko": "재상",
+    "start_year": 1064,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1092,
+    "end_month": 10,
+    "end_day": 14,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Nizam al-Mulk became vizier under Alp Arslan after the elimination of his predecessor al-Kunduri in 1064 and continued as the dominant vizier under Malik-Shah. He was not a Seljuk sultan; ATLAS therefore uses serves rather than rules. His service ended with his assassination on 14 October 1092."
+  },
+  "sources": [
+    {
+      "title": "Neẓām-al-Molk — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/nezam-al-molk/",
+      "citation_text": "Encyclopaedia Iranica describes Nizam al-Mulk's rise to the Seljuk vizierate after al-Kunduri's death in 1064 and his long service under Alp Arslan and Malik-Shah.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Malekšāh — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/maleksah/",
+      "citation_text": "Encyclopaedia Iranica gives Nizam al-Mulk's assassination date as 14 October 1092.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
