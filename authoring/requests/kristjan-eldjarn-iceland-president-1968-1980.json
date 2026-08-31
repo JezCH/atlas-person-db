@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Kristján Eldjárn",
+    "display_name_ko": "크리스티안 엘디아른",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Iceland",
+    "display_name_ko": "아이슬란드",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1968,
+    "start_month": 8,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1980,
+    "end_month": 7,
+    "end_day": 31,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kristján Eldjárn took office as President of Iceland on 1 August 1968. He was reelected unopposed in 1972 and 1976 and completed his final four-year term on 31 July 1980, with Vigdís Finnbogadóttir succeeding on 1 August."
+  },
+  "sources": [
+    {
+      "title": "Fylgiskjöl með skýrslu vinnuhóps um forsetakosningar — Alþingi",
+      "canonical_url": "https://www.althingi.is/media/kosningalog/Fylgiskjol_med_skyrslu_vinnuhops_2016.pdf",
+      "citation_text": "The Icelandic Parliament's election-history appendix states that Kristján Eldjárn was elected for the term 1 August 1968–31 July 1972 and was reelected unopposed in 1972 and 1976.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Minning Kristján Eldjárns fyrrv. forseta Íslands — Alþingi",
+      "canonical_url": "https://www.althingi.is/altext/105/r_txt/0003.txt",
+      "citation_text": "Alþingi records that Kristján Eldjárn assumed the presidency on 1 August 1968 and held it for twelve years until 1 August 1980.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

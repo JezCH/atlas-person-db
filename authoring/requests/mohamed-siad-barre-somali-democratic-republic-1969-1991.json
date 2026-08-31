@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Mohamed Siad Barre",
+    "display_name_ko": "모하메드 시아드 바레",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Somali Democratic Republic",
+    "display_name_ko": "소말리아 민주 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1969,
+    "start_month": 10,
+    "start_day": 21,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1991,
+    "end_month": 1,
+    "end_day": 26,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Siad Barre seized power in the 21 October 1969 coup and led the renamed Somali Democratic Republic until his regime collapsed and he fled Mogadishu on 26 January 1991. During the early phase he was formally President/Chairman of the Supreme Revolutionary Council; the SRC was replaced by the party-state structure in 1976, but his head-of-state tenure was continuous, so ATLAS records one continuous presidential Activity."
+  },
+  "sources": [
+    {
+      "title": "Somalia (10/03) — U.S. Department of State",
+      "canonical_url": "https://2009-2017.state.gov/outofdate/bgn/somalia/36384.htm",
+      "citation_text": "The U.S. Department of State states that the army and police led by Siad Barre seized power on 21 October 1969 and that the Supreme Revolutionary Council headed by him exercised executive and legislative power.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Information on Central Committee members during Barre's regime — Immigration and Refugee Board of Canada",
+      "canonical_url": "https://www.ecoi.net/en/document/1248719.html",
+      "citation_text": "The Canadian IRB country-information response states that Siad Barre took power in October 1969 and led Somalia until January 1991.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

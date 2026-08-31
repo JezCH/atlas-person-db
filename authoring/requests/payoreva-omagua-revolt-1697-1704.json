@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Payoreva",
+    "display_name_ko": "파요레바",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Omagua (Cambeba)",
+    "display_name_ko": "오마과(캄베바)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Cacique and revolt leader",
+    "role_display_name_ko": "카시케·저항 지도자",
+    "start_year": 1697,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1704,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "uncertain",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Payoreva is documented as an Omagua cacique who led resistance against Jesuit mission control beginning in 1697 and again in 1701. After escaping Spanish imprisonment in 1702 he persuaded many Omagua to abandon San Joaquín; by 1704 he disappears from the record toward Pará, possibly through Portuguese enslavement. ATLAS therefore uses active_in rather than claiming that he ruled all Omagua communities."
+  },
+  "sources": [
+    {
+      "title": "A Linguistic Analysis of Old Omagua Ecclesiastical Texts — Michael & O'Hagan",
+      "canonical_url": "https://www.cabeceras.org/ldm_publications/michael%26ohagan_omagua_eccl_texts.pdf",
+      "citation_text": "The historical section identifies Payoreva as the Omagua cacique leading open conflict with Jesuit missions from 1697 and again in 1701, with his return after escape in 1702.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Omaguas, cataclismo amazónico — Ferran Cabrero",
+      "canonical_url": "https://ddd.uab.cat/pub/tesis/2014/hdl_10803_284977/fcm1de1.pdf",
+      "citation_text": "The study describes Payoreva as chief of the Omagua of San Joaquín, his rebellions in 1697 and 1701, his 1702 escape and departure, and his disappearance toward Pará in 1704.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

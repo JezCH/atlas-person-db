@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Tenenisk",
+    "display_name_ko": "테네니스크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Haush (Manek'enk)",
+    "display_name_ko": "하우시(마네켄크)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Shaman",
+    "role_display_name_ko": "샤먼",
+    "start_year": 1899,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1899,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Tenenisk (also Tininisk/Tenenesk) was a documented Fuegian shaman of mixed Haush and Selk'nam background, associated with the Punta Azara clan. He is not securely attested as a political chief of the Haush. ATLAS therefore records only a representative c.1899 attestation point as a shaman active in the Haush community rather than fabricating a reign or treating the Haush as 'under' him."
+  },
+  "sources": [
+    {
+      "title": "Uttermost Part of the Earth — E. Lucas Bridges",
+      "canonical_url": "https://books.google.com/books/about/Uttermost_Part_of_the_Earth.html?id=JK8ZAAAAYAAJ",
+      "citation_text": "Bridges' ethnographic memoir is a primary biographical source for Tininisk/Tenenisk among the Fuegian peoples.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Tenenisk — Haush shaman, historical photograph",
+      "canonical_url": "https://commons.wikimedia.org/wiki/File:Tenenisk_-_Haush_shaman.jpg",
+      "citation_text": "The historical photograph is dated approximately 1899 and identifies Tenenisk as a well-known shaman of mixed Haush and Selk'nam background.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
