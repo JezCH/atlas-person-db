@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:willem-ii:grand-duchy-of-luxembourg:grand-duke:1840-1849:v1",
+  "person": {
+    "canonical_name_en": "Willem II",
+    "display_name_ko": "빌럼 2세"
+  },
+  "polity": {
+    "canonical_name_en": "Grand Duchy of Luxembourg",
+    "display_name_ko": "룩셈부르크 대공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Grand Duke",
+    "role_display_name_ko": "대공",
+    "start_year": 1840,
+    "start_month": 10,
+    "start_day": 7,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1849,
+    "end_month": 3,
+    "end_day": 17,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Willem II succeeded his father on 7 October 1840 not only as King of the Netherlands but also as Grand Duke of Luxembourg. Luxembourg remained a distinct Grand Duchy in personal union with the Netherlands until the end of his reign on 17 March 1849. ATLAS therefore records the Luxembourg grand-ducal crown as a separate concurrent sovereign Activity."
+  },
+  "sources": [
+    {
+      "title": "King Willem II (1792-1849) — Royal House of the Netherlands",
+      "canonical_url": "https://www.royal-house.nl/topics/history/kings-and-queens/king-willem-ii-1792-1849",
+      "citation_text": "The Royal House of the Netherlands states that Willem II was King of the Netherlands, Grand Duke of Luxembourg and Duke of Limburg from 1840 to 1849.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "The history of the Nassau dynasty — Cour grand-ducale",
+      "canonical_url": "https://monarchie.lu/en/luxembourg-monarchy/history-nassau-dynasty",
+      "citation_text": "The Luxembourg Grand Ducal Court states that William II succeeded his father on 7 October 1840 and remained Grand Duke until his death on 17 March 1849.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "빌럼 2세",
+      "url": "https://namu.wiki/w/%EB%B9%8C%EB%9F%BC%202%EC%84%B8"
+    }
+  }
+}
