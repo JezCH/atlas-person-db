@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sayyida-al-hurra:tetouan:co-regent:c1510-1519:v1",
+  "person": {
+    "canonical_name_en": "Sayyida al-Hurra",
+    "display_name_ko": "사이이다 알 후라"
+  },
+  "polity": {
+    "canonical_name_en": "Tetouan",
+    "display_name_ko": "테투안"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Co-regent",
+    "role_display_name_ko": "공동 통치자",
+    "start_year": 1510,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1519,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sayyida al-Hurra entered the political government of Tétouan after her marriage to Muhammad al-Manzari around 1510, becoming his principal confidant, deputy and eventually informal co-governor. Modern scholarship treats her pre-1519 authority as a co-ruling phase before she became the official sole governor after al-Manzari's death in 1519. ATLAS therefore records c.1510-1519 as a separate Co-regent Activity and keeps the existing 1519-1542 sole-governorship Activity distinct."
+  },
+  "sources": [
+    {
+      "title": "Sayyida al-Ḥurra: An Early Modern Decolonial Muslim Exemplar — Religions",
+      "canonical_url": "https://www.mdpi.com/2077-1444/16/11/1362",
+      "citation_text": "The peer-reviewed study states that Sayyida al-Hurra married the governor of Tétouan in 1510, became his main confidant, advisor and eventually informal co-governor, and officially became governor after his death in 1519.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Gender and Authority: The Particularities of Female Rule in the Premodern Mediterranean — Arizona State University",
+      "canonical_url": "https://asu.pressbooks.pub/gender-in-the-premodern-mediterranean/chapter/chapter-7/",
+      "citation_text": "The academic teaching text describes Sayyida al-Hurra as wielding authority in the Tétouan region from about 1510, initially co-ruling with her first husband and later governing alone.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}
