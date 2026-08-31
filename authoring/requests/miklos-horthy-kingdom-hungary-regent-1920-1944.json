@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Miklós Horthy",
+    "display_name_ko": "호르티 미클로시",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Hungary",
+    "display_name_ko": "헝가리 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Regent",
+    "role_display_name_ko": "섭정",
+    "start_year": 1920,
+    "start_month": 3,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1944,
+    "end_month": 10,
+    "end_day": 16,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Hungarian National Assembly elected Miklós Horthy Regent on 1 March 1920 in the restored Kingdom of Hungary. His de facto regency ended on 16 October 1944, when German pressure and the Arrow Cross takeover forced the transfer of power. ATLAS uses Kingdom of Hungary rather than a generic Hungary label because the legal state form in the Horthy era was a monarchy without a reigning king."
+  },
+  "sources": [
+    {
+      "title": "Horthy Miklós kormányzóvá választása — Magyar Nemzeti Levéltár",
+      "canonical_url": "https://mnl.gov.hu/mnl/ol/hirek/horthy_miklos_kormanyzova_valasztasa",
+      "citation_text": "The Hungarian National Archives records Horthy's election as Regent on 1 March 1920.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Tényleg lemondott Horthy 1944-ben? — Museum.hu",
+      "canonical_url": "https://www.museum.hu/hir/11196/Tenyleg_lemondott_Horthy_1944-ben",
+      "citation_text": "Museum.hu summarizes archival research on the events of 16 October 1944, when Horthy, under German custody and pressure, signed the resignation and appointment documents.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-31",
+      "document_title": "호르티 미클로시",
+      "url": "https://namu.wiki/w/%ED%98%B8%EB%A5%B4%ED%8B%B0%20%EB%AF%B8%ED%81%B4%EB%A1%9C%EC%8B%9C"
+    }
+  }
+}
