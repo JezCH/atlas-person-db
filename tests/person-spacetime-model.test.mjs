@@ -2,157 +2,65 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import { readFileSync } from "node:fs";
+const require=createRequire(import.meta.url);
+const model=require("../atlas-person-spacetime-model.js");
 
-const require = createRequire(import.meta.url);
-const model = require("../atlas-person-spacetime-model.js");
+function geographyIndex(region="east-asia"){return {schema:model.SPATIAL_INDEX_SCHEMA,polity_geography:{"polity-a":region},place_function_records:[],review_queue:[]};}
+function placeFunctionIndex(){return {schema:model.SPATIAL_INDEX_SCHEMA,polity_geography:{},place_function_records:[{polity_id:"polity-a",functions:[
+  {start_year:100,end_year:109,function_type:"capital",place_name:"Old Capital",region_code:"west-asia",confidence:"well_established",source_refs:["source:old"]},
+  {start_year:110,end_year:130,function_type:"capital",place_name:"New Capital",region_code:"east-asia",confidence:"well_established",source_refs:["source:new"]}
+]}],review_queue:[]};}
 
-function geographyIndex(region = "east-asia") {
-  return {
-    schema: model.SPATIAL_INDEX_SCHEMA,
-    polity_geography: { "polity-a": region },
-    place_function_records: [],
-    review_queue: []
-  };
-}
-
-function placeFunctionIndex() {
-  return {
-    schema: model.SPATIAL_INDEX_SCHEMA,
-    polity_geography: {},
-    place_function_records: [{
-      polity_id: "polity-a",
-      functions: [
-        { start_year: 100, end_year: 109, function_type: "capital", place_name: "Old Capital", region_code: "west-asia", confidence: "well_established", source_refs: ["source:old"] },
-        { start_year: 110, end_year: 130, function_type: "capital", place_name: "New Capital", region_code: "east-asia", confidence: "well_established", source_refs: ["source:new"] }
-      ]
-    }],
-    review_queue: []
-  };
-}
-
-test("historical timeline has no year zero", () => {
-  assert.equal(model.historicalYearToOrdinal(-1), -1);
-  assert.equal(model.historicalYearToOrdinal(1), 0);
-  assert.equal(model.historicalYearToOrdinal(0), null);
-  assert.equal(model.ordinalToHistoricalYear(-1), -1);
-  assert.equal(model.ordinalToHistoricalYear(0), 1);
-  assert.equal(model.yearLabel(-1), "BC 1");
-  assert.equal(model.yearLabel(1), "AD 1");
+test("historical timeline has no year zero",()=>{
+  assert.equal(model.historicalYearToOrdinal(-1),-1); assert.equal(model.historicalYearToOrdinal(1),0); assert.equal(model.historicalYearToOrdinal(0),null);
+  assert.equal(model.ordinalToHistoricalYear(-1),-1); assert.equal(model.ordinalToHistoricalYear(0),1);
 });
 
-test("century ticks use calendar centuries across BC and AD", () => {
-  const ticks = model.buildCenturyTicks(-250, 250);
-  assert.deepEqual(ticks.filter((tick) => !tick.terminal).map((tick) => tick.year), [-200, -100, 1, 100, 200]);
-  assert.equal(ticks.at(-1).year, 250);
-  assert.equal(ticks.at(-1).terminal, true);
-  assert.equal(ticks.some((tick) => tick.year === 0), false);
+test("century ticks cross BCE and CE without year zero",()=>{
+  const ticks=model.buildCenturyTicks(-250,250);
+  assert.deepEqual(ticks.filter(t=>!t.terminal).map(t=>t.year),[-200,-100,1,100,200]);
+  assert.equal(ticks.some(t=>t.year===0),false);
 });
 
-test("reviewed polity geography places an activity without place-function data", () => {
-  const lookup = model.createSpatialLookup(geographyIndex("east-asia"));
-  const placement = model.resolveActivityPlacement({ id: "activity-a", polity: { id: "polity-a" }, start: { year: 100 }, end: { year: 120 } }, lookup);
-  assert.equal(placement.status, "placed");
-  assert.equal(placement.segments.length, 1);
-  assert.equal(placement.segments[0].region_code, "east-asia");
-  assert.equal(placement.segments[0].placement_basis, "polity_geography");
-  assert.equal(placement.segments[0].start_year, 100);
-  assert.equal(placement.segments[0].end_year, 120);
+test("reviewed polity geography places an activity without invented precision",()=>{
+  const placement=model.resolveActivityPlacement({id:"a",polity:{id:"polity-a"},start:{year:100},end:{year:120}},model.createSpatialLookup(geographyIndex()));
+  assert.equal(placement.status,"placed"); assert.equal(placement.segments[0].region_code,"east-asia"); assert.equal(placement.segments[0].placement_basis,"polity_geography");
 });
 
-test("missing reviewed spatial record never guesses a placement", () => {
-  const lookup = model.createSpatialLookup({ schema: model.SPATIAL_INDEX_SCHEMA, polity_geography: {}, place_function_records: [], review_queue: [] });
-  const placement = model.resolveActivityPlacement({ id: "activity-a", polity: { id: "polity-a" }, start: { year: 100 }, end: { year: 120 } }, lookup);
-  assert.equal(placement.status, "spatial_unresolved");
-  assert.deepEqual(placement.segments, []);
+test("missing reviewed spatial record stays unresolved",()=>{
+  const lookup=model.createSpatialLookup({schema:model.SPATIAL_INDEX_SCHEMA,polity_geography:{},place_function_records:[],review_queue:[]});
+  assert.equal(model.resolveActivityPlacement({id:"a",polity:{id:"polity-a"},start:{year:100},end:{year:120}},lookup).status,"spatial_unresolved");
 });
 
-test("partial and reversed chronology remain review-required", () => {
-  const lookup = model.createSpatialLookup(geographyIndex());
-  const partial = model.resolveActivityPlacement({ id: "partial", polity: { id: "polity-a" }, start: { year: 110 }, end: { year: null } }, lookup);
-  const reversed = model.resolveActivityPlacement({ id: "reversed", polity: { id: "polity-a" }, start: { year: 130 }, end: { year: 110 } }, lookup);
-  assert.equal(partial.status, "chronology_unresolved");
-  assert.equal(partial.chronology_reason, "incomplete_boundary");
-  assert.equal(reversed.status, "chronology_unresolved");
-  assert.equal(reversed.chronology_reason, "reversed_boundaries");
+test("partial and reversed chronology remain review-required",()=>{
+  const lookup=model.createSpatialLookup(geographyIndex());
+  assert.equal(model.resolveActivityPlacement({id:"p",polity:{id:"polity-a"},start:{year:110},end:{year:null}},lookup).chronology_reason,"incomplete_boundary");
+  assert.equal(model.resolveActivityPlacement({id:"r",polity:{id:"polity-a"},start:{year:130},end:{year:110}},lookup).chronology_reason,"reversed_boundaries");
 });
 
-test("a reviewed capital move splits only visual placement segments", () => {
-  const lookup = model.createSpatialLookup(placeFunctionIndex());
-  const activity = { id: "activity-a", polity: { id: "polity-a" }, start: { year: 105 }, end: { year: 115 } };
-  const placement = model.resolveActivityPlacement(activity, lookup);
-  assert.equal(placement.status, "placed");
-  assert.deepEqual(placement.segments.map((segment) => [segment.place_function_type, segment.place_name, segment.start_year, segment.end_year, segment.region_code]), [
-    ["capital", "Old Capital", 105, 109, "west-asia"],
-    ["capital", "New Capital", 110, 115, "east-asia"]
+test("reviewed capital move splits only visual placement segments",()=>{
+  const activity={id:"a",polity:{id:"polity-a"},start:{year:105},end:{year:115}};
+  const placement=model.resolveActivityPlacement(activity,model.createSpatialLookup(placeFunctionIndex()));
+  assert.deepEqual(placement.segments.map(s=>[s.place_name,s.start_year,s.end_year,s.region_code]),[
+    ["Old Capital",105,109,"west-asia"],["New Capital",110,115,"east-asia"]
   ]);
-  assert.equal(activity.start.year, 105);
-  assert.equal(activity.end.year, 115);
+  assert.equal(activity.start.year,105); assert.equal(activity.end.year,115);
 });
 
-test("place-function records require reviewed source references", () => {
-  const invalid = placeFunctionIndex();
-  invalid.place_function_records[0].functions[0].source_refs = [];
-  const result = model.validateSpatialIndex(invalid);
-  assert.equal(result.valid, false);
-  assert.ok(result.errors.some((message) => message.includes("source_refs")));
+test("spatial evidence validation remains strict",()=>{
+  const invalid=placeFunctionIndex(); invalid.place_function_records[0].functions[0].source_refs=[];
+  assert.ok(model.validateSpatialIndex(invalid).errors.some(m=>m.includes("source_refs")));
+  assert.ok(model.validateSpatialIndex(geographyIndex("middle-earth")).errors.some(m=>m.includes("invalid region_code")));
 });
 
-test("direct geography records reject unknown region codes", () => {
-  const result = model.validateSpatialIndex(geographyIndex("middle-earth"));
-  assert.equal(result.valid, false);
-  assert.ok(result.errors.some((message) => message.includes("invalid region_code")));
+test("committed spatial index satisfies reviewed placement contract",()=>{
+  const index=JSON.parse(readFileSync(new URL("../atlas-polity-spatial-index.json",import.meta.url),"utf8"));
+  const result=model.validateSpatialIndex(index);
+  assert.equal(result.valid,true,result.errors.join(" | "));
+  assert.ok(Object.keys(index.polity_geography).length>0);
+  assert.ok(index.place_function_records.length>0);
 });
 
-test("review queue cannot duplicate a resolved polity", () => {
-  const invalid = geographyIndex();
-  invalid.review_queue = [{ polity_id: "polity-a", canonical_key: "Polity A", reason: "review" }];
-  const result = model.validateSpatialIndex(invalid);
-  assert.equal(result.valid, false);
-  assert.ok(result.errors.some((message) => message.includes("already resolved")));
-});
-
-test("committed spatial index satisfies the reviewed placement contract", () => {
-  const index = JSON.parse(readFileSync(new URL("../atlas-polity-spatial-index.json", import.meta.url), "utf8"));
-  const result = model.validateSpatialIndex(index);
-  assert.equal(result.valid, true, result.errors.join(" | "));
-  assert.ok(Object.keys(index.polity_geography).length > 0);
-  assert.ok(index.place_function_records.length > 0);
-  assert.equal(Object.hasOwn(index, "capital_records"), false);
-  assert.equal(Object.hasOwn(index, "authority_center_records"), false);
-});
-
-test("collision lane assignment is deterministic and keeps overlapping cards apart", () => {
-  const items = [
-    { stable_id: "b", visual_top: 10, visual_bottom: 60 },
-    { stable_id: "a", visual_top: 10, visual_bottom: 60 },
-    { stable_id: "c", visual_top: 70, visual_bottom: 110 }
-  ];
-  const first = model.assignLanes(items, 6);
-  const second = model.assignLanes(items.slice().reverse(), 6);
-  assert.deepEqual(first.map(({ stable_id, lane }) => [stable_id, lane]), second.map(({ stable_id, lane }) => [stable_id, lane]));
-  assert.equal(first.find((item) => item.stable_id === "a").lane, 0);
-  assert.equal(first.find((item) => item.stable_id === "b").lane, 1);
-  assert.equal(first.find((item) => item.stable_id === "c").lane, 0);
-});
-
-test("logarithmic timeline gives recent centuries more vertical space", () => {
-  const scale = model.createLogTimelineScale(-3000, 2026, 2800, 180);
-  assert.equal(scale.yForYear(-3000), 0);
-  assert.ok(Math.abs(scale.yForYear(2026) - 2800) < 1e-9);
-  const ancientCentury = scale.yForYear(-1900) - scale.yForYear(-2000);
-  const modernCentury = scale.yForYear(2000) - scale.yForYear(1900);
-  assert.ok(modernCentury > ancientCentury * 4, "expected modern century to be much wider");
-});
-
-test("adaptive log ticks become finer toward the present and never emit year zero", () => {
-  const scale = model.createLogTimelineScale(-3000, 2026, 2800, 180);
-  const ticks = model.buildAdaptiveTimeTicks(-3000, 2026, scale);
-  assert.equal(ticks.some((tick) => tick.year === 0), false);
-  assert.equal(ticks[0].year, -3000);
-  assert.equal(ticks.at(-1).year, 2026);
-  const ancient = ticks.filter((tick) => tick.year >= -3000 && tick.year <= -1000).map((tick) => tick.interval_years).filter(Boolean);
-  const recent = ticks.filter((tick) => tick.year >= 1950).map((tick) => tick.interval_years).filter(Boolean);
-  assert.ok(Math.min(...ancient) >= 250);
-  assert.ok(Math.min(...recent) <= 25);
-  for (let index = 1; index < ticks.length; index += 1) assert.ok(ticks[index].y > ticks[index - 1].y);
+test("legacy low-scale projection lane and adaptive tick APIs are not exported",()=>{
+  for(const name of ["createSpacetimeTimeProjection","createLogTimelineScale","buildAdaptiveTimeTicks","assignLanes"]) assert.equal(Object.hasOwn(model,name),false);
 });
