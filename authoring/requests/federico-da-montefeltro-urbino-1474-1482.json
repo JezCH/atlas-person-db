@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Federico da Montefeltro",
+    "display_name_ko": "페데리코 다 몬테펠트로",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Urbino",
+    "display_name_ko": "우르비노 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Duke",
+    "role_display_name_ko": "공작",
+    "start_year": 1474,
+    "start_month": 8,
+    "start_day": 21,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 1482,
+    "end_month": 9,
+    "end_day": 10,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Federico da Montefeltro had ruled Urbino since 1444, but Pope Sixtus IV created him Duke of Urbino on 21 August 1474. ATLAS records only the ducal phase requested here, ending with Federico's death at Ferrara on 10 September 1482."
+  },
+  "sources": [
+    {
+      "title": "Federico da Montefeltro, duca di Urbino — Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/federico-da-montefeltro-duca-di-urbino_%28Enciclopedia-Italiana%29/",
+      "citation_text": "Treccani states that Sixtus IV created Federico Duke of Urbino on 21 August 1474.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Urbino negli anni di Federico da Montefeltro — Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/urbino-negli-anni-di-federico-da-montefeltro_%28Storia-della-civilta-europea-a-cura-di-Umberto-Eco%29/",
+      "citation_text": "Treccani records Federico's death at Ferrara on 10 September 1482 and his receipt of the ducal title in 1474.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Kakuei Tanaka",
+    "display_name_ko": "다나카 가쿠에이",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "내각총리대신",
+    "start_year": 1972,
+    "start_month": 7,
+    "start_day": 7,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1974,
+    "end_month": 12,
+    "end_day": 9,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kakuei Tanaka served continuously as Prime Minister of Japan from 7 July 1972 to 9 December 1974. His first and second cabinets are not split into separate ATLAS Activities because there was no interruption in his tenure as prime minister."
+  },
+  "sources": [
+    {
+      "title": "64th TANAKA Kakuei — Prime Minister of Japan and His Cabinet",
+      "canonical_url": "https://japan.kantei.go.jp/past_cabinet/064.html",
+      "citation_text": "The official Prime Minister's Office records Tanaka's first premiership beginning on 7 July 1972.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "65th TANAKA Kakuei — Prime Minister of Japan and His Cabinet",
+      "canonical_url": "https://japan.kantei.go.jp/past_cabinet/065.html",
+      "citation_text": "The official Prime Minister's Office records Tanaka's second cabinet ending on 9 December 1974.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-31",
+      "document_title": "다나카 가쿠에이",
+      "url": "https://namu.wiki/w/%EB%8B%A4%EB%82%98%EC%B9%B4%20%EA%B0%80%EC%BF%A0%EC%97%90%EC%9D%B4"
+    }
+  }
+}
