@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Roald Amundsen",
+    "display_name_ko": "로알 아문센",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Norway",
+    "display_name_ko": "노르웨이",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Antarctic explorer and expedition leader",
+    "role_display_name_ko": "남극 탐험가·원정대장",
+    "start_year": 1911,
+    "start_month": 12,
+    "start_day": 14,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1911,
+    "end_month": 12,
+    "end_day": 14,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Antarctica is a geographic continent, not a polity, so ATLAS does not create 'Antarctica' as Amundsen's political entity. Instead, the Norwegian explorer is associated with Norway at the exact representative event point when his expedition became the first to reach the South Pole on 14 December 1911."
+  },
+  "sources": [
+    {
+      "title": "The 1911 expedition to the South Pole — Norwegian Polar Institute / Nansen-Amundsen 2011",
+      "canonical_url": "https://nettarkiv.npolar.no/www.nansenamundsen.no/en/galleries/amundsen/south-pole-1911/",
+      "citation_text": "The Norwegian Polar Institute's historical project records that Amundsen reached the South Pole on 14 December 1911.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Sydpolbrevet fra Roald Amundsen til Kong Haakon 1911 — Kulturdirektoratet",
+      "canonical_url": "https://www.kulturdirektoratet.no/samlinger/norges-dokumentarv/sydpolbrevet-fra-roald-amundsen-til-kong-haakon-1911",
+      "citation_text": "Norway's Directorate for Cultural Affairs describes Amundsen's South Pole letter as documenting the raising of the Norwegian flag at the South Pole in December 1911.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

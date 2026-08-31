@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Stephen Harper",
+    "display_name_ko": "스티븐 하퍼",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Canada",
+    "display_name_ko": "캐나다",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 2006,
+    "start_month": 2,
+    "start_day": 6,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2015,
+    "end_month": 11,
+    "end_day": 4,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Stephen Harper served continuously as Prime Minister of Canada from 6 February 2006 until the transfer of office to Justin Trudeau on 4 November 2015. House of Commons ministry tables sometimes list 3 November as the last full day of the 28th Ministry; the parliamentary roles record uses 4 November for the end of Harper's prime-ministerial role."
+  },
+  "sources": [
+    {
+      "title": "Roles — Right Hon. Stephen Harper — House of Commons of Canada",
+      "canonical_url": "https://www.ourcommons.ca/members/en/stephen-harper%281733%29/roles",
+      "citation_text": "The House of Commons records Harper's role as Prime Minister from 6 February 2006 to 4 November 2015.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Antônio Conselheiro",
+    "display_name_ko": "안토니우 콘셀례이루",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Belo Monte (Canudos)",
+    "display_name_ko": "벨루 몬치(카누두스)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Religious and community leader",
+    "role_display_name_ko": "종교·공동체 지도자",
+    "start_year": 1893,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1897,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Antônio Conselheiro and his followers settled at Canudos in Bahia in 1893 and developed the community known by them as Belo Monte. ATLAS uses the autonomous Belo Monte/Canudos community rather than the broad geographic term Sertão, which is a region rather than a polity or political community."
+  },
+  "sources": [
+    {
+      "title": "Casa de Antonio Conselheiro — Sobre",
+      "canonical_url": "https://casadeantonioconselheiro.cultura.ce.gov.br/sobre/",
+      "citation_text": "The Ceará cultural institution states that Conselheiro and his large following settled in Canudos in 1893, developing the community project of Belo Monte before its destruction in 1897.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
