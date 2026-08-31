@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ptolemy-i-soter:egypt:satrap:323-305-bce:v1",
+  "person": {
+    "canonical_name_en": "Ptolemy I Soter",
+    "display_name_ko": "프톨레마이오스 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Egypt",
+    "display_name_ko": "이집트"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Satrap",
+    "role_display_name_ko": "총독",
+    "start_year": -323,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -305,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After Alexander the Great's death in 323 BCE, Ptolemy son of Lagus established himself as satrap/governor of Egypt under the nominal Argead kings. He governed Egypt in that capacity until taking the royal title in 305 BCE. ATLAS records this pre-royal Egyptian government separately from his existing 305-282 BCE kingship of the Ptolemaic Kingdom."
+  },
+  "sources": [
+    {
+      "title": "Ptolemy(1), name of the Macedonian kings of Egypt — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/550492830",
+      "citation_text": "The Oxford Classical Dictionary states that after Alexander's death in 323 BCE Ptolemy established himself as satrap in Egypt and took the title of King in 305 BCE.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Egypt, Ptolemaic — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548206937",
+      "citation_text": "The Oxford Classical Dictionary describes Ptolemy as governor (satrap) of Egypt under the Argead kings before becoming king from 305/4 BCE.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-21",
+      "document_title": "프톨레마이오스 1세",
+      "url": "https://namu.wiki/w/%ED%94%84%ED%86%A8%EB%A0%88%EB%A7%88%EC%9D%B4%EC%98%A4%EC%8A%A4%201%EC%84%B8"
+    }
+  }
+}
