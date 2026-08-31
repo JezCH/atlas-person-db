@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:frederick-augustus-i-of-saxony:duchy-of-warsaw:duke:1807-1815:v1",
+  "person": {
+    "canonical_name_en": "Frederick Augustus I of Saxony",
+    "display_name_ko": "프리드리히 아우구스트 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Warsaw",
+    "display_name_ko": "바르샤바 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Duke",
+    "role_display_name_ko": "공작",
+    "start_year": 1807,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1815,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Constitution of the Duchy of Warsaw established a personal union with Saxony in 1807, and Frederick Augustus served as Duke of Warsaw until the duchy's dissolution in 1815. ATLAS records this Polish polity separately from his concurrent kingship of Saxony."
+  },
+  "sources": [
+    {
+      "title": "Fryderyk August — Archiwum Główne Akt Dawnych",
+      "canonical_url": "https://agad.gov.pl/?page_id=844",
+      "citation_text": "Poland's Central Archives of Historical Records states that Frederick Augustus ruled as Elector of Saxony in 1763-1806, King of Saxony in 1806-1827, and Duke of Warsaw in 1807-1815 under the personal union established by the Duchy's constitution.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "Ducat of the Duchy of Warsaw — National Museum in Wrocław",
+      "canonical_url": "https://muzeumcyfrowe.mnwr.pl/en/exhibit/ducat-of-the-duchy-of-warsaw",
+      "citation_text": "The National Museum in Wrocław identifies Frederick Augustus I as King of Saxony and Duke of Warsaw and the Duchy of Warsaw as existing from 1807 to 1815.",
+      "source_type": "museum_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  }
+}
