@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:abdulaziz-ibn-saud:sultanate-of-nejd:sultan:1921-1927:v1",
+  "person": {
+    "canonical_name_en": "Abdulaziz Ibn Saud",
+    "display_name_ko": "압둘아지즈 이븐 사우드"
+  },
+  "polity": {
+    "canonical_name_en": "Sultanate of Nejd",
+    "display_name_ko": "나지드 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1921,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1927,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Abdulaziz assumed the title Sultan of Nejd in 1921. After conquering the Hejaz he additionally became King of the Hejaz in 1926 while retaining the Nejd sultanate. In 1927 Nejd itself was elevated to a kingdom, ending the sultanic phase. ATLAS therefore records the Nejd sultanate as a distinct pre-royal Activity and preserves the 1926 dual-title transition in notes rather than inventing a separate one-year polity."
+  },
+  "sources": [
+    {
+      "title": "List of Titles of King Abdulaziz — Saudipedia",
+      "canonical_url": "https://saudipedia.com/en/list-of-titles-of-king-abdulaziz",
+      "citation_text": "Saudipedia lists Abdulaziz as Sultan of Nejd from 1921, King of the Hejaz and Sultan of Nejd and its Dependencies in 1926, and King of the Hejaz, Najd and its Dependencies in 1927.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "File 87/1926 Pt 1 'Arabia: Bin Saud; Title; Recognition as King of the Hedjaz' — Qatar Digital Library",
+      "canonical_url": "https://qdl.qa/en/archive/81055/vdc_100079351204.0x00002b",
+      "citation_text": "British India Office records preserve the 1927 decision converting the Sultanate of Nejd and its Dependencies into the Kingdom of Nejd and its Dependencies under Abdulaziz.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
