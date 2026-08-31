@@ -18,8 +18,8 @@ test('spacetime owns a bounded map-like viewport once the incremental time camer
 });
 
 test('authority navigation loads the current spacetime renderer without a stale cache key', () => {
-  assert.match(navScript, /atlas-person-spacetime-view\.js\?v=20260831-500-floor/);
-  assert.match(navScript, /atlas-person-spacetime-view\.css\?v=20260831-500-floor/);
+  assert.match(navScript, /atlas-person-spacetime-view\.js\?v=20260831-uniform-078/);
+  assert.match(navScript, /atlas-person-spacetime-view\.css\?v=20260831-uniform-078/);
   assert.match(indexHtml, /atlas-main-authority-nav\.js\?v=20260831-spacetime-500-floor/);
 });
 
