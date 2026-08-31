@@ -5,13 +5,13 @@
   if (root) root.ATLAS_PERSON_SPACETIME_LABEL_ENGINE = api;
 })(typeof globalThis !== "undefined" ? globalThis : this, () => {
   "use strict";
-  const DEFAULT_LABEL_HEIGHT = 22;
-  const DEFAULT_MIN_LABEL_WIDTH = 42;
-  const DEFAULT_MAX_LABEL_WIDTH = 180;
-  const DEFAULT_CHAR_WIDTH = 7.2;
-  const DEFAULT_HORIZONTAL_GAP = 6;
-  const DEFAULT_ANCHOR_GAP = 5;
-  const DEFAULT_SEARCH_STEP = 6;
+  const DEFAULT_LABEL_HEIGHT = 20;
+  const DEFAULT_MIN_LABEL_WIDTH = 38;
+  const DEFAULT_MAX_LABEL_WIDTH = 156;
+  const DEFAULT_CHAR_WIDTH = 6.8;
+  const DEFAULT_HORIZONTAL_GAP = 4;
+  const DEFAULT_ANCHOR_GAP = 4;
+  const DEFAULT_SEARCH_STEP = 4;
   const DEFAULT_MAX_HORIZONTAL_SHIFT = 320;
   const DEFAULT_CONNECTOR_THRESHOLD = 10;
   const EPSILON = 1e-9;
