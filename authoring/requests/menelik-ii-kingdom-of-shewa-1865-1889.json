@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:menelik-ii:kingdom-of-shewa:king:c1865-1889:v1",
+  "person": {
+    "canonical_name_en": "Menelik II",
+    "display_name_ko": "메넬리크 2세"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Shewa",
+    "display_name_ko": "셰와 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1865,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1889,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Menelik escaped Tewodros II's court in 1865, reclaimed Shewa and was proclaimed negus (king), building an independent regional power base before later becoming emperor of Ethiopia. Modern summaries vary by about a year in dating the initial proclamation, so ATLAS records the start as approximately 1865 rather than falsely exact. The Shewan kingship ends in 1889 with Menelik's accession as Emperor of Ethiopia, already represented by his existing Ethiopian Empire Activity."
+  },
+  "sources": [
+    {
+      "title": "Menelik II — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/people/history/african-history-biographies/menelik-ii",
+      "citation_text": "The biography states that Menelik fled to reclaim Shewa in 1865, defeated the usurper and proclaimed himself negus; he became emperor in 1889.",
+      "source_type": "reference_work"
+    },
+    {
+      "title": "Zauditu (1876–1930) — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/women/encyclopedias-almanacs-transcripts-and-maps/zauditu-1876-1930",
+      "citation_text": "The entry identifies Menelik II as king of Shoa from 1865 to 1889 and emperor of Ethiopia from 1889 to 1913.",
+      "source_type": "reference_work"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  }
+}
