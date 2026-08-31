@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Iskandar Muda",
+    "display_name_ko": "이스칸다르 무다",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Aceh Sultanate",
+    "display_name_ko": "아체 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1607,
+    "start_month": 4,
+    "start_day": 4,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1636,
+    "end_month": 12,
+    "end_day": 27,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Iskandar Muda ruled Aceh during its greatest territorial expansion and remained sultan until his death in 1636."
+  },
+  "sources": [
+    {
+      "title": "Iskandar Muda",
+      "canonical_url": "https://en.wikipedia.org/wiki/Iskandar_Muda",
+      "citation_text": "The ruler chronology gives his reign as Sultan of Aceh from 4 April 1607 to 27 December 1636.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

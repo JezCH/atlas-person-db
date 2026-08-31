@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Nuku Amiruddin",
+    "display_name_ko": "누쿠 아미루딘",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Sultanate of Tidore",
+    "display_name_ko": "티도레 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1797,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1805,
+    "end_month": 11,
+    "end_day": 14,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Nuku recovered Tidore and was recognized as Sultan in 1797, ruling until his death in 1805."
+  },
+  "sources": [
+    {
+      "title": "Nuku of Tidore",
+      "canonical_url": "https://en.wikipedia.org/wiki/Nuku_of_Tidore",
+      "citation_text": "Nuku led the anti-Dutch rebellion from 1780 and reigned as Sultan of Tidore from 1797 until his death on 14 November 1805.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

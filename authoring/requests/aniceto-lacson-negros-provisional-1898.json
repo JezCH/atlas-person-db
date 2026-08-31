@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Aniceto Lacson",
+    "display_name_ko": "아니세토 락손",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Provisional Government of Negros",
+    "display_name_ko": "네그로스 임시정부",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1898,
+    "start_month": 11,
+    "start_day": 5,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1898,
+    "end_month": 11,
+    "end_day": 26,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Lacson headed the provisional revolutionary government in Negros Occidental from 5 November 1898; the island-wide Cantonal Republic was proclaimed on 27 November."
+  },
+  "sources": [
+    {
+      "title": "Philippines — Republic of Negros chronology",
+      "canonical_url": "https://worldstatesmen.org/Philippines.htm",
+      "citation_text": "The chronology records the provisional Negros government from 5 November 1898, the Cantonal Republic from 27 November, U.S. protection from 30 April 1899, and Aniceto Lacson as president until 22 July 1899.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

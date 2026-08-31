@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Floris V",
+    "display_name_ko": "플로리스 5세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "County of Holland",
+    "display_name_ko": "홀란트 백국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Count",
+    "role_display_name_ko": "백작",
+    "start_year": 1256,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1296,
+    "end_month": 6,
+    "end_day": 27,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Floris V was Count of Holland and Zeeland from 1256 until his murder on 27 June 1296."
+  },
+  "sources": [
+    {
+      "title": "Floris V, Count of Holland",
+      "canonical_url": "https://en.wikipedia.org/wiki/Floris_V%2C_Count_of_Holland",
+      "citation_text": "The ruler chronology records Floris V as Count of Holland and Zeeland from 1256 to 1296 and gives his death on 27 June 1296.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

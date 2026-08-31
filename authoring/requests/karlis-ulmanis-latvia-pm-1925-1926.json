@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Kārlis Ulmanis",
+    "display_name_ko": "카를리스 울마니스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Latvia",
+    "display_name_ko": "라트비아 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1925,
+    "start_month": 9,
+    "start_day": 24,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1926,
+    "end_month": 5,
+    "end_day": 6,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ulmanis's second discontinuous premiership."
+  },
+  "sources": [
+    {
+      "title": "Kārlis Ulmanis — President of Latvia",
+      "canonical_url": "https://www.president.lv/en/karlis-ulmanis",
+      "citation_text": "The Latvian Presidency gives Ulmanis's successive prime-ministerial terms and his assumption of presidential functions in 1936.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

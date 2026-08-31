@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Plaek Phibunsongkhram",
+    "display_name_ko": "쁠랙 피분송크람",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Siam",
+    "display_name_ko": "시암 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1948,
+    "start_month": 4,
+    "start_day": 8,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1949,
+    "end_month": 5,
+    "end_day": 10,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Phibunsongkhram returned to office in 1948 while the official English country name was again Siam; ATLAS splits at the 11 May 1949 restoration of Thailand."
+  },
+  "sources": [
+    {
+      "title": "Plaek Phibunsongkhram",
+      "canonical_url": "https://en.wikipedia.org/wiki/Plaek_Phibunsongkhram",
+      "citation_text": "The office chronology gives Phibunsongkhram's prime-ministerial terms as 16 December 1938–1 August 1944 and 8 April 1948–16 September 1957.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Siam/Thailand name changes — UNESCO Siam Society minutes",
+      "canonical_url": "https://media.unesco.org/sites/default/files/webform/mow001/thailand_minute_books_council_of_siam_society.pdf",
+      "citation_text": "The archival nomination records the 24 June 1939 change from Siam to Thailand and notes the postwar reversion to Siam until 1949.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Thailand — United Nations",
+      "canonical_url": "https://www.un.org/en/about-us/member-states/thailand",
+      "citation_text": "The United Nations records that Siam informed the Secretary-General of the change back to Thailand on 11 May 1949.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

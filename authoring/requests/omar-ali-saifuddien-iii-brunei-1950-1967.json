@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Omar Ali Saifuddien III",
+    "display_name_ko": "오마르 알리 사이푸딘 3세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Brunei Sultanate",
+    "display_name_ko": "브루나이 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1950,
+    "start_month": 6,
+    "start_day": 4,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1967,
+    "end_month": 10,
+    "end_day": 5,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Omar Ali Saifuddien III became Sultan following Ahmad Tajuddin's death in June 1950 and abdicated in favour of Hassanal Bolkiah on 5 October 1967."
+  },
+  "sources": [
+    {
+      "title": "Omar Ali Saifuddien III",
+      "canonical_url": "https://en.wikipedia.org/wiki/Omar_Ali_Saifuddien_III",
+      "citation_text": "The ruler chronology gives his reign as 4 June 1950 to 5 October 1967.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

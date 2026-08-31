@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Trần Thánh Tông",
+    "display_name_ko": "쩐 성종",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Đại Việt",
+    "display_name_ko": "대월",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1258,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1278,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Trần Thánh Tông reigned as emperor from 1258 until abdicating in favour of Trần Nhân Tông in 1278."
+  },
+  "sources": [
+    {
+      "title": "Trần Thánh Tông",
+      "canonical_url": "https://en.wikipedia.org/wiki/Tr%E1%BA%A7n_Th%C3%A1nh_T%C3%B4ng",
+      "citation_text": "The chronology records Trần Thánh Tông as emperor of Đại Việt from 1258 to 1278 and subsequently as retired emperor and senior co-ruler until 1290.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

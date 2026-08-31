@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Duan Siping",
+    "display_name_ko": "단사평",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Dali Kingdom",
+    "display_name_ko": "대리국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 937,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 944,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Duan Siping founded the Dali Kingdom in 937 and ruled as its first emperor until 944."
+  },
+  "sources": [
+    {
+      "title": "Buddhist kingship and governance in the Dali Kingdom — Cambridge",
+      "canonical_url": "https://www.cambridge.org/core/journals/journal-of-southeast-asian-studies/article/buddhist-kingship-and-governance-in-the-dali-kingdom-1140s-to-1200/CBAB43963316CEE8E42CA0F54837DAD9",
+      "citation_text": "The Cambridge study identifies Duan Siping as founder of the Dali Kingdom and gives his reign as 937–944.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

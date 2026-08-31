@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "U Nu",
+    "display_name_ko": "우 누",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Union of Burma",
+    "display_name_ko": "버마 연방",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1957,
+    "start_month": 3,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1958,
+    "end_month": 10,
+    "end_day": 29,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "U Nu returned after Ba Swe's ministry and handed power to Ne Win's caretaker government in October 1958."
+  },
+  "sources": [
+    {
+      "title": "List of prime ministers of Myanmar",
+      "canonical_url": "https://en.wikipedia.org/wiki/List_of_prime_ministers_of_Myanmar",
+      "citation_text": "The office chronology gives U Nu's three premierships as 4 January 1948–12 June 1956, 1 March 1957–29 October 1958, and 4 April 1960–2 March 1962.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

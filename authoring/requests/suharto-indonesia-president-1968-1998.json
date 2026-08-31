@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Suharto",
+    "display_name_ko": "수하르토",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Indonesia",
+    "display_name_ko": "인도네시아 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1968,
+    "start_month": 3,
+    "start_day": 27,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1998,
+    "end_month": 5,
+    "end_day": 21,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Suharto was formally elected and inaugurated as Indonesia's second president on 27 March 1968 and resigned on 21 May 1998."
+  },
+  "sources": [
+    {
+      "title": "Presiden Soeharto — Arsip Nasional Republik Indonesia",
+      "canonical_url": "https://pusdipres.anri.go.id/presidenpedia?slug=presiden-soeharto",
+      "citation_text": "Indonesia's presidential archive states that Suharto was made acting president in March 1967, confirmed as president in March 1968, and resigned on 21 May 1998.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

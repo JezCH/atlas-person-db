@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Saigō Takamori",
+    "display_name_ko": "사이고 다카모리",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Satsuma Domain",
+    "display_name_ko": "사쓰마번",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Samurai retainer and military leader",
+    "role_display_name_ko": "번사·군사 지도자",
+    "start_year": 1854,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1868,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Saigō was not the ruler of Satsuma Domain. He rose as a Satsuma retainer under Shimazu Nariakira, later became one of the domain's principal military-political leaders, and helped lead the anti-shogunate coalition through the Meiji Restoration. ATLAS therefore uses active_in rather than rules."
+  },
+  "sources": [
+    {
+      "title": "Saigo, Takamori — Encyclopædia Britannica 1911",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Saigo%2C_Takamori",
+      "citation_text": "The biography identifies Saigō as a Satsuma political figure who became a leading force in the movement that overthrew Tokugawa rule.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Satsuma Domain",
+      "canonical_url": "https://en.wikipedia.org/wiki/Satsuma_Domain",
+      "citation_text": "The domain history describes Saigō as a Satsuma retainer who led Satsuma forces and helped broker the Satsuma–Chōshū alignment against the shogunate.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
