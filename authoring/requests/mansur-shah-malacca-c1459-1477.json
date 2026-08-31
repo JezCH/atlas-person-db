@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Mansur Shah of Malacca",
+    "display_name_ko": "만수르 샤",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Sultanate of Malacca",
+    "display_name_ko": "말라카 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1459,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1477,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Modern scholarship commonly places Mansur Shah's reign at about 1459–1477, while some popular chronologies give 1456 as the accession year. ATLAS therefore stores the 1459 start as approximate rather than pretending the disputed accession chronology is exact."
+  },
+  "sources": [
+    {
+      "title": "Malacca's Early Kings and the Reception of Islam — Journal of Southeast Asian History",
+      "canonical_url": "https://www.cambridge.org/core/journals/journal-of-southeast-asian-history/article/abs/malaccas-early-kings-and-the-reception-of-islam/1386B1531F19978DF48670510B7598DA",
+      "citation_text": "The scholarly discussion places the reign of Mansur Shah approximately in 1459–1477.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Malacca Sultanate — World History Volume 2, OpenStax",
+      "canonical_url": "https://openstax.org/books/world-history-volume-2/pages/2-2-the-malacca-sultanate",
+      "citation_text": "OpenStax identifies Mansur Shah's reign as part of Malacca's late-fifteenth-century height and describes his expansionist rule.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

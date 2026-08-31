@@ -814,5 +814,22 @@
     "role_ko": "아하가르 투아레그 전승의 여왕·시조 인물",
     "reason": "Tin Hinan is remembered in Tuareg tradition as an ancestral queen associated with the Ahaggar. The elite female burial at Abalessa is archaeological evidence for a late-antique high-status woman, but identifying that burial with the named Tin Hinan remains traditional and does not establish a defensible person-specific reign interval. ATLAS preserves the traditional association while leaving all timeline years unknown.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "Niall Noígíallach",
+    "politic_name": "Gaels",
+    "display_name_ko": "니얼 노이기알라흐",
+    "politic_display_name_ko": "게일인",
+    "historicity": "legendary_possible_historical_core",
+    "historicity_display_ko": "전승·역사적 핵심 가능",
+    "timeline_status": "excluded",
+    "date_basis": "early_irish_dynastic_tradition_and_generation_counting",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "게일계 전승의 왕·우이 닐 왕조 시조",
+    "reason": "Niall Noígíallach is plausibly based on a historical fifth-century ruler and became the eponymous ancestor of the Uí Néill, but the surviving narrative and regnal traditions are late and politically shaped. Modern scholarship places his floruit roughly in the middle of the fifth century by generation-counting and explicitly cautions that there is no strong reason to think he ruled more than an ordinary túath. ATLAS therefore does not portray him as a historically verified High King ruling all Gaels and does not promote later traditional reign years to the historical timeline.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary, dynastic-tradition or uncertain-chronology overlay is enabled."
   }
 ]

@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "William Lyon Mackenzie King",
+    "display_name_ko": "윌리엄 라이언 매켄지 킹",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Dominion of Canada",
+    "display_name_ko": "캐나다 자치령",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1921,
+    "start_month": 12,
+    "start_day": 29,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1926,
+    "end_month": 6,
+    "end_day": 28,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mackenzie King's first, second and third premierships are historically discontinuous and are therefore stored as separate Activities. This first term ended on 28 June 1926 during the King–Byng crisis."
+  },
+  "sources": [
+    {
+      "title": "National Program for the Grave Sites of Canadian Prime Ministers — William Lyon Mackenzie King",
+      "canonical_url": "https://parks.canada.ca/culture/designation/sepulture-gravesite",
+      "citation_text": "Parks Canada lists Mackenzie King's three prime-ministerial terms as 29 December 1921–28 June 1926, 25 September 1926–7 August 1930, and 23 October 1935–15 November 1948.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "William Lyon Mackenzie King",
+    "display_name_ko": "윌리엄 라이언 매켄지 킹",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Dominion of Canada",
+    "display_name_ko": "캐나다 자치령",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1926,
+    "start_month": 9,
+    "start_day": 25,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1930,
+    "end_month": 8,
+    "end_day": 7,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "King returned to office on 25 September 1926 after Arthur Meighen's short ministry and served until 7 August 1930. ATLAS keeps this as a separate term rather than merging it with 1921–1926."
+  },
+  "sources": [
+    {
+      "title": "National Program for the Grave Sites of Canadian Prime Ministers — William Lyon Mackenzie King",
+      "canonical_url": "https://parks.canada.ca/culture/designation/sepulture-gravesite",
+      "citation_text": "Parks Canada lists Mackenzie King's three prime-ministerial terms as 29 December 1921–28 June 1926, 25 September 1926–7 August 1930, and 23 October 1935–15 November 1948.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
