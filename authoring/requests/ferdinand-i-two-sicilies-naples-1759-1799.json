@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ferdinand-i-two-sicilies:kingdom-of-naples:king:1759-1799:v1",
+  "person": {
+    "canonical_name_en": "Ferdinand I of the Two Sicilies",
+    "display_name_ko": "페르디난도 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Naples",
+    "display_name_ko": "나폴리 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1759,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1799,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ferdinand succeeded to the Neapolitan crown in 1759 as Ferdinand IV. His first effective reign ended when the Bourbon court fled and the Neapolitan Republic replaced royal government in 1799. ATLAS records this first Neapolitan reign separately rather than presenting 1759-1806 as continuous rule."
+  },
+  "sources": [
+    {
+      "title": "Ferdinando I di Borbone già IV come re di Napoli e III come re di Sicilia — Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/ferdinando-i-di-borbone-gia-iv-come-re-di-napoli-e-iii-come-re-di-sicilia_%28Dizionario-di-Storia%29/",
+      "citation_text": "Treccani identifies Ferdinand I of the Two Sicilies as formerly Ferdinand IV of Naples and Ferdinand III of Sicily, succeeding in 1759, losing Naples in 1799, regaining it, losing Naples again in 1806, recovering it in 1815, and creating the Kingdom of the Two Sicilies in 1816.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "FERDINANDO I di Borbone, re delle Due Sicilie — Dizionario Biografico degli Italiani, Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/ferdinando-i-di-borbone-re-delle-due-sicilie_%28Dizionario-Biografico%29/",
+      "citation_text": "The Dizionario Biografico degli Italiani confirms Ferdinand's accession to the Neapolitan and Sicilian crowns in 1759 and his later identity as Ferdinand I of the Two Sicilies.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
