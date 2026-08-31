@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Walter Ulbricht",
+    "display_name_ko": "발터 울브리히트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "German Democratic Republic",
+    "display_name_ko": "동독",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Chairman of the State Council",
+    "role_display_name_ko": "국가평의회 의장",
+    "start_year": 1960,
+    "start_month": 9,
+    "start_day": 12,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1973,
+    "end_month": 8,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After Wilhelm Pieck's death, the presidency was replaced by a collective State Council and Ulbricht became its chairman on 12 September 1960. He remained formal head of state until his death on 1 August 1973, although he had lost dominant political power in 1971."
+  },
+  "sources": [
+    {
+      "title": "Walter Ulbricht — Bundesstiftung zur Aufarbeitung der SED-Diktatur",
+      "canonical_url": "https://www.bundesstiftung-aufarbeitung.de/de/recherche/kataloge-datenbanken/biographische-datenbanken/walter-ernst-paul-ulbricht",
+      "citation_text": "The Federal Foundation identifies Ulbricht as the dominant GDR politician, SED leader until May 1971, and Chairman of the State Council from 1960 until his death in 1973.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "document_title": "발터 울브리히트",
+      "url": "https://namu.wiki/w/%EB%B0%9C%ED%84%B0%20%EC%9A%B8%EB%B8%8C%EB%A6%AC%ED%9E%88%ED%8A%B8",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

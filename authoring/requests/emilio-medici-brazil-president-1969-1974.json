@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Emílio Garrastazu Médici",
+    "display_name_ko": "에밀리우 가라스타주 메디시",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Brazil",
+    "display_name_ko": "브라질",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1969,
+    "start_month": 10,
+    "start_day": 30,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1974,
+    "end_month": 3,
+    "end_day": 15,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Médici served as President of Brazil during the military dictatorship from 30 October 1969 until 15 March 1974."
+  },
+  "sources": [
+    {
+      "title": "Emílio Garrastazu Médici — Arquivo Nacional",
+      "canonical_url": "https://presidentes.an.gov.br/index.php/centro-de-referencia-de-acervos-presidenciais/assuntos/biografias/190-emilio-garrastazu-medici",
+      "citation_text": "Brazil's National Archives gives Médici's presidential term as 30 October 1969 to 15 March 1974.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
