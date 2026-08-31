@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "James Brooke",
+    "display_name_ko": "제임스 브룩",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Raj of Sarawak",
+    "display_name_ko": "사라왁 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Rajah",
+    "role_display_name_ko": "라자",
+    "start_year": 1841,
+    "start_month": 9,
+    "start_day": 24,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1868,
+    "end_month": 6,
+    "end_day": 11,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Malaysian archival and government material dates the cession of Sarawak to James Brooke to 24 September 1841, while his formal installation in Kuching followed in 1842. ATLAS uses the 1841 cession as the start of the Brooke Raj and his death on 11 June 1868 as the end."
+  },
+  "sources": [
+    {
+      "title": "Bendera Negeri Dan Wilayah — Jabatan Penerangan Malaysia",
+      "canonical_url": "https://dbook.penerangan.gov.my/dbook/dmdocuments/bendera_negeri_dan_wilayah/files/basic-html/page61.html",
+      "citation_text": "The Malaysian government publication states that Sarawak was surrendered to Rajah James Brooke on 24 September 1841 and that his rule continued until his death in 1868.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Keith Holyoake",
+    "display_name_ko": "키스 홀리오크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "New Zealand",
+    "display_name_ko": "뉴질랜드",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1957,
+    "start_month": 9,
+    "start_day": 20,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1957,
+    "end_month": 12,
+    "end_day": 12,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Holyoake's first premiership was a short, separate term in 1957."
+  },
+  "sources": [
+    {
+      "title": "Prime Ministers of New Zealand since 1856 — New Zealand Parliament",
+      "canonical_url": "https://www3.parliament.nz/en/visit-and-learn/mps-and-parliaments-1854-onwards/prime-ministers-of-new-zealand-since-1856/",
+      "citation_text": "New Zealand Parliament lists Keith Holyoake's first term as 20 September to 12 December 1957.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

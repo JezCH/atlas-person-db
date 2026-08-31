@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Sawlon of Mohnyin",
+    "display_name_ko": "사울론",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Mohnyin",
+    "display_name_ko": "모힌",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Saopha",
+    "role_display_name_ko": "사오파",
+    "start_year": 1500,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "uncertain",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1533,
+    "end_month": 1,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Sawlon was saopha of the Shan state of Mohnyin in the early sixteenth century and led a wider Shan confederation. 'Shan States' is too broad for his personal polity, so ATLAS uses Mohnyin. The start of his reign is only given broadly as the 1500s; the earliest 1502 raid may refer to his father, so the start is marked uncertain."
+  },
+  "sources": [
+    {
+      "title": "Sawlon",
+      "canonical_url": "https://ctext.org/dictionary.pl?char=%E6%80%9D%E5%80%AB&if=en&remap=gb",
+      "citation_text": "The biographical entry identifies Sawlon as saopha of Mohnyin and leader of a confederation of Shan states, with his death in 1533 and an uncertain early-sixteenth-century accession.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

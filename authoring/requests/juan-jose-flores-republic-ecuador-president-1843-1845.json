@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Juan José Flores",
+    "display_name_ko": "후안 호세 플로레스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Ecuador",
+    "display_name_ko": "에콰도르 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1843,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1845,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Flores began a new presidential term under the 1843 constitutional settlement and was overthrown in the March Revolution of 1845."
+  },
+  "sources": [
+    {
+      "title": "Flores, Juan José, Presidente del Ecuador 1800-1864 — Biblioteca Nacional Eugenio Espejo",
+      "canonical_url": "https://biblioteca.bne.gob.ec/cgi-bin/koha/opac-authoritiesdetail.pl?authid=2727",
+      "citation_text": "The Ecuadorian National Library authority record lists Juan José Flores as President in 1830–1834, 1839–1843, and 1843–1845.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

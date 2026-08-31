@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Karib'il Watar",
+    "display_name_ko": "카리브일 와타르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Saba",
+    "display_name_ko": "사바 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Mukarrib",
+    "role_display_name_ko": "무카리브",
+    "start_year": -680,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -680,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Karib'il Watar is securely attested epigraphically as a Sabaean mukarrib, but his absolute chronology is debated. ATLAS uses c.680 BCE only as a representative early-seventh-century attestation point rather than inventing a precise reign interval."
+  },
+  "sources": [
+    {
+      "title": "Quelques épisodes marquants de l'histoire sudarabique — Persée",
+      "canonical_url": "https://www.persee.fr/doc/remmm_0997-1327_1991_num_61_1_1507",
+      "citation_text": "The study discusses Karib'il Watar, son of Dhamar'ali, as mukarrib of Saba and places him in the first half of the seventh century BCE if the Assyrian synchronism is accepted.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Ngô Đình Diệm",
+    "display_name_ko": "응오딘지엠",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "State of Vietnam",
+    "display_name_ko": "베트남국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1954,
+    "start_month": 6,
+    "start_day": 26,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1955,
+    "end_month": 10,
+    "end_day": 25,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Diem served as Prime Minister under Bảo Đại in the State of Vietnam before the 1955 referendum and creation of the Republic of Vietnam. ATLAS ends this activity the day before the new republic was proclaimed."
+  },
+  "sources": [
+    {
+      "title": "Ngo Dinh Diem",
+      "canonical_url": "https://en.wikipedia.org/wiki/Ngo_Dinh_Diem",
+      "citation_text": "The office chronology records Diem as Prime Minister of the State of Vietnam from 26 June 1954 to 26 October 1955 and President of South Vietnam from 26 October 1955 to 2 November 1963.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

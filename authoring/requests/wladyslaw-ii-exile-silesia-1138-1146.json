@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Władysław II the Exile",
+    "display_name_ko": "브와디스와프 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Silesia",
+    "display_name_ko": "실레시아 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Duke",
+    "role_display_name_ko": "공작",
+    "start_year": 1138,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1146,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Under Bolesław III's testamentary division, Władysław II held Silesia from 1138 until his expulsion in 1146."
+  },
+  "sources": [
+    {
+      "title": "Władysław II the Exile",
+      "canonical_url": "https://en.wikipedia.org/wiki/W%C5%82adys%C5%82aw_II_the_Exile",
+      "citation_text": "The biographical chronology records Władysław II as Duke of Silesia from 1138 to 1146.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
