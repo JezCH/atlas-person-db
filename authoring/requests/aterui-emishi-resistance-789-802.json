@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Aterui",
+    "display_name_ko": "아테루이",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Emishi",
+    "display_name_ko": "에미시",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Emishi resistance leader",
+    "role_display_name_ko": "에미시 저항 지도자",
+    "start_year": 789,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 802,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Aterui first appears in the written record in 789 as a leader of the Emishi force that defeated the imperial army at Sufuse. He surrendered with More in 802 and was executed later that year. The surviving record does not justify portraying him as a monarch of all Emishi, so ATLAS uses active_in."
+  },
+  "sources": [
+    {
+      "title": "阿弖流為(アテルイ) — 奥州市埋蔵文化財調査センター",
+      "canonical_url": "https://www.oshu-bunka.or.jp/maibun/publics/index/127/",
+      "citation_text": "The official Oshu archaeological center identifies Aterui as an Emishi leader in the 789 battle and records his surrender and execution in 802.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

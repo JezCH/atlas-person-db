@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Tokugawa Yoshimune",
+    "display_name_ko": "도쿠가와 요시무네",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Shogun",
+    "role_display_name_ko": "쇼군",
+    "start_year": 1716,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1745,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Yoshimune became the eighth Tokugawa shogun in 1716 and transferred the shogunal office to his son Ieshige in 1745. ATLAS uses Japan to remain consistent with the existing Tokugawa Ieyasu record, which also represents the shogunate under Japan."
+  },
+  "sources": [
+    {
+      "title": "将軍のアーカイブズ — 国立公文書館",
+      "canonical_url": "https://www.archives.go.jp/exhibition/digital/shogunnoarchives/data.html",
+      "citation_text": "The National Archives of Japan identifies Yoshimune as the eighth shogun from 1716 and notes his 29-year tenure.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Bogislaw X",
+    "display_name_ko": "보구스와프 10세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Pomerania",
+    "display_name_ko": "포메라니아 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Duke",
+    "role_display_name_ko": "공작",
+    "start_year": 1478,
+    "start_month": 12,
+    "start_day": 17,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1523,
+    "end_month": 10,
+    "end_day": 5,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bogislaw had inherited part of the Pomeranian territories in 1474. After the death of his uncle Wartislaw X in 1478 he became the sole ruler of all Pomerania. Because the requested polity is Pomerania as a whole, ATLAS begins this Activity with the reunified duchy in 1478 rather than implying that he already ruled all Pomerania from 1474."
+  },
+  "sources": [
+    {
+      "title": "Bogislaw X. — Deutsche Biographie",
+      "canonical_url": "https://www.deutsche-biographie.de/gnd119399679.html",
+      "citation_text": "Neue Deutsche Biographie states that after Wartislaw X's death in 1478 Bogislaw became sole ruler of all Pomerania and that he died on 5 October 1523.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

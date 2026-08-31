@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Islam Karimov",
+    "display_name_ko": "이슬람 카리모프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Uzbekistan",
+    "display_name_ko": "우즈베키스탄 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1991,
+    "start_month": 8,
+    "start_day": 31,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2016,
+    "end_month": 9,
+    "end_day": 2,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "On 31 August 1991 the Uzbek SSR was renamed the Republic of Uzbekistan and independence was proclaimed. Karimov remained president continuously and served until his death on 2 September 2016. His nationwide presidential election on 29 December 1991 occurred within this already-continuous presidency."
+  },
+  "sources": [
+    {
+      "title": "The main national holiday of Uzbekistan is the Independence Day — Government of Uzbekistan",
+      "canonical_url": "https://gov.uz/en/rishton/news/view/74095",
+      "citation_text": "The Government of Uzbekistan states that on 31 August 1991 the Uzbek SSR was renamed the Republic of Uzbekistan and state independence was proclaimed.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "President of the Republic of Uzbekistan Islam Abduganievich Karimov — UZA",
+      "canonical_url": "https://uza.uz/sp/posts/president-of-the-republic-of-uzbekistan-islam-abduganievich--03-09-2016",
+      "citation_text": "The state news agency records Karimov's death on 2 September 2016 and his leadership of independent Uzbekistan for 25 years.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
