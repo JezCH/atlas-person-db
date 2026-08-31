@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Marcus Junius Brutus",
+    "display_name_ko": "마르쿠스 유니우스 브루투스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Republic",
+    "display_name_ko": "로마 공화정",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Republican leader and praetor",
+    "role_display_name_ko": "공화파 지도자·법무관",
+    "start_year": -44,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -42,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Brutus was not a ruler of the Roman Republic. In 44 BCE he was urban praetor and one of the principal conspirators against Julius Caesar; after the assassination he became a leading commander of the republican cause in the civil war, ending with his defeat and death after Philippi in 42 BCE. ATLAS therefore uses active_in rather than rules."
+  },
+  "sources": [
+    {
+      "title": "1911 Encyclopædia Britannica — Brutus",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Brutus",
+      "citation_text": "The reference identifies Marcus Junius Brutus as city praetor in 44 BCE, a leading participant in Caesar's assassination, and a defender of the republican cause until his defeat and death in 42 BCE.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

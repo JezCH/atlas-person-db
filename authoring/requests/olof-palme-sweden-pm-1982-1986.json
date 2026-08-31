@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Olof Palme",
+    "display_name_ko": "올로프 팔메",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Sweden",
+    "display_name_ko": "스웨덴",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1982,
+    "start_month": 10,
+    "start_day": 8,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1986,
+    "end_month": 2,
+    "end_day": 28,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Palme returned as Prime Minister on 8 October 1982 and remained in office until his assassination on 28 February 1986."
+  },
+  "sources": [
+    {
+      "title": "The office of Prime Minister in Sweden — Government Offices of Sweden",
+      "canonical_url": "https://www.government.se/how-sweden-is-governed/the-office-of-prime-minister-in-sweden/",
+      "citation_text": "The official chronology gives Palme's second term from 8 October 1982 until his death on 28 February 1986.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

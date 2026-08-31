@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Islam Karimov",
+    "display_name_ko": "이슬람 카리모프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Uzbek Soviet Socialist Republic",
+    "display_name_ko": "우즈베크 소비에트 사회주의 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1990,
+    "start_month": 3,
+    "start_day": 24,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1991,
+    "end_month": 8,
+    "end_day": 31,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Karimov was elected President of the Uzbek SSR on 24 March 1990. On 31 August 1991 the republic proclaimed independence and the Uzbek SSR was renamed the Republic of Uzbekistan, so ATLAS splits the continuous presidency at the state-name transition."
+  },
+  "sources": [
+    {
+      "title": "President of the Republic of Uzbekistan Islam Abduganievich Karimov — President.uz",
+      "canonical_url": "https://president.uz/en/lists/view/33",
+      "citation_text": "The official presidential biography records Karimov's election as President of the Uzbek SSR on 24 March 1990 and his later leadership of independent Uzbekistan.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

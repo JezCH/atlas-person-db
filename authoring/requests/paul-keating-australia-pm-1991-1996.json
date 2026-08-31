@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Paul Keating",
+    "display_name_ko": "폴 키팅",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Australia",
+    "display_name_ko": "호주",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1991,
+    "start_month": 12,
+    "start_day": 20,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1996,
+    "end_month": 3,
+    "end_day": 11,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Paul Keating served continuously as Australia's 24th Prime Minister from 20 December 1991 until 11 March 1996."
+  },
+  "sources": [
+    {
+      "title": "Paul Keating — National Archives of Australia",
+      "canonical_url": "https://www.naa.gov.au/explore-collection/australias-prime-ministers/paul-keating",
+      "citation_text": "The National Archives of Australia gives Keating's prime-ministerial term as 20 December 1991 to 11 March 1996.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

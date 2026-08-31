@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Olof Palme",
+    "display_name_ko": "올로프 팔메",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Sweden",
+    "display_name_ko": "스웨덴",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1969,
+    "start_month": 10,
+    "start_day": 14,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1976,
+    "end_month": 10,
+    "end_day": 8,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Palme's premiership was interrupted between 1976 and 1982, so ATLAS stores his two terms as separate Activities."
+  },
+  "sources": [
+    {
+      "title": "Olof Palme — Government Offices of Sweden",
+      "canonical_url": "https://www.government.se/articles/2016/02/olof-palme/",
+      "citation_text": "The Government Offices of Sweden state that Olof Palme served as Prime Minister from 1969 to 1976 and again from 1982 to 1986.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}

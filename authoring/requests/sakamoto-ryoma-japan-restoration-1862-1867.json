@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Sakamoto Ryōma",
+    "display_name_ko": "사카모토 료마",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Restoration activist and political mediator",
+    "role_display_name_ko": "유신 활동가·정치 중재자",
+    "start_year": 1862,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1867,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Shikoku is a geographic island rather than a polity. Ryoma was born a Tosa Domain samurai on Shikoku, left the domain in 1862, and thereafter became a cross-domain political activist who helped realize the Satsuma–Choshu Alliance and the restoration of political authority to the emperor. ATLAS therefore represents his principal historical activity under Japan rather than inventing a 'Shikoku' polity."
+  },
+  "sources": [
+    {
+      "title": "坂本龍馬関係資料 — 文化遺産オンライン",
+      "canonical_url": "https://online.bunka.go.jp/heritages/detail/169165",
+      "citation_text": "Japan's Cultural Heritage Online records Ryoma's departure from Tosa in 1862 and his subsequent work with Katsu Kaishu, Satsuma, and Choshu, including efforts toward the Satsuma–Choshu Alliance.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
