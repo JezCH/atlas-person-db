@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Shapur II",
+    "display_name_ko": "샤푸르 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Sasanian Empire",
+    "display_name_ko": "사산 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Shahanshah (King of Kings)",
+    "role_display_name_ko": "샤한샤(왕중왕)",
+    "start_year": 309,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 379,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Shapur II ruled the Sasanian Empire from 309 to 379 CE, the longest reign of the Sasanian dynasty. ATLAS reuses the existing Sasanian Empire and Shahanshah identities already used for Shapur I and Khosrow I."
+  },
+  "sources": [
+    {
+      "title": "ŠĀPUR II — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/shapur-ii/",
+      "citation_text": "Encyclopaedia Iranica identifies Shapur II as the Sasanian monarch who reigned from 309 to 379 CE.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

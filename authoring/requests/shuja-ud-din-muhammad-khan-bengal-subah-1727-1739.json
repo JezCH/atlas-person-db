@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Shuja-ud-Din Muhammad Khan",
+    "display_name_ko": "슈자 웃 딘 무함마드 칸",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Bengal Subah",
+    "display_name_ko": "벵골 수바",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Nawab (Nazim/Subahdar)",
+    "role_display_name_ko": "나와브(나짐·수바다르)",
+    "start_year": 1727,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1739,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Shuja-ud-Din Muhammad Khan ruled Bengal from 1727 to 1739. Contemporary Mughal administrative usage treated the office as nazim/subahdar rather than a formally independent kingship, while the Bengal nawabs were effectively autonomous in practice. ATLAS therefore uses the historically specific Bengal Subah polity rather than the game-style label 'Bengal Empire'."
+  },
+  "sources": [
+    {
+      "title": "Shujauddin Muhammad Khan — Banglapedia",
+      "canonical_url": "https://en.banglapedia.org/index.php/Shujauddin_Muhammad_Khan",
+      "citation_text": "Banglapedia identifies Shujauddin Muhammad Khan as nawab of Bengal from 1727 to 1739 and describes his administration of Bengal, Bihar and Orissa.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
