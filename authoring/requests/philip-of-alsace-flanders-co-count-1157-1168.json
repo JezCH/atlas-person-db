@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philip-of-alsace:county-of-flanders:co-count:1157-1168:v1",
+  "person": {
+    "canonical_name_en": "Philip of Alsace",
+    "display_name_ko": "필리프 드 알자스"
+  },
+  "polity": {
+    "canonical_name_en": "County of Flanders",
+    "display_name_ko": "플랑드르 백국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Co-Count",
+    "role_display_name_ko": "공동 백작",
+    "start_year": 1157,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1168,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Philip of Alsace began exercising comital authority in Flanders in 1157 when his father Thierry departed on crusade and Philip took the count's title. After Thierry returned, father and son continued a shared government until Thierry's death in 1168, when Philip became sole count. ATLAS therefore records 1157-1168 as a separate Co-Count Activity before the existing 1168-1191 sole reign."
+  },
+  "sources": [
+    {
+      "title": "Flanders — The New Cambridge Medieval History",
+      "canonical_url": "https://www.cambridge.org/core/books/new-cambridge-medieval-history/flanders/BA10069D4C5DC5215B06E9B3FEBEDD32",
+      "citation_text": "The New Cambridge Medieval History treats Philip of Alsace as count from 1157 to 1191, while his father Thierry remained alive until 1168.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "De eerste oorkonde van Filips van de Elzas te Atrecht (1167)",
+      "canonical_url": "https://www.researchgate.net/publication/309798116_De_eerste_oorkonde_van_Filips_van_de_Elzas_te_Atrecht_1167",
+      "citation_text": "The study notes that Thierry placed his son Philip in charge of Flanders in 1157; after Thierry's return Philip remained actively involved in government and continued to use the title of count while his father was still count de jure.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
