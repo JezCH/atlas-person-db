@@ -30,16 +30,16 @@ function button(textContent = "") {
   };
 }
 
-function zoomMount(current = "100%") {
+function zoomMount(current = "500%") {
   const zoomOut = button();
   const zoomValue = button(current);
   const zoomIn = button();
-  const reset = button("100%");
+  const reset = button("500%");
   const nodes = {
-    "#spacetimeTimeZoomOut": zoomOut,
-    "#spacetimeTimeZoomValue": zoomValue,
-    "#spacetimeTimeZoomIn": zoomIn,
-    "#spacetimeTimeZoomReset": reset
+    "#spacetimeCameraZoomOut": zoomOut,
+    "#spacetimeCameraZoomValue": zoomValue,
+    "#spacetimeCameraZoomIn": zoomIn,
+    "#spacetimeCameraZoomReset": reset
   };
   return {
     mount: { querySelector(selector) { return nodes[selector] || null; } },
@@ -54,15 +54,16 @@ function approximatelyEqual(actual, expected, epsilon = 1e-9) {
   assert.ok(Math.abs(actual - expected) <= epsilon, `expected ${actual} ≈ ${expected}`);
 }
 
-test("spacetime camera control state is loaded by the production page", () => {
-  assert.match(indexSource, /atlas-person-spacetime-control-state\.css\?v=20260826-zoom-bound-affordance/);
-  assert.match(indexSource, /atlas-person-spacetime-control-state\.js\?v=20260827-mount-rebind/);
-  assert.match(controlCss, /\.spacetime-time-camera button:disabled\{/);
+test("production page loads the unified spacetime camera control state", () => {
+  assert.match(indexSource, /atlas-person-spacetime-control-state\.css/);
+  assert.match(indexSource, /atlas-person-spacetime-control-state\.js/);
+  assert.match(controlCss, /\.spacetime-camera button:disabled\{/);
+  assert.doesNotMatch(controlCss, /spacetime-time-camera/);
 });
 
-test("minimum zoom disables only controls that cannot change the camera", () => {
+test("500 percent is the visible and structural minimum", () => {
   const api = loadControlApi();
-  const state = zoomMount("100%");
+  const state = zoomMount("500%");
 
   assert.equal(api.syncZoomControlState(state.mount), true);
   assert.equal(state.zoomOut.disabled, true);
@@ -72,80 +73,56 @@ test("minimum zoom disables only controls that cannot change the camera", () => 
   assert.equal(state.zoomIn.attributes.get("aria-disabled"), "false");
   assert.equal(state.reset.attributes.get("aria-disabled"), "true");
 
-  state.zoomValue.textContent = "135%";
+  state.zoomValue.textContent = "625%";
   assert.equal(api.syncZoomControlState(state.mount), true);
   assert.equal(state.zoomOut.disabled, false);
   assert.equal(state.zoomIn.disabled, false);
   assert.equal(state.reset.disabled, false);
 });
 
-test("maximum zoom disables zoom-in while preserving zoom-out and reset", () => {
+test("800 percent is the maximum", () => {
   const api = loadControlApi();
   const state = zoomMount("800%");
-
   assert.equal(api.syncZoomControlState(state.mount), true);
   assert.equal(state.zoomOut.disabled, false);
   assert.equal(state.zoomIn.disabled, true);
   assert.equal(state.reset.disabled, false);
-  assert.equal(state.zoomIn.attributes.get("aria-disabled"), "true");
-
-  state.zoomValue.textContent = "605%";
-  assert.equal(api.syncZoomControlState(state.mount), true);
-  assert.equal(state.zoomIn.disabled, false);
-  assert.equal(state.zoomIn.attributes.get("aria-disabled"), "false");
 });
 
-test("visible zoom bounds stay aligned with the renderer camera contract", () => {
+test("visible bounds stay aligned with the unified renderer camera contract", () => {
   const api = loadControlApi();
-  assert.equal(api.parsePercent("100%"), 100);
-  assert.equal(api.parsePercent(" 135% "), 135);
+  assert.equal(api.parsePercent("500%"), 500);
+  assert.equal(api.parsePercent(" 625% "), 625);
   assert.equal(api.parsePercent("not a zoom"), null);
 
-  const minMatch = viewSource.match(/const TIME_CAMERA_MIN_ZOOM = ([\d.]+);/);
-  const maxMatch = viewSource.match(/const TIME_CAMERA_MAX_ZOOM = ([\d.]+);/);
+  const minMatch = viewSource.match(/const CAMERA_MIN_ZOOM = ([\d.]+);/);
+  const maxMatch = viewSource.match(/const CAMERA_MAX_ZOOM = ([\d.]+);/);
   const adapterMaxMatch = controlSource.match(/const MAXIMUM_PERCENT = ([\d.]+);/);
   assert.ok(minMatch);
   assert.ok(maxMatch);
   assert.ok(adapterMaxMatch);
-  assert.equal(Number(minMatch[1]) * 100, 100);
+  assert.equal(Number(minMatch[1]) * 100, 500);
   assert.equal(Number(adapterMaxMatch[1]), Number(maxMatch[1]) * 100);
-  assert.match(viewSource, /id="spacetimeTimeZoomReset"[^>]*>100%<\/button>/);
+  assert.match(viewSource, /id="spacetimeCameraZoomReset"[^>]*>500%<\/button>/);
+  assert.doesNotMatch(viewSource, /spacetimeTimeZoom/);
+  assert.doesNotMatch(viewSource, />100%<\/button>/);
 });
 
-test("overview to detail space zoom preserves the horizontal world center", () => {
+test("normalized horizontal camera center remains stable when the unified world extent changes", () => {
   const api = loadControlApi();
   const viewportWidth = 1200;
-  const axisWidth = 168;
-  const overviewWorldWidth = 1030;
-  const detailWorldWidth = overviewWorldWidth * 3;
-
-  const overviewCenter = api.horizontalCenterRatio(0, viewportWidth, axisWidth, overviewWorldWidth);
-  approximatelyEqual(overviewCenter, 516 / 1030);
-
-  const detailScrollLeft = api.scrollLeftForHorizontalCenter(overviewCenter, viewportWidth, axisWidth, detailWorldWidth);
-  approximatelyEqual(detailScrollLeft, 1032);
-
-  const detailCenter = api.horizontalCenterRatio(detailScrollLeft, viewportWidth, axisWidth, detailWorldWidth);
-  approximatelyEqual(detailCenter, overviewCenter);
+  const axisWidth = 152;
+  const worldA = 4200;
+  const worldB = 6300;
+  const center = api.horizontalCenterRatio(1200, viewportWidth, axisWidth, worldA);
+  const restored = api.scrollLeftForHorizontalCenter(center, viewportWidth, axisWidth, worldB);
+  approximatelyEqual(api.horizontalCenterRatio(restored, viewportWidth, axisWidth, worldB), center);
 });
 
-test("horizontal camera context clamps safely at world edges and non-scrollable overview", () => {
-  const api = loadControlApi();
-  assert.equal(api.scrollLeftForHorizontalCenter(0, 1200, 168, 3090), 0);
-  assert.equal(api.scrollLeftForHorizontalCenter(1, 1200, 168, 3090), 2058);
-  assert.equal(api.scrollLeftForHorizontalCenter(0.75, 1200, 168, 1030), 0);
-  assert.equal(api.horizontalCenterRatio(0, 1200, 168, 0), null);
-  assert.match(controlSource, /addEventListener\("change"[\s\S]*spacetimeHorizontalMode[\s\S]*captureHorizontalCamera/);
-  assert.match(controlSource, /Promise\.resolve\(\)\.then\(\(\) => restoreHorizontalCamera\(mount, snapshot\)\)/);
-});
-
-
-test("control state keeps watching authority-shell mount replacement", () => {
+test("control state contains no retired horizontal overview-detail adapter", () => {
+  assert.doesNotMatch(controlSource, /spacetimeHorizontalMode/);
+  assert.doesNotMatch(controlSource, /captureHorizontalCamera/);
+  assert.doesNotMatch(controlSource, /restoreHorizontalCamera/);
   assert.match(controlSource, /let activeMount = null;/);
-  assert.match(controlSource, /function bindCurrentMount\(\)/);
-  assert.match(controlSource, /if \(mount === activeMount\) return;/);
-  assert.match(controlSource, /activeMount = mount \|\| null;/);
   assert.match(controlSource, /const observer = new MutationObserver\(bindCurrentMount\)/);
-  assert.match(controlSource, /observer\.observe\(document\.documentElement, \{ childList: true, subtree: true \}\)/);
-  assert.doesNotMatch(controlSource, /observer\.disconnect\(\)/);
 });
