@@ -403,7 +403,7 @@
         forced: forceAll || selectedPersonId === item.track.person_id
       }));
       if (!labels.length) continue;
-      const result = labelEngine.packLabels(labels, { width: Math.max(48, region.width), height: timelineHeight }, { maxLabelWidth: Math.max(42, Math.min(164, region.width - 8)), maxHorizontalShift: region.width });
+      const result = labelEngine.packLabels(labels, { width: Math.max(48, region.width), height: timelineHeight }, { maxLabelWidth: Math.max(38, Math.min(156, region.width - 6)), maxHorizontalShift: region.width });
       placed.push(...result.placed.map((label) => ({ ...label, label_x: region.left + label.label_x, region_code: region.code, region_left: region.left })));
       deferred.push(...result.deferred);
     }
