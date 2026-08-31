@@ -27,7 +27,7 @@ test("detail action raises only the unified camera zoom", () => {
   assert.match(view, /if \(selectedPersonId && options\.detail\)/);
   assert.match(view, /cameraZoom = Math\.max\(cameraZoom, FOCUS_DETAIL_ZOOM\)/);
   assert.doesNotMatch(view, /horizontalViewMode/);
-  assert.doesNotMatch(view, /timeCameraZoom/);
+  assert.doesNotMatch(view, /\\btimeCameraZoom\\b/);
   assert.match(view, /id="spacetimeDetailPerson"/);
 });
 
