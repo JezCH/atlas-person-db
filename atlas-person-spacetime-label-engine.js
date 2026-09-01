@@ -6,9 +6,10 @@
 })(typeof globalThis !== "undefined" ? globalThis : this, () => {
   "use strict";
   const DEFAULT_LABEL_HEIGHT = 19;
-  const DEFAULT_MIN_LABEL_WIDTH = 38;
-  const DEFAULT_MAX_LABEL_WIDTH = 156;
+  const DEFAULT_MIN_LABEL_WIDTH = 30;
+  const DEFAULT_MAX_LABEL_WIDTH = 148;
   const DEFAULT_CHAR_WIDTH = 6.8;
+  const DEFAULT_LABEL_CHROME_WIDTH = 4;
   const DEFAULT_HORIZONTAL_GAP = 2;
   const DEFAULT_ANCHOR_GAP = 4;
   const DEFAULT_SEARCH_STEP = 4;
@@ -25,7 +26,7 @@
     const minimum = positive(options.minLabelWidth ?? DEFAULT_MIN_LABEL_WIDTH, "minLabelWidth");
     const maximum = positive(options.maxLabelWidth ?? DEFAULT_MAX_LABEL_WIDTH, "maxLabelWidth");
     if (maximum < minimum) throw new RangeError("maxLabelWidth must be >= minLabelWidth");
-    return clamp(12 + [...String(label?.text ?? "")].length * charWidth, minimum, maximum);
+    return clamp(DEFAULT_LABEL_CHROME_WIDTH + [...String(label?.text ?? "")].length * charWidth, minimum, maximum);
   }
   function normalizeLabel(label, options = {}) {
     const width = estimateWidth(label, options);
@@ -87,5 +88,5 @@
     }
     return Object.freeze({ placed: Object.freeze(placed), deferred: Object.freeze(deferred), viewport });
   }
-  return Object.freeze({ DEFAULT_LABEL_HEIGHT, DEFAULT_MIN_LABEL_WIDTH, DEFAULT_MAX_LABEL_WIDTH, DEFAULT_HORIZONTAL_GAP, DEFAULT_MAX_HORIZONTAL_SHIFT, estimateWidth, normalizeLabel, rectFor, rectanglesOverlap, candidateLeftPositions, connectorFor, packLabels });
+  return Object.freeze({ DEFAULT_LABEL_HEIGHT, DEFAULT_MIN_LABEL_WIDTH, DEFAULT_MAX_LABEL_WIDTH, DEFAULT_CHAR_WIDTH, DEFAULT_LABEL_CHROME_WIDTH, DEFAULT_HORIZONTAL_GAP, DEFAULT_MAX_HORIZONTAL_SHIFT, estimateWidth, normalizeLabel, rectFor, rectanglesOverlap, candidateLeftPositions, connectorFor, packLabels });
 });
