@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gian-galeazzo-visconti:lordship-of-milan:lord:1385-1395:v1",
+  "person": {
+    "canonical_name_en": "Gian Galeazzo Visconti",
+    "display_name_ko": "잔 갈레아초 비스콘티"
+  },
+  "polity": {
+    "canonical_name_en": "Lordship of Milan",
+    "display_name_ko": "밀라노 영주국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Lord",
+    "role_display_name_ko": "영주",
+    "start_year": 1385,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1395,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gian Galeazzo Visconti captured and removed his uncle Bernabò in 1385, unifying the Visconti dominion under his sole lordship. Emperor Wenceslaus granted him the ducal dignity of Milan in 1395, creating the legal transition represented by his existing Duchy of Milan Activity. ATLAS therefore records 1385-1395 as a distinct pre-ducal Lordship of Milan phase."
+  },
+  "sources": [
+    {
+      "title": "Gian Galeazzo Visconti — Dizionario di Storia, Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/gian-galeazzo-visconti_%28Dizionario-di-Storia%29/",
+      "citation_text": "Treccani states that Gian Galeazzo captured Bernabò in 1385 and reunited the Visconti dominion, and that he received the ducal dignity from the Empire on 11 May 1395.",
+      "source_type": "reference_work"
+    },
+    {
+      "title": "Visconti — Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/visconti/",
+      "citation_text": "Treccani identifies Gian Galeazzo as sole lord of the state from 1385 and Duke of Milan from 1395.",
+      "source_type": "reference_work"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}
