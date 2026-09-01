@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Umberto I",
+    "display_name_ko": "움베르토 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Italy",
+    "display_name_ko": "이탈리아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1878,
+    "start_month": 1,
+    "start_day": 9,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1900,
+    "end_month": 7,
+    "end_day": 29,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Umberto I succeeded Victor Emmanuel II as King of Italy on 9 January 1878 and reigned until his assassination at Monza on 29 July 1900."
+  },
+  "sources": [
+    {
+      "title": "Umberto I re d'Italia — Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/umberto-i-re-d-italia/",
+      "citation_text": "Treccani records Umberto I's accession on 9 January 1878 and assassination at Monza on 29 July 1900.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "FRUS 1878 — Accession of Umberto I",
+      "canonical_url": "https://history.state.gov/historicaldocuments/frus1878/d294",
+      "citation_text": "A contemporary U.S. diplomatic dispatch announces the death of Victor Emmanuel II and accession of Crown Prince Umberto as Umberto I, King of Italy, in January 1878.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
