@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Kalonga Muzura",
+    "display_name_ko": "칼롱가 무주라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Maravi Empire",
+    "display_name_ko": "마라비 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Kalonga (king)",
+    "role_display_name_ko": "칼롱가(왕)",
+    "start_year": 1608,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1635,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "The Civilization-mod spelling 'Kalonga Mazula' is normalized to the historically attested form Kalonga Muzura. Early seventeenth-century Portuguese records and modern scholarship identify Muzura as Kalonga of the Maravi. He was already a military ally of Gatsi Rusere by 1608, hosted Gaspar Bocarro in 1616, defeated Lundu in 1622, and was still described as a powerful ruler in Portuguese records in 1635. Because the exact accession and death years are uncertain, ATLAS uses a conservative documented ruling-activity window of c.1608–c.1635 rather than inventing a full reign."
+  },
+  "sources": [
+    {
+      "title": "Long-distance trade and the rise of the Maravi empire — Archaeology and Oral Tradition in Malawi",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/archaeology-and-oral-tradition-in-malawi/longdistance-trade-and-the-rise-of-the-maravi-empire/E5EDDA05233F2FA99979542FED3176A9",
+      "citation_text": "Yusuf M. Juwayeyi's academic study uses early seventeenth-century Portuguese records and identifies Kalonga Muzura among the Maravi rulers involved in regional military and commercial politics.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Maravi",
+      "canonical_url": "https://en.wikipedia.org/wiki/Maravi",
+      "citation_text": "The compiled chronology, citing Juwayeyi and Kings M. Phiri, records Muzura as Kalonga before/around 1608, active through the 1630s, with death in the 1640s; ATLAS uses only the conservative attested 1608–1635 activity window.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

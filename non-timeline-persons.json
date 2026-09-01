@@ -950,5 +950,22 @@
     "role_ko": "모르드바 서사 전승의 전설적 군주·전사",
     "reason": "Tyushtya is a central ruler figure in Mordvin (Erzya and Moksha) epic and folklore. Folklore portrays him with overtly supernatural attributes and later traditions treat 'Tyushtya' both as a ruler figure and possibly as a title. No secure contemporary evidence or defensible person-specific reign interval establishes a historical individual called Tyushtya. The user-supplied 'Eastern Finns' is therefore replaced by the more precise Mordvin/Erzya-Moksha association, and ATLAS preserves the figure outside the historical year timeline.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or mythological overlay is enabled."
+  },
+  {
+    "person_name": "Ngurunderi",
+    "politic_name": "Ngarrindjeri people",
+    "display_name_ko": "응구룬데리",
+    "politic_display_name_ko": "응가린제리족",
+    "historicity": "mythical",
+    "historicity_display_ko": "신화",
+    "timeline_status": "excluded",
+    "date_basis": "ngarrindjeri_creation_tradition_without_historical_person_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "창조 조상 존재·문화영웅",
+    "reason": "Ngurunderi is identified by Ngarrindjeri sources and South Australian government cultural material as a Creation ancestral being who shaped the land and waters and gave laws and culture to the Ngarrindjeri. Although the narrative may preserve deep-time environmental knowledge, it does not establish a datable historical human ruler. ATLAS therefore preserves Ngurunderi as a mythological ancestral figure associated with the Ngarrindjeri people and excludes the figure from the historical year timeline.",
+    "map_policy": "Do not display on the historical year timeline unless a separate mythical or traditional overlay is enabled."
   }
 ]
