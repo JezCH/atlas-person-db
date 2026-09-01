@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:kim-il-sung:retire-premier-president-1948-1994:20260901:v1",
+  "review_status": "approved",
+  "release_order": 720,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "161b1b02-2e61-5a00-b9cc-ab13ad566f29"
+  },
+  "evidence": {
+    "reason": "Compound-role audit confirmed that the legacy North Korea Activity labels Kim Il Sung as 'Premier and President' across the entire 1948-1994 interval, although these were sequential formal offices. Production now contains two reviewed replacements: Premier of the Cabinet 1948-1972 (dc25dcee-f774-428b-9cd4-cf910e6751da) and President of the DPRK 1972-1994 (19dc9859-93c5-4c49-bcf2-6e7b3dbbb61a). Retire only the legacy compound Activity; no Person or Polity is removed.",
+    "person_id": "25d01b3c-20b6-5aad-8355-a83665e66d82",
+    "replacement_activity_ids": [
+      "dc25dcee-f774-428b-9cd4-cf910e6751da",
+      "19dc9859-93c5-4c49-bcf2-6e7b3dbbb61a"
+    ],
+    "retire_activity_id": "161b1b02-2e61-5a00-b9cc-ab13ad566f29"
+  }
+}
