@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Hugh O'Neill",
+    "display_name_ko": "휴 오닐",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Tír Eoghain (O'Neill Lordship)",
+    "display_name_ko": "티르 에오간(오닐 영지)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "de_facto_rule",
+    "role": "Lord of Tyrone and The O'Neill",
+    "role_display_name_ko": "티론 영주·오닐 씨족장",
+    "start_year": 1593,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1607,
+    "end_month": 9,
+    "end_day": 14,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "In May 1593 Turlough Luineach surrendered the government of Tyrone to Hugh O'Neill; in 1595 Hugh formally assumed the Gaelic title 'The O'Neill'. After the 1603 settlement he retained a restored patent and political position in Tyrone until the Flight of the Earls on 14 September 1607. ATLAS uses the Gaelic lordship Tír Eoghain rather than treating 'Tyrone' as a modern county administration."
+  },
+  "sources": [
+    {
+      "title": "O'Neill, Hugh — Dictionary of Irish Biography",
+      "canonical_url": "https://www.dib.ie/index.php/biography/oneill-hugh-a6962",
+      "citation_text": "The Dictionary of Irish Biography records Hugh O'Neill's recognized lordship in Tyrone, his acquisition of the government of Tyrone in 1593, assumption of the title O'Neill in 1595, leadership of the confederate war, settlement in 1603, and flight in 1607.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Nine Years' War — Wiley Blackwell Encyclopedia",
+      "canonical_url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/9781444338232.wbeow449",
+      "citation_text": "The reference work describes the Nine Years' War as a rebellion led by Hugh O'Neill that became a major war involving a confederation of Irish lords and Spanish aid.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

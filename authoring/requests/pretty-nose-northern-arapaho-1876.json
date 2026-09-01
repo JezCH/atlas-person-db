@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Pretty Nose",
+    "display_name_ko": "프리티 노즈",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Northern Arapaho",
+    "display_name_ko": "북부 아라파호",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Warrior; later remembered as a war chief",
+    "role_display_name_ko": "전사·후대에 전쟁지도자로 기억된 인물",
+    "start_year": 1876,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1876,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Pretty Nose is a documented Arapaho woman photographed in the late 1870s and remembered in Arapaho family tradition as a war chief who participated in the Battle of the Little Bighorn. Because the evidence for a formal tribe-wide chieftainship is retrospective, ATLAS records the defensible 1876 warrior activity rather than treating her as the sovereign ruler of all Arapaho."
+  },
+  "sources": [
+    {
+      "title": "Smithsonian to Honor Native American Veterans With National Memorial",
+      "canonical_url": "https://www.voanews.com/amp/smithsonian-to-honor-native-american-veterans-with-national-memorial/4374842.html",
+      "citation_text": "The article identifies Pretty Nose as an Arapaho war chief believed to have fought at the Battle of the Little Bighorn and reproduces the 1878 Huffman photograph.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Pretty Nose, Arapaho Warrior who Fought at the Battle of the Little Bighorn",
+      "canonical_url": "https://www.worldhistory.org/image/19592/pretty-nose-arapaho-warrior-who-fought-at-the-batt/",
+      "citation_text": "The historical image record identifies Pretty Nose as an Arapaho warrior associated with the 1876 Battle of the Little Bighorn.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

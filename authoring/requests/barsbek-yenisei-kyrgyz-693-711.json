@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Bars Bek",
+    "display_name_ko": "바르스 벡",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Yenisei Kyrgyz Khaganate",
+    "display_name_ko": "예니세이 키르기스 카간국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khagan",
+    "role_display_name_ko": "카간",
+    "start_year": 693,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 711,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bars Bek is attested in the Old Turkic historical tradition surrounding the Yenisei Kyrgyz and Second Turkic Khaganate. Conventional reconstruction places his khaganate from about 693 until he was killed during the Göktürk winter campaign of 710–711. ATLAS keeps the year boundaries approximate because the inscriptions do not supply modern day-level regnal dates."
+  },
+  "sources": [
+    {
+      "title": "Kyrgyz Khan Bars-Beg",
+      "canonical_url": "https://open.kg/en/about-kyrgyzstan/history/kyrgyz-in-vi-xii-centuries/print%3Apage%2C1%2C35039-kyrgyzskiy-kagan-bars-beg.html",
+      "citation_text": "The historical summary places Bars-beg as Kyrgyz kagan by 693, documents his diplomacy with the Tang and his death during the Göktürk attack in the winter of 710–711.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Jenissei-Kirghiz in the Early Eighth Century — researcher record",
+      "canonical_url": "https://rd.iai.osaka-u.ac.jp/en/a943d563c32b1caf.html",
+      "citation_text": "Osaka University's researcher record lists Takashi Osawa's scholarly study 'Jenissei-Kirghiz in the Early Eighth Century', a specialist work on the period and inscriptions relevant to Bars-beg.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

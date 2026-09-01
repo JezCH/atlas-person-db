@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Deskaheh",
+    "display_name_ko": "데스카헤",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Haudenosaunee Confederacy (Six Nations of the Grand River)",
+    "display_name_ko": "하우데노사우니 연맹(그랜드리버 식스네이션스)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "general_activity",
+    "role": "Cayuga chief, speaker and diplomatic representative",
+    "role_display_name_ko": "카유가 추장·의장·외교 대표",
+    "start_year": 1921,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1924,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Levi General, bearing the title Deskaheh, was a Cayuga chief within the Six Nations hereditary council. From 1921 through 1924 he acted internationally on the Six Nations' sovereignty claim, culminating in his League of Nations campaign. Because he represented the Six Nations confederacy rather than only the Cayuga Nation, ATLAS binds this Activity to the Haudenosaunee Confederacy at Grand River."
+  },
+  "sources": [
+    {
+      "title": "DESKAHEH (Levi General) — Dictionary of Canadian Biography",
+      "canonical_url": "https://www.biographi.ca/en/bio.php?id_nbr=8103",
+      "citation_text": "The Dictionary of Canadian Biography identifies Deskaheh as a Cayuga chief and activist, documents his 1921 sovereignty mission and his 1923–1924 campaign at the League of Nations on behalf of the Six Nations, and notes that the imposed elected council in 1924 ended his authority to speak for the hereditary council.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

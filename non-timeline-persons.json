@@ -1086,5 +1086,22 @@
     "role_ko": "상 주왕의 총희로 전해지는 인물",
     "reason": "Daji is named in later received historical tradition as the favorite consort of Di Xin (King Zhou), but she is not independently attested in contemporary Shang oracle-bone inscriptions. Her notorious image as a cruel corrupter and especially as a nine-tailed fox spirit developed much later, with the fox identification becoming prominent from medieval literature onward. Because ATLAS cannot securely establish an individual historical activity interval or separate the possible historical consort from layers of later moralizing and myth, she is preserved outside the historical year timeline.",
     "map_policy": "Do not display on the historical year timeline unless a legendary or uncertain-historicity overlay is enabled."
+  },
+  {
+    "person_name": "Chiksa'",
+    "politic_name": "Chickasaw migration tradition",
+    "display_name_ko": "칙사",
+    "politic_display_name_ko": "치카소 이주 전승",
+    "historicity": "legendary_possible_historical_core",
+    "historicity_display_ko": "전승적 시조·역사적 핵심 가능",
+    "timeline_status": "excluded",
+    "date_basis": "chickasaw_official_migration_tradition_without_independently_defensible_personal_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "치카소 이주전승의 민코·시조 지도자",
+    "reason": "The Chickasaw Nation's official migration story names Chiksa' as a minko' who led one migrating group and whose followers became the Chickasaw people after separating from the group led by his brother Chahta. This is an important Chickasaw origin tradition, but it does not provide a securely datable historical individual or a defensible person-specific activity interval. ATLAS therefore preserves Chiksa' as a traditional founder figure outside the historical year timeline.",
+    "map_policy": "Do not display on the historical year timeline unless a legendary, traditional, or uncertain-chronology overlay is enabled."
   }
 ]

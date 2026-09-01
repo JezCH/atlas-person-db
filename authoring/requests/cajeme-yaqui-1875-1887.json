@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Cajeme",
+    "display_name_ko": "카헤메",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Yaqui Nation",
+    "display_name_ko": "야키 공동체",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Yaqui leader and captain general",
+    "role_display_name_ko": "야키 지도자·카피탄 헤네랄",
+    "start_year": 1875,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1887,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "José María Leyva, known as Cajeme, had been appointed alcalde mayor before turning to Yaqui autonomy. From about 1875 he organized the Yaqui towns, taxation, trade control and military resistance, creating a de facto autonomous political order that endured until his capture and execution in 1887. ATLAS deliberately avoids a disputed day-level death date and records the secure year boundary."
+  },
+  "sources": [
+    {
+      "title": "History — Texas Band of Yaquis",
+      "canonical_url": "https://www.tbyi.gov/history",
+      "citation_text": "The tribal history describes Cajeme as the central Yaqui leader in the autonomous resistance of the 1870s–1887 and records his capture and execution in 1887.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Unos indios para civilizar: los yaquis ante el progreso, 1875-1900",
+      "canonical_url": "https://www.scielo.org.mx/scielo.php?lng=es&nrm=iso&pid=S2663-371X2025000200167&script=sci_arttext&tlng=es",
+      "citation_text": "The scholarly article states that Cajeme was appointed alcalde mayor of the Yaqui, organized the Yaqui around 1875, imposed a taxation and administrative system, and led resistance against colonization.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
