@@ -22,6 +22,9 @@ test("completion contract records the readable-scale architecture without claimi
   assert.equal(contract.readable_scale.minimum_base_world_width_px, 900);
   assert.equal(contract.readable_scale.maximum_base_world_width_px, 1275);
   assert.equal(contract.readable_scale.viewport_expansion_above_cap_allowed, false);
+  assert.equal(contract.readable_scale.axis_width_px, 140);
+  assert.equal(contract.readable_scale.camera_header_height_px, 36);
+  assert.equal(contract.readable_scale.shared_chrome_compaction, true);
   assert.equal(contract.readable_scale.local_density_compression_allowed, false);
   assert.match(contractDoc, /500%/);
   assert.match(contractDoc, /uniform/i);
