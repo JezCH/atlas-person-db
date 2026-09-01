@@ -403,7 +403,11 @@
         forced: forceAll || selectedPersonId === item.track.person_id
       }));
       if (!labels.length) continue;
-      const result = labelEngine.packLabels(labels, { width: Math.max(48, region.width), height: timelineHeight }, { maxLabelWidth: Math.max(38, Math.min(156, region.width - 6)), maxHorizontalShift: region.width });
+      const runtimeMaxLabelWidth = Math.max(
+        labelEngine.DEFAULT_MIN_LABEL_WIDTH,
+        Math.min(labelEngine.DEFAULT_MAX_LABEL_WIDTH, region.width - labelEngine.DEFAULT_LABEL_CHROME_WIDTH)
+      );
+      const result = labelEngine.packLabels(labels, { width: Math.max(48, region.width), height: timelineHeight }, { maxLabelWidth: runtimeMaxLabelWidth, maxHorizontalShift: region.width });
       placed.push(...result.placed.map((label) => ({ ...label, label_x: region.left + label.label_x, region_code: region.code, region_left: region.left })));
       deferred.push(...result.deferred);
     }
