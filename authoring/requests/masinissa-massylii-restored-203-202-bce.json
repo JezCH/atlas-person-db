@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:masinissa:kingdom-of-the-massylii:king:c203-c202-bce:v1",
+  "person": {
+    "canonical_name_en": "Masinissa",
+    "display_name_ko": "마시니사"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of the Massylii",
+    "display_name_ko": "마실리 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -203,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -202,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After joining Scipio and helping defeat and capture Syphax in 203 BCE, Masinissa recovered effective royal authority over the Massylii. By about 202 BCE the Roman-backed settlement and annexation of Syphax's territories produced the wider unified Numidian kingdom already represented by his existing c.202-148 BCE Activity. ATLAS records this restored Massylian phase separately from both his earlier interrupted reign and the subsequent Kingdom of Numidia."
+  },
+  "sources": [
+    {
+      "title": "Masinissa — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/549655097",
+      "citation_text": "Oxford describes Masinissa's renewed fortunes with Scipio, the defeat and capture of Syphax, and the recovery of his kingship before the final Numidian settlement.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Masinissa — Encyclopedia of Ancient History",
+      "canonical_url": "https://www.researchgate.net/publication/264042067_Masinissa",
+      "citation_text": "The scholarly reference describes the Roman grant of Syphax's lands and royal confirmation that culminated in Masinissa's unified Numidian kingship.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-21",
+      "document_title": "마시니사",
+      "url": "https://namu.wiki/w/%EB%A7%88%EC%8B%9C%EB%8B%88%EC%82%AC"
+    }
+  }
+}
