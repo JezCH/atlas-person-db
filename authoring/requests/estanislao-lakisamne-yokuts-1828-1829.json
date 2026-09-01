@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Estanislao",
+    "display_name_ko": "에스타니슬라오",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Lakisamne Yokuts",
+    "display_name_ko": "라키삼니 요쿠츠",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Lakisamne leader and rebel commander",
+    "role_display_name_ko": "라키삼니 지도자·봉기 지휘관",
+    "start_year": 1828,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1829,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Estanislao, a Lakisamne Yokuts man and former alcalde at Mission San José, led hundreds of Native Californians back to Lakisamne territory in 1828 and organized armed resistance to mission and Mexican military authority through 1829. ATLAS uses the specific Lakisamne Yokuts political community rather than treating the broader Yokuts ethnolinguistic category or the Mexican state as his representative polity."
+  },
+  "sources": [
+    {
+      "title": "Estanislao and the 1828 Revolt at Mission San José — Native Knowledge 360°, Smithsonian National Museum of the American Indian",
+      "canonical_url": "https://americanindian.si.edu/nk360/california-missions/source-h/",
+      "citation_text": "The Smithsonian identifies Estanislao as Lakisamne Yokuts and describes his 1828 return to Lakisamne territory, alliance-building, fortification, and resistance to multiple attacks.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Native Americans and the California Mission System — California Office of Historic Preservation",
+      "canonical_url": "https://ohp.parks.ca.gov/pages/1054/files/CA_Multiple_Native%20Americans%20and%20CA%20Mission%20System%20MPDF.pdf",
+      "citation_text": "California's historic-preservation documentation identifies the Estanislao Revolt as a major 1828–1829 Yokuts-led uprising and records his leadership role.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
