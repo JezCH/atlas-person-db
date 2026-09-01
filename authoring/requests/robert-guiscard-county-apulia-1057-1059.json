@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:robert-guiscard:county-of-apulia:count:1057-1059:v1",
+  "person": {
+    "canonical_name_en": "Robert Guiscard",
+    "display_name_ko": "로베르 기스카르"
+  },
+  "polity": {
+    "canonical_name_en": "County of Apulia",
+    "display_name_ko": "아풀리아 백국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Count",
+    "role_display_name_ko": "백작",
+    "start_year": 1057,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1059,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Robert Guiscard succeeded his brother Humphrey as Count of Apulia in 1057. At the Council of Melfi in 1059 Pope Nicholas II invested him with the higher ducal authority over Apulia and Calabria, represented by his existing 1059-1085 Activity. ATLAS therefore records the preceding comital polity and office separately rather than extending the later duchy backward."
+  },
+  "sources": [
+    {
+      "title": "Roberto I detto il Guiscardo — Treccani, Dizionario di Storia",
+      "canonical_url": "https://www.treccani.it/enciclopedia/roberto-i-detto-il-guiscardo_%28Dizionario-di-Storia%29/",
+      "citation_text": "Treccani states that Robert was elected Count of Apulia in 1057 and received the ducal investiture of Apulia and Calabria at Melfi in 1059.",
+      "source_type": "reference_work"
+    },
+    {
+      "title": "Robert Guiscard — Encyclopaedia Britannica 1911",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Robert_Guiscard",
+      "citation_text": "The Britannica biography records Robert's succession to Humphrey as Count of Apulia in 1057 and papal investiture in 1059.",
+      "source_type": "reference_work"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-26",
+      "document_title": "로베르 기스카르",
+      "url": "https://namu.wiki/w/%EB%A1%9C%EB%B2%A0%EB%A5%B4%20%EA%B8%B0%EC%8A%A4%EC%B9%B4%EB%A5%B4"
+    }
+  }
+}

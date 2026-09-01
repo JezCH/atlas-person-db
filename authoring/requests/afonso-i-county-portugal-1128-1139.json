@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:afonso-i-of-portugal:county-of-portugal:count:1128-1139:v1",
+  "person": {
+    "canonical_name_en": "Afonso I of Portugal",
+    "display_name_ko": "아폰수 1세"
+  },
+  "polity": {
+    "canonical_name_en": "County of Portugal",
+    "display_name_ko": "포르투갈 백국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Count",
+    "role_display_name_ko": "백작",
+    "start_year": 1128,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1139,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Afonso Henriques defeated his mother's faction at São Mamede in 1128 and thereafter exercised effective government over the County of Portugal. Institutional and scholarly accounts conventionally describe him as count/ruler of Portugal before his adoption of royal status around 1139-1140, although his own charters often used the princely style infans. ATLAS therefore records the effective comital-polity phase from 1128 to c.1139 separately from his existing royal Activity."
+  },
+  "sources": [
+    {
+      "title": "D. Afonso Henriques — Assembleia da República",
+      "canonical_url": "https://www.parlamento.pt/VisitaParlamento/Paginas/BiogDAfonsoHenriques.aspx",
+      "citation_text": "The Portuguese Parliament states that the Battle of São Mamede in 1128 marks the beginning of Afonso Henriques's government of the County of Portugal and that after Ourique in 1139 he proclaimed himself king.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "The Papacy and the Establishment of the Kingdoms of Jerusalem, Sicily and Portugal — Journal of Ecclesiastical History",
+      "canonical_url": "https://www.cambridge.org/core/journals/journal-of-ecclesiastical-history/article/papacy-and-the-establishment-of-the-kingdoms-of-jerusalem-sicily-and-portugal-twelfthcentury-papal-political-thought-on-incipient-kingship/C1C5F8F8DF68F33F0DF642133085379F",
+      "citation_text": "Cambridge scholarship identifies São Mamede in 1128 as securing Afonso's status as Portugal's ruler and shows that his shift from princely to royal titulature occurred only around 1139-1140.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-28",
+      "document_title": "아폰수 1세",
+      "url": "https://namu.wiki/w/%EC%95%84%ED%8F%B0%EC%88%98%201%EC%84%B8"
+    }
+  }
+}
