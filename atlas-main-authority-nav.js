@@ -140,7 +140,7 @@
     if (spacetimeAssetsPromise) return spacetimeAssetsPromise;
     appendStylesheetOnce("./atlas-person-spacetime-view.css?v=20260901-uniform-076-label-chrome");
     spacetimeAssetsPromise = loadScriptOnce("./atlas-person-spacetime-model.js?v=20260831-500-floor", () => Boolean(window.ATLAS_PERSON_SPACETIME_MODEL))
-      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20260901-uniform-076-label-chrome", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
+      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20260901-runtime-label-bound", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
       .then(() => window.ATLAS_PERSON_SPACETIME_VIEW)
       .catch((error) => {
         spacetimeAssetsPromise = null;
