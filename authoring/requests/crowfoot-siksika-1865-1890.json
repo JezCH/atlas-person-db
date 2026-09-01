@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Crowfoot",
+    "display_name_ko": "크로우풋",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Siksika (Blackfoot)",
+    "display_name_ko": "시크시카(블랙풋)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Chief and head chief",
+    "role_display_name_ko": "추장·수석 추장",
+    "start_year": 1865,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1890,
+    "end_month": 4,
+    "end_day": 25,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Crowfoot became a minor chief of a Siksika band in 1865 and emerged as one of the principal head chiefs after the 1869–1870 smallpox epidemic, remaining a central Siksika political leader until his death in 1890. ATLAS uses Siksika rather than falsely portraying him as a unitary sovereign over the entire Blackfoot Confederacy."
+  },
+  "sources": [
+    {
+      "title": "ISAPO-MUXIKA (Crowfoot) — Dictionary of Canadian Biography",
+      "canonical_url": "https://www.biographi.ca/en/bio.php?BioId=39726",
+      "citation_text": "The Dictionary of Canadian Biography records Crowfoot's rise to minor chief in 1865, later emergence as a head chief of the Blackfoot tribe, and death on 25 April 1890.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

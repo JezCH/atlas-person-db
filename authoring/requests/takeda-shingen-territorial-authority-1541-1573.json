@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Takeda Shingen",
+    "display_name_ko": "다케다 신겐",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Takeda territorial authority",
+    "display_name_ko": "다케다 신겐 세력권",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "de_facto_rule",
+    "role": "Daimyo",
+    "role_display_name_ko": "다이묘",
+    "start_year": 1541,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1573,
+    "end_month": 5,
+    "end_day": 13,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Takeda Shingen displaced his father and became head of the Takeda house and ruler of Kai in 1541, building a substantial territorial authority through central Japan before his death in 1573. Consistent with ATLAS modeling for Sengoku daimyo such as Uesugi Kenshin and Oda Nobunaga, the polity is represented as a durable territorial authority rather than the Takeda family itself."
+  },
+  "sources": [
+    {
+      "title": "Takeda Shingen",
+      "canonical_url": "https://en.wikipedia.org/wiki/Takeda_Shingen",
+      "citation_text": "The compiled biography records Shingen's control of the Takeda clan and Kai from 1541 until his death on 13 May 1573, with extensive campaigns and territorial rule.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

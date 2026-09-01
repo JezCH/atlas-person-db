@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Willie Seaweed",
+    "display_name_ko": "윌리 시위드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Nakwaxda'xw Kwakwaka'wakw",
+    "display_name_ko": "나콱다콰크와콰카왁",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Hereditary chief and artist",
+    "role_display_name_ko": "세습 추장·예술가",
+    "start_year": 1930,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1967,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Willie Seaweed (Kwaxitola/Hiłamas) was a high-ranking hereditary chief and major Kwakwaka'wakw artist from Blunden Harbour. Smithsonian and American Museum of Natural History records document him as chief and artist and emphasize his role in maintaining potlatch traditions during and after the Canadian prohibition. Because a precise accession date is not established, ATLAS begins the documented public chief-artist phase approximately around 1930, when surviving museum-documented works already identify him in that capacity."
+  },
+  "sources": [
+    {
+      "title": "Kwakwa̱ka̱’wakw — American Museum of Natural History",
+      "canonical_url": "https://www.amnh.org/exhibitions/permanent/northwest-coast/kwakwakawakw",
+      "citation_text": "AMNH identifies Kwaxitola (Willie Seaweed, 1873–1967) as a chief and artist who kept potlatch traditions alive during the prohibition.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Hiłamas, gikiwe´ — National Museum of the American Indian",
+      "canonical_url": "https://americanindian.si.edu/exhibitions/infinityofnations/northwest-coast/238252.html",
+      "citation_text": "The Smithsonian identifies Willie Seaweed as a high-ranking hereditary chief and one of the foremost Kwakwaka'wakw carvers, central to cultural survival.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

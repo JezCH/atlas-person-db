@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Chisli",
+    "display_name_ko": "치슬리",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Nipaguay Kumeyaay",
+    "display_name_ko": "니파과이 쿠메야이",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Kwaaypaay and resistance leader",
+    "role_display_name_ko": "콰이파이·저항 지도자",
+    "start_year": 1775,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1775,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Chisli is identified in scholarship on Mission San Diego as the Kwaaypaay, or leader, of Nipaguay and a key figure in the escalating conflict that culminated in the 1775 Kumeyaay revolt. ATLAS records the securely documented 1775 resistance context rather than inventing a longer chiefly reign."
+  },
+  "sources": [
+    {
+      "title": "To Toil in That Vineyard of the Lord — Santa Clara University Faculty Book Gallery",
+      "canonical_url": "https://scholarcommons.scu.edu/faculty_books/115/",
+      "citation_text": "The scholarly volume includes the chapter 'Chisli, Canuch, and Junípero Serra: Indian Responses to Mission San Diego, 1769–1788', establishing Chisli as a historical Kumeyaay figure in mission-era ethnohistory.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Journal of San Diego History 68(2)",
+      "canonical_url": "https://sandiegohistory.org/wp-content/uploads/2019/07/Journal_web_68-2_Summer_2019.pdf",
+      "citation_text": "The journal cites the specialist scholarship on Chisli and the 1775 Mission San Diego revolt, including Sandos and Sandos and Richard Carrico's ethnohistorical study.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

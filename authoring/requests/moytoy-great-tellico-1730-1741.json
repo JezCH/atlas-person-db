@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Moytoy of Tellico",
+    "display_name_ko": "텔리코의 모이토이",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Great Tellico (Overhill Cherokee)",
+    "display_name_ko": "그레이트 텔리코(오버힐 체로키)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Headman and war chief",
+    "role_display_name_ko": "수장·전쟁 지도자",
+    "start_year": 1730,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1741,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Moytoy was an influential headman of Great Tellico. In 1730 Alexander Cuming orchestrated a ceremony styling him 'Emperor of the Cherokee', but Cherokee towns retained their own councils and leadership and the title did not create a centralized Cherokee monarchy. ATLAS therefore records his actual Great Tellico leadership and preserves the colonial 'emperor' title only in the notes."
+  },
+  "sources": [
+    {
+      "title": "Moytoy of Tellico",
+      "canonical_url": "https://en.wikipedia.org/wiki/Moytoy_of_Tellico",
+      "citation_text": "The compiled biography identifies Moytoy as a Cherokee leader from Great Tellico, records the British-engineered 1730 'Emperor' ceremony, and his death in 1741.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Moytoy's Folly — Georgia Tribe of Eastern Cherokee",
+      "canonical_url": "https://georgiatribeofeasterncherokee.org/f/moytoy%E2%80%99s-folly",
+      "citation_text": "The tribal history emphasizes that Cherokee communities remained self-governing and describes Moytoy as an influential respected headman rather than a genuine centralized emperor.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
