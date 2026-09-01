@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "John Paul II",
+    "display_name_ko": "요한 바오로 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Vatican City",
+    "display_name_ko": "바티칸 시국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Pope and Sovereign",
+    "role_display_name_ko": "교황·국가원수",
+    "start_year": 1978,
+    "start_month": 10,
+    "start_day": 16,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2005,
+    "end_month": 4,
+    "end_day": 2,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Karol Wojtyła was elected Pope John Paul II on 16 October 1978 and remained pope until his death on 2 April 2005. Because Vatican City had existed as a sovereign territorial state since 1929, ATLAS uses Vatican City for this temporal sovereign role."
+  },
+  "sources": [
+    {
+      "title": "John Paul II — Vatican",
+      "canonical_url": "https://www.vatican.va/content/john-paul-ii/en/speeches/1978.html",
+      "citation_text": "The Vatican records the beginning of John Paul II's pontificate on 16 October 1978 and its end on 2 April 2005.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

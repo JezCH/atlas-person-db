@@ -967,5 +967,39 @@
     "role_ko": "창조 조상 존재·문화영웅",
     "reason": "Ngurunderi is identified by Ngarrindjeri sources and South Australian government cultural material as a Creation ancestral being who shaped the land and waters and gave laws and culture to the Ngarrindjeri. Although the narrative may preserve deep-time environmental knowledge, it does not establish a datable historical human ruler. ATLAS therefore preserves Ngurunderi as a mythological ancestral figure associated with the Ngarrindjeri people and excludes the figure from the historical year timeline.",
     "map_policy": "Do not display on the historical year timeline unless a separate mythical or traditional overlay is enabled."
+  },
+  {
+    "person_name": "Tadodaho",
+    "politic_name": "Onondaga Nation / Haudenosaunee tradition",
+    "display_name_ko": "타도다호",
+    "politic_display_name_ko": "오논다가족·하우데노쇼니 전승",
+    "historicity": "legendary",
+    "historicity_display_ko": "전설",
+    "timeline_status": "excluded",
+    "date_basis": "haudenosaunee_foundation_tradition_without_secure_personal_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "하우데노쇼니 건국 전승의 오논다가 지도자",
+    "reason": "Tadodaho is a central figure in Haudenosaunee Confederacy foundation tradition and is associated specifically with the Onondaga. Onondaga tradition preserves overtly supernatural elements in his story, and proposed dates for the Confederacy's founding cannot be converted into a defensible personal activity interval for Tadodaho. ATLAS therefore preserves him as a legendary political-founder figure outside the historical year timeline.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or traditional overlay is enabled."
+  },
+  {
+    "person_name": "Yujiulü Mugulü",
+    "politic_name": "Early Rouran (Yujiulü tradition)",
+    "display_name_ko": "욱구려 목골려",
+    "politic_display_name_ko": "초기 유연(욱구려씨 전승)",
+    "historicity": "legendary",
+    "historicity_display_ko": "전승적·역사성 불확실",
+    "timeline_status": "excluded",
+    "date_basis": "wei_shu_origin_tradition_without_defensible_personal_activity_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "욱구려씨·유연 기원 전승의 시조",
+    "reason": "Yujiulü Mugulü appears in the Wei Shu-derived origin tradition of the Rouran as an enslaved man who escaped, gathered followers, and became ancestral to the Yujiulü line. The narrative may preserve a historical core, but it does not provide a defensible person-specific activity interval suitable for the ATLAS historical timeline. His son Cheluhui is the figure more directly associated with organizing the followers into the group later called Rouran.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-historicity overlay is enabled."
   }
 ]

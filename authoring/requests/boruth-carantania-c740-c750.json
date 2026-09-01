@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Boruth",
+    "display_name_ko": "보루트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Carantania",
+    "display_name_ko": "카란타니아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Prince",
+    "role_display_name_ko": "공작·군주",
+    "start_year": 740,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 750,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Boruth is the first documented named prince of Carantania. Scholarship places his rule approximately c.740-c.750. Around 740 he sought Bavarian help against the Avars and subsequently accepted Bavarian overlordship. ATLAS preserves Carantania as the represented polity rather than replacing it with Bavaria."
+  },
+  "sources": [
+    {
+      "title": "KARANTANIYA — Great Russian Encyclopedia",
+      "canonical_url": "https://old.bigenc.ru/world_history/text/2044819",
+      "citation_text": "The encyclopedia identifies Boruth as prince of Carantania around 740 and dying around 750, and notes Carantania's acceptance of Bavarian overlordship after seeking aid against the Avars.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

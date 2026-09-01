@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Víctor Paz Estenssoro",
+    "display_name_ko": "빅토르 파스 에스텐소로",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Bolivia",
+    "display_name_ko": "볼리비아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1985,
+    "start_month": 8,
+    "start_day": 6,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1989,
+    "end_month": 8,
+    "end_day": 6,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Final presidential term, 6 August 1985 to 6 August 1989."
+  },
+  "sources": [
+    {
+      "title": "Víctor Paz Estenssoro",
+      "canonical_url": "https://en.wikipedia.org/wiki/V%C3%ADctor_Paz_Estenssoro",
+      "citation_text": "The compiled presidential chronology records Paz Estenssoro's terms in 1952–1956, 1960–1964 and 1985–1989.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

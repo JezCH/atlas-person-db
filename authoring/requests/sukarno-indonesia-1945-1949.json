@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Sukarno",
+    "display_name_ko": "수카르노",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Indonesia",
+    "display_name_ko": "인도네시아 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1945,
+    "start_month": 8,
+    "start_day": 18,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1949,
+    "end_month": 12,
+    "end_day": 27,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sukarno was chosen President on 18 August 1945, one day after independence was proclaimed. This first Activity ends at the constitutional transfer to the federal United States of Indonesia on 27 December 1949."
+  },
+  "sources": [
+    {
+      "title": "History of Indonesia: A Resource Book — Indonesian Ministry of Education",
+      "canonical_url": "https://repositori.kemendikdasmen.go.id/23704/1/HISTORY%20OF%20INDONESIA%20A%20RESOURCE%20BOOK.pdf",
+      "citation_text": "The Indonesian education resource records Sukarno as President from the proclamation-era state in 1945 through the constitutional transitions and into the Guided Democracy period.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

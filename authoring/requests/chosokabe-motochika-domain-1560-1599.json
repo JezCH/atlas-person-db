@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Chōsokabe Motochika",
+    "display_name_ko": "쵸소카베 모토치카",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Chōsokabe Domain",
+    "display_name_ko": "쵸소카베 영지",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Daimyō",
+    "role_display_name_ko": "다이묘",
+    "start_year": 1560,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1599,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Motochika succeeded as head of the Chōsokabe in 1560, unified Tosa in 1575, nearly unified Shikoku in 1585, and after submission to Toyotomi Hideyoshi retained Tosa until his death in 1599. ATLAS models the durable Sengoku daimyō territorial authority as a Chōsokabe domain rather than treating the clan name alone as a polity."
+  },
+  "sources": [
+    {
+      "title": "Chōsokabe Motochika chronology — Kōchi City",
+      "canonical_url": "https://www.city.kochi.kochi.jp/uploaded/attachment/155940.pdf",
+      "citation_text": "Kōchi City's chronology records Motochika's succession in 1560, unification of Tosa in 1575, near-unification of Shikoku in 1585 and death in 1599.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

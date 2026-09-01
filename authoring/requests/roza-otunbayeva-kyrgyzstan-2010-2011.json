@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Roza Otunbayeva",
+    "display_name_ko": "로자 오툰바예바",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kyrgyzstan",
+    "display_name_ko": "키르기스스탄",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 2010,
+    "start_month": 7,
+    "start_day": 3,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2011,
+    "end_month": 12,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Roza Otunbayeva headed Kyrgyzstan's interim government after the April 2010 uprising and was sworn in as President on 3 July 2010 for a limited transition term. Her successor assumed office on 1 December 2011."
+  },
+  "sources": [
+    {
+      "title": "United Nations in the Kyrgyz Republic — country history",
+      "canonical_url": "https://kyrgyzstan.un.org/en/download/2559/15703",
+      "citation_text": "The UN account states that Otunbayeva was sworn in as President on 3 July 2010 and served until her successor took office on 1 December 2011.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

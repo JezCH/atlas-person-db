@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Amage",
+    "display_name_ko": "아마게",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roxolani",
+    "display_name_ko": "록솔라니",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "de_facto_rule",
+    "role": "Queen-regent",
+    "role_display_name_ko": "여왕·섭정",
+    "start_year": -165,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -140,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Polyaenus describes Amage as the wife of the Sarmatian king Medosaccus who took over government, judged cases, stationed garrisons and repelled invasions. Modern scholarship dates the episode approximately 165-140 BCE and identifies her group more specifically with the Roxolani. Because the account is preserved in a later literary source, ATLAS marks the chronology as approximate and confidence as likely."
+  },
+  "sources": [
+    {
+      "title": "Amazons ii. Amazons in the Iranian world — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/amazons/amazons-ii/",
+      "citation_text": "Encyclopaedia Iranica cites Polyaenus and places Amage as ruler of the Roxolani around 165-140 BCE.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

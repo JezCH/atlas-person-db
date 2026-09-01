@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Yi'nan (Zhenzhu Khan)",
+    "display_name_ko": "진주 칸",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Xueyantuo Khaganate",
+    "display_name_ko": "설연타 칸국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khan",
+    "role_display_name_ko": "칸",
+    "start_year": 628,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 645,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Yi'nan was acclaimed and recognized as Zhenzhu Khan in 628 and ruled the Xueyantuo until his death in 645. The user-supplied 'Tiele Turks' is an umbrella ethnopolitical label; ATLAS uses the historically specific Xueyantuo Khaganate."
+  },
+  "sources": [
+    {
+      "title": "Zhenzhu Khan",
+      "canonical_url": "https://en.wikipedia.org/wiki/Zhenzhu_Khan",
+      "citation_text": "The compiled account, based on Tang historical sources, gives Zhenzhu Khan's Xueyantuo reign as 628-645 and identifies his personal name as Yi'nan.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

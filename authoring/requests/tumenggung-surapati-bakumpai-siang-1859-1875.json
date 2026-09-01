@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Tumenggung Surapati",
+    "display_name_ko": "투멩궁 수라파티",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Bakumpai-Siang Dayak",
+    "display_name_ko": "바쿰파이-시앙 다야크",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Chief and resistance commander",
+    "role_display_name_ko": "추장·저항 지휘관",
+    "start_year": 1859,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1875,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The game/mod label 'Pati Djaja Raja' corresponds to Tumenggung Surapati, also styled Kiai Dipati Jaya Raja / Pangeran Dipati in local traditions. He was a Dayak leader in the Dusun Ulu–Murung–Siang sphere and became an important resistance commander allied with Pangeran Antasari during the Banjar/Barito resistance from 1859 until his death in 1875. ATLAS does not create a fictional 'Dayak Empire'."
+  },
+  "sources": [
+    {
+      "title": "Berkala Arkeologi — Dayak leadership in the upper Barito",
+      "canonical_url": "https://ejournal.brin.go.id/berkalaarkeologi/article/download/4201/3007/12488",
+      "citation_text": "The BRIN archaeology article identifies Toemenggong Soera Pattie as a leader of the Dusun Ulu, Murung and Siang region and discusses the political authority of the tumenggung title.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

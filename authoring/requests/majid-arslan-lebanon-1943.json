@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Majid Arslan",
+    "display_name_ko": "마지드 아르슬란",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Lebanon",
+    "display_name_ko": "레바논",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Minister of National Defence and independence leader",
+    "role_display_name_ko": "국방장관·독립 지도자",
+    "start_year": 1943,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1943,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "During the November 1943 independence crisis, Majid Arslan was one of the uncaptured Lebanese ministers who continued governmental functions from Bechamoun after French authorities arrested the president, prime minister and other leaders. ATLAS records his high-significance independence-government activity rather than inventing a sovereign reign."
+  },
+  "sources": [
+    {
+      "title": "Nationalism and Independence, 1943–1944 — American University of Beirut",
+      "canonical_url": "https://online-exhibit.aub.edu.lb/exhibits/show/world-war-two/1943-1944/nationalism---independence",
+      "citation_text": "AUB's historical exhibit identifies Emir Majid Arslan, Minister of National Defence, among the ministers who continued Lebanese governmental functions at Bechamoun during the 1943 independence crisis.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

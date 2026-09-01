@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Grigory Choros-Gurkin",
+    "display_name_ko": "그리고리 초로스구르킨",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Karakorum-Altai District",
+    "display_name_ko": "카라코룸-알타이 자치구",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Chairman of the Karakorum-Altai Administration",
+    "role_display_name_ko": "카라코룸-알타이 행정부 의장",
+    "start_year": 1918,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1919,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Altai national movement created the Karakorum-Altai District and its executive administration in 1918. Gurkin, already chairman of the Altai Mountain Duma, became chairman of the Karakorum-Altai administration and remained a leading Altai autonomous-state figure until the structure was suppressed during the Civil War."
+  },
+  "sources": [
+    {
+      "title": "Grigory Ivanovich Choros-Gurkin — Russian Archives Guides",
+      "canonical_url": "https://guides.rusarchives.ru/node/9456",
+      "citation_text": "The archival guide records Gurkin as chairman of the Altai Mountain Duma in 1917 and chairman of the Karakorum-Altai administration in 1918.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

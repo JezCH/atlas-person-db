@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Pope Leo I",
+    "display_name_ko": "교황 레오 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Holy See",
+    "display_name_ko": "성좌",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Pope",
+    "role_display_name_ko": "교황",
+    "start_year": 440,
+    "start_month": 9,
+    "start_day": 29,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 461,
+    "end_month": 11,
+    "end_day": 10,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Leo I (Leo the Great) served as bishop of Rome and pope from 29 September 440 until his death on 10 November 461. Because Vatican City and the later Papal States did not yet exist, ATLAS uses the Holy See as the enduring ecclesiastical-political institution represented by his pontificate."
+  },
+  "sources": [
+    {
+      "title": "Leo I the Great — Vatican",
+      "canonical_url": "https://www.vatican.va/content/vatican/en/holy-father/leone-i--magno.html",
+      "citation_text": "The Vatican lists Leo I as the 45th pope, with pontificate from 29 September 440 to 10 November 461.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Sukarno",
+    "display_name_ko": "수카르노",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "United States of Indonesia",
+    "display_name_ko": "인도네시아 합중국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1949,
+    "start_month": 12,
+    "start_day": 27,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1950,
+    "end_month": 8,
+    "end_day": 17,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "During the short-lived federal constitutional phase, Sukarno served as President of the United States of Indonesia from 27 December 1949 until the unitary Republic of Indonesia was restored on 17 August 1950."
+  },
+  "sources": [
+    {
+      "title": "History of Indonesia: A Resource Book — Indonesian Ministry of Education",
+      "canonical_url": "https://repositori.kemendikdasmen.go.id/23704/1/HISTORY%20OF%20INDONESIA%20A%20RESOURCE%20BOOK.pdf",
+      "citation_text": "The Indonesian education resource records Sukarno as President from the proclamation-era state in 1945 through the constitutional transitions and into the Guided Democracy period.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

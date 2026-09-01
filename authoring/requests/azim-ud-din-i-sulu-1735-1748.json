@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Azim ud-Din I",
+    "display_name_ko": "아짐 우드딘 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Sultanate of Sulu",
+    "display_name_ko": "술루 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1735,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1748,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "First reign of Azim ud-Din I (Alimuddin I) as Sultan of Sulu, 1735–1748. His later baptism under the Christian name Don Fernando de Alimuddin refers to the same individual and is not modeled as a separate ruler identity."
+  },
+  "sources": [
+    {
+      "title": "Azim ud-Din I of Sulu",
+      "canonical_url": "https://en.wikipedia.org/wiki/Azim_ud-Din_I_of_Sulu",
+      "citation_text": "The compiled account records Azim ud-Din I (Alimuddin I) as Sultan of Sulu in 1735–1748 and again in 1764–1774, and identifies Don Fernando de Alimuddin as his Christian baptismal name rather than a separate ruler.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
