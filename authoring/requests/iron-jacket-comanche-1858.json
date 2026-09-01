@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Iron Jacket",
+    "display_name_ko": "아이언 재킷",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Comanche people",
+    "display_name_ko": "코만치족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Chief, medicine man and war leader",
+    "role_display_name_ko": "추장·주술사·전쟁 지도자",
+    "start_year": 1858,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1858,
+    "end_month": 5,
+    "end_day": 12,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Iron Jacket was a documented Comanche chieftain and medicine man. Because surviving sources do not establish a secure accession date or unified political jurisdiction, ATLAS records the well-attested 1858 war-leadership context culminating in his death in battle on 12 May 1858 rather than inventing a multi-year sovereign reign."
+  },
+  "sources": [
+    {
+      "title": "Iron Jacket — Handbook of Texas",
+      "canonical_url": "https://www.tshaonline.org/handbook/entries/iron-jacket",
+      "citation_text": "The Texas State Historical Association identifies Iron Jacket as a Comanche chieftain and medicine man and records his death in battle on 12 May 1858.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

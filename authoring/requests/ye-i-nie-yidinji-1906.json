@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Ye-i-nie",
+    "display_name_ko": "예이니",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Yidinji people",
+    "display_name_ko": "이딘지족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Aboriginal leader and high-status community figure",
+    "role_display_name_ko": "원주민 지도자·고위 공동체 인물",
+    "start_year": 1906,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1906,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The National Museum of Australia identifies Ye-i-nie as a highly esteemed Aboriginal man in traditional society and documents a 1906 gorget proclaiming him 'King of Cairns'. The University of Melbourne independently describes him as an Aboriginal leader in the Cairns region and ancestor of Yidinji elder Henrietta Marrie. ATLAS records the securely documented 1906 leadership context rather than treating the colonial 'King' title as a hereditary sovereign office."
+  },
+  "sources": [
+    {
+      "title": "Kings and the expansion of the pastoral frontier — National Museum of Australia",
+      "canonical_url": "https://www.nma.gov.au/explore/features/aboriginal-breastplates/pastoral-expansion",
+      "citation_text": "The National Museum of Australia identifies Ye-i-nie as 'King of Cairns', records his 1906 gorget, and describes him as a man of high esteem within traditional Aboriginal society.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Professor Henrietta Fourmile Marrie — University of Melbourne",
+      "canonical_url": "https://indigenousknowledge.unimelb.edu.au/people/advisory-board/professor-henrietta-fourmile-marrie",
+      "citation_text": "The University of Melbourne identifies Henrietta Marrie as directly descended from Ye-i-nie, an Aboriginal leader in the Cairns region.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

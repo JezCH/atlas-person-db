@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "William Augustus Bowles",
+    "display_name_ko": "윌리엄 오거스터스 볼스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "State of Muskogee",
+    "display_name_ko": "머스코기국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Director General and Commander-in-Chief",
+    "role_display_name_ko": "총재·총사령관",
+    "start_year": 1799,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1803,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "A congress of Creek and Seminole supporters elected Bowles director general of the State of Muskogee in 1799. The Florida Department of State identifies Mikasuke as its capital and states that the polity ended after Bowles was captured and handed to Spanish authorities in 1803. ATLAS therefore treats it as a short-lived proclaimed and de facto Indigenous-borderland polity, not merely a fictional title."
+  },
+  "sources": [
+    {
+      "title": "State of Muskogee — Florida Department of State",
+      "canonical_url": "https://dos.fl.gov/florida-facts/florida-state-symbols/state-flag/floridas-historic-flags/other-flags/state-of-muskogee/",
+      "citation_text": "Florida's Department of State states that a congress of Creeks and Seminoles elected William Augustus Bowles director general of the State of Muskogee in 1799 and that the state ended after his 1803 capture.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

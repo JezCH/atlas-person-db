@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Chief Joseph",
+    "display_name_ko": "조지프 추장",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Wallowa band of the Nez Perce",
+    "display_name_ko": "왈로와 네즈퍼스 밴드",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Band leader",
+    "role_display_name_ko": "밴드 지도자",
+    "start_year": 1871,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1904,
+    "end_month": 9,
+    "end_day": 21,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Hin-mah-too-yah-lat-kekt, known as Chief Joseph, succeeded his father as a leader of the Wallowa band after Old Chief Joseph's death in 1871. He led his people through the 1877 crisis and remained their most prominent political advocate in exile until his death on 21 September 1904. ATLAS uses the Wallowa band rather than treating him as a sovereign chief of all Nez Perce."
+  },
+  "sources": [
+    {
+      "title": "Chief Joseph — Lake Roosevelt National Recreation Area, NPS",
+      "canonical_url": "https://www.nps.gov/laro/learn/historyculture/people.htm",
+      "citation_text": "The National Park Service identifies Chief Joseph as leader of the Wallowa band of Nez Perce, gives his lifespan 1840–1904, and describes his role in the 1877 flight and later advocacy.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Old Chief Joseph Gravesite — National Park Service",
+      "canonical_url": "https://www.nps.gov/places/old-chief-joseph-gravesite.htm",
+      "citation_text": "NPS records Old Chief Joseph's death in 1871 and identifies his son Chief Joseph as the subsequent leader during the events of 1877.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
