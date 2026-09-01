@@ -6,9 +6,16 @@ It does **not** define a second database write model. A reviewed manifest is dec
 
 The broader final Authoring product — first-class Person / Place / Source objects, unresolved-safe research candidates, human review, Compile → Runtime projection and map integration — remains governed by `ATLAS_REQUIREMENTS.md` and later P13/P14 work.
 
-## Current new-write contract — Stage 2-native v2
+## Current new-write contracts
 
-All **new** authoring requests must use `atlas-authoring-manifest/v2` with UUID-bound Activity semantics.
+The repository currently supports **two intentional authoring manifest families**, and they serve different operator surfaces:
+
+- `atlas-human-authoring/v1` — the normal reviewed historical-Person registration path governed by `REGISTRATION_SOP.md` and `HUMAN_AUTHORING.md`. It accepts reviewed names/codes and lets the Production Human Authoring service resolve or create normalized Person/Polity/Role identities inside the SERIALIZABLE transaction.
+- `atlas-authoring-manifest/v2` — the lower-level Stage 2-native UUID-bound path for already-normalized authoring work.
+
+The `ATLAS Authoring Apply` workflow explicitly accepts both current families. For ordinary historical-Person registration, **follow `REGISTRATION_SOP.md` rather than converting a Human Authoring request into a UUID-bound v2 manifest merely because this README documents the native contract below.**
+
+### Stage 2-native v2 contract
 
 A v2 manifest always declares the Person and Activity. It may declare a new Polity and/or Role identity, or bind existing normalized UUIDs.
 
@@ -120,15 +127,17 @@ Certainty is recorded but is **not** part of the P9 semantic identity key. Granu
 
 Synthetic source-link UUIDs and legacy source keys are forbidden. An empty list is allowed when the reviewed manifest has no normalized Source link yet, but provenance must never be fabricated.
 
-## Legacy manifests
+## Manifest families and legacy compatibility
 
 Historical manifests remain in `authoring/requests/` as audit history.
 
+- `atlas-human-authoring/v1` is a **current** normal historical-Person registration schema. The Production workflow validates it, performs batch preflight/apply through the Human Authoring service, and verifies the resulting Stage 2-native Person/Activity data.
+- `atlas-authoring-manifest/v2` is the current Stage 2-native UUID-bound schema for normalized authoring work.
 - New `atlas-authoring-manifest/v1` writes are retired.
-- Older v1/v2 ledger requests may still replay through the compatibility path when an exact historical request already exists.
-- The Production workflow selects **only current Stage 2-native v2 manifests** for new execution.
+- Older ledger requests may still replay through the compatibility path when an exact historical request already exists.
+- The Production workflow rejects unsupported schemas; it does **not** restrict new execution to v2 when the request is a valid `atlas-human-authoring/v1` registration.
 
-Examples such as `liliuokalani.json`, `khri-srong-lde-btsan.json`, and `ngawang-lobsang-gyatso.json` predate the final Stage 2-native manifest shape and are not templates for new requests.
+Examples such as `liliuokalani.json`, `khri-srong-lde-btsan.json`, and `ngawang-lobsang-gyatso.json` predate the current contracts and are not templates for new requests.
 
 ## Atomic execution
 
