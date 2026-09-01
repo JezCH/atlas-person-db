@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Nikola I of Montenegro",
+    "display_name_ko": "니콜라 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Montenegro",
+    "display_name_ko": "몬테네그로 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1910,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1918,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Nikola I became the first and only King of Montenegro in 1910 and remained the kingdom's monarch until the 1918 political union that ended the independent Montenegrin monarchy."
+  },
+  "sources": [
+    {
+      "title": "Nikola I Petrović Njegoš — Digital Library of Montenegro",
+      "canonical_url": "https://nikola.dlib.me/me/biografija",
+      "citation_text": "The Montenegrin digital-library biography records Nikola I as Prince of Montenegro from 1860 to 1910 and King from 1910 to 1918.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

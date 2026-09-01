@@ -1001,5 +1001,22 @@
     "role_ko": "욱구려씨·유연 기원 전승의 시조",
     "reason": "Yujiulü Mugulü appears in the Wei Shu-derived origin tradition of the Rouran as an enslaved man who escaped, gathered followers, and became ancestral to the Yujiulü line. The narrative may preserve a historical core, but it does not provide a defensible person-specific activity interval suitable for the ATLAS historical timeline. His son Cheluhui is the figure more directly associated with organizing the followers into the group later called Rouran.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-historicity overlay is enabled."
+  },
+  {
+    "person_name": "Domitian of Carantania",
+    "politic_name": "Carantania",
+    "display_name_ko": "카란타니아의 도미티안",
+    "politic_display_name_ko": "카란타니아",
+    "historicity": "legendary",
+    "historicity_display_ko": "전승적·역사성 논쟁",
+    "timeline_status": "excluded",
+    "date_basis": "millstatt_hagiographic_and_epigraphic_tradition_with_disputed_historicity_and_no_secure_personal_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "카란타니아 공작 전승 인물·성인",
+    "reason": "Domitian (Domicijan Koroški) is preserved in the Millstatt tradition as a Carantanian duke and Christianizer. His name is absent from the ninth-century Conversio Bagoariorum et Carantanorum, while later hagiographic and epigraphic evidence has produced a long-running scholarly dispute over whether the tradition preserves a real Carolingian-era ruler. Even scholarship favorable to a historical core places him only broadly in Charlemagne's time, without a secure individual reign or activity interval. ATLAS therefore preserves him as a legendary/disputed-historicity Carantanian figure outside the historical year timeline.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-historicity overlay is enabled."
   }
 ]

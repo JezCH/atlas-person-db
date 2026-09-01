@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Albert Kalonji",
+    "display_name_ko": "알베르 칼론지",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Federated Kingdom of South Kasai",
+    "display_name_ko": "남카사이 연방왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Mulopwe (King)",
+    "role_display_name_ko": "물로프웨(왕)",
+    "start_year": 1961,
+    "start_month": 7,
+    "start_day": 16,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1962,
+    "end_month": 10,
+    "end_day": 5,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "On 16 July 1961 Kalonji assumed the Luba sovereign title Mulopwe and South Kasai was styled the Federated Kingdom of South Kasai. His rule ended in 1962 as the secessionist/autonomous regime collapsed. This is modeled separately from his earlier presidential headship because both the polity styling and sovereign title changed."
+  },
+  "sources": [
+    {
+      "title": "South Kasai",
+      "canonical_url": "https://en.wikipedia.org/wiki/South_Kasai",
+      "citation_text": "The compiled history records Kalonji's accession as Mulopwe on 16 July 1961 and the corresponding change of the state's title to the Federated Kingdom of South Kasai.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Albert Kalonji",
+      "canonical_url": "https://en.wikipedia.org/wiki/Albert_Kalonji",
+      "citation_text": "The biographical chronology records Kalonji as head of state of South Kasai until 5 October 1962, first as president and later as king/Mulopwe.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
