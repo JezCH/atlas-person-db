@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Emilio Aguinaldo",
+    "display_name_ko": "에밀리오 아기날도",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Revolutionary Government of the Philippines",
+    "display_name_ko": "필리핀 혁명정부",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1898,
+    "start_month": 6,
+    "start_day": 23,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1899,
+    "end_month": 1,
+    "end_day": 23,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Aguinaldo reorganized the Dictatorial Government into the Revolutionary Government on 23 June 1898. This political phase continued through the Malolos constitutional process and was superseded by the First Philippine Republic on 23 January 1899."
+  },
+  "sources": [
+    {
+      "title": "Emilio Aguinaldo y Famy (1869–1964) — National Historical Commission of the Philippines",
+      "canonical_url": "https://philhistoricsites.nhcp.gov.ph/registry_database/emilio-aguinaldo-y-famy-1869-1964-2/",
+      "citation_text": "The NHCP biographical marker records Aguinaldo's election at Tejeros on 22 March 1897, presidency of the Biak-na-Bato Republic from 2 November 1897, establishment of the Dictatorial Government on 24 May 1898, Revolutionary Government on 23 June 1898, presidency of the Philippine Republic from 23 January 1899, and capture on 23 March 1901.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Philippine Republic 1898–1901 — National Historical Commission of the Philippines",
+      "canonical_url": "https://philhistoricsites.nhcp.gov.ph/registry_database/philippine-republic-1898-1901/",
+      "citation_text": "The NHCP historical marker identifies Emilio Aguinaldo as President of the First Philippine Republic and documents its presidential seat during 1898–1899.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

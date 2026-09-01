@@ -1069,5 +1069,22 @@
     "role_ko": "베실라흐티 전승의 이교 전사·족장",
     "reason": "Kirmu-Karmu is a local Vesilahti folk-tradition figure described as a pagan Häme/Finnish war leader who opposed an early Christian missionary. The associated Kirmukarmu cemetery is a genuine Iron Age archaeological site, and some scholarship has explored whether the tradition preserves a historical core. However, the surviving personal narrative was recorded very late, chiefly in Frans Kärki's twentieth-century folklore collection, and no independently defensible individual chronology or securely identified historical person can be established. ATLAS therefore preserves the figure outside the historical year timeline.",
     "map_policy": "Do not display on the historical year timeline unless a legendary or uncertain-historicity overlay is enabled."
+  },
+  {
+    "person_name": "Daji",
+    "politic_name": "Shang dynasty (traditional court)",
+    "display_name_ko": "달기",
+    "politic_display_name_ko": "상 왕조 궁정(전승)",
+    "historicity": "legendary_possible_historical_core",
+    "historicity_display_ko": "전설·역사적 핵심 가능",
+    "timeline_status": "excluded",
+    "date_basis": "later_zhou_and_han_historiography_without_contemporary_oracle_bone_confirmation_or_secure_personal_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "상 주왕의 총희로 전해지는 인물",
+    "reason": "Daji is named in later received historical tradition as the favorite consort of Di Xin (King Zhou), but she is not independently attested in contemporary Shang oracle-bone inscriptions. Her notorious image as a cruel corrupter and especially as a nine-tailed fox spirit developed much later, with the fox identification becoming prominent from medieval literature onward. Because ATLAS cannot securely establish an individual historical activity interval or separate the possible historical consort from layers of later moralizing and myth, she is preserved outside the historical year timeline.",
+    "map_policy": "Do not display on the historical year timeline unless a legendary or uncertain-historicity overlay is enabled."
   }
 ]

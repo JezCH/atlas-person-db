@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Alfredo Stroessner",
+    "display_name_ko": "알프레도 스트로에스네르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Paraguay",
+    "display_name_ko": "파라과이 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "De facto leader",
+    "role_display_name_ko": "사실상 지도자",
+    "start_year": 1954,
+    "start_month": 5,
+    "start_day": 4,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1954,
+    "end_month": 8,
+    "end_day": 15,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Stroessner led the 4 May 1954 coup and was Paraguay's de facto ruler during the provisional presidency of Tomás Romero Pereira until assuming the presidency on 15 August 1954. ATLAS separates this coup-to-presidency phase from his formal presidential tenure."
+  },
+  "sources": [
+    {
+      "title": "Presidencia del General Alfredo Stroessner — Portal Guaraní",
+      "canonical_url": "https://www.portalguarani.com/detalles_museos_exposiciones.php?id=27&id_exposicion=117",
+      "citation_text": "The Paraguayan historical portal records Stroessner's presidency from 15 August 1954 to 3 February 1989 and describes his rise through the 1954 coup.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Alfredo Stroessner",
+      "canonical_url": "https://en.wikipedia.org/wiki/Alfredo_Stroessner",
+      "citation_text": "The political chronology distinguishes Stroessner's de facto leadership from 4 May to 15 August 1954 from his subsequent presidency.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

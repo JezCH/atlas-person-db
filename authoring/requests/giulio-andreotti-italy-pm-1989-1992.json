@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Giulio Andreotti",
+    "display_name_ko": "줄리오 안드레오티",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Italian Republic",
+    "display_name_ko": "이탈리아 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1989,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1992,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Andreotti returned as Prime Minister in 1989 and remained continuously in office across his sixth and seventh cabinets until 1992. ATLAS merges the consecutive cabinets into one uninterrupted prime-ministerial Activity."
+  },
+  "sources": [
+    {
+      "title": "Giulio Andreotti — Italian Ministry of Foreign Affairs",
+      "canonical_url": "https://www.esteri.it/en/ministero/storia/ministri_esteri/giulio_andreotti/",
+      "citation_text": "The Italian Foreign Ministry records Andreotti's first premiership in February 1972, formation of his second government in June 1972, his governments beginning in July 1976, March 1978 and March 1979, and his later foreign-ministerial career.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "La Presidenza del Consiglio dei Ministri — Governo Italiano",
+      "canonical_url": "https://www.governo.it/sites/governo.it/files/ATTI_LEGGE400.pdf",
+      "citation_text": "The Presidency of the Council's official appendix records the Andreotti VI government in 1989–1991 and Andreotti VII in 1991–1992.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

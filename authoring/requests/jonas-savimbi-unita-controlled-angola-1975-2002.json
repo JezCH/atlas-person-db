@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Jonas Savimbi",
+    "display_name_ko": "조나스 사빔비",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "UNITA-controlled territories in Angola",
+    "display_name_ko": "UNITA 지배 앙골라 지역",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "UNITA leader and de facto ruler",
+    "role_display_name_ko": "UNITA 지도자·반군 지배지역 실권자",
+    "start_year": 1975,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 2002,
+    "end_month": 2,
+    "end_day": 22,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Savimbi was not head of the internationally recognized Republic of Angola. He founded UNITA in 1966 and, after Angolan independence in 1975, led a rival political-military authority that at various times governed extensive territories, especially in southern and central Angola, until his death on 22 February 2002. ATLAS therefore uses 'UNITA-controlled territories in Angola' rather than falsely assigning him national rule over Angola."
+  },
+  "sources": [
+    {
+      "title": "Savimbi, Jonas Malheiro — Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/jonas-malheiro-savimbi_%28Dizionario-di-Storia%29/",
+      "citation_text": "Treccani records Savimbi as founder of UNITA in 1966, principal opponent of the MPLA government, controller of southern areas by the late 1980s, and a central figure in the civil war until his death in 2002.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Jonás Savimbi — CIDOB",
+      "canonical_url": "https://www.cidob.org/lider-politico/jonas-savimbi",
+      "citation_text": "CIDOB gives Savimbi's leadership of UNITA from 13 March 1966 to his death on 22 February 2002.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
