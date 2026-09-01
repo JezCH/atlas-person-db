@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:pablo-tac:payomkawichum:c1840-1841:v1",
+  "person": {
+    "canonical_name_en": "Pablo Tac",
+    "display_name_ko": "파블로 탁",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Payómkawichum (Luiseño)",
+    "display_name_ko": "파욤카위춤(루이세뇨)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Indigenous scholar and language documenter",
+    "role_display_name_ko": "원주민 학자·언어 기록자",
+    "start_year": 1840,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1841,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Pablo Tac, a Payómkawichum/Luiseño scholar from Mission San Luis Rey, wrote a Luiseño grammar, dictionary and history in Rome around 1840 and died in 1841. His work is a rare first-person Indigenous record of Luiseño language and colonial history. ATLAS links this intellectual activity to his own Payómkawichum community rather than to the Papal States where the manuscript happened to be written."
+  },
+  "sources": [
+    {
+      "title": "Pablo Tac, Indigenous Scholar: Writing on Luiseño Language and Colonial History, c.1840",
+      "canonical_url": "https://www.degruyterbrill.com/document/doi/10.1525/9780520950290/html",
+      "citation_text": "Lisbeth Haas's University of California Press study documents Tac's life and writing and reproduces his Luiseño grammar, history and dictionary.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

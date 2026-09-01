@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:uzun-hasan:aq-qoyunlu:1453-1478:v1",
+  "person": {
+    "canonical_name_en": "Uzun Hasan",
+    "display_name_ko": "우준 하산",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Aq Qoyunlu",
+    "display_name_ko": "아크 코윤루",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1453,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1478,
+    "end_month": 1,
+    "end_day": 6,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Uzun Hasan emerged as the dominant ruler of the Aq Qoyunlu in the early 1450s and transformed the confederation into a major imperial power. Modern references vary slightly over the accession year (1452/1453); ATLAS uses c.1453 while preserving the exact death date of 6 January 1478."
+  },
+  "sources": [
+    {
+      "title": "AQ QOYUNLŪ — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/aq-qoyunlu-confederation/",
+      "citation_text": "Encyclopaedia Iranica describes the Aq Qoyunlu empire reaching its zenith under Uzun Hasan and records his death on 5-6 January 1478.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Uzun Həsən (1423-1478) — Türk Dünyası Ansiklopedisi",
+      "canonical_url": "https://turkdunyasiansiklopedisi.gov.tr/detay/1110/Uzun-H%C9%99s%C9%99n-",
+      "citation_text": "The encyclopedia records Uzun Hasan as ascending the Aq Qoyunlu throne in 1453 and ruling until 1478.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

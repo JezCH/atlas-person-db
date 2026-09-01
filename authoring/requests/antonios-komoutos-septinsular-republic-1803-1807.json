@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:antonios-komoutos:septinsular-republic:1803-1807:v1",
+  "person": {
+    "canonical_name_en": "Antonios Komoutos",
+    "display_name_ko": "안토니오스 코무토스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Septinsular Republic",
+    "display_name_ko": "칠도 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Prince and President of the Ionian Senate",
+    "role_display_name_ko": "공화국 수반·이오니아 상원 의장",
+    "start_year": 1803,
+    "start_month": 11,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1807,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Antonios Komoutos succeeded Spyridon Georgios Theotokis in November 1803 as President of the Ionian Senate and head of state ('Prince') of the Septinsular Republic. His tenure ended with the republic's termination under renewed French occupation in 1807."
+  },
+  "sources": [
+    {
+      "title": "Antonios Komoutos — biographical summary",
+      "canonical_url": "https://en.wikipedia.org/wiki/Antonios_Komoutos",
+      "citation_text": "The biographical summary records Komoutos as President of the Ionian Senate and Prince/head of state of the Septinsular Republic from November 1803 to 1807.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
