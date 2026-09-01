@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:charlemagne:frankish-kingdom:king:768-814:v1",
+  "person": {
+    "canonical_name_en": "Charlemagne",
+    "display_name_ko": "카롤루스 대제"
+  },
+  "polity": {
+    "canonical_name_en": "Frankish Kingdom",
+    "display_name_ko": "프랑크 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 768,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 814,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Charlemagne became King of the Franks in 768, initially sharing the Frankish realm with his brother Carloman until 771, and retained the Frankish kingship until his death in 814. ATLAS preserves this crown as a continuous Frankish Kingdom Activity rather than folding it into the later imperial title."
+  },
+  "sources": [
+    {
+      "title": "Charlemagne (742 or 747/748–814) — Wiley Blackwell Encyclopedia of Medieval Christianity",
+      "canonical_url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/9780470670606.wbecc0263",
+      "citation_text": "The reference entry identifies Charlemagne as King of the Franks from 768 to 814, King of the Lombards from 774 to 814, and Emperor of the Romans from 800.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Charlemagne — The Henry Project",
+      "canonical_url": "https://fasg.org/projects/henryproject/data/charl000.htm",
+      "citation_text": "The prosopographical entry lists Charlemagne as King of the Franks 768–814, King of the Langobards 774–814, and Emperor 800–814.",
+      "source_type": "scholarly_reference"
+    }
+  ]
+}
