@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:catherine-de-medici:retire-compound-1560-1563:20260901:v1",
+  "review_status": "approved",
+  "release_order": 731,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "7c4f690f-ea8f-52e2-b499-017a16b8cbd6"
+  },
+  "evidence": {
+    "reason": "Production contains reviewed replacement Activity Regent 1560-1563 (c665ca7c-c809-475a-9c62-9fa5be5ffeca). Retire the legacy phase with generic compound role Queen consort and regent.",
+    "person_id": "d3db3949-d37e-5e7f-9b75-7c993fce314b",
+    "replacement_activity_ids": [
+      "c665ca7c-c809-475a-9c62-9fa5be5ffeca"
+    ],
+    "retire_activity_id": "7c4f690f-ea8f-52e2-b499-017a16b8cbd6"
+  }
+}
