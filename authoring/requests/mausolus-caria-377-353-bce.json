@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mausolus:caria:c377-c353-bce:v1",
+  "person": {
+    "canonical_name_en": "Mausolus",
+    "display_name_ko": "마우솔로스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Caria",
+    "display_name_ko": "카리아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "reign",
+    "role": "Satrap and dynast",
+    "role_display_name_ko": "사트라프·왕조 통치자",
+    "start_year": -377,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -353,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mausolus was the Hecatomnid satrap and dynastic ruler of Caria from about 377/6 to 353/2 BCE. Caria remained within the Achaemenid imperial framework, so ATLAS uses governs rather than treating Mausolus as an entirely independent sovereign."
+  },
+  "sources": [
+    {
+      "title": "Mausolus — Oxford Classical Dictionary",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/549652818",
+      "citation_text": "The Oxford Classical Dictionary identifies Mausolus as ruler of Caria from 377 to 353 BCE.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "CARIA — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/caria/",
+      "citation_text": "Encyclopaedia Iranica lists Hecatomnid Mausolus with regnal years 377/6 to 353/2 and treats Caria as an Achaemenid satrapy under the Hecatomnids.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-01",
+      "document_title": "마우솔로스",
+      "url": "https://namu.wiki/w/%EB%A7%88%EC%9A%B0%EC%86%94%EB%A1%9C%EC%8A%A4"
+    }
+  }
+}

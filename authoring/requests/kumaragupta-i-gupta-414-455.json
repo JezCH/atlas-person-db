@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:kumaragupta-i:gupta-empire:c414-c455:v1",
+  "person": {
+    "canonical_name_en": "Kumaragupta I",
+    "display_name_ko": "쿠마라굽타 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Gupta Empire",
+    "display_name_ko": "굽타 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 414,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 455,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kumaragupta I Mahendraditya succeeded Chandragupta II around 414/415 CE and ruled the Gupta Empire until about 455. The succession boundary is approximate because the epigraphic record brackets the transition rather than preserving an exact accession day."
+  },
+  "sources": [
+    {
+      "title": "Kumāragupta I — The Age of the Imperial Guptas",
+      "canonical_url": "https://ignca.gov.in/Asi_data/17904.pdf",
+      "citation_text": "The historical study gives Kumāragupta I as 414–455 CE and explains from the Sanchi and Bilsad inscriptions that the sceptre probably changed hands about 414.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Treasures of the Gupta Empire: Kumāragupta I",
+      "canonical_url": "https://www.jstor.org/stable/jj.17610828.1",
+      "citation_text": "The numismatic study notes that exact accession is unconfirmed and that scholarly consensus places accession around 415 based on epigraphic evidence.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

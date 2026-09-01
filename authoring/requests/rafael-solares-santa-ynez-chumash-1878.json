@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:rafael-solares:santa-ynez-chumash:c1878:v1",
+  "person": {
+    "canonical_name_en": "Rafael Solares",
+    "display_name_ko": "라파엘 솔라레스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Santa Ynez Chumash",
+    "display_name_ko": "산타이네스 추마시",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Chief of the Ineseño Chumash community",
+    "role_display_name_ko": "이네세뇨 추마시 공동체 추장",
+    "start_year": 1878,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1878,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Rafael Solares (1822–1890) is documented as chief/leader of the Ineseño (Santa Ynez) Chumash community at Zanja de Cota. ATLAS uses the documented c.1878 portrait context as a representative activity point rather than inventing an unsupported full chiefship interval."
+  },
+  "sources": [
+    {
+      "title": "Cultural Affiliation and Lineal Descent of Chumash Peoples",
+      "canonical_url": "https://npshistory.com/publications/chis/chumash.pdf",
+      "citation_text": "The cultural-affiliation report captions Rafael Solares as chief of the Ineseño Chumash community at Zanja Cota.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "People of the Sky: Birds in Chumash Culture",
+      "canonical_url": "https://faculty.washington.edu/hunn/vitae/Explorations-in-Ethnobiology-web.pdf",
+      "citation_text": "The publication identifies Rafael Solares as leader of the Santa Ynez Chumash community in a photograph dated 1878.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

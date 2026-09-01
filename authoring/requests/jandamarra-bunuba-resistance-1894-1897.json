@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jandamarra:bunuba:1894-1897:v1",
+  "person": {
+    "canonical_name_en": "Jandamarra",
+    "display_name_ko": "잔다마라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Bunuba",
+    "display_name_ko": "부누바",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Indigenous resistance leader",
+    "role_display_name_ko": "원주민 저항 지도자",
+    "start_year": 1894,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1897,
+    "end_month": 4,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Jandamarra was a Bunuba leader who broke with the colonial police in 1894 and led an organised armed defence of Bunuba country until he was killed at Tunnel Creek on 1 April 1897. Bunuba is his representative political community; colonial Western Australia is not used as his affiliation polity."
+  },
+  "sources": [
+    {
+      "title": "Jandamarra (1870–1897) — Australian Dictionary of Biography",
+      "canonical_url": "https://ia.anu.edu.au/biography/jandamarra-8822",
+      "citation_text": "The Australian Dictionary of Biography identifies Jandamarra as a Bunuba Aboriginal leader and documents his organised resistance from 1894 until his death on 1 April 1897.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

@@ -1154,5 +1154,22 @@
     "role_ko": "키르기스 서사시의 전설적 영웅·칸",
     "reason": "Manas is the central hero of the Kyrgyz epic trilogy and is portrayed in the epic tradition as uniting scattered Kyrgyz tribes and being chosen as khan. Proposed historical prototypes and the chronology of the epic remain debated and do not establish a secure person-specific reign or activity interval. ATLAS therefore preserves Manas as a legendary Kyrgyz-associated Person without inventing a 'Kyrgyz Civilization' polity or any timeline years.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "Queen Soma",
+    "politic_name": "Funan founding tradition",
+    "display_name_ko": "소마 여왕",
+    "politic_display_name_ko": "후난 창건 전승",
+    "historicity": "legendary",
+    "historicity_display_ko": "전설",
+    "timeline_status": "excluded",
+    "date_basis": "conflated_funan_foundation_traditions_without_defensible_person_specific_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "후난 창건 전승의 여왕",
+    "reason": "Queen Soma belongs to later and conflated Funan foundation traditions associated with Kaundinya/Preah Thong and the serpent or naga princess motif. Critical scholarship treats these origin narratives as layered legends and does not support securely identifying the later Soma figure with the Chinese Liuye account as one datable historical queen. ATLAS therefore preserves Soma as a legendary Funan-associated figure without inventing a reign interval.",
+    "map_policy": "Do not display on the historical year timeline unless a legendary or mythic overlay is enabled."
   }
 ]
