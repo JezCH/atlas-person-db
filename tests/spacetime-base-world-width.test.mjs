@@ -18,7 +18,7 @@ test("base world width is bounded globally rather than growing with a wide viewp
 test("base width cap preserves nine equal macroregion bands", () => {
   const continuum = spaceAxis.createSpatialContinuum();
   const base = spaceAxis.baseWorldWidthForViewport(3840, 152);
-  const contentWidth = base * 5 * 0.78;
+  const contentWidth = base * 5 * 0.76;
   const regions = spaceAxis.stableRegionLayout(continuum, contentWidth);
   assert.equal(regions.length, 9);
   const expected = contentWidth / 9;
