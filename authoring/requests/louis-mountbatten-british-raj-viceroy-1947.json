@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:louis-mountbatten:british-raj:1947:v1",
+  "person": {
+    "canonical_name_en": "Louis Mountbatten",
+    "display_name_ko": "루이 마운트배튼",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "British Raj",
+    "display_name_ko": "영국령 인도 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Viceroy of India",
+    "role_display_name_ko": "인도 총독",
+    "start_year": 1947,
+    "start_month": 3,
+    "start_day": 24,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1947,
+    "end_month": 8,
+    "end_day": 15,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Louis Mountbatten succeeded Lord Wavell as Viceroy of India on 24 March 1947 and served as the last viceroy through the transfer of power on 15 August 1947. His subsequent service as Governor-General of independent India is a distinct office and is intentionally not folded into this British Raj Activity."
+  },
+  "sources": [
+    {
+      "title": "Mountbatten Papers: Official papers: India, 1947-8 — University of Southampton",
+      "canonical_url": "https://www.southampton.ac.uk/assets/imported/transforms/content-block/UsefulDownloads_Download/0CF6048CF9964036BBFB50CB107D4206/MB1_D.pdf",
+      "citation_text": "The Mountbatten Papers catalogue records that Mountbatten succeeded Wavell as Viceroy on 24 March 1947 and separately identifies the post-transfer Governor-General period.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

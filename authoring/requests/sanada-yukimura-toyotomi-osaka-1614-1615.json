@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sanada-yukimura:toyotomi-osaka:1614-1615:v1",
+  "person": {
+    "canonical_name_en": "Sanada Yukimura",
+    "display_name_ko": "사나다 유키무라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Toyotomi Osaka regime",
+    "display_name_ko": "오사카 도요토미 정권",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Commander in the Osaka campaigns",
+    "role_display_name_ko": "오사카 전역 지휘관",
+    "start_year": 1614,
+    "start_month": 11,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1615,
+    "end_month": 6,
+    "end_day": 3,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sanada Nobushige, popularly known as Yukimura, was not the sovereign ruler of a 'Sanada state'. His historically significant final role was as a senior commander defending Toyotomi Hideyori's Osaka regime during the winter and summer Osaka campaigns of 1614-1615. ATLAS therefore models him as serving the Toyotomi political-military remnant, not as ruling a clan polity."
+  },
+  "sources": [
+    {
+      "title": "Sanada Yukimura — Osaka campaign summary",
+      "canonical_url": "https://en.wikipedia.org/wiki/Sanada_Yukimura",
+      "citation_text": "The campaign chronology documents Yukimura/Nobushige as a principal commander on the Osaka side in the 1614-1615 siege, ending with his death in the summer campaign.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

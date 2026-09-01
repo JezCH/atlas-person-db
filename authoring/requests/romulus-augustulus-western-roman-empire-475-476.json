@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:romulus-augustulus:western-roman-empire:475-476:v1",
+  "person": {
+    "canonical_name_en": "Romulus Augustulus",
+    "display_name_ko": "로물루스 아우구스툴루스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Western Roman Empire",
+    "display_name_ko": "서로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Western Roman Emperor",
+    "role_display_name_ko": "서로마 황제",
+    "start_year": 475,
+    "start_month": 10,
+    "start_day": 31,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 476,
+    "end_month": 9,
+    "end_day": 4,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Romulus Augustus, commonly called Romulus Augustulus, was installed as emperor in the West on 31 October 475 and deposed by Odoacer on 4 September 476. Julius Nepos continued to claim the western imperial title in exile, so ATLAS records Romulus specifically as the emperor ruling in Italy rather than treating his deposition as an uncontested legal end of all Western imperial claims."
+  },
+  "sources": [
+    {
+      "title": "Romulus Augustulus — Roman emperor",
+      "canonical_url": "https://en.wikipedia.org/wiki/Romulus_Augustulus",
+      "citation_text": "The standard chronology gives Romulus's western imperial reign as 31 October 475 to 4 September 476 and notes Julius Nepos's continued claim from exile.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

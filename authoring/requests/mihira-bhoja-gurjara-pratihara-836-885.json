@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mihira-bhoja:gurjara-pratihara:836-885:v1",
+  "person": {
+    "canonical_name_en": "Mihira Bhoja",
+    "display_name_ko": "미히라 보자",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Gurjara-Pratihara Empire",
+    "display_name_ko": "구르자라-프라티하라 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 836,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 885,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mihira Bhoja (Bhoja I) ruled the Gurjara-Pratihara Empire from 836 to 885 and restored it as one of northern India's major imperial powers."
+  },
+  "sources": [
+    {
+      "title": "Mihira Bhoja — Pratihara emperor",
+      "canonical_url": "https://en.wikipedia.org/wiki/Mihira_Bhoja",
+      "citation_text": "The ruler chronology gives Mihira Bhoja's Pratihara reign as 836-885.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:wonggu:yolngu:c1930-1959:v1",
+  "person": {
+    "canonical_name_en": "Wonggu",
+    "display_name_ko": "웡구",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Yolngu",
+    "display_name_ko": "욜ŋ우",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Djapu elder and Yolngu leader",
+    "role_display_name_ko": "자푸 원로·욜ŋ우 지도자",
+    "start_year": 1930,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1959,
+    "end_month": 6,
+    "end_day": 7,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Wonggu (c.1880-1959) was a senior elder of the Djapu, a Yolngu clan of north-east Arnhem Land, and an influential Aboriginal leader during the Caledon Bay crisis and its aftermath. The Australian Dictionary of Biography summarizes his leadership period as 1930-1959; ATLAS therefore uses c.1930 to his death on 7 June 1959."
+  },
+  "sources": [
+    {
+      "title": "Wonggu (1880–1959) — Australian Dictionary of Biography",
+      "canonical_url": "https://adb.anu.edu.au/biography/wonggu-12061",
+      "citation_text": "The Australian Dictionary of Biography identifies Wonggu as a Djapu/Yolngu Aboriginal leader and senior elder, with a life summary describing Indigenous leadership from 1930 to 1959.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

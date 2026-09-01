@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:osman-ali-khan:hyderabad-state:1911-1948:v1",
+  "person": {
+    "canonical_name_en": "Mir Osman Ali Khan",
+    "display_name_ko": "미르 오스만 알리 칸",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Hyderabad State",
+    "display_name_ko": "하이데라바드국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Nizam of Hyderabad",
+    "role_display_name_ko": "하이데라바드 니잠",
+    "start_year": 1911,
+    "start_month": 8,
+    "start_day": 29,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1948,
+    "end_month": 9,
+    "end_day": 17,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mir Osman Ali Khan became Nizam of Hyderabad on 29 August 1911 and remained its sovereign princely ruler until Hyderabad's incorporation into the Indian Union in September 1948. His later titular status is not extended as territorial rule."
+  },
+  "sources": [
+    {
+      "title": "Mir Osman Ali Khan — Nizam of Hyderabad",
+      "canonical_url": "https://en.wikipedia.org/wiki/Mir_Osman_Ali_Khan",
+      "citation_text": "The ruler chronology gives Osman Ali Khan's reign as Nizam of Hyderabad from 29 August 1911 to 17 September 1948.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:honma-yoshihisa:sado-honma:c1185:v1",
+  "person": {
+    "canonical_name_en": "Honma Yoshihisa",
+    "display_name_ko": "혼마 요시히사",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Sado Honma authority",
+    "display_name_ko": "사도 혼마 세력권",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Early Honma governor tradition of Sado",
+    "role_display_name_ko": "사도 혼마계 초기 통치자",
+    "start_year": 1185,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "uncertain",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1185,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "uncertain",
+    "end_calendar": "unspecified_historical",
+    "confidence": "disputed",
+    "chronology_status": "reviewed",
+    "notes": "Later Honma genealogical tradition associates Honma Yoshihisa with the origins of Honma rule on Sado, but modern historical summaries place the securely documented Honma entry into Sado's shugo-deputy structure after the Jōkyū War and the documentary record becomes firm only in the thirteenth century. ATLAS therefore preserves only a c.1185 representative tradition point with uncertain/disputed status and does not fabricate a continuous rule interval or treat the Honma clan itself as a state."
+  },
+  "sources": [
+    {
+      "title": "本間氏 — 世界大百科事典 via Kotobank",
+      "canonical_url": "https://kotobank.jp/word/%E6%9C%AC%E9%96%93%E6%B0%8F-1207075",
+      "citation_text": "The encyclopedia treats the Honma as local warriors of Sado and places their documented Sado shugo-deputy position in the Kamakura period, with secure evidence emerging in the thirteenth century.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "佐渡市歴史的風致維持向上計画 — Sado City",
+      "canonical_url": "https://www.city.sado.niigata.jp/uploaded/attachment/15259.pdf",
+      "citation_text": "Sado City's historical plan states that the Honma entered Sado as deputies of the shugo after the Jōkyū War and subsequently expanded their control across the island.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
