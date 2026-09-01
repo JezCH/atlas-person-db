@@ -63,7 +63,7 @@ Permanent dense windows:
 1. Europe, AD 1800–1950.
 2. East Asia, AD 500–1900.
 
-At sufficient zoom: label overlap count = 0, historical Y deviation = 0 px, deferred visible labels = 0. Reducing below 500% is never an acceptance strategy.
+At sufficient zoom: label overlap count = 0, historical Y deviation = 0 px, deferred visible labels = 0. Reducing below 500% is never an acceptance strategy. The label packer keeps the historical-Y invariant and evaluates deterministic baseline, width-first, and collision-constrained horizontal orders; the baseline order is always a candidate, so an alternative order is selected only when it preserves forced labels and improves placed-label count or equal-count horizontal shift.
 
 ## Legacy prohibition
 

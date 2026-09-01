@@ -67,25 +67,82 @@
     if (distance <= threshold + EPSILON) return null;
     return Object.freeze({ x1: label.anchor_x, y1: label.anchor_y, x2: endX, y2: label.anchor_y, length: distance });
   }
-  function packLabels(labels, viewportInput, options = {}) {
-    const viewport = Object.freeze({ width: positive(viewportInput?.width, "viewport.width"), height: positive(viewportInput?.height, "viewport.height") });
-    const gap = Math.max(0, Number(options.gap ?? DEFAULT_HORIZONTAL_GAP) || 0);
-    const normalized = (Array.isArray(labels) ? labels : []).map((label) => normalizeLabel(label, options));
-    normalized.sort((a, b) => (a.forced !== b.forced ? (a.forced ? -1 : 1) : a.anchor_y - b.anchor_y || a.anchor_x - b.anchor_x || a.person_id.localeCompare(b.person_id)));
+  function baseLabelOrder(a, b) {
+    return a.forced !== b.forced ? (a.forced ? -1 : 1) : a.anchor_y - b.anchor_y || a.anchor_x - b.anchor_x || a.person_id.localeCompare(b.person_id);
+  }
+  function verticalCollisionCount(label, labels, gap) {
+    const top = label.anchor_y - label.height / 2;
+    const bottom = label.anchor_y + label.height / 2;
+    let count = 0;
+    for (const other of labels) {
+      if (other === label) continue;
+      const otherTop = other.anchor_y - other.height / 2;
+      const otherBottom = other.anchor_y + other.height / 2;
+      if (bottom + gap <= otherTop + EPSILON || otherBottom + gap <= top + EPSILON) continue;
+      count += 1;
+    }
+    return count;
+  }
+  function packOrderedLabels(order, viewport, options, gap, candidateMap) {
     const placed = [], deferred = [];
-    for (const label of normalized) {
+    for (const label of order) {
       const preferredTop = label.anchor_y - label.height / 2;
-      if (preferredTop < -EPSILON || preferredTop + label.height > viewport.height + EPSILON || label.width > viewport.width + EPSILON) { deferred.push(Object.freeze({ ...label, reason: "viewport_capacity" })); continue; }
+      if (preferredTop < -EPSILON || preferredTop + label.height > viewport.height + EPSILON || label.width > viewport.width + EPSILON) {
+        deferred.push(Object.freeze({ ...label, reason: "viewport_capacity" }));
+        continue;
+      }
       let accepted = null;
-      for (const left of candidateLeftPositions(label, viewport.width, options)) {
+      for (const left of candidateMap.get(label) || []) {
         const rect = rectFor(label, left);
         if (placed.some((item) => rectanglesOverlap(rect, item.rect, gap))) continue;
         accepted = Object.freeze({ ...label, label_x: left, label_y: label.anchor_y, rect, horizontal_shift: left + label.width / 2 - label.anchor_x, connector: connectorFor(label, rect, options) });
         break;
       }
-      if (accepted) placed.push(accepted); else deferred.push(Object.freeze({ ...label, reason: "collision_capacity" }));
+      if (accepted) placed.push(accepted);
+      else deferred.push(Object.freeze({ ...label, reason: "collision_capacity" }));
     }
-    return Object.freeze({ placed: Object.freeze(placed), deferred: Object.freeze(deferred), viewport });
+    return { placed, deferred };
+  }
+  function candidateQuality(result) {
+    return Object.freeze({
+      forced_placed: result.placed.reduce((count, item) => count + (item.forced ? 1 : 0), 0),
+      placed: result.placed.length,
+      total_shift: result.placed.reduce((sum, item) => sum + Math.abs(Number(item.horizontal_shift) || 0), 0)
+    });
+  }
+  function betterPacking(current, candidate) {
+    const left = candidateQuality(current);
+    const right = candidateQuality(candidate);
+    if (right.forced_placed !== left.forced_placed) return right.forced_placed > left.forced_placed ? candidate : current;
+    if (right.placed !== left.placed) return right.placed > left.placed ? candidate : current;
+    if (right.total_shift + EPSILON < left.total_shift) return candidate;
+    return current;
+  }
+  function freezePacking(result, viewport) {
+    return Object.freeze({ placed: Object.freeze(result.placed), deferred: Object.freeze(result.deferred), viewport });
+  }
+  function packLabels(labels, viewportInput, options = {}) {
+    const viewport = Object.freeze({ width: positive(viewportInput?.width, "viewport.width"), height: positive(viewportInput?.height, "viewport.height") });
+    const gap = Math.max(0, Number(options.gap ?? DEFAULT_HORIZONTAL_GAP) || 0);
+    const normalized = (Array.isArray(labels) ? labels : []).map((label) => normalizeLabel(label, options));
+    const candidateMap = new Map(normalized.map((label) => [label, candidateLeftPositions(label, viewport.width, options)]));
+    const baselineOrder = normalized.slice().sort(baseLabelOrder);
+    let best = packOrderedLabels(baselineOrder, viewport, options, gap, candidateMap);
+    if (!best.deferred.length || normalized.length < 3) return freezePacking(best, viewport);
+
+    const collisionCounts = new Map(normalized.map((label) => [label, verticalCollisionCount(label, normalized, gap)]));
+    const widthFirst = normalized.slice().sort((a, b) =>
+      a.forced !== b.forced ? (a.forced ? -1 : 1)
+        : b.width - a.width || collisionCounts.get(b) - collisionCounts.get(a) || baseLabelOrder(a, b)
+    );
+    const constrainedFirst = normalized.slice().sort((a, b) =>
+      a.forced !== b.forced ? (a.forced ? -1 : 1)
+        : collisionCounts.get(b) - collisionCounts.get(a) || b.width - a.width || baseLabelOrder(a, b)
+    );
+
+    best = betterPacking(best, packOrderedLabels(widthFirst, viewport, options, gap, candidateMap));
+    best = betterPacking(best, packOrderedLabels(constrainedFirst, viewport, options, gap, candidateMap));
+    return freezePacking(best, viewport);
   }
   return Object.freeze({ DEFAULT_LABEL_HEIGHT, DEFAULT_MIN_LABEL_WIDTH, DEFAULT_MAX_LABEL_WIDTH, DEFAULT_HORIZONTAL_GAP, DEFAULT_MAX_HORIZONTAL_SHIFT, estimateWidth, normalizeLabel, rectFor, rectanglesOverlap, candidateLeftPositions, connectorFor, packLabels });
 });

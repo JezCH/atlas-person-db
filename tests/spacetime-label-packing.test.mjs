@@ -61,3 +61,37 @@ test("label placement is deterministic and sparse labels remain exactly on their
   assert.deepEqual(first.placed.map((item) => item.label_y), [40, 140, 240]);
   assert.deepEqual(first.placed.map((item) => item.anchor_y), [40, 140, 240]);
 });
+
+
+test("multi-order packing improves constrained clusters without moving historical Y", () => {
+  const input = [
+    { person_id: "a", text: "A", anchor_x: 100, anchor_y: 134, width: 78 },
+    { person_id: "b", text: "B", anchor_x: 60, anchor_y: 126, width: 42 },
+    { person_id: "c", text: "C", anchor_x: 120, anchor_y: 94, width: 54 },
+    { person_id: "d", text: "D", anchor_x: 100, anchor_y: 126, width: 66 }
+  ];
+  const result = labels.packLabels(input, { width: 170, height: 220 }, { maxHorizontalShift: 170 });
+
+  assert.equal(result.placed.length, 3);
+  assert.equal(result.deferred.length, 1);
+  assertNoRectangleOverlap(result.placed, labels.DEFAULT_HORIZONTAL_GAP);
+  for (const placement of result.placed) {
+    assert.equal(placement.label_y, placement.anchor_y);
+  }
+  assert.deepEqual(
+    result.placed.map((item) => item.person_id).sort(),
+    ["a", "c", "d"]
+  );
+});
+
+test("multi-order packing stays deterministic", () => {
+  const input = [
+    { person_id: "a", text: "A", anchor_x: 100, anchor_y: 134, width: 78 },
+    { person_id: "b", text: "B", anchor_x: 60, anchor_y: 126, width: 42 },
+    { person_id: "c", text: "C", anchor_x: 120, anchor_y: 94, width: 54 },
+    { person_id: "d", text: "D", anchor_x: 100, anchor_y: 126, width: 66 }
+  ];
+  const first = labels.packLabels(input, { width: 170, height: 220 }, { maxHorizontalShift: 170 });
+  const second = labels.packLabels(input, { width: 170, height: 220 }, { maxHorizontalShift: 170 });
+  assert.deepEqual(first, second);
+});
