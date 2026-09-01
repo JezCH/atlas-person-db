@@ -1,0 +1,21 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:frederick-i-barbarossa:retire-compound-king-emperor-1152-1190:20260901:v1",
+  "review_status": "approved",
+  "release_order": 711,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "38d57f2a-61e2-57b1-9dd8-c5ddb9d88e9a"
+  },
+  "evidence": {
+    "reason": "Production read-back after audit batch 29 confirms four reviewed replacement Activities for Frederick I Barbarossa: Duchy of Swabia — Duke 1147-1152 (a0ff70a2-3d85-492c-9a23-28a1c7da859a), Holy Roman Empire — King of the Romans 1152-1190 (4f71f8f8-095f-47bf-8290-f09423d6dc08), Kingdom of Italy — King 1155-1190 (5b52e0b1-167a-4d2f-8e3f-494a4974977f), and Holy Roman Empire — Holy Roman Emperor 1155-1190 (733356b6-8d37-498a-99ed-bedb6ac61848). Retire only the legacy Holy Roman Empire 1152-1190 Activity with free-text role 'King and emperor', which conflates the royal and imperial stages and omits the separately modeled Italian crown.",
+    "person_id": "1d2e250d-1f41-58f6-8aff-17fff0962ec8",
+    "replacement_activity_ids": [
+      "a0ff70a2-3d85-492c-9a23-28a1c7da859a",
+      "4f71f8f8-095f-47bf-8290-f09423d6dc08",
+      "5b52e0b1-167a-4d2f-8e3f-494a4974977f",
+      "733356b6-8d37-498a-99ed-bedb6ac61848"
+    ],
+    "retire_activity_id": "38d57f2a-61e2-57b1-9dd8-c5ddb9d88e9a"
+  }
+}
