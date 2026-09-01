@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:willem-ii:duchy-of-limburg-1839-1867:duke:1840-1849:v1",
+  "person": {
+    "canonical_name_en": "Willem II",
+    "display_name_ko": "빌럼 2세"
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Limburg (1839–1867)",
+    "display_name_ko": "림뷔르흐 공국 (1839~1867)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Duke",
+    "role_display_name_ko": "공작",
+    "start_year": 1840,
+    "start_month": 10,
+    "start_day": 7,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1849,
+    "end_month": 3,
+    "end_day": 17,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Willem II succeeded Willem I on 7 October 1840 as King of the Netherlands, Grand Duke of Luxembourg and Duke of Limburg, and held the Limburg title until his death on 17 March 1849. ATLAS creates a separate nineteenth-century Limburg polity identity because the Duchy created in 1839 as part of the post-Belgian settlement and German Confederation arrangement was not the same political entity as the medieval Duchy of Limburg already represented in the catalog."
+  },
+  "sources": [
+    {
+      "title": "Koning Willem II (1840-1849) — Het Koninklijk Huis",
+      "canonical_url": "https://www.koninklijkhuis.nl/onderwerpen/koninklijk-huis/geschiedenis/koningen-en-koninginnen/koning-willem-2-1840-1849",
+      "citation_text": "The Dutch Royal House states that Willem II succeeded in 1840 as King of the Netherlands, Grand Duke of Luxembourg and Duke of Limburg, and reigned until his death on 17 March 1849.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "Koning Willem I (1815-1840) — Het Koninklijk Huis",
+      "canonical_url": "https://www.koninklijkhuis.nl/onderwerpen/koninklijk-huis/geschiedenis/koningen-en-koninginnen/koning-willem-1-1815-1840",
+      "citation_text": "The Dutch Royal House records Willem I as Duke of Limburg after the definitive separation of Belgium in 1839 and his abdication on 7 October 1840, establishing the nineteenth-century ducal succession inherited by Willem II.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "Koning Willem III (1849-1890) — Het Koninklijk Huis",
+      "canonical_url": "https://www.koninklijkhuis.nl/onderwerpen/koninklijk-huis/geschiedenis/koningen-en-koninginnen/koning-willem-3-1849-1890",
+      "citation_text": "The Dutch Royal House identifies Willem III as Duke of Limburg from 1849 to 1866, corroborating that the nineteenth-century Limburg title was a distinct historical institution from the medieval duchy.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "빌럼 2세",
+      "url": "https://namu.wiki/w/%EB%B9%8C%EB%9F%BC%202%EC%84%B8"
+    }
+  }
+}
