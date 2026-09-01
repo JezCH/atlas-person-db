@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Odd Olsen Ingerø",
+    "display_name_ko": "오드 올센 잉에뢰",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Svalbard",
+    "display_name_ko": "스발바르",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Governor of Svalbard",
+    "role_display_name_ko": "스발바르 총독",
+    "start_year": 2001,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2005,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "First term as Governor (Sysselmester/Sysselmann) of Svalbard, the Norwegian state's highest public representative in the remote archipelago. ATLAS retains Svalbard as the represented outer political-administrative space under the project's remote-territory representation rule."
+  },
+  "sources": [
+    {
+      "title": "Tidligere sysselmenn — Governor of Svalbard",
+      "canonical_url": "https://www.sysselmesteren.no/om-sysselmesteren/dagens-sysselmann/tidligere-sysselmenn/",
+      "citation_text": "The official Governor of Svalbard list records Odd Olsen Ingerø as Governor in 2001–2005 and again in 2009–2015.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

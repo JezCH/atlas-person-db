@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Alikhan Bukeikhanov",
+    "display_name_ko": "알리한 부케이하노프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Alash Autonomy",
+    "display_name_ko": "알라시 자치국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Chairman of Alash Orda",
+    "role_display_name_ko": "알라시 오르다 의장",
+    "start_year": 1917,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1920,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "At the Second All-Kazakh Congress in December 1917 the Alash national-territorial autonomy and its council Alash Orda were formed, and Bukeikhanov was elected chairman. He led Alash Orda through the Civil War period until the autonomy's dissolution under Soviet power in 1920."
+  },
+  "sources": [
+    {
+      "title": "Alikhan Bukeikhan — Qazaqstan Tarihy",
+      "canonical_url": "https://e-history.kz/ru/prominent-figures/show/12697",
+      "citation_text": "Kazakhstan's national history portal records Bukeikhanov's election as chairman of Alash Orda in December 1917 and his leadership during 1917-1920.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

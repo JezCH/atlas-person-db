@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Éamon de Valera",
+    "display_name_ko": "에이먼 데 벌레라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Irish Free State",
+    "display_name_ko": "아일랜드 자유국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President of the Executive Council",
+    "role_display_name_ko": "집행평의회 의장",
+    "start_year": 1932,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1937,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "De Valera became President of the Executive Council in 1932 and remained head of government through the constitutional transition in 1937. ATLAS separates the Irish Free State phase from the later Ireland polity."
+  },
+  "sources": [
+    {
+      "title": "Éamon de Valera — President of Ireland",
+      "canonical_url": "https://president.ie/en/the-president/eamon-devalera",
+      "citation_text": "The official President of Ireland biography records de Valera's leadership of government from 1932, his Taoiseach terms, and his presidency from 1959 to 1973.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Ibrahim I of Shirvan",
+    "display_name_ko": "이브라힘 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Shirvan",
+    "display_name_ko": "시르반",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Shirvanshah",
+    "role_display_name_ko": "시르반샤",
+    "start_year": 1382,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1417,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ibrahim I was chosen as Shirvanshah in 1382 and ruled Shirvan until his death in 1417. His reign preserved Shirvan through the Timurid period and is modeled as rule of the historical Shirvan polity."
+  },
+  "sources": [
+    {
+      "title": "Ibrahim I of Shirvan",
+      "canonical_url": "https://en.wikipedia.org/wiki/Ibrahim_I_of_Shirvan",
+      "citation_text": "The compiled historical account gives Ibrahim I's reign as Shirvanshah from 1382 until his death in 1417.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

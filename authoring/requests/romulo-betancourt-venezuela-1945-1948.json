@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Rómulo Betancourt",
+    "display_name_ko": "로물로 베탕쿠르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Venezuela",
+    "display_name_ko": "베네수엘라",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1945,
+    "start_month": 10,
+    "start_day": 19,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1948,
+    "end_month": 2,
+    "end_day": 15,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Betancourt headed the Revolutionary Government Junta and served as Venezuela's president from 19 October 1945 until 15 February 1948."
+  },
+  "sources": [
+    {
+      "title": "Rómulo Betancourt — John F. Kennedy Presidential Library",
+      "canonical_url": "https://jfk.artifacts.archives.gov/people/2264/romulo-betancourt%3Bjsessionid%3D6251D615F166D57C30EFE3A8F8762F54",
+      "citation_text": "The JFK Library identifies Betancourt as President of Venezuela in 1945–1948 and again in 1959–1964.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
