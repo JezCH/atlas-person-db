@@ -1137,5 +1137,22 @@
     "role_ko": "타밀 전승의 판디아계 여왕·여전사",
     "reason": "Alli Rani (Alli Arasani) is a legendary Tamil queen known from later folklore and literary/dramatic cycles. Her stories include miraculous birth, an all-female court and army, and marriage to the Mahabharata hero Arjuna. These traditions may preserve regional memories, but ATLAS cannot establish an independently attested historical Pandya queen or a defensible person-specific reign interval. She is therefore preserved outside the historical year timeline.",
     "map_policy": "Do not display on the historical year timeline unless a legendary or mythic overlay is enabled."
+  },
+  {
+    "person_name": "Manas",
+    "politic_name": "Kyrgyz",
+    "display_name_ko": "마나스",
+    "politic_display_name_ko": "키르기스",
+    "historicity": "legendary",
+    "historicity_display_ko": "전설",
+    "timeline_status": "excluded",
+    "date_basis": "kyrgyz_epic_tradition_unresolved_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "키르기스 서사시의 전설적 영웅·칸",
+    "reason": "Manas is the central hero of the Kyrgyz epic trilogy and is portrayed in the epic tradition as uniting scattered Kyrgyz tribes and being chosen as khan. Proposed historical prototypes and the chronology of the epic remain debated and do not establish a secure person-specific reign or activity interval. ATLAS therefore preserves Manas as a legendary Kyrgyz-associated Person without inventing a 'Kyrgyz Civilization' polity or any timeline years.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
   }
 ]
