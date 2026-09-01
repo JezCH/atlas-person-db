@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:catherine-de-medici:retire-compound-1564-1589:20260901:v1",
+  "review_status": "approved",
+  "release_order": 732,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "8b2056fb-455d-5343-8142-1d0d74099884"
+  },
+  "evidence": {
+    "reason": "Production contains reviewed replacement Activity Queen Mother 1564-1589 (1bce9a74-bd6c-4ca7-b32a-eece60bcab80). Retire the legacy post-regency phase whose role incorrectly continues to include regent.",
+    "person_id": "d3db3949-d37e-5e7f-9b75-7c993fce314b",
+    "replacement_activity_ids": [
+      "1bce9a74-bd6c-4ca7-b32a-eece60bcab80"
+    ],
+    "retire_activity_id": "8b2056fb-455d-5343-8142-1d0d74099884"
+  }
+}
