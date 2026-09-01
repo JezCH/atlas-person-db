@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:catherine-de-medici:retire-compound-1547-1559:20260901:v1",
+  "review_status": "approved",
+  "release_order": 730,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "627ed16c-1fa9-5047-8e0c-bc3c552fb5c7"
+  },
+  "evidence": {
+    "reason": "Production contains reviewed replacement Activity Queen Consort 1547-1559 (bea1fe4f-d365-45b3-b303-e70819e9364d). Retire the legacy phase whose role incorrectly combines queen consort and regent before Catherine's regency began.",
+    "person_id": "d3db3949-d37e-5e7f-9b75-7c993fce314b",
+    "replacement_activity_ids": [
+      "bea1fe4f-d365-45b3-b303-e70819e9364d"
+    ],
+    "retire_activity_id": "627ed16c-1fa9-5047-8e0c-bc3c552fb5c7"
+  }
+}
