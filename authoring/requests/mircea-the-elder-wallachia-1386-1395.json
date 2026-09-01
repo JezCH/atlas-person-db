@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mircea-the-elder:wallachia:voivode:1386-1395:v1",
+  "person": {
+    "canonical_name_en": "Mircea the Elder",
+    "display_name_ko": "미르체아 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Wallachia",
+    "display_name_ko": "왈라키아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Voivode",
+    "role_display_name_ko": "보이보드",
+    "start_year": 1386,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1395,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Mircea the Elder's first Wallachian reign began in 1386 and was interrupted in the mid-1390s; the exact transition chronology is reconstructed, so both boundaries are approximate."
+  },
+  "sources": [
+    {
+      "title": "Mircea I of Wallachia — Wikimedia/Wikidata authority summary",
+      "canonical_url": "https://commons.wikimedia.org/wiki/Category:Mircea_I_of_Wallachia",
+      "citation_text": "The authority summary records Mircea's Wallachian rule in two periods, beginning in 1386 and restored in 1397 through 1418.",
+      "source_type": "authority_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

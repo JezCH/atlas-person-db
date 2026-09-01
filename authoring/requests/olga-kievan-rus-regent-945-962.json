@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:olga-of-kiev:kievan-rus:regent:c945-c962:v1",
+  "person": {
+    "canonical_name_en": "Olga of Kiev",
+    "display_name_ko": "키이우의 올가",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kievan Rus'",
+    "display_name_ko": "키이우 루스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "reign",
+    "role": "Regent",
+    "role_display_name_ko": "섭정",
+    "start_year": 945,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 962,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Princess Olga governed Kyivan Rus' as regent after Igor's death while Sviatoslav was a minor. Early Rus' absolute chronology derives largely from later chronicles, so ATLAS treats the 945–962 regency bounds as approximate."
+  },
+  "sources": [
+    {
+      "title": "Kyivan Rus' — Encyclopedia of Ukraine",
+      "canonical_url": "https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%5CK%5CY%5CKyivanRushDA.htm",
+      "citation_text": "The Encyclopedia of Ukraine describes Princess Olha as ruling as regent in the mid-tenth century.",
+      "source_type": "academic_encyclopedia"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

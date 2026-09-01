@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:demetrius-i-bactria:greco-bactrian-kingdom:king:c200-c190-bce:v1",
+  "person": {
+    "canonical_name_en": "Demetrius I of Bactria",
+    "display_name_ko": "박트리아의 데메트리오스 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Greco-Bactrian Kingdom",
+    "display_name_ko": "그레코-박트리아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -200,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -190,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Demetrius I was a Greco-Bactrian king whose absolute reign chronology is reconstructed. The British Museum authority record places his rule around 200–190 BCE, so both boundaries are stored as approximate."
+  },
+  "sources": [
+    {
+      "title": "Demetrius I Bactria — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG89804",
+      "citation_text": "The British Museum identifies Demetrius I as ruler of Bactria and dates his rule to about 200–190 BCE.",
+      "source_type": "museum_collection"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

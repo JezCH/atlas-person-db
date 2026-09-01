@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:milan-kucan:republic-of-slovenia:president:1992-2002:v1",
+  "person": {
+    "canonical_name_en": "Milan Kučan",
+    "display_name_ko": "밀란 쿠찬",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Slovenia",
+    "display_name_ko": "슬로베니아 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1992,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2002,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Milan Kučan served as President of the Republic of Slovenia from 1992 to 2002 after having led the republican presidency during the independence transition."
+  },
+  "sources": [
+    {
+      "title": "Biography of Milan Kučan — Former President of the Republic of Slovenia",
+      "canonical_url": "https://www.bivsi-predsednik.si/up-rs/2002-2007/bp-mk.nsf/ostalo/Biography",
+      "citation_text": "The official former-president biography records Kučan's presidency of the Republic of Slovenia from 1992 through 2002.",
+      "source_type": "government_archive"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

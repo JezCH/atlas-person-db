@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:julius-echter-von-mespelbrunn:prince-bishopric-of-wurzburg:prince-bishop:1573-1617:v1",
+  "person": {
+    "canonical_name_en": "Julius Echter von Mespelbrunn",
+    "display_name_ko": "율리우스 에히터 폰 메스펠브룬",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Prince-Bishopric of Würzburg",
+    "display_name_ko": "뷔르츠부르크 주교후국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Prince-Bishop",
+    "role_display_name_ko": "주교후",
+    "start_year": 1573,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1617,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Julius Echter was elected Prince-Bishop of Würzburg in 1573 and ruled the ecclesiastical principality until his death in 1617. ATLAS uses the actual Prince-Bishopric of Würzburg rather than the broader regional label Franconia."
+  },
+  "sources": [
+    {
+      "title": "History — Stiftung Juliusspital Würzburg",
+      "canonical_url": "https://www.juliusspital.de/ueber-uns/geschichte",
+      "citation_text": "Juliusspital's institutional history records Julius Echter's election as Prince-Bishop in 1573 and his death in 1617.",
+      "source_type": "institutional_history"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

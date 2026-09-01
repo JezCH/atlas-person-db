@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:chief-blackbird:omaha:chief:1794-1800:v1",
+  "person": {
+    "canonical_name_en": "Chief Blackbird",
+    "display_name_ko": "블랙버드 추장",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Omaha",
+    "display_name_ko": "오마하",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Chief",
+    "role_display_name_ko": "추장",
+    "start_year": 1794,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1800,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Wazhiⁿga sabe, commonly called Chief Blackbird, is securely documented as Omaha leader by 1794 and remained the dominant chief until his death during the 1799–1800 smallpox epidemic. The 1794 start is an external documentary attestation, not an accession date."
+  },
+  "sources": [
+    {
+      "title": "Blackbird Hill — National Park Service",
+      "canonical_url": "https://www.nps.gov/places/blackbird-hill-nebraska.htm",
+      "citation_text": "The National Park Service describes Blackbird's leadership of the Omaha, documentary references in 1794 and 1796, and his death around 1800.",
+      "source_type": "government_history"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
