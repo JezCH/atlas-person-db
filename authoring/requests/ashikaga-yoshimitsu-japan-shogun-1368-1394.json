@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Ashikaga Yoshimitsu",
+    "display_name_ko": "아시카가 요시미쓰",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Shogun",
+    "role_display_name_ko": "쇼군",
+    "start_year": 1368,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1394,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ashikaga Yoshimitsu served as the third Ashikaga shogun from 1368 to 1394. ATLAS attaches the office to the higher-order Japan polity, consistent with the project rule that the Muromachi bakufu is a governing regime rather than a separate territorial polity."
+  },
+  "sources": [
+    {
+      "title": "Yoshimitsu Ashikaga — Japan Search",
+      "canonical_url": "https://jpsearch.go.jp/en/gallery/ndl-JVK2pJ3xwPu34K",
+      "citation_text": "Japan Search identifies Yoshimitsu as the third Ashikaga shogun and dates his shogunal tenure to 1368–1394.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-01",
+      "document_title": "아시카가 요시미츠",
+      "url": "https://namu.wiki/w/%EC%95%84%EC%8B%9C%EC%B9%B4%EA%B0%80%20%EC%9A%94%EC%8B%9C%EB%AF%B8%EC%B8%A0"
+    }
+  }
+}

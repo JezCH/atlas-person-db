@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Ashikaga Yoshimitsu",
+    "display_name_ko": "아시카가 요시미쓰",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Retired shogun and de facto ruler",
+    "role_display_name_ko": "은퇴 쇼군·사실상 통치자",
+    "start_year": 1394,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1408,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Yoshimitsu transferred the shogunate to Yoshimochi in 1394 but continued to exercise supreme political power until his death in 1408. This is modeled separately from his formal shogunal term as de facto governance of Japan."
+  },
+  "sources": [
+    {
+      "title": "Yoshimitsu Ashikaga — Japan Search",
+      "canonical_url": "https://jpsearch.go.jp/en/gallery/ndl-JVK2pJ3xwPu34K",
+      "citation_text": "Japan Search states that Yoshimitsu passed the shogunate to Yoshimochi in 1394 but continued to exercise actual/supreme power thereafter until his death in 1408.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-01",
+      "document_title": "아시카가 요시미츠",
+      "url": "https://namu.wiki/w/%EC%95%84%EC%8B%9C%EC%B9%B4%EA%B0%80%20%EC%9A%94%EC%8B%9C%EB%AF%B8%EC%B8%A0"
+    }
+  }
+}

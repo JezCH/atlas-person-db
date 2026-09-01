@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Elizabeth Báthory",
+    "display_name_ko": "바토리 에르제베트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Hungary",
+    "display_name_ko": "헝가리 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Hungarian countess and magnate",
+    "role_display_name_ko": "헝가리 백작부인·대귀족",
+    "start_year": 1575,
+    "start_month": 5,
+    "start_day": 8,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1610,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Elizabeth Báthory was a powerful Hungarian countess and magnate, not a sovereign ruler of 'Royal Hungary'. ATLAS therefore reuses the Kingdom of Hungary polity but records an active_in/general_activity relationship rather than rules/governs. The interval begins with her 1575 marriage into the Nádasdy household and ends with her confinement in 1610; it is a biographical-public-status interval, not a reign."
+  },
+  "sources": [
+    {
+      "title": "Báthory Erzsébet és bűnpere — Magyar Nemzeti Levéltár",
+      "canonical_url": "https://mnl.gov.hu/mnl/ol/hirek/bathory_erzsebet_es_bunpere",
+      "citation_text": "The Hungarian National Archives treats Báthory Erzsébet as a major historical figure, documents her 1610 will and confinement, and notes continuing historical debate over the accusations against her.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Elizabeth Bathory — Biography.com",
+      "canonical_url": "https://www.biography.com/crime/elizabeth-bathory",
+      "citation_text": "The biography records her 1575 marriage, status as a wealthy Hungarian countess, management of extensive estates, and confinement in 1610.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-01",
+      "document_title": "바토리 에르제베트",
+      "url": "https://namu.wiki/w/%EB%B0%94%ED%86%A0%EB%A6%AC%20%EC%97%90%EB%A5%B4%EC%A0%9C%EB%B2%A0%ED%8A%B8"
+    }
+  }
+}

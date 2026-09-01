@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Ugolino della Gherardesca",
+    "display_name_ko": "우골리노 델라 게라르데스카",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Pisa",
+    "display_name_ko": "피사 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Podestà and communal ruler",
+    "role_display_name_ko": "포데스타·코무네 통치자",
+    "start_year": 1284,
+    "start_month": 10,
+    "start_day": 18,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1288,
+    "end_month": 7,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After Pisa's defeat at Meloria, Ugolino was appointed podestà on 18 October 1284 and became the dominant ruler of the commune; the office of capitano del popolo was added in February 1285, and from 1286 he shared rule with Nino Visconti. He was overthrown and imprisoned on 1 July 1288. The combined role label avoids pretending that both formal offices began on the same day."
+  },
+  "sources": [
+    {
+      "title": "GHERARDESCA, Ugolino della — Enciclopedia Italiana, Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/ugolino-della-gherardesca_%28Enciclopedia-Italiana%29/",
+      "citation_text": "Treccani records Ugolino's appointment as podestà on 18 October 1284, the addition of capitano del popolo in February 1285, shared communal rule, and his imprisonment on 1 July 1288.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Gbudwe",
+    "display_name_ko": "그부드웨",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Gbudwe Zande Kingdom",
+    "display_name_ko": "그부드웨 잔데 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1870,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1905,
+    "end_month": 2,
+    "end_day": 10,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "reviewed",
+    "chronology_status": "reviewed",
+    "notes": "Gbudwe (Gbudue/Yambio) was the best-known ruler of one of several precolonial Zande kingdoms. Scholarship explicitly distinguishes Gbudwe's kingdom from other Zande kingdoms such as those of Mange, Ezo, Tambura and Wandu, so ATLAS does not flatten the broader Azande people into one polity. The conventional accession around 1870 is approximate; his death during a British patrol in February 1905 is well documented."
+  },
+  "sources": [
+    {
+      "title": "“This kingdom will not be like the kingdom(s) in the era of Gbudue” — HAU: Journal of Ethnographic Theory",
+      "canonical_url": "https://www.journals.uchicago.edu/doi/full/10.1086/732344",
+      "citation_text": "The article distinguishes multiple historical Zande kingdoms and identifies Gbudue as the most famous leader associated with resistance to colonial incursions.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Research from the South Sudan National Archives: The Political Life of King Gbudwe’s Grave — Rift Valley Institute",
+      "canonical_url": "https://riftvalley.net/news/sudan-and-south-sudan/research-south-sudan-national-archives-political-life-king-gbudwes-grave/",
+      "citation_text": "Rift Valley Institute identifies Gbudwe as a royal Zande leader and records his death during a British patrol in February 1905.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
