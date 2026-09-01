@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Arwa al-Sulayhi",
+    "display_name_ko": "아르와 앗 술라이히",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Sulayhid Yemen",
+    "display_name_ko": "술라이히 왕조 예멘",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "reign",
+    "role": "Queen and ruler",
+    "role_display_name_ko": "여왕·통치자",
+    "start_year": 1067,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1138,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Arwa al-Sulayhi exercised ruling authority in Yemen from 1067, initially in conjunction with male co-rulers and later as the dominant/sole sovereign, until her death in 1138. Because the precise transition from co-rule to uncontested sole rule is described differently across sources, ATLAS uses one continuous reviewed ruling Activity rather than inventing a sharp disputed boundary. The polity is styled Sulayhid Yemen rather than treating the dynasty name alone as a territorial polity."
+  },
+  "sources": [
+    {
+      "title": "Women Who Have Impacted Ismaili History — Institute of Ismaili Studies",
+      "canonical_url": "https://www.iis.ac.uk/scholarly-contributions/women-in-ismaili-history/",
+      "citation_text": "The Institute of Ismaili Studies identifies Queen Arwa as a major Yemeni ruler who held power until her death in 1138.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Arwa al-Sulayhi",
+      "canonical_url": "https://en.wikipedia.org/wiki/Arwa_al-Sulayhi",
+      "citation_text": "The compiled chronology records Arwa as a ruler of Yemen from 1067 to 1138, first as co-ruler and later as sole ruler.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-01",
+      "document_title": "아르와 앗 술라이히",
+      "url": "https://namu.wiki/w/%EC%95%84%EB%A5%B4%EC%99%80%20%EC%95%97%20%EC%88%A0%EB%9D%BC%EC%9D%B4%ED%9E%88"
+    }
+  }
+}

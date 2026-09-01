@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Nikola I of Montenegro",
+    "display_name_ko": "니콜라 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Principality of Montenegro",
+    "display_name_ko": "몬테네그로 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Prince",
+    "role_display_name_ko": "공",
+    "start_year": 1860,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1910,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Nikola I ruled Montenegro as prince from 1860 until the principality was elevated to a kingdom in 1910. ATLAS separates the principality and kingdom phases because the polity's constitutional-monarchical form and his sovereign title changed."
+  },
+  "sources": [
+    {
+      "title": "Nikola I Petrović Njegoš — Digital Library of Montenegro",
+      "canonical_url": "https://nikola.dlib.me/me/biografija",
+      "citation_text": "The Montenegrin digital-library biography records Nikola I as Prince of Montenegro from 1860 to 1910 and King from 1910 to 1918.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

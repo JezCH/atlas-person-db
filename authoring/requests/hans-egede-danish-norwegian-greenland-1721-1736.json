@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Hans Egede",
+    "display_name_ko": "한스 에게데",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Danish-Norwegian Greenland",
+    "display_name_ko": "덴마크-노르웨이령 그린란드",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Missionary and colonial governor",
+    "role_display_name_ko": "선교사·식민 행정 책임자",
+    "start_year": 1721,
+    "start_month": 7,
+    "start_day": 3,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1736,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Hans Egede arrived in Greenland on 3 July 1721 and led the Danish-Norwegian mission and colonial project until leaving Greenland in 1736. ATLAS does not treat him as a representative ruler of the Inuit/Greenlandic people; the represented polity is the Danish-Norwegian colonial establishment in Greenland."
+  },
+  "sources": [
+    {
+      "title": "Hans Egede, 1686-1758 — Danmarkshistorien/Lex",
+      "canonical_url": "https://danmarkshistorien.lex.dk/Hans_Egede%2C_1686-1758",
+      "citation_text": "Lex describes Egede as a Danish-Norwegian priest, missionary and colonizer, working in Greenland from 1721 to 1736 and leading the colonial project.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Albert Kalonji",
+    "display_name_ko": "알베르 칼론지",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Autonomous State of South Kasai",
+    "display_name_ko": "남카사이 자치국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "President and Head of State",
+    "role_display_name_ko": "대통령·국가원수",
+    "start_year": 1960,
+    "start_month": 8,
+    "start_day": 9,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1961,
+    "end_month": 7,
+    "end_day": 16,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Albert Kalonji led the de facto autonomous South Kasai regime created in August 1960. ATLAS retains South Kasai as a distinct short-lived de facto political community while noting that it claimed autonomy/federal status rather than universally recognized sovereign independence."
+  },
+  "sources": [
+    {
+      "title": "Why Congo Persists — QEH Working Paper Series",
+      "canonical_url": "https://www.qeh.ox.ac.uk/sites/default/files/pdf_docs/qehwps95.pdf",
+      "citation_text": "The Oxford working paper describes Kalonji's August 1960 proclamation and organization of autonomous rule in South Kasai, which functioned until 1962.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "South Kasai",
+      "canonical_url": "https://en.wikipedia.org/wiki/South_Kasai",
+      "citation_text": "The compiled chronology records South Kasai's proclamation on 9 August 1960 and Kalonji's appointment as president.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

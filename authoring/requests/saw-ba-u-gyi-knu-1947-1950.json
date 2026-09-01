@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Saw Ba U Gyi",
+    "display_name_ko": "소 바 우 지",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Karen National Union (Kawthoolei)",
+    "display_name_ko": "카렌민족연합(코토레이)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Chairman and Karen national leader",
+    "role_display_name_ko": "의장·카렌 민족운동 지도자",
+    "start_year": 1947,
+    "start_month": 4,
+    "start_day": 14,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1950,
+    "end_month": 8,
+    "end_day": 12,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The game-like label 'Karen Empire' is rejected. Saw Ba U Gyi became chairman of the Karen National Union at its second congress in April 1947 and led the Karen national movement through the beginning of armed struggle until his death on 12 August 1950. KNU sources describe the movement as representing the Karen political community and the claim to Kawthoolei; ATLAS therefore uses KNU/Kawthoolei as the represented political community rather than inventing an empire."
+  },
+  "sources": [
+    {
+      "title": "Chairpersons and Leaders — Karen National Union Official Portal",
+      "canonical_url": "https://www.knuhq.org/about-us/congress-timeline",
+      "citation_text": "The KNU's official leadership chronology records Saw Ba U Gyi as chairman from the second congress of 14 April 1947 through 1950.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The death of Saw Ba U Gyi — Mizzima",
+      "canonical_url": "https://mizzima.com/news-features/death-saw-ba-u-gyi",
+      "citation_text": "The historical account records Saw Ba U Gyi's death on 12 August 1950 during an encounter with Burmese Army forces.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

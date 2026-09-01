@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Edward I of England",
+    "display_name_ko": "에드워드 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of England",
+    "display_name_ko": "잉글랜드 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1272,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1307,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Edward I succeeded Henry III in 1272 and remained King of England until his death in 1307. ATLAS records the English kingship only; his campaigns and overlordship claims in Wales and Scotland are not converted into separate sovereign polities."
+  },
+  "sources": [
+    {
+      "title": "Edward I 'Longshanks' (r. 1272-1307) — The Royal Family",
+      "canonical_url": "https://www.royal.uk/edward-i-longshanks",
+      "citation_text": "The Royal Family records Edward I's reign as King of England from 1272 to 1307.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-01",
+      "document_title": "에드워드 1세",
+      "url": "https://namu.wiki/w/%EC%97%90%EB%93%9C%EC%9B%8C%EB%93%9C%201%EC%84%B8"
+    }
+  }
+}
