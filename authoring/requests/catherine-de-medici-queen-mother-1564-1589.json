@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:catherine-de-medici:kingdom-of-france:queen-mother:1564-1589:v1",
+  "person": {
+    "canonical_name_en": "Catherine de' Medici",
+    "display_name_ko": "카트린 드 메디시스"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of France",
+    "display_name_ko": "프랑스 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Queen Mother",
+    "role_display_name_ko": "왕대비",
+    "start_year": 1564,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1589,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the formal regency ended, Catherine remained an influential queen mother in French politics until her death in 1589. The 1564 start marks the post-regency political phase rather than the beginning of her queen-mother status itself; therefore ATLAS uses general_activity and active_in rather than extending the regency."
+  },
+  "sources": [
+    {
+      "title": "Catherine de' Medici, Queen and Regent of France — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG38000",
+      "citation_text": "The British Museum identifies Catherine as Queen of France from 1547 and Regent from 1560 to 1563, and notes her continuing political influence after the regency.",
+      "source_type": "official_museum_biographical_reference"
+    },
+    {
+      "title": "Caterina de' Medici regina di Francia — Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/caterina-de-medici-regina-di-francia/",
+      "citation_text": "Treccani describes Catherine as the central political arbiter after 1560 and notes that her influence later declined under Henry III, supporting a post-regency political-activity phase rather than a continuous formal regency.",
+      "source_type": "reference_work"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-26",
+      "document_title": "카트린 드 메디시스",
+      "url": "https://namu.wiki/w/%EC%B9%B4%ED%8A%B8%EB%A6%B0%20%EB%93%9C%20%EB%A9%94%EB%94%94%EC%8B%9C%EC%8A%A4"
+    }
+  }
+}
