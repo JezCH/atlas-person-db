@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Guido da Landriano",
+    "display_name_ko": "귀도 다 란드리아노",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Lombard League",
+    "display_name_ko": "롬바르디아 동맹",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "general_activity",
+    "role": "Rector and military commander",
+    "role_display_name_ko": "렉토르·군사 지휘관",
+    "start_year": 1176,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1176,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Documents identify Guido da Landriano as a rector of the Lombard League in 1176 and modern scholarship identifies him, rather than the legendary Alberto da Giussano, as commander of the League's forces at the Battle of Legnano on 29 May 1176. The Lombard League is modeled as a real confederated political association of communes, not as a unitary kingdom."
+  },
+  "sources": [
+    {
+      "title": "Pinamonte Vimercati — Dizionario Biografico degli Italiani, Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/pinamonte-vimercati_%28Dizionario-Biografico%29/",
+      "citation_text": "Treccani notes Guido da Landriano as the figure recognized by historiography as the protagonist of the Lombard victory at Legnano and as a leading delegate at the Peace of Constance.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "I capitanei urbani e la politica milanese — University of Florence thesis",
+      "canonical_url": "https://flore.unifi.it/retrieve/e398c37e-088f-179a-e053-3705fe0a4cff/Bernardinello_tesi%20definitiva.pdf",
+      "citation_text": "The University of Florence study states that Guido was rector for Milan in 1176 and commanded the Lombard League army that defeated Frederick Barbarossa at Legnano.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

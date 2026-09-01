@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Marcus Aurelius",
+    "display_name_ko": "마르쿠스 아우렐리우스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 161,
+    "start_month": 3,
+    "start_day": 7,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 180,
+    "end_month": 3,
+    "end_day": 17,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Marcus Aurelius became Roman emperor on 7 March 161 and reigned until his death on 17 March 180. Lucius Verus shared imperial power until 169 and Commodus was elevated as co-emperor in 177, but Marcus's own imperial reign was continuous."
+  },
+  "sources": [
+    {
+      "title": "Marcus Aurelius — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG140707",
+      "citation_text": "The British Museum identifies Marcus Aurelius as Roman emperor from 161 to 180 and notes his joint rule with Lucius Verus.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Reign of Marcus Aurelius",
+      "canonical_url": "https://en.wikipedia.org/wiki/Reign_of_Marcus_Aurelius",
+      "citation_text": "The detailed reign chronology gives accession on 7 March 161 and death on 17 March 180.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Manso I of Amalfi",
+    "display_name_ko": "만소 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Amalfi",
+    "display_name_ko": "아말피 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Co-Duke",
+    "role_display_name_ko": "공동 공작",
+    "start_year": 958,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 966,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Contemporary diplomatic chronology associates Manso with his father Sergius I in the government of Amalfi from 958 to 966. This co-ducal phase is separated from Manso's full ducal succession in 966."
+  },
+  "sources": [
+    {
+      "title": "Mansóne I duca di Amalfi — Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/mansone-i-duca-di-amalfi/",
+      "citation_text": "Treccani records Manso's rule with his father, sole rule from 966, co-rule with his son through 984, interruption under Adelterio around 984–988, and restored rule until 1004.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Codice diplomatico Amalfitano",
+      "canonical_url": "https://resources.warburg.sas.ac.uk/pdf/hnh8025b2477866.pdf",
+      "citation_text": "The diplomatic chronology lists Sergius with his son Manso in 958–966, Manso as duke 966–976, with John 976–984, and Manso's later restored rule; it also records his princely rule in Salerno.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Mansone — Dizionario Biografico degli Italiani, Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/mansone_res-c0533e34-395f-11dd-904a-0016357eee51_%28Dizionario-Biografico%29/",
+      "citation_text": "Treccani's biographical entry records Manso's seizure and princely rule of Salerno beginning in 981 and his deposition there by late 983.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Alfredo Stroessner",
+    "display_name_ko": "알프레도 스트로에스네르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Paraguay",
+    "display_name_ko": "파라과이 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1954,
+    "start_month": 8,
+    "start_day": 15,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1989,
+    "end_month": 2,
+    "end_day": 3,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Alfredo Stroessner served as President of Paraguay from 15 August 1954 until his overthrow on 3 February 1989. His repeated elections occurred under an authoritarian military-party regime; ATLAS records the continuous head-of-state tenure without treating each controlled electoral cycle as a separate Activity."
+  },
+  "sources": [
+    {
+      "title": "Presidencia del General Alfredo Stroessner — Portal Guaraní",
+      "canonical_url": "https://www.portalguarani.com/detalles_museos_exposiciones.php?id=27&id_exposicion=117",
+      "citation_text": "The Paraguayan historical portal gives Stroessner's presidency as 15 August 1954 to 3 February 1989.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
