@@ -916,5 +916,39 @@
     "role_ko": "마살리아의 전설적 건국자",
     "reason": "Protis is preserved in ancient and later Massaliote foundation traditions as a Phocaean founder associated with the establishment of Massalia around 600 BCE. The archaeological and historical foundation of the Greek colony around that date is well established, but the surviving narratives differ over whether Protis himself was the founder or the son of Euxenus, and they do not securely establish Protis as a datable historical individual. ATLAS therefore preserves the traditional Massalia association and the conventional foundation year only as a traditional-year marker, not as a historical personal Activity.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or traditional overlay is enabled."
+  },
+  {
+    "person_name": "Eso",
+    "politic_name": "Guaycuru peoples (Toba and Pilagá)",
+    "display_name_ko": "에소",
+    "politic_display_name_ko": "구아이쿠루계 민족(토바·필라가)",
+    "historicity": "mythical",
+    "historicity_display_ko": "신화",
+    "timeline_status": "excluded",
+    "date_basis": "toba_and_pilaga_mythological_tradition_without_secure_personal_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "토바·필라가 신화의 전사·추장·문화영웅",
+    "reason": "Eso is described in Toba and Pilagá mythology as a warrior and chief who defeats witches and other supernatural enemies. The user-supplied 'Guaycuru' is an umbrella ethnolinguistic label rather than evidence that Eso historically ruled a unified Guaycuru polity. No independent historical chronology establishes Eso as a datable historical ruler. ATLAS therefore preserves him as a mythological cultural hero associated specifically with Toba and Pilagá Guaycuru peoples and excludes him from the historical year timeline.",
+    "map_policy": "Do not display on the historical year timeline unless a separate mythical or traditional overlay is enabled."
+  },
+  {
+    "person_name": "Tyushtya",
+    "politic_name": "Mordvin peoples (Erzya and Moksha)",
+    "display_name_ko": "튜시탸",
+    "politic_display_name_ko": "모르드바인(에르자·목샤)",
+    "historicity": "legendary",
+    "historicity_display_ko": "전설·서사 전승",
+    "timeline_status": "excluded",
+    "date_basis": "mordvin_epic_and_folklore_without_secure_personal_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "모르드바 서사 전승의 전설적 군주·전사",
+    "reason": "Tyushtya is a central ruler figure in Mordvin (Erzya and Moksha) epic and folklore. Folklore portrays him with overtly supernatural attributes and later traditions treat 'Tyushtya' both as a ruler figure and possibly as a title. No secure contemporary evidence or defensible person-specific reign interval establishes a historical individual called Tyushtya. The user-supplied 'Eastern Finns' is therefore replaced by the more precise Mordvin/Erzya-Moksha association, and ATLAS preserves the figure outside the historical year timeline.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or mythological overlay is enabled."
   }
 ]

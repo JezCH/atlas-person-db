@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Julius Sundblom",
+    "display_name_ko": "율리우스 순드블롬",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Åland",
+    "display_name_ko": "올란드",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Speaker of the Åland Landsting",
+    "role_display_name_ko": "올란드 의회 의장",
+    "start_year": 1922,
+    "start_month": 6,
+    "start_day": 9,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1945,
+    "end_month": 8,
+    "end_day": 23,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sundblom was a leading figure of the Åland movement and became the first Speaker of the autonomous Åland Landsting on 9 June 1922, remaining Speaker until his death on 23 August 1945. Åland is retained as the represented autonomous political community rather than flattening him into Finland, consistent with ATLAS's minority/small-polity representation rule."
+  },
+  "sources": [
+    {
+      "title": "Julius Sundblom — Ålands lagting",
+      "canonical_url": "https://www.lagtinget.ax/ledamoter/julius-sundblom-4458",
+      "citation_text": "The official Åland parliament records Sundblom as Speaker from the first Landsting term beginning 9 June 1922 through 1945.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Tidigare talmän och vice talmän i Ålands lagting",
+      "canonical_url": "https://www.lagtinget.ax/ledamoter/tidigare-lagting/tidigare-talman-och-vice-talman-alands-lagting",
+      "citation_text": "Ålands lagting lists Julius Sundblom as Speaker from 1922 to 1945.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
