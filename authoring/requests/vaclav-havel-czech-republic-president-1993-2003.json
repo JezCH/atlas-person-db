@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:vaclav-havel:czech-republic:president:1993-2003:v1",
+  "person": {
+    "canonical_name_en": "Václav Havel",
+    "display_name_ko": "바츨라프 하벨",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Czech Republic",
+    "display_name_ko": "체코 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1993,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2003,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Havel became the first President of the Czech Republic in 1993 and served until 2003."
+  },
+  "sources": [
+    {
+      "title": "Václav Havel — President",
+      "canonical_url": "https://www.vaclavhavel.cz/en/vaclav-havel/president",
+      "citation_text": "The Václav Havel Library records his Czechoslovak presidency from 1989 to 1992 and Czech presidency from 1993 to 2003.",
+      "source_type": "foundation_archive"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

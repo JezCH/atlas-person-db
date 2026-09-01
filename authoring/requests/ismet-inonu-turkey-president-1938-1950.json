@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ismet-inonu:turkey:president:1938-1950:v1",
+  "person": {
+    "canonical_name_en": "İsmet İnönü",
+    "display_name_ko": "이스메트 이뇌뉘",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Turkey",
+    "display_name_ko": "튀르키예",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1938,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1950,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "İsmet İnönü was elected President of Turkey in November 1938 after Atatürk's death and left the presidency after the 1950 change of government."
+  },
+  "sources": [
+    {
+      "title": "İsmet İnönü biography — Republic of Türkiye Ministry of Foreign Affairs",
+      "canonical_url": "https://www.mfa.gov.tr/sayin-ismet-inonu-_pasa__nin-ozgecmisi.tr.mfa",
+      "citation_text": "Türkiye's Foreign Ministry records İnönü's election as president in 1938 and the end of his presidency in 1950.",
+      "source_type": "government_web"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

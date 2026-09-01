@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jerome-bonaparte:kingdom-of-westphalia:king:1807-1813:v1",
+  "person": {
+    "canonical_name_en": "Jérôme Bonaparte",
+    "display_name_ko": "제롬 보나파르트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Westphalia",
+    "display_name_ko": "베스트팔렌 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1807,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1813,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Napoleon installed his brother Jérôme Bonaparte as King of Westphalia in 1807; his reign ended with the kingdom's collapse in 1813."
+  },
+  "sources": [
+    {
+      "title": "Jérôme Bonaparte — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG110334",
+      "citation_text": "The British Museum identifies Jérôme Bonaparte as King of Westphalia from 1807 until the kingdom's dissolution in 1813.",
+      "source_type": "museum_collection"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:bernie-sanders:united-states:presidential-primary-candidate:2015-2016:v1",
+  "person": {
+    "canonical_name_en": "Bernie Sanders",
+    "display_name_ko": "버니 샌더스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Presidential primary candidate",
+    "role_display_name_ko": "대통령 후보 경선 주자",
+    "start_year": 2015,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2016,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bernie Sanders sought the Democratic presidential nomination in the 2016 election cycle. This Activity records a national political candidacy and does not represent him as a ruler or president of the United States."
+  },
+  "sources": [
+    {
+      "title": "SANDERS, Bernard — Biographical Directory of the United States Congress",
+      "canonical_url": "https://bioguideretro.congress.gov/Home/MemberDetails?memIndex=s000033",
+      "citation_text": "The Congressional biography records Sanders as an unsuccessful candidate for the Democratic presidential nomination in 2016 and 2020.",
+      "source_type": "government_biography"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-28",
+      "document_title": "버니 샌더스",
+      "url": "https://namu.wiki/w/%EB%B2%84%EB%8B%88%20%EC%83%8C%EB%8D%94%EC%8A%A4"
+    }
+  }
+}

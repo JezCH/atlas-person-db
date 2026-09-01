@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:george-ii-greece:kingdom-of-greece:king:1922-1924:v1",
+  "person": {
+    "canonical_name_en": "George II of Greece",
+    "display_name_ko": "요르요스 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Greece",
+    "display_name_ko": "그리스 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1922,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1924,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "George II reigned as King of Greece from 1922 until the abolition of the monarchy in 1924."
+  },
+  "sources": [
+    {
+      "title": "George II of Greece",
+      "canonical_url": "https://en.wikipedia.org/wiki/George_II_of_Greece",
+      "citation_text": "The standard regnal chronology gives George II's two reigns as 1922–1924 and 1935–1947.",
+      "source_type": "encyclopedic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

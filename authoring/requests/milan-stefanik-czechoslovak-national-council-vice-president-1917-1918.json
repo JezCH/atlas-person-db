@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:milan-rastislav-stefanik:czechoslovak-national-council:vice-president:1917-1918:v1",
+  "person": {
+    "canonical_name_en": "Milan Rastislav Štefánik",
+    "display_name_ko": "밀란 라스티슬라우 슈테파니크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Czechoslovak National Council",
+    "display_name_ko": "체코슬로바키아 국민평의회",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Vice-President",
+    "role_display_name_ko": "부의장",
+    "start_year": 1917,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1918,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Štefánik served as vice-president of the Czechoslovak National Council during the final phase of the independence movement. This avoids the anachronistic claim that he ruled an independent Slovakia."
+  },
+  "sources": [
+    {
+      "title": "Slovak hero Milan Rastislav Štefánik knew the price of freedom — Slovak Ministry of Foreign and European Affairs",
+      "canonical_url": "https://www.mzv.sk/en/web/en/slovakia/history/slovak-hero-milan-rastislav-stefanik-knew-the-price-of-freedom",
+      "citation_text": "Slovakia's Foreign Ministry records Štefánik becoming vice-president of the Czechoslovak National Council in 1917.",
+      "source_type": "government_history"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:michael-joseph-savage:new-zealand:prime-minister:1935-1940:v1",
+  "person": {
+    "canonical_name_en": "Michael Joseph Savage",
+    "display_name_ko": "마이클 조지프 새비지",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "New Zealand",
+    "display_name_ko": "뉴질랜드",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1935,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1940,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Michael Joseph Savage served as New Zealand's first Labour prime minister from December 1935 until his death in March 1940."
+  },
+  "sources": [
+    {
+      "title": "Michael Joseph Savage — NZHistory",
+      "canonical_url": "https://nzhistory.govt.nz/keyword/savage",
+      "citation_text": "New Zealand's Ministry for Culture and Heritage records Savage's prime-ministerial term as 6 December 1935 to 27 March 1940.",
+      "source_type": "government_history"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
