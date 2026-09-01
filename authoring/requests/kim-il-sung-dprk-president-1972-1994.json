@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:kim-il-sung:north-korea:president-of-dprk:1972-1994:v1",
+  "person": {
+    "canonical_name_en": "Kim Il Sung",
+    "display_name_ko": "김일성"
+  },
+  "polity": {
+    "canonical_name_en": "North Korea",
+    "display_name_ko": "조선민주주의인민공화국",
+    "polity_type": "modern_state",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "President of the DPRK",
+    "role_display_name_ko": "국가주석",
+    "start_year": 1972,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1994,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The 1972 Socialist Constitution created the office of President of the DPRK, and Kim Il Sung assumed that state-head office in December 1972. He remained President until his death on 8 July 1994. ATLAS records this presidency separately from his preceding premiership."
+  },
+  "sources": [
+    {
+      "title": "김일성 — 북한정보포털, 통일부",
+      "canonical_url": "https://nkinfo.unikorea.go.kr/nkp/prsn/view.do?menuId=PEOPLE&prsnMngNo=959",
+      "citation_text": "The Ministry of Unification chronology records Kim Il Sung as State President from December 1972 and his death in July 1994.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "정치체제 형성 — 북한정보포털, 통일부",
+      "canonical_url": "https://nkinfo.unikorea.go.kr/nkp/pge/view.do?menuId=PO005",
+      "citation_text": "The Ministry of Unification explains that the 1972 Socialist Constitution abolished the prior cabinet system and established the presidency as the state's supreme office.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "Kim Il-Sung — Encyclopaedia Britannica",
+      "canonical_url": "https://www.britannica.com/biography/Kim-Il-Sung",
+      "citation_text": "Britannica identifies Kim Il Sung as president and head of state of North Korea from 1972 until his death in 1994.",
+      "source_type": "reference_work"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "김일성",
+      "url": "https://namu.wiki/w/%EA%B9%80%EC%9D%BC%EC%84%B1"
+    }
+  }
+}

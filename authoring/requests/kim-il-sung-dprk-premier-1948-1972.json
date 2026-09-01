@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:kim-il-sung:north-korea:premier-of-cabinet:1948-1972:v1",
+  "person": {
+    "canonical_name_en": "Kim Il Sung",
+    "display_name_ko": "김일성"
+  },
+  "polity": {
+    "canonical_name_en": "North Korea",
+    "display_name_ko": "조선민주주의인민공화국",
+    "polity_type": "modern_state",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Premier of the Cabinet",
+    "role_display_name_ko": "내각 수상",
+    "start_year": 1948,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1972,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kim Il Sung became Premier of the Cabinet when the Democratic People's Republic of Korea was established in September 1948 and held the premiership until the 1972 Socialist Constitution replaced the cabinet-centered structure and created the presidency. ATLAS records this formal office separately from his subsequent presidency rather than using the legacy compound role 'Premier and President' across 1948-1994."
+  },
+  "sources": [
+    {
+      "title": "김일성 — 북한정보포털, 통일부",
+      "canonical_url": "https://nkinfo.unikorea.go.kr/nkp/prsn/view.do?menuId=PEOPLE&prsnMngNo=959",
+      "citation_text": "The Ministry of Unification career chronology records Kim Il Sung as DPRK Cabinet Premier from 1948 and lists the transition to State President in December 1972.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "Kim Il-Sung — Encyclopaedia Britannica",
+      "canonical_url": "https://www.britannica.com/biography/Kim-Il-Sung",
+      "citation_text": "Britannica identifies Kim Il Sung as premier of North Korea from 1948 to 1972 and president from 1972 to 1994.",
+      "source_type": "reference_work"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "김일성",
+      "url": "https://namu.wiki/w/%EA%B9%80%EC%9D%BC%EC%84%B1"
+    }
+  }
+}
