@@ -15,7 +15,7 @@
   },
   "activity": {
     "relation_type": "governs",
-    "period_basis": "regency",
+    "period_basis": "term",
     "role": "Janishin (regent/deputy)",
     "role_display_name_ko": "자니신(섭정·대리통치자)",
     "start_year": 1703,
@@ -30,7 +30,7 @@
     "end_calendar": "unspecified_historical",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "The National Archives of Georgia identifies Vakhtang VI as janishini of Kartli from 1703 to 1712. This regency is kept separate from his later formal kingship."
+    "notes": "The National Archives of Georgia identifies Vakhtang VI as janishini of Kartli from 1703 to 1712. This regency is kept separate from his later formal kingship. The current authoring vocabulary has no dedicated regency period-basis code, so the bounded regency is represented with period_basis=term while the role retains the exact Janishin/regent semantics."
   },
   "sources": [
     {
