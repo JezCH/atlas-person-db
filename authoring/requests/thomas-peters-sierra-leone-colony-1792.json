@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Thomas Peters",
+    "display_name_ko": "토머스 피터스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Sierra Leone Colony",
+    "display_name_ko": "시에라리온 식민지",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Founding leader and Black Loyalist representative",
+    "role_display_name_ko": "건국 지도자·흑인 로열리스트 대표",
+    "start_year": 1792,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1792,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Thomas Peters was a leading Black Loyalist representative who helped organize the 1792 migration from Nova Scotia to Sierra Leone and was a principal founding figure of Freetown. He did not hold a formal sovereign office over Sierra Leone, so ATLAS records an active_in/general_activity relationship rather than a reign or governorship. 'Sierra Leone Colony' here denotes the Sierra Leone Company-era West African colony centered on the new Freetown settlement, not the later Crown Colony established in 1808."
+  },
+  "sources": [
+    {
+      "title": "Thomas Peters National Historic Person (c. 1738–1792) — Parks Canada",
+      "canonical_url": "https://parks.canada.ca/culture/designation/personnage-person/thomas-peters",
+      "citation_text": "Parks Canada identifies Thomas Peters as a prominent Black Loyalist leader who recruited settlers for Sierra Leone and helped found Freetown in 1792.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
