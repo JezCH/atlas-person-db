@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:frederick-i-barbarossa:duchy-of-swabia:duke:1147-1152:v1",
+  "person": {
+    "canonical_name_en": "Frederick I Barbarossa",
+    "display_name_ko": "프리드리히 1세 바르바로사"
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Swabia",
+    "display_name_ko": "슈바벤 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Duke",
+    "role_display_name_ko": "공작",
+    "start_year": 1147,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1152,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Frederick succeeded his father as Duke of Swabia in 1147 (as Frederick III). When he was elected Roman-German king in 1152, the Swabian duchy passed to Frederick IV. ATLAS records this pre-royal territorial rule separately from his later royal and imperial offices."
+  },
+  "sources": [
+    {
+      "title": "Friedrich I. Barbarossa — Neue Deutsche Biographie",
+      "canonical_url": "https://www.deutsche-biographie.de/sfz69823.html?language=de",
+      "citation_text": "The German biographical reference identifies Frederick as the son of Duke Frederick II of Swabia and traces his rise before the royal election of 1152.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Frederick I Barbarossa, Roman Emperor — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/frederick-i-barbarossa-roman-emperor",
+      "citation_text": "The reference biography states that Frederick became Duke of Swabia on his father's death in 1147 and was elected King of Germany in 1152.",
+      "source_type": "reference_work"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "프리드리히 1세(신성 로마 제국)",
+      "url": "https://namu.wiki/w/%ED%94%84%EB%A6%AC%EB%93%9C%EB%A6%AC%ED%9E%88%201%EC%84%B8%28%EC%8B%A0%EC%84%B1%20%EB%A1%9C%EB%A7%88%20%EC%A0%9C%EA%B5%AD%29"
+    }
+  }
+}
