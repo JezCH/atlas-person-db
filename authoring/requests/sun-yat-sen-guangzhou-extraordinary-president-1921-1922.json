@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sun-yat-sen:guangzhou-government:extraordinary-president:1921-1922:v1",
+  "person": {
+    "canonical_name_en": "Sun Yat-sen",
+    "display_name_ko": "쑨원"
+  },
+  "polity": {
+    "canonical_name_en": "Guangzhou Government of the Republic of China",
+    "display_name_ko": "중화민국 광저우 정부",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Extraordinary President",
+    "role_display_name_ko": "비상대총통",
+    "start_year": 1921,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1922,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Guangzhou extraordinary parliament elected Sun president in April 1921 and he was sworn in on 5 May. Chen Jiongming's revolt forced Sun from the presidential office in June 1922, ending this southern-government presidency."
+  },
+  "sources": [
+    {
+      "title": "Chronology of Dr. Sun Yat-sen — National Dr. Sun Yat-sen Memorial Hall",
+      "canonical_url": "https://www.yatsen.gov.tw/en/cp.aspx?n=6695",
+      "citation_text": "Official chronology records Sun's 1912 provisional presidency, 1917-1918 grand-marshal leadership of the Constitutional Protection government, 1921-1922 Guangzhou presidency, and restoration as grand marshal in 1923.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "쑨원",
+      "url": "https://namu.wiki/w/%EC%91%A8%EC%9B%90"
+    }
+  }
+}
