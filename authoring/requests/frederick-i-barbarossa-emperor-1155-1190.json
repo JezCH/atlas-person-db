@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:frederick-i-barbarossa:holy-roman-empire:holy-roman-emperor:1155-1190:v1",
+  "person": {
+    "canonical_name_en": "Frederick I Barbarossa",
+    "display_name_ko": "프리드리히 1세 바르바로사"
+  },
+  "polity": {
+    "canonical_name_en": "Holy Roman Empire",
+    "display_name_ko": "신성 로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Holy Roman Emperor",
+    "role_display_name_ko": "신성 로마 황제",
+    "start_year": 1155,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1190,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Frederick was crowned emperor at Rome on 18 June 1155 and held the imperial office until his death in 1190. This Activity uses the existing specialized Holy Roman Emperor role and replaces the imperial component of the legacy combined 'King and emperor' row."
+  },
+  "sources": [
+    {
+      "title": "Friedrich I. Barbarossa — Neue Deutsche Biographie",
+      "canonical_url": "https://www.deutsche-biographie.de/sfz69823.html?language=de",
+      "citation_text": "Neue Deutsche Biographie records Frederick's imperial coronation by the pope on 18 June 1155 and his reign until his death in 1190.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Federico I di Svevia detto il Barbarossa — Treccani, Dizionario di Storia",
+      "canonical_url": "https://www.treccani.it/enciclopedia/federico-i-di-svevia-detto-il-barbarossa_%28Dizionario-di-Storia%29/",
+      "citation_text": "Treccani records the 1155 imperial coronation and Frederick's subsequent imperial reign.",
+      "source_type": "reference_work"
+    }
+  ]
+}
