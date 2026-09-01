@@ -14,7 +14,7 @@
   },
   "activity": {
     "relation_type": "governs",
-    "period_basis": "regency",
+    "period_basis": "term",
     "role": "Empress Dowager and Regent",
     "role_display_name_ko": "황태후·섭정",
     "start_year": 684,
