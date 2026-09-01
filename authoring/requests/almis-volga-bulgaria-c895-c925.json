@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Almış",
+    "display_name_ko": "알미시",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Volga Bulgaria",
+    "display_name_ko": "볼가 불가리아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Iltäbär / ruler",
+    "role_display_name_ko": "일테베르·군주",
+    "start_year": 895,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 925,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Almış, son of Şilki, was the Volga Bulgar ruler encountered by Ibn Fadlan's Abbasid embassy in 922 and is associated with the polity's formal adoption of Islam. The broader c.895–c.925 reign is a reconstruction and is therefore kept approximate."
+  },
+  "sources": [
+    {
+      "title": "Almış",
+      "canonical_url": "https://en.wikipedia.org/wiki/Alm%C4%B1%C5%9F",
+      "citation_text": "The compiled biography identifies Almış as ruler of Volga Bulgaria, conventionally c.895–925, and the ruler who received the Abbasid mission in 922.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

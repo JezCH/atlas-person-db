@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Francis II",
+    "display_name_ko": "프란츠 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Holy Roman Empire",
+    "display_name_ko": "신성 로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Holy Roman Emperor",
+    "role_display_name_ko": "신성 로마 황제",
+    "start_year": 1792,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1806,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Francis II was the last Holy Roman Emperor from 1792 until the dissolution of the Empire in 1806. ATLAS keeps this title distinct from his overlapping Austrian imperial title."
+  },
+  "sources": [
+    {
+      "title": "Francis II (I) — Fondation Napoléon",
+      "canonical_url": "https://www.napoleon.org/en/history-of-the-two-empires/biographies/francis-ii-i/",
+      "citation_text": "Fondation Napoléon identifies Francis II as Holy Roman Emperor from 1792 to 1806 and Francis I as Emperor of Austria from 1804 to 1835.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

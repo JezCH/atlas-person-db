@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Kurt Waldheim",
+    "display_name_ko": "쿠르트 발트하임",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Austria",
+    "display_name_ko": "오스트리아 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Federal President",
+    "role_display_name_ko": "연방대통령",
+    "start_year": 1986,
+    "start_month": 7,
+    "start_day": 8,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1992,
+    "end_month": 7,
+    "end_day": 8,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kurt Waldheim served as Federal President of Austria from 8 July 1986 to 8 July 1992. His earlier UN Secretary-General role is not a state/polity rulership activity for ATLAS."
+  },
+  "sources": [
+    {
+      "title": "Dr. Kurt Waldheim — Austrian Parliament",
+      "canonical_url": "https://www.parlament.gv.at/person/13961",
+      "citation_text": "The Austrian Parliament lists Waldheim as Bundespräsident from 8 July 1986 to 8 July 1992.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

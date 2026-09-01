@@ -1120,5 +1120,22 @@
     "role_ko": "오오담 창조신·문화영웅 'Elder Brother'",
     "reason": "I'itoi is an O'odham creator/culture-hero figure associated with Baboquivari and known as Elder Brother. Tohono O'odham tradition treats I'itoi as a sacred creator being, not a historically datable Hohokam ruler. Hohokam are ancestral to O'odham communities, but assigning I'itoi a reign over a historical Hohokam polity would convert living religious tradition into a fabricated historical chronology. ATLAS therefore preserves I'itoi outside the historical year timeline.",
     "map_policy": "Do not display on the historical year timeline unless a mythic or traditional overlay is enabled."
+  },
+  {
+    "person_name": "Alli Rani",
+    "politic_name": "Pandya/Tamil legendary tradition",
+    "display_name_ko": "알리 라니",
+    "politic_display_name_ko": "판디아·타밀 전승",
+    "historicity": "legendary",
+    "historicity_display_ko": "전설",
+    "timeline_status": "excluded",
+    "date_basis": "later_tamil_folklore_and_literary_cycles_without_independently_defensible_historical_person_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "타밀 전승의 판디아계 여왕·여전사",
+    "reason": "Alli Rani (Alli Arasani) is a legendary Tamil queen known from later folklore and literary/dramatic cycles. Her stories include miraculous birth, an all-female court and army, and marriage to the Mahabharata hero Arjuna. These traditions may preserve regional memories, but ATLAS cannot establish an independently attested historical Pandya queen or a defensible person-specific reign interval. She is therefore preserved outside the historical year timeline.",
+    "map_policy": "Do not display on the historical year timeline unless a legendary or mythic overlay is enabled."
   }
 ]

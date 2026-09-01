@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Francis II",
+    "display_name_ko": "프란츠 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Austrian Empire",
+    "display_name_ko": "오스트리아 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor of Austria (Francis I)",
+    "role_display_name_ko": "오스트리아 황제(프란츠 1세)",
+    "start_year": 1804,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1835,
+    "end_month": 3,
+    "end_day": 2,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The same ruler assumed the hereditary Austrian imperial title as Francis I in 1804 while remaining Francis II of the Holy Roman Empire until 1806, and continued as Emperor of Austria until his death in 1835."
+  },
+  "sources": [
+    {
+      "title": "Francis II (I) — Fondation Napoléon",
+      "canonical_url": "https://www.napoleon.org/en/history-of-the-two-empires/biographies/francis-ii-i/",
+      "citation_text": "Fondation Napoléon identifies Francis I as Emperor of Austria from 1804 to 1835.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

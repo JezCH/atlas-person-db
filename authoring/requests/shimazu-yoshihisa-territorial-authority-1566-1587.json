@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Shimazu Yoshihisa",
+    "display_name_ko": "시마즈 요시히사",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Shimazu territorial authority",
+    "display_name_ko": "시마즈 요시히사 세력권",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "de_facto_rule",
+    "role": "Daimyo and head of the Shimazu",
+    "role_display_name_ko": "다이묘·시마즈 당주",
+    "start_year": 1566,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1587,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Shimazu Yoshihisa inherited leadership in 1566 and expanded the Shimazu territorial authority across much of Kyushu. His independent Sengoku expansion ended with submission to Toyotomi Hideyoshi in 1587. Consistent with ATLAS handling of Oda, Uesugi and Takeda, the clan itself is not treated as a state."
+  },
+  "sources": [
+    {
+      "title": "Shimazu Yoshihisa — Kotobank",
+      "canonical_url": "https://kotobank.jp/word/%E5%B3%B6%E6%B4%A5%E7%BE%A9%E4%B9%85-75150",
+      "citation_text": "Kotobank states that Yoshihisa inherited Shimazu leadership in 1566, expanded across Kyushu, and submitted to Toyotomi Hideyoshi in 1587.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
