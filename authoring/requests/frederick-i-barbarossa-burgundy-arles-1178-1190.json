@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:frederick-i-barbarossa:kingdom-of-burgundy-arles:king:1178-1190:v1",
+  "person": {
+    "canonical_name_en": "Frederick I Barbarossa",
+    "display_name_ko": "프리드리히 1세 바르바로사"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Burgundy (Arles)",
+    "display_name_ko": "부르군트 왕국(아를 왕국)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1178,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1190,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Frederick I Barbarossa was crowned king of Burgundy at Arles in 1178, an inauguration treated by contemporary and modern scholarship as a distinct Burgundian royal crown within the Empire. Because the Burgundian coronation was not constitutionally indispensable to imperial rule in the region and the surviving evidence does not justify backdating this specific ATLAS Activity to his German royal election in 1152, ATLAS conservatively records the explicit Burgundian-Arles kingship from the 1178 coronation until Frederick's death in 1190. The polity label 'Kingdom of Burgundy (Arles)' distinguishes this medieval imperial kingdom from the earlier Kingdom of the Burgundians while preserving the historically attested Burgundy/Arles naming."
+  },
+  "sources": [
+    {
+      "title": "Inauguration and political liturgy in the Hohenstaufen Empire, 1138–1215 — German History",
+      "canonical_url": "https://academic.oup.com/gh/article/34/2/191/2605062",
+      "citation_text": "The study notes Frederick Barbarossa's inauguration as king of Burgundy at Arles in 1178 and discusses the distinct crowns associated with the different kingdoms of the Empire.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Friedrich I. Barbarossa — Deutsche Biographie",
+      "canonical_url": "https://www.deutsche-biographie.de/sfz69823.html?language=de",
+      "citation_text": "Deutsche Biographie records Frederick's Burgundian coronation at Arles on 30 July 1178 and explains that it asserted his claim over the wider Burgundian kingdom.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "The kingdom of Burgundy, the lands of the house of Savoy and adjacent territories — The New Cambridge Medieval History",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/new-cambridge-medieval-history/kingdom-of-burgundy-the-lands-of-the-house-of-savoy-and-adjacent-territories/FA69DBB25453E99E761F43E41D193E5C",
+      "citation_text": "The Cambridge history describes the medieval imperial realm as traditionally the kingdom of Burgundy, with Kingdom of Arles becoming an increasingly common name for its southern and later medieval usage.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "프리드리히 1세(신성 로마 제국)",
+      "url": "https://namu.wiki/w/%ED%94%84%EB%A6%AC%EB%93%9C%EB%A6%AC%ED%9E%88%201%EC%84%B8%28%EC%8B%A0%EC%84%B1%20%EB%A1%9C%EB%A7%88%20%EC%A0%9C%EA%B5%AD%29"
+    }
+  }
+}
