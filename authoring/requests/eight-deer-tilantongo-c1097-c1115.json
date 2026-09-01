@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Eight Deer Jaguar Claw",
+    "display_name_ko": "8사슴 재규어 발톱",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Tilantongo",
+    "display_name_ko": "틸란통고",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Iya (Lord/King)",
+    "role_display_name_ko": "이야(군주)",
+    "start_year": 1097,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1115,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Eight Deer acquired the lordship of Tilantongo (Ñuu Tnoo), a major Mixtec political center, around 1097 and held it alongside Tututepec until his death in 1115. ATLAS records Tilantongo separately because the Mixtec world consisted of multiple city-state lordships rather than one single sovereign 'Mixtec state'."
+  },
+  "sources": [
+    {
+      "title": "The Complete Codex Zouche-Nuttall — University of Texas Press",
+      "canonical_url": "https://utpress.utexas.edu/9780292744387/",
+      "citation_text": "The scholarly edition treats the reverse of Codex Zouche-Nuttall as the political biography of Eight Deer Jaguar Claw and includes his transition to Tututepec, rule there, alliances and conquests.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "50 Features: the Story of Lord Eight Deer Jaguar Claw — UC Davis Library",
+      "canonical_url": "https://library.ucdavis.edu/news/50-features-special-collections-story-lord-eight-deer-jaguar-claw/",
+      "citation_text": "UC Davis describes the codex as preserving Eight Deer's military and political conquests, ceremonies and genealogy, based on the Mixtec pictorial historical tradition.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Eight Deer Jaguar Claw",
+      "canonical_url": "https://en.wikipedia.org/wiki/Eight_Deer_Jaguar_Claw",
+      "citation_text": "The compiled chronology gives Eight Deer as ruler of Tututepec from 1084 to 1115 and Tilantongo from 1097 to 1115, with the chronology based on specialist readings of Mixtec codices.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

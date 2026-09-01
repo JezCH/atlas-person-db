@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "James II of Majorca",
+    "display_name_ko": "자우메 2세 (마요르카)",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Majorca",
+    "display_name_ko": "마요르카 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1276,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1285,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "James II inherited the Kingdom of Majorca from James I in 1276. His first effective reign ended when Alfonso III of Aragon seized Majorca in 1285. ATLAS separates the interrupted reign rather than representing 1276–1311 as continuous control."
+  },
+  "sources": [
+    {
+      "title": "Majorca — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/places/spain-portugal-italy-greece-and-balkans/spanish-and-portuguese-political-geography/majorca",
+      "citation_text": "The reference states that James II began ruling Majorca in 1276, that Alfonso III seized the island in 1285, and that it remained under Aragonese rule until restoration in 1295.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Jaume II de Mallorca — Gran Enciclopèdia Catalana",
+      "canonical_url": "https://www.enciclopedia.cat/gran-enciclopedia-catalana/jaume-ii-de-mallorca",
+      "citation_text": "The Catalan encyclopedia identifies Jaume II as king of Mallorca, inheriting his father's Mallorcan crown in 1276 and ruling the kingdom in the late 13th and early 14th centuries.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "James II of Majorca",
+      "canonical_url": "https://en.wikipedia.org/wiki/James_II_of_Majorca",
+      "citation_text": "The compiled chronology records his restored reign from 1295 until 1311 after the Treaty of Anagni returned the Balearic kingdom.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
