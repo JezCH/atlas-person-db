@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Sō Yoshitoshi",
+    "display_name_ko": "소 요시토시",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Tsushima",
+    "display_name_ko": "쓰시마",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Lord of Tsushima and daimyō",
+    "role_display_name_ko": "쓰시마 도주·다이묘",
+    "start_year": 1588,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1615,
+    "end_month": 1,
+    "end_day": 31,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sō Yoshitoshi was the Sō-clan lord of Tsushima from 1588 until his death in 1615. ATLAS does not model the Sō family itself as a polity; it uses Tsushima as the durable island political unit governed by the clan. His significance includes both participation in Hideyoshi's Korean invasions and the later restoration of Japan–Joseon diplomatic exchange through Tsushima."
+  },
+  "sources": [
+    {
+      "title": "宗義智について知りたい。— National Diet Library Collaborative Reference Database",
+      "canonical_url": "https://crd.ndl.go.jp/reference/entry/index.php?id=1000131017&page=ref_view",
+      "citation_text": "The NDL reference entry identifies Sō Yoshitoshi (1568–1615) as the lord of Tsushima in the late Sengoku and early Edo periods and as founder of the Tsushima domain line.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Tsushima island — NDL Gallery",
+      "canonical_url": "https://ndlsearch.ndl.go.jp/en/gallery/landmarks/sights/tsushima",
+      "citation_text": "The National Diet Library notes that the Sō clan were the feudal lords of Tsushima and mediated the restoration of diplomatic exchange with Korea after Hideyoshi's invasions.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

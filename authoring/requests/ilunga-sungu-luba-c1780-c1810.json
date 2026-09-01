@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Ilunga Sungu",
+    "display_name_ko": "일룽가 숭구",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Luba",
+    "display_name_ko": "루바 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Mulopwe",
+    "role_display_name_ko": "물로프웨(왕)",
+    "start_year": 1780,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1810,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Oral-historical reconstruction places Ilunga Sungu's rule approximately c.1780–c.1810. His reign saw major eastward expansion and extension of Luba cultural-political influence toward Lake Tanganyika. ATLAS uses 'Kingdom of Luba' rather than automatically upgrading the polity to 'Luba Empire', reflecting scholarship that cautions against treating the wider sphere of influence as a uniformly centralized empire."
+  },
+  "sources": [
+    {
+      "title": "Finality Without End — history of the Luba kingdom after Reefe (1981)",
+      "canonical_url": "https://sergeschoffel.com/uploads/publications/finalite-sans-fin-bd-page-page.pdf",
+      "citation_text": "The publication, summarizing Reefe's historical reconstruction, places Ilunga Sungu's reign around 1780–1810 and describes major expansion of Luba influence during his rule.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Ilunga Sungu",
+      "canonical_url": "https://en.wikipedia.org/wiki/Ilunga_Sungu",
+      "citation_text": "The compiled biography places Ilunga Sungu's accession around 1780, with a death around 1810, while emphasizing uncertainty in the exact chronology.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

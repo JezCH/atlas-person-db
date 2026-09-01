@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Áedán mac Gabráin",
+    "display_name_ko": "아에단 막 가브란",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Dál Riata",
+    "display_name_ko": "달 리아타",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 574,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 609,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Áedán mac Gabráin was a historically attested ruler of the Gaelic kingdom later known as Dál Riata. The surviving annalistic and hagiographic chronologies vary slightly, with accession around 574/576 and death around 608/609, so ATLAS records c.574–c.609 rather than false exactness."
+  },
+  "sources": [
+    {
+      "title": "From Caledonia to Pictland: Scotland to 795 — Chapter 5",
+      "canonical_url": "https://www.jstor.org/stable/10.3366/j.ctt1r28q5.12",
+      "citation_text": "The scholarly study describes Áedán son of Gabrán as the first early Scottish king whose career can be reconstructed in narrative form and places his accession around 576.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Áedán mac Gabráin",
+      "canonical_url": "https://en.wikipedia.org/wiki/%C3%81ed%C3%A1n_mac_Gabr%C3%A1in",
+      "citation_text": "The compiled chronology, drawing on Irish annals and Adomnán, gives Áedán's reign over Dál Riata from about 574 until about 609.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

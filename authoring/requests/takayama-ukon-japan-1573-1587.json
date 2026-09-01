@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Takayama Ukon",
+    "display_name_ko": "다카야마 우콘",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Christian daimyō and territorial lord",
+    "role_display_name_ko": "기리시탄 다이묘·영주",
+    "start_year": 1573,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1587,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Takayama Ukon, baptized Justo, became lord of Takatsuki in 1573, was transferred to Akashi in 1585, and relinquished his daimyō status in 1587 rather than renounce Christianity under Toyotomi Hideyoshi's anti-Christian order. Because the Takayama clan is a family rather than a polity, ATLAS binds his continuous daimyō activity to Japan while preserving the Takatsuki-to-Akashi territorial sequence in the notes."
+  },
+  "sources": [
+    {
+      "title": "Takayama Ukon — Takatsuki City Tourist Association",
+      "canonical_url": "https://www.takatsuki-kankou.org/takayama-ukon/en/",
+      "citation_text": "Takatsuki's official tourism history records Ukon as lord of Takatsuki from 1573, transferred to Akashi in 1585, and stripped of daimyō status in 1587 after refusing to renounce Christianity.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Decree on the martyrdom of Iustus Takayama Ukon — Acta Apostolicae Sedis",
+      "canonical_url": "https://press.vatican.va/archive/aas/documents/2018/acta-aprile2018.pdf",
+      "citation_text": "The Vatican decree identifies Iustus (Justo) Takayama Ukon as a Japanese daimyō and records his refusal to abandon Christianity during Toyotomi Hideyoshi's 1587 persecution.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

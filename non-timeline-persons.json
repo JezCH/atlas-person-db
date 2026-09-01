@@ -1018,5 +1018,39 @@
     "role_ko": "카란타니아 공작 전승 인물·성인",
     "reason": "Domitian (Domicijan Koroški) is preserved in the Millstatt tradition as a Carantanian duke and Christianizer. His name is absent from the ninth-century Conversio Bagoariorum et Carantanorum, while later hagiographic and epigraphic evidence has produced a long-running scholarly dispute over whether the tradition preserves a real Carolingian-era ruler. Even scholarship favorable to a historical core places him only broadly in Charlemagne's time, without a secure individual reign or activity interval. ATLAS therefore preserves him as a legendary/disputed-historicity Carantanian figure outside the historical year timeline.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-historicity overlay is enabled."
+  },
+  {
+    "person_name": "Adoni-zedek",
+    "politic_name": "Canaanite Jerusalem",
+    "display_name_ko": "아도니세덱",
+    "politic_display_name_ko": "가나안계 예루살렘",
+    "historicity": "legendary",
+    "historicity_display_ko": "성서 전승·역사성 미확정",
+    "timeline_status": "excluded",
+    "date_basis": "biblical_joshua_narrative_without_independent_personal_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "여호수아서 전승의 예루살렘 왕",
+    "reason": "Adoni-zedek appears in Joshua 10 as king of Jerusalem who organized an Amorite coalition against Gibeon and Joshua. The individual is not independently established by contemporary evidence, and the biblical conquest narrative does not provide a defensible person-specific historical reign interval for ATLAS. The figure is therefore preserved as a biblical-traditional ruler associated with Canaanite Jerusalem outside the historical year timeline.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or biblical-traditional overlay is enabled."
+  },
+  {
+    "person_name": "Penelope",
+    "politic_name": "Ithaca",
+    "display_name_ko": "페넬로페",
+    "politic_display_name_ko": "이타카",
+    "historicity": "mythical",
+    "historicity_display_ko": "신화",
+    "timeline_status": "excluded",
+    "date_basis": "homeric_greek_myth_without_historical_person_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "그리스 신화의 이타카 왕비",
+    "reason": "Penelope is the wife of Odysseus and queen of Ithaca in the Homeric and later Greek mythological tradition. Her narrative role is culturally important, but she is not a historically established individual with a defensible personal chronology. ATLAS therefore preserves her as a mythological Ithacan figure outside the historical year timeline.",
+    "map_policy": "Do not display on the historical year timeline unless a separate mythical or traditional overlay is enabled."
   }
 ]

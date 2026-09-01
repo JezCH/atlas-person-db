@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Francisco Morazán",
+    "display_name_ko": "프란시스코 모라산",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Federal Republic of Central America",
+    "display_name_ko": "중앙아메리카 연방공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1830,
+    "start_month": 9,
+    "start_day": 16,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1834,
+    "end_month": 9,
+    "end_day": 16,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "First constitutional presidential term of Francisco Morazán in the Federal Republic of Central America, from 16 September 1830 to 16 September 1834."
+  },
+  "sources": [
+    {
+      "title": "Morazán, Francisco (1792–1842) — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/humanities/encyclopedias-almanacs-transcripts-and-maps/morazan-francisco-1792-1842",
+      "citation_text": "The encyclopedia identifies Francisco Morazán as president of the Federation of Central America in 1830–1834 and 1835–1839.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Francisco Morazán",
+      "canonical_url": "https://en.wikipedia.org/wiki/Francisco_Moraz%C3%A1n",
+      "citation_text": "The compiled presidential chronology gives the exact federal presidential terms as 16 September 1830–16 September 1834 and 14 February 1835–1 February 1839.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
