@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gyorgy-dozsa:hungarian-peasant-uprising:1514:v3",
+  "person": {
+    "canonical_name_en": "György Dózsa",
+    "display_name_ko": "죄르지 도자",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Hungarian Peasant Uprising of 1514",
+    "display_name_ko": "1514년 헝가리 농민 봉기",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Leader of the 1514 peasant uprising",
+    "role_display_name_ko": "1514년 농민 봉기 지도자",
+    "start_year": 1514,
+    "start_month": 4,
+    "start_day": 24,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 1514,
+    "end_month": 7,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "György Dózsa was appointed commander of a crusading force on 24 April 1514; the movement rapidly became a major peasant uprising against the Hungarian nobility. The first attempt was blocked because 'opposes' cannot be a person's primary Activity; a second retry using period_basis 'rebellion' was blocked because that code is not in the current Production vocabulary. This final model follows existing revolutionary-leader records such as Sandino and Levski: Dózsa is active in the Hungarian Peasant Uprising of 1514 with general_activity as the supported period basis."
+  },
+  "sources": [
+    {
+      "title": "Crusading as Social Revolt: The Hungarian Peasant Uprising of 1514 — Cambridge Core",
+      "canonical_url": "https://www.cambridge.org/core/journals/journal-of-ecclesiastical-history/article/abs/crusading-as-social-revolt-the-hungarian-peasant-uprising-of-1514/A5C978CD52DF7BDF7ABA29C88199916C",
+      "citation_text": "Norman Housley's study records Dózsa's appointment as commander on 24 April 1514 and the transformation of the crusade into the Hungarian peasant uprising.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
