@@ -1,0 +1,286 @@
+name: ATLAS Authoring Completeness Audit
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/atlas-authoring-completeness-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: atlas-authoring-completeness-audit
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      ATLAS_AUTHORING_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply
+      ATLAS_HUMAN_AUTHORING_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring
+      ATLAS_AUTHORING_AUDIENCE: atlas-person-db-authoring
+      ATLAS_AUTHORING_TRANSPORT_VERSION: '2'
+      ATLAS_AUDIT_DIR: /tmp/atlas-authoring-completeness
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve deployed authoring runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$ATLAS_AUDIT_DIR/batches" "$ATLAS_AUDIT_DIR/responses"
+
+          status="$(curl --silent --show-error             --output "$ATLAS_AUDIT_DIR/readiness.json"             --write-out '%{http_code}'             "$ATLAS_AUTHORING_ENDPOINT")"
+          [[ "$status" == "200" ]] || {
+            cat "$ATLAS_AUDIT_DIR/readiness.json" >&2 || true
+            echo "Authoring readiness failed: HTTP $status" >&2
+            exit 1
+          }
+
+          jq -e --argjson version "$ATLAS_AUTHORING_TRANSPORT_VERSION" '
+            .ok==true
+            and .marker=="ATLAS_AUTHORING_TRANSPORT_V2"
+            and .transport_version==$version
+            and (.runtime_sha | test("^[0-9a-f]{40}$"))
+            and .ready==true
+            and .readiness.p9.duplicate_groups==0
+          ' "$ATLAS_AUDIT_DIR/readiness.json" >/dev/null
+
+          runtime_sha="$(jq -er '.runtime_sha' "$ATLAS_AUDIT_DIR/readiness.json")"
+          git cat-file -e "${runtime_sha}^{commit}"
+          git merge-base --is-ancestor "$runtime_sha" "$GITHUB_SHA"
+          git diff --name-only --diff-filter=ACDMRTUXB "$runtime_sha" "$GITHUB_SHA" -- > "$ATLAS_AUDIT_DIR/runtime-diff.txt"
+
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import { shouldBuildForChangedPaths } from './scripts/vercel-ignore-build.mjs';
+          const text = fs.readFileSync('/tmp/atlas-authoring-completeness/runtime-diff.txt', 'utf8').trim();
+          const paths = text ? text.split(/\r?\n/).filter(Boolean) : [];
+          if (shouldBuildForChangedPaths(paths)) {
+            console.error('AUTHORING_COMPLETENESS_RUNTIME_CODE_DRIFT');
+            for (const path of paths) console.error(`  ${path}`);
+            process.exit(1);
+          }
+          console.log(`Completeness audit delta is deployment-safe (${paths.length} path${paths.length === 1 ? '' : 's'}).`);
+          NODE
+
+          echo "ATLAS_RUNTIME_SHA=$runtime_sha" >> "$GITHUB_ENV"
+
+      - name: Build immutable approved-manifest audit batches
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          'use strict';
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const { withResolvedHumanRequestId } = require('./server/atlas-human-authoring-service.js');
+          const { manifestHash } = require('./server/atlas-authoring-manifest-service.js');
+
+          const root = 'authoring/requests';
+          const out = '/tmp/atlas-authoring-completeness';
+          const files = fs.readdirSync(root)
+            .filter((name) => name.endsWith('.json'))
+            .sort()
+            .map((name) => path.posix.join(root, name));
+
+          const rows = [];
+          const invalid = [];
+          for (const manifestPath of files) {
+            let raw;
+            try {
+              raw = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+            } catch (error) {
+              invalid.push({ manifest_path: manifestPath, code: 'INVALID_JSON', detail: String(error.message || error) });
+              continue;
+            }
+            if (raw?.schema !== 'atlas-human-authoring/v1' || raw?.review_status !== 'approved') continue;
+            try {
+              const resolved = withResolvedHumanRequestId(raw);
+              rows.push({
+                manifest_path: manifestPath,
+                request_id: resolved.request_id,
+                request_id_generated: resolved.generated === true,
+                manifest_hash: manifestHash(resolved.request),
+                request: resolved.request
+              });
+            } catch (error) {
+              invalid.push({ manifest_path: manifestPath, code: String(error.message || 'HUMAN_AUTHORING_REQUEST_INVALID') });
+            }
+          }
+
+          fs.writeFileSync(path.join(out, 'inventory.json'), JSON.stringify({
+            schema: 'atlas-authoring-completeness-inventory/v1',
+            approved_human_manifest_count: rows.length,
+            invalid_manifest_count: invalid.length,
+            invalid_manifests: invalid,
+            manifests: rows.map(({ request, ...row }) => row)
+          }, null, 2) + '\n');
+
+          const byRequest = new Map();
+          for (const row of rows) {
+            const group = byRequest.get(row.request_id) || [];
+            group.push(row);
+            byRequest.set(row.request_id, group);
+          }
+          const collisions = [];
+          for (const [requestId, group] of byRequest) {
+            const hashes = [...new Set(group.map((row) => row.manifest_hash))];
+            if (hashes.length > 1) {
+              collisions.push({
+                request_id: requestId,
+                distinct_hash_count: hashes.length,
+                manifests: group.map((row) => ({ manifest_path: row.manifest_path, manifest_hash: row.manifest_hash }))
+              });
+            }
+          }
+          fs.writeFileSync(path.join(out, 'request-id-collisions.json'), JSON.stringify(collisions, null, 2) + '\n');
+
+          // Pack requests so the same resolved request_id never appears twice in one API batch.
+          // That prevents provenance duplicates from being misclassified by the batch duplicate guard.
+          const limit = 40;
+          const batches = [];
+          for (const row of rows) {
+            let batch = batches.find((candidate) =>
+              candidate.items.length < limit && !candidate.requestIds.has(row.request_id)
+            );
+            if (!batch) {
+              batch = { items: [], requestIds: new Set() };
+              batches.push(batch);
+            }
+            batch.items.push(row);
+            batch.requestIds.add(row.request_id);
+          }
+
+          for (let index = 0; index < batches.length; index += 1) {
+            const batch = batches[index];
+            const output = {
+              schema: 'atlas-authoring-completeness-batch/v1',
+              index,
+              count: batch.items.length,
+              manifest_paths: batch.items.map((row) => row.manifest_path),
+              requests: batch.items.map((row) => row.request)
+            };
+            fs.writeFileSync(
+              path.join(out, 'batches', String(index).padStart(3, '0') + '.json'),
+              JSON.stringify(output) + '\n'
+            );
+          }
+
+          console.log(JSON.stringify({
+            approved_human_manifest_count: rows.length,
+            invalid_manifest_count: invalid.length,
+            request_id_collision_groups: collisions.length,
+            batch_count: batches.length
+          }, null, 2));
+          NODE
+
+      - name: Preflight every approved human authoring manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          : > "$ATLAS_AUDIT_DIR/results.jsonl"
+
+          request_oidc() {
+            curl --fail-with-body --silent --show-error               -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}"               "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_AUTHORING_AUDIENCE}" | jq -er '.value'
+          }
+
+          batch_index=0
+          for batch in "$ATLAS_AUDIT_DIR"/batches/*.json; do
+            [[ -f "$batch" ]] || continue
+            oidc_token="$(request_oidc)"
+            payload="$(jq -cn               --argjson transport_version "$ATLAS_AUTHORING_TRANSPORT_VERSION"               --arg runtime_sha "$ATLAS_RUNTIME_SHA"               --arg authoring_sha "$GITHUB_SHA"               --slurpfile batch "$batch"               '{
+                operation:"preflight_batch",
+                transport_version:$transport_version,
+                runtime_sha:$runtime_sha,
+                authoring_sha:$authoring_sha,
+                manifest_paths:$batch[0].manifest_paths,
+                requests:$batch[0].requests
+              }')"
+            response="$ATLAS_AUDIT_DIR/responses/$(printf '%03d' "$batch_index").json"
+            status="$(curl --silent --show-error               --output "$response"               --write-out '%{http_code}'               --request POST               -H 'content-type: application/json'               -H "authorization: Bearer $oidc_token"               --data "$payload"               "$ATLAS_HUMAN_AUTHORING_ENDPOINT")"
+
+            if [[ "$status" != "200" ]]; then
+              cat "$response" >&2 || true
+              echo "Completeness preflight batch $batch_index failed: HTTP $status" >&2
+              exit 1
+            fi
+
+            jq -e '
+              .ok==true
+              and .marker=="ATLAS_HUMAN_AUTHORING_BATCH_V1"
+              and .schema=="atlas-human-authoring-batch/v1"
+              and .operation=="preflight_batch"
+              and .committed==false
+              and (.results | type=="array")
+              and (.count == (.results | length))
+            ' "$response" >/dev/null
+            jq -c '.results[]' "$response" >> "$ATLAS_AUDIT_DIR/results.jsonl"
+            batch_index=$((batch_index + 1))
+          done
+
+      - name: Classify completeness result
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          'use strict';
+          const fs = require('node:fs');
+          const out = '/tmp/atlas-authoring-completeness';
+          const inventory = JSON.parse(fs.readFileSync(out + '/inventory.json', 'utf8'));
+          const collisions = JSON.parse(fs.readFileSync(out + '/request-id-collisions.json', 'utf8'));
+          const text = fs.readFileSync(out + '/results.jsonl', 'utf8').trim();
+          const results = text ? text.split(/\r?\n/).filter(Boolean).map((line) => JSON.parse(line)) : [];
+          const counts = { ALREADY_PRESENT: 0, READY: 0, BLOCKED: 0 };
+          const blockedCodes = {};
+          for (const row of results) {
+            counts[row.status] = (counts[row.status] || 0) + 1;
+            if (row.status === 'BLOCKED') {
+              blockedCodes[row.code || 'UNKNOWN'] = (blockedCodes[row.code || 'UNKNOWN'] || 0) + 1;
+            }
+          }
+          const ready = results.filter((row) => row.status === 'READY');
+          const blocked = results.filter((row) => row.status === 'BLOCKED');
+          const summary = {
+            schema: 'atlas-authoring-completeness-audit/v1',
+            authoring_sha: process.env.GITHUB_SHA,
+            runtime_sha: process.env.ATLAS_RUNTIME_SHA,
+            approved_human_manifest_count: inventory.approved_human_manifest_count,
+            invalid_manifest_count: inventory.invalid_manifest_count,
+            result_count: results.length,
+            counts,
+            blocked_codes: blockedCodes,
+            request_id_collision_groups: collisions.length,
+            data_level_missing_count: ready.length,
+            complete: ready.length === 0 && inventory.invalid_manifest_count === 0
+          };
+          fs.writeFileSync(out + '/summary.json', JSON.stringify(summary, null, 2) + '\n');
+          fs.writeFileSync(out + '/ready.json', JSON.stringify(ready, null, 2) + '\n');
+          fs.writeFileSync(out + '/blocked.json', JSON.stringify(blocked, null, 2) + '\n');
+          console.log(JSON.stringify(summary, null, 2));
+          if (ready.length) {
+            console.error('Approved manifests that are READY against Production:');
+            for (const row of ready) console.error(`  ${row.manifest_path} [${row.request_id}]`);
+          }
+          if (inventory.invalid_manifest_count) {
+            console.error('Approved human manifests that could not be inventoried:');
+            for (const row of inventory.invalid_manifests) console.error(`  ${row.manifest_path}: ${row.code}`);
+          }
+          if (ready.length > 0 || inventory.invalid_manifest_count > 0) process.exit(1);
+          NODE
+
+      - name: Upload immutable completeness evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-authoring-completeness-${{ github.sha }}
+          path: /tmp/atlas-authoring-completeness/
+          if-no-files-found: error
+          retention-days: 90
