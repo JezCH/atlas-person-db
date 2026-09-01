@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ferdinand-i-of-leon:county-of-castile:count:1029-1065:v1",
+  "person": {
+    "canonical_name_en": "Ferdinand I of León",
+    "display_name_ko": "페르난도 1세"
+  },
+  "polity": {
+    "canonical_name_en": "County of Castile",
+    "display_name_ko": "카스티야 백국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Count",
+    "role_display_name_ko": "백작",
+    "start_year": 1029,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1065,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ferdinand was installed as Count of Castile after the murder of García Sánchez in 1029 and retained Castile while later acquiring the León crown in 1037/1038. Modern scholarship differs over retrospective use of a separate Castilian royal title during Ferdinand's lifetime, but the comital authority itself is well attested. ATLAS therefore preserves the County of Castile as a distinct concurrent political Activity through Ferdinand's death in 1065 without inventing an anachronistic Kingdom of Castile before the succession of Sancho II."
+  },
+  "sources": [
+    {
+      "title": "Fernando I, conde de Castilla y rey de León — Historia del Condado de Castilla",
+      "canonical_url": "https://www.condadodecastilla.es/personajes/fernando-i-conde-de-castilla-y-rey-de-leon/",
+      "citation_text": "The specialized Castilian-history reference identifies Ferdinand as Count of Castile from 1029 and later King of León, drawing on modern documentary scholarship.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Fernán González — Historia Hispánica, Real Academia de la Historia",
+      "canonical_url": "https://historia-hispanica.rah.es/biografias/19830-fernan-gonzalez",
+      "citation_text": "The Real Academia de la Historia's linked historical-person data identifies Ferdinand I as Count of Castile and ruler of León within the eleventh-century Castilian-Leonese succession framework.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-30"
+    }
+  }
+}
