@@ -2,7 +2,7 @@
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
   "person": {
-    "canonical_name_en": "Egbert of Wessex",
+    "canonical_name_en": "Egbert",
     "display_name_ko": "에그버트",
     "person_type": "historical",
     "historicity": "historical"
@@ -30,7 +30,7 @@
     "end_calendar": "unspecified_historical",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "Egbert ruled Wessex from 802 until his death in 839. His victories temporarily established West Saxon supremacy over much of southern England, but ATLAS retains the historically specific Kingdom of Wessex rather than back-projecting a later unified England polity."
+    "notes": "Egbert ruled Wessex from 802 until his death in 839. This request intentionally resolves to the existing Production Person identity `Egbert`; the Activity is already present and should be treated as ALREADY_PRESENT rather than creating a duplicate Person."
   },
   "sources": [
     {
