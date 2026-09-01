@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cakobau:kingdom-of-fiji:1871-1874:v2",
+  "person": {
+    "canonical_name_en": "Seru Epenisa Cakobau",
+    "display_name_ko": "세루 에페니사 카코바우",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Fiji",
+    "display_name_ko": "피지 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Tui Viti / King of Fiji",
+    "role_display_name_ko": "투이 비티·피지 국왕",
+    "start_year": 1871,
+    "start_month": 6,
+    "start_day": 5,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1874,
+    "end_month": 10,
+    "end_day": 10,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Cakobau was named King of Fiji on 5 June 1871 and remained the central monarch of the short-lived Kingdom of Fiji until cession to Britain on 10 October 1874. His claim was not universally accepted across all Fijian communities, so the Activity is limited to the documented kingdom rather than projected backward over earlier Fiji."
+  },
+  "sources": [
+    {
+      "title": "Cakobau, Seru Epenisa (Ratu), 1815?-1883 — National Library of New Zealand",
+      "canonical_url": "https://natlib.govt.nz/records/22376895",
+      "citation_text": "The National Library of New Zealand records Cakobau as named King of Fiji on 5 June 1871, formally installed as Tui Viti in 1873, and describes his role up to the 1874 cession.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

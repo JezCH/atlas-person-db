@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ordelafo-faliero:republic-of-venice:c1102-c1118:v1",
+  "person": {
+    "canonical_name_en": "Ordelafo Faliero",
+    "display_name_ko": "오르델라포 팔리에로",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Venice",
+    "display_name_ko": "베네치아 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Doge",
+    "role_display_name_ko": "도제",
+    "start_year": 1102,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1118,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ordelafo Faliero is conventionally placed as Doge of Venice from about 1102 until his death in battle near Zara in 1117 or, at the latest, 1118. The detailed Treccani biography stresses that early-12th-century dogal chronology is not secure, so ATLAS preserves the familiar c.1102-c.1118 interval with both boundaries approximate rather than presenting an exact accession or death year."
+  },
+  "sources": [
+    {
+      "title": "Falièro, Ordelafo — Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/ordelafo-faliero/",
+      "citation_text": "Treccani identifies Ordelafo Faliero as Doge of Venice from 1102 and records his death fighting near Zara.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "FALIER, Ordelaffo — Dizionario Biografico degli Italiani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/ordelaffo-falier_%28Dizionario-Biografico%29/",
+      "citation_text": "The detailed biographical entry explains the uncertainty of the early-twelfth-century dogal chronology and places Faliero's death in 1117 or at the latest 1118.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

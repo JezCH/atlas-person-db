@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gustave-eiffel:french-republic:eiffel-tower:1887-1889:v1",
+  "person": {
+    "canonical_name_en": "Gustave Eiffel",
+    "display_name_ko": "귀스타브 에펠",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "French Republic",
+    "display_name_ko": "프랑스 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Engineer and constructor of the Eiffel Tower",
+    "role_display_name_ko": "에펠탑 기술자·건설 책임자",
+    "start_year": 1887,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1889,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gustave Eiffel was the engineer-contractor who led the Eiffel Tower project for the 1889 Exposition Universelle. ATLAS uses the tightly bounded construction phase, 1887-1889, as his representative French engineering Activity rather than stretching his multinational engineering and later scientific career across several decades."
+  },
+  "sources": [
+    {
+      "title": "Eiffel Tower history, architecture, design & construction — Eiffel Tower official site",
+      "canonical_url": "https://www.toureiffel.paris/en/the-monument/history",
+      "citation_text": "The official Eiffel Tower history states that construction began on 26 January 1887 and the Tower was completed on 31 March 1889.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Gustave Eiffel, l’homme de fer — Archives nationales",
+      "canonical_url": "https://www.archives-nationales.culture.gouv.fr/dossiers-thematiques/gustave-eiffel-lhomme-de-fer",
+      "citation_text": "The French National Archives describes Eiffel as the engineer whose technical achievements included the 1889 300-metre tower and major structures in France and abroad.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

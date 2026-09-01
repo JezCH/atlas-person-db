@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:antoni-gaudi:kingdom-of-spain:sagrada-familia:1883-1926:v1",
+  "person": {
+    "canonical_name_en": "Antoni Gaudí",
+    "display_name_ko": "안토니 가우디",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Spain",
+    "display_name_ko": "스페인 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "artistic_activity",
+    "role": "Architect of the Sagrada Família",
+    "role_display_name_ko": "사그라다 파밀리아 건축가",
+    "start_year": 1883,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1926,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Antoni Gaudí took over the Sagrada Família project in 1883 and remained its defining architect until his death in 1926. ATLAS uses this exceptionally well-documented 43-year architectural Activity as the representative Spanish polity link, rather than treating every separate Gaudí commission as an independent Activity."
+  },
+  "sources": [
+    {
+      "title": "Antoni Gaudí — Sagrada Família",
+      "canonical_url": "https://sagradafamilia.org/en/antoni-gaudi?lang=1",
+      "citation_text": "The Sagrada Família states that Gaudí took over the project in 1883 and continued his work on it until his death in 1926.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Works of Antoni Gaudí — UNESCO World Heritage Centre",
+      "canonical_url": "https://whc.unesco.org/en/list/320/",
+      "citation_text": "UNESCO recognizes seven Gaudí works as an exceptional creative contribution to architecture and construction technology of the nineteenth and early twentieth centuries.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-01",
+      "document_title": "안토니 가우디",
+      "url": "https://namu.wiki/w/%EC%95%88%ED%86%A0%EB%8B%88%20%EA%B0%80%EC%9A%B0%EB%94%94"
+    }
+  }
+}
