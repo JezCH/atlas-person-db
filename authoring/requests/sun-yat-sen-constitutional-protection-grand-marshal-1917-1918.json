@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sun-yat-sen:constitutional-protection-government:grand-marshal:1917-1918:v1",
+  "person": {
+    "canonical_name_en": "Sun Yat-sen",
+    "display_name_ko": "쑨원"
+  },
+  "polity": {
+    "canonical_name_en": "Constitutional Protection Military Government",
+    "display_name_ko": "호법군정부",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Grand Marshal",
+    "role_display_name_ko": "대원수",
+    "start_year": 1917,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1918,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The extraordinary parliament in Guangzhou elected Sun grand marshal on 1 September 1917; he assumed office on 10 September and resigned in May 1918 as the military government was reorganized into a directorate. ATLAS models this southern Constitutional Protection government separately from the Beijing-based national administration."
+  },
+  "sources": [
+    {
+      "title": "Chronology of Dr. Sun Yat-sen — National Dr. Sun Yat-sen Memorial Hall",
+      "canonical_url": "https://www.yatsen.gov.tw/en/cp.aspx?n=6695",
+      "citation_text": "Official chronology records Sun's 1912 provisional presidency, 1917-1918 grand-marshal leadership of the Constitutional Protection government, 1921-1922 Guangzhou presidency, and restoration as grand marshal in 1923.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "쑨원",
+      "url": "https://namu.wiki/w/%EC%91%A8%EC%9B%90"
+    }
+  }
+}
