@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:than-shwe:myanmar:1992-2011:v1",
+  "person": {
+    "canonical_name_en": "Than Shwe",
+    "display_name_ko": "탄 슈웨",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Myanmar",
+    "display_name_ko": "미얀마",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Chairman of the military junta and head of state",
+    "role_display_name_ko": "군사평의회 의장·국가 최고지도자",
+    "start_year": 1992,
+    "start_month": 4,
+    "start_day": 23,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2011,
+    "end_month": 3,
+    "end_day": 30,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Than Shwe became Myanmar's junta chairman and effective head of state on 23 April 1992 and remained the country's dominant ruler through the military government's dissolution on 30 March 2011."
+  },
+  "sources": [
+    {
+      "title": "Than Shwe — CIDOB",
+      "canonical_url": "https://www.cidob.org/en/lider-politico/shwe",
+      "citation_text": "CIDOB lists Than Shwe as president/chairman of Myanmar's military junta from 23 April 1992 to 30 March 2011.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-01",
+      "document_title": "탄 슈웨",
+      "url": "https://namu.wiki/w/%ED%83%84%20%EC%8A%88%EC%9B%A8"
+    }
+  }
+}

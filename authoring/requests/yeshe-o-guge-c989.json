@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:yeshe-o:guge:c989:v1",
+  "person": {
+    "canonical_name_en": "Yeshe-Ö",
+    "display_name_ko": "예셰 외",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Guge",
+    "display_name_ko": "구게",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King and Buddhist patron",
+    "role_display_name_ko": "왕·불교 후원자",
+    "start_year": 989,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 989,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "disputed",
+    "chronology_status": "reviewed",
+    "notes": "Yeshe-Ö was a historical ruler of Guge and a major patron of the later dissemination of Buddhism. His regnal chronology is materially inconsistent across later Tibetan and modern reconstructions. A critical biography on Tibetan Law states that he took monastic vows in 989 and handed over kingship to Khor re. ATLAS therefore records only c.989 as a representative final-ruler point instead of fabricating a full reign interval from conflicting chronologies."
+  },
+  "sources": [
+    {
+      "title": "Biography of Lha Lama Yeshe Ö — Tibetan Law",
+      "canonical_url": "https://tibetanlaw.org/article/biography-of-lha-lama-yeshe-o",
+      "citation_text": "The critical biography states that Yeshe Ö belonged to Guge's ruling family, united a wider area, and took monastic vows in 989 while handing over the kingship to Khor re.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Lha Lama Yeshe Wo — The Treasury of Lives",
+      "canonical_url": "https://treasuryoflives.org/biographies/view/Lha-Lama-Yeshe-O/TBRC_p8344",
+      "citation_text": "The peer-reviewed Treasury of Lives biography identifies Yeshe Wo/Yeshe Ö as a historical tenth- to eleventh-century Tibetan figure associated with Guge and Tholing.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

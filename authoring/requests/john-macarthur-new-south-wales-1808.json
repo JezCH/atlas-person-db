@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:john-macarthur:new-south-wales:1808:v1",
+  "person": {
+    "canonical_name_en": "John Macarthur",
+    "display_name_ko": "존 매카서",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Colony of New South Wales",
+    "display_name_ko": "뉴사우스웨일스 식민지",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Colonial Secretary and de facto administrator",
+    "role_display_name_ko": "식민지 서기·사실상 행정 책임자",
+    "start_year": 1808,
+    "start_month": 1,
+    "start_day": 26,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1808,
+    "end_month": 7,
+    "end_day": 28,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "During the Rum Rebellion, George Johnston deposed Governor William Bligh on 26 January 1808 and created the office of colonial secretary for John Macarthur. The Australian Dictionary of Biography states that Macarthur 'virtually administered' the colony until Lieutenant-Colonel Joseph Foveaux arrived on 28 July. ATLAS records this exceptional de facto administrative phase rather than treating Macarthur as a normal governor of New South Wales."
+  },
+  "sources": [
+    {
+      "title": "John Macarthur — Australian Dictionary of Biography",
+      "canonical_url": "https://adb.anu.edu.au/biography/macarthur-john-2390",
+      "citation_text": "The ADB states that after Bligh's deposition Macarthur received the specially created colonial secretaryship and 'virtually administered' New South Wales until Foveaux arrived on 28 July 1808.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

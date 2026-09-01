@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:olive-yang:kokang:c1950-c1959:v1",
+  "person": {
+    "canonical_name_en": "Olive Yang",
+    "display_name_ko": "올리브 양",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kokang",
+    "display_name_ko": "코캉",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Warlord and de facto ruler",
+    "role_display_name_ko": "군벌·사실상 지배자",
+    "start_year": 1950,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1959,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Olive Yang (Yang Jinxiu) is described by The Irrawaddy as the de facto ruler of Kokang in the 1950s, commanding an army of nearly 1,000 and operating within the region's warlord politics. The source does not establish exact accession and displacement dates, so ATLAS uses only the approximate decade rather than extending her rule to her 1961 arrest."
+  },
+  "sources": [
+    {
+      "title": "The Origins of the Kokang in Myanmar — The Irrawaddy",
+      "canonical_url": "https://www.irrawaddy.com/news/burma/kokang-the-backstory.html",
+      "citation_text": "The Irrawaddy states that Olive Yang was the de facto ruler of Kokang in the 1950s and maintained a private army of nearly 1,000 men.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

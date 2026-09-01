@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:multuggerah:western-moreton-resistance:c1841-c1846:v1",
+  "person": {
+    "canonical_name_en": "Multuggerah",
+    "display_name_ko": "멀투게라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Western Moreton Indigenous resistance alliance",
+    "display_name_ko": "서부 모턴 원주민 저항 연합",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Aboriginal headman and resistance leader",
+    "role_display_name_ko": "원주민 수장·저항 지도자",
+    "start_year": 1841,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1846,
+    "end_month": 9,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Multuggerah was a young Aboriginal headman and major resistance leader in the Lockyer Valley, Darling Downs and upper Brisbane regions. The Australian Dictionary of Biography notes that his homeland is claimed by Yugara/Jagera, western Wakka Wakka, Giabal and other groups; ATLAS therefore does not portray him as the sovereign ruler of a single 'Jagera state'. The Activity represents the inter-group western Moreton resistance alliance from the onset of hostilities in the early 1840s to his death in September 1846."
+  },
+  "sources": [
+    {
+      "title": "Multuggerah (c. 1820–c. 1846) — Australian Dictionary of Biography",
+      "canonical_url": "https://adb.anu.edu.au/biography/multuggerah-29904",
+      "citation_text": "The ADB identifies Multuggerah as an Aboriginal warrior, resistance leader and headman, documents his multi-group alliance and resistance from the early 1840s until his death in September 1846, and notes the contested/multiple cultural claims to his homeland.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
