@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:hussein-bin-ali:sharifate-of-mecca:sharif-emir:1908-1916:v1",
+  "person": {
+    "canonical_name_en": "Hussein bin Ali, Sharif of Mecca",
+    "display_name_ko": "샤리프 후세인"
+  },
+  "polity": {
+    "canonical_name_en": "Sharifate of Mecca",
+    "display_name_ko": "메카 샤리프국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sharif and Emir of Mecca",
+    "role_display_name_ko": "메카 샤리프·에미르",
+    "start_year": 1908,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1916,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Hussein bin Ali returned from Istanbul in 1908 as Sharif and Emir, or ruler, of Mecca under Ottoman suzerainty. In June 1916 he launched the Arab Revolt and the political order was transformed into the independent Kingdom of Hejaz, represented by his existing 1916-1924 kingship. Hussein continued to bear the sharifal title afterward, but ATLAS ends this pre-kingdom Sharifate Activity at the 1916 state transition to avoid duplicating the same Hejazi sovereign authority under nested labels."
+  },
+  "sources": [
+    {
+      "title": "Sharif Hussein bin Ali (1853-1931) — The Royal Hashemite Court",
+      "canonical_url": "https://rhc.jo/en/sharif-hussein-bin-ali-1853-1931",
+      "citation_text": "The Royal Hashemite Court states that Hussein returned to Mecca as Emir and launched the Great Arab Revolt on 10 June 1916.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "Out of the Hijaz: The Hashemite dynasty in the twentieth century — Qatar Digital Library",
+      "canonical_url": "https://qdl.qa/en/out-hijaz-hashemite-dynasty-twentieth-century",
+      "citation_text": "The Qatar Digital Library, drawing on British Library records, states that Husayn bin Ali took on the Sharifate of Mecca in 1908.",
+      "source_type": "institutional_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-29"
+    }
+  }
+}

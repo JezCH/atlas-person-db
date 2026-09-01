@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:abdulaziz-ibn-saud:third-saudi-state:emir:1902-1921:v1",
+  "person": {
+    "canonical_name_en": "Abdulaziz Ibn Saud",
+    "display_name_ko": "압둘아지즈 이븐 사우드"
+  },
+  "polity": {
+    "canonical_name_en": "Third Saudi State",
+    "display_name_ko": "제3사우디국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emir",
+    "role_display_name_ko": "에미르",
+    "start_year": 1902,
+    "start_month": 1,
+    "start_day": 15,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1921,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Abdulaziz restored Al Saud rule by recapturing Riyadh in January 1902 and thereafter ruled the expanding Saudi polity in Najd until he assumed the title Sultan of Najd in 1921. Saudipedia records his 1902 title as Prince of Najd and Chief of its Tribes and the 1921 transition to Sultan. ATLAS uses 'Third Saudi State' as a historiographic umbrella catalog label for this continuous 1902-1921 Saudi political formation rather than inventing formal state-name changes each time its territory expanded, while preserving the later Sultanate, Hejaz, dual-monarchy and Saudi Arabia Activities separately."
+  },
+  "sources": [
+    {
+      "title": "List of Titles of King Abdulaziz — Saudipedia",
+      "canonical_url": "https://saudipedia.com/en/list-of-titles-of-king-abdulaziz",
+      "citation_text": "Saudipedia states that Abdulaziz received the title Prince of Najd and Chief of its Tribes in 1902 and became Sultan of Najd in 1921.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "Abdulaziz Bin Abdulrahman Al Saud — Saudipedia",
+      "canonical_url": "https://saudipedia.com/en/abdulaziz-bin-abdulrahman-al-saud",
+      "citation_text": "Saudipedia records Abdulaziz's recovery of Riyadh and official assumption of rule in 1902, beginning the restored Saudi state that expanded before the 1921 sultanate.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
