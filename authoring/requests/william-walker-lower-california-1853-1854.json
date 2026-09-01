@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:william-walker:republic-of-lower-california:self-proclaimed-president:1853-1854:v1",
+  "person": {
+    "canonical_name_en": "William Walker",
+    "display_name_ko": "윌리엄 워커"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Lower California",
+    "display_name_ko": "바하칼리포르니아 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Self-proclaimed President",
+    "role_display_name_ko": "자칭 대통령",
+    "start_year": 1853,
+    "start_month": 11,
+    "start_day": 3,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1854,
+    "end_month": 1,
+    "end_day": 18,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "William Walker proclaimed the unrecognized Republic of Lower California on 3 November 1853 and installed himself as president. On 18 January 1854 he replaced that claimed polity with the broader Republic of Sonora, already represented by his existing Activity. ATLAS therefore preserves Lower California as the distinct first phase of Walker's filibuster regime and keeps the office explicitly self-proclaimed rather than treating the episode as legitimate Mexican sovereignty."
+  },
+  "sources": [
+    {
+      "title": "Map of the New Republic — The Huntington",
+      "canonical_url": "https://www.huntington.org/collections/lib-p9539coll1-23559",
+      "citation_text": "The Huntington identifies the mapped entity as the Republic of Lower California attempted by William Walker in the 1853-1854 filibustering expedition.",
+      "source_type": "museum_reference"
+    },
+    {
+      "title": "William Walker proclaims himself president of an independent Republic of Lower California — House Divided, Dickinson College",
+      "canonical_url": "https://hd.housedivided.dickinson.edu/node/1988",
+      "citation_text": "Dickinson College's Civil War Research Engine dates Walker's proclamation of the independent Republic of Lower California and his presidency to 3 November 1853.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-30",
+      "document_title": "윌리엄 워커",
+      "url": "https://namu.wiki/w/%EC%9C%8C%EB%A6%AC%EC%97%84%20%EC%9B%8C%EC%BB%A4"
+    }
+  }
+}

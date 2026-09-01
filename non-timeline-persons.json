@@ -1103,5 +1103,22 @@
     "role_ko": "치카소 이주전승의 민코·시조 지도자",
     "reason": "The Chickasaw Nation's official migration story names Chiksa' as a minko' who led one migrating group and whose followers became the Chickasaw people after separating from the group led by his brother Chahta. This is an important Chickasaw origin tradition, but it does not provide a securely datable historical individual or a defensible person-specific activity interval. ATLAS therefore preserves Chiksa' as a traditional founder figure outside the historical year timeline.",
     "map_policy": "Do not display on the historical year timeline unless a legendary, traditional, or uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "I'itoi",
+    "politic_name": "O'odham creation tradition",
+    "display_name_ko": "이토이",
+    "politic_display_name_ko": "오오담 창조 전승",
+    "historicity": "mythical",
+    "historicity_display_ko": "신화",
+    "timeline_status": "excluded",
+    "date_basis": "tohono_oodham_and_akimel_oodham_creation_cosmology_without_historical_person_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "오오담 창조신·문화영웅 'Elder Brother'",
+    "reason": "I'itoi is an O'odham creator/culture-hero figure associated with Baboquivari and known as Elder Brother. Tohono O'odham tradition treats I'itoi as a sacred creator being, not a historically datable Hohokam ruler. Hohokam are ancestral to O'odham communities, but assigning I'itoi a reign over a historical Hohokam polity would convert living religious tradition into a fabricated historical chronology. ATLAS therefore preserves I'itoi outside the historical year timeline.",
+    "map_policy": "Do not display on the historical year timeline unless a mythic or traditional overlay is enabled."
   }
 ]

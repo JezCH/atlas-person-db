@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "John Carver",
+    "display_name_ko": "존 카버",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Plymouth Colony",
+    "display_name_ko": "플리머스 식민지",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Governor",
+    "role_display_name_ko": "총독",
+    "start_year": 1620,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1621,
+    "end_month": 4,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "John Carver was chosen or confirmed as governor immediately after the Mayflower Compact in 1620 and served as Plymouth Colony's first governor until his death in April 1621."
+  },
+  "sources": [
+    {
+      "title": "Leadership & Governance in Plymouth Colony — Pilgrim Hall Museum",
+      "canonical_url": "https://www.pilgrimhall.org/leadership-governance-in-plymouth-colony/",
+      "citation_text": "Pilgrim Hall Museum identifies John Carver as Plymouth Colony's first governor, chosen immediately after the Mayflower Compact, and records his death in April 1621.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "John Carver Biography — American Ancestors",
+      "canonical_url": "https://mayflower.americanancestors.org/john-carver-biography",
+      "citation_text": "American Ancestors records Carver as governor from the landing at Plymouth until his death in April 1621.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

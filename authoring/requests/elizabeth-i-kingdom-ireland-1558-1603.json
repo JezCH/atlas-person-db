@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:elizabeth-i:kingdom-of-ireland:queen:1558-1603:v1",
+  "person": {
+    "canonical_name_en": "Elizabeth I",
+    "display_name_ko": "엘리자베스 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Ireland",
+    "display_name_ko": "아일랜드 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Queen",
+    "role_display_name_ko": "여왕",
+    "start_year": 1558,
+    "start_month": 11,
+    "start_day": 17,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 1603,
+    "end_month": 3,
+    "end_day": 24,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Elizabeth I succeeded Mary I on 17 November 1558 as Queen of England and, under the separate Tudor crown created for Ireland in 1542, Queen of Ireland. Her Great Seal explicitly styles her Queen of England, France and Ireland. ATLAS therefore records the Irish crown as a distinct concurrent sovereign Activity, consistent with the separate Kingdom of Ireland Activities already used for Henry VIII, James I, William III and George III."
+  },
+  "sources": [
+    {
+      "title": "The Great Seal of Elizabeth I — The National Archives",
+      "canonical_url": "https://www.nationalarchives.gov.uk/education/resources/elizabeth-monarchy/the-great-seal-of-elizabeth-i/",
+      "citation_text": "The National Archives transcribes Elizabeth I's Great Seal as styling her, by the grace of God, Queen of England, France and Ireland.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "Elizabeth I (r.1558-1603) — The Royal Family",
+      "canonical_url": "https://www.royal.uk/elizabeth-i",
+      "citation_text": "The Royal Family records Elizabeth's accession in November 1558 and death on 24 March 1603.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-25",
+      "document_title": "엘리자베스 1세",
+      "url": "https://namu.wiki/w/%EC%97%98%EB%A6%AC%EC%9E%90%EB%B2%A0%EC%8A%A4%201%EC%84%B8"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Saturiwa",
+    "display_name_ko": "사투리와",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Saturiwa chiefdom",
+    "display_name_ko": "사투리와 추장국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Head chief",
+    "role_display_name_ko": "대추장",
+    "start_year": 1562,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "uncertain",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1565,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "uncertain",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "French and Spanish contact-era sources identify Saturiwa as the head chief of a Timucua chiefdom centered near the mouth of the St. Johns River during 1562–1565. Florida scholarship emphasizes that 'Timucua' comprised multiple autonomous provinces, so ATLAS uses the specific Saturiwa chiefdom rather than a unitary Timucua state."
+  },
+  "sources": [
+    {
+      "title": "16th Century Settlements — Florida Department of State",
+      "canonical_url": "https://dos.fl.gov/florida-facts/florida-history/16th-century-settlements",
+      "citation_text": "Florida's Department of State explains that Timucua consisted of autonomous provinces and identifies Saturiwa as one of the important divisions.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "First Colony exhibit educator guide — Florida Museum",
+      "canonical_url": "https://www.floridamuseum.ufl.edu/wp-content/uploads/sites/16/2017/03/First-Colony-exhibit-Educator-Guide.pdf",
+      "citation_text": "The Florida Museum states that Timucua speakers were organized into many chiefdoms and identifies Saturiwa as chief of coastal northeast Florida, with subordinate local chiefs.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
