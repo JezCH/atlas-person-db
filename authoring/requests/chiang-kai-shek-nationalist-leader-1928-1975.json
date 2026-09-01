@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:chiang-kai-shek:republic-of-china:nationalist-leader:1928-1975:v1",
+  "person": {
+    "canonical_name_en": "Chiang Kai-shek",
+    "display_name_ko": "장제스"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of China",
+    "display_name_ko": "중화민국",
+    "polity_type": "modern_state",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Nationalist leader",
+    "role_display_name_ko": "국민당 지도자",
+    "start_year": 1928,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1975,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "This broad Activity preserves Chiang Kai-shek's long-term role as the dominant Nationalist political leader from the completion of the Northern Expedition in 1928 until his death in 1975. It intentionally does not label the entire interval as one continuous presidency or one uninterrupted formal state office; those offices are modeled separately."
+  },
+  "sources": [
+    {
+      "title": "Chiang Kai-shek (1st–5th terms) — Office of the President, Republic of China (Taiwan)",
+      "canonical_url": "https://english.president.gov.tw/Page/83",
+      "citation_text": "The Office of the President records Chiang as chairman of the Nationalist Government from 1928, first constitutional president in 1948, resignation in January 1949, and resumption of the presidency in March 1950 through his death in 1975.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "President Chiang Kai-shek and the Republic of China — National Chiang Kai-shek Memorial Hall",
+      "canonical_url": "https://www.cksmh.gov.tw/en/cp.aspx?n=6477",
+      "citation_text": "The National Chiang Kai-shek Memorial Hall describes Chiang's rise after the Northern Expedition, his chairmanship of the National Government, wartime national leadership, and election as constitutional president in 1948.",
+      "source_type": "official_museum_biographical_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-25",
+      "document_title": "장제스",
+      "url": "https://namu.wiki/w/%EC%9E%A5%EC%A0%9C%EC%8A%A4"
+    }
+  }
+}
