@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:federico-da-montefeltro:lordship-of-urbino:lord:1444-1474:v1",
+  "person": {
+    "canonical_name_en": "Federico da Montefeltro",
+    "display_name_ko": "페데리코 다 몬테펠트로"
+  },
+  "polity": {
+    "canonical_name_en": "Lordship of Urbino",
+    "display_name_ko": "우르비노 영주국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Lord",
+    "role_display_name_ko": "영주",
+    "start_year": 1444,
+    "start_month": 7,
+    "start_day": 23,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 1474,
+    "end_month": 8,
+    "end_day": 21,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After Oddantonio's killing, Federico entered Urbino on 23 July 1444 and was acclaimed its new lord. He governed and enlarged the Urbino state for three decades before Sixtus IV invested him with the ducal title in 1474. ATLAS therefore separates the 1444-1474 Lordship phase from Federico's existing 1474-1482 Duchy of Urbino Activity."
+  },
+  "sources": [
+    {
+      "title": "FEDERICO da Montefeltro, duca di Urbino — Dizionario Biografico, Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/federico-da-montefeltro-duca-di-urbino_%28Dizionario-Biografico%29/",
+      "citation_text": "Treccani records Federico's triumphant entry into Urbino on 23 July 1444 as the new lord and his later ducal investiture in 1474.",
+      "source_type": "reference_work"
+    },
+    {
+      "title": "Federico da Montefeltro duca di Urbino — Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/federico-da-montefeltro-duca-di-urbino/",
+      "citation_text": "Treccani states that Federico succeeded to the lordship of Urbino in 1444 and received legal recognition of his state and the ducal title in 1474.",
+      "source_type": "reference_work"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-31"
+    }
+  }
+}
