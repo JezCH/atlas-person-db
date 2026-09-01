@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:otomo-sorin:territorial-authority:1550-1576:v1",
+  "person": {
+    "canonical_name_en": "Ōtomo Sōrin",
+    "display_name_ko": "오토모 소린",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ōtomo Sōrin territorial authority",
+    "display_name_ko": "오토모 소린 세력권",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "de_facto_rule",
+    "role": "Daimyo and head of the Ōtomo",
+    "role_display_name_ko": "다이묘·오토모 당주",
+    "start_year": 1550,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1576,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ōtomo Sōrin (Yoshishige) succeeded to Ōtomo leadership in 1550 and built a major territorial authority in northern Kyūshū. He formally transferred the daimyo position to his son Yoshimune in 1576, although he remained politically influential afterward. ATLAS therefore ends this ruler Activity at the formal handover and does not treat the clan name itself as a state."
+  },
+  "sources": [
+    {
+      "title": "Ōtomo Sōrin (1530-1587) — Japan Reference",
+      "canonical_url": "https://jref.com/articles/%C5%8Ctomo-s%C5%8Drin-1530-1587.860/",
+      "citation_text": "The biography identifies Sōrin as the 21st head of the Ōtomo and records that he formally passed leadership to Ōtomo Yoshimune in 1576.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Japanese Journal of Religious Studies 34/1",
+      "canonical_url": "https://dl.ndl.go.jp/view/prepareDownload?contentNo=1&itemId=info%3Andljp%2Fpid%2F9591957",
+      "citation_text": "The study notes that Ōtomo Yoshimune became daimyo in 1576 on Sōrin's retirement and distinguishes Sōrin's later influence from formal territorial rulership.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-01",
+      "document_title": "오토모 소린",
+      "url": "https://namu.wiki/w/%EC%98%A4%ED%86%A0%EB%AA%A8%20%EC%86%8C%EB%A6%B0"
+    }
+  }
+}

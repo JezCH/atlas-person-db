@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:date-masamune:territorial-authority:1584-1590:v1",
+  "person": {
+    "canonical_name_en": "Date Masamune",
+    "display_name_ko": "다테 마사무네",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Date Masamune territorial authority",
+    "display_name_ko": "다테 마사무네 세력권",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "de_facto_rule",
+    "role": "Daimyo and head of the Date",
+    "role_display_name_ko": "다이묘·다테 당주",
+    "start_year": 1584,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1590,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Date Masamune became the 17th head of the Date in 1584 and rapidly expanded an autonomous Sengoku territorial authority in Ōshū. In 1590 he submitted to Toyotomi Hideyoshi during the latter's national unification. Consistent with ATLAS treatment of Oda, Uesugi and Shimazu, the Date clan itself is not treated as a state; this Activity represents Masamune's pre-Toyotomi territorial authority."
+  },
+  "sources": [
+    {
+      "title": "伊達市と伊達氏 — 福島県伊達市",
+      "canonical_url": "https://www.city.fukushima-date.lg.jp/soshiki/87/141.html",
+      "citation_text": "Date City records that Masamune received the Date headship in 1584 and had expanded Date territory widely by 1589.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "主な収蔵品 11 伊達政宗に関する資料（1）— 仙台市博物館",
+      "canonical_url": "https://www.city.sendai.jp/hakubutsu-shomu/hakubutsukan/shuzohin/shuzohin/shuzohin-18.html",
+      "citation_text": "Sendai City Museum records that Terumune transferred the family headship to Masamune in 1584, when Masamune was eighteen.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-01",
+      "document_title": "다테 마사무네",
+      "url": "https://namu.wiki/w/%EB%8B%A4%ED%85%8C%20%EB%A7%88%EC%82%AC%EB%AC%B4%EB%84%A4"
+    }
+  }
+}

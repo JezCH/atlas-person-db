@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:idi-amin:uganda:1971-1979:v1",
+  "person": {
+    "canonical_name_en": "Idi Amin",
+    "display_name_ko": "이디 아민",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Uganda",
+    "display_name_ko": "우간다",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1971,
+    "start_month": 1,
+    "start_day": 25,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1979,
+    "end_month": 4,
+    "end_day": 11,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Idi Amin seized power in the January 1971 coup and served as the third president of independent Uganda until 11 April 1979."
+  },
+  "sources": [
+    {
+      "title": "President Idi Amin Dada — State House Uganda",
+      "canonical_url": "https://statehouse.go.ug/the-state-house/past-presidents/president-idi-amin-dada-field-marshall/",
+      "citation_text": "Uganda State House gives Amin's presidency as 25 January 1971 to 11 April 1979 and identifies him as the third president of independent Uganda.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-01",
+      "document_title": "이디 아민",
+      "url": "https://namu.wiki/w/%EC%9D%B4%EB%94%94%20%EC%95%84%EB%AF%BC"
+    }
+  }
+}

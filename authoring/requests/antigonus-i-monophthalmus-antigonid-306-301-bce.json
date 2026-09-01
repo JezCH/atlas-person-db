@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:antigonus-i-monophthalmus:antigonid-kingdom:306-301-bce:v1",
+  "person": {
+    "canonical_name_en": "Antigonus I Monophthalmus",
+    "display_name_ko": "안티고노스 1세 모노프탈모스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Antigonid Kingdom",
+    "display_name_ko": "안티고노스 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Basileus / King",
+    "role_display_name_ko": "바실레우스·국왕",
+    "start_year": -306,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -301,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the victory at Salamis in 306 BCE, Antigonus I and his son Demetrius assumed the royal diadem. Antigonus remained king of his vast successor realm until his defeat and death at Ipsus in 301 BCE. ATLAS keeps this Antigonid successor kingdom distinct from the later Antigonid kingship of Macedon represented by Antigonus II."
+  },
+  "sources": [
+    {
+      "title": "Antigonids — Livius",
+      "canonical_url": "https://www.livius.org/articles/dynasty/antigonids/",
+      "citation_text": "Livius records that Antigonus and Demetrius accepted the royal diadem in 306 BCE and lists Antigonus I Monophthalmus as king from 306 to 301 BCE, ending with his death at Ipsus.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-01",
+      "document_title": "안티고노스 1세",
+      "url": "https://namu.wiki/w/%EC%95%88%ED%8B%B0%EA%B3%A0%EB%85%B8%EC%8A%A4%201%EC%84%B8"
+    }
+  }
+}
