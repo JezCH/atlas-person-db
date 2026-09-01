@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:charlemagne:kingdom-of-the-lombards:king:774-814:v1",
+  "person": {
+    "canonical_name_en": "Charlemagne",
+    "display_name_ko": "카롤루스 대제"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of the Lombards",
+    "display_name_ko": "랑고바르드 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 774,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 814,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the capitulation of Pavia in 774, Charlemagne assumed the Lombard royal title and remained King of the Lombards until his death in 814. This crown coexisted with his Frankish kingship and, from 800, his imperial title, so ATLAS records it as a separate overlapping polity Activity."
+  },
+  "sources": [
+    {
+      "title": "Charlemagne (742 or 747/748–814) — Wiley Blackwell Encyclopedia of Medieval Christianity",
+      "canonical_url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/9780470670606.wbecc0263",
+      "citation_text": "The reference entry gives Charlemagne's Lombard kingship as 774–814 alongside his Frankish and imperial titles.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Charlemagne — Encyclopaedia Britannica 1911",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Charlemagne",
+      "citation_text": "The biography records the capitulation of Pavia in 774 and Charlemagne's adoption of the title King of the Lombards.",
+      "source_type": "reference_work"
+    }
+  ]
+}
