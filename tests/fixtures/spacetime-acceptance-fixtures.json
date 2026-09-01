@@ -5,7 +5,10 @@
     "default_zoom_percent": 500,
     "maximum_zoom_percent": 800,
     "global_extent_compression": 0.78,
-    "local_density_compression_allowed": false
+    "local_density_compression_allowed": false,
+    "minimum_base_world_width_px": 900,
+    "maximum_base_world_width_px": 1275,
+    "viewport_expansion_above_cap_allowed": false
   },
   "dense_label_windows": [
     {

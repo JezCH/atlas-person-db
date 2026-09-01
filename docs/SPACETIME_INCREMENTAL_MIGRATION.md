@@ -11,6 +11,8 @@ The current `시공간 인물도` remains the single supported renderer. The rea
 - minimum/default camera zoom = 500%; maximum = 800%;
 - one camera zoom controls X and Y;
 - one shared physical extent compression factor = 0.78;
+- horizontal base-world width is globally clamped to 900–1,275 px before zoom/compression;
+- viewport growth beyond the cap must not enlarge world geometry;
 - no local density-based region or era compression;
 - historical Y never moves to resolve labels;
 - search/filter never changes normalized coordinates;

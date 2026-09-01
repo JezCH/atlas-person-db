@@ -6,6 +6,11 @@
 })(typeof globalThis !== "undefined" ? globalThis : this, () => {
   "use strict";
 
+  const DEFAULT_MIN_BASE_WORLD_WIDTH = 900;
+  const DEFAULT_MAX_BASE_WORLD_WIDTH = 1275;
+  const DEFAULT_AXIS_WIDTH = 152;
+  const DEFAULT_WORLD_VIEWPORT_GUTTER = 2;
+
   const DEFAULT_SPATIAL_HIERARCHY = Object.freeze([
     Object.freeze({ code: "americas", label: "아메리카", subregions: Object.freeze([
       Object.freeze({ code: "north-america", label: "북아메리카" }),
@@ -125,6 +130,21 @@
     return Object.freeze({ macroregions: Object.freeze(macroregions), subregions: Object.freeze(subregions), bandForCode, macroForCode });
   }
 
+  function baseWorldWidthForViewport(viewportWidth, axisWidth = DEFAULT_AXIS_WIDTH, options = {}) {
+    const viewport = Number(viewportWidth);
+    const axis = Number(axisWidth);
+    const minimum = Number(options.minWidth ?? DEFAULT_MIN_BASE_WORLD_WIDTH);
+    const maximum = Number(options.maxWidth ?? DEFAULT_MAX_BASE_WORLD_WIDTH);
+    const gutter = Number(options.gutter ?? DEFAULT_WORLD_VIEWPORT_GUTTER);
+    if (!Number.isFinite(viewport) || viewport <= 0) throw new RangeError("viewportWidth must be > 0");
+    if (!Number.isFinite(axis) || axis < 0) throw new RangeError("axisWidth must be >= 0");
+    if (!Number.isFinite(minimum) || minimum <= 0) throw new RangeError("minWidth must be > 0");
+    if (!Number.isFinite(maximum) || maximum < minimum) throw new RangeError("maxWidth must be >= minWidth");
+    if (!Number.isFinite(gutter) || gutter < 0) throw new RangeError("gutter must be >= 0");
+    const available = Math.max(1, Math.floor(viewport - axis - gutter));
+    return Math.max(minimum, Math.min(maximum, available));
+  }
+
   function stableRegionLayout(continuum, contentWidth) {
     const width = Number.isFinite(Number(contentWidth)) && Number(contentWidth) > 0 ? Number(contentWidth) : 900;
     return Object.freeze(continuum.macroregions.map((band) => Object.freeze({
@@ -135,5 +155,15 @@
     })));
   }
 
-  return Object.freeze({ DEFAULT_SPATIAL_HIERARCHY, validateHierarchy, createSpatialContinuum, stableRegionLayout });
+  return Object.freeze({
+    DEFAULT_MIN_BASE_WORLD_WIDTH,
+    DEFAULT_MAX_BASE_WORLD_WIDTH,
+    DEFAULT_AXIS_WIDTH,
+    DEFAULT_WORLD_VIEWPORT_GUTTER,
+    DEFAULT_SPATIAL_HIERARCHY,
+    validateHierarchy,
+    createSpatialContinuum,
+    baseWorldWidthForViewport,
+    stableRegionLayout
+  });
 });

@@ -19,6 +19,9 @@ test("completion contract records the readable-scale architecture without claimi
   assert.equal(contract.readable_scale.minimum_zoom_percent, 500);
   assert.equal(contract.readable_scale.default_zoom_percent, 500);
   assert.equal(contract.readable_scale.global_extent_compression, 0.78);
+  assert.equal(contract.readable_scale.minimum_base_world_width_px, 900);
+  assert.equal(contract.readable_scale.maximum_base_world_width_px, 1275);
+  assert.equal(contract.readable_scale.viewport_expansion_above_cap_allowed, false);
   assert.equal(contract.readable_scale.local_density_compression_allowed, false);
   assert.match(contractDoc, /500%/);
   assert.match(contractDoc, /uniform/i);
@@ -33,6 +36,7 @@ test("required product gates remain explicit", () => {
     "unified-global-camera",
     "minimum-readable-scale-floor",
     "uniform-global-extent-compression",
+    "bounded-base-world-width",
     "spatial-subregion-precision",
     "spatial-place-precision",
     "spatial-multi-place-preservation",
@@ -71,6 +75,9 @@ test("coordinate invariance uses one global camera zoom", () => {
   ]);
   assert.equal(fixtures.readable_scale.minimum_zoom_percent, 500);
   assert.equal(fixtures.readable_scale.global_extent_compression, 0.78);
+  assert.equal(fixtures.readable_scale.minimum_base_world_width_px, 900);
+  assert.equal(fixtures.readable_scale.maximum_base_world_width_px, 1275);
+  assert.equal(fixtures.readable_scale.viewport_expansion_above_cap_allowed, false);
   assert.equal(fixtures.readable_scale.local_density_compression_allowed, false);
 });
 

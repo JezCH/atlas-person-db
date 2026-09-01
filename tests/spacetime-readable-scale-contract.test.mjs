@@ -4,6 +4,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
+const spaceAxis = require("../atlas-person-spacetime-space-axis.js");
 const rootUrl = new URL("../", import.meta.url);
 const view = readFileSync(new URL("../atlas-person-spacetime-view.js", import.meta.url), "utf8");
 const css = readFileSync(new URL("../atlas-person-spacetime-view.css", import.meta.url), "utf8");
@@ -15,6 +16,8 @@ test("spacetime minimum and default scale are structurally locked to 500 percent
   assert.match(view, /const CAMERA_MAX_ZOOM = 8;/);
   assert.match(view, /let cameraZoom = CAMERA_MIN_ZOOM;/);
   assert.match(view, /const GLOBAL_EXTENT_COMPRESSION = 0\.78;/);
+  assert.equal(spaceAxis.DEFAULT_MIN_BASE_WORLD_WIDTH, 900);
+  assert.equal(spaceAxis.DEFAULT_MAX_BASE_WORLD_WIDTH, 1275);
   assert.match(view, /id="spacetimeCameraZoomReset"[^>]*>500%<\/button>/);
   assert.match(view, /return Math\.min\(CAMERA_MAX_ZOOM, Math\.max\(CAMERA_MIN_ZOOM, numeric\)\);/);
   assert.doesNotMatch(view, /100%/);
@@ -30,10 +33,20 @@ test("reviewed compact label geometry preserves text readability while reducing 
 test("one global camera zoom owns both horizontal and vertical extent", () => {
   assert.match(view, /DEFAULT_TIMELINE_HEIGHT \* cameraZoom \* GLOBAL_EXTENT_COMPRESSION/);
   assert.match(view, /baseWorldWidth \* cameraZoom \* GLOBAL_EXTENT_COMPRESSION/);
+  assert.match(view, /spaceAxis\.baseWorldWidthForViewport\(/);
   assert.doesNotMatch(view, /horizontalViewMode/);
   assert.doesNotMatch(view, /spacetimeHorizontalMode/);
   assert.doesNotMatch(view, /DETAIL_SPACE_ZOOM/);
   assert.doesNotMatch(view, /TIME_CAMERA_MIN_ZOOM/);
+});
+
+test("viewport growth cannot inflate base world beyond the global cap", () => {
+  assert.equal(spaceAxis.baseWorldWidthForViewport(1024, 152), 900);
+  assert.equal(spaceAxis.baseWorldWidthForViewport(1280, 152), 1126);
+  assert.equal(spaceAxis.baseWorldWidthForViewport(1440, 152), 1275);
+  assert.equal(spaceAxis.baseWorldWidthForViewport(1920, 152), 1275);
+  assert.equal(spaceAxis.baseWorldWidthForViewport(3840, 152), 1275);
+  assert.throws(() => spaceAxis.baseWorldWidthForViewport(1280, 152, { minWidth: 1300, maxWidth: 1200 }), /maxWidth must be >= minWidth/);
 });
 
 test("retired low-scale overview rendering has no production artifacts", () => {
