@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Irataba",
+    "display_name_ko": "이라타바",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Mohave people",
+    "display_name_ko": "모하비족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Chief",
+    "role_display_name_ko": "추장",
+    "start_year": 1854,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1874,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Smithsonian archival notes quote the 1874 Indian agent report that Irataba had been chief for about twenty years, supporting an approximate start around 1854. He is independently identified in federal records as Chief of the Mohaves in 1864 and 1872. ATLAS therefore uses c.1854–1874 rather than inventing an exact accession date."
+  },
+  "sources": [
+    {
+      "title": "Bureau of American Ethnology negatives — Irataba, chief of the Mohaves",
+      "canonical_url": "https://sirismm.si.edu/EADpdfs/NAA.PhotoLot.176.pdf",
+      "citation_text": "Smithsonian archival notes identify Irataba as chief of the Mohaves in 1864 and quote the 1874 Indian agent report that his death ended about twenty years as chief.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "National Register continuation sheet — Date Creek Incident",
+      "canonical_url": "https://npgallery.nps.gov/GetAsset/930312fc-e74b-434f-8c22-82d5b402c601",
+      "citation_text": "The National Park Service record identifies Irataba as Chief of the Mojaves in a documented 1872 incident.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Kondiaronk",
+    "display_name_ko": "콘디아롱크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Wendat of Michilimackinac",
+    "display_name_ko": "미실리마키낙 웬다트",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Chief and diplomat",
+    "role_display_name_ko": "추장·외교가",
+    "start_year": 1687,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1701,
+    "end_month": 8,
+    "end_day": 2,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kondiaronk was a Tionontati/Petun Huron (Wendat) chief at Michilimackinac. His documented political career is especially clear from 1687 through his death during the Great Peace of Montreal negotiations on 2 August 1701. ATLAS uses active_in rather than inventing a formal accession date for his chieftainship."
+  },
+  "sources": [
+    {
+      "title": "KONDIARONK — Dictionary of Canadian Biography",
+      "canonical_url": "https://www.biographi.ca/bio.php?id=kondiaronk_2E.html",
+      "citation_text": "The Dictionary of Canadian Biography identifies Kondiaronk as a Tionontati/Petun Huron chief at Michilimackinac, documents his political and military actions from 1687 onward, and his central role in the 1701 Montreal peace negotiations.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

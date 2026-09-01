@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Kintpuash",
+    "display_name_ko": "킨트푸아시",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Modoc people",
+    "display_name_ko": "모독족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Principal headman and war leader",
+    "role_display_name_ko": "주요 추장·전쟁 지도자",
+    "start_year": 1864,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1873,
+    "end_month": 10,
+    "end_day": 3,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kintpuash, also known as Captain Jack, was a principal Modoc headman and 1864 treaty signatory. He led Modoc bands resisting forced removal and became the central Modoc war leader in 1872–1873, before his execution on 3 October 1873. ATLAS records his leadership within the Modoc political community rather than treating the Modoc as a centralized state."
+  },
+  "sources": [
+    {
+      "title": "Kintpuash (Captain Jack) — Oregon Encyclopedia",
+      "canonical_url": "https://www.oregonencyclopedia.org/articles/kintpuash_captain_jack/",
+      "citation_text": "The Oregon Encyclopedia identifies Kintpuash as a principal Modoc headman during the 1860s and early 1870s, a signatory of the 1864 treaty, and leader of Modoc resistance through the 1872–1873 war.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Winema and the Modoc War — National Archives",
+      "canonical_url": "https://www.archives.gov/publications/prologue/2005/spring/winema.html",
+      "citation_text": "The National Archives account documents Kintpuash's leadership of the Modoc group that resisted forced return to the reservation and occupied the Lava Beds in 1872–1873.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
