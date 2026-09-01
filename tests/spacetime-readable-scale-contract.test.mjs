@@ -35,6 +35,10 @@ test("reviewed compact label geometry preserves text readability while reducing 
   assert.equal(labelEngine.DEFAULT_MIN_LABEL_WIDTH - labelEngine.DEFAULT_LABEL_CHROME_WIDTH, 26);
   assert.equal(labelEngine.DEFAULT_MAX_LABEL_WIDTH - labelEngine.DEFAULT_LABEL_CHROME_WIDTH, 144);
   assert.match(css, /\.spacetime-track-label\{[^}]*height:19px[^}]*padding:0 1px[^}]*font-size:10px[^}]*line-height:16px/);
+  assert.match(view, /labelEngine\.DEFAULT_MIN_LABEL_WIDTH/);
+  assert.match(view, /labelEngine\.DEFAULT_MAX_LABEL_WIDTH/);
+  assert.match(view, /labelEngine\.DEFAULT_LABEL_CHROME_WIDTH/);
+  assert.doesNotMatch(view, /Math\.max\(38, Math\.min\(156/);
 });
 
 test("one global camera zoom owns both horizontal and vertical extent", () => {
