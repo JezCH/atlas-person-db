@@ -40,5 +40,13 @@
       "citation_text": "The study explains the multiple royal and imperial inaugurations attached to rulers of the Hohenstaufen Empire.",
       "source_type": "academic_reference"
     }
-  ]
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "프리드리히 1세(신성 로마 제국)",
+      "url": "https://namu.wiki/w/%ED%94%84%EB%A6%AC%EB%93%9C%EB%A6%AC%ED%9E%88%201%EC%84%B8%28%EC%8B%A0%EC%84%B1%20%EB%A1%9C%EB%A7%88%20%EC%A0%9C%EA%B5%AD%29"
+    }
+  }
 }
