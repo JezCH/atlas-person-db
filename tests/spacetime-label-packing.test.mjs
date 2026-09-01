@@ -61,3 +61,12 @@ test("label placement is deterministic and sparse labels remain exactly on their
   assert.deepEqual(first.placed.map((item) => item.label_y), [40, 140, 240]);
   assert.deepEqual(first.placed.map((item) => item.anchor_y), [40, 140, 240]);
 });
+
+test("outer chrome compaction preserves the prior text content budget", () => {
+  assert.equal(labels.DEFAULT_LABEL_CHROME_WIDTH, 4);
+  assert.equal(labels.DEFAULT_MIN_LABEL_WIDTH, 30);
+  assert.equal(labels.DEFAULT_MAX_LABEL_WIDTH, 148);
+  assert.equal(labels.DEFAULT_MIN_LABEL_WIDTH - labels.DEFAULT_LABEL_CHROME_WIDTH, 26);
+  assert.equal(labels.DEFAULT_MAX_LABEL_WIDTH - labels.DEFAULT_LABEL_CHROME_WIDTH, 144);
+  assert.equal(labels.estimateWidth({ text: "12345678901234567890" }), 140);
+});

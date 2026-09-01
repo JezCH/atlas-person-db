@@ -22,7 +22,7 @@ function compiledPlacement(activityId, regionCode, continuum, relationCode, star
 }
 
 test("500 percent uniform time projection is linear reversible and has no year zero", () => {
-  const p=timeProjection.createUniformTimeProjection(-3000,2026,4200*5*0.78,5);
+  const p=timeProjection.createUniformTimeProjection(-3000,2026,4200*5*0.76,5);
   let previous=-Infinity;
   for(const year of [-2000,-500,-1,1,500,1500,2026]){
     const ordinal=model.historicalYearToOrdinal(year);
@@ -91,7 +91,7 @@ test("readable-floor LOD is rail+label and Activity appears only with more zoom"
 test("single renderer has no low-scale density point lane or card path", () => {
   assert.doesNotThrow(()=>new Function(view));
   assert.match(view,/createUniformTimeProjection\(/);
-  assert.match(view,/GLOBAL_EXTENT_COMPRESSION = 0\.78/);
+  assert.match(view,/GLOBAL_EXTENT_COMPRESSION = 0\.76/);
   assert.match(view,/performance\.cullProjectedItems\(/);
   assert.match(view,/spacetime-track-label/);
   assert.match(view,/spacetime-track-rail/);

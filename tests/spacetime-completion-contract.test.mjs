@@ -18,13 +18,20 @@ test("completion contract records the readable-scale architecture without claimi
   assert.equal(contract.foundation_track.sufficient_for_final_completion, false);
   assert.equal(contract.readable_scale.minimum_zoom_percent, 500);
   assert.equal(contract.readable_scale.default_zoom_percent, 500);
-  assert.equal(contract.readable_scale.global_extent_compression, 0.78);
+  assert.equal(contract.readable_scale.global_extent_compression, 0.76);
   assert.equal(contract.readable_scale.minimum_base_world_width_px, 900);
   assert.equal(contract.readable_scale.maximum_base_world_width_px, 1275);
   assert.equal(contract.readable_scale.viewport_expansion_above_cap_allowed, false);
   assert.equal(contract.readable_scale.axis_width_px, 140);
   assert.equal(contract.readable_scale.camera_header_height_px, 36);
   assert.equal(contract.readable_scale.shared_chrome_compaction, true);
+  assert.equal(contract.readable_scale.label_horizontal_padding_px, 1);
+  assert.equal(contract.readable_scale.label_outer_chrome_px, 4);
+  assert.equal(contract.readable_scale.label_min_width_px, 30);
+  assert.equal(contract.readable_scale.label_max_width_px, 148);
+  assert.equal(contract.readable_scale.label_text_content_min_width_px, 26);
+  assert.equal(contract.readable_scale.label_text_content_max_width_px, 144);
+  assert.equal(contract.readable_scale.label_text_width_budget_preserved, true);
   assert.equal(contract.readable_scale.local_density_compression_allowed, false);
   assert.match(contractDoc, /500%/);
   assert.match(contractDoc, /uniform/i);
@@ -77,10 +84,13 @@ test("coordinate invariance uses one global camera zoom", () => {
     "search-off","search-on","selection-change","global-camera-zoom","minimap-navigation"
   ]);
   assert.equal(fixtures.readable_scale.minimum_zoom_percent, 500);
-  assert.equal(fixtures.readable_scale.global_extent_compression, 0.78);
+  assert.equal(fixtures.readable_scale.global_extent_compression, 0.76);
   assert.equal(fixtures.readable_scale.minimum_base_world_width_px, 900);
   assert.equal(fixtures.readable_scale.maximum_base_world_width_px, 1275);
   assert.equal(fixtures.readable_scale.viewport_expansion_above_cap_allowed, false);
+  assert.equal(fixtures.readable_scale.label_horizontal_padding_px, 1);
+  assert.equal(fixtures.readable_scale.label_outer_chrome_px, 4);
+  assert.equal(fixtures.readable_scale.label_text_width_budget_preserved, true);
   assert.equal(fixtures.readable_scale.local_density_compression_allowed, false);
 });
 

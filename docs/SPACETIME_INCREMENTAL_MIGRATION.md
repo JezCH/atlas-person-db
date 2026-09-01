@@ -10,7 +10,7 @@ The current `시공간 인물도` remains the single supported renderer. The rea
 
 - minimum/default camera zoom = 500%; maximum = 800%;
 - one camera zoom controls X and Y;
-- one shared physical extent compression factor = 0.78;
+- one shared physical extent compression factor = 0.76;
 - horizontal base-world width is globally clamped to 900–1,275 px before zoom/compression;
 - viewport growth beyond the cap must not enlarge world geometry;
 - shared fixed chrome uses one global 140 px left axis and 36 px sticky header;
@@ -27,11 +27,11 @@ The current `시공간 인물도` remains the single supported renderer. The rea
 1. Lock 500% readable-scale contract.
 2. Replace low-scale semantic/log time projection with uniform time projection.
 3. Unify time and space zoom into one 2D camera.
-4. Apply the same 0.78 extent compression to X and Y.
+4. Apply the same 0.76 extent compression to X and Y.
 5. Remove overview/detail selector and all below-floor entry points.
 6. Remove density and point low-scale rendering.
 7. Remove obsolete log/adaptive tick/lane APIs.
-8. Compact common padding, gutters, axes, rails, and labels uniformly; keep axis/header geometry renderer-owned and global.
+8. Compact common padding, gutters, axes, rails, and labels uniformly; preserve label text-content width while removing shared outer chrome, and keep axis/header geometry renderer-owned and global.
 9. Update tests and acceptance fixtures.
 10. Remove dead files and stale cache references.
 11. Run complete CI and browser visual verification.
