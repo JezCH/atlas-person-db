@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Tsakhiagiin Elbegdorj",
+    "display_name_ko": "차히아긴 엘베그도르지",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Mongolia",
+    "display_name_ko": "몽골",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1998,
+    "start_month": 4,
+    "start_day": 23,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1998,
+    "end_month": 12,
+    "end_day": 9,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "First term of Tsakhiagiin Elbegdorj as Prime Minister of Mongolia, 23 April–9 December 1998."
+  },
+  "sources": [
+    {
+      "title": "Mongolia: Issues for Congress — Congressional Research Service",
+      "canonical_url": "https://www.congress.gov/crs_external_products/R/PDF/R41867/R41867.12.pdf",
+      "citation_text": "The CRS profile identifies Tsakhiagiin Elbegdorj as a leader of Mongolia's democratic revolution, twice prime minister—briefly in 1998 and again in 2004–2006—and president beginning in 2009, reelected in 2013.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Tsakhiagiin Elbegdorj",
+      "canonical_url": "https://en.wikipedia.org/wiki/Tsakhiagiin_Elbegdorj",
+      "citation_text": "The compiled office chronology gives exact terms as prime minister from 23 April to 9 December 1998, prime minister from 20 August 2004 to 13 January 2006, and president from 18 June 2009 to 10 July 2017.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

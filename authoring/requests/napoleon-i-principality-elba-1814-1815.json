@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Napoleon I",
+    "display_name_ko": "나폴레옹 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Principality of Elba",
+    "display_name_ko": "엘바 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sovereign of Elba",
+    "role_display_name_ko": "엘바의 주권 군주",
+    "start_year": 1814,
+    "start_month": 4,
+    "start_day": 11,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1815,
+    "end_month": 2,
+    "end_day": 26,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Treaty of Fontainebleau of 11 April 1814 explicitly created Elba as a separate principality to be possessed by Napoleon in full sovereignty and property while allowing him to retain the imperial title. ATLAS therefore records Elba as a genuine separate sovereign Activity, not merely an exile location. The Activity ends on 26 February 1815 when Napoleon left Elba to return to France for the Hundred Days."
+  },
+  "sources": [
+    {
+      "title": "Treaty of Fontainebleau, 11 April 1814 — official text transcription",
+      "canonical_url": "https://www.napoleon-empire.org/en/official-texts/treaty-of-fontainebleau-1814.php",
+      "citation_text": "Article III states that Elba would form a separate principality possessed by Napoleon in full sovereignty and property.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Treaty of Fontainebleau (1814) — Wikisource",
+      "canonical_url": "https://en.wikisource.org/wiki/Treaty_of_Fontainebleau_(1814)",
+      "citation_text": "The treaty text confirms Napoleon's sovereign possession of the separate Principality of Elba after his first abdication.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "나폴레옹 1세",
+      "url": "https://namu.wiki/w/%EB%82%98%ED%8F%B4%EB%A0%88%EC%98%B9%201%EC%84%B8"
+    }
+  }
+}
