@@ -18,6 +18,9 @@ test("spacetime minimum and default scale are structurally locked to 500 percent
   assert.match(view, /const GLOBAL_EXTENT_COMPRESSION = 0\.78;/);
   assert.equal(spaceAxis.DEFAULT_MIN_BASE_WORLD_WIDTH, 900);
   assert.equal(spaceAxis.DEFAULT_MAX_BASE_WORLD_WIDTH, 1275);
+  assert.equal(spaceAxis.DEFAULT_AXIS_WIDTH, 140);
+  assert.match(view, /const AXIS_WIDTH = 140;/);
+  assert.match(view, /const CAMERA_HEADER_HEIGHT = 36;/);
   assert.match(view, /id="spacetimeCameraZoomReset"[^>]*>500%<\/button>/);
   assert.match(view, /return Math\.min\(CAMERA_MAX_ZOOM, Math\.max\(CAMERA_MIN_ZOOM, numeric\)\);/);
   assert.doesNotMatch(view, /100%/);
@@ -41,12 +44,19 @@ test("one global camera zoom owns both horizontal and vertical extent", () => {
 });
 
 test("viewport growth cannot inflate base world beyond the global cap", () => {
-  assert.equal(spaceAxis.baseWorldWidthForViewport(1024, 152), 900);
-  assert.equal(spaceAxis.baseWorldWidthForViewport(1280, 152), 1126);
-  assert.equal(spaceAxis.baseWorldWidthForViewport(1440, 152), 1275);
-  assert.equal(spaceAxis.baseWorldWidthForViewport(1920, 152), 1275);
-  assert.equal(spaceAxis.baseWorldWidthForViewport(3840, 152), 1275);
-  assert.throws(() => spaceAxis.baseWorldWidthForViewport(1280, 152, { minWidth: 1300, maxWidth: 1200 }), /maxWidth must be >= minWidth/);
+  assert.equal(spaceAxis.baseWorldWidthForViewport(1024, 140), 900);
+  assert.equal(spaceAxis.baseWorldWidthForViewport(1280, 140), 1138);
+  assert.equal(spaceAxis.baseWorldWidthForViewport(1440, 140), 1275);
+  assert.equal(spaceAxis.baseWorldWidthForViewport(1920, 140), 1275);
+  assert.equal(spaceAxis.baseWorldWidthForViewport(3840, 140), 1275);
+  assert.throws(() => spaceAxis.baseWorldWidthForViewport(1280, 140, { minWidth: 1300, maxWidth: 1200 }), /maxWidth must be >= minWidth/);
+});
+
+test("shared chrome geometry is compact and owned by renderer constants", () => {
+  assert.match(view, /--spacetime-axis-width:\$\{AXIS_WIDTH\}px/);
+  assert.match(view, /--spacetime-header-height:\$\{CAMERA_HEADER_HEIGHT\}px/);
+  assert.match(css, /width:var\(--spacetime-axis-width,140px\)/);
+  assert.match(css, /height:var\(--spacetime-header-height,36px\)/);
 });
 
 test("retired low-scale overview rendering has no production artifacts", () => {

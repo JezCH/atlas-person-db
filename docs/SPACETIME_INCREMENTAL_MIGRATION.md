@@ -13,6 +13,7 @@ The current `시공간 인물도` remains the single supported renderer. The rea
 - one shared physical extent compression factor = 0.78;
 - horizontal base-world width is globally clamped to 900–1,275 px before zoom/compression;
 - viewport growth beyond the cap must not enlarge world geometry;
+- shared fixed chrome uses one global 140 px left axis and 36 px sticky header;
 - no local density-based region or era compression;
 - historical Y never moves to resolve labels;
 - search/filter never changes normalized coordinates;
@@ -30,7 +31,7 @@ The current `시공간 인물도` remains the single supported renderer. The rea
 5. Remove overview/detail selector and all below-floor entry points.
 6. Remove density and point low-scale rendering.
 7. Remove obsolete log/adaptive tick/lane APIs.
-8. Compact common padding, gutters, axes, rails, and labels uniformly.
+8. Compact common padding, gutters, axes, rails, and labels uniformly; keep axis/header geometry renderer-owned and global.
 9. Update tests and acceptance fixtures.
 10. Remove dead files and stale cache references.
 11. Run complete CI and browser visual verification.

@@ -138,9 +138,9 @@
   function ensureSpacetimeAssets() {
     if (window.ATLAS_PERSON_SPACETIME_VIEW) return Promise.resolve(window.ATLAS_PERSON_SPACETIME_VIEW);
     if (spacetimeAssetsPromise) return spacetimeAssetsPromise;
-    appendStylesheetOnce("./atlas-person-spacetime-view.css?v=20260831-uniform-078");
+    appendStylesheetOnce("./atlas-person-spacetime-view.css?v=20260901-compact-shared-chrome");
     spacetimeAssetsPromise = loadScriptOnce("./atlas-person-spacetime-model.js?v=20260831-500-floor", () => Boolean(window.ATLAS_PERSON_SPACETIME_MODEL))
-      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20260901-world-cap-1275", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
+      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20260901-compact-shared-chrome", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
       .then(() => window.ATLAS_PERSON_SPACETIME_VIEW)
       .catch((error) => {
         spacetimeAssetsPromise = null;

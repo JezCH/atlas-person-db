@@ -5,9 +5,10 @@
   const model = window.ATLAS_PERSON_SPACETIME_MODEL;
   const eraModel = window.ATLAS_PERSON_ERA_MODEL;
   const SPATIAL_INDEX_URL = "./atlas-polity-spatial-index.json";
-  const AXIS_WIDTH = 152;
+  const AXIS_WIDTH = 140;
+  const ERA_AXIS_WIDTH = 68;
   const DEFAULT_TIMELINE_HEIGHT = 4200;
-  const CAMERA_HEADER_HEIGHT = 40;
+  const CAMERA_HEADER_HEIGHT = 36;
   const CAMERA_MIN_ZOOM = 5;
   const CAMERA_MAX_ZOOM = 8;
   const CAMERA_ZOOM_STEP = 1.25;
@@ -15,7 +16,7 @@
   const FOCUS_DETAIL_ZOOM = 6.5;
   const RUNTIME_ASSETS = Object.freeze([
     ["./atlas-person-spacetime-time-projection.js?v=20260831-uniform-500-floor", "ATLAS_PERSON_SPACETIME_TIME_PROJECTION"],
-    ["./atlas-person-spacetime-space-axis.js?v=20260901-world-cap-1275", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
+    ["./atlas-person-spacetime-space-axis.js?v=20260901-compact-shared-chrome", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
     ["./atlas-person-spacetime-semantic-axis.js?v=20260826-p10", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
     ["./atlas-person-spacetime-exploration.js?v=20260826-p11", "ATLAS_PERSON_SPACETIME_EXPLORATION"],
     ["./atlas-person-spacetime-minimap.js?v=20260826-p12", "ATLAS_PERSON_SPACETIME_MINIMAP"],
@@ -838,7 +839,7 @@
     <section class="spacetime-status-row"><span><b>${visibleTracks.length}</b> ${needle ? "검색" : "전체"} Person track</span><span><b>${primarySegmentCount}</b> 전체 주 위치 구간</span><span><b>${counterpartyCount}</b> 전체 counterparty 제외</span><span><b>${compiled.unresolvedPosition.length}</b> 전체 위치 미확정</span><span><b>${compiled.unresolvedChronology.length}</b> 전체 연대 미확정</span><span><b id="spacetimeDomPersonCount">0</b> viewport Person DOM</span><span><b id="spacetimeDomSegmentCount">0</b> viewport segment DOM</span><span><b id="spacetimeDomLabelCount">0</b> 이름 표시</span><span><b id="spacetimeDeferredLabelCount">0</b> label defer</span><span><b>${escapeHtml(timeAxis.stage_label)}</b> 시간축</span><span><b>${escapeHtml(spaceHeader.stage_label)}</b> 공간축</span><span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> LOD</span><span><b>${escapeHtml(cameraZoomLabel())}</b> 시공간 줌</span></section>
     ${(compiled.unresolvedPosition.length || compiled.partitioned.relation_review.length) ? `<section class="spacetime-integrity-note card"><strong>근거 없는 위치는 자동 추정하지 않습니다.</strong><p>현재 canonical spatial index가 제공하는 검토된 macroregion만 좌표로 사용합니다. 세부 Place/subregion 근거가 없으면 macroregion보다 정밀한 좌표를 만들지 않으며, counterparty인 opposes는 자기 위치 계산에서 제외합니다.</p></section>` : ""}
         ${renderSelection(selectedTrack, navigationItems.length)}
-    <section class="spacetime-frame card"><div class="spacetime-scroll" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 Person track 및 등록 인물 밀도 분포">
+    <section class="spacetime-frame card" style="--spacetime-axis-width:${AXIS_WIDTH}px;--spacetime-header-height:${CAMERA_HEADER_HEIGHT}px;--spacetime-era-axis-width:${ERA_AXIS_WIDTH}px;--spacetime-year-axis-width:${AXIS_WIDTH - ERA_AXIS_WIDTH}px"><div class="spacetime-scroll" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 Person track 및 등록 인물 밀도 분포">
       <div class="spacetime-sticky-corner"><span>시대</span><span>연도<small>${escapeHtml(timeAxis.stage_label)}</small></span></div>
       <div class="spacetime-region-head" style="width:${contentWidth}px">
         <div class="spacetime-region-head-layer is-macro" style="opacity:${spaceHeader.macro_opacity}">${spaceHeader.macroregions.map((region) => `<div class="spacetime-region-head-band" style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${escapeHtml(region.code)}</small></div>`).join("")}</div>
