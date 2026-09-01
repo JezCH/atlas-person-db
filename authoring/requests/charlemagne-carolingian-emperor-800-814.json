@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:charlemagne:carolingian-empire:emperor:800-814:v1",
+  "person": {
+    "canonical_name_en": "Charlemagne",
+    "display_name_ko": "카롤루스 대제"
+  },
+  "polity": {
+    "canonical_name_en": "Carolingian Empire",
+    "display_name_ko": "카롤링거 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 800,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 814,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Pope Leo III crowned Charlemagne Emperor of the Romans on 25 December 800, and Charlemagne held the imperial dignity until his death in 814. ATLAS uses the existing Carolingian Empire polity for this imperial phase while preserving his concurrent Frankish and Lombard kingships separately."
+  },
+  "sources": [
+    {
+      "title": "Charlemagne (742 or 747/748–814) — Wiley Blackwell Encyclopedia of Medieval Christianity",
+      "canonical_url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/9780470670606.wbecc0263",
+      "citation_text": "The reference entry states that Leo III crowned Charlemagne Emperor of the Romans on Christmas Day 800 and gives his imperial period as 800–814.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "The Carolingian World — Cambridge University Press preview",
+      "canonical_url": "https://api.pageplace.de/preview/DT0400.9781139927406_A23869369/preview-9781139927406_A23869369.pdf",
+      "citation_text": "The genealogical and regnal table lists Charlemagne as King of the Franks from 768, King of the Lombards from 774, and Emperor from 800.",
+      "source_type": "academic_reference"
+    }
+  ]
+}
