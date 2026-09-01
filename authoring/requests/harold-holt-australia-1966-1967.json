@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Harold Holt",
+    "display_name_ko": "해럴드 홀트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Commonwealth of Australia",
+    "display_name_ko": "오스트레일리아 연방",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1966,
+    "start_month": 1,
+    "start_day": 26,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1967,
+    "end_month": 12,
+    "end_day": 19,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Harold Holt was sworn in as Australia's 17th Prime Minister on 26 January 1966. National Archives of Australia and the official prime-ministerial transcript archive give his period of service through 19 December 1967, when he was officially pronounced dead after disappearing while swimming."
+  },
+  "sources": [
+    {
+      "title": "Harold Holt — National Archives of Australia",
+      "canonical_url": "https://www.naa.gov.au/explore-collection/australias-prime-ministers/harold-holt",
+      "citation_text": "The National Archives identifies Holt as Australia's 17th Prime Minister, in office from 26 January 1966 to 19 December 1967.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "PM Transcripts — Harold Holt",
+      "canonical_url": "https://pmtranscripts.pmc.gov.au/release/transcript-1283",
+      "citation_text": "The official Australian prime-ministerial transcript archive lists Holt's period of service as 26 January 1966 to 19 December 1967.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

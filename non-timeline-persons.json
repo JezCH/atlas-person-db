@@ -1052,5 +1052,22 @@
     "role_ko": "그리스 신화의 이타카 왕비",
     "reason": "Penelope is the wife of Odysseus and queen of Ithaca in the Homeric and later Greek mythological tradition. Her narrative role is culturally important, but she is not a historically established individual with a defensible personal chronology. ATLAS therefore preserves her as a mythological Ithacan figure outside the historical year timeline.",
     "map_policy": "Do not display on the historical year timeline unless a separate mythical or traditional overlay is enabled."
+  },
+  {
+    "person_name": "Kirmu-Karmu",
+    "politic_name": "Häme Finns (Vesilahti tradition)",
+    "display_name_ko": "키르무카르무",
+    "politic_display_name_ko": "헤메계 핀란드인(베실라흐티 전승)",
+    "historicity": "legendary_possible_historical_core",
+    "historicity_display_ko": "전설·역사적 핵심 가능",
+    "timeline_status": "excluded",
+    "date_basis": "vesilahti_local_folk_tradition_recorded_in_modern_period_without_secure_personal_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "베실라흐티 전승의 이교 전사·족장",
+    "reason": "Kirmu-Karmu is a local Vesilahti folk-tradition figure described as a pagan Häme/Finnish war leader who opposed an early Christian missionary. The associated Kirmukarmu cemetery is a genuine Iron Age archaeological site, and some scholarship has explored whether the tradition preserves a historical core. However, the surviving personal narrative was recorded very late, chiefly in Frans Kärki's twentieth-century folklore collection, and no independently defensible individual chronology or securely identified historical person can be established. ATLAS therefore preserves the figure outside the historical year timeline.",
+    "map_policy": "Do not display on the historical year timeline unless a legendary or uncertain-historicity overlay is enabled."
   }
 ]

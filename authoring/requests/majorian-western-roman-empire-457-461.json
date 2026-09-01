@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Majorian",
+    "display_name_ko": "마요리아누스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Western Roman Empire",
+    "display_name_ko": "서로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 457,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 461,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Majorian (Iulius Valerius Maiorianus) was Western Roman emperor from 457 to 461. Ancient and modern reconstructions distinguish his elevation/proclamation and later eastern recognition at day-level, so ATLAS keeps the authoritative and undisputed year-level reign instead of forcing one contested accession day."
+  },
+  "sources": [
+    {
+      "title": "Majorian — Encyclopaedia Britannica (1911)",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Majorian",
+      "citation_text": "Britannica identifies Majorian as emperor of the West from 457 to 461.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Majorian — De Imperatoribus Romanis",
+      "canonical_url": "https://www.roman-emperors.sites.luc.edu/major.htm",
+      "citation_text": "The scholarly Roman-emperors reference discusses Majorian's western imperial rule in 457–461 and the differing accession/recognition chronology.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
