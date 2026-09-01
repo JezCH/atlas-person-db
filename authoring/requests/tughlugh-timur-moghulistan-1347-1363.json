@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Tughlugh Timur",
+    "display_name_ko": "투글루크 티무르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Moghulistan",
+    "display_name_ko": "모굴리스탄",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khan",
+    "role_display_name_ko": "칸",
+    "start_year": 1347,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1363,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tughlugh Timur was raised as khan in the eastern Chagatai realm, later called Moghulistan, around 1347 and ruled it until his death in 1363."
+  },
+  "sources": [
+    {
+      "title": "Tughlugh Timur",
+      "canonical_url": "https://en.wikipedia.org/wiki/Tughlugh_Timur",
+      "citation_text": "The compiled chronology identifies Tughlugh Timur as Khan of Moghulistan from 1347 to 1363.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Chagatai Khanate Timeline — World History Encyclopedia",
+      "canonical_url": "https://www.worldhistory.org/timeline/Chagatai_Khanate/",
+      "citation_text": "World History Encyclopedia places Tughlugh Timur in the final Chagatai phase, 1347–1363.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

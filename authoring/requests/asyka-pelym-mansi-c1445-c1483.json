@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Asyka (Azykay)",
+    "display_name_ko": "아시카(아지카이)",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Pelym Mansi Principality",
+    "display_name_ko": "펠림 만시 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Great prince and war leader",
+    "role_display_name_ko": "대공·전쟁 지도자",
+    "start_year": 1445,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1483,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "The Civ label 'Permians (Azykay)' is historically misleading. Asyka/Azykay is described in Russian sources as a great prince of the Voguls (Mansi), centered on Pelym, not as ruler of Great Perm or the Komi-Permyaks. He is documented in Pelym-Mansi campaigns from the mid-15th century and was defeated at Pelym in 1483."
+  },
+  "sources": [
+    {
+      "title": "Asyka",
+      "canonical_url": "https://ru.wikipedia.org/wiki/%D0%90%D1%81%D1%8B%D0%BA%D0%B0",
+      "citation_text": "The Russian historical summary identifies Asyka/Azykay as a great prince of the Voguls/Mansi and documents Pelym campaigns through the 1483 defeat.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

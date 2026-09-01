@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Tlacaelel",
+    "display_name_ko": "틀라카엘렐",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Mexico-Tenochtitlan (Aztec Triple Alliance)",
+    "display_name_ko": "멕시코-테노치티틀란(아즈텍 삼국동맹)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Cihuacoatl and principal statesman",
+    "role_display_name_ko": "시우아코아틀·최고 정무가",
+    "start_year": 1427,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1487,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tlacaelel rose during the late-1420s war against Azcapotzalco and held the senior cihuacoatl office of Tenochtitlan across several tlatoani reigns until his death in 1487. He was not an Aztec emperor, so ATLAS binds the office specifically to Mexico-Tenochtitlan within the Triple Alliance."
+  },
+  "sources": [
+    {
+      "title": "Tlacaelel — Nahuatl Dictionary",
+      "canonical_url": "https://nahuatl.wired-humanities.org/content/tlacaelel",
+      "citation_text": "The University of Oregon Nahuatl Dictionary identifies Tlacaelel as a ruler/statesman of Mexico-Tenochtitlan who held the title cihuacoatl.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Tlacaelel",
+      "canonical_url": "https://en.wikipedia.org/wiki/Tlacaelel",
+      "citation_text": "The compiled chronology places his rise to the cihuacoatl/principal-adviser role in the late 1420s and records his death in 1487.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

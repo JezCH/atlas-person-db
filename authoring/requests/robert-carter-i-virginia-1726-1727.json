@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Robert Carter I",
+    "display_name_ko": "로버트 카터 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Colony of Virginia",
+    "display_name_ko": "버지니아 식민지",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President of the Governor's Council and Acting Governor",
+    "role_display_name_ko": "총독평의회 의장·총독 대행",
+    "start_year": 1726,
+    "start_month": 8,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1727,
+    "end_month": 9,
+    "end_day": 11,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Robert Carter I was a planter and colonial administrator, not a hereditary ruler. Encyclopedia Virginia records him as president of the Council exercising the colony's executive authority between Hugh Drysdale and William Gooch."
+  },
+  "sources": [
+    {
+      "title": "Governors of Virginia — Encyclopedia Virginia",
+      "canonical_url": "https://encyclopediavirginia.org/entries/governors-of-virginia/",
+      "citation_text": "Encyclopedia Virginia lists Robert Carter, president of the Council, as serving from 1 August 1726 to 11 September 1727.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

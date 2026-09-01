@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Tamanend",
+    "display_name_ko": "타마넨드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Unami Lenape",
+    "display_name_ko": "우나미 레나페",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Sachem and diplomatic leader",
+    "role_display_name_ko": "사쳄·외교 지도자",
+    "start_year": 1683,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1683,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tamanend was a Lenape sachem involved in land and peace agreements with William Penn in 1683. Because Lenape political organization was decentralized, ATLAS records the documented sachem/diplomatic activity rather than a centralized reign over all Lenape."
+  },
+  "sources": [
+    {
+      "title": "Chief Tamanend — Upper Southampton Township",
+      "canonical_url": "https://www.ustwp.org/government/boards-commissions/historical-advisory-board/chief-tamanend/",
+      "citation_text": "The historical account reproduces the June 1683 deed and negotiations involving Tamanend and William Penn.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

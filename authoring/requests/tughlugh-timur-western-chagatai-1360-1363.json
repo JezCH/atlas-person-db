@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Tughlugh Timur",
+    "display_name_ko": "투글루크 티무르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Western Chagatai Khanate",
+    "display_name_ko": "서차가타이 칸국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khan",
+    "role_display_name_ko": "칸",
+    "start_year": 1360,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1363,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After invading Transoxiana, Tughlugh Timur imposed authority over the western Chagatai realm around 1360 while retaining Moghulistan. ATLAS records this overlapping western phase separately."
+  },
+  "sources": [
+    {
+      "title": "Tughlugh Timur",
+      "canonical_url": "https://en.wikipedia.org/wiki/Tughlugh_Timur",
+      "citation_text": "The compiled chronology records Tughlugh Timur's western Chagatai authority from about 1360 to 1363.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

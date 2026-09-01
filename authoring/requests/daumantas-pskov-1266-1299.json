@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Daumantas of Pskov",
+    "display_name_ko": "프스코프의 도브몬트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Pskov Republic",
+    "display_name_ko": "프스코프 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Prince of Pskov",
+    "role_display_name_ko": "프스코프 공",
+    "start_year": 1266,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1299,
+    "end_month": 5,
+    "end_day": 20,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Daumantas, known in Pskov as Dovmont and baptized Timofei, was accepted as Prince of Pskov in 1266 and remained its military-political ruler until his death in 1299."
+  },
+  "sources": [
+    {
+      "title": "Daumantas of Pskov",
+      "canonical_url": "https://en.wikipedia.org/wiki/Daumantas_of_Pskov",
+      "citation_text": "The compiled chronology gives Daumantas as Prince of Pskov from 1266 to his death on 20 May 1299.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Dovmont — Russian Biographical Dictionary",
+      "canonical_url": "https://biography.wikireading.ru/245078",
+      "citation_text": "The Russian biographical dictionary identifies Dovmont/Daumantas as Prince of Pskov from 1266 and records his death in 1299.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Boris Yeltsin",
+    "display_name_ko": "보리스 옐친",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Russian SFSR",
+    "display_name_ko": "러시아 소비에트 연방 사회주의 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1991,
+    "start_month": 7,
+    "start_day": 10,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1991,
+    "end_month": 12,
+    "end_day": 25,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Yeltsin's presidency began with his inauguration on 10 July 1991. ATLAS separates the final Russian SFSR phase from the Russian Federation phase at the formal state-name change of 25 December 1991."
+  },
+  "sources": [
+    {
+      "title": "Boris Yeltsin — President of Russia",
+      "canonical_url": "https://en.kremlin.ru/catalog/persons/6/biography",
+      "citation_text": "The official Kremlin biography records Yeltsin's 1991 election as the first president of Russia and his resignation on 31 December 1999.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Presidency of Boris Yeltsin",
+      "canonical_url": "https://en.wikipedia.org/wiki/Presidency_of_Boris_Yeltsin",
+      "citation_text": "The detailed presidency chronology gives the first inauguration on 10 July 1991 and the end of the presidency on 31 December 1999.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

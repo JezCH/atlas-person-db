@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Vakhtang VI of Kartli",
+    "display_name_ko": "바흐탕 6세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Kartli",
+    "display_name_ko": "카르틀리 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1716,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1724,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Vakhtang VI was recognized as King of Kartli in 1716 and ruled until the Ottoman occupation and his departure for Russia in 1724."
+  },
+  "sources": [
+    {
+      "title": "King Vakhtang VI — National Archives of Georgia",
+      "canonical_url": "https://archive.gov.ge/index.php/en/news/erovnul-arkivshi-vakhtang-vi-is-saiubileo-gamofena-gaikhsna-1",
+      "citation_text": "The National Archives of Georgia gives Vakhtang VI's kingship as 1716–1724.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

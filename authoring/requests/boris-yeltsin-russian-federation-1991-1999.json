@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Boris Yeltsin",
+    "display_name_ko": "보리스 옐친",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Russian Federation",
+    "display_name_ko": "러시아 연방",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1991,
+    "start_month": 12,
+    "start_day": 25,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1999,
+    "end_month": 12,
+    "end_day": 31,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Yeltsin's presidency continued after the Russian SFSR became the Russian Federation and ended with his resignation on 31 December 1999."
+  },
+  "sources": [
+    {
+      "title": "Boris Yeltsin — President of Russia",
+      "canonical_url": "https://en.kremlin.ru/catalog/persons/6/biography",
+      "citation_text": "The official Kremlin biography identifies Yeltsin as President of Russia in 1991–1999 and records his 31 December 1999 resignation.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
