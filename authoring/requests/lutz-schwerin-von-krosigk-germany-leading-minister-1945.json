@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Lutz Graf Schwerin von Krosigk",
+    "display_name_ko": "루츠 그라프 슈베린 폰 크로지크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Germany",
+    "display_name_ko": "독일",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Leading Minister",
+    "role_display_name_ko": "수석장관",
+    "start_year": 1945,
+    "start_month": 5,
+    "start_day": 2,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1945,
+    "end_month": 5,
+    "end_day": 23,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After Hitler's death, Reich President Karl Dönitz commissioned Lutz Graf Schwerin von Krosigk on 2 May 1945 to form the acting Reich government. Krosigk served as Leitender Minister (Leading Minister), effectively head of government, until the Flensburg government was arrested on 23 May 1945. Dönitz remained head of state. ATLAS reuses the existing higher-order Germany polity used for Adolf Hitler. The user-supplied 'Greater Germanic Reich of the German People' is not modeled as a separate polity because the Großgermanisches Reich Deutscher Nation was an expansionist Nazi vision/war aim rather than the distinct state governed by Krosigk in May 1945."
+  },
+  "sources": [
+    {
+      "title": "Die Geschäftsführende Reichsregierung Dönitz — Bundesarchiv",
+      "canonical_url": "https://www.bundesarchiv.de/themen-entdecken/online-entdecken/geschichtsgalerien/die-geschaeftsfuehrende-reichsregierung-doenitz/",
+      "citation_text": "The German Federal Archives states that Dönitz commissioned Schwerin von Krosigk on 2 May 1945 to form an acting Reich government; it operated in Flensburg until the Allied arrest of the government on 23 May.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
