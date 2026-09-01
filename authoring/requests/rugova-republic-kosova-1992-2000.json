@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ibrahim-rugova:republic-of-kosova:president:1992-2000:v1",
+  "person": {
+    "canonical_name_en": "Ibrahim Rugova",
+    "display_name_ko": "이브라힘 루고바"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Kosova",
+    "display_name_ko": "코소바 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1992,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2000,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kosovo Albanian parallel institutions elected Ibrahim Rugova president in 1992 and reelected him in 1998. The system operated as an unrecognized parallel Republic of Kosova with education, health and other shadow institutions rather than as Serbia's recognized provincial government. International and diplomatic references place this presidency through the end of the 1990s and transition around 2000. ATLAS therefore records a separate 1992-c.2000 parallel-state governing Activity, distinct from Rugova's existing 2002-2006 presidency under the post-war UN-administered institutional framework."
+  },
+  "sources": [
+    {
+      "title": "Dr. Ibrahim Rugova — President of the Republic of Kosovo",
+      "canonical_url": "https://president-ksgov.net/en/former-presidents-of-kosovo/dr-ibrahim-rugova/",
+      "citation_text": "Kosovo's presidential office states that Rugova was elected President of the Republic of Kosovo in the 1992 parallel elections and reelected in March 1998.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "Ibrahim Rugova — International Criminal Tribunal for the former Yugoslavia",
+      "canonical_url": "https://www.icty.org/en/content/ibrahim-rugova",
+      "citation_text": "The ICTY describes Rugova as president of the parallel Kosovo state from 1992 through 1999 and explains that the LDK's shadow government provided basic government and social services.",
+      "source_type": "international_organization"
+    },
+    {
+      "title": "RFY diplomatic archives inventory — French Ministry for Europe and Foreign Affairs",
+      "canonical_url": "https://archivesdiplomatiques.diplomatie.gouv.fr/media/405acec0-94dc-4c24-8a87-6a20c4ce209b.pdf",
+      "citation_text": "The French diplomatic archives inventory explicitly catalogs Ibrahim Rugova as president of the Republic from 1992 to 2000.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-27"
+    }
+  }
+}

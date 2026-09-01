@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:napoleon-i:french-first-republic:first-consul:1799-1804:v1",
+  "person": {
+    "canonical_name_en": "Napoleon I",
+    "display_name_ko": "나폴레옹 1세"
+  },
+  "polity": {
+    "canonical_name_en": "French First Republic",
+    "display_name_ko": "프랑스 제1공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "First Consul",
+    "role_display_name_ko": "제1통령",
+    "start_year": 1799,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1804,
+    "end_month": 5,
+    "end_day": 18,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Napoleon seized power in the coup of 18 Brumaire in November 1799 and emerged as First Consul, the dominant executive office of the French Republic under the Consulate. The French Ministry of the Interior describes the Consulate as the 1799-1804 regime in which Bonaparte concentrated executive, military and diplomatic authority. ATLAS ends this republican governing Activity on 18 May 1804, when the First Empire was constitutionally proclaimed, before his existing imperial Activity begins."
+  },
+  "sources": [
+    {
+      "title": "Le Consulat (1799-1804) — Ministère de l'Intérieur",
+      "canonical_url": "https://formation-civique.interieur.gouv.fr/fiches-par-thematiques/histoire-geographie-et-culture/les-regimes-politiques-depuis-1789/le-consulat-1799-1804/",
+      "citation_text": "The French Ministry of the Interior defines the Consulate as the 1799-1804 regime and states that First Consul Napoleon Bonaparte concentrated the essential executive, military and diplomatic authority.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "La proclamation de l'Empire, 18 mai 1804 — Napoleon.org",
+      "canonical_url": "https://www.napoleon.org/histoire-des-2-empires/dossiers-thematiques/la-proclamation-de-lempire-18-mai-1804/",
+      "citation_text": "Napoleon.org documents the constitutional proclamation of the Empire on 18 May 1804, when First Consul Bonaparte received the imperial dignity.",
+      "source_type": "institutional_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "나폴레옹 1세",
+      "url": "https://namu.wiki/w/%EB%82%98%ED%8F%B4%EB%A0%88%EC%98%B9%201%EC%84%B8"
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:wu-zetian:tang-dynasty:regent:684-690:v1",
+  "person": {
+    "canonical_name_en": "Wu Zetian",
+    "display_name_ko": "측천무후"
+  },
+  "polity": {
+    "canonical_name_en": "Tang Dynasty",
+    "display_name_ko": "당나라",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "regency",
+    "role": "Empress Dowager and Regent",
+    "role_display_name_ko": "황태후·섭정",
+    "start_year": 684,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 690,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After Gaozong's death at the end of 683, Wu Zetian became empress dowager and governed through her sons Zhongzong and Ruizong. She deposed Zhongzong, kept Ruizong as a nominal emperor, and exercised the decisive regency until 690, when she took the imperial title in her own name and founded Wu Zhou. ATLAS separates this Tang regency from her existing 690-705 Wu Zhou imperial Activity."
+  },
+  "sources": [
+    {
+      "title": "When the Emperor Is a Woman: The Case of Wu Zetian — A Companion to Global Queenship",
+      "canonical_url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/C613662325224FEEA5ACD972FCA1CE5D",
+      "citation_text": "Cambridge scholarship treats Wu Zetian's rise to the dragon throne and her 690-705 imperial reign as a distinct culmination of her earlier political ascent under Tang.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Wu Zetian (624–705) — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/women/encyclopedias-almanacs-transcripts-and-maps/wu-zetian-624-705",
+      "citation_text": "The biographical reference identifies Wu as empress dowager and regent for her sons before founding Zhou in 690, giving the regency as the 680s immediately preceding her own imperial reign.",
+      "source_type": "reference_work"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-26",
+      "document_title": "측천무후",
+      "url": "https://namu.wiki/w/%EC%B8%A1%EC%B2%9C%EB%AC%B4%ED%9B%84"
+    }
+  }
+}
