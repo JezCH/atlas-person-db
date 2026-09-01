@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ngawang-lobsang-gyatso:ganden-phodrang:1642-1682:v1",
+  "person": {
+    "canonical_name_en": "Ngawang Lobsang Gyatso",
+    "display_name_ko": "달라이 라마 5세(롭상 갸초)",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ganden Phodrang",
+    "display_name_ko": "간덴 포드랑(티베트)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "5th Dalai Lama and political leader of Tibet",
+    "role_display_name_ko": "제5대 달라이 라마·티베트 정치 지도자",
+    "start_year": 1642,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1682,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ngawang Lobsang Gyatso, the Fifth Dalai Lama, was enthroned in 1642 as both spiritual and political leader of Tibet after the Qoshot intervention led by Güshi Khan. ATLAS represents the Tibetan government he headed as Ganden Phodrang and records the political leadership phase from 1642 until his death in 1682, without collapsing the distinct Khoshut patron-protector relationship into the same office."
+  },
+  "sources": [
+    {
+      "title": "The Fifth Dalai Lama, Ngawang Lobzang Gyatso — The Treasury of Lives",
+      "canonical_url": "https://treasuryoflives.org/biographies/view/biography/6065",
+      "citation_text": "The biographical encyclopedia identifies the Fifth Dalai Lama as Ngawang Lobzang Gyatso, born in 1617 and died in 1682, and documents his central seventeenth-century Tibetan role.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Fifth Dalai Lama, Lobsang Gyatso — Central Tibetan Administration",
+      "canonical_url": "https://tibet.net/about-tibet/his-holiness/",
+      "citation_text": "The Central Tibetan Administration states that in 1642 the Fifth Dalai Lama was enthroned as both spiritual and political leader of Tibet.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-01",
+      "document_title": "달라이 라마 5세",
+      "url": "https://namu.wiki/w/%EB%8B%AC%EB%9D%BC%EC%9D%B4%20%EB%9D%BC%EB%A7%88%205%EC%84%B8"
+    }
+  }
+}
