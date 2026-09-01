@@ -1,0 +1,20 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:charlemagne:retire-compound-king-emperor-768-814:20260901:v1",
+  "review_status": "approved",
+  "release_order": 710,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "4987a639-e916-54e0-bd21-93d3d21e4d5a"
+  },
+  "evidence": {
+    "reason": "Production read-back after audit batch 29 confirms three reviewed replacement Activities for Charlemagne: Frankish Kingdom — King 768-814 (10da5454-2dce-467d-be3d-4178a22ffc1e), Kingdom of the Lombards — King 774-814 (897ffb36-0ef7-49c4-9f54-b507fee45cd9), and Carolingian Empire — Emperor 800-814 (f4caa9be-8277-4a89-a634-58df799beeb5). Retire only the legacy Carolingian Empire 768-814 Activity with free-text role 'King and emperor', which conflates distinct and overlapping crowns/offices and retains legacy_asserted chronology.",
+    "person_id": "50ba5bb7-0660-5089-ae67-d692cf282b24",
+    "replacement_activity_ids": [
+      "10da5454-2dce-467d-be3d-4178a22ffc1e",
+      "897ffb36-0ef7-49c4-9f54-b507fee45cd9",
+      "f4caa9be-8277-4a89-a634-58df799beeb5"
+    ],
+    "retire_activity_id": "4987a639-e916-54e0-bd21-93d3d21e4d5a"
+  }
+}
