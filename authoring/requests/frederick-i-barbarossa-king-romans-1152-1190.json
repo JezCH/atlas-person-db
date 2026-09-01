@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:frederick-i-barbarossa:holy-roman-empire:king-of-the-romans:1152-1190:v1",
+  "person": {
+    "canonical_name_en": "Frederick I Barbarossa",
+    "display_name_ko": "프리드리히 1세 바르바로사"
+  },
+  "polity": {
+    "canonical_name_en": "Holy Roman Empire",
+    "display_name_ko": "신성 로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King of the Romans",
+    "role_display_name_ko": "로마왕",
+    "start_year": 1152,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1190,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Frederick was elected Roman-German king on 4 March 1152 and crowned at Aachen days later. The royal authority remained the foundation of his rule until his death in 1190, while the imperial dignity was added by coronation in 1155. ATLAS therefore separates the royal office from the overlapping imperial office instead of retaining the legacy combined role 'King and emperor'."
+  },
+  "sources": [
+    {
+      "title": "Inauguration and political liturgy in the Hohenstaufen Empire, 1138–1215 — German History",
+      "canonical_url": "https://academic.oup.com/gh/article/34/2/191/2605062",
+      "citation_text": "The study distinguishes royal and imperial inaugurations in the Hohenstaufen Empire and treats Frederick Barbarossa's royal and imperial stages as distinct constitutional rites.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Frederick I Barbarossa, Roman Emperor — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/frederick-i-barbarossa-roman-emperor",
+      "citation_text": "The reference biography dates Frederick's election as King of Germany to 4 March 1152 and his reign through his death in 1190.",
+      "source_type": "reference_work"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "프리드리히 1세(신성 로마 제국)",
+      "url": "https://namu.wiki/w/%ED%94%84%EB%A6%AC%EB%93%9C%EB%A6%AC%ED%9E%88%201%EC%84%B8%28%EC%8B%A0%EC%84%B1%20%EB%A1%9C%EB%A7%88%20%EC%A0%9C%EA%B5%AD%29"
+    }
+  }
+}
