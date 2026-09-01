@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:skenandoa:oneida:c1775-c1783:v1",
+  "person": {
+    "canonical_name_en": "Skenandoa",
+    "display_name_ko": "스케난도아",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Oneida",
+    "display_name_ko": "오네이다",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Pine Tree chief and military leader",
+    "role_display_name_ko": "파인트리 추장·군사 지도자",
+    "start_year": 1775,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1783,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Skenandoa (also Shenandoah/Oskanondonha) was a respected elected Oneida chief and military leader. During the American Revolutionary War he played a major role in the Oneida decision to support the American side and led Oneida/Tuscarora forces. Because no secure full chiefship interval is preserved, ATLAS uses the Revolutionary War as the bounded representative leadership period."
+  },
+  "sources": [
+    {
+      "title": "Reverend Samuel Kirkland — Fort Stanwix National Monument",
+      "canonical_url": "https://www.nps.gov/people/reverend-samuel-kirkland.htm",
+      "citation_text": "The National Park Service identifies Skenandoa as a respected Oneida chief and Kirkland's close Oneida associate.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Bicentennial Colleges Educate, Enlighten and Entertain — Hamilton College",
+      "canonical_url": "https://www.hamilton.edu/news/story/bicentennial-colleges-educate-enlighten-and-entertain",
+      "citation_text": "Hamilton College records that Skenandoa played a major role in the Oneida alliance with the colonists during the American Revolutionary War.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

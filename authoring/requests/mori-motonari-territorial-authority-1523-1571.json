@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mori-motonari:territorial-authority:1523-1571:v1",
+  "person": {
+    "canonical_name_en": "Mōri Motonari",
+    "display_name_ko": "모리 모토나리",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Mōri Motonari territorial authority",
+    "display_name_ko": "모리 모토나리 세력권",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "de_facto_rule",
+    "role": "Daimyo and head of the Mōri",
+    "role_display_name_ko": "다이묘·모리 당주",
+    "start_year": 1523,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1571,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mōri Motonari became head of the Mōri lineage in 1523 and developed a dominant territorial power in western Honshū. Although succession arrangements shifted formal family leadership during his lifetime, Motonari remained the decisive political-military authority until his death in 1571; ATLAS therefore records the continuous de facto authority rather than treating the clan name as a state."
+  },
+  "sources": [
+    {
+      "title": "Mōri Motonari (1497-1571) — Dictionnaire historique du Japon",
+      "canonical_url": "https://www.persee.fr/doc/dhjap_0000-0000_1988_dic_14_1_922_t1_0158_0000_2",
+      "citation_text": "Dictionnaire historique du Japon identifies Motonari as a powerful Sengoku daimyō in western Honshū and states that he took leadership of the Mōri lineage in 1523.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

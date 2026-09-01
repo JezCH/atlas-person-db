@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:khufu:egypt:c2589-c2566-bce:v1",
+  "person": {
+    "canonical_name_en": "Khufu",
+    "display_name_ko": "쿠푸",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ancient Egypt",
+    "display_name_ko": "고대 이집트",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Pharaoh",
+    "role_display_name_ko": "파라오",
+    "start_year": -2589,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -2566,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Khufu (Cheops), Fourth Dynasty pharaoh and builder of the Great Pyramid at Giza, is conventionally dated by the British Museum to a reign of 2589–2566 BCE. Old Kingdom absolute chronology is not exact, so ATLAS marks both bounds approximate."
+  },
+  "sources": [
+    {
+      "title": "Khufu — British Museum Collections Online",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG54242",
+      "citation_text": "The British Museum identifies Khufu as a Fourth Dynasty ruler of Egypt and gives his reign as 2589–2566 BCE.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

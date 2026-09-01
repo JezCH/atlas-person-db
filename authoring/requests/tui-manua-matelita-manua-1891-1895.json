@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tui-manua-matelita:manua:1891-1895:v1",
+  "person": {
+    "canonical_name_en": "Tui Manuʻa Matelita",
+    "display_name_ko": "투이 마누아 마텔리타",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Manuʻa",
+    "display_name_ko": "마누아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Tui Manuʻa (paramount chief/queen)",
+    "role_display_name_ko": "투이 마누아(최고 추장·여왕)",
+    "start_year": 1891,
+    "start_month": 7,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1895,
+    "end_month": 10,
+    "end_day": 29,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Matelita, born Margaret Young, was selected as Tui Manuʻa and held the title from 1 July 1891 until her death on 29 October 1895. The office was the paramount chiefly/royal title of the Manuʻa island group."
+  },
+  "sources": [
+    {
+      "title": "Tui Manuʻa Graves Monument — National Register of Historic Places",
+      "canonical_url": "https://npgallery.nps.gov/GetAsset/5e051383-1bad-4468-a120-3072ed7b9fa1",
+      "citation_text": "The National Park Service nomination states that Matelita held the Tui Manuʻa title from 1 July 1891 until her death on 29 October 1895.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
