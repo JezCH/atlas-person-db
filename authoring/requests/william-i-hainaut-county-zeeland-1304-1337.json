@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:william-i-hainaut:county-of-zeeland:count:1304-1337:v1",
+  "person": {
+    "canonical_name_en": "William I of Hainaut",
+    "display_name_ko": "기욤 1세"
+  },
+  "polity": {
+    "canonical_name_en": "County of Zeeland",
+    "display_name_ko": "질란트 백국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Count",
+    "role_display_name_ko": "백작",
+    "start_year": 1304,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1337,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "William of Avesnes simultaneously held Zeeland as William II from 1304 until his death in 1337. Holland, Zeeland and Hainaut remained institutionally distinct Low Countries principalities despite their dynastic union, so ATLAS preserves the Zeeland title as its own concurrent Activity."
+  },
+  "sources": [
+    {
+      "title": "Introduction — Postcolonial Fictions in the Roman de Perceforest",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/postcolonial-fictions-in-the-roman-de-perceforest/introduction/35236F28F5AB41954E97A2D6EC36A13A",
+      "citation_text": "Cambridge identifies William I as Count of Hainaut, Holland, and Zeeland.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "The Low Countries, 1290–1415 — The New Cambridge Medieval History",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/new-cambridge-medieval-history/low-countries-12901415/BD6583A54A402C878382F6BE1FDED205",
+      "citation_text": "The New Cambridge Medieval History treats Holland, Zeeland, and Hainaut as distinct principalities that could be combined by joint dynastic rulership.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-28"
+    }
+  }
+}
