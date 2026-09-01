@@ -1205,5 +1205,22 @@
     "role_ko": "로마 건국 신화의 시조·왕",
     "reason": "Romulus is the eponymous founder-king of Roman foundation mythology. The surviving narratives are legendary and mythic traditions rather than independently datable biography, so ATLAS does not convert traditional foundation chronology into a historical reign.",
     "map_policy": "Do not display on the historical year timeline unless a legendary or mythic overlay is enabled."
+  },
+  {
+    "person_name": "Waqah'il Sadiq I",
+    "politic_name": "Ma'in",
+    "display_name_ko": "와카힐 사디크 1세",
+    "politic_display_name_ko": "마인 왕국",
+    "historicity": "historical_attested_uncertain_chronology",
+    "historicity_display_ko": "실존 사료 확인·절대연대 불확실",
+    "timeline_status": "excluded",
+    "date_basis": "minaean_inscription_attestation_with_competing_fifth_vs_third_century_bce_reconstructions",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "마인 왕",
+    "reason": "Waqah'il Sadiq I is attested as a king of Ma'in in Minaean inscriptions, including material associated with Dedan, so ATLAS treats him as a historical ruler rather than a legendary figure. However, the absolute chronology is not defensible at person level: modern scholarship distinguishes two rulers named Waqah'il Sadiq and places the first only broadly around the fifth century BCE in one reconstruction, while older chronologies place the same royal sequence centuries later. ATLAS therefore preserves the historical royal identity without inventing a reign interval or a midpoint year.",
+    "map_policy": "Do not display on the historical year timeline unless a separate uncertain-chronology overlay is enabled."
   }
 ]

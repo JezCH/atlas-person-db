@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:imagawa-yoshimoto:territorial-authority:1536-1560:v1",
+  "person": {
+    "canonical_name_en": "Imagawa Yoshimoto",
+    "display_name_ko": "이마가와 요시모토",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Imagawa Yoshimoto territorial authority",
+    "display_name_ko": "이마가와 요시모토 세력권",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "de_facto_rule",
+    "role": "Daimyo and head of the Imagawa",
+    "role_display_name_ko": "다이묘·이마가와 당주",
+    "start_year": 1536,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1560,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Imagawa Yoshimoto won the Hanagura succession conflict in 1536 and became head of the Imagawa, ruling a major Sengoku territorial authority centered on Suruga and extending into Tōtōmi and Mikawa. He was killed at the Battle of Okehazama in 1560. Following the existing Oda, Uesugi, Shimazu, Date, Mōri and Ōtomo conventions, ATLAS does not treat the clan name itself as a state."
+  },
+  "sources": [
+    {
+      "title": "今川氏～駿河に君臨した名家～ — Shizuoka City",
+      "canonical_url": "https://www.city.shizuoka.lg.jp/s6725/p009495.html",
+      "citation_text": "Shizuoka City states that Yoshimoto won the Hanagura succession dispute and inherited the Imagawa leadership, developed the domain further, and was killed at Okehazama.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "今川館 symposium chronology — Shizuoka City",
+      "canonical_url": "https://www.city.shizuoka.lg.jp/documents/5146/000967697.pdf",
+      "citation_text": "The official chronology records Yoshimoto becoming Imagawa head in 1536 after the Hanagura conflict.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

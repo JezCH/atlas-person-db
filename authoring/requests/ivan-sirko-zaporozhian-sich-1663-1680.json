@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ivan-sirko:zaporozhian-sich:1663-1680:v1",
+  "person": {
+    "canonical_name_en": "Ivan Sirko",
+    "display_name_ko": "이반 시르코",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Zaporozhian Sich",
+    "display_name_ko": "자포로지아 시치",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Repeatedly elected Kish otaman and military leader",
+    "role_display_name_ko": "반복 선출 코시 오타만·군사 지도자",
+    "start_year": 1663,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1680,
+    "end_month": 8,
+    "end_day": 11,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ivan Sirko was repeatedly elected Kish otaman of the Zaporozhian Host in the 1660s and 1670s and remained one of the Sich's dominant military leaders until his death on 11 August 1680. Sources differ in how they enumerate his individual annual terms, so ATLAS records a reviewed leadership Activity from the first securely cited election year, 1663, to his death rather than fabricating one continuous formal term or an uncertain set of separate terms."
+  },
+  "sources": [
+    {
+      "title": "Sirko, Ivan — Internet Encyclopedia of Ukraine",
+      "canonical_url": "https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%5CS%5CI%5CSirkoIvan.htm",
+      "citation_text": "The Encyclopedia of Ukraine identifies Sirko as a Zaporozhian military leader elected Kish otaman eight times in the 1660s and 1670s and gives his death as 11 August 1680.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Historical Dictionary of Ukraine",
+      "canonical_url": "https://resource.odmu.edu.ua/chair/download/145852/V1z4_VIOpfVZE3mjagdy9g/Hist_dictionary_of_Ukr.pdf",
+      "citation_text": "The historical dictionary describes Sirko as a political and military figure and Kish otaman, with repeated elections beginning in 1663.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}

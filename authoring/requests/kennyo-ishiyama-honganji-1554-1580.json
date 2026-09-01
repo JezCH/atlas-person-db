@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:kennyo:ishiyama-honganji:1554-1580:v1",
+  "person": {
+    "canonical_name_en": "Kennyo",
+    "display_name_ko": "혼간지 겐뇨",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ishiyama Hongan-ji",
+    "display_name_ko": "이시야마 혼간지",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "11th head of Hongan-ji and Ikkō-ikki resistance leader",
+    "role_display_name_ko": "혼간지 제11대 문주·잇코잇키 저항 지도자",
+    "start_year": 1554,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1580,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kennyo succeeded as the eleventh head of Hongan-ji in 1554. Hongan-ji at Ishiyama was the principal fortified institutional center of the wider Ikkō-ikki/Hongan-ji network, which was not a single centralized state. The Activity closes in 1580 when Kennyo accepted the imperial-mediated peace with Oda Nobunaga and withdrew from Ishiyama; his later continuation as Hongan-ji religious head is not represented as continuing rule over an 'Ikkō-ikki state'."
+  },
+  "sources": [
+    {
+      "title": "戦国期本願寺教団の構造 — NDL Search / Shigaku",
+      "canonical_url": "https://ndlsearch.ndl.go.jp/books/R000000004-I3288799",
+      "citation_text": "The academic study analyzes the Sengoku Hongan-ji organization and emphasizes the negotiated structure between the Hongan-ji head and the monto, supporting treatment of the Ikkō-ikki network as a religious-political organization rather than a unitary clan state.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Hongan-ji Kennyo — Samurai Archive",
+      "canonical_url": "https://samurai-archive.com/en/people/59",
+      "citation_text": "The biography records Kennyo as the eleventh head of Hongan-ji from 1554 and his ten-year Ishiyama conflict with Nobunaga ending with withdrawal in 1580.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-01"
+    }
+  }
+}
