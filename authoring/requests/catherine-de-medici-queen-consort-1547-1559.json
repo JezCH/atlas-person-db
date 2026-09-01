@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:catherine-de-medici:kingdom-of-france:queen-consort:1547-1559:v1",
+  "person": {
+    "canonical_name_en": "Catherine de' Medici",
+    "display_name_ko": "카트린 드 메디시스"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of France",
+    "display_name_ko": "프랑스 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "term",
+    "role": "Queen Consort",
+    "role_display_name_ko": "왕비",
+    "start_year": 1547,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1559,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Catherine de' Medici became Queen Consort of France when Henry II acceded in 1547 and remained queen consort until his death in 1559. This replaces the legacy phase label 'Queen consort and regent' for a period in which she was not yet regent."
+  },
+  "sources": [
+    {
+      "title": "Catherine de' Medici, Queen and Regent of France — British Museum",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG38000",
+      "citation_text": "The British Museum identifies Catherine as Queen of France from 1547 and Regent from 1560 to 1563, and notes her continuing political influence after the regency.",
+      "source_type": "official_museum_biographical_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-26",
+      "document_title": "카트린 드 메디시스",
+      "url": "https://namu.wiki/w/%EC%B9%B4%ED%8A%B8%EB%A6%B0%20%EB%93%9C%20%EB%A9%94%EB%94%94%EC%8B%9C%EC%8A%A4"
+    }
+  }
+}
