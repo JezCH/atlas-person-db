@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mael-sechnaill:high-kingship-of-ireland:high-king:c846-862:v1",
+  "person": {
+    "canonical_name_en": "Máel Sechnaill mac Máele Ruanaid",
+    "display_name_ko": "말 셰흐날 막 말레 루아니"
+  },
+  "polity": {
+    "canonical_name_en": "High Kingship of Ireland",
+    "display_name_ko": "아일랜드 최고왕권",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "High King",
+    "role_display_name_ko": "최고왕",
+    "start_year": 846,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 862,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Máel Sechnaill ruled Mide from the mid-840s and achieved a wider personal supremacy conventionally represented as the high kingship of Ireland. The Dictionary of Irish Biography describes him as king of Tara, arguably the first of his dynasty to make a credible overkingship claim, and notes that the Annals of Ulster styled him 'king of all Ireland' at his death in 862. ATLAS therefore adds a separate approximate c.846-862 High Kingship Activity while preserving that this supremacy was personal and not a centralized unitary Irish kingdom."
+  },
+  "sources": [
+    {
+      "title": "Máel-Sechnaill — Dictionary of Irish Biography",
+      "canonical_url": "https://www.dib.ie/biography/mael-sechnaill-a5318",
+      "citation_text": "The Dictionary of Irish Biography identifies Máel-Sechnaill as king of Tara and a ruler who made a credible claim to the overkingship of Ireland; at his death in 862 the Annals of Ulster style him king of all Ireland.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-26"
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jozef-pilsudski:second-polish-republic:de-facto-leader:1926-1935:v1",
+  "person": {
+    "canonical_name_en": "Józef Piłsudski",
+    "display_name_ko": "유제프 피우수트스키"
+  },
+  "polity": {
+    "canonical_name_en": "Second Polish Republic",
+    "display_name_ko": "폴란드 제2공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "De facto leader",
+    "role_display_name_ko": "사실상 최고지도자",
+    "start_year": 1926,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1935,
+    "end_month": 5,
+    "end_day": 12,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Piłsudski returned to power through the May Coup of 1926 and remained the decisive political authority of the Second Polish Republic until his death on 12 May 1935. Polish state archival guidance notes that although he did not remain formal head of state and served only briefly as prime minister, his voice in practice decided the most important matters of domestic and foreign policy. ATLAS therefore records this historically distinct 1926-1935 de facto governing phase separately from his formal 1918-1922 Chief of State Activity, without multiplying every concurrent cabinet and military office into separate Activities."
+  },
+  "sources": [
+    {
+      "title": "Józef Piłsudski collection description — Szukaj w Archiwach / Polish State Archives",
+      "canonical_url": "https://www.szukajwarchiwach.gov.pl/en/web/guest/zespol/-/zespol/49181?refererPlid=2144199",
+      "citation_text": "The Polish State Archives describe the May Coup as beginning the Sanation authoritarian system and state that Piłsudski's voice in practice decided the most important domestic and foreign-policy questions until his death in 1935.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "Józef Piłsudski — 1914-1918 Online",
+      "canonical_url": "https://encyclopedia.1914-1918-online.net/article/pisudski-jozef/",
+      "citation_text": "The scholarly encyclopedia describes Piłsudski's 1926-1935 leadership as a quasi- or semi-dictatorship and records his two prime-ministerial terms alongside his continuing political dominance.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-23",
+      "document_title": "유제프 피우수트스키",
+      "url": "https://namu.wiki/w/%EC%9C%A0%EC%A0%9C%ED%94%84%20%ED%94%BC%EC%9A%B0%EC%88%98%ED%8A%B8%EC%8A%A4%ED%82%A4"
+    }
+  }
+}

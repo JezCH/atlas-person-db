@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tomislav-of-croatia:principality-of-croatia:duke:c910-c925:v1",
+  "person": {
+    "canonical_name_en": "Tomislav of Croatia",
+    "display_name_ko": "토미슬라브"
+  },
+  "polity": {
+    "canonical_name_en": "Principality of Croatia",
+    "display_name_ko": "크로아티아 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Duke",
+    "role_display_name_ko": "공작",
+    "start_year": 910,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 925,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Modern Croatian reference scholarship places Tomislav's rule approximately from 910 to 928. Thomas the Archdeacon explicitly calls him dux in 914, whereas a papal letter associated with the 925 Split council addresses him as rex. ATLAS therefore separates the pre-royal Croatian princely phase c.910-c.925 from the existing c.925-c.928 Kingdom of Croatia Activity, without asserting a specific coronation date or ceremony."
+  },
+  "sources": [
+    {
+      "title": "Tomislav — Hrvatska enciklopedija",
+      "canonical_url": "https://www.enciklopedija.hr/clanak/tomislav",
+      "citation_text": "The Croatian Encyclopedia places Tomislav's rule approximately from 910 to 928, identifies the reliable 914 reference to him as dux, and explains that a 925 papal letter addresses him as rex.",
+      "source_type": "national_reference"
+    },
+    {
+      "title": "Hrvatska — Hrvatska enciklopedija",
+      "canonical_url": "https://www.enciklopedija.hr/clanak/26396",
+      "citation_text": "The Croatian Encyclopedia describes the tenth-century transition of the earlier Croatian principality into a kingdom.",
+      "source_type": "national_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-08-24"
+    }
+  }
+}
