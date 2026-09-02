@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:yagan:whadjuk-noongar:1832-1833:v1",
+  "person": {
+    "canonical_name_en": "Yagan",
+    "display_name_ko": "야간",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Whadjuk Noongar",
+    "display_name_ko": "와주크 눙가르",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Warrior and Indigenous leader",
+    "role_display_name_ko": "전사·원주민 지도적 인물",
+    "start_year": 1832,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1833,
+    "end_month": 7,
+    "end_day": 11,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Yagan was a prominent Whadjuk Noongar warrior and Indigenous leader during the early Swan River colonial conflict. ATLAS does not call him chief of all Noongar people: the Australian Dictionary of Biography explicitly notes that traditional Noongar society had no tribal kings or chiefs and cautions that Yagan cannot properly be described as the leader of an organized, sustained Noongar resistance."
+  },
+  "sources": [
+    {
+      "title": "Australian Dictionary of Biography — Yagan (1795–1833)",
+      "canonical_url": "https://adb.anu.edu.au/biography/yagan-2826",
+      "citation_text": "The Australian Dictionary of Biography identifies Yagan as a Whadjuk Noongar warrior and records his prominence in 1832–1833, while rejecting the notion that he was a chief of all Noongar or leader of a centralized resistance.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

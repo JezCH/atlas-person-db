@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:symon-petliura:ukrainian-peoples-republic:1919-1920:v1",
+  "person": {
+    "canonical_name_en": "Symon Petliura",
+    "display_name_ko": "시몬 페틀류라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ukrainian People's Republic",
+    "display_name_ko": "우크라이나 인민공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Head of the Directory",
+    "role_display_name_ko": "디렉토리 수반",
+    "start_year": 1919,
+    "start_month": 2,
+    "start_day": 11,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1920,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Symon Petliura became head of the Directory of the Ukrainian People's Republic on 11 February 1919. This Activity models the territorial-state phase through 1920, when the UNR government and army were forced into exile. His subsequent leadership of the UNR government-in-exile is recorded as a separate Activity."
+  },
+  "sources": [
+    {
+      "title": "Encyclopedia of Ukraine — Petliura, Symon",
+      "canonical_url": "https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%5CP%5CE%5CPetliuraSymon.htm",
+      "citation_text": "The Encyclopedia of Ukraine states that Petliura succeeded Volodymyr Vynnychenko as president/head of the Directory on 11 February 1919 and led the UNR through the subsequent war.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Encyclopedia of Ukraine — Directory of the Ukrainian National Republic",
+      "canonical_url": "https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%5CD%5CI%5CDirectoryoftheUkrainianNationalRepublic.htm",
+      "citation_text": "The Directory entry confirms Petliura became its head on 11 February 1919 and later held the republic's supreme authority.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

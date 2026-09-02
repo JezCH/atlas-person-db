@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gregor-macgregor:republic-of-the-floridas:1817:v1",
+  "person": {
+    "canonical_name_en": "Gregor MacGregor",
+    "display_name_ko": "그레거 맥그리거",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of the Floridas",
+    "display_name_ko": "플로리다 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Head of government and General-in-Chief",
+    "role_display_name_ko": "정부 수반·총사령관",
+    "start_year": 1817,
+    "start_month": 6,
+    "start_day": 29,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1817,
+    "end_month": 9,
+    "end_day": 4,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gregor MacGregor captured Fernandina on Amelia Island on 29 June 1817 and proclaimed the short-lived Republic of the Floridas under a government headed by himself. He relinquished command and boarded ship on 4 September 1817. ATLAS models only his de facto Amelia Island regime, not all of Spanish Florida."
+  },
+  "sources": [
+    {
+      "title": "Florida Historical Society — McGregor to Capture Spanish Florida",
+      "canonical_url": "https://myfloridahistory.org/date-in-history/june-20-1817/mcgregor-capture-spanish-florida",
+      "citation_text": "The Florida Historical Society records MacGregor's June 1817 capture of Amelia Island and establishment of a new government there.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "What's in a Fraud? The Many Worlds of Gregor MacGregor, 1817–1824 — Enterprise & Society",
+      "canonical_url": "https://www.cambridge.org/core/journals/enterprise-and-society/article/whats-in-a-fraud-the-many-worlds-of-gregor-macgregor-18171824/18C69E0C9D7E0878A96E17E2B0B9E12F",
+      "citation_text": "The scholarly article describes MacGregor's attempt to establish a Republic of the Floridas on Amelia Island in 1817 and his abandonment of the island within three months.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
