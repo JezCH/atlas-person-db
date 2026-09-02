@@ -21,6 +21,8 @@ test('authority navigation loads the current spacetime renderer without a stale 
   assert.match(navScript, /atlas-person-spacetime-model\.js\?v=20260902-place-precision/);
   assert.match(navScript, /atlas-person-spacetime-view\.js\?v=20260902-place-precision/);
   assert.match(navScript, /atlas-person-spacetime-view\.css\?v=20260902-label-font-10/);
+  assert.match(spacetimeView, /atlas-person-spacetime-spatial-compile\.js\?v=20260902-place-precision/);
+  assert.match(spacetimeView, /atlas-person-spacetime-person-tracks\.js\?v=20260902-place-precision/);
   assert.match(indexHtml, /atlas-main-authority-nav\.js\?v=20260902-spacetime-place-precision/);
 });
 
