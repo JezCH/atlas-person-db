@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:moxammat-amin:khanate-of-kazan:first-reign:1484-1485:v2",
+  "person": {
+    "canonical_name_en": "Möxämmät-Ämin",
+    "display_name_ko": "무함마드 아민",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Khanate of Kazan",
+    "display_name_ko": "카잔 칸국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khan",
+    "role_display_name_ko": "칸",
+    "start_year": 1484,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1485,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Retry manifest after the v1 request was blocked because it attempted to create a duplicate polity canonical name for the already-existing 카잔 칸국. This version explicitly reuses the existing 'Khanate of Kazan' polity. Tatarica treats the first reign as probable in 1484-1485, so both endpoints remain approximate."
+  },
+  "sources": [
+    {
+      "title": "Казанское ханство — TATARICA",
+      "canonical_url": "https://tatarica.org/ru/razdely/istoriya/srednie-veka/gosudarstva/kazanskoe-hanstvo",
+      "citation_text": "Tatarica lists Muhammad Amin's separate Kazan reigns and describes the 1484-1485 first reign as reconstructed, the 1487-1495 second reign, and the 1502-1518 third reign.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Мухаммад-Амин — TATARICA",
+      "canonical_url": "https://tatarica.org/ru/razdely/istoriya/srednie-veka/personalii/muhammad-amin",
+      "citation_text": "Tatarica documents Muhammad Amin's 1487-1495 and 1502-1518 reigns, including his restoration in 1502 and death in 1518.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
