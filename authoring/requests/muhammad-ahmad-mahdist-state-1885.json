@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:muhammad-ahmad:mahdist-state:1885:v1",
+  "person": {
+    "canonical_name_en": "Muhammad Ahmad",
+    "display_name_ko": "무함마드 아흐마드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Mahdist State",
+    "display_name_ko": "마흐디국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "de_facto_rule",
+    "role": "Mahdi and head of state",
+    "role_display_name_ko": "마흐디·국가 최고지도자",
+    "start_year": 1885,
+    "start_month": 1,
+    "start_day": 26,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1885,
+    "end_month": 6,
+    "end_day": 22,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Muhammad Ahmad launched the Mahdist movement in 1881, but the user specifically supplied the Mahdist State. ATLAS therefore begins the state-specific Activity with the fall of Khartoum on 26 January 1885 and closes it with Muhammad Ahmad's death at Omdurman on 22 June 1885. His earlier 1881-1884 revolutionary leadership is not conflated with formal control of the Mahdist State."
+  },
+  "sources": [
+    {
+      "title": "Mahdist State — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/humanities/encyclopedias-almanacs-transcripts-and-maps/mahdist-state",
+      "citation_text": "The encyclopedia describes the independent Mahdist government as established in January 1885 by Muhammad Ahmad and records his death on 22 June 1885.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Mahommed Ahmed ibn Seyyid Abdullah — Encyclopaedia Britannica 1911",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Mahommed_Ahmed_ibn_Seyyid_Abdullah",
+      "citation_text": "The Britannica article records the capture of Khartoum on 25-26 January 1885 and Muhammad Ahmad's death on 22 June 1885.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

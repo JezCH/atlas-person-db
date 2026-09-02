@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:rhydderch-hael:alt-clut:c580-c614:v1",
+  "person": {
+    "canonical_name_en": "Rhydderch Hael",
+    "display_name_ko": "리데르흐 하엘",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Alt Clut",
+    "display_name_ko": "알트 클루트(스트래스클라이드)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 580,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 614,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Rhydderch Hael is not merely a later legendary king: Adomnan's Life of Columba, written around 700, independently attests a king Roderc son of Tothail ruling at Petra Cloithe (Alt Clut), making his historical kingship secure. The broader c.580-c.614 interval comes from reconstruction using later northern British traditions and should remain approximate."
+  },
+  "sources": [
+    {
+      "title": "Rhydderch Hael — The Heroic Age",
+      "canonical_url": "https://jemne.org/issues/2/ha2rh.htm",
+      "citation_text": "The study explains that Adomnan's Life of Columba attests Roderc son of Tothail as ruler at Petra Cloithe/Alt Clut and distinguishes this secure evidence from later genealogical and literary material.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Rhydderch Hael — ruler of Alt Clut",
+      "canonical_url": "https://en.wikipedia.org/wiki/Rhydderch_Hael",
+      "citation_text": "The ruler chronology summarizes Rhydderch's floruit as c.580-c.614 while noting the mix of historical and later medieval evidence.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

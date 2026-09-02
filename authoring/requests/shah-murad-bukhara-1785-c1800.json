@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:shah-murad:emirate-of-bukhara:1785-c1800:v1",
+  "person": {
+    "canonical_name_en": "Shah Murad",
+    "display_name_ko": "샤 무라드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Emirate of Bukhara",
+    "display_name_ko": "부하라 토후국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emir of Bukhara",
+    "role_display_name_ko": "부하라 에미르",
+    "start_year": 1785,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1800,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Shah Murad established the Manghit emirate form of rule in Bukhara in 1785 and ruled as emir until his death around the turn of 1799-1800. Modern reference works disagree between a precise death on 19 December 1799 and the conventional dynastic endpoint 1800, so ATLAS keeps 1785 exact at year granularity and marks the end c.1800."
+  },
+  "sources": [
+    {
+      "title": "Bukhara, Khanate and Emirate of — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/bukhara-khanate-and-emirate",
+      "citation_text": "The encyclopedia identifies Shah Murad as the Manghit ruler who abolished the khanate form and ruled Bukhara as emir from 1785 to 1800.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "A History of Inner Asia",
+      "canonical_url": "https://turkistanilibrary.com/sites/default/files/a-history-of-inner-asia.pdf",
+      "citation_text": "The dynastic appendix lists Mir Masum Shah Murad as the first Manghit emir of Bukhara, 1785-1800.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
