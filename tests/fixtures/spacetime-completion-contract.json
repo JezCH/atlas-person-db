@@ -146,7 +146,7 @@
     {
       "id": "data-parity",
       "required": true,
-      "status": "pending"
+      "status": "locked"
     }
   ],
   "dense_label_verification": {
@@ -186,5 +186,26 @@
     "counterparty_excluded_from_spatial_counts": true,
     "search_independent_global_summary": true,
     "test": "tests/spacetime-meanwhile-active-activity.test.mjs"
+  },
+  "data_parity_verification": {
+    "status": "locked",
+    "mode": "runtime_fail_closed",
+    "source": "ATLAS Person reader list payload",
+    "compared_at": "Person Track compile boundary before political partitioning",
+    "person_identity_delta": 0,
+    "activity_identity_delta": 0,
+    "temporal_boundary_delta": 0,
+    "polity_delta": 0,
+    "relation_delta": 0,
+    "role_delta": 0,
+    "unresolved_activity_included": true,
+    "multi_place_segment_deduplication_by_activity_id": true,
+    "conflicting_duplicate_activity_fails": true,
+    "test": "tests/spacetime-data-parity.test.mjs"
+  },
+  "final_completion_verification": {
+    "status": "locked",
+    "required_pending_count": 0,
+    "required_capability_count": 23
   }
 }
