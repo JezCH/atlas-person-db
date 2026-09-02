@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:zhuge-liang:shu-han:imperial-chancellor:221-234:v1",
+  "person": {
+    "canonical_name_en": "Zhuge Liang",
+    "display_name_ko": "제갈량"
+  },
+  "polity": {
+    "canonical_name_en": "Shu Han",
+    "display_name_ko": "촉한",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Imperial Chancellor",
+    "role_display_name_ko": "승상",
+    "start_year": 221,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 234,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "When Liu Bei proclaimed himself emperor in 221, Zhuge Liang was appointed Imperial Chancellor. He retained that chief-minister office until his death in 234. This formal office overlaps with, but is not identical to, his regency after 223."
+  },
+  "sources": [
+    {
+      "title": "Zhuge Liang — ChinaKnowledge.de",
+      "canonical_url": "https://www.chinaknowledge.de/History/Division/personszhugeliang.html",
+      "citation_text": "ChinaKnowledge records Zhuge Liang as Liu Bei's senior military-political adviser, appointed Counsellor-in-chief in 221 and effectively regent under Liu Shan after Liu Bei's death.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Zhuge Liang — Chinese Text Project",
+      "canonical_url": "https://ctext.org/datawiki.pl?if=en&remap=gb&res=82307",
+      "citation_text": "The Chinese Text Project account identifies Zhuge Liang as Imperial Chancellor from Shu Han's founding in 221 and regent from 223 until his death in 234.",
+      "source_type": "reference_work"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-21",
+      "document_title": "제갈량",
+      "url": "https://namu.wiki/w/%EC%A0%9C%EA%B0%88%EB%9F%89"
+    }
+  }
+}

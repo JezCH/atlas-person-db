@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:liu-bei:shu-han:warlord:211-221:v1",
+  "person": {
+    "canonical_name_en": "Liu Bei",
+    "display_name_ko": "유비"
+  },
+  "polity": {
+    "canonical_name_en": "Shu Han",
+    "display_name_ko": "촉한",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Warlord",
+    "role_display_name_ko": "군벌",
+    "start_year": 211,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 221,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "This Activity preserves the broad pre-imperial phase represented by the legacy 211-223 compound row without calling Liu Bei an emperor before 221. The 211 start reflects his Yi Province campaign and the emergence of the territorial Liu Bei faction; Shu Han is retained as the project-level umbrella polity label for that faction before the formal 221 imperial proclamation."
+  },
+  "sources": [
+    {
+      "title": "Previous Events of the Three Empires — ChinaKnowledge.de",
+      "canonical_url": "https://www.chinaknowledge.de/History/Division/sanguo-event.html",
+      "citation_text": "ChinaKnowledge describes Liu Bei's takeover of Sichuan, capture of Hanzhong in 219, adoption of a royal title, and proclamation as emperor in 221.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Liu Bei — Chinese Text Project",
+      "canonical_url": "https://ctext.org/datawiki.pl?if=en&res=335944",
+      "citation_text": "The Chinese Text Project account records Liu Bei's 221 imperial proclamation and establishment of Shu Han, following his earlier Hanzhong kingship.",
+      "source_type": "reference_work"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-21",
+      "document_title": "유비",
+      "url": "https://namu.wiki/w/%EC%9C%A0%EB%B9%84"
+    }
+  }
+}

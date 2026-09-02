@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:zhuge-liang:shu-han:senior-adviser:211-221:v1",
+  "person": {
+    "canonical_name_en": "Zhuge Liang",
+    "display_name_ko": "제갈량"
+  },
+  "polity": {
+    "canonical_name_en": "Shu Han",
+    "display_name_ko": "촉한",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Senior adviser",
+    "role_display_name_ko": "수석 참모",
+    "start_year": 211,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 221,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "This preserves the pre-221 strategist/administrator phase of the legacy Activity without extending the later chancellorship or regency backward. Zhuge Liang was a senior adviser and administrator of Liu Bei's faction during the Yi Province campaign and consolidation period. Shu Han is retained as the project-level umbrella label for the faction before its formal establishment."
+  },
+  "sources": [
+    {
+      "title": "Zhuge Liang — ChinaKnowledge.de",
+      "canonical_url": "https://www.chinaknowledge.de/History/Division/personszhugeliang.html",
+      "citation_text": "ChinaKnowledge records Zhuge Liang as Liu Bei's senior military-political adviser, appointed Counsellor-in-chief in 221 and effectively regent under Liu Shan after Liu Bei's death.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-21",
+      "document_title": "제갈량",
+      "url": "https://namu.wiki/w/%EC%A0%9C%EA%B0%88%EB%9F%89"
+    }
+  }
+}
