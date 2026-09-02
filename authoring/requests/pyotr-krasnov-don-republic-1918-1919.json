@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:pyotr-krasnov:don-republic:1918-1919:v1",
+  "person": {
+    "canonical_name_en": "Pyotr Krasnov",
+    "display_name_ko": "표트르 크라스노프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Don Republic",
+    "display_name_ko": "돈 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Ataman of the Don Cossack Host",
+    "role_display_name_ko": "돈 카자크 아타만",
+    "start_year": 1918,
+    "start_month": 5,
+    "start_day": 18,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1919,
+    "end_month": 2,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Krasnov was elected Don Ataman on 16 May 1918 and two days later established the Great Don/Don Republic framework. ATLAS begins this polity-specific Activity on 18 May. Modern chronologies differ by several days over the formal acceptance of his resignation in February 1919 (commonly 15 or 19 February), so the end is stored only as approximate February 1919."
+  },
+  "sources": [
+    {
+      "title": "Krasnov, Pyotr Nikolayevich — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/history/encyclopedias-almanacs-transcripts-and-maps/krasnov-pyotr-nikolayevich",
+      "citation_text": "The encyclopedia identifies Krasnov as elected ataman of the Don Cossack Host in May 1918 and as the German-assisted anti-Bolshevik ruler of the Don territory.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Historical Dictionary of the Russian Civil Wars, 1916–1926",
+      "canonical_url": "https://dokumen.pub/historical-dictionary-of-the-russian-civil-wars-19161926-9781442252806-9781442252813-2015011566.html",
+      "citation_text": "The historical dictionary chronology records Krasnov's resignation as Don ataman in February 1919 and his replacement by Afrikan Bogaevsky.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

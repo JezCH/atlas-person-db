@@ -1222,5 +1222,22 @@
     "role_ko": "마인 왕",
     "reason": "Waqah'il Sadiq I is attested as a king of Ma'in in Minaean inscriptions, including material associated with Dedan, so ATLAS treats him as a historical ruler rather than a legendary figure. However, the absolute chronology is not defensible at person level: modern scholarship distinguishes two rulers named Waqah'il Sadiq and places the first only broadly around the fifth century BCE in one reconstruction, while older chronologies place the same royal sequence centuries later. ATLAS therefore preserves the historical royal identity without inventing a reign interval or a midpoint year.",
     "map_policy": "Do not display on the historical year timeline unless a separate uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "Siward Barn",
+    "politic_name": "Nova Anglia / New England tradition",
+    "display_name_ko": "시워드 반",
+    "politic_display_name_ko": "노바 앙글리아·뉴잉글랜드 전승",
+    "historicity": "historical_attested_uncertain_chronology",
+    "historicity_display_ko": "실존 인물·전승 연관 불확실",
+    "timeline_status": "excluded",
+    "date_basis": "historical_anglo_saxon_noble_with_debated_identification_as_nova_anglia_expedition_leader",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "잉글랜드 귀족·노바 앙글리아 전승상 원정 지도자",
+    "reason": "Siward Barn is a securely historical Anglo-Saxon noble associated with resistance to Norman rule and imprisonment after the 1071 rebellion. Later Latin and Icelandic narratives describe an English expedition to Byzantium and a 'New England' colony around the Black Sea, and modern scholars have proposed identifying that expedition leader with Siward Barn. The identification and chronology remain debated, so ATLAS preserves the requested Nova Anglia association outside the historical year timeline rather than inventing a colonial leadership interval.",
+    "map_policy": "Do not display on the historical year timeline unless a separate historical-tradition or uncertain-association overlay is enabled."
   }
 ]
