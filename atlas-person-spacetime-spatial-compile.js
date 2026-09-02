@@ -38,6 +38,21 @@
       source_refs: Object.freeze(["Hellenic Ministry of Culture, Cultural Egnatia: Pella", "Hellenic Ministry of Culture and Sports, Odysseus: Pella"])
     }),
     Object.freeze({
+      place_id: "place-constantinople", polity_id: "5d9a6186-bbe6-5d1a-ba93-02190ae4c417", function_type: "capital", place_name: "Constantinople",
+      macroregion_code: "europe", subregion_code: "balkans",
+      source_refs: Object.freeze(["1911 Encyclopaedia Britannica: Constantinople"])
+    }),
+    Object.freeze({
+      place_id: "place-constantinople", polity_id: "074510f4-f2e7-5795-8cfb-2a4206fa7254", function_type: "capital", place_name: "Constantinople",
+      macroregion_code: "europe", subregion_code: "balkans",
+      source_refs: Object.freeze(["1911 Encyclopaedia Britannica: Constantinople"])
+    }),
+    Object.freeze({
+      place_id: "place-constantinople", polity_id: "6d1520e2-0aff-5063-b2b7-95eb86daf372", function_type: "capital", place_name: "Constantinople",
+      macroregion_code: "europe", subregion_code: "balkans",
+      source_refs: Object.freeze(["1911 Encyclopaedia Britannica: Constantinople"])
+    }),
+    Object.freeze({
       place_id: "place-ankara", polity_id: "28448862-277d-4738-9fb4-7f51a9e4c03a", function_type: "capital", place_name: "Ankara",
       macroregion_code: "west-asia", subregion_code: "anatolia-caucasus",
       source_refs: Object.freeze(["Atatürk Ansiklopedisi: Ankara’nın Başkent Oluşu"])
