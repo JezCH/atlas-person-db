@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:harold-godwinson:kingdom-of-england:1066:v1",
+  "person": {
+    "canonical_name_en": "Harold Godwinson",
+    "display_name_ko": "해럴드 고드윈슨",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of England",
+    "display_name_ko": "잉글랜드 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1066,
+    "start_month": 1,
+    "start_day": 6,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 1066,
+    "end_month": 10,
+    "end_day": 14,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Harold Godwinson (Harold II) was selected by the Witan after Edward the Confessor's death and crowned at Westminster Abbey on 6 January 1066. His reign ended with his death at the Battle of Hastings on 14 October 1066. ATLAS records the short, well-attested royal reign at day granularity."
+  },
+  "sources": [
+    {
+      "title": "Harold II (r. Jan - Oct 1066) — The Royal Family",
+      "canonical_url": "https://www.royal.uk/harold-ii-r-jan-oct-1066",
+      "citation_text": "The Royal Family states that Harold was crowned at Westminster Abbey on 6 January 1066 and died at the Battle of Hastings on 14 October 1066.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "A Restless Reign: King Harold in 1066 — English Heritage",
+      "canonical_url": "https://www.english-heritage.org.uk/visit/places/1066-battle-of-hastings-abbey-and-battlefield/history-and-stories/king-harold/",
+      "citation_text": "English Heritage confirms Harold's accession in January 1066 and death at Hastings on 14 October 1066.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
