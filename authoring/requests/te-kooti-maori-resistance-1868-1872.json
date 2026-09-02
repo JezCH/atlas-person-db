@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:te-kooti:maori-resistance:1868-1872:v1",
+  "person": {
+    "canonical_name_en": "Te Kooti Arikirangi Te Turuki",
+    "display_name_ko": "테 코티 아리키랑이 테 투루키",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Te Kooti's Māori resistance",
+    "display_name_ko": "테 코티의 마오리 저항세력",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Māori resistance and religious leader",
+    "role_display_name_ko": "마오리 저항·종교 지도자",
+    "start_year": 1868,
+    "start_month": 7,
+    "start_day": 4,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1872,
+    "end_month": 5,
+    "end_day": 15,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Te Kooti was not a sovereign ruler of all Māori. He led his own followers in a four-year guerrilla conflict after escaping the Chatham Islands on 4 July 1868. The military phase ended when he took refuge in the King Country on 15 May 1872. ATLAS therefore models the user label 'Maori' as Te Kooti's specific resistance movement rather than a unified Māori state."
+  },
+  "sources": [
+    {
+      "title": "Te Kooti's war — NZHistory",
+      "canonical_url": "https://nzhistory.govt.nz/war/te-kootis-war",
+      "citation_text": "New Zealand's Ministry for Culture and Heritage states that Te Kooti orchestrated the 4 July 1868 escape and waged guerrilla war for nearly four years until taking sanctuary under the Māori King in 1872.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Pursuit of Te Kooti, 1868–1872 — Te Ara",
+      "canonical_url": "https://teara.govt.nz/en/new-zealand-wars/page-10",
+      "citation_text": "Te Ara records Te Kooti's 1868-1872 campaign and states that on 15 May 1872 he took refuge in the King Country, bringing the wars to an end.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
