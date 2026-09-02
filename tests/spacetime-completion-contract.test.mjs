@@ -24,7 +24,8 @@ test("completion contract records the readable-scale architecture without claimi
   assert.equal(contract.readable_scale.viewport_expansion_above_cap_allowed, false);
   assert.equal(contract.readable_scale.axis_width_px, 140);
   assert.equal(contract.readable_scale.camera_header_height_px, 36);
-  assert.equal(contract.readable_scale.shared_chrome_compaction, true);\n  assert.equal(contract.readable_scale.label_height_px, 18);
+  assert.equal(contract.readable_scale.shared_chrome_compaction, true);
+  assert.equal(contract.readable_scale.label_height_px, 18);
   assert.equal(contract.readable_scale.label_horizontal_padding_px, 1);
   assert.equal(contract.readable_scale.label_outer_chrome_px, 4);
   assert.equal(contract.readable_scale.label_min_width_px, 30);
@@ -87,7 +88,8 @@ test("coordinate invariance uses one global camera zoom", () => {
   assert.equal(fixtures.readable_scale.global_extent_compression, 0.748);
   assert.equal(fixtures.readable_scale.minimum_base_world_width_px, 900);
   assert.equal(fixtures.readable_scale.maximum_base_world_width_px, 1275);
-  assert.equal(fixtures.readable_scale.viewport_expansion_above_cap_allowed, false);\n  assert.equal(fixtures.readable_scale.label_height_px, 18);
+  assert.equal(fixtures.readable_scale.viewport_expansion_above_cap_allowed, false);
+  assert.equal(fixtures.readable_scale.label_height_px, 18);
   assert.equal(fixtures.readable_scale.label_horizontal_padding_px, 1);
   assert.equal(fixtures.readable_scale.label_outer_chrome_px, 4);
   assert.equal(fixtures.readable_scale.label_text_width_budget_preserved, true);
