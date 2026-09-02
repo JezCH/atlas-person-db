@@ -1574,5 +1574,361 @@
       "batch": "moldavia-luxembourg-20260902",
       "item": 74
     }
+  },
+  {
+    "person_name": "Atanarjuat",
+    "display_name_ko": "아타나르주아트",
+    "politic_name": "Iglulingmiut",
+    "politic_display_name_ko": "이글룰링미우트",
+    "historicity": "legendary",
+    "historicity_display_ko": "전설",
+    "role_ko": "이글룰리크 구전 전승의 주인공",
+    "reason": "Hero of an Inuit oral narrative retold in Atanarjuat: The Fast Runner. The film's 2001 release is not a historical activity date, and no secure personal reign is established.",
+    "sources": [
+      {
+        "title": "Atanarjuat — identity and historical classification",
+        "url": "https://en.wikipedia.org/wiki/Atanarjuat%3A_The_Fast_Runner"
+      },
+      {
+        "title": "Atanarjuat — identity and historical classification",
+        "url": "https://books.google.com/books/about/Atanarjuat.html?id=kPQdAQAAIAAJ"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed chronology.",
+    "request_context": {
+      "batch": "nanyue-yanina-20260902",
+      "item": 4
+    }
+  },
+  {
+    "person_name": "Janequeo",
+    "display_name_ko": "야네케오",
+    "politic_name": "Mapuche and Pehuenche tradition",
+    "politic_display_name_ko": "마푸체·페우엔체 전승",
+    "historicity": "disputed_historical_tradition",
+    "historicity_display_ko": "역사성 논쟁·전승",
+    "role_ko": "전승 속 여성 저항 지도자",
+    "reason": "Janequeo is a celebrated resistance figure in later chronicles and literature. Historians dispute whether the account preserves a historical woman or a literary creation. The traditional 1587 episode is not converted into an established historical reign.",
+    "sources": [
+      {
+        "title": "Janequeo — identity and historical classification",
+        "url": "https://es.wikipedia.org/wiki/Janequeo_(hero%C3%ADna_mapuche)"
+      },
+      {
+        "title": "Janequeo — identity and historical classification",
+        "url": "https://en.wikipedia.org/wiki/Janequeo_(lonco)"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed chronology.",
+    "request_context": {
+      "batch": "nanyue-yanina-20260902",
+      "item": 7
+    }
+  },
+  {
+    "person_name": "Selu",
+    "display_name_ko": "셀루",
+    "politic_name": "Cherokee tradition",
+    "politic_display_name_ko": "체로키 전승",
+    "historicity": "mythological",
+    "historicity_display_ko": "신화",
+    "role_ko": "옥수수 어머니",
+    "reason": "Cherokee Corn Mother in creation traditions. The user's Angel Mounds association does not establish an archaeological ruler or personal political chronology.",
+    "sources": [
+      {
+        "title": "Selu — identity and historical classification",
+        "url": "https://www.oregonhumanities.org/rll/magazine/bloom-spring-2025/carrying-the-corn-mother/"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed chronology.",
+    "request_context": {
+      "batch": "nanyue-yanina-20260902",
+      "item": 8
+    }
+  },
+  {
+    "person_name": "Apanuugpak",
+    "display_name_ko": "아파누그파크",
+    "politic_name": "Yup'ik",
+    "politic_display_name_ko": "유픽족",
+    "historicity": "historical_tradition_uncertain_chronology",
+    "historicity_display_ko": "역사 전승·연대 불확실",
+    "role_ko": "구전 전승의 전사·공동체 지도자",
+    "reason": "Yup'ik warrior known through oral narratives discussed by Ann Fienup-Riordan. Neither a whole warfare era nor a later retelling date establishes his individual leadership interval.",
+    "sources": [
+      {
+        "title": "Apanuugpak — identity and historical classification",
+        "url": "https://www.jstor.org/stable/42869583"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed chronology.",
+    "request_context": {
+      "batch": "nanyue-yanina-20260902",
+      "item": 13
+    }
+  },
+  {
+    "person_name": "Yarima",
+    "display_name_ko": "야리마",
+    "politic_name": "Yariguí",
+    "politic_display_name_ko": "야리기족",
+    "historicity": "historical_tradition_uncertain_chronology",
+    "historicity_display_ko": "역사 전승·연대 불확실",
+    "role_ko": "야리기 저항 전승의 여성",
+    "reason": "Remembered in Yariguí resistance tradition alongside Pipatón. Reviewed accounts do not securely date her own political activity; events assigned to Pipatón are not silently transferred to her.",
+    "sources": [
+      {
+        "title": "Yarima — identity and historical classification",
+        "url": "https://es.wikipedia.org/wiki/Cacique_Pipat%C3%B3n"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed chronology.",
+    "request_context": {
+      "batch": "nanyue-yanina-20260902",
+      "item": 20
+    }
+  },
+  {
+    "person_name": "Nunuku-whenua",
+    "display_name_ko": "누누쿠훼누아",
+    "politic_name": "Moriori",
+    "politic_display_name_ko": "모리오리족",
+    "historicity": "historical_tradition_uncertain_chronology",
+    "historicity_display_ko": "역사 전승·연대 불확실",
+    "role_ko": "평화 규범을 세운 전승 속 수장",
+    "reason": "Moriori tradition remembers the chief who established Nunuku's Law. Museum and community histories support his cultural role, but broad fifteenth- or sixteenth-century dating does not yield secure individual start and end years.",
+    "sources": [
+      {
+        "title": "Nunuku-whenua — identity and historical classification",
+        "url": "https://teara.govt.nz/en/moriori/print"
+      },
+      {
+        "title": "Nunuku-whenua — identity and historical classification",
+        "url": "https://tepapa.govt.nz/about/repatriation/repatriation-and-return-karapuna-rekohu"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed chronology.",
+    "request_context": {
+      "batch": "nanyue-yanina-20260902",
+      "item": 27
+    }
+  },
+  {
+    "person_name": "Edward Blondin",
+    "display_name_ko": "에드워드 블론딘",
+    "politic_name": "Sahtu Dene",
+    "politic_display_name_ko": "사투 데네족",
+    "historicity": "historical_uncertain_chronology",
+    "historicity_display_ko": "실존·연대 불확실",
+    "role_ko": "사투 데네 원로·샤먼",
+    "reason": "Historical Sahtu Dene elder and medicine person, husband of Eliza Blondin and father of George Blondin. Available accounts do not establish a defensible personal leadership interval. References to Little Edward and the dates of George Blondin are not assumed to describe this person.",
+    "sources": [
+      {
+        "title": "Edward Blondin — identity and historical classification",
+        "url": "https://en.wikipedia.org/wiki/Edward_Blondin"
+      },
+      {
+        "title": "Edward Blondin — identity and historical classification",
+        "url": "https://canolheritagetrail.ca/CHTHistory.html"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed chronology.",
+    "request_context": {
+      "batch": "nanyue-yanina-20260902",
+      "item": 28
+    }
+  },
+  {
+    "person_name": "Yámas",
+    "display_name_ko": "야마스",
+    "politic_name": "Indo-Iranian mythic tradition",
+    "politic_display_name_ko": "인도이란 신화 전승",
+    "historicity": "mythological",
+    "historicity_display_ko": "신화",
+    "role_ko": "최초의 인간·왕에 관한 신화 인물",
+    "reason": "The submitted Sintashta figure corresponds to the Indo-Iranian Yama/Yima mythic complex. Comparative reconstruction is not evidence of a named historical Sintashta king or reign.",
+    "sources": [
+      {
+        "title": "Yámas — identity and historical classification",
+        "url": "https://www.iranicaonline.org/articles/jamsid-i/"
+      },
+      {
+        "title": "Yámas — identity and historical classification",
+        "url": "https://czasopisma.uni.lodz.pl/sceranea/article/view/4248"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed chronology.",
+    "request_context": {
+      "batch": "nanyue-yanina-20260902",
+      "item": 32
+    }
+  },
+  {
+    "person_name": "Kón",
+    "display_name_ko": "콘",
+    "politic_name": "Paracas and Andean tradition",
+    "politic_display_name_ko": "파라카스·안데스 전승",
+    "historicity": "mythological",
+    "historicity_display_ko": "신화",
+    "role_ko": "창조·바람·비의 신",
+    "reason": "Mythic deity in traditions associated with the Peruvian coast. Archaeological cultural periods and mythic actions cannot be assigned as a personal historical reign.",
+    "sources": [
+      {
+        "title": "Kón — identity and historical classification",
+        "url": "https://en.wikipedia.org/wiki/Kon_(Pre-Incan_mythology)"
+      },
+      {
+        "title": "Kón — identity and historical classification",
+        "url": "https://es.wikipedia.org/wiki/Kon_(mitolog%C3%ADa_inca)"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed chronology.",
+    "request_context": {
+      "batch": "nanyue-yanina-20260902",
+      "item": 48
+    }
+  },
+  {
+    "person_name": "Inal the Great",
+    "display_name_ko": "이날 대왕",
+    "politic_name": "Circassia",
+    "politic_display_name_ko": "체르케스",
+    "historicity": "legendary_possible_historical_core",
+    "historicity_display_ko": "전설·역사적 핵심 가능",
+    "role_ko": "체르케스 통합의 전설적 군주",
+    "reason": "Circassian genealogical and political traditions preserve Inal as a unifier. His dates and historical identification remain disputed; frequently repeated reign estimates are not treated as securely established.",
+    "sources": [
+      {
+        "title": "Inal the Great — identity and historical classification",
+        "url": "https://en.wikipedia.org/wiki/Inal_the_Great"
+      },
+      {
+        "title": "Inal the Great — identity and historical classification",
+        "url": "https://abkhazworld.com/aw/history/1724-the-legendary-circassian-prince-inal-by-vitaliy-shtybin"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed chronology.",
+    "request_context": {
+      "batch": "nanyue-yanina-20260902",
+      "item": 53
+    }
+  },
+  {
+    "person_name": "Qutb al-Din Tahamtan of Hormuz",
+    "display_name_ko": "호르무즈의 쿠트브 앗딘 타함탄",
+    "politic_name": "Hormuz",
+    "politic_display_name_ko": "호르무즈",
+    "historicity": "historical_uncertain_identity_chronology",
+    "historicity_display_ko": "실존·신원 및 연대 불확실",
+    "role_ko": "호르무즈의 군주",
+    "reason": "Historical Hormuz rulers bearing Tahamtan are discussed in fourteenth- and fifteenth-century sources, with competing identifications and dates. The supplied name alone does not securely select a complete reign; Ibn Battuta's ruler and the later ruler discussed by Kauz are not conflated into one timeline.",
+    "sources": [
+      {
+        "title": "Qutb al-Din Tahamtan of Hormuz — identity and historical classification",
+        "url": "https://www.persee.fr/doc/befeo_0336-1519_2001_num_88_1_3509"
+      },
+      {
+        "title": "Qutb al-Din Tahamtan of Hormuz — identity and historical classification",
+        "url": "https://peterbrowland.uk/essays/3.3.htm"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed chronology.",
+    "request_context": {
+      "batch": "nanyue-yanina-20260902",
+      "item": 75
+    }
+  },
+  {
+    "person_name": "Ansenuza",
+    "display_name_ko": "안세누사",
+    "politic_name": "Sanavirones",
+    "politic_display_name_ko": "사나비로네스족",
+    "historicity": "mythological",
+    "historicity_display_ko": "신화",
+    "role_ko": "물의 여신",
+    "reason": "Water goddess in Sanavirón tradition, associated with the Mar Chiquita lagoon. No historical ruler or individual activity interval is established.",
+    "sources": [
+      {
+        "title": "Ansenuza — identity and historical classification",
+        "url": "https://pueblosoriginarios.com/sur/andina/sanavirones/ansenuza.html"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed chronology.",
+    "request_context": {
+      "batch": "nanyue-yanina-20260902",
+      "item": 76
+    }
   }
 ]

@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Nicefor Czernichowski",
+    "display_name_ko": "니체포르 체르니호프스키",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Jaxa",
+    "display_name_ko": "약사",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Autonomous settlement leader",
+    "role_display_name_ko": "자치 정착지 지도자",
+    "period_basis": "de_facto_rule",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Led the autonomous Albazin/Jaxa settlement from 1665 until incorporation into Russian administration in 1674; death in 1675 is not substituted for the political endpoint.",
+    "start_year": 1665,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1674,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Nicefor Czernichowski — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Nicefor_Czernichowski",
+      "citation_text": "Led the autonomous Albazin/Jaxa settlement from 1665 until incorporation into Russian administration in 1674; death in 1675 is not substituted for the political endpoint."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Nicefor Czernichowski — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Jaxa_(state)",
+      "citation_text": "Led the autonomous Albazin/Jaxa settlement from 1665 until incorporation into Russian administration in 1674; death in 1675 is not substituted for the political endpoint."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 43
+  }
+}

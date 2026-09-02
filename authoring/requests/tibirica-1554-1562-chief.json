@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Tibiriçá",
+    "display_name_ko": "티비리사",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Tupiniquim of Piratininga",
+    "display_name_ko": "피라티닝가의 투피니킹족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Chief",
+    "role_display_name_ko": "수장",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Chief involved in the São Paulo foundation and defense in 1554–1562; this attested phase does not invent his accession.",
+    "start_year": 1554,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1562,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Tibiriçá — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Tibiri%C3%A7%C3%A1",
+      "citation_text": "Chief involved in the São Paulo foundation and defense in 1554–1562; this attested phase does not invent his accession."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Tibiriçá — historical reference",
+      "canonical_url": "https://www.cambridge.org/core/books/blacks-of-the-land/transformation-of-indigenous-sao-paulo-in-the-sixteenth-century/82FD65E00BE21FE1DB47244BF742530F",
+      "citation_text": "Chief involved in the São Paulo foundation and defense in 1554–1562; this attested phase does not invent his accession."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 31
+  }
+}

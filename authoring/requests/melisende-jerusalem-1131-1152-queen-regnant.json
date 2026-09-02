@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Melisende of Jerusalem",
+    "display_name_ko": "예루살렘의 멜리장드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Jerusalem",
+    "display_name_ko": "예루살렘 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Queen regnant",
+    "role_display_name_ko": "재위 여왕",
+    "period_basis": "reign",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "National royal authority until Baldwin III's seizure of sole power in 1152; her later life at Nablus is not extended national rule.",
+    "start_year": 1131,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1152,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Melisende of Jerusalem — historical reference",
+      "canonical_url": "https://epistolae.ctl.columbia.edu/woman/30.html",
+      "citation_text": "National royal authority until Baldwin III's seizure of sole power in 1152; her later life at Nablus is not extended national rule."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Melisende of Jerusalem — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Melisende_of_Jerusalem",
+      "citation_text": "National royal authority until Baldwin III's seizure of sole power in 1152; her later life at Nablus is not extended national rule."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 19
+  }
+}

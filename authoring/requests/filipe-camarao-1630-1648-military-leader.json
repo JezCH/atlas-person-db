@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Antônio Filipe Camarão",
+    "display_name_ko": "안토니우 필리피 카마랑",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Potiguara",
+    "display_name_ko": "포티과라족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Military leader",
+    "role_display_name_ko": "군사 지도자",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Potiguara leader commanding Indigenous forces against the Dutch in Portuguese Brazil, rather than sovereign of Brazil. The recorded interval covers documented military leadership.",
+    "start_year": 1630,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1648,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Antônio Filipe Camarão — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Filipe_Camar%C3%A3o",
+      "citation_text": "Potiguara leader commanding Indigenous forces against the Dutch in Portuguese Brazil, rather than sovereign of Brazil. The recorded interval covers documented military leadership."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Antônio Filipe Camarão — historical reference",
+      "canonical_url": "https://sevenpubl.com.br/editora/article/view/5995",
+      "citation_text": "Potiguara leader commanding Indigenous forces against the Dutch in Portuguese Brazil, rather than sovereign of Brazil. The recorded interval covers documented military leadership."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 35
+  }
+}

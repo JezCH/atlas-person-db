@@ -2,31 +2,31 @@
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
   "person": {
-    "canonical_name_en": "Te Atairangikaahu",
-    "display_name_ko": "테 아타이랑기카후",
+    "canonical_name_en": "Idris of Libya",
+    "display_name_ko": "리비아의 이드리스 1세",
     "person_type": "historical",
     "historicity": "historical"
   },
   "polity": {
-    "canonical_name_en": "Kīngitanga",
-    "display_name_ko": "마오리 왕 운동",
+    "canonical_name_en": "Kingdom of Libya",
+    "display_name_ko": "리비아 왕국",
     "polity_type": "historical_polity",
     "historicity": "historical"
   },
   "activity": {
     "relation_type": "rules",
-    "role": "Queen",
-    "role_display_name_ko": "여왕",
+    "role": "King",
+    "role_display_name_ko": "국왕",
     "period_basis": "reign",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "Māori queen in the Kīngitanga from 1966 to 2006, not monarch of New Zealand. Uses the existing Kīngitanga polity shared with Pōtatau Te Wherowhero.",
-    "start_year": 1966,
+    "notes": "Independent Cyrenaica emirate followed by kingship of Libya; the kingdom's 1963 constitutional name change did not end his reign.",
+    "start_year": 1951,
     "start_month": null,
     "start_day": null,
     "start_certainty": "exact",
     "start_calendar": "gregorian",
-    "end_year": 2006,
+    "end_year": 1969,
     "end_month": null,
     "end_day": null,
     "end_certainty": "exact",
@@ -35,9 +35,9 @@
   "sources": [
     {
       "source_type": "web_bibliographic_reference",
-      "title": "Te Atairangikaahu — historical reference",
-      "canonical_url": "https://en.wikipedia.org/wiki/Te_Atairangikaahu",
-      "citation_text": "Māori queen in the Kīngitanga from 1966 to 2006, not monarch of New Zealand."
+      "title": "Idris of Libya — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Idris_of_Libya",
+      "citation_text": "Independent Cyrenaica emirate followed by kingship of Libya; the kingdom's 1963 constitutional name change did not end his reign."
     }
   ],
   "external_references": {},
@@ -50,7 +50,7 @@
     }
   },
   "review_context": {
-    "request_batch": "moldavia-luxembourg-20260902",
-    "requested_item": 22
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 12
   }
 }

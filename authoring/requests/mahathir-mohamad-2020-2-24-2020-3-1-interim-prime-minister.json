@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Mahathir Mohamad",
+    "display_name_ko": "마하티르 모하맛",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Malaysia",
+    "display_name_ko": "말레이시아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Interim Prime Minister",
+    "role_display_name_ko": "임시 총리",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Two premierships and the final interim phase are distinguished. Malaysia was not a Malaysian Empire.",
+    "start_year": 2020,
+    "start_month": 2,
+    "start_day": 24,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2020,
+    "end_month": 3,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Mahathir Mohamad — historical reference",
+      "canonical_url": "https://www.perdana.org.my/pms-of-malaysia/tun-dr-mahathir-mohamad/",
+      "citation_text": "Two premierships and the final interim phase are distinguished. Malaysia was not a Malaysian Empire."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Mahathir Mohamad — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Mahathir_Mohamad",
+      "citation_text": "Two premierships and the final interim phase are distinguished. Malaysia was not a Malaysian Empire."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 10
+  }
+}
