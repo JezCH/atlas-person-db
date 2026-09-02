@@ -65,6 +65,8 @@ Permanent dense windows:
 
 At sufficient zoom: label overlap count = 0, historical Y deviation = 0 px, deferred visible labels = 0. Reducing below 500% is never an acceptance strategy.
 
+These two dense-label gates are locked by the reproducible Production snapshot in `tests/fixtures/spacetime-dense-label-snapshot.json`. The snapshot is packed at 800% using the minimum 900 px base world, the shared 0.748 compression, and the production label engine; CI requires zero overlap, zero deferred labels, and zero historical-Y deviation for both permanent dense windows.
+
 ## Legacy prohibition
 
 The following may not return: overview/detail mode selector, density overview renderer, Person point-only renderer, logarithmic time overview, adaptive low-scale ticks, retired lane assignment, 100% reset, any below-500 camera entry, or local region/time compression.
@@ -81,6 +83,8 @@ DOM size scales with viewport + overscan, not total DB size. Minimap may retain 
 
 - `tests/fixtures/spacetime-completion-contract.json`
 - `tests/fixtures/spacetime-acceptance-fixtures.json`
+- `tests/fixtures/spacetime-dense-label-snapshot.json`
+- `tests/spacetime-dense-label-acceptance.test.mjs`
 - `tests/spacetime-completion-contract.test.mjs`
 - `tests/spacetime-readable-scale-contract.test.mjs`
 
