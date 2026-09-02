@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mao-zedong:prc:president:1954-1959:v1",
+  "person": {
+    "canonical_name_en": "Mao Zedong",
+    "display_name_ko": "마오쩌둥"
+  },
+  "polity": {
+    "canonical_name_en": "People's Republic of China",
+    "display_name_ko": "중화인민공화국",
+    "polity_type": "modern_state",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "국가주석",
+    "start_year": 1954,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1959,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The First National People's Congress elected Mao President of the People's Republic of China on 27 September 1954. The Second National People's Congress elected Liu Shaoqi to that office in April 1959. Mao remained China's paramount political leader after leaving the state presidency, so ATLAS keeps the 1954-1959 formal presidency distinct from the broader 1949-1976 leadership Activity."
+  },
+  "sources": [
+    {
+      "title": "National People's Congress announcement, 27 September 1954 — State Council",
+      "canonical_url": "https://www.gov.cn/test/2008-03/06/content_910702.htm",
+      "citation_text": "The Chinese central government portal reproduces the First NPC announcement electing Mao Zedong President of the People's Republic of China on 27 September 1954.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "1959 election of Liu Shaoqi as President — National People's Congress",
+      "canonical_url": "https://www.npc.gov.cn/npc/c12434/c12495/c235/c2465/201905/t20190522_45177.html",
+      "citation_text": "The National People's Congress records Liu Shaoqi's election as President of the People's Republic of China in April 1959, ending Mao's formal presidency.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-25",
+      "document_title": "마오쩌둥",
+      "url": "https://namu.wiki/w/%EB%A7%88%EC%98%A4%EC%A9%8C%EB%91%A5"
+    }
+  }
+}
