@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mao-zedong:prc:central-peoples-government-chairman:1949-1954:v1",
+  "person": {
+    "canonical_name_en": "Mao Zedong",
+    "display_name_ko": "마오쩌둥"
+  },
+  "polity": {
+    "canonical_name_en": "People's Republic of China",
+    "display_name_ko": "중화인민공화국",
+    "polity_type": "modern_state",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Chairman of the Central People's Government",
+    "role_display_name_ko": "중앙인민정부 주석",
+    "start_year": 1949,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1954,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The First Plenary Session of the CPPCC elected Mao Chairman of the Central People's Government in September 1949. The 1954 Constitution and First National People's Congress reorganized the central state institutions and elected Mao to the newly constitutional office of President of the People's Republic of China. ATLAS therefore models 1949-1954 as a distinct formal state-head phase."
+  },
+  "sources": [
+    {
+      "title": "中华人民共和国大事记 — Central Commission for Discipline Inspection",
+      "canonical_url": "https://www.ccdi.gov.cn/yaowen/201909/t20190927_201391.html",
+      "citation_text": "The official chronology records Mao's election as Chairman of the Central People's Government in September 1949 and the establishment of that government on 1 October.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "Constitutional review history of the First NPC — National People's Congress",
+      "canonical_url": "https://www.npc.gov.cn/npc/c2/c30834/202009/t20200923_307773.html",
+      "citation_text": "The National People's Congress history records the 1954 constitutional reorganization and Mao's election as President of the People's Republic of China on 27 September 1954.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-25",
+      "document_title": "마오쩌둥",
+      "url": "https://namu.wiki/w/%EB%A7%88%EC%98%A4%EC%A9%8C%EB%91%A5"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mao-zedong:prc:paramount-leader:1949-1976:v1",
+  "person": {
+    "canonical_name_en": "Mao Zedong",
+    "display_name_ko": "마오쩌둥"
+  },
+  "polity": {
+    "canonical_name_en": "People's Republic of China",
+    "display_name_ko": "중화인민공화국",
+    "polity_type": "modern_state",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "de_facto_rule",
+    "role": "Paramount Leader",
+    "role_display_name_ko": "최고지도자",
+    "start_year": 1949,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1976,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mao Zedong was the dominant political leader of the People's Republic of China from its establishment in 1949 until his death in 1976. This broad de facto leadership Activity is intentionally distinct from his shorter formal state-head offices."
+  },
+  "sources": [
+    {
+      "title": "毛泽东 — Chinese People's Political Consultative Conference",
+      "canonical_url": "https://www.cppcc.gov.cn/2011/09/20/ARTI1316517733522396.shtml",
+      "citation_text": "The official CPPCC biography records Mao as chairman of the CPC Central Committee from 1945 until his death in 1976 and describes his leadership of the new People's Republic after 1949.",
+      "source_type": "government_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-25",
+      "document_title": "마오쩌둥",
+      "url": "https://namu.wiki/w/%EB%A7%88%EC%98%A4%EC%A9%8C%EB%91%A5"
+    }
+  }
+}
