@@ -35,6 +35,7 @@ test("reviewed compact label geometry preserves text readability while reducing 
   assert.equal(labelEngine.DEFAULT_MIN_LABEL_WIDTH - labelEngine.DEFAULT_LABEL_CHROME_WIDTH, 26);
   assert.equal(labelEngine.DEFAULT_MAX_LABEL_WIDTH - labelEngine.DEFAULT_LABEL_CHROME_WIDTH, 144);
   assert.match(css, /\.spacetime-track-label\{[^}]*height:18px[^}]*padding:0 1px[^}]*font-size:10px[^}]*line-height:16px/);
+  assert.doesNotMatch(css, /@media\(max-width:1100px\)\{\.spacetime-track-label\{font-size:9px\}/);
   assert.match(view, /labelEngine\.DEFAULT_MIN_LABEL_WIDTH/);
   assert.match(view, /labelEngine\.DEFAULT_MAX_LABEL_WIDTH/);
   assert.match(view, /labelEngine\.DEFAULT_LABEL_CHROME_WIDTH/);
