@@ -102,7 +102,19 @@ The following may not return: overview/detail mode selector, density overview re
 
 ## Data parity
 
-Zero unintended delta for Person identity, Activity identity, temporal boundaries, Polity, relation, and role.
+Final parity is enforced at runtime, fail-closed, between the authoritative Person reader payload and the compiled Person Track set **before political placement partitioning**.
+
+Required zero unintended delta:
+- Person identity and count;
+- Activity identity and count;
+- complete start/end temporal boundaries, including year, month, day, granularity, certainty, and calendar;
+- Polity identity;
+- relation identity/code;
+- role identity/code.
+
+Activities that cannot be spatially placed or whose chronology is unresolved still participate in parity through the unresolved Person Track path. A single Activity split into multiple spatial segments by reviewed multi-Place evidence is deduplicated by Activity ID, but conflicting semantic payloads for the same Activity ID fail closed.
+
+If any required semantic delta is detected, the Production renderer throws `SPACETIME_DATA_PARITY_FAILED` rather than rendering a silently altered historical model.
 
 ## Performance
 
@@ -117,6 +129,7 @@ DOM size scales with viewport + overscan, not total DB size. Minimap may retain 
 - `tests/spacetime-place-precision.test.mjs`
 - `tests/spacetime-person-inspector-evidence.test.mjs`
 - `tests/spacetime-meanwhile-active-activity.test.mjs`
+- `tests/spacetime-data-parity.test.mjs`
 - `tests/spacetime-completion-contract.test.mjs`
 - `tests/spacetime-readable-scale-contract.test.mjs`
 
