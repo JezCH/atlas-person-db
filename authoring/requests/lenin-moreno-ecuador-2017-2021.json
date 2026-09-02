@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:lenin-moreno:ecuador:president:2017-2021:v1",
+  "person": {
+    "canonical_name_en": "Lenín Moreno",
+    "display_name_ko": "레닌 모레노",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ecuador",
+    "display_name_ko": "에콰도르",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 2017,
+    "start_month": 5,
+    "start_day": 24,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2021,
+    "end_month": 5,
+    "end_day": 24,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Lenín Moreno assumed the constitutional presidency of Ecuador on 24 May 2017 and transferred power to Guillermo Lasso on 24 May 2021."
+  },
+  "sources": [
+    {
+      "title": "Presidencia de la República del Ecuador — Informe sobre el cumplimiento del Decreto Ejecutivo 135",
+      "canonical_url": "https://www.presidencia.gob.ec/wp-content/uploads/downloads/2018/08/INFORME-MEDIDAS-DE-CUMPLIMIENTO-DECRETO-135-PRESIDENCIA-DE-LA-REPU%CC%81BLICA.pdf",
+      "citation_text": "The Ecuadorian presidency records that Lenín Moreno assumed the constitutional presidency on 24 May 2017.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Primicias — Guillermo Lasso inaugurated, 24 May 2021",
+      "canonical_url": "https://www.primicias.ec/noticias/politica/guillermo-lasso-posesion-presidente-ecuador/",
+      "citation_text": "Contemporary reporting records outgoing president Lenín Moreno transferring power on 24 May 2021.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
