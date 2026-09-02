@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:artemisia-ii:caria:353-351-bce:v1",
+  "person": {
+    "canonical_name_en": "Artemisia II",
+    "display_name_ko": "아르테미시아 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Caria",
+    "display_name_ko": "카리아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Satrap and ruler",
+    "role_display_name_ko": "사트라프·통치자",
+    "start_year": -353,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -351,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Artemisia II succeeded Mausolus as Hecatomnid ruler of Caria and ruled for roughly two years, conventionally dated 353-351 BCE. Caria remained within the Achaemenid imperial order, but Artemisia's own ruling authority was exercised over the Carian satrapy."
+  },
+  "sources": [
+    {
+      "title": "Encyclopaedia Britannica — Artemisia II",
+      "citation_text": "Britannica identifies Artemisia II as ruler of Caria after the death of Mausolus and places her rule in the mid-fourth century BCE.",
+      "source_type": "bibliographic_reference"
+    },
+    {
+      "title": "Kadmos — recent scholarship on the Hecatomnid dynasty",
+      "citation_text": "Modern Hecatomnid chronology places Artemisia II's succession to Mausolus and her approximately two-year rule in 353-351 BCE.",
+      "source_type": "bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

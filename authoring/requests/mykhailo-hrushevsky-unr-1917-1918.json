@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mykhailo-hrushevsky:ukrainian-peoples-republic:1917-1918:v1",
+  "person": {
+    "canonical_name_en": "Mykhailo Hrushevsky",
+    "display_name_ko": "미하일로 흐루셰우스키",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ukrainian People's Republic",
+    "display_name_ko": "우크라이나 인민공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Chairman of the Ukrainian Central Rada",
+    "role_display_name_ko": "우크라이나 중앙 라다 의장",
+    "start_year": 1917,
+    "start_month": 11,
+    "start_day": 20,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1918,
+    "end_month": 4,
+    "end_day": 29,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Hrushevsky chaired the Central Rada. ATLAS does not label him 'first President of Ukraine', a later popular misdescription. This Activity begins with the Third Universal's proclamation of the Ukrainian People's Republic and ends with the overthrow of the Central Rada on 29 April 1918."
+  },
+  "sources": [
+    {
+      "title": "Ukrainian Institute of National Memory — Mykhailo Hrushevsky was not the first President of Ukraine",
+      "citation_text": "The institute explains that Hrushevsky was Chairman of the Central Rada through 29 April 1918 and rejects the retrospective title 'first president'.",
+      "source_type": "bibliographic_reference"
+    },
+    {
+      "title": "Encyclopedia of Ukraine — Central Rada",
+      "citation_text": "The Central Rada proclaimed the Ukrainian People's Republic by its Third Universal in November 1917 and remained its central representative body until the Hetman coup of April 1918.",
+      "source_type": "bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
