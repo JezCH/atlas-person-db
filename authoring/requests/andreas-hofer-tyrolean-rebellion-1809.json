@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:andreas-hofer:tyrolean-rebellion:1809:v1",
+  "person": {
+    "canonical_name_en": "Andreas Hofer",
+    "display_name_ko": "안드레아스 호퍼",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Tyrolean Rebellion of 1809",
+    "display_name_ko": "1809년 티롤 반란",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Tyrolean rebellion leader",
+    "role_display_name_ko": "티롤 반란 지도자",
+    "start_year": 1809,
+    "start_month": 4,
+    "start_day": 9,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1809,
+    "end_month": 11,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Tyrolean uprising against Bavarian and Napoleonic rule began on 9 April 1809. Hofer became its best-known military-political leader and after the August victory directed the country's military and civil administration. His organized leadership phase ended with the defeat of the renewed uprising on 1 November 1809. ATLAS therefore models Hofer as active in the Tyrolean Rebellion rather than as a sovereign ruler of a separate Tyrol state."
+  },
+  "sources": [
+    {
+      "title": "HOFER, Andreas — Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/andreas-hofer_%28Enciclopedia-Italiana%29/",
+      "citation_text": "Treccani records the uprising beginning on 9 April 1809, Hofer's leadership and direction of Tyrol's military and civil administration, and his final defeat on 1 November.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

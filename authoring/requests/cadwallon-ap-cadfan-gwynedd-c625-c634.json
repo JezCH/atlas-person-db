@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cadwallon-ap-cadfan:gwynedd:c625-c634:v1",
+  "person": {
+    "canonical_name_en": "Cadwallon ap Cadfan",
+    "display_name_ko": "카드왈론 압 카드반",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Gwynedd",
+    "display_name_ko": "귀네드 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 625,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 634,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Cadwallon ap Cadfan is unusually well attested for a seventh-century Welsh king and succeeded his father in Gwynedd around 625. He allied with Penda, defeated Edwin of Northumbria, and died at Heavenfield. Bede's calendrical reckoning leaves a genuine 633-versus-634 debate for his death, so both ends are retained at approximate year-level rather than overstated as exact."
+  },
+  "sources": [
+    {
+      "title": "Cadwallon ap Cadfan — historical summary",
+      "canonical_url": "https://en.wikipedia.org/wiki/Cadwallon_ap_Cadfan",
+      "citation_text": "The summary gives Cadwallon's reign in Gwynedd as c.625-634 and discusses the 633/634 chronological dispute over his death.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Canu Cadwallon — historical background",
+      "canonical_url": "https://en.wikipedia.org/wiki/Canu_Cadwallon",
+      "citation_text": "The historical background notes that Cadwallon is very well attested by seventh-century Welsh standards, with Bede, Adomnan, annalistic and genealogical evidence.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

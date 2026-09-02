@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:hojo-ujiyasu:territorial-authority:1541-1571:v1",
+  "person": {
+    "canonical_name_en": "Hōjō Ujiyasu",
+    "display_name_ko": "호조 우지야스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Hōjō Ujiyasu territorial authority",
+    "display_name_ko": "호조 우지야스 세력권",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "de_facto_rule",
+    "role": "Daimyo and senior ruler of the Later Hōjō",
+    "role_display_name_ko": "다이묘·후호조 최고 지도자",
+    "start_year": 1541,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1571,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ujiyasu succeeded Hōjō Ujitsuna as third head of the Later Hōjō in 1541. He formally transferred the family headship to Ujimasa in 1559/1560, but contemporary and later accounts describe a continuing dual-rule arrangement in which Ujiyasu retained senior authority until his death in 1571. Following the project's Oda, Uesugi, Shimazu, Date, Mōri, Ōtomo and Imagawa conventions, the clan is represented as a territorial authority rather than as a sovereign 'Hōjō clan state'."
+  },
+  "sources": [
+    {
+      "title": "北条氏五代100年の歴史 — Odawara City",
+      "canonical_url": "https://www.city.odawara.kanagawa.jp/kanko/hojo/p09347.html",
+      "citation_text": "Odawara City's official chronology records Ujiyasu succeeding as third Hōjō head in 1541, transferring the headship to Ujimasa around 1560, and dying in 1571.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Hojo Ujimasa — Japanese Wiki Corpus",
+      "canonical_url": "https://www.japanesewiki.com/person/Ujimasa%20HOJO.html",
+      "citation_text": "This reference states that after the 1559 transfer of headship, a diarchy of Ujiyasu and Ujimasa continued until Ujiyasu's death.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

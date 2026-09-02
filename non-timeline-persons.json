@@ -1239,5 +1239,22 @@
     "role_ko": "잉글랜드 귀족·노바 앙글리아 전승상 원정 지도자",
     "reason": "Siward Barn is a securely historical Anglo-Saxon noble associated with resistance to Norman rule and imprisonment after the 1071 rebellion. Later Latin and Icelandic narratives describe an English expedition to Byzantium and a 'New England' colony around the Black Sea, and modern scholars have proposed identifying that expedition leader with Siward Barn. The identification and chronology remain debated, so ATLAS preserves the requested Nova Anglia association outside the historical year timeline rather than inventing a colonial leadership interval.",
     "map_policy": "Do not display on the historical year timeline unless a separate historical-tradition or uncertain-association overlay is enabled."
+  },
+  {
+    "person_name": "Geraint (Arthurian Dumnonia tradition)",
+    "politic_name": "Dumnonia",
+    "display_name_ko": "게라인트(아서왕 전승)",
+    "politic_display_name_ko": "둠노니아",
+    "historicity": "legendary_possible_historical_core",
+    "historicity_display_ko": "전설·역사적 핵심 가능",
+    "timeline_status": "excluded",
+    "date_basis": "arthurian_and_later_brittonic_tradition_without_secure_person_specific_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "둠노니아 전승의 왕자·전사",
+    "reason": "The Civilization mod supplied by the user explicitly identifies its Dumnonia leader as the legendary Arthurian prince Geraint, son of Urbanus/Erbin, not the historically attested early-eighth-century King Geraint who fought Ine in 710. The Arthurian Geraint belongs to later literary and heroic tradition and cannot be assigned a defensible personal reign interval without conflating two different figures. ATLAS therefore preserves the requested leader outside the historical year timeline.",
+    "map_policy": "Do not display on the historical year timeline unless a legendary or Arthurian-tradition overlay is enabled."
   }
 ]
