@@ -27,14 +27,14 @@ test("spacetime minimum and default scale are structurally locked to 500 percent
 });
 
 test("reviewed compact label geometry preserves text readability while reducing collision waste", () => {
-  assert.equal(labelEngine.DEFAULT_LABEL_HEIGHT, 19);
+  assert.equal(labelEngine.DEFAULT_LABEL_HEIGHT, 18);
   assert.equal(labelEngine.DEFAULT_HORIZONTAL_GAP, 2);
   assert.equal(labelEngine.DEFAULT_MIN_LABEL_WIDTH, 30);
   assert.equal(labelEngine.DEFAULT_MAX_LABEL_WIDTH, 148);
   assert.equal(labelEngine.DEFAULT_LABEL_CHROME_WIDTH, 4);
   assert.equal(labelEngine.DEFAULT_MIN_LABEL_WIDTH - labelEngine.DEFAULT_LABEL_CHROME_WIDTH, 26);
   assert.equal(labelEngine.DEFAULT_MAX_LABEL_WIDTH - labelEngine.DEFAULT_LABEL_CHROME_WIDTH, 144);
-  assert.match(css, /\.spacetime-track-label\{[^}]*height:19px[^}]*padding:0 1px[^}]*font-size:10px[^}]*line-height:16px/);
+  assert.match(css, /\.spacetime-track-label\{[^}]*height:18px[^}]*padding:0 1px[^}]*font-size:10px[^}]*line-height:16px/);
   assert.match(view, /labelEngine\.DEFAULT_MIN_LABEL_WIDTH/);
   assert.match(view, /labelEngine\.DEFAULT_MAX_LABEL_WIDTH/);
   assert.match(view, /labelEngine\.DEFAULT_LABEL_CHROME_WIDTH/);

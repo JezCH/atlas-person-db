@@ -5,7 +5,7 @@
   if (root) root.ATLAS_PERSON_SPACETIME_LABEL_ENGINE = api;
 })(typeof globalThis !== "undefined" ? globalThis : this, () => {
   "use strict";
-  const DEFAULT_LABEL_HEIGHT = 19;
+  const DEFAULT_LABEL_HEIGHT = 18;
   const DEFAULT_MIN_LABEL_WIDTH = 30;
   const DEFAULT_MAX_LABEL_WIDTH = 148;
   const DEFAULT_CHAR_WIDTH = 6.8;
