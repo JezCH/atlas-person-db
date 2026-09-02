@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:haci-i-giray:crimean-khanate:c1441-1466:v1",
+  "person": {
+    "canonical_name_en": "Hacı I Giray",
+    "display_name_ko": "하즈 1세 기라이",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Crimean Khanate",
+    "display_name_ko": "크림 칸국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khan and founder",
+    "role_display_name_ko": "칸·창건자",
+    "start_year": 1441,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1466,
+    "end_month": 8,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Hacı I Giray founded the Crimean Khanate and established the Giray dynasty. Genoese evidence and coinage make 1441 a common foundation/accession date, but modern scholarship also uses alternative dates including 1449, so ATLAS marks the start approximate. Some king lists insert a brief and uncertain displacement by his son Hayder in 1456; because the interruption itself is disputed, ATLAS preserves one representative founder-khan interval to Hacı's death in August 1466 rather than asserting a precise split reign."
+  },
+  "sources": [
+    {
+      "title": "Hacı I Giray — founder of the Crimean Khanate",
+      "canonical_url": "https://en.wikipedia.org/wiki/Hac%C4%B1_I_Giray",
+      "citation_text": "The biography summarizes Genoese and numismatic evidence for Hacı I Giray as founder of the Crimean Khanate, commonly dated from 1441, and records his death in August 1466 while noting competing accession chronologies.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Crimea (Haci I Giray) — Civilization V Customisation Wiki",
+      "canonical_url": "https://civilization-v-customisation.fandom.com/wiki/Crimea_%28Haci_I_Giray%29",
+      "citation_text": "The comparator catalog identifies the user-supplied Crimean Khanate civilization as the custom civilization led by Haci I Giray; this source is used only to resolve the omitted leader identity, not as the historical chronology authority.",
+      "source_type": "comparator_catalog_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

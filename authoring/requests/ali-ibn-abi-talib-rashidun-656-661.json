@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ali-ibn-abi-talib:rashidun-caliphate:656-661:v1",
+  "person": {
+    "canonical_name_en": "Ali ibn Abi Talib",
+    "display_name_ko": "알리 이븐 아비 탈리브",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Rashidun Caliphate",
+    "display_name_ko": "정통 칼리파국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Caliph",
+    "role_display_name_ko": "칼리파",
+    "start_year": 656,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 661,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ali ibn Abi Talib was the fourth caliph, ruling from 656 until his assassination in 661 during the First Fitna. His capital was moved to Kufa during the caliphate. ATLAS records the standard year-level Rashidun reign without projecting later Shi'i imam chronology into the political-office interval."
+  },
+  "sources": [
+    {
+      "title": "ʿALĪ B. ABĪ ṬĀLEB — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/ali-b-abi-taleb/",
+      "citation_text": "Encyclopaedia Iranica identifies Ali as the fourth caliph and gives his caliphate as 35–40 AH / 656–661 CE.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "KUFA — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/kufa/",
+      "citation_text": "The Iranica Kufa entry confirms Ali's reign in 656–661 and his choice of Kufa as capital.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

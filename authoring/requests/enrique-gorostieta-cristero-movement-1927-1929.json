@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:enrique-gorostieta:cristero-movement:1927-1929:v1",
+  "person": {
+    "canonical_name_en": "Enrique Gorostieta Velarde",
+    "display_name_ko": "엔리케 고로스티에타 벨라르데",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Cristero movement",
+    "display_name_ko": "크리스테로 운동",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "General and commander of the Cristero forces",
+    "role_display_name_ko": "크리스테로군 장군·지휘관",
+    "start_year": 1927,
+    "start_month": 7,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1929,
+    "end_month": 6,
+    "end_day": 2,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The National League for the Defense of Religious Liberty recruited former general Enrique Gorostieta in July 1927 to coordinate and professionalize the Cristero armed struggle. He became the movement's principal military commander and was killed on 2 June 1929, shortly before the negotiated end of the Cristero War. ATLAS models him as active in the Cristero movement rather than as a ruler of a sovereign 'Cristero state'."
+  },
+  "sources": [
+    {
+      "title": "History of the Cristiada — University of Texas at Austin",
+      "canonical_url": "https://laits.utexas.edu/jaime/cwp5/crg/english/history/",
+      "citation_text": "The University of Texas history states that in July 1927 the Liga recruited former general Enrique Gorostieta to coordinate the Cristero effort.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Enrique Gorostieta Velarde — biographical chronology",
+      "canonical_url": "https://www.santiebeati.it/dettaglio/100503",
+      "citation_text": "The detailed biography records Gorostieta's military leadership and his death during the final phase of the Cristero conflict on 2 June 1929.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
