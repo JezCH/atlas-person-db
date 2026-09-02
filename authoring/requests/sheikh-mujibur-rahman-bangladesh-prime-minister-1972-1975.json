@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sheikh-mujibur-rahman:bangladesh:prime-minister:1972-1975:v1",
+  "person": {
+    "canonical_name_en": "Sheikh Mujibur Rahman",
+    "display_name_ko": "셰이크 무지부르 라흐만",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Bangladesh",
+    "display_name_ko": "방글라데시",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1972,
+    "start_month": 1,
+    "start_day": 12,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1975,
+    "end_month": 1,
+    "end_day": 25,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the Provisional Constitution Order introduced a parliamentary cabinet system, Sheikh Mujibur Rahman became Prime Minister on 12 January 1972. ATLAS ends this Activity on 25 January 1975, when the Fourth Amendment restored the presidential system and Mujib assumed the presidency."
+  },
+  "sources": [
+    {
+      "title": "Banglapedia — Prime Minister",
+      "canonical_url": "https://en.banglapedia.org/index.php?lang=en&title=Prime_Minister",
+      "citation_text": "Banglapedia records Sheikh Mujibur Rahman as Prime Minister from 12 January 1972 until the January 1975 constitutional transition.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Banglapedia — Constitutional Amendments",
+      "canonical_url": "https://en.banglapedia.org/index.php/Constitutional_Amendments",
+      "citation_text": "Banglapedia records passage of the Fourth Amendment on 25 January 1975 and its replacement of the parliamentary system with a presidential system.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sheikh-mujibur-rahman:bangladesh:president:1971-1972:v1",
+  "person": {
+    "canonical_name_en": "Sheikh Mujibur Rahman",
+    "display_name_ko": "셰이크 무지부르 라흐만",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Bangladesh",
+    "display_name_ko": "방글라데시",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1971,
+    "start_month": 4,
+    "start_day": 17,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1972,
+    "end_month": 1,
+    "end_day": 12,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Mujibnagar government named Sheikh Mujibur Rahman President of Bangladesh while he was imprisoned in Pakistan, with Syed Nazrul Islam serving as Acting President. Banglapedia's presidential chronology records Mujib's first presidential tenure from 17 April 1971 to 12 January 1972. The 10 April Proclamation of Independence deemed the constitutional order effective from 26 March, but ATLAS uses the formal government-in-exile office chronology rather than backdating the personal term."
+  },
+  "sources": [
+    {
+      "title": "Banglapedia — Rastrapati",
+      "canonical_url": "https://en.banglapedia.org/index.php?lang=en&title=Rastrapati",
+      "citation_text": "Banglapedia lists Sheikh Mujibur Rahman's first presidency as 17 April 1971 to 12 January 1972.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Banglapedia — Proclamation of Independence",
+      "canonical_url": "https://en.banglapedia.org/index.php/Proclamation_of_Independence",
+      "citation_text": "The Proclamation names Sheikh Mujibur Rahman President and Syed Nazrul Islam Vice President/Acting President, while deeming the proclamation effective from 26 March 1971.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:dzhokhar-dudayev:chechen-republic-of-ichkeria:1991-1996:v1",
+  "person": {
+    "canonical_name_en": "Dzhokhar Dudayev",
+    "display_name_ko": "조하르 두다예프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Chechen Republic of Ichkeria",
+    "display_name_ko": "체첸 이치케리야 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1991,
+    "start_month": 11,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1996,
+    "end_month": 4,
+    "end_day": 21,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Dzhokhar Dudayev won the Chechen presidential election held on 27 October 1991 and on 1 November issued the decree restoring Chechen state independence. ATLAS uses 1 November 1991 as the start of his presidency of the self-proclaimed Chechen Republic of Ichkeria and records his term through his death on 21 April 1996. The polity label records the de facto separatist political community without implying international recognition."
+  },
+  "sources": [
+    {
+      "title": "Ministry of Foreign Affairs of the Chechen Republic of Ichkeria — History",
+      "canonical_url": "https://www.mfachechnya.com/history/",
+      "citation_text": "The chronology records the 27 October 1991 presidential election won by Dzhokhar Dudayev and his 1 November independence decree.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Refworld — Freedom in the World 2008: Chechnya",
+      "canonical_url": "https://www.refworld.org/reference/annualreport/freehou/2008/en/60836",
+      "citation_text": "Refworld records Dudayev as elected president in October 1991 and killed in April 1996 during the First Chechen War.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
