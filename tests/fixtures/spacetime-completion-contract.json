@@ -126,7 +126,7 @@
     {
       "id": "meanwhile-active-activity",
       "required": true,
-      "status": "pending"
+      "status": "locked"
     },
     {
       "id": "minimum-readable-camera-reset",
@@ -174,5 +174,17 @@
     "display_source_refs_visible": true,
     "counterparty_not_used_as_primary_evidence": true,
     "test": "tests/spacetime-person-inspector-evidence.test.mjs"
+  },
+  "meanwhile_verification": {
+    "status": "locked",
+    "selected_historical_moment": true,
+    "full_width_moment_line": true,
+    "active_activity_source": "primary_spatial_activity_segments",
+    "unique_person_counts": true,
+    "macroregion_distribution": true,
+    "active_person_highlight": true,
+    "counterparty_excluded_from_spatial_counts": true,
+    "search_independent_global_summary": true,
+    "test": "tests/spacetime-meanwhile-active-activity.test.mjs"
   }
 }
