@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:wimayuk-wandik:uwambo-yali:1945:v1",
+  "person": {
+    "canonical_name_en": "Wimayuk Wandik",
+    "display_name_ko": "위마유크 완디크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Uwambo Yali",
+    "display_name_ko": "우암보 얄리 공동체",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Village leader",
+    "role_display_name_ko": "마을 지도자",
+    "start_year": 1945,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1945,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Wimayuk Wandik, nicknamed 'Chief Pete' by the American survivors of the 1945 Gremlin Special crash, was a leader of the Yali village of Uwambo and advocated protecting the stranded outsiders. ATLAS uses the specific Uwambo Yali community rather than portraying him as a centralized chief of all Yali people."
+  },
+  "sources": [
+    {
+      "title": "Mitchell Zuckoff, Lost in Shangri-La",
+      "canonical_url": "https://books.google.com/books/about/Lost_in_Shangri_La.html?id=0TuezeguPGgC",
+      "citation_text": "The book contains a dedicated chapter 'Wimayuk Wandik, aka Chief Pete' and documents his leadership in Uwambo during the 1945 rescue episode.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Yali (Wimayuk Wandik) — Civilization V Customisation Wiki",
+      "canonical_url": "https://civilization-v-customisation.fandom.com/wiki/The_Yali_%28Wimayuk_Wandik%29",
+      "citation_text": "The mod documentation identifies the historical source used for Wimayuk as a leader of the village of Uwambo and summarizes the 1945 encounter.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

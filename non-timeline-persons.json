@@ -1290,5 +1290,22 @@
     "role_ko": "와가두·가나 건국 전승의 시조",
     "reason": "Dinga Cisse belongs to Soninke oral traditions of Wagadu/Ghana as an ancestral founder figure. Scholarly treatments analyze Dinga within origin epic and myth, while the traditions themselves vary substantially and do not provide contemporary evidence or a secure person-specific chronology. ATLAS therefore preserves the Soninke-Wagadu association outside the historical year timeline.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary, oral-tradition or uncertain-historicity overlay is enabled."
+  },
+  {
+    "person_name": "Javraganak",
+    "politic_name": "Inuit",
+    "display_name_ko": "자브라가낙",
+    "politic_display_name_ko": "이누이트",
+    "historicity": "legendary_possible_historical_core",
+    "historicity_display_ko": "전승·역사적 핵심 가능",
+    "timeline_status": "excluded",
+    "date_basis": "inuit_oral_tradition_with_incompatible_regional_variants_and_no_secure_personal_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "이누이트 전승의 갈등 유발 여성 인물",
+    "reason": "Javraganak (also transmitted as Navaranak) appears in nineteenth-century collections of Inuit/Eskimo oral tradition. Hinrich Rink explicitly described the story as an 'apparently historical tradition', but the North Greenland, South Greenland and Labrador variants localize the enemies differently and do not provide a secure, person-specific chronology. The Civilization mod's 'Thule' label is therefore not treated as proof that she was a datable ruler of a historical Thule polity.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary, oral-tradition or uncertain-historicity overlay is enabled."
   }
 ]

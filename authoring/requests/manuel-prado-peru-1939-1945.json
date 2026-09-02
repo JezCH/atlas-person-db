@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:manuel-prado-ugarteche:peru:president:1939-1945:v1",
+  "person": {
+    "canonical_name_en": "Manuel Prado Ugarteche",
+    "display_name_ko": "마누엘 프라도 우가르테체",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Peru",
+    "display_name_ko": "페루",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1939,
+    "start_month": 12,
+    "start_day": 8,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1945,
+    "end_month": 7,
+    "end_day": 28,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Manuel Prado Ugarteche's first constitutional presidency of Peru ran from 8 December 1939 to 28 July 1945."
+  },
+  "sources": [
+    {
+      "title": "Diario Oficial El Peruano — Manuel Prado Ugarteche",
+      "canonical_url": "https://elperuano.pe/noticia/66134-manuel-prado-ugarteche",
+      "citation_text": "Peru's official newspaper identifies Prado's first presidency beginning in 1939 and his return for a second term in 1956.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Peruvian military historical study — Manuel Prado Ugarteche",
+      "canonical_url": "https://caejm.fmp.gob.pe/wp-content/uploads/2025/12/tomo-4-e3c6a752-ffa0-48e1-b760-70ae7b60bcbe.pdf",
+      "citation_text": "The chronology gives the first term from 8 December 1939 to 28 July 1945.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

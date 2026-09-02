@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:manuel-prado-ugarteche:peru:president:1956-1962:v1",
+  "person": {
+    "canonical_name_en": "Manuel Prado Ugarteche",
+    "display_name_ko": "마누엘 프라도 우가르테체",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Peru",
+    "display_name_ko": "페루",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1956,
+    "start_month": 7,
+    "start_day": 28,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1962,
+    "end_month": 7,
+    "end_day": 18,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Prado's second presidency began on 28 July 1956 and ended on 18 July 1962 when a military coup removed him shortly before the scheduled constitutional end of the term."
+  },
+  "sources": [
+    {
+      "title": "John F. Kennedy Presidential Library — President Manuel Prado Ugarteche",
+      "canonical_url": "https://jfk.artifacts.archives.gov/people/531/president-manuel-prado-ugarteche%3Bjsessionid%3D328F9B36608C40B1A93C3FCFF883F70F",
+      "citation_text": "The JFK Library identifies Prado as president of Peru in 1939–1945 and 1956–1962.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Mensaje a la Nación, 18 July 1962",
+      "canonical_url": "https://es.wikisource.org/wiki/Mensaje_a_la_Naci%C3%B3n_del_Presidente_Constitucional_del_Per%C3%BA%2C_Doctor_Manuel_Prado_y_Ugarteche%2C_18_de_julio_de_1962",
+      "citation_text": "Prado's own address documents the military overthrow on 18 July 1962.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

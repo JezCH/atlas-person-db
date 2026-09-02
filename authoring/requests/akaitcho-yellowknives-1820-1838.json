@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:akaitcho:yellowknives-dene:1820-1838:v1",
+  "person": {
+    "canonical_name_en": "Akaitcho",
+    "display_name_ko": "아카이초",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Yellowknives Dene",
+    "display_name_ko": "옐로나이브스 데네",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Paramount leader",
+    "role_display_name_ko": "최고 지도자",
+    "start_year": 1820,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1838,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Akaitcho was the paramount leader of the Yellowknives (Copper Indians) encountered by John Franklin's expedition in 1820 and remained a major Yellowknives leader until his death in 1838. ATLAS uses Yellowknives Dene as his own political community rather than Canada or a colonial authority."
+  },
+  "sources": [
+    {
+      "title": "Arctic Profiles — Akaitcho (ca. 1786–1838)",
+      "canonical_url": "https://pubs.aina.ucalgary.ca/arctic/Arctic36-2-208.pdf",
+      "citation_text": "The scholarly profile identifies Akaitcho as the paramount leader of the Yellowknives in 1820 and describes his band and role in Franklin's expedition.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "University of Calgary Archives — Akaitcho",
+      "canonical_url": "https://searcharchives.ucalgary.ca/akaitcho",
+      "citation_text": "The archival authority record identifies Akaitcho as chief of the Yellowknives and describes his traditional territory.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

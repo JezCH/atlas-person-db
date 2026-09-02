@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:long-yun:yunnan-clique:1928-1945:v1",
+  "person": {
+    "canonical_name_en": "Long Yun",
+    "display_name_ko": "룽윈",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Yunnan Clique",
+    "display_name_ko": "윈난 군벌",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Governor of Yunnan and warlord",
+    "role_display_name_ko": "윈난성 주석·군벌",
+    "start_year": 1928,
+    "start_month": 1,
+    "start_day": 17,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1945,
+    "end_month": 10,
+    "end_day": 2,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Long Yun was the dominant Yunnan warlord and provincial governor from the late 1920s until Chiang Kai-shek removed him in the 1945 Kunming coup. ATLAS uses Yunnan Clique rather than generic Republic of China provincial administration because his regime possessed substantial autonomous military and political power."
+  },
+  "sources": [
+    {
+      "title": "S. C. M. Paine, The Wars for Asia, 1911–1949 — China 1926–1936",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/wars-for-asia-19111949/china-19261936/217E081F9843C5D640111CA2C22DDC5C",
+      "citation_text": "Cambridge describes Long Yun as the long-ruling regional warlord of Yunnan and distinguishes his regional home-rule power from national contenders.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Long Yun — office chronology",
+      "canonical_url": "https://en.wikipedia.org/wiki/Long_Yun",
+      "citation_text": "The office chronology gives Long Yun's governorship as 17 January 1928 to 2 October 1945.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

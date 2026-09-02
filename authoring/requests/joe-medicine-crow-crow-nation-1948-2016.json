@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:joe-medicine-crow:crow-nation:tribal-historian:1948-2016:v1",
+  "person": {
+    "canonical_name_en": "Joe Medicine Crow",
+    "display_name_ko": "조 메디슨 크로",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Crow Nation",
+    "display_name_ko": "크로우 네이션",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "general_activity",
+    "role": "Tribal historian",
+    "role_display_name_ko": "부족 역사가",
+    "start_year": 1948,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2016,
+    "end_month": 4,
+    "end_day": 3,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Joe Medicine Crow was appointed Crow tribal historian in 1948 and became a major custodian of Apsáalooke history and culture. He was also recognized as the last traditional Crow war chief after completing the four required war deeds during World War II. ATLAS reuses the existing Crow Nation polity and records his formal long-term representative service rather than treating him as principal chief or sovereign ruler."
+  },
+  "sources": [
+    {
+      "title": "PBS / Ken Burns — Joseph Medicine Crow",
+      "canonical_url": "https://www.pbs.org/kenburns/the-war/joseph-medicine-crow/",
+      "citation_text": "PBS documents Medicine Crow's Crow upbringing and the four war deeds associated with becoming a chief.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Washington Post — Joe Medicine Crow, a war chief, historian...",
+      "canonical_url": "https://www.washingtonpost.com/news/morning-mix/wp/2016/04/04/joe-medicine-crow-a-war-chief-historian-and-the-last-link-to-the-battle-of-little-big-horn-dies-at-102/",
+      "citation_text": "The obituary records his traditional war-chief status, his appointment as tribal historian in 1948, and his death in 2016.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
