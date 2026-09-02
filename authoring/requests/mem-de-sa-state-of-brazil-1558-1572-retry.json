@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mem-de-sa:state-of-brazil:1558-1572:v2",
+  "person": {
+    "canonical_name_en": "Mem de Sá",
+    "display_name_ko": "멤 지 사",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "State of Brazil",
+    "display_name_ko": "브라질국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Governor General",
+    "role_display_name_ko": "총독",
+    "start_year": 1558,
+    "start_month": 1,
+    "start_day": 3,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 1572,
+    "end_month": 3,
+    "end_day": 2,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mem de Sá was the third governor-general of the Portuguese State of Brazil. Brazilian archival and historical references place his administration in 1558-1572; office lists give 3 January 1558 as his assumption of office and he governed until his death in Salvador on 2 March 1572. Retry v2 normalizes the role string to the canonical ATLAS role label 'Governor General' after the v1 Production write succeeded but the workflow read-back comparator rejected the hyphenated authoring label."
+  },
+  "sources": [
+    {
+      "title": "Mem de Sá — Arquivo Nacional",
+      "canonical_url": "https://mapa.an.gov.br/index.php/mapa/centrais-de-conteudo/producao/biografias/445-mem-de-sa",
+      "citation_text": "Brazil's National Archive identifies Mem de Sá as governor-general and states that he governed until his death in Salvador in March 1572.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Governador-geral do Estado do Brasil — Arquivo Nacional",
+      "canonical_url": "https://mapa.an.gov.br/index.php/assuntos/15-dicionario/57-dicionario-da-administracao-publica-brasileira-do-periodo-colonial/196-governador-geral-do-estado-do-brasil",
+      "citation_text": "The National Archive's administrative history lists Mem de Sá among the governors-general of the State of Brazil for 1557-1572.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Mem de Sá",
+      "canonical_url": "https://en.wikipedia.org/wiki/Mem_de_S%C3%A1",
+      "citation_text": "The office chronology gives Mem de Sá's governorship as 3 January 1558 to 2 March 1572.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
