@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Thubten Gyatso",
+    "display_name_ko": "툽텐 갸초",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ganden Phodrang",
+    "display_name_ko": "간덴 포드랑",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Temporal ruler",
+    "role_display_name_ko": "정치 통치자",
+    "period_basis": "reign",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The thirteenth Dalai Lama's religious office is separate from direct political rule, split around the 1904–1909 and 1910–1913 exiles.",
+    "start_year": 1895,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1904,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Thubten Gyatso — historical reference",
+      "canonical_url": "https://www.dalailama.com/the-dalai-lama/previous-dalai-lamas/previous-dalai-lama",
+      "citation_text": "The thirteenth Dalai Lama's religious office is separate from direct political rule, split around the 1904–1909 and 1910–1913 exiles."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Thubten Gyatso — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/13th_Dalai_Lama",
+      "citation_text": "The thirteenth Dalai Lama's religious office is separate from direct political rule, split around the 1904–1909 and 1910–1913 exiles."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 13
+  }
+}

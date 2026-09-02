@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Engelbert Dollfuss",
+    "display_name_ko": "엥겔베르트 돌푸스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Austria",
+    "display_name_ko": "오스트리아 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Chancellor",
+    "role_display_name_ko": "총리",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Chancellorship split at the Federal State's establishment on 1 May 1934, ending with assassination on 25 July.",
+    "start_year": 1932,
+    "start_month": 5,
+    "start_day": 20,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1934,
+    "end_month": 5,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Engelbert Dollfuss — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Engelbert_Dollfuss",
+      "citation_text": "Chancellorship split at the Federal State's establishment on 1 May 1934, ending with assassination on 25 July."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 29
+  }
+}

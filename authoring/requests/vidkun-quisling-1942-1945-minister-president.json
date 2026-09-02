@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Vidkun Quisling",
+    "display_name_ko": "비드쿤 크비슬링",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Norway",
+    "display_name_ko": "노르웨이",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Minister President",
+    "role_display_name_ko": "장관통령",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The brief illegal 1940 coup cabinet is separate from the collaborationist administration under German occupation in 1942–1945.",
+    "start_year": 1942,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1945,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Vidkun Quisling — historical reference",
+      "canonical_url": "https://www.regjeringen.no/en/the-government/previous-governments/regjeringer-siden-1814/historiske-regjeringer/norways-governments-1940-1945/vidkun-quislings-illegal-government-in-oslo-1940/id2602597/",
+      "citation_text": "The brief illegal 1940 coup cabinet is separate from the collaborationist administration under German occupation in 1942–1945."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Vidkun Quisling — historical reference",
+      "canonical_url": "https://encyclopedia.ushmm.org/content/en/article/vidkun-quisling-1",
+      "citation_text": "The brief illegal 1940 coup cabinet is separate from the collaborationist administration under German occupation in 1942–1945."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 31
+  }
+}
