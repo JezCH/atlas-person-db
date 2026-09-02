@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:maria-theresa:kingdom-of-hungary:queen:1740-1780:v1",
+  "person": {
+    "canonical_name_en": "Maria Theresa",
+    "display_name_ko": "마리아 테레지아"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Hungary",
+    "display_name_ko": "헝가리 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Queen",
+    "role_display_name_ko": "여왕",
+    "start_year": 1740,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1780,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Maria Theresa succeeded to the Hungarian crown in 1740 and was crowned at Pressburg on 25 June 1741. She remained ruler of Hungary until her death in 1780. The coronation date is not used to erase the preceding succession year at ATLAS year granularity."
+  },
+  "sources": [
+    {
+      "title": "Maria Theresa — Die Welt der Habsburger",
+      "canonical_url": "https://www.habsburger.net/en/persons/habsburg-emperor/maria-theresa",
+      "citation_text": "The Habsburg history portal identifies Maria Theresa as ruler of the Habsburg Monarchy from 1740 to 1780, Queen of Hungary and Bohemia, and Archduchess of Austria.",
+      "source_type": "official_museum_biographical_reference"
+    },
+    {
+      "title": "Mária Terézia koronázási hitlevele — Magyar Nemzeti Levéltár",
+      "canonical_url": "https://mnl.gov.hu/mnl/ol/hirek/maria_terezia_koronazasi_hitlevele?theme=mnlvakbarat",
+      "citation_text": "The Hungarian National Archives records Charles III's death on 20 October 1740 and Maria Theresa's coronation as ruler of Hungary at Pressburg on 25 June 1741.",
+      "source_type": "government_archive"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-25",
+      "document_title": "마리아 테레지아",
+      "url": "https://namu.wiki/w/%EB%A7%88%EB%A6%AC%EC%95%84%20%ED%85%8C%EB%A0%88%EC%A7%80%EC%95%84"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:maria-theresa:habsburg-monarchy:sovereign:1740-1780:v1",
+  "person": {
+    "canonical_name_en": "Maria Theresa",
+    "display_name_ko": "마리아 테레지아"
+  },
+  "polity": {
+    "canonical_name_en": "Habsburg Monarchy",
+    "display_name_ko": "합스부르크 군주국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sovereign",
+    "role_display_name_ko": "군주",
+    "start_year": 1740,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1780,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Maria Theresa succeeded to the Habsburg hereditary lands on the death of Charles VI in 1740 and remained the sovereign of the composite Habsburg Monarchy until her death in 1780. This umbrella Activity preserves the composite-monarchy level while her principal crowns are modeled separately rather than compressed into one compound Role."
+  },
+  "sources": [
+    {
+      "title": "Maria Theresa — Die Welt der Habsburger",
+      "canonical_url": "https://www.habsburger.net/en/persons/habsburg-emperor/maria-theresa",
+      "citation_text": "The Habsburg history portal identifies Maria Theresa as ruler of the Habsburg Monarchy from 1740 to 1780, Queen of Hungary and Bohemia, and Archduchess of Austria.",
+      "source_type": "official_museum_biographical_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-25",
+      "document_title": "마리아 테레지아",
+      "url": "https://namu.wiki/w/%EB%A7%88%EB%A6%AC%EC%95%84%20%ED%85%8C%EB%A0%88%EC%A7%80%EC%95%84"
+    }
+  }
+}
