@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:yelu-dashi:qara-khitai:1124-1143:v1",
+  "person": {
+    "canonical_name_en": "Yelü Dashi",
+    "display_name_ko": "야율대석",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Qara Khitai (Western Liao)",
+    "display_name_ko": "서요(카라 키타이)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Gurkhan and founder",
+    "role_display_name_ko": "구르칸·창건자",
+    "start_year": 1124,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1143,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Yelü Dashi broke with the collapsing Liao order in 1124, proclaimed himself king, moved west, adopted the title Gurkhan and founded the Qara Khitai/Western Liao polity. Encyclopaedia Iranica gives his reign as 1124-1143."
+  },
+  "sources": [
+    {
+      "title": "QARĀ ḴEṬĀY — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/qara-ketay/",
+      "citation_text": "Iranica identifies Yelü Dashi as ruler from 1124 to 1143 and describes his 1124 break from the Liao court, westward migration, adoption of the Gurkhan title and creation of the Qara Khitai state.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Qara Khitai — Oxford Research Encyclopedia of Asian History",
+      "canonical_url": "https://academic.oup.com/edited-volume/61799/chapter-abstract/546311966",
+      "citation_text": "The Oxford reference identifies the Qara Khitai/Western Liao as a Central Asian polity of 1124-1218 founded through Yelü Dashi's westward movement.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

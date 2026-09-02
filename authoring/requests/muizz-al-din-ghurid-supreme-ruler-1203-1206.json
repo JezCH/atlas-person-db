@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:muizz-al-din-muhammad:ghurid-empire:supreme-ruler:1203-1206:v1",
+  "person": {
+    "canonical_name_en": "Mu'izz al-Din Muhammad",
+    "display_name_ko": "무이즈 앗딘 무함마드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ghurid Empire",
+    "display_name_ko": "구르 왕조",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1203,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1206,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After Ghiyath al-Din Muhammad died in 1203, Mu'izz al-Din became the supreme Ghurid ruler. He remained sultan until his assassination in 1206. The David Collection independently identifies his sole-rule phase as 1203-1206."
+  },
+  "sources": [
+    {
+      "title": "GHURIDS — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/ghurids/",
+      "citation_text": "Iranica states that Mu'izz al-Din was supreme ruler for the final three years until his death in 1206.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Ghaznavids and the Ghurids — The David Collection",
+      "canonical_url": "https://legacy.davidmus.dk/en/collections/islamic/dynasties/ghaznavids-and-ghurids/coins/c132?show=faq",
+      "citation_text": "The David Collection identifies Mu'izz al-Din Muhammad ibn Sam as sole ruler in 599-603 AH / 1203-1206 CE.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

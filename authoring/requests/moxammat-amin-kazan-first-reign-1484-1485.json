@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:moxammat-amin:kazan:first-reign:1484-1485:v1",
+  "person": {
+    "canonical_name_en": "Möxämmät-Ämin",
+    "display_name_ko": "무함마드 아민",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kazan Khanate",
+    "display_name_ko": "카잔 칸국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khan",
+    "role_display_name_ko": "칸",
+    "start_year": 1484,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1485,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tatarica states that Muhammad Amin probably occupied Kazan in 1484-1485 before being displaced. Because the first reign is explicitly reconstructed as approximate in the encyclopedia, ATLAS keeps both endpoints approximate rather than flattening all three reigns into one interval."
+  },
+  "sources": [
+    {
+      "title": "Казанское ханство — TATARICA",
+      "canonical_url": "https://tatarica.org/ru/razdely/istoriya/srednie-veka/gosudarstva/kazanskoe-hanstvo",
+      "citation_text": "Tatarica states that Muhammad Amin probably occupied Kazan in 1484-1485 and later ruled again in 1487-1495 and 1502-1518.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

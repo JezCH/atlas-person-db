@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:moxammat-amin:kazan:second-reign:1487-1495:v1",
+  "person": {
+    "canonical_name_en": "Möxämmät-Ämin",
+    "display_name_ko": "무함마드 아민",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kazan Khanate",
+    "display_name_ko": "카잔 칸국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khan",
+    "role_display_name_ko": "칸",
+    "start_year": 1487,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1495,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Muhammad Amin returned to the Kazan throne in 1487 after the Russian siege and deposition of Ilham, and was overthrown by a noble faction in 1495."
+  },
+  "sources": [
+    {
+      "title": "Мухаммад-Амин — TATARICA",
+      "canonical_url": "https://tatarica.org/ru/razdely/istoriya/srednie-veka/personalii/muhammad-amin",
+      "citation_text": "Tatarica gives Muhammad Amin's documented Kazan reign as 1487-1495 and describes his deposition in 1495.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Казанское ханство — TATARICA",
+      "canonical_url": "https://tatarica.org/ru/razdely/istoriya/srednie-veka/gosudarstva/kazanskoe-hanstvo",
+      "citation_text": "Tatarica's khanate history lists Muhammad Amin's separate 1487-1495 reign.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

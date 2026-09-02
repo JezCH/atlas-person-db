@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:muizz-al-din-muhammad:ghurid-empire:co-sultan:1173-1203:v1",
+  "person": {
+    "canonical_name_en": "Mu'izz al-Din Muhammad",
+    "display_name_ko": "무이즈 앗딘 무함마드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ghurid Empire",
+    "display_name_ko": "구르 왕조",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Co-sultan",
+    "role_display_name_ko": "공동 술탄",
+    "start_year": 1173,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1203,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mu'izz al-Din Muhammad was installed at Ghazna in 1173-1174 with the title of sultan and ruled in a dynastic dyarchy with his elder brother Ghiyath al-Din Muhammad. ATLAS therefore separates this co-sultan phase from his later sole supremacy after his brother's death in 1203."
+  },
+  "sources": [
+    {
+      "title": "GHURIDS — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/ghurids/",
+      "citation_text": "Iranica states that Mu'izz al-Din was installed at Ghazna in 569/1173-74 with the title sultan and that he became supreme ruler only for the final three years before his death in 1206.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

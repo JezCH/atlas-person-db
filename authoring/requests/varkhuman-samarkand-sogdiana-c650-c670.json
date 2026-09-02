@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:varkhuman:samarkand-sogdiana:c650-c670:v1",
+  "person": {
+    "canonical_name_en": "Varkhuman",
+    "display_name_ko": "바르후만",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Samarkand (Sogdiana)",
+    "display_name_ko": "사마르칸드(소그디아)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Ikhshid",
+    "role_display_name_ko": "이흐시드(왕)",
+    "start_year": 650,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 670,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Varkhuman was the Sogdian king/Ikhshid based at Samarkand, not ruler of a single centralized state encompassing every Sogdian principality. Chinese sources recognized him as governor of Samarkand and Sogdiana between 650 and 655 and formally invested him in 658; the conventional reign reconstruction extends to about 670. ATLAS therefore uses Samarkand (Sogdiana) and approximate endpoints."
+  },
+  "sources": [
+    {
+      "title": "AFRĀSIĀB ii. Wall Paintings — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/afrasiab-ii-wall-paintings-2/",
+      "citation_text": "Iranica identifies Varkhuman in the Afrasiab inscriptions as sovereign and records Chinese recognition of him as governor of Samarkand and Sogdiana in 650-655 and official investiture in 658.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "SAMARQAND i. HISTORY AND ARCHAEOLOGY — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/samarqand-i/",
+      "citation_text": "Iranica states that the famous Samarkand wall paintings were commissioned around 660, probably by King Varkhuman himself.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Life and Worldview of the Sogdians according to the Afrasyab Paintings",
+      "canonical_url": "https://www.researchgate.net/publication/354862926_Life_and_Worldview_of_the_Sogdians_according_to_the_Afrasyab_Paintings",
+      "citation_text": "The scholarly article places Varkhuman as king of Samarkand around 650-675 and ties the Afrasiab inscriptions and murals to his court.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
