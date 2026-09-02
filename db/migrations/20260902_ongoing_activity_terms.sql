@@ -4,9 +4,19 @@ SET LOCAL lock_timeout = '10s';
 
 -- Existing closed intervals and their semantic index remain unchanged.
 -- A null end is admitted only for an explicitly verified ongoing interval.
-ALTER TABLE atlas_v2.person_politics_v2 ALTER COLUMN activity_end DROP NOT NULL;
 DO $$
 BEGIN
+  -- Clean-schema rehearsals run ledger migrations before the Stage 2 temporal
+  -- expansion. Leave that earlier schema untouched; replay after Stage 2.
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_schema='atlas_v2' AND table_name='person_politics_v2'
+      AND column_name='activity_end_month'
+  ) THEN
+    RAISE NOTICE 'Ongoing terms await the Stage 2 temporal schema';
+    RETURN;
+  END IF;
+  ALTER TABLE atlas_v2.person_politics_v2 ALTER COLUMN activity_end DROP NOT NULL;
   IF NOT EXISTS (
     SELECT 1 FROM pg_constraint
     WHERE conrelid='atlas_v2.person_politics_v2'::regclass
@@ -25,7 +35,6 @@ BEGIN
         )
       );
   END IF;
-END $$;
 
 CREATE UNIQUE INDEX IF NOT EXISTS person_politics_v2_ongoing_semantic_identity_uq
   ON atlas_v2.person_politics_v2 (
@@ -34,4 +43,5 @@ CREATE UNIQUE INDEX IF NOT EXISTS person_politics_v2_ongoing_semantic_identity_u
     activity_start_granularity, activity_start_calendar
   ) NULLS NOT DISTINCT
   WHERE chronology_status='ongoing' AND activity_end IS NULL;
+END $$;
 COMMIT;
