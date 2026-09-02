@@ -121,7 +121,7 @@
     {
       "id": "person-inspector-evidence",
       "required": true,
-      "status": "pending"
+      "status": "locked"
     },
     {
       "id": "meanwhile-active-activity",
@@ -165,5 +165,14 @@
     "exact_geographic_coordinate_claimed": false,
     "multi_place_case": "Roman Empire: Rome (-27–329) → Constantinople (330–395)",
     "test": "tests/spacetime-place-precision.test.mjs"
+  },
+  "person_inspector_verification": {
+    "status": "locked",
+    "spatial_precision_visible": true,
+    "place_evidence_visible": true,
+    "historical_source_refs_visible": true,
+    "display_source_refs_visible": true,
+    "counterparty_not_used_as_primary_evidence": true,
+    "test": "tests/spacetime-person-inspector-evidence.test.mjs"
   }
 }
