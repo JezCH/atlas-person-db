@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:maximilian-i-hre:holy-roman-emperor:1508-1519:v1",
+  "person": {
+    "canonical_name_en": "Maximilian I, Holy Roman Emperor",
+    "display_name_ko": "막시밀리안 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Holy Roman Empire",
+    "display_name_ko": "신성 로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Holy Roman Emperor",
+    "role_display_name_ko": "신성 로마 황제",
+    "start_year": 1508,
+    "start_month": 2,
+    "start_day": 4,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1519,
+    "end_month": 1,
+    "end_day": 12,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "On 4 February 1508 Maximilian adopted the title 'Elected Roman Emperor' at Trent after his route to papal coronation in Rome was blocked. He retained the imperial title until his death on 12 January 1519."
+  },
+  "sources": [
+    {
+      "title": "The Habsburgs — Emperor Maximilian I",
+      "canonical_url": "https://www.habsburger.net/en/media/albrecht-duerer-emperor-maximilian-i-1519",
+      "citation_text": "The Habsburg historical site identifies Maximilian I as Roman-German Emperor from 1508 to 1519.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Salzburg Museum — Haus Österreich: Maximilian I",
+      "canonical_url": "https://salzburgmuseum.ikmk.net/object?id=ID12&lang=en",
+      "citation_text": "The museum catalogue identifies Maximilian as German king from 1493 and emperor from 1508 through 1519.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:maximilian-i-of-bavaria:electorate-of-bavaria:1623-1651:v1",
+  "person": {
+    "canonical_name_en": "Maximilian I of Bavaria",
+    "display_name_ko": "바이에른의 막시밀리안 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Electorate of Bavaria",
+    "display_name_ko": "바이에른 선제후국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Elector of Bavaria",
+    "role_display_name_ko": "바이에른 선제후",
+    "start_year": 1623,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1651,
+    "end_month": 9,
+    "end_day": 27,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "In 1623 Maximilian received the Palatine electoral dignity for the Bavarian line and thereafter ruled Bavaria as prince-elector until his death on 27 September 1651."
+  },
+  "sources": [
+    {
+      "title": "Historisches Lexikon Bayerns — Electors",
+      "canonical_url": "https://www.historisches-lexikon-bayerns.de/Lexikon/EN%3AElectors",
+      "citation_text": "The Bavarian historical lexicon identifies Maximilian I as Elector from 1623 and ruler until 1651.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Maximilian I of Bavaria — Numista ruler chronology",
+      "canonical_url": "https://en.numista.com/catalogue/ruler.php?id=5135",
+      "citation_text": "The ruler chronology distinguishes the Duchy of Bavaria phase (1597–1623) from the Electorate of Bavaria phase (1623–1651).",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

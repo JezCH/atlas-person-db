@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jurgen-wullenwever:hanseatic-league:1533-1535:v1",
+  "person": {
+    "canonical_name_en": "Jürgen Wullenwever",
+    "display_name_ko": "위르겐 불렌베버",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Hanseatic League",
+    "display_name_ko": "한자동맹",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Lübeck burgomaster and Hanseatic policy leader",
+    "role_display_name_ko": "뤼베크 시장·한자동맹 정책 주도자",
+    "start_year": 1533,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1535,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "As Lübeck's burgomaster, Wullenwever attempted to restore Lübeck's and the Hanseatic League's declining Baltic influence and became a leading architect of the League-related foreign policy of the period. This is an active_in relationship, not a claim that he formally ruled the League."
+  },
+  "sources": [
+    {
+      "title": "Jürgen Wullenwever",
+      "canonical_url": "https://de.wikipedia.org/wiki/J%C3%BCrgen_Wullenwever",
+      "citation_text": "The biography describes Wullenwever's foreign policy as tied to Lübeck's role as head of the Hanse and to the decline of Lübeck's Hanseatic primacy.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

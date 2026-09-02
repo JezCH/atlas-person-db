@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:lobengula:ndebele-kingdom:1870-1894:v1",
+  "person": {
+    "canonical_name_en": "Lobengula",
+    "display_name_ko": "로벵굴라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ndebele Kingdom",
+    "display_name_ko": "은데벨레 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1870,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1894,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Lobengula, son of Mzilikazi, became the second and last king of the Ndebele/Mthwakazi state after a contested succession around 1870. He remained the principal sovereign through the British South Africa Company's conquest and died around 1894. The year boundaries are approximate because sources differ on the accession/coronation sequence and the exact date of death."
+  },
+  "sources": [
+    {
+      "title": "Springer — nineteenth-century Ndebele political context",
+      "canonical_url": "https://link.springer.com/chapter/10.1007/978-3-031-75964-2_1",
+      "citation_text": "The study states that Lobengula was declared king in January 1870 after the succession struggle and describes the continued consolidation of Ndebele authority.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Lobengula — standard historical chronology",
+      "citation_text": "Modern histories identify Lobengula as the second and last king of the Ndebele kingdom, ruling from about 1870 until the kingdom's conquest and his death around 1894.",
+      "source_type": "bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

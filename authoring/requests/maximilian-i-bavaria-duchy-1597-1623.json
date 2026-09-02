@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:maximilian-i-of-bavaria:duchy-of-bavaria:1597-1623:v1",
+  "person": {
+    "canonical_name_en": "Maximilian I of Bavaria",
+    "display_name_ko": "바이에른의 막시밀리안 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Bavaria",
+    "display_name_ko": "바이에른 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Duke",
+    "role_display_name_ko": "공작",
+    "start_year": 1597,
+    "start_month": 10,
+    "start_day": 15,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1623,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Maximilian I of the Bavarian Wittelsbach line assumed the government of the Duchy of Bavaria on 15 October 1597. In 1623 he received the electoral dignity, so ATLAS separates his ducal and electoral phases."
+  },
+  "sources": [
+    {
+      "title": "Historisches Lexikon Bayerns — Electors",
+      "canonical_url": "https://www.historisches-lexikon-bayerns.de/Lexikon/EN%3AElectors",
+      "citation_text": "The Bavarian historical lexicon identifies Maximilian I as ruler from 1597 to 1651 and Elector from 1623.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Catholic Encyclopedia — Maximilian I of Bavaria",
+      "canonical_url": "https://www.newadvent.org/cathen/10075b.htm",
+      "citation_text": "The biography records Maximilian's assumption of government on 15 October 1597 and his later electoral dignity.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

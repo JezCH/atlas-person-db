@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:bernaldina-jose-pedro:maturuca-macuxi:2005-2020:v1",
+  "person": {
+    "canonical_name_en": "Bernaldina José Pedro",
+    "display_name_ko": "베르날지나 조제 페드루",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Maturuca Macuxi community",
+    "display_name_ko": "마투루카 마쿠시 공동체",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Indigenous leader and cultural master",
+    "role_display_name_ko": "원주민 지도자·문화 전승자",
+    "start_year": 2005,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 2020,
+    "end_month": 6,
+    "end_day": 24,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bernaldina José Pedro, known as Vovó Bernaldina, was a prominent Macuxi leader of the Maturuca community in the Raposa Serra do Sol Indigenous Territory and a leading advocate for its recognition. ATLAS uses c.2005—the year of the federal homologation she had campaigned for—as a representative public-leadership boundary, not as a formal accession date. Her activity is attached to her specific community rather than treating her as sovereign over all Macuxi."
+  },
+  "sources": [
+    {
+      "title": "FUNAI — Vovó Bernaldina, important Macuxi leader",
+      "canonical_url": "https://www.gov.br/funai/pt-br/assuntos/noticias/2023/funai-participa-de-premiacao-que-homenageia-vovo-bernaldina-importante-lideranca-macuxi-no-lancamento-do-edital-cultura-viva-em-recife",
+      "citation_text": "FUNAI identifies Bernaldina as an important Macuxi leader from the Maturuca community of Raposa Serra do Sol and a prominent defender of the territory's homologation.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Cultura Viva — Prêmio Culturas Indígenas Vovó Bernaldina",
+      "canonical_url": "https://www.gov.br/culturaviva/pt-br/rede-cultura-viva/apoio-cultura-viva-cultura-popular-e-diversidade/edital-de-premiacao-cultura-viva-sergio-mamberti-scdc-minc-no-08-2023/premio-culturas-indigenas-vovo",
+      "citation_text": "Brazil's Ministry of Culture identifies her as a Maturuca community leader and master of Macuxi culture.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
