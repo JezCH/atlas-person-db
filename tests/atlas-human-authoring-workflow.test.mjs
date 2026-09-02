@@ -47,9 +47,24 @@ test('authoring readiness retries both route propagation and deployment races', 
   assert.match(workflow, /Production runtime is still behind the authoring commit/);
 });
 
-test('authoring workflow fixes recover the most recent immutable batch without copying manifests', () => {
-  assert.match(workflow, /\.github\/workflows\/atlas-authoring-apply\.yml/);
-  assert.match(workflow, /recovery_commit="\$\(git log -1 --format=%H/);
-  assert.match(workflow, /git diff --name-only --diff-filter=AM "\$\{recovery_commit\}\^" "\$recovery_commit"/);
-  assert.match(workflow, /Workflow recovery selected the most recent immutable authoring batch/);
+test('workflow-only changes run the trusted read-only completeness audit instead of replaying a historical batch', () => {
+  assert.match(workflow, /audit_all_approved:/);
+  assert.match(workflow, /Workflow-only change selected the trusted read-only completeness audit/);
+  assert.match(workflow, /ATLAS_AUTHORING_AUDIT_ALL_APPROVED/);
+  assert.match(workflow, /Build immutable approved human-authoring audit batches/);
+  assert.match(workflow, /Preflight every approved human-authoring manifest read-only/);
+  assert.match(workflow, /operation:"preflight_batch"/);
+  assert.match(workflow, /data_level_missing_count: ready\.length/);
+  assert.match(workflow, /Approved manifests that are READY against Production/);
+  assert.doesNotMatch(workflow, /recovery_commit=/);
+  assert.doesNotMatch(workflow, /Workflow recovery selected the most recent immutable authoring batch/);
+});
+
+test('trusted completeness audit is mutation-free and preserves normal apply semantics', () => {
+  assert.match(workflow, /audit_all_approved and bootstrap_only are mutually exclusive/);
+  assert.match(workflow, /Completeness audit is read-only and requires an already-ready Production authoring runtime/);
+  assert.match(workflow, /Bootstrap bounded authoring schema migrations\n\s+if: .*ATLAS_AUTHORING_AUDIT_ALL_APPROVED != 'true'/);
+  assert.match(workflow, /Apply manifests through deployed Vercel server\n\s+if: .*ATLAS_AUTHORING_AUDIT_ALL_APPROVED != 'true'/);
+  assert.match(workflow, /\.committed==false/);
+  assert.match(workflow, /result_count_mismatch/);
 });
