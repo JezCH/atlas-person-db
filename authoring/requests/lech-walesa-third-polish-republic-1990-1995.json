@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:lech-walesa:third-polish-republic:president:1990-1995:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Lech Wałęsa",
+    "display_name_ko": "레흐 바웬사"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Third Polish Republic",
+    "display_name_ko": "폴란드 제3공화국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1990,
+    "start_month": 12,
+    "start_day": 22,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1995,
+    "end_month": 12,
+    "end_day": 22,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Lech Wałęsa served as President of post-communist Poland from 22 December 1990 to 22 December 1995. ATLAS uses the conventional Third Polish Republic label to preserve the user's requested regime context."
+  },
+  "sources": [
+    {
+      "title": "Lech Wałęsa — biography",
+      "canonical_url": "https://www.britannica.com/biography/Lech-Walesa",
+      "citation_text": "Biographical chronology identifies Wałęsa as President of Poland from 1990 to 1995.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:batu-khan:golden-horde:1242-1255:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Batu Khan",
+    "display_name_ko": "바투 칸"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Golden Horde",
+    "display_name_ko": "킵차크 칸국(금장 칸국)"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khan and founder",
+    "role_display_name_ko": "칸·창건자",
+    "start_year": 1242,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1255,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Batu, a son of Jochi, established the western Jochid ulus that became known as the Golden Horde after the Mongol campaigns in Europe. ATLAS uses c.1242–c.1255 as a representative sovereign interval; the terminology 'Golden Horde' is later than Batu's own lifetime."
+  },
+  "sources": [
+    {
+      "title": "Batu — Mongol ruler",
+      "canonical_url": "https://www.britannica.com/biography/Batu-Mongol-ruler",
+      "citation_text": "Britannica identifies Batu as founder of the Golden Horde and a ruler of the western Mongol domains.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

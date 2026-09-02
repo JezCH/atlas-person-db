@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:joe-biden:united-states:president:2021-2025:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Joe Biden",
+    "display_name_ko": "조 바이든"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 2021,
+    "start_month": 1,
+    "start_day": 20,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2025,
+    "end_month": 1,
+    "end_day": 20,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Joe Biden served as the 46th President of the United States from 20 January 2021 until 20 January 2025. The term is complete and therefore satisfies ATLAS's closed-boundary requirement."
+  },
+  "sources": [
+    {
+      "title": "The Biden-Harris White House Archive — President Joe Biden",
+      "canonical_url": "https://bidenwhitehouse.archives.gov/administration/president-biden/",
+      "citation_text": "The archived White House biography identifies Biden as the 46th President, inaugurated on 20 January 2021.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

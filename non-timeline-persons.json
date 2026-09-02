@@ -1324,5 +1324,22 @@
     "role_ko": "니브흐 구전전승의 영웅",
     "reason": "Umu is a hero of Nivkh oral tradition rather than a securely attested historical ruler. The surviving story tradition describes a miraculous birth from an egg, vengeance for murdered parents, supernatural helpers and eventual prosperity. No defensible historical reign or person-specific chronology is available. The Civilization mod's presentation of Umu as leader of the Nivkh is therefore retained only as a cultural association outside the historical timeline.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or oral-tradition overlay is enabled."
+  },
+  {
+    "person_name": "Po Nagar",
+    "politic_name": "Champa",
+    "display_name_ko": "포 나가르",
+    "politic_display_name_ko": "참파",
+    "historicity": "mythical",
+    "historicity_display_ko": "신화",
+    "timeline_status": "excluded",
+    "date_basis": "cham_mother_goddess_and_founder_myth_without_historical_person_specific_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "참파의 어머니 여신·건국 전승의 신격",
+    "reason": "Po Nagar (Yan Po Nagar) is the Cham Mother Goddess of the Realm, worshipped as a land and fertility deity and later associated with Bhagavati. Cham foundation legends portray her as founder of Champa, but she is a deity rather than a securely attested human ruler. ATLAS therefore preserves the Champa association only in the mythic/non-timeline layer.",
+    "map_policy": "Do not display on the historical year timeline unless a separate mythic or legendary overlay is enabled."
   }
 ]

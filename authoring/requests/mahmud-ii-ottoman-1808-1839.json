@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mahmud-ii:ottoman-empire:1808-1839:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Mahmud II",
+    "display_name_ko": "마흐무트 2세"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Ottoman Empire",
+    "display_name_ko": "오스만 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1808,
+    "start_month": 7,
+    "start_day": 28,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1839,
+    "end_month": 7,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mahmud II was Sultan of the Ottoman Empire from 28 July 1808 until his death on 1 July 1839."
+  },
+  "sources": [
+    {
+      "title": "Mahmud II — Ottoman sultan",
+      "canonical_url": "https://www.britannica.com/biography/Mahmud-II-Ottoman-sultan",
+      "citation_text": "Standard biographies identify Mahmud II as Ottoman sultan from 1808 to 1839.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

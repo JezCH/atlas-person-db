@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:kastus-kalinouski:january-uprising-lithuania-belarus:1863-1864:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Kastuś Kalinoŭski",
+    "display_name_ko": "카스투시 칼리노우스키"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "January Uprising in Lithuania and Belarus",
+    "display_name_ko": "리투아니아·벨라루스 1월 봉기 세력"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Commissar Plenipotentiary and insurgent leader",
+    "role_display_name_ko": "전권위원·봉기 지도자",
+    "start_year": 1863,
+    "start_month": 6,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1864,
+    "end_month": 1,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kalinoŭski was a leading organizer of the January Uprising in the lands of the former Grand Duchy of Lithuania and became Commissar Plenipotentiary of the insurgent National Government in 1863. ATLAS does not project him backward into the modern Republic of Belarus."
+  },
+  "sources": [
+    {
+      "title": "Kastuś Kalinoŭski & the Rise of the Political Idea of Belarus",
+      "canonical_url": "https://culture.pl/en/article/kastus-kalinouski-the-rise-of-the-political-idea-of-belarus",
+      "citation_text": "The article identifies Kalinoŭski as a principal leader of the 1863 uprising in Lithuania and Belarus and as Commissar Plenipotentiary.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

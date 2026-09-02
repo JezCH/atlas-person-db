@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:liu-yongfu:republic-of-formosa:de-facto-leader:1895:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Liu Yongfu",
+    "display_name_ko": "류융푸"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Republic of Formosa",
+    "display_name_ko": "대만민주국(포르모사 공화국)"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Commander-in-chief and de facto head of government",
+    "role_display_name_ko": "총사령관·사실상 정부 수반",
+    "start_year": 1895,
+    "start_month": 6,
+    "start_day": 6,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1895,
+    "end_month": 10,
+    "end_day": 20,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After President Tang Jingsong fled on 6 June 1895, Liu Yongfu became the de facto leader of the Republic of Formosa from Tainan while continuing to style himself commander-in-chief rather than formally accepting the presidency. He fled on 20 October, the eve of Tainan's fall."
+  },
+  "sources": [
+    {
+      "title": "Japan Center for Asian Historical Records — Republic of Formosa",
+      "canonical_url": "https://www.jacar.go.jp/english/exhibition/jacarbl-fsjwar-e/about/p005.html",
+      "citation_text": "JACAR states that after Tang fled, Liu Yongfu replaced him as leader of the Republic and its armed forces and directed the resistance from Tainan.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "JACAR Glossary — Liu Yongfu",
+      "canonical_url": "https://www.jacar.go.jp/english/exhibition/jacarbl-fsjwar-e/smart/glossary/index.html",
+      "citation_text": "JACAR identifies Liu as head of government after Tang's flight, without formal presidential title, and records his flight on 20 October 1895.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
