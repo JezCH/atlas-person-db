@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:coya-cusirimay:inca-empire:coya:1493:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Coya Cusirimay",
+    "display_name_ko": "코야 쿠시리마이"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Inca Empire",
+    "display_name_ko": "잉카 제국"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "general_activity",
+    "role": "Coya (principal queen and second-in-command)",
+    "role_display_name_ko": "코야(정실 왕비·제2권력자)",
+    "start_year": 1493,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1493,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Cusirimay became Coya after Huayna Capac's succession in 1493. Sources describe the Coya as the principal queen and, in her case, as second in command, but she was not the Sapa Inca and her death occurred early in Huayna Capac's reign at an uncertain date. ATLAS therefore uses the securely attributable 1493 accession/marriage point as a representative political Activity rather than fabricating a full reign."
+  },
+  "sources": [
+    {
+      "title": "Pedro de Cieza de León, The Second Part of the Chronicle of Peru — Coya",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/second-part-of-the-chronicle-of-peru/how-the-lord-after-he-had-assumed-the-fringe-of-sovereignty-was-married-to-his-sister-the-coya-which-is-the-name-of-the-queen-and-how-it-was-permitted-that-he-should-have-many-women-although-among-them-all-the-coya-alone-was-the-legitimate-and-principal-wife/955FA0E50C8273CCAD533C841FFF8DF0",
+      "citation_text": "Cieza de León explains the institutional role of the Coya as the Inca's principal legitimate queen.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Cusirimay — Team Queens",
+      "canonical_url": "https://teamqueens.org/cusirimay/",
+      "citation_text": "The biographical synthesis places Cusirimay's marriage to Huayna Capac after his 1493 succession and describes her as second in command.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

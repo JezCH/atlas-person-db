@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ramon-villeda-morales:honduras:president:1957-1963:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Ramón Villeda Morales",
+    "display_name_ko": "라몬 비예다 모랄레스"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Republic of Honduras",
+    "display_name_ko": "온두라스 공화국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1957,
+    "start_month": 12,
+    "start_day": 21,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1963,
+    "end_month": 10,
+    "end_day": 3,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ramón Villeda Morales became constitutional President of Honduras on 21 December 1957. His term was cut short by the military coup of 3 October 1963."
+  },
+  "sources": [
+    {
+      "title": "Ramón Villeda Morales — presidential chronology",
+      "canonical_url": "https://es.wikipedia.org/wiki/Ram%C3%B3n_Villeda_Morales",
+      "citation_text": "The chronology records his presidency beginning 21 December 1957 and ending with the coup on 3 October 1963.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

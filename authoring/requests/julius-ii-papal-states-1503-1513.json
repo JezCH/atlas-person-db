@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:pope-julius-ii:papal-states:1503-1513:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Pope Julius II",
+    "display_name_ko": "교황 율리오 2세"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Papal States",
+    "display_name_ko": "교황령"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Pope and sovereign",
+    "role_display_name_ko": "교황·교황령 군주",
+    "start_year": 1503,
+    "start_month": 11,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1513,
+    "end_month": 2,
+    "end_day": 21,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Giuliano della Rovere was elected Pope Julius II on 1 November 1503 and, as pope, was sovereign of the Papal States until his death on 21 February 1513."
+  },
+  "sources": [
+    {
+      "title": "Holy See — Pontiffs: Julius II",
+      "canonical_url": "https://www.vatican.va/content/vatican/en/holy-father.html",
+      "citation_text": "The Holy See lists Julius II's pontificate from 1 November 1503 to 21 February 1513.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

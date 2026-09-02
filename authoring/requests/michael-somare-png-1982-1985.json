@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:michael-somare:papua-new-guinea:prime-minister:1982-1985:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Michael Somare",
+    "display_name_ko": "마이클 소마레"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Papua New Guinea",
+    "display_name_ko": "파푸아뉴기니"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1982,
+    "start_month": 8,
+    "start_day": 2,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1985,
+    "end_month": 11,
+    "end_day": 21,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the 1982 election Parliament again chose Somare as Prime Minister. His second prime-ministerial term ended with a vote of no confidence on 21 November 1985."
+  },
+  "sources": [
+    {
+      "title": "Papua New Guinea Department of Foreign Affairs — PNG History",
+      "canonical_url": "https://www.dfa.gov.pg/png-history/",
+      "citation_text": "PNG's Department of Foreign Affairs states that Parliament again chose Somare as Prime Minister after the 1982 election and that his government fell to a no-confidence vote in November 1985.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "ANU Press — PNG prime ministers table",
+      "canonical_url": "https://press-files.anu.edu.au/downloads/press/n13904/html/annex_a.xhtml",
+      "citation_text": "ANU gives the second Somare term as 2 August 1982 to 21 November 1985.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

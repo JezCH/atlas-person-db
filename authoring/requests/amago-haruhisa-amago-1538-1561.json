@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:amago-haruhisa:amago-clan:1538-1561:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Amago Haruhisa",
+    "display_name_ko": "아마고 하루히사"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Amago clan",
+    "display_name_ko": "아마고 가문"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Clan head and daimyō",
+    "role_display_name_ko": "가문 당주·다이묘",
+    "start_year": 1538,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1561,
+    "end_month": 1,
+    "end_day": 9,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Amago Haruhisa succeeded his grandfather as head of the Amago clan in the late 1530s and ruled its western-Japanese domain until his death on 9 January 1561. ATLAS uses the standard office chronology beginning in 1538."
+  },
+  "sources": [
+    {
+      "title": "Amago Haruhisa — office chronology",
+      "canonical_url": "https://en.wikipedia.org/wiki/Amago_Haruhisa",
+      "citation_text": "The chronology lists Haruhisa as head of the Amago clan from 1538 to 1561.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

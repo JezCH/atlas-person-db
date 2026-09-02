@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mogami-yoshiaki:mogami-clan:1571-1614:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Mogami Yoshiaki",
+    "display_name_ko": "모가미 요시아키"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Mogami clan",
+    "display_name_ko": "모가미 가문"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Clan head and daimyō",
+    "role_display_name_ko": "가문 당주·다이묘",
+    "start_year": 1571,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1614,
+    "end_month": 2,
+    "end_day": 26,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mogami Yoshiaki became head of the Mogami clan in 1571 and remained its ruling daimyō until his death on 26 February 1614. His later Yamagata-domain status is encompassed by this requested Mogami-clan Activity."
+  },
+  "sources": [
+    {
+      "title": "Mogami Yoshiaki — office chronology",
+      "canonical_url": "https://en.wikipedia.org/wiki/Mogami_Yoshiaki",
+      "citation_text": "The standard chronology gives Yoshiaki as head of the Mogami clan from 1571 to 1614.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

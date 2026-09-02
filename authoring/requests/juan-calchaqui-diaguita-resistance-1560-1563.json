@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:juan-calchaqui:diaguita-resistance:1560-1563:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Juan Calchaquí",
+    "display_name_ko": "후안 칼차키"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Diaguita resistance confederation (First Calchaquí War)",
+    "display_name_ko": "디아기타 저항연합(제1차 칼차키 전쟁)"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Tolombón chief and resistance leader",
+    "role_display_name_ko": "톨롬본 추장·저항 지도자",
+    "start_year": 1560,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1563,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Juan Calchaquí was a Tolombón/Diaguita chief who organized the first major Calchaquí uprising against Spanish settlement from 1560 to 1563. ATLAS attaches him to the inter-community resistance confederation rather than making him a monarch of all Diaguita peoples."
+  },
+  "sources": [
+    {
+      "title": "Universidad Nacional de La Plata thesis — Jujuy, siglo XVII",
+      "canonical_url": "https://www.memoria.fahce.unlp.edu.ar/tesis/te.2581/te.2581.pdf",
+      "citation_text": "The academic thesis identifies Juan Calchaquí as cacique of Tolombón and dates his uprising to 1560–1563.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
