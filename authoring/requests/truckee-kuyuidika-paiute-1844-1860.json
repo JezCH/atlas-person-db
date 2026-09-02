@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:truckee:kuyuidika-northern-paiute:1844-1860:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Truckee",
+    "display_name_ko": "트러키 추장"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Kuyuidika Northern Paiute",
+    "display_name_ko": "쿠유디카 북부 파이우트 공동체"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Chief, medicine leader and prophet",
+    "role_display_name_ko": "추장·의술 지도자·예언자",
+    "start_year": 1844,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1860,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Truckee (also remembered as Old Winnemucca or Captain Truckee) was a medicine chief and influential prophet associated with the Kuyuidika band of the Northern Paiute. A U.S. National Park Service account securely documents him as a Northern Paiute chief guiding emigrants in 1844; he remained an influential leader until his death in 1860. ATLAS uses this evidence window rather than fabricating a formal accession date or treating him as ruler of all Northern Paiute."
+  },
+  "sources": [
+    {
+      "title": "U.S. National Park Service — Young Man Alone: Snowbound in the Sierra Nevada, 1844",
+      "canonical_url": "https://www.nps.gov/articles/000/young-man-alone-snowbound-in-the-sierra-nevada-1844.htm",
+      "citation_text": "NPS identifies Truckee as a Northern Paiute chief who guided the 1844 emigrant party and explains the origin of the Truckee name.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Truckee-Donner Historical Society — Chief Truckee",
+      "canonical_url": "https://www.truckeehistory.org/chief-truckee.html",
+      "citation_text": "The local historical society describes Truckee as an influential Paiute chief and records his death in 1860.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

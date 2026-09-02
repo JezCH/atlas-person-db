@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:francois-duvalier:haiti:president:1957-1971:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "François Duvalier",
+    "display_name_ko": "프랑수아 뒤발리에"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Haiti",
+    "display_name_ko": "아이티"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1957,
+    "start_month": 10,
+    "start_day": 22,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1971,
+    "end_month": 4,
+    "end_day": 21,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "François Duvalier ('Papa Doc') was inaugurated President of Haiti on 22 October 1957. In 1964 he converted the presidency into a presidency for life, but because there was no interruption in his control of the same office and polity, ATLAS models one continuous presidential Activity through his death on 21 April 1971."
+  },
+  "sources": [
+    {
+      "title": "Bibliothèque nationale de France — Haïti, 1957–1971 (François Duvalier)",
+      "canonical_url": "https://catalogue.bnf.fr/ark:/12148/cb18094641b",
+      "citation_text": "The BnF chronology records Duvalier's inauguration on 22 October 1957, the 1964 presidency-for-life change, and his death on 21 April 1971.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:patrick-buchan-hepburn:west-indies-federation:governor-general:1958-1962:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Patrick Buchan-Hepburn",
+    "display_name_ko": "패트릭 뷰컨헵번"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "West Indies Federation",
+    "display_name_ko": "서인도 연방"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Governor-General",
+    "role_display_name_ko": "총독",
+    "start_year": 1958,
+    "start_month": 1,
+    "start_day": 3,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1962,
+    "end_month": 5,
+    "end_day": 31,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Patrick Buchan-Hepburn, 1st Baron Hailes, was the only Governor-General of the West Indies Federation, serving from the federation's establishment on 3 January 1958 until its dissolution on 31 May 1962. He represented Elizabeth II and held substantial executive authority under the federation's constitution."
+  },
+  "sources": [
+    {
+      "title": "Governor-General of the West Indies Federation — office chronology",
+      "canonical_url": "https://en.wikipedia.org/wiki/Governor-General_of_the_West_Indies_Federation",
+      "citation_text": "The office chronology identifies Lord Hailes as the sole Governor-General from 3 January 1958 to 31 May 1962.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Churchill Archives Centre — Papers of Patrick George Buchan-Hepburn, 1st Baron Hailes",
+      "canonical_url": "https://archivesearch.lib.cam.ac.uk/repositories/9/resources/13790",
+      "citation_text": "The archive collection identifies Buchan-Hepburn as Governor-General of the West Indies Federation in his public career.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

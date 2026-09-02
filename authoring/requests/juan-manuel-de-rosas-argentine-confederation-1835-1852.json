@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:juan-manuel-de-rosas:argentine-confederation:de-facto-rule:1835-1852:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Juan Manuel de Rosas",
+    "display_name_ko": "후안 마누엘 데 로사스"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Argentine Confederation",
+    "display_name_ko": "아르헨티나 연방"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Governor of Buenos Aires and de facto confederal leader",
+    "role_display_name_ko": "부에노스아이레스 주지사·사실상 연방 지도자",
+    "start_year": 1835,
+    "start_month": 4,
+    "start_day": 13,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1852,
+    "end_month": 2,
+    "end_day": 3,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Rosas began his second and dominant government after being appointed Governor of Buenos Aires with the sum of public power on 13 April 1835. Through Buenos Aires he directed the Confederation's foreign relations and exercised paramount de facto leadership of the provincial compact. His regime ended with defeat at the Battle of Caseros on 3 February 1852. ATLAS uses a de_facto_rule relationship rather than calling him a constitutional president."
+  },
+  "sources": [
+    {
+      "title": "Instituto Nacional de Investigaciones Históricas Juan Manuel de Rosas — biographical synthesis",
+      "canonical_url": "https://institutorosas.cultura.gob.ar/noticia/juan-manuel-de-rosas/",
+      "citation_text": "The official historical institute records Rosas's second governorship beginning on 13 April 1835 and his defeat at Caseros on 3 February 1852.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Buenos Aires City — Rosas and the Confederation",
+      "canonical_url": "https://buenosaires.gob.ar/gcaba_historico/cultura/museos/museosaavedra/exposicion-permanente/sala-rosas-y-la-confederacion",
+      "citation_text": "The city historical museum describes Rosas's 1835–1852 government and Buenos Aires's direction of the confederal provincial system.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

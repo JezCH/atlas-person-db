@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:johannes-brand:orange-free-state:president:1864-1888:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Johannes Brand",
+    "display_name_ko": "요하네스 브란트(얀 브란트)"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Orange Free State",
+    "display_name_ko": "오렌지 자유국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "State President",
+    "role_display_name_ko": "국가대통령",
+    "start_year": 1864,
+    "start_month": 2,
+    "start_day": 2,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1888,
+    "end_month": 7,
+    "end_day": 14,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Johannes Henricus Brand, widely known as Jan Brand, served continuously as the fourth State President of the Orange Free State from 2 February 1864 until his death on 14 July 1888."
+  },
+  "sources": [
+    {
+      "title": "Johannes Brand — office chronology",
+      "canonical_url": "https://en.wikipedia.org/wiki/Johannes_Brand",
+      "citation_text": "The office chronology gives Brand's State Presidency of the Orange Free State as 2 February 1864 to 14 July 1888.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
