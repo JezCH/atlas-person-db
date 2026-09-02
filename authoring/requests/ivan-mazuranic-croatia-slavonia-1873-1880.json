@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ivan-mazuranic:kingdom-of-croatia-slavonia:ban:1873-1880:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Ivan Mažuranić",
+    "display_name_ko": "이반 마주라니치"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Kingdom of Croatia-Slavonia",
+    "display_name_ko": "크로아티아-슬라보니아 왕국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Ban of Croatia",
+    "role_display_name_ko": "크로아티아 반",
+    "start_year": 1873,
+    "start_month": 9,
+    "start_day": 20,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1880,
+    "end_month": 2,
+    "end_day": 21,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ivan Mažuranić served as Ban of Croatia-Slavonia from 20 September 1873 to 21 February 1880 and was the first ban from a non-noble background."
+  },
+  "sources": [
+    {
+      "title": "Ivan Mažuranić — Croatian Encyclopedia",
+      "canonical_url": "https://www.enciklopedija.hr/clanak/mazuranic-ivan",
+      "citation_text": "The Croatian biographical tradition identifies Mažuranić as Ban of Croatia from 1873 to 1880.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

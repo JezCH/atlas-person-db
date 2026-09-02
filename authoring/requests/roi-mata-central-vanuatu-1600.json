@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:roi-mata:roi-matas-domain:c1600:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Roi Mata",
+    "display_name_ko": "로이 마타"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Roi Mata's Domain",
+    "display_name_ko": "로이 마타의 중부 바누아투 권역"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Paramount chief",
+    "role_display_name_ko": "최고추장",
+    "start_year": 1600,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1600,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "UNESCO and archaeological evidence associate Roi Mata with an early seventeenth-century chiefly domain in central Vanuatu. Because no defensible personal reign interval survives, ATLAS uses c.1600 as a representative approximate leadership point rather than inventing a multi-year reign."
+  },
+  "sources": [
+    {
+      "title": "UNESCO World Heritage Centre — Chief Roi Mata's Domain",
+      "canonical_url": "https://whc.unesco.org/en/list/1280",
+      "citation_text": "UNESCO identifies the property as three early seventeenth-century sites associated with the life and death of the last paramount chief Roi Mata of central Vanuatu.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:juana-ines-de-la-cruz:new-spain:1669-1695:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Sor Juana Inés de la Cruz",
+    "display_name_ko": "후아나 이네스 데 라 크루스"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Viceroyalty of New Spain",
+    "display_name_ko": "누에바에스파냐 부왕령"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Writer, nun and intellectual",
+    "role_display_name_ko": "작가·수녀·지식인",
+    "start_year": 1669,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1695,
+    "end_month": 4,
+    "end_day": 17,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sor Juana was a seventeenth-century writer and nun of New Spain, not a figure of the later independent United Mexican States. ATLAS therefore corrects the anachronistic user label 'Mexico' to the Viceroyalty of New Spain and records her mature convent and literary career from 1669 until her death in 1695."
+  },
+  "sources": [
+    {
+      "title": "Sor Juana Inés de la Cruz",
+      "canonical_url": "https://www.britannica.com/biography/Sor-Juana-Ines-de-la-Cruz",
+      "citation_text": "Britannica describes Sor Juana as a New Spanish nun, poet and scholar and gives her death in 1695.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

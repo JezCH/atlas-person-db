@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cecil-rhodes:cape-colony:prime-minister:1890-1896:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Cecil Rhodes",
+    "display_name_ko": "세실 로즈"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Cape Colony",
+    "display_name_ko": "케이프 식민지"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1890,
+    "start_month": 7,
+    "start_day": 17,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1896,
+    "end_month": 1,
+    "end_day": 12,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Cecil Rhodes served as Prime Minister of the Cape Colony from 17 July 1890 to 12 January 1896. ATLAS records the colonial political community he actually governed, not a later South African state."
+  },
+  "sources": [
+    {
+      "title": "South Africa Department of Sport, Arts and Culture — Prime Minister, Cape of Good Hope",
+      "canonical_url": "https://atom.dac.gov.za/index.php/cape-of-good-hope-55/term/relatedAuthorities?listLimit=10&onlyDirect=1&sort=lastUpdated&sortDir=asc",
+      "citation_text": "The archival authority list gives Cecil John Rhodes's prime-ministerial term as 17 July 1890 to 12 January 1896.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

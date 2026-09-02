@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:william-tubman:liberia:president:1944-1971:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "William V. S. Tubman",
+    "display_name_ko": "윌리엄 터브먼"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Liberia",
+    "display_name_ko": "라이베리아"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1944,
+    "start_month": 1,
+    "start_day": 3,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1971,
+    "end_month": 7,
+    "end_day": 23,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "William V. S. Tubman served as President of Liberia from 3 January 1944 until his death on 23 July 1971."
+  },
+  "sources": [
+    {
+      "title": "William V. S. Tubman",
+      "canonical_url": "https://www.britannica.com/biography/William-V-S-Tubman",
+      "citation_text": "Standard biographies identify Tubman as President of Liberia from 1944 until his death in 1971.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

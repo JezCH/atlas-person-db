@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:henry-ii:angevin-empire:1154-1189:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Henry II of England",
+    "display_name_ko": "헨리 2세"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Angevin Empire",
+    "display_name_ko": "앙주 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King of England and Angevin ruler",
+    "role_display_name_ko": "잉글랜드 국왕·앙주권역 통치자",
+    "start_year": 1154,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1189,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Henry II's accession to the English throne in 1154 consolidated the cross-Channel Plantagenet dominions often called the 'Angevin Empire' by modern historians. The term was not a contemporary formal state title, so ATLAS uses it as a historiographical polity label for his composite dominions through his death in 1189."
+  },
+  "sources": [
+    {
+      "title": "Henry II — king of England",
+      "canonical_url": "https://www.britannica.com/biography/Henry-II-king-of-England",
+      "citation_text": "Britannica identifies Henry II as king of England from 1154 to 1189 and describes his extensive continental dominions.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

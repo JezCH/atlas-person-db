@@ -1,0 +1,49 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ivan-mazepa:cossack-hetmanate:1687-1708:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Ivan Mazepa",
+    "display_name_ko": "이반 마제파"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Cossack Hetmanate",
+    "display_name_ko": "코사크 헤트만국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Hetman",
+    "role_display_name_ko": "헤트만",
+    "start_year": 1687,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1708,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ivan Mazepa was Hetman of the Cossack Hetmanate from 1687 until his break with Peter I in 1708. The user label 'Zaporozhia' is normalized to the Cossack Hetmanate, the polity he actually governed; he was not the ruler of the Zaporozhian Sich."
+  },
+  "sources": [
+    {
+      "title": "Encyclopedia of Ukraine — Ivan Mazepa",
+      "citation_text": "The Encyclopedia of Ukraine identifies Mazepa as Hetman from 1687 to 1708 and describes Baturyn as his hetman capital.",
+      "source_type": "bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

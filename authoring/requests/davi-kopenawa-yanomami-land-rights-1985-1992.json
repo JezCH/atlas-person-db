@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:davi-kopenawa:yanomami-land-rights-movement:1985-1992:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Davi Kopenawa",
+    "display_name_ko": "다비 코페나와"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Yanomami land-rights movement (Brazil)",
+    "display_name_ko": "브라질 야노마미 영토권 운동"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Indigenous leader and land-rights advocate",
+    "role_display_name_ko": "원주민 지도자·영토권 운동가",
+    "start_year": 1985,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1992,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Beginning in the mid-1980s, Davi Kopenawa actively lobbied Brazilian authorities for legal protection of Yanomami lands and was instrumental in the official recognition and demarcation of the Yanomami territory in 1992. His later and still ongoing leadership, including the Hutukara presidency, is not assigned a fabricated end date here."
+  },
+  "sources": [
+    {
+      "title": "Davi Kopenawa / Hutukara Yanomami Association — Right Livelihood",
+      "canonical_url": "https://rightlivelihood.org/the-change-makers/find-a-laureate/davi-kopenawa-hutukara-yanomami-association/",
+      "citation_text": "Right Livelihood records Kopenawa's lobbying from the mid-1980s and his instrumental role in securing the 1992 Yanomami land demarcation.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
