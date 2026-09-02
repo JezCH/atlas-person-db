@@ -2,31 +2,31 @@
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
   "person": {
-    "canonical_name_en": "Te Atairangikaahu",
-    "display_name_ko": "테 아타이랑기카후",
+    "canonical_name_en": "Dashi-Dorzho Itigilov",
+    "display_name_ko": "다시도르조 이티길로프",
     "person_type": "historical",
     "historicity": "historical"
   },
   "polity": {
-    "canonical_name_en": "Kīngitanga",
-    "display_name_ko": "마오리 왕 운동",
+    "canonical_name_en": "Buryat Buddhist community",
+    "display_name_ko": "부랴트 불교 공동체",
     "polity_type": "historical_polity",
     "historicity": "historical"
   },
   "activity": {
-    "relation_type": "rules",
-    "role": "Queen",
-    "role_display_name_ko": "여왕",
-    "period_basis": "reign",
+    "relation_type": "active_in",
+    "role": "Pandito Khambo Lama",
+    "role_display_name_ko": "판디토 함보 라마",
+    "period_basis": "term",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "Māori queen in the Kīngitanga from 1966 to 2006, not monarch of New Zealand. Uses the existing Kīngitanga polity shared with Pōtatau Te Wherowhero.",
-    "start_year": 1966,
+    "notes": "Twelfth Pandito Khambo Lama, a religious head rather than a secular ruler of an independent Buryat state.",
+    "start_year": 1911,
     "start_month": null,
     "start_day": null,
     "start_certainty": "exact",
     "start_calendar": "gregorian",
-    "end_year": 2006,
+    "end_year": 1917,
     "end_month": null,
     "end_day": null,
     "end_certainty": "exact",
@@ -35,9 +35,9 @@
   "sources": [
     {
       "source_type": "web_bibliographic_reference",
-      "title": "Te Atairangikaahu — historical reference",
-      "canonical_url": "https://en.wikipedia.org/wiki/Te_Atairangikaahu",
-      "citation_text": "Māori queen in the Kīngitanga from 1966 to 2006, not monarch of New Zealand."
+      "title": "Dashi-Dorzho Itigilov — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Dashi-Dorzho_Itigilov",
+      "citation_text": "Twelfth Pandito Khambo Lama, a religious head rather than a secular ruler of an independent Buryat state."
     }
   ],
   "external_references": {},
@@ -50,7 +50,7 @@
     }
   },
   "review_context": {
-    "request_batch": "moldavia-luxembourg-20260902",
-    "requested_item": 22
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 29
   }
 }

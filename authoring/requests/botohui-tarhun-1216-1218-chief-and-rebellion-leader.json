@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Botohui-Tarhun",
+    "display_name_ko": "보토후이 타르훈",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Khori-Tumed",
+    "display_name_ko": "호리투메드",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Chief and rebellion leader",
+    "role_display_name_ko": "수장·봉기 지도자",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Widowed ruler who led the forest-peoples revolt. The 1216–1218 interval is the uprising documented in scholarship, not an invented full reign.",
+    "start_year": 1216,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1218,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Botohui-Tarhun — historical reference",
+      "canonical_url": "https://dergipark.org.tr/en/download/article-file/3033247",
+      "citation_text": "Widowed ruler who led the forest-peoples revolt. The 1216–1218 interval is the uprising documented in scholarship, not an invented full reign."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Botohui-Tarhun — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Botohui-Tarhun",
+      "citation_text": "Widowed ruler who led the forest-peoples revolt. The 1216–1218 interval is the uprising documented in scholarship, not an invented full reign."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 40
+  }
+}

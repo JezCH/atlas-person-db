@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Abayubá",
+    "display_name_ko": "아바유바",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Charrúa",
+    "display_name_ko": "차루아족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "War chief",
+    "role_display_name_ko": "전쟁 수장",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Montevideo's municipal account identifies Abayubá as a Charrúa chief killed fighting in 1574. Only the documented resistance year is recorded; later heroic embellishment does not establish a longer reign.",
+    "start_year": 1574,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1574,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Abayubá — historical reference",
+      "canonical_url": "https://municipiog.montevideo.gub.uy/node/1935",
+      "citation_text": "Montevideo's municipal account identifies Abayubá as a Charrúa chief killed fighting in 1574. Only the documented resistance year is recorded; later heroic embellishment does not establish a longer reign."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 47
+  }
+}

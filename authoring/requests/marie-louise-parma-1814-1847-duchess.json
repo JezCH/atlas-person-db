@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Marie Louise, Duchess of Parma",
+    "display_name_ko": "파르마 여공작 마리루이즈",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Parma and Piacenza",
+    "display_name_ko": "파르마 피아첸차 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Duchess",
+    "role_display_name_ko": "여공작",
+    "period_basis": "reign",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sovereign duchess by the 1814 settlement, personally arriving in 1816. Her earlier French consort status is distinct from this rule.",
+    "start_year": 1814,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1847,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Marie Louise, Duchess of Parma — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Marie_Louise%2C_Duchess_of_Parma",
+      "citation_text": "Sovereign duchess by the 1814 settlement, personally arriving in 1816. Her earlier French consort status is distinct from this rule."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Marie Louise, Duchess of Parma — historical reference",
+      "canonical_url": "https://collection.sciencemuseumgroup.org.uk/people/cp98032/duchess-of-parma-marie",
+      "citation_text": "Sovereign duchess by the 1814 settlement, personally arriving in 1816. Her earlier French consort status is distinct from this rule."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 39
+  }
+}

@@ -2,42 +2,42 @@
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
   "person": {
-    "canonical_name_en": "Te Atairangikaahu",
-    "display_name_ko": "테 아타이랑기카후",
+    "canonical_name_en": "Hasan-i Sabbah",
+    "display_name_ko": "하산 이 사바흐",
     "person_type": "historical",
     "historicity": "historical"
   },
   "polity": {
-    "canonical_name_en": "Kīngitanga",
-    "display_name_ko": "마오리 왕 운동",
+    "canonical_name_en": "Nizari Ismaili state",
+    "display_name_ko": "니자리 이스마일파 국가",
     "polity_type": "historical_polity",
     "historicity": "historical"
   },
   "activity": {
     "relation_type": "rules",
-    "role": "Queen",
-    "role_display_name_ko": "여왕",
-    "period_basis": "reign",
+    "role": "Religious and political leader",
+    "role_display_name_ko": "종교·정치 지도자",
+    "period_basis": "de_facto_rule",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "Māori queen in the Kīngitanga from 1966 to 2006, not monarch of New Zealand. Uses the existing Kīngitanga polity shared with Pōtatau Te Wherowhero.",
-    "start_year": 1966,
+    "notes": "Leadership from seizure of Alamut in 1090 until death in 1124; Hashashins is normalized to the historical Nizari polity.",
+    "start_year": 1090,
     "start_month": null,
     "start_day": null,
     "start_certainty": "exact",
-    "start_calendar": "gregorian",
-    "end_year": 2006,
+    "start_calendar": "unspecified_historical",
+    "end_year": 1124,
     "end_month": null,
     "end_day": null,
     "end_certainty": "exact",
-    "end_calendar": "gregorian"
+    "end_calendar": "unspecified_historical"
   },
   "sources": [
     {
       "source_type": "web_bibliographic_reference",
-      "title": "Te Atairangikaahu — historical reference",
-      "canonical_url": "https://en.wikipedia.org/wiki/Te_Atairangikaahu",
-      "citation_text": "Māori queen in the Kīngitanga from 1966 to 2006, not monarch of New Zealand."
+      "title": "Hasan-i Sabbah — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Hasan-i_Sabbah",
+      "citation_text": "Leadership from seizure of Alamut in 1090 until death in 1124; Hashashins is normalized to the historical Nizari polity."
     }
   ],
   "external_references": {},
@@ -50,7 +50,7 @@
     }
   },
   "review_context": {
-    "request_batch": "moldavia-luxembourg-20260902",
-    "requested_item": 22
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 37
   }
 }

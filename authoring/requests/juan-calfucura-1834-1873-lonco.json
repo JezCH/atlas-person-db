@@ -2,31 +2,31 @@
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
   "person": {
-    "canonical_name_en": "Te Atairangikaahu",
-    "display_name_ko": "테 아타이랑기카후",
+    "canonical_name_en": "Juan Calfucurá",
+    "display_name_ko": "후안 칼푸쿠라",
     "person_type": "historical",
     "historicity": "historical"
   },
   "polity": {
-    "canonical_name_en": "Kīngitanga",
-    "display_name_ko": "마오리 왕 운동",
+    "canonical_name_en": "Salinas Grandes confederation",
+    "display_name_ko": "살리나스그란데스 연합",
     "polity_type": "historical_polity",
     "historicity": "historical"
   },
   "activity": {
     "relation_type": "rules",
-    "role": "Queen",
-    "role_display_name_ko": "여왕",
+    "role": "Lonco",
+    "role_display_name_ko": "론코",
     "period_basis": "reign",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "Māori queen in the Kīngitanga from 1966 to 2006, not monarch of New Zealand. Uses the existing Kīngitanga polity shared with Pōtatau Te Wherowhero.",
-    "start_year": 1966,
+    "notes": "Power centered at Salinas Grandes after the 1834 defeat of the Boroanos, ending at his death in 1873.",
+    "start_year": 1834,
     "start_month": null,
     "start_day": null,
     "start_certainty": "exact",
     "start_calendar": "gregorian",
-    "end_year": 2006,
+    "end_year": 1873,
     "end_month": null,
     "end_day": null,
     "end_certainty": "exact",
@@ -35,9 +35,15 @@
   "sources": [
     {
       "source_type": "web_bibliographic_reference",
-      "title": "Te Atairangikaahu — historical reference",
-      "canonical_url": "https://en.wikipedia.org/wiki/Te_Atairangikaahu",
-      "citation_text": "Māori queen in the Kīngitanga from 1966 to 2006, not monarch of New Zealand."
+      "title": "Juan Calfucurá — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Calfucur%C3%A1",
+      "citation_text": "Power centered at Salinas Grandes after the 1834 defeat of the Boroanos, ending at his death in 1873."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Juan Calfucurá — historical reference",
+      "canonical_url": "https://www.encyclopedia.com/humanities/encyclopedias-almanacs-transcripts-and-maps/calfucura-1770-1873",
+      "citation_text": "Power centered at Salinas Grandes after the 1834 defeat of the Boroanos, ending at his death in 1873."
     }
   ],
   "external_references": {},
@@ -50,7 +56,7 @@
     }
   },
   "review_context": {
-    "request_batch": "moldavia-luxembourg-20260902",
-    "requested_item": 22
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 24
   }
 }

@@ -2,31 +2,31 @@
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
   "person": {
-    "canonical_name_en": "Te Atairangikaahu",
-    "display_name_ko": "테 아타이랑기카후",
+    "canonical_name_en": "Akechi Mitsuhide",
+    "display_name_ko": "아케치 미쓰히데",
     "person_type": "historical",
     "historicity": "historical"
   },
   "polity": {
-    "canonical_name_en": "Kīngitanga",
-    "display_name_ko": "마오리 왕 운동",
+    "canonical_name_en": "Japan",
+    "display_name_ko": "일본",
     "polity_type": "historical_polity",
     "historicity": "historical"
   },
   "activity": {
-    "relation_type": "rules",
-    "role": "Queen",
-    "role_display_name_ko": "여왕",
-    "period_basis": "reign",
+    "relation_type": "claims_rule",
+    "role": "Contender for national power",
+    "role_display_name_ko": "전국 패권 도전자",
+    "period_basis": "general_activity",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "Māori queen in the Kīngitanga from 1966 to 2006, not monarch of New Zealand. Uses the existing Kīngitanga polity shared with Pōtatau Te Wherowhero.",
-    "start_year": 1966,
+    "notes": "Territorial lordship from Sakamoto is separate from the brief 1582 bid for power after Honnō-ji; no formal shogunate is asserted.",
+    "start_year": 1582,
     "start_month": null,
     "start_day": null,
     "start_certainty": "exact",
     "start_calendar": "gregorian",
-    "end_year": 2006,
+    "end_year": 1582,
     "end_month": null,
     "end_day": null,
     "end_certainty": "exact",
@@ -35,9 +35,9 @@
   "sources": [
     {
       "source_type": "web_bibliographic_reference",
-      "title": "Te Atairangikaahu — historical reference",
-      "canonical_url": "https://en.wikipedia.org/wiki/Te_Atairangikaahu",
-      "citation_text": "Māori queen in the Kīngitanga from 1966 to 2006, not monarch of New Zealand."
+      "title": "Akechi Mitsuhide — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Akechi_Mitsuhide",
+      "citation_text": "Territorial lordship from Sakamoto is separate from the brief 1582 bid for power after Honnō-ji; no formal shogunate is asserted."
     }
   ],
   "external_references": {},
@@ -50,7 +50,7 @@
     }
   },
   "review_context": {
-    "request_batch": "moldavia-luxembourg-20260902",
-    "requested_item": 22
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 38
   }
 }
