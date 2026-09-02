@@ -71,6 +71,21 @@ For each displayed primary placement segment, the inspector shows:
 
 Counterparty relations remain excluded from primary Person placement evidence. Presentation anchors are still presentation data and are never described as exact geographic coordinates.
 
+## Meanwhile active-Activity exploration
+
+Meanwhile is a selected-historical-moment comparison tool, not a second timeline and not a search-dependent filter.
+
+- Clicking the year axis or an unoccupied point in the spacetime canvas selects a historical year.
+- A horizontal line for that year crosses the full spatial world.
+- Active entries come from primary spatial Activity segments whose interval contains the selected historical ordinal.
+- The Activity list preserves simultaneous Activities.
+- Global and macroregion counts deduplicate by Person, so one Person with multiple active Activities is counted once per region.
+- Counterparty relations such as `opposes` never become a Person's contemporaneous spatial position.
+- The global Meanwhile summary is computed from all placed Person tracks, independently of the current text search.
+- Visible labels, rails, and Activity glyphs that are active at the selected moment receive an explicit highlight.
+
+This preserves the original exploration question: **who else was active elsewhere in the world at this historical moment?**
+
 ## Dense-label acceptance
 
 Permanent dense windows:
@@ -101,6 +116,7 @@ DOM size scales with viewport + overscan, not total DB size. Minimap may retain 
 - `tests/spacetime-dense-label-acceptance.test.mjs`
 - `tests/spacetime-place-precision.test.mjs`
 - `tests/spacetime-person-inspector-evidence.test.mjs`
+- `tests/spacetime-meanwhile-active-activity.test.mjs`
 - `tests/spacetime-completion-contract.test.mjs`
 - `tests/spacetime-readable-scale-contract.test.mjs`
 
