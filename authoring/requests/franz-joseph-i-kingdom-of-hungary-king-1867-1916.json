@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:franz-joseph-i:kingdom-of-hungary:king:1867-1916:v1",
+  "person": {
+    "canonical_name_en": "Franz Joseph I",
+    "display_name_ko": "프란츠 요제프 1세"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Hungary",
+    "display_name_ko": "헝가리 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1867,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1916,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Following the Austro-Hungarian Compromise, Franz Joseph was crowned King of Hungary in Budapest on 8 June 1867 and remained king until his death in 1916. ATLAS records the Hungarian crown separately from his Austrian imperial title."
+  },
+  "sources": [
+    {
+      "title": "Franz Joseph I — Die Welt der Habsburger",
+      "canonical_url": "https://www.habsburger.net/en/persons/habsburg-emperor/franz-joseph-i",
+      "citation_text": "The Habsburg history portal identifies Franz Joseph as Emperor of Austria and King of Hungary, with an overall reign from 1848 to 1916 and the constitutional reorganization of 1867.",
+      "source_type": "official_museum_biographical_reference"
+    },
+    {
+      "title": "The Austro-Hungarian Dual Monarchy: the coronation of the Hungarian royal couple — Die Welt der Habsburger",
+      "canonical_url": "https://www.habsburger.net/en/chapter/austro-hungarian-dual-monarchy-coronation-hungarian-royal-couple",
+      "citation_text": "The Habsburg history portal explains that the 1867 Compromise created the Dual Monarchy and records Franz Joseph's coronation as King of Hungary in Budapest in 1867 while he remained Emperor of Austria.",
+      "source_type": "official_museum_biographical_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "프란츠 요제프 1세",
+      "url": "https://namu.wiki/w/%ED%94%84%EB%9E%80%EC%B8%A0%20%EC%9A%94%EC%A0%9C%ED%94%84%201%EC%84%B8"
+    }
+  }
+}
