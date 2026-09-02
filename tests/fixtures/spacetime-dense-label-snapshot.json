@@ -1,0 +1,810 @@
+{
+  "schema": "atlas-spacetime-dense-label-snapshot/v1",
+  "generated_from": {
+    "production_person_count": 1334,
+    "production_activity_count": 1747,
+    "projected_track_count": 625,
+    "timeline_start_year": -3200,
+    "timeline_end_year": 2026,
+    "source_main_sha": "feb6c64413cb2a02ef7014587bbb4184f2065297"
+  },
+  "sufficient_zoom_percent": 800,
+  "minimum_base_world_width_px": 900,
+  "global_extent_compression": 0.748,
+  "default_timeline_height_px": 4200,
+  "macroregion_count": 9,
+  "windows": [
+    {
+      "id": "europe-ad-1800-1950",
+      "macroregion_code": "europe",
+      "start_year": 1800,
+      "end_year": 1950,
+      "label_count": 63,
+      "labels": [
+        {
+          "person_id": "b8fd62a2-9f1d-4f2e-96aa-9f9ec0302ae4",
+          "text": "윌리엄 피트",
+          "x_fraction": 0.5,
+          "y_fraction": 0.957703349
+        },
+        {
+          "person_id": "8d7d3979-c769-4b50-8bd5-1ace1bdcd865",
+          "text": "카라조르제 페트로비치",
+          "x_fraction": 0.5,
+          "y_fraction": 0.958373206
+        },
+        {
+          "person_id": "945b78a7-3941-5e05-a6c9-ce57e7395727",
+          "text": "나폴레옹 1세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.958564593
+        },
+        {
+          "person_id": "6ca23ece-ac45-4b3f-abed-eaa19a8ca5f2",
+          "text": "조지 3세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.958755981
+        },
+        {
+          "person_id": "e555d224-ab19-419a-9524-a0b14703e09e",
+          "text": "알렉산드르 1세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.95923445
+        },
+        {
+          "person_id": "a2c8b64d-8f37-432c-bfd3-c6a2bc542551",
+          "text": "제인 오스틴",
+          "x_fraction": 0.5,
+          "y_fraction": 0.959425837
+        },
+        {
+          "person_id": "b372abba-5962-4c67-980c-087846a3cb00",
+          "text": "아서 웰즐리",
+          "x_fraction": 0.5,
+          "y_fraction": 0.962296651
+        },
+        {
+          "person_id": "928045d7-e218-543d-9df8-9b96c8f65781",
+          "text": "에이다 러브레이스",
+          "x_fraction": 0.5,
+          "y_fraction": 0.964880383
+        },
+        {
+          "person_id": "089ea4d8-76d2-47d4-a715-9c8a6f5c8960",
+          "text": "빌럼 2세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.965263158
+        },
+        {
+          "person_id": "bdf1f0b4-9730-4e55-b066-5e3eb3e9a276",
+          "text": "레오폴드 1세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.965933014
+        },
+        {
+          "person_id": "74f4afe8-bbb2-4f29-b6be-56fa46b0f6c1",
+          "text": "이사벨 2세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.966411483
+        },
+        {
+          "person_id": "75114421-92e5-478b-b642-4ed0c509132e",
+          "text": "플로렌스 나이팅게일",
+          "x_fraction": 0.5,
+          "y_fraction": 0.967272727
+        },
+        {
+          "person_id": "5911b977-4788-474a-a8ce-2d7745d89515",
+          "text": "프레데리크 7세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.967368421
+        },
+        {
+          "person_id": "a3dad1b6-d7c3-4351-abc7-8d9bbc1ed0e5",
+          "text": "기욤 앙리 뒤푸르",
+          "x_fraction": 0.5,
+          "y_fraction": 0.967559809
+        },
+        {
+          "person_id": "ee2b07d6-f28a-4252-b437-e3e35f43755d",
+          "text": "카를 마르크스",
+          "x_fraction": 0.5,
+          "y_fraction": 0.96784689
+        },
+        {
+          "person_id": "ebd12cb5-8da8-4b1d-8f19-d0480d7e5ccf",
+          "text": "비오 9세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.968229665
+        },
+        {
+          "person_id": "a42872b9-887e-4b65-8875-c90825affb82",
+          "text": "나폴레옹 3세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.968421053
+        },
+        {
+          "person_id": "9b452dd5-d936-4578-90d2-cfe8e16b6c44",
+          "text": "욘 시귀르드손",
+          "x_fraction": 0.5,
+          "y_fraction": 0.96861244
+        },
+        {
+          "person_id": "4b0471c2-e601-4039-8ac4-ead55ea24f7d",
+          "text": "알프레트 에셔",
+          "x_fraction": 0.5,
+          "y_fraction": 0.969186603
+        },
+        {
+          "person_id": "ce85374b-a0ed-50b5-a32b-a35721da2c01",
+          "text": "빅토리아 여왕",
+          "x_fraction": 0.5,
+          "y_fraction": 0.969952153
+        },
+        {
+          "person_id": "2194bdbe-d89e-4831-a721-661a45509606",
+          "text": "비토리오 에마누엘레 2세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.970047847
+        },
+        {
+          "person_id": "e6ebde9e-6e9f-43f1-9fd8-f818b49af267",
+          "text": "빌헬름 1세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.971004785
+        },
+        {
+          "person_id": "51da879f-ca5d-54bc-8457-802243c366d2",
+          "text": "루트비히 2세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.971100478
+        },
+        {
+          "person_id": "5401a194-c4e1-57e9-97da-49538d756182",
+          "text": "비스마르크",
+          "x_fraction": 0.5,
+          "y_fraction": 0.97215311
+        },
+        {
+          "person_id": "e0b2112b-78ae-44b1-80dc-62374673ae59",
+          "text": "루이 파스퇴르",
+          "x_fraction": 0.5,
+          "y_fraction": 0.972344498
+        },
+        {
+          "person_id": "1b610095-2357-47fa-898e-46a591e62b3d",
+          "text": "크리스티안 9세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.97291866
+        },
+        {
+          "person_id": "61ae82c4-b260-46e0-a119-cfe4b4fff5e5",
+          "text": "레오폴드 2세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.973397129
+        },
+        {
+          "person_id": "51ee3a3e-cb38-4c72-8711-091e77ed0d21",
+          "text": "귀스타브 에펠",
+          "x_fraction": 0.5,
+          "y_fraction": 0.973588517
+        },
+        {
+          "person_id": "7763a315-4385-404b-b0d6-92a074a2aa27",
+          "text": "빈센트 반 고흐",
+          "x_fraction": 0.5,
+          "y_fraction": 0.973588517
+        },
+        {
+          "person_id": "3ec2f795-cb9c-4314-8786-99b5e3d1a8ab",
+          "text": "움베르토 1세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.973779904
+        },
+        {
+          "person_id": "f61cc119-d01b-446e-9a4d-f539cd3c8958",
+          "text": "마르게리타 디 사보이아",
+          "x_fraction": 0.5,
+          "y_fraction": 0.973779904
+        },
+        {
+          "person_id": "c9924ddf-74ae-471d-b860-7b6275eef473",
+          "text": "오스카르 2세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.973875598
+        },
+        {
+          "person_id": "fc954d0b-d83b-4310-b093-787904232ee5",
+          "text": "프란츠 요제프 1세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.974258373
+        },
+        {
+          "person_id": "5b3fc484-77e5-47d6-a57f-9d7477fe76a0",
+          "text": "마리 퀴리",
+          "x_fraction": 0.5,
+          "y_fraction": 0.975502392
+        },
+        {
+          "person_id": "3537cda2-73ce-411f-b02f-431726e93a56",
+          "text": "빌헬름 2세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.97645933
+        },
+        {
+          "person_id": "e3a77c32-5829-4f34-b567-26959e85ed12",
+          "text": "안토니 가우디",
+          "x_fraction": 0.5,
+          "y_fraction": 0.976746411
+        },
+        {
+          "person_id": "d2b6be8c-df56-44fe-848d-660fb8f9b89a",
+          "text": "알베르트 아인슈타인",
+          "x_fraction": 0.5,
+          "y_fraction": 0.976842105
+        },
+        {
+          "person_id": "4dfceb56-f4f7-4928-a285-35466c72976b",
+          "text": "니콜라이 2세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.976937799
+        },
+        {
+          "person_id": "610e2100-c61b-42e5-b9f0-26c349558253",
+          "text": "조르주 클레망소",
+          "x_fraction": 0.5,
+          "y_fraction": 0.977320574
+        },
+        {
+          "person_id": "1cdc23c0-22f5-42f6-99d4-2a0ece00ffa4",
+          "text": "그리고리 라스푸틴",
+          "x_fraction": 0.5,
+          "y_fraction": 0.977894737
+        },
+        {
+          "person_id": "5cbd8092-162d-4dbe-ac75-da03418433d5",
+          "text": "로알 아문센",
+          "x_fraction": 0.5,
+          "y_fraction": 0.977990431
+        },
+        {
+          "person_id": "d68e8073-5020-483d-9383-e2f539108530",
+          "text": "메흐메트 5세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.9784689
+        },
+        {
+          "person_id": "a098e80f-f3b9-4aaa-a643-c5d4dc4da1b9",
+          "text": "만프레트 폰 리히트호펜",
+          "x_fraction": 0.5,
+          "y_fraction": 0.97923445
+        },
+        {
+          "person_id": "2150c24d-8b9c-4704-b25d-db1be8f527e1",
+          "text": "밀란 라스티슬라우 슈테파니크",
+          "x_fraction": 0.5,
+          "y_fraction": 0.979425837
+        },
+        {
+          "person_id": "626a40c3-a005-459b-b78c-e58ed7b0a790",
+          "text": "네스토르 마흐노",
+          "x_fraction": 0.5,
+          "y_fraction": 0.979617225
+        },
+        {
+          "person_id": "57205f43-d5cb-48ec-83e1-6d02a8496d5d",
+          "text": "레프 트로츠키",
+          "x_fraction": 0.5,
+          "y_fraction": 0.979808612
+        },
+        {
+          "person_id": "94c95ef0-3b97-433b-b695-acc024635dc2",
+          "text": "알베르 1세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.98
+        },
+        {
+          "person_id": "017cf4d6-ccbd-4a4b-9f47-3bd547790003",
+          "text": "로만 드모프스키",
+          "x_fraction": 0.5,
+          "y_fraction": 0.980287081
+        },
+        {
+          "person_id": "1ce3ed8e-d932-433f-925c-d4c43c83bb18",
+          "text": "비토리오 에마누엘레 3세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.980287081
+        },
+        {
+          "person_id": "87818acc-f7aa-40c1-a349-8820b4e129cb",
+          "text": "조지 5세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.980287081
+        },
+        {
+          "person_id": "67028e4d-aeb5-4a9e-9e5d-840c22aed9c3",
+          "text": "토마시 가리크 마사리크",
+          "x_fraction": 0.5,
+          "y_fraction": 0.980956938
+        },
+        {
+          "person_id": "bf004b79-b184-4ba6-b38a-66b3d1ce69f5",
+          "text": "크리스티안 10세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.9815311
+        },
+        {
+          "person_id": "115beb3b-5b5b-49b0-9ef7-71411d6d4eec",
+          "text": "호콘 7세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.981818182
+        },
+        {
+          "person_id": "80f5abf5-337f-496d-b553-98e5f521e6f6",
+          "text": "호르티 미클로시",
+          "x_fraction": 0.5,
+          "y_fraction": 0.982009569
+        },
+        {
+          "person_id": "f898737a-3f2d-4677-9303-785ee221f70a",
+          "text": "베니토 무솔리니",
+          "x_fraction": 0.5,
+          "y_fraction": 0.982105263
+        },
+        {
+          "person_id": "f44baebf-9996-4c03-9f3d-5f9ee9e6ee7e",
+          "text": "조구 1세",
+          "x_fraction": 0.5,
+          "y_fraction": 0.982296651
+        },
+        {
+          "person_id": "3087c3a4-8c15-5663-90be-e482cd304d8c",
+          "text": "이오시프 스탈린",
+          "x_fraction": 0.5,
+          "y_fraction": 0.982966507
+        },
+        {
+          "person_id": "c8fd9bf8-5076-403f-8b22-548fcd459c67",
+          "text": "아돌프 히틀러",
+          "x_fraction": 0.5,
+          "y_fraction": 0.983349282
+        },
+        {
+          "person_id": "1539ff3b-f3fc-492d-9828-34874f338eed",
+          "text": "에르빈 롬멜",
+          "x_fraction": 0.5,
+          "y_fraction": 0.983923445
+        },
+        {
+          "person_id": "4ee81499-5584-4d32-a28d-a0bcce5ef6e7",
+          "text": "루츠 그라프 슈베린 폰 크로지크",
+          "x_fraction": 0.5,
+          "y_fraction": 0.984497608
+        },
+        {
+          "person_id": "9385af1f-4c8f-441d-b747-f22635edc8d6",
+          "text": "칼 구스타프 에밀 만네르헤임",
+          "x_fraction": 0.5,
+          "y_fraction": 0.984497608
+        },
+        {
+          "person_id": "3c113104-804e-4578-8e87-129cbc6c48fe",
+          "text": "클레멘트 애틀리",
+          "x_fraction": 0.5,
+          "y_fraction": 0.98507177
+        },
+        {
+          "person_id": "e313c5ef-779c-40b2-ab4c-0555160d5f85",
+          "text": "하워드 플로리",
+          "x_fraction": 0.5,
+          "y_fraction": 0.985167464
+        }
+      ]
+    },
+    {
+      "id": "east-asia-ad-500-1900",
+      "macroregion_code": "east-asia",
+      "start_year": 500,
+      "end_year": 1900,
+      "label_count": 66,
+      "labels": [
+        {
+          "person_id": "0325df09-38b7-42cd-8645-d2280b14ee89",
+          "text": "진흥왕",
+          "x_fraction": 0.5,
+          "y_fraction": 0.719043062
+        },
+        {
+          "person_id": "7198c2c0-e9d6-419e-bfee-cc0c7036d874",
+          "text": "쇼토쿠 태자",
+          "x_fraction": 0.5,
+          "y_fraction": 0.728516746
+        },
+        {
+          "person_id": "53e756b2-5623-5f83-ab0f-985609decf2c",
+          "text": "수 양제",
+          "x_fraction": 0.5,
+          "y_fraction": 0.729186603
+        },
+        {
+          "person_id": "bf41533a-6c7c-43a0-95ab-df18f958d092",
+          "text": "을지문덕",
+          "x_fraction": 0.5,
+          "y_fraction": 0.72937799
+        },
+        {
+          "person_id": "1f810733-0b87-407d-af14-c4d3471c34d1",
+          "text": "당 고조",
+          "x_fraction": 0.5,
+          "y_fraction": 0.731291866
+        },
+        {
+          "person_id": "c181107a-88e2-5f49-8d23-55d1f38b1ee8",
+          "text": "선덕여왕",
+          "x_fraction": 0.5,
+          "y_fraction": 0.734641148
+        },
+        {
+          "person_id": "f802c213-0cde-4c7d-b2f7-5a22c8b4dfb1",
+          "text": "연개소문",
+          "x_fraction": 0.5,
+          "y_fraction": 0.737416268
+        },
+        {
+          "person_id": "08009747-3d05-4680-9dba-6e800a80017e",
+          "text": "태종 무열왕(김춘추)",
+          "x_fraction": 0.5,
+          "y_fraction": 0.738086124
+        },
+        {
+          "person_id": "e2ade9e4-fe1d-431d-bd04-f5be0bbd8fbc",
+          "text": "계백",
+          "x_fraction": 0.5,
+          "y_fraction": 0.738564593
+        },
+        {
+          "person_id": "46187c42-c80d-4dbc-aa31-3adfb2e3d39c",
+          "text": "김유신",
+          "x_fraction": 0.5,
+          "y_fraction": 0.739330144
+        },
+        {
+          "person_id": "f5bd441f-850e-4d36-a238-33e4f5daaed6",
+          "text": "문무왕",
+          "x_fraction": 0.5,
+          "y_fraction": 0.740669856
+        },
+        {
+          "person_id": "492b042f-ff7f-5ca9-85aa-521d64c94fbb",
+          "text": "측천무후",
+          "x_fraction": 0.5,
+          "y_fraction": 0.743732057
+        },
+        {
+          "person_id": "d14de270-9848-4138-84e3-3bc11ba31d62",
+          "text": "대조영",
+          "x_fraction": 0.5,
+          "y_fraction": 0.74784689
+        },
+        {
+          "person_id": "2435a5a0-41d1-4571-b128-b8c687a472a2",
+          "text": "대흠무",
+          "x_fraction": 0.5,
+          "y_fraction": 0.758660287
+        },
+        {
+          "person_id": "38a006d4-eb26-4412-8a60-ccb209a10f37",
+          "text": "장보고",
+          "x_fraction": 0.5,
+          "y_fraction": 0.772440191
+        },
+        {
+          "person_id": "46fd1ea5-29a2-5d21-98c9-63b0a31c1873",
+          "text": "이극용",
+          "x_fraction": 0.5,
+          "y_fraction": 0.783349282
+        },
+        {
+          "person_id": "f987856e-7582-5e41-ba79-a37b1c116304",
+          "text": "후량 태조",
+          "x_fraction": 0.5,
+          "y_fraction": 0.786315789
+        },
+        {
+          "person_id": "688e7025-910a-54f7-9690-33cea2ee475a",
+          "text": "후당 장종",
+          "x_fraction": 0.5,
+          "y_fraction": 0.789186603
+        },
+        {
+          "person_id": "e6487f0c-c9e2-52f2-adfa-23a08eed96f2",
+          "text": "후주 태조",
+          "x_fraction": 0.5,
+          "y_fraction": 0.794545455
+        },
+        {
+          "person_id": "b779e73c-dc07-5daa-a433-e79a2db29572",
+          "text": "후주 세종",
+          "x_fraction": 0.5,
+          "y_fraction": 0.795311005
+        },
+        {
+          "person_id": "2c5c4bb8-c962-43ef-81a8-c4d26896f97a",
+          "text": "광종",
+          "x_fraction": 0.5,
+          "y_fraction": 0.796363636
+        },
+        {
+          "person_id": "19e941d1-a06f-5d44-9301-4a724c520e3a",
+          "text": "송 태조",
+          "x_fraction": 0.5,
+          "y_fraction": 0.797511962
+        },
+        {
+          "person_id": "c147980f-c632-58c4-be2e-ac57d51825e0",
+          "text": "승천황태후",
+          "x_fraction": 0.5,
+          "y_fraction": 0.80277512
+        },
+        {
+          "person_id": "5a938ac4-1dfd-40ae-b926-bc80750beac1",
+          "text": "강감찬",
+          "x_fraction": 0.5,
+          "y_fraction": 0.80708134
+        },
+        {
+          "person_id": "335e1747-8015-4771-8772-7c6a20c8761b",
+          "text": "유아",
+          "x_fraction": 0.5,
+          "y_fraction": 0.808899522
+        },
+        {
+          "person_id": "472df92e-5a78-5767-acb5-bd4ec1708433",
+          "text": "서하 경종",
+          "x_fraction": 0.5,
+          "y_fraction": 0.811866029
+        },
+        {
+          "person_id": "1a360101-20de-5db6-935f-958e558bd8db",
+          "text": "송 신종",
+          "x_fraction": 0.5,
+          "y_fraction": 0.818181818
+        },
+        {
+          "person_id": "7c679576-24e1-5c23-adfa-a2592228135c",
+          "text": "금 태조",
+          "x_fraction": 0.5,
+          "y_fraction": 0.826411483
+        },
+        {
+          "person_id": "0eadcb6a-84f4-53e1-9b1c-01f1ddd3fe5d",
+          "text": "금 태종",
+          "x_fraction": 0.5,
+          "y_fraction": 0.828325359
+        },
+        {
+          "person_id": "82809cc5-fc51-4e96-98e5-b290126fdcac",
+          "text": "송 고종",
+          "x_fraction": 0.5,
+          "y_fraction": 0.831483254
+        },
+        {
+          "person_id": "79ff4824-3c09-42a2-b2aa-25394a74697b",
+          "text": "금 세종",
+          "x_fraction": 0.5,
+          "y_fraction": 0.837129187
+        },
+        {
+          "person_id": "0e9a360e-175a-4b60-8194-5f15bd66faf4",
+          "text": "미나모토노 요시츠네",
+          "x_fraction": 0.5,
+          "y_fraction": 0.838947368
+        },
+        {
+          "person_id": "409e0d8a-4149-5a89-a037-023abbba0d9c",
+          "text": "가사도",
+          "x_fraction": 0.5,
+          "y_fraction": 0.854832536
+        },
+        {
+          "person_id": "11fbeb26-a0e2-5abc-b6aa-e4010ff52e62",
+          "text": "호조 도키무네",
+          "x_fraction": 0.5,
+          "y_fraction": 0.85645933
+        },
+        {
+          "person_id": "e170fae3-b8cc-4a69-9309-5c69269140fb",
+          "text": "구스노키 마사시게",
+          "x_fraction": 0.5,
+          "y_fraction": 0.867464115
+        },
+        {
+          "person_id": "c5f831b4-ca83-5fb5-8477-278c4ec0323c",
+          "text": "원 순제",
+          "x_fraction": 0.5,
+          "y_fraction": 0.870717703
+        },
+        {
+          "person_id": "3d1caf4a-1251-5566-8830-c1daecfdecd4",
+          "text": "유복통",
+          "x_fraction": 0.5,
+          "y_fraction": 0.871961722
+        },
+        {
+          "person_id": "33459667-1632-5a3e-bcc3-63833af5128c",
+          "text": "방국진",
+          "x_fraction": 0.5,
+          "y_fraction": 0.872057416
+        },
+        {
+          "person_id": "91826126-280e-5960-a34f-588ec25e439f",
+          "text": "볼라드 테무르",
+          "x_fraction": 0.5,
+          "y_fraction": 0.87291866
+        },
+        {
+          "person_id": "205b82a5-7368-404b-979b-eccb9a532207",
+          "text": "공민왕",
+          "x_fraction": 0.5,
+          "y_fraction": 0.873014354
+        },
+        {
+          "person_id": "ade6fb59-27b4-49ee-92df-cdfaee646572",
+          "text": "최영",
+          "x_fraction": 0.5,
+          "y_fraction": 0.875598086
+        },
+        {
+          "person_id": "26d34228-d337-43e0-8f17-b3c9b7860e28",
+          "text": "최무선",
+          "x_fraction": 0.5,
+          "y_fraction": 0.876076555
+        },
+        {
+          "person_id": "5a06eb78-8683-4293-a5c3-1a51f293094c",
+          "text": "아시카가 요시미쓰",
+          "x_fraction": 0.5,
+          "y_fraction": 0.876555024
+        },
+        {
+          "person_id": "3e0ec2d6-691c-5402-adf9-672338931420",
+          "text": "명 태조",
+          "x_fraction": 0.5,
+          "y_fraction": 0.876937799
+        },
+        {
+          "person_id": "8308bf45-0b35-4215-9a91-012958cd4637",
+          "text": "이성계",
+          "x_fraction": 0.5,
+          "y_fraction": 0.87923445
+        },
+        {
+          "person_id": "37634648-d825-557a-ba1f-4e2534f28fd8",
+          "text": "영락제",
+          "x_fraction": 0.5,
+          "y_fraction": 0.882679426
+        },
+        {
+          "person_id": "63ae502c-cc46-4f04-8c7b-1be1be9b613b",
+          "text": "쇼 하시",
+          "x_fraction": 0.5,
+          "y_fraction": 0.886698565
+        },
+        {
+          "person_id": "e51ad0be-e92b-5b2b-a8f4-9a81f35e57c9",
+          "text": "세종대왕",
+          "x_fraction": 0.5,
+          "y_fraction": 0.886698565
+        },
+        {
+          "person_id": "a27c6f27-4223-52c3-ad04-cc5632c1928c",
+          "text": "쇼 신왕",
+          "x_fraction": 0.5,
+          "y_fraction": 0.899617225
+        },
+        {
+          "person_id": "4d136faa-d857-4d64-a864-160b3628bbe1",
+          "text": "가정제",
+          "x_fraction": 0.5,
+          "y_fraction": 0.907751196
+        },
+        {
+          "person_id": "1310c298-605b-5228-9c17-80b3b91f186d",
+          "text": "우에스기 겐신",
+          "x_fraction": 0.5,
+          "y_fraction": 0.91138756
+        },
+        {
+          "person_id": "98c57fef-32d1-551b-beb4-c562efe3e1e6",
+          "text": "오다 노부나가",
+          "x_fraction": 0.5,
+          "y_fraction": 0.913684211
+        },
+        {
+          "person_id": "3ca8a960-1156-4daf-83a7-d32877d72b55",
+          "text": "다카야마 우콘",
+          "x_fraction": 0.5,
+          "y_fraction": 0.914641148
+        },
+        {
+          "person_id": "10c0c302-4cdb-5fd2-a029-8d1a6c3287cf",
+          "text": "도요토미 히데요시",
+          "x_fraction": 0.5,
+          "y_fraction": 0.915789474
+        },
+        {
+          "person_id": "e5707968-fc11-4dd7-9972-de4b1eb207c8",
+          "text": "권율",
+          "x_fraction": 0.5,
+          "y_fraction": 0.917129187
+        },
+        {
+          "person_id": "5f509c89-dd34-4ed2-bf81-111036bb7733",
+          "text": "류성룡",
+          "x_fraction": 0.5,
+          "y_fraction": 0.917799043
+        },
+        {
+          "person_id": "108f55ab-3e8b-40e3-aded-8ed291174e49",
+          "text": "허준",
+          "x_fraction": 0.5,
+          "y_fraction": 0.919043062
+        },
+        {
+          "person_id": "308373b7-1bb5-5e02-9e95-a832a875c8a2",
+          "text": "도쿠가와 이에야스",
+          "x_fraction": 0.5,
+          "y_fraction": 0.920478469
+        },
+        {
+          "person_id": "352b4b15-b074-43cd-a532-5a5f87c3741f",
+          "text": "미야모토 무사시",
+          "x_fraction": 0.5,
+          "y_fraction": 0.926602871
+        },
+        {
+          "person_id": "60d08f81-fc95-4e7a-a10d-ac1a0f460132",
+          "text": "도쿠가와 요시무네",
+          "x_fraction": 0.5,
+          "y_fraction": 0.943444976
+        },
+        {
+          "person_id": "2595d093-b3a9-484e-b65e-6d7fa5cec770",
+          "text": "정조",
+          "x_fraction": 0.5,
+          "y_fraction": 0.954449761
+        },
+        {
+          "person_id": "c3a35ac3-c3d2-4b69-85cc-8a8c7c4f3e7f",
+          "text": "사카모토 료마",
+          "x_fraction": 0.5,
+          "y_fraction": 0.969090909
+        },
+        {
+          "person_id": "b5526a78-a46c-449d-b69d-0201f688e43c",
+          "text": "고종",
+          "x_fraction": 0.5,
+          "y_fraction": 0.972057416
+        },
+        {
+          "person_id": "9f5a7d89-69e5-4660-81a3-3c08e627b0fd",
+          "text": "서태후",
+          "x_fraction": 0.5,
+          "y_fraction": 0.972440191
+        },
+        {
+          "person_id": "f14bd56a-8c24-591c-811a-e731bccc4eeb",
+          "text": "메이지 천황",
+          "x_fraction": 0.5,
+          "y_fraction": 0.973875598
+        },
+        {
+          "person_id": "f95de505-7c9e-4382-ac8e-f7575bf2746b",
+          "text": "전봉준",
+          "x_fraction": 0.5,
+          "y_fraction": 0.974736842
+        }
+      ]
+    }
+  ]
+}

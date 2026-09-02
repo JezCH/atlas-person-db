@@ -69,7 +69,12 @@ test("required product gates remain explicit", () => {
   for (const id of requiredIds) assert.equal(capabilities.get(id)?.required, true);
   const pending = [...capabilities.values()].filter((item) => item.required && item.status !== "locked").map((item) => item.id);
   assert.ok(pending.length > 0);
-  for (const id of ["spatial-place-precision","dense-label-zero-overlap","person-inspector-evidence","meanwhile-active-activity","data-parity"]) assert.ok(pending.includes(id));
+  for (const id of ["spatial-place-precision","person-inspector-evidence","meanwhile-active-activity","data-parity"]) assert.ok(pending.includes(id));
+  assert.equal(capabilities.get("dense-label-zero-overlap")?.status, "locked");
+  assert.equal(capabilities.get("dense-label-zero-deferred-at-sufficient-zoom")?.status, "locked");
+  assert.equal(contract.dense_label_verification.status, "locked");
+  assert.equal(contract.dense_label_verification.sufficient_zoom_percent, 800);
+  assert.equal(contract.dense_label_verification.minimum_base_world_width_px, 900);
 });
 
 test("permanent dense acceptance windows remain unchanged", () => {

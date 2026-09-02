@@ -111,12 +111,12 @@
     {
       "id": "dense-label-zero-overlap",
       "required": true,
-      "status": "pending"
+      "status": "locked"
     },
     {
       "id": "dense-label-zero-deferred-at-sufficient-zoom",
       "required": true,
-      "status": "pending"
+      "status": "locked"
     },
     {
       "id": "person-inspector-evidence",
@@ -148,5 +148,14 @@
       "required": true,
       "status": "pending"
     }
-  ]
+  ],
+  "dense_label_verification": {
+    "status": "locked",
+    "snapshot_fixture": "tests/fixtures/spacetime-dense-label-snapshot.json",
+    "sufficient_zoom_percent": 800,
+    "minimum_base_world_width_px": 900,
+    "required_overlap_count": 0,
+    "required_deferred_visible_labels": 0,
+    "required_historical_y_deviation_px": 0
+  }
 }
