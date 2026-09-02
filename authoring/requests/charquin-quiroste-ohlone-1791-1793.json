@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:charquin:quiroste-ohlone:resistance:1791-1793:v1",
+  "person": {
+    "canonical_name_en": "Charquin",
+    "display_name_ko": "차르킨",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Quiroste Ohlone",
+    "display_name_ko": "퀴로스테 올로니",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Resistance leader",
+    "role_display_name_ko": "저항 지도자",
+    "start_year": 1791,
+    "start_month": 11,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1793,
+    "end_month": 5,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Charquin was a leader of the Quiroste Ohlone who organized resistance to the Spanish mission system beginning soon after his baptism in November 1791. This first Activity ends with his capture in spring 1793."
+  },
+  "sources": [
+    {
+      "title": "National Park Service — Ohlone/Costanoan Ethnohistory",
+      "canonical_url": "https://www.nps.gov/goga/learn/historyculture/upload/Ohlone-All-Chapters.pdf",
+      "citation_text": "The NPS ethnohistory identifies Charquin as a Quiroste resistance leader active from late 1791 and records his arrest in 1793.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "East Bay Regional Park District — Ohlone Resistance to the Mission System",
+      "canonical_url": "https://www.ebparks.org/node/7281",
+      "citation_text": "The curriculum identifies Charquin as leader of the first known active Ohlone resistance effort and describes his 1791–1793 resistance.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

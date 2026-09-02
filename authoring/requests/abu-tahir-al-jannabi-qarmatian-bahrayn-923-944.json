@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:abu-tahir-al-jannabi:qarmatian-state-bahrayn:923-944:v1",
+  "person": {
+    "canonical_name_en": "Abu Tahir al-Jannabi",
+    "display_name_ko": "아부 타히르 알잔나비",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Qarmatian State of Bahrayn",
+    "display_name_ko": "바레인 카르마트국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Ruler",
+    "role_display_name_ko": "통치자",
+    "start_year": 923,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 944,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Abu Tahir al-Jannabi became the dominant ruler of the Qarmatian state in Bahrayn in 923 and led its most aggressive expansion, including the 930 attack on Mecca. He remained its leader until his death in 944."
+  },
+  "sources": [
+    {
+      "title": "Encyclopaedia Iranica — CARMATIANS",
+      "canonical_url": "https://www.iranicaonline.org/articles/carmatians-ismailis/",
+      "citation_text": "Iranica describes Abu Tahir's leadership of the Carmatians of Bahrain, the 930 attack on Mecca, and the transition after his death in 944.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

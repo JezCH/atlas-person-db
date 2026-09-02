@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:abu-bakr-ibn-umar:almoravids:1056-1087:v1",
+  "person": {
+    "canonical_name_en": "Abu Bakr ibn Umar",
+    "display_name_ko": "아부 바크르 이븐 우마르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Almoravid Empire",
+    "display_name_ko": "무라비트 왕조",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Amir of the Almoravids",
+    "role_display_name_ko": "무라비트 아미르",
+    "start_year": 1056,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1087,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Abu Bakr ibn Umar succeeded Yahya ibn Umar as leader of the Almoravid movement in 1056 and remained the senior Almoravid amir until his death in 1087. After 1072 Yusuf ibn Tashfin exercised effective authority over the northern Moroccan wing while Abu Bakr returned to command the Saharan wing. The user-supplied 'Mogadishawi Empire' association is rejected: Abu Bakr ibn Umar was an Almoravid leader of the western Sahara and Maghreb, not a ruler of Mogadishu."
+  },
+  "sources": [
+    {
+      "title": "Nehemia Levtzion, Ancient Ghana and Mali — The Almoravids",
+      "canonical_url": "https://sahistory.org.za/sites/default/files/archive-files3/nehemia_levtzion_ancient_ghana_and_malibook4you.pdf",
+      "citation_text": "Levtzion discusses Abu Bakr ibn Umar as the supreme Almoravid leader and the southern Saharan wing of the movement.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Abu Bakr ibn Umar — historical overview",
+      "canonical_url": "https://en.wikipedia.org/wiki/Abu_Bakr_ibn_Umar",
+      "citation_text": "The chronology identifies Abu Bakr as Almoravid amir from 1056 to 1087 and describes the effective partition with Yusuf ibn Tashfin after 1072.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

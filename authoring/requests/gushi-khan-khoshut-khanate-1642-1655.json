@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gushi-khan:khoshut-khanate:1642-1655:v1",
+  "person": {
+    "canonical_name_en": "Güshi Khan",
+    "display_name_ko": "구시 칸",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Khoshut Khanate",
+    "display_name_ko": "코슈트 칸국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khan and founder",
+    "role_display_name_ko": "칸·창건자",
+    "start_year": 1642,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1655,
+    "end_month": 1,
+    "end_day": 14,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Güshi Khan founded the Khoshut Khanate in Tibet in 1642 after defeating the Tsangpa forces and became the principal Khoshut sovereign and military patron of the Fifth Dalai Lama. He remained khan until his death on 14 January 1655."
+  },
+  "sources": [
+    {
+      "title": "W. Woodville Rockhill, 'Tibet: A Geographical, Ethnographical, and Historical Sketch, derived from Chinese Sources'",
+      "canonical_url": "https://www.cambridge.org/core/journals/journal-of-the-royal-asiatic-society/article/abs/art-ivtibet-a-geographical-ethnographical-and-historical-sketch-derived-from-chinese-sources/E7A59F46D4A461D7A5E12242F958BFD6",
+      "citation_text": "The historical survey discusses Gushi Khan as a ruler and patron in seventeenth-century Tibet.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Cambridge review discussion of the Fifth Dalai Lama era",
+      "canonical_url": "https://static.cambridge.org/content/id/urn%3Acambridge.org%3Aid%3Aarticle%3AS1356186304264604/resource/name/S1356186304004602a.pdf",
+      "citation_text": "The review summarizes Gushi Khan's defeat of Tsang and the 1642 political settlement in Tibet.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

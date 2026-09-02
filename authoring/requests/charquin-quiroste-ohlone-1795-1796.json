@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:charquin:quiroste-ohlone:resistance:1795-1796:v1",
+  "person": {
+    "canonical_name_en": "Charquin",
+    "display_name_ko": "차르킨",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Quiroste Ohlone",
+    "display_name_ko": "퀴로스테 올로니",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Resistance leader",
+    "role_display_name_ko": "저항 지도자",
+    "start_year": 1795,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1796,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "After his first capture, Charquin escaped in 1795 and remained at large until he was recaptured in 1796. ATLAS separates this interval from the 1791–1793 resistance phase rather than falsely presenting continuous freedom and leadership through his imprisonment."
+  },
+  "sources": [
+    {
+      "title": "Ohlone — historical summary of Charquin",
+      "canonical_url": "https://en.wikipedia.org/wiki/Ohlone",
+      "citation_text": "The summary records Charquin's escape in 1795, recapture in 1796, and later death in exile.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Ohlone/Costanoan Indians of the San Francisco Peninsula and their Neighbors",
+      "canonical_url": "https://fileserver-az.core.ac.uk/download/pdf/229520891.pdf",
+      "citation_text": "The scholarly ethnohistory documents Charquin's role in the 1791–1793 resistance and subsequent Spanish efforts against him.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

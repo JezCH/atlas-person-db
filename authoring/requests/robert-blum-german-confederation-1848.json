@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:robert-blum:german-confederation:frankfurt-assembly:1848:v1",
+  "person": {
+    "canonical_name_en": "Robert Blum",
+    "display_name_ko": "로베르트 블룸",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "German Confederation",
+    "display_name_ko": "독일 연방",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Frankfurt National Assembly deputy and democratic leader",
+    "role_display_name_ko": "프랑크푸르트 국민의회 의원·민주파 지도자",
+    "start_year": 1848,
+    "start_month": 5,
+    "start_day": 18,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1848,
+    "end_month": 11,
+    "end_day": 9,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Robert Blum was a leading democratic politician of the 1848 German Revolution and a Leipzig representative in the Frankfurt National Assembly. ATLAS does not model him as ruler of Germany: the German national state had not yet been created, so his Activity is recorded as political activity within the German Confederation and the all-German Frankfurt parliamentary movement."
+  },
+  "sources": [
+    {
+      "title": "German Bundestag — Robert Blum: Visionär, Demokrat, Revolutionär",
+      "canonical_url": "https://www.bundestag.de/besuche/ausstellungen/pol_parl/blum",
+      "citation_text": "The Bundestag identifies Blum as a leading politician and speaker of the Paulskirche parliament and records his execution on 9 November 1848.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "German Bundestag — Revolution and the National Assembly in Frankfurt 1848/1849",
+      "canonical_url": "https://www.bundestag.de/en/parliament/history/parliamentarism/1848",
+      "citation_text": "The Bundestag records the opening of the German National Assembly on 18 May 1848 and its role in attempted German unification.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

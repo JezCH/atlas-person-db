@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:vonya:piebald-horde:1596-1598:v1",
+  "person": {
+    "canonical_name_en": "Vonya",
+    "display_name_ko": "보냐",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Piebald Horde",
+    "display_name_ko": "피에발드 호드",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "de_facto_rule",
+    "role": "Prince and leader",
+    "role_display_name_ko": "공·지도자",
+    "start_year": 1596,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1598,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Vonya was the prince of the Upper Narym Selkups and principal leader of the Piebald Horde, a Selkup-Ket military-political union. Russian records for 1596 describe roughly 400 warriors under his authority. He resisted Russian yasak demands and allied with Kuchum; the horde was decisively subordinated in 1598. ATLAS uses Piebald Horde rather than the broad modern ethnonym Selkup as the historical political community."
+  },
+  "sources": [
+    {
+      "title": "Atlas of Indigenous Peoples of Russia — Selkup history",
+      "canonical_url": "https://atlaskmns.ru/page/ru/people_selcupy_history.html",
+      "citation_text": "The official indigenous peoples atlas describes the Piebald Horde as a major Selkup military-political union led by Prince Vonya, with 400 warriors and resistance to Russian expansion.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Ya. G. Solodkin — How the Peg Orda transformed into Narymsky volost",
+      "canonical_url": "https://cyberleninka.ru/article/n/kak-pegaya-orda-prevratilas-v-narymskuyu-volost-k-istorii-obrazovaniya-sibirskogo-tsarstva-moskovskih-gosudarey",
+      "citation_text": "The scholarly article treats the Piebald Horde as a Middle Ob Selkup military-political union and identifies Vonya as its ruler during the Russian conquest.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
