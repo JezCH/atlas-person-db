@@ -1256,5 +1256,39 @@
     "role_ko": "둠노니아 전승의 왕자·전사",
     "reason": "The Civilization mod supplied by the user explicitly identifies its Dumnonia leader as the legendary Arthurian prince Geraint, son of Urbanus/Erbin, not the historically attested early-eighth-century King Geraint who fought Ine in 710. The Arthurian Geraint belongs to later literary and heroic tradition and cannot be assigned a defensible personal reign interval without conflating two different figures. ATLAS therefore preserves the requested leader outside the historical year timeline.",
     "map_policy": "Do not display on the historical year timeline unless a legendary or Arthurian-tradition overlay is enabled."
+  },
+  {
+    "person_name": "Aeneas",
+    "politic_name": "Troy",
+    "display_name_ko": "아이네이아스",
+    "politic_display_name_ko": "트로이",
+    "historicity": "legendary",
+    "historicity_display_ko": "전설",
+    "timeline_status": "excluded",
+    "date_basis": "greco_roman_trojan_legend_without_secure_person_specific_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "트로이의 전설적 왕자·영웅",
+    "reason": "Aeneas is a central Trojan hero in Greek and Roman legendary tradition, portrayed as a son of Anchises and Aphrodite and as a leading Trojan warrior. Archaeological Troy is historical, but no contemporary evidence securely identifies Aeneas as a datable historical prince or provides a defensible personal activity interval. ATLAS therefore preserves the Trojan association without assigning Trojan War chronology to his personal timeline.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or mythic overlay is enabled."
+  },
+  {
+    "person_name": "Dinga Cisse",
+    "politic_name": "Ghana Empire (Wagadu)",
+    "display_name_ko": "딩가 시세",
+    "politic_display_name_ko": "가나 제국(와가두)",
+    "historicity": "legendary_or_unverified",
+    "historicity_display_ko": "전승·역사성 미검증",
+    "timeline_status": "excluded",
+    "date_basis": "soninke_wagadu_origin_epic_without_contemporary_person_specific_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "와가두·가나 건국 전승의 시조",
+    "reason": "Dinga Cisse belongs to Soninke oral traditions of Wagadu/Ghana as an ancestral founder figure. Scholarly treatments analyze Dinga within origin epic and myth, while the traditions themselves vary substantially and do not provide contemporary evidence or a secure person-specific chronology. ATLAS therefore preserves the Soninke-Wagadu association outside the historical year timeline.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary, oral-tradition or uncertain-historicity overlay is enabled."
   }
 ]

@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tribhuvan:kingdom-of-nepal:1951-1955:v1",
+  "person": {
+    "canonical_name_en": "Tribhuvan Bir Bikram Shah",
+    "display_name_ko": "트리부반",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Nepal",
+    "display_name_ko": "네팔 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1951,
+    "start_month": 2,
+    "start_day": 18,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1955,
+    "end_month": 3,
+    "end_day": 13,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tribhuvan was restored to effective kingship during the February 1951 settlement that ended hereditary Rana rule and remained King of Nepal until his death on 13 March 1955."
+  },
+  "sources": [
+    {
+      "title": "Nepal Tourism Board — Nepal's History",
+      "canonical_url": "https://trade.ntb.gov.np/know-nepal/nepals-history/",
+      "citation_text": "Nepal Tourism Board states that Tribhuvan was reinstated as head of state following the overthrow of the Rana regime in the early 1950s.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Nehru Archive — To the King of Nepal, 7 November 1952",
+      "canonical_url": "https://nehruarchive.in/documents/to-the-king-of-nepal-7-november-1952-lojj7",
+      "citation_text": "The archival annotation records the February 1951 settlement and Tribhuvan's 18 February proclamation ending Rana family rule.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "British Museum — Tribhuvan Bir Bikram, King of Nepal",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG116628",
+      "citation_text": "The British Museum gives Tribhuvan's life dates as 1906-1955 and his rule as 1911-1955.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

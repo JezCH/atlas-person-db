@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:kirsan-ilyumzhinov:kalmykia:president:1993-2005:v1",
+  "person": {
+    "canonical_name_en": "Kirsan Ilyumzhinov",
+    "display_name_ko": "키르산 일륨지노프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Kalmykia",
+    "display_name_ko": "칼미키야 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1993,
+    "start_month": 4,
+    "start_day": 23,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2005,
+    "end_month": 10,
+    "end_day": 24,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kirsan Ilyumzhinov became the first elected President of the Republic of Kalmykia in April 1993. The office title changed from President to Head of the Republic in October 2005, so ATLAS separates the two formal-title phases."
+  },
+  "sources": [
+    {
+      "title": "Kirsan Ilyumzhinov — Biography",
+      "canonical_url": "https://kirsan.today/en/biography.html",
+      "citation_text": "Ilyumzhinov's biography records him as President of the Republic of Kalmykia from April 1993 to October 2010.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "U.S. Department of Energy — Fact Sheet: President Ilumzhinov and Republic of Kalmykia",
+      "canonical_url": "https://www.energy.gov/sites/prod/files/maprod/documents/enron1993.pdf",
+      "citation_text": "The contemporary 1993 fact sheet identifies Ilyumzhinov as the elected President of the Republic of Kalmykia.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

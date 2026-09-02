@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:kirsan-ilyumzhinov:kalmykia:head:2005-2010:v1",
+  "person": {
+    "canonical_name_en": "Kirsan Ilyumzhinov",
+    "display_name_ko": "키르산 일륨지노프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Kalmykia",
+    "display_name_ko": "칼미키야 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Head of the Republic",
+    "role_display_name_ko": "공화국 수반",
+    "start_year": 2005,
+    "start_month": 10,
+    "start_day": 24,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2010,
+    "end_month": 10,
+    "end_day": 24,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the office was retitled Head of the Republic in October 2005, Ilyumzhinov continued as Kalmykia's highest executive until 24 October 2010. ATLAS retains Kalmykia as a distinct ethnic-federal political community rather than reducing this Activity to generic Russian regional administration."
+  },
+  "sources": [
+    {
+      "title": "Kirsan Ilyumzhinov — Biography",
+      "canonical_url": "https://kirsan.today/en/biography.html",
+      "citation_text": "The biography records Ilyumzhinov's leadership of the Republic of Kalmykia through October 2010.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Head of the Republic of Kalmykia — office chronology",
+      "citation_text": "Office chronologies record Ilyumzhinov's title change to Head of the Republic in 2005 and departure on 24 October 2010.",
+      "source_type": "bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

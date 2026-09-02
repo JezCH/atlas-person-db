@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:charles-the-bold:burgundian-state:1467-1477:v1",
+  "person": {
+    "canonical_name_en": "Charles the Bold",
+    "display_name_ko": "용담공 샤를",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Burgundian State",
+    "display_name_ko": "부르고뉴국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Duke of Burgundy",
+    "role_display_name_ko": "부르고뉴 공작",
+    "start_year": 1467,
+    "start_month": 6,
+    "start_day": 15,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1477,
+    "end_month": 1,
+    "end_day": 5,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Charles the Bold succeeded Philip the Good on 15 June 1467 and ruled the composite Burgundian State until his death at Nancy on 5 January 1477. ATLAS uses Burgundian State rather than only Duchy of Burgundy because his political rule encompassed the wider Valois-Burgundian territorial complex, while preserving Duke of Burgundy as his principal title."
+  },
+  "sources": [
+    {
+      "title": "Charles the Bold in Italy, 1467–1477 — Cambridge University Press",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/charles-the-bold-in-italy-14671477/introduction/9C185AE648F4F2486CC9A47A404F6EAC",
+      "citation_text": "Cambridge states that Charles became Duke of Burgundy on 15 June 1467 and inherited the major Burgundian territorial conglomerate.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Charles, Duke of Burgundy — Encyclopaedia Britannica (1911)",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Charles_(Duke_of_Burgundy)",
+      "citation_text": "The biographical entry identifies Charles the Bold as Duke of Burgundy and records his death in 1477.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
