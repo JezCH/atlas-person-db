@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:muhammad-shaybani:khanate-of-bukhara:1500-1510:v1",
+  "person": {
+    "canonical_name_en": "Muhammad Shaybani Khan",
+    "display_name_ko": "무함마드 샤이바니 칸",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Khanate of Bukhara",
+    "display_name_ko": "부하라 칸국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khan",
+    "role_display_name_ko": "칸",
+    "start_year": 1500,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1510,
+    "end_month": 12,
+    "end_day": 2,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Muhammad Shaybani captured Bukhara in 1500 and founded the Abu'l-Khayrid/Shibanid Uzbek state in Transoxiana. Iranica treats him as ruler in 1500-1510; he was killed at Merv on 2 December 1510."
+  },
+  "sources": [
+    {
+      "title": "ABU'L-KHAYRIDS — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/abul-khayrids-dynasty/",
+      "citation_text": "Iranica identifies Muhammad Shaybani as ruler from 1500 to 1510 and as founder of the Uzbek state that became the Khanate of Bukhara.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "BUKHARA iii. After the Mongol Invasion — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/bukhara-iii/",
+      "citation_text": "Iranica records Shaybani Khan's capture of Bukhara after a three-day siege in 1500.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

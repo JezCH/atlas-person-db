@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tugo-wad-dhokoth:shilluk:c1690-c1710:v1",
+  "person": {
+    "canonical_name_en": "Tugo wad Dhokoth",
+    "display_name_ko": "투고 와드 도코트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Shilluk Kingdom",
+    "display_name_ko": "실루크 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Reth",
+    "role_display_name_ko": "레트(왕)",
+    "start_year": 1690,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1710,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Shilluk royal genealogies place Tugo, son of Dhokoth, as the tenth reth around 1690-1710 and associate his reign with the consolidation of sacred kingship and the royal center at Fashoda. Because the chronology derives substantially from oral and later ethnographic reconstruction, both endpoints remain approximate."
+  },
+  "sources": [
+    {
+      "title": "The divine kingship of the Shilluk",
+      "canonical_url": "https://doi.org/10.14318/hau1.1.002",
+      "citation_text": "The HAU study identifies Tugo, son of Dhokoth, as a Shilluk reth conventionally dated c.1690-1710 and associates his reign with the formation of Shilluk divine kingship and Fashoda.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

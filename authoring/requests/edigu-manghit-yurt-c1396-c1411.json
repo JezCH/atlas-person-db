@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:edigu:manghit-yurt-early-nogai:c1396-c1411:v1",
+  "person": {
+    "canonical_name_en": "Edigu",
+    "display_name_ko": "에디구",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Manghit Yurt (early Nogai Horde)",
+    "display_name_ko": "망기트 유르트(초기 노가이 오르다)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Emir and founder",
+    "role_display_name_ko": "에미르·창건자",
+    "start_year": 1396,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1411,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Edigu was a dominant emir of the late Golden Horde and under him the Manghit Yurt began separating into the political formation later known as the Nogai Horde. Kazakhstan's historical portal describes him as sovereign ruler for about fifteen years, 1396-1411, while noting that full Nogai independence came only in the mid-fifteenth century. ATLAS therefore avoids anachronistically presenting a fully independent Nogai Horde in 1396."
+  },
+  "sources": [
+    {
+      "title": "Nogai Horde — E-history.kz",
+      "canonical_url": "https://e-history.kz/en/history-of-kazakhstan/show/9546",
+      "citation_text": "Kazakhstan's history portal states that separation of the Nogai Horde began under Edigu, who ruled sovereignly for about fifteen years in 1396-1411, while full independence emerged only in the mid-fifteenth century.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

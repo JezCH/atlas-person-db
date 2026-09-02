@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ayuka-khan:kalmyk-khanate:taishi:1672-1690:v1",
+  "person": {
+    "canonical_name_en": "Ayuka Khan",
+    "display_name_ko": "아유카 칸",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kalmyk Khanate",
+    "display_name_ko": "칼미크 칸국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Taishi",
+    "role_display_name_ko": "타이시",
+    "start_year": 1672,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1690,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ayuka led the Kalmyks as taishi from 1672 until receiving/assuming the khan title in 1690. ATLAS preserves this pre-khan leadership phase separately from his formal khanate reign."
+  },
+  "sources": [
+    {
+      "title": "Ayuka Khan",
+      "canonical_url": "https://en.wikipedia.org/wiki/Ayuka_Khan",
+      "citation_text": "The biography lists Ayuka as Taishi of the Kalmyks from 1672 to 1690 and Khan of the Kalmyk Khanate from 1690 to 1724.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

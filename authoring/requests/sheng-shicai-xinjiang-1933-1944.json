@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sheng-shicai:xinjiang:1933-1944:v1",
+  "person": {
+    "canonical_name_en": "Sheng Shicai",
+    "display_name_ko": "성스차이",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Xinjiang Province",
+    "display_name_ko": "신장성",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Military Governor and de facto ruler",
+    "role_display_name_ko": "군정장관·사실상 지배자",
+    "start_year": 1933,
+    "start_month": 4,
+    "start_day": 14,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1944,
+    "end_month": 8,
+    "end_day": 29,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the April 1933 coup in Xinjiang, Sheng Shicai emerged as military governor and became the province's de facto ruler. He relinquished Xinjiang authority in August 1944 when transferred to the central government."
+  },
+  "sources": [
+    {
+      "title": "Sheng Shicai",
+      "canonical_url": "https://en.wikipedia.org/wiki/Sheng_Shicai",
+      "citation_text": "The biography lists Sheng as Duban (Military Governor) of Xinjiang from 14 April 1933 to 29 August 1944 and describes him as Xinjiang's de facto ruler.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

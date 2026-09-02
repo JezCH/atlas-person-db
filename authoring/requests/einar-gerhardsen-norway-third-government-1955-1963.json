@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:einar-gerhardsen:norway:third-government:1955-1963:v1",
+  "person": {
+    "canonical_name_en": "Einar Gerhardsen",
+    "display_name_ko": "에이나르 게르하르센",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Norway",
+    "display_name_ko": "노르웨이",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1955,
+    "start_month": 1,
+    "start_day": 22,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1963,
+    "end_month": 8,
+    "end_day": 28,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gerhardsen returned as prime minister on 22 January 1955 and served until the Lyng interlude began on 28 August 1963."
+  },
+  "sources": [
+    {
+      "title": "Einar Gerhardsen — Government.no",
+      "canonical_url": "https://www.regjeringen.no/en/the-government/previous-governments/historiske-artikler/offices/prime-minister-since-1814/einar-henry-gerhardsen/id463396/",
+      "citation_text": "The Norwegian government's official historical page lists Gerhardsen's prime-ministerial terms as 25 June-5 November 1945, 5 November 1945-19 November 1951, 22 January 1955-28 August 1963, and 25 September 1963-12 October 1965.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sabit-damolla:first-east-turkestan-republic:1933-1934:v1",
+  "person": {
+    "canonical_name_en": "Sabit Damolla",
+    "display_name_ko": "사비트 다몰라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "First East Turkestan Republic",
+    "display_name_ko": "제1동튀르키스탄 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1933,
+    "start_month": 11,
+    "start_day": 12,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1934,
+    "end_month": 4,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sabit Damolla was the first and only prime minister of the First East Turkestan Republic proclaimed at Kashgar on 12 November 1933. Sources vary on the precise April 1934 terminal date of the collapsing republic, so ATLAS keeps the end at approximate month granularity rather than forcing a disputed day."
+  },
+  "sources": [
+    {
+      "title": "Sabit Damolla",
+      "canonical_url": "https://en.wikipedia.org/wiki/Sabit_Damolla",
+      "citation_text": "The biographical summary identifies Sabit Damolla as prime minister of the First East Turkestan Republic from 12 November 1933 until its defeat in April 1934.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
