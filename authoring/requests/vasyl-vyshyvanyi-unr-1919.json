@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:vasyl-vyshyvanyi:ukrainian-peoples-republic:1919:v1",
+  "person": {
+    "canonical_name_en": "Vasyl Vyshyvanyi",
+    "display_name_ko": "바실 비시바니",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ukrainian People's Republic",
+    "display_name_ko": "우크라이나 인민공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Colonel in the War Ministry",
+    "role_display_name_ko": "전쟁부 대령",
+    "start_year": 1919,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1919,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Vasyl Vyshyvanyi (Archduke Wilhelm of Austria) supported the Ukrainian national movement and in 1919 served as a colonel in the War Ministry of the Ukrainian People's Republic. The user-supplied Kingdom of Galicia and Lodomeria is not used because he did not rule that Habsburg crown land."
+  },
+  "sources": [
+    {
+      "title": "Encyclopedia of Ukraine — Vyshyvany, Vasyl",
+      "citation_text": "The Encyclopedia of Ukraine states that in 1919 Vyshyvanyi served as a colonel in the War Ministry of the Ukrainian National Republic.",
+      "source_type": "bibliographic_reference"
+    },
+    {
+      "title": "1914-1918 Online — Wilhelm, Archduke of Austria",
+      "citation_text": "The scholarly encyclopedia describes Wilhelm Habsburg's pro-Ukrainian political orientation and his command of Ukrainian troops during the late Habsburg period.",
+      "source_type": "bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

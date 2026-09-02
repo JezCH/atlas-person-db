@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sergei-bagapsh:republic-of-abkhazia:2005-2011:v1",
+  "person": {
+    "canonical_name_en": "Sergei Bagapsh",
+    "display_name_ko": "세르게이 바갑시",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of Abkhazia",
+    "display_name_ko": "압하지야 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 2005,
+    "start_month": 2,
+    "start_day": 12,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2011,
+    "end_month": 5,
+    "end_day": 29,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sergei Bagapsh served as President of the de facto Republic of Abkhazia from his inauguration in February 2005 until his death on 29 May 2011. ATLAS records Abkhazia as the political community he governed, without implying a judgment on international recognition."
+  },
+  "sources": [
+    {
+      "title": "Ministry of Foreign Affairs of the Republic of Abkhazia — History of the presidency",
+      "citation_text": "The official Abkhaz historical account records Bagapsh's 2005 election and his death in office on 29 May 2011.",
+      "source_type": "bibliographic_reference"
+    },
+    {
+      "title": "Encyclopaedia Britannica / contemporary reference chronology — Sergei Bagapsh",
+      "citation_text": "Reference chronologies identify Bagapsh as president of Abkhazia from 2005 until his death in 2011.",
+      "source_type": "bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

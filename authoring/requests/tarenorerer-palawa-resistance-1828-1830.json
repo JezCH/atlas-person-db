@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tarenorerer:palawa-resistance:1828-1830:v1",
+  "person": {
+    "canonical_name_en": "Tarenorerer",
+    "display_name_ko": "타레노레러",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Tarenorerer's Palawa resistance",
+    "display_name_ko": "타레노레러의 팔라와 저항세력",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Palawa resistance leader",
+    "role_display_name_ko": "팔라와 저항 지도자",
+    "start_year": 1828,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1830,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tarenorerer (also known as Walyer) organized and led armed Aboriginal resistance in northern Tasmania from 1828 until her capture in 1830. ATLAS does not model all Palawa as a single centralized state; the Polity label identifies Tarenorerer's specific inter-band resistance force."
+  },
+  "sources": [
+    {
+      "title": "Australian Dictionary of Biography — Tarenorerer (Walyer)",
+      "citation_text": "The Australian Dictionary of Biography records that Tarenorerer gathered men and women from several bands in 1828 and initiated organized warfare against colonial invaders before her capture in 1830.",
+      "source_type": "bibliographic_reference"
+    },
+    {
+      "title": "Companion to Tasmanian History — Tarenorerer / Walyer",
+      "citation_text": "Tasmanian historical scholarship treats Tarenorerer as a major leader of Aboriginal armed resistance during the Black War period.",
+      "source_type": "bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

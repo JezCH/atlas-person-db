@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:margrethe-ii:denmark:1972-2024:v1",
+  "person": {
+    "canonical_name_en": "Margrethe II",
+    "display_name_ko": "마르그레테 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Denmark",
+    "display_name_ko": "덴마크",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Queen",
+    "role_display_name_ko": "여왕",
+    "start_year": 1972,
+    "start_month": 1,
+    "start_day": 14,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2024,
+    "end_month": 1,
+    "end_day": 14,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Margrethe II became Queen of Denmark on 14 January 1972 and abdicated exactly 52 years later on 14 January 2024, when Frederik X succeeded her."
+  },
+  "sources": [
+    {
+      "title": "The Danish Royal House — Her Majesty Queen Margrethe",
+      "citation_text": "The Danish Royal House records Queen Margrethe II's accession on 14 January 1972 and abdication on 14 January 2024.",
+      "source_type": "bibliographic_reference"
+    },
+    {
+      "title": "Denmark.dk — The Danish monarchy",
+      "citation_text": "Denmark's official national website records Frederik X's accession on 14 January 2024 following Margrethe II's abdication.",
+      "source_type": "bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-02",
+      "document_title": "마르그레테 2세",
+      "url": "https://namu.wiki/w/%EB%A7%88%EB%A5%B4%EA%B7%B8%EB%A0%88%ED%85%8C%202%EC%84%B8"
+    }
+  }
+}
