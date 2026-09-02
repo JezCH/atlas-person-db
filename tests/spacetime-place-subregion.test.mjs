@@ -45,7 +45,7 @@ function spatialIndexFunctionForBinding(binding) {
   return matches[0];
 }
 
-test("all reviewed C2 bindings compile from macroregion to their reviewed subregion", () => {
+test("all reviewed C2 bindings compile to Place precision while retaining their reviewed subregion presentation anchor", () => {
   for (const binding of registry.bindings) {
     const place = placeById.get(binding.place_id);
     const compiled = spatialCompile.compilePlacementSegment(sourceSegment(binding), continuum);
@@ -55,11 +55,11 @@ test("all reviewed C2 bindings compile from macroregion to their reviewed subreg
     assert.equal(compiled.place_id, binding.place_id, binding.place_id);
     assert.equal(compiled.macroregion_code, place.macroregion_code, binding.place_id);
     assert.equal(compiled.subregion_code, place.subregion_code, binding.place_id);
-    assert.equal(compiled.spatial_precision, "subregion", binding.place_id);
-    assert.equal(compiled.display_anchor_basis, "reviewed_place_subregion", binding.place_id);
+    assert.equal(compiled.spatial_precision, "place", binding.place_id);
+    assert.equal(compiled.display_anchor_basis, "reviewed_place_point", binding.place_id);
     assert.equal(compiled.x_anchor, subregion.center_space, binding.place_id);
-    assert.equal(compiled.x_min, subregion.min_space, binding.place_id);
-    assert.equal(compiled.x_max, subregion.max_space, binding.place_id);
+    assert.equal(compiled.x_min, subregion.center_space, binding.place_id);
+    assert.equal(compiled.x_max, subregion.center_space, binding.place_id);
   }
 });
 
@@ -90,8 +90,13 @@ test("reviewed bindings activate through the real spatial-index resolver, not on
     assert.equal(compiled.status, "placed", placeId);
     assert.equal(compiled.segments.length, 1, placeId);
     assert.equal(compiled.segments[0].place_id, placeId, placeId);
-    assert.equal(compiled.segments[0].spatial_precision, "subregion", placeId);
+    assert.equal(compiled.segments[0].spatial_precision, "place", placeId);
     assert.equal(compiled.segments[0].subregion_code, placeById.get(placeId).subregion_code, placeId);
+    assert.equal(compiled.segments[0].x_min, compiled.segments[0].x_anchor, placeId);
+    assert.equal(compiled.segments[0].x_max, compiled.segments[0].x_anchor, placeId);
+    assert.equal(compiled.segments[0].active_place_functions.length, 1, placeId);
+    assert.equal(compiled.segments[0].display_place_points.length, 1, placeId);
+    assert.equal(compiled.segments[0].display_place_points[0].place_id, placeId, placeId);
   }
 });
 
