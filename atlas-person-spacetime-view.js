@@ -20,6 +20,7 @@
     ["./atlas-person-spacetime-semantic-axis.js?v=20260826-p10", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
     ["./atlas-person-spacetime-exploration.js?v=20260826-p11", "ATLAS_PERSON_SPACETIME_EXPLORATION"],
     ["./atlas-person-spacetime-meanwhile.js?v=20260902-active-activity", "ATLAS_PERSON_SPACETIME_MEANWHILE"],
+    ["./atlas-person-spacetime-data-parity.js?v=20260902-final-parity", "ATLAS_PERSON_SPACETIME_DATA_PARITY"],
     ["./atlas-person-spacetime-minimap.js?v=20260826-p12", "ATLAS_PERSON_SPACETIME_MINIMAP"],
     ["./atlas-person-spacetime-performance.js?v=20260826-p13", "ATLAS_PERSON_SPACETIME_PERFORMANCE"],
     ["./atlas-person-spacetime-spatial-compile.js?v=20260902-place-precision", "ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE"],
@@ -170,6 +171,7 @@
       semanticAxis: window.ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS,
       exploration: window.ATLAS_PERSON_SPACETIME_EXPLORATION,
       meanwhile: window.ATLAS_PERSON_SPACETIME_MEANWHILE,
+      dataParity: window.ATLAS_PERSON_SPACETIME_DATA_PARITY,
       minimap: window.ATLAS_PERSON_SPACETIME_MINIMAP,
       performance: window.ATLAS_PERSON_SPACETIME_PERFORMANCE,
       spatialCompile: window.ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE,
@@ -429,7 +431,7 @@
 
   function compileAtlas() {
     if (compiledAtlasCache) return compiledAtlasCache;
-    const { spaceAxis, spatialCompile, personTracks, politicalPlacement } = runtime();
+    const { spaceAxis, spatialCompile, personTracks, politicalPlacement, dataParity } = runtime();
     const continuum = spaceAxis.createSpatialContinuum();
     const lookup = model.createSpatialLookup(spatialIndex);
     const placements = [];
@@ -444,6 +446,13 @@
       if (raw.status === "placed" && compiled.status !== "placed") unresolvedPosition.push({ ...entry, reason: compiled.reason || compiled.status });
     }
     const compiledTracks = personTracks.compilePersonTracks(persons, placements);
+    const parityReport = dataParity.verify(persons, compiledTracks);
+    if (!parityReport.ok) {
+      const error = new Error(`SPACETIME_DATA_PARITY_FAILED: ${dataParity.failureSummary(parityReport)}`);
+      error.code = "SPACETIME_DATA_PARITY_FAILED";
+      error.details = parityReport;
+      throw error;
+    }
     const partitioned = politicalPlacement.partitionTracks(compiledTracks);
     compiledAtlasCache = Object.freeze({ continuum, partitioned, unresolvedPosition, unresolvedChronology });
     return compiledAtlasCache;
