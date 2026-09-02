@@ -1,0 +1,52 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "well_established",
+    "end_calendar": "gregorian",
+    "end_certainty": "exact",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1932,
+    "notes": "Chief Isaac led the Tr'ondëk Hwëch'in before the Klondike gold rush and until his death in 1932. The gold-rush period around 1896 is a representative, approximate activity boundary, not an invented accession date. The political community is the specific Hän community at Tr'ochëk/Moosehide, not all Hän-speaking peoples.",
+    "period_basis": "general_activity",
+    "relation_type": "governs",
+    "role": "Chief",
+    "role_display_name_ko": "추장",
+    "start_calendar": "gregorian",
+    "start_certainty": "approximate",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1896
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Chief Isaac",
+    "display_name_ko": "아이작 추장",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Tr'ondëk Hwëch'in",
+    "display_name_ko": "트론덱 훼친",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://www.trondek.ca/who-we-are/our-territory/trochek/",
+      "citation_text": "States that Isaac led the people before the gold rush until his death in 1932 and describes the relocation negotiations.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Tr'ochëk — Tr'ondëk Hwëch'in Government"
+    }
+  ]
+}

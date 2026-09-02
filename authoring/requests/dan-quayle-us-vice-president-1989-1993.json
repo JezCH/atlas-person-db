@@ -1,0 +1,52 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "well_established",
+    "end_calendar": "gregorian",
+    "end_certainty": "exact",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1993,
+    "notes": "Dan Quayle served as the 44th Vice President of the United States under George H. W. Bush from 1989 to 1993. This is a national vice-presidential office, not a presidency or independent rulership.",
+    "period_basis": "term",
+    "relation_type": "serves",
+    "role": "Vice President",
+    "role_display_name_ko": "부통령",
+    "start_calendar": "gregorian",
+    "start_certainty": "exact",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1989
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Dan Quayle",
+    "display_name_ko": "댄 퀘일",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://vicepresidentdanquayle.com/biography.html",
+      "citation_text": "Identifies Quayle as the 44th Vice President, 1989–1993, sworn in on 20 January 1989.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Dan Quayle — official biography"
+    }
+  ]
+}

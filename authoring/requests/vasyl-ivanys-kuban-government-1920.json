@@ -1,0 +1,58 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "well_established",
+    "end_calendar": "gregorian",
+    "end_certainty": "exact",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1920,
+    "notes": "Vasyl Ivanys headed the Kuban government in 1920. The Encyclopedia of Ukraine records his appointment to form a government on 4 January, the retreat from Katerynodar in March, and his continued political leadership during the collapse and exile later that year. Only the documented 1920 territorial-government phase is recorded; no later exile tenure is inferred.",
+    "period_basis": "term",
+    "relation_type": "governs",
+    "role": "Head of Government",
+    "role_display_name_ko": "정부 수반",
+    "start_calendar": "gregorian",
+    "start_certainty": "exact",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1920
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Vasyl Ivanys",
+    "display_name_ko": "바실 이바니스",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kuban People's Republic",
+    "display_name_ko": "쿠반 인민공화국",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%5CI%5CV%5CIvanysVasyl.htm",
+      "citation_text": "Identifies Ivanys as head of the Kuban government in 1920.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Ivanys, Vasyl — Encyclopedia of Ukraine"
+    },
+    {
+      "canonical_url": "https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%5CK%5CU%5CKuban.htm",
+      "citation_text": "Documents formation of the Ivanys government in January 1920 and the retreat and exile during that year.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Kuban — Encyclopedia of Ukraine"
+    }
+  ]
+}

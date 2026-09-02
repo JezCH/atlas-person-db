@@ -1,0 +1,58 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "likely",
+    "end_calendar": "gregorian",
+    "end_certainty": "exact",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1846,
+    "notes": "Ismail Dogomuqo Berzeg was an Ubykh and Circassian military-political leader. His recorded participation in the Circassian assembly around 1830 anchors this representative public-leadership interval, ending with his death in 1846. This does not fabricate a centralized presidency or assign exact constitutional terms to the Circassian confederation.",
+    "period_basis": "general_activity",
+    "relation_type": "active_in",
+    "role": "Military and political leader",
+    "role_display_name_ko": "군사·정치 지도자",
+    "start_calendar": "gregorian",
+    "start_certainty": "approximate",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1830
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Ismail Berzeg",
+    "display_name_ko": "이스마일 베르제그",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Circassia",
+    "display_name_ko": "체르케스",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://jamestown.org/hadji-ismail-dagomuqua-berzeg-circassian-warrior-and-diplomat-part-1/",
+      "citation_text": "Identifies Ismail as an assembly deputy and discusses the 1830 delegation decision.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Hadji-Ismail Dagomuqua Berzeg, Circassian Warrior and Diplomat (Part 1)"
+    },
+    {
+      "canonical_url": "https://jamestown.org/hadji-ismail-dagomuqua-berzeg-circassian-warrior-and-diplomat-part-2-2/",
+      "citation_text": "Describes his military leadership and death in 1846.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Hadji-Ismail Dagomuqua Berzeg, Circassian Warrior and Diplomat (Part 2)"
+    }
+  ]
+}

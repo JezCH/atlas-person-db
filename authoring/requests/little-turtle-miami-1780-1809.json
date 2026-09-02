@@ -1,0 +1,52 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "well_established",
+    "end_calendar": "gregorian",
+    "end_certainty": "exact",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1809,
+    "notes": "Mihšihkinaahkwa, known as Little Turtle, was a prominent Myaamia leader from 1780 to 1809 according to the Myaamia community biography. The interval follows that documented leadership floruit rather than extending a formal chieftainship to his death in 1812. His military and diplomatic activity does not make him a hereditary supreme chief over every Miami community.",
+    "period_basis": "general_activity",
+    "relation_type": "active_in",
+    "role": "Military and political leader",
+    "role_display_name_ko": "군사·정치 지도자",
+    "start_calendar": "gregorian",
+    "start_certainty": "exact",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1780
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Little Turtle",
+    "display_name_ko": "리틀 터틀",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Miami",
+    "display_name_ko": "마이애미",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://aacimotaatiiyankwi.org/2020/01/20/biography-of-little-turtle/",
+      "citation_text": "Myaamia community biography explicitly describes prominent leadership from 1780 until 1809.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Mihšihkinaahkwa — A Brief Biography of Little Turtle"
+    }
+  ]
+}

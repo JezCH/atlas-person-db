@@ -1,0 +1,58 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "well_established",
+    "end_calendar": "gregorian",
+    "end_certainty": "exact",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1906,
+    "notes": "Morenga commanded a coalition drawing on Nama and Herero communities against German colonial rule. This Activity covers the 1904–1906 campaign and ends before his detention in the Cape Colony. His resumed resistance in 1907 is separate; he is not represented as a hereditary king of all Herero.",
+    "period_basis": "general_activity",
+    "relation_type": "active_in",
+    "role": "Resistance commander",
+    "role_display_name_ko": "저항군 지휘관",
+    "start_calendar": "gregorian",
+    "start_certainty": "exact",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1904
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Jacob Morenga",
+    "display_name_ko": "야코프 모렝가",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Nama-Herero resistance coalition",
+    "display_name_ko": "나마·헤레로 저항 연합",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://en.wikipedia.org/wiki/Jacob_Morenga",
+      "citation_text": "Documents the 1904–1906 guerrilla campaign, detention in 1906, release and renewed resistance in 1907, and death on 20 September 1907.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Jacob Morenga — biography"
+    },
+    {
+      "canonical_url": "https://www.namibian.com.na/the-legacy-of-jacob-morenga/",
+      "citation_text": "Discusses his leadership and alliance across Nama and Herero communities.",
+      "source_type": "web_bibliographic_reference",
+      "title": "The Legacy of Jacob Morenga — The Namibian"
+    }
+  ]
+}

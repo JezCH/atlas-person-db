@@ -1,0 +1,58 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "well_established",
+    "end_calendar": "gregorian",
+    "end_certainty": "exact",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1893,
+    "notes": "Manuelito was a leading Diné headman, resistance leader and later advocate for the community and its children. The 1855 treaty provides a documented leadership anchor, and the representative community-activity interval continues through his later public involvement before his death in 1893. This does not assert an uninterrupted sole head-chieftainship, military command or formal office through the Long Walk and captivity.",
+    "period_basis": "general_activity",
+    "relation_type": "active_in",
+    "role": "Navajo leader",
+    "role_display_name_ko": "나바호 지도자",
+    "start_calendar": "gregorian",
+    "start_certainty": "exact",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1855
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Manuelito",
+    "display_name_ko": "마누엘리토",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Navajo",
+    "display_name_ko": "나바호",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://en.wikipedia.org/wiki/Manuelito",
+      "citation_text": "Documents the 1855 treaty, resistance, the 1868 treaty, later public activity and death in 1893.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Manuelito — biography and chronology"
+    },
+    {
+      "canonical_url": "https://www.encyclopedia.com/history/encyclopedias-almanacs-transcripts-and-maps/manuelito",
+      "citation_text": "Identifies the Navajo leader and his resistance during 1863–1866.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Manuelito — Encyclopedia of World Biography"
+    }
+  ]
+}

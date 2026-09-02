@@ -1,0 +1,58 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "well_established",
+    "end_calendar": "gregorian",
+    "end_certainty": "exact",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1880,
+    "notes": "Ouray became a leader of the Tabeguache/Uncompahgre Utes around 1860 and remained a leading negotiator until his death in 1880. The US government's later designation of him as head chief of the Utes did not establish hereditary sovereignty over every Ute band; the Activity is attached to his own Uncompahgre community.",
+    "period_basis": "general_activity",
+    "relation_type": "governs",
+    "role": "Chief",
+    "role_display_name_ko": "추장",
+    "start_calendar": "gregorian",
+    "start_certainty": "approximate",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1860
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Ouray",
+    "display_name_ko": "우레이",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Uncompahgre Utes",
+    "display_name_ko": "운컴파그레 유트",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://historytogo.utah.gov/post/ouray-chief/",
+      "citation_text": "Documents his Ute leadership, treaty negotiations in 1863 and 1868, and final negotiations and death in 1880.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Chief Ouray — Utah History to Go"
+    },
+    {
+      "canonical_url": "https://en.wikipedia.org/wiki/Ouray_(Ute_leader)",
+      "citation_text": "Places his leadership of the band in 1860.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Ouray (Ute leader) — biography"
+    }
+  ]
+}

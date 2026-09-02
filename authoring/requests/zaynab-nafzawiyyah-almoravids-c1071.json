@@ -1,0 +1,58 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "likely",
+    "end_calendar": "unspecified_historical",
+    "end_certainty": "approximate",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1071,
+    "notes": "Zaynab was an influential political adviser and consort in the early Almoravid state. The chronology of her marriages and death is disputed. Around 1071 is retained only as a representative approximate point associated with her marriage and political partnership with Yusuf ibn Tashfin; no exact reign or fabricated lifelong co-rulership is asserted.",
+    "period_basis": "general_activity",
+    "relation_type": "active_in",
+    "role": "Political adviser and consort",
+    "role_display_name_ko": "정치 고문·배우자",
+    "start_calendar": "unspecified_historical",
+    "start_certainty": "approximate",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1071
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Zaynab an-Nafzawiyyah",
+    "display_name_ko": "자이나브 안나프자위야",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Almoravid Empire",
+    "display_name_ko": "무라비트 제국",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://teamqueens.org/zaynab-al-nafzawiyya/",
+      "citation_text": "Discusses the uncertain marriage chronology, including 1071, and her political advisory influence.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Zaynab al-Nafzawiyya — Team Queens, Johanna Strong"
+    },
+    {
+      "canonical_url": "https://oxfordaasc.com/view/10.1093/acref/9780195301731.001.0001/acref-9780195301731-e-50261",
+      "citation_text": "Identifies her as a political adviser in the Almoravid Empire.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Zaynab, al-Nafzawiyya — Oxford African American Studies Center"
+    }
+  ]
+}

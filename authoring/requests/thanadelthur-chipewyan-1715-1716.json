@@ -1,0 +1,52 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "well_established",
+    "end_calendar": "gregorian",
+    "end_certainty": "exact",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1716,
+    "notes": "Thanadelthur was a Dene/Chipewyan woman who guided the 1715–1716 expedition from York Factory and negotiated peace between the Dene and Cree. This directly documented mission is the Activity interval; she is not presented as a reigning queen or tribal chief.",
+    "period_basis": "general_activity",
+    "relation_type": "active_in",
+    "role": "Interpreter and peace negotiator",
+    "role_display_name_ko": "통역가·평화협상가",
+    "start_calendar": "gregorian",
+    "start_certainty": "exact",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1715
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Thanadelthur",
+    "display_name_ko": "타나델서",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Chipewyan",
+    "display_name_ko": "치페와이언",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://www.canada.ca/en/parks-canada/news/2017/08/thanadelthur_d_1717.html",
+      "citation_text": "Parks Canada explicitly dates the peace expedition to 1715–1716.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Thanadelthur (d. 1717) — Parks Canada"
+    }
+  ]
+}

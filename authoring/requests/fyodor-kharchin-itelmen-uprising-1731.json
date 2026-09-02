@@ -1,0 +1,58 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "well_established",
+    "end_calendar": "gregorian",
+    "end_certainty": "exact",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1731,
+    "notes": "Fyodor Kharchin, rendered Harchin in the submitted list, was an Itelmen toyon and a leader of the 1731 Kamchatka uprising. The directly documented uprising year is recorded as a representative point; the interval is not extended to his 1735 execution as if he remained a free ruling chief throughout imprisonment.",
+    "period_basis": "general_activity",
+    "relation_type": "active_in",
+    "role": "Uprising leader",
+    "role_display_name_ko": "봉기 지도자",
+    "start_calendar": "gregorian",
+    "start_certainty": "exact",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1731
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Fyodor Kharchin",
+    "display_name_ko": "표도르 하르친",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Itelmen",
+    "display_name_ko": "이텔멘",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://ru.wikipedia.org/wiki/Харчин,_Фёдор",
+      "citation_text": "Identifies the Elovka toyon and leader of the 1731 revolt, later executed in 1735.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Kharchin, Fyodor — biographical entry"
+    },
+    {
+      "canonical_url": "https://domlotsmana.ru/2023/09/20/fedor-kharchin-kamchatka-spartak-the-uprising-of-1731-part-2/",
+      "citation_text": "Historical discussion of the 1731 uprising and its leader.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Fyodor Kharchin — uprising of 1731, Part 2"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "well_established",
+    "end_calendar": "gregorian",
+    "end_certainty": "exact",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1922,
+    "notes": "Yurii Hlushko, also known as Hlushko-Mova, headed the Ukrainian Far Eastern Secretariat and the organized Ukrainian movement in Green Ukraine/Zelenyi Klyn during 1918–1922. This records leadership of an organized national community and autonomy movement, without asserting that a sovereign Green Ukraine state or uncontested territorial government was established. The submitted suffix Malyatinsky is not adopted as a verified personal name.",
+    "period_basis": "general_activity",
+    "relation_type": "active_in",
+    "role": "Head of the Ukrainian Far Eastern Secretariat",
+    "role_display_name_ko": "극동 우크라이나 서기국 수반",
+    "start_calendar": "gregorian",
+    "start_certainty": "exact",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1918
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Yurii Hlushko",
+    "display_name_ko": "유리 흘루시코",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ukrainians of the Russian Far East",
+    "display_name_ko": "극동 우크라이나인 공동체",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://vue.gov.ua/Глушко,_Юрій_Косьмич_(1882–1942)",
+      "citation_text": "Identifies him among the organizers and leaders of Ukrainian public and national-cultural life in Zelenyi Klyn during 1918–1922.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Hlushko, Yurii Kosmych (1882–1942) — Great Ukrainian Encyclopedia"
+    },
+    {
+      "canonical_url": "https://en.wikipedia.org/wiki/Yurii_Hlushko",
+      "citation_text": "Identifies Hlushko-Mova and his Secretariat leadership from 1918 to 1922.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Yurii Hlushko — biography"
+    }
+  ]
+}

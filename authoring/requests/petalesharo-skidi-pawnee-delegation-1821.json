@@ -1,0 +1,58 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "well_established",
+    "end_calendar": "gregorian",
+    "end_certainty": "exact",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1821,
+    "notes": "This is the Skidi Pawnee Petalesharo associated with rescuing a captive and with the 1821 delegation to Washington, not Petalesharo II of the later Grand Pawnee. The securely documented diplomatic visit is a representative point; no uncertain lifetime chieftainship is fabricated.",
+    "period_basis": "general_activity",
+    "relation_type": "active_in",
+    "role": "Community leader and delegate",
+    "role_display_name_ko": "공동체 지도자·사절",
+    "start_calendar": "gregorian",
+    "start_certainty": "exact",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1821
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Petalesharo",
+    "display_name_ko": "페탈레샤로",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Skidi Pawnee",
+    "display_name_ko": "스키디 포니",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://www.whitehousehistory.org/an-eloquent-visitor-from-the-great-plains",
+      "citation_text": "Documents Petalesharro's 1821 visit and speech.",
+      "source_type": "web_bibliographic_reference",
+      "title": "An Eloquent Visitor from the Great Plains — White House Historical Association"
+    },
+    {
+      "canonical_url": "https://en.wikipedia.org/wiki/Petalesharo",
+      "citation_text": "Distinguishes the Skidi figure from other nineteenth-century Pawnee men of the same name.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Petalesharo — biography"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "well_established",
+    "end_calendar": "gregorian",
+    "end_certainty": "exact",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1812,
+    "notes": "Jonathan Lambert established a small settlement on Tristan da Cunha and proclaimed personal sovereignty in 1811, using the Islands of Refreshment name. His project ended with his death in 1812. This records an actual historical settlement and self-proclaimed claim, without implying international recognition or a modern established monarchy.",
+    "period_basis": "general_activity",
+    "relation_type": "claims_rule",
+    "role": "Self-proclaimed ruler",
+    "role_display_name_ko": "자칭 통치자",
+    "start_calendar": "gregorian",
+    "start_certainty": "exact",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1811
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Jonathan Lambert",
+    "display_name_ko": "조너선 램버트",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Islands of Refreshment",
+    "display_name_ko": "리프레시먼트 제도",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://shop.tristandc.com/blogs/news/flags-of-tristan-da-cunha",
+      "citation_text": "Documents Lambert's settlement project and sovereignty proclamation printed in the Boston Gazette in July 1811.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Flags of Tristan da Cunha — Tristan da Cunha Post Office"
+    },
+    {
+      "canonical_url": "https://en.wikipedia.org/wiki/Jonathan_Lambert_(sailor)",
+      "citation_text": "Records his self-proclaimed rule in 1811–1812 and death in 1812.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Jonathan Lambert (sailor) — biography"
+    }
+  ]
+}
