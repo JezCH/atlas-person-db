@@ -1,0 +1,66 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Ahmed al-Sharaa",
+    "display_name_ko": "아흐마드 알샤라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Syria",
+    "display_name_ko": "시리아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "ongoing",
+    "ongoing_as_of": "2026-09-02",
+    "notes": "Source-verified ongoing term as of 2 September 2026. The end boundary is deliberately null; the verification date is provenance, not a terminal date.",
+    "start_year": 2025,
+    "start_month": 1,
+    "start_day": 29,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": null,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": null,
+    "end_calendar": null
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "SANA: President al-Sharaa — one year since assuming the presidency",
+      "canonical_url": "https://sana.sy/en/presidency/2293293/",
+      "citation_text": "The appointment was announced at the conference of 29 January 2025.",
+      "locator": "https://sana.sy/en/presidency/2293293/"
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "SANA: President al-Sharaa meets families of missing persons",
+      "canonical_url": "https://sana.sy/en/politics/2340022/",
+      "citation_text": "Dated 2 September 2026; identifies al-Sharaa acting as President of Syria.",
+      "locator": "https://sana.sy/en/politics/2340022/"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "civ-leaders-ongoing-followup-20260902",
+    "resolves_route": "DEFERRED_OPEN_ENDED",
+    "existing_person_reused": true
+  }
+}

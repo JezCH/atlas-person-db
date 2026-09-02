@@ -1,5 +1,10 @@
 "use strict";
 
+const { validateOngoingActivity } = require("./atlas-ongoing-activity.js");
+function verifiedOngoing(row) {
+  try { return validateOngoingActivity(row); } catch { return false; }
+}
+
 const NAME_CATALOGS = Object.freeze([
   Object.freeze({ key: "persons", names: "person_names", entityId: "id", nameEntityId: "person_id" }),
   Object.freeze({ key: "polities", names: "polity_names", entityId: "id", nameEntityId: "polity_id" }),
@@ -237,8 +242,7 @@ function auditBaselineBDocument(baseline) {
       !text(row?.period_basis_id) ||
       !text(row?.activity_start_granularity) ||
       !text(row?.activity_start_calendar) ||
-      !text(row?.activity_end_granularity) ||
-      !text(row?.activity_end_calendar)
+      ((!text(row?.activity_end_granularity) || !text(row?.activity_end_calendar)) && !verifiedOngoing(row))
     )
     .map((row) => text(row?.id))
     .filter(Boolean)

@@ -82,7 +82,7 @@
 
   function periodLabel(activity) {
     const start = Number.isInteger(activity?.start?.year) && activity.start.year !== 0 ? model.yearLabel(activity.start.year) : "시작 미상";
-    const end = Number.isInteger(activity?.end?.year) && activity.end.year !== 0 ? model.yearLabel(activity.end.year) : "종료 미상";
+    const end = activity?.end?.status === "ongoing" ? `현재 (${activity.end.as_of} 확인)` : Number.isInteger(activity?.end?.year) && activity.end.year !== 0 ? model.yearLabel(activity.end.year) : "종료 미상";
     return `${start} – ${end}`;
   }
 

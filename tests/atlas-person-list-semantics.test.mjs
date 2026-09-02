@@ -104,7 +104,9 @@ test('compact list semantic SQL returns one Activity-shaped tuple including lega
   assert.match(PERSON_LIST_SEMANTIC_SQL, /order by pn\.id\s+limit 1/i);
   assert.match(PERSON_LIST_SEMANTIC_SQL, /order by rn\.id\s+limit 1/i);
   assert.match(PERSON_LIST_SEMANTIC_SQL, /order by pbn\.id\s+limit 1/i);
-  assert.doesNotMatch(PERSON_LIST_SEMANTIC_SQL, /source_locator|source_key|sha256|bytes|canonical_key/i);
+  // Only the public verification date is extracted; the private JSON payload stays server-side.
+  assert.match(PERSON_LIST_SEMANTIC_SQL, /pp\.source_locator->>'ongoing_as_of' as ongoing_as_of/);
+  assert.doesNotMatch(PERSON_LIST_SEMANTIC_SQL.replace("pp.source_locator->>'ongoing_as_of' as ongoing_as_of", ""), /source_locator|source_key|sha256|bytes|canonical_key/i);
 });
 
 test('compact Activity projection preserves the actual Polity-Relation-Role-Basis-temporal tuple plus notes', () => {

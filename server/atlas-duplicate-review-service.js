@@ -35,7 +35,7 @@ async function loadDetectorInput(client) {
   const activities = await client.query(`
     select id,person_id,polity_id,relation_type_id,role_id,period_basis_id,
            activity_start,activity_start_month,activity_start_day,activity_start_granularity,activity_start_calendar,activity_start_certainty,
-           activity_end,activity_end_month,activity_end_day,activity_end_granularity,activity_end_calendar,activity_end_certainty
+           activity_end,activity_end_month,activity_end_day,activity_end_granularity,activity_end_calendar,activity_end_certainty,chronology_status
       from atlas_v2.person_politics_v2
      order by person_id,activity_start,activity_end,polity_id,relation_type_id,role_id nulls first,period_basis_id,id
   `);
@@ -147,7 +147,7 @@ async function listCandidates({ client, includeStale = false } = {}) {
     const activities = await client.query(`
       select pp.person_id,pp.id,pp.polity_id,pp.relation_type_id,pp.role_id,pp.period_basis_id,
              pp.activity_start,pp.activity_start_month,pp.activity_start_day,pp.activity_start_granularity,pp.activity_start_calendar,pp.activity_start_certainty,
-             pp.activity_end,pp.activity_end_month,pp.activity_end_day,pp.activity_end_granularity,pp.activity_end_calendar,pp.activity_end_certainty,
+             pp.activity_end,pp.activity_end_month,pp.activity_end_day,pp.activity_end_granularity,pp.activity_end_calendar,pp.activity_end_certainty,pp.chronology_status,
              pp.notes,pp.source_locator,
              coalesce(pko.name,pen.name)::text as polity_name,
              r.source_label::text as role_name_en,
@@ -180,7 +180,8 @@ async function listCandidates({ client, includeStale = false } = {}) {
         activity_start_granularity: row.activity_start_granularity == null ? null : String(row.activity_start_granularity),
         activity_start_calendar: row.activity_start_calendar == null ? null : String(row.activity_start_calendar),
         activity_start_certainty: row.activity_start_certainty == null ? null : String(row.activity_start_certainty),
-        activity_end: Number(row.activity_end),
+        activity_end: row.activity_end == null ? null : Number(row.activity_end),
+        ...(row.chronology_status === "ongoing" ? { chronology_status:"ongoing" } : {}),
         activity_end_month: row.activity_end_month == null ? null : Number(row.activity_end_month),
         activity_end_day: row.activity_end_day == null ? null : Number(row.activity_end_day),
         activity_end_granularity: row.activity_end_granularity == null ? null : String(row.activity_end_granularity),

@@ -24,6 +24,7 @@ select
   pp.activity_end_calendar,
   pp.confidence,
   pp.chronology_status,
+  pp.source_locator->>'ongoing_as_of' as ongoing_as_of,
   pp.notes,
   prt.code as relation_type_code,
   prt.category as relation_type_category,

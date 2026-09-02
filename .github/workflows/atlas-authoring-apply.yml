@@ -108,9 +108,9 @@ jobs:
                 and (.activity.relation_type | IN("rules","governs","serves","active_in","opposes","claims_rule"))
                 and (.activity.period_basis | type == "string" and length > 0)
                 and (.activity.start_year | type == "number")
-                and (.activity.end_year | type == "number")
+                and ((.activity.end_year | type == "number") or (.activity.chronology_status == "ongoing" and .activity.end_year == null and (.activity.ongoing_as_of | type == "string")))
                 and (.activity.start_certainty | IN("exact","approximate","uncertain"))
-                and (.activity.end_certainty | IN("exact","approximate","uncertain"))
+                and ((.activity.end_certainty | IN("exact","approximate","uncertain")) or (.activity.chronology_status == "ongoing" and .activity.end_certainty == null))
                 and (.activity.confidence | IN("well_established","likely","speculative","disputed","unknown"))
                 and (.sources | type == "array" and length > 0)
               ' "$manifest" >/dev/null || { echo "Rejected human authoring request: $manifest" >&2; exit 1; }
@@ -195,6 +195,18 @@ jobs:
               exit 1
             fi
             bootstrap_required="$(jq -er 'if .ready==true then "false" elif .bootstrap_ready==true then "true" else error("AUTHORING_NOT_BOOTSTRAPPABLE") end' /tmp/atlas-authoring-evidence/readiness.json)"
+            if [[ "${ATLAS_AUTHORING_AUDIT_ALL_APPROVED:-false}" != "true" ]]; then
+              if [[ "${ATLAS_AUTHORING_BOOTSTRAP_ONLY:-false}" == "true" ]]; then
+                bootstrap_required=true
+              elif ! jq -e '.readiness.core.ongoing_terms_ready==true' /tmp/atlas-authoring-evidence/readiness.json >/dev/null; then
+                while IFS= read -r candidate; do
+                  if jq -e '.activity.chronology_status=="ongoing"' "$candidate" >/dev/null; then
+                    bootstrap_required=true
+                    break
+                  fi
+                done < /tmp/atlas-manifests.txt
+              fi
+            fi
             git cat-file -e "${runtime_sha}^{commit}" || { echo "Deployed runtime commit is unavailable in checkout: ${runtime_sha}" >&2; exit 1; }
             git merge-base --is-ancestor "$runtime_sha" "$GITHUB_SHA" || { echo "Deployed runtime is not an ancestor of authoring commit" >&2; exit 1; }
             git diff --name-only --diff-filter=ACDMRTUXB "$runtime_sha" "$GITHUB_SHA" -- > /tmp/atlas-authoring-evidence/runtime-diff.txt
@@ -790,10 +802,11 @@ jobs:
                     and (.start.certainty // null)==($m.activity.start_certainty // null)
                     and (.start.calendar // null)==($m.activity.start_calendar // "unspecified_historical")
                     and .end.year==$m.activity.end_year
+                    and (if $m.activity.chronology_status=="ongoing" then .end.status=="ongoing" and .end.as_of==$m.activity.ongoing_as_of else true end)
                     and (.end.month // null)==($m.activity.end_month // null)
                     and (.end.day // null)==($m.activity.end_day // null)
                     and (.end.certainty // null)==($m.activity.end_certainty // null)
-                    and (.end.calendar // null)==($m.activity.end_calendar // "unspecified_historical")
+                    and (.end.calendar // null)==(if $m.activity.chronology_status=="ongoing" then null else ($m.activity.end_calendar // "unspecified_historical") end)
                     and (
                       if ($m.activity.role // null)==null then .role==null
                       else

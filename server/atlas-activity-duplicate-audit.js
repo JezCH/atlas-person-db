@@ -30,6 +30,9 @@ function nestedId(value) {
 function boundary(row, side) {
   const nested = row?.[side] && typeof row[side] === "object" ? row[side] : null;
   const prefix = side === "start" ? "activity_start" : "activity_end";
+  if (side === "end" && (nested?.status === "ongoing" || row?.chronology_status === "ongoing") && (nested?.year ?? row?.[prefix]) == null) {
+    return Object.freeze({ year:null, month:null, day:null, granularity:null, calendar:null, status:"ongoing" });
+  }
   return Object.freeze({
     year: Number(nested?.year ?? row?.[prefix]),
     month: nested?.month ?? row?.[`${prefix}_month`] ?? null,
@@ -40,6 +43,7 @@ function boundary(row, side) {
 }
 
 function boundaryKey(value) {
+  if (value.status === "ongoing") return "<ONGOING>";
   return [value.year, value.month ?? "_", value.day ?? "_", value.granularity ?? "_", value.calendar ?? "_"].join(":");
 }
 
@@ -52,7 +56,7 @@ function normalizeActivity(row) {
   const id = nullableId(row?.id ?? row?.activity_id);
   const start = boundary(row, "start");
   const end = boundary(row, "end");
-  if (!id || !personId || !polityId || !periodBasisId || !Number.isInteger(start.year) || !Number.isInteger(end.year)) {
+  if (!id || !personId || !polityId || !periodBasisId || !Number.isInteger(start.year) || (!Number.isInteger(end.year) && end.status !== "ongoing")) {
     throw new Error("ACTIVITY_DUPLICATE_AUDIT_ROW_INCOMPLETE");
   }
   return Object.freeze({
@@ -76,6 +80,7 @@ function sameBoundary(a, b) {
 }
 
 function contains(a, b) {
+  if (a.end.status === "ongoing" || b.end.status === "ongoing") return false;
   return a.start.year <= b.start.year && a.end.year >= b.end.year &&
     (a.start.year < b.start.year || a.end.year > b.end.year);
 }

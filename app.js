@@ -106,11 +106,17 @@
   }
 
   function formatYear(year) {
+    if (year == null) return "현재";
     return `${yearEra(year)} ${yearNumber(year)}`;
   }
 
   function setPeriodParts(start, end, startEl, endEl) {
     const startEra = yearEra(start);
+    if (end == null) {
+      startEl.textContent = `${startEra} ${yearNumber(start)}`;
+      endEl.textContent = "현재";
+      return;
+    }
     const endEra = yearEra(end);
     startEl.textContent = `${startEra} ${yearNumber(start)}`;
     endEl.textContent = startEra === endEra ? String(yearNumber(end)) : `${endEra} ${yearNumber(end)}`;

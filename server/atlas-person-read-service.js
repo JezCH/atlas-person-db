@@ -120,6 +120,7 @@ select
   pp.activity_end_calendar,
   pp.confidence,
   pp.chronology_status,
+  pp.source_locator->>'ongoing_as_of' as ongoing_as_of,
   pp.notes,
   prt.code as relation_type_code,
   prt.category as relation_type_category,
@@ -291,6 +292,9 @@ function projectPerson(row) {
 }
 
 function normalizeBoundary(row, prefix) {
+  if (prefix === "activity_end" && row.chronology_status === "ongoing" && row.activity_end == null) {
+    return Object.freeze({ year:null, month:null, day:null, granularity:null, certainty:null, calendar:null, status:"ongoing", as_of:row.ongoing_as_of ?? row.source_locator?.ongoing_as_of ?? null });
+  }
   const year = row?.[prefix];
   return Object.freeze({
     year: year == null ? null : Number(year),

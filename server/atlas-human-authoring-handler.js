@@ -29,7 +29,7 @@ function parseBody(req) {
 function statusForError(code) {
   if (/UNAUTHORIZED|OIDC/.test(code)) return 401;
   if (/COLLISION|AMBIGUOUS|DUPLICATE|UNRESOLVED|CONFLICT|DRIFT|NOT_READY/.test(code)) return 409;
-  if (/REQUIRED|INVALID|FORBIDDEN|MISMATCH/.test(code)) return 400;
+  if (/REQUIRED|INVALID|FORBIDDEN|MISMATCH|^ONGOING_ACTIVITY_/.test(code)) return 400;
   if (/SUPABASE|NOT_PRODUCTION|NOT_MAIN|REPOSITORY/.test(code)) return 503;
   return 500;
 }

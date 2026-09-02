@@ -37,7 +37,10 @@ function optionalComponent(value, label, min, max) {
   return component;
 }
 
+const { EMPTY_END, validateOngoingActivity } = require("./atlas-ongoing-activity.js");
+
 function normalizeBoundary(row, prefix, { requireCertainty = false } = {}) {
+  if (prefix === "activity_end" && validateOngoingActivity(row, { requireProvenance:requireCertainty })) return Object.freeze({ ...EMPTY_END, status:"ongoing" });
   const year = historicalYear(row?.[prefix], prefix);
   const month = optionalComponent(row?.[`${prefix}_month`], `${prefix}_month`, 1, 12);
   const day = optionalComponent(row?.[`${prefix}_day`], `${prefix}_day`, 1, 31);
@@ -64,6 +67,7 @@ function normalizeBoundary(row, prefix, { requireCertainty = false } = {}) {
 }
 
 function assertKnownBoundaryOrder(start, end) {
+  if (end.status === "ongoing") return;
   if (end.year < start.year) throw new Error("activity_end precedes activity_start by historical year");
   if (end.year !== start.year || end.calendar !== start.calendar) return;
   if (start.month !== null && end.month !== null && end.month < start.month) {
@@ -75,6 +79,7 @@ function assertKnownBoundaryOrder(start, end) {
 }
 
 function boundaryToken(boundary) {
+  if (boundary.status === "ongoing") return "<ONGOING>";
   return [
     boundary.year,
     boundary.month == null ? "_" : boundary.month,

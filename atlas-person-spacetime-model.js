@@ -63,7 +63,10 @@
   }
 
   function activityInterval(activity) {
-    return normalizeInterval(boundaryYear(activity?.start), boundaryYear(activity?.end));
+    const ongoing = activity?.end?.status === "ongoing";
+    const asOfYear = ongoing && /^\d{4}-\d{2}-\d{2}$/.test(activity.end.as_of || "") ? Number(activity.end.as_of.slice(0, 4)) : null;
+    const interval = normalizeInterval(boundaryYear(activity?.start), ongoing ? asOfYear : boundaryYear(activity?.end));
+    return ongoing && interval ? Object.freeze({ ...interval, ongoing:true, display_through:activity.end.as_of }) : interval;
   }
 
   function validatePlaceFunction(fn, polityId, recordIndex, functionIndex) {

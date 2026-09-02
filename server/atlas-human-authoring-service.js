@@ -5,6 +5,8 @@ const { createStage2NativeActivityTx, loadStage2NativeActivity } = require("./at
 const { requiredUuid, historicalYear } = require("./atlas-activity-semantic-key-v2.js");
 const { manifestHash, readLedger } = require("./atlas-authoring-manifest-service.js");
 
+const { EMPTY_END, validateOngoingActivity } = require("./atlas-ongoing-activity.js");
+
 const HUMAN_AUTHORING_SCHEMA = "atlas-human-authoring/v1";
 const HUMAN_AUTHORING_MARKER = "ATLAS_HUMAN_AUTHORING_V1";
 const SEMANTIC_VERSION = "v2-relation-full-temporal";
@@ -158,7 +160,8 @@ function normalizeHumanAuthoringRequest(raw, { allowLegacyNamuWikiOmission = tru
   if ((polity == null) !== (relationCode == null)) throw new Error("HUMAN_AUTHORING_PRIMARY_POLITY_RELATION_PAIR_REQUIRED");
   const periodBasis = requiredText(activity.period_basis, "HUMAN_AUTHORING_PERIOD_BASIS_REQUIRED");
   const start = normalizeBoundary(activity, "start");
-  const end = normalizeBoundary(activity, "end");
+  const ongoing = validateOngoingActivity(activity, { human:true });
+  const end = ongoing ? EMPTY_END : normalizeBoundary(activity, "end");
   const confidence = requiredText(activity.confidence, "HUMAN_AUTHORING_CONFIDENCE_REQUIRED");
   if (!CONFIDENCE_VALUES.has(confidence)) throw new Error("HUMAN_AUTHORING_CONFIDENCE_INVALID");
   const roleLabel = optionalText(activity.role);
@@ -193,6 +196,7 @@ function normalizeHumanAuthoringRequest(raw, { allowLegacyNamuWikiOmission = tru
       end,
       confidence,
       chronology_status:optionalText(activity.chronology_status) || "reviewed",
+      ...(ongoing ? { ongoing_as_of:activity.ongoing_as_of } : {}),
       notes:optionalText(activity.notes)
     }),
     sources:Object.freeze(normalizeSources(request.sources)),
@@ -397,6 +401,7 @@ function activityPayload({ personId, polityId, roleId, relation, periodBasis, ac
     activity_end_calendar:activity.end.calendar,
     confidence:activity.confidence,
     chronology_status:activity.chronology_status,
+    ...(activity.chronology_status === "ongoing" ? { ongoing_as_of:activity.ongoing_as_of } : {}),
     notes:activity.notes,
     source_links:sources.map((source) => Object.freeze({ source_id:source.id, source_locator_key:source.locator }))
   });
