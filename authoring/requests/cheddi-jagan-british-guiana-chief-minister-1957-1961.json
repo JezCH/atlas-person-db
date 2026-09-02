@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cheddi-jagan:british-guiana:chief-minister:1957-1961:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Cheddi Jagan",
+    "display_name_ko": "체디 제이건"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "British Guiana",
+    "display_name_ko": "영국령 기아나"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Chief Minister",
+    "role_display_name_ko": "수석장관",
+    "start_year": 1957,
+    "start_month": 8,
+    "start_day": 21,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1961,
+    "end_month": 9,
+    "end_day": 5,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the PPP victory in the 1957 election, Jagan returned as chief minister under the restored limited constitutional government. This term ended when the 1961 constitution created the office of Premier."
+  },
+  "sources": [
+    {
+      "title": "Parliament of Guyana — History of Parliament",
+      "canonical_url": "https://old.parliament.gov.gy/about-parliament/about-parliamant-history/",
+      "citation_text": "The parliamentary history records the 1957 election victory of the PPP under Cheddi Jagan and the constitutional transition to the premiership in 1961.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Prime Minister of Guyana — historical office chronology",
+      "canonical_url": "https://en.wikipedia.org/wiki/Prime_Minister_of_Guyana",
+      "citation_text": "The office chronology gives Jagan's second chief-ministerial period from 21 August 1957 to 5 September 1961.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

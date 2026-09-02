@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sargent-sambo:shasta-people:1961:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Sargent Sambo",
+    "display_name_ko": "서전트 샘보"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Shasta people",
+    "display_name_ko": "샤스타족"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Hereditary chief and cultural informant",
+    "role_display_name_ko": "세습 추장·문화 전승자",
+    "start_year": 1961,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1961,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sargent Sambo (Indian name recorded as Ah Kee Ah Humpy) was described in northern California historical sources as one of the last hereditary chiefs of the Shasta people and an important speaker/informant for Shasta language and culture. ATLAS uses the securely documented 1961 interview year as a representative leadership point because no defensible accession or formal term dates survive. The Shasta are not modeled here as a centralized sovereign state."
+  },
+  "sources": [
+    {
+      "title": "Southern Oregon Historical Society — California Newspapers Interview Ancient Indian",
+      "canonical_url": "https://research.sohs.org/node/13771",
+      "citation_text": "SOHS records Sargent Sambo as one of the last hereditary chiefs of the Shasta people and notes a 1961 newspaper interview.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Southern Oregon Historical Society, Commentary, January 1988",
+      "canonical_url": "https://research.sohs.org/sites/default/files/magazines/1988-01.pdf",
+      "citation_text": "The historical society magazine identifies Sargent Sambo as the son of a Shasta headman and a principal ethnographic informant on traditional Shasta culture.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

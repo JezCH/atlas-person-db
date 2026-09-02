@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:giuseppe-garibaldi:italian-unification:expedition-of-the-thousand:1860:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Giuseppe Garibaldi",
+    "display_name_ko": "주세페 가리발디"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Italian unification movement (Risorgimento)",
+    "display_name_ko": "이탈리아 통일운동(리소르지멘토)"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Commander of the Expedition of the Thousand",
+    "role_display_name_ko": "천인대 원정 지휘관",
+    "start_year": 1860,
+    "start_month": 5,
+    "start_day": 5,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1860,
+    "end_month": 11,
+    "end_day": 9,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Garibaldi was not a sovereign ruler of a unified Italy. ATLAS represents the user's 'Italy — Garibaldi' association through his decisive 1860 Expedition of the Thousand, which conquered the Bourbon south and transferred it to Victor Emmanuel II, helping create the Kingdom of Italy in 1861. The expedition departed Quarto during the night of 5–6 May and Garibaldi left Naples for Caprera on 9 November."
+  },
+  "sources": [
+    {
+      "title": "Treccani — Garibaldi, Giuseppe",
+      "canonical_url": "https://www.treccani.it/enciclopedia/giuseppe-garibaldi/",
+      "citation_text": "Treccani describes Garibaldi as a principal architect of Italian unification and gives the chronology of the Expedition of the Thousand from the night of 5–6 May to his departure from Naples on 9 November 1860.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

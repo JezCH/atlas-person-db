@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:martin-olleta:cailin-chono-communities:1744:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Martín Olleta",
+    "display_name_ko": "마르틴 올레타"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Cailín-centered Chono communities",
+    "display_name_ko": "카일린 중심 초노 공동체"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Chieftain (gobernadorcillo)",
+    "role_display_name_ko": "추장(고베르나도르시요)",
+    "start_year": 1744,
+    "start_month": 3,
+    "start_day": 14,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1744,
+    "end_month": 3,
+    "end_day": 14,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "A 14 March 1744 archival document cited by Ximena Urbina explicitly calls Martín Olleta 'gobernadorcillo de dicha nación chonos' and places him at Cailín; a 27 March record calls him governor of the indicated indigenous population, including people living on more remote islands. ATLAS uses the directly attested 14 March 1744 point rather than fabricating a multi-year chieftainship. His earlier 1742 rescue of HMS Wager survivors is historical context, not used as an accession date."
+  },
+  "sources": [
+    {
+      "title": "Ximena Urbina Carrasco, Interacciones entre españoles de Chiloé y Chonos en los siglos XVII y XVIII",
+      "canonical_url": "https://www.scielo.cl/scielo.php?pid=S0717-73562016000100008&script=sci_arttext",
+      "citation_text": "The peer-reviewed study quotes 1744 archival records describing Martín Olleta as gobernadorcillo of the Chono and as governor of indigenous groups centered on Cailín and more remote islands.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

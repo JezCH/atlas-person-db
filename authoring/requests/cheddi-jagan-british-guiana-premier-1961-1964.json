@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cheddi-jagan:british-guiana:premier:1961-1964:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Cheddi Jagan",
+    "display_name_ko": "체디 제이건"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "British Guiana",
+    "display_name_ko": "영국령 기아나"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Premier",
+    "role_display_name_ko": "총리",
+    "start_year": 1961,
+    "start_month": 9,
+    "start_day": 5,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1964,
+    "end_month": 12,
+    "end_day": 12,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The 1961 constitution created the office of Premier of British Guiana, and Jagan became its first holder. He served through the 1964 constitutional and electoral transition. Contemporary official notices list him as Premier and Minister of Development and Planning."
+  },
+  "sources": [
+    {
+      "title": "Parliament of Guyana — Guyana Parliament History, 1961–1964",
+      "canonical_url": "https://old.parliament.gov.gy/GUYANA%20PARLIAMENT%20HISTORY%202009-1.pdf",
+      "citation_text": "The official parliamentary history identifies Cheddi Jagan as the first Premier of British Guiana, serving 1961–1964.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "British Guiana official notice assigning ministerial responsibilities, 1961",
+      "canonical_url": "https://parliament.gov.gy/documents/notices/21362/notice-ministers_responsibilities.pdf",
+      "citation_text": "The official notice identifies Cheddi Jagan as Premier and Minister of Development and Planning in September 1961.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

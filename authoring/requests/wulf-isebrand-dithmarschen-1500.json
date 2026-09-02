@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:wulf-isebrand:peasant-republic-of-dithmarschen:hemmingstedt:1500:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Wulf Isebrand",
+    "display_name_ko": "불프 이제브란트"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Peasant Republic of Dithmarschen",
+    "display_name_ko": "디트마르셴 농민공화국"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Battle leader",
+    "role_display_name_ko": "전투 지도자",
+    "start_year": 1500,
+    "start_month": 2,
+    "start_day": 17,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1500,
+    "end_month": 2,
+    "end_day": 17,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Dithmarschen lacked a single centralized executive command in 1500. Wulf Isebrand, an immigrant from Holland, became the celebrated organizer of the defensive fieldworks and a leader of the Dithmarscher force at the Battle of Hemmingstedt on 17 February 1500. ATLAS therefore records him as a military leader active in the peasant republic, not as its ruler."
+  },
+  "sources": [
+    {
+      "title": "Gesellschaft für Schleswig-Holsteinische Geschichte — Hemmingstedt",
+      "canonical_url": "https://geschichte-s-h.de/sh-von-a-bis-z/h/hemmingstedt/",
+      "citation_text": "The Schleswig-Holstein historical society identifies Wulf Isebrand as organizer of the defensive works and leader in the Battle of Hemmingstedt on 17 February 1500.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

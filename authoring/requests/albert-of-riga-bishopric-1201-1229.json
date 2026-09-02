@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:albert-of-riga:bishopric-of-riga:1201-1229:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Albert of Riga",
+    "display_name_ko": "리가의 알베르트"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Bishopric of Riga",
+    "display_name_ko": "리가 주교령"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Bishop of Riga",
+    "role_display_name_ko": "리가 주교",
+    "start_year": 1201,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1229,
+    "end_month": 1,
+    "end_day": 17,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Albert of Buxhoeveden had been Bishop of Livonia from 1199; in 1201 he founded Riga and transferred the effective center of his bishopric there. He directed the crusading ecclesiastical polity until his death on 17 January 1229. ATLAS therefore normalizes the broad user label 'Livonia' to the Bishopric of Riga rather than treating Albert as ruler of all medieval Livonia."
+  },
+  "sources": [
+    {
+      "title": "Marek Tamm, Mission and Mobility: The Travels and Networking of Bishop Albert of Riga",
+      "canonical_url": "https://helda.helsinki.fi/server/api/core/bitstreams/139b6de0-7644-45bc-8f7c-a5ce800be5ed/content",
+      "citation_text": "The study identifies Albert as bishop of Livonia from 1199 to 1229, the founder of Riga in 1201, and the organizer of Livonian crusading institutions.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Dramatis Personae — medieval Riga",
+      "canonical_url": "https://www.degruyterbrill.com/document/doi/10.1515/9781501747700-002/pdf?licenseType=free",
+      "citation_text": "The reference identifies Albert of Buxhoeveden as the first bishop of Riga, founder of the city in 1201, and leader of the crusades.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
