@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Ahmad ibn Ibrahim al-Ghazi",
+    "display_name_ko": "아흐마드 이븐 이브라힘 알가지",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Adal Sultanate",
+    "display_name_ko": "아달 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Imam and military ruler",
+    "role_display_name_ko": "이맘·군사 지도자",
+    "period_basis": "de_facto_rule",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Adal's imam and military leader, not personally titled Sultan.",
+    "start_year": 1527,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1543,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Ahmad ibn Ibrahim al-Ghazi — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Ahmad_ibn_Ibrahim_al-Ghazi",
+      "citation_text": "Adal's imam and military leader, not personally titled Sultan."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 53
+  }
+}

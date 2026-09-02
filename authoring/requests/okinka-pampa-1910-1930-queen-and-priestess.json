@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Okinka Pampa",
+    "display_name_ko": "오킨카 팜파",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Orango",
+    "display_name_ko": "오랑구",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Queen and priestess",
+    "role_display_name_ko": "여왕·여사제",
+    "period_basis": "reign",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Queen-priestess on Orango among the Bijagos, conventionally circa 1910–1930, not sovereign of every island.",
+    "start_year": 1910,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1930,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Okinka Pampa — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Okinka_Pampa",
+      "citation_text": "Queen-priestess on Orango among the Bijagos, conventionally circa 1910–1930, not sovereign of every island."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 50
+  }
+}

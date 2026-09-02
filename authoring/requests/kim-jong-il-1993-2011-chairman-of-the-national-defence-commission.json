@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Kim Jong-il",
+    "display_name_ko": "김정일",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "North Korea",
+    "display_name_ko": "북한",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Chairman of the National Defence Commission",
+    "role_display_name_ko": "국방위원장",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "National leadership and the NDC and party offices are distinct; he was not President of the Republic.",
+    "start_year": 1993,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2011,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Kim Jong-il — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Kim_Jong_Il",
+      "citation_text": "National leadership and the NDC and party offices are distinct; he was not President of the Republic."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 55
+  }
+}

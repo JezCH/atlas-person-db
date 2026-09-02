@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Yamada Nagamasa",
+    "display_name_ko": "야마다 나가마사",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ligor",
+    "display_name_ko": "리고르",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Governor of Ligor",
+    "role_display_name_ko": "리고르 총독",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ayutthaya's Japanese community leader and military figure, later governor at Ligor within Siam, not an independent Japanese king.",
+    "start_year": 1630,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1630,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Yamada Nagamasa — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Yamada_Nagamasa",
+      "citation_text": "Ayutthaya's Japanese community leader and military figure, later governor at Ligor within Siam, not an independent Japanese king."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 57
+  }
+}
