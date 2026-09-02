@@ -15,7 +15,7 @@ test("spacetime minimum and default scale are structurally locked to 500 percent
   assert.match(view, /const CAMERA_MIN_ZOOM = 5;/);
   assert.match(view, /const CAMERA_MAX_ZOOM = 8;/);
   assert.match(view, /let cameraZoom = CAMERA_MIN_ZOOM;/);
-  assert.match(view, /const GLOBAL_EXTENT_COMPRESSION = 0\.76;/);
+  assert.match(view, /const GLOBAL_EXTENT_COMPRESSION = 0\.748;/);
   assert.equal(spaceAxis.DEFAULT_MIN_BASE_WORLD_WIDTH, 900);
   assert.equal(spaceAxis.DEFAULT_MAX_BASE_WORLD_WIDTH, 1275);
   assert.equal(spaceAxis.DEFAULT_AXIS_WIDTH, 140);

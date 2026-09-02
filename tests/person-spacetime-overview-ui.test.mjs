@@ -10,7 +10,7 @@ const semanticAxis = readFileSync(new URL("../atlas-person-spacetime-semantic-ax
 test("spacetime opens directly at the readable 500 percent floor", () => {
   assert.match(view, /const CAMERA_MIN_ZOOM = 5;/);
   assert.match(view, /let cameraZoom = CAMERA_MIN_ZOOM;/);
-  assert.match(view, /const GLOBAL_EXTENT_COMPRESSION = 0\.76;/);
+  assert.match(view, /const GLOBAL_EXTENT_COMPRESSION = 0\.748;/);
   assert.match(view, /baseWorldWidth \* cameraZoom \* GLOBAL_EXTENT_COMPRESSION/);
   assert.match(view, /DEFAULT_TIMELINE_HEIGHT \* cameraZoom \* GLOBAL_EXTENT_COMPRESSION/);
   assert.doesNotMatch(view, /horizontalViewMode/);

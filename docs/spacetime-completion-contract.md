@@ -10,7 +10,7 @@ The readable camera floor is **500%**.
 - default zoom: 500%
 - maximum zoom: 800%
 - X and Y use the same global camera zoom
-- the physical world extent applies one shared compression factor: **0.76**
+- the physical world extent applies one shared compression factor: **0.748**
 - base world width before camera zoom/compression is globally bounded to 900–1,275 px
 - widening the viewport above the 1,275 px base-world cap must not inflate world geometry
 - shared axis/header chrome is compacted globally to 140 px / 36 px and may not vary by region or era
@@ -18,7 +18,7 @@ The readable camera floor is **500%**.
 - a sparse region or era may not be folded independently
 - no runtime, UI, test, or compatibility path may expose a scale below 500%
 
-The 0.76 factor is presentation compression only. It applies uniformly to the whole X and Y extent and never changes normalized historical coordinates. Horizontal base-world sizing is also data-independent: viewport width is clamped to a global 900–1,275 px base before zoom/compression, so large monitors do not create extra world-space. The readable label geometry keeps the 10px font and the exact prior text-content budget while using a 19px label box, a 2px collision gap, and 1px horizontal padding. The outer min/max widths are reduced from 38/156 px to 30/148 px only because per-label horizontal chrome falls from 12 px to 4 px; the usable text area remains 26 px minimum and 144 px maximum. Shared non-world chrome is also globally compact: the fixed left axis is 140px and the sticky region header is 36px high; these dimensions are renderer-owned and identical across all regions and eras.
+The 0.748 factor is presentation compression only. It applies uniformly to the whole X and Y extent and never changes normalized historical coordinates. Horizontal base-world sizing is also data-independent: viewport width is clamped to a global 900–1,275 px base before zoom/compression, so large monitors do not create extra world-space. The readable label geometry keeps the 10px font and the exact prior text-content budget while using a 18px label box, a 2px collision gap, and 1px horizontal padding. The outer min/max widths are reduced from 38/156 px to 30/148 px only because per-label horizontal chrome falls from 12 px to 4 px; the usable text area remains 26 px minimum and 144 px maximum. Shared non-world chrome is also globally compact: the fixed left axis is 140px and the sticky region header is 36px high; these dimensions are renderer-owned and identical across all regions and eras.
 
 ## Architecture
 
@@ -84,4 +84,4 @@ DOM size scales with viewport + overscan, not total DB size. Minimap may retain 
 - `tests/spacetime-completion-contract.test.mjs`
 - `tests/spacetime-readable-scale-contract.test.mjs`
 
-Changing the 500% floor, 0.76 shared compression, 900–1,275 px base-world bounds, 140/36 px shared chrome geometry, or prohibition on local compression requires explicit review.
+Changing the 500% floor, 0.748 shared compression, 900–1,275 px base-world bounds, 140/36 px shared chrome geometry, or prohibition on local compression requires explicit review.
