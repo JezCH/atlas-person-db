@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Antanas Smetona",
+    "display_name_ko": "안타나스 스메토나",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Council of Lithuania",
+    "display_name_ko": "리투아니아 평의회",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Chairman of the Council of Lithuania",
+    "role_display_name_ko": "리투아니아 평의회 의장",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Two separate presidencies, preceded by chairmanship of the independence council. Post-1940 exile is not territorial rule.",
+    "start_year": 1917,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1919,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Antanas Smetona — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Antanas_Smetona",
+      "citation_text": "Two separate presidencies, preceded by chairmanship of the independence council. Post-1940 exile is not territorial rule."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Antanas Smetona — historical reference",
+      "canonical_url": "https://encyclopedia.1914-1918-online.net/article/smetona-antanas/",
+      "citation_text": "Two separate presidencies, preceded by chairmanship of the independence council. Post-1940 exile is not territorial rule."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 75
+  }
+}

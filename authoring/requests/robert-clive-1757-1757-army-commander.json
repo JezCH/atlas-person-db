@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Robert Clive",
+    "display_name_ko": "로버트 클라이브",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "East India Company",
+    "display_name_ko": "동인도 회사",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Army commander",
+    "role_display_name_ko": "군사령관",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Governorship uses office-tenure dates 1758–1760 and 1765–1767. The 1757 Plassey command is separate from appointment dates.",
+    "start_year": 1757,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1757,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Robert Clive — historical reference",
+      "canonical_url": "https://www.encyclopedia.com/people/history/historians-miscellaneous-biographies/robert-clive",
+      "citation_text": "Governorship uses office-tenure dates 1758–1760 and 1765–1767. The 1757 Plassey command is separate from appointment dates."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Robert Clive — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Robert_Clive",
+      "citation_text": "Governorship uses office-tenure dates 1758–1760 and 1765–1767. The 1757 Plassey command is separate from appointment dates."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 65
+  }
+}

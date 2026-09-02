@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Alexander Krasnoshchyokov",
+    "display_name_ko": "알렉산드르 크라스노쇼코프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Far Eastern Republic",
+    "display_name_ko": "극동 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Chairman of the Council of Ministers",
+    "role_display_name_ko": "각료평의회 의장",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "National leader of the Far Eastern Republic, also its first Council of Ministers chairman. Distinct from Pyotr Krasnov.",
+    "start_year": 1920,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1920,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Alexander Krasnoshchyokov — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Alexander_Krasnoshchyokov",
+      "citation_text": "National leader of the Far Eastern Republic, also its first Council of Ministers chairman. Distinct from Pyotr Krasnov."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Alexander Krasnoshchyokov — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Far_Eastern_Republic",
+      "citation_text": "National leader of the Far Eastern Republic, also its first Council of Ministers chairman. Distinct from Pyotr Krasnov."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 77
+  }
+}

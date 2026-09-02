@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Miyoshi Nagayoshi",
+    "display_name_ko": "미요시 나가요시",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Miyoshi regime",
+    "display_name_ko": "미요시 정권",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Daimyo and military ruler",
+    "role_display_name_ko": "다이묘·군사 통치자",
+    "period_basis": "de_facto_rule",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Regional political supremacy following Hosokawa Harumoto's overthrow in 1549, not the start of his childhood family membership.",
+    "start_year": 1549,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1564,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Miyoshi Nagayoshi — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Miyoshi_Nagayoshi",
+      "citation_text": "Regional political supremacy following Hosokawa Harumoto's overthrow in 1549, not the start of his childhood family membership."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Miyoshi Nagayoshi — historical reference",
+      "canonical_url": "https://www.city.nagaokakyo.lg.jp/0000001016.html",
+      "citation_text": "Regional political supremacy following Hosokawa Harumoto's overthrow in 1549, not the start of his childhood family membership."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 70
+  }
+}

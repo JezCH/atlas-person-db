@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Nanny of the Maroons",
+    "display_name_ko": "마룬의 내니",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Windward Maroons",
+    "display_name_ko": "윈드워드 마룬",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Maroon community leader",
+    "role_display_name_ko": "마룬 공동체 지도자",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "A named 1740 land patent supplies documentary attestation; uncertain oral-tradition birth and death dates do not define a reign.",
+    "start_year": 1740,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1740,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Nanny of the Maroons — historical reference",
+      "canonical_url": "https://jis.gov.jm/proper-records-management-key-to-national-development/",
+      "citation_text": "A named 1740 land patent supplies documentary attestation; uncertain oral-tradition birth and death dates do not define a reign."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Nanny of the Maroons — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Nanny_of_the_Maroons",
+      "citation_text": "A named 1740 land patent supplies documentary attestation; uncertain oral-tradition birth and death dates do not define a reign."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 86
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Davyd Zherebtsov",
+    "display_name_ko": "다비드 제레브초프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Mangazeya",
+    "display_name_ko": "망가제야",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Voivode",
+    "role_display_name_ko": "보이보드",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Russian voivode at Mangazeya, later commander in the Time of Troubles and relief of the Trinity monastery. Mangazeya was a Russian settlement, not an independent sovereign kingdom.",
+    "start_year": 1606,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1608,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Davyd Zherebtsov — historical reference",
+      "canonical_url": "https://lavra.ru/news/all/iz-slavnogo-roda-byakonta",
+      "citation_text": "Russian voivode at Mangazeya, later commander in the Time of Troubles and relief of the Trinity monastery. Mangazeya was a Russian settlement, not an independent sovereign kingdom."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Davyd Zherebtsov — historical reference",
+      "canonical_url": "https://selkup.yanao.ru/district/places/35/",
+      "citation_text": "Russian voivode at Mangazeya, later commander in the Time of Troubles and relief of the Trinity monastery. Mangazeya was a Russian settlement, not an independent sovereign kingdom."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Davyd Zherebtsov — historical reference",
+      "canonical_url": "https://ru.wikipedia.org/wiki/Жеребцов,_Давыд_Васильевич",
+      "citation_text": "Russian voivode at Mangazeya, later commander in the Time of Troubles and relief of the Trinity monastery. Mangazeya was a Russian settlement, not an independent sovereign kingdom."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "belize-vyatka-remaining-20260902",
+    "requested_item": "previous-4"
+  }
+}
