@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:pier-gerlofs-donia:arumer-zwarte-hoop:1515-1519:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Pier Gerlofs Donia",
+    "display_name_ko": "피어 헤를로프스 도니아"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Arumer Zwarte Hoop (Frisian rebel movement)",
+    "display_name_ko": "아루메르 즈바르테 호프(프리슬란트 반란 세력)"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Frisian rebel and fleet commander",
+    "role_display_name_ko": "프리슬란트 반란·함대 지도자",
+    "start_year": 1515,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1519,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Pier Gerlofs Donia (Grutte Pier) became a leader of the Frisian resistance after the destruction of Kimswerd in 1515, helping form the Arumer Zwarte Hoop and commanding its maritime forces. He retired from the struggle in 1519. ATLAS does not make him a sovereign ruler of all Frisia; the record attaches him to the actual rebel organization and independence struggle."
+  },
+  "sources": [
+    {
+      "title": "Royal Netherlands Academy-hosted study — Grote Pier: facts, fiction and image formation",
+      "canonical_url": "https://pure.knaw.nl/portal/files/12605796/artikel_Groniek_Grote_Pier_DEF.pdf",
+      "citation_text": "The study describes Pier Gerlofs Donia as a Frisian farmer who became a fleet commander in the military struggle for control and autonomy of Friesland after 1515.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Fries Museum — Sword of Grutte Pier",
+      "canonical_url": "https://www.friesmuseum.nl/en/collection/icons/zwaard-van-grutte-pier",
+      "citation_text": "The Fries Museum states that Pier joined fellow Frisians after the 1515 destruction of his farm, helped form the Arumer Zwarte Hoop, and served as a maritime commander.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
