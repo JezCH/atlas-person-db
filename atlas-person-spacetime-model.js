@@ -196,7 +196,14 @@
         place_function_type: text(representative?.function_type),
         place_name: text(representative?.place_name),
         place_id: text(representative?.place_id) || null,
-        active_place_functions: Object.freeze(active.map((fn) => Object.freeze({ function_type: text(fn.function_type), place_name: text(fn.place_name), place_id: text(fn.place_id) || null, region_code: text(fn.region_code) }))),
+        active_place_functions: Object.freeze(active.map((fn) => Object.freeze({
+          function_type: text(fn.function_type),
+          place_name: text(fn.place_name),
+          place_id: text(fn.place_id) || null,
+          region_code: text(fn.region_code),
+          confidence: text(fn.confidence) || null,
+          source_refs: Object.freeze([...new Set(Array.isArray(fn.source_refs) ? fn.source_refs.map(text).filter(Boolean) : [])])
+        }))),
         confidence: text(representative?.confidence),
         source_refs: Object.freeze([...new Set(active.flatMap((fn) => Array.isArray(fn.source_refs) ? fn.source_refs.map(text).filter(Boolean) : []))]),
         start_year: ordinalToHistoricalYear(segmentStart),

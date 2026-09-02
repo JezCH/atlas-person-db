@@ -69,7 +69,11 @@ test("required product gates remain explicit", () => {
   for (const id of requiredIds) assert.equal(capabilities.get(id)?.required, true);
   const pending = [...capabilities.values()].filter((item) => item.required && item.status !== "locked").map((item) => item.id);
   assert.ok(pending.length > 0);
-  for (const id of ["spatial-place-precision","person-inspector-evidence","meanwhile-active-activity","data-parity"]) assert.ok(pending.includes(id));
+  for (const id of ["person-inspector-evidence","meanwhile-active-activity","data-parity"]) assert.ok(pending.includes(id));
+  assert.equal(capabilities.get("spatial-place-precision")?.status, "locked");
+  assert.equal(capabilities.get("spatial-multi-place-preservation")?.status, "locked");
+  assert.equal(contract.spatial_place_verification.status, "locked");
+  assert.equal(contract.spatial_place_verification.exact_geographic_coordinate_claimed, false);
   assert.equal(capabilities.get("dense-label-zero-overlap")?.status, "locked");
   assert.equal(capabilities.get("dense-label-zero-deferred-at-sufficient-zoom")?.status, "locked");
   assert.equal(contract.dense_label_verification.status, "locked");

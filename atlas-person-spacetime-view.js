@@ -21,8 +21,8 @@
     ["./atlas-person-spacetime-exploration.js?v=20260826-p11", "ATLAS_PERSON_SPACETIME_EXPLORATION"],
     ["./atlas-person-spacetime-minimap.js?v=20260826-p12", "ATLAS_PERSON_SPACETIME_MINIMAP"],
     ["./atlas-person-spacetime-performance.js?v=20260826-p13", "ATLAS_PERSON_SPACETIME_PERFORMANCE"],
-    ["./atlas-person-spacetime-spatial-compile.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE"],
-    ["./atlas-person-spacetime-person-tracks.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
+    ["./atlas-person-spacetime-spatial-compile.js?v=20260902-place-precision", "ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE"],
+    ["./atlas-person-spacetime-person-tracks.js?v=20260902-place-precision", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
     ["./atlas-person-spacetime-political-placement.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT"],
     ["./atlas-person-spacetime-lod.js?v=20260831-500-floor", "ATLAS_PERSON_SPACETIME_LOD"],
     ["./atlas-person-spacetime-label-engine.js?v=20260902-label-height-18", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]

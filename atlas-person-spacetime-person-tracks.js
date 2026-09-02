@@ -37,7 +37,27 @@
       x_max: Number.isFinite(Number(compiledSegment?.x_max)) ? Number(compiledSegment.x_max) : null,
       macroregion_code: text(compiledSegment?.macroregion_code) || text(compiledSegment?.region_code) || null,
       subregion_code: text(compiledSegment?.subregion_code) || null, spatial_precision: text(compiledSegment?.spatial_precision) || "unresolved",
-      display_anchor_basis: text(compiledSegment?.display_anchor_basis) || null, polity_id: text(activity?.polity?.id) || text(compiledSegment?.polity_id) || null,
+      display_anchor_basis: text(compiledSegment?.display_anchor_basis) || null,
+      place_function_type: text(compiledSegment?.place_function_type) || null,
+      place_name: text(compiledSegment?.place_name) || null,
+      place_id: text(compiledSegment?.place_id) || null,
+      active_place_functions: Object.freeze((Array.isArray(compiledSegment?.active_place_functions) ? compiledSegment.active_place_functions : []).map((fn) => Object.freeze({
+        function_type: text(fn?.function_type) || null,
+        place_name: text(fn?.place_name) || null,
+        place_id: text(fn?.place_id) || null,
+        region_code: text(fn?.region_code) || null,
+        confidence: text(fn?.confidence) || null,
+        source_refs: Object.freeze(Array.isArray(fn?.source_refs) ? fn.source_refs.map(text).filter(Boolean) : [])
+      }))),
+      display_place_points: Object.freeze((Array.isArray(compiledSegment?.display_place_points) ? compiledSegment.display_place_points : []).map((point) => Object.freeze({
+        place_id: text(point?.place_id) || null,
+        place_name: text(point?.place_name) || null,
+        function_type: text(point?.function_type) || null,
+        macroregion_code: text(point?.macroregion_code) || null,
+        subregion_code: text(point?.subregion_code) || null,
+        x_anchor: Number.isFinite(Number(point?.x_anchor)) ? Number(point.x_anchor) : null
+      }))),
+      polity_id: text(activity?.polity?.id) || text(compiledSegment?.polity_id) || null,
       relation_code: relationCode(activity) || null, role_code: text(activity?.role?.code) || null,
       role_label: text(activity?.role?.display_name) || text(activity?.role?.source_label) || null,
       historical_placement_basis: text(compiledSegment?.historical_placement_basis) || null,

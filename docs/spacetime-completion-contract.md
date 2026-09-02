@@ -39,6 +39,8 @@ Camera and presentation may change extent. They must never invent, upgrade, loca
 
 Reviewed Place evidence may compile to a Place point; reviewed subregion evidence to a subregion range; reviewed macroregion evidence only to a macroregion range. Conflicting or missing evidence remains unresolved. Display anchors are presentation data, never historical evidence.
 
+A reviewed Place point uses a zero-width world range (`x_min = x_anchor = x_max`). The current display anchor is the stable center of the reviewed subregion and is **not** claimed to be an exact geographic longitude. Place identity and evidence precision are therefore preserved without inventing coordinates. When a polity changes Place function over time, every time-sliced Place segment is preserved through spatial compile and Person Track compile; the Roman Empire Rome → Constantinople case is a permanent regression test.
+
 ## Stable-world invariants
 
 Normalized world coordinates remain identical under search, selection, global camera zoom, and minimap navigation. `opposes` never determines primary Person placement.
@@ -85,6 +87,7 @@ DOM size scales with viewport + overscan, not total DB size. Minimap may retain 
 - `tests/fixtures/spacetime-acceptance-fixtures.json`
 - `tests/fixtures/spacetime-dense-label-snapshot.json`
 - `tests/spacetime-dense-label-acceptance.test.mjs`
+- `tests/spacetime-place-precision.test.mjs`
 - `tests/spacetime-completion-contract.test.mjs`
 - `tests/spacetime-readable-scale-contract.test.mjs`
 
