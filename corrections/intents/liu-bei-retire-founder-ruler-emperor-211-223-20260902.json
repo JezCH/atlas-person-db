@@ -1,0 +1,20 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:liu-bei:retire-founder-ruler-emperor-211-223:20260902:v1",
+  "review_status": "approved",
+  "release_order": 750,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "f64072c1-a665-5e09-9581-ab5d8cf766a9"
+  },
+  "evidence": {
+    "reason": "Compound-role audit confirmed that the legacy 211-223 row combines Liu Bei's pre-imperial territorial leadership, 219-221 kingship of Hanzhong, and 221-223 imperial reign into one role. Production now contains reviewed replacements: Warlord 211-221 (0f71d721-19da-493a-9995-0f1878e89ec8), King of Hanzhong 219-221 (36deb337-b5f8-40ef-879d-e1b007ffe736), and Emperor 221-223 (7d765097-0cf9-46b3-a9a6-6729003045c3). Retire only the legacy compound Activity.",
+    "person_id": "11cf48bf-60dd-53f3-8f02-9644bb995cb9",
+    "replacement_activity_ids": [
+      "0f71d721-19da-493a-9995-0f1878e89ec8",
+      "36deb337-b5f8-40ef-879d-e1b007ffe736",
+      "7d765097-0cf9-46b3-a9a6-6729003045c3"
+    ],
+    "retire_activity_id": "f64072c1-a665-5e09-9581-ab5d8cf766a9"
+  }
+}
