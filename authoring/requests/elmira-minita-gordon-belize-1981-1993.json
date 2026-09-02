@@ -1,0 +1,52 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "well_established",
+    "end_calendar": "gregorian",
+    "end_certainty": "exact",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1993,
+    "notes": "First Governor-General of independent Belize, serving from independence in 1981 until 1993. This is a national constitutional office, not a colonial district governorship.",
+    "period_basis": "term",
+    "relation_type": "governs",
+    "role": "Governor-General",
+    "role_display_name_ko": "총독",
+    "start_calendar": "gregorian",
+    "start_certainty": "exact",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1981
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Elmira Minita Gordon",
+    "display_name_ko": "엘미라 미니타 고든",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Belize",
+    "display_name_ko": "벨리즈",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://www.pressoffice.gov.bz/belizes-first-governor-general-to-be-honoured-with-state-funeral/",
+      "citation_text": "Belize's government records Gordon's service as first Governor-General from 1981 to 1993.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Belize's First Governor General to be Honoured with State Funeral — Government of Belize"
+    }
+  ]
+}

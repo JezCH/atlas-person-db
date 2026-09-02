@@ -1,0 +1,64 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "well_established",
+    "end_calendar": "unspecified_historical",
+    "end_certainty": "exact",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1504,
+    "notes": "Christopher Columbus led four transatlantic voyages for the Castilian Crown between 1492 and 1504. The submitted West Indies label is a geographic and colonial label, not an independent sovereign state that he ruled. This records the well-documented expedition career; disputed formal governorship termination dates are not converted into a falsely precise continuous office here.",
+    "period_basis": "general_activity",
+    "relation_type": "serves",
+    "role": "Explorer and expedition commander",
+    "role_display_name_ko": "탐험가·원정 지휘관",
+    "start_calendar": "unspecified_historical",
+    "start_certainty": "exact",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1492
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Christopher Columbus",
+    "display_name_ko": "크리스토퍼 콜럼버스",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Crown of Castile",
+    "display_name_ko": "카스티야 연합왕국",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://en.wikipedia.org/wiki/Christopher_Columbus",
+      "citation_text": "Documents the four Castilian-sponsored transatlantic voyages, 1492–1504.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Christopher Columbus — biography"
+    },
+    {
+      "canonical_url": "https://rsc.byu.edu/christopher-columbus-latter-day-saint-perspective/later-voyages-columbus-governor",
+      "citation_text": "Discusses the later voyages and colonial governorship, including the 1493 expedition and 1500 removal.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Later Voyages: Columbus as Governor — BYU Religious Studies Center"
+    },
+    {
+      "canonical_url": "https://en.wikipedia.org/wiki/Voyages_of_Christopher_Columbus",
+      "citation_text": "The four transatlantic expeditions ran from 1492 to 1504.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Voyages of Christopher Columbus — four voyages, 1492–1504"
+    }
+  ]
+}

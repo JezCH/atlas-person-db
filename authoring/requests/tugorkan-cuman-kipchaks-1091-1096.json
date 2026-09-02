@@ -1,0 +1,58 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "well_established",
+    "end_calendar": "unspecified_historical",
+    "end_certainty": "exact",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1096,
+    "notes": "Tugorkan is the Cuman/Polovtsian leader called Togortak in the Alexiad. He is documented in the 1091 Byzantine alliance, the 1094 peace and marriage alliance with Sviatopolk, and was killed in the fighting near Pereiaslav in 1096. This is an attested leadership floruit, not a claim that he first became khan in 1091 or ruled every Kipchak group.",
+    "period_basis": "general_activity",
+    "relation_type": "rules",
+    "role": "Khan",
+    "role_display_name_ko": "칸",
+    "start_calendar": "unspecified_historical",
+    "start_certainty": "exact",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1091
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Tugorkan",
+    "display_name_ko": "투고르칸",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Cuman-Kipchak Confederation",
+    "display_name_ko": "쿠만 킵차크 연맹",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://fr.wikipedia.org/wiki/Tougorkan",
+      "citation_text": "Documents the leader's 1091 first appearance, 1094 alliance and 1096 death.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Tougorkan — biographical entry"
+    },
+    {
+      "canonical_url": "https://www.jstor.org/stable/44170670",
+      "citation_text": "Identifies Tugorkan with Togortak in the Alexiad.",
+      "source_type": "web_bibliographic_reference",
+      "title": "K. Ciggaar, Flemish Mercenaries in Byzantium: Their Later History"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "well_established",
+    "end_calendar": "gregorian",
+    "end_certainty": "exact",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1866,
+    "notes": "Dohasan (Dohäsan, Little Bluff) became the Kiowa principal chief after A'date's removal in 1833 and held the position until his death in 1866. Distinguish him from later relatives bearing the same hereditary name.",
+    "period_basis": "term",
+    "relation_type": "governs",
+    "role": "Principal Chief",
+    "role_display_name_ko": "수석 추장",
+    "start_calendar": "gregorian",
+    "start_certainty": "exact",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1833
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Dohasan",
+    "display_name_ko": "도하산",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kiowa",
+    "display_name_ko": "카이오와",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://www.okhistory.org/publications/enc/entry?entry=DO005",
+      "citation_text": "Records the principal chieftainship as 1833–1866.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Dohasan — Oklahoma Historical Society"
+    }
+  ]
+}

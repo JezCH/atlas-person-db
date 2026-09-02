@@ -1,0 +1,52 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "well_established",
+    "end_calendar": "gregorian",
+    "end_certainty": "exact",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1787,
+    "notes": "Joseph María was a Guapite Karankawa leader whose coalition attacked the Andry expedition and Mission Rosario in 1778 and negotiated with the Spanish in 1787. This records his documented period of prominent leadership, not a formal pan-Karankawa kingship. His influence declined after the July 1787 crisis; he was reported killed by Lipan Apaches in 1789. He is distinct from similarly named nineteenth-century Karankawa leaders.",
+    "period_basis": "general_activity",
+    "relation_type": "active_in",
+    "role": "Resistance leader and diplomat",
+    "role_display_name_ko": "저항 지도자·외교가",
+    "start_calendar": "gregorian",
+    "start_certainty": "exact",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1778
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Joseph María",
+    "display_name_ko": "조지프 마리아",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Karankawa",
+    "display_name_ko": "카란카와",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://www.tshaonline.org/handbook/entries/joseph-maria",
+      "citation_text": "Documents the 1778 campaigns, 1787 peace negotiations and subsequent loss of influence; distinguishes his eighteenth-century career.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Joseph María — Handbook of Texas, Tim Seiter"
+    }
+  ]
+}

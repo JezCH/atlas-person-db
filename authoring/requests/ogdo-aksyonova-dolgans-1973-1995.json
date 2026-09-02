@@ -1,0 +1,58 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "well_established",
+    "end_calendar": "gregorian",
+    "end_certainty": "exact",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1995,
+    "notes": "Ogdo (Yevdokiya) Aksyonova helped establish Dolgan written literature and develop its written language. The publication of Baraksan in 1973 anchors this representative literary activity, which continued through her later work before her death in 1995. This is cultural activity for the Dolgan community, not a reign or government office.",
+    "period_basis": "general_activity",
+    "relation_type": "active_in",
+    "role": "Poet and language advocate",
+    "role_display_name_ko": "시인·언어문화 운동가",
+    "start_calendar": "gregorian",
+    "start_certainty": "exact",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1973
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Ogdo Aksyonova",
+    "display_name_ko": "오그도 악쇼노바",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Dolgans",
+    "display_name_ko": "돌간인",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://www.atlaskmns.ru/page/en/lang_dolgany_all.html",
+      "citation_text": "Records Aksyonova's first Dolgan poetry collection in 1973 and the alphabet's subsequent development.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Dolgan Language — Atlas of Indigenous Minorities of the North"
+    },
+    {
+      "canonical_url": "https://en.wikipedia.org/wiki/Ogdo_Aksyonova",
+      "citation_text": "Documents her continuing literary, language and radio work and death in 1995.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Ogdo Aksyonova — biography"
+    }
+  ]
+}

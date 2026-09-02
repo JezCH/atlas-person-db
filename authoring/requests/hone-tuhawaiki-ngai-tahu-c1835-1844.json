@@ -1,0 +1,52 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "well_established",
+    "end_calendar": "gregorian",
+    "end_certainty": "exact",
+    "end_day": null,
+    "end_month": null,
+    "end_year": 1844,
+    "notes": "Hone Tūhawaiki led Ngāi Tahu in Murihiku from Te Whakataupuka's death, probably in 1835, until his own death in 1844. The scope is the southern Ngāi Tahu community rather than all Māori; the initial year is explicitly approximate.",
+    "period_basis": "general_activity",
+    "relation_type": "governs",
+    "role": "Chief",
+    "role_display_name_ko": "추장",
+    "start_calendar": "gregorian",
+    "start_certainty": "approximate",
+    "start_day": null,
+    "start_month": null,
+    "start_year": 1835
+  },
+  "external_references": {},
+  "person": {
+    "canonical_name_en": "Hone Tūhawaiki",
+    "display_name_ko": "호네 투하와이키",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ngāi Tahu",
+    "display_name_ko": "응아이 타후",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "attempted_at": "2026-09-02",
+      "authorization": "user_requested_registration_after_disclosed_block",
+      "reason": "Direct NamuWiki verification was blocked by browser site policy. No person-document absence is asserted. The user requested registration to continue after this restriction was disclosed.",
+      "reason_code": "provider_access_blocked"
+    }
+  },
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://teara.govt.nz/en/biographies/1t110/tuhawaiki-hone",
+      "citation_text": "Gives leadership from the predecessor's death, probably 1835, until Tūhawaiki's death in 1844.",
+      "source_type": "web_bibliographic_reference",
+      "title": "Tūhawaiki, Hone — Dictionary of New Zealand Biography"
+    }
+  ]
+}
