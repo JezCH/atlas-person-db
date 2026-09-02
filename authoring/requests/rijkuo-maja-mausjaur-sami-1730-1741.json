@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:rijkuo-maja:mausjaur-sami:1730-1741:v1",
+  "person": {
+    "canonical_name_en": "Rijkuo-Maja",
+    "display_name_ko": "리쿠오 마야",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Mausjaur Sámi community",
+    "display_name_ko": "마우스야우르 사미 공동체",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Noaidi and influential community figure",
+    "role_display_name_ko": "노아이디·유력 공동체 인물",
+    "start_year": 1730,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1741,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Rijkuo-Maja (Rika Maja, 1661–1757) was a historically attested Sámi noaidi and wealthy reindeer owner from Mausjaur in the Arvidsjaur forest-Sámi area. Documentary tax records place her at Mausjaur in 1730 and 1741; ATLAS uses that bounded documentary interval as representative activity rather than inventing a full leadership term. The Civilization mod's 'Ume Sámi ruler' framing is normalized: sources describe her as an influential noaidi and community figure, not a formal sovereign. Mausjaur lies in the southeastern Ume Sámi dialect area, close to the Ume–Pite Sámi boundary."
+  },
+  "sources": [
+    {
+      "title": "Bo Lundmark, 'Rijkuo-Maja and Silbo-Gåmmoe — towards the question of female shamanism in the Saami area'",
+      "canonical_url": "https://doi.org/10.30674/scripta.67160",
+      "citation_text": "Lundmark's 1987 study treats Rijkuo-Maja as a historically remembered female noaidi among the Forest Sámi of Arvidsjaur and cites documentary records from Mausjaur in 1730 and 1741.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "LIBRIS — Arvidsjaur: några bilder från förr och nu",
+      "canonical_url": "https://libris.kb.se/bib/3327778",
+      "citation_text": "The Swedish national library catalogue records the 1920 historical work on Arvidsjaur and indexes Rika-Maja (1661–1757) as a named historical person.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

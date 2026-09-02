@@ -1307,5 +1307,22 @@
     "role_ko": "이누이트 전승의 갈등 유발 여성 인물",
     "reason": "Javraganak (also transmitted as Navaranak) appears in nineteenth-century collections of Inuit/Eskimo oral tradition. Hinrich Rink explicitly described the story as an 'apparently historical tradition', but the North Greenland, South Greenland and Labrador variants localize the enemies differently and do not provide a secure, person-specific chronology. The Civilization mod's 'Thule' label is therefore not treated as proof that she was a datable ruler of a historical Thule polity.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary, oral-tradition or uncertain-historicity overlay is enabled."
+  },
+  {
+    "person_name": "Umu",
+    "politic_name": "Nivkh",
+    "display_name_ko": "우무",
+    "politic_display_name_ko": "니브흐",
+    "historicity": "legendary",
+    "historicity_display_ko": "전설",
+    "timeline_status": "excluded",
+    "date_basis": "nivkh_folklore_hero_without_historical_person_specific_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "니브흐 구전전승의 영웅",
+    "reason": "Umu is a hero of Nivkh oral tradition rather than a securely attested historical ruler. The surviving story tradition describes a miraculous birth from an egg, vengeance for murdered parents, supernatural helpers and eventual prosperity. No defensible historical reign or person-specific chronology is available. The Civilization mod's presentation of Umu as leader of the Nivkh is therefore retained only as a cultural association outside the historical timeline.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or oral-tradition overlay is enabled."
   }
 ]
