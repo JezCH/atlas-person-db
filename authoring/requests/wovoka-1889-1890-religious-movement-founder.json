@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Wovoka",
+    "display_name_ko": "워보카",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ghost Dance movement",
+    "display_name_ko": "고스트 댄스 운동",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Religious movement founder",
+    "role_display_name_ko": "종교 운동 창시자",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Northern Paiute prophet: the 1889 revelation and 1890 spread form a documented activity phase, not a lifelong political office.",
+    "start_year": 1889,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1890,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Wovoka — historical reference",
+      "canonical_url": "https://plainshumanities.unl.edu/encyclopedia/doc/egp.rel.023.html",
+      "citation_text": "Northern Paiute prophet: the 1889 revelation and 1890 spread form a documented activity phase, not a lifelong political office."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Wovoka — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Ghost_Dance",
+      "citation_text": "Northern Paiute prophet: the 1889 revelation and 1890 spread form a documented activity phase, not a lifelong political office."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 44
+  }
+}

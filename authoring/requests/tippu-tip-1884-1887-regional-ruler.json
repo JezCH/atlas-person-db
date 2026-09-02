@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Tippu Tip",
+    "display_name_ko": "티푸 티프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Tippu Tip's trading state",
+    "display_name_ko": "티푸 티프의 교역국가",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Regional ruler",
+    "role_display_name_ko": "지역 통치자",
+    "period_basis": "de_facto_rule",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Documented 1884–1887 eastern Congo political control, partly associated with Zanzibar. This bounded phase is not the entire state's history or an invented Sultanate reign.",
+    "start_year": 1884,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1887,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Tippu Tip — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Tippu_Tip",
+      "citation_text": "Documented 1884–1887 eastern Congo political control, partly associated with Zanzibar. This bounded phase is not the entire state's history or an invented Sultanate reign."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Tippu Tip — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Tippu_Tip%27s_state",
+      "citation_text": "Documented 1884–1887 eastern Congo political control, partly associated with Zanzibar. This bounded phase is not the entire state's history or an invented Sultanate reign."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 37
+  }
+}
