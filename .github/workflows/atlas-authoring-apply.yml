@@ -797,8 +797,8 @@ jobs:
                     and (
                       if ($m.activity.role // null)==null then .role==null
                       else
-                        ((.role.source_label // .role.canonical_name_en // "") | ascii_downcase)
-                        == (($m.activity.role // "") | ascii_downcase)
+                        ((.role.source_label // .role.canonical_name_en // "") | ascii_downcase | gsub("[^a-z0-9]"; ""))
+                        == (($m.activity.role // "") | ascii_downcase | gsub("[^a-z0-9]"; ""))
                       end
                     )
                   )
