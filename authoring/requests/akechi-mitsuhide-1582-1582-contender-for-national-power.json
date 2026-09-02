@@ -51,6 +51,10 @@
   },
   "review_context": {
     "request_batch": "nanyue-yanina-20260902",
-    "requested_item": 38
+    "requested_item": 38,
+    "apply_recovery": {
+      "previous_run": "https://github.com/JezCH/atlas-person-db/actions/runs/33650568857",
+      "reason": "Queued run was cancelled by GitHub concurrency before any job started; retrying the reviewed request with unchanged historical content."
+    }
   }
 }
