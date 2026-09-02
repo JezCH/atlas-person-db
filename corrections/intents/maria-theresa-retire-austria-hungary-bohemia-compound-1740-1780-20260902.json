@@ -1,0 +1,22 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:maria-theresa:retire-austria-hungary-bohemia-compound-1740-1780:20260902:v1",
+  "review_status": "approved",
+  "release_order": 760,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "694d1057-2ab3-57b5-8c40-3a1e884e97b8"
+  },
+  "evidence": {
+    "reason": "Compound-role audit confirmed that the legacy Habsburg Monarchy row compresses distinct constitutional crowns and hides the 1741-1743 interruption of Maria Theresa's Bohemian kingship. Production now contains reviewed replacements: Habsburg Monarchy Sovereign 1740-1780 (5d1f5517-13bb-4487-a0b3-063e0a1d5907), Archduchy of Austria Archduchess 1740-1780 (a32a88dd-27fd-40a2-a08e-bb9b9a3dd3ac), Kingdom of Hungary Queen 1740-1780 (a8385024-b1b6-4067-8221-ed284c7d320e), Kingdom of Bohemia Queen first reign 1740-1741 (d2621fd8-17f3-497c-b726-1c4102e9733f), and second reign 1743-1780 (8de5c9a7-6ce5-41a3-abdb-fc70c9cb38f6). Retire only the legacy compound Activity.",
+    "person_id": "c3248e1c-8ab3-5977-9558-e2cbcbbc263c",
+    "replacement_activity_ids": [
+      "5d1f5517-13bb-4487-a0b3-063e0a1d5907",
+      "a32a88dd-27fd-40a2-a08e-bb9b9a3dd3ac",
+      "a8385024-b1b6-4067-8221-ed284c7d320e",
+      "d2621fd8-17f3-497c-b726-1c4102e9733f",
+      "8de5c9a7-6ce5-41a3-abdb-fc70c9cb38f6"
+    ],
+    "retire_activity_id": "694d1057-2ab3-57b5-8c40-3a1e884e97b8"
+  }
+}
