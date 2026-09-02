@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:apoena:pimentel-barbosa-xavante:1950-1980:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Apoena",
+    "display_name_ko": "아포에나"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Pimentel Barbosa Xavante community",
+    "display_name_ko": "피멘텔 바르보자 자반테 공동체"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Chief and elder",
+    "role_display_name_ko": "추장·원로",
+    "start_year": 1950,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1980,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Apoena was a Xavante chief of the Pimentel Barbosa community. Scholarly accounts document his contact strategy around 1950–1951 and his continued leadership into the late 1970s and early 1980s, when he sent younger Xavante to learn Portuguese and Brazilian institutions. The interval is a representative evidence window, not a formal reign."
+  },
+  "sources": [
+    {
+      "title": "Contact Strategies: Histories of Native Autonomy in Brazil",
+      "canonical_url": "https://dokumen.pub/contact-strategies-histories-of-native-autonomy-in-brazil-9781503628120.html",
+      "citation_text": "The historical study describes Chief Apoena's peace/contact strategy from the 1940s and his leadership decisions into the late 1970s and early 1980s.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "SciELO — A propósito do universal deprimente",
+      "canonical_url": "https://www.scielo.br/j/estpsi/a/8pJJbqxp8TfyMnkzRQ7D5By/?lang=en",
+      "citation_text": "The article identifies chief Apöena of Pimentel Barbosa and documents his establishment of outside contacts in 1950–1951.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:hyeonjong-of-goryeo:goryeo:1009-1031:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Hyeonjong of Goryeo",
+    "display_name_ko": "고려 현종"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Goryeo",
+    "display_name_ko": "고려"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1009,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1031,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Hyeonjong, personal name Wang Sun, was the eighth ruler of Goryeo and reigned from 1009 to 1031, including the major Goryeo–Khitan wars and the initiation of the First Tripitaka Koreana."
+  },
+  "sources": [
+    {
+      "title": "GyeongGi Cultural Foundation — Goryeo and GyeongGi Millennium",
+      "canonical_url": "https://ggc.ggcf.kr/en/p/5b564861dca6f36941567f37",
+      "citation_text": "The GyeongGi Cultural Foundation identifies King Hyeonjong's reign as 1009–1031.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Tripitaka Diplomacy in the East Asian World",
+      "canonical_url": "https://www.mdpi.com/2077-1444/16/8/961",
+      "citation_text": "The academic article repeatedly identifies Hyeonjong of Goryeo as ruling 1009–1031.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

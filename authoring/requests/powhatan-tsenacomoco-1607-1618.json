@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:wahunsenacawh-powhatan:tsenacomoco:1607-1618:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Wahunsenacawh (Powhatan)",
+    "display_name_ko": "포와탄(와훈세나코)"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Tsenacomoco (Powhatan paramount chiefdom)",
+    "display_name_ko": "체나코마코(포와탄 연맹)"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Paramount chief (mamanatowick)",
+    "role_display_name_ko": "최고추장(마마나토윅)",
+    "start_year": 1607,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1618,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Wahunsenacawh, called Powhatan by the English, was paramount chief of Tsenacomoco and had united dozens of Tidewater Virginia communities before the English arrival. ATLAS uses 1607–1618 as the securely documented contact-era leadership window rather than inventing an accession date in the late sixteenth century."
+  },
+  "sources": [
+    {
+      "title": "National Park Service — Powhatan",
+      "canonical_url": "https://www.nps.gov/people/powhatan.htm",
+      "citation_text": "NPS identifies Powhatan/Wahunsenacawh as paramount chief of Tsenacomoco, highest authority when Jamestown was founded in 1607, and records his death in 1618.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

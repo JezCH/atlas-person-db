@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tenaya:ahwahneechee:1851-1853:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Tenaya",
+    "display_name_ko": "테나야"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Ahwahneechee",
+    "display_name_ko": "아와니치"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Chief",
+    "role_display_name_ko": "추장",
+    "start_year": 1851,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1853,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tenaya was chief of the Ahwahneechee community of Yosemite Valley. ATLAS corrects the broad user label 'Miwok': the historical sources identify the specific Yosemite community as Ahwahneechee. The 1851–1853 interval represents the securely documented conflict/displacement period rather than a formal accession-to-death reign."
+  },
+  "sources": [
+    {
+      "title": "National Park Service — Roosevelt, Muir, and the Grace of Place",
+      "canonical_url": "https://www.nps.gov/yose/learn/historyculture/roosevelt-muir-and-the-grace-of-place.htm",
+      "citation_text": "NPS recounts the Mariposa Battalion's 1851 removal of the Ahwahneechee and identifies Tenaya as their chief.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

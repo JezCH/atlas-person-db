@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:aleksandar-vucic:republic-of-serbia:prime-minister:2014-2017:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Aleksandar Vučić",
+    "display_name_ko": "알렉산다르 부치치"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Republic of Serbia",
+    "display_name_ko": "세르비아 공화국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 2014,
+    "start_month": 4,
+    "start_day": 27,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2017,
+    "end_month": 5,
+    "end_day": 31,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Vučić served as Prime Minister of Serbia from 27 April 2014 until 31 May 2017. As of 2 September 2026 he remains the incumbent President of Serbia, so ATLAS does not fabricate an end date for that current presidency; only this completed premiership is authored."
+  },
+  "sources": [
+    {
+      "title": "Government of Serbia — Aleksandar Vučić biography",
+      "canonical_url": "https://www.srbija.gov.rs/biografija/en/33985/aleksandar-vucic.php",
+      "citation_text": "Serbian government biography records Vučić's completed prime-ministerial service before his presidency.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Serbian Government — Non-Aligned Movement commemorative meeting, 1 September 2026",
+      "canonical_url": "https://www.srbija.gov.rs/vest/en/286225/non-aligned-movement-remains-strongest-pillar-of-multilateralism.php",
+      "citation_text": "The official Serbian government identifies Aleksandar Vučić as President of the Republic of Serbia on 1 September 2026.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
