@@ -68,7 +68,13 @@ test("required product gates remain explicit", () => {
   assert.deepEqual([...capabilities.keys()], requiredIds);
   for (const id of requiredIds) assert.equal(capabilities.get(id)?.required, true);
   const pending = [...capabilities.values()].filter((item) => item.required && item.status !== "locked").map((item) => item.id);
-  assert.deepEqual(pending, ["meanwhile-active-activity","data-parity"]);
+  assert.deepEqual(pending, ["data-parity"]);
+  assert.equal(capabilities.get("meanwhile-active-activity")?.status, "locked");
+  assert.equal(contract.meanwhile_verification.status, "locked");
+  assert.equal(contract.meanwhile_verification.selected_historical_moment, true);
+  assert.equal(contract.meanwhile_verification.unique_person_counts, true);
+  assert.equal(contract.meanwhile_verification.macroregion_distribution, true);
+  assert.equal(contract.meanwhile_verification.active_person_highlight, true);
   assert.equal(capabilities.get("person-inspector-evidence")?.status, "locked");
   assert.equal(contract.person_inspector_verification.status, "locked");
   assert.equal(contract.person_inspector_verification.spatial_precision_visible, true);

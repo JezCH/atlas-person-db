@@ -38,6 +38,30 @@
 .spacetime-selection-actions button:hover,.spacetime-selection-actions button:focus-visible{border-color:#7790b9;background:#fff;outline:none}
 .spacetime-selection-actions button:disabled,.spacetime-selection-actions button:disabled:hover{cursor:not-allowed;opacity:.45;border-color:#dde4ee;background:#f6f8fb;color:#8d98a8;box-shadow:none}
 #spacetimeDetailPerson{border-color:#819ac2;background:#edf3ff;color:#31527f}
+.spacetime-meanwhile{display:grid;gap:7px;padding:9px 12px;margin:0 0 8px;border-color:#d7c9a8;background:#fffdf7}
+.spacetime-meanwhile.is-empty{padding:8px 12px;background:#fbfcfe;border-color:#dbe3ee}
+.spacetime-meanwhile.is-empty>div{display:flex;align-items:center;gap:8px;min-width:0}
+.spacetime-meanwhile small{font-size:9px;letter-spacing:.12em;color:#93753b}
+.spacetime-meanwhile.is-empty small{color:#7c8aa0}
+.spacetime-meanwhile strong{font-size:13px;color:#433719}
+.spacetime-meanwhile.is-empty strong{color:#40516a;white-space:nowrap}
+.spacetime-meanwhile span{font-size:10px;color:#756746}
+.spacetime-meanwhile.is-empty span{color:#718096;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.spacetime-meanwhile-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.spacetime-meanwhile-head>div{display:flex;align-items:baseline;gap:8px;min-width:0}
+.spacetime-meanwhile-head button{height:26px;padding:0 8px;border:1px solid #d9caa8;border-radius:7px;background:#fff;color:#6d5931;font-size:9px;font-weight:750;cursor:pointer}
+.spacetime-meanwhile-regions{display:flex;gap:4px;overflow:auto;padding-bottom:2px;scrollbar-width:thin}
+.spacetime-meanwhile-regions span{display:inline-flex;gap:3px;align-items:center;flex:0 0 auto;padding:3px 6px;border:1px solid #eadfc5;border-radius:999px;background:#fff;font-size:9px;color:#7a6a46}
+.spacetime-meanwhile-regions b{color:#514224}
+.spacetime-meanwhile-activities{display:flex;gap:5px;overflow:auto;padding-bottom:2px;scrollbar-width:thin}
+.spacetime-meanwhile-activities button{display:grid;grid-template-columns:auto auto;grid-template-areas:"name polity" "period period";gap:2px 6px;align-items:center;min-width:160px;max-width:240px;padding:5px 7px;border:1px solid #e3d8bf;border-radius:8px;background:#fff;text-align:left;cursor:pointer}
+.spacetime-meanwhile-activities button:hover,.spacetime-meanwhile-activities button:focus-visible{border-color:#b89c62;background:#fffaf0;outline:none}
+.spacetime-meanwhile-activities strong{grid-area:name;font-size:10px;color:#3e3218;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.spacetime-meanwhile-activities span{grid-area:polity;font-size:8px;color:#7b6b48;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.spacetime-meanwhile-activities small{grid-area:period;font-size:8px;letter-spacing:0;color:#9a8457}
+.spacetime-meanwhile-line{position:absolute;z-index:8;left:0;height:0;border-top:1px solid rgba(166,123,45,.78);pointer-events:none}
+.spacetime-meanwhile-line span{position:absolute;left:6px;top:-17px;padding:1px 4px;border:1px solid rgba(197,165,105,.68);border-radius:4px;background:rgba(255,251,239,.95);color:#6d5424;font-size:8px;font-weight:800;white-space:nowrap}
+
 .spacetime-selection-evidence{grid-column:1/-1!important;display:grid!important;gap:6px!important;padding-top:8px;border-top:1px solid #d8e3f1}
 .spacetime-selection-evidence-title{display:flex!important;grid-template-columns:1fr auto!important;align-items:center;gap:10px!important}
 .spacetime-selection-evidence-title strong{font-size:11px;color:#344b6d}
@@ -73,6 +97,7 @@
 .spacetime-year-axis span{position:absolute;right:7px;transform:translateY(-50%);font-size:10px;font-variant-numeric:tabular-nums;color:#6b778a;white-space:nowrap}
 .spacetime-year-axis span.is-major{font-weight:800;color:#42536b}
 .spacetime-year-axis[data-axis-stage="decade"] span,.spacetime-year-axis[data-axis-stage="quarter-century"] span{font-size:9px}
+.spacetime-year-axis{cursor:crosshair}
 .spacetime-canvas{position:absolute;left:var(--spacetime-axis-width,140px);top:var(--spacetime-header-height,36px);background:#fff;contain:layout paint style}
 .spacetime-runtime-layer{position:absolute;inset:0;pointer-events:none;contain:layout style}
 .spacetime-runtime-layer button{pointer-events:auto}
@@ -83,12 +108,15 @@
 .spacetime-subregion-line{position:absolute;z-index:3;top:0;width:1px;background:#edf1f6;pointer-events:none;transition:opacity .18s ease}
 .spacetime-track-label{position:absolute;z-index:11;height:18px;transform:translateY(-50%);padding:0 1px;border:1px solid #cbd7e9;border-radius:4px;background:rgba(255,255,255,.94);box-shadow:0 1px 5px rgba(35,50,74,.08);font-size:10px;font-weight:700;line-height:16px;color:#16233a;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;box-sizing:border-box}
 .spacetime-track-label:hover,.spacetime-track-label.is-selected{z-index:22;border-color:#7089b7;background:#fff;box-shadow:0 4px 12px rgba(35,50,74,.16)}
+.spacetime-track-label.is-meanwhile-active{z-index:21;border-color:#b68b3f;background:#fffaf0;box-shadow:0 0 0 1px rgba(190,145,62,.14),0 3px 10px rgba(94,70,25,.13)}
 .spacetime-label-connector{position:absolute;z-index:6;height:1px;background:#9fb0c7;transform:translateY(-50%);pointer-events:none}
 .spacetime-track-rail{position:absolute;z-index:5;width:4px;min-height:2px;margin-left:-2px;padding:0;border:0;border-radius:5px;background:#6f89b1;cursor:pointer}
 .spacetime-track-rail:hover,.spacetime-track-rail.is-selected{z-index:18;width:6px;margin-left:-3px;background:#4f6fa2}
+.spacetime-track-rail.is-meanwhile-active{z-index:17;width:6px;margin-left:-3px;background:#b2873d}
 .spacetime-activity-glyph{position:absolute;z-index:14;max-width:150px;height:22px;transform:translateY(-50%);padding:2px 7px;border:1px solid #cbd7e9;border-radius:6px;background:#fff;box-shadow:0 2px 7px rgba(35,50,74,.1);font-size:9px;color:#43536a;text-align:left;cursor:pointer;overflow:hidden}
 .spacetime-activity-glyph span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .spacetime-activity-glyph:hover,.spacetime-activity-glyph.is-selected{z-index:22;border-color:#7089b7;background:#f6f9ff;box-shadow:0 4px 12px rgba(35,50,74,.16)}
+.spacetime-activity-glyph.is-meanwhile-active{z-index:21;border-color:#b68b3f;background:#fffaf0;color:#6b5427}
 .spacetime-minimap{position:absolute;right:10px;bottom:10px;z-index:70;width:228px;padding:6px;border:1px solid rgba(118,137,166,.48);border-radius:11px;background:rgba(255,255,255,.94);box-shadow:0 8px 24px rgba(35,50,74,.16);box-sizing:border-box;user-select:none}
 .spacetime-minimap-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
 .spacetime-minimap-head strong{font-size:10px;color:#30435f}
