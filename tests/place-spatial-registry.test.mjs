@@ -26,10 +26,28 @@ function reviewedPlace(overrides = {}) {
 test("canonical registry validates reviewed C2 Place identities and exact bindings", () => {
   const validation = registryApi.validatePlaceRegistry(registry);
   assert.equal(validation.valid, true, validation.errors.join("\n"));
-  assert.equal(registry.places.length, 5);
-  assert.equal(registry.bindings.length, 5);
-  assert.equal(registryApi.createPlaceLookup(registry).size, 5);
-  assert.equal(registryApi.createReviewedBindingLookup(registry).size, 5);
+  assert.equal(registry.places.length, 6);
+  assert.equal(registry.bindings.length, 8);
+  assert.equal(registryApi.createPlaceLookup(registry).size, 6);
+  assert.equal(registryApi.createReviewedBindingLookup(registry).size, 8);
+});
+
+test("Constantinople is reviewed only to the stable Balkans subregion with three exact polity bindings", () => {
+  const place = registry.places.find((item) => item.place_id === "place-constantinople");
+  assert.ok(place);
+  assert.equal(place.canonical_name, "Constantinople");
+  assert.equal(place.macroregion_code, "europe");
+  assert.equal(place.subregion_code, "balkans");
+  assert.equal(place.coordinate_precision, "unknown");
+  assert.equal(place.latitude, null);
+  assert.equal(place.longitude, null);
+  const bindings = registry.bindings.filter((item) => item.place_id === "place-constantinople");
+  assert.equal(bindings.length, 3);
+  assert.deepEqual(new Set(bindings.map((item) => item.polity_id)), new Set([
+    "5d9a6186-bbe6-5d1a-ba93-02190ae4c417",
+    "074510f4-f2e7-5795-8cfb-2a4206fa7254",
+    "6d1520e2-0aff-5063-b2b7-95eb86daf372"
+  ]));
 });
 
 test("reviewed Place identity can carry reviewed coordinates and a real subregion parent", () => {
