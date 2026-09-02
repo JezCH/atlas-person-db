@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tachibana-ginchiyo:tachibana-clan:1575-1581:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Tachibana Ginchiyo",
+    "display_name_ko": "다치바나 긴치요"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Tachibana clan",
+    "display_name_ko": "다치바나 가문"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Head of the Tachibana house and castellan",
+    "role_display_name_ko": "다치바나 가문 당주·성주",
+    "start_year": 1575,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1581,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tachibana Dōsetsu transferred the headship of the Tachibana house to his daughter Ginchiyo in 1575 when she was seven. In 1581 Tachibana Muneshige was adopted as successor and became head of the house. This rare female warrior-house inheritance is modeled as actual clan rule rather than merely marriage to a daimyō."
+  },
+  "sources": [
+    {
+      "title": "Samurai Archive — Tachibana Ginchiyo",
+      "canonical_url": "https://samurai-archive.com/en/people/55",
+      "citation_text": "The profile states that Dōsetsu passed the Tachibana house headship to Ginchiyo in 1575 and that Muneshige succeeded in 1581.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

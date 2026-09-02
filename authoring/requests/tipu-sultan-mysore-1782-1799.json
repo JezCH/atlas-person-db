@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tipu-sultan:mysore:1782-1799:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Tipu Sultan",
+    "display_name_ko": "티푸 술탄"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Kingdom of Mysore",
+    "display_name_ko": "마이소르 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1782,
+    "start_month": 12,
+    "start_day": 29,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1799,
+    "end_month": 5,
+    "end_day": 4,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tipu Sultan succeeded Hyder Ali in 1782 and was formally enthroned/crowned on 29 December 1782. He ruled Mysore until he was killed defending Seringapatam on 4 May 1799."
+  },
+  "sources": [
+    {
+      "title": "Encyclopaedia Britannica — Tipu Sultan",
+      "canonical_url": "https://www.britannica.com/biography/Tipu-Sultan",
+      "citation_text": "Britannica identifies Tipu Sultan as ruler of Mysore from 1782 until his death in 1799.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

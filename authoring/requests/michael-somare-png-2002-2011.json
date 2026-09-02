@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:michael-somare:papua-new-guinea:prime-minister:2002-2011:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Michael Somare",
+    "display_name_ko": "마이클 소마레"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Papua New Guinea",
+    "display_name_ko": "파푸아뉴기니"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 2002,
+    "start_month": 8,
+    "start_day": 5,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2011,
+    "end_month": 8,
+    "end_day": 2,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Somare returned as Prime Minister after the 2002 election and remained the political holder of the office until Parliament elected Peter O'Neill on 2 August 2011 amid Somare's prolonged illness and the ensuing constitutional crisis. Temporary acting arrangements during illness are not split into separate ATLAS Activities because they did not represent a new elected Somare mandate."
+  },
+  "sources": [
+    {
+      "title": "Michael Somare — office chronology",
+      "canonical_url": "https://en.wikipedia.org/wiki/Michael_Somare",
+      "citation_text": "The office chronology records Somare's long third prime-ministerial period beginning in August 2002 and ending with the 2011 succession crisis.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Papua New Guinea Department of Foreign Affairs — PNG History",
+      "canonical_url": "https://www.dfa.gov.pg/png-history/",
+      "citation_text": "The official historical summary identifies Somare as the central post-independence prime minister and notes Peter O'Neill's assumption of office in 2011.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:min-razagyi:mrauk-u:1593-1612:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Min Razagyi",
+    "display_name_ko": "민 라자기"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Kingdom of Mrauk U",
+    "display_name_ko": "므라우우 왕국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King of Arakan",
+    "role_display_name_ko": "아라칸 국왕",
+    "start_year": 1593,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1612,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Min Razagyi ruled the Kingdom of Mrauk U (Arakan) from 1593 to 1612. The user label 'Mrauk U Empire' is normalized to Kingdom of Mrauk U, while preserving the period of major expansion under his rule."
+  },
+  "sources": [
+    {
+      "title": "Oriental Numismatic Society Newsletter 60 — Razagyi",
+      "canonical_url": "https://www.orientalnumismaticsociety.org/archive/ONS_060.pdf",
+      "citation_text": "The numismatic historical note identifies Razagyi as ruler of Arakan from AD 1593 to 1612.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

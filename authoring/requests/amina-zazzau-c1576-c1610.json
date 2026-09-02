@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:amina:zazzau:c1576-c1610:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Amina of Zazzau",
+    "display_name_ko": "자자우의 아미나"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Zazzau",
+    "display_name_ko": "자자우"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Queen (Sarauniya)",
+    "role_display_name_ko": "여왕(사라우니야)",
+    "start_year": 1576,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1610,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Amina is a historical figure strongly preserved in Hausa and Zazzau traditions, but her chronology is disputed. Some traditions place her in the fifteenth or early sixteenth century, while Abdullahi Smith and several modern reference works place her reign after 1576 and commonly give c.1576–c.1610. ATLAS uses that later conventional reconstruction with approximate boundaries and explicitly does not treat the dates as secure contemporary regnal evidence."
+  },
+  "sources": [
+    {
+      "title": "Amina of Zazzau — chronology and source traditions",
+      "canonical_url": "https://know-your-history.com/articles/amina-of-zazzau/",
+      "citation_text": "The historical survey explains the conflicting fifteenth-, sixteenth-, and later chronologies and notes Abdullahi Smith's influential placement of Amina after 1576.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Abdullahi Smith, 'Some Considerations Relating to the Formation of States in Hausaland'",
+      "citation_text": "Smith's reconstruction is among the principal scholarly bases for placing Amina's reign after 1576.",
+      "source_type": "bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

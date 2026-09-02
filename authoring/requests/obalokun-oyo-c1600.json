@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:obalokun:oyo:c1600:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Obalókun",
+    "display_name_ko": "오발로쿤"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Oyo Empire",
+    "display_name_ko": "오요 제국"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Alaafin",
+    "role_display_name_ko": "알라핀",
+    "start_year": 1600,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1600,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Obalókun is remembered in Oyo historical tradition as an expansionist Alaafin associated with Oyo's first direct Atlantic-facing expansion. Early Oyo regnal chronology is highly uncertain: modern reconstructions variously place him around 1588–1599 or in the 1620s. ATLAS therefore uses only c.1600 as a representative rule point rather than inventing a precise reign interval."
+  },
+  "sources": [
+    {
+      "title": "Akinwumi Ogundiran, The Yoruba: A New History",
+      "citation_text": "Ogundiran discusses Obalókun as an expansionist Alaafin in the reconstructed political history of Oyo.",
+      "source_type": "bibliographic_reference"
+    },
+    {
+      "title": "Obalókun — reconstructed Oyo chronology",
+      "canonical_url": "https://en.wikipedia.org/wiki/Obalokun",
+      "citation_text": "The summary illustrates the contested chronology, giving 1588–1599 while noting an alternative placement in the 1620s.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

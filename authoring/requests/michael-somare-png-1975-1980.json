@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:michael-somare:papua-new-guinea:prime-minister:1975-1980:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Michael Somare",
+    "display_name_ko": "마이클 소마레"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Papua New Guinea",
+    "display_name_ko": "파푸아뉴기니"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "start_year": 1975,
+    "start_month": 9,
+    "start_day": 16,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1980,
+    "end_month": 3,
+    "end_day": 11,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Somare became the first Prime Minister of independent Papua New Guinea on 16 September 1975 and served until losing a vote of no confidence on 11 March 1980."
+  },
+  "sources": [
+    {
+      "title": "ANU Press — PNG prime ministers table",
+      "canonical_url": "https://press-files.anu.edu.au/downloads/press/n13904/html/annex_a.xhtml",
+      "citation_text": "ANU's political table gives Somare's first prime-ministerial term as 16 September 1975 to 11 March 1980.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
