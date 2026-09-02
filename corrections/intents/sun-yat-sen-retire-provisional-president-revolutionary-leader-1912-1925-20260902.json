@@ -1,0 +1,22 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:sun-yat-sen:retire-provisional-president-revolutionary-leader-1912-1925:20260902:v1",
+  "review_status": "approved",
+  "release_order": 740,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "17eba513-c00d-59c5-ba29-4a69f9143d9a"
+  },
+  "evidence": {
+    "reason": "Compound-role audit confirmed that the legacy 1912-1925 row incorrectly extends Sun Yat-sen's provisional presidency across his entire later revolutionary career. Production now contains reviewed replacements: Revolutionary leader 1912-1925 (b2a03f4d-869d-4aa4-bbcd-195c3b7b75d1), Provisional President 1912 (7e78f947-04fc-4680-9cff-c5538ad077ef), Constitutional Protection Grand Marshal 1917-1918 (b121d9c3-6823-478c-9f4a-01ecba917a36), Guangzhou Extraordinary President 1921-1922 (8835904a-45dc-4c0f-8380-d376d8281e40), and Guangzhou Grand Marshal 1923-1925 (6facafe6-d3d8-4c6c-8516-2035dc8d26a5). Retire only the legacy compound Activity.",
+    "person_id": "bce94016-8f0d-5f14-9582-431a25602665",
+    "replacement_activity_ids": [
+      "b2a03f4d-869d-4aa4-bbcd-195c3b7b75d1",
+      "7e78f947-04fc-4680-9cff-c5538ad077ef",
+      "b121d9c3-6823-478c-9f4a-01ecba917a36",
+      "8835904a-45dc-4c0f-8380-d376d8281e40",
+      "6facafe6-d3d8-4c6c-8516-2035dc8d26a5"
+    ],
+    "retire_activity_id": "17eba513-c00d-59c5-ba29-4a69f9143d9a"
+  }
+}
