@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:yaqub-beg:yettishar:1865-1877:v1",
+  "person": {
+    "canonical_name_en": "Yaqub Beg",
+    "display_name_ko": "야쿠브 베그",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Yettishar",
+    "display_name_ko": "예티샤르",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emir",
+    "role_display_name_ko": "에미르",
+    "start_year": 1865,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1877,
+    "end_month": 5,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Yaqub Beg seized power in Kashgar and in 1865 proclaimed himself ruler of the independent state of Yettishar. He ruled until his death in late May 1877; the precise day is disputed, so ATLAS stores the end at approximate month granularity."
+  },
+  "sources": [
+    {
+      "title": "ЯКУБ-БЕК МУХАММЕД ЯКУБ-БЕК — Большая российская энциклопедия",
+      "canonical_url": "https://old.bigenc.ru/world_history/text/4925525",
+      "citation_text": "The Great Russian Encyclopedia states that Yaqub Beg usurped power in Kashgar and in 1865 proclaimed himself ruler of the independent state of Yettishar, which ended after his death in May 1877.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:john-paul-i:vatican-city:1978:v1",
+  "person": {
+    "canonical_name_en": "John Paul I",
+    "display_name_ko": "요한 바오로 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Vatican City",
+    "display_name_ko": "바티칸 시국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Pope and Sovereign",
+    "role_display_name_ko": "교황·세속 군주",
+    "start_year": 1978,
+    "start_month": 8,
+    "start_day": 26,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1978,
+    "end_month": 9,
+    "end_day": 28,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Albino Luciani was elected Pope John Paul I on 26 August 1978 and his pontificate ended with his death on 28 September 1978. The existing Vatican City polity and Pope-and-Sovereign role are reused."
+  },
+  "sources": [
+    {
+      "title": "John Paul I — Holy See",
+      "canonical_url": "https://www.vatican.va/content/vatican/en/holy-father/giovanni-paolo-i.html",
+      "citation_text": "The Holy See lists the beginning of John Paul I's pontificate on 26 August 1978 and its end on 28 September 1978.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

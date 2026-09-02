@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:abu-al-ghazi-bahadur:khanate-of-khiva:1643-1663:v1",
+  "person": {
+    "canonical_name_en": "Abu al-Ghazi Bahadur",
+    "display_name_ko": "아불 가지 바하두르 칸",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Khanate of Khiva",
+    "display_name_ko": "히바 칸국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khan",
+    "role_display_name_ko": "칸",
+    "start_year": 1643,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1663,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Abu al-Ghazi Bahadur acceded to the Khivan throne in 1643 and abdicated in favor of his son Anusha Khan in 1663."
+  },
+  "sources": [
+    {
+      "title": "Abu al-Ghazi Bahadur",
+      "canonical_url": "https://en.wikipedia.org/wiki/Abu_al-Ghazi_Bahadur",
+      "citation_text": "The biography identifies Abu al-Ghazi Bahadur as Khan of Khiva from 1643 to 1663 and records his abdication in favor of Anusha Khan.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

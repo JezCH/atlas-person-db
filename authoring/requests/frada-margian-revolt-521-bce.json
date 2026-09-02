@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:frada:margian-revolt:521-bce:v1",
+  "person": {
+    "canonical_name_en": "Frâda",
+    "display_name_ko": "프라다",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Margian Revolt against Darius I",
+    "display_name_ko": "다리우스 1세에 대한 마르기아 반란",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Leader of the Margian revolt",
+    "role_display_name_ko": "마르기아 반란 지도자",
+    "start_year": -521,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -521,
+    "end_month": 12,
+    "end_day": 28,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Behistun inscription identifies Frâda as the leader chosen by the people of Margiana during revolt against Darius I. The mod label 'Oxus' is not treated as evidence for a sovereign Oxus polity. Iranica argues that Frâda's defeat most probably occurred on 28 December 521 BCE, while acknowledging a 522 BCE chronological alternative; ATLAS therefore keeps the revolt year and terminal day approximate."
+  },
+  "sources": [
+    {
+      "title": "FRĀDA — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/frada/",
+      "citation_text": "Iranica identifies Frâda as a Margian leader chosen as chief/king during revolt against Darius I and argues that his defeat most probably occurred on 28 December 521 BCE, while noting an alternative 522 BCE chronology.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

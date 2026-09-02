@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:saparmurat-niyazov:turkmenistan:1991-2006:v1",
+  "person": {
+    "canonical_name_en": "Saparmurat Niyazov",
+    "display_name_ko": "사파르무라트 니야조프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Turkmenistan",
+    "display_name_ko": "투르크메니스탄",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1991,
+    "start_month": 10,
+    "start_day": 27,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2006,
+    "end_month": 12,
+    "end_day": 21,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Niyazov became president of independent Turkmenistan on 27 October 1991 and remained the country's authoritarian head of state until his death on 21 December 2006. His earlier Soviet Turkmen SSR party leadership is not folded into this independent-state Activity."
+  },
+  "sources": [
+    {
+      "title": "Saparmurat Niyazov",
+      "canonical_url": "https://en.wikipedia.org/wiki/Saparmurat_Niyazov",
+      "citation_text": "The biography lists Niyazov as President of Turkmenistan from 27 October 1991 until his death on 21 December 2006.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

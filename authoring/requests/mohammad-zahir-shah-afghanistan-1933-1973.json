@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mohammad-zahir-shah:kingdom-of-afghanistan:1933-1973:v1",
+  "person": {
+    "canonical_name_en": "Mohammad Zahir Shah",
+    "display_name_ko": "무함마드 자히르 샤",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Afghanistan",
+    "display_name_ko": "아프가니스탄 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1933,
+    "start_month": 11,
+    "start_day": 8,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1973,
+    "end_month": 7,
+    "end_day": 17,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mohammad Zahir Shah became king on 8 November 1933 and remained monarch until the coup of 17 July 1973 abolished the Afghan monarchy."
+  },
+  "sources": [
+    {
+      "title": "Mohammad Zahir Shah",
+      "canonical_url": "https://en.wikipedia.org/wiki/Mohammad_Zahir_Shah",
+      "citation_text": "The biography gives Zahir Shah's reign as King of Afghanistan from 8 November 1933 to 17 July 1973.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

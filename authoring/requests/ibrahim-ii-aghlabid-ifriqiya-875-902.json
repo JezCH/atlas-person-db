@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ibrahim-ii:aghlabid-ifriqiya:875-902:v1",
+  "person": {
+    "canonical_name_en": "Ibrahim II ibn Ahmad",
+    "display_name_ko": "이브라힘 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Aghlabid Emirate of Ifriqiya",
+    "display_name_ko": "이프리키야 아글라브 토후국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emir",
+    "role_display_name_ko": "에미르",
+    "start_year": 875,
+    "start_month": 2,
+    "start_day": 16,
+    "start_certainty": "exact",
+    "start_calendar": "julian",
+    "end_year": 902,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ibrahim II was proclaimed Aghlabid emir of Ifriqiya on 16 February 875 and ruled until his abdication in 902. ATLAS uses the historical polity rather than treating the dynasty name alone as a state."
+  },
+  "sources": [
+    {
+      "title": "İBRÂHİM II — TDV İslâm Ansiklopedisi",
+      "canonical_url": "https://islamansiklopedisi.org.tr/ibrahim-ii",
+      "citation_text": "TDV identifies Ibrahim II as Aghlabid emir from 875 to 902 and gives his proclamation as emir on 16 February 875.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

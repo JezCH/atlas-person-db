@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ayuka-khan:kalmyk-khanate:khan:1690-1724:v1",
+  "person": {
+    "canonical_name_en": "Ayuka Khan",
+    "display_name_ko": "아유카 칸",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kalmyk Khanate",
+    "display_name_ko": "칼미크 칸국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khan",
+    "role_display_name_ko": "칸",
+    "start_year": 1690,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1724,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ayuka ruled as Khan of the Kalmyk Khanate from 1690 until his death in 1724, when Kalmyk military and political power reached a high point. The user label 'Kalmyk Empire' is normalized to the historically standard Kalmyk Khanate."
+  },
+  "sources": [
+    {
+      "title": "Ayuka Khan",
+      "canonical_url": "https://en.wikipedia.org/wiki/Ayuka_Khan",
+      "citation_text": "The biography lists Ayuka as Taishi of the Kalmyks from 1672 to 1690 and Khan of the Kalmyk Khanate from 1690 to 1724.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
