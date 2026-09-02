@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:agathokles-of-rhodes:rhodes:c300-bce:v1",
+  "person": {
+    "canonical_name_en": "Agathokles of Rhodes",
+    "display_name_ko": "로도스의 아가토클레스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Rhodes",
+    "display_name_ko": "로도스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Merchant and civic benefactor",
+    "role_display_name_ko": "상인·공공 후원자",
+    "start_year": -300,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -300,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The custom-civilization leader Agathokles Rhodios corresponds to the historically attested Agathokles son of Hagemon of Rhodes. An Ephesian decree around 300 BCE honors him for importing 14,000 hekteis of grain and selling it below market price. The inscription does not establish him as ruler or magistrate of Rhodes, so ATLAS records a representative civic-commercial activity point rather than inventing a Rhodian reign."
+  },
+  "sources": [
+    {
+      "title": "Sylloge Inscriptionum Graecarum 354 — Ephesos honours Agathokles of Rhodes",
+      "canonical_url": "https://attalus.org/docs/sig1/s354.html",
+      "citation_text": "The c.300 BCE Ephesian decree honors Agathokles son of Hagemon of Rhodes for importing grain and selling it below market price, granting him Ephesian citizenship.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Ephesos 59 — PHI Greek Inscriptions",
+      "canonical_url": "https://epigraphy.packhum.org/text/247766",
+      "citation_text": "The epigraphic text identifies Agathokles son of Hagemon as Rhodian and records the grain benefaction; it does not identify him as political ruler of Rhodes.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

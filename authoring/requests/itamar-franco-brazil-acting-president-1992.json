@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:itamar-franco:brazil:acting-president:1992:v1",
+  "person": {
+    "canonical_name_en": "Itamar Franco",
+    "display_name_ko": "이타마르 프랑쿠",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Brazil",
+    "display_name_ko": "브라질",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Acting President",
+    "role_display_name_ko": "대통령 권한대행",
+    "start_year": 1992,
+    "start_month": 10,
+    "start_day": 2,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1992,
+    "end_month": 12,
+    "end_day": 28,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Itamar Franco assumed the presidency in an acting capacity on 2 October 1992 during Fernando Collor's impeachment proceedings. His acting phase ended when he was formally installed as President on 29 December 1992."
+  },
+  "sources": [
+    {
+      "title": "Itamar Augusto Cautiero Franco — Arquivo Nacional",
+      "canonical_url": "https://presidentes.an.gov.br/index.php/centro-de-referencia-de-acervos-presidenciais/assuntos/biografias/203-itamar-augusto-cautiero-franco",
+      "citation_text": "Brazil's National Archive gives Itamar Franco's presidential period as 2 October 1992 to 1 January 1995.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Biografia — Itamar Franco — Secretaria-Geral",
+      "canonical_url": "https://www.gov.br/secretariageral/pt-br/centrais-de-conteudo/biblioteca-da-pr/galeria-dos-ex-presidentes/itamar-augusto-cautiero-franco/biografia",
+      "citation_text": "The Brazilian federal government states that Itamar became acting president on 2 October 1992 and was formally installed as president on 29 December 1992 after Collor's resignation.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

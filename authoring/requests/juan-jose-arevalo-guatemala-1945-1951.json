@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:juan-jose-arevalo:guatemala:1945-1951:v1",
+  "person": {
+    "canonical_name_en": "Juan José Arévalo",
+    "display_name_ko": "후안 호세 아레발로",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Guatemala",
+    "display_name_ko": "과테말라",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1945,
+    "start_month": 3,
+    "start_day": 15,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1951,
+    "end_month": 3,
+    "end_day": 15,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Juan José Arévalo assumed the Guatemalan presidency on 15 March 1945 after the 1944 Revolution and completed the constitutional six-year term on 15 March 1951."
+  },
+  "sources": [
+    {
+      "title": "Historia Política de Guatemala, Siglo XX — CEUR/USAC",
+      "canonical_url": "https://ceur.usac.edu.gt/publicaciones1/historia-politica-tomo-ii.html",
+      "citation_text": "The University of San Carlos history center states that Arévalo took office on 15 March 1945 for a six-year presidential term ending in 1951.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Discurso del Doctor Juan José Arévalo, Presidente Constitucional 1945-1951 — SICultura Guatemala",
+      "canonical_url": "https://www.sicultura.gob.gt/wp-content/uploads/2022/12/VOL.-5-III-EPOCA.pdf",
+      "citation_text": "Arévalo's transfer-of-power address states that he assumed the presidency on 15 March 1945 and handed over power on 15 March 1951.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

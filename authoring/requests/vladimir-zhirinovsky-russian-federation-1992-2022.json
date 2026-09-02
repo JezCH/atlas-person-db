@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:vladimir-zhirinovsky:russian-federation:1992-2022:v1",
+  "person": {
+    "canonical_name_en": "Vladimir Zhirinovsky",
+    "display_name_ko": "블라디미르 지리놉스키",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Russian Federation",
+    "display_name_ko": "러시아 연방",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "LDPR leader and State Duma politician",
+    "role_display_name_ko": "LDPR 지도자·국가두마 정치인",
+    "start_year": 1992,
+    "start_month": 4,
+    "start_day": 18,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2022,
+    "end_month": 4,
+    "end_day": 6,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Zhirinovsky never ruled the Russian Federation. He led the LDPR from 18 April 1992 until his death on 6 April 2022 and served for decades in the State Duma, including as a parliamentary faction leader and deputy chairman. ATLAS therefore records bounded national political activity, not a presidential or sovereign term."
+  },
+  "sources": [
+    {
+      "title": "Zhirinovsky Vladimir Volfovich — State Duma",
+      "canonical_url": "https://duma.gov.ru/en/duma/persons/99100142/",
+      "citation_text": "The official State Duma profile confirms Zhirinovsky as a long-serving LDPR parliamentary politician.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Vladimir Zhirinovsky",
+      "canonical_url": "https://en.wikipedia.org/wiki/Vladimir_Zhirinovsky",
+      "citation_text": "The office chronology gives his leadership of the LDPR from 18 April 1992 to 6 April 2022 and documents his long State Duma career.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
