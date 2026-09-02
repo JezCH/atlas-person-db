@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Glory of the Morning",
+    "display_name_ko": "글로리 오브 더 모닝",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ho-Chunk",
+    "display_name_ko": "호청크족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Chief",
+    "role_display_name_ko": "수장",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ho-Chunk leader Hąboguwįga, also recorded as Ho-poe-kaw and translated Glory of the Morning. Jonathan Carver visited her village in 1766 and described her leadership. This is a directly attested activity point, not a one-year reign. Her full tenure and death year are not securely established; conflicting traditional accession dates and claims of survival to 1832 are not converted into a continuous reign.",
+    "start_year": 1766,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1766,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Glory of the Morning — historical biography",
+      "canonical_url": "https://en.wikipedia.org/wiki/Glory_of_the_Morning",
+      "citation_text": "Ho-Chunk leader Hąboguwįga, also recorded as Ho-poe-kaw and translated Glory of the Morning. Jonathan Carver visited her village in 1766 and described her leadership. This is a directly attested activity point, not a one-year reign. Her full tenure and death year are not securely established; conflicting traditional accession dates and claims of survival to 1832 are not converted into a continuous reign."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Patrick J. Jung — Ho-Chunk Matriculture: History, Theory, and Methodology",
+      "canonical_url": "https://www.academia.edu/143556486/Ho_Chunk_Matriculture_History_Theory_and_Methodology",
+      "citation_text": "Ho-Chunk leader Hąboguwįga, also recorded as Ho-poe-kaw and translated Glory of the Morning. Jonathan Carver visited her village in 1766 and described her leadership. This is a directly attested activity point, not a one-year reign. Her full tenure and death year are not securely established; conflicting traditional accession dates and claims of survival to 1832 are not converted into a continuous reign."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "nanyue-yanina-identity-resolution-20260902",
+    "requested_item": 67
+  }
+}

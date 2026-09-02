@@ -1930,5 +1930,65 @@
       "batch": "nanyue-yanina-20260902",
       "item": 76
     }
+  },
+  {
+    "person_name": "Damahaar",
+    "display_name_ko": "다마하르",
+    "politic_name": "Dheeva Maari (Solar dynasty)",
+    "politic_display_name_ko": "디바마리(태양 왕조)",
+    "historicity": "historical_tradition_uncertain_chronology",
+    "historicity_display_ko": "역사 전승·연대 불확실",
+    "role_ko": "몰디브 태양 왕조의 여왕",
+    "reason": "Identified by the user as the queen Damahaar, also written Srimati Damahara, rather than the kingdom name Dheeva Maari. Maldivian royal history identifies her as a pre-Koimala Solar-dynasty queen. Reviewed accounts do not independently establish a secure personal reign; precise-looking modern king-list dates are not promoted to verified Activity boundaries.",
+    "sources": [
+      {
+        "title": "Maldive Sovereigns — Maldives Royal Family historical account",
+        "url": "https://maldivesroyalfamily.com/maldives_kings_list.full.shtml"
+      },
+      {
+        "title": "List of Maldivian monarchs — Solar dynasty",
+        "url": "https://en.wikipedia.org/wiki/List_of_Maldivian_monarchs"
+      }
+    ],
+    "request_context": {
+      "batch": "nanyue-yanina-20260902",
+      "item": 30,
+      "identity_resolved_by": "user_supplied_queen_Damahaar"
+    },
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed personal chronology."
+  },
+  {
+    "person_name": "Saraiden Sapw",
+    "display_name_ko": "사라이덴 삽",
+    "politic_name": "Saudeleur polity (Pohnpei)",
+    "politic_display_name_ko": "사우델레우르 정체(폰페이)",
+    "historicity": "historical_tradition_uncertain_chronology",
+    "historicity_display_ko": "역사 전승·연대 불확실",
+    "role_ko": "난마돌을 중심으로 한 사우델레우르 군주",
+    "reason": "The user identified the individual Saraiden Sapw, resolving the earlier generic title Saudeleur. Pohnpeian traditions name him among the rulers and associate him with first-fruits tribute. A defensible individual reign interval is unavailable; the dynasty's archaeological dates and another ruler's traditional dates are not assigned to him.",
+    "sources": [
+      {
+        "title": "Saudeleur dynasty — named rulers and first-fruits tradition, citing Ballinger (1978), pp. 45–48",
+        "url": "https://en.wikipedia.org/wiki/Saudeleur_dynasty"
+      }
+    ],
+    "request_context": {
+      "batch": "nanyue-yanina-20260902",
+      "item": 41,
+      "identity_resolved_by": "user_supplied_Saraiden_Sapw"
+    },
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed personal chronology."
   }
 ]
