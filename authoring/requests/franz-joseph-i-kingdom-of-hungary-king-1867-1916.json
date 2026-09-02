@@ -29,10 +29,16 @@
   },
   "sources": [
     {
-      "title": "Franz Joseph I — Die Welt der Habsburger",
-      "canonical_url": "https://www.habsburger.net/en/persons/habsburg-emperor/franz-joseph-i",
-      "citation_text": "The Habsburg history portal records Franz Joseph I as Emperor of Austria and King of Hungary, ruling from 1848 to 1916, and states that he ascended the Austrian throne in 1848 and accepted the 1867 Dual Monarchy settlement.",
-      "source_type": "web_bibliographic_reference"
+      "title": "Franz Joseph I taking the Hungarian coronation oath in 1867 — Austrian Parliament",
+      "canonical_url": "https://www.parlament.gv.at/bild/20124581",
+      "citation_text": "The Austrian Parliament documents Emperor Franz Joseph I taking the Hungarian coronation oath in 1867, supporting the distinct Hungarian royal crown after the Compromise.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "The Eternal Emperor. Franz Joseph I 1830–1916 — Austrian National Library",
+      "canonical_url": "https://www.onb.ac.at/en/museums/state-hall/programme/previous-exhibitions/the-eternal-emperor-franz-joseph-i-1830-1916",
+      "citation_text": "The Austrian National Library documents Franz Joseph's reign from his 1848 accession until his death in 1916.",
+      "source_type": "official_museum_biographical_reference"
     }
   ],
   "external_references": {
