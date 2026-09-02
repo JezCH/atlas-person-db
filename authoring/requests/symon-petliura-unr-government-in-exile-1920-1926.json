@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:symon-petliura:unr-government-in-exile:1920-1926:v1",
+  "person": {
+    "canonical_name_en": "Symon Petliura",
+    "display_name_ko": "시몬 페틀류라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Government-in-exile of the Ukrainian People's Republic",
+    "display_name_ko": "우크라이나 인민공화국 망명정부",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Head of the Directory",
+    "role_display_name_ko": "디렉토리 수반",
+    "start_year": 1920,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1926,
+    "end_month": 5,
+    "end_day": 25,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the Ukrainian People's Republic lost territorial control in late 1920, Petliura continued as head of the Directory and therefore head of the UNR government-in-exile until his death on 25 May 1926. ATLAS keeps this exile phase separate from his territorial-state leadership."
+  },
+  "sources": [
+    {
+      "title": "Encyclopedia of Ukraine — Government-in-exile of the Ukrainian National Republic",
+      "canonical_url": "https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%5CG%5CO%5CGovernment6in6exileoftheUkrainianNationalRepublic.htm",
+      "citation_text": "The Encyclopedia of Ukraine states that Symon Petliura remained head of the Directory and hence head of state until 25 May 1926.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "State Archival Service of Ukraine — The Odyssey of the Petliura Library and the Records of the Ukrainian National Republic during World War II",
+      "canonical_url": "https://old.archives.gov.ua/Eng/Odyssey.php",
+      "citation_text": "Ukraine's archival service describes the UNR government being forced into exile in 1920 and Petliura initially settling in Tarnów as chairman of the UNR Directorate.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
