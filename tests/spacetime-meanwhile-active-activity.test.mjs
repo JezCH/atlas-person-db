@@ -57,3 +57,24 @@ test("Activity interval boundaries are inclusive", () => {
   assert.equal(meanwhile.activeAtOrdinal(s, -5), true);
   assert.equal(meanwhile.activeAtOrdinal(s, -4), false);
 });
+
+import { readFileSync } from "node:fs";
+
+const viewSource = readFileSync(new URL("../atlas-person-spacetime-view.js", import.meta.url), "utf8");
+const viewCss = readFileSync(new URL("../atlas-person-spacetime-view.css", import.meta.url), "utf8");
+
+test("Production renderer exposes selected-moment line, regional summary, Activity list, and active highlighting", () => {
+  assert.match(viewSource, /atlas-person-spacetime-meanwhile\.js\?v=20260902-active-activity/);
+  assert.match(viewSource, /function setMeanwhileYear\(/);
+  assert.match(viewSource, /historicalYearForScreenY/);
+  assert.match(viewSource, /function renderMeanwhile\(/);
+  assert.match(viewSource, /spacetime-meanwhile-regions/);
+  assert.match(viewSource, /data-spacetime-meanwhile-person/);
+  assert.match(viewSource, /spacetime-meanwhile-line/);
+  assert.match(viewSource, /is-meanwhile-active/);
+  assert.match(viewSource, /compiled\.partitioned\.tracks,\s*meanwhileOrdinal/s);
+  assert.match(viewCss, /\.spacetime-meanwhile-line/);
+  assert.match(viewCss, /\.spacetime-track-label\.is-meanwhile-active/);
+  assert.match(viewCss, /\.spacetime-track-rail\.is-meanwhile-active/);
+  assert.match(viewCss, /\.spacetime-activity-glyph\.is-meanwhile-active/);
+});
