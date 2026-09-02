@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:karl-fassi:zheltuga-republic:president:1885:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Karl Fassi",
+    "display_name_ko": "카를 파시(아돌프 카를로비치 파스)"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Zheltuga Republic",
+    "display_name_ko": "젤투가 공화국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President / senior elected officer",
+    "role_display_name_ko": "대통령·선출 수반",
+    "start_year": 1885,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1885,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "The first elected head of the Zheltuga self-governing mining community is transmitted under conflicting names. A late-imperial Russian finance report cited by modern scholarship gives Karl Karlovich Fosse, while contemporary reporting also gives Adolf Karlovich Fass; later summaries identify him as Karl Fassi. The user/mod label 'Adolf Karlstens' is not supported by the historical sources checked. ATLAS therefore normalizes the identity to Karl Fassi while preserving Adolf Karlovich Fass as the principal variant in the Korean display name and notes. Because the exact beginning and end of his presidency are uncertain and leadership changed rapidly, ATLAS uses 1885 as a representative approximate term point rather than fabricating a multi-year tenure."
+  },
+  "sources": [
+    {
+      "title": "O. I. Kurto, Zheltuginskaya Republic: Experience of Social Development on the Russian-Chinese Border",
+      "canonical_url": "https://libmonster.com/m/articles/view/ZHELTUGINSKAYA-REPUBLIC-EXPERIENCE-OF-SOCIAL-DEVELOPMENT-ON-THE-RUSSIAN-CHINESE-BORDER",
+      "citation_text": "The study describes Zheltuga's elected president and documents the conflicting contemporary names Karl Karlovich Fosse and Adolf Karlovich Fass, emphasizing uncertainty over the first ruler's identity.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Russia Beyond — How Russians secretly set up their own 'California' in China",
+      "canonical_url": "https://www.rbth.com/history/333347-russians-secretly-set-up-california",
+      "citation_text": "The overview identifies the elected first president as Karl Johann Fasse and describes Zheltuga's self-governing institutions.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

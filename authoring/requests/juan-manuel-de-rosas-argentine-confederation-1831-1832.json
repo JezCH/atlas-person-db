@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:juan-manuel-de-rosas:argentine-confederation:foreign-relations:1831-1832:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Juan Manuel de Rosas",
+    "display_name_ko": "후안 마누엘 데 로사스"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Argentine Confederation",
+    "display_name_ko": "아르헨티나 연방"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Governor of Buenos Aires managing confederal foreign relations",
+    "role_display_name_ko": "부에노스아이레스 주지사·연방 대외관계 대표",
+    "start_year": 1831,
+    "start_month": 1,
+    "start_day": 4,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1832,
+    "end_month": 12,
+    "end_day": 5,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the Federal Pact of 4 January 1831 created the basis of the Argentine Confederation, Rosas, as Governor of Buenos Aires, exercised the foreign relations delegated by the confederated provinces. ATLAS models this as de facto confederal governance rather than inventing a presidential title. This first interval ends when Rosas left the Buenos Aires governorship in December 1832."
+  },
+  "sources": [
+    {
+      "title": "Argentina.gob.ar — Juan Manuel de Rosas historical institute decree",
+      "canonical_url": "https://www.argentina.gob.ar/normativa/nacional/norma-41447/texto",
+      "citation_text": "Argentina's national decree states that Rosas governed Buenos Aires and exercised representation of the foreign relations of the Argentine Confederation.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Argentine Confederation — heads managing international relations",
+      "canonical_url": "https://en.wikipedia.org/wiki/List_of_heads_of_state_of_Argentina",
+      "citation_text": "The historical head-of-state chronology gives Rosas's first confederal foreign-relations interval from 4 January 1831 to 5 December 1832.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
