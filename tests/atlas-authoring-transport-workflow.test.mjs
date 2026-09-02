@@ -5,7 +5,7 @@ import fs from 'node:fs';
 const workflow = fs.readFileSync(new URL('../.github/workflows/atlas-authoring-apply.yml', import.meta.url), 'utf8');
 
 function applyScript() {
-  const startMarker = '      - name: Apply manifests through deployed Vercel server\n        if: env.ATLAS_AUTHORING_SELECTED == \'true\'\n        shell: bash\n        run: |\n';
+  const startMarker = '      - name: Apply manifests through deployed Vercel server\n        if: env.ATLAS_AUTHORING_SELECTED == \'true\' && env.ATLAS_AUTHORING_AUDIT_ALL_APPROVED != \'true\'\n        shell: bash\n        run: |\n';
   const endMarker = '\n      - name: Upload immutable authoring evidence';
   const start = workflow.indexOf(startMarker);
   assert.notEqual(start, -1, 'authoring apply step must exist');
@@ -20,6 +20,7 @@ test('authoring workflow is triggered only by reviewed request data or explicit 
   assert.doesNotMatch(workflow, /- 'server\/atlas-authoring-apply-handler\.js'/);
   assert.match(workflow, /workflow_dispatch:/);
   assert.match(workflow, /bootstrap_only:/);
+  assert.match(workflow, /audit_all_approved:/);
   assert.match(workflow, /required: false/);
 });
 
@@ -52,8 +53,8 @@ test('bounded bootstrap sends only exact SHAs, requires OIDC, and proves ledger 
   assert.match(workflow, /\.bootstrap_complete==true/);
   assert.match(workflow, /\.readiness\.core\.ledger_columns_ready==true/);
   const bootstrapStart = workflow.indexOf('      - name: Bootstrap bounded authoring schema migrations');
-  const applyStart = workflow.indexOf('      - name: Apply manifests through deployed Vercel server');
-  const bootstrapBody = workflow.slice(bootstrapStart, applyStart);
+  const auditStart = workflow.indexOf('      - name: Build immutable approved human-authoring audit batches');
+  const bootstrapBody = workflow.slice(bootstrapStart, auditStart);
   assert.doesNotMatch(bootstrapBody, /--slurpfile manifest/);
   assert.doesNotMatch(bootstrapBody, /manifest_path/);
 });
@@ -86,4 +87,14 @@ test('authoring apply verifies Stage 2-native response and preserves evidence', 
   assert.match(workflow, /Upload immutable authoring evidence/);
   assert.match(workflow, /name: atlas-authoring-\$\{\{ github\.sha \}\}/);
   assert.match(workflow, /retention-days: 90/);
+});
+
+test('trusted completeness audit uses the pinned authoring workflow and never enters mutation steps', () => {
+  assert.match(workflow, /audit_all_approved:/);
+  assert.match(workflow, /Preflight every approved human-authoring manifest read-only/);
+  assert.match(workflow, /ATLAS_AUTHORING_AUDIT_ALL_APPROVED == 'true'/);
+  assert.match(workflow, /operation:"preflight_batch"/);
+  assert.match(workflow, /data_level_missing_count: ready\.length/);
+  assert.match(workflow, /ATLAS_AUTHORING_AUDIT_ALL_APPROVED != 'true'/);
+  assert.doesNotMatch(workflow, /atlas-authoring-completeness-audit\.yml/);
 });
