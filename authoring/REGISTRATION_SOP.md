@@ -439,3 +439,15 @@ Production read-back: VERIFIED
 The stopping rule is strict: **first authoritative canonical Production verification completes the registration.** A second manual verification pass is not part of the normal path.
 
 For a mixed user batch, the final report should distinguish `COMPLETE_EXISTING`, newly `VERIFIED`, `NON_TIMELINE`, `EXCLUDE`, `NEEDS_CORRECTION`, and `DEFERRED_OPEN_ENDED` items without forcing them through one artificial workflow.
+
+
+### Ongoing-term support (2026-09-02)
+
+The Human Authoring path now supports source-verified current terms using
+`chronology_status: "ongoing"`, an entirely null end boundary, and
+`ongoing_as_of`. Review the actual start and the incumbent status at that date.
+Use the ordinary path when the ongoing schema migration is deployed; retain
+`DEFERRED_OPEN_ENDED` for a runtime that cannot represent this contract. Never
+convert an unknown historical endpoint into an ongoing term. Do not use the
+verification date as the Activity end. See `HUMAN_AUTHORING.md` for the payload
+and readback contract.

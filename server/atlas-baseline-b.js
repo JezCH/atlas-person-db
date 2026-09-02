@@ -155,8 +155,8 @@ async function inspectBaselineBReadiness(client, {
         or period_basis_id is null
         or activity_start_granularity is null
         or activity_start_calendar is null
-        or activity_end_granularity is null
-        or activity_end_calendar is null)::int as semantic_v2_incomplete,
+        or ((activity_end_granularity is null or activity_end_calendar is null)
+          and not (chronology_status='ongoing' and activity_end is null)))::int as semantic_v2_incomplete,
       count(*) filter (where relation_type_id is null
         and id = any($1::uuid[])
         and period_basis_id is not null
@@ -170,8 +170,8 @@ async function inspectBaselineBReadiness(client, {
         or period_basis_id is null
         or activity_start_granularity is null
         or activity_start_calendar is null
-        or activity_end_granularity is null
-        or activity_end_calendar is null)
+        or ((activity_end_granularity is null or activity_end_calendar is null)
+          and not (chronology_status='ongoing' and activity_end is null)))
         and not (relation_type_id is null
           and id = any($1::uuid[])
           and period_basis_id is not null

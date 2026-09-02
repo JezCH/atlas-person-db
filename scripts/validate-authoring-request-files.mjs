@@ -1,6 +1,8 @@
+import ongoingActivity from "../server/atlas-ongoing-activity.js";
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
+const { validateOngoingActivity } = ongoingActivity;
 
 const HUMAN_SCHEMA = 'atlas-human-authoring/v1';
 const NATIVE_SCHEMA = 'atlas-authoring-manifest/v2';
@@ -108,6 +110,10 @@ function validateNamuWiki(file, manifest) {
 }
 
 function validateBoundary(file, activity, prefix) {
+  if (prefix === "end" && activity.chronology_status === "ongoing") {
+    try { validateOngoingActivity(activity, { human:true }); } catch (error) { fail(file, error.message); }
+    return;
+  }
   const year = activity[`${prefix}_year`];
   const month = activity[`${prefix}_month`];
   const day = activity[`${prefix}_day`];
@@ -153,7 +159,7 @@ function validateNative(file, manifest) {
   if (!nonEmptyString(activity.period_basis_id)) fail(file, 'activity.period_basis_id is required');
   if (!BINDING_MODES.has(activity?.polity_binding?.mode)) fail(file, 'activity.polity_binding.mode is invalid');
   if (!ROLE_BINDING_MODES.has(activity?.role_binding?.mode)) fail(file, 'activity.role_binding.mode is invalid');
-  for (const prefix of ['activity_start','activity_end']) {
+  for (const prefix of ["activity_start","activity_end"]) {
     if (!historicalYear(activity[prefix])) fail(file, `${prefix} must be a non-zero integer historical year`);
     if (!nonEmptyString(activity[`${prefix}_granularity`])) fail(file, `${prefix}_granularity is required`);
     if (!nonEmptyString(activity[`${prefix}_certainty`])) fail(file, `${prefix}_certainty is required`);

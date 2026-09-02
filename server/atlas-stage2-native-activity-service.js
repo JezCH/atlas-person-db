@@ -10,6 +10,8 @@ const {
   semanticHash
 } = require("./atlas-activity-semantic-key-v2.js");
 
+const { ongoingAsOf } = require("./atlas-ongoing-activity.js");
+
 const ACTIVITY_FIELDS = Object.freeze([
   "person_id","polity_id","relation_type_id","role_id","period_basis_id",
   "activity_start","activity_start_month","activity_start_day","activity_start_granularity","activity_start_certainty","activity_start_calendar",
@@ -88,6 +90,7 @@ function normalizeStage2NativeActivity(raw) {
     activity_end_calendar: end.calendar,
     confidence: requiredText(raw.confidence, "STAGE2_ACTIVITY_CONFIDENCE_REQUIRED"),
     chronology_status: requiredText(raw.chronology_status, "STAGE2_ACTIVITY_CHRONOLOGY_STATUS_REQUIRED"),
+    ...(raw.chronology_status === "ongoing" ? { ongoing_as_of:ongoingAsOf(raw) } : {}),
     notes: optionalText(raw.notes),
     source_links: normalizeSourceLinks(raw.source_links)
   };
@@ -133,11 +136,11 @@ async function semanticCollisions(client, row, excludeId = null) {
        and activity_start_day is not distinct from $8::smallint
        and activity_start_granularity=$9
        and activity_start_calendar=$10
-       and activity_end=$11
+       and activity_end is not distinct from $11::integer
        and activity_end_month is not distinct from $12::smallint
        and activity_end_day is not distinct from $13::smallint
-       and activity_end_granularity=$14
-       and activity_end_calendar=$15
+       and activity_end_granularity is not distinct from $14::text
+       and activity_end_calendar is not distinct from $15::text
        and ($16::uuid is null or id<>$16::uuid)
      order by id
      limit 2`, [
@@ -180,7 +183,7 @@ async function replaceSourceLinks(client, activityId, links) {
 }
 
 function activityInsertValues(row, requestId, operation) {
-  const locator = Object.freeze({ kind:"stage2_native_authoring", request_id:String(requestId || ""), operation });
+  const locator = Object.freeze({ kind:"stage2_native_authoring", request_id:String(requestId || ""), operation, ...(row.chronology_status === "ongoing" ? { ongoing_as_of:row.ongoing_as_of } : {}) });
   return {
     locator,
     content_hash: hashPayload({ ...row, source_locator: locator })

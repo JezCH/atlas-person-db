@@ -64,12 +64,14 @@
   function rangeLabel(person) {
     const start = person?.first_activity_year;
     const end = person?.last_activity_year;
+    if (person?.activity_summaries?.some(a => a.end?.status === "ongoing")) return `${yearLabel(start)} – 현재`;
     if (!Number.isInteger(start) && !Number.isInteger(end)) return "주요 활동연도 미상";
     if (Number.isInteger(start) && Number.isInteger(end)) return `${yearLabel(start)} – ${yearLabel(end)}`;
     return Number.isInteger(start) ? `${yearLabel(start)} – 종료 미상` : `시작 미상 – ${yearLabel(end)}`;
   }
 
   function boundaryLabel(boundary) {
+    if (boundary?.status === "ongoing") return `현재 (${boundary.as_of || "확인일 미상"} 확인)`;
     if (!boundary || !Number.isInteger(boundary.year)) return "연도 미상";
     let label = yearLabel(boundary.year);
     if (Number.isInteger(boundary.month)) label += ` ${boundary.month}월`;

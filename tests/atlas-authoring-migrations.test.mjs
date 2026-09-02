@@ -14,7 +14,7 @@ const root = path.resolve(new URL('..', import.meta.url).pathname);
 const baseline = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 
 test('authoring migration registry is ordered and contains durable lifecycle-safe ledger and Person reference migrations', () => {
-  assert.equal(AUTHORING_MIGRATION_PATHS.length, 6);
+  assert.equal(AUTHORING_MIGRATION_PATHS.length, 7);
   assert.match(AUTHORING_MIGRATION_PATHS[0], /20260811_authoring_manifest_runs\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[1], /20260811_authoring_result_snapshot\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[2], /20260814_authoring_ledger_live_reference_lifecycle\.sql$/);

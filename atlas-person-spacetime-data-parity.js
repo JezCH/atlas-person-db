@@ -17,6 +17,7 @@
 
   function boundarySignature(boundary) {
     return Object.freeze({
+      ...(boundary?.status === "ongoing" ? { status:"ongoing", as_of:text(boundary.as_of) } : {}),
       year: numberOrNull(boundary?.year),
       month: numberOrNull(boundary?.month),
       day: numberOrNull(boundary?.day),

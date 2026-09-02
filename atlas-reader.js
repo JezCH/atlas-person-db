@@ -15,7 +15,8 @@
     const ids = new Set();
     (rows || []).forEach((row, index) => {
       if (!row || typeof row !== "object") return failures.push(`row ${index}: object required`);
-      const required = ["id", "person_name", "politic_name", "activity_start", "activity_end", "period_basis"];
+      const ongoing = row.chronology_status === "ongoing" && row.activity_end === null;
+      const required = ["id", "person_name", "politic_name", "activity_start", ...(ongoing ? [] : ["activity_end"]), "period_basis"];
       required.forEach((key) => {
         if (row[key] === null || row[key] === undefined || row[key] === "") failures.push(`row ${index}: ${key} required`);
       });
@@ -23,8 +24,8 @@
         if (row[key] !== null && row[key] !== undefined && (typeof row[key] !== "string" || !row[key].trim())) failures.push(`row ${index}: ${key} must be non-empty string when present`);
       }
       if (!Number.isInteger(Number(row.activity_start))) failures.push(`row ${index}: activity_start integer required`);
-      if (!Number.isInteger(Number(row.activity_end))) failures.push(`row ${index}: activity_end integer required`);
-      if (Number(row.activity_end) < Number(row.activity_start)) failures.push(`row ${index}: invalid chronology`);
+      if (!ongoing && !Number.isInteger(Number(row.activity_end))) failures.push(`row ${index}: activity_end integer required`);
+      if (!ongoing && Number(row.activity_end) < Number(row.activity_start)) failures.push(`row ${index}: invalid chronology`);
       if (!PERIOD_BASES.has(String(row.period_basis))) failures.push(`row ${index}: invalid period_basis`);
       if (row.role !== null && row.role !== undefined && typeof row.role !== "string") failures.push(`row ${index}: role must be string/null`);
       if (row.role_display_name !== null && row.role_display_name !== undefined && typeof row.role_display_name !== "string") failures.push(`row ${index}: role_display_name must be string/null`);

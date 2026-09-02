@@ -52,7 +52,8 @@
     "calendars": ["gregorian","julian","unspecified_historical","source_calendar"],
     "interval_semantics": "inclusive_without_fabricated_lower_precision_components",
     "boundary_may_be_unresolved_in_authoring": true,
-    "partial_boundary_tuple_allowed": false
+    "partial_boundary_tuple_allowed": false,
+    "ongoing_activity": {"chronology_status":"ongoing","end_boundary":"all_null","verification_date":"source_locator.ongoing_as_of","semantic_end_token":"<ONGOING>","display_extent":"through_verified_as_of_only"}
   },
   "polity_designation_types": ["official_name","state_form","historiographic_period","conventional_temporal_label"],
   "polity_relation_candidate_types": [

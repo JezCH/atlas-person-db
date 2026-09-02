@@ -21,7 +21,7 @@
   }
   function activityChronology(activity) {
     const startYear = Number.isInteger(activity?.start?.year) && activity.start.year !== 0 ? activity.start.year : null;
-    const endYear = Number.isInteger(activity?.end?.year) && activity.end.year !== 0 ? activity.end.year : null;
+    const endYear = modelApi.activityInterval(activity)?.end_year ?? null;
     const startOrdinal = modelApi.historicalYearToOrdinal(startYear);
     const endOrdinal = modelApi.historicalYearToOrdinal(endYear);
     if (startOrdinal == null || endOrdinal == null || startOrdinal > endOrdinal) return null;

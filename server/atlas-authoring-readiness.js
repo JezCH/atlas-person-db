@@ -7,6 +7,11 @@ const { personMergeExecutionState } = require("./atlas-person-merge-interlock.js
 async function inspectCoreAuthoringSchema(client) {
   const result = await client.query(`
     select
+      exists (
+        select 1 from pg_constraint
+        where conrelid=to_regclass('atlas_v2.person_politics_v2')
+          and conname='person_politics_v2_ongoing_end_check'
+      ) and to_regclass('atlas_v2.person_politics_v2_ongoing_semantic_identity_uq') is not null as ongoing_terms_ready,
       to_regclass('atlas_v2.persons') as persons,
       to_regclass('atlas_v2.polities') as polities,
       to_regclass('atlas_v2.roles') as roles,
@@ -170,6 +175,7 @@ async function inspectCoreAuthoringSchema(client) {
     && personReferenceConstraintsReady
     && personExternalReferenceSyncReady;
   return Object.freeze({
+    ongoing_terms_ready: row.ongoing_terms_ready === true,
     base_tables_ready: baseTablesReady,
     ledger_table_ready: ledgerTableReady,
     tables_ready: baseTablesReady && ledgerTableReady,

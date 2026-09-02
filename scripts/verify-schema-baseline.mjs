@@ -19,7 +19,8 @@ const expectedAuthoringMigrations = [
   '20260814_authoring_ledger_live_reference_lifecycle.sql',
   '20260815_human_authoring_manifest_schema.sql',
   '20260821_person_external_references.sql',
-  '20260821_human_authoring_external_reference_sync.sql'
+  '20260821_human_authoring_external_reference_sync.sql',
+  '20260902_ongoing_activity_terms.sql'
 ];
 
 const expectedCorrectionMigrations = [

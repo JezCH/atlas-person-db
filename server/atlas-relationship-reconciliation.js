@@ -30,7 +30,8 @@ function fingerprintProjection(row) {
     role_id:id(row.role_id), period_basis_id:id(row.period_basis_id),
     activity_start:Number(row.activity_start), activity_start_month:row.activity_start_month==null?null:Number(row.activity_start_month), activity_start_day:row.activity_start_day==null?null:Number(row.activity_start_day),
     activity_start_granularity:row.activity_start_granularity==null?null:String(row.activity_start_granularity), activity_start_calendar:row.activity_start_calendar==null?null:String(row.activity_start_calendar),
-    activity_end:Number(row.activity_end), activity_end_month:row.activity_end_month==null?null:Number(row.activity_end_month), activity_end_day:row.activity_end_day==null?null:Number(row.activity_end_day),
+    activity_end:row.activity_end == null ? null : Number(row.activity_end), activity_end_month:row.activity_end_month==null?null:Number(row.activity_end_month), activity_end_day:row.activity_end_day==null?null:Number(row.activity_end_day),
+    ...(row.chronology_status === "ongoing" ? { chronology_status:"ongoing" } : {}),
     activity_end_granularity:row.activity_end_granularity==null?null:String(row.activity_end_granularity), activity_end_calendar:row.activity_end_calendar==null?null:String(row.activity_end_calendar)
   };
 }
@@ -50,7 +51,7 @@ function buildRelationshipReconciliationGroups({ rows=[], lowPersonId, highPerso
     const byRole=new Map();for(const row of list){const key=roleKey(row),roleRows=byRole.get(key)||[];roleRows.push(row);byRole.set(key,roleRows);}
     const sorted=[...list].sort((a,b)=>a.id.localeCompare(b.id));
     const exactDuplicateRoleGroups=[...byRole.entries()].filter(([,roleRows])=>roleRows.length>1).map(([role_key,roleRows])=>({role_key,role_id:roleRows[0].role_id,relationships:[...roleRows].sort((a,b)=>a.id.localeCompare(b.id))}));
-    groups.push({context_key,group_fingerprint:groupFingerprint(sorted),semantic_version:RECONCILIATION_SEMANTIC_VERSION,semantic_key_version:SEMANTIC_KEY_VERSION,polity_id:id(sorted[0].polity_id),relation_type_id:id(sorted[0].relation_type_id),period_basis_id:id(sorted[0].period_basis_id),activity_start:Number(sorted[0].activity_start),activity_end:Number(sorted[0].activity_end),has_exact_role_duplicates:exactDuplicateRoleGroups.length>0,has_role_variants:byRole.size>1,exact_duplicate_role_groups:exactDuplicateRoleGroups,relationships:sorted});
+    groups.push({context_key,group_fingerprint:groupFingerprint(sorted),semantic_version:RECONCILIATION_SEMANTIC_VERSION,semantic_key_version:SEMANTIC_KEY_VERSION,polity_id:id(sorted[0].polity_id),relation_type_id:id(sorted[0].relation_type_id),period_basis_id:id(sorted[0].period_basis_id),activity_start:Number(sorted[0].activity_start),activity_end:sorted[0].activity_end == null ? null : Number(sorted[0].activity_end),has_exact_role_duplicates:exactDuplicateRoleGroups.length>0,has_role_variants:byRole.size>1,exact_duplicate_role_groups:exactDuplicateRoleGroups,relationships:sorted});
   }
   return groups.sort((a,b)=>a.activity_start-b.activity_start||a.activity_end-b.activity_end||a.context_key.localeCompare(b.context_key));
 }

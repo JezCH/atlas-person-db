@@ -59,7 +59,9 @@ test('R4 keeps legacy-readable notes inside the existing bounded compact Activit
   assert.match(semanticService, /pp\.notes/);
   assert.match(semanticService, /notes:\s*activity\.notes/);
   assert.match(semanticService, /where pp\.person_id = any\(\$1::uuid\[\]\)/i);
-  assert.doesNotMatch(semanticService, /source_locator|source_key|sha256|bytes|canonical_key/i);
+  // Only the public verification date is extracted; the private JSON payload stays server-side.
+  assert.match(semanticService, /pp\.source_locator->>'ongoing_as_of' as ongoing_as_of/);
+  assert.doesNotMatch(semanticService.replace("pp.source_locator->>'ongoing_as_of' as ongoing_as_of", ""), /source_locator|source_key|sha256|bytes|canonical_key/i);
 });
 
 test('R4 search finds notes, raw chronology, era labels and all compact Activity semantics', () => {

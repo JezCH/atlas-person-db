@@ -146,7 +146,7 @@ function validatedActivityMap(rows) {
       id: row.id == null ? null : String(row.id),
       polity_id: String(row.polity_id),
       activity_start: Number(row.activity_start),
-      activity_end: Number(row.activity_end),
+      activity_end: row.activity_end == null ? null : Number(row.activity_end),
       exact_context: [parts[2], parts[3], parts[4], parts[5], parts[6], parts[7]].join("|"),
       roleless_context: [parts[2], parts[3], parts[5], parts[6], parts[7]].join("|")
     });

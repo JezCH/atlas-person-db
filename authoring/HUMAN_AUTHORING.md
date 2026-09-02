@@ -94,3 +94,26 @@ This path exists for reviewed batch work, auditability, and deployment smoke tes
 ## PostgreSQL client discipline
 
 Authoring readiness, P9 inspection, and human catalog loading use one PostgreSQL client sequentially. They must not overlap `client.query()` calls on that client; this avoids the deprecated pg behavior that becomes unsafe in pg@9. Fresh-PostgreSQL operational parity rehearsal covers readiness, catalogs, entity reuse/create, full-temporal Activity creation, URL and URL-less Sources, idempotent replay, semantic duplicate rejection, and the NamuWiki authoring contract.
+
+
+## Source-verified ongoing terms
+
+A current Activity can use `chronology_status: "ongoing"`, `end_year: null`,
+null/omitted end month, day, granularity, certainty and calendar, and a required
+`ongoing_as_of: "YYYY-MM-DD"`. The verification date must be real, no later than
+review time, and no earlier than the known start. Sources must establish both
+the start and continued activity at that date. Unknown historical endpoints do
+not qualify. An ordinary closed Activity still requires its actual end.
+
+The existing chronology-status field explicitly distinguishes ongoing intervals;
+no year is stored as an artificial endpoint. Native provenance retains
+`source_locator.ongoing_as_of`. Person readback exposes `end.status="ongoing"`,
+`end.as_of`, and null temporal fields. Timeline drawing uses the verification
+year only as a display extent, with an ongoing label. Verification dates are
+excluded from Activity semantic identity. The existing closed-interval key/index
+is unchanged; ongoing intervals have an additional database uniqueness index.
+
+The reviewed `20260902_ongoing_activity_terms.sql` migration is required before
+these writes. The authenticated authoring workflow bootstraps the bounded
+migration when a selected ongoing request needs it. Existing registration,
+source, transaction, idempotency, NamuWiki and readback requirements still apply.
