@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:malik-ambar:ahmadnagar-sultanate:1600-1626:v1",
+  "person": {
+    "canonical_name_en": "Malik Ambar",
+    "display_name_ko": "말리크 암바르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ahmadnagar Sultanate",
+    "display_name_ko": "아흐마드나가르 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Regent and prime minister",
+    "role_display_name_ko": "섭정·재상",
+    "start_year": 1600,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1626,
+    "end_month": 5,
+    "end_day": 13,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Malik Ambar revived the Nizam Shahi state in 1600, installed Murtaza Nizam Shah II, and exercised the sultanate's effective government as regent and chief minister while resisting Mughal expansion. His governing role continued until his death on 13 May 1626."
+  },
+  "sources": [
+    {
+      "title": "The Metropolitan Museum of Art — Sultans of Deccan India, 1500–1700",
+      "canonical_url": "https://resources.metmuseum.org/resources/metpublications/pdf/Sultans_of_Deccan_India_1500_1700.pdf",
+      "citation_text": "The Met's Deccan history discusses Malik Ambar as the decisive Nizam Shahi statesman who sustained Ahmadnagar until his death in 1626.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Ahmadnagar Sultanate — Malik Ambar phase",
+      "canonical_url": "https://en.wikipedia.org/wiki/Ahmadnagar_Sultanate",
+      "citation_text": "The chronology records Malik Ambar's restoration of the Nizam Shahi state in 1600 and his position as prime minister and vekil-us-saltanat.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jacques-delors:european-union:commission-president:1993-1995:v1",
+  "person": {
+    "canonical_name_en": "Jacques Delors",
+    "display_name_ko": "자크 들로르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "European Union",
+    "display_name_ko": "유럽 연합",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President of the European Commission",
+    "role_display_name_ko": "유럽 집행위원회 위원장",
+    "start_year": 1993,
+    "start_month": 11,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1995,
+    "end_month": 1,
+    "end_day": 23,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the Maastricht Treaty entered into force on 1 November 1993, Delors continued as President of the European Commission within the newly established European Union framework. The Delors Commission remained in office through 23 January 1995."
+  },
+  "sources": [
+    {
+      "title": "European Commission — Delors III Commission",
+      "canonical_url": "https://audiovisual.ec.europa.eu/en/album/M-000183",
+      "citation_text": "The Commission archive records the Delors Commission as holding office until 23 January 1995.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "European Commission — Jacques Delors",
+      "canonical_url": "https://ec.europa.eu/stories/Jacques-Delors/",
+      "citation_text": "The Commission describes Delors' 1985–1995 presidency and his role in shaping the European Union.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

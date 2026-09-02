@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:changamire-dombo:rozvi-empire:1684-1696:v1",
+  "person": {
+    "canonical_name_en": "Changamire Dombo",
+    "display_name_ko": "창가미레 돔보",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Rozvi Empire",
+    "display_name_ko": "로즈비 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Changamire and founder",
+    "role_display_name_ko": "창가미레·창건자",
+    "start_year": 1684,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1696,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Changamire Dombo founded the Rozvi state through the wars conventionally dated 1684–1695, defeated Portuguese forces and expanded his authority over the Zimbabwean plateau. Contemporary and modern chronologies place his death around 1696, so both boundaries are intentionally approximate."
+  },
+  "sources": [
+    {
+      "title": "The Journal of African History — The role of foreign trade in the Rozvi empire",
+      "canonical_url": "https://www.cambridge.org/core/journals/journal-of-african-history/article/abs/role-of-foreign-trade-in-the-rozvi-empire-a-reappraisal1/8E6ED5AA169396B26616B1BDA863A6D3",
+      "citation_text": "The Cambridge article identifies Dombo as founder of the Rozvi empire and refers to his wars of 1684–95.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "David Beach, The Shona & Zimbabwe 900–1850",
+      "citation_text": "Modern Shona historiography treats Dombo as the foundational Changamire of the Rozvi state and places his death in the mid-1690s.",
+      "source_type": "bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

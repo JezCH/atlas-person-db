@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jurgen-wullenwever:lubeck:burgomaster:1533-1535:v1",
+  "person": {
+    "canonical_name_en": "Jürgen Wullenwever",
+    "display_name_ko": "위르겐 불렌베버",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Free Imperial City of Lübeck",
+    "display_name_ko": "뤼베크 자유제국도시",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Burgomaster",
+    "role_display_name_ko": "시장",
+    "start_year": 1533,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1535,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Jürgen Wullenwever served as burgomaster of Lübeck from 1533 to 1535. ATLAS records the office he actually held rather than treating him as a sovereign ruler of the Hanseatic League."
+  },
+  "sources": [
+    {
+      "title": "Jürgen Wullenwever — Lübeck burgomaster, 1533–1535",
+      "canonical_url": "https://de.wikipedia.org/wiki/J%C3%BCrgen_Wullenwever",
+      "citation_text": "Biographical chronology identifies Wullenwever as Lübeck burgomaster from 1533 to 1535 and a major actor in Lübeck's Hanseatic policy.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Jürgen Wullenwever — Encyclopaedia Britannica tradition",
+      "citation_text": "Standard biographical accounts identify Wullenwever as Lübeck burgomaster and a central political actor during the Count's Feud.",
+      "source_type": "bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

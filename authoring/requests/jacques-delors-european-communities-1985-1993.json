@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jacques-delors:european-communities:commission-president:1985-1993:v1",
+  "person": {
+    "canonical_name_en": "Jacques Delors",
+    "display_name_ko": "자크 들로르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "European Communities",
+    "display_name_ko": "유럽 공동체",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President of the European Commission",
+    "role_display_name_ko": "유럽 집행위원회 위원장",
+    "start_year": 1985,
+    "start_month": 1,
+    "start_day": 7,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1993,
+    "end_month": 11,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Jacques Delors became President of the European Commission on 7 January 1985, when the supranational polity was still the European Communities. ATLAS ends this phase on 1 November 1993, the entry into force of the Maastricht Treaty and formal creation of the European Union."
+  },
+  "sources": [
+    {
+      "title": "European Union — Key dates in European integration",
+      "canonical_url": "https://europa.eu/abc/12lessons/key_dates_en.htm",
+      "citation_text": "The EU chronology records Jacques Delors becoming President of the Commission on 7 January 1985.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "European Commission — Jacques Delors",
+      "canonical_url": "https://commission.europa.eu/about/jacques-delors_en",
+      "citation_text": "The Commission records Delors as President for three terms from January 1985 to the end of 1994.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

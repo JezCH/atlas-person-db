@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:maximilian-i-hre:king-of-the-romans:1486-1508:v1",
+  "person": {
+    "canonical_name_en": "Maximilian I, Holy Roman Emperor",
+    "display_name_ko": "막시밀리안 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Holy Roman Empire",
+    "display_name_ko": "신성 로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King of the Romans",
+    "role_display_name_ko": "로마왕",
+    "start_year": 1486,
+    "start_month": 2,
+    "start_day": 16,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1508,
+    "end_month": 2,
+    "end_day": 4,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Maximilian was elected King of the Romans in 1486, initially ruling alongside his father Frederick III. After Frederick's death on 19 August 1493 he became sole Roman-German king. ATLAS preserves this pre-imperial title phase separately from his emperor-elect title adopted in 1508."
+  },
+  "sources": [
+    {
+      "title": "Deutschlandmuseum — Maximilian I becomes sole Roman-German king",
+      "canonical_url": "https://www.deutschlandmuseum.de/en/history/calendar/1493-08-19-maximilian-i-becomes-sole-roman-german-king/",
+      "citation_text": "The museum notes Maximilian's earlier co-kingship and his becoming sole Roman-German king on 19 August 1493.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Maximilian I, Holy Roman Emperor — office chronology",
+      "canonical_url": "https://en.wikipedia.org/wiki/Maximilian_I,_Holy_Roman_Emperor",
+      "citation_text": "The office chronology records his election as King of the Romans in 1486 and adoption of the imperial title on 4 February 1508.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tiberius:roman-empire:14-37:v1",
+  "person": {
+    "canonical_name_en": "Tiberius",
+    "display_name_ko": "티베리우스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Roman Emperor",
+    "role_display_name_ko": "로마 황제",
+    "start_year": 14,
+    "start_month": 9,
+    "start_day": 17,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 37,
+    "end_month": 3,
+    "end_day": 16,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tiberius succeeded Augustus as Roman emperor in September AD 14 and ruled until his death on 16 March AD 37."
+  },
+  "sources": [
+    {
+      "title": "Tiberius — Encyclopaedia Britannica",
+      "citation_text": "Standard Roman imperial chronology places Tiberius' reign from AD 14 until his death in AD 37.",
+      "source_type": "bibliographic_reference"
+    },
+    {
+      "title": "1911 Encyclopaedia Britannica — Tiberius",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Tiberius",
+      "citation_text": "The biographical entry identifies Tiberius as Roman emperor and gives his death in AD 37.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
