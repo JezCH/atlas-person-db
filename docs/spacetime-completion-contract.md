@@ -59,6 +59,18 @@ The Production surface must provide continuous two-axis camera behavior at 500%-
 
 A Fit World action that produces a scale below 500% is prohibited.
 
+## Person inspector evidence
+
+Selecting a Person must expose the spatial evidence used by the renderer instead of showing only a name and Activity summary.
+
+For each displayed primary placement segment, the inspector shows:
+- spatial precision (`Place`, subregion, macroregion, or unresolved)
+- the historical placement basis and active Place-function evidence
+- historical spatial source references preserved from the resolver
+- display-precision source references used by reviewed Place bindings
+
+Counterparty relations remain excluded from primary Person placement evidence. Presentation anchors are still presentation data and are never described as exact geographic coordinates.
+
 ## Dense-label acceptance
 
 Permanent dense windows:
@@ -88,6 +100,7 @@ DOM size scales with viewport + overscan, not total DB size. Minimap may retain 
 - `tests/fixtures/spacetime-dense-label-snapshot.json`
 - `tests/spacetime-dense-label-acceptance.test.mjs`
 - `tests/spacetime-place-precision.test.mjs`
+- `tests/spacetime-person-inspector-evidence.test.mjs`
 - `tests/spacetime-completion-contract.test.mjs`
 - `tests/spacetime-readable-scale-contract.test.mjs`
 

@@ -10,6 +10,9 @@
   function text(value) { return value == null ? "" : String(value).trim(); }
   function personLabel(person) { return text(person?.display_name) || text(person?.preferred_name_ko) || text(person?.canonical_name_en) || "이름 미상"; }
   function relationCode(activity) { return text(activity?.relation?.code); }
+  function normalizedRefs(refs) {
+    return Object.freeze(Array.from(new Set((Array.isArray(refs) ? refs : []).map(text).filter(Boolean))).sort());
+  }
   function normalizePlacementMap(results) {
     if (results instanceof Map) return results;
     const map = new Map();
@@ -47,7 +50,7 @@
         place_id: text(fn?.place_id) || null,
         region_code: text(fn?.region_code) || null,
         confidence: text(fn?.confidence) || null,
-        source_refs: Object.freeze(Array.isArray(fn?.source_refs) ? fn.source_refs.map(text).filter(Boolean) : [])
+        source_refs: normalizedRefs(fn?.source_refs)
       }))),
       display_place_points: Object.freeze((Array.isArray(compiledSegment?.display_place_points) ? compiledSegment.display_place_points : []).map((point) => Object.freeze({
         place_id: text(point?.place_id) || null,
@@ -55,13 +58,19 @@
         function_type: text(point?.function_type) || null,
         macroregion_code: text(point?.macroregion_code) || null,
         subregion_code: text(point?.subregion_code) || null,
-        x_anchor: Number.isFinite(Number(point?.x_anchor)) ? Number(point.x_anchor) : null
+        x_anchor: Number.isFinite(Number(point?.x_anchor)) ? Number(point.x_anchor) : null,
+        display_anchor_basis: text(point?.display_anchor_basis) || null,
+        display_source_refs: normalizedRefs(point?.display_source_refs)
       }))),
       polity_id: text(activity?.polity?.id) || text(compiledSegment?.polity_id) || null,
       relation_code: relationCode(activity) || null, role_code: text(activity?.role?.code) || null,
       role_label: text(activity?.role?.display_name) || text(activity?.role?.source_label) || null,
       historical_placement_basis: text(compiledSegment?.historical_placement_basis) || null,
-      historical_confidence: text(compiledSegment?.historical_confidence) || null, activity
+      historical_confidence: text(compiledSegment?.historical_confidence) || null,
+      historical_source_refs: normalizedRefs(compiledSegment?.historical_source_refs),
+      display_confidence: text(compiledSegment?.display_confidence) || null,
+      display_source_refs: normalizedRefs(compiledSegment?.display_source_refs),
+      activity
     });
   }
   function compilePersonTrack(person, placementResults) {
