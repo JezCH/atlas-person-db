@@ -56,13 +56,32 @@
 
   const REVIEWED_BINDING_BY_SIGNATURE = new Map(REVIEWED_PLACE_BINDINGS.map((binding) => [bindingSignature(binding), binding]));
 
-  function reviewedPlaceBindingForSegment(segment) {
+  function reviewedPlaceBindingForFunction(polityId, fn) {
     return REVIEWED_BINDING_BY_SIGNATURE.get(bindingSignature({
-      polity_id: segment?.polity_id,
-      place_function_type: segment?.place_function_type,
+      polity_id: polityId,
+      function_type: fn?.function_type,
+      place_name: fn?.place_name,
+      source_refs: fn?.source_refs
+    })) || null;
+  }
+
+  function reviewedPlaceBindingForSegment(segment) {
+    return reviewedPlaceBindingForFunction(segment?.polity_id, {
+      function_type: segment?.place_function_type,
       place_name: segment?.place_name,
       source_refs: segment?.source_refs
-    })) || null;
+    });
+  }
+
+  function normalizedActivePlaceFunctions(segment) {
+    return Object.freeze((Array.isArray(segment?.active_place_functions) ? segment.active_place_functions : []).map((fn) => Object.freeze({
+      function_type: text(fn?.function_type) || null,
+      place_name: text(fn?.place_name) || null,
+      place_id: text(fn?.place_id) || null,
+      region_code: text(fn?.region_code) || null,
+      confidence: text(fn?.confidence) || null,
+      source_refs: normalizedRefs(fn?.source_refs)
+    })));
   }
 
   function compileSubregionRange(continuum, macroregionCode, subregionCode) {
@@ -86,7 +105,8 @@
       place_function_type: text(segment?.place_function_type) || null, place_name: text(segment?.place_name) || null,
       place_id: text(segment?.place_id) || null, start_year: segment?.start_year ?? null, end_year: segment?.end_year ?? null,
       historical_placement_basis: text(segment?.placement_basis), historical_confidence: text(segment?.confidence),
-      historical_source_refs: normalizedRefs(segment?.source_refs)
+      historical_source_refs: normalizedRefs(segment?.source_refs),
+      active_place_functions: normalizedActivePlaceFunctions(segment)
     };
   }
 
@@ -95,6 +115,27 @@
       ...baseCompiledSegment(segment, macro), status: "spatial_compile_unresolved", reason,
       x_anchor: null, x_min: null, x_max: null, spatial_precision: "unresolved", display_anchor_basis: null
     });
+  }
+
+  function compiledDisplayPlacePoints(segment, continuum, macro) {
+    const points = [];
+    for (const fn of normalizedActivePlaceFunctions(segment)) {
+      const binding = reviewedPlaceBindingForFunction(segment?.polity_id, fn);
+      if (!binding || binding.macroregion_code !== macro?.code) continue;
+      const range = compileSubregionRange(continuum, binding.macroregion_code, binding.subregion_code);
+      if (!range) continue;
+      points.push(Object.freeze({
+        place_id: binding.place_id,
+        place_name: binding.place_name,
+        function_type: binding.function_type,
+        macroregion_code: binding.macroregion_code,
+        subregion_code: range.subregion_code,
+        x_anchor: range.x_anchor,
+        display_anchor_basis: "reviewed_place_point",
+        display_source_refs: normalizedRefs(binding.source_refs)
+      }));
+    }
+    return Object.freeze(points);
   }
 
   function compilePlacementSegment(segment, continuum = spaceAxisApi.createSpatialContinuum()) {
@@ -112,10 +153,11 @@
         place_id: binding.place_id,
         subregion_code: range.subregion_code,
         status: "placed", reason: null,
-        x_anchor: range.x_anchor, x_min: range.x_min, x_max: range.x_max,
-        spatial_precision: "subregion", display_anchor_basis: "reviewed_place_subregion",
+        x_anchor: range.x_anchor, x_min: range.x_anchor, x_max: range.x_anchor,
+        spatial_precision: "place", display_anchor_basis: "reviewed_place_point",
         display_confidence: "reviewed",
-        display_source_refs: normalizedRefs(binding.source_refs)
+        display_source_refs: normalizedRefs(binding.source_refs),
+        display_place_points: compiledDisplayPlacePoints(segment, continuum, macro)
       });
     }
 
@@ -124,7 +166,8 @@
       x_anchor: macro.center_space, x_min: macro.min_space, x_max: macro.max_space,
       spatial_precision: "macroregion", display_anchor_basis: "canonical_macroregion",
       display_confidence: text(segment?.confidence) || "reviewed",
-      display_source_refs: normalizedRefs(segment?.source_refs)
+      display_source_refs: normalizedRefs(segment?.source_refs),
+      display_place_points: compiledDisplayPlacePoints(segment, continuum, macro)
     });
   }
 
@@ -144,7 +187,10 @@
   return Object.freeze({
     REVIEWED_PLACE_BINDINGS,
     bindingSignature,
+    reviewedPlaceBindingForFunction,
     reviewedPlaceBindingForSegment,
+    normalizedActivePlaceFunctions,
+    compiledDisplayPlacePoints,
     compileSubregionRange,
     compilePlacementSegment,
     compileActivityPlacement,
