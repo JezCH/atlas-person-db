@@ -22,7 +22,7 @@
     ["./atlas-person-spacetime-minimap.js?v=20260826-p12", "ATLAS_PERSON_SPACETIME_MINIMAP"],
     ["./atlas-person-spacetime-performance.js?v=20260826-p13", "ATLAS_PERSON_SPACETIME_PERFORMANCE"],
     ["./atlas-person-spacetime-spatial-compile.js?v=20260902-place-precision", "ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE"],
-    ["./atlas-person-spacetime-person-tracks.js?v=20260902-place-precision", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
+    ["./atlas-person-spacetime-person-tracks.js?v=20260902-inspector-evidence", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
     ["./atlas-person-spacetime-political-placement.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT"],
     ["./atlas-person-spacetime-lod.js?v=20260831-500-floor", "ATLAS_PERSON_SPACETIME_LOD"],
     ["./atlas-person-spacetime-label-engine.js?v=20260902-label-height-18", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
@@ -87,6 +87,40 @@
     if (segment?.historical_placement_basis !== "polity_place_function") return "검토된 정치체 권역";
     const typeLabel = ({ capital: "수도", royal_court: "왕정 중심", royal_residence: "왕실 거점", imperial_court_core: "제국 궁정 중심", political_center: "정치 중심", administrative_center: "행정 중심" })[segment?.place_function_type] || "정치체 장소 기능";
     return `${typeLabel}: ${segment.location_label || segment.place_name || "미상"}`;
+  }
+
+  function spatialPrecisionLabel(segment) {
+    return ({ place: "Place", subregion: "하위 권역", macroregion: "대권역", unresolved: "미확정" })[text(segment?.spatial_precision)] || text(segment?.spatial_precision) || "미확정";
+  }
+
+  function normalizedEvidenceRefs(refs) {
+    return [...new Set((Array.isArray(refs) ? refs : []).map(text).filter(Boolean))];
+  }
+
+  function placeFunctionEvidence(segment) {
+    return (Array.isArray(segment?.active_place_functions) ? segment.active_place_functions : []).map((fn) => {
+      const typeLabel = ({ capital: "수도", royal_court: "왕정 중심", royal_residence: "왕실 거점", imperial_court_core: "제국 궁정 중심", political_center: "정치 중심", administrative_center: "행정 중심" })[text(fn?.function_type)] || text(fn?.function_type) || "장소 기능";
+      const confidence = text(fn?.confidence);
+      return `${typeLabel}: ${text(fn?.place_name) || "미상"}${confidence ? ` · ${confidence}` : ""}`;
+    });
+  }
+
+  function evidenceRefsHtml(label, refs) {
+    const normalized = normalizedEvidenceRefs(refs);
+    return `<div class="spacetime-selection-evidence-sources"><b>${escapeHtml(label)}</b><span>${normalized.length ? normalized.map((ref) => escapeHtml(ref)).join(" · ") : "없음"}</span></div>`;
+  }
+
+  function renderSelectionEvidence(segment) {
+    const placeFunctions = placeFunctionEvidence(segment);
+    const historicalRefs = normalizedEvidenceRefs(segment?.historical_source_refs);
+    const displayRefs = normalizedEvidenceRefs(segment?.display_source_refs);
+    return `<article class="spacetime-selection-evidence-row">
+      <div class="spacetime-selection-evidence-head"><strong>${escapeHtml(polityLabel(segment.activity))}</strong><span>${escapeHtml(periodLabel(segment.activity))}</span></div>
+      <div class="spacetime-selection-evidence-meta"><span>공간 정밀도: <b>${escapeHtml(spatialPrecisionLabel(segment))}</b></span><span>배치 근거: <b>${escapeHtml(placementBasisLabel(segment))}</b></span></div>
+      <div class="spacetime-selection-evidence-place"><b>Place evidence</b><span>${placeFunctions.length ? placeFunctions.map((value) => escapeHtml(value)).join(" · ") : "검토된 Place 기능 없음"}</span></div>
+      ${evidenceRefsHtml("역사 배치 근거", historicalRefs)}
+      ${evidenceRefsHtml("표시 정밀도 근거", displayRefs)}
+    </article>`;
   }
 
   function loadScriptOnce(src, globalName) {
@@ -447,8 +481,12 @@
     const cycleDisabled = canCycle ? "" : ' disabled aria-disabled="true"';
     const primary = track.primary_segments || [];
     const counterparties = track.counterparty_segments || [];
-    const activities = primary.slice(0, 5).map((segment) => `${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`).join(" / ");
-    return `<div class="spacetime-selection" id="spacetimeSelection"><div><small>SELECTED PERSON TRACK</small><strong>${escapeHtml(track.display_name)}</strong><span>${escapeHtml(activities || "주 위치 Activity 없음")}</span></div><div class="spacetime-selection-meta"><span>${primary.length}개 주 위치 구간</span><span>${counterparties.length}개 counterparty 관계는 자기 위치에서 제외</span></div><div class="spacetime-selection-actions" role="group" aria-label="선택 인물 탐색"><button id="spacetimePrevPerson" type="button"${cycleDisabled}>이전 인물</button><button id="spacetimeFocusPerson" type="button">위치로</button><button id="spacetimeDetailPerson" type="button">자세히 보기</button><button id="spacetimeNextPerson" type="button"${cycleDisabled}>다음 인물</button><button id="spacetimeClearPerson" type="button">선택 해제</button></div></div>`;
+    const evidenceSegments = primary.slice(0, 5);
+    const activities = evidenceSegments.map((segment) => `${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`).join(" / ");
+    const evidence = evidenceSegments.length
+      ? `<div class="spacetime-selection-evidence" aria-label="선택 인물 공간 근거와 출처"><div class="spacetime-selection-evidence-title"><strong>공간 근거·출처</strong><span>${evidenceSegments.length}${primary.length > evidenceSegments.length ? ` / ${primary.length}` : ""}개 구간 표시</span></div><div class="spacetime-selection-evidence-list">${evidenceSegments.map(renderSelectionEvidence).join("")}</div></div>`
+      : "";
+    return `<div class="spacetime-selection" id="spacetimeSelection"><div><small>SELECTED PERSON TRACK</small><strong>${escapeHtml(track.display_name)}</strong><span>${escapeHtml(activities || "주 위치 Activity 없음")}</span></div><div class="spacetime-selection-meta"><span>${primary.length}개 주 위치 구간</span><span>${counterparties.length}개 counterparty 관계는 자기 위치에서 제외</span></div><div class="spacetime-selection-actions" role="group" aria-label="선택 인물 탐색"><button id="spacetimePrevPerson" type="button"${cycleDisabled}>이전 인물</button><button id="spacetimeFocusPerson" type="button">위치로</button><button id="spacetimeDetailPerson" type="button">자세히 보기</button><button id="spacetimeNextPerson" type="button"${cycleDisabled}>다음 인물</button><button id="spacetimeClearPerson" type="button">선택 해제</button></div>${evidence}</div>`;
   }
 
   function renderMinimap() {
