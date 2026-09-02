@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mengistu-haile-mariam:derg-ethiopia:1977-1987:v1",
+  "person": {
+    "canonical_name_en": "Mengistu Haile Mariam",
+    "display_name_ko": "멩기스투 하일레 마리암",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Provisional Military Government of Socialist Ethiopia",
+    "display_name_ko": "에티오피아 사회주의 임시 군사정부",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Chairman of the Derg",
+    "role_display_name_ko": "데르그 의장",
+    "start_year": 1977,
+    "start_month": 2,
+    "start_day": 3,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1987,
+    "end_month": 9,
+    "end_day": 10,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mengistu became chairman of the Derg and head of state on 3 February 1977. This military-government phase ended with the establishment of the People's Democratic Republic of Ethiopia in September 1987."
+  },
+  "sources": [
+    {
+      "title": "Human Rights Watch — Evil Days: 30 Years of War and Famine in Ethiopia",
+      "canonical_url": "https://www.hrw.org/report/1991/09/01/evil-days/30-years-war-and-famine-ethiopia",
+      "citation_text": "HRW documents the Mengistu government and the Derg era culminating in 1991.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Ethiopia state chronology — World Statesmen",
+      "canonical_url": "https://www.worldstatesmen.org/Ethiopia.html",
+      "citation_text": "The chronology records Mengistu as chairman of the Provisional Military Administrative Council from 3 February 1977 to 10 September 1987.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

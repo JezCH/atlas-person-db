@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mengistu-haile-mariam:pdre:1987-1991:v1",
+  "person": {
+    "canonical_name_en": "Mengistu Haile Mariam",
+    "display_name_ko": "멩기스투 하일레 마리암",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "People's Democratic Republic of Ethiopia",
+    "display_name_ko": "에티오피아 인민민주공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1987,
+    "start_month": 9,
+    "start_day": 10,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1991,
+    "end_month": 5,
+    "end_day": 21,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mengistu became president of the People's Democratic Republic of Ethiopia in September 1987 and remained head of state until he left power on 21 May 1991 as the Derg/PDRE regime collapsed."
+  },
+  "sources": [
+    {
+      "title": "Constitution of the People's Democratic Republic of Ethiopia",
+      "canonical_url": "https://en.wikisource.org/wiki/Constitution_of_the_People%27s_Democratic_Republic_of_Ethiopia",
+      "citation_text": "The 1987 constitutional proclamation establishes the People's Democratic Republic and bears Mengistu Hailemariam's name as head of the new order.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Human Rights Watch — Ethiopia",
+      "canonical_url": "https://www.hrw.org/reports/1997/ethiopia/Ethio97d-02.htm",
+      "citation_text": "HRW describes the Derg government and its overthrow by the EPRDF in May 1991.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:krishnadevaraya:vijayanagara-empire:1509-1529:v1",
+  "person": {
+    "canonical_name_en": "Krishnadevaraya",
+    "display_name_ko": "크리슈나데바라야",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Vijayanagara Empire",
+    "display_name_ko": "비자야나가라 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1509,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1529,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Krishnadevaraya of the Tuluva dynasty ruled the Vijayanagara Empire from 1509 to 1529, a reign widely regarded as the empire's political and cultural zenith."
+  },
+  "sources": [
+    {
+      "title": "A new imperial idiom in the sixteenth century: Krishnadevaraya and his political theory of Vijayanagara",
+      "canonical_url": "https://iks.iitgn.ac.in/wp-content/uploads/2020/01/Krishnadevaraya_and_his_political_theory_of_Vijayanagara.pdf",
+      "citation_text": "Narayana Rao, Shulman and Subrahmanyam identify Krishnadevaraya as Vijayanagara emperor, r. 1509-1529.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Empire Inside Out: Religion, Conquest, and Community in Krishnadevaraya's Amuktamalyada",
+      "canonical_url": "https://cris.tau.ac.il/en/publications/empire-inside-out-religion-conquest-and-community-in-krsnadevaray/",
+      "citation_text": "Academic monograph metadata identifies Krishnadevaraya as emperor-poet of Vijayanagara, r. 1509-1529.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

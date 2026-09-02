@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tribhuvan:kingdom-of-nepal:1911-1950:v1",
+  "person": {
+    "canonical_name_en": "Tribhuvan Bir Bikram Shah",
+    "display_name_ko": "트리부반",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Nepal",
+    "display_name_ko": "네팔 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "start_year": 1911,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1950,
+    "end_month": 11,
+    "end_day": 7,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Tribhuvan became King of Nepal in 1911. ATLAS ends the first reign phase on 7 November 1950, when the Rana government attempted to depose him after he sought refuge in the Indian embassy; the exile/deposition interruption is not flattened into a continuous reign."
+  },
+  "sources": [
+    {
+      "title": "British Museum — Tribhuvan Bir Bikram, King of Nepal",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG116628",
+      "citation_text": "The British Museum identifies Tribhuvan as a Shah dynasty king of Nepal who ruled 1911-1955.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Nehru Archive — To Rajendra Prasad, 7 November 1950",
+      "canonical_url": "https://nehruarchive.in/documents/to-rajendra-prasad-7-november-1950-6nl2jx",
+      "citation_text": "Nehru's contemporary correspondence records the crisis in which King Tribhuvan sought refuge at the Indian embassy in November 1950.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
