@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Harold Covington",
+    "display_name_ko": "해럴드 코빙턴",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Northwest Front",
+    "display_name_ko": "노스웨스트 프런트",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Founder and movement leader",
+    "role_display_name_ko": "창립자·운동 지도자",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Founder of the white-supremacist Northwest Front movement, active from its 2009 formation until his death in 2018. The proposed Northwest American Republic was not an existing sovereign state.",
+    "start_year": 2009,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2018,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Harold Covington — historical reference",
+      "canonical_url": "https://mappingmilitants.org/mmp-group/northwest-front",
+      "citation_text": "Founder of the white-supremacist Northwest Front movement, active from its 2009 formation until his death in 2018. The proposed Northwest American Republic was not an existing sovereign state."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Harold Covington — historical reference",
+      "canonical_url": "https://archives.lib.ku.edu/repositories/3/resources/5422",
+      "citation_text": "Founder of the white-supremacist Northwest Front movement, active from its 2009 formation until his death in 2018. The proposed Northwest American Republic was not an existing sovereign state."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 66
+  }
+}

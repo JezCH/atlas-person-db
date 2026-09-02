@@ -1,0 +1,794 @@
+{
+  "batch": "nanyue-yanina-20260902",
+  "reviewed_at": "2026-09-02",
+  "requested": 79,
+  "existing_people": 19,
+  "new_timeline_people": 45,
+  "new_timeline_activities": 64,
+  "new_non_timeline_people": 12,
+  "needs_identity": 3,
+  "namuwiki_review": "Provider access blocked; no not_found status inferred. Explicit authorized deferral retained.",
+  "ongoing_periods": "Farage renewed Reform UK leadership from June 2024 is ongoing. Completed leadership periods are registered; no fabricated endpoint is assigned.",
+  "publication_evidence": "Approved data only counts as applied after the ATLAS Authoring Apply workflow reports successful Production read-back.",
+  "items": [
+    {
+      "index": 1,
+      "name": "Zhao Tuo",
+      "polity": "Nanyue",
+      "steam": null,
+      "review_result": "existing_registration_verified"
+    },
+    {
+      "index": 2,
+      "name": "Seattle",
+      "polity": "Lushootseed",
+      "steam": null,
+      "review_result": "approved_timeline",
+      "canonical_name": "Seattle",
+      "manifest_paths": [
+        "authoring/requests/chief-seattle-1855-1855-chief-and-treaty-representative.json"
+      ]
+    },
+    {
+      "index": 3,
+      "name": "Didda",
+      "polity": "Kashmir",
+      "steam": null,
+      "review_result": "approved_timeline",
+      "canonical_name": "Didda",
+      "manifest_paths": [
+        "authoring/requests/didda-958-980-regent.json",
+        "authoring/requests/didda-980-1003-queen-regnant.json"
+      ]
+    },
+    {
+      "index": 4,
+      "name": "Atanarjuat",
+      "polity": "Iglulingmiut",
+      "steam": null,
+      "review_result": "approved_non_timeline",
+      "canonical_name": "Atanarjuat",
+      "historicity": "legendary"
+    },
+    {
+      "index": 5,
+      "name": "Daniel Moricio",
+      "polity": "Uru",
+      "steam": null,
+      "review_result": "approved_timeline",
+      "canonical_name": "Daniel Mauricio Choque",
+      "manifest_paths": [
+        "authoring/requests/daniel-mauricio-choque-1992-2018-community-elder-and-cultural-representative.json"
+      ]
+    },
+    {
+      "index": 6,
+      "name": "Alexander II",
+      "polity": "Russian Empire",
+      "steam": null,
+      "review_result": "approved_timeline",
+      "canonical_name": "Alexander II of Russia",
+      "manifest_paths": [
+        "authoring/requests/alexander-ii-russia-1855-1881-emperor.json"
+      ]
+    },
+    {
+      "index": 7,
+      "name": "Janequeo",
+      "polity": "Pehuenche",
+      "steam": null,
+      "review_result": "approved_non_timeline",
+      "canonical_name": "Janequeo",
+      "historicity": "disputed_historical_tradition"
+    },
+    {
+      "index": 8,
+      "name": "Selu",
+      "polity": "Angel Mounds",
+      "steam": null,
+      "review_result": "approved_non_timeline",
+      "canonical_name": "Selu",
+      "historicity": "mythological"
+    },
+    {
+      "index": 9,
+      "name": "Sviatoslav",
+      "polity": "Kyivan Rus",
+      "steam": null,
+      "review_result": "approved_timeline",
+      "canonical_name": "Sviatoslav I",
+      "manifest_paths": [
+        "authoring/requests/sviatoslav-i-945-972-grand-prince.json"
+      ]
+    },
+    {
+      "index": 10,
+      "name": "Mahathir Mohamad",
+      "polity": "Malaysia",
+      "steam": null,
+      "review_result": "approved_timeline",
+      "canonical_name": "Mahathir Mohamad",
+      "manifest_paths": [
+        "authoring/requests/mahathir-mohamad-1981-2003-prime-minister.json",
+        "authoring/requests/mahathir-mohamad-2018-5-10-2020-2-24-prime-minister.json",
+        "authoring/requests/mahathir-mohamad-2020-2-24-2020-3-1-interim-prime-minister.json"
+      ]
+    },
+    {
+      "index": 11,
+      "name": "Satake Yoshishige",
+      "polity": "Satake",
+      "steam": null,
+      "review_result": "approved_timeline",
+      "canonical_name": "Satake Yoshishige",
+      "manifest_paths": [
+        "authoring/requests/satake-yoshishige-1562-1589-daimyo-and-clan-head.json"
+      ]
+    },
+    {
+      "index": 12,
+      "name": "Idris I",
+      "polity": "Libya",
+      "steam": null,
+      "review_result": "approved_timeline",
+      "canonical_name": "Idris of Libya",
+      "manifest_paths": [
+        "authoring/requests/idris-libya-1949-1951-emir.json",
+        "authoring/requests/idris-libya-1951-1969-king.json"
+      ]
+    },
+    {
+      "index": 13,
+      "name": "Apanuugpak",
+      "polity": "Yup'ik",
+      "steam": null,
+      "review_result": "approved_non_timeline",
+      "canonical_name": "Apanuugpak",
+      "historicity": "historical_tradition_uncertain_chronology"
+    },
+    {
+      "index": 14,
+      "name": "Caterina Sforza",
+      "polity": "Forli",
+      "steam": null,
+      "review_result": "existing_registration_verified"
+    },
+    {
+      "index": 15,
+      "name": "Federico da Montefeltro",
+      "polity": "Urbino",
+      "steam": null,
+      "review_result": "existing_registration_verified"
+    },
+    {
+      "index": 16,
+      "name": "Irene",
+      "polity": "Byzantium",
+      "steam": null,
+      "review_result": "existing_registration_verified"
+    },
+    {
+      "index": 17,
+      "name": "Merkurios",
+      "polity": "Makuria",
+      "steam": null,
+      "review_result": "existing_registration_verified"
+    },
+    {
+      "index": 18,
+      "name": "Kanishka",
+      "polity": "Kushan Empire",
+      "steam": null,
+      "review_result": "existing_registration_verified"
+    },
+    {
+      "index": 19,
+      "name": "Melisende",
+      "polity": "Jerusalem",
+      "steam": null,
+      "review_result": "approved_timeline",
+      "canonical_name": "Melisende of Jerusalem",
+      "manifest_paths": [
+        "authoring/requests/melisende-jerusalem-1131-1152-queen-regnant.json"
+      ]
+    },
+    {
+      "index": 20,
+      "name": "Yarima",
+      "polity": "Yarigui",
+      "steam": null,
+      "review_result": "approved_non_timeline",
+      "canonical_name": "Yarima",
+      "historicity": "historical_tradition_uncertain_chronology"
+    },
+    {
+      "index": 21,
+      "name": "Thiebaut de Heu",
+      "polity": "Metz",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3708447950",
+      "review_result": "approved_timeline",
+      "canonical_name": "Thiébaut de Heu",
+      "manifest_paths": [
+        "authoring/requests/thiebaut-de-heu-1314-1314-master-alderman.json"
+      ]
+    },
+    {
+      "index": 22,
+      "name": "Rene II",
+      "polity": "Lorraine",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3708447554",
+      "review_result": "approved_timeline",
+      "canonical_name": "René II of Lorraine",
+      "manifest_paths": [
+        "authoring/requests/rene-ii-lorraine-1473-1508-duke.json",
+        "authoring/requests/rene-ii-lorraine-1483-1508-duke.json",
+        "authoring/requests/rene-ii-lorraine-1470-1508-count.json"
+      ]
+    },
+    {
+      "index": 23,
+      "name": "Lothair II",
+      "polity": "Lotharingia",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3708447117",
+      "review_result": "approved_timeline",
+      "canonical_name": "Lothair II",
+      "manifest_paths": [
+        "authoring/requests/lothair-ii-855-869-king.json"
+      ]
+    },
+    {
+      "index": 24,
+      "name": "Juan Calfucura",
+      "polity": "Salinas Grande",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3707645967",
+      "review_result": "approved_timeline",
+      "canonical_name": "Juan Calfucurá",
+      "manifest_paths": [
+        "authoring/requests/juan-calfucura-1834-1873-lonco.json"
+      ]
+    },
+    {
+      "index": 25,
+      "name": "Kayqubad I",
+      "polity": "Rum",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3707632165",
+      "review_result": "existing_registration_verified"
+    },
+    {
+      "index": 26,
+      "name": "Quanfengyou",
+      "polity": "Nanzhao",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3707613739",
+      "review_result": "approved_timeline",
+      "canonical_name": "Quanfengyou",
+      "manifest_paths": [
+        "authoring/requests/quanfengyou-824-859-king.json"
+      ]
+    },
+    {
+      "index": 27,
+      "name": "Nunuku-whenua",
+      "polity": "Moriori",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3707238718",
+      "review_result": "approved_non_timeline",
+      "canonical_name": "Nunuku-whenua",
+      "historicity": "historical_tradition_uncertain_chronology"
+    },
+    {
+      "index": 28,
+      "name": "Edward Blondin",
+      "polity": "Sahtu Dene",
+      "steam": null,
+      "review_result": "approved_non_timeline",
+      "canonical_name": "Edward Blondin",
+      "historicity": "historical_uncertain_chronology"
+    },
+    {
+      "index": 29,
+      "name": "Dashi-Dorzho Itigilov",
+      "polity": "Buddhist Buryats",
+      "steam": null,
+      "review_result": "approved_timeline",
+      "canonical_name": "Dashi-Dorzho Itigilov",
+      "manifest_paths": [
+        "authoring/requests/dashi-dorzho-itigilov-1911-1917-pandito-khambo-lama.json"
+      ]
+    },
+    {
+      "index": 30,
+      "name": "Dheeva Maari",
+      "polity": "Maldives",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3705762703",
+      "review_result": "needs_person_identity",
+      "reason": "Dheeva Maari identifies a historical Maldivian kingdom; the submitted text does not name a particular human ruler."
+    },
+    {
+      "index": 31,
+      "name": "Tibirica",
+      "polity": "Tupiniquim",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3705741932",
+      "review_result": "approved_timeline",
+      "canonical_name": "Tibiriçá",
+      "manifest_paths": [
+        "authoring/requests/tibirica-1554-1562-chief.json"
+      ]
+    },
+    {
+      "index": 32,
+      "name": "Yamas",
+      "polity": "Sintashta",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3705670872",
+      "review_result": "approved_non_timeline",
+      "canonical_name": "Yámas",
+      "historicity": "mythological"
+    },
+    {
+      "index": 33,
+      "name": "Charles IV",
+      "polity": "Bohemia",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3704991162",
+      "review_result": "existing_registration_verified"
+    },
+    {
+      "index": 34,
+      "name": "Mandume ya Ndemufayo",
+      "polity": "Oukwanyama",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3702200514",
+      "review_result": "approved_timeline",
+      "canonical_name": "Mandume ya Ndemufayo",
+      "manifest_paths": [
+        "authoring/requests/mandume-ndemufayo-1911-1917-king.json"
+      ]
+    },
+    {
+      "index": 35,
+      "name": "Felipe Camarao",
+      "polity": "Potiguara",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3700442056",
+      "review_result": "approved_timeline",
+      "canonical_name": "Antônio Filipe Camarão",
+      "manifest_paths": [
+        "authoring/requests/filipe-camarao-1630-1648-military-leader.json"
+      ]
+    },
+    {
+      "index": 36,
+      "name": "Cunhambebe",
+      "polity": "Tupinamba",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3699932039",
+      "review_result": "existing_registration_verified"
+    },
+    {
+      "index": 37,
+      "name": "Hassan-i Sabbah",
+      "polity": "Hashashins",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3697654167",
+      "review_result": "approved_timeline",
+      "canonical_name": "Hasan-i Sabbah",
+      "manifest_paths": [
+        "authoring/requests/hasan-i-sabbah-1090-1124-religious-and-political-leader.json"
+      ]
+    },
+    {
+      "index": 38,
+      "name": "Akechi Mitsuhide",
+      "polity": "Akechi",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3697493295",
+      "review_result": "approved_timeline",
+      "canonical_name": "Akechi Mitsuhide",
+      "manifest_paths": [
+        "authoring/requests/akechi-mitsuhide-1571-1582-daimyo.json",
+        "authoring/requests/akechi-mitsuhide-1582-1582-contender-for-national-power.json"
+      ]
+    },
+    {
+      "index": 39,
+      "name": "Maria Luigia",
+      "polity": "Parma",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3696909508",
+      "review_result": "approved_timeline",
+      "canonical_name": "Marie Louise, Duchess of Parma",
+      "manifest_paths": [
+        "authoring/requests/marie-louise-parma-1814-1847-duchess.json"
+      ]
+    },
+    {
+      "index": 40,
+      "name": "Botohui-Tarhun",
+      "polity": "Khori-Tumed",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3693647651",
+      "review_result": "approved_timeline",
+      "canonical_name": "Botohui-Tarhun",
+      "manifest_paths": [
+        "authoring/requests/botohui-tarhun-1216-1218-chief-and-rebellion-leader.json"
+      ]
+    },
+    {
+      "index": 41,
+      "name": "Saudeleur",
+      "polity": "Pohnpei",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3692364813",
+      "review_result": "needs_person_identity",
+      "reason": "Saudeleur is a dynastic title borne by multiple Pohnpei rulers; no particular holder is specified."
+    },
+    {
+      "index": 42,
+      "name": "Tarrarer",
+      "polity": "Gunditjmara",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3736009615",
+      "review_result": "approved_timeline",
+      "canonical_name": "Tarrarer",
+      "manifest_paths": [
+        "authoring/requests/tarrarer-1842-1842-resistance-leader.json"
+      ]
+    },
+    {
+      "index": 43,
+      "name": "Nicefor Czernichowski",
+      "polity": "Jaxa",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3735114549",
+      "review_result": "approved_timeline",
+      "canonical_name": "Nicefor Czernichowski",
+      "manifest_paths": [
+        "authoring/requests/nicefor-czernichowski-1665-1674-autonomous-settlement-leader.json"
+      ]
+    },
+    {
+      "index": 44,
+      "name": "Seku Wattara",
+      "polity": "Kong",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3734636756",
+      "review_result": "approved_timeline",
+      "canonical_name": "Seku Watara",
+      "manifest_paths": [
+        "authoring/requests/seku-watara-1710-1745-king.json"
+      ]
+    },
+    {
+      "index": 45,
+      "name": "Bogu Khagan",
+      "polity": "Uyghurs",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3734454156",
+      "review_result": "approved_timeline",
+      "canonical_name": "Bögü Khagan",
+      "manifest_paths": [
+        "authoring/requests/bogu-khagan-759-779-khagan.json"
+      ]
+    },
+    {
+      "index": 46,
+      "name": "Abdelkader",
+      "polity": "Mascara",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3734115870",
+      "review_result": "existing_registration_verified"
+    },
+    {
+      "index": 47,
+      "name": "Abayuba",
+      "polity": "Charrua",
+      "steam": null,
+      "review_result": "approved_timeline",
+      "canonical_name": "Abayubá",
+      "manifest_paths": [
+        "authoring/requests/abayuba-1574-1574-war-chief.json"
+      ]
+    },
+    {
+      "index": 48,
+      "name": "Kon",
+      "polity": "Paracas",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3733599752",
+      "review_result": "approved_non_timeline",
+      "canonical_name": "Kón",
+      "historicity": "mythological"
+    },
+    {
+      "index": 49,
+      "name": "Amadeus VIII",
+      "polity": "Savoy",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3731051860",
+      "review_result": "approved_timeline",
+      "canonical_name": "Amadeus VIII, Duke of Savoy",
+      "manifest_paths": [
+        "authoring/requests/amadeus-viii-savoy-1391-1416-count.json",
+        "authoring/requests/amadeus-viii-savoy-1416-1440-duke.json",
+        "authoring/requests/amadeus-viii-savoy-1439-1449-antipope-felix-v.json"
+      ]
+    },
+    {
+      "index": 50,
+      "name": "Sheehays",
+      "polity": "Susquehannock",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3730302005",
+      "review_result": "approved_timeline",
+      "canonical_name": "Sheehays",
+      "manifest_paths": [
+        "authoring/requests/sheehays-1763-1763-chief.json"
+      ]
+    },
+    {
+      "index": 51,
+      "name": "Nasr ibn Ahmad",
+      "polity": "Fraxinetum",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3729080557",
+      "review_result": "approved_timeline",
+      "canonical_name": "Nasr ibn Ahmad of Fraxinetum",
+      "manifest_paths": [
+        "authoring/requests/nasr-ibn-ahmad-fraxinetum-940-940-commander.json"
+      ]
+    },
+    {
+      "index": 52,
+      "name": "Rudolf I",
+      "polity": "Kingdom of Germany",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3725483530",
+      "review_result": "approved_timeline",
+      "canonical_name": "Rudolf I of Germany",
+      "manifest_paths": [
+        "authoring/requests/rudolf-i-germany-1273-1291-king-of-the-romans.json"
+      ]
+    },
+    {
+      "index": 53,
+      "name": "Inal",
+      "polity": "Circassia",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3723321698",
+      "review_result": "approved_non_timeline",
+      "canonical_name": "Inal the Great",
+      "historicity": "legendary_possible_historical_core"
+    },
+    {
+      "index": 54,
+      "name": "Nigel Farage",
+      "polity": "Reform UK",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3722688556",
+      "review_result": "approved_timeline",
+      "canonical_name": "Nigel Farage",
+      "manifest_paths": [
+        "authoring/requests/nigel-farage-2006-9-27-2009-11-27-party-leader.json",
+        "authoring/requests/nigel-farage-2010-11-5-2016-9-16-party-leader.json",
+        "authoring/requests/nigel-farage-2016-10-5-2016-11-28-acting-party-leader.json",
+        "authoring/requests/nigel-farage-2019-3-22-2021-3-6-party-leader.json"
+      ]
+    },
+    {
+      "index": 55,
+      "name": "Yavu a Nawej",
+      "polity": "Lunda",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3721913982",
+      "review_result": "approved_timeline",
+      "canonical_name": "Yavu a Nawej",
+      "manifest_paths": [
+        "authoring/requests/yavu-a-nawej-1740-1740-mwaant-yaav.json"
+      ]
+    },
+    {
+      "index": 56,
+      "name": "Wilhelm I",
+      "polity": "Germany",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3720707759",
+      "review_result": "existing_registration_verified"
+    },
+    {
+      "index": 57,
+      "name": "Muhammad Ali",
+      "polity": "Egypt",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3773717079",
+      "review_result": "approved_timeline",
+      "canonical_name": "Muhammad Ali of Egypt",
+      "manifest_paths": [
+        "authoring/requests/muhammad-ali-egypt-1805-1848-wali-and-de-facto-ruler.json"
+      ]
+    },
+    {
+      "index": 58,
+      "name": "Skanderbeg",
+      "polity": "Albania",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3773716064",
+      "review_result": "existing_registration_verified"
+    },
+    {
+      "index": 59,
+      "name": "Hole-in-the-Day",
+      "polity": "Ojibwe",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3770945484",
+      "review_result": "approved_timeline",
+      "canonical_name": "Bagone-giizhig (Hole-in-the-Day the Younger)",
+      "manifest_paths": [
+        "authoring/requests/hole-in-the-day-younger-1847-1868-chief.json"
+      ]
+    },
+    {
+      "index": 60,
+      "name": "Alfonso I d'Este",
+      "polity": "Ferrara",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3770629745",
+      "review_result": "approved_timeline",
+      "canonical_name": "Alfonso I d'Este",
+      "manifest_paths": [
+        "authoring/requests/alfonso-i-d-este-1505-1534-duke.json"
+      ]
+    },
+    {
+      "index": 61,
+      "name": "Agustin de Iturbide",
+      "polity": "Mexico",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3770428341",
+      "review_result": "approved_timeline",
+      "canonical_name": "Agustín de Iturbide",
+      "manifest_paths": [
+        "authoring/requests/agustin-de-iturbide-1821-9-28-1822-5-18-president-of-the-regency.json",
+        "authoring/requests/agustin-de-iturbide-1822-5-19-1823-3-19-emperor.json"
+      ]
+    },
+    {
+      "index": 62,
+      "name": "Fidel Castro",
+      "polity": "Cuba",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3767489347",
+      "review_result": "existing_registration_verified"
+    },
+    {
+      "index": 63,
+      "name": "Harriet Tubman",
+      "polity": "Underground Railroad",
+      "steam": null,
+      "review_result": "existing_registration_verified"
+    },
+    {
+      "index": 64,
+      "name": "Mohammad Mossadegh",
+      "polity": "Iran",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3762856340",
+      "review_result": "approved_timeline",
+      "canonical_name": "Mohammad Mosaddegh",
+      "manifest_paths": [
+        "authoring/requests/mohammad-mosaddegh-1951-4-29-1952-7-16-prime-minister.json",
+        "authoring/requests/mohammad-mosaddegh-1952-7-21-1953-8-19-prime-minister.json"
+      ]
+    },
+    {
+      "index": 65,
+      "name": "Yasser Arafat",
+      "polity": "Palestine",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3762395202",
+      "review_result": "existing_registration_verified"
+    },
+    {
+      "index": 66,
+      "name": "Harold Covington",
+      "polity": "Northwest American Republic",
+      "steam": null,
+      "review_result": "approved_timeline",
+      "canonical_name": "Harold Covington",
+      "manifest_paths": [
+        "authoring/requests/harold-covington-2009-2018-founder-and-movement-leader.json"
+      ]
+    },
+    {
+      "index": 67,
+      "name": "Ho-Chunk",
+      "polity": "Ho-Chunk people",
+      "steam": null,
+      "review_result": "needs_person_identity",
+      "reason": "Ho-Chunk is the name of a people; a personal name is missing."
+    },
+    {
+      "index": 68,
+      "name": "Faisal I",
+      "polity": "Iraq",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3760391675",
+      "review_result": "existing_registration_verified"
+    },
+    {
+      "index": 69,
+      "name": "Joseph Brant",
+      "polity": "Mohawk",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3758778844",
+      "review_result": "approved_timeline",
+      "canonical_name": "Joseph Brant",
+      "manifest_paths": [
+        "authoring/requests/joseph-brant-1775-1783-war-leader-and-diplomat.json",
+        "authoring/requests/joseph-brant-1784-1807-community-leader.json"
+      ]
+    },
+    {
+      "index": 70,
+      "name": "Ahmad Shah Massoud",
+      "polity": "Afghanistan",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3758077464",
+      "review_result": "approved_timeline",
+      "canonical_name": "Ahmad Shah Massoud",
+      "manifest_paths": [
+        "authoring/requests/ahmad-shah-massoud-1979-1992-resistance-commander.json",
+        "authoring/requests/ahmad-shah-massoud-1992-2001-minister-of-defence.json",
+        "authoring/requests/ahmad-shah-massoud-1996-2001-military-leader.json"
+      ]
+    },
+    {
+      "index": 71,
+      "name": "Lester B Pearson",
+      "polity": "Canada",
+      "steam": null,
+      "review_result": "approved_timeline",
+      "canonical_name": "Lester B. Pearson",
+      "manifest_paths": [
+        "authoring/requests/lester-b-pearson-1963-1968-prime-minister.json"
+      ]
+    },
+    {
+      "index": 72,
+      "name": "Pyotr Masherov",
+      "polity": "Byelorussian SSR",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3757199981",
+      "review_result": "approved_timeline",
+      "canonical_name": "Pyotr Masherov",
+      "manifest_paths": [
+        "authoring/requests/pyotr-masherov-1965-1980-first-secretary-of-the-communist-party.json"
+      ]
+    },
+    {
+      "index": 73,
+      "name": "Ching Shih",
+      "polity": "Red Flag Gang",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3788205237",
+      "review_result": "existing_registration_verified"
+    },
+    {
+      "index": 74,
+      "name": "Souphanouvong",
+      "polity": "Laos",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3787575457",
+      "review_result": "approved_timeline",
+      "canonical_name": "Souphanouvong",
+      "manifest_paths": [
+        "authoring/requests/souphanouvong-1975-1986-president.json",
+        "authoring/requests/souphanouvong-1986-1991-titular-president.json"
+      ]
+    },
+    {
+      "index": 75,
+      "name": "Qutb al-Din Tahamtan",
+      "polity": "Hormuz",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3784211423",
+      "review_result": "approved_non_timeline",
+      "canonical_name": "Qutb al-Din Tahamtan of Hormuz",
+      "historicity": "historical_uncertain_identity_chronology"
+    },
+    {
+      "index": 76,
+      "name": "Ansenuza",
+      "polity": "Sanavirones",
+      "steam": null,
+      "review_result": "approved_non_timeline",
+      "canonical_name": "Ansenuza",
+      "historicity": "mythological"
+    },
+    {
+      "index": 77,
+      "name": "Casimir III",
+      "polity": "Poland",
+      "steam": null,
+      "review_result": "existing_registration_verified"
+    },
+    {
+      "index": 78,
+      "name": "Corazon Aquino",
+      "polity": "Philippines",
+      "steam": null,
+      "review_result": "existing_registration_verified"
+    },
+    {
+      "index": 79,
+      "name": "Ali Pasha",
+      "polity": "Yanina",
+      "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3773719287",
+      "review_result": "approved_timeline",
+      "canonical_name": "Ali Pasha of Yanina",
+      "manifest_paths": [
+        "authoring/requests/ali-pasha-yanina-1788-1820-pasha-and-autonomous-ruler.json",
+        "authoring/requests/ali-pasha-yanina-1820-1822-rebel-ruler.json"
+      ]
+    }
+  ]
+}

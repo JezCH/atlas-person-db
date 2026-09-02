@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Nasr ibn Ahmad of Fraxinetum",
+    "display_name_ko": "프락시네툼의 나스르 이븐 아흐마드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Fraxinetum",
+    "display_name_ko": "프락시네툼",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Commander",
+    "role_display_name_ko": "사령관",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Historian Mohamad Ballan identifies the Fraxinetum qa'id Nasr ibn Ahmad in Ibn Hayyan's account of correspondence in 940/941. This approximate attestation is not a complete reign and is not the Samanid emir Nasr II.",
+    "start_year": 940,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 940,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Nasr ibn Ahmad of Fraxinetum — historical reference",
+      "canonical_url": "https://ballandalus.wordpress.com/2015/06/08/fraxinetum-an-islamic-frontier-state-in-tenth-century-provence/",
+      "citation_text": "Historian Mohamad Ballan identifies the Fraxinetum qa'id Nasr ibn Ahmad in Ibn Hayyan's account of correspondence in 940/941. This approximate attestation is not a complete reign and is not the Samanid emir Nasr II."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 51
+  }
+}

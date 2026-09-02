@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Nigel Farage",
+    "display_name_ko": "나이절 패라지",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "UK Independence Party",
+    "display_name_ko": "영국 독립당",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Acting party leader",
+    "role_display_name_ko": "당 대표 권한대행",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Completed party-leadership terms only; the Brexit Party was renamed Reform UK during the 2019–2021 term. His renewed leadership from June 2024 is ongoing as checked in September 2026, and is not given a fabricated end date. No UK premiership is asserted.",
+    "start_year": 2016,
+    "start_month": 10,
+    "start_day": 5,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2016,
+    "end_month": 11,
+    "end_day": 28,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Nigel Farage — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Nigel_Farage",
+      "citation_text": "Completed party-leadership terms only; the Brexit Party was renamed Reform UK during the 2019–2021 term. His renewed leadership from June 2024 is ongoing as checked in September 2026, and is not given a fabricated end date. No UK premiership is asserted."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Nigel Farage — historical reference",
+      "canonical_url": "https://www.theguardian.com/politics/2026/sep/01/nigel-farage-questions-claim-second-standards-investigation",
+      "citation_text": "Completed party-leadership terms only; the Brexit Party was renamed Reform UK during the 2019–2021 term. His renewed leadership from June 2024 is ongoing as checked in September 2026, and is not given a fabricated end date. No UK premiership is asserted."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 54
+  }
+}

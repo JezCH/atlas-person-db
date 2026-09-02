@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Agustín de Iturbide",
+    "display_name_ko": "아구스틴 데 이투르비데",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "First Mexican Empire",
+    "display_name_ko": "멕시코 제1제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "President of the Regency",
+    "role_display_name_ko": "섭정위원회 의장",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Regency presidency before election as emperor is separated from the imperial reign, which ended with abdication in March 1823.",
+    "start_year": 1821,
+    "start_month": 9,
+    "start_day": 28,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1822,
+    "end_month": 5,
+    "end_day": 18,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Agustín de Iturbide — historical reference",
+      "canonical_url": "https://www.tshaonline.org/handbook/entries/iturbide-agustin-de",
+      "citation_text": "Regency presidency before election as emperor is separated from the imperial reign, which ended with abdication in March 1823."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Agustín de Iturbide — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Agust%C3%ADn_de_Iturbide",
+      "citation_text": "Regency presidency before election as emperor is separated from the imperial reign, which ended with abdication in March 1823."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 61
+  }
+}

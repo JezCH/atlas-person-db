@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Ahmad Shah Massoud",
+    "display_name_ko": "아흐마드 샤 마수드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Islamic State of Afghanistan",
+    "display_name_ko": "아프가니스탄 이슬람국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Minister of Defence",
+    "role_display_name_ko": "국방장관",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Defence minister in the internationally recognized Islamic State; after the loss of Kabul in 1996 this government continued in opposition to Taliban control. Northern Alliance leadership is a separate military role. He was not president of Afghanistan.",
+    "start_year": 1992,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2001,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Ahmad Shah Massoud — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Ahmad_Shah_Massoud",
+      "citation_text": "Defence minister in the internationally recognized Islamic State; after the loss of Kabul in 1996 this government continued in opposition to Taliban control. Northern Alliance leadership is a separate military role. He was not president of Afghanistan."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Ahmad Shah Massoud — historical reference",
+      "canonical_url": "https://journals.sagepub.com/doi/pdf/10.2968/057006004",
+      "citation_text": "Defence minister in the internationally recognized Islamic State; after the loss of Kabul in 1996 this government continued in opposition to Taliban control. Northern Alliance leadership is a separate military role. He was not president of Afghanistan."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 70
+  }
+}

@@ -2,31 +2,31 @@
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
   "person": {
-    "canonical_name_en": "Baudouin of Belgium",
-    "display_name_ko": "보두앵",
+    "canonical_name_en": "Souphanouvong",
+    "display_name_ko": "수파누봉",
     "person_type": "historical",
     "historicity": "historical"
   },
   "polity": {
-    "canonical_name_en": "Belgium",
-    "display_name_ko": "벨기에",
+    "canonical_name_en": "Laos",
+    "display_name_ko": "라오스",
     "polity_type": "historical_polity",
     "historicity": "historical"
   },
   "activity": {
     "relation_type": "governs",
-    "role": "Prince Royal and regent",
-    "role_display_name_ko": "왕세자·섭정",
+    "role": "President",
+    "role_display_name_ko": "국가주석",
     "period_basis": "term",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "Regency precedes kingship. Temporary constitutional incapacity in April 1990 did not terminate his royal title.",
-    "start_year": 1950,
+    "notes": "Active presidency ended in 1986 due to illness. He retained the presidential title until 1991 while Phoumi Vongvichit exercised the functions as acting president.",
+    "start_year": 1975,
     "start_month": null,
     "start_day": null,
     "start_certainty": "exact",
     "start_calendar": "gregorian",
-    "end_year": 1951,
+    "end_year": 1986,
     "end_month": null,
     "end_day": null,
     "end_certainty": "exact",
@@ -35,15 +35,15 @@
   "sources": [
     {
       "source_type": "web_bibliographic_reference",
-      "title": "Baudouin of Belgium — historical reference",
-      "canonical_url": "https://www.monarchie.be/en/royal-family/history/king-baudouin",
-      "citation_text": "Regency precedes kingship. Temporary constitutional incapacity in April 1990 did not terminate his royal title."
+      "title": "Souphanouvong — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Prince_Souphanouvong",
+      "citation_text": "Active presidency ended in 1986 due to illness. He retained the presidential title until 1991 while Phoumi Vongvichit exercised the functions as acting president."
     },
     {
       "source_type": "web_bibliographic_reference",
-      "title": "Baudouin of Belgium — historical reference",
-      "canonical_url": "https://en.wikipedia.org/wiki/Baudouin_of_Belgium",
-      "citation_text": "Regency precedes kingship. Temporary constitutional incapacity in April 1990 did not terminate his royal title."
+      "title": "Souphanouvong — historical reference",
+      "canonical_url": "https://www.luangprabangculture.com/tiao-souphanouvong.html",
+      "citation_text": "Active presidency ended in 1986 due to illness. He retained the presidential title until 1991 while Phoumi Vongvichit exercised the functions as acting president."
     }
   ],
   "external_references": {},
@@ -56,7 +56,7 @@
     }
   },
   "review_context": {
-    "request_batch": "moldavia-luxembourg-20260902",
-    "requested_item": 52
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 74
   }
 }

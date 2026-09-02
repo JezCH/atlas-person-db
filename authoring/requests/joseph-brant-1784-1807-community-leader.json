@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Joseph Brant",
+    "display_name_ko": "조지프 브랜트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Grand River Mohawk",
+    "display_name_ko": "그랜드리버 모호크족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Community leader",
+    "role_display_name_ko": "공동체 지도자",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Thayendanegea's documented leadership in the American Revolutionary War is followed by leadership in the Grand River community after 1784. Mohawk Empire is not asserted as a historical imperial state.",
+    "start_year": 1784,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1807,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Joseph Brant — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Joseph_Brant",
+      "citation_text": "Thayendanegea's documented leadership in the American Revolutionary War is followed by leadership in the Grand River community after 1784. Mohawk Empire is not asserted as a historical imperial state."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Joseph Brant — historical reference",
+      "canonical_url": "https://www.battlefields.org/learn/biographies/joseph-brant",
+      "citation_text": "Thayendanegea's documented leadership in the American Revolutionary War is followed by leadership in the Grand River community after 1784. Mohawk Empire is not asserted as a historical imperial state."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 69
+  }
+}
