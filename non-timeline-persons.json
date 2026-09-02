@@ -1358,5 +1358,32 @@
     "role_ko": "요나구니 전승의 여성 통치자·수호자",
     "reason": "Yonaguni municipal cultural material states that San'ai Isoba is said to have ruled the island in the late fifteenth century and to have placed her brothers as local chiefs. However, Okinawa Prefectural Museum oral-history records classify the surviving narratives as legend and include superhuman strength and miraculous defensive feats. The historical core may preserve memory of a real female local ruler, but the evidence does not support a secure person-specific reign interval. ATLAS therefore keeps her outside the historical year timeline.",
     "map_policy": "Do not display on the historical year timeline unless a legendary/oral-tradition overlay is enabled."
+  },
+  {
+    "person_name": "Ce Acatl Topiltzin",
+    "politic_name": "Toltecs",
+    "display_name_ko": "세 아카틀 토필친",
+    "politic_display_name_ko": "톨테카",
+    "historicity": "legendary_possible_historical_core",
+    "historicity_display_ko": "전승·역사적 핵심 가능",
+    "timeline_status": "excluded",
+    "date_basis": "toltec_priest_king_tradition_without_secure_person_specific_historical_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "톨테카 전승의 사제왕",
+    "reason": "Ce Acatl Topiltzin Quetzalcoatl is the priest-king of Tollan in later Nahua and colonial-era traditions. These accounts combine a possible human ruler with narratives of the deity Quetzalcoatl, and their chronology and historical interpretation are disputed. A possible historical core is retained without equating the person with the deity or treating a traditional reign as securely dated history.",
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-historicity overlay is enabled.",
+    "sources": [
+      {
+        "title": "H. B. Nicholson, Topiltzin Quetzalcoatl: The Once and Future Lord of the Toltecs (University Press of Colorado, 2001) — publisher description",
+        "url": "https://www.bibliovault.org/BV.book.epl?ISBN=9780870815546"
+      },
+      {
+        "title": "Ce Acatl Topiltzin — synopsis of divergent source traditions",
+        "url": "https://en.wikipedia.org/wiki/C%C4%93_%C4%80catl_Topiltzin"
+      }
+    ]
   }
 ]
