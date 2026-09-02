@@ -38,6 +38,19 @@
 .spacetime-selection-actions button:hover,.spacetime-selection-actions button:focus-visible{border-color:#7790b9;background:#fff;outline:none}
 .spacetime-selection-actions button:disabled,.spacetime-selection-actions button:disabled:hover{cursor:not-allowed;opacity:.45;border-color:#dde4ee;background:#f6f8fb;color:#8d98a8;box-shadow:none}
 #spacetimeDetailPerson{border-color:#819ac2;background:#edf3ff;color:#31527f}
+.spacetime-selection-evidence{grid-column:1/-1!important;display:grid!important;gap:6px!important;padding-top:8px;border-top:1px solid #d8e3f1}
+.spacetime-selection-evidence-title{display:flex!important;grid-template-columns:1fr auto!important;align-items:center;gap:10px!important}
+.spacetime-selection-evidence-title strong{font-size:11px;color:#344b6d}
+.spacetime-selection-evidence-title span{font-size:9px;color:#7c8aa0;white-space:nowrap}
+.spacetime-selection-evidence-list{display:flex!important;gap:6px!important;overflow:auto;padding:1px 0 3px;scrollbar-width:thin}
+.spacetime-selection-evidence-row{display:grid;gap:4px;min-width:280px;max-width:420px;padding:7px 8px;border:1px solid #dbe5f2;border-radius:9px;background:#fff;box-sizing:border-box}
+.spacetime-selection-evidence-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.spacetime-selection-evidence-head strong{font-size:10px;color:#253a59;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.spacetime-selection-evidence-head span{font-size:9px;color:#7b8798;white-space:nowrap}
+.spacetime-selection-evidence-meta{display:flex;gap:8px;flex-wrap:wrap}
+.spacetime-selection-evidence-meta span,.spacetime-selection-evidence-place,.spacetime-selection-evidence-sources{font-size:9px;line-height:1.35;color:#617087;white-space:normal;overflow:visible;text-overflow:clip}
+.spacetime-selection-evidence-place,.spacetime-selection-evidence-sources{display:grid;grid-template-columns:max-content 1fr;gap:5px;align-items:start}
+.spacetime-selection-evidence-place b,.spacetime-selection-evidence-sources b{color:#465a76}
 .spacetime-frame{position:relative;padding:0;overflow:hidden}
 .spacetime-scroll{position:relative;overflow:auto;height:clamp(520px,72vh,860px);max-height:860px;min-height:520px;background:#f8fafc;overscroll-behavior:contain;scrollbar-gutter:stable}
 .spacetime-scroll:focus-visible{outline:2px solid #9db1cf;outline-offset:-2px}
