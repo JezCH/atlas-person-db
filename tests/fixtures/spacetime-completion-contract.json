@@ -76,12 +76,12 @@
     {
       "id": "spatial-place-precision",
       "required": true,
-      "status": "pending"
+      "status": "locked"
     },
     {
       "id": "spatial-multi-place-preservation",
       "required": true,
-      "status": "pending"
+      "status": "locked"
     },
     {
       "id": "precision-not-greater-than-evidence",
@@ -157,5 +157,13 @@
     "required_overlap_count": 0,
     "required_deferred_visible_labels": 0,
     "required_historical_y_deviation_px": 0
+  },
+  "spatial_place_verification": {
+    "status": "locked",
+    "reviewed_place_binding_count": 5,
+    "point_anchor_policy": "reviewed_place_identity_with_subregion_center_presentation_anchor",
+    "exact_geographic_coordinate_claimed": false,
+    "multi_place_case": "Roman Empire: Rome (-27–329) → Constantinople (330–395)",
+    "test": "tests/spacetime-place-precision.test.mjs"
   }
 }
