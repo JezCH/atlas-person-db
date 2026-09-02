@@ -68,5 +68,5 @@ test("common chrome and label geometry are uniformly compact", () => {
   assert.match(css, /\.spacetime-sticky-corner\{[^}]*width:var\(--spacetime-axis-width,140px\);height:var\(--spacetime-header-height,36px\)/);
   assert.match(css, /\.spacetime-region-head\{[^}]*height:var\(--spacetime-header-height,36px\);margin-left:var\(--spacetime-axis-width,140px\)/);
   assert.match(css, /\.spacetime-canvas\{[^}]*left:var\(--spacetime-axis-width,140px\);top:var\(--spacetime-header-height,36px\)/);
-  assert.match(css, /\.spacetime-track-label\{[^}]*height:19px/);
+  assert.match(css, /\.spacetime-track-label\{[^}]*height:18px/);
 });
