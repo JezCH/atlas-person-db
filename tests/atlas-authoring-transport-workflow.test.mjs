@@ -53,8 +53,8 @@ test('bounded bootstrap sends only exact SHAs, requires OIDC, and proves ledger 
   assert.match(workflow, /\.bootstrap_complete==true/);
   assert.match(workflow, /\.readiness\.core\.ledger_columns_ready==true/);
   const bootstrapStart = workflow.indexOf('      - name: Bootstrap bounded authoring schema migrations');
-  const applyStart = workflow.indexOf('      - name: Apply manifests through deployed Vercel server');
-  const bootstrapBody = workflow.slice(bootstrapStart, applyStart);
+  const auditStart = workflow.indexOf('      - name: Build immutable approved human-authoring audit batches');
+  const bootstrapBody = workflow.slice(bootstrapStart, auditStart);
   assert.doesNotMatch(bootstrapBody, /--slurpfile manifest/);
   assert.doesNotMatch(bootstrapBody, /manifest_path/);
 });
