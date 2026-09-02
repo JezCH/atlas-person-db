@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:pavlo-skoropadskyi:ukrainian-state:1918:v1",
+  "person": {
+    "canonical_name_en": "Pavlo Skoropadskyi",
+    "display_name_ko": "파울로 스코로파드스키",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ukrainian State",
+    "display_name_ko": "우크라이나국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Hetman of Ukraine",
+    "role_display_name_ko": "우크라이나 헤트만",
+    "start_year": 1918,
+    "start_month": 4,
+    "start_day": 29,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1918,
+    "end_month": 12,
+    "end_day": 14,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Pavlo Skoropadskyi was proclaimed Hetman on 29 April 1918 and headed the Ukrainian State, the official polity name under the Hetman government. The regime ended when he abdicated on 14 December 1918 amid the anti-Hetman uprising and collapse of Central Powers support."
+  },
+  "sources": [
+    {
+      "title": "Ukrainian State — Internet Encyclopedia of Ukraine",
+      "canonical_url": "https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%5CU%5CK%5CUkrainianState.htm",
+      "citation_text": "The Encyclopedia of Ukraine states that the Ukrainian State was formally established on 29 April 1918 under Pavlo Skoropadsky and existed until his abdication on 14 December 1918.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Skoropadsky, Pavlo — Internet Encyclopedia of Ukraine",
+      "canonical_url": "https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%5CS%5CK%5CSkoropadskyPavlo",
+      "citation_text": "The biographical entry records Skoropadsky's successful 29 April 1918 coup and proclamation as Hetman of the Ukrainian State.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

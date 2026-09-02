@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:raoni-metuktire:kayapo:1989:v1",
+  "person": {
+    "canonical_name_en": "Raoni Metuktire",
+    "display_name_ko": "라오니 메투크티레",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kayapo (Mẽbêngôkre)",
+    "display_name_ko": "카야포(Mẽbêngôkre)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Indigenous chief and international campaigner",
+    "role_display_name_ko": "원주민 추장·국제 권리운동 지도자",
+    "start_year": 1989,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1989,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Raoni Metuktire is a living Kayapo/Mẽbêngôkre chief and long-running Indigenous and rainforest campaigner. To avoid inventing an open-ended present-day 'reign', ATLAS records the sharply documented 1989 international campaign as a representative leadership Activity, when Raoni brought Kayapo territorial and environmental concerns to a worldwide audience."
+  },
+  "sources": [
+    {
+      "title": "Chief Raoni Metuktire — Religions for Peace",
+      "canonical_url": "https://www.rfp.org/leadership_member/chief-raoni-metuktire/",
+      "citation_text": "Religions for Peace identifies Raoni as Chief of the Kayapo People and describes his international campaign beginning with his 1989 overseas tour.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "We need the trees that give us life — IUCN",
+      "canonical_url": "https://iucn.org/story/202411/we-need-trees-give-us-life",
+      "citation_text": "IUCN identifies Chief Raoni as a revered Indigenous leader who has spent decades campaigning for Indigenous rights and Amazon protection.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
