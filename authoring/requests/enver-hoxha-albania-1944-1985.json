@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:enver-hoxha:albania:1944-1985:v1",
+  "person": {
+    "canonical_name_en": "Enver Hoxha",
+    "display_name_ko": "엔베르 호자",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Albania",
+    "display_name_ko": "알바니아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "de_facto_rule",
+    "role": "Paramount leader",
+    "role_display_name_ko": "최고지도자",
+    "start_year": 1944,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1985,
+    "end_month": 4,
+    "end_day": 11,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Enver Hoxha became the dominant leader of postwar Albania in 1944 and remained the country's undisputed ruler until his death on 11 April 1985. Because his formal offices changed over time while his paramount authority continued, ATLAS records one de facto leadership Activity rather than flattening his prime-ministerial and party offices into a misleading single formal term."
+  },
+  "sources": [
+    {
+      "title": "Hoxha, Enver — Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/enver-hoxha_%28Dizionario-di-Storia%29/",
+      "citation_text": "Treccani identifies Hoxha as head of the provisional government in 1944, prime minister from 1945 to 1954, and party leader until his death in 1985.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Hoxha, Enver (1908–1985) — Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/history/encyclopedias-almanacs-transcripts-and-maps/hoxha-enver-1908-1985",
+      "citation_text": "The reference describes Hoxha as Albania's undisputed leader until his death and head of the ruling party throughout the communist era.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

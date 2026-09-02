@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:paiva-couceiro:monarchy-of-the-north:1919:v1",
+  "person": {
+    "canonical_name_en": "Henrique de Paiva Couceiro",
+    "display_name_ko": "엔리케 드 파이바 쿠세이루",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Monarchy of the North",
+    "display_name_ko": "북부 군주국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President of the Governing Junta",
+    "role_display_name_ko": "통치위원회 의장",
+    "start_year": 1919,
+    "start_month": 1,
+    "start_day": 19,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1919,
+    "end_month": 2,
+    "end_day": 13,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Paiva Couceiro was not the constitutional head of Portugal as a whole. He led the royalist regime proclaimed in Porto as the Monarchy of the North and presided over its Governing Junta from 19 January to 13 February 1919. ATLAS therefore links him to that short-lived restoration regime rather than to Portugal generically."
+  },
+  "sources": [
+    {
+      "title": "COUCEIRO, Henrique de Paiva — Portal Português de Arquivos",
+      "canonical_url": "https://portal.arquivos.pt/record?id=oai%3APT%2FAMAP%3A87427&s=DwEV7",
+      "citation_text": "Portugal's archival portal states that Paiva Couceiro presided over the government of the Monarchy of the North from 19 January to 13 February 1919.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Paiva Couceiro e a contra-revolução monárquica (1910-1919) — RCAAP",
+      "canonical_url": "https://www.rcaap.pt/detail.jsp?id=oai%3Arepositorium.uminho.pt%3A1822%2F6989",
+      "citation_text": "The University of Minho repository identifies Paiva Couceiro as the charismatic leader of the monarchist counter-revolution culminating in 1919.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

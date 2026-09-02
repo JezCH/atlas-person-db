@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:isabella-deste:marquisate-of-mantua:regency:1509-1510:v1",
+  "person": {
+    "canonical_name_en": "Isabella d'Este",
+    "display_name_ko": "이사벨라 데스테",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Marquisate of Mantua",
+    "display_name_ko": "만토바 후국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Regent",
+    "role_display_name_ko": "섭정",
+    "start_year": 1509,
+    "start_month": 8,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "julian",
+    "end_year": 1510,
+    "end_month": 7,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "julian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Isabella d'Este repeatedly governed Mantua during her husband's absences, but the most securely bounded major regency began when Francesco II Gonzaga was captured by the Venetians in August 1509 and lasted until his release in July 1510. ATLAS records this principal regency with month-level approximate boundaries rather than treating her entire tenure as marchioness consort as sovereign rule."
+  },
+  "sources": [
+    {
+      "title": "ISABELLA d'Este, marchesa di Mantova — Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/isabella-d-este-marchesa-di-mantova_%28Dizionario-Biografico%29/",
+      "citation_text": "Treccani states that Isabella assumed the most difficult of her regencies in April 1509 and governed Mantua during Francesco Gonzaga's captivity, with the central captive-regency phase running from August 1509 to July 1510.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "ISABELLA d'Este Gonzaga, marchesa di Mantova — Treccani",
+      "canonical_url": "https://www.treccani.it/enciclopedia/isabella-d-este-gonzaga-marchesa-di-mantova_%28Enciclopedia-Italiana%29/",
+      "citation_text": "Treccani explicitly states that Isabella governed the state for her husband while he was a Venetian prisoner from August 1509 to July 1510.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
