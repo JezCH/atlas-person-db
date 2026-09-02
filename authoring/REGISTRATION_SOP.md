@@ -135,6 +135,8 @@ During the normal path, do not inspect implementation files merely to remember h
 
 ### 4.2 Batch compilation + Production preflight invariant — build once, probe once, write once
 
+Operational continuation: when the user instructs registration to continue after a disclosed provider access block, apply the explicit `review_deferrals.namuwiki` GitHub exception in `NAMUWIKI_REGISTRATION_POLICY.md`. Its pending-review record replaces the unavailable reference decision for this bounded case; never record an unverified `not_found`. If a direct Admin session is unavailable, the existing authenticated GitHub Authoring Apply workflow performs authoritative `preflight_batch` before any Person/Activity write. Report pre-commit preflight as not performed, and rely on the workflow's actual per-item classifications and canonical verification rather than claiming READY in advance. This changes neither authentication nor the pre-write database checks.
+
 After SCREEN and REVIEW finish for a multi-Person request, compile the surviving registrations as one in-memory batch before touching Git.
 
 The local batch compilation preflight must confirm:

@@ -1,6 +1,6 @@
 # NamuWiki reference policy for Person registration
 
-This policy applies to every new `atlas-human-authoring/v1` Person registration created after this contract is merged.
+This policy applies to every new `atlas-human-authoring/v1` Person registration created after this contract is merged. The explicit provider-access deferral below is the only exception to the normal required-decision rule.
 
 ## Required registration decision
 
@@ -33,6 +33,27 @@ When no Person document can be found after the check:
 ```
 
 Omission, `unknown`, guessed URLs, non-NamuWiki URLs, and a `not_found` record carrying a title or URL are not valid decisions for a new human-authoring registration.
+
+## Explicit provider-access deferral for GitHub batches
+
+When a provider access restriction has been disclosed and the user instructs registration to continue, historical Person/Activity registration may proceed through the existing authenticated GitHub transport while the NamuWiki review remains pending. This exception does not turn a failed search or blocked page into `not_found`.
+
+The reviewed manifest must omit `external_references.namuwiki` and include:
+
+```json
+"review_deferrals": {
+  "namuwiki": {
+    "reason_code": "provider_access_blocked",
+    "attempted_at": "2026-09-02",
+    "reason": "Describe the actual provider restriction and outstanding review.",
+    "authorization": "user_requested_registration_after_disclosed_block"
+  }
+}
+```
+
+The immutable Git manifest is the pending-review record. No fabricated NamuWiki decision or URL is written; the Person remains unreviewed unless a reviewed value already exists, which the service reuses. Link verification is outstanding even after Person/Activity registration succeeds and must be reported separately. Do not claim complete NamuWiki review for these records.
+
+This is a bounded GitHub batch exception. Bare omission, `unknown` decisions, and simultaneous decisions plus deferrals remain invalid for new manifests. The Admin path, OIDC authentication, source requirements, historical review, duplicate checks, transaction boundaries, overwrite protections, and canonical read-back are unchanged. Complete the reference review later through the existing NamuWiki link workflow once verified evidence is available.
 
 ## Authoritative storage and read path
 
