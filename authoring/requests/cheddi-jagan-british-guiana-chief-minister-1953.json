@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cheddi-jagan:british-guiana:chief-minister:1953:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Cheddi Jagan",
+    "display_name_ko": "체디 제이건"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "British Guiana",
+    "display_name_ko": "영국령 기아나"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Chief Minister",
+    "role_display_name_ko": "수석장관",
+    "start_year": 1953,
+    "start_month": 5,
+    "start_day": 30,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1953,
+    "end_month": 10,
+    "end_day": 9,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Cheddi Jagan headed the short-lived elected government created by British Guiana's 1953 constitution. The constitutional government was suspended in October 1953. ATLAS separates this first chief-ministerial period from his later return to office."
+  },
+  "sources": [
+    {
+      "title": "Parliament of Guyana — Guyana Parliament History",
+      "canonical_url": "https://parliament.gov.gy/new2/GUYANA%20PARLIAMENT%20HISTORY%202009-1.pdf",
+      "citation_text": "The parliamentary history documents Jagan as Leader of the House in the first elected ministerial government of 1953.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Prime Minister of Guyana — historical office chronology",
+      "canonical_url": "https://en.wikipedia.org/wiki/Prime_Minister_of_Guyana",
+      "citation_text": "The office chronology gives Jagan's first chief-ministerial term as 30 May to 9 October 1953.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
