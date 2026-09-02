@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:abdel-fattah-el-sisi:egypt:defense-minister:2012-2014:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Abdel Fattah el-Sisi",
+    "display_name_ko": "압델 파타 엘시시"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Arab Republic of Egypt",
+    "display_name_ko": "이집트 아랍 공화국"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Minister of Defense and Commander-in-Chief",
+    "role_display_name_ko": "국방장관·군 총사령관",
+    "start_year": 2012,
+    "start_month": 8,
+    "start_day": 12,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2014,
+    "end_month": 3,
+    "end_day": 26,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "El-Sisi served as Egypt's Minister of Defense and commander-in-chief of the armed forces from 12 August 2012 until resigning on 26 March 2014 to run for president. As of 2 September 2026 he remains the incumbent President of Egypt, so ATLAS does not fabricate an end date for that ongoing presidency; only this completed office is authored."
+  },
+  "sources": [
+    {
+      "title": "Abdel Fattah el-Sisi — military and ministerial chronology",
+      "canonical_url": "https://en.wikipedia.org/wiki/Abdel_Fattah_el-Sisi",
+      "citation_text": "The chronology records his appointment as Minister of Defense on 12 August 2012.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Sisi's resignation speech in full",
+      "canonical_url": "https://www.aljazeera.com/amp/news/2014/3/26/sisis-resignation-speech-in-full",
+      "citation_text": "El-Sisi announced on 26 March 2014 that he was retiring as Minister of Defense and leaving the military to run for president.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Egyptian Presidency — President El-Sisi Holds Talks with President Xi Jinping",
+      "canonical_url": "https://www.presidency.eg/EN/%D9%82%D8%B3%D9%85-%D8%A7%D9%84%D8%A3%D8%AE%D8%A8%D8%A7%D8%B1/%D8%A3%D8%AE%D8%A8%D8%A7%D8%B1-%D8%B1%D8%A6%D8%A7%D8%B3%D9%8A%D8%A9/news02092026/",
+      "citation_text": "The Egyptian Presidency identifies Abdel Fattah El-Sisi as President on 2 September 2026, confirming that his presidency is still open-ended.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

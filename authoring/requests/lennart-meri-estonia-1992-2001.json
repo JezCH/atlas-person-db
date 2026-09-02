@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:lennart-meri:estonia:president:1992-2001:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Lennart Meri",
+    "display_name_ko": "레나르트 메리"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Republic of Estonia",
+    "display_name_ko": "에스토니아 공화국"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1992,
+    "start_month": 10,
+    "start_day": 6,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2001,
+    "end_month": 10,
+    "end_day": 8,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Lennart Meri served as President of the Republic of Estonia from 6 October 1992 to 8 October 2001, spanning two presidential terms after the restoration of Estonian independence."
+  },
+  "sources": [
+    {
+      "title": "Office of the President of Estonia — Lennart Meri",
+      "canonical_url": "https://president.ee/en/republic-of-estonia/heads-of-state/440/",
+      "citation_text": "The official Estonian presidency gives Meri's presidential service as 6 October 1992 to 8 October 2001.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

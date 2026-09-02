@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:spearthrower-owl:teotihuacan:ruler:374-439:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Spearthrower Owl",
+    "display_name_ko": "스피어스로어 아울"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Teotihuacan",
+    "display_name_ko": "테오티우아칸"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Ruler (scholarly reconstruction)",
+    "role_display_name_ko": "통치자(학술적 복원)",
+    "start_year": 374,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 439,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Maya inscriptions give Spearthrower Owl an accession in 374 and death in 439, and identify him as father of the Teotihuacan-linked Tikal ruler Yax Nuun Ahiin I. David Stuart's 2024 synthesis argues that he was a historical ruler of Teotihuacan. The personal dates are epigraphically grounded, but identifying his unspecified throne with Teotihuacan remains a scholarly reconstruction rather than an uncontested contemporary title; ATLAS therefore records the polity link with confidence 'likely'."
+  },
+  "sources": [
+    {
+      "title": "David Stuart, Spearthrower Owl: A Teotihuacan Ruler in Maya History",
+      "canonical_url": "https://search.worldcat.org/title/Spearthrower-Owl-%3A-a-Teotihuacan-ruler-in-Maya-history/oclc/1396060559",
+      "citation_text": "The 2024 Dumbarton Oaks monograph argues from epigraphic and iconographic evidence that Spearthrower Owl was a historical ruler of Teotihuacan from 374 to 439 CE.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "David Stuart, The Arrival of Strangers",
+      "canonical_url": "https://www.precolumbia.org/pari/publications/news_archive/25/strangers/strangers.html",
+      "citation_text": "Stuart's epigraphic discussion identifies an accession date in 374 and a recorded death in 439 while noting that the throne's location must be reconstructed from the Teotihuacan context.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:subcomandante-marcos:ezln:spokesperson:1994-2014:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Subcomandante Marcos",
+    "display_name_ko": "마르코스 부사령관"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Zapatista Army of National Liberation (EZLN)",
+    "display_name_ko": "사파티스타 민족해방군(EZLN)"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Spokesperson and military subcommander",
+    "role_display_name_ko": "대변인·군사 부사령관",
+    "start_year": 1994,
+    "start_month": 1,
+    "start_day": 1,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2014,
+    "end_month": 5,
+    "end_day": 25,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Subcomandante Insurgente Marcos became the internationally visible spokesperson and military subcommander of the EZLN with its public uprising on 1 January 1994. At 02:08 on 25 May 2014 he publicly declared that the Marcos persona ceased to exist and that his voice would no longer speak for the EZLN, thereafter adopting the name Galeano. ATLAS therefore uses 1994–2014 as the closed Marcos public-leadership interval and does not treat him as sovereign ruler of the Zapatista communities."
+  },
+  "sources": [
+    {
+      "title": "EZLN — Between Light and Shadow",
+      "canonical_url": "https://enlacezapatista.ezln.org.mx/2014/05/27/between-light-and-shadow/",
+      "citation_text": "The EZLN communiqué explains Marcos's public-media function and records his declaration at 02:08 on 25 May 2014 that Subcomandante Insurgente Marcos ceased to exist and would no longer speak for the EZLN.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "EZLN historical interview — Subcomandante Marcos, October 1994",
+      "canonical_url": "https://enlacezapatista.ezln.org.mx/1994/10/20/subcomandante-marcos-sobre-la-linea-dura-del-gobierno/",
+      "citation_text": "The official EZLN archive documents Marcos acting publicly as Subcomandante Insurgente and spokesman in 1994.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

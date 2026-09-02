@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:white-eagle:ponca:hereditary-chief:1870-1904:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "White Eagle",
+    "display_name_ko": "화이트 이글"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Ponca",
+    "display_name_ko": "폰카족"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Hereditary chief",
+    "role_display_name_ko": "세습 추장",
+    "start_year": 1870,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1904,
+    "end_month": 5,
+    "end_day": 8,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "White Eagle (Qithaska) was the hereditary head chief of the Ponca during the removal crisis and subsequent life in Indian Territory. He succeeded to the hereditary chieftaincy in 1870 and formally abdicated in favor of his son Horse Chief Eagle on 8 May 1904."
+  },
+  "sources": [
+    {
+      "title": "Oklahoma Historical Society — White Eagle",
+      "canonical_url": "https://www.okhistory.org/publications/enc/entry?entry=WH005",
+      "citation_text": "The Oklahoma Historical Society identifies White Eagle as the hereditary chief of the Ponca and documents his leadership during and after the 1877 removal.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "White Eagle — chieftaincy chronology",
+      "canonical_url": "https://en.wikipedia.org/wiki/Chief_White_Eagle",
+      "citation_text": "The chieftaincy chronology gives White Eagle's hereditary leadership as 1870–1904 and records his formal abdication on 8 May 1904.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Smithsonian transcription — White Eagle statement, 1879",
+      "canonical_url": "https://transcription.si.edu/view/8133/NMAI-066_001_06_001",
+      "citation_text": "The Smithsonian transcription identifies White Eagle contemporaneously as head-chief of the Ponca Tribe in 1879.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:fin:otsjanep-asmat:jeu-war-leader:1961:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Fin",
+    "display_name_ko": "핀"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Otsjanep Asmat",
+    "display_name_ko": "오츠야넵 아스마트 공동체"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Jeu headman and war leader",
+    "role_display_name_ko": "제우 수장·전쟁 지도자",
+    "start_year": 1961,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1961,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Fin was an Asmat man of Otsjanep who, according to missionary testimony and later investigation, had succeeded one of the village's slain war leaders by 1961 and was a headman of a jeu men's-house/warrior group. He is also repeatedly named in testimony concerning Michael Rockefeller's disappearance and alleged killing. ATLAS does not make him ruler of all Asmat and uses the securely documented 1961 context as a representative point."
+  },
+  "sources": [
+    {
+      "title": "Carl Hoffman, What Really Happened to Michael Rockefeller",
+      "canonical_url": "https://www.smithsonianmag.com/history/What-Really-Happened-to-Michael-Rockefeller-180949813/",
+      "citation_text": "Smithsonian's account, based on missionary testimony and later field investigation, identifies Fin among the men who succeeded Otsjanep war leaders killed in the 1958 Dutch raid and places him in the 1961 events.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The Asmat of New Guinea — Michael Clark Rockefeller journal and ethnographic catalogue",
+      "canonical_url": "https://libmma.contentdm.oclc.org/digital/collection/p16028coll15/id/3230/",
+      "citation_text": "The Metropolitan Museum digital collection preserves Michael Rockefeller's 1961 Asmat field material and documents an Asmat carver named Fin, supporting the historical context and identity.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
