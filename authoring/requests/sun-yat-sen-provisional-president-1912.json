@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sun-yat-sen:republic-of-china:provisional-president:1912:v1",
+  "person": {
+    "canonical_name_en": "Sun Yat-sen",
+    "display_name_ko": "쑨원"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of China",
+    "display_name_ko": "중화민국",
+    "polity_type": "modern_state",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "term",
+    "role": "Provisional President",
+    "role_display_name_ko": "임시대총통",
+    "start_year": 1912,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1912,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sun Yat-sen assumed office as provisional president in Nanjing on 1 January 1912, tendered his resignation in February, and officially terminated his presidential duties on 1 April 1912. ATLAS uses a year-level 1912 term."
+  },
+  "sources": [
+    {
+      "title": "Chronology of Dr. Sun Yat-sen — National Dr. Sun Yat-sen Memorial Hall",
+      "canonical_url": "https://www.yatsen.gov.tw/en/cp.aspx?n=6695",
+      "citation_text": "Official chronology records Sun's 1912 provisional presidency, 1917-1918 grand-marshal leadership of the Constitutional Protection government, 1921-1922 Guangzhou presidency, and restoration as grand marshal in 1923.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "Sun Yat-sen becomes first President of Republic of China — Oxford University Press",
+      "canonical_url": "https://blog.oup.com/2011/12/sun-yat-sen/",
+      "citation_text": "Oxford University Press describes Sun's election as provisional president in late 1911 and assumption of office in Nanjing on 1 January 1912.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "쑨원",
+      "url": "https://namu.wiki/w/%EC%91%A8%EC%9B%90"
+    }
+  }
+}

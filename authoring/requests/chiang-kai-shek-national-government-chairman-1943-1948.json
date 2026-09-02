@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:chiang-kai-shek:republic-of-china:chairman-national-government:1943-1948:v1",
+  "person": {
+    "canonical_name_en": "Chiang Kai-shek",
+    "display_name_ko": "장제스"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of China",
+    "display_name_ko": "중화민국",
+    "polity_type": "modern_state",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Chairman of the National Government",
+    "role_display_name_ko": "국민정부 주석",
+    "start_year": 1943,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1948,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After Lin Sen's death in 1943, Chiang resumed the chairmanship of the National Government and held it until the constitutional presidency replaced that head-of-state structure in May 1948."
+  },
+  "sources": [
+    {
+      "title": "President Chiang Kai-shek and the Republic of China — National Chiang Kai-shek Memorial Hall",
+      "canonical_url": "https://www.cksmh.gov.tw/en/cp.aspx?n=6477",
+      "citation_text": "The National Chiang Kai-shek Memorial Hall describes Chiang's rise after the Northern Expedition, his chairmanship of the National Government, wartime national leadership, and election as constitutional president in 1948.",
+      "source_type": "official_museum_biographical_reference"
+    },
+    {
+      "title": "Hoover acquires personal papers of Lin Sen — Hoover Institution",
+      "canonical_url": "https://www.hoover.org/news/hoover-acquires-personal-papers-lin-sen-longest-serving-head-state-nationalist-china",
+      "citation_text": "Hoover notes that Lin Sen became chairman of the Nationalist government in 1931 and held that office until his death in 1943, confirming the interruption between Chiang's two chairmanships.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-25",
+      "document_title": "장제스",
+      "url": "https://namu.wiki/w/%EC%9E%A5%EC%A0%9C%EC%8A%A4"
+    }
+  }
+}
