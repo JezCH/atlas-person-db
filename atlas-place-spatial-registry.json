@@ -1,6 +1,6 @@
 {
   "schema": "atlas-place-spatial-registry/v1",
-  "generated_at": "2026-08-26T16:05:00+09:00",
+  "generated_at": "2026-09-02T10:14:00+09:00",
   "policy": {
     "identity_display_separation": "Historical Place identity and reviewed geographic evidence belong here; runtime display anchors do not.",
     "no_guessing": "Do not infer coordinates, subregions, or canonical identity from a Person name, modern nationality, or an unreviewed place-name string.",
@@ -13,7 +13,9 @@
     {
       "place_id": "place-rome",
       "canonical_name": "Rome",
-      "historical_names": ["Roma"],
+      "historical_names": [
+        "Roma"
+      ],
       "macroregion_code": "europe",
       "subregion_code": "italy",
       "coordinate_precision": "unknown",
@@ -41,6 +43,24 @@
         "https://www.britannica.com/place/Macedonia-ancient-kingdom-Europe"
       ],
       "review_note": "Reviewed only to the stable Balkans subregion. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-constantinople",
+      "canonical_name": "Constantinople",
+      "historical_names": [
+        "Byzantium"
+      ],
+      "macroregion_code": "europe",
+      "subregion_code": "balkans",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://whc.unesco.org/en/list/356/",
+        "https://whc.unesco.org/archive/2016/whc16-40com-INF1-en.pdf"
+      ],
+      "review_note": "Reviewed only to the stable Balkans subregion. UNESCO identifies the historic peninsula where Byzantium/Constantinople developed and states that Istanbul's historical centre lies on the European side; no runtime point coordinate is asserted."
     },
     {
       "place_id": "place-ankara",
@@ -99,6 +119,36 @@
       "place_name": "Rome",
       "source_refs": [
         "1911 Encyclopaedia Britannica: Constantine (emperors)"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-constantinople",
+      "polity_id": "5d9a6186-bbe6-5d1a-ba93-02190ae4c417",
+      "function_type": "capital",
+      "place_name": "Constantinople",
+      "source_refs": [
+        "1911 Encyclopaedia Britannica: Constantinople"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-constantinople",
+      "polity_id": "074510f4-f2e7-5795-8cfb-2a4206fa7254",
+      "function_type": "capital",
+      "place_name": "Constantinople",
+      "source_refs": [
+        "1911 Encyclopaedia Britannica: Constantinople"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-constantinople",
+      "polity_id": "6d1520e2-0aff-5063-b2b7-95eb86daf372",
+      "function_type": "capital",
+      "place_name": "Constantinople",
+      "source_refs": [
+        "1911 Encyclopaedia Britannica: Constantinople"
       ],
       "review_status": "reviewed"
     },
