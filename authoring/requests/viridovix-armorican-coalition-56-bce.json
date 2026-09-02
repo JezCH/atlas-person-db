@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:viridovix:armorican-coalition:56-bce:v1",
+  "person": {
+    "canonical_name_en": "Viridovix",
+    "display_name_ko": "비리도빅스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Armorican anti-Roman coalition of 56 BCE",
+    "display_name_ko": "기원전 56년 아르모리카 반로마 연합",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Chief of the Unelli and coalition commander",
+    "role_display_name_ko": "우넬리족 수장·연합군 지휘관",
+    "start_year": -56,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -56,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Caesar's Gallic War III.17 names Viridovix as chief of the Unelli and commander-in-chief of the revolted states that joined him in 56 BCE. 'Armorica' was a broad geographic-cultural region, not a centralized kingdom ruled by Viridovix, so ATLAS models the specific anti-Roman coalition rather than an 'Aremorica' state."
+  },
+  "sources": [
+    {
+      "title": "Caesar, Gallic War, Book III",
+      "canonical_url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Caesar/Gallic_War/3%2A.html",
+      "citation_text": "Caesar states that Viridovix, chief of the Unelli, held supreme command over the revolted states and their army during the 56 BCE campaign.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

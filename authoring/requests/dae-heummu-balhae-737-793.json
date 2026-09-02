@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:dae-heummu:balhae:737-793:v1",
+  "person": {
+    "canonical_name_en": "Dae Heummu",
+    "display_name_ko": "대흠무",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Balhae",
+    "display_name_ko": "발해",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 737,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 793,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Dae Heummu (King Mun of Balhae) succeeded King Mu in 737 and reigned as Balhae's third king until 793. The user's spelling 'Dae-Hemmu' is normalized to Dae Heummu, the Revised Romanization of 대흠무."
+  },
+  "sources": [
+    {
+      "title": "문왕 — 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0019602",
+      "citation_text": "The Academy of Korean Studies identifies King Mun's personal name as Dae Heummu (대흠무) and gives his reign over Balhae as 737-793.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "문왕 — 우리역사넷",
+      "canonical_url": "https://contents.history.go.kr/mobile/kc/view.do?code=kc_age_10&levelId=kc_n101100",
+      "citation_text": "The National Institute of Korean History states that Dae Heummu succeeded King Mu in 737 and ruled Balhae as King Mun through 793.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

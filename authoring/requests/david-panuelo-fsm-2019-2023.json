@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:david-panuelo:federated-states-of-micronesia:2019-2023:v1",
+  "person": {
+    "canonical_name_en": "David W. Panuelo",
+    "display_name_ko": "데이비드 파누엘로",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Federated States of Micronesia",
+    "display_name_ko": "미크로네시아 연방",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 2019,
+    "start_month": 5,
+    "start_day": 11,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2023,
+    "end_month": 5,
+    "end_day": 10,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Congress of the Federated States of Micronesia records David W. Panuelo as the ninth president, elected on 11 May 2019 and serving until 10 May 2023. Because his presidency is complete, he is eligible for the historical timeline."
+  },
+  "sources": [
+    {
+      "title": "Congress Resolution No. 23-05 — Federated States of Micronesia Congress",
+      "canonical_url": "https://www.cfsm.gov.fm/wp-content/uploads/2024/07/CR-23-05.pdf",
+      "citation_text": "FSM Congress Resolution 23-05 states that David W. Panuelo was elected ninth president on 11 May 2019 and served until 10 May 2023.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
