@@ -25,7 +25,7 @@
     ["./atlas-person-spacetime-person-tracks.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
     ["./atlas-person-spacetime-political-placement.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT"],
     ["./atlas-person-spacetime-lod.js?v=20260831-500-floor", "ATLAS_PERSON_SPACETIME_LOD"],
-    ["./atlas-person-spacetime-label-engine.js?v=20260901-uniform-076-label-chrome", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
+    ["./atlas-person-spacetime-label-engine.js?v=20260902-label-height-18", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
   ]);
 
   if (!reader || !model || !eraModel) {
