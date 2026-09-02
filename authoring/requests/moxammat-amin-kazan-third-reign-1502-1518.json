@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:moxammat-amin:kazan:third-reign:1502-1518:v1",
+  "person": {
+    "canonical_name_en": "Möxämmät-Ämin",
+    "display_name_ko": "무함마드 아민",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kazan Khanate",
+    "display_name_ko": "카잔 칸국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khan",
+    "role_display_name_ko": "칸",
+    "start_year": 1502,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1518,
+    "end_month": 12,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Muhammad Amin was restored to the Kazan throne in 1502 and remained khan until his death in December 1518. ATLAS records this as a distinct third reign rather than a continuous 1484-1518 rule."
+  },
+  "sources": [
+    {
+      "title": "Мухаммад-Амин — TATARICA",
+      "canonical_url": "https://tatarica.org/ru/razdely/istoriya/srednie-veka/personalii/muhammad-amin",
+      "citation_text": "Tatarica records Muhammad Amin's restoration in 1502 and death in 1518.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Казанское ханство — TATARICA",
+      "canonical_url": "https://tatarica.org/ru/razdely/istoriya/srednie-veka/gosudarstva/kazanskoe-hanstvo",
+      "citation_text": "The Tatarica khanate chronology lists Muhammad Amin in 1502-1518 and explicitly notes his death in December 1518.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

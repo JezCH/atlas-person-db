@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:nodira:khanate-of-kokand:1822-1842:v1",
+  "person": {
+    "canonical_name_en": "Nodira",
+    "display_name_ko": "노디라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Khanate of Kokand",
+    "display_name_ko": "코칸트 칸국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Regent",
+    "role_display_name_ko": "섭정",
+    "start_year": 1822,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1842,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After Umar Khan died in 1822, his teenage son Muhammad Ali Khan succeeded. Uzbek encyclopedic material describes Nodira as the principal administrator of the state, while modern scholarship describes her as a powerful court stateswoman and regent/adviser. ATLAS therefore records her as de facto regent under her son's formal khanship through 1842, not as a formal khan in her own right."
+  },
+  "sources": [
+    {
+      "title": "NODIRA — Qomus.INFO / Uzbek National Encyclopedia content",
+      "canonical_url": "https://qomus.info/oz/encyclopedia/n/nodira/",
+      "citation_text": "The Uzbek encyclopedia identifies Nodira as a stateswoman and states that after Umar Khan's death in 1822, although Muhammad Ali Khan took the throne, the state was mainly administered by Nodira.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "KOKAND KHANATE — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/kokand-khanate/",
+      "citation_text": "Iranica confirms Muhammad Ali Khan's formal reign from 1822 to 1842 and the strong palace-clique politics of the period, contextualizing Nodira's de facto rather than titular authority.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

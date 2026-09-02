@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sorghaghtani-beki:toluid-ulus:c1232-1252:v1",
+  "person": {
+    "canonical_name_en": "Sorghaghtani Beki",
+    "display_name_ko": "소르칵타니 베키",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Toluid ulus",
+    "display_name_ko": "톨루이 울루스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Administrator of the Toluid ulus",
+    "role_display_name_ko": "톨루이 울루스 운영자",
+    "start_year": 1232,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1252,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sorghaghtani was not Great Khan or sovereign ruler of 'Mongolia'. After Tolui's death, she retained and administered his family appanage, developed its sedentary revenues and became a central imperial stateswoman whose political strategy helped transfer the Great Khanate to her son Möngke. ATLAS therefore models her against the Toluid ulus rather than falsely assigning her a reign over the whole Mongol Empire."
+  },
+  "sources": [
+    {
+      "title": "Sorghaghtani Beki in the eyes of court historians — World History Commons",
+      "canonical_url": "https://worldhistorycommons.org/sorghaghtani-beki-eyes-court-historians",
+      "citation_text": "Contemporary court historians Juvaini and Rashid al-Din are quoted describing Sorghaghtani's administration of affairs of state and the decisive political management of her sons' interests.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "The reign of Khubilai khan — The Cambridge History of China",
+      "canonical_url": "https://resolve.cambridge.org/core/services/aop-cambridge-core/content/view/5A78D2CB4336B15FB090E0532672D3CA/9781139054744c5_p414-489_CBO.pdf/reign_of_khubilai_khan.pdf",
+      "citation_text": "The Cambridge History of China describes Sorghaghtani as a powerful political actor with her own north-China appanage and credits her strategy with the rise of her sons.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
