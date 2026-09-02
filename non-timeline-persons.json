@@ -1385,5 +1385,194 @@
         "url": "https://en.wikipedia.org/wiki/C%C4%93_%C4%80catl_Topiltzin"
       }
     ]
+  },
+  {
+    "person_name": "Hárekr of Bjarmia",
+    "display_name_ko": "비야르미아의 하레크",
+    "politic_name": "Bjarmia",
+    "politic_display_name_ko": "비야르미아",
+    "historicity": "legendary",
+    "historicity_display_ko": "전설",
+    "role_ko": "사가에 등장하는 비야르미아의 왕",
+    "reason": "Harekr is the Bjarmian king in Bósa saga ok Herrauðs, a legendary saga. He is not identified with the historical Norwegian Harek of Thjotta; no historical reign dates are established.",
+    "sources": [
+      {
+        "title": "Hárekr of Bjarmia — historical classification",
+        "url": "https://en.wikipedia.org/wiki/B%C3%B3sa_saga_ok_Herrau%C3%B0s"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed chronology.",
+    "request_context": {
+      "batch": "moldavia-luxembourg-20260902",
+      "item": 9
+    }
+  },
+  {
+    "person_name": "Maniiḷaq",
+    "display_name_ko": "마니일라크",
+    "politic_name": "Iñupiat",
+    "politic_display_name_ko": "이누피아트",
+    "historicity": "historical_tradition_uncertain_chronology",
+    "historicity_display_ko": "역사 전승·연대 불확실",
+    "role_ko": "이누피아트의 예언자·치유자",
+    "reason": "Maniilaq belongs to nineteenth-century Iñupiat history and oral tradition. His community importance is retained, but defensible person-specific start and end years are unavailable.",
+    "sources": [
+      {
+        "title": "Maniiḷaq — historical classification",
+        "url": "https://en.wikipedia.org/wiki/Maniilaq"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed chronology.",
+    "request_context": {
+      "batch": "moldavia-luxembourg-20260902",
+      "item": 15
+    }
+  },
+  {
+    "person_name": "Dragoș of Moldavia",
+    "display_name_ko": "몰다비아의 드라고슈",
+    "politic_name": "Moldavia",
+    "politic_display_name_ko": "몰다비아",
+    "historicity": "historical_tradition_uncertain_chronology",
+    "historicity_display_ko": "역사 전승·연대 불확실",
+    "role_ko": "몰다비아의 초기 보이보드·건국 전승 인물",
+    "reason": "Chronicles and reconstructions date Dragoș's arrival variously to 1345, 1347, 1352 or 1359, and identification with documented landowners is disputed. No arbitrary personal reign interval is selected.",
+    "sources": [
+      {
+        "title": "Dragoș of Moldavia — historical classification",
+        "url": "https://en.wikipedia.org/wiki/Drago%C8%99,_Voivode_of_Moldavia"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed chronology.",
+    "request_context": {
+      "batch": "moldavia-luxembourg-20260902",
+      "item": 24
+    }
+  },
+  {
+    "person_name": "Åsa Haraldsdottir of Agder",
+    "display_name_ko": "아그데르의 오사 하랄스도티르",
+    "politic_name": "Agder",
+    "politic_display_name_ko": "아그데르",
+    "historicity": "legendary_possible_historical_core",
+    "historicity_display_ko": "전설·역사적 핵심 가능",
+    "role_ko": "사가 전승의 아그데르 여왕",
+    "reason": "Known only through later saga literature. Personal political chronology and proposed identification with an Oseberg burial are not secure.",
+    "sources": [
+      {
+        "title": "Åsa Haraldsdottir of Agder — historical classification",
+        "url": "https://snl.no/%C3%85sa_Haraldsdatter"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed chronology.",
+    "request_context": {
+      "batch": "moldavia-luxembourg-20260902",
+      "item": 45
+    }
+  },
+  {
+    "person_name": "Nyatri Tsenpo",
+    "display_name_ko": "냐트리 첸포",
+    "politic_name": "Yarlung",
+    "politic_display_name_ko": "야를룽",
+    "historicity": "legendary",
+    "historicity_display_ko": "전설",
+    "role_ko": "티베트 왕조의 전설적 시조",
+    "reason": "Legendary progenitor of the Tibetan royal line. Traditional dates do not provide historical evidence for a personal reign.",
+    "sources": [
+      {
+        "title": "Nyatri Tsenpo — historical classification",
+        "url": "https://en.wikipedia.org/wiki/Nyatri_Tsenpo"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed chronology.",
+    "request_context": {
+      "batch": "moldavia-luxembourg-20260902",
+      "item": 47
+    }
+  },
+  {
+    "person_name": "Lady of Huarmey",
+    "display_name_ko": "우아르메이의 귀부인",
+    "politic_name": "Wari",
+    "politic_display_name_ko": "와리",
+    "historicity": "historical_uncertain_identity_chronology",
+    "historicity_display_ko": "실존·신원 및 연대 불확실",
+    "role_ko": "와리의 고위 여성·우아르메이 매장 인물",
+    "reason": "Archaeological remains document a high-status Wari woman nicknamed the Huarmey Queen. Her personal name, exact political office and individual reign dates are unknown; the tomb's age is not a reign.",
+    "sources": [
+      {
+        "title": "Lady of Huarmey — historical classification",
+        "url": "https://www.nationalgeographic.com/history/article/inca-empire-wari-women-tomb"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed chronology.",
+    "request_context": {
+      "batch": "moldavia-luxembourg-20260902",
+      "item": 71
+    }
+  },
+  {
+    "person_name": "Guacanaoma",
+    "display_name_ko": "과카나오마",
+    "politic_name": "Tairona (Valle de la Caldera)",
+    "politic_display_name_ko": "타이로나(칼데라 계곡)",
+    "historicity": "historical_uncertain_chronology",
+    "historicity_display_ko": "실존·연대 불확실",
+    "role_ko": "타이로나의 유력 수장",
+    "reason": "Colonial accounts and archaeological scholarship identify a paramount chief of Valle de la Caldera. The reviewed sources do not establish his personal accession or endpoint; chronicle publication dates are not activity dates.",
+    "sources": [
+      {
+        "title": "Guacanaoma — historical classification",
+        "url": "https://www.humanas.unal.edu.co/colantropos/files/7114/7974/8355/Gold_Stone_and_Ideology_Symbols_of_Power.pdf"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "reviewed_sources_without_secure_personal_interval",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed chronology.",
+    "request_context": {
+      "batch": "moldavia-luxembourg-20260902",
+      "item": 74
+    }
   }
 ]

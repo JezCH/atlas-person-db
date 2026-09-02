@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Eagle Woman",
+    "display_name_ko": "이글 우먼",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Lakota",
+    "display_name_ko": "라코타족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Community leader and diplomat",
+    "role_display_name_ko": "공동체 지도자·외교가",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Lakota community leadership and diplomacy in her documented 1868–1888 public activity phase; not a sovereign queenship.",
+    "start_year": 1868,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1888,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Eagle Woman — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Eagle_Woman",
+      "citation_text": "Lakota community leadership and diplomacy in her documented 1868–1888 public activity phase; not a sovereign queenship."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Eagle Woman — historical reference",
+      "canonical_url": "https://sdexcellence.org/Eagle_Woman_Who_All_Look_At_2010",
+      "citation_text": "Lakota community leadership and diplomacy in her documented 1868–1888 public activity phase; not a sovereign queenship."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 16
+  }
+}

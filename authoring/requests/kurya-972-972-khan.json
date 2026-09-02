@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Kurya",
+    "display_name_ko": "쿠리야",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Pechenegs",
+    "display_name_ko": "페체네그족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Khan",
+    "role_display_name_ko": "칸",
+    "period_basis": "general_activity",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Pecheneg leader attested in the events of 972 involving Sviatoslav. No accession date is inferred.",
+    "start_year": 972,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 972,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Kurya — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Kurya_(khan)",
+      "citation_text": "Pecheneg leader attested in the events of 972 involving Sviatoslav. No accession date is inferred."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 10
+  }
+}

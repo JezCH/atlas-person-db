@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Leonor of El Limón",
+    "display_name_ko": "엘리몬의 레오노르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Palenque El Limón",
+    "display_name_ko": "엘리몬 팔렝케",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Queen",
+    "role_display_name_ko": "여왕",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Queen Leonor is documented in the 1634 colonial proceedings. The palenque's foundation date is not her accession.",
+    "start_year": 1634,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1634,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Leonor of El Limón — historical reference",
+      "canonical_url": "https://www.redalyc.org/journal/833/83375485004/html/",
+      "citation_text": "Queen Leonor is documented in the 1634 colonial proceedings. The palenque's foundation date is not her accession."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Leonor of El Limón — historical reference",
+      "canonical_url": "https://www.researchgate.net/publication/236765082_Confronted_Rituals_Spanish_Colonial_and_Angolan_Maroon_Executions_in_Cartagena_de_Indias_1634",
+      "citation_text": "Queen Leonor is documented in the 1634 colonial proceedings. The palenque's foundation date is not her accession."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 25
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Te Atairangikaahu",
+    "display_name_ko": "테 아타이랑기카후",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Māori King Movement",
+    "display_name_ko": "마오리 왕 운동",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Queen",
+    "role_display_name_ko": "여왕",
+    "period_basis": "reign",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Māori queen in the Kīngitanga from 1966 to 2006, not monarch of New Zealand.",
+    "start_year": 1966,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2006,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Te Atairangikaahu — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Te_Atairangikaahu",
+      "citation_text": "Māori queen in the Kīngitanga from 1966 to 2006, not monarch of New Zealand."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 22
+  }
+}

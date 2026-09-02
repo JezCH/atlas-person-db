@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Gumalanga",
+    "display_name_ko": "구말랑가",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Washoe",
+    "display_name_ko": "와쇼족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Community leader and peace negotiator",
+    "role_display_name_ko": "공동체 지도자·평화 중재자",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gumalanga is Captain Jim in tribal history. His documented 1860 peace initiative is an attested activity, not an inferred lifelong chiefship.",
+    "start_year": 1860,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1860,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Gumalanga — historical reference",
+      "canonical_url": "https://www.fs.usda.gov/media/141982",
+      "citation_text": "Gumalanga is Captain Jim in tribal history. His documented 1860 peace initiative is an attested activity, not an inferred lifelong chiefship."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Gumalanga — historical reference",
+      "canonical_url": "https://www.carsonnvmuseum.org/november-curators-corner/",
+      "citation_text": "Gumalanga is Captain Jim in tribal history. His documented 1860 peace initiative is an attested activity, not an inferred lifelong chiefship."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 5
+  }
+}

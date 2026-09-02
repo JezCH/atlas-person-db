@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Francisco Macías Nguema",
+    "display_name_ko": "프란시스코 마시아스 응게마",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Equatorial Guinea",
+    "display_name_ko": "적도 기니",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "First president from independence in 1968 until overthrow in 1979.",
+    "start_year": 1968,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1979,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Francisco Macías Nguema — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Francisco_Mac%C3%ADas_Nguema",
+      "citation_text": "First president from independence in 1968 until overthrow in 1979."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Francisco Macías Nguema — historical reference",
+      "canonical_url": "https://www.bushcenter.org/freedom-collection/tutu-alicante-about-equatorial-guinea",
+      "citation_text": "First president from independence in 1968 until overthrow in 1979."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 26
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Alexander Solovyov",
+    "display_name_ko": "알렉산드르 솔로비요프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Udmurt Republic",
+    "display_name_ko": "우드무르트 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Head of the Republic",
+    "role_display_name_ko": "공화국 수반",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Head of the Udmurt Republic within the Russian Federation, not an independent country's president.",
+    "start_year": 2014,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2017,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Alexander Solovyov — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Alexander_Solovyov_(politician)",
+      "citation_text": "Head of the Udmurt Republic within the Russian Federation, not an independent country's president."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Alexander Solovyov — historical reference",
+      "canonical_url": "https://en.kremlin.ru/events/president/news/54200",
+      "citation_text": "Head of the Udmurt Republic within the Russian Federation, not an independent country's president."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 8
+  }
+}
