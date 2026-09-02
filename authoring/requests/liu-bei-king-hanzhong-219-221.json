@@ -1,0 +1,46 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:liu-bei:shu-han:king-of-hanzhong:219-221:v1",
+  "person": {
+    "canonical_name_en": "Liu Bei",
+    "display_name_ko": "유비"
+  },
+  "polity": {
+    "canonical_name_en": "Shu Han",
+    "display_name_ko": "촉한",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King of Hanzhong",
+    "role_display_name_ko": "한중왕",
+    "start_year": 219,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 221,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After securing Hanzhong in 219, Liu Bei assumed the title King of Hanzhong and retained it until proclaiming himself emperor in 221. ATLAS records the royal phase separately from the later imperial reign."
+  },
+  "sources": [
+    {
+      "title": "Previous Events of the Three Empires — ChinaKnowledge.de",
+      "canonical_url": "https://www.chinaknowledge.de/History/Division/sanguo-event.html",
+      "citation_text": "ChinaKnowledge describes Liu Bei's takeover of Sichuan, capture of Hanzhong in 219, adoption of a royal title, and proclamation as emperor in 221.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-21",
+      "document_title": "유비",
+      "url": "https://namu.wiki/w/%EC%9C%A0%EB%B9%84"
+    }
+  }
+}
