@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cheddi-jagan:guyana:president:1992-1997:v1",
+  "person": {
+    "person_type": "historical",
+    "historicity": "historical",
+    "canonical_name_en": "Cheddi Jagan",
+    "display_name_ko": "체디 제이건"
+  },
+  "polity": {
+    "polity_type": "historical_polity",
+    "historicity": "historical",
+    "canonical_name_en": "Guyana",
+    "display_name_ko": "가이아나"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1992,
+    "start_month": 10,
+    "start_day": 9,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1997,
+    "end_month": 3,
+    "end_day": 6,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Cheddi Jagan was declared elected and sworn in as President of Guyana on 9 October 1992. His presidency ended with his death on 6 March 1997. The user-supplied 'Guyanese Empire' label is rejected; the historical polity was the Co-operative Republic of Guyana."
+  },
+  "sources": [
+    {
+      "title": "Parliament of Guyana — Sixth Parliament, 1992–1997",
+      "canonical_url": "https://old.parliament.gov.gy/GUYANA%20PARLIAMENT%20HISTORY%202009-1.pdf",
+      "citation_text": "The official parliamentary history states that Jagan was declared elected and sworn in as President on 9 October 1992.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Parliament of Guyana — 94th Sitting minutes",
+      "canonical_url": "https://www.parliament.gov.gy/new2/documents/minutes/6287-94th_sitting__minutes.pdf",
+      "citation_text": "The National Assembly minutes record the death of President Cheddi Jagan on 6 March 1997 and the assumption of office by Prime Minister Samuel Hinds.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
