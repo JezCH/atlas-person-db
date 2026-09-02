@@ -1,0 +1,22 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:chiang-kai-shek:retire-generalissimo-president-1928-1975:20260902:v1",
+  "review_status": "approved",
+  "release_order": 741,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "6ec884b8-5b36-573f-afcb-968aef1e2833"
+  },
+  "evidence": {
+    "reason": "Compound-role audit confirmed that the legacy 1928-1975 row incorrectly labels Chiang Kai-shek as President throughout the whole interval and bridges the 1949-1950 interruption. Production now contains reviewed replacements: Nationalist leader 1928-1975 (ce1eb3b7-753f-4e3d-88e8-99811409fe1f), Chairman of the National Government 1928-1931 (97f02340-606b-4dbe-b660-a65a8758209a), Chairman 1943-1948 (b380e081-968e-4f1e-b2db-c55d875f05bc), President 1948-1949 (cae1557c-ac50-48a0-b88a-3c449dca8303), and President 1950-1975 (34dc18d1-f323-4401-9336-5ed689345b06). Retire only the legacy compound Activity.",
+    "person_id": "d9573bcb-08ed-50fc-b310-cf17e1d5acce",
+    "replacement_activity_ids": [
+      "ce1eb3b7-753f-4e3d-88e8-99811409fe1f",
+      "97f02340-606b-4dbe-b660-a65a8758209a",
+      "b380e081-968e-4f1e-b2db-c55d875f05bc",
+      "cae1557c-ac50-48a0-b88a-3c449dca8303",
+      "34dc18d1-f323-4401-9336-5ed689345b06"
+    ],
+    "retire_activity_id": "6ec884b8-5b36-573f-afcb-968aef1e2833"
+  }
+}
