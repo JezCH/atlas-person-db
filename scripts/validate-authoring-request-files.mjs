@@ -74,6 +74,18 @@ function canonicalNamuWikiUrl(value) {
 
 function validateNamuWiki(file, manifest) {
   const reference = manifest?.external_references?.namuwiki;
+  const deferral = manifest?.review_deferrals?.namuwiki;
+  if (deferral != null) {
+    if (reference != null) fail(file, 'a NamuWiki decision and review deferral cannot coexist');
+    if (!deferral || typeof deferral !== 'object' || Array.isArray(deferral)
+      || deferral.reason_code !== 'provider_access_blocked'
+      || !validIsoDate(deferral.attempted_at)
+      || !nonEmptyString(deferral.reason)
+      || deferral.authorization !== 'user_requested_registration_after_disclosed_block') {
+      fail(file, 'NamuWiki deferral requires a provider access block, attempt date, reason, and explicit continuation authority');
+    }
+    return Object.freeze({ status:'deferred', attempted_at:deferral.attempted_at });
+  }
   if (!reference || typeof reference !== 'object' || Array.isArray(reference)) {
     fail(file, 'external_references.namuwiki is required for every new human-authoring Person registration');
   }
@@ -200,6 +212,8 @@ for (const file of files) {
     console.log(`[NamuWiki] ${manifest.person.canonical_name_en}: linked — ${namuwiki.document_title}`);
   } else if (namuwiki?.status === 'not_found') {
     console.log(`[NamuWiki] ${manifest.person.canonical_name_en}: document not found`);
+  } else if (namuwiki?.status === 'deferred') {
+    console.log(`[NamuWiki] ${manifest.person.canonical_name_en}: review deferred after provider access block; no absence decision written`);
   }
 }
 
