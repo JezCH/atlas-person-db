@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:olusegun-obasanjo:nigeria:head-of-state:1976-1979:v1",
+  "person": {
+    "canonical_name_en": "Olusegun Obasanjo",
+    "display_name_ko": "올루세군 오바산조",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Federal Republic of Nigeria",
+    "display_name_ko": "나이지리아 연방공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Head of State",
+    "role_display_name_ko": "국가원수",
+    "start_year": 1976,
+    "start_month": 2,
+    "start_day": 13,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1979,
+    "end_month": 10,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Olusegun Obasanjo became Nigeria's military Head of State on 13 February 1976 after the assassination of Murtala Mohammed. He handed power to the elected civilian government of Shehu Shagari on 1 October 1979."
+  },
+  "sources": [
+    {
+      "title": "State House, Abuja — Past Heads of State and Presidents",
+      "canonical_url": "https://statehouse.gov.ng/past-heads-of-state-and-presidents/",
+      "citation_text": "Nigeria's State House lists Gen. Olusegun Obasanjo as Head of State from 13 February 1976 to 1 October 1979.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

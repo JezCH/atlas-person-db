@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:andranik-ozanian:zangezur-armenian-resistance:1918-1919:v1",
+  "person": {
+    "canonical_name_en": "Andranik Ozanian",
+    "display_name_ko": "안드라니크 오자니안",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Zangezur Armenian resistance",
+    "display_name_ko": "잔게주르 아르메니아 저항세력",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Commander",
+    "role_display_name_ko": "지휘관",
+    "start_year": 1918,
+    "start_month": 7,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1919,
+    "end_month": 3,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Andranik Ozanian entered Zangezur with his Special Striking Division in mid-1918 and exercised autonomous military leadership there until leaving the region in March 1919. ATLAS does not attach this Activity to the First Republic of Armenia as a government command: contemporary and scholarly accounts emphasize that Andranik rejected the Batum settlement and operated independently of the Armenian republican government. The specific Zangezur Armenian resistance polity is used to represent the political-military community he actually led."
+  },
+  "sources": [
+    {
+      "title": "1914-1918 Online — Ozanian, Antranik",
+      "canonical_url": "https://encyclopedia.1914-1918-online.net/article/ozanian-antranik/",
+      "citation_text": "The scholarly encyclopedia describes Andranik's independent operations in Zangezur after the establishment of the First Republic of Armenia and notes that he did not recognize the republic's settlement.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Richard G. Hovannisian, The Republic of Armenia: The First Year, 1918–1919",
+      "canonical_url": "https://books.google.com/books/about/The_Republic_of_Armenia_The_first_year_1.html?id=WSl4JW5hQewC",
+      "citation_text": "Hovannisian's study documents Andranik's role in the struggle for Zangezur and Karabagh during 1918–1919.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

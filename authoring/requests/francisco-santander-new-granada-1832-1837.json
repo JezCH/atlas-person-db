@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:francisco-de-paula-santander:new-granada:president:1832-1837:v1",
+  "person": {
+    "canonical_name_en": "Francisco de Paula Santander",
+    "display_name_ko": "프란시스코 데 파울라 산탄데르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Republic of New Granada",
+    "display_name_ko": "누에바그라나다 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1832,
+    "start_month": 10,
+    "start_day": 7,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1837,
+    "end_month": 4,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Francisco de Paula Santander was elected President of New Granada in 1832 while abroad and personally assumed office on 7 October 1832 after returning to Bogotá. He served until 1 April 1837. ATLAS uses the actual assumption of office rather than the earlier acting period exercised by Vice President José Ignacio de Márquez."
+  },
+  "sources": [
+    {
+      "title": "Presidency of Colombia — Francisco de Paula Santander",
+      "canonical_url": "https://historico.presidencia.gov.co/asiescolombia/presidentes/02.htm",
+      "citation_text": "The Colombian presidency identifies Santander as president in 1832–1837 and explains that he exercised the first magistracy after returning from exile.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Banco de la República Cultural Encyclopedia — Los partidos políticos en el siglo XIX",
+      "canonical_url": "https://enciclopedia.banrepcultural.org/Los_partidos_pol%C3%ADticos_en_el_siglo_XIX",
+      "citation_text": "The Banco de la República states that Santander arrived back in 1832 and took possession of the presidency on 7 October.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

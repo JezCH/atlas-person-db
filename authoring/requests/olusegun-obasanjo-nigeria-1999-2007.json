@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:olusegun-obasanjo:nigeria:president:1999-2007:v1",
+  "person": {
+    "canonical_name_en": "Olusegun Obasanjo",
+    "display_name_ko": "올루세군 오바산조",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Federal Republic of Nigeria",
+    "display_name_ko": "나이지리아 연방공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1999,
+    "start_month": 5,
+    "start_day": 29,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2007,
+    "end_month": 5,
+    "end_day": 29,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Obasanjo returned to power as the elected civilian President of Nigeria on 29 May 1999 and served two terms until 29 May 2007. ATLAS keeps this constitutional presidency separate from his 1976–1979 military head-of-state period."
+  },
+  "sources": [
+    {
+      "title": "State House, Abuja — Past Heads of State and Presidents",
+      "canonical_url": "https://statehouse.gov.ng/past-heads-of-state-and-presidents/",
+      "citation_text": "Nigeria's State House lists Chief Olusegun Obasanjo as President from 29 May 1999 to 29 May 2007.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
