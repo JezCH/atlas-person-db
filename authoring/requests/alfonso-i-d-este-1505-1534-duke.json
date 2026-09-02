@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Alfonso I d'Este",
+    "display_name_ko": "알폰소 1세 데스테",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Ferrara",
+    "display_name_ko": "페라라 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Duke",
+    "role_display_name_ko": "공작",
+    "period_basis": "reign",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Duke of Ferrara from 1505 to 1534. The separately interrupted control of Modena and Reggio is not folded into this Ferrara term.",
+    "start_year": 1505,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1534,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Alfonso I d'Este — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Alfonso_I_d%27Este",
+      "citation_text": "Duke of Ferrara from 1505 to 1534. The separately interrupted control of Modena and Reggio is not folded into this Ferrara term."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 60
+  }
+}

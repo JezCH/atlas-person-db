@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Yavu a Nawej",
+    "display_name_ko": "야부 아 나웨지",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Lunda Empire",
+    "display_name_ko": "룬다 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Mwaant Yaav",
+    "role_display_name_ko": "므완트 야브",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Eighteenth-century Lunda king associated with eastern expansion and the Kazembe around 1740. This approximate attestation does not conflate him with the earlier Nawej or assert a complete reign.",
+    "start_year": 1740,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1740,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Yavu a Nawej — historical reference",
+      "canonical_url": "https://www.cambridge.org/core/books/history-of-west-central-africa-to-1850/emergence-of-lunda/217772278889F27A939637A817DC83EF",
+      "citation_text": "Eighteenth-century Lunda king associated with eastern expansion and the Kazembe around 1740. This approximate attestation does not conflate him with the earlier Nawej or assert a complete reign."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Yavu a Nawej — historical reference",
+      "canonical_url": "https://www.africanhistoryextra.com/p/trans-continental-trade-in-central",
+      "citation_text": "Eighteenth-century Lunda king associated with eastern expansion and the Kazembe around 1740. This approximate attestation does not conflate him with the earlier Nawej or assert a complete reign."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 55
+  }
+}

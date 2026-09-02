@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Sheehays",
+    "display_name_ko": "시헤이스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Conestoga Susquehannock",
+    "display_name_ko": "코네스토가 서스쿼해녹족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Chief",
+    "role_display_name_ko": "수장",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Elder Conestoga chief murdered by the Paxton Boys on 14 December 1763. This is an attested leadership point, not the date of an unrelated seventeenth-century treaty.",
+    "start_year": 1763,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1763,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Sheehays — historical reference",
+      "canonical_url": "https://www.conestogasusquehannocktribe.com/general-1",
+      "citation_text": "Elder Conestoga chief murdered by the Paxton Boys on 14 December 1763. This is an attested leadership point, not the date of an unrelated seventeenth-century treaty."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Sheehays — historical reference",
+      "canonical_url": "https://www.tandfonline.com/doi/pdf/10.1080/03086534.2011.543817",
+      "citation_text": "Elder Conestoga chief murdered by the Paxton Boys on 14 December 1763. This is an attested leadership point, not the date of an unrelated seventeenth-century treaty."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 50
+  }
+}

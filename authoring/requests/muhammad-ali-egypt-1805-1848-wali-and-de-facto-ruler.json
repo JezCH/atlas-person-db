@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Muhammad Ali of Egypt",
+    "display_name_ko": "이집트의 무함마드 알리",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Egypt Eyalet",
+    "display_name_ko": "이집트 에야레트",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Wali and de facto ruler",
+    "role_display_name_ko": "왈리·사실상 통치자",
+    "period_basis": "de_facto_rule",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Exercised autonomous rule from 1805 until incapacity and Ibrahim's succession in 1848. Death in 1849 is not used to prolong active government.",
+    "start_year": 1805,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1848,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Muhammad Ali of Egypt — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Muhammad_Ali_of_Egypt",
+      "citation_text": "Exercised autonomous rule from 1805 until incapacity and Ibrahim's succession in 1848. Death in 1849 is not used to prolong active government."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Muhammad Ali of Egypt — historical reference",
+      "canonical_url": "https://www.presidency.eg/en/مصر/الحكام/محمد-على/",
+      "citation_text": "Exercised autonomous rule from 1805 until incapacity and Ibrahim's succession in 1848. Death in 1849 is not used to prolong active government."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 57
+  }
+}

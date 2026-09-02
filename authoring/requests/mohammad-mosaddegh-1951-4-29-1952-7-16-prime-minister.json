@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Mohammad Mosaddegh",
+    "display_name_ko": "모하마드 모사데그",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Iran",
+    "display_name_ko": "이란",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Prime Minister",
+    "role_display_name_ko": "총리",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Two premierships separated by Qavam's July 1952 government. The first begins with the 29 April 1951 appointment stated by Encyclopaedia Iranica, following the 28 April parliamentary vote.",
+    "start_year": 1951,
+    "start_month": 4,
+    "start_day": 29,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1952,
+    "end_month": 7,
+    "end_day": 16,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Mohammad Mosaddegh — historical reference",
+      "canonical_url": "https://www.iranicaonline.org/articles/coup-detat-1953/",
+      "citation_text": "Two premierships separated by Qavam's July 1952 government. The first begins with the 29 April 1951 appointment stated by Encyclopaedia Iranica, following the 28 April parliamentary vote."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Mohammad Mosaddegh — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Mohammad_Mosaddegh",
+      "citation_text": "Two premierships separated by Qavam's July 1952 government. The first begins with the 29 April 1951 appointment stated by Encyclopaedia Iranica, following the 28 April parliamentary vote."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "nanyue-yanina-20260902",
+    "requested_item": 64
+  }
+}
