@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:kubrat:old-great-bulgaria:c632-c665:v1",
+  "person": {
+    "canonical_name_en": "Kubrat",
+    "display_name_ko": "쿠브라트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Old Great Bulgaria",
+    "display_name_ko": "고대 대불가리아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Khan and founder",
+    "role_display_name_ko": "칸·창건자",
+    "start_year": 632,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 665,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Kubrat is the historical ruler associated with the formation of Old Great Bulgaria/Onogur-Bulgar confederation in the seventh century. Scholarly reconstructions vary over the exact foundation and death dates, with c.632-635 for formation and c.650-668 for the end of his rule, so ATLAS stores a representative c.632-c.665 reign rather than false precision."
+  },
+  "sources": [
+    {
+      "title": "Old Great Bulgaria and the Rise of the Onoğurs during the Rule of Kubrat",
+      "canonical_url": "https://journals.azbuki.bg/en/history/stara-velika-blgariya-i-vzxodt-na-unogundurite-pri-kan-kubrat/view",
+      "citation_text": "The academic article treats Old Great Bulgaria as a seventh-century polity founded and ruled by Khan Kubrat.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Kubrat",
+      "canonical_url": "https://en.wikipedia.org/wiki/Kubrat",
+      "citation_text": "The historical summary gives Kubrat as the founding khan of Old Great Bulgaria and notes competing chronologies for his reign and death.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:joao-goulart:brazil:1961-1964:v1",
+  "person": {
+    "canonical_name_en": "João Goulart",
+    "display_name_ko": "주앙 굴라르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Brazil",
+    "display_name_ko": "브라질",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1961,
+    "start_month": 9,
+    "start_day": 8,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1964,
+    "end_month": 4,
+    "end_day": 1,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Brazil's presidential archive records João Goulart's effective presidency from 8 September 1961 to 1 April 1964, spanning an initial parliamentary phase and a later presidential phase. ATLAS records the constitutional presidency as one office term rather than splitting the system-of-government change into separate presidencies."
+  },
+  "sources": [
+    {
+      "title": "João Belchior Marques Goulart — Biblioteca da Presidência",
+      "canonical_url": "https://www.biblioteca.presidencia.gov.br/presidencia/ex-presidentes/joao-goulart/nome-do-presidente",
+      "citation_text": "Brazil's presidential archive gives Goulart's effective presidency as 8 September 1961 to 1 April 1964 and distinguishes parliamentary and presidential phases within the same presidency.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Dados ex-Presidente — João Goulart",
+      "canonical_url": "https://www.gov.br/secretariageral/pt-br/centrais-de-conteudo/biblioteca-da-pr/galeria-dos-ex-presidentes/goulart",
+      "citation_text": "The Brazilian federal government confirms Goulart's presidency and the parliamentary and presidential phases of his administration.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

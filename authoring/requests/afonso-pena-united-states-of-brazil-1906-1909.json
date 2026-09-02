@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:afonso-pena:united-states-of-brazil:1906-1909:v1",
+  "person": {
+    "canonical_name_en": "Afonso Pena",
+    "display_name_ko": "아폰수 페나",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "United States of Brazil",
+    "display_name_ko": "브라질 합중국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "President",
+    "role_display_name_ko": "대통령",
+    "start_year": 1906,
+    "start_month": 11,
+    "start_day": 15,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1909,
+    "end_month": 6,
+    "end_day": 14,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Afonso Pena served as president during Brazil's First Republic under the constitutional state name United States of Brazil. The official presidential archive gives his term from 15 November 1906 until his death in office on 14 June 1909."
+  },
+  "sources": [
+    {
+      "title": "Affonso Augusto Moreira Penna — Biblioteca da Presidência",
+      "canonical_url": "https://www.biblioteca.presidencia.gov.br/presidencia/ex-presidentes/affonso-penna/nome-do-presidente",
+      "citation_text": "Brazil's presidential archive gives Afonso Pena's presidency from 15 November 1906 to 14 June 1909.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
