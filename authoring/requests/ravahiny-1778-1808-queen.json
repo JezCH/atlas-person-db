@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Ravahiny",
+    "display_name_ko": "라바히니",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Boina Kingdom",
+    "display_name_ko": "보이나 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Queen",
+    "role_display_name_ko": "여왕",
+    "period_basis": "reign",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Queen of Boina (Iboina), conventionally circa 1778–1808.",
+    "start_year": 1778,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1808,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Ravahiny — historical reference",
+      "canonical_url": "https://www.guide2womenleaders.com/Madagascar_Substates.htm",
+      "citation_text": "Queen of Boina (Iboina), conventionally circa 1778–1808."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Ravahiny — historical reference",
+      "canonical_url": "https://www.crwflags.com/fotw/flags/mg_boina.html",
+      "citation_text": "Queen of Boina (Iboina), conventionally circa 1778–1808."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 82
+  }
+}

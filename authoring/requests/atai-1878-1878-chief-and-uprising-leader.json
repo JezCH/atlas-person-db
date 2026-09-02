@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Ataï",
+    "display_name_ko": "아타이",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kanak resistance",
+    "display_name_ko": "카나크 저항 세력",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Chief and uprising leader",
+    "role_display_name_ko": "수장·봉기 지도자",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Chief of Komalé and leader of the 1878 uprising, killed during the conflict.",
+    "start_year": 1878,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1878,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Ataï — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/1878_Kanak_revolt",
+      "citation_text": "Chief of Komalé and leader of the 1878 uprising, killed during the conflict."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Ataï — historical reference",
+      "canonical_url": "https://e-tangata.co.nz/history/the-long-struggle-of-the-kanak-people/",
+      "citation_text": "Chief of Komalé and leader of the 1878 uprising, killed during the conflict."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 85
+  }
+}

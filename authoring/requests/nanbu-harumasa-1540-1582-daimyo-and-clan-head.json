@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Nanbu Harumasa",
+    "display_name_ko": "난부 하루마사",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Nanbu clan",
+    "display_name_ko": "난부씨",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Daimyo and clan head",
+    "role_display_name_ko": "다이묘·가문 당주",
+    "period_basis": "reign",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Conventional succession is circa 1540, with political activity already attested in the late 1530s; accession is approximate.",
+    "start_year": 1540,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1582,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Nanbu Harumasa — historical reference",
+      "canonical_url": "https://samurai-archives.com/wiki/Nanbu_Harumasa",
+      "citation_text": "Conventional succession is circa 1540, with political activity already attested in the late 1530s; accession is approximate."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Nanbu Harumasa — historical reference",
+      "canonical_url": "https://adeac.jp/hirosaki-lib/text-list/d100010/ht030540",
+      "citation_text": "Conventional succession is circa 1540, with political activity already attested in the late 1530s; accession is approximate."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 68
+  }
+}

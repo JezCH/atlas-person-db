@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Chen Jiongming",
+    "display_name_ko": "천중밍",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Guangdong military regime",
+    "display_name_ko": "광둥 군벌 정권",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Military commander",
+    "role_display_name_ko": "군사령관",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Guangdong Army command is separate from civil governorship. Shifting military control is not asserted as uninterrupted civil government.",
+    "start_year": 1917,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1925,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Chen Jiongming — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Chen_Jiongming",
+      "citation_text": "Guangdong Army command is separate from civil governorship. Shifting military control is not asserted as uninterrupted civil government."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Chen Jiongming — historical reference",
+      "canonical_url": "https://www.cambridge.org/core/journals/journal-of-chinese-history/article/not-just-a-man-of-guns-chen-jiongming-warlord-and-the-may-fourth-intellectual-19191922/D3F42851FB781476DF67023C46B3234F",
+      "citation_text": "Guangdong Army command is separate from civil governorship. Shifting military control is not asserted as uninterrupted civil government."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 83
+  }
+}

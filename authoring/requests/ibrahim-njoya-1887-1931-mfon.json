@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Ibrahim Njoya",
+    "display_name_ko": "이브라힘 은조야",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Bamum",
+    "display_name_ko": "바뭄 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Mfon",
+    "role_display_name_ko": "음폰",
+    "period_basis": "reign",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Active kingship follows the museum chronology circa 1887–1931. Dynastic title sometimes extends to 1933 death after exile.",
+    "start_year": 1887,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1931,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Ibrahim Njoya — historical reference",
+      "canonical_url": "https://www.metmuseum.org/art/collection/search/312206",
+      "citation_text": "Active kingship follows the museum chronology circa 1887–1931. Dynastic title sometimes extends to 1933 death after exile."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Ibrahim Njoya — historical reference",
+      "canonical_url": "https://en.wikipedia.org/wiki/Ibrahim_Njoya",
+      "citation_text": "Active kingship follows the museum chronology circa 1887–1931. Dynastic title sometimes extends to 1933 death after exile."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-02",
+      "reason": "Direct NamuWiki verification is blocked by browser provider policy. The user requested continued registration after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "moldavia-luxembourg-20260902",
+    "requested_item": 81
+  }
+}
