@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:franz-joseph-i:retire-emperor-and-king-1867-1916:20260902:v1",
+  "review_status": "approved",
+  "release_order": 770,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "8a7ee192-bf8c-4c04-94cb-637efaa1a4f9"
+  },
+  "evidence": {
+    "reason": "Compound-role audit confirmed that the post-1867 Austria-Hungary row compresses Franz Joseph I's distinct Austrian imperial and Hungarian royal crowns into one role. Production now contains reviewed replacements: Austria-Hungary / Emperor of Austria 1867-1916 (389a58b2-0c34-46c3-be58-f627ba5ca1ac) and Kingdom of Hungary / King 1867-1916 (19b97837-89ad-455c-b6f5-2e33fc9b98f5). The existing Austrian Empire / Emperor 1848-1867 row remains untouched. Retire only the legacy compound Activity.",
+    "person_id": "fc954d0b-d83b-4310-b093-787904232ee5",
+    "replacement_activity_ids": [
+      "389a58b2-0c34-46c3-be58-f627ba5ca1ac",
+      "19b97837-89ad-455c-b6f5-2e33fc9b98f5"
+    ],
+    "retire_activity_id": "8a7ee192-bf8c-4c04-94cb-637efaa1a4f9"
+  }
+}
