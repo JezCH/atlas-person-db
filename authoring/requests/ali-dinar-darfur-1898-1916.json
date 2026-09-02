@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ali-dinar:darfur-sultanate:1898-1916:v1",
+  "person": {
+    "canonical_name_en": "Ali Dinar",
+    "display_name_ko": "알리 디나르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Darfur Sultanate",
+    "display_name_ko": "다르푸르 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1898,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1916,
+    "end_month": 11,
+    "end_day": 6,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Ali Dinar restored the Darfur sultanate after the Mahdist collapse in 1898 and remained its last sultan until he was killed on 6 November 1916 during the Anglo-Egyptian conquest. The 1898-1916 reign is standard in specialist Darfur scholarship."
+  },
+  "sources": [
+    {
+      "title": "Between an Anvil and a Hammer — The Reign of Ali Dinar, 1898–1916",
+      "canonical_url": "https://www.cambridge.org/core/books/abs/darfurs-sorrow/between-an-anvil-and-a-hammer/D5F035F7DAC73D7EA165ECF1597378A4",
+      "citation_text": "Cambridge's Darfur history explicitly titles the period as the reign of Ali Dinar, 1898-1916.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Ali Dinar: Last Sultan of Darfur, 1898-1916",
+      "canonical_url": "https://books.google.com/books?id=Aq0dAAAAMAAJ",
+      "citation_text": "The standard monograph identifies Ali Dinar as the last Sultan of Darfur for 1898-1916.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Ali Dinar",
+      "canonical_url": "https://en.wikipedia.org/wiki/Ali_Dinar",
+      "citation_text": "The biographical chronology gives Ali Dinar's restored reign from September 1898 to his death on 6 November 1916.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}

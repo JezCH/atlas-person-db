@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:johan-maurits:dutch-brazil:1637-1644:v1",
+  "person": {
+    "canonical_name_en": "Johan Maurits of Nassau-Siegen",
+    "display_name_ko": "요한 마우리츠 판 나사우지겐",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Dutch Brazil (New Holland)",
+    "display_name_ko": "네덜란드령 브라질(뉴홀란트)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Governor-General",
+    "role_display_name_ko": "총독",
+    "start_year": 1637,
+    "start_month": 1,
+    "start_day": 23,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1644,
+    "end_month": 5,
+    "end_day": 11,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Johan Maurits arrived at Recife on 23 January 1637 as the Dutch West India Company's governor-general of Dutch Brazil/New Holland. Brazil's National Archive records his departure from Recife on 11 May 1644. ATLAS models the effective governorship in Brazil, not the earlier 1636 appointment date."
+  },
+  "sources": [
+    {
+      "title": "Johan Maurits — Mauritshuis",
+      "canonical_url": "https://www.mauritshuis.nl/en/what-s-on/always-on-show/welcome-to-the-mauritshuis/johan-maurits",
+      "citation_text": "The Mauritshuis identifies Johan Maurits as governor-general of the Dutch West India Company colony in Brazil and places his Brazilian governorship in 1636-1644.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Johann Moritz von Nassau-Siegen, Maurício de Nassau — Arquivo Nacional",
+      "canonical_url": "https://mapa.arquivonacional.gov.br/index.php/mapa/centrais-de-conteudo/producao/biografias/428-johann-moritz-von-nassau-siegen-mauricio-de-nassau",
+      "citation_text": "Brazil's National Archive records that Johan Maurits departed Recife on 11 May 1644 after governing Dutch Brazil.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Dutch Brazil: contemporary arrival record",
+      "canonical_url": "https://objdigital.bn.br/objdigital2/acervo_digital/div_manuscritos/bndigital0460/bndigital0460.pdf",
+      "citation_text": "A contemporary Dutch source records Johan Maurits arriving in Pernambuco on 23 January 1637.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  }
+}
