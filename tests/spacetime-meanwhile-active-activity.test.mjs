@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
+import { readFileSync } from "node:fs";
 
 const require = createRequire(import.meta.url);
 const meanwhile = require("../atlas-person-spacetime-meanwhile.js");
@@ -57,8 +58,6 @@ test("Activity interval boundaries are inclusive", () => {
   assert.equal(meanwhile.activeAtOrdinal(s, -5), true);
   assert.equal(meanwhile.activeAtOrdinal(s, -4), false);
 });
-
-import { readFileSync } from "node:fs";
 
 const viewSource = readFileSync(new URL("../atlas-person-spacetime-view.js", import.meta.url), "utf8");
 const viewCss = readFileSync(new URL("../atlas-person-spacetime-view.css", import.meta.url), "utf8");
