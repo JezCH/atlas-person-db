@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:sepe-tiaraju:seven-missions-guarani:1753-1756:v1",
+  "person": {
+    "canonical_name_en": "Sepé Tiaraju",
+    "display_name_ko": "세페 티아라주",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Seven Missions Guaraní",
+    "display_name_ko": "7개 선교촌 과라니",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Corregidor of São Miguel and Guaraní resistance leader",
+    "role_display_name_ko": "상미겔 코레히도르·과라니 저항 지도자",
+    "start_year": 1753,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1756,
+    "end_month": 2,
+    "end_day": 7,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sepé Tiaraju was the Guaraní corregidor of the São Miguel mission and became the principal resistance leader among the Seven Missions communities opposing the transfer of their lands under the Treaty of Madrid. He confronted Spanish-Portuguese boundary commissioners in February 1753 and remained a central military leader through the Guaraní War until he was killed in combat at Batovi on 7 February 1756. ATLAS uses active_in rather than rules because he did not rule all Guaraní peoples or a unified Guaraní state."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "Câmara dos Deputados — Sepé Tiaraju: herói guarani, missioneiro, rio-grandense e, agora, herói brasileiro",
+      "canonical_url": "https://museudasmissoes.museus.gov.br/wp-content/uploads/2019/06/SEPE_TIARAJU_heroi_guarani_missioneiro_brasileiro.pdf",
+      "citation_text": "The Câmara publication identifies Sepé as corregidor of the São Miguel reduction, leader of mission Guaraní resistance, and records his death in combat on 7 February 1756."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Encyclopedia.com — Guarani War",
+      "canonical_url": "https://www.encyclopedia.com/humanities/encyclopedias-almanacs-transcripts-and-maps/guarani-war",
+      "citation_text": "The reference describes the Guaraní resistance as organized under the corregidor Sepé Tiarayú, records his February 1753 confrontation with the boundary commissioners, and his death during the 1756 campaign."
+    },
+    {
+      "source_type": "institutional_reference",
+      "title": "Museu Paraense Emílio Goeldi — No Museu Goeldi, Ciência é aliada na luta dos povos indígenas",
+      "canonical_url": "https://www.gov.br/museugoeldi/pt-br/arquivos/noticias/no-museu-goeldi-ciencia-e-aliada-na-luta-dos-povos-indigenas",
+      "citation_text": "The Brazilian federal museum identifies Sepé Tiaraju as the Guaraní leader killed on 7 February 1756 fighting Portuguese and Spanish forces during the Guaraní War."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "gedemo-civ-leaders-5-20260903",
+    "requested_identity": "Sepé Tiaraju",
+    "correction_note": "Register as São Miguel corregidor and Seven Missions Guaraní resistance leader, not as ruler of all Guaraní peoples."
+  }
+}
