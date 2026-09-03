@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:yuknoom-cheen-ii:kaanul-calakmul:636-686:v1",
+  "person": {
+    "canonical_name_en": "Yuknoom Ch'een II",
+    "display_name_ko": "유크놈 첸 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kaanul Kingdom (Calakmul)",
+    "display_name_ko": "카눌 왕국(칼라크물)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "K'uhul Kaanul Ajaw (Divine Lord of Kaanul)",
+    "role_display_name_ko": "카눌 신성군주",
+    "start_year": 636,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 686,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Yuknoom Ch'een II, also called Yuknoom the Great, ruled the Kaanul (Snake) kingdom from Calakmul during its seventh-century apogee. Current epigraphic scholarship places his accession in 636 and the end of his approximately fifty-year reign in 685 or 686. ATLAS therefore records 636–c.686, binding him to the Kaanul kingdom centered at Calakmul rather than to an undifferentiated 'Maya Civilization'."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Simon Martin, In search of the serpent kings: From Dzibanche to Calakmul — Ancient Mesoamerica",
+      "canonical_url": "https://www.cambridge.org/core/journals/ancient-mesoamerica/article/in-search-of-the-serpent-kings-from-dzibanche-to-calakmul/CA64F5753086F211D772C2B38DFF46CF",
+      "citation_text": "The study identifies Yuknoom Ch'een II as the ruler who reconstituted the Kaanul kingdom at Calakmul after the 636 transition and states that his fifty-year reign ended in either 685 or 686."
+    },
+    {
+      "source_type": "institutional_reference",
+      "title": "The Metropolitan Museum of Art — A Maya Game of Thrones and Artistic Innovation in Golden Kingdoms",
+      "canonical_url": "https://www.metmuseum.org/pt/perspectives/golden-kingdoms-calakmul-palenque-maya-game-of-thrones",
+      "citation_text": "The Met dates Yuknoom Ch'een II's reign to AD 636–686 and describes his network of vassal rulers and Calakmul's political ascendancy under his rule."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "gedemo-civ-leaders-3-20260903",
+    "requested_identity": "Yuknoom Ch'een II",
+    "correction_note": "Register as ruler of the Kaanul/Snake kingdom centered at Calakmul, not as a generic ruler of all Maya civilization."
+  }
+}
