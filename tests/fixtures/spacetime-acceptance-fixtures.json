@@ -10,14 +10,18 @@
     "maximum_base_world_width_px": 1275,
     "viewport_expansion_above_cap_allowed": false,
     "label_height_px": 18,
-    "label_horizontal_gap_px": 2,
+    "label_horizontal_gap_px": 1,
     "label_horizontal_padding_px": 1,
     "label_outer_chrome_px": 4,
     "label_min_width_px": 30,
-    "label_max_width_px": 148,
+    "label_max_width_px": 384,
     "label_text_content_min_width_px": 26,
-    "label_text_content_max_width_px": 144,
-    "label_text_width_budget_preserved": true
+    "label_text_content_max_width_px": 380,
+    "label_text_width_budget_preserved": false,
+    "label_width_policy": "natural_width_global_free_space",
+    "person_label_font_px": 11,
+    "label_can_borrow_adjacent_empty_world_space": true,
+    "label_historical_y_invariant": true
   },
   "dense_label_windows": [
     {
