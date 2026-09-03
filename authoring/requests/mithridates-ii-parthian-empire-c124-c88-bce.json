@@ -19,7 +19,7 @@
     "period_basis": "reign",
     "role": "King of Parthia",
     "role_display_name_ko": "파르티아 왕",
-    "start_year": -124,
+    "start_year": -122,
     "start_month": null,
     "start_day": null,
     "start_certainty": "approximate",
@@ -31,20 +31,14 @@
     "end_calendar": "unspecified_historical",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "Mithridates II was one of the greatest Arsacid rulers. Encyclopaedia Iranica places his accession around 124/123 BCE and his death around 88/87 BCE; exact chronology varies by reconstruction. During his reign Parthia expanded its influence in Mesopotamia and Armenia, opened diplomatic contact with Han China, and made early formal contact with Rome. ATLAS therefore records c.124–c.88 BCE rather than forcing one disputed terminal year."
+    "notes": "Mithridates II was one of the greatest Arsacid rulers. Modern chronologies vary over his accession, with reconstructions around 124/123 BCE and 122 BCE, while his death is generally placed around 88/87 BCE. ATLAS follows the reviewed Olbrycht chronology at year granularity and records c.122–c.88 BCE, explicitly approximate rather than forcing false precision."
   },
   "sources": [
     {
       "source_type": "academic_reference",
-      "title": "Encyclopaedia Iranica — Arsacids ii. The Arsacid dynasty",
-      "canonical_url": "https://www.iranicaonline.org/articles/arsacids-ii/",
-      "citation_text": "Iranica gives Mithridates II's reign approximately as 124/123–88/87 BCE and describes him as one of the outstanding Arsacid rulers."
-    },
-    {
-      "source_type": "academic_reference",
-      "title": "Encyclopaedia Iranica — Chronology of Iranian History Part 1",
-      "canonical_url": "https://www.iranicaonline.org/articles/chronology-of-iranian-history-part-1/",
-      "citation_text": "Iranica's chronology records the accession of Arsacid Mithridates II in 124 BCE."
+      "title": "Marek Jan Olbrycht, The Early Reign of Mithradates II the Great in Parthia, Anabasis 1 (2010)",
+      "canonical_url": "https://journals.ur.edu.pl/anabasis/article/view/10130",
+      "citation_text": "Olbrycht identifies Mithradates II as one of the greatest Parthian kings and gives his reign as 122–88/87 BCE."
     }
   ],
   "external_references": {
@@ -56,6 +50,6 @@
   "review_context": {
     "request_batch": "strudeler-parthia-vandals-iceni-nevsky-judea-20260903",
     "requested_identity": "MITHRIDATES II — PARTHIA",
-    "correction_note": "Register as Arsacid king of the Parthian Empire with approximate chronology reflecting scholarly variation."
+    "correction_note": "Retry after source canonical-URL ambiguity blocked the original manifest; use a distinct peer-reviewed source and keep chronology approximate."
   }
 }
