@@ -603,7 +603,7 @@
         <strong>${escapeHtml(koName)}</strong>
         ${secondaryName ? `<span>${escapeHtml(secondaryName)}</span>` : ""}
         <p>${escapeHtml(extent ? ordinalRangeLabel(extent.start_ordinal, extent.end_ordinal) : "Activity 기간 미상")}</p>
-        ${selectedActivity && Number.isInteger(selectedTimeOrdinal) ? `<output>선택 Activity 기준 시점 · ${escapeHtml(ordinalLabel(selectedTimeOrdinal))}</output>` : ""}
+        ${selectedActivity && Number.isInteger(selectedTimeOrdinal) ? `<output>선택 Activity 중간 시점 · ${escapeHtml(ordinalLabel(selectedTimeOrdinal))}</output>` : ""}
       </header>
       <div class="spacetime-inspector-actions" role="group" aria-label="선택 인물 탐색"><button id="spacetimePrevPerson" type="button"${cycleDisabled}>이전</button><button id="spacetimeFocusPerson" type="button">위치로</button><button id="spacetimeDetailPerson" type="button">확대</button><button id="spacetimeNextPerson" type="button"${cycleDisabled}>다음</button><button id="spacetimeClearPerson" type="button">해제</button></div>
       <section class="spacetime-inspector-activities"><div class="spacetime-inspector-section-title"><strong>Activities</strong><span>${activities.length}</span></div>${activities.map(renderInspectorActivity).join("") || '<p class="spacetime-empty-inline">Activity 없음</p>'}</section>
@@ -655,15 +655,17 @@
   }
 
   function renderActivityGlyphs(tracks, projection, contentWidth, opacity, meanwhileOrdinal = null) {
-    if (opacity <= 0.01) return "";
     const { uncertainty } = runtime();
-    return tracks.flatMap((track) => (track.primary_segments || []).map((segment) => {
+    return tracks.flatMap((track) => (track.primary_segments || []).flatMap((segment) => {
+      const personSelected = selectedPersonId === track.person_id;
+      const segmentOpacity = personSelected ? 1 : opacity;
+      if (segmentOpacity <= 0.01) return [];
       const y1 = projection.yForOrdinal(segment.start_ordinal);
       const y2 = projection.yForOrdinal(segment.end_ordinal);
       const y = (y1 + y2) / 2;
       const x = segment.x_anchor * contentWidth;
       const meanwhileActive = meanwhileOrdinal != null && segment.start_ordinal <= meanwhileOrdinal && meanwhileOrdinal <= segment.end_ordinal;
-      return `<button type="button" class="spacetime-activity-glyph ${escapeHtml(uncertainty.precisionClass(segment))}${selectedPersonId === track.person_id ? " is-selected" : ""}${selectedPersonId === track.person_id && selectedActivityId === segment.activity_id ? " is-activity-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" data-spacetime-activity="${escapeHtml(segment.activity_id)}" style="left:${x + 6}px;top:${y}px;opacity:${opacity}" title="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`)}" aria-label="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`)}"><span>${escapeHtml(polityLabel(segment.activity))}</span></button>`;
+      return [`<button type="button" class="spacetime-activity-glyph ${escapeHtml(uncertainty.precisionClass(segment))}${personSelected ? " is-selected" : ""}${personSelected && selectedActivityId === segment.activity_id ? " is-activity-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" data-spacetime-activity="${escapeHtml(segment.activity_id)}" style="left:${x + 6}px;top:${y}px;opacity:${segmentOpacity}" title="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`)}" aria-label="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`)}"><span>${escapeHtml(polityLabel(segment.activity))}</span></button>`];
     })).join("");
   }
 
@@ -1068,7 +1070,7 @@
       </div>
       <div class="spacetime-era-axis" style="height:${timelineHeight}px;opacity:${timeAxis.era_opacity}">${eras.map((era) => `<div class="person-era-${escapeHtml(era.code)}" style="top:${era.top}px;height:${era.height}px"><span>${escapeHtml(era.label)}</span></div>`).join("")}</div>
       <div class="spacetime-year-axis" data-axis-stage="${escapeHtml(timeAxis.stage)}" style="height:${timelineHeight}px">${ticks.map((tick) => `<span class="${tick.major ? "is-major" : ""}" style="top:${tick.y}px">${escapeHtml(tick.label)}</span>`).join("")}</div>
-      <div class="spacetime-canvas" style="width:${contentWidth}px;height:${timelineHeight}px">
+      <div class="spacetime-canvas${selectedPersonId ? " has-person-selection" : ""}" style="width:${contentWidth}px;height:${timelineHeight}px">
         ${ticks.map((tick) => `<i class="spacetime-century-line${tick.major ? " is-major" : ""}" style="top:${tick.y}px"></i>`).join("")}
         ${regions.map((region) => `<i class="spacetime-region-line" style="left:${region.left}px;height:${timelineHeight}px"></i>`).join("")}
         ${spaceHeader.subregions.map((subregion) => `<i class="spacetime-subregion-line" style="left:${subregion.left}px;height:${timelineHeight}px;opacity:${spaceHeader.subregion_opacity}" title="${escapeHtml(subregion.label)}"></i>`).join("")}
