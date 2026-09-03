@@ -70,3 +70,32 @@ test("outer chrome compaction preserves the prior text content budget", () => {
   assert.equal(labels.DEFAULT_MAX_LABEL_WIDTH - labels.DEFAULT_LABEL_CHROME_WIDTH, 144);
   assert.equal(labels.estimateWidth({ text: "12345678901234567890" }), 140);
 });
+
+
+test("CJK names use wide glyph metrics instead of the Latin-width floor", () => {
+  assert.equal(labels.DEFAULT_CJK_CHAR_WIDTH, 10);
+  assert.ok(labels.estimateWidth({ text:"서하 경종" }) > 44);
+  assert.ok(labels.estimateWidth({ text:"미나모토노 요시츠네" }) > labels.estimateWidth({ text:"Minamoto" }));
+});
+
+test("per-label horizontal zones prevent packing into otherwise unused forbidden space", () => {
+  const input = [
+    { person_id:"a", text:"서하 경종", anchor_x:12, anchor_y:80, min_left:24, max_right:100 },
+    { person_id:"b", text:"금 태조", anchor_x:12, anchor_y:120, min_left:24, max_right:100 }
+  ];
+  const result = labels.packLabels(input, { width:120, height:200 });
+  assert.equal(result.deferred.length, 0);
+  for (const placement of result.placed) {
+    assert.ok(placement.rect.left >= 24 - 1e-9);
+    assert.ok(placement.rect.right <= 100 + 1e-9);
+  }
+});
+
+test("a label wider than its own allowed zone defers instead of spilling across a region boundary", () => {
+  const result = labels.packLabels([
+    { person_id:"a", text:"긴 이름", anchor_x:20, anchor_y:60, width:70, min_left:30, max_right:80 }
+  ], { width:140, height:120 });
+  assert.equal(result.placed.length, 0);
+  assert.equal(result.deferred.length, 1);
+  assert.equal(result.deferred[0].reason, "viewport_capacity");
+});

@@ -10,6 +10,7 @@ const view = readFileSync(new URL("../atlas-person-spacetime-view.js", import.me
 const css = readFileSync(new URL("../atlas-person-spacetime-view.css", import.meta.url), "utf8");
 const control = readFileSync(new URL("../atlas-person-spacetime-control-state.js", import.meta.url), "utf8");
 const labelEngine = require("../atlas-person-spacetime-label-engine.js");
+const presentationLayout = require("../atlas-person-spacetime-presentation-layout.js");
 
 test("spacetime minimum and default scale are structurally locked to 500 percent", () => {
   assert.match(view, /const CAMERA_MIN_ZOOM = 5;/);
@@ -32,13 +33,14 @@ test("reviewed compact label geometry preserves text readability while reducing 
   assert.equal(labelEngine.DEFAULT_MIN_LABEL_WIDTH, 30);
   assert.equal(labelEngine.DEFAULT_MAX_LABEL_WIDTH, 148);
   assert.equal(labelEngine.DEFAULT_LABEL_CHROME_WIDTH, 4);
+  assert.equal(labelEngine.DEFAULT_CJK_CHAR_WIDTH, 10);
   assert.equal(labelEngine.DEFAULT_MIN_LABEL_WIDTH - labelEngine.DEFAULT_LABEL_CHROME_WIDTH, 26);
   assert.equal(labelEngine.DEFAULT_MAX_LABEL_WIDTH - labelEngine.DEFAULT_LABEL_CHROME_WIDTH, 144);
   assert.match(css, /\.spacetime-track-label\{[^}]*height:18px[^}]*padding:0 1px[^}]*font-size:10px[^}]*line-height:16px/);
   assert.doesNotMatch(css, /@media\(max-width:1100px\)\{\.spacetime-track-label\{font-size:9px\}/);
   assert.match(view, /labelEngine\.DEFAULT_MIN_LABEL_WIDTH/);
   assert.match(view, /labelEngine\.DEFAULT_MAX_LABEL_WIDTH/);
-  assert.match(view, /labelEngine\.DEFAULT_LABEL_CHROME_WIDTH/);
+  assert.match(view, /labelEngine\.estimateWidth/);
   assert.doesNotMatch(view, /Math\.max\(38, Math\.min\(156/);
 });
 
@@ -108,4 +110,26 @@ test("control adapter derives its lower bound from the visible 500 percent reset
   assert.doesNotMatch(control, /spacetimeHorizontalMode/);
   assert.doesNotMatch(control, /captureHorizontalCamera/);
   assert.doesNotMatch(control, /restoreHorizontalCamera/);
+});
+
+
+test("presentation geometry owns rail and label pixels without changing global geography", () => {
+  assert.equal(presentationLayout.DEFAULT_BAND_PADDING, 2);
+  assert.equal(presentationLayout.DEFAULT_RAIL_LABEL_GAP, 3);
+  assert.ok(presentationLayout.DEFAULT_RAIL_CORRIDOR_RATIO < 0.3);
+  assert.match(view, /presentationLayout\.compileTrackPresentation\(compiled\.partitioned\.tracks, compiled\.continuum, contentWidth\)/);
+  assert.match(view, /presentationLayout\.applyTrackPresentation\(item, presentation\)/);
+  assert.match(view, /presentationLayout\.geometryForSegment\(presentation, segment\)/);
+  assert.doesNotMatch(view, /item\.macroregion_code === region\.code/);
+  assert.match(view, /data-spacetime-band=/);
+  assert.match(view, /data-spacetime-rail-basis=/);
+});
+
+test("label packing uses each presentation band and label zone instead of whole macroregion capacity", () => {
+  assert.match(view, /presentation_band_code/);
+  assert.match(view, /label_zone_left/);
+  assert.match(view, /label_zone_right/);
+  assert.match(view, /min_left:/);
+  assert.match(view, /max_right:/);
+  assert.match(view, /labelEngine\.estimateWidth/);
 });

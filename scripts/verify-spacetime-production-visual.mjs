@@ -150,6 +150,39 @@ const overlapCode = `
   return { count:overlaps.length, overlaps };
 }`;
 
+const bandContainmentCode = `
+(labels,bands,rails) => {
+  const bandMap = new Map(bands.map((el) => {
+    const left = parseFloat(el.style.left);
+    const width = parseFloat(el.style.width);
+    return [el.dataset.spacetimeBand || "", { left, right:left+width, width }];
+  }).filter(([code,row]) => code && Number.isFinite(row.left) && Number.isFinite(row.width)));
+  const labelViolations = labels.map((el) => {
+    const band = bandMap.get(el.dataset.spacetimeBand || "");
+    const left = parseFloat(el.style.left), width = parseFloat(el.style.width);
+    if (!band || !Number.isFinite(left) || !Number.isFinite(width)) return null;
+    return left < band.left - 0.5 || left + width > band.right + 0.5
+      ? { text:(el.textContent||"").trim(), band:el.dataset.spacetimeBand, left, width, band_left:band.left, band_right:band.right }
+      : null;
+  }).filter(Boolean);
+  const corridorRails = rails.filter((el) => el.dataset.spacetimeRailBasis === "presentation_corridor");
+  const railViolations = corridorRails.map((el) => {
+    const band = bandMap.get(el.dataset.spacetimeBand || "");
+    const x = parseFloat(el.style.left);
+    if (!band || !Number.isFinite(x)) return null;
+    return x < band.left - 0.5 || x > band.left + band.width * 0.45 + 0.5
+      ? { band:el.dataset.spacetimeBand, x, band_left:band.left, band_width:band.width }
+      : null;
+  }).filter(Boolean);
+  return {
+    label_violation_count:labelViolations.length,
+    label_violations:labelViolations,
+    corridor_rail_count:corridorRails.length,
+    rail_violation_count:railViolations.length,
+    rail_violations:railViolations
+  };
+}`;
+
 async function collect500(client) {
   return evaluate(client, `(() => {
     const q=(s)=>document.querySelector(s);
@@ -162,6 +195,7 @@ async function collect500(client) {
     const placeLayer=q(".spacetime-region-head-layer.is-place");
     const header=q(".spacetime-region-head"), corner=q(".spacetime-sticky-corner"), scroll=q(".spacetime-scroll");
     const labelOverlap=(${overlapCode})(qa(".spacetime-track-label"));
+    const bandContainment=(${bandContainmentCode})(qa(".spacetime-track-label"),qa(".spacetime-region-head-band[data-spacetime-band]"),qa(".spacetime-track-rail"));
     return {
       viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio},
       zoom:(q("#spacetimeCameraZoomValue")?.textContent||"").trim(),
@@ -181,7 +215,8 @@ async function collect500(client) {
       scrollHeight:rect(scroll).height,
       scrollOverflowX:style(scroll).overflowX,
       scrollOverflowY:style(scroll).overflowY,
-      labelOverlap
+      labelOverlap,
+      bandContainment
     };
   })()`);
 }
@@ -198,6 +233,7 @@ async function collect800(client, geometry500) {
     const markers=qa(".spacetime-place-head-marker");
     const placeOverlap=(${overlapCode})(markers);
     const labelOverlap=(${overlapCode})(qa(".spacetime-track-label"));
+    const bandContainment=(${bandContainmentCode})(qa(".spacetime-track-label"),qa(".spacetime-region-head-band[data-spacetime-band]"),qa(".spacetime-track-rail"));
     return {
       zoom:(q("#spacetimeCameraZoomValue")?.textContent||"").trim(),
       spatialStage:qa(".spacetime-status-row span").map(x=>(x.textContent||"").trim()).find(x=>x.endsWith("공간축"))||null,
@@ -206,6 +242,7 @@ async function collect800(client, geometry500) {
       placeMarkers:markers.map(rect),
       placeOverlap,
       labelOverlap,
+      bandContainment,
       macro,sub,
       uncertaintyCount:qa(".spacetime-spatial-uncertainty").length,
       geometry500:${JSON.stringify(geometry500)}
@@ -282,13 +319,13 @@ async function main() {
     const live = await evaluate(client, `(() => ({
       href:location.href,
       title:document.title,
-      navKey:Boolean(document.querySelector('script[src*="20260903-spacetime-place-lod"]')),
+      navLoaded:Boolean(document.querySelector('script[src*="atlas-main-authority-nav.js"]')),
       viewLoaded:Boolean(window.ATLAS_PERSON_SPACETIME_VIEW),
       semanticLoaded:Boolean(window.ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS),
       bodyTextLength:document.body.innerText.trim().length,
       errorOverlay:Boolean(document.querySelector('[data-nextjs-dialog], .vite-error-overlay, #webpack-dev-server-client-overlay'))
     }))()`);
-    assert(live.navKey, "Production did not load the expected Place-LOD authority cache key", live);
+    assert(live.navLoaded, "Production did not load the ATLAS authority navigation runtime", live);
     assert(live.viewLoaded && live.semanticLoaded, "Production spacetime runtime modules were not loaded", live);
     assert(live.bodyTextLength > 500, "Production page appears blank or incomplete", live);
     assert(!live.errorOverlay, "Framework error overlay detected", live);
@@ -308,6 +345,8 @@ async function main() {
     assert(Math.abs(at500.cornerWidth - 140) < 0.75, "Shared axis width drifted from 140px", at500);
     assert(Math.abs(at500.cornerHeight - 36) < 0.75, "Shared corner height drifted from 36px", at500);
     assert(at500.labelOverlap.count === 0, "Visible Person labels overlap at 500%", at500.labelOverlap);
+    assert(at500.bandContainment.label_violation_count === 0, "Person labels escape their reviewed presentation bands at 500%", at500.bandContainment);
+    assert(at500.bandContainment.rail_violation_count === 0, "Presentation rails drift back toward band centers at 500%", at500.bandContainment);
     await screenshot(client, "spacetime-500.png");
 
     for (let i=0;i<3;i++) {
@@ -337,6 +376,8 @@ async function main() {
     assert(at800.placeMarkerCount === EXPECTED_REVIEWED_PLACE_COUNT, "Unexpected reviewed Place marker count at 800%", at800);
     assert(at800.placeOverlap.count === 0, "Reviewed Place header markers overlap at 800%", at800.placeOverlap);
     assert(at800.labelOverlap.count === 0, "Visible Person labels overlap at 800%", at800.labelOverlap);
+    assert(at800.bandContainment.label_violation_count === 0, "Person labels escape their reviewed presentation bands at 800%", at800.bandContainment);
+    assert(at800.bandContainment.rail_violation_count === 0, "Presentation rails drift back toward band centers at 800%", at800.bandContainment);
     assertNormalizedGeometryInvariant(at500.macro, at800.macro, "Macroregion");
     assertNormalizedGeometryInvariant(at500.sub, at800.sub, "Subregion");
     assert(at800.uncertaintyCount > 0, "No C6 spatial uncertainty evidence was rendered in the inspected 800% viewport", at800);

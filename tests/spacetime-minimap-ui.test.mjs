@@ -31,7 +31,7 @@ test("current spacetime surface loads the P12 minimap in place", async () => {
 
 test("minimap preserves whole-world context while search only highlights active Persons", async () => {
   const view = await fixture(viewUrl);
-  assert.ok(view.includes("const allProjectedTracks = compiled.partitioned.tracks.map"));
+  assert.ok(view.includes("const allProjectedTracks = compiled.partitioned.tracks"));
   assert.ok(view.includes("const projectedTracks = needle ? allProjectedTracks.filter"));
   assert.ok(view.includes("const activePersonIds = new Set(projectedTracks.map"));
   assert.ok(view.includes("drawMinimap(mount, allProjectedTracks, activePersonIds"));

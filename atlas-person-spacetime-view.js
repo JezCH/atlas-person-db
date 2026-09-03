@@ -17,6 +17,7 @@
   const RUNTIME_ASSETS = Object.freeze([
     ["./atlas-person-spacetime-time-projection.js?v=20260831-uniform-500-floor", "ATLAS_PERSON_SPACETIME_TIME_PROJECTION"],
     ["./atlas-person-spacetime-space-axis.js?v=20260901-compact-shared-chrome", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
+    ["./atlas-person-spacetime-presentation-layout.js?v=20260903-band-corridor-v1", "ATLAS_PERSON_SPACETIME_PRESENTATION_LAYOUT"],
     ["./atlas-person-spacetime-semantic-axis.js?v=20260903-place-lod", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
     ["./atlas-person-spacetime-uncertainty.js?v=20260903-c6", "ATLAS_PERSON_SPACETIME_UNCERTAINTY"],
     ["./atlas-person-spacetime-inspector.js?v=20260903-c8", "ATLAS_PERSON_SPACETIME_INSPECTOR"],
@@ -29,7 +30,7 @@
     ["./atlas-person-spacetime-person-tracks.js?v=20260902-inspector-evidence", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
     ["./atlas-person-spacetime-political-placement.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT"],
     ["./atlas-person-spacetime-lod.js?v=20260831-500-floor", "ATLAS_PERSON_SPACETIME_LOD"],
-    ["./atlas-person-spacetime-label-engine.js?v=20260902-label-height-18", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
+    ["./atlas-person-spacetime-label-engine.js?v=20260903-cjk-band-zone", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
   ]);
 
   if (!reader || !model || !eraModel) {
@@ -175,6 +176,7 @@
     const api = {
       timeProjection: window.ATLAS_PERSON_SPACETIME_TIME_PROJECTION,
       spaceAxis: window.ATLAS_PERSON_SPACETIME_SPACE_AXIS,
+      presentationLayout: window.ATLAS_PERSON_SPACETIME_PRESENTATION_LAYOUT,
       semanticAxis: window.ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS,
       uncertainty: window.ATLAS_PERSON_SPACETIME_UNCERTAINTY,
       inspector: window.ATLAS_PERSON_SPACETIME_INSPECTOR,
@@ -525,27 +527,63 @@
     return searchable;
   }
 
-  function packTrackLabels(projectedTracks, regions, timelineHeight, forceAll) {
+  function packTrackLabels(projectedTracks, timelineHeight, forceAll) {
     const { labelEngine } = runtime();
     const placed = [];
     const deferred = [];
-    for (const region of regions) {
-      const labels = projectedTracks.filter((item) => item.macroregion_code === region.code).map((item) => ({
-        person_id: item.track.person_id,
-        track_id: item.track.track_id,
-        text: item.track.display_name,
-        anchor_x: item.x - region.left,
-        anchor_y: item.y,
-        forced: forceAll || selectedPersonId === item.track.person_id
-      }));
-      if (!labels.length) continue;
-      const runtimeMaxLabelWidth = Math.max(
-        labelEngine.DEFAULT_MIN_LABEL_WIDTH,
-        Math.min(labelEngine.DEFAULT_MAX_LABEL_WIDTH, region.width - labelEngine.DEFAULT_LABEL_CHROME_WIDTH)
+    const groups = new Map();
+
+    for (const item of projectedTracks) {
+      const bandCode = text(item?.presentation_band_code);
+      const bandLeft = Number(item?.presentation_band_left);
+      const bandRight = Number(item?.presentation_band_right);
+      const zoneLeft = Number(item?.label_zone_left);
+      const zoneRight = Number(item?.label_zone_right);
+      if (!bandCode || !Number.isFinite(bandLeft) || !Number.isFinite(bandRight) || !(bandRight > bandLeft)
+        || !Number.isFinite(zoneLeft) || !Number.isFinite(zoneRight) || !(zoneRight > zoneLeft)) {
+        deferred.push(Object.freeze({ person_id:item?.track?.person_id || null, track_id:item?.track?.track_id || null, reason:"presentation_label_zone_missing" }));
+        continue;
+      }
+      if (!groups.has(bandCode)) groups.set(bandCode, { bandCode, bandLeft, bandRight, items:[] });
+      groups.get(bandCode).items.push(item);
+    }
+
+    for (const group of groups.values()) {
+      const bandWidth = group.bandRight - group.bandLeft;
+      const labels = group.items.map((item) => {
+        const zoneLeft = Math.max(group.bandLeft, Number(item.label_zone_left));
+        const zoneRight = Math.min(group.bandRight, Number(item.label_zone_right));
+        const zoneWidth = Math.max(0, zoneRight - zoneLeft);
+        const minimum = Math.min(labelEngine.DEFAULT_MIN_LABEL_WIDTH, Math.max(16, zoneWidth));
+        const maximum = Math.max(minimum, Math.min(labelEngine.DEFAULT_MAX_LABEL_WIDTH, Math.max(16, zoneWidth)));
+        return {
+          person_id: item.track.person_id,
+          track_id: item.track.track_id,
+          text: item.track.display_name,
+          anchor_x: item.x - group.bandLeft,
+          anchor_y: item.y,
+          min_left: zoneLeft - group.bandLeft,
+          max_right: zoneRight - group.bandLeft,
+          width: labelEngine.estimateWidth(
+            { text:item.track.display_name },
+            { minLabelWidth:minimum, maxLabelWidth:maximum }
+          ),
+          forced: forceAll || selectedPersonId === item.track.person_id
+        };
+      });
+      const result = labelEngine.packLabels(
+        labels,
+        { width:bandWidth, height:timelineHeight },
+        { maxLabelWidth:Math.min(labelEngine.DEFAULT_MAX_LABEL_WIDTH, bandWidth), maxHorizontalShift:bandWidth }
       );
-      const result = labelEngine.packLabels(labels, { width: Math.max(48, region.width), height: timelineHeight }, { maxLabelWidth: runtimeMaxLabelWidth, maxHorizontalShift: region.width });
-      placed.push(...result.placed.map((label) => ({ ...label, label_x: region.left + label.label_x, region_code: region.code, region_left: region.left })));
-      deferred.push(...result.deferred);
+      placed.push(...result.placed.map((label) => ({
+        ...label,
+        label_x:group.bandLeft + label.label_x,
+        region_code:group.bandCode,
+        region_left:group.bandLeft,
+        region_right:group.bandRight
+      })));
+      deferred.push(...result.deferred.map((label) => ({ ...label, region_code:group.bandCode })));
     }
     return { placed, deferred };
   }
@@ -667,22 +705,25 @@
     })).join("");
   }
 
-  function renderRails(tracks, projection, contentWidth, opacity, meanwhileOrdinal = null) {
+  function renderRails(tracks, projection, contentWidth, opacity, presentation, meanwhileOrdinal = null) {
     if (opacity <= 0.01) return "";
-    const { uncertainty } = runtime();
+    const { uncertainty, presentationLayout } = runtime();
     return tracks.flatMap((track) => (track.primary_segments || []).map((segment) => {
       const y1 = projection.yForOrdinal(segment.start_ordinal);
       const y2 = projection.yForOrdinal(segment.end_ordinal);
       const top = Math.min(y1, y2);
       const height = Math.max(2, Math.abs(y2 - y1));
-      const x = segment.x_anchor * contentWidth;
+      const geometry = presentationLayout.geometryForSegment(presentation, segment);
+      const x = Number.isFinite(Number(geometry?.rail_x)) ? Number(geometry.rail_x) : segment.x_anchor * contentWidth;
+      const bandCode = text(geometry?.band_code) || text(segment.subregion_code) || text(segment.macroregion_code);
+      const railBasis = text(geometry?.rail_basis) || "historical_fallback";
       const meanwhileActive = meanwhileOrdinal != null && segment.start_ordinal <= meanwhileOrdinal && meanwhileOrdinal <= segment.end_ordinal;
-      return `<button type="button" class="spacetime-track-rail ${escapeHtml(uncertainty.precisionClass(segment))}${selectedPersonId === track.person_id ? " is-selected" : ""}${selectedPersonId === track.person_id && selectedActivityId === segment.activity_id ? " is-activity-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" data-spacetime-activity="${escapeHtml(segment.activity_id)}" style="left:${x}px;top:${top}px;height:${height}px;opacity:${opacity}" title="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)} · ${placementBasisLabel(segment)}`)}" aria-label="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)} · ${placementBasisLabel(segment)}`)}"></button>`;
+      return `<button type="button" class="spacetime-track-rail ${escapeHtml(uncertainty.precisionClass(segment))}${selectedPersonId === track.person_id ? " is-selected" : ""}${selectedPersonId === track.person_id && selectedActivityId === segment.activity_id ? " is-activity-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" data-spacetime-activity="${escapeHtml(segment.activity_id)}" data-spacetime-band="${escapeHtml(bandCode)}" data-spacetime-rail-basis="${escapeHtml(railBasis)}" style="left:${x}px;top:${top}px;height:${height}px;opacity:${opacity}" title="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)} · ${placementBasisLabel(segment)}`)}" aria-label="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)} · ${placementBasisLabel(segment)}`)}"></button>`;
     })).join("");
   }
 
-  function renderActivityGlyphs(tracks, projection, contentWidth, opacity, meanwhileOrdinal = null) {
-    const { uncertainty } = runtime();
+  function renderActivityGlyphs(tracks, projection, contentWidth, opacity, presentation, meanwhileOrdinal = null) {
+    const { uncertainty, presentationLayout, labelEngine } = runtime();
     return tracks.flatMap((track) => (track.primary_segments || []).flatMap((segment) => {
       const personSelected = selectedPersonId === track.person_id;
       const segmentOpacity = personSelected ? 1 : opacity;
@@ -690,9 +731,19 @@
       const y1 = projection.yForOrdinal(segment.start_ordinal);
       const y2 = projection.yForOrdinal(segment.end_ordinal);
       const y = (y1 + y2) / 2;
-      const x = segment.x_anchor * contentWidth;
+      const geometry = presentationLayout.geometryForSegment(presentation, segment);
+      const fallbackX = segment.x_anchor * contentWidth;
+      const labelText = polityLabel(segment.activity);
+      const naturalWidth = labelEngine.estimateWidth(
+        { text:labelText },
+        { minLabelWidth:28, maxLabelWidth:140, charWidth:6.2, cjkCharWidth:9 }
+      ) + 10;
+      const box = presentationLayout.activityBox(presentation, segment, naturalWidth, { minWidth:28, maxWidth:150 });
+      const left = Number.isFinite(Number(box?.left)) ? Number(box.left) : fallbackX + 6;
+      const widthStyle = Number.isFinite(Number(box?.width)) ? `width:${Number(box.width)}px;` : "";
+      const bandCode = text(box?.band_code) || text(geometry?.band_code) || text(segment.subregion_code) || text(segment.macroregion_code);
       const meanwhileActive = meanwhileOrdinal != null && segment.start_ordinal <= meanwhileOrdinal && meanwhileOrdinal <= segment.end_ordinal;
-      return [`<button type="button" class="spacetime-activity-glyph ${escapeHtml(uncertainty.precisionClass(segment))}${personSelected ? " is-selected" : ""}${personSelected && selectedActivityId === segment.activity_id ? " is-activity-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" data-spacetime-activity="${escapeHtml(segment.activity_id)}" style="left:${x + 6}px;top:${y}px;opacity:${segmentOpacity}" title="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`)}" aria-label="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`)}"><span>${escapeHtml(polityLabel(segment.activity))}</span></button>`];
+      return [`<button type="button" class="spacetime-activity-glyph ${escapeHtml(uncertainty.precisionClass(segment))}${personSelected ? " is-selected" : ""}${personSelected && selectedActivityId === segment.activity_id ? " is-activity-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" data-spacetime-activity="${escapeHtml(segment.activity_id)}" data-spacetime-band="${escapeHtml(bandCode)}" style="left:${left}px;top:${y}px;${widthStyle}opacity:${segmentOpacity}" title="${escapeHtml(`${track.display_name} · ${labelText} · ${periodLabel(segment.activity)}`)}" aria-label="${escapeHtml(`${track.display_name} · ${labelText} · ${periodLabel(segment.activity)}`)}"><span>${escapeHtml(labelText)}</span></button>`];
     })).join("");
   }
 
@@ -705,7 +756,7 @@
       const opacity = forced ? 1 : lodWeights.labels;
       const connector = label.connector ? `<i class="spacetime-label-connector" style="left:${label.region_left + Math.min(label.connector.x1, label.connector.x2)}px;top:${label.connector.y1}px;width:${label.connector.length}px"></i>` : "";
       const meanwhileActive = meanwhilePersonIds.has(item.track.person_id);
-      return `${connector}<button type="button" class="spacetime-track-label${selectedPersonId === item.track.person_id ? " is-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(item.track.person_id)}" style="left:${label.label_x}px;top:${label.label_y}px;width:${label.width}px;opacity:${opacity}" title="${escapeHtml(item.track.display_name)}">${escapeHtml(item.track.display_name)}</button>`;
+      return `${connector}<button type="button" class="spacetime-track-label${selectedPersonId === item.track.person_id ? " is-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(item.track.person_id)}" data-spacetime-band="${escapeHtml(label.region_code)}" style="left:${label.label_x}px;top:${label.label_y}px;width:${label.width}px;opacity:${opacity}" title="${escapeHtml(item.track.display_name)}">${escapeHtml(item.track.display_name)}</button>`;
     }).join("");
   }
 
@@ -928,15 +979,15 @@
       const signature = `${personIds.join(",")}|${segmentIds.join(",")}|${selectedPersonId || ""}|${selectedActivityId || ""}|${state.meanwhileOrdinal ?? ""}|${state.needle}|${state.lodWeights.labels}|${state.lodWeights.rails}|${state.lodWeights.activities}`;
 
       if (signature !== lastSignature) {
-        const labelPack = packTrackLabels(personItems, state.regions, state.timelineHeight, Boolean(state.needle));
+        const labelPack = packTrackLabels(personItems, state.timelineHeight, Boolean(state.needle));
         const railLayer = mount.querySelector("#spacetimeRailLayer");
         const uncertaintyLayer = mount.querySelector("#spacetimeUncertaintyLayer");
         const labelLayer = mount.querySelector("#spacetimeLabelLayer");
         const activityLayer = mount.querySelector("#spacetimeActivityLayer");
-        if (railLayer) railLayer.innerHTML = renderRails(segmentTracks, state.projection, state.contentWidth, state.lodWeights.rails, state.meanwhileOrdinal);
+        if (railLayer) railLayer.innerHTML = renderRails(segmentTracks, state.projection, state.contentWidth, state.lodWeights.rails, state.presentation, state.meanwhileOrdinal);
         if (uncertaintyLayer) uncertaintyLayer.innerHTML = renderSpatialUncertainty(segmentTracks, state.projection, state.contentWidth, state.lodWeights.activities);
         if (labelLayer) labelLayer.innerHTML = renderLabels(personItems, labelPack, state.lodWeights, state.needle, state.meanwhilePersonIds);
-        if (activityLayer) activityLayer.innerHTML = renderActivityGlyphs(segmentTracks, state.projection, state.contentWidth, state.lodWeights.activities, state.meanwhileOrdinal);
+        if (activityLayer) activityLayer.innerHTML = renderActivityGlyphs(segmentTracks, state.projection, state.contentWidth, state.lodWeights.activities, state.presentation, state.meanwhileOrdinal);
         updateCount("spacetimeDomPersonCount", personItems.length);
         updateCount("spacetimeDomSegmentCount", segmentIds.length);
         updateCount("spacetimeDomLabelCount", labelPack.placed.length);
@@ -1034,7 +1085,7 @@
 
   function renderInto(mount) {
     const renderFocus = captureRenderFocus(mount);
-    const { timeProjection, spaceAxis, semanticAxis, spatialCompile, exploration, inspector, meanwhile, lod } = runtime();
+    const { timeProjection, spaceAxis, semanticAxis, spatialCompile, exploration, inspector, meanwhile, lod, presentationLayout } = runtime();
     const timeline = timelineRange();
     const projection = timeProjection.createUniformTimeProjection(timeline.start_year, timeline.end_year, DEFAULT_TIMELINE_HEIGHT * cameraZoom * GLOBAL_EXTENT_COMPRESSION, cameraZoom);
     currentTimelineProjection = projection;
@@ -1046,7 +1097,12 @@
     const regions = spaceAxis.stableRegionLayout(compiled.continuum, contentWidth);
     const spaceHeader = semanticAxis.buildSpaceHeaderPlan(compiled.continuum, contentWidth, cameraZoom, spatialCompile.REVIEWED_PLACE_BINDINGS);
     const timeAxis = semanticAxis.buildTimeAxisPlan(timeline, projection, cameraZoom);
-    const allProjectedTracks = compiled.partitioned.tracks.map((track) => exploration.projectTrack(track, projection, contentWidth)).filter(Boolean);
+    const presentation = presentationLayout.compileTrackPresentation(compiled.partitioned.tracks, compiled.continuum, contentWidth);
+    const allProjectedTracks = compiled.partitioned.tracks
+      .map((track) => exploration.projectTrack(track, projection, contentWidth))
+      .filter(Boolean)
+      .map((item) => presentationLayout.applyTrackPresentation(item, presentation))
+      .filter(Boolean);
     const projectedTracks = needle ? allProjectedTracks.filter((item) => trackSearchable(item.track).includes(needle)) : allProjectedTracks;
     const visibleTracks = projectedTracks.map((item) => item.track);
     const activePersonIds = new Set(projectedTracks.map((item) => item.person_id));
@@ -1094,8 +1150,8 @@
     <section class="spacetime-frame card" style="--spacetime-axis-width:${AXIS_WIDTH}px;--spacetime-header-height:${CAMERA_HEADER_HEIGHT}px;--spacetime-era-axis-width:${ERA_AXIS_WIDTH}px;--spacetime-year-axis-width:${AXIS_WIDTH - ERA_AXIS_WIDTH}px"><div class="spacetime-scroll" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 Person track 및 등록 인물 밀도 분포">
       <div class="spacetime-sticky-corner"><span>시대</span><span>연도<small>${escapeHtml(timeAxis.stage_label)}</small></span></div>
       <div class="spacetime-region-head" style="width:${contentWidth}px">
-        <div class="spacetime-region-head-layer is-macro" style="opacity:${spaceHeader.macro_opacity}">${spaceHeader.macroregions.map((region) => `<div class="spacetime-region-head-band" style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${escapeHtml(region.code)}</small></div>`).join("")}</div>
-        <div class="spacetime-region-head-layer is-subregion" style="opacity:${spaceHeader.subregion_opacity}">${spaceHeader.subregions.map((region) => `<div class="spacetime-region-head-band" style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${escapeHtml(region.parent_code)}</small></div>`).join("")}</div>
+        <div class="spacetime-region-head-layer is-macro" style="opacity:${spaceHeader.macro_opacity}">${spaceHeader.macroregions.map((region) => `<div class="spacetime-region-head-band" data-spacetime-band="${escapeHtml(region.code)}" style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${escapeHtml(region.code)}</small></div>`).join("")}</div>
+        <div class="spacetime-region-head-layer is-subregion" style="opacity:${spaceHeader.subregion_opacity}">${spaceHeader.subregions.map((region) => `<div class="spacetime-region-head-band" data-spacetime-band="${escapeHtml(region.code)}" style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${escapeHtml(region.parent_code)}</small></div>`).join("")}</div>
         <div class="spacetime-region-head-layer is-place" style="opacity:${spaceHeader.place_opacity}">${spaceHeader.places.map((place) => `<div class="spacetime-place-head-marker" style="left:${place.x}px" title="${escapeHtml(`검토 Place · ${place.place_name} · ${place.subregion_code}의 presentation anchor · 정확한 지리 좌표 아님`)}"><i></i><strong>${escapeHtml(place.place_name)}</strong></div>`).join("")}</div>
       </div>
       <div class="spacetime-era-axis" style="height:${timelineHeight}px;opacity:${timeAxis.era_opacity}">${eras.map((era) => `<div class="person-era-${escapeHtml(era.code)}" style="top:${era.top}px;height:${era.height}px"><span>${escapeHtml(era.label)}</span></div>`).join("")}</div>
@@ -1123,6 +1179,7 @@
       projectedTracks,
       visibleTracks,
       projection,
+      presentation,
       contentWidth,
       timelineHeight,
       regions,
