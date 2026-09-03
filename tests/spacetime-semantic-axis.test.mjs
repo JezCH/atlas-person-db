@@ -49,7 +49,7 @@ test("below-500 time stages no longer exist", () => {
 
 test("space header is fixed to reviewed subregion hierarchy at the readable floor", () => {
   const continuum = spaceAxis.createSpatialContinuum();
-  const plan = semanticAxis.buildSpaceHeaderPlan(continuum, 3600);
+  const plan = semanticAxis.buildSpaceHeaderPlan(continuum, 3600, 5, []);
 
   assert.equal(plan.stage, "subregion");
   assert.equal(plan.macroregions.length, 9);
@@ -69,4 +69,42 @@ test("spatial hierarchy remains uniform and independent of Person density", () =
   const continuum = spaceAxis.createSpatialContinuum();
   const macroWidths = continuum.macroregions.map((band) => band.max_space - band.min_space);
   for (const width of macroWidths) assert.ok(Math.abs(width - 1/9) < 1e-12);
+});
+
+
+test("reviewed Place semantic detail appears only at high readable zoom without changing world geometry", () => {
+  const continuum = spaceAxis.createSpatialContinuum();
+  const bindings = [
+    {place_id:"place-rome",place_name:"Rome",macroregion_code:"europe",subregion_code:"italy"},
+    {place_id:"place-pella",place_name:"Pella",macroregion_code:"europe",subregion_code:"balkans"},
+    {place_id:"bad",place_name:"Bad",macroregion_code:"europe",subregion_code:"south-america"}
+  ];
+  const floor = semanticAxis.buildSpaceHeaderPlan(continuum, 3600, 5, bindings);
+  const detail = semanticAxis.buildSpaceHeaderPlan(continuum, 3600, 8, bindings);
+
+  assert.equal(floor.stage, "subregion");
+  assert.equal(floor.place_opacity, 0);
+  assert.equal(detail.stage, "place");
+  assert.equal(detail.stage_label, "검토 Place");
+  assert.equal(detail.place_opacity, 1);
+  assert.equal(detail.places.length, 2);
+  assert.deepEqual(detail.places.map((place)=>place.place_id), ["place-pella","place-rome"]);
+  assert.ok(detail.places.every((place)=>place.display_anchor_basis === "reviewed_place_point"));
+  assert.ok(detail.places.every((place)=>place.exact_geographic_coordinate_claimed === false));
+
+  for (const place of detail.places) {
+    const subregion = continuum.bandForCode(place.subregion_code);
+    assert.equal(place.x_anchor, subregion.center_space);
+    assert.equal(place.x, subregion.center_space * 3600);
+  }
+});
+
+test("Place semantic LOD is driven only by reviewed bindings, never Person density", () => {
+  const continuum = spaceAxis.createSpatialContinuum();
+  const bindings = [{place_id:"place-rome",place_name:"Rome",macroregion_code:"europe",subregion_code:"italy"}];
+  const a = semanticAxis.buildSpaceHeaderPlan(continuum, 3600, 8, bindings);
+  const b = semanticAxis.buildSpaceHeaderPlan(continuum, 3600, 8, bindings);
+  assert.deepEqual(a.places, b.places);
+  assert.equal(a.macroregions.length, 9);
+  assert.equal(b.macroregions.length, 9);
 });
