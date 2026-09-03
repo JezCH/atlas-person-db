@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:alfonso-v-of-aragon:crown-aragon:1416-1458:v1",
+  "person": {
+    "canonical_name_en": "Alfonso V of Aragon",
+    "display_name_ko": "알폰소 5세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Crown of Aragon",
+    "display_name_ko": "아라곤 연합왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King of Aragon",
+    "role_display_name_ko": "아라곤 국왕",
+    "start_year": 1416,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1458,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Alfonso the Magnanimous succeeded to the Crown of Aragon in 1416 and retained his Aragonese kingship until his death in 1458. ATLAS keeps this continuous western Mediterranean kingship distinct from the later Neapolitan crown."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Alan Ryder, Alfonso the Magnanimous: King of Aragon, Naples, and Sicily 1396–1458",
+      "canonical_url": "https://academic.oup.com/book/1973",
+      "citation_text": "Oxford University Press's scholarly biography follows Alfonso V from accession to the Aragonese throne in 1416 through his conquest of Naples in 1442 and rule until 1458."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-global-batch-20260903",
+    "requested_identity": "ALFONSO V/I — ARAGON AND NAPLES",
+    "correction_note": "Alfonso V of Aragon and Alfonso I of Naples are the same person; store the Aragonese crown separately."
+  }
+}

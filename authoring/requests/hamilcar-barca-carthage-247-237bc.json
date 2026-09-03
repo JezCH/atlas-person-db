@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:hamilcar-barca:carthaginian-republic:-247--237:v1",
+  "person": {
+    "canonical_name_en": "Hamilcar Barca",
+    "display_name_ko": "하밀카르 바르카",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Carthaginian Republic",
+    "display_name_ko": "카르타고 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "General and statesman",
+    "role_display_name_ko": "장군·정치가",
+    "start_year": -247,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -237,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Hamilcar Barca held major Carthaginian military command from 247 BCE during the First Punic War and later played the decisive role in suppressing the Mercenary War, completed in 237 BCE. ATLAS records service to Carthage rather than treating him as a monarch. The user's repeated Phoenicia/Carthage labels all refer to the same historical person."
+  },
+  "sources": [
+    {
+      "source_type": "secondary_reference",
+      "title": "Encyclopaedia Britannica — Hamilcar Barca (1911 edition)",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Hamilcar_Barca",
+      "citation_text": "The Britannica article describes Hamilcar as Carthaginian general and statesman, his suppression of the mercenary revolt by 237 BCE, subsequent expedition and territorial expansion in Spain, and death in 228 BCE."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-03",
+      "document_title": "하밀카르 바르카",
+      "url": "https://namu.wiki/w/%ED%95%98%EB%B0%80%EC%B9%B4%EB%A5%B4%20%EB%B0%94%EB%A5%B4%EC%B9%B4"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-global-batch-20260903",
+    "requested_identity": "HAMILCAR BARCA — CARTHAGE / PHOENICIA / PUNIC-IBERIA",
+    "correction_note": "Represent the Carthaginian command phase once; Carthaginian Phoenician ancestry does not make Hamilcar a ruler of Phoenicia."
+  }
+}

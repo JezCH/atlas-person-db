@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:muhammad-ibn-al-qasim:umayyad-sindh:711-715:v1",
+  "person": {
+    "canonical_name_en": "Muhammad ibn al-Qasim",
+    "display_name_ko": "무함마드 빈 카심",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Umayyad Caliphate",
+    "display_name_ko": "우마이야 칼리파국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "General and governor of Sindh",
+    "role_display_name_ko": "신드 정복군 사령관·총독",
+    "start_year": 711,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 715,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Muhammad ibn al-Qasim led the Umayyad conquest of Sindh beginning in 711 and then administered the conquered province until his recall and death in 715. The mod exposes him to Sindh, Arabia and India, but historically he was an Umayyad commander and provincial governor, not a sovereign ruler of three separate civilizations."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "TDV İslâm Ansiklopedisi — Muhammed b. Kāsım es-Sekafî",
+      "canonical_url": "https://islamansiklopedisi.org.tr/muhammed-b-kasim-es-sekafi",
+      "citation_text": "The TDV Encyclopaedia of Islam article treats Muhammad ibn al-Qasim as the Umayyad commander of the conquest of Sindh and cites the standard Encyclopaedia of Islam and specialist scholarship."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-global-batch-20260903",
+    "requested_identity": "MUHAMMAD IBN AL-QASIM — SINDH, ARABIA, AND INDIA",
+    "correction_note": "Bind military and provincial authority to the Umayyad Caliphate; do not invent sovereign rules over Arabia or India."
+  }
+}

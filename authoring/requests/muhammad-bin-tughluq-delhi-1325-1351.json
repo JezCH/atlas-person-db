@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:muhammad-bin-tughluq:delhi-sultanate:1325-1351:v1",
+  "person": {
+    "canonical_name_en": "Muhammad bin Tughluq",
+    "display_name_ko": "무함마드 빈 투글루크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Delhi Sultanate",
+    "display_name_ko": "델리 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Sultan",
+    "role_display_name_ko": "술탄",
+    "start_year": 1325,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1351,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Muhammad bin Tughluq ruled the Delhi Sultanate from 1325 to 1351. The mod's 'Delhi and India' labels describe gameplay availability; ATLAS records the historical Delhi Sultanate rather than a generic timeless India polity."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Encyclopaedia Iranica — Delhi Sultanate",
+      "canonical_url": "https://www.iranicaonline.org/articles/delhi-sultanate/delhi-sultanate-i-political-and-cultural-history/",
+      "citation_text": "Encyclopaedia Iranica gives Muhammad b. Tughluq's Delhi Sultanate reign as 725–752 AH / 1325–1351 CE."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-global-batch-20260903",
+    "requested_identity": "MUHAMMAD BIN TUGLUQ — DELHI AND INDIA",
+    "correction_note": "Register the Delhi Sultanate reign only."
+  }
+}
