@@ -73,7 +73,16 @@ test("required product gates remain explicit", () => {
   assert.deepEqual([...capabilities.keys()], requiredIds);
   for (const id of requiredIds) assert.equal(capabilities.get(id)?.required, true);
   const pending = [...capabilities.values()].filter((item) => item.required && item.status !== "locked").map((item) => item.id);
-  assert.deepEqual(pending, ["spatial-place-semantic-lod","original-plan-visual-acceptance"]);
+  assert.deepEqual(pending, ["original-plan-visual-acceptance"]);
+  assert.equal(capabilities.get("spatial-place-semantic-lod")?.status, "locked");
+  assert.equal(contract.spatial_place_semantic_lod_verification.status, "locked");
+  assert.equal(contract.spatial_place_semantic_lod_verification.place_detail_start_percent, 720);
+  assert.equal(contract.spatial_place_semantic_lod_verification.place_detail_full_percent, 800);
+  assert.equal(contract.spatial_place_semantic_lod_verification.macroregion_geometry_invariant, true);
+  assert.equal(contract.spatial_place_semantic_lod_verification.subregion_geometry_invariant, true);
+  assert.equal(contract.spatial_place_semantic_lod_verification.person_density_independent, true);
+  assert.equal(contract.spatial_place_semantic_lod_verification.reviewed_only, true);
+  assert.equal(contract.spatial_place_semantic_lod_verification.exact_geographic_coordinate_claimed, false);
   assert.equal(capabilities.get("activity-selection-meanwhile-link")?.status, "locked");
   assert.equal(contract.activity_meanwhile_link_verification.status, "locked");
   assert.equal(contract.activity_meanwhile_link_verification.selected_activity_midpoint_drives_meanwhile, true);
@@ -95,7 +104,7 @@ test("required product gates remain explicit", () => {
   assert.equal(contract.spatial_uncertainty_verification.culling_includes_x_min_x_max, true);
   assert.equal(contract.original_plan_reconciliation.status, "in_progress");
   assert.equal(contract.final_completion_verification.status, "in_progress");
-  assert.equal(contract.final_completion_verification.required_pending_count, 2);
+  assert.equal(contract.final_completion_verification.required_pending_count, 1);
   assert.equal(capabilities.get("data-parity")?.status, "locked");
   assert.equal(contract.data_parity_verification.status, "locked");
   assert.equal(contract.data_parity_verification.mode, "runtime_fail_closed");
@@ -108,7 +117,7 @@ test("required product gates remain explicit", () => {
   assert.equal(contract.data_parity_verification.unresolved_activity_included, true);
   assert.equal(contract.data_parity_verification.multi_place_segment_deduplication_by_activity_id, true);
   assert.equal(contract.final_completion_verification.status, "in_progress");
-  assert.equal(contract.final_completion_verification.required_pending_count, 2);
+  assert.equal(contract.final_completion_verification.required_pending_count, 1);
   assert.equal(capabilities.get("meanwhile-active-activity")?.status, "locked");
   assert.equal(contract.meanwhile_verification.status, "locked");
   assert.equal(contract.meanwhile_verification.selected_historical_moment, true);

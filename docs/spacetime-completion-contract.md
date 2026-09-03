@@ -41,6 +41,19 @@ Reviewed Place evidence may compile to a Place point; reviewed subregion evidenc
 
 A reviewed Place point uses a zero-width world range (`x_min = x_anchor = x_max`). The current display anchor is the stable center of the reviewed subregion and is **not** claimed to be an exact geographic longitude. Place identity and evidence precision are therefore preserved without inventing coordinates. When a polity changes Place function over time, every time-sliced Place segment is preserved through spatial compile and Person Track compile; the Roman Empire Rome → Constantinople case is a permanent regression test.
 
+## Spatial semantic LOD
+
+The horizontal world geometry never changes with semantic detail. The readable floor remains macroregion + reviewed subregion. Above 720%, reviewed Place semantics begin to appear and reach full opacity at 800%.
+
+Place semantic markers:
+- come only from `spatialCompile.REVIEWED_PLACE_BINDINGS`;
+- reuse the reviewed Place's subregion-center presentation anchor;
+- never claim exact longitude or geographic point precision;
+- do not alter macroregion or subregion widths;
+- do not depend on Person count, Person density, search results, or visible tracks.
+
+The header therefore progresses semantically as **Macroregion → Subregion → reviewed Place** while the normalized world coordinate system remains invariant.
+
 ## Spatial uncertainty rendering
 
 Spatial precision is visible on the world surface and must not be confused with territory, residence, or a physical travel path.
@@ -148,6 +161,7 @@ DOM size scales with viewport + overscan, not total DB size. Minimap may retain 
 - `tests/fixtures/spacetime-dense-label-snapshot.json`
 - `tests/spacetime-dense-label-acceptance.test.mjs`
 - `tests/spacetime-place-precision.test.mjs`
+- `tests/spacetime-place-semantic-lod.test.mjs`
 - `tests/spacetime-person-inspector-evidence.test.mjs`
 - `tests/spacetime-meanwhile-active-activity.test.mjs`
 - `tests/spacetime-data-parity.test.mjs`
@@ -161,4 +175,4 @@ Changing the 500% floor, 0.748 shared compression, 900–1,275 px base-world bou
 
 ## Original-plan reconciliation
 
-The earlier 23-gate contract reached zero pending before a direct audit against the original C0-C11 design. That audit showed the contract itself was incomplete. C6 uncertainty rendering, C8 sticky Person/Activity inspector, and C9 Activity-selection-to-Meanwhile linkage are now locked; the remaining required original-plan gates are Place-level spatial semantic LOD and final browser/visual acceptance. Final product completion must not be declared again until those gates are locked.
+The earlier 23-gate contract reached zero pending before a direct audit against the original C0-C11 design. That audit showed the contract itself was incomplete. C6 uncertainty rendering, Place-level spatial semantic LOD, C8 sticky Person/Activity inspector, and C9 Activity-selection-to-Meanwhile linkage are now locked; the only remaining required original-plan gate is final browser/visual acceptance. Final product completion must not be declared again until those gates are locked.

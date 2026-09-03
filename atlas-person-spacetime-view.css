@@ -124,6 +124,10 @@
 .spacetime-region-head-layer.is-subregion .spacetime-region-head-band{flex-direction:column;gap:0;padding:3px 3px}
 .spacetime-region-head-layer.is-subregion .spacetime-region-head-band strong{max-width:100%;font-size:9px;line-height:1.15}
 .spacetime-region-head-layer.is-subregion .spacetime-region-head-band small{max-width:100%;font-size:7px;line-height:1.1}
+.spacetime-region-head-layer.is-place{z-index:4;overflow:visible}
+.spacetime-place-head-marker{position:absolute;top:19px;transform:translateX(-50%);display:flex;align-items:center;gap:3px;max-width:92px;padding:1px 4px 1px 2px;border:1px solid rgba(92,112,143,.46);border-radius:999px;background:rgba(255,255,255,.94);box-shadow:0 1px 4px rgba(38,54,78,.08);box-sizing:border-box}
+.spacetime-place-head-marker i{flex:0 0 auto;width:5px;height:5px;border:1px solid #5f789d;border-radius:50%;background:#fff;box-sizing:border-box}
+.spacetime-place-head-marker strong{min-width:0;font-size:8px;line-height:11px;color:#3f5575;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .spacetime-era-axis{position:sticky;z-index:30;left:0;width:var(--spacetime-era-axis-width,68px);margin-top:0;background:#fff;border-right:1px solid #d7e0ea;transition:opacity .18s ease}
 .spacetime-era-axis>div{position:absolute;left:0;width:var(--spacetime-era-axis-width,68px);display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(77,91,110,.15);overflow:hidden}
 .spacetime-era-axis>div span{writing-mode:vertical-rl;text-orientation:upright;transform:none;font-size:12px;font-weight:800;letter-spacing:.08em;line-height:1.35;opacity:.76}
@@ -140,6 +144,7 @@
 .spacetime-century-line.is-major{background:#d8e1ec}
 .spacetime-region-line{position:absolute;z-index:3;top:0;width:1px;background:#d4dde9;pointer-events:none}
 .spacetime-subregion-line{position:absolute;z-index:3;top:0;width:1px;background:#edf1f6;pointer-events:none;transition:opacity .18s ease}
+.spacetime-place-guide{position:absolute;z-index:4;top:0;width:0;height:18px;border-left:1px dotted rgba(76,101,139,.62);pointer-events:none;transition:opacity .18s ease}
 .spacetime-track-label{position:absolute;z-index:11;height:18px;transform:translateY(-50%);padding:0 1px;border:1px solid #cbd7e9;border-radius:4px;background:rgba(255,255,255,.94);box-shadow:0 1px 5px rgba(35,50,74,.08);font-size:10px;font-weight:700;line-height:16px;color:#16233a;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;box-sizing:border-box}
 .spacetime-track-label:hover,.spacetime-track-label.is-selected{z-index:22;border-color:#7089b7;background:#fff;box-shadow:0 4px 12px rgba(35,50,74,.16)}
 .spacetime-track-label.is-meanwhile-active{z-index:21;border-color:#b68b3f;background:#fffaf0;box-shadow:0 0 0 1px rgba(190,145,62,.14),0 3px 10px rgba(94,70,25,.13)}
