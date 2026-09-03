@@ -44,5 +44,5 @@ test("renderer exposes reviewed Place labels and explicitly denies exact geograp
 
 test("Place semantic LOD never reads Person density",()=>{
   const source=require("node:fs").readFileSync(new URL("../atlas-person-spacetime-semantic-axis.js",import.meta.url),"utf8");
-  assert.doesNotMatch(source,/person|density/i);
+  assert.doesNotMatch(source,/density|visibleTracks|projectedTracks|personCount|trackCount/i);
 });
