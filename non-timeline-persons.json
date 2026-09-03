@@ -2161,5 +2161,36 @@
       }
     ],
     "map_policy": "Do not display on the historical year timeline unless a legendary or historical-tradition overlay is enabled."
+  },
+  {
+    "person_name": "Hanno the Navigator",
+    "display_name_ko": "항해자 한노",
+    "politic_name": "Carthage",
+    "politic_display_name_ko": "카르타고",
+    "historicity": "historical_tradition_contested_source",
+    "historicity_display_ko": "고대 전승·원전 역사성 논쟁",
+    "timeline_status": "excluded",
+    "date_basis": "periplus_of_hanno_contested_fifth_century_bce_attribution",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "카르타고의 항해·식민 원정 지도자",
+    "reason": "The surviving Greek Periplus presents Hanno as the Carthaginian leader of a state-sponsored expedition beyond the Pillars of Heracles to found Libyphoenician settlements and explore the Atlantic African coast. Modern scholarship often treats the work as a purported fifth-century BCE Carthaginian account but continues to debate whether the text is genuinely translated from Punic, whether it records an actual voyage, and how much of the narrative is historical. No defensible person-specific absolute activity interval can therefore be assigned. ATLAS preserves Hanno as a major Carthaginian exploration tradition without fabricating a reign or expedition year.",
+    "sources": [
+      {
+        "title": "D. Graham J. Shipley, Hanno of Carthage, in Geographers of the Ancient Greek World (Cambridge University Press, 2024)",
+        "url": "https://www.cambridge.org/core/books/abs/geographers-of-the-ancient-greek-world/hanno-of-carthage/1411574AD9C6768F49E3375AAA3C32F8"
+      },
+      {
+        "title": "P. E. H. Hair, The Periplus of Hanno in the History and Historiography of Black Africa, History in Africa 14 (1987)",
+        "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/73D2406CDF4F7F9FB8D9060A3DE0C913/S0361541300008949a.pdf/the-periplus-of-hanno-in-the-history-and-historiography-of-black-africa.pdf"
+      }
+    ],
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed chronology.",
+    "request_context": {
+      "batch": "strudeler-khazaria-bohemia-carthage-denmark-20260903",
+      "requested_identity": "Hanno / Hanno the Navigator"
+    }
   }
 ]
