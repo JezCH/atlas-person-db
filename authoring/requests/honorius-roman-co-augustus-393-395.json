@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:honorius:roman-empire:co-augustus:393-395:v1",
+  "person": {
+    "canonical_name_en": "Honorius",
+    "display_name_ko": "호노리우스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Co-Augustus",
+    "role_display_name_ko": "공동 아우구스투스",
+    "start_year": 393,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 395,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Theodosius I elevated the child Honorius to Augustus in 393. Until Theodosius's death in January 395 he was a junior co-Augustus of the still formally unified Roman Empire. This distinct stage corresponds to the mod's broader Rome slot."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Oxford Classical Dictionary — Honorius, Roman emperor",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548934218",
+      "citation_text": "The Oxford Classical Dictionary states that Theodosius I made Honorius Augustus in 393 and that from 395 he ruled the West."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-aksum-rome-daylam-vietnam-batch-20260903",
+    "requested_identity": "HONORIUS — OCCIDENTAL ROME AND ROME",
+    "correction_note": "Separate the 393–395 junior Augustus phase from the subsequent western emperorship."
+  }
+}

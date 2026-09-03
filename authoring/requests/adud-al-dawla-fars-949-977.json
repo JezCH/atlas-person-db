@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:adud-al-dawla:buyid-fars:949-977:v1",
+  "person": {
+    "canonical_name_en": "Adud al-Dawla",
+    "display_name_ko": "아두드 앗다울라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Buyid Emirate of Fars",
+    "display_name_ko": "부와이흐 파르스 토후국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Amir of Fars",
+    "role_display_name_ko": "파르스 아미르",
+    "start_year": 949,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 977,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Adud al-Dawla was installed at Shiraz in 949 as successor to Imad al-Dawla and ruled Fars until the expansion of his direct rule into Iraq in 977. The mod's Daylam label reflects Buyid Daylamite origin, not a separate kingdom of Daylam ruled throughout his career."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Encyclopaedia Iranica — ʿAŻOD-AL-DAWLA, ABŪ ŠOJĀʾ FANNĀ ḴOSROW",
+      "canonical_url": "https://www.iranicaonline.org/articles/azod-al-dawla-abu-soja/",
+      "citation_text": "Iranica describes Adud al-Dawla's installation on the throne of Fars at Shiraz in 949 and his subsequent expansion of power."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Encyclopaedia Iranica — Fārs iii. History in the Islamic Period",
+      "canonical_url": "https://www.iranicaonline.org/articles/fars-iii/",
+      "citation_text": "Iranica states that Adud al-Dawla ruled Fars from 949 to 977 and Fars together with Iraq from 977 to 983."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-aksum-rome-daylam-vietnam-batch-20260903",
+    "requested_identity": "ADUD AL-DAWLA — DAYLAM",
+    "correction_note": "Represent the Buyid Fars phase rather than an ethnic Daylam polity."
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:dhu-nuwas:himyar:522-525:v1",
+  "person": {
+    "canonical_name_en": "Dhu Nuwas",
+    "display_name_ko": "두 누와스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Himyar",
+    "display_name_ko": "힘야르 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 522,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 525,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Dhu Nuwas is the later Arabic name of the Himyarite king Yusuf As'ar Yath'ar. Peer-reviewed scholarship places his reign in 522–525 CE and identifies him as the last independent Himyarite king before the Aksumite conquest. ATLAS uses the historical Himyarite kingdom rather than a generic Arabia polity."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Lasse Løvlund Toft, Dhū Nuwās and the Martyrs of Najrān in Islamic Arabic Literature until 1400 AD",
+      "canonical_url": "https://pure.au.dk/portal/en/publications/dh%C5%AB-nuw%C4%81s-and-the-martyrs-of-najr%C4%81n-in-islamic-arabic-literature-/",
+      "citation_text": "The peer-reviewed article identifies Yusuf As'ar Yath'ar, known as Dhu Nuwas, as the last king of Himyar and gives his reign as 522–525 CE."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-aksum-rome-daylam-vietnam-batch-20260903",
+    "requested_identity": "DHU NUWAS — HIMYAR",
+    "correction_note": "Register the epigraphically and historically attested Himyarite kingship."
+  }
+}
