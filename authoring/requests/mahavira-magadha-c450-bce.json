@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mahavira:magadha:religious-activity:c450-bce:v1",
+  "person": {
+    "canonical_name_en": "Mahavira",
+    "display_name_ko": "마하비라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-04"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Magadha",
+    "display_name_ko": "마가다",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "religious_activity",
+    "role": "Jain teacher and Tirthankara",
+    "role_display_name_ko": "자이나교 교사·티르탕카라",
+    "start_year": -450,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -450,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Mahavira is a historical early Jain teacher and the twenty-fourth Tirthankara of the current Jain tradition. Jain tradition gives much earlier exact-looking dates such as 599-527/510 BCE, but modern scholarship commonly places his floruit in the fifth century BCE, with some reconstructions putting his death around 420 BCE. ATLAS therefore does not draw the traditional lifespan as an exact rail. Instead it uses c.450 BCE only as a representative point within the person-specific fifth-century scholarly floruit, not as an asserted dated event. The Magadha association is based on early Jain textual tradition reporting repeated rainy-season residence at Nalanda, near Rajagriha in Magadha; this is recorded as active_in religious activity rather than political service or rule."
+  },
+  "sources": [
+    {
+      "title": "Jaina Philosophy — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/jaina-philosophy/",
+      "citation_text": "The Stanford Encyclopedia of Philosophy identifies Mahavira as the twenty-fourth and last Jina of the current cosmic period, gives the traditional dates 599-527/510 BCE, and places him broadly around the fifth-sixth centuries BCE while treating him as an older contemporary of the Buddha.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Narrating Karma and Rebirth: Buddhist and Jain Multi-Life Stories — Cambridge University Press excerpt",
+      "canonical_url": "https://assets.cambridge.org/97811070/33931/excerpt/9781107033931_excerpt.pdf",
+      "citation_text": "Cambridge notes that recent scholarship on the dating of the Buddha implies that Mahavira too flourished in the fifth century BCE, perhaps dying roughly two decades before a Buddha death around 400 BCE, rather than simply accepting the traditional sixth-century chronology.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Looking West to India: Asian education, intra-Asian renaissance, and the Nalanda revival — Cambridge Core",
+      "canonical_url": "https://www.cambridge.org/core/journals/modern-asian-studies/article/abs/looking-west-to-india-asian-education-intraasian-renaissance-and-the-nalanda-revival/072BD01B1598166421651C53ED0ACC23",
+      "citation_text": "Cambridge reports that the early Jain Sutrakritanga describes Nalanda near Rajagriha and says Mahavira spent fourteen rainy seasons there, with the same tradition also appearing in the Kalpasutra. This supports a defensible Magadha activity context without claiming political office.",
+      "source_type": "academic_reference"
+    }
+  ]
+}
