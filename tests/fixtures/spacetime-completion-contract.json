@@ -284,4 +284,4 @@
     "meanwhile_mutation": false,
     "test": "tests/spacetime-sticky-inspector.test.mjs"
   }
-}\n
+}
