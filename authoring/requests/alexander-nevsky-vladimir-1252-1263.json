@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:alexander-nevsky:grand-principality-vladimir:1252-1263:v1",
+  "person": {
+    "canonical_name_en": "Alexander Nevsky",
+    "display_name_ko": "알렉산드르 넵스키",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Grand Principality of Vladimir",
+    "display_name_ko": "블라디미르 대공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Grand Prince of Vladimir",
+    "role_display_name_ko": "블라디미르 대공",
+    "start_year": 1252,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1263,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Alexander Nevsky became grand prince of Vladimir in 1252 after Andrei Yaroslavich was displaced and held the senior northeastern Rus' title until his death in 1263. This Activity complements his already registered discontinuous Novgorod tenures. ATLAS uses the contemporary Grand Principality of Vladimir rather than retrojecting the later Russian state onto the thirteenth century."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "The Cambridge History of Russia — chronology",
+      "canonical_url": "https://assets.cambridge.org/052181/2275/frontmatter/0521812275_frontmatter.htm",
+      "citation_text": "The Cambridge chronology states that Alexander Nevsky became prince of Vladimir in 1252 and died in 1263."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Janet Martin, Medieval Russia 980–1584, 2nd ed. — chronology",
+      "canonical_url": "https://assets.cambridge.org/97805216/76366/frontmatter/9780521676366_frontmatter.pdf",
+      "citation_text": "The Cambridge chronology records Alexander replacing Andrei as prince of Vladimir in 1252 and his death in 1263."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "알렉산드르 넵스키",
+      "url": "https://namu.wiki/w/%EC%95%8C%EB%A0%89%EC%82%B0%EB%93%9C%EB%A5%B4%20%EB%84%B5%EC%8A%A4%ED%82%A4"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-parthia-vandals-iceni-nevsky-judea-20260903",
+    "requested_identity": "ALEXANDER NEVSKY — NOVGOROD AND RUSSIA",
+    "correction_note": "Existing Novgorod tenures are retained; add the missing 1252–1263 Grand Prince of Vladimir office instead of using an anachronistic Russia polity."
+  }
+}
