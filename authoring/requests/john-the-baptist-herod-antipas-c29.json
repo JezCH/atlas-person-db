@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:john-the-baptist:herod-antipas-tetrarchy:religious:c29:v1",
+  "person": {
+    "canonical_name_en": "John the Baptist",
+    "display_name_ko": "세례자 요한",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-04",
+      "reason": "Direct NamuWiki document access was blocked by the provider during this reviewed registration batch; exact-person link verification remains outstanding and is not recorded as not_found.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Tetrarchy of Herod Antipas",
+    "display_name_ko": "헤롯 안티파스 분봉국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "religious_activity",
+    "role": "Prophet and baptizer",
+    "role_display_name_ko": "예언자·세례자",
+    "start_year": 29,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 29,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "John the Baptist was a historical first-century Jewish preacher known for repentance preaching and a distinctive baptismal practice. Cambridge scholarship places the beginning of his public preaching around 29 CE, while Oxford notes his independent reputation as teacher and prophet and his later execution by Herod Antipas. Because the exact duration and execution chronology remain debated, ATLAS records only a representative c.29 CE religious-activity point rather than a fabricated multi-year rail."
+  },
+  "sources": [
+    {
+      "title": "John the Baptist — Oxford Bibliographies in Biblical Studies",
+      "canonical_url": "https://academic.oup.com/reference/62341/reference-article-abstract/554100904",
+      "citation_text": "Oxford describes John as a widely esteemed historical teacher and prophet known for distinctive water baptism, whose arrest and execution were ordered by Herod Antipas.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "An overview of early Christian history — Cambridge University Press",
+      "canonical_url": "https://www.cambridge.org/highereducation/books/an-introduction-to-the-new-testament-and-the-origins-of-christianity/32A6751C4FE08D443DC4BDD934A3C343/an-overview-of-early-christian-history/3622AD35D4A76856568A0C2FF1F155A7",
+      "citation_text": "Cambridge's historical overview states that around 29 CE John began preaching repentance, providing a defensible representative personal activity point.",
+      "source_type": "academic_reference"
+    }
+  ]
+}
