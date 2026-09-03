@@ -7,15 +7,15 @@
   "use strict";
   const DEFAULT_LABEL_HEIGHT = 18;
   const DEFAULT_MIN_LABEL_WIDTH = 30;
-  const DEFAULT_MAX_LABEL_WIDTH = 148;
-  const DEFAULT_CHAR_WIDTH = 6.8;
-  const DEFAULT_CJK_CHAR_WIDTH = 10;
+  const DEFAULT_MAX_LABEL_WIDTH = 384;
+  const DEFAULT_CHAR_WIDTH = 7.6;
+  const DEFAULT_CJK_CHAR_WIDTH = 11.2;
   const DEFAULT_LABEL_CHROME_WIDTH = 4;
-  const DEFAULT_HORIZONTAL_GAP = 2;
-  const DEFAULT_ANCHOR_GAP = 4;
-  const DEFAULT_SEARCH_STEP = 4;
-  const DEFAULT_MAX_HORIZONTAL_SHIFT = 320;
-  const DEFAULT_CONNECTOR_THRESHOLD = 10;
+  const DEFAULT_HORIZONTAL_GAP = 1;
+  const DEFAULT_ANCHOR_GAP = 1;
+  const DEFAULT_SEARCH_STEP = 1;
+  const DEFAULT_MAX_HORIZONTAL_SHIFT = 640;
+  const DEFAULT_CONNECTOR_THRESHOLD = 6;
   const EPSILON = 1e-9;
   function finite(value, label) { const n = Number(value); if (!Number.isFinite(n)) throw new TypeError(`${label} must be finite`); return n; }
   function positive(value, label) { const n = finite(value, label); if (n <= 0) throw new RangeError(`${label} must be > 0`); return n; }
