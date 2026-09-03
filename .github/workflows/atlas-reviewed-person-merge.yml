@@ -1,0 +1,180 @@
+name: ATLAS Reviewed Person Merge
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'corrections/reviewed-person-merges/*.json'
+
+permissions:
+  contents: read
+  id-token: write
+  issues: write
+
+concurrency:
+  group: atlas-reviewed-person-merge-production
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    if: github.actor == 'JezCH'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    env:
+      MERGE_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-reviewed-person-merge
+      PERSON_READ_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-person-read
+      READINESS_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply
+      OIDC_AUDIENCE: atlas-person-db-reviewed-person-merge
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Resolve reviewed merge manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${GITHUB_SHA}" -- \
+            'corrections/reviewed-person-merges/*.json' > /tmp/reviewed-person-merge-files.txt
+          test "$(grep -cve '^$' /tmp/reviewed-person-merge-files.txt)" = "1"
+          MANIFEST_PATH="$(grep -ve '^$' /tmp/reviewed-person-merge-files.txt)"
+          jq -e '
+            .schema == "atlas-reviewed-person-merge/v1"
+            and .review_status == "approved"
+            and (.request_id | type == "string" and length > 0)
+            and (.survivor_person_id | test("^[0-9a-fA-F-]{36}$"))
+            and (.source_person_id | test("^[0-9a-fA-F-]{36}$"))
+            and (.expected.source_activity_count_after_correction == 0)
+          ' "$MANIFEST_PATH" >/dev/null
+          echo "MANIFEST_PATH=$MANIFEST_PATH" >> "$GITHUB_ENV"
+          echo "SOURCE_PERSON_ID=$(jq -er '.source_person_id' "$MANIFEST_PATH")" >> "$GITHUB_ENV"
+          echo "SURVIVOR_PERSON_ID=$(jq -er '.survivor_person_id' "$MANIFEST_PATH")" >> "$GITHUB_ENV"
+          echo "ISSUE_NUMBER=$(jq -er '.evidence.issue' "$MANIFEST_PATH")" >> "$GITHUB_ENV"
+
+      - name: Wait for exact Production runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 75); do
+            body="$(curl --fail --silent --show-error "$READINESS_ENDPOINT")"
+            runtime_sha="$(jq -r '.runtime_sha // ""' <<<"$body")"
+            if [[ "$runtime_sha" == "$GITHUB_SHA" ]]; then
+              jq -e '.ok == true and .ready == true and .readiness.person_merge_contract_ready == true' <<<"$body" >/dev/null
+              echo "Exact Production runtime ready: $runtime_sha"
+              exit 0
+            fi
+            echo "Waiting for Production $GITHUB_SHA (currently ${runtime_sha:-unknown}) — attempt ${attempt}/75"
+            sleep 10
+          done
+          echo "Production did not reach exact reviewed-merge SHA." >&2
+          exit 1
+
+      - name: Wait for duplicate Activity correction
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 60); do
+            body="$(curl --fail --silent --show-error --get \
+              --data-urlencode "person_id=$SOURCE_PERSON_ID" \
+              "$PERSON_READ_ENDPOINT")"
+            count="$(jq -r '.person.activity_count // -1' <<<"$body")"
+            if [[ "$count" == "0" ]]; then
+              echo "Duplicate source Person now has zero Activities; reviewed merge may proceed."
+              exit 0
+            fi
+            echo "Waiting for reviewed duplicate Activity retirement (activity_count=$count) — attempt ${attempt}/60"
+            sleep 10
+          done
+          echo "Duplicate Activity correction did not complete before merge." >&2
+          exit 1
+
+      - name: Request dedicated GitHub OIDC token
+        shell: bash
+        run: |
+          set -euo pipefail
+          TOKEN_FILE="$RUNNER_TEMP/atlas-reviewed-person-merge-oidc"
+          umask 077
+          curl --fail --silent --show-error \
+            -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${OIDC_AUDIENCE}" \
+            | jq -er '.value' > "$TOKEN_FILE"
+          test -s "$TOKEN_FILE"
+          echo "OIDC_TOKEN_FILE=$TOKEN_FILE" >> "$GITHUB_ENV"
+
+      - name: Execute reviewed Person merge
+        shell: bash
+        run: |
+          set -euo pipefail
+          RESPONSE="$RUNNER_TEMP/atlas-reviewed-person-merge-response.json"
+          PAYLOAD="$(jq -cn \
+            --arg deployment_sha "$GITHUB_SHA" \
+            --arg workflow_sha "$GITHUB_SHA" \
+            --arg manifest_path "$MANIFEST_PATH" \
+            --slurpfile manifest "$MANIFEST_PATH" \
+            '{deployment_sha:$deployment_sha,workflow_sha:$workflow_sha,manifest_path:$manifest_path,manifest:$manifest[0]}')"
+          status="$(curl --silent --show-error \
+            --output "$RESPONSE" \
+            --write-out '%{http_code}' \
+            --request POST \
+            --header 'content-type: application/json' \
+            --header "Authorization: Bearer $(cat "$OIDC_TOKEN_FILE")" \
+            --data "$PAYLOAD" \
+            "$MERGE_ENDPOINT")"
+          cat "$RESPONSE"
+          test "$status" = "200"
+          jq -e --arg survivor "$SURVIVOR_PERSON_ID" --arg source "$SOURCE_PERSON_ID" '
+            .ok == true
+            and .marker == "ATLAS_REVIEWED_PERSON_MERGE_V1"
+            and .survivor_person_id == $survivor
+            and .source_person_id == $source
+            and .source_person_present == false
+            and (.survivor_activities | length) == 1
+            and .namuwiki.status == "linked"
+          ' "$RESPONSE" >/dev/null
+          cp "$RESPONSE" /tmp/atlas-reviewed-person-merge-response.json
+
+      - name: Exact Production read-back
+        shell: bash
+        run: |
+          set -euo pipefail
+          SURVIVOR="$RUNNER_TEMP/survivor-read.json"
+          ALL="$RUNNER_TEMP/person-list-read.json"
+
+          curl --fail --silent --show-error --get \
+            --data-urlencode "person_id=$SURVIVOR_PERSON_ID" \
+            "$PERSON_READ_ENDPOINT" > "$SURVIVOR"
+          jq -e '
+            .person.external_references.namuwiki.status == "linked"
+            and .person.external_references.namuwiki.document_title == "야율대석"
+            and .person.activity_count == 1
+            and (.person.names | map(.name) | index("서요 덕종")) != null
+            and (.person.names | map(.name) | index("Emperor Dezong of Western Liao")) != null
+          ' "$SURVIVOR" >/dev/null
+
+          curl --fail --silent --show-error \
+            "https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=person" > "$ALL"
+          jq -e --arg source "$SOURCE_PERSON_ID" --arg survivor "$SURVIVOR_PERSON_ID" '
+            ([.persons[] | select(.id == $source)] | length) == 0
+            and ([.persons[] | select(.id == $survivor)] | length) == 1
+          ' "$ALL" >/dev/null
+
+      - name: Comment issue with verified merge
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          MERGE_AUDIT_ID="$(jq -r '.merge_audit_id' /tmp/atlas-reviewed-person-merge-response.json)"
+          BODY="✅ Reviewed Person merge completed in Production
+
+Survivor: \`$SURVIVOR_PERSON_ID\` — Yelü Dashi / 야율대석
+Removed duplicate: \`$SOURCE_PERSON_ID\` — Emperor Dezong of Western Liao / 서요 덕종
+Duplicate Activity retired before merge.
+Aliases preserved on survivor.
+NamuWiki reference preserved.
+Merge audit: \`$MERGE_AUDIT_ID\`
+Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          gh api "repos/${GITHUB_REPOSITORY}/issues/${ISSUE_NUMBER}/comments" -f body="$BODY" >/dev/null
