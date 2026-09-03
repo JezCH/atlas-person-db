@@ -10,6 +10,9 @@
   if (!modelApi) throw new Error("ATLAS_PERSON_SPACETIME_MODEL is required");
 
   const MIN_SUPPORTED_ZOOM = 5;
+  const PLACE_DETAIL_START_ZOOM = 7.2;
+  const PLACE_DETAIL_FULL_ZOOM = 8;
+
   const TIME_STAGES = Object.freeze([
     Object.freeze({ code: "quarter-century", max_zoom: 6.5, interval_years: 25, min_gap_px: 38, label: "25년" }),
     Object.freeze({ code: "decade", max_zoom: Number.POSITIVE_INFINITY, interval_years: 10, min_gap_px: 34, label: "10년" })
@@ -112,28 +115,66 @@
     })));
   }
 
-  function buildSpaceHeaderPlan(continuum, contentWidth) {
+  function buildReviewedPlaceGeometry(bindings, continuum, width) {
+    const seen = new Set();
+    const rows = [];
+    for (const binding of Array.isArray(bindings) ? bindings : []) {
+      const placeId = String(binding?.place_id || "").trim();
+      const placeName = String(binding?.place_name || "").trim();
+      const macroCode = String(binding?.macroregion_code || "").trim();
+      const subregionCode = String(binding?.subregion_code || "").trim();
+      if (!placeId || !placeName || !macroCode || !subregionCode || seen.has(placeId)) continue;
+      const macro = continuum?.bandForCode?.(macroCode);
+      const subregion = continuum?.bandForCode?.(subregionCode);
+      if (!macro || macro.kind !== "macroregion") continue;
+      if (!subregion || subregion.kind !== "subregion" || subregion.parent_code !== macro.code) continue;
+      seen.add(placeId);
+      rows.push(Object.freeze({
+        place_id: placeId,
+        place_name: placeName,
+        macroregion_code: macro.code,
+        subregion_code: subregion.code,
+        x_anchor: subregion.center_space,
+        x: subregion.center_space * width,
+        display_anchor_basis: "reviewed_place_point",
+        exact_geographic_coordinate_claimed: false
+      }));
+    }
+    rows.sort((a,b)=>a.x-b.x || a.place_name.localeCompare(b.place_name));
+    return Object.freeze(rows);
+  }
+
+  function buildSpaceHeaderPlan(continuum, contentWidth, zoomInput = MIN_SUPPORTED_ZOOM, reviewedPlaceBindings = []) {
     if (!continuum || !Array.isArray(continuum.macroregions) || !Array.isArray(continuum.subregions)) throw new TypeError("space header requires a spatial continuum");
     const width = Number(contentWidth);
     if (!Number.isFinite(width) || width <= 0) throw new RangeError("space header width must be > 0");
+    const zoom = readableZoom(zoomInput);
+    const placeOpacity = smoothstep(PLACE_DETAIL_START_ZOOM, PLACE_DETAIL_FULL_ZOOM, zoom);
     return Object.freeze({
-      stage: "subregion",
-      stage_label: "세부 지역",
+      stage: zoom > PLACE_DETAIL_START_ZOOM ? "place" : "subregion",
+      stage_label: zoom > PLACE_DETAIL_START_ZOOM ? "검토 Place" : "세부 지역",
       macro_opacity: 0.38,
-      subregion_opacity: 1,
+      subregion_opacity: 1 - 0.18 * placeOpacity,
+      place_opacity: placeOpacity,
       macroregions: buildBandGeometry(continuum.macroregions, width),
       subregions: buildBandGeometry(continuum.subregions, width),
-      minimum_zoom: MIN_SUPPORTED_ZOOM
+      places: buildReviewedPlaceGeometry(reviewedPlaceBindings, continuum, width),
+      minimum_zoom: MIN_SUPPORTED_ZOOM,
+      place_detail_start_zoom: PLACE_DETAIL_START_ZOOM,
+      place_detail_full_zoom: PLACE_DETAIL_FULL_ZOOM
     });
   }
 
   return Object.freeze({
     MIN_SUPPORTED_ZOOM,
+    PLACE_DETAIL_START_ZOOM,
+    PLACE_DETAIL_FULL_ZOOM,
     TIME_STAGES,
     smoothstep,
     timeStage,
     candidateHistoricalYears,
     buildTimeAxisPlan,
+    buildReviewedPlaceGeometry,
     buildSpaceHeaderPlan
   });
 });
