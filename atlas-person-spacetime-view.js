@@ -124,6 +124,7 @@
     return `<article class="spacetime-selection-evidence-row">
       <div class="spacetime-selection-evidence-head"><strong>${escapeHtml(polityLabel(segment.activity))}</strong><span>${escapeHtml(periodLabel(segment.activity))}</span></div>
       <div class="spacetime-selection-evidence-meta"><span>공간 정밀도: <b>${escapeHtml(spatialPrecisionLabel(segment))}</b></span><span>배치 근거: <b>${escapeHtml(placementBasisLabel(segment))}</b></span></div>
+      <div class="spacetime-selection-evidence-meta"><span>Place/region: <b>${escapeHtml(text(segment.place_name) || text(segment.subregion_code) || text(segment.macroregion_code) || "미확정")}</b></span><span>confidence: <b>${escapeHtml([text(segment.historical_confidence), text(segment.display_confidence)].filter(Boolean).join(" / ") || "미상")}</b></span></div>
       <div class="spacetime-selection-evidence-place"><b>Place evidence</b><span>${placeFunctions.length ? placeFunctions.map((value) => escapeHtml(value)).join(" · ") : "검토된 Place 기능 없음"}</span></div>
       ${evidenceRefsHtml("역사 배치 근거", historicalRefs)}
       ${evidenceRefsHtml("표시 정밀도 근거", displayRefs)}
