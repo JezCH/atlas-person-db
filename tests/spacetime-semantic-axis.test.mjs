@@ -88,7 +88,7 @@ test("reviewed Place semantic detail appears only at high readable zoom without 
   assert.equal(detail.stage_label, "검토 Place");
   assert.equal(detail.place_opacity, 1);
   assert.equal(detail.places.length, 2);
-  assert.deepEqual(detail.places.map((place)=>place.place_id), ["place-pella","place-rome"]);
+  assert.deepEqual(detail.places.map((place)=>place.place_id), ["place-rome","place-pella"]);
   assert.ok(detail.places.every((place)=>place.display_anchor_basis === "reviewed_place_point"));
   assert.ok(detail.places.every((place)=>place.exact_geographic_coordinate_claimed === false));
 
