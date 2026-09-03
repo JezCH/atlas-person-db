@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Mustafa Kemal Atatürk",
+    "display_name_ko": "무스타파 케말 아타튀르크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Government of the Grand National Assembly",
+    "display_name_ko": "튀르키예 대국민의회 정부(앙카라 정부)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Speaker of the Grand National Assembly",
+    "role_display_name_ko": "대국민의회 의장",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mustafa Kemal was elected Speaker of the Grand National Assembly on 24 April 1920 and remained in that office until he was elected President of the Republic on 29 October 1923. This Activity represents his leadership of the Ankara-based assembly-government during the Turkish War of Independence and is intentionally separate from his 1923–1938 presidency of Turkey; it does not assert personal sovereign rule over the assembly government.",
+    "start_year": 1920,
+    "start_month": 4,
+    "start_day": 24,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1923,
+    "end_month": 10,
+    "end_day": 29,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Meclis Başkanlarımız — Türkiye Büyük Millet Meclisi",
+      "canonical_url": "https://www.tbmm.gov.tr/meclis-baskanlarimiz",
+      "citation_text": "The official TBMM list gives Mustafa Kemal Atatürk’s speakership as 24 April 1920 to 29 October 1923.",
+      "locator": "https://www.tbmm.gov.tr/meclis-baskanlarimiz"
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "1921 Anayasası’nın Kabul Edilişinin 100. Yılı Ulusal Sempozyumu — TBMM",
+      "canonical_url": "https://cdn.tbmm.gov.tr/TbmmWeb/Yayinlar/Dosya/8c0fe478-acbc-4233-a8bd-f43b20baf119.pdf",
+      "citation_text": "TBMM scholarship explains that Mustafa Kemal was elected Assembly President on 24 April 1920 and that the assembly-government model combined legislative and executive authority.",
+      "locator": "https://cdn.tbmm.gov.tr/TbmmWeb/Yayinlar/Dosya/8c0fe478-acbc-4233-a8bd-f43b20baf119.pdf"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-24",
+      "document_title": "무스타파 케말 아타튀르크",
+      "url": "https://namu.wiki/w/%EB%AC%B4%EC%8A%A4%ED%83%80%ED%8C%8C%20%EC%BC%80%EB%A7%90%20%EC%95%84%ED%83%80%ED%8A%80%EB%A5%B4%ED%81%AC"
+    }
+  },
+  "review_context": {
+    "request_batch": "ataturk-pre-presidency-20260903",
+    "requested_identity": "Mustafa Kemal Atatürk",
+    "activity_scope": "TBMM speakership before the Republic presidency",
+    "existing_person_reuse": "Reuse the existing Mustafa Kemal Atatürk identity and preserve the existing 1923–1938 Turkey presidency."
+  }
+}
