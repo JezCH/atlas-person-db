@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:thomas-aquinas:kingdom-of-france:paris:1252-1259:v1",
+  "person": {
+    "canonical_name_en": "Thomas Aquinas",
+    "display_name_ko": "토마스 아퀴나스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-04",
+      "reason": "Direct NamuWiki document access was blocked by the provider during this reviewed registration batch; exact-person link verification remains outstanding and is not recorded as not_found.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of France",
+    "display_name_ko": "프랑스 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Theologian and philosopher",
+    "role_display_name_ko": "신학자·철학자",
+    "start_year": 1252,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1259,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Thomas Aquinas returned to Paris in 1252 for advanced theological study and teaching, became master of theology in 1256, and held the Dominican chair through 1259. ATLAS uses this well-attested Paris intellectual-activity interval in the Kingdom of France rather than his full lifespan or later movements among several Italian political contexts."
+  },
+  "sources": [
+    {
+      "title": "Thomas Aquinas — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/aquinas/",
+      "citation_text": "The Stanford Encyclopedia of Philosophy records Aquinas's return to Paris in 1252 for advanced theology, his appointment as master of theology in 1256, and his Dominican chair there until 1259.",
+      "source_type": "academic_reference"
+    }
+  ]
+}
