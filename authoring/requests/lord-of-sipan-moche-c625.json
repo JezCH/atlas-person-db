@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:lord-of-sipan:sipan-moche:ruler-warrior:c625:v1",
+  "person": {
+    "canonical_name_en": "Lord of Sipán",
+    "display_name_ko": "시판의 군주",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Sipán (Moche)",
+    "display_name_ko": "시판(모체)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Ruler and warrior",
+    "role_display_name_ko": "통치자·전사",
+    "start_year": 625,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 625,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Lord of Sipán is an archaeologically attested elite Moche ruler whose intact royal tomb at Huaca Rajada-Sipán contained emblems of rank, command, and military authority. Peru's Ministry of Culture dates the burial to approximately AD 600–650 and describes him as the maximum authority of his time. Because no personal reign interval or personal name survives, ATLAS uses c.625 as a representative point within the archaeological date range and binds him to Sipán's Moche political sphere rather than treating all Moche society as one centralized kingdom under him."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "Proyecto Especial Naylamp / Ministerio de Cultura del Perú — Visitar el Museo Tumbas Reales de Sipán",
+      "canonical_url": "https://www.gob.pe/es/10982-visitar-el-museo-tumbas-reales-de-sipan",
+      "citation_text": "The official museum service identifies the Lord of Sipán as a Moche ruler and maximum authority of his time."
+    },
+    {
+      "source_type": "institutional_reference",
+      "title": "Ministerio de Cultura del Perú — Museo Tumbas Reales de Sipán ofrece una experiencia virtual",
+      "canonical_url": "https://www.gob.pe/institucion/cultura/noticias/341351-museo-tumbas-reales-de-sipan-ofrece-una-experiencia-maravillosa-para-conocer-sus-instalaciones-de-manera-virtual",
+      "citation_text": "The Ministry of Culture describes the tomb as that of a Moche ruler and warrior and dates it to AD 600–650."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "gedemo-civ-leaders-4-20260903",
+    "requested_identity": "Lord of Sipan",
+    "correction_note": "Bind the anonymous archaeological ruler to Sipán (Moche) and use a representative c.625 point rather than inventing a pan-Moche reign."
+  }
+}

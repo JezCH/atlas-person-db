@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mongke-khan:mongol-empire:great-khan:1251-1259:v1",
+  "person": {
+    "canonical_name_en": "Möngke Khan",
+    "display_name_ko": "몽케 칸",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Mongol Empire",
+    "display_name_ko": "몽골 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Great Khan (Qa'an)",
+    "role_display_name_ko": "대칸",
+    "start_year": 1251,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1259,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Möngke, grandson of Chinggis Khan through Tolui, was elected Great Khan in 1251 and ruled the Mongol Empire until his death in 1259. Encyclopaedia Iranica and modern scholarship consistently identify his great khanate as 1251–1259. ATLAS records the empire-wide Great Khan office and does not retroject his later Yuan temple title into the contemporary polity identity."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Encyclopaedia Iranica — Central Asia v. In the Mongol and Timurid Periods",
+      "canonical_url": "https://www.iranicaonline.org/articles/central-asia-v/",
+      "citation_text": "Iranica identifies Möngke as Great Khan, elected in 1251 and reigning 1251–1259."
+    },
+    {
+      "source_type": "institutional_reference",
+      "title": "The Metropolitan Museum of Art — Armenia: Art, Religion, and Trade in the Middle Ages",
+      "canonical_url": "https://resources.metmuseum.org/resources/metpublications/pdf/Armenia_Art_Religion_and_Trade_in_the_Middle_Ages.pdf",
+      "citation_text": "The Met publication refers to Möngke Khan's court and gives his reign as 1251–1259."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-03",
+      "document_title": "몽케 칸",
+      "url": "https://namu.wiki/w/%EB%AA%BD%EC%BC%80%20%EC%B9%B8"
+    }
+  },
+  "review_context": {
+    "request_batch": "gedemo-civ-leaders-4-20260903",
+    "requested_identity": "Mongke Khan",
+    "correction_note": "Register as Great Khan of the Mongol Empire, 1251–1259."
+  }
+}
