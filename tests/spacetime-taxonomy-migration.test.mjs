@@ -25,7 +25,8 @@ const EXPECTED_SPLIT_COUNTS = Object.freeze({
   caucasus: 4,
   levant: 11,
   mesopotamia: 7,
-  "sri-lanka-maldives": 2,
+  maldives: 1,
+  "sri-lanka": 1,
   manchuria: 4
 });
 
@@ -35,7 +36,8 @@ const LEGACY_SPLIT_CODES = [
   "north-africa-nile",
   "anatolia-caucasus",
   "levant-mesopotamia",
-  "manchuria-mongolia"
+  "manchuria-mongolia",
+  "sri-lanka-maldives"
 ];
 
 const EXPECTED_REMAPS = Object.freeze({
@@ -90,21 +92,21 @@ const EXPECTED_REMAPS = Object.freeze({
   "3268029f-b2b9-52b3-9988-5e98bed20b3e":"mesopotamia",
   "33f8157e-e7c9-4cdb-bea6-9514fa5a57b8":"mesopotamia",
 
-  "81abc0e7-367d-48db-853c-2bdd5f76fa04":"sri-lanka-maldives",
-  "c4089cc9-41b3-4879-9db0-c8776c59c87d":"sri-lanka-maldives",
+  "81abc0e7-367d-48db-853c-2bdd5f76fa04":"maldives",
+  "c4089cc9-41b3-4879-9db0-c8776c59c87d":"sri-lanka",
 
   "c49578ef-3430-453b-b36e-884376031431":"manchuria",
   "f0450e38-c5d8-579b-92ec-1e08434355b6":"manchuria",
   "c7414968-29fc-5749-bfda-bf4dab331dd8":"manchuria"
 });
 
-test("taxonomy r2 has one deterministic adjacency path and 39 equal active leaves", () => {
-  assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.taxonomy_revision, "2026-09-03-r2");
+test("taxonomy r3 has one deterministic adjacency path and 40 equal active leaves", () => {
+  assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.taxonomy_revision, "2026-09-03-r3");
   assert.deepEqual(continuum.macroregions.map((band) => band.code), EXPECTED_MACROS);
   assert.deepEqual(index.regions.map((region) => region.code), EXPECTED_MACROS);
-  assert.equal(continuum.subregions.length, 39);
+  assert.equal(continuum.subregions.length, 40);
   for (const band of continuum.subregions) {
-    assert.ok(Math.abs((band.max_space - band.min_space) - 1 / 39) < 1e-12);
+    assert.ok(Math.abs((band.max_space - band.min_space) - 1 / 40) < 1e-12);
   }
 
   const counts = new Map();
@@ -139,7 +141,7 @@ test("map-like adjacency decisions remain explicit inside each refined macroregi
   assert.deepEqual(hierarchy.africa, ["west-africa","maghreb-north-africa","central-africa","southern-africa","east-africa-horn","nile-valley"]);
   assert.deepEqual(hierarchy["west-asia"], ["levant","anatolia","caucasus","mesopotamia","arabia","iranian-plateau"]);
   assert.deepEqual(hierarchy["central-asia"], ["western-central-asia","eastern-central-asia-steppe"]);
-  assert.deepEqual(hierarchy["south-asia"], ["northwest-south-asia","north-india-ganges","deccan-south-india","sri-lanka-maldives"]);
+  assert.deepEqual(hierarchy["south-asia"], ["northwest-south-asia","north-india-ganges","deccan-south-india","maldives","sri-lanka"]);
   assert.deepEqual(hierarchy["southeast-asia"], ["mainland-southeast-asia","maritime-southeast-asia"]);
   assert.deepEqual(hierarchy["east-asia"], ["china","manchuria","korean-peninsula","japan"]);
   assert.deepEqual(hierarchy.oceania, ["australasia","pacific-islands"]);
