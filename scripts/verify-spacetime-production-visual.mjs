@@ -219,7 +219,30 @@ async function main() {
     await client.call("Page.navigate", { url: PRODUCTION_URL });
     await waitFor(client, "document.readyState === 'complete'", 45000);
     await waitFor(client, "Boolean(document.querySelector('#personSpacetimeMount .spacetime-frame'))", 90000);
-    await waitFor(client, "document.querySelectorAll('.spacetime-track-label').length > 0", 90000);
+
+    // The historical world opens at the top of the full range, which may legitimately
+    // contain no virtualized Person labels. Focus the first real searchable Person,
+    // then clear the query so acceptance runs on the unfiltered world around that era.
+    const focused = await evaluate(client, `(() => {
+      const input=document.querySelector('#spacetimeSearch');
+      if (!input) return false;
+      input.value='a';
+      input.dispatchEvent(new Event('input',{bubbles:true}));
+      return true;
+    })()`);
+    assert(focused, "Spacetime search input was not available");
+    await waitFor(client, "document.querySelectorAll('[data-spacetime-search-result]').length > 0", 30000);
+    await evaluate(client, "document.querySelector('[data-spacetime-search-result]')?.click()");
+    await waitFor(client, "Boolean(document.querySelector('#spacetimeInspector:not(.is-empty)'))", 30000);
+    await sleep(700);
+    await evaluate(client, `(() => {
+      const input=document.querySelector('#spacetimeSearch');
+      if (!input) return false;
+      input.value='';
+      input.dispatchEvent(new Event('input',{bubbles:true}));
+      return true;
+    })()`);
+    await waitFor(client, "document.querySelectorAll('.spacetime-track-label').length > 0", 30000);
     await sleep(1200);
 
     const live = await evaluate(client, `(() => ({
