@@ -27,6 +27,8 @@
       "312c56af-d6e2-4713-8ef1-91877ee66f9b"
     ],
     "duplicate_interval": "1124-1143",
-    "reviewed_survivor_reason": "Yelü Dashi row is the reviewed normalized identity and carries the verified NamuWiki link."
+    "reviewed_survivor_reason": "Yelü Dashi row is the reviewed normalized identity and carries the verified NamuWiki link.",
+    "execution_trigger_revision": 2,
+    "duplicate_activity_retired_in_production": true
   }
 }
