@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:matthias-corvinus:kingdom-croatia:1458-1490:v1",
+  "person": {
+    "canonical_name_en": "Matthias Corvinus",
+    "display_name_ko": "마차시 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Croatia",
+    "display_name_ko": "크로아티아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King of Croatia",
+    "role_display_name_ko": "크로아티아 국왕",
+    "start_year": 1458,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1490,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Matthias Corvinus was king of Hungary and Croatia from 1458 to 1490. ATLAS already records his Hungarian kingship; this manifest adds the omitted concurrent Croatian royal title within the Hungarian-Croatian personal union without duplicating the person."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "Hrvatska enciklopedija — Matija Korvin",
+      "canonical_url": "https://www.enciklopedija.hr/clanak/matija-korvin",
+      "citation_text": "The Croatian Encyclopedia identifies Matthias Corvinus as Croatian-Hungarian king from 1458 to 1490."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-27",
+      "document_title": "마차시 1세",
+      "url": "https://namu.wiki/w/%EB%A7%88%EC%B0%A8%EC%8B%9C%201%EC%84%B8"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-eurasia-batch-20260903",
+    "requested_identity": "CROATIA — MATTHIAS CORVINUS",
+    "correction_note": "Complete the existing person with his concurrent Croatian kingship."
+  }
+}

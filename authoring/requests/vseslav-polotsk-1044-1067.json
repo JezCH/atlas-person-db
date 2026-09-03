@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:vseslav-of-polotsk:principality-polotsk:1044-1067:v1",
+  "person": {
+    "canonical_name_en": "Vseslav of Polotsk",
+    "display_name_ko": "폴라츠크의 브세슬라프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Principality of Polotsk",
+    "display_name_ko": "폴라츠크 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Prince of Polotsk",
+    "role_display_name_ko": "폴라츠크 공",
+    "start_year": 1044,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1067,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Civilization mod labels this leader 'Vseslav II' of Belarus, but the historical target is Vseslav Bryachislavich, usually called Vseslav of Polotsk or Vseslav the Seer. His first Polotsk reign ran from 1044 until his capture in 1067. ATLAS does not retroject the modern Belarusian state onto the eleventh century."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "Great Russian Encyclopedia — Vseslav Bryachislavich",
+      "canonical_url": "https://bigenc.ru/c/vseslav-briachislavich-72b032",
+      "citation_text": "The Great Russian Encyclopedia records Vseslav as prince of Polotsk in 1044–1067 and 1071–1101, and prince of Kiev in 1068–1069."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-eurasia-batch-20260903",
+    "requested_identity": "BELARUS — VSESLAV II",
+    "correction_note": "Resolve the mod identity as Vseslav of Polotsk and preserve the interruption in his Polotsk rule."
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:vseslav-of-polotsk:kievan-rus:grand-prince-kiev:1068-1069:v1",
+  "person": {
+    "canonical_name_en": "Vseslav of Polotsk",
+    "display_name_ko": "폴라츠크의 브세슬라프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kievan Rus'",
+    "display_name_ko": "키이우 루스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Grand Prince of Kiev",
+    "role_display_name_ko": "키이우 대공",
+    "start_year": 1068,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1069,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "During the Kiev uprising of September 1068 Vseslav was released from captivity and acclaimed prince of Kiev. He abandoned Kiev in spring 1069 as Izyaslav returned with Polish support. This brief Kievan tenure is stored separately from his Polotsk reigns."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "Great Russian Encyclopedia — Vseslav Bryachislavich",
+      "canonical_url": "https://bigenc.ru/c/vseslav-briachislavich-72b032",
+      "citation_text": "The Great Russian Encyclopedia records Vseslav as prince of Polotsk in 1044–1067 and 1071–1101, and prince of Kiev in 1068–1069."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-eurasia-batch-20260903",
+    "requested_identity": "BELARUS — VSESLAV II",
+    "correction_note": "Add Vseslav's distinct 1068–1069 Kievan grand-princely tenure."
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:narasimhadeva-i:eastern-ganga-odisha:1238-1264:v1",
+  "person": {
+    "canonical_name_en": "Narasimhadeva I",
+    "display_name_ko": "나라심하데바 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Eastern Ganga Kingdom (Odisha)",
+    "display_name_ko": "동강가 왕국(오디샤)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King (Gajapati)",
+    "role_display_name_ko": "왕(가자파티)",
+    "start_year": 1238,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1264,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Narasimhadeva I of the Eastern Ganga dynasty succeeded Anangabhimadeva III in 1238 and ruled Odisha until 1264. Odisha government historical literature identifies him as the first king of Orissa to bear the title Gajapati and as the builder of the Konark Sun Temple. The mod's additional India leader availability is gameplay compatibility, not a separate historical Indian-state reign."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "Government of Odisha, Orissa Review — Narasimhadeva-I",
+      "canonical_url": "https://magazines.odisha.gov.in/Orissareview/2009/June/engpdf/june-2009.pdf",
+      "citation_text": "The Government of Odisha's Orissa Review states that Narasimhadeva I succeeded Anangabhimadeva III in 1238, reigned until 1264, was the first king of Orissa to bear the title Gajapati, and built the Konark Sun Temple."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-eurasia-batch-20260903",
+    "requested_identity": "LANGULA NARASINGHA DEVA — ODISHA AND INDIA",
+    "correction_note": "Resolve the mod name as Narasimhadeva I and bind him to the Eastern Ganga polity in Odisha."
+  }
+}

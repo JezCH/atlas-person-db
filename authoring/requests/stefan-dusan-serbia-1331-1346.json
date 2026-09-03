@@ -1,7 +1,7 @@
 {
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
-  "request_id": "authoring:stefan-uros-iv-dusan:serbian-empire:1346-1355:v1",
+  "request_id": "authoring:stefan-uros-iv-dusan:kingdom-serbia:1331-1346:v1",
   "person": {
     "canonical_name_en": "Stefan Uroš IV Dušan",
     "display_name_ko": "스테판 우로시 4세 두샨",
@@ -9,29 +9,29 @@
     "historicity": "historical"
   },
   "polity": {
-    "canonical_name_en": "Serbian Empire",
-    "display_name_ko": "세르비아 제국",
+    "canonical_name_en": "Kingdom of Serbia",
+    "display_name_ko": "세르비아 왕국",
     "polity_type": "historical_polity",
     "historicity": "historical"
   },
   "activity": {
     "relation_type": "rules",
     "period_basis": "reign",
-    "role": "Emperor of the Serbs and Greeks",
-    "role_display_name_ko": "세르비아인과 그리스인의 황제",
-    "start_year": 1346,
-    "start_month": 4,
-    "start_day": 16,
+    "role": "King of Serbia",
+    "role_display_name_ko": "세르비아 국왕",
+    "start_year": 1331,
+    "start_month": null,
+    "start_day": null,
     "start_certainty": "exact",
     "start_calendar": "unspecified_historical",
-    "end_year": 1355,
-    "end_month": 12,
-    "end_day": 20,
+    "end_year": 1346,
+    "end_month": 4,
+    "end_day": 16,
     "end_certainty": "exact",
     "end_calendar": "unspecified_historical",
     "confidence": "well_established",
     "chronology_status": "reviewed",
-    "notes": "Dušan was crowned emperor at Skopje on 16 April 1346 and ruled the Serbian Empire until his death on 20 December 1355. His imperial titulature invoked the Serbs and Greeks (and in fuller forms Albanians and other lands), but ATLAS does not model this as him separately ruling a Kingdom of Greece or the Byzantine Empire."
+    "notes": "Stefan Uroš IV Dušan ruled as king of Serbia from 1331 until his imperial coronation at Skopje on Easter, 16 April 1346. The mod's cross-civilization 'Serbia, Greece and Byzantium' framing is not treated as three separate sovereign offices."
   },
   "sources": [
     {
@@ -58,6 +58,6 @@
   "review_context": {
     "request_batch": "strudeler-eurasia-batch-20260903",
     "requested_identity": "STEFAN UROS IV DUSAN — SERBIA, GREECE, AND BYZANTIUM",
-    "correction_note": "Use the Serbian Empire and Dušan's imperial title rather than inventing separate Greek or Byzantine reigns."
+    "correction_note": "Represent the historical Serbian royal phase separately from the imperial phase."
   }
 }
