@@ -66,8 +66,8 @@ test("viewport growth cannot inflate base world beyond the global cap", () => {
 test("shared chrome geometry is compact and owned by renderer constants", () => {
   assert.match(view, /--spacetime-axis-width:\$\{AXIS_WIDTH\}px/);
   assert.match(view, /--spacetime-header-height:\$\{CAMERA_HEADER_HEIGHT\}px/);
-  assert.match(css, /width:var\(--spacetime-axis-width,140px\)/);
-  assert.match(css, /height:var\(--spacetime-header-height,36px\)/);
+  assert.match(css, /width:var\(--spacetime-axis-width,112px\)/);
+  assert.match(css, /height:var\(--spacetime-header-height,32px\)/);
 });
 
 test("retired low-scale overview rendering has no production artifacts", () => {
@@ -127,9 +127,11 @@ test("presentation geometry owns rail and label pixels without changing global g
 
 test("Person label packing may borrow global empty world space while geography stays on the rail", () => {
   assert.match(view, /presentation_band_code/);
-  assert.match(view, /label_zone_left/);
-  assert.match(view, /label_zone_right/);
-  assert.match(view, /min_left:/);
-  assert.match(view, /max_right:/);
+  assert.match(view, /min_left:0/);
+  assert.match(view, /max_right:width/);
+  assert.match(view, /maxHorizontalShift:width/);
+  assert.match(view, /region_left:0/);
   assert.match(view, /labelEngine\.estimateWidth/);
+  assert.match(css, /\.spacetime-track-label\{[^}]*overflow:visible[^}]*text-overflow:clip/);
+  assert.doesNotMatch(css, /\.spacetime-track-label\{[^}]*text-overflow:ellipsis/);
 });
