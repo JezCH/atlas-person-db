@@ -22,7 +22,7 @@ test("base width cap preserves equal leaf subregions and derives macro widths fr
   const regions = spaceAxis.stableRegionLayout(continuum, contentWidth);
   assert.equal(regions.length, 9);
   assert.equal(continuum.subregions.length, 40);
-  const expectedLeafWidth = contentWidth / 39;
+  const expectedLeafWidth = contentWidth / 40;
   for (const subregion of continuum.subregions) {
     assert.ok(Math.abs((subregion.max_space - subregion.min_space) * contentWidth - expectedLeafWidth) < 1e-9);
   }
