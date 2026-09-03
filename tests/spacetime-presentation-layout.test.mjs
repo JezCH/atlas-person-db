@@ -45,7 +45,7 @@ test("subregion tracks use a compact rail corridor and the remaining band width 
   assert.ok(gb.rail_x >= left && gb.rail_x < left + (right-left) * 0.4);
   assert.ok(ga.label_left > ga.rail_x);
   assert.ok(ga.label_right <= right + 1e-9);
-  assert.ok(ga.label_width > (right-left) * 0.55, "most of the band should remain available to the name");
+  assert.ok(ga.label_width > (right-left) * 0.72, "refined taxonomy keeps most of the band available to the name");
 });
 
 test("equal leaf width restores readable label room at the 500 percent floor", () => {
@@ -61,8 +61,8 @@ test("equal leaf width restores readable label room at the 500 percent floor", (
     CONTENT_WIDTH
   );
 
-  const expectedLeafWidth = CONTENT_WIDTH / 33;
-  assert.ok(expectedLeafWidth > 140, "500% floor should give every leaf a substantial common band width");
+  const expectedLeafWidth = CONTENT_WIDTH / 39;
+  assert.ok(expectedLeafWidth > 120, "500% wide-desktop floor should keep each refined leaf above 120px");
 
   for (const s of probes) {
     const g = layout.geometryForSegment(presentation, s);
