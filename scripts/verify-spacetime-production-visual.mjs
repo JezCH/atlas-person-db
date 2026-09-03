@@ -148,7 +148,7 @@ async function collect500(client) {
       spatialStage:qa(".spacetime-status-row span").map(x=>(x.textContent||"").trim()).find(x=>x.endsWith("공간축"))||null,
       placeOpacity:Number(style(placeLayer).opacity),
       placeMarkerCount:qa(".spacetime-place-head-marker").length,
-      placeVisibleCount:qa(".spacetime-place-head-marker").filter(el=>Number(style(el).opacity||style(placeLayer).opacity)>0.02).length,
+      placeVisibleCount:Number(style(placeLayer).opacity) > 0.02 ? qa(".spacetime-place-head-marker").filter(el=>Number(style(el).opacity) > 0.02).length : 0,
       macro, sub,
       workspaceRect:rect(workspace),
       frameRect:rect(frame),
