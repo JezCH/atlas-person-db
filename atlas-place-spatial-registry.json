@@ -13,7 +13,9 @@
     {
       "place_id": "place-rome",
       "canonical_name": "Rome",
-      "historical_names": ["Roma"],
+      "historical_names": [
+        "Roma"
+      ],
       "macroregion_code": "europe",
       "subregion_code": "italy",
       "coordinate_precision": "unknown",
@@ -47,7 +49,7 @@
       "canonical_name": "Ankara",
       "historical_names": [],
       "macroregion_code": "west-asia",
-      "subregion_code": "anatolia-caucasus",
+      "subregion_code": "anatolia",
       "coordinate_precision": "unknown",
       "latitude": null,
       "longitude": null,
@@ -56,7 +58,7 @@
         "https://www.britannica.com/place/Ankara",
         "https://www.britannica.com/place/Turkey"
       ],
-      "review_note": "Reviewed only to the stable Anatolia-Caucasus subregion. No runtime point coordinate is asserted."
+      "review_note": "Reviewed only to the stable Anatolia subregion. No runtime point coordinate is asserted."
     },
     {
       "place_id": "place-rio-de-janeiro",
