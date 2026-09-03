@@ -19,9 +19,9 @@ test("spacetime minimum and default scale are structurally locked to 500 percent
   assert.match(view, /const GLOBAL_EXTENT_COMPRESSION = 0\.748;/);
   assert.equal(spaceAxis.DEFAULT_MIN_BASE_WORLD_WIDTH, 900);
   assert.equal(spaceAxis.DEFAULT_MAX_BASE_WORLD_WIDTH, 1275);
-  assert.equal(spaceAxis.DEFAULT_AXIS_WIDTH, 140);
-  assert.match(view, /const AXIS_WIDTH = 140;/);
-  assert.match(view, /const CAMERA_HEADER_HEIGHT = 36;/);
+  assert.equal(spaceAxis.DEFAULT_AXIS_WIDTH, 112);
+  assert.match(view, /const AXIS_WIDTH = 112;/);
+  assert.match(view, /const CAMERA_HEADER_HEIGHT = 32;/);
   assert.match(view, /id="spacetimeCameraZoomReset"[^>]*>500%<\/button>/);
   assert.match(view, /return Math\.min\(CAMERA_MAX_ZOOM, Math\.max\(CAMERA_MIN_ZOOM, numeric\)\);/);
   assert.doesNotMatch(view, /100%/);
@@ -29,14 +29,14 @@ test("spacetime minimum and default scale are structurally locked to 500 percent
 
 test("reviewed compact label geometry preserves text readability while reducing collision waste", () => {
   assert.equal(labelEngine.DEFAULT_LABEL_HEIGHT, 18);
-  assert.equal(labelEngine.DEFAULT_HORIZONTAL_GAP, 2);
+  assert.equal(labelEngine.DEFAULT_HORIZONTAL_GAP, 1);
   assert.equal(labelEngine.DEFAULT_MIN_LABEL_WIDTH, 30);
-  assert.equal(labelEngine.DEFAULT_MAX_LABEL_WIDTH, 148);
+  assert.equal(labelEngine.DEFAULT_MAX_LABEL_WIDTH, 384);
   assert.equal(labelEngine.DEFAULT_LABEL_CHROME_WIDTH, 4);
-  assert.equal(labelEngine.DEFAULT_CJK_CHAR_WIDTH, 10);
+  assert.equal(labelEngine.DEFAULT_CJK_CHAR_WIDTH, 11.2);
   assert.equal(labelEngine.DEFAULT_MIN_LABEL_WIDTH - labelEngine.DEFAULT_LABEL_CHROME_WIDTH, 26);
-  assert.equal(labelEngine.DEFAULT_MAX_LABEL_WIDTH - labelEngine.DEFAULT_LABEL_CHROME_WIDTH, 144);
-  assert.match(css, /\.spacetime-track-label\{[^}]*height:18px[^}]*padding:0 1px[^}]*font-size:10px[^}]*line-height:16px/);
+  assert.equal(labelEngine.DEFAULT_MAX_LABEL_WIDTH - labelEngine.DEFAULT_LABEL_CHROME_WIDTH, 380);
+  assert.match(css, /\.spacetime-track-label\{[^}]*height:18px[^}]*padding:0 1px[^}]*font-size:11px[^}]*line-height:16px/);
   assert.doesNotMatch(css, /@media\(max-width:1100px\)\{\.spacetime-track-label\{font-size:9px\}/);
   assert.match(view, /labelEngine\.DEFAULT_MIN_LABEL_WIDTH/);
   assert.match(view, /labelEngine\.DEFAULT_MAX_LABEL_WIDTH/);
@@ -55,12 +55,12 @@ test("one global camera zoom owns both horizontal and vertical extent", () => {
 });
 
 test("viewport growth cannot inflate base world beyond the global cap", () => {
-  assert.equal(spaceAxis.baseWorldWidthForViewport(1024, 140), 900);
-  assert.equal(spaceAxis.baseWorldWidthForViewport(1280, 140), 1138);
-  assert.equal(spaceAxis.baseWorldWidthForViewport(1440, 140), 1275);
-  assert.equal(spaceAxis.baseWorldWidthForViewport(1920, 140), 1275);
-  assert.equal(spaceAxis.baseWorldWidthForViewport(3840, 140), 1275);
-  assert.throws(() => spaceAxis.baseWorldWidthForViewport(1280, 140, { minWidth: 1300, maxWidth: 1200 }), /maxWidth must be >= minWidth/);
+  assert.equal(spaceAxis.baseWorldWidthForViewport(1024, 112), 910);
+  assert.equal(spaceAxis.baseWorldWidthForViewport(1280, 112), 1166);
+  assert.equal(spaceAxis.baseWorldWidthForViewport(1440, 112), 1275);
+  assert.equal(spaceAxis.baseWorldWidthForViewport(1920, 112), 1275);
+  assert.equal(spaceAxis.baseWorldWidthForViewport(3840, 112), 1275);
+  assert.throws(() => spaceAxis.baseWorldWidthForViewport(1280, 112, { minWidth: 1300, maxWidth: 1200 }), /maxWidth must be >= minWidth/);
 });
 
 test("shared chrome geometry is compact and owned by renderer constants", () => {
@@ -114,8 +114,8 @@ test("control adapter derives its lower bound from the visible 500 percent reset
 
 
 test("presentation geometry owns rail and label pixels without changing global geography", () => {
-  assert.equal(presentationLayout.DEFAULT_BAND_PADDING, 2);
-  assert.equal(presentationLayout.DEFAULT_RAIL_LABEL_GAP, 3);
+  assert.equal(presentationLayout.DEFAULT_BAND_PADDING, 0);
+  assert.equal(presentationLayout.DEFAULT_RAIL_LABEL_GAP, 1);
   assert.ok(presentationLayout.DEFAULT_RAIL_CORRIDOR_RATIO < 0.3);
   assert.match(view, /presentationLayout\.compileTrackPresentation\(compiled\.partitioned\.tracks, compiled\.continuum, contentWidth\)/);
   assert.match(view, /presentationLayout\.applyTrackPresentation\(item, presentation\)/);
@@ -125,7 +125,7 @@ test("presentation geometry owns rail and label pixels without changing global g
   assert.match(view, /data-spacetime-rail-basis=/);
 });
 
-test("label packing uses each presentation band and label zone instead of whole macroregion capacity", () => {
+test("Person label packing may borrow global empty world space while geography stays on the rail", () => {
   assert.match(view, /presentation_band_code/);
   assert.match(view, /label_zone_left/);
   assert.match(view, /label_zone_right/);
