@@ -565,6 +565,7 @@
     const classes = Array.isArray(group?.classifications) ? group.classifications : [];
     if (classes.includes("primary")) return classes.length > 1 ? "주 위치 + 관계 참조" : "주 위치";
     if (classes.includes("counterparty")) return "counterparty · 자기 위치 계산 제외";
+    if (classes.includes("unresolved")) return "위치/연대 미확정";
     return "공간 관계 검토";
   }
 
@@ -580,7 +581,7 @@
         <span>${escapeHtml(relation)} · ${escapeHtml(role)}</span>
         <em>${escapeHtml(activityClassificationLabel(group))}</em>
       </button>
-      <div class="spacetime-inspector-activity-evidence">${placements || '<p class="spacetime-empty-inline">공간 배치 slice 없음</p>'}</div>
+      <div class="spacetime-inspector-activity-evidence">${placements || `<p class="spacetime-empty-inline">공간 배치 slice 없음${group.unresolved_reason ? ` · ${escapeHtml(reasonLabel(group.unresolved_reason))}` : ""}</p>`}</div>
     </article>`;
   }
 
