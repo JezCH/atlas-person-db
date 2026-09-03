@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:petar-kresimir-iv:croatia-dalmatia:c1058-1074:v1",
+  "person": {
+    "canonical_name_en": "Petar Krešimir IV",
+    "display_name_ko": "페타르 크레시미르 4세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Croatia and Dalmatia",
+    "display_name_ko": "크로아티아·달마티아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King of Croatia and Dalmatia",
+    "role_display_name_ko": "크로아티아·달마티아 국왕",
+    "start_year": 1058,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1074,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Petar Krešimir IV ruled approximately from 1058 until 1074. Contemporary evidence attests him as king of Croatia and Dalmatia, so ATLAS uses that historical royal polity/title rather than a generic modern Croatia label. The accession boundary is approximate because reconstruction of his reign is complicated by disputed charter authenticity."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "Hrvatska enciklopedija — Petar Krešimir IV.",
+      "canonical_url": "https://www.enciklopedija.hr/clanak/petar-kresimir-iv",
+      "citation_text": "The Croatian Encyclopedia identifies Petar Krešimir IV as Croatian king approximately 1058–1074 and the first ruler for whom contemporary sources attest the title king of Croatia and Dalmatia."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-eurasia-batch-20260903",
+    "requested_identity": "CROATIA — PETAR KRESIMIR IV",
+    "correction_note": "Register the historically attested king of Croatia and Dalmatia with approximate accession."
+  }
+}

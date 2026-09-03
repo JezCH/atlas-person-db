@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:vseslav-of-polotsk:principality-polotsk:1071-1101:v1",
+  "person": {
+    "canonical_name_en": "Vseslav of Polotsk",
+    "display_name_ko": "폴라츠크의 브세슬라프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Principality of Polotsk",
+    "display_name_ko": "폴라츠크 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Prince of Polotsk",
+    "role_display_name_ko": "폴라츠크 공",
+    "start_year": 1071,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1101,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After losing Polotsk during the struggles of 1069–1071, Vseslav recovered the principality in 1071 and retained it until his death in 1101. ATLAS stores this as a second Polotsk interval rather than falsely drawing a continuous 1044–1101 reign."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "Great Russian Encyclopedia — Vseslav Bryachislavich",
+      "canonical_url": "https://bigenc.ru/c/vseslav-briachislavich-72b032",
+      "citation_text": "The Great Russian Encyclopedia records Vseslav as prince of Polotsk in 1044–1067 and 1071–1101, and prince of Kiev in 1068–1069."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-eurasia-batch-20260903",
+    "requested_identity": "BELARUS — VSESLAV II",
+    "correction_note": "Restore the second Polotsk reign as a separate interval."
+  }
+}

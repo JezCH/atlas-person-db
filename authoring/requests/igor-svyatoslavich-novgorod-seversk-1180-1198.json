@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:igor-svyatoslavich:novgorod-seversk:1180-1198:v1",
+  "person": {
+    "canonical_name_en": "Igor Svyatoslavich",
+    "display_name_ko": "이고리 스뱌토슬라비치",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Principality of Novgorod-Seversk",
+    "display_name_ko": "노브고로드세베르스크 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Prince of Novgorod-Seversk",
+    "role_display_name_ko": "노브고로드세베르스크 공",
+    "start_year": 1180,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1198,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Igor Svyatoslavich succeeded his brother Oleg at Novgorod-Seversk in 1180 and ruled there until moving to the senior Chernigov throne in 1198. Some later genealogical tables assign him Putivl from 1164, but Ukrainian historical scholarship notes that after his father's death he did not receive a separate principality and likely remained with Oleg; ATLAS therefore does not create a speculative Putivl reign."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Institute of History of Ukraine — Vladni instytutsii Chernihovo-Sivershchyny",
+      "canonical_url": "https://history.org.ua/LiberUA/978-617-7062-12-6/978-617-7062-12-6.pdf",
+      "citation_text": "The Institute of History of Ukraine identifies Igor Svyatoslavich as prince of Novhorod-Siverskyi in 1180–1198."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-eurasia-batch-20260903",
+    "requested_identity": "IGOR SVYATOSLAVICH — RUS'",
+    "correction_note": "Register the secure Novgorod-Seversk reign and reject the weak Putivl reconstruction."
+  }
+}

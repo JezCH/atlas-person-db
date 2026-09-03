@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:igor-svyatoslavich:chernigov:1198-c1202:v1",
+  "person": {
+    "canonical_name_en": "Igor Svyatoslavich",
+    "display_name_ko": "이고리 스뱌토슬라비치",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Principality of Chernigov",
+    "display_name_ko": "체르니히우 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Prince of Chernigov",
+    "role_display_name_ko": "체르니히우 공",
+    "start_year": 1198,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1202,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Igor succeeded to Chernigov in 1198. The terminal chronology varies between spring 1201 and 1202 in modern reconstructions; the Encyclopedia of History of Ukraine uses 1198–1202. ATLAS therefore records the terminal year as approximately 1202 rather than presenting the disputed death year as exact."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "Encyclopedia of History of Ukraine — Chernihiv Principality",
+      "canonical_url": "https://resource.history.org.ua/cgi-bin/eiu/history.exe?C21COM=S&I21DBN=EIu&P21DBN=&S21CNR=20&S21COLORTERMS=0&S21FMT=eiu_all&S21P01=0&S21P02=0&S21P03=TRN%3D&S21REF=10&S21STN=1&S21STR=Chernihivske_kniazivstvo&Z21ID=",
+      "citation_text": "The Encyclopedia of History of Ukraine lists Igor Svyatoslavich among the principal rulers of Chernihiv, 1198–1202."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-eurasia-batch-20260903",
+    "requested_identity": "IGOR SVYATOSLAVICH — RUS'",
+    "correction_note": "Register the Chernigov reign with an approximate terminal boundary reflecting the 1201/1202 dispute."
+  }
+}
