@@ -15,6 +15,20 @@
     return Object.freeze([...new Set((Array.isArray(refs) ? refs : []).map(text).filter(Boolean))].sort());
   }
 
+  function historicalYearToOrdinal(year) {
+    if (!Number.isInteger(year) || year === 0) return null;
+    return year < 0 ? year : year - 1;
+  }
+
+  function activityChronology(activity) {
+    const startYear = Number.isInteger(activity?.start?.year) && activity.start.year !== 0 ? activity.start.year : null;
+    let endYear = Number.isInteger(activity?.end?.year) && activity.end.year !== 0 ? activity.end.year : null;
+    if (activity?.end?.status === "ongoing" && /^\d{4}-\d{2}-\d{2}$/.test(activity?.end?.as_of || "")) endYear = Number(activity.end.as_of.slice(0,4));
+    const start = historicalYearToOrdinal(startYear);
+    const end = historicalYearToOrdinal(endYear);
+    return start == null || end == null || start > end ? null : Object.freeze({ start_ordinal:start, end_ordinal:end });
+  }
+
   function segmentClassification(segment, fallback) {
     const explicit = text(segment?.political_spatial_class);
     if (explicit) return explicit;
@@ -41,11 +55,18 @@
 
   function groupActivities(track) {
     const groups = new Map();
+    const unresolvedById = new Map();
     for (const segment of allClassifiedSegments(track)) {
       const activityId = text(segment?.activity_id);
       if (!activityId) continue;
       if (!groups.has(activityId)) groups.set(activityId, []);
       groups.get(activityId).push(segment);
+    }
+    for (const unresolved of Array.isArray(track?.unresolved_activities) ? track.unresolved_activities : []) {
+      const activityId = text(unresolved?.activity_id) || text(unresolved?.activity?.id);
+      if (!activityId) continue;
+      if (!groups.has(activityId)) groups.set(activityId, []);
+      if (!unresolvedById.has(activityId)) unresolvedById.set(activityId, unresolved);
     }
 
     const activities = [];
@@ -55,13 +76,15 @@
         || Number(a?.end_ordinal)-Number(b?.end_ordinal)
         || Number(a?.segment_index)-Number(b?.segment_index)
       );
-      const activity = segments.find((segment)=>segment?.activity)?.activity || null;
+      const unresolved = unresolvedById.get(activityId) || null;
+      const activity = segments.find((segment)=>segment?.activity)?.activity || unresolved?.activity || null;
       const starts = segments.map((segment)=>Number(segment?.start_ordinal)).filter(Number.isFinite);
       const ends = segments.map((segment)=>Number(segment?.end_ordinal)).filter(Number.isFinite);
-      const startOrdinal = starts.length ? Math.min(...starts) : null;
-      const endOrdinal = ends.length ? Math.max(...ends) : null;
+      const fallbackChronology = activityChronology(activity);
+      const startOrdinal = starts.length ? Math.min(...starts) : fallbackChronology?.start_ordinal ?? null;
+      const endOrdinal = ends.length ? Math.max(...ends) : fallbackChronology?.end_ordinal ?? null;
       const midpointOrdinal = startOrdinal == null || endOrdinal == null ? null : Math.floor((startOrdinal + endOrdinal) / 2);
-      const classifications = [...new Set(segments.map((segment)=>segment.inspector_classification))];
+      const classifications = segments.length ? [...new Set(segments.map((segment)=>segment.inspector_classification))] : ["unresolved"];
       const sourceRefs = normalizedRefs(segments.flatMap((segment)=>[
         ...(Array.isArray(segment?.historical_source_refs) ? segment.historical_source_refs : []),
         ...(Array.isArray(segment?.display_source_refs) ? segment.display_source_refs : [])
@@ -74,7 +97,8 @@
         end_ordinal: endOrdinal,
         midpoint_ordinal: midpointOrdinal,
         classifications: Object.freeze(classifications),
-        source_refs: sourceRefs
+        source_refs: sourceRefs,
+        unresolved_reason: text(unresolved?.reason)
       }));
     }
 
@@ -126,6 +150,8 @@
 
   return Object.freeze({
     normalizedRefs,
+    historicalYearToOrdinal,
+    activityChronology,
     allClassifiedSegments,
     groupActivities,
     selectedActivity,
