@@ -39,7 +39,7 @@
     }),
     Object.freeze({
       place_id: "place-ankara", polity_id: "28448862-277d-4738-9fb4-7f51a9e4c03a", function_type: "capital", place_name: "Ankara",
-      macroregion_code: "west-asia", subregion_code: "anatolia-caucasus",
+      macroregion_code: "west-asia", subregion_code: "anatolia",
       source_refs: Object.freeze(["Atatürk Ansiklopedisi: Ankara’nın Başkent Oluşu"])
     }),
     Object.freeze({

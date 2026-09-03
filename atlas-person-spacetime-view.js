@@ -16,8 +16,8 @@
   const FOCUS_DETAIL_ZOOM = 6.5;
   const RUNTIME_ASSETS = Object.freeze([
     ["./atlas-person-spacetime-time-projection.js?v=20260831-uniform-500-floor", "ATLAS_PERSON_SPACETIME_TIME_PROJECTION"],
-    ["./atlas-person-spacetime-space-axis.js?v=20260903-leaf-equal-map-order", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
-    ["./atlas-person-spacetime-presentation-layout.js?v=20260903-band-corridor-v1", "ATLAS_PERSON_SPACETIME_PRESENTATION_LAYOUT"],
+    ["./atlas-person-spacetime-space-axis.js?v=20260903-taxonomy-r2", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
+    ["./atlas-person-spacetime-presentation-layout.js?v=20260903-taxonomy-r2", "ATLAS_PERSON_SPACETIME_PRESENTATION_LAYOUT"],
     ["./atlas-person-spacetime-semantic-axis.js?v=20260903-place-lod", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
     ["./atlas-person-spacetime-uncertainty.js?v=20260903-c6", "ATLAS_PERSON_SPACETIME_UNCERTAINTY"],
     ["./atlas-person-spacetime-inspector.js?v=20260903-c8", "ATLAS_PERSON_SPACETIME_INSPECTOR"],
@@ -26,7 +26,7 @@
     ["./atlas-person-spacetime-data-parity.js?v=20260902-final-parity", "ATLAS_PERSON_SPACETIME_DATA_PARITY"],
     ["./atlas-person-spacetime-minimap.js?v=20260826-p12", "ATLAS_PERSON_SPACETIME_MINIMAP"],
     ["./atlas-person-spacetime-performance.js?v=20260826-p13", "ATLAS_PERSON_SPACETIME_PERFORMANCE"],
-    ["./atlas-person-spacetime-spatial-compile.js?v=20260902-place-precision", "ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE"],
+    ["./atlas-person-spacetime-spatial-compile.js?v=20260903-taxonomy-r2", "ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE"],
     ["./atlas-person-spacetime-person-tracks.js?v=20260902-inspector-evidence", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
     ["./atlas-person-spacetime-political-placement.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT"],
     ["./atlas-person-spacetime-lod.js?v=20260831-500-floor", "ATLAS_PERSON_SPACETIME_LOD"],

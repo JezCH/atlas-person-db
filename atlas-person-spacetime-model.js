@@ -11,11 +11,11 @@
     Object.freeze({ code: "europe", label: "유럽" }),
     Object.freeze({ code: "africa", label: "아프리카" }),
     Object.freeze({ code: "west-asia", label: "서아시아" }),
-    Object.freeze({ code: "south-asia", label: "남아시아" }),
     Object.freeze({ code: "central-asia", label: "중앙아시아" }),
+    Object.freeze({ code: "south-asia", label: "남아시아" }),
     Object.freeze({ code: "southeast-asia", label: "동남아시아" }),
-    Object.freeze({ code: "oceania", label: "오세아니아" }),
-    Object.freeze({ code: "east-asia", label: "동아시아" })
+    Object.freeze({ code: "east-asia", label: "동아시아" }),
+    Object.freeze({ code: "oceania", label: "오세아니아" })
   ]);
   const REGION_CODES = new Set(REGION_DEFINITIONS.map((item) => item.code));
   const ALLOWED_CONFIDENCE = new Set(["well_established", "likely", "speculative", "disputed", "unknown"]);
@@ -24,38 +24,52 @@
   const SPATIAL_INDEX_SCHEMA = "atlas-polity-spatial-index/v2";
   const SUBREGION_PARENT = Object.freeze({
     "north-america": "americas",
-    "mesoamerica-caribbean": "americas",
+    "mesoamerica": "americas",
+    "caribbean": "americas",
     "south-america": "americas",
+
     "britain-ireland": "europe",
-    "western-europe": "europe",
     "iberia": "europe",
-    "central-europe": "europe",
+    "western-europe": "europe",
     "italy": "europe",
+    "central-europe": "europe",
     "northern-europe": "europe",
     "balkans": "europe",
-    "eastern-europe-russia": "europe",
-    "north-africa-nile": "africa",
+    "eastern-europe": "europe",
+    "russia-volga": "europe",
+
     "west-africa": "africa",
+    "maghreb-north-africa": "africa",
     "central-africa": "africa",
-    "east-africa-horn": "africa",
     "southern-africa": "africa",
-    "anatolia-caucasus": "west-asia",
-    "levant-mesopotamia": "west-asia",
+    "east-africa-horn": "africa",
+    "nile-valley": "africa",
+
+    "levant": "west-asia",
+    "anatolia": "west-asia",
+    "caucasus": "west-asia",
+    "mesopotamia": "west-asia",
     "arabia": "west-asia",
     "iranian-plateau": "west-asia",
+
+    "western-central-asia": "central-asia",
+    "eastern-central-asia-steppe": "central-asia",
+
     "northwest-south-asia": "south-asia",
     "north-india-ganges": "south-asia",
     "deccan-south-india": "south-asia",
-    "western-central-asia": "central-asia",
-    "eastern-central-asia-steppe": "central-asia",
+    "sri-lanka-maldives": "south-asia",
+
     "mainland-southeast-asia": "southeast-asia",
     "maritime-southeast-asia": "southeast-asia",
-    "australasia": "oceania",
-    "pacific-islands": "oceania",
+
     "china": "east-asia",
+    "manchuria": "east-asia",
     "korean-peninsula": "east-asia",
     "japan": "east-asia",
-    "manchuria-mongolia": "east-asia"
+
+    "australasia": "oceania",
+    "pacific-islands": "oceania"
   });
 
   function text(value) {
