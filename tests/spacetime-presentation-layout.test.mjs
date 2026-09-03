@@ -41,11 +41,11 @@ test("subregion tracks use a compact rail corridor and the remaining band width 
   assert.equal(ga.rail_basis, "presentation_corridor");
   assert.equal(gb.rail_basis, "presentation_corridor");
   assert.notEqual(ga.rail_x, gb.rail_x, "overlapping intervals need separate rail lanes");
-  assert.ok(ga.rail_x >= left && ga.rail_x < left + (right-left) * 0.4);
-  assert.ok(gb.rail_x >= left && gb.rail_x < left + (right-left) * 0.4);
+  assert.ok(ga.rail_x >= left && ga.rail_x < left + (right-left) * 0.15);
+  assert.ok(gb.rail_x >= left && gb.rail_x < left + (right-left) * 0.15);
   assert.ok(ga.label_left > ga.rail_x);
   assert.ok(ga.label_right <= right + 1e-9);
-  assert.ok(ga.label_width > (right-left) * 0.72, "refined taxonomy keeps most of the band available to the name");
+  assert.ok(ga.label_width > (right-left) * 0.88, "refined taxonomy keeps most of the band available to the name");
 });
 
 test("equal leaf width restores readable label room at the 500 percent floor", () => {
@@ -66,7 +66,7 @@ test("equal leaf width restores readable label room at the 500 percent floor", (
 
   for (const s of probes) {
     const g = layout.geometryForSegment(presentation, s);
-    const box = layout.activityBox(presentation, s, 100, { minWidth: 30, maxWidth: 148 });
+    const box = layout.activityBox(presentation, s, 100, { minWidth: 24, maxWidth: 120 });
     assert.ok(g.label_width >= 100, `${s.subregion_code}: ordinary name zone must not collapse`);
     assert.equal(box.width, 100, `${s.subregion_code}: a 100px natural label should fit without forced shrink`);
     assert.ok(box.left >= g.band_left - 1e-9);
