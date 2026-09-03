@@ -39,11 +39,11 @@ test("500 percent uniform time projection is linear reversible and has no year z
 test("spatial continuum stays leaf-uniform and independent of data density", () => {
   const c=spaceAxis.createSpatialContinuum();
   assert.equal(c.macroregions.length,9);
-  assert.equal(c.subregions.length,39);
-  for(const band of c.subregions) almostEqual(band.max_space-band.min_space,1/39,1e-12);
+  assert.equal(c.subregions.length,40);
+  for(const band of c.subregions) almostEqual(band.max_space-band.min_space,1/40,1e-12);
   for(const macro of spaceAxis.DEFAULT_SPATIAL_HIERARCHY) {
     const band=c.bandForCode(macro.code);
-    almostEqual(band.max_space-band.min_space,macro.subregions.length/39,1e-12);
+    almostEqual(band.max_space-band.min_space,macro.subregions.length/40,1e-12);
   }
 });
 

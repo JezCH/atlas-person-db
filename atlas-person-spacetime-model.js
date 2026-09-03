@@ -58,7 +58,8 @@
     "northwest-south-asia": "south-asia",
     "north-india-ganges": "south-asia",
     "deccan-south-india": "south-asia",
-    "sri-lanka-maldives": "south-asia",
+    "maldives": "south-asia",
+    "sri-lanka": "south-asia",
 
     "mainland-southeast-asia": "southeast-asia",
     "maritime-southeast-asia": "southeast-asia",

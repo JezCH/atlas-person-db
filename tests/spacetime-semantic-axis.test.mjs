@@ -67,13 +67,13 @@ test("space header is fixed to reviewed subregion hierarchy at the readable floo
 
 test("spatial hierarchy is leaf-uniform, density-independent, and map-like at the eastern edge", () => {
   const continuum = spaceAxis.createSpatialContinuum();
-  assert.equal(continuum.subregions.length, 39);
+  assert.equal(continuum.subregions.length, 40);
   for (const band of continuum.subregions) {
-    assert.ok(Math.abs((band.max_space - band.min_space) - 1/39) < 1e-12);
+    assert.ok(Math.abs((band.max_space - band.min_space) - 1/40) < 1e-12);
   }
   for (const macro of spaceAxis.DEFAULT_SPATIAL_HIERARCHY) {
     const band = continuum.bandForCode(macro.code);
-    assert.ok(Math.abs((band.max_space - band.min_space) - macro.subregions.length / 39) < 1e-12);
+    assert.ok(Math.abs((band.max_space - band.min_space) - macro.subregions.length / 40) < 1e-12);
   }
   assert.deepEqual(
     continuum.macroregions.slice(-3).map((band) => band.code),
@@ -90,7 +90,7 @@ test("spatial hierarchy is leaf-uniform, density-independent, and map-like at th
   );
   assert.deepEqual(
     spaceAxis.DEFAULT_SPATIAL_HIERARCHY.find((macro) => macro.code === "south-asia").subregions.map((band) => band.code),
-    ["northwest-south-asia", "north-india-ganges", "deccan-south-india", "sri-lanka-maldives"]
+    ["northwest-south-asia", "north-india-ganges", "deccan-south-india", "maldives", "sri-lanka"]
   );
   assert.deepEqual(
     spaceAxis.DEFAULT_SPATIAL_HIERARCHY.find((macro) => macro.code === "east-asia").subregions.map((band) => band.code),
@@ -101,8 +101,8 @@ test("spatial hierarchy is leaf-uniform, density-independent, and map-like at th
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.width_basis, "equal_leaf_subregion");
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.horizontal_order_basis, "representative_longitude_plus_geographic_continuity");
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.density_weighting, false);
-  assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.taxonomy_revision, "2026-09-03-r2");
-  assert.match(spaceAxis.SPATIAL_HIERARCHY_POLICY.migration_document, /spacetime-spatial-taxonomy-migration-20260903\.md$/);
+  assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.taxonomy_revision, "2026-09-03-r3");
+  assert.match(spaceAxis.SPATIAL_HIERARCHY_POLICY.migration_document, /spacetime-spatial-taxonomy-migration-20260903-r3\.md$/);
   assert.match(spaceAxis.SPATIAL_HIERARCHY_POLICY.audit_document, /spacetime-spatial-hierarchy-audit-20260903\.md$/);
 });
 

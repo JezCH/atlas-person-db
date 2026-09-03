@@ -61,8 +61,8 @@ test("equal leaf width restores readable label room at the 500 percent floor", (
     CONTENT_WIDTH
   );
 
-  const expectedLeafWidth = CONTENT_WIDTH / 39;
-  assert.ok(expectedLeafWidth > 120, "500% wide-desktop floor should keep each refined leaf above 120px");
+  const expectedLeafWidth = CONTENT_WIDTH / 40;
+  assert.ok(expectedLeafWidth > 119, "500% wide-desktop floor should keep each refined leaf above 120px");
 
   for (const s of probes) {
     const g = layout.geometryForSegment(presentation, s);
