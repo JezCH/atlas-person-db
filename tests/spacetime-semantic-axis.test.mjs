@@ -67,13 +67,13 @@ test("space header is fixed to reviewed subregion hierarchy at the readable floo
 
 test("spatial hierarchy is leaf-uniform, density-independent, and map-like at the eastern edge", () => {
   const continuum = spaceAxis.createSpatialContinuum();
-  assert.equal(continuum.subregions.length, 33);
+  assert.equal(continuum.subregions.length, 39);
   for (const band of continuum.subregions) {
-    assert.ok(Math.abs((band.max_space - band.min_space) - 1/33) < 1e-12);
+    assert.ok(Math.abs((band.max_space - band.min_space) - 1/39) < 1e-12);
   }
   for (const macro of spaceAxis.DEFAULT_SPATIAL_HIERARCHY) {
     const band = continuum.bandForCode(macro.code);
-    assert.ok(Math.abs((band.max_space - band.min_space) - macro.subregions.length / 33) < 1e-12);
+    assert.ok(Math.abs((band.max_space - band.min_space) - macro.subregions.length / 39) < 1e-12);
   }
   assert.deepEqual(
     continuum.macroregions.slice(-3).map((band) => band.code),
@@ -82,25 +82,27 @@ test("spatial hierarchy is leaf-uniform, density-independent, and map-like at th
   assert.ok(continuum.bandForCode("east-asia").max_space <= continuum.bandForCode("oceania").min_space + 1e-12);
   assert.deepEqual(
     spaceAxis.DEFAULT_SPATIAL_HIERARCHY.find((macro) => macro.code === "europe").subregions.map((band) => band.code),
-    ["britain-ireland", "iberia", "western-europe", "italy", "central-europe", "northern-europe", "balkans", "eastern-europe-russia"]
+    ["britain-ireland", "iberia", "western-europe", "italy", "central-europe", "northern-europe", "balkans", "eastern-europe", "russia-volga"]
   );
   assert.deepEqual(
     spaceAxis.DEFAULT_SPATIAL_HIERARCHY.find((macro) => macro.code === "africa").subregions.map((band) => band.code),
-    ["west-africa", "north-africa-nile", "central-africa", "southern-africa", "east-africa-horn"]
+    ["west-africa", "maghreb-north-africa", "central-africa", "southern-africa", "east-africa-horn", "nile-valley"]
   );
   assert.deepEqual(
     spaceAxis.DEFAULT_SPATIAL_HIERARCHY.find((macro) => macro.code === "south-asia").subregions.map((band) => band.code),
-    ["northwest-south-asia", "deccan-south-india", "north-india-ganges"]
+    ["northwest-south-asia", "north-india-ganges", "deccan-south-india", "sri-lanka-maldives"]
   );
   assert.deepEqual(
     spaceAxis.DEFAULT_SPATIAL_HIERARCHY.find((macro) => macro.code === "east-asia").subregions.map((band) => band.code),
-    ["china", "manchuria-mongolia", "korean-peninsula", "japan"]
+    ["china", "manchuria", "korean-peninsula", "japan"]
   );
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.taxonomy_basis, "atlas_internal_display_taxonomy");
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.external_standard, null);
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.width_basis, "equal_leaf_subregion");
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.horizontal_order_basis, "representative_longitude_plus_geographic_continuity");
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.density_weighting, false);
+  assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.taxonomy_revision, "2026-09-03-r2");
+  assert.match(spaceAxis.SPATIAL_HIERARCHY_POLICY.migration_document, /spacetime-spatial-taxonomy-migration-20260903\.md$/);
   assert.match(spaceAxis.SPATIAL_HIERARCHY_POLICY.audit_document, /spacetime-spatial-hierarchy-audit-20260903\.md$/);
 });
 
