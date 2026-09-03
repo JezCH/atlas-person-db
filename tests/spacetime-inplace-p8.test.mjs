@@ -36,10 +36,15 @@ test("500 percent uniform time projection is linear reversible and has no year z
   assert.equal(model.historicalYearToOrdinal(0),null);
 });
 
-test("spatial continuum stays nine equal macroregion bands independent of data density", () => {
+test("spatial continuum stays leaf-uniform and independent of data density", () => {
   const c=spaceAxis.createSpatialContinuum();
   assert.equal(c.macroregions.length,9);
-  for(const band of c.macroregions) almostEqual(band.max_space-band.min_space,1/9,1e-12);
+  assert.equal(c.subregions.length,33);
+  for(const band of c.subregions) almostEqual(band.max_space-band.min_space,1/33,1e-12);
+  for(const macro of spaceAxis.DEFAULT_SPATIAL_HIERARCHY) {
+    const band=c.bandForCode(macro.code);
+    almostEqual(band.max_space-band.min_space,macro.subregions.length/33,1e-12);
+  }
 });
 
 test("spatial compile never invents precision", () => {

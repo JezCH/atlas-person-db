@@ -11,6 +11,18 @@
   const DEFAULT_AXIS_WIDTH = 140;
   const DEFAULT_WORLD_VIEWPORT_GUTTER = 2;
 
+  const SPATIAL_HIERARCHY_POLICY = Object.freeze({
+    taxonomy_basis: "atlas_internal_display_taxonomy",
+    external_standard: null,
+    reference_frameworks: Object.freeze(["UN M49 geographic regions (reference only; not adopted as the ATLAS taxonomy)"]),
+    audit_document: "docs/spacetime-spatial-hierarchy-audit-20260903.md",
+    width_basis: "equal_leaf_subregion",
+    macro_width_basis: "sum_of_child_leaf_widths",
+    horizontal_order_basis: "representative_longitude_plus_geographic_continuity",
+    density_weighting: false,
+    note: "This hierarchy is an ATLAS historical-display taxonomy. External modern classifications are references only; Person density never determines geography or width."
+  });
+
   const DEFAULT_SPATIAL_HIERARCHY = Object.freeze([
     Object.freeze({ code: "americas", label: "아메리카", subregions: Object.freeze([
       Object.freeze({ code: "north-america", label: "북아메리카" }),
@@ -19,20 +31,20 @@
     ]) }),
     Object.freeze({ code: "europe", label: "유럽", subregions: Object.freeze([
       Object.freeze({ code: "britain-ireland", label: "영국·아일랜드" }),
-      Object.freeze({ code: "western-europe", label: "서유럽" }),
       Object.freeze({ code: "iberia", label: "이베리아" }),
-      Object.freeze({ code: "central-europe", label: "중부유럽" }),
+      Object.freeze({ code: "western-europe", label: "서유럽" }),
       Object.freeze({ code: "italy", label: "이탈리아" }),
+      Object.freeze({ code: "central-europe", label: "중부유럽" }),
       Object.freeze({ code: "northern-europe", label: "북유럽" }),
       Object.freeze({ code: "balkans", label: "발칸" }),
       Object.freeze({ code: "eastern-europe-russia", label: "동유럽·러시아" })
     ]) }),
     Object.freeze({ code: "africa", label: "아프리카", subregions: Object.freeze([
-      Object.freeze({ code: "north-africa-nile", label: "북아프리카·나일" }),
       Object.freeze({ code: "west-africa", label: "서아프리카" }),
+      Object.freeze({ code: "north-africa-nile", label: "북아프리카·나일" }),
       Object.freeze({ code: "central-africa", label: "중앙아프리카" }),
-      Object.freeze({ code: "east-africa-horn", label: "동아프리카·아프리카의 뿔" }),
-      Object.freeze({ code: "southern-africa", label: "남아프리카" })
+      Object.freeze({ code: "southern-africa", label: "남아프리카" }),
+      Object.freeze({ code: "east-africa-horn", label: "동아프리카·아프리카의 뿔" })
     ]) }),
     Object.freeze({ code: "west-asia", label: "서아시아", subregions: Object.freeze([
       Object.freeze({ code: "anatolia-caucasus", label: "아나톨리아·캅카스" }),
@@ -42,8 +54,8 @@
     ]) }),
     Object.freeze({ code: "south-asia", label: "남아시아", subregions: Object.freeze([
       Object.freeze({ code: "northwest-south-asia", label: "북서부" }),
-      Object.freeze({ code: "north-india-ganges", label: "북인도·갠지스" }),
-      Object.freeze({ code: "deccan-south-india", label: "데칸·남인도" })
+      Object.freeze({ code: "deccan-south-india", label: "데칸·남인도" }),
+      Object.freeze({ code: "north-india-ganges", label: "북인도·갠지스" })
     ]) }),
     Object.freeze({ code: "central-asia", label: "중앙아시아", subregions: Object.freeze([
       Object.freeze({ code: "western-central-asia", label: "서부 중앙아시아" }),
@@ -53,15 +65,15 @@
       Object.freeze({ code: "mainland-southeast-asia", label: "대륙부 동남아시아" }),
       Object.freeze({ code: "maritime-southeast-asia", label: "해양부 동남아시아" })
     ]) }),
+    Object.freeze({ code: "east-asia", label: "동아시아", subregions: Object.freeze([
+      Object.freeze({ code: "china", label: "중국권" }),
+      Object.freeze({ code: "manchuria-mongolia", label: "만주·몽골권" }),
+      Object.freeze({ code: "korean-peninsula", label: "한반도" }),
+      Object.freeze({ code: "japan", label: "일본" })
+    ]) }),
     Object.freeze({ code: "oceania", label: "오세아니아", subregions: Object.freeze([
       Object.freeze({ code: "australasia", label: "오스트랄라시아" }),
       Object.freeze({ code: "pacific-islands", label: "태평양 도서" })
-    ]) }),
-    Object.freeze({ code: "east-asia", label: "동아시아", subregions: Object.freeze([
-      Object.freeze({ code: "china", label: "중국권" }),
-      Object.freeze({ code: "korean-peninsula", label: "한반도" }),
-      Object.freeze({ code: "japan", label: "일본" }),
-      Object.freeze({ code: "manchuria-mongolia", label: "만주·몽골권" })
     ]) })
   ]);
 
@@ -102,24 +114,29 @@
       error.details = validation.errors;
       throw error;
     }
-    const macroWidth = 1 / definitions.length;
+    const totalLeafCount = definitions.reduce((sum, macro) => sum + macro.subregions.length, 0);
+    const leafWidth = 1 / totalLeafCount;
     const macroregions = [];
     const subregions = [];
     const byCode = new Map();
+    let leafOffset = 0;
     definitions.forEach((macro, macroIndex) => {
-      const min = macroIndex * macroWidth;
-      const max = macroIndex === definitions.length - 1 ? 1 : (macroIndex + 1) * macroWidth;
+      const macroLeafCount = macro.subregions.length;
+      const min = leafOffset * leafWidth;
+      const maxLeafOffset = leafOffset + macroLeafCount;
+      const max = maxLeafOffset === totalLeafCount ? 1 : maxLeafOffset * leafWidth;
       const macroBand = Object.freeze({ kind: "macroregion", code: text(macro.code), label: text(macro.label), parent_code: null, min_space: min, max_space: max, center_space: (min + max) / 2, ordinal: macroIndex });
       macroregions.push(macroBand);
       byCode.set(macroBand.code, macroBand);
-      const childWidth = (max - min) / macro.subregions.length;
       macro.subregions.forEach((subregion, subIndex) => {
-        const childMin = min + subIndex * childWidth;
-        const childMax = subIndex === macro.subregions.length - 1 ? max : min + (subIndex + 1) * childWidth;
+        const globalLeafIndex = leafOffset + subIndex;
+        const childMin = globalLeafIndex * leafWidth;
+        const childMax = globalLeafIndex === totalLeafCount - 1 ? 1 : (globalLeafIndex + 1) * leafWidth;
         const subBand = Object.freeze({ kind: "subregion", code: text(subregion.code), label: text(subregion.label), parent_code: macroBand.code, min_space: childMin, max_space: childMax, center_space: (childMin + childMax) / 2, ordinal: subIndex });
         subregions.push(subBand);
         byCode.set(subBand.code, subBand);
       });
+      leafOffset = maxLeafOffset;
     });
     const bandForCode = (code) => byCode.get(text(code)) || null;
     const macroForCode = (code) => {
@@ -160,6 +177,7 @@
     DEFAULT_MAX_BASE_WORLD_WIDTH,
     DEFAULT_AXIS_WIDTH,
     DEFAULT_WORLD_VIEWPORT_GUTTER,
+    SPATIAL_HIERARCHY_POLICY,
     DEFAULT_SPATIAL_HIERARCHY,
     validateHierarchy,
     createSpatialContinuum,

@@ -15,14 +15,21 @@ test("base world width is bounded globally rather than growing with a wide viewp
   assert.equal(spaceAxis.baseWorldWidthForViewport(3840, 152), 1275);
 });
 
-test("base width cap preserves nine equal macroregion bands", () => {
+test("base width cap preserves equal leaf subregions and derives macro widths from child counts", () => {
   const continuum = spaceAxis.createSpatialContinuum();
   const base = spaceAxis.baseWorldWidthForViewport(3840, 152);
-  const contentWidth = base * 5 * 0.76;
+  const contentWidth = base * 5 * 0.748;
   const regions = spaceAxis.stableRegionLayout(continuum, contentWidth);
   assert.equal(regions.length, 9);
-  const expected = contentWidth / 9;
-  for (const region of regions) assert.ok(Math.abs(region.width - expected) < 1e-9);
+  assert.equal(continuum.subregions.length, 33);
+  const expectedLeafWidth = contentWidth / 33;
+  for (const subregion of continuum.subregions) {
+    assert.ok(Math.abs((subregion.max_space - subregion.min_space) * contentWidth - expectedLeafWidth) < 1e-9);
+  }
+  const europe = regions.find((region) => region.code === "europe");
+  const oceania = regions.find((region) => region.code === "oceania");
+  assert.ok(Math.abs(europe.width - expectedLeafWidth * 8) < 1e-9);
+  assert.ok(Math.abs(oceania.width - expectedLeafWidth * 2) < 1e-9);
 });
 
 test("base width policy rejects invalid bounds instead of silently warping geometry", () => {

@@ -48,6 +48,32 @@ test("subregion tracks use a compact rail corridor and the remaining band width 
   assert.ok(ga.label_width > (right-left) * 0.55, "most of the band should remain available to the name");
 });
 
+test("equal leaf width restores readable label room at the 500 percent floor", () => {
+  const probes = [
+    segment("europe-name", "central-europe", 100, 150),
+    segment("china-name", "china", 100, 150),
+    segment("korea-name", "korean-peninsula", 100, 150),
+    segment("japan-name", "japan", 100, 150)
+  ];
+  const presentation = layout.compileTrackPresentation(
+    probes.map((s, i) => track(`readable-${i}`, [s])),
+    continuum,
+    CONTENT_WIDTH
+  );
+
+  const expectedLeafWidth = CONTENT_WIDTH / 33;
+  assert.ok(expectedLeafWidth > 140, "500% floor should give every leaf a substantial common band width");
+
+  for (const s of probes) {
+    const g = layout.geometryForSegment(presentation, s);
+    const box = layout.activityBox(presentation, s, 100, { minWidth: 30, maxWidth: 148 });
+    assert.ok(g.label_width >= 100, `${s.subregion_code}: ordinary name zone must not collapse`);
+    assert.equal(box.width, 100, `${s.subregion_code}: a 100px natural label should fit without forced shrink`);
+    assert.ok(box.left >= g.band_left - 1e-9);
+    assert.ok(box.left + box.width <= g.band_right + 1e-9);
+  }
+});
+
 test("non-overlapping intervals reuse presentation lanes deterministically", () => {
   const a = segment("reuse-a", "korean-peninsula", 100, 120);
   const b = segment("reuse-b", "korean-peninsula", 121, 140);
