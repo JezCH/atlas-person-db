@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:wenceslaus-i-duke-bohemia:921-935:v1",
+  "person": {
+    "canonical_name_en": "Wenceslaus I, Duke of Bohemia",
+    "display_name_ko": "성 바츨라프",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Duchy of Bohemia",
+    "display_name_ko": "보헤미아 공국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Duke of Bohemia",
+    "role_display_name_ko": "보헤미아 공작",
+    "start_year": 921,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 935,
+    "end_month": 9,
+    "end_day": 28,
+    "end_certainty": "uncertain",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "This is Saint Wenceslaus (Václav), the tenth-century Přemyslid duke intended by the Civilization mod's internal label 'Wenceslas I', not the thirteenth-century King Wenceslaus I of Bohemia. He succeeded to the Bohemian ducal title in 921 while still a minor and was murdered by the faction of his brother Boleslav. The traditional death year is disputed between 929 and 935; modern archaeological work on the violence following his overthrow supports the 935 chronology. ATLAS therefore records 921–28 September 935 with the end boundary explicitly uncertain rather than conflating him with the later king."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Ivo Štefan et al., The archaeology of early medieval violence: the mass grave at Budeč, Czech Republic, Antiquity",
+      "canonical_url": "https://www.cambridge.org/core/journals/antiquity/article/archaeology-of-early-medieval-violence-the-mass-grave-at-budec-czech-republic/95D3015BF84B5D88BCF72B474535BA27",
+      "citation_text": "The study identifies Wenceslas as the ruling Přemyslid murdered in AD 935 and connects contemporary violence at Budeč with his overthrow."
+    },
+    {
+      "source_type": "institutional_reference",
+      "title": "Radio Prague International — Prince Wenceslas, patron saint of the Czech nation",
+      "canonical_url": "https://archiv.radio.cz/en/static/saint-wenceslas-2017",
+      "citation_text": "The Czech public-service source identifies Wenceslas as the Přemyslid prince who succeeded after Vratislav's death and records his murder at Stará Boleslav on 28 September 935."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-khazaria-bohemia-carthage-denmark-20260903",
+    "requested_identity": "WENCESLAS I — Bohemia",
+    "correction_note": "Resolve the mod's WENCESLAS I as Saint Wenceslaus, tenth-century Duke of Bohemia, not the thirteenth-century king of the same ordinal."
+  }
+}
