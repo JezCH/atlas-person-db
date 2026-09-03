@@ -91,7 +91,8 @@ test("unresolved Activities remain present in the full Person inspector",()=>{
   assert.equal(unresolved.unresolved_reason,"spatial_unresolved");
   assert.equal(unresolved.midpoint_ordinal,1904);
 });
-\nconst view=readFileSync(new URL("../atlas-person-spacetime-view.js",import.meta.url),"utf8");
+
+const view=readFileSync(new URL("../atlas-person-spacetime-view.js",import.meta.url),"utf8");
 const css=readFileSync(new URL("../atlas-person-spacetime-view.css",import.meta.url),"utf8");
 
 test("Production view uses right sticky Person/Activity inspector and distinct Activity selection state",()=>{
