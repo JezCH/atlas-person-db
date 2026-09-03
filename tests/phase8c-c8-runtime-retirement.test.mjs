@@ -50,6 +50,7 @@ test('historical C8 workflow manifest remains audit evidence while current workf
     'atlas-p11-baseline-b-capture.yml',
     'atlas-p11-baseline-b-readiness.yml',
     'atlas-p11-semantic-v2-backfill.yml',
+    'atlas-reviewed-person-merge.yml',
     'atlas-spacetime-production-visual.yml',
     'atlas-stage2-schema-release.yml',
     'atlas-stage2-train2-live-parity.yml',
