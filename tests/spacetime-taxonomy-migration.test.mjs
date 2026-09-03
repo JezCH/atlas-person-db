@@ -23,7 +23,7 @@ const EXPECTED_SPLIT_COUNTS = Object.freeze({
   "nile-valley": 4,
   anatolia: 2,
   caucasus: 2,
-  levant: 9,
+  levant: 10,
   mesopotamia: 6,
   "sri-lanka-maldives": 2,
   manchuria: 3
