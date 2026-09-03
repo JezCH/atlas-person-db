@@ -32,8 +32,8 @@ test("spatial index v2 uses one canonical temporal polity-place-function family"
   const validation = model.validateSpatialIndex(index);
   assert.equal(validation.valid, true, validation.errors.join(" | "));
   assert.equal(index.schema, "atlas-polity-spatial-index/v2");
-  assert.equal(Object.keys(index.polity_geography).length, 445);
-  assert.equal(Object.keys(index.polity_subregions).length, 419);
+  assert.equal(Object.keys(index.polity_geography).length, 455);
+  assert.equal(Object.keys(index.polity_subregions).length, 429);
   assert.equal(index.place_function_records.length, 11);
   assert.equal(index.review_queue.length, 2);
   assert.equal(Object.hasOwn(index, "capital_records"), false);
