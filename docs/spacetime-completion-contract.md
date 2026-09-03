@@ -13,12 +13,12 @@ The readable camera floor is **500%**.
 - the physical world extent applies one shared compression factor: **0.748**
 - base world width before camera zoom/compression is globally bounded to 900–1,275 px
 - widening the viewport above the 1,275 px base-world cap must not inflate world geometry
-- shared axis/header chrome is compacted globally to 112 px / 32 px and may not vary by region or era
+- shared axis/header chrome is compacted globally to 140 px / 36 px and may not vary by region or era
 - local density-based compression is forbidden
 - a sparse region or era may not be folded independently
 - no runtime, UI, test, or compatibility path may expose a scale below 500%
 
-The 0.748 factor is presentation compression only. It applies uniformly to the whole X and Y extent and never changes normalized historical coordinates. Horizontal base-world sizing is also data-independent: viewport width is clamped to a global 900–1,275 px base before zoom/compression, so large monitors do not create extra world-space. The readable label geometry keeps an 11px Person-name font in an 18px label box with a 1px collision gap and 1px horizontal padding. Person labels are no longer capped at the old 148px band-local budget: the natural-width ceiling is 384px, and labels may borrow otherwise empty horizontal world space outside their own leaf while their geographic rail remains inside the reviewed leaf. Shared non-world chrome is also globally compact: the fixed left axis is 112px and the sticky region header is 32px high; these dimensions are renderer-owned and identical across all regions and eras.
+The 0.748 factor is presentation compression only. It applies uniformly to the whole X and Y extent and never changes normalized historical coordinates. Horizontal base-world sizing is also data-independent: viewport width is clamped to a global 900–1,275 px base before zoom/compression, so large monitors do not create extra world-space. The readable label geometry keeps the 10px font and the exact prior text-content budget while using a 18px label box, a 2px collision gap, and 1px horizontal padding. The outer min/max widths are reduced from 38/156 px to 30/148 px only because per-label horizontal chrome falls from 12 px to 4 px; the usable text area remains 26 px minimum and 144 px maximum. Shared non-world chrome is also globally compact: the fixed left axis is 140px and the sticky region header is 36px high; these dimensions are renderer-owned and identical across all regions and eras.
 
 ## Architecture
 
@@ -72,7 +72,7 @@ Normalized world coordinates remain identical under search, selection, global ca
 
 ## Time invariant
 
-Historical Y is derived from historical time only. The supported readable surface uses a **uniform linear time projection**. There is no low-scale logarithmic overview and no era-specific density compression. Labels remain historical-Y invariant and never move vertically. Their annotation box may move horizontally across the global world to borrow unused space; a connector preserves the relationship to the reviewed geographic rail. Current dense acceptance requires zero deferred Person names.
+Historical Y is derived from historical time only. The supported readable surface uses a **uniform linear time projection**. There is no low-scale logarithmic overview and no era-specific density compression. Labels may move horizontally or defer, never vertically.
 
 ## Space invariant
 
@@ -143,7 +143,7 @@ Evidence:
 - 500% floor: reviewed Place effective opacity 0, visible Place count 0, visible Person label overlap 0
 - 800% detail: reviewed Place count 5, Place overlap 0, visible Person label overlap 0
 - macroregion/subregion normalized geometry invariant across 500%→800%
-- shared axis/header in the original acceptance artifact measured at 140px / 36px; the later full-name space reallocation deliberately compacts current chrome to 112px / 32px
+- shared axis/header measured at 140px / 36px
 - sticky Person/Activity inspector occupies its reserved right column without map overlap
 - C6 spatial uncertainty rendered in the inspected detail viewport
 - Person → Activity selection drives the Activity-midpoint C9 Meanwhile state and a full-width line
@@ -195,7 +195,7 @@ DOM size scales with viewport + overscan, not total DB size. Minimap may retain 
 - `tests/spacetime-completion-contract.test.mjs`
 - `tests/spacetime-readable-scale-contract.test.mjs`
 
-Changing the 500% floor, 0.748 shared compression, 900–1,275 px base-world bounds, 112/32 px current shared chrome geometry, or prohibition on local compression requires explicit review.
+Changing the 500% floor, 0.748 shared compression, 900–1,275 px base-world bounds, 140/36 px shared chrome geometry, or prohibition on local compression requires explicit review.
 
 ## Original-plan reconciliation
 
