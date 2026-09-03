@@ -1,0 +1,419 @@
+{
+  "schema": "atlas-person-necessity-delta-audit/v1",
+  "audit_date": "2026-09-03",
+  "production_sha": "bbaaf33c2d9845832a527d79329443b5d6ff8968",
+  "production_person_count": 1552,
+  "inherited_audit": {
+    "file": "docs/audits/PERSON_NECESSITY_AUDIT_2026-08-27.json",
+    "production_person_count": 788,
+    "inherited_keep_count": 788
+  },
+  "delta_person_count": 764,
+  "batch": {
+    "id": "B1_LOCAL_ADMIN_RISK",
+    "scope": "new Persons since 2026-08-27 whose role text signals governor/viceroy/commissioner/administrator/burgomaster/rector/director-general/prefect/mayor/magistrate-class local or administrative office risk",
+    "audited_person_count": 35,
+    "remaining_delta_person_count_after_batch": 729,
+    "counts": {
+      "KEEP": 34,
+      "REVIEW": 1,
+      "DELETE_CANDIDATE_PENDING_USER_APPROVAL": 0
+    },
+    "production_mutation_authorized": false,
+    "deletion_performed": false
+  },
+  "policy": {
+    "file": "docs/audits/PERSON_NECESSITY_AUDIT_POLICY_2026-09-03.md",
+    "sparse_polity_is_signal_not_automatic_keep": true,
+    "local_office_alone_is_sufficient": false,
+    "distinct_polity_or_quasi_state_can_justify_keep": true,
+    "remote_distinct_territory_can_justify_keep": true,
+    "independent_historical_significance_can_justify_keep": true,
+    "delete_requires_exact_user_approval": true
+  },
+  "manual_external_checks": [
+    {
+      "person_id": "80e57198-43e4-4d0d-a130-2218489b357d",
+      "topic": "Honma chronology",
+      "source": "Sado City historical landscape plan",
+      "url": "https://www.city.sado.niigata.jp/uploaded/attachment/15259.pdf",
+      "finding": "Official Sado history places Honma entry as shugo deputies after the 1221 Jokyu War; current c.1185 individual Timeline point requires re-research."
+    },
+    {
+      "person_id": "18aec990-63e4-46aa-a9f1-a6aecdd04ba9",
+      "topic": "Svalbard office scope",
+      "source": "Governor of Svalbard official site",
+      "url": "https://www.sysselmesteren.no/en/the-governor-of-svalbard/",
+      "finding": "Governor is Norway's highest-ranking government representative on the archipelago and combines police/county-governor responsibilities."
+    },
+    {
+      "person_id": "b6d97112-95c8-4442-a4ac-c4f8062c8ec4",
+      "topic": "Virginia chief executive",
+      "source": "Encyclopedia Virginia",
+      "url": "https://encyclopediavirginia.org/entries/governors-of-virginia/",
+      "finding": "Robert Carter served as president of the Council and actually discharged Virginia chief-executive duties in 1726-1727."
+    },
+    {
+      "person_id": "e63755de-3533-4126-8bd3-f815cf9df804",
+      "topic": "Hanseatic significance",
+      "source": "Neue Deutsche Biographie / Deutsche Biographie",
+      "url": "https://www.deutsche-biographie.de/sfz86242.html",
+      "finding": "Wullenwever is treated as a major figure of a consequential period in Lubeck/Hanseatic history; his failure is widely treated as a marker in Hanseatic decline."
+    }
+  ],
+  "decisions": [
+    {
+      "person_id": "dd459595-dcd4-421c-bded-9e0d2bcc502d",
+      "canonical_name_en": "Antonio de Mendoza",
+      "preferred_name_ko": "안토니오 데 멘도사",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_COLONIAL_POLITY_FORMATION",
+      "reason": "First viceroy of New Spain and later viceroy of Peru; represents major colonial state-building rather than an ordinary provincial office.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "c924b9f6-896f-4472-92f0-4da5bdceddc0",
+      "canonical_name_en": "Brigham Young",
+      "preferred_name_ko": "브리검 영",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_QUASI_STATE_REPRESENTATION",
+      "reason": "Governor of the provisional State of Deseret; the represented polity was a distinct short-lived quasi-government, not an ordinary U.S. state governorship.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "f81935c0-c516-4f1c-82d5-5b0079bf7407",
+      "canonical_name_en": "Chen Jiongming",
+      "preferred_name_ko": "천중밍",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_DE_FACTO_AUTONOMOUS_REGIME",
+      "reason": "Guangdong military regime exercised substantial autonomous military-political power; local title does not describe merely routine provincial administration.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "688997c1-188c-4aa0-a7df-c2c42257e4ea",
+      "canonical_name_en": "Elmira Minita Gordon",
+      "preferred_name_ko": "엘미라 미니타 고든",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_NATIONAL_CONSTITUTIONAL_HEAD",
+      "reason": "First Governor-General of independent Belize; national constitutional head-of-state office.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "e1014975-8146-47c9-b8dc-6e7506d79a46",
+      "canonical_name_en": "Guido da Landriano",
+      "preferred_name_ko": "귀도 다 란드리아노",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_MAJOR_CONFEDERATION_MILITARY_SIGNIFICANCE",
+      "reason": "Rector and historically attested military commander of the Lombard League at Legnano; significance is broader than a municipal rectorate.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "09eeea77-bec5-42ac-b2bb-443649067f1e",
+      "canonical_name_en": "Hans Egede",
+      "preferred_name_ko": "한스 에게데",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_COLONIAL_FORMATION_AND_REMOTE_REGION",
+      "reason": "Central founder of the Danish-Norwegian colonial and missionary establishment in Greenland; relevant to a distinct remote territorial history.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "80e57198-43e4-4d0d-a130-2218489b357d",
+      "canonical_name_en": "Honma Yoshihisa",
+      "preferred_name_ko": "혼마 요시히사",
+      "decision": "REVIEW",
+      "decision_basis": "REVIEW_IDENTITY_AND_CHRONOLOGY_EVIDENCE",
+      "reason": "Person-level deletion is not proposed, but the current c.1185 Sado placement is weaker than official Sado history placing Honma entry as shugo deputies after the 1221 Jokyu War. Individual identity/chronology must be re-researched before keeping the Timeline point.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false,
+      "chronology_review_required": true,
+      "person_identity_review_required": true,
+      "review_scope": "Resolve Honma Yoshihisa-specific evidence and chronology; do not invent a replacement year from clan-level evidence."
+    },
+    {
+      "person_id": "605d4e27-e933-4429-bb51-c023d4a20905",
+      "canonical_name_en": "J. Robert Oppenheimer",
+      "preferred_name_ko": "줄리어스 로버트 오펜하이머",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_SCIENTIFIC_GLOBAL_SIGNIFICANCE",
+      "reason": "Global scientific and political-history significance of the Manhattan Project independently justifies retention; Los Alamos directorship is not being treated as a local political office.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "d04475e5-db2d-43cd-91ce-ef674124a948",
+      "canonical_name_en": "Jan Pieterszoon Coen",
+      "preferred_name_ko": "얀 피터르스존 쿤",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_COLONIAL_EMPIRE_TRANSFORMATION",
+      "reason": "Governor-General whose rule was central to creation and consolidation of the VOC's Asian colonial system.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "66a048e7-43e6-4eee-90e4-e8b4f5228f54",
+      "canonical_name_en": "Johan Maurits of Nassau-Siegen",
+      "preferred_name_ko": "요한 마우리츠 판 나사우지겐",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_DISTINCT_COLONIAL_POLITY",
+      "reason": "Governor-General of Dutch Brazil/New Holland, a distinct colonial political formation represented by the project.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "3a0ec85e-d989-4a0a-8e77-d75adcdfa2e5",
+      "canonical_name_en": "John Carver",
+      "preferred_name_ko": "존 카버",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_COLONIAL_FOUNDING",
+      "reason": "First governor of Plymouth Colony and a foundational figure of that distinct colonial polity.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "8df15ef6-19d6-40e8-b515-3a670b894744",
+      "canonical_name_en": "John Macarthur",
+      "preferred_name_ko": "존 매카서",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_EXCEPTIONAL_DE_FACTO_RULE_AND_SIGNIFICANCE",
+      "reason": "Exceptional de facto administration during the Rum Rebellion plus major colonial political-economic significance; not retained merely for an administrative title.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "7bad68a3-7af2-4946-82c1-34d555acfb91",
+      "canonical_name_en": "Joseph Jenkins Roberts",
+      "preferred_name_ko": "조지프 젱킨스 로버츠",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_STATE_FORMATION",
+      "reason": "Pre-independence governor and later first president of Liberia; direct state-formation significance.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "85967c4c-4048-4a70-b0ef-11a2987ca612",
+      "canonical_name_en": "Juan Antonio Lavalleja",
+      "preferred_name_ko": "후안 안토니오 라바예하",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_INDEPENDENCE_STATE_FORMATION",
+      "reason": "Independence-era leader of the Oriental Province; office belongs to a state-formation and anti-imperial transition.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "3bf477d4-1f3d-406b-a848-3101d37f2348",
+      "canonical_name_en": "Juan Manuel de Rosas",
+      "preferred_name_ko": "후안 마누엘 데 로사스",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_DE_FACTO_CONFEDERAL_LEADER",
+      "reason": "Buenos Aires governorship was the institutional base for de facto leadership of the Argentine Confederation, not merely a provincial governorship.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "e63755de-3533-4126-8bd3-f815cf9df804",
+      "canonical_name_en": "Jürgen Wullenwever",
+      "preferred_name_ko": "위르겐 불렌베버",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_CITY_STATE_AND_HANSEATIC_SIGNIFICANCE",
+      "reason": "Burgomaster of the Free Imperial City of Lubeck and a major Hanseatic policy leader; his fall is treated in German biographical scholarship as a marker in Hanseatic decline.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "d6c3be3c-8297-4227-886e-c1cdcadb907f",
+      "canonical_name_en": "Long Yun",
+      "preferred_name_ko": "룽윈",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_DE_FACTO_AUTONOMOUS_REGIME",
+      "reason": "Dominant Yunnan warlord and governor over a substantially autonomous regional regime.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "58f08c67-13e0-4ba7-b833-17e882d8cc6e",
+      "canonical_name_en": "Louis Mountbatten",
+      "preferred_name_ko": "루이 마운트배튼",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_DECOLONIZATION_TRANSITION",
+      "reason": "Last Viceroy of India during the transfer of power; decolonization significance independently justifies inclusion.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "e9d40eda-f98b-479d-980c-1ede14c4acea",
+      "canonical_name_en": "Ma Bufang",
+      "preferred_name_ko": "마부팡",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_DE_FACTO_AUTONOMOUS_REGIME",
+      "reason": "Qinghai Ma-clique military ruler; represents a de facto warlord regime rather than routine provincial administration.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "1ab0d006-e037-4f12-8d16-326313543ca0",
+      "canonical_name_en": "Mem de Sá",
+      "preferred_name_ko": "멤 지 사",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_COLONIAL_POLITY_FORMATION",
+      "reason": "Governor-General of the State of Brazil during major territorial and institutional consolidation; broader than a local governorship.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "2638e685-929f-4825-bfc1-30e4eb2d5ab7",
+      "canonical_name_en": "Murray MacLehose",
+      "preferred_name_ko": "머리 맥리호스",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_DISTINCT_TERRITORY_TRANSFORMATION",
+      "reason": "Governor of British Hong Kong during a major institutional and social transformation of a distinct overseas territory.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "5b567eb8-c0ca-40cf-ad28-1f8882e65fe1",
+      "canonical_name_en": "Nicolò Vito di Gozze",
+      "preferred_name_ko": "니콜로 비토 디 고체",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_SOVEREIGN_CITY_STATE_HEAD",
+      "reason": "Rector of the sovereign Republic of Ragusa; the office is the head magistracy of a distinct polity, not a subordinate municipal post.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "c31f9b04-ba85-4ead-a203-89a97dd7e121",
+      "canonical_name_en": "Nobusuke Kishi",
+      "preferred_name_ko": "기시 노부스케",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_MAJOR_NATIONAL_AND_IMPERIAL_SIGNIFICANCE",
+      "reason": "Manchukuo industrial administration is only one phase; later Japanese premiership and major economic-political significance independently justify retention.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "18aec990-63e4-46aa-a9f1-a6aecdd04ba9",
+      "canonical_name_en": "Odd Olsen Ingerø",
+      "preferred_name_ko": "오드 올센 잉에뢰",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_REMOTE_TERRITORY_REPRESENTATION",
+      "reason": "Svalbard is a distinct remote treaty-governed archipelago; its Governor is Norway's highest government representative there. Retained under the project's remote-territory representation rule.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "3dbb4146-486e-4c1b-9788-f52ebc331da3",
+      "canonical_name_en": "Patrick Buchan-Hepburn",
+      "preferred_name_ko": "패트릭 뷰컨헵번",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_FEDERAL_POLITY_HEAD",
+      "reason": "Only Governor-General of the short-lived West Indies Federation; represents a distinct federal political experiment.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "174a7740-2eb6-409c-b8ac-98e107ad8c1e",
+      "canonical_name_en": "Peter Stuyvesant",
+      "preferred_name_ko": "페터르 스튀베산트",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_DISTINCT_COLONIAL_POLITY",
+      "reason": "Long-serving Director-General of New Netherland until its English seizure; central representative of a distinct colonial polity.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "b6d97112-95c8-4442-a4ac-c4f8062c8ec4",
+      "canonical_name_en": "Robert Carter I",
+      "preferred_name_ko": "로버트 카터 1세",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_MAJOR_COLONIAL_POLITICAL_ECONOMIC_SIGNIFICANCE",
+      "reason": "Actually discharged Virginia's chief-executive duties in 1726-1727 and was a major colonial political-economic figure; not retained merely as an acting officeholder.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "f66f7659-44a3-4d1f-ae9f-d393c49d4f00",
+      "canonical_name_en": "Robert Clive",
+      "preferred_name_ko": "로버트 클라이브",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_IMPERIAL_TRANSFORMATION",
+      "reason": "Central military-political architect of East India Company ascendancy in Bengal; importance far exceeds the formal governor title.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "54bf8c8a-7c98-4a83-8106-99bf17b4170d",
+      "canonical_name_en": "Roland",
+      "preferred_name_ko": "롤랑",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_COLLECTIVE_MEMORY_AND_HISTORICAL_CORE",
+      "reason": "Historical Hruodland/Roland has both an attested 778 historical core and exceptional later collective-memory significance.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "6dd8f199-078f-4b9e-ba4c-42d7ddb1478f",
+      "canonical_name_en": "Santiago Méndez",
+      "preferred_name_ko": "산티아고 멘데스",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_INDEPENDENT_REPUBLIC_HEAD",
+      "reason": "Governorship is specifically tied to the independent Republic of Yucatan, satisfying the distinct-polity criterion.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "7c16a731-0d78-4731-8b4d-e863ae4bff5b",
+      "canonical_name_en": "Sheng Shicai",
+      "preferred_name_ko": "성스차이",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_DE_FACTO_AUTONOMOUS_REGIME",
+      "reason": "Military governor and de facto ruler of Xinjiang; autonomous regime significance rather than ordinary provincial service.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "27b37ef6-1210-4a05-a643-fa1458c66b03",
+      "canonical_name_en": "Sorghaghtani Beki",
+      "preferred_name_ko": "소르칵타니 베키",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_DYNASTIC_IMPERIAL_SIGNIFICANCE",
+      "reason": "Administration of the Toluid ulus was part of a major dynastic role in the Mongol imperial succession; significance independently exceeds local administration.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "9680b82d-10d3-40e8-b9bf-a87370d39ed5",
+      "canonical_name_en": "Symon Petliura",
+      "preferred_name_ko": "시몬 페틀류라",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_STATE_FORMATION_NATIONAL_LEADER",
+      "reason": "Head of the Ukrainian People's Republic Directory and later government-in-exile; national state-formation leadership.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "c6f2fce9-29a4-44f6-a523-0e27b8130a96",
+      "canonical_name_en": "William Augustus Bowles",
+      "preferred_name_ko": "윌리엄 오거스터스 볼스",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_SHORT_LIVED_QUASI_INDEPENDENT_POLITY",
+      "reason": "Leader of the short-lived State of Muskogee, a proclaimed and de facto Indigenous-borderland polity rather than a routine office.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    },
+    {
+      "person_id": "02e6975e-5432-4b71-8b9f-451e41bc6b26",
+      "canonical_name_en": "Yamada Nagamasa",
+      "preferred_name_ko": "야마다 나가마사",
+      "decision": "KEEP",
+      "decision_basis": "KEEP_TRANSREGIONAL_MILITARY_COMMERCIAL_SIGNIFICANCE",
+      "reason": "Prominent Ayutthaya-era Japanese military-commercial leader and court actor; retention does not depend on the brief Ligor governorship.",
+      "delete_requires_user_approval": true,
+      "production_deleted": false
+    }
+  ]
+}
