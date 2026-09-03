@@ -5,10 +5,10 @@
   const model = window.ATLAS_PERSON_SPACETIME_MODEL;
   const eraModel = window.ATLAS_PERSON_ERA_MODEL;
   const SPATIAL_INDEX_URL = "./atlas-polity-spatial-index.json";
-  const AXIS_WIDTH = 140;
-  const ERA_AXIS_WIDTH = 68;
+  const AXIS_WIDTH = 112;
+  const ERA_AXIS_WIDTH = 48;
   const DEFAULT_TIMELINE_HEIGHT = 4200;
-  const CAMERA_HEADER_HEIGHT = 36;
+  const CAMERA_HEADER_HEIGHT = 32;
   const CAMERA_MIN_ZOOM = 5;
   const CAMERA_MAX_ZOOM = 8;
   const CAMERA_ZOOM_STEP = 1.25;
@@ -16,8 +16,8 @@
   const FOCUS_DETAIL_ZOOM = 6.5;
   const RUNTIME_ASSETS = Object.freeze([
     ["./atlas-person-spacetime-time-projection.js?v=20260831-uniform-500-floor", "ATLAS_PERSON_SPACETIME_TIME_PROJECTION"],
-    ["./atlas-person-spacetime-space-axis.js?v=20260903-taxonomy-r2", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
-    ["./atlas-person-spacetime-presentation-layout.js?v=20260903-taxonomy-r2", "ATLAS_PERSON_SPACETIME_PRESENTATION_LAYOUT"],
+    ["./atlas-person-spacetime-space-axis.js?v=20260903-full-person-labels", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
+    ["./atlas-person-spacetime-presentation-layout.js?v=20260903-full-person-labels", "ATLAS_PERSON_SPACETIME_PRESENTATION_LAYOUT"],
     ["./atlas-person-spacetime-semantic-axis.js?v=20260903-place-lod", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
     ["./atlas-person-spacetime-uncertainty.js?v=20260903-c6", "ATLAS_PERSON_SPACETIME_UNCERTAINTY"],
     ["./atlas-person-spacetime-inspector.js?v=20260903-c8", "ATLAS_PERSON_SPACETIME_INSPECTOR"],
@@ -30,7 +30,7 @@
     ["./atlas-person-spacetime-person-tracks.js?v=20260902-inspector-evidence", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
     ["./atlas-person-spacetime-political-placement.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT"],
     ["./atlas-person-spacetime-lod.js?v=20260831-500-floor", "ATLAS_PERSON_SPACETIME_LOD"],
-    ["./atlas-person-spacetime-label-engine.js?v=20260903-cjk-band-zone", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
+    ["./atlas-person-spacetime-label-engine.js?v=20260903-full-person-labels", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
   ]);
 
   if (!reader || !model || !eraModel) {
@@ -527,64 +527,73 @@
     return searchable;
   }
 
-  function packTrackLabels(projectedTracks, timelineHeight, forceAll) {
+  function packTrackLabels(projectedTracks, contentWidth, timelineHeight, forceAll) {
     const { labelEngine } = runtime();
-    const placed = [];
+    const width = Number(contentWidth);
+    const height = Number(timelineHeight);
+    const placedMetadata = new Map();
     const deferred = [];
-    const groups = new Map();
+    if (!Number.isFinite(width) || !(width > 0) || !Number.isFinite(height) || !(height > 0)) {
+      return { placed: [], deferred: (projectedTracks || []).map((item) => Object.freeze({
+        person_id:item?.track?.person_id || null,
+        track_id:item?.track?.track_id || null,
+        reason:"global_label_space_missing"
+      })) };
+    }
 
-    for (const item of projectedTracks) {
-      const bandCode = text(item?.presentation_band_code);
-      const bandLeft = Number(item?.presentation_band_left);
-      const bandRight = Number(item?.presentation_band_right);
-      const zoneLeft = Number(item?.label_zone_left);
-      const zoneRight = Number(item?.label_zone_right);
-      if (!bandCode || !Number.isFinite(bandLeft) || !Number.isFinite(bandRight) || !(bandRight > bandLeft)
-        || !Number.isFinite(zoneLeft) || !Number.isFinite(zoneRight) || !(zoneRight > zoneLeft)) {
-        deferred.push(Object.freeze({ person_id:item?.track?.person_id || null, track_id:item?.track?.track_id || null, reason:"presentation_label_zone_missing" }));
+    const labels = [];
+    for (const item of projectedTracks || []) {
+      const anchorX = Number(item?.x);
+      const anchorY = Number(item?.y);
+      const personId = item?.track?.person_id || null;
+      const trackId = item?.track?.track_id || personId;
+      if (!personId || !Number.isFinite(anchorX) || !Number.isFinite(anchorY)) {
+        deferred.push(Object.freeze({ person_id:personId, track_id:trackId, reason:"projected_label_anchor_missing" }));
         continue;
       }
-      if (!groups.has(bandCode)) groups.set(bandCode, { bandCode, bandLeft, bandRight, items:[] });
-      groups.get(bandCode).items.push(item);
+      const displayName = text(item?.track?.display_name) || "이름 미상";
+      const boundedAnchorX = Math.min(width, Math.max(0, anchorX));
+      labels.push({
+        person_id:personId,
+        track_id:trackId,
+        text:displayName,
+        anchor_x:boundedAnchorX,
+        anchor_y:anchorY,
+        min_left:0,
+        max_right:width,
+        width:labelEngine.estimateWidth(
+          { text:displayName },
+          { minLabelWidth:labelEngine.DEFAULT_MIN_LABEL_WIDTH, maxLabelWidth:Math.min(labelEngine.DEFAULT_MAX_LABEL_WIDTH, width) }
+        ),
+        forced:forceAll || selectedPersonId === personId
+      });
+      placedMetadata.set(personId, {
+        region_code:text(item?.presentation_band_code) || text(item?.macroregion_code) || null
+      });
     }
 
-    for (const group of groups.values()) {
-      const bandWidth = group.bandRight - group.bandLeft;
-      const labels = group.items.map((item) => {
-        const zoneLeft = Math.max(group.bandLeft, Number(item.label_zone_left));
-        const zoneRight = Math.min(group.bandRight, Number(item.label_zone_right));
-        const zoneWidth = Math.max(0, zoneRight - zoneLeft);
-        const minimum = Math.min(labelEngine.DEFAULT_MIN_LABEL_WIDTH, Math.max(16, zoneWidth));
-        const maximum = Math.max(minimum, Math.min(labelEngine.DEFAULT_MAX_LABEL_WIDTH, Math.max(16, zoneWidth)));
-        return {
-          person_id: item.track.person_id,
-          track_id: item.track.track_id,
-          text: item.track.display_name,
-          anchor_x: item.x - group.bandLeft,
-          anchor_y: item.y,
-          min_left: zoneLeft - group.bandLeft,
-          max_right: zoneRight - group.bandLeft,
-          width: labelEngine.estimateWidth(
-            { text:item.track.display_name },
-            { minLabelWidth:minimum, maxLabelWidth:maximum }
-          ),
-          forced: forceAll || selectedPersonId === item.track.person_id
-        };
-      });
-      const result = labelEngine.packLabels(
-        labels,
-        { width:bandWidth, height:timelineHeight },
-        { maxLabelWidth:Math.min(labelEngine.DEFAULT_MAX_LABEL_WIDTH, bandWidth), maxHorizontalShift:bandWidth }
-      );
-      placed.push(...result.placed.map((label) => ({
-        ...label,
-        label_x:group.bandLeft + label.label_x,
-        region_code:group.bandCode,
-        region_left:group.bandLeft,
-        region_right:group.bandRight
-      })));
-      deferred.push(...result.deferred.map((label) => ({ ...label, region_code:group.bandCode })));
-    }
+    const result = labelEngine.packLabels(
+      labels,
+      { width, height },
+      {
+        maxLabelWidth:Math.min(labelEngine.DEFAULT_MAX_LABEL_WIDTH, width),
+        maxHorizontalShift:width,
+        anchorGap:1,
+        searchStep:1,
+        gap:labelEngine.DEFAULT_HORIZONTAL_GAP
+      }
+    );
+
+    const placed = result.placed.map((label) => ({
+      ...label,
+      region_code:placedMetadata.get(label.person_id)?.region_code || null,
+      region_left:0,
+      region_right:width
+    }));
+    deferred.push(...result.deferred.map((label) => ({
+      ...label,
+      region_code:placedMetadata.get(label.person_id)?.region_code || null
+    })));
     return { placed, deferred };
   }
 
@@ -979,7 +988,7 @@
       const signature = `${personIds.join(",")}|${segmentIds.join(",")}|${selectedPersonId || ""}|${selectedActivityId || ""}|${state.meanwhileOrdinal ?? ""}|${state.needle}|${state.lodWeights.labels}|${state.lodWeights.rails}|${state.lodWeights.activities}`;
 
       if (signature !== lastSignature) {
-        const labelPack = packTrackLabels(personItems, state.timelineHeight, Boolean(state.needle));
+        const labelPack = packTrackLabels(personItems, state.contentWidth, state.timelineHeight, Boolean(state.needle));
         const railLayer = mount.querySelector("#spacetimeRailLayer");
         const uncertaintyLayer = mount.querySelector("#spacetimeUncertaintyLayer");
         const labelLayer = mount.querySelector("#spacetimeLabelLayer");
@@ -1143,7 +1152,7 @@
     </section>
     ${renderSearchResults(searchItems, needle)}
     <section class="spacetime-precision-legend card"><strong>공간 배치 정밀도</strong><span><i class="is-place"></i>Place</span><span><i class="is-subregion"></i>Subregion 범위</span><span><i class="is-macroregion"></i>Macroregion 범위</span><small>점선 가로선은 ATLAS 시공간 배치 정밀도 범위이며, 인물의 활동 영역이나 실제 이동 경로가 아닙니다.</small></section>
-    <section class="spacetime-status-row"><span><b>${visibleTracks.length}</b> ${needle ? "검색" : "전체"} Person track</span><span><b>${primarySegmentCount}</b> 전체 주 위치 구간</span><span><b>${counterpartyCount}</b> 전체 counterparty 제외</span><span><b>${compiled.unresolvedPosition.length}</b> 전체 위치 미확정</span><span><b>${compiled.unresolvedChronology.length}</b> 전체 연대 미확정</span><span><b id="spacetimeDomPersonCount">0</b> viewport Person DOM</span><span><b id="spacetimeDomSegmentCount">0</b> viewport segment DOM</span><span><b id="spacetimeDomLabelCount">0</b> 이름 표시</span><span><b id="spacetimeDeferredLabelCount">0</b> label defer</span><span><b>${escapeHtml(timeAxis.stage_label)}</b> 시간축</span><span><b>${escapeHtml(spaceHeader.stage_label)}</b> 공간축</span><span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> LOD</span><span><b>${escapeHtml(cameraZoomLabel())}</b> 시공간 줌</span></section>
+    <section class="spacetime-status-row"><span><b>${visibleTracks.length}</b> ${needle ? "검색" : "전체"} Person track</span><span><b>${primarySegmentCount}</b> 전체 주 위치 구간</span><span><b>${counterpartyCount}</b> 전체 counterparty 제외</span><span><b>${compiled.unresolvedPosition.length}</b> 전체 위치 미확정</span><span><b>${compiled.unresolvedChronology.length}</b> 전체 연대 미확정</span><span><b id="spacetimeDomPersonCount">0</b> viewport Person DOM</span><span><b id="spacetimeDomSegmentCount">0</b> viewport segment DOM</span><span><b id="spacetimeDomLabelCount">0</b> 이름 표시</span><span><b id="spacetimeDeferredLabelCount">0</b> 이름 미표기</span><span><b>${escapeHtml(timeAxis.stage_label)}</b> 시간축</span><span><b>${escapeHtml(spaceHeader.stage_label)}</b> 공간축</span><span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> LOD</span><span><b>${escapeHtml(cameraZoomLabel())}</b> 시공간 줌</span></section>
     ${(compiled.unresolvedPosition.length || compiled.partitioned.relation_review.length) ? `<section class="spacetime-integrity-note card"><strong>근거 없는 위치는 자동 추정하지 않습니다.</strong><p>현재 canonical spatial index가 제공하는 검토된 macroregion만 좌표로 사용합니다. 세부 Place/subregion 근거가 없으면 macroregion보다 정밀한 좌표를 만들지 않으며, counterparty인 opposes는 자기 위치 계산에서 제외합니다.</p></section>` : ""}
     ${renderMeanwhile(meanwhileSummary)}
     <div class="spacetime-workspace">
