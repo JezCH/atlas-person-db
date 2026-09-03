@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-03T23:44:00+09:00",
+  "generated_at": "2026-09-03T23:21:00+09:00",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -11,9 +11,9 @@
     "no_guessing": "Do not infer placement from person names, modern nationality, ethnicity, or unreviewed geometry.",
     "unresolved": "If neither reviewed broad geography nor complete reviewed polity-place-function coverage yields one region, keep the Activity unresolved.",
     "subregion_precision": "When a reviewed polity has a stable historical subregion inside its macroregion, polity_subregions provides that reviewed coarse precision. Transregional, broad, or temporally shifting polities remain at macroregion precision until reviewed temporal polity-place-function coverage can place them more narrowly.",
-    "taxonomy_revision": "2026-09-03-r2",
+    "taxonomy_revision": "2026-09-03-r3",
     "taxonomy_rule": "Split only mixed historical-geographic leaves with reviewed polity evidence on both sides; preserve equal leaf width and keep every migrated leaf actively bound.",
-    "horizontal_order": "Macro and leaf order follows geographic adjacency first and representative longitude second; it is a one-dimensional historical display path, not a claim of exact longitude."
+    "horizontal_order": "Macro and leaf order follows geographic adjacency first and representative longitude second; South Asia uses Deccan → Maldives → Sri Lanka so the eastern endpoint hands off toward mainland Southeast Asia."
   },
   "regions": [
     {
@@ -919,7 +919,7 @@
     "7e731083-7dc1-47b4-a34e-8ac525f62422": "maritime-southeast-asia",
     "7e8213f0-ad28-5d2a-8d3b-629088c5539b": "china",
     "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6": "japan",
-    "81abc0e7-367d-48db-853c-2bdd5f76fa04": "sri-lanka-maldives",
+    "81abc0e7-367d-48db-853c-2bdd5f76fa04": "maldives",
     "8208ad7e-4e8e-4425-8801-be17044b735a": "central-europe",
     "82671a4d-2f26-47e4-b06b-7992c46d7b76": "northwest-south-asia",
     "829b5976-18f4-48e3-a35d-3c141858ce56": "balkans",
@@ -1024,7 +1024,7 @@
     "c068d786-ab71-5516-ad51-b682feba155a": "eastern-europe",
     "c117fb82-4943-40d6-bc2d-740f0665665a": "northern-europe",
     "c1a85ed8-7c95-5192-939d-d5d3bd96106c": "china",
-    "c4089cc9-41b3-4879-9db0-c8776c59c87d": "sri-lanka-maldives",
+    "c4089cc9-41b3-4879-9db0-c8776c59c87d": "sri-lanka",
     "c40d4e85-38a3-59ab-b3f4-a618ffbde2e5": "china",
     "c49578ef-3430-453b-b36e-884376031431": "manchuria",
     "c4d7101f-83e2-4327-bd3a-3fcc5a0eaad9": "russia-volga",
