@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mithridates-ii:parthian-empire:c124-c88-bce:v1",
+  "person": {
+    "canonical_name_en": "Mithridates II",
+    "display_name_ko": "미트리다테스 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Parthian Empire",
+    "display_name_ko": "파르티아 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King of Parthia",
+    "role_display_name_ko": "파르티아 왕",
+    "start_year": -124,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -88,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mithridates II was one of the greatest Arsacid rulers. Encyclopaedia Iranica places his accession around 124/123 BCE and his death around 88/87 BCE; exact chronology varies by reconstruction. During his reign Parthia expanded its influence in Mesopotamia and Armenia, opened diplomatic contact with Han China, and made early formal contact with Rome. ATLAS therefore records c.124–c.88 BCE rather than forcing one disputed terminal year."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Encyclopaedia Iranica — Arsacids ii. The Arsacid dynasty",
+      "canonical_url": "https://www.iranicaonline.org/articles/arsacids-ii/",
+      "citation_text": "Iranica gives Mithridates II's reign approximately as 124/123–88/87 BCE and describes him as one of the outstanding Arsacid rulers."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Encyclopaedia Iranica — Chronology of Iranian History Part 1",
+      "canonical_url": "https://www.iranicaonline.org/articles/chronology-of-iranian-history-part-1/",
+      "citation_text": "Iranica's chronology records the accession of Arsacid Mithridates II in 124 BCE."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-parthia-vandals-iceni-nevsky-judea-20260903",
+    "requested_identity": "MITHRIDATES II — PARTHIA",
+    "correction_note": "Register as Arsacid king of the Parthian Empire with approximate chronology reflecting scholarly variation."
+  }
+}

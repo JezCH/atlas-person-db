@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:salome-alexandra:hasmonean-judea:c76-67-bce:v1",
+  "person": {
+    "canonical_name_en": "Salome Alexandra",
+    "display_name_ko": "살로메 알렉산드라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Hasmonean Kingdom of Judea",
+    "display_name_ko": "하스몬 유대 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Queen Regnant",
+    "role_display_name_ko": "여왕",
+    "start_year": -76,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -67,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Salome Alexandra (Shlomtzion) succeeded her husband Alexander Jannaeus and ruled Hasmonean Judea in her own right until her death in 67 BCE. Standard chronologies give 76–67 BCE, while older reference literature allows accession in 76 or 75 BCE. ATLAS therefore marks the 76 BCE start as approximate and avoids the mod's broad 'Graeco-Israel and Greece' framing."
+  },
+  "sources": [
+    {
+      "source_type": "reference",
+      "title": "Jewish Encyclopedia — Alexandra (Salome)",
+      "canonical_url": "https://www.jewishencyclopedia.com/articles/1167-alexandra",
+      "citation_text": "The entry identifies Alexandra Salome as queen regnant and places her accession in 76 or 75 BCE and her death in 67 BCE."
+    },
+    {
+      "source_type": "primary_source",
+      "title": "Josephus, Antiquities of the Jews, Book XIII",
+      "canonical_url": "https://penelope.uchicago.edu/josephus/ant-13.html",
+      "citation_text": "Josephus describes Alexandra taking control of the kingdom after Alexander Jannaeus and governing Judea as queen."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-parthia-vandals-iceni-nevsky-judea-20260903",
+    "requested_identity": "JUDEA — SALOME ALEXANDRA",
+    "correction_note": "Register as queen regnant of the Hasmonean Kingdom of Judea, not a hybrid 'Graeco-Israel and Greece' polity."
+  }
+}
