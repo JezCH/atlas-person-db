@@ -81,10 +81,15 @@
     const y1 = projection.yForOrdinal(segment.start_ordinal);
     const y2 = projection.yForOrdinal(segment.end_ordinal);
     if (!Number.isFinite(y1) || !Number.isFinite(y2)) return null;
-    const x = Number(segment.x_anchor) * positive(contentWidth);
+    const width = positive(contentWidth);
+    const anchorX = Number(segment.x_anchor) * width;
+    const minX = Number.isFinite(Number(segment.x_min)) ? Number(segment.x_min) * width : anchorX;
+    const maxX = Number.isFinite(Number(segment.x_max)) ? Number(segment.x_max) * width : anchorX;
+    const leftX = Math.min(anchorX, minX, maxX);
+    const rightX = Math.max(anchorX, minX, maxX);
     const top = Math.min(y1, y2);
     const bottom = Math.max(y1, y2);
-    return Object.freeze({ left: x - 12, right: x + 180, top: top - 12, bottom: bottom + 12, width: 192, height: Math.max(24, bottom - top + 24) });
+    return Object.freeze({ left: leftX - 12, right: rightX + 180, top: top - 12, bottom: bottom + 12, width: Math.max(192, rightX - leftX + 192), height: Math.max(24, bottom - top + 24) });
   }
 
   function cullTrackSegments(tracks, projection, contentWidth, rectInput, forcedIdsInput = []) {
