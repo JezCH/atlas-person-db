@@ -745,9 +745,9 @@
       const labelText = polityLabel(segment.activity);
       const naturalWidth = labelEngine.estimateWidth(
         { text:labelText },
-        { minLabelWidth:28, maxLabelWidth:140, charWidth:6.2, cjkCharWidth:9 }
+        { minLabelWidth:24, maxLabelWidth:112, charWidth:5.8, cjkCharWidth:8 }
       ) + 10;
-      const box = presentationLayout.activityBox(presentation, segment, naturalWidth, { minWidth:28, maxWidth:150 });
+      const box = presentationLayout.activityBox(presentation, segment, naturalWidth, { minWidth:24, maxWidth:120 });
       const left = Number.isFinite(Number(box?.left)) ? Number(box.left) : fallbackX + 6;
       const widthStyle = Number.isFinite(Number(box?.width)) ? `width:${Number(box.width)}px;` : "";
       const bandCode = text(box?.band_code) || text(geometry?.band_code) || text(segment.subregion_code) || text(segment.macroregion_code);
