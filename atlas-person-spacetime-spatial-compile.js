@@ -101,7 +101,7 @@
   function baseCompiledSegment(segment, macro) {
     return {
       activity_id: text(segment?.activity_id), polity_id: text(segment?.polity_id), region_code: text(segment?.region_code),
-      macroregion_code: macro?.code || null, subregion_code: null, location_label: text(segment?.location_label),
+      macroregion_code: macro?.code || null, subregion_code: text(segment?.subregion_code) || null, location_label: text(segment?.location_label),
       place_function_type: text(segment?.place_function_type) || null, place_name: text(segment?.place_name) || null,
       place_id: text(segment?.place_id) || null, start_year: segment?.start_year ?? null, end_year: segment?.end_year ?? null,
       historical_placement_basis: text(segment?.placement_basis), historical_confidence: text(segment?.confidence),
@@ -157,6 +157,22 @@
         spatial_precision: "place", display_anchor_basis: "reviewed_place_point",
         display_confidence: "reviewed",
         display_source_refs: normalizedRefs(binding.source_refs),
+        display_place_points: compiledDisplayPlacePoints(segment, continuum, macro)
+      });
+    }
+
+    const reviewedSubregionCode = text(segment?.subregion_code);
+    if (reviewedSubregionCode) {
+      const range = compileSubregionRange(continuum, macro.code, reviewedSubregionCode);
+      if (!range) return unresolvedSegment(segment, macro, "reviewed_polity_subregion_invalid");
+      return Object.freeze({
+        ...baseCompiledSegment(segment, macro),
+        subregion_code: range.subregion_code,
+        status: "placed", reason: null,
+        x_anchor: range.x_anchor, x_min: range.x_min, x_max: range.x_max,
+        spatial_precision: "subregion", display_anchor_basis: "reviewed_polity_subregion",
+        display_confidence: "reviewed",
+        display_source_refs: normalizedRefs(segment?.source_refs),
         display_place_points: compiledDisplayPlacePoints(segment, continuum, macro)
       });
     }
