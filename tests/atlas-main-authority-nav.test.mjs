@@ -16,7 +16,7 @@ test('Main navigation exposes all authority domains through static controls plus
   assert.match(nav, /dataAtlasDomain|dataset\.atlasDomain|data-atlas-domain="spacetime"/i);
   assert.match(catalog, /spacetime: entry/);
   assert.match(html, /atlas-main-authority-nav\.css\?v=20260815-ui5/);
-  assert.match(html, /atlas-main-authority-nav\.js\?v=20260903-spacetime-leaf-equal-map-order/);
+  assert.match(html, /atlas-main-authority-nav\.js\?v=20260903-spacetime-taxonomy-r2/);
 });
 
 test('future authority shells state readiness from the Korean catalog instead of fabricating first-class data', () => {
