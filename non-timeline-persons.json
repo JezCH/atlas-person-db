@@ -2038,5 +2038,128 @@
     "role_ko": "오레야나 원정 기록에 전하는 아마존 여왕",
     "reason": "Gonzalo Fernández de Oviedo records Conori as the purported queen of a female-ruled Amazonian realm based on information relayed from the Orellana expedition and an Indigenous informant. The report does not establish Conori as a historical ruler of the Omagua, and no defensible personal chronology is available. ATLAS therefore preserves her only as an unverified colonial-era Amazon tradition and rejects the game-specific Omagua-ruler attribution.",
     "map_policy": "Do not display on the historical year timeline unless a separate legendary or uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "Lawtylywalyn",
+    "display_name_ko": "라우틸리왈린",
+    "politic_name": "Koryak",
+    "politic_display_name_ko": "코랴크",
+    "historicity": "legendary_or_unverified",
+    "historicity_display_ko": "전승·역사성 미검증",
+    "timeline_status": "excluded",
+    "date_basis": "koryak_chukchi_war_epic_tradition",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "코랴크 전승의 전사·지도자",
+    "reason": "Koryak and Chukchi war traditions recorded by Bogoraz preserve Lawtylywalyn as one of the named bogatyr/ermechyp warrior-leaders in older legends. The surviving evidence is epic and folkloric, not a secure biographical record of a single datable chief, and no defensible personal activity interval can be established. ATLAS therefore retains the traditional Koryak association without treating the game-mod title 'Chief of the Koryak Civilization' as verified history.",
+    "sources": [
+      {
+        "title": "Folklorica — discussion of Chukchi-Koryak war legends citing Bogoraz",
+        "url": "https://journals.ku.edu/folklorica/article/download/3714/3557"
+      }
+    ],
+    "map_policy": "Do not display on the historical year timeline unless a legendary or uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "Qillerkavialuk",
+    "display_name_ko": "킬레르카비알루크",
+    "politic_name": "Qavinaq Yup'ik",
+    "politic_display_name_ko": "카비나크 유픽",
+    "historicity": "historical_tradition_uncertain_chronology",
+    "historicity_display_ko": "역사 전승·연대 불확실",
+    "timeline_status": "excluded",
+    "date_basis": "yupik_bow_and_arrow_war_oral_histories",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "카비나크의 전쟁 지도자",
+    "reason": "Yup'ik oral histories synthesized in the peer-reviewed Ethnohistory study of the Bow and Arrow War Days explicitly identify Qillerkavialuk as the war leader of Qavinaq and a renowned warrior on whom the community depended. The war cycle predates Russian arrival in the region and its chronology spans competing centuries; the source does not establish a defensible person-specific calendar interval for Qillerkavialuk. ATLAS therefore retains him as a historical-tradition war leader outside the year timeline rather than inventing a reign or chiefship.",
+    "sources": [
+      {
+        "title": "Caroline L. Funk, The Bow and Arrow War Days on the Yukon-Kuskokwim Delta of Alaska, Ethnohistory 57(4)",
+        "url": "https://www.researchgate.net/publication/261929331_The_Bow_and_Arrow_War_Days_on_the_Yukon-Kuskokwim_Delta_of_Alaska"
+      }
+    ],
+    "map_policy": "Do not display on the historical year timeline unless an uncertain-chronology or oral-history overlay is enabled."
+  },
+  {
+    "person_name": "Wëikayoma",
+    "display_name_ko": "웨이카요마",
+    "politic_name": "Waika/Yanomami",
+    "politic_display_name_ko": "와이카·야노마미",
+    "historicity": "historical_ethnographic_uncertain_chronology",
+    "historicity_display_ko": "민족지 기록상 실존·연대 불확실",
+    "timeline_status": "excluded",
+    "date_basis": "jacques_lizot_ethnographic_report_without_personal_dates",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "여성 샤먼(헤쿠라)",
+    "reason": "Jacques Lizot's Yanomami ethnographic account records a specifically named woman shaman, Wëikayoma, among the Waika and describes her as a woman hekura who used hallucinogens, sang to spirits and was understood to act on patients' souls. The account does not give her village, birth, death, office term, or a defensible personal calendar point. ATLAS therefore accepts the ethnographically attested individual but keeps her outside the year timeline.",
+    "sources": [
+      {
+        "title": "Jacques Lizot, Yanomami ethnographic account — Os poderes mágicos / Comedores de Almas",
+        "url": "https://acervo.socioambiental.org/sites/default/files/documents/yal00077.pdf"
+      }
+    ],
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline without separately reviewed personal chronology."
+  },
+  {
+    "person_name": "Nkongolo Mwamba",
+    "display_name_ko": "응콩골로 음왐바",
+    "politic_name": "Luba",
+    "politic_display_name_ko": "루바",
+    "historicity": "legendary_or_dynastic_symbol",
+    "historicity_display_ko": "전설·왕조적 상징",
+    "timeline_status": "excluded",
+    "date_basis": "luba_genesis_myth_and_oral_kinglist",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "루바 건국 전승의 정복자·초기 군주",
+    "reason": "Luba origin traditions place Nkongolo Mwamba at the beginning of Luba state formation, but Thomas Reefe's historical analysis treats the genesis narrative as mythic charter material rather than a literal biography, and modern reference scholarship notes that Nkongolo may symbolize a pre-mid-sixteenth-century dynasty rather than a single historical individual. ATLAS therefore preserves the foundational Luba tradition without assigning the precise-looking c.1585 reign often repeated in secondary king lists.",
+    "sources": [
+      {
+        "title": "Thomas Q. Reefe, The Rainbow and the Kings: A History of the Luba Empire to 1891",
+        "url": "https://www.jstor.org/stable/jj.8306252"
+      },
+      {
+        "title": "Encyclopaedia Africana — Nkongolo",
+        "url": "https://encyclopaediaafricana.com/nkongolo/"
+      }
+    ],
+    "map_policy": "Do not display on the historical year timeline unless a legendary or historical-tradition overlay is enabled."
+  },
+  {
+    "person_name": "Eréndira",
+    "display_name_ko": "에렌디라",
+    "politic_name": "Purépecha",
+    "politic_display_name_ko": "푸레페차",
+    "historicity": "legendary_or_literary_tradition",
+    "historicity_display_ko": "전설·후대 문학 전승",
+    "timeline_status": "excluded",
+    "date_basis": "purepecha_oral_legend_and_later_literary_elaboration",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "푸레페차 정복기 전승의 저항 영웅",
+    "reason": "Eréndira is preserved in Purépecha legend as a young woman associated with resistance during the Spanish conquest, but no contemporary document securely establishes the familiar princess biography or the exact 1503–1529 life span. UNAM scholarship traces major elements of the modern narrative to later oral variants and Eduardo Ruiz's 1900 literary treatment, while Mexico's INPI explicitly presents her story as an Indigenous legend. ATLAS therefore preserves Eréndira as a major Purépecha resistance tradition without promoting legendary dates to historical Activity boundaries.",
+    "sources": [
+      {
+        "title": "INPI — Leyendas de los pueblos indígenas: La princesa purépecha Eréndira",
+        "url": "https://www.gob.mx/inpi/articulos/leyendas-de-los-pueblos-indigenas-la-princesa-purepecha-erendira-descarga-la-publicacion-en-pdf"
+      },
+      {
+        "title": "UNAM thesis — El filme y la leyenda de Eréndira",
+        "url": "https://tesiunamdocumentos.dgb.unam.mx/ptd2009/febrero/0639362/0639362_A1.pdf"
+      }
+    ],
+    "map_policy": "Do not display on the historical year timeline unless a legendary or historical-tradition overlay is enabled."
   }
 ]

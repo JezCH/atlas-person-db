@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:ihikutaha:kuikuro:founder-chief:c1850:v1",
+  "person": {
+    "canonical_name_en": "Ihikutaha",
+    "display_name_ko": "이히쿠타하",
+    "person_type": "historical",
+    "historicity": "historical_tradition"
+  },
+  "polity": {
+    "canonical_name_en": "Kuikuro",
+    "display_name_ko": "쿠이쿠루",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Founder chief",
+    "role_display_name_ko": "창건 추장",
+    "start_year": 1850,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1850,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Kuikuro oral history and linguistic documentation identify Ihikutaha, together with Mütsümü/Mâcâmâ, as a chief involved in the fission from Oti and the formation of the Kuikuro local group and village. The Kuikuro lexicon places Oti's joint Kuikuro-Matipu occupation probably until the middle of the nineteenth century. ATLAS therefore uses c.1850 as a narrow representative point for Ihikutaha's documented founding activity, not as a fabricated lifelong chiefship or a claim that all Kuikuro history began in one exact year."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Kuikuro Lexicon — DOBES / Max Planck documentation",
+      "canonical_url": "https://dobes.mpi.nl/wp-content/uploads/2011/07/Kuikuro_lexicon_example.pdf",
+      "citation_text": "The Kuikuro lexicon states that founder chiefs Mütsümü and Ihikutaha left Oti to seek another place and that Oti was occupied by shared Kuikuro/Matipu ancestors probably until the middle of the nineteenth century."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Mutua Mehinaku, Tetsualü: pluralismo de línguas e pessoas no Alto Xingu — UFRJ/FUNAI",
+      "canonical_url": "https://biblioteca.funai.gov.br/media/pdf/TESES/MFN-36966.pdf",
+      "citation_text": "The thesis preserves Kuikuro oral-history passages naming Ihikutaha as a young chief who joined the founding group at Kuhikugu and describes the village-formation process."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "gedemo-civ-leaders-2-20260903",
+    "requested_identity": "Ihikutaha",
+    "correction_note": "Register the documented Kuikuro founder chief with a c.1850 representative point; do not treat 'Kuikuro Civilization' as a centralized state with a continuous sovereign reign."
+  }
+}

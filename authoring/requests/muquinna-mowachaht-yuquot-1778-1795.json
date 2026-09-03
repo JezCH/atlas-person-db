@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:muquinna-d1795:mowachaht-yuquot:chief:c1778-1795:v1",
+  "person": {
+    "canonical_name_en": "Muquinna (d. 1795)",
+    "display_name_ko": "무퀸나(1795년 사망)",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Mowachaht (Yuquot)",
+    "display_name_ko": "모와차트(유쿼트)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "Hereditary chief",
+    "role_display_name_ko": "세습 추장",
+    "start_year": 1778,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1795,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "The name Muquinna/Maquinna was borne by a succession of ranking Mowachaht chiefs at Yuquot, so ATLAS does not collapse all late-eighteenth- and early-nineteenth-century references into one person. The Dictionary of Canadian Biography identifies a Muquinna who likely assumed leadership around 1778 and probably died in 1795, after which another chief took the same name/title. This Activity records only that earlier individual."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Dictionary of Canadian Biography — MUQUINNA (Macuina, Maquilla, Maquinna), d. 1795",
+      "canonical_url": "https://www.biographi.ca/en/bio/muquinna_1795_4E.html",
+      "citation_text": "The Dictionary of Canadian Biography explains that Muquinna was a ranking Mowachaht/Nootka chief at Yuquot, likely assumed leadership around 1778, probably died in 1795, and was succeeded by another chief using the same name."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "gedemo-civ-leaders-2-20260903",
+    "requested_identity": "Macuina / Maquinna",
+    "correction_note": "Disambiguate the hereditary name/title and register the earlier Muquinna who likely died in 1795; do not merge him with the later Muquinna active during the 1803 Boston incident."
+  }
+}
