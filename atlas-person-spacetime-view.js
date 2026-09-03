@@ -17,7 +17,7 @@
   const RUNTIME_ASSETS = Object.freeze([
     ["./atlas-person-spacetime-time-projection.js?v=20260831-uniform-500-floor", "ATLAS_PERSON_SPACETIME_TIME_PROJECTION"],
     ["./atlas-person-spacetime-space-axis.js?v=20260901-compact-shared-chrome", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
-    ["./atlas-person-spacetime-semantic-axis.js?v=20260826-p10", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
+    ["./atlas-person-spacetime-semantic-axis.js?v=20260903-place-lod", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
     ["./atlas-person-spacetime-uncertainty.js?v=20260903-c6", "ATLAS_PERSON_SPACETIME_UNCERTAINTY"],
     ["./atlas-person-spacetime-inspector.js?v=20260903-c8", "ATLAS_PERSON_SPACETIME_INSPECTOR"],
     ["./atlas-person-spacetime-exploration.js?v=20260826-p11", "ATLAS_PERSON_SPACETIME_EXPLORATION"],
@@ -1034,7 +1034,7 @@
 
   function renderInto(mount) {
     const renderFocus = captureRenderFocus(mount);
-    const { timeProjection, spaceAxis, semanticAxis, exploration, inspector, meanwhile, lod } = runtime();
+    const { timeProjection, spaceAxis, semanticAxis, spatialCompile, exploration, inspector, meanwhile, lod } = runtime();
     const timeline = timelineRange();
     const projection = timeProjection.createUniformTimeProjection(timeline.start_year, timeline.end_year, DEFAULT_TIMELINE_HEIGHT * cameraZoom * GLOBAL_EXTENT_COMPRESSION, cameraZoom);
     currentTimelineProjection = projection;
@@ -1044,7 +1044,7 @@
     const baseWorldWidth = spaceAxis.baseWorldWidthForViewport(Number(mount.clientWidth) || window.innerWidth || 1280, AXIS_WIDTH);
     const contentWidth = baseWorldWidth * cameraZoom * GLOBAL_EXTENT_COMPRESSION;
     const regions = spaceAxis.stableRegionLayout(compiled.continuum, contentWidth);
-    const spaceHeader = semanticAxis.buildSpaceHeaderPlan(compiled.continuum, contentWidth);
+    const spaceHeader = semanticAxis.buildSpaceHeaderPlan(compiled.continuum, contentWidth, cameraZoom, spatialCompile.REVIEWED_PLACE_BINDINGS);
     const timeAxis = semanticAxis.buildTimeAxisPlan(timeline, projection, cameraZoom);
     const allProjectedTracks = compiled.partitioned.tracks.map((track) => exploration.projectTrack(track, projection, contentWidth)).filter(Boolean);
     const projectedTracks = needle ? allProjectedTracks.filter((item) => trackSearchable(item.track).includes(needle)) : allProjectedTracks;
@@ -1096,6 +1096,7 @@
       <div class="spacetime-region-head" style="width:${contentWidth}px">
         <div class="spacetime-region-head-layer is-macro" style="opacity:${spaceHeader.macro_opacity}">${spaceHeader.macroregions.map((region) => `<div class="spacetime-region-head-band" style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${escapeHtml(region.code)}</small></div>`).join("")}</div>
         <div class="spacetime-region-head-layer is-subregion" style="opacity:${spaceHeader.subregion_opacity}">${spaceHeader.subregions.map((region) => `<div class="spacetime-region-head-band" style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${escapeHtml(region.parent_code)}</small></div>`).join("")}</div>
+        <div class="spacetime-region-head-layer is-place" style="opacity:${spaceHeader.place_opacity}">${spaceHeader.places.map((place) => `<div class="spacetime-place-head-marker" style="left:${place.x}px" title="${escapeHtml(`검토 Place · ${place.place_name} · ${place.subregion_code}의 presentation anchor · 정확한 지리 좌표 아님`)}"><i></i><strong>${escapeHtml(place.place_name)}</strong></div>`).join("")}</div>
       </div>
       <div class="spacetime-era-axis" style="height:${timelineHeight}px;opacity:${timeAxis.era_opacity}">${eras.map((era) => `<div class="person-era-${escapeHtml(era.code)}" style="top:${era.top}px;height:${era.height}px"><span>${escapeHtml(era.label)}</span></div>`).join("")}</div>
       <div class="spacetime-year-axis" data-axis-stage="${escapeHtml(timeAxis.stage)}" style="height:${timelineHeight}px">${ticks.map((tick) => `<span class="${tick.major ? "is-major" : ""}" style="top:${tick.y}px">${escapeHtml(tick.label)}</span>`).join("")}</div>
@@ -1103,6 +1104,7 @@
         ${ticks.map((tick) => `<i class="spacetime-century-line${tick.major ? " is-major" : ""}" style="top:${tick.y}px"></i>`).join("")}
         ${regions.map((region) => `<i class="spacetime-region-line" style="left:${region.left}px;height:${timelineHeight}px"></i>`).join("")}
         ${spaceHeader.subregions.map((subregion) => `<i class="spacetime-subregion-line" style="left:${subregion.left}px;height:${timelineHeight}px;opacity:${spaceHeader.subregion_opacity}" title="${escapeHtml(subregion.label)}"></i>`).join("")}
+        ${spaceHeader.places.map((place) => `<i class="spacetime-place-guide" style="left:${place.x}px;opacity:${spaceHeader.place_opacity}" title="${escapeHtml(`검토 Place: ${place.place_name} · presentation anchor · 정확한 지리 좌표 아님`)}"></i>`).join("")}
         ${meanwhileOrdinal == null ? "" : `<div class="spacetime-meanwhile-line${meanwhileSelectionSource === "activity" ? " is-activity-linked" : ""}" style="top:${projection.yForOrdinal(meanwhileOrdinal)}px;width:${contentWidth}px"><span>${escapeHtml(meanwhileMomentLabel())}</span></div>`}
         <div id="spacetimeRailLayer" class="spacetime-runtime-layer"></div>
         <div id="spacetimeUncertaintyLayer" class="spacetime-runtime-layer"></div>
