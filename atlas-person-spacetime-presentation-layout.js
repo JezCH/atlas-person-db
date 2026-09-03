@@ -6,13 +6,13 @@
 })(typeof globalThis !== "undefined" ? globalThis : this, () => {
   "use strict";
 
-  const DEFAULT_BAND_PADDING = 2;
-  const DEFAULT_RAIL_LABEL_GAP = 3;
-  const DEFAULT_RAIL_CORRIDOR_RATIO = 0.12;
-  const DEFAULT_RAIL_CORRIDOR_MIN_WIDTH = 12;
-  const DEFAULT_RAIL_CORRIDOR_MAX_WIDTH = 30;
-  const DEFAULT_MIN_LABEL_ZONE_WIDTH = 24;
-  const DEFAULT_RAIL_LANE_SPACING = 4;
+  const DEFAULT_BAND_PADDING = 0;
+  const DEFAULT_RAIL_LABEL_GAP = 1;
+  const DEFAULT_RAIL_CORRIDOR_RATIO = 0.035;
+  const DEFAULT_RAIL_CORRIDOR_MIN_WIDTH = 4;
+  const DEFAULT_RAIL_CORRIDOR_MAX_WIDTH = 12;
+  const DEFAULT_MIN_LABEL_ZONE_WIDTH = 12;
+  const DEFAULT_RAIL_LANE_SPACING = 2;
 
   function text(value) { return value == null ? "" : String(value).trim(); }
   function finite(value) { const n = Number(value); return Number.isFinite(n) ? n : null; }
@@ -87,11 +87,11 @@
     const minLabelWidth = Math.max(12, Number(options.minLabelZoneWidth ?? DEFAULT_MIN_LABEL_ZONE_WIDTH) || DEFAULT_MIN_LABEL_ZONE_WIDTH);
     const minCorridor = Math.max(4, Number(options.minRailCorridorWidth ?? DEFAULT_RAIL_CORRIDOR_MIN_WIDTH) || DEFAULT_RAIL_CORRIDOR_MIN_WIDTH);
     const maxCorridor = Math.max(minCorridor, Number(options.maxRailCorridorWidth ?? DEFAULT_RAIL_CORRIDOR_MAX_WIDTH) || DEFAULT_RAIL_CORRIDOR_MAX_WIDTH);
-    const ratio = clamp(Number(options.railCorridorRatio ?? DEFAULT_RAIL_CORRIDOR_RATIO) || DEFAULT_RAIL_CORRIDOR_RATIO, 0.05, 0.45);
+    const ratio = clamp(Number(options.railCorridorRatio ?? DEFAULT_RAIL_CORRIDOR_RATIO) || DEFAULT_RAIL_CORRIDOR_RATIO, 0.02, 0.45);
     const laneSpacing = Math.max(2, Number(options.railLaneSpacing ?? DEFAULT_RAIL_LANE_SPACING) || DEFAULT_RAIL_LANE_SPACING);
     const usable = Math.max(0, pixels.width - padding * 2);
     const maximumAllowed = Math.max(4, usable - gap - Math.min(minLabelWidth, Math.max(12, usable * 0.55)));
-    const laneDemand = 4 + Math.max(1, Number(laneCount) || 1) * laneSpacing;
+    const laneDemand = 2 + Math.max(1, Number(laneCount) || 1) * laneSpacing;
     const desired = Math.max(minCorridor, pixels.width * ratio, Math.min(maxCorridor, laneDemand));
     const corridorWidth = Math.min(maxCorridor, maximumAllowed, desired);
     const corridorLeft = pixels.left + padding;
@@ -116,7 +116,7 @@
     const count = Math.max(1, Number(laneCount) || 1);
     const lane = clamp(Number(laneIndex) || 0, 0, count - 1);
     if (count === 1) return corridor.corridor_left + corridor.corridor_width / 2;
-    const inset = Math.min(2, corridor.corridor_width * 0.12);
+    const inset = Math.min(1, corridor.corridor_width * 0.1);
     const span = Math.max(0, corridor.corridor_width - inset * 2);
     return corridor.corridor_left + inset + (lane / (count - 1)) * span;
   }
