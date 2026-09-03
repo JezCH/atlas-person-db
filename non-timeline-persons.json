@@ -2331,5 +2331,36 @@
       }
     ],
     "map_policy": "Do not display on the historical year timeline unless a separate uncertain-chronology overlay is enabled."
+  },
+  {
+    "person_name": "Adi Shankara",
+    "display_name_ko": "아디 샹카라",
+    "politic_name": "Early medieval India",
+    "politic_display_name_ko": "중세 초기 인도",
+    "historicity": "historical_uncertain_biography",
+    "historicity_display_ko": "역사적 인물·전기 불확실",
+    "timeline_status": "excluded",
+    "date_basis": "eighth_century_scholarly_floruit_without_secure_person_polity_binding",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "아드바이타 베단타 철학자·종교 사상가",
+    "reason": "Śaṅkara is securely treated by modern scholarship as a major historical Advaita Vedānta philosopher of the eighth century. Oxford's Handbook of Indian Philosophy gives a representative floruit around 710 CE, while other scholarly reconstructions range from the late seventh or early eighth century through 700–750 or the traditional 788–820 chronology. However, dependable historical records of his life are extremely sparse; the familiar birthplace, itineraries, monastery foundations and many biographical details come from hagiographies written centuries later. ATLAS therefore preserves him as a historical figure associated with early medieval India but does not fabricate a single contemporary kingdom or a precise year-based Activity rail from later biographical tradition.",
+    "sources": [
+      {
+        "title": "Śaṅkara — Stanford Encyclopedia of Philosophy",
+        "url": "https://plato.stanford.edu/entries/shankara/"
+      },
+      {
+        "title": "Śaṅkara — Oxford Bibliographies in Hinduism",
+        "url": "https://academic.oup.com/reference/62357/reference-article-abstract/554514321"
+      },
+      {
+        "title": "Timeline: Indian Philosophy in a Hundred Thinkers — The Oxford Handbook of Indian Philosophy",
+        "url": "https://academic.oup.com/edited-volume/27982/chapter/211656615"
+      }
+    ],
+    "map_policy": "Retain in the Person registry; do not display on the historical year timeline until a defensible person-specific polity/location binding is reviewed. A separate uncertain-biography overlay may display the eighth-century scholarly floruit."
   }
 ]
