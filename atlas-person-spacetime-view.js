@@ -16,7 +16,7 @@
   const FOCUS_DETAIL_ZOOM = 6.5;
   const RUNTIME_ASSETS = Object.freeze([
     ["./atlas-person-spacetime-time-projection.js?v=20260831-uniform-500-floor", "ATLAS_PERSON_SPACETIME_TIME_PROJECTION"],
-    ["./atlas-person-spacetime-space-axis.js?v=20260901-compact-shared-chrome", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
+    ["./atlas-person-spacetime-space-axis.js?v=20260903-leaf-equal-map-order", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
     ["./atlas-person-spacetime-presentation-layout.js?v=20260903-band-corridor-v1", "ATLAS_PERSON_SPACETIME_PRESENTATION_LAYOUT"],
     ["./atlas-person-spacetime-semantic-axis.js?v=20260903-place-lod", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
     ["./atlas-person-spacetime-uncertainty.js?v=20260903-c6", "ATLAS_PERSON_SPACETIME_UNCERTAINTY"],
