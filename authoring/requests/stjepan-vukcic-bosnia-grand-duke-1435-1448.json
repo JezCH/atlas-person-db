@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:stjepan-vukcic-kosaca:kingdom-bosnia:1435-1448:v1",
+  "person": {
+    "canonical_name_en": "Stjepan Vukčić Kosača",
+    "display_name_ko": "스체판 부크치치 코사차",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Bosnia",
+    "display_name_ko": "보스니아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Grand Duke of Bosnia",
+    "role_display_name_ko": "보스니아 대공",
+    "start_year": 1435,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1448,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Stjepan succeeded Sandalj Hranić in 1435 as the leading grand duke of the Bosnian state. This service phase is separated from his later autonomous Herzegovinian rule."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "Hrvatska enciklopedija — Kosača, Stjepan Vukčić",
+      "canonical_url": "https://www.enciklopedija.hr/clanak/kosaca-stjepan-vukcic",
+      "citation_text": "The Croatian Encyclopedia identifies Stjepan as grand duke of the Bosnian state from 1435, his adoption of the herceg of Saint Sava title in 1448, and his independent rule in the territory thereafter known as Herzegovina until 1466."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-bosnia-egypt-sudan-batch-20260903",
+    "requested_identity": "STJEPAN VUKCIC — HERZEGOVINA",
+    "correction_note": "Preserve the earlier Bosnian grand-ducal office."
+  }
+}

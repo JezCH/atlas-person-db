@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:casimir-iii-the-great:ruthenian-domain:1349-1370:v1",
+  "person": {
+    "canonical_name_en": "Casimir III the Great",
+    "display_name_ko": "카지미에시 3세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ruthenian Domain of the Polish Crown",
+    "display_name_ko": "폴란드 왕관령 루테니아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Lord of Ruthenia",
+    "role_display_name_ko": "루테니아의 군주",
+    "start_year": 1349,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1370,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the 1349 conquest Casimir controlled the southern core of the former Kingdom of Rus' and styled himself Dominus terrae Russiae. This complements, rather than replaces, his existing Polish kingship."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "European Expansion and the Contested Borderlands of Late Medieval Podillya, Ukraine",
+      "canonical_url": "https://dokumen.pub/european-expansion-and-the-contested-borderlands-of-late-medieval-podillya-ukraine-9781641890311.html",
+      "citation_text": "The scholarly monograph states that Casimir III's 1349 campaign conquered the southern part of the Kingdom of Rus' and made it the core of his Ruthenian domain."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-08-26",
+      "document_title": "카지미에시 3세",
+      "url": "https://namu.wiki/w/%EC%B9%B4%EC%A7%80%EB%AF%B8%EC%97%90%EC%8B%9C%203%EC%84%B8"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-bosnia-egypt-sudan-batch-20260903",
+    "requested_identity": "CASIMIR III — POLAND-RUS' AND POLAND",
+    "correction_note": "Add the substantial Ruthenian lordship while retaining the existing Polish kingship."
+  }
+}

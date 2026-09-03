@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:abu-amr-uthman:hafsid-sultanate:1435-1488:v1",
+  "person": {
+    "canonical_name_en": "Abu 'Amr 'Uthman",
+    "display_name_ko": "아부 암르 우스만",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Hafsid Sultanate",
+    "display_name_ko": "하프스 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Hafsid Caliph and Sultan",
+    "role_display_name_ko": "하프스 칼리프·술탄",
+    "start_year": 1435,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1488,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Abu 'Amr 'Uthman ruled the Hafsid state from 1435 to 1488. ATLAS uses the historical Hafsid polity rather than the modern Tunisia label."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "C. E. Bosworth, The New Islamic Dynasties — Hafsids",
+      "canonical_url": "https://dokumen.pub/the-new-islamic-dynasties-a-chronological-and-genealogical-manual-9781474464628.html",
+      "citation_text": "Bosworth's dynastic manual lists the Hafsid ruler Abu 'Amr 'Uthman from 839/1435 to 893/1488."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-bosnia-egypt-sudan-batch-20260903",
+    "requested_identity": "ABU 'AMR 'UTHMAN — TUNISIA",
+    "correction_note": "Normalize modern Tunisia to the Hafsid Sultanate."
+  }
+}

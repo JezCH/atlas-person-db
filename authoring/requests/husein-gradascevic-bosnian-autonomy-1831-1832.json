@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:husein-gradascevic:bosnian-autonomy-movement:1831-1832:v1",
+  "person": {
+    "canonical_name_en": "Husein Gradaščević",
+    "display_name_ko": "후세인 그라다슈체비치",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Bosnian Autonomy Movement",
+    "display_name_ko": "보스니아 자치 운동",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "de_facto_rule",
+    "role": "Movement leader and self-proclaimed Vizier of Bosnia",
+    "role_display_name_ko": "자치운동 지도자·자칭 보스니아 총독",
+    "start_year": 1831,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1832,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bosnian notables selected Gradaščević to lead the autonomy movement in 1831. He proclaimed himself Bosnian vizier, but the Porte never confirmed the title and imperial forces defeated the movement in 1832."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "Hrvatska enciklopedija — Gradaščević, Husein-beg",
+      "canonical_url": "https://enciklopedija.hr/clanak/gradascevic-husein-beg",
+      "citation_text": "The Croatian Encyclopedia identifies Gradaščević as leader of the Bosnian autonomy movement, self-proclaimed Bosnian vizier in 1831, and defeated rebel leader in 1832 whose title was never confirmed by the Porte."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-bosnia-egypt-sudan-batch-20260903",
+    "requested_identity": "HUSEIN GRADASCEVIC — BOSNIA-HERZEGOVINA",
+    "correction_note": "Represent the autonomy movement rather than retrojecting the modern state."
+  }
+}

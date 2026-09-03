@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:jezebel:kingdom-israel:c860-c840-bce:v1",
+  "person": {
+    "canonical_name_en": "Jezebel",
+    "display_name_ko": "이세벨",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Israel",
+    "display_name_ko": "이스라엘 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Queen consort and queen mother",
+    "role_display_name_ko": "왕비·왕대비",
+    "start_year": -860,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -840,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Jezebel was a Phoenician princess who married Ahab of the northern Kingdom of Israel and remained a major court figure into the reigns of their sons. Exact absolute chronology varies, so ATLAS uses a broad approximate ninth-century window. Phoenician origin does not create a separate rulership of Canaan or Phoenicia."
+  },
+  "sources": [
+    {
+      "source_type": "reference",
+      "title": "Jewish Encyclopedia — Ahab",
+      "canonical_url": "https://www.jewishencyclopedia.com/articles/955-ahab",
+      "citation_text": "The entry dates Ahab's reign to the mid-ninth century BCE and identifies Jezebel as his queen and daughter of Ethbaal, king of Tyre."
+    },
+    {
+      "source_type": "reference",
+      "title": "Encyclopedia.com — Jezebel",
+      "canonical_url": "https://www.encyclopedia.com/people/philosophy-and-religion/biblical-proper-names-biographies/jezebel",
+      "citation_text": "The reference identifies Jezebel as a ninth-century BCE Phoenician princess who became the wife of Ahab, king of Israel, and was killed during Jehu's coup."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-bosnia-egypt-sudan-batch-20260903",
+    "requested_identity": "JEZEBEL — CANAAN AND PHOENICIA",
+    "correction_note": "Bind her political role to Israel; treat Phoenicia as dynastic origin, not another sovereign office."
+  }
+}

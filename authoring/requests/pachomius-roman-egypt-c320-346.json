@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:pachomius:roman-egypt:c320-346:v1",
+  "person": {
+    "canonical_name_en": "Pachomius",
+    "display_name_ko": "파코미우스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Egypt",
+    "display_name_ko": "로마령 이집트",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Founder and superior of Pachomian monastic communities",
+    "role_display_name_ko": "파코미우스 수도공동체 창립자·총원장",
+    "start_year": 320,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 346,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Pachomius established the major cenobitic monastic community at Tabennisi around 320 and directed an expanding federation until his death in 346. He was not a ruler of Egypt."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Philip Rousseau, Pachomius: The Making of a Community in Fourth-Century Egypt",
+      "canonical_url": "https://www.degruyterbrill.com/document/doi/10.1525/9780520341692/html",
+      "citation_text": "Rousseau's study treats Pachomius, who died in 346, and the development of the monastic community he founded in fourth-century Egypt."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-bosnia-egypt-sudan-batch-20260903",
+    "requested_identity": "PACHOMIUS — COPTMET AND EGYPT",
+    "correction_note": "Register major religious-community activity in Roman Egypt, not political sovereignty."
+  }
+}
