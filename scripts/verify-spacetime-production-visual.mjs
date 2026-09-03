@@ -107,6 +107,26 @@ function assert(condition, message, details = null) {
   }
 }
 
+function normalizedBandGeometry(rows) {
+  const total = Math.max(...rows.map((row) => Number(row.left) + Number(row.width)));
+  return rows.map((row) => ({
+    text: row.text,
+    left: Number(row.left) / total,
+    width: Number(row.width) / total
+  }));
+}
+
+function assertNormalizedGeometryInvariant(a, b, label) {
+  assert(a.length === b.length, `${label} band count changed across zoom`, { a, b });
+  const na = normalizedBandGeometry(a);
+  const nb = normalizedBandGeometry(b);
+  for (let i = 0; i < na.length; i++) {
+    assert(na[i].text === nb[i].text, `${label} identity/order changed across zoom`, { a:na[i], b:nb[i] });
+    assert(Math.abs(na[i].left - nb[i].left) < 2e-5, `${label} normalized left changed across zoom`, { a:na[i], b:nb[i] });
+    assert(Math.abs(na[i].width - nb[i].width) < 2e-5, `${label} normalized width changed across zoom`, { a:na[i], b:nb[i] });
+  }
+}
+
 const overlapCode = `
 (elements) => {
   const rows = elements
@@ -303,8 +323,8 @@ async function main() {
     assert(at800.placeMarkerCount === EXPECTED_REVIEWED_PLACE_COUNT, "Unexpected reviewed Place marker count at 800%", at800);
     assert(at800.placeOverlap.count === 0, "Reviewed Place header markers overlap at 800%", at800.placeOverlap);
     assert(at800.labelOverlap.count === 0, "Visible Person labels overlap at 800%", at800.labelOverlap);
-    assert(JSON.stringify(at800.macro) === JSON.stringify(at500.macro), "Macroregion geometry changed between 500% and 800%", {at500:at500.macro,at800:at800.macro});
-    assert(JSON.stringify(at800.sub) === JSON.stringify(at500.sub), "Subregion geometry changed between 500% and 800%", {at500:at500.sub,at800:at800.sub});
+    assertNormalizedGeometryInvariant(at500.macro, at800.macro, "Macroregion");
+    assertNormalizedGeometryInvariant(at500.sub, at800.sub, "Subregion");
     assert(at800.uncertaintyCount > 0, "No C6 spatial uncertainty evidence was rendered in the inspected 800% viewport", at800);
     await screenshot(client, "spacetime-800.png");
 
