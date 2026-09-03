@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Shimazu Yoshihiro",
+    "display_name_ko": "시마즈 요시히로",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Shimazu clan",
+    "display_name_ko": "시마즈 가문",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Senior Shimazu commander and traditional 17th clan head",
+    "role_display_name_ko": "시마즈 중진 지휘관·전통적 17대 당주",
+    "period_basis": "general_activity",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Yoshihiro was a major Shimazu daimyo and commander. Traditional genealogies count him as the 17th clan head from 1587 to 1602, but modern discussion notes that his elder brother Yoshihisa may have retained the effective headship. ATLAS therefore preserves the conventional interval as senior leadership activity rather than asserting an uncontested succession.",
+    "start_year": 1587,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1602,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Shimazu Yoshihiro — biographical summary",
+      "canonical_url": "https://en.wikipedia.org/wiki/Shimazu_Yoshihiro",
+      "citation_text": "Lists the traditional 1587–1602 headship while noting that current interpretations question whether Yoshihiro actually displaced Yoshihisa as effective clan head.",
+      "locator": "https://en.wikipedia.org/wiki/Shimazu_Yoshihiro"
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Shimazu Yoshihiro — Chinese Text Project data page",
+      "canonical_url": "https://ctext.org/datawiki.pl?if=en&remap=gb&res=844556",
+      "citation_text": "Summarizes Yoshihiro's historical military career and the traditional, but debated, clan-head succession.",
+      "locator": "https://ctext.org/datawiki.pl?if=en&remap=gb&res=844556"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-03",
+      "reason": "Direct NamuWiki verification returned no usable provider result. The user explicitly requested registration to continue after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "c2c-reviewed-14-20260903",
+    "requested_identity": "Shimazu Yoshihiro",
+    "identity_distinction": "Not Shimazu Yoshihisa"
+  }
+}

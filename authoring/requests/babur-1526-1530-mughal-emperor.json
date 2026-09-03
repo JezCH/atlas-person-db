@@ -1,0 +1,64 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Babur",
+    "display_name_ko": "바부르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Mughal Empire",
+    "display_name_ko": "무굴 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "period_basis": "reign",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Babur founded the Mughal Empire in northern India after the 1526 conquest and ruled it until his death in 1530. Earlier Timurid/Fergana and Kabul phases are not collapsed into this Mughal Activity.",
+    "start_year": 1526,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1530,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "BĀBOR, ẒAHĪR-AL-DĪN MOḤAMMAD — Encyclopaedia Iranica",
+      "canonical_url": "https://www.iranicaonline.org/articles/babor-zahir-al-din/",
+      "citation_text": "Describes Babur as the Timurid prince who founded the Mughal Empire in India and died in 1530.",
+      "locator": "https://www.iranicaonline.org/articles/babor-zahir-al-din/"
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Babur — historical summary",
+      "canonical_url": "https://en.wikipedia.org/wiki/Babur",
+      "citation_text": "Dates the founding Mughal imperial phase from 1526 until Babur's death in 1530.",
+      "locator": "https://en.wikipedia.org/wiki/Babur"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-03",
+      "reason": "Direct NamuWiki verification returned no usable provider result. The user explicitly requested registration to continue after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "c2c-reviewed-14-20260903",
+    "requested_identity": "Babur"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Mongkut",
+    "display_name_ko": "몽꿋",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Siam",
+    "display_name_ko": "시암 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "period_basis": "reign",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mongkut, Rama IV, ruled Siam from 1851 until his death in 1868. This reuses the same Kingdom of Siam identity already used for Chulalongkorn.",
+    "start_year": 1851,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1868,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Mongkut — historical summary",
+      "canonical_url": "https://en.wikipedia.org/wiki/Mongkut",
+      "citation_text": "Identifies Mongkut as King of Siam from 1851 to 1868.",
+      "locator": "https://en.wikipedia.org/wiki/Mongkut"
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Mongkut — Wikidata authority summary",
+      "canonical_url": "https://www.wikidata.org/wiki/Q312849",
+      "citation_text": "Authority record describes Mongkut as King of Siam from 1851 to 1868 and lists Rama IV as an alternate name.",
+      "locator": "https://www.wikidata.org/wiki/Q312849"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-03",
+      "reason": "Direct NamuWiki verification returned no usable provider result. The user explicitly requested registration to continue after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "c2c-reviewed-14-20260903",
+    "requested_identity": "Mongkut / Rama IV"
+  }
+}

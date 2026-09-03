@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Roland",
+    "display_name_ko": "롤랑",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Frankish Kingdom",
+    "display_name_ko": "프랑크 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Prefect of the Breton March and rearguard commander",
+    "role_display_name_ko": "브르타뉴 변경백·후위대 지휘관",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "This record is the historical Hruodland/Roland attested in connection with Charlemagne's 778 campaign, not the superhuman hero of the later Song of Roland. The directly attributable 778 Roncevaux episode is used as a representative historical point.",
+    "start_year": 778,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 778,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Breton March — historical ruler list",
+      "canonical_url": "https://www.historyfiles.co.uk/KingListsEurope/WesternBretonMarch.htm",
+      "citation_text": "Identifies Roland/Hruodland as military governor or prefect of the Breton March and as a commander killed in the 778 Roncevaux disaster.",
+      "locator": "https://www.historyfiles.co.uk/KingListsEurope/WesternBretonMarch.htm"
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Charlemagne’s Failed Invasion of Spain, 777–778",
+      "canonical_url": "https://www.medievalists.net/2026/03/charlemagnes-failed-invasion-of-spain-777-778/",
+      "citation_text": "Summarizes the historical Roland as praefectus of the Breton March and commander in the 778 rearguard.",
+      "locator": "https://www.medievalists.net/2026/03/charlemagnes-failed-invasion-of-spain-777-778/"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-03",
+      "reason": "Direct NamuWiki verification returned no usable provider result. The user explicitly requested registration to continue after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "c2c-reviewed-14-20260903",
+    "requested_identity": "Roland",
+    "historical_core": "Hruodland, distinct from later literary embellishment"
+  }
+}

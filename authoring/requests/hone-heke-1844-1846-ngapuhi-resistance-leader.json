@@ -1,0 +1,64 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Hōne Heke",
+    "display_name_ko": "호네 헤케",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Northern War Ngāpuhi resistance",
+    "display_name_ko": "북부전쟁 응아푸히 저항 세력",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Rangatira and war leader",
+    "role_display_name_ko": "랑가티라·전쟁 지도자",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Hōne Heke was a Ngāpuhi rangatira who became a leading opponent of British rule. ATLAS uses the bounded 1844–1846 flagstaff/Northern War phase and a specific resistance polity, rather than making him sovereign of all Ngāpuhi.",
+    "start_year": 1844,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1846,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Hōne Heke — NZHistory",
+      "canonical_url": "https://nzhistory.govt.nz/people/hone-heke",
+      "citation_text": "New Zealand Ministry for Culture and Heritage biography identifies Heke as an influential Ngāpuhi chief and later leading opponent of British rule.",
+      "locator": "https://nzhistory.govt.nz/people/hone-heke"
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "The Northern War — NZHistory",
+      "canonical_url": "https://nzhistory.govt.nz/war/northern-war",
+      "citation_text": "Dates the Northern War to 1845–1846 and identifies Heke's faction as one of the principal Ngāpuhi forces opposing the Crown.",
+      "locator": "https://nzhistory.govt.nz/war/northern-war"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-03",
+      "reason": "Direct NamuWiki verification returned no usable provider result. The user explicitly requested registration to continue after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "c2c-reviewed-14-20260903",
+    "requested_identity": "Hone Heke"
+  }
+}

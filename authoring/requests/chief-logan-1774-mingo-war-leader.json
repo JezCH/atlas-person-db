@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Logan",
+    "display_name_ko": "로건",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Ohio Valley Mingo communities",
+    "display_name_ko": "오하이오 계곡 밍고 공동체",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Mingo leader and war leader",
+    "role_display_name_ko": "밍고 지도자·전쟁 지도자",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Logan was a leader among the Ohio Valley Mingo. ATLAS uses the directly attested 1774 retaliation and Dunmore's War activity as a representative point rather than inventing a continuous chiefly reign or asserting a disputed Indigenous personal name.",
+    "start_year": 1774,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1774,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Who Was Logan? — Colonial Williamsburg",
+      "canonical_url": "https://www.colonialwilliamsburg.org/discover/18th-century-people/stories-of-american-indian-life/who-was-logan-the-mystery-at-the-heart-of-the-shawnee-dunmore-war/",
+      "citation_text": "Identifies Logan as a leader among the Mingo and explains that his 1774 retaliatory raids helped spark the Shawnee-Dunmore War; it also notes uncertainty over his full name.",
+      "locator": "https://www.colonialwilliamsburg.org/discover/18th-century-people/stories-of-american-indian-life/who-was-logan-the-mystery-at-the-heart-of-the-shawnee-dunmore-war/"
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Chief Logan — West Virginia Encyclopedia",
+      "canonical_url": "https://wvencyclopedia.org/entries/1397",
+      "citation_text": "Documents Logan's 1774 raids after the Yellow Creek massacre and his role in the conflict.",
+      "locator": "https://wvencyclopedia.org/entries/1397"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-03",
+      "reason": "Direct NamuWiki verification returned no usable provider result. The user explicitly requested registration to continue after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "c2c-reviewed-14-20260903",
+    "requested_identity": "Logan / Chief Logan",
+    "name_note": "Full Indigenous personal name remains historically disputed"
+  }
+}
