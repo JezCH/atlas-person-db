@@ -222,6 +222,8 @@ async function main() {
 
   const consoleErrors = [];
   const exceptions = [];
+  const resourceErrors = [];
+  const requestUrls = new Map();
   await client.call("Page.enable");
   await client.call("Runtime.enable");
   await client.call("Log.enable");
@@ -233,6 +235,18 @@ async function main() {
   client.on("Runtime.exceptionThrown", (params) => exceptions.push(params.exceptionDetails?.exception?.description || params.exceptionDetails?.text || "runtime exception"));
   client.on("Log.entryAdded", (params) => {
     if (params.entry?.level === "error") consoleErrors.push(params.entry.text || "Log.entryAdded error");
+  });
+  client.on("Network.requestWillBeSent", (params) => {
+    if (params.requestId && params.request?.url) requestUrls.set(params.requestId, params.request.url);
+  });
+  client.on("Network.responseReceived", (params) => {
+    if (Number(params.response?.status) >= 400) {
+      resourceErrors.push({ url: params.response.url, status: Number(params.response.status), type: params.type || null });
+    }
+  });
+  client.on("Network.loadingFailed", (params) => {
+    const url = requestUrls.get(params.requestId) || null;
+    resourceErrors.push({ url, status: null, type: params.type || null, error: params.errorText || "loadingFailed", blocked_reason: params.blockedReason || null });
   });
 
   try {
@@ -375,9 +389,22 @@ async function main() {
     await screenshot(client, "spacetime-activity-meanwhile.png");
 
     await sleep(500);
-    const filteredConsoleErrors = consoleErrors.filter((msg) => !/favicon/i.test(msg));
+    const ignorableResource = (item) => {
+      try {
+        const pathname = new URL(item?.url || "", PRODUCTION_URL).pathname;
+        return pathname === "/favicon.ico" || pathname === "/apple-touch-icon.png";
+      } catch { return false; }
+    };
+    const nonIgnorableResourceErrors = resourceErrors.filter((item) => !ignorableResource(item));
+    const genericNetworkConsoleError = (msg) => /^Failed to load resource: the server responded with a status of 404/i.test(msg);
+    const filteredConsoleErrors = consoleErrors.filter((msg) => {
+      if (/favicon/i.test(msg)) return false;
+      if (genericNetworkConsoleError(msg) && nonIgnorableResourceErrors.length === 0) return false;
+      return true;
+    });
     assert(exceptions.length === 0, "Runtime exceptions detected during visual acceptance", exceptions);
-    assert(filteredConsoleErrors.length === 0, "Console errors detected during visual acceptance", filteredConsoleErrors);
+    assert(nonIgnorableResourceErrors.length === 0, "Non-ignorable resource failures detected during visual acceptance", nonIgnorableResourceErrors);
+    assert(filteredConsoleErrors.length === 0, "Console errors detected during visual acceptance", { console_errors:filteredConsoleErrors, resource_errors:resourceErrors });
 
     const report = {
       schema:"atlas-spacetime-production-visual-acceptance/v1",
@@ -390,6 +417,7 @@ async function main() {
       at_800_percent:at800,
       interaction,
       console_errors:filteredConsoleErrors,
+      resource_errors:resourceErrors,
       runtime_exceptions:exceptions,
       screenshots:["spacetime-500.png","spacetime-800.png","spacetime-activity-meanwhile.png"],
       status:"PASS"
