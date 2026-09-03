@@ -92,6 +92,8 @@
 .spacetime-meanwhile-activities small{grid-area:period;font-size:8px;letter-spacing:0;color:#9a8457}
 .spacetime-meanwhile-line{position:absolute;z-index:8;left:0;height:0;border-top:1px solid rgba(166,123,45,.78);pointer-events:none}
 .spacetime-meanwhile-line span{position:absolute;left:6px;top:-17px;padding:1px 4px;border:1px solid rgba(197,165,105,.68);border-radius:4px;background:rgba(255,251,239,.95);color:#6d5424;font-size:8px;font-weight:800;white-space:nowrap}
+.spacetime-meanwhile-line.is-activity-linked{border-top-width:2px}
+.spacetime-meanwhile-line.is-activity-linked span::before{content:"ACTIVITY · ";font-size:7px;letter-spacing:.08em}
 
 .spacetime-selection-evidence{grid-column:1/-1!important;display:grid!important;gap:6px!important;padding-top:8px;border-top:1px solid #d8e3f1}
 .spacetime-selection-evidence-title{display:flex!important;grid-template-columns:1fr auto!important;align-items:center;gap:10px!important}
