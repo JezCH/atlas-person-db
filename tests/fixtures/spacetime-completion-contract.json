@@ -147,6 +147,31 @@
       "id": "data-parity",
       "required": true,
       "status": "locked"
+    },
+    {
+      "id": "spatial-uncertainty-rendering",
+      "required": true,
+      "status": "locked"
+    },
+    {
+      "id": "spatial-place-semantic-lod",
+      "required": true,
+      "status": "pending"
+    },
+    {
+      "id": "sticky-person-activity-inspector",
+      "required": true,
+      "status": "pending"
+    },
+    {
+      "id": "activity-selection-meanwhile-link",
+      "required": true,
+      "status": "pending"
+    },
+    {
+      "id": "original-plan-visual-acceptance",
+      "required": true,
+      "status": "pending"
     }
   ],
   "dense_label_verification": {
@@ -204,8 +229,30 @@
     "test": "tests/spacetime-data-parity.test.mjs"
   },
   "final_completion_verification": {
+    "status": "in_progress",
+    "required_pending_count": 4,
+    "required_capability_count": 28
+  },
+  "spatial_uncertainty_verification": {
     "status": "locked",
-    "required_pending_count": 0,
-    "required_capability_count": 23
+    "semantics": "placement_precision_not_activity_extent",
+    "place": "point",
+    "multi_place": "multiple_reviewed_anchors_with_non_route_connector",
+    "subregion": "horizontal_uncertainty_whisker",
+    "macroregion": "wider_horizontal_uncertainty_whisker",
+    "unresolved": "no_world_coordinate",
+    "detail_lod_or_selection": true,
+    "culling_includes_x_min_x_max": true,
+    "test": "tests/spacetime-uncertainty-rendering.test.mjs"
+  },
+  "original_plan_reconciliation": {
+    "status": "in_progress",
+    "reopened_after_audit": true,
+    "remaining_required_capabilities": [
+      "spatial-place-semantic-lod",
+      "sticky-person-activity-inspector",
+      "activity-selection-meanwhile-link",
+      "original-plan-visual-acceptance"
+    ]
   }
 }
