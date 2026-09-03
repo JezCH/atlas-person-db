@@ -2192,5 +2192,94 @@
       "batch": "strudeler-khazaria-bohemia-carthage-denmark-20260903",
       "requested_identity": "Hanno / Hanno the Navigator"
     }
+  },
+  {
+    "person_name": "Thomas the Apostle",
+    "display_name_ko": "사도 토마스",
+    "politic_name": "Saint Thomas Christians (India)",
+    "politic_display_name_ko": "성 토마스 그리스도인 공동체(인도)",
+    "historicity": "historical_tradition_uncertain_chronology",
+    "historicity_display_ko": "역사전승·연대 불확실",
+    "role_ko": "인도 사도전승의 사도·선교사",
+    "reason": "The Civilization VI mod's Toma/Tomas HaKadosh is explicitly Thomas the Apostle. Ancient and later Christian traditions connect Thomas with Parthia and India, and the Saint Thomas Christian communities of southern India claim him as apostolic founder, but the personal Indian mission and its conventional first-century itinerary cannot be securely verified as historical chronology. ATLAS therefore preserves the tradition without assigning a year-based Activity.",
+    "sources": [
+      {
+        "title": "Strudeler's Civilizations - Syro-India (mod identity)",
+        "url": "https://www.nexusmods.com/civilisationvi/mods/158"
+      },
+      {
+        "title": "Encyclopaedia Britannica — St Thomas (tradition and historical uncertainty)",
+        "url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Thomas%2C_St"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "apostolic_india_tradition_without_secure_personal_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline unless a separate religious-tradition or uncertain-chronology overlay is enabled.",
+    "request_context": {
+      "batch": "strudeler-global-batch-20260903",
+      "item": "TOMAS HAKADOSH (SYRO-INDIA AND INDIA)"
+    }
+  },
+  {
+    "person_name": "Numa Pompilius",
+    "display_name_ko": "누마 폼필리우스",
+    "politic_name": "Early Rome",
+    "politic_display_name_ko": "초기 로마",
+    "historicity": "legendary",
+    "historicity_display_ko": "전설",
+    "role_ko": "전승상 로마 제2대 왕",
+    "reason": "Roman literary tradition presents Numa Pompilius as the second king of Rome and attributes many early religious institutions to him. The conventional reign dates belong to Rome's legendary royal chronology and are not securely historical personal dates, so ATLAS preserves Numa outside the year-based historical timeline.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Britannica — Numa Pompilius (1911 edition)",
+        "url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Numa_Pompilius"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "roman_legendary_royal_tradition",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline unless a separate legendary/traditional overlay is enabled.",
+    "request_context": {
+      "batch": "strudeler-global-batch-20260903",
+      "item": "Numa (Rome)"
+    }
+  },
+  {
+    "person_name": "Klaus Störtebeker",
+    "display_name_ko": "클라우스 슈퇴르테베커",
+    "politic_name": "Victual Brothers / Likedeelers",
+    "politic_display_name_ko": "비탈리엔브뤼더·리케델러",
+    "historicity": "historical_tradition_uncertain_chronology",
+    "historicity_display_ko": "역사전승·연대 불확실",
+    "role_ko": "전승상의 비탈리엔브뤼더 해적 지도자",
+    "reason": "Late-medieval piracy associated with the Victual Brothers is historical, and sources preserve persons bearing the name Störtebeker, but Hamburg historical scholarship stresses that the famous 'Klaus Störtebeker' biography, leadership status and 1401 execution narrative are entangled with later legend and uncertain personal identification. ATLAS therefore does not force the mod's Pomerania/Germany leader into a precise personal timeline.",
+    "sources": [
+      {
+        "title": "Geschichtsbuch Hamburg — Störtebeker: vom Taugenichts zum Mythos",
+        "url": "https://geschichtsbuch.hamburg.de/epochen/spaetes-mittelalter/stoertebeker-vom-taugenichts-zum-mythos/"
+      },
+      {
+        "title": "University of Hamburg dissertation — Bartholomäus Voet und die Freibeuter der Hansezeit",
+        "url": "https://ediss.sub.uni-hamburg.de/handle/ediss/5749"
+      }
+    ],
+    "timeline_status": "excluded",
+    "date_basis": "late_medieval_pirate_tradition_with_uncertain_personal_identification",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "map_policy": "Retain in the person registry; do not display on the historical year timeline unless a separate historical-tradition/uncertain-identity overlay is enabled.",
+    "request_context": {
+      "batch": "strudeler-global-batch-20260903",
+      "item": "KLAUS STORTEBEKER (POMERANIA AND GERMANY)"
+    }
   }
 ]
