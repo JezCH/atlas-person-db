@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:windradyne:wiradjuri:resistance-leader:1823-1824:v1",
+  "person": {
+    "canonical_name_en": "Windradyne",
+    "display_name_ko": "윈드라다인",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Wiradjuri",
+    "display_name_ko": "위라주리",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Aboriginal resistance leader",
+    "role_display_name_ko": "원주민 저항 지도자",
+    "start_year": 1823,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1824,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Windradyne (c.1800–1829), a northern Wiradjuri man from the upper Macquarie River region, emerged as a key resistance leader during the conflict later known as the Bathurst Wars. The Australian Dictionary of Biography securely documents his central role from December 1823 through the martial-law crisis and his formal pardon in December 1824. ATLAS therefore records 1823–1824 as the core resistance-leadership interval and does not treat him as a sovereign chief or ruler of all Wiradjuri people."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Australian Dictionary of Biography — Windradyne (1800–1829)",
+      "canonical_url": "https://adb.anu.edu.au/biography/windradyne-13251",
+      "citation_text": "ADB identifies Windradyne as a northern Wiradjuri Aboriginal resistance leader and key protagonist of the Bathurst Wars, documenting his role from December 1823 through his pardon in December 1824."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "gedemo-civ-leaders-4-20260903",
+    "requested_identity": "Windradyne",
+    "correction_note": "Register as a Wiradjuri resistance leader, not a formal ruler of all Wiradjuri people."
+  }
+}
