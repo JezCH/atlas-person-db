@@ -1,0 +1,81 @@
+name: ATLAS Batch 19 Autopatch
+
+on:
+  push:
+    branches:
+      - agent/spacetime-polity-placement-batch-19
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply batch 19 spatial bindings
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('node:fs');
+          const indexPath = 'atlas-polity-spatial-index.json';
+          const index = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+          const additions = [
+            ['a15acba9-0a67-4259-8b6a-fce4d630b252','europe','eastern-europe'],
+            ['bb87c6d6-bc33-4a57-a01c-c6cbfa3b7ee3','europe','central-europe'],
+            ['db21d06f-3505-4f1c-8cdf-e7810330c3be','africa','east-africa-horn'],
+            ['035158bf-89c8-4ca1-ad06-ae2320bb2c72','americas','mesoamerica'],
+            ['adab7e7d-9d97-4c3e-bca0-dafa1eebbdc0','americas','caribbean'],
+            ['52616889-d8df-47f6-88f1-1ee6f54464b7','europe','western-europe'],
+            ['119f3866-ce15-44a1-a4f6-aa139f06f9ef','europe','russia-volga'],
+            ['2b18d717-af7a-4261-81fb-8ed0c0862cbc','europe','russia-volga'],
+            ['ebddde4e-21b8-4d7f-8756-bed1434c89cf','south-asia','northwest-south-asia'],
+            ['6d2333d1-af2e-4b64-a42d-0f38dc5654a2','americas','north-america']
+          ];
+          for (const [id, macro, sub] of additions) {
+            if (index.polity_geography[id] || index.polity_subregions[id]) throw new Error(`already mapped: ${id}`);
+            index.polity_geography[id] = macro;
+            index.polity_subregions[id] = sub;
+          }
+          const sorted = (obj) => Object.fromEntries(Object.entries(obj).sort(([a],[b]) => a.localeCompare(b)));
+          index.polity_geography = sorted(index.polity_geography);
+          index.polity_subregions = sorted(index.polity_subregions);
+          index.generated_at = '2026-09-04T07:29:00+09:00';
+          fs.writeFileSync(indexPath, JSON.stringify(index, null, 2) + '\n');
+
+          function replaceExact(path, before, after) {
+            let text = fs.readFileSync(path, 'utf8');
+            if (!text.includes(before)) throw new Error(`${path}: missing expected text ${before}`);
+            text = text.replace(before, after);
+            fs.writeFileSync(path, text);
+          }
+          replaceExact('tests/person-spacetime-spatial-index-coverage.test.mjs',
+            'assert.equal(Object.keys(index.polity_geography).length, 505);',
+            'assert.equal(Object.keys(index.polity_geography).length, 515);');
+          replaceExact('tests/person-spacetime-spatial-index-coverage.test.mjs',
+            'assert.equal(Object.keys(index.polity_subregions).length, 479);',
+            'assert.equal(Object.keys(index.polity_subregions).length, 489);');
+          replaceExact('tests/spacetime-taxonomy-migration.test.mjs', '  mesoamerica: 14,', '  mesoamerica: 15,');
+          replaceExact('tests/spacetime-taxonomy-migration.test.mjs', '  caribbean: 5,', '  caribbean: 6,');
+          replaceExact('tests/spacetime-taxonomy-migration.test.mjs', '  "eastern-europe": 6,', '  "eastern-europe": 7,');
+          replaceExact('tests/spacetime-taxonomy-migration.test.mjs', '  "russia-volga": 7,', '  "russia-volga": 9,');
+          replaceExact('tests/spacetime-taxonomy-migration.test.mjs',
+            'assert.equal(Object.keys(index.polity_subregions).length, 479);',
+            'assert.equal(Object.keys(index.polity_subregions).length, 489);');
+          NODE
+      - name: Commit clean batch 19 diff
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rm .github/workflows/atlas-batch19-autopatch.yml
+          git add atlas-polity-spatial-index.json tests/person-spacetime-spatial-index-coverage.test.mjs tests/spacetime-taxonomy-migration.test.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Backfill clear spacetime polity placements batch 19'
+          git push origin HEAD:agent/spacetime-polity-placement-batch-19
