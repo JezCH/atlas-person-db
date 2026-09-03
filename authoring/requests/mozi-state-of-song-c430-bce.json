@@ -17,7 +17,7 @@
     }
   },
   "polity": {
-    "canonical_name_en": "State of Song",
+    "canonical_name_en": "Song",
     "display_name_ko": "송나라",
     "polity_type": "historical_polity",
     "historicity": "historical"
@@ -39,7 +39,7 @@
     "end_calendar": "unspecified_historical",
     "confidence": "likely",
     "chronology_status": "reviewed",
-    "notes": "Mo Di (Mozi) is the historical founder of Mohism. Modern scholarship places his floruit around 430 BCE, but very little is known about his biography and even his home state is uncertain. Sima Qian's later Shiji says he was an official of the State of Song. ATLAS therefore uses only a representative c.430 BCE intellectual-activity point and preserves the traditional Song association without inventing a lifespan or long career interval."
+    "notes": "Mo Di (Mozi) is the historical founder of Mohism. Modern scholarship places his floruit around 430 BCE, but very little is known about his biography and even his home state is uncertain. Sima Qian's later Shiji says he was an official of Song. ATLAS therefore uses only a representative c.430 BCE intellectual-activity point and reuses the existing ancient Song / 송나라 polity identity, without inventing a lifespan or long career interval."
   },
   "sources": [
     {
