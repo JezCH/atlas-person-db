@@ -107,11 +107,11 @@ test("Production view uses right sticky Person/Activity inspector and distinct A
   assert.match(css,/\.spacetime-workspace\{[^}]*grid-template-columns/);
 });
 
-test("C8 selection computes Activity midpoint but does not yet mutate Meanwhile state",()=>{
+test("C8 selection keeps Person and Activity identity distinct while C9 consumes the midpoint",()=>{
   const start=view.indexOf("function selectActivity(");
   const end=view.indexOf("\n  function",start+10);
   const body=view.slice(start,end);
   assert.match(body,/selectedActivityId/);
   assert.match(body,/selectedTimeOrdinal/);
-  assert.doesNotMatch(body,/meanwhileYear\s*=/);
+  assert.match(body,/meanwhileSelectedOrdinal = selectedTimeOrdinal/);
 });
