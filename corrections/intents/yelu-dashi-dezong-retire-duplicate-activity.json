@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:yelu-dashi-dezong:retire-duplicate-activity:20260903:v1",
+  "review_status": "approved",
+  "release_order": 120,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "73953cab-4df0-50e0-a8a7-7cd89c41fa44"
+  },
+  "evidence": {
+    "issue": 848,
+    "reason": "This Activity belongs to the duplicate Person `Emperor Dezong of Western Liao`, which is the same historical person as Yelü Dashi. Production currently contains a separate reviewed Yelü Dashi Activity for the same 1124–1143 rule. Retire this legacy duplicate Activity before the physical Person merge so the survivor retains exactly one reviewed reign Activity.",
+    "survivor_person_id": "312c56af-d6e2-4713-8ef1-91877ee66f9b",
+    "source_person_id": "0274dd73-8573-5cd7-9013-3aed524d4f4d",
+    "survivor_activity_id": "c739480b-0ee2-4d8b-983e-0c7965b66433",
+    "duplicate_activity_id": "73953cab-4df0-50e0-a8a7-7cd89c41fa44"
+  }
+}

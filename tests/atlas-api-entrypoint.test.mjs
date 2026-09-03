@@ -40,8 +40,9 @@ test('Vercel exposes exactly twelve physical ATLAS API functions on Hobby', () =
   assert.equal(apiFiles.length, 12);
 });
 
-test('logical read, NamuWiki link and P11 capture URLs consolidate onto existing physical functions', () => {
+test('logical read, NamuWiki link, reviewed Person merge and P11 capture URLs consolidate onto existing physical functions', () => {
   assert.deepEqual(vercel.rewrites, [
+    { source: '/api/atlas-reviewed-person-merge', destination: '/api/atlas-authoring?__atlas_authoring_surface=reviewed-person-merge' },
     { source: '/api/atlas-namuwiki-link', destination: '/api/atlas-authoring?__atlas_authoring_surface=namuwiki-link' },
     { source: '/api/atlas-person-read', destination: '/api/atlas-read?__atlas_read_surface=person' },
     { source: '/api/atlas-admin-inspector', destination: '/api/atlas-read?__atlas_read_surface=admin-inspector' },
