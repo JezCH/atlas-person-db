@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:mozi:state-of-song:intellectual:c430-bce:v1",
+  "person": {
+    "canonical_name_en": "Mozi",
+    "display_name_ko": "묵자",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-04",
+      "reason": "Direct NamuWiki document access was blocked by the provider during this reviewed registration batch; exact-person link verification remains outstanding and is not recorded as not_found.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "State of Song",
+    "display_name_ko": "송나라",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Philosopher and founder of Mohism",
+    "role_display_name_ko": "철학자·묵가 창시자",
+    "start_year": -430,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -430,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Mo Di (Mozi) is the historical founder of Mohism. Modern scholarship places his floruit around 430 BCE, but very little is known about his biography and even his home state is uncertain. Sima Qian's later Shiji says he was an official of the State of Song. ATLAS therefore uses only a representative c.430 BCE intellectual-activity point and preserves the traditional Song association without inventing a lifespan or long career interval."
+  },
+  "sources": [
+    {
+      "title": "Mohism — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/mohism/",
+      "citation_text": "The Stanford Encyclopedia of Philosophy identifies Mo Di or Mozi as the founder of Mohism, gives his floruit as approximately 430 BCE, and notes that the Shiji says he was an official of the state of Song while emphasizing how little is known of his life.",
+      "source_type": "academic_reference"
+    }
+  ]
+}
