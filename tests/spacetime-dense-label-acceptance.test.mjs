@@ -5,6 +5,7 @@ import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
 const labels = require("../atlas-person-spacetime-label-engine.js");
+const spaceAxis = require("../atlas-person-spacetime-space-axis.js");
 const snapshot = JSON.parse(readFileSync(new URL("./fixtures/spacetime-dense-label-snapshot.json", import.meta.url), "utf8"));
 
 function assertNoOverlap(placed) {
@@ -28,24 +29,31 @@ test("permanent dense acceptance windows pack cleanly at sufficient zoom", () =>
 
   const zoom = snapshot.sufficient_zoom_percent / 100;
   const contentWidth = snapshot.minimum_base_world_width_px * zoom * snapshot.global_extent_compression;
-  const regionWidth = contentWidth / snapshot.macroregion_count;
   const timelineHeight = snapshot.default_timeline_height_px * zoom * snapshot.global_extent_compression;
-  const maxLabelWidth = Math.max(
-    labels.DEFAULT_MIN_LABEL_WIDTH,
-    Math.min(labels.DEFAULT_MAX_LABEL_WIDTH, regionWidth - labels.DEFAULT_LABEL_CHROME_WIDTH)
-  );
+  const continuum = spaceAxis.createSpatialContinuum();
+  const regions = new Map(spaceAxis.stableRegionLayout(continuum, contentWidth).map((region) => [region.code, region]));
 
   for (const window of snapshot.windows) {
+    const region = regions.get(window.macroregion_code);
+    assert.ok(region, `${window.id} macroregion exists`);
     const input = window.labels.map((item) => ({
       person_id: item.person_id,
       text: item.text,
-      anchor_x: item.x_fraction * regionWidth,
-      anchor_y: item.y_fraction * timelineHeight
+      anchor_x: region.left + item.x_fraction * region.width,
+      anchor_y: item.y_fraction * timelineHeight,
+      min_left: 0,
+      max_right: contentWidth
     }));
     const packed = labels.packLabels(
       input,
-      { width: regionWidth, height: timelineHeight },
-      { maxLabelWidth, maxHorizontalShift: regionWidth }
+      { width: contentWidth, height: timelineHeight },
+      {
+        maxLabelWidth: labels.DEFAULT_MAX_LABEL_WIDTH,
+        maxHorizontalShift: contentWidth,
+        searchStep: 1,
+        anchorGap: 1,
+        gap: labels.DEFAULT_HORIZONTAL_GAP
+      }
     );
 
     assert.equal(packed.placed.length, window.label_count, `${window.id} placed count`);
