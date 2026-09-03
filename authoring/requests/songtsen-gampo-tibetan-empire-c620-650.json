@@ -1,0 +1,63 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:songtsen-gampo:tibetan-empire:tsenpo:c620-650:v1",
+  "person": {
+    "canonical_name_en": "Songtsen Gampo",
+    "display_name_ko": "송첸 감포",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Tibetan Empire",
+    "display_name_ko": "토번 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Tsenpo",
+    "role_display_name_ko": "첸포(찬보)",
+    "start_year": 620,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 650,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Songtsen Gampo (Srong-brtsan sgam-po) is the early Tibetan imperial ruler under whom the Tibetan kingdom expanded and consolidated. UNESCO's History of Civilizations of Central Asia places his enthronement and rule at about 620 to 649/650. ATLAS therefore uses c.620–650 with approximate boundaries rather than choosing one of the competing 618/629 accession traditions as exact."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "History of Civilizations of Central Asia, Vol. III — The Western Regions under the T'ang Empire and the Kingdom of Tibet",
+      "canonical_url": "https://en.unesco.org/silkroad/sites/default/files/knowledge-bank-article/vol_III%20silk%20road_the%20western%20regions%20under%20the%20t%27ang%20empire%20and%20the%20kingdom%20of%20tibet.pdf",
+      "citation_text": "UNESCO's scholarly history places the enthronement of Srong-brtsan sgam-po at about 620 and his death at 649 or 650, identifying him as btsan-po and describing his imperial institutions and expansion."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Royal titulature and the succession to the throne in the Tibetan Empire — Bulletin of the School of Oriental and African Studies",
+      "canonical_url": "https://www.cambridge.org/core/journals/bulletin-of-the-school-of-oriental-and-african-studies/article/bcan-pos-who-were-not-khri-royal-titulature-and-the-succession-to-the-throne-in-the-tibetan-empire/99E19B4CF083FC5F5C04570298218A4E",
+      "citation_text": "A modern study of Tibetan imperial titulature and succession treats Khri Srong-rcan (Songtsen Gampo) as an attested ruler in the early imperial dynasty and discusses the documentary basis for the succession chronology."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-03",
+      "document_title": "송찬간포",
+      "url": "https://namu.wiki/w/%EC%86%A1%EC%B0%AC%EA%B0%84%ED%8F%AC"
+    }
+  },
+  "review_context": {
+    "request_batch": "gedemo-civ-leaders-20260903",
+    "requested_identity": "Songtsen Gampo",
+    "correction_note": "Register the historical Tibetan ruler under the Tibetan Empire rather than the generic game label 'Tibetan Civilization'."
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:crooked-hand:skidi-pawnee:chief:c1870:v1",
+  "person": {
+    "canonical_name_en": "Crooked Hand",
+    "display_name_ko": "크루키드 핸드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Skidi Pawnee",
+    "display_name_ko": "스키디 포니",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Chief",
+    "role_display_name_ko": "추장",
+    "start_year": 1870,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1870,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Smithsonian records identify Crooked Hand as a Skidi Pawnee chief, approximately 1830–1873. A Bureau of American Ethnology photographic record identifies the same Pawnee man, Crooked Hand, in a portrait dated about 1870. Because the sources do not establish a defensible full chiefly term, ATLAS uses c.1870 as a representative person-specific leadership point instead of turning his life span into a reign."
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Chief Crooked Hand — National Museum of the American Indian collection record",
+      "canonical_url": "https://americanindian.si.edu/collections-search/object/NMAI_253763",
+      "citation_text": "The Smithsonian NMAI identifies Chief Crooked Hand as Skidi Chaticks Si Chaticks (Skidi/Skiri Pawnee), ca. 1830–1873, and records an object formerly owned by him."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Portrait of Pawnee man, Crooked Hand — Bureau of American Ethnology negatives, Smithsonian",
+      "canonical_url": "https://sirismm.si.edu/EADpdfs/NAA.PhotoLot.176.pdf",
+      "citation_text": "The Smithsonian archival catalog identifies a portrait of the Pawnee man Crooked Hand, Skedee band, dated ca. 1870."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "gedemo-civ-leaders-20260903",
+    "requested_identity": "Chief Crooked Hand",
+    "correction_note": "Use the documented Skidi Pawnee identity; do not generalize him into a ruler of all Pawnee peoples."
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cuchacique:jeriboca:principal-cacique:1599-1600:v1",
+  "person": {
+    "canonical_name_en": "Cuchacique",
+    "display_name_ko": "쿠차카시케",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Jeriboca",
+    "display_name_ko": "헤리보카",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Principal Cacique",
+    "role_display_name_ko": "수석 카시케",
+    "start_year": 1599,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1600,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Cuchacique is documented as the principal cacique of Jeriboca and a leading organizer of the Tairona uprising against Spanish Santa Marta in 1599. Historical documentation records the suppression in 1600 and his execution. ATLAS therefore links him to the specific Jeriboca political community rather than treating the broad archaeological/cultural label 'Tairona Civilization' as a single centralized state."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Banco de la República historical synthesis on Indigenous resistance in Santa Marta",
+      "canonical_url": "https://publicaciones.banrepcultural.org/index.php/banrep/article/download/8252/8646/16844",
+      "citation_text": "The Banco de la República publication states that in 1600 Spanish forces confronted confederated Indigenous communities under Cuchacique, cacique of Jeriboca, and that Cuchacique was among the executed leaders."
+    },
+    {
+      "source_type": "primary_source_edition",
+      "title": "Indios y Españoles en la Antigua Provincia de Santa Marta, Colombia: Documentos de los siglos XVI y XVII",
+      "canonical_url": "https://dokumen.pub/indios-y-espaoles-en-la-antigua-provincia-de-santa-marta-colombia-documentos-de-los-siglos-xvi-y-xvii-primera-edicion.html",
+      "citation_text": "The documentary edition preserves the sentence naming Cuchacique 'cacique principal' of Jeriboca and 'principal movedor' of the uprising, followed by his death sentence."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "gedemo-civ-leaders-20260903",
+    "requested_identity": "Cacique Cuchacique",
+    "correction_note": "Use Jeriboca as the specific political community while preserving the broader Tairona cultural context in notes."
+  }
+}
