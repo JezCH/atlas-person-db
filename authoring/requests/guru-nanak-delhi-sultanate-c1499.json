@@ -1,0 +1,56 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:guru-nanak:delhi-sultanate:religious-mission:c1499:v1",
+  "person": {
+    "canonical_name_en": "Guru Nanak",
+    "display_name_ko": "구루 나나크",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-04"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Delhi Sultanate",
+    "display_name_ko": "델리 술탄국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "religious_activity",
+    "role": "Sikh Guru and religious teacher",
+    "role_display_name_ko": "시크교 구루·종교 지도자",
+    "start_year": 1499,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1499,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Guru Nanak is the historical founder and first Guru of Sikhism. Reference works place his transformative religious experience at Sultanpur probably around 1499, after which he began his preaching mission. ATLAS records c.1499 as a representative person-specific religious-activity point within the Delhi Sultanate rather than fabricating a continuous single-polity rail across his later wide travels and the 1526 transition to Mughal rule."
+  },
+  "sources": [
+    {
+      "title": "Nanak, Guru — Encyclopedia of Religion / Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/environment/encyclopedias-almanacs-transcripts-and-maps/nanak-0",
+      "citation_text": "The reference identifies Guru Nanak (1469–1539) as the founder of the Sikh religion and states that at Sultanpur, probably in 1499, he experienced God's call and then began his religious mission.",
+      "source_type": "reference_work"
+    },
+    {
+      "title": "Sikh Philosophy — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/archives/sum2026/entries/sikh-philosophy/",
+      "citation_text": "The Stanford Encyclopedia of Philosophy identifies Guru Nanak as the founder of the Sikh spiritual path and places the emergence of Sikh philosophy in the fifteenth century from his writings and teaching.",
+      "source_type": "academic_reference"
+    }
+  ]
+}
