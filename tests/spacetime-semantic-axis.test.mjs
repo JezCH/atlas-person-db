@@ -102,7 +102,7 @@ test("spatial hierarchy is leaf-uniform, density-independent, and map-like at th
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.horizontal_order_basis, "representative_longitude_plus_geographic_continuity");
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.density_weighting, false);
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.taxonomy_revision, "2026-09-03-r3");
-  assert.match(spaceAxis.SPATIAL_HIERARCHY_POLICY.migration_document, /spacetime-spatial-taxonomy-migration-20260903\.md$/);
+  assert.match(spaceAxis.SPATIAL_HIERARCHY_POLICY.migration_document, /spacetime-spatial-taxonomy-migration-20260903-r3\.md$/);
   assert.match(spaceAxis.SPATIAL_HIERARCHY_POLICY.audit_document, /spacetime-spatial-hierarchy-audit-20260903\.md$/);
 });
 
