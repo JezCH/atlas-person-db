@@ -18,6 +18,7 @@
     ["./atlas-person-spacetime-time-projection.js?v=20260831-uniform-500-floor", "ATLAS_PERSON_SPACETIME_TIME_PROJECTION"],
     ["./atlas-person-spacetime-space-axis.js?v=20260901-compact-shared-chrome", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
     ["./atlas-person-spacetime-semantic-axis.js?v=20260826-p10", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
+    ["./atlas-person-spacetime-uncertainty.js?v=20260903-c6", "ATLAS_PERSON_SPACETIME_UNCERTAINTY"],
     ["./atlas-person-spacetime-exploration.js?v=20260826-p11", "ATLAS_PERSON_SPACETIME_EXPLORATION"],
     ["./atlas-person-spacetime-meanwhile.js?v=20260902-active-activity", "ATLAS_PERSON_SPACETIME_MEANWHILE"],
     ["./atlas-person-spacetime-data-parity.js?v=20260902-final-parity", "ATLAS_PERSON_SPACETIME_DATA_PARITY"],
@@ -123,6 +124,7 @@
       <div class="spacetime-selection-evidence-place"><b>Place evidence</b><span>${placeFunctions.length ? placeFunctions.map((value) => escapeHtml(value)).join(" · ") : "검토된 Place 기능 없음"}</span></div>
       ${evidenceRefsHtml("역사 배치 근거", historicalRefs)}
       ${evidenceRefsHtml("표시 정밀도 근거", displayRefs)}
+      <div class="spacetime-selection-evidence-note">ATLAS 시공간 배치 기준이며 실제 거주 위치·활동 영역·이동 경로를 뜻하지 않습니다.</div>
     </article>`;
   }
 
@@ -169,6 +171,7 @@
       timeProjection: window.ATLAS_PERSON_SPACETIME_TIME_PROJECTION,
       spaceAxis: window.ATLAS_PERSON_SPACETIME_SPACE_AXIS,
       semanticAxis: window.ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS,
+      uncertainty: window.ATLAS_PERSON_SPACETIME_UNCERTAINTY,
       exploration: window.ATLAS_PERSON_SPACETIME_EXPLORATION,
       meanwhile: window.ATLAS_PERSON_SPACETIME_MEANWHILE,
       dataParity: window.ATLAS_PERSON_SPACETIME_DATA_PARITY,
@@ -541,8 +544,33 @@
     return `<aside class="spacetime-minimap" aria-label="전체 시공간 미니맵"><div class="spacetime-minimap-head"><strong>전체 시공간</strong><span>클릭·드래그·방향키 이동</span></div><div id="spacetimeMinimapSurface" class="spacetime-minimap-surface" role="group" tabindex="0" aria-label="현재 전체 시공간과 카메라 범위. 방향키로 카메라 이동"><canvas id="spacetimeMinimapCanvas" class="spacetime-minimap-canvas" aria-hidden="true"></canvas><div id="spacetimeMinimapViewport" class="spacetime-minimap-viewport" aria-hidden="true"></div><i id="spacetimeMinimapSelected" class="spacetime-minimap-selected" aria-hidden="true"></i></div><output id="spacetimeMinimapStatus" class="spacetime-minimap-status">현재 화면</output></aside>`;
   }
 
+  function renderSpatialUncertainty(tracks, projection, contentWidth, activityOpacity) {
+    const { uncertainty } = runtime();
+    return tracks.flatMap((track) => (track.primary_segments || []).flatMap((segment) => {
+      const selected = selectedPersonId === track.person_id;
+      if (!uncertainty.visible(segment, activityOpacity, selected)) return [];
+      const geometry = uncertainty.geometry(segment, contentWidth);
+      const y1 = projection.yForOrdinal(segment.start_ordinal);
+      const y2 = projection.yForOrdinal(segment.end_ordinal);
+      const y = (y1 + y2) / 2;
+      const precision = spatialPrecisionLabel(segment);
+      if (geometry.kind === "range") {
+        const title = `ATLAS 시공간 배치 정밀도 범위 · ${precision} · 활동 영역이나 실제 이동 경로가 아닙니다`;
+        return [`<button type="button" class="spacetime-spatial-uncertainty ${escapeHtml(uncertainty.precisionClass(segment))}${selected ? " is-selected" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" style="left:${geometry.left}px;top:${y}px;width:${geometry.width}px" title="${escapeHtml(title)}" aria-label="${escapeHtml(`${track.display_name} · ${title}`)}"><i></i></button>`];
+      }
+      if (geometry.kind === "multi-place") {
+        const names = geometry.place_anchors.map((point) => point.place_name).filter(Boolean).join(" · ");
+        const title = `복수 검토 Place 배치 기준: ${names || "복수 Place"} · 실제 이동 경로가 아닙니다`;
+        const points = geometry.place_anchors.map((point) => `<i class="spacetime-multi-place-anchor" style="left:${point.x - geometry.left}px" title="${escapeHtml(point.place_name || "Place")}"></i>`).join("");
+        return [`<button type="button" class="spacetime-spatial-uncertainty is-multi-place${selected ? " is-selected" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" style="left:${geometry.left}px;top:${y}px;width:${geometry.width}px" title="${escapeHtml(title)}" aria-label="${escapeHtml(`${track.display_name} · ${title}`)}">${points}</button>`];
+      }
+      return [];
+    })).join("");
+  }
+
   function renderRails(tracks, projection, contentWidth, opacity, meanwhileOrdinal = null) {
     if (opacity <= 0.01) return "";
+    const { uncertainty } = runtime();
     return tracks.flatMap((track) => (track.primary_segments || []).map((segment) => {
       const y1 = projection.yForOrdinal(segment.start_ordinal);
       const y2 = projection.yForOrdinal(segment.end_ordinal);
@@ -550,19 +578,20 @@
       const height = Math.max(2, Math.abs(y2 - y1));
       const x = segment.x_anchor * contentWidth;
       const meanwhileActive = meanwhileOrdinal != null && segment.start_ordinal <= meanwhileOrdinal && meanwhileOrdinal <= segment.end_ordinal;
-      return `<button type="button" class="spacetime-track-rail${selectedPersonId === track.person_id ? " is-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" style="left:${x}px;top:${top}px;height:${height}px;opacity:${opacity}" title="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)} · ${placementBasisLabel(segment)}`)}" aria-label="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)} · ${placementBasisLabel(segment)}`)}"></button>`;
+      return `<button type="button" class="spacetime-track-rail ${escapeHtml(uncertainty.precisionClass(segment))}${selectedPersonId === track.person_id ? " is-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" style="left:${x}px;top:${top}px;height:${height}px;opacity:${opacity}" title="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)} · ${placementBasisLabel(segment)}`)}" aria-label="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)} · ${placementBasisLabel(segment)}`)}"></button>`;
     })).join("");
   }
 
   function renderActivityGlyphs(tracks, projection, contentWidth, opacity, meanwhileOrdinal = null) {
     if (opacity <= 0.01) return "";
+    const { uncertainty } = runtime();
     return tracks.flatMap((track) => (track.primary_segments || []).map((segment) => {
       const y1 = projection.yForOrdinal(segment.start_ordinal);
       const y2 = projection.yForOrdinal(segment.end_ordinal);
       const y = (y1 + y2) / 2;
       const x = segment.x_anchor * contentWidth;
       const meanwhileActive = meanwhileOrdinal != null && segment.start_ordinal <= meanwhileOrdinal && meanwhileOrdinal <= segment.end_ordinal;
-      return `<button type="button" class="spacetime-activity-glyph${selectedPersonId === track.person_id ? " is-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" style="left:${x + 6}px;top:${y}px;opacity:${opacity}" title="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`)}" aria-label="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`)}"><span>${escapeHtml(polityLabel(segment.activity))}</span></button>`;
+      return `<button type="button" class="spacetime-activity-glyph ${escapeHtml(uncertainty.precisionClass(segment))}${selectedPersonId === track.person_id ? " is-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" style="left:${x + 6}px;top:${y}px;opacity:${opacity}" title="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`)}" aria-label="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`)}"><span>${escapeHtml(polityLabel(segment.activity))}</span></button>`;
     })).join("");
   }
 
@@ -800,9 +829,11 @@
       if (signature !== lastSignature) {
         const labelPack = packTrackLabels(personItems, state.regions, state.timelineHeight, Boolean(state.needle));
         const railLayer = mount.querySelector("#spacetimeRailLayer");
+        const uncertaintyLayer = mount.querySelector("#spacetimeUncertaintyLayer");
         const labelLayer = mount.querySelector("#spacetimeLabelLayer");
         const activityLayer = mount.querySelector("#spacetimeActivityLayer");
         if (railLayer) railLayer.innerHTML = renderRails(segmentTracks, state.projection, state.contentWidth, state.lodWeights.rails, state.meanwhileOrdinal);
+        if (uncertaintyLayer) uncertaintyLayer.innerHTML = renderSpatialUncertainty(segmentTracks, state.projection, state.contentWidth, state.lodWeights.activities);
         if (labelLayer) labelLayer.innerHTML = renderLabels(personItems, labelPack, state.lodWeights, state.needle, state.meanwhilePersonIds);
         if (activityLayer) activityLayer.innerHTML = renderActivityGlyphs(segmentTracks, state.projection, state.contentWidth, state.lodWeights.activities, state.meanwhileOrdinal);
         updateCount("spacetimeDomPersonCount", personItems.length);
@@ -941,6 +972,7 @@
       </div>
     </section>
     ${renderSearchResults(searchItems, needle)}
+    <section class="spacetime-precision-legend card"><strong>공간 배치 정밀도</strong><span><i class="is-place"></i>Place</span><span><i class="is-subregion"></i>Subregion 범위</span><span><i class="is-macroregion"></i>Macroregion 범위</span><small>점선 가로선은 ATLAS 시공간 배치 정밀도 범위이며, 인물의 활동 영역이나 실제 이동 경로가 아닙니다.</small></section>
     <section class="spacetime-status-row"><span><b>${visibleTracks.length}</b> ${needle ? "검색" : "전체"} Person track</span><span><b>${primarySegmentCount}</b> 전체 주 위치 구간</span><span><b>${counterpartyCount}</b> 전체 counterparty 제외</span><span><b>${compiled.unresolvedPosition.length}</b> 전체 위치 미확정</span><span><b>${compiled.unresolvedChronology.length}</b> 전체 연대 미확정</span><span><b id="spacetimeDomPersonCount">0</b> viewport Person DOM</span><span><b id="spacetimeDomSegmentCount">0</b> viewport segment DOM</span><span><b id="spacetimeDomLabelCount">0</b> 이름 표시</span><span><b id="spacetimeDeferredLabelCount">0</b> label defer</span><span><b>${escapeHtml(timeAxis.stage_label)}</b> 시간축</span><span><b>${escapeHtml(spaceHeader.stage_label)}</b> 공간축</span><span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> LOD</span><span><b>${escapeHtml(cameraZoomLabel())}</b> 시공간 줌</span></section>
     ${(compiled.unresolvedPosition.length || compiled.partitioned.relation_review.length) ? `<section class="spacetime-integrity-note card"><strong>근거 없는 위치는 자동 추정하지 않습니다.</strong><p>현재 canonical spatial index가 제공하는 검토된 macroregion만 좌표로 사용합니다. 세부 Place/subregion 근거가 없으면 macroregion보다 정밀한 좌표를 만들지 않으며, counterparty인 opposes는 자기 위치 계산에서 제외합니다.</p></section>` : ""}
         ${renderSelection(selectedTrack, navigationItems.length)}
@@ -959,6 +991,7 @@
         ${spaceHeader.subregions.map((subregion) => `<i class="spacetime-subregion-line" style="left:${subregion.left}px;height:${timelineHeight}px;opacity:${spaceHeader.subregion_opacity}" title="${escapeHtml(subregion.label)}"></i>`).join("")}
         ${meanwhileYear == null ? "" : `<div class="spacetime-meanwhile-line" style="top:${projection.yForYear(meanwhileYear)}px;width:${contentWidth}px"><span>${escapeHtml(model.yearLabel(meanwhileYear))}</span></div>`}
         <div id="spacetimeRailLayer" class="spacetime-runtime-layer"></div>
+        <div id="spacetimeUncertaintyLayer" class="spacetime-runtime-layer"></div>
         <div id="spacetimeLabelLayer" class="spacetime-runtime-layer"></div>
         <div id="spacetimeActivityLayer" class="spacetime-runtime-layer"></div>
       </div>
