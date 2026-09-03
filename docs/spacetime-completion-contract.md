@@ -1,6 +1,6 @@
 # ATLAS Spacetime Completion Contract
 
-Status: authoritative completion gate for the current Production `시공간 인물도`.
+Status: authoritative completion gate for the current Production `시공간 인물도`. Original-plan reconciliation is in progress after the post-completion audit found requirements that were not represented by the earlier 23-gate contract.
 
 ## Readable-scale decision
 
@@ -40,6 +40,18 @@ Camera and presentation may change extent. They must never invent, upgrade, loca
 Reviewed Place evidence may compile to a Place point; reviewed subregion evidence to a subregion range; reviewed macroregion evidence only to a macroregion range. Conflicting or missing evidence remains unresolved. Display anchors are presentation data, never historical evidence.
 
 A reviewed Place point uses a zero-width world range (`x_min = x_anchor = x_max`). The current display anchor is the stable center of the reviewed subregion and is **not** claimed to be an exact geographic longitude. Place identity and evidence precision are therefore preserved without inventing coordinates. When a polity changes Place function over time, every time-sliced Place segment is preserved through spatial compile and Person Track compile; the Roman Empire Rome → Constantinople case is a permanent regression test.
+
+## Spatial uncertainty rendering
+
+Spatial precision is visible on the world surface and must not be confused with territory, residence, or a physical travel path.
+
+- reviewed Place: point/rail precision; no fake uncertainty width
+- multiple reviewed Place anchors: preserve every reviewed anchor and connect them only as a **placement-basis relation**, never as a route
+- subregion: horizontal dotted uncertainty whisker from compiled `x_min/x_max`
+- macroregion: wider dashed uncertainty whisker from compiled `x_min/x_max`
+- unresolved: no world coordinate
+
+The range is shown for selection or detail LOD. Coarse rails also keep a distinct precision treatment at lower detail so a macroregion placement does not masquerade as an exact Place. Viewport culling uses the full compiled uncertainty extent, not only `x_anchor`.
 
 ## Stable-world invariants
 
@@ -130,7 +142,12 @@ DOM size scales with viewport + overscan, not total DB size. Minimap may retain 
 - `tests/spacetime-person-inspector-evidence.test.mjs`
 - `tests/spacetime-meanwhile-active-activity.test.mjs`
 - `tests/spacetime-data-parity.test.mjs`
+- `tests/spacetime-uncertainty-rendering.test.mjs`
 - `tests/spacetime-completion-contract.test.mjs`
 - `tests/spacetime-readable-scale-contract.test.mjs`
 
 Changing the 500% floor, 0.748 shared compression, 900–1,275 px base-world bounds, 140/36 px shared chrome geometry, or prohibition on local compression requires explicit review.
+
+## Original-plan reconciliation
+
+The earlier 23-gate contract reached zero pending before a direct audit against the original C0-C11 design. That audit showed the contract itself was incomplete. C6 uncertainty rendering is now locked; the remaining required original-plan gates are Place-level spatial semantic LOD, sticky Person/Activity inspector, Activity-selection-to-Meanwhile linkage, and final browser/visual acceptance. Final product completion must not be declared again until those gates are locked.

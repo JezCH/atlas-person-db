@@ -63,12 +63,24 @@ test("required product gates remain explicit", () => {
     "minimum-readable-camera-reset",
     "minimap-global-context",
     "viewport-scalability",
-    "data-parity"
+    "data-parity",
+    "spatial-uncertainty-rendering",
+    "spatial-place-semantic-lod",
+    "sticky-person-activity-inspector",
+    "activity-selection-meanwhile-link",
+    "original-plan-visual-acceptance"
   ];
   assert.deepEqual([...capabilities.keys()], requiredIds);
   for (const id of requiredIds) assert.equal(capabilities.get(id)?.required, true);
   const pending = [...capabilities.values()].filter((item) => item.required && item.status !== "locked").map((item) => item.id);
-  assert.deepEqual(pending, []);
+  assert.deepEqual(pending, ["spatial-place-semantic-lod","sticky-person-activity-inspector","activity-selection-meanwhile-link","original-plan-visual-acceptance"]);
+  assert.equal(capabilities.get("spatial-uncertainty-rendering")?.status, "locked");
+  assert.equal(contract.spatial_uncertainty_verification.status, "locked");
+  assert.equal(contract.spatial_uncertainty_verification.semantics, "placement_precision_not_activity_extent");
+  assert.equal(contract.spatial_uncertainty_verification.culling_includes_x_min_x_max, true);
+  assert.equal(contract.original_plan_reconciliation.status, "in_progress");
+  assert.equal(contract.final_completion_verification.status, "in_progress");
+  assert.equal(contract.final_completion_verification.required_pending_count, 4);
   assert.equal(capabilities.get("data-parity")?.status, "locked");
   assert.equal(contract.data_parity_verification.status, "locked");
   assert.equal(contract.data_parity_verification.mode, "runtime_fail_closed");
@@ -80,8 +92,8 @@ test("required product gates remain explicit", () => {
   assert.equal(contract.data_parity_verification.role_delta, 0);
   assert.equal(contract.data_parity_verification.unresolved_activity_included, true);
   assert.equal(contract.data_parity_verification.multi_place_segment_deduplication_by_activity_id, true);
-  assert.equal(contract.final_completion_verification.status, "locked");
-  assert.equal(contract.final_completion_verification.required_pending_count, 0);
+  assert.equal(contract.final_completion_verification.status, "in_progress");
+  assert.equal(contract.final_completion_verification.required_pending_count, 4);
   assert.equal(capabilities.get("meanwhile-active-activity")?.status, "locked");
   assert.equal(contract.meanwhile_verification.status, "locked");
   assert.equal(contract.meanwhile_verification.selected_historical_moment, true);

@@ -19,12 +19,13 @@ test('spacetime owns a bounded map-like viewport once the incremental time camer
 
 test('authority navigation loads the current spacetime renderer without a stale cache key', () => {
   assert.match(navScript, /atlas-person-spacetime-model\.js\?v=20260902-place-precision/);
-  assert.match(navScript, /atlas-person-spacetime-view\.js\?v=20260902-final-parity/);
-  assert.match(navScript, /atlas-person-spacetime-view\.css\?v=20260902-final-parity/);
+  assert.match(navScript, /atlas-person-spacetime-view\.js\?v=20260903-c6-uncertainty/);
+  assert.match(navScript, /atlas-person-spacetime-view\.css\?v=20260903-c6-uncertainty/);
   assert.match(spacetimeView, /atlas-person-spacetime-spatial-compile\.js\?v=20260902-place-precision/);
   assert.match(spacetimeView, /atlas-person-spacetime-person-tracks\.js\?v=20260902-inspector-evidence/);
   assert.match(spacetimeView, /atlas-person-spacetime-data-parity\.js\?v=20260902-final-parity/);
-  assert.match(indexHtml, /atlas-main-authority-nav\.js\?v=20260902-spacetime-final-parity/);
+  assert.match(spacetimeView, /atlas-person-spacetime-uncertainty\.js\?v=20260903-c6/);
+  assert.match(indexHtml, /atlas-main-authority-nav\.js\?v=20260903-spacetime-c6-uncertainty/);
 });
 
 test('authority navigation resets the viewport only when the domain changes', () => {

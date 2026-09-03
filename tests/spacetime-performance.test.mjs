@@ -69,3 +69,20 @@ test("forced Person keeps its segments outside overscan", () => {
 test("retired density culling API cannot return", () => {
   assert.equal(Object.hasOwn(perf, "cullDensityCells"), false);
 });
+
+test("coarse placement remains renderable when its uncertainty range intersects the viewport", () => {
+  const tracks = [{
+    person_id: "coarse",
+    primary_segments: [{
+      stable_id: "coarse:1",
+      x_anchor: 0.5,
+      x_min: 0.1,
+      x_max: 0.9,
+      start_ordinal: 100,
+      end_ordinal: 200
+    }]
+  }];
+  const culled = perf.cullTrackSegments(tracks, projection, 1000, { left: 50, top: 120, width: 120, height: 40 });
+  assert.equal(culled.length, 1);
+  assert.equal(culled[0].person_id, "coarse");
+});

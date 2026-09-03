@@ -19,9 +19,10 @@ test("current spacetime surface keeps viewport virtualization runtime", async ()
   assert.ok(performance.includes("cullTrackSegments"));
 });
 
-test("only rail label and Activity DOM layers remain", async () => {
+test("only virtualized rail uncertainty label and Activity DOM layers remain", async () => {
   const view = await fixture(viewUrl);
   assert.ok(view.includes('id="spacetimeRailLayer"'));
+  assert.ok(view.includes('id="spacetimeUncertaintyLayer"'));
   assert.ok(view.includes('id="spacetimeLabelLayer"'));
   assert.ok(view.includes('id="spacetimeActivityLayer"'));
   assert.doesNotMatch(view, /spacetimePointLayer/);
