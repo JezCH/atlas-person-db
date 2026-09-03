@@ -57,7 +57,7 @@ test("keyboard and modifier-wheel zoom respect the 500 percent bound", () => {
 test("selection cycling remains inert with one Person", () => {
   assert.match(view, /const canCycle = Number\(navigationCount\) > 1/);
   assert.match(view, /navigationItems\.length <= 1\) return/);
-  assert.match(css, /\.spacetime-selection-actions button:disabled/);
+  assert.match(css, /.spacetime-inspector-actions button:disabled/);
 });
 
 test("activation invalidates stale data requests and retry reloads failed runtime scripts", () => {
