@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:francisco-pizarro-guaman:chachapoya:principal-cacique:1533:v1",
+  "person": {
+    "canonical_name_en": "Francisco Pizarro Guaman",
+    "display_name_ko": "프란시스코 피사로 구아만",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Chachapoya",
+    "display_name_ko": "차차포야",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Principal Cacique",
+    "role_display_name_ko": "수석 카시케",
+    "start_year": 1533,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1533,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Historical testimony identifies Guaman as an Indigenous Chachapoya elite who followed Pizarro in 1533 and was made principal cacique of Chachapoyas. ATLAS uses the documented 1533 political activity as a representative point rather than inventing a full reign interval. The baptized name Francisco Pizarro Guaman is used to distinguish him from unrelated persons named Guaman."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Feral Empire — Chapter 4: Indigenous Equestrianism, Cambridge University Press",
+      "canonical_url": "https://www.cambridge.org/core/books/feral-empire/indigenous-equestrianism/4BCD90FE74886000E1634EEF5F6EEC83",
+      "citation_text": "Cambridge scholarship cites colonial testimony that Guaman followed Pizarro to Andahuaylas in November 1533 and that Pizarro made him cacique principal of Chachapoyas, granting him lands, livestock, attendants, and other markers of elite authority."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "gedemo-civ-leaders-20260903",
+    "requested_identity": "Kuraka Guaman",
+    "correction_note": "Register the documented Chachapoya principal cacique as Francisco Pizarro Guaman; do not infer a sovereign 'Chachapoya king' title."
+  }
+}

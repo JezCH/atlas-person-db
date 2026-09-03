@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:vauli-piettomin:yamal-nenets:rebellion-leader:1841:v1",
+  "person": {
+    "canonical_name_en": "Vauli Piettomin",
+    "display_name_ko": "바울리 피에토민",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Yamal Nenets",
+    "display_name_ko": "야말 네네츠",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Rebellion leader",
+    "role_display_name_ko": "봉기 지도자",
+    "start_year": 1841,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1841,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Vauli Piettomin (Vavlyo Nenyang) was a Nenets leader of a major nineteenth-century movement among Nenets and Khanty communities in western Siberia. Modern ethnological scholarship documents his renewed march on Obdorsk and arrest in January 1841, while earlier activity extends back into the late 1820s and includes a 1839 arrest and escape. ATLAS uses the securely person-specific 1841 climax as a representative point rather than inventing one continuous leadership term across the documented interruption."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Conference Almanac of Young Researchers — Institute of Ethnology and Anthropology, Russian Academy of Sciences",
+      "canonical_url": "https://static.iea.ras.ru/books/Almanah_KMU_2_T1_2020.pdf",
+      "citation_text": "The Institute of Ethnology and Anthropology study describes Vauli Piettomin/Vavlyo Nenyang as the organizer of a Nenets and Khanty poor people's movement from the late 1820s to early 1841, with an interruption after his 1839 arrest, and records his January 1841 arrest during the move on Obdorsk."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Yamalo-Nenets National Okrug — Encyclopedia Arctica",
+      "canonical_url": "https://collections.dartmouth.edu/arctica-beta/html/EA10-22.html",
+      "citation_text": "The Arctic historical encyclopedia records an armed uprising in the Yamal Nenets tundra led by Vauli Piettomin and describes his opposition to tsarist authorities and wealthy local elites."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "gedemo-civ-leaders-20260903",
+    "requested_identity": "Vauli Piettomin",
+    "correction_note": "Treat Vauli as a historical Nenets resistance leader, not a sovereign ruler of a generic 'Nenets Civilization'."
+  }
+}

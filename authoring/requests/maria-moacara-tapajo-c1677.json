@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:maria-moacara:tapajo:oracle-mediator:c1677:v1",
+  "person": {
+    "canonical_name_en": "Maria Moaçara",
+    "display_name_ko": "마리아 모아사라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Tapajó",
+    "display_name_ko": "타파조",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Princess and oracle",
+    "role_display_name_ko": "귀족 여성·오라클",
+    "start_year": 1677,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "gregorian",
+    "end_year": 1677,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "gregorian",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Seventeenth-century missionary material and modern Amazonian scholarship identify Maria Moaçara as a high-status Tapajó woman described in colonial terminology as a hereditary 'princess' and principal oracle who mediated between Indigenous people and Portuguese missionaries. A modern scholarly edition places a notable intervention around 1677. ATLAS therefore registers Maria Moaçara with the Tapajó and a c.1677 representative point; it does not reproduce the game-mod attribution that makes 'Cunhã Moaçara' a ruler of Marajoara, and it does not treat the Nheengatu expression cunhã moaçara ('woman of great nobility') as proof of a sovereign royal office."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Revisitando os alter egos: figuras sobrepostas na iconografia Konduri e sua relação com o xamanismo — Boletim do Museu Paraense Emílio Goeldi",
+      "canonical_url": "https://www.scielo.br/j/bgoeldi/a/73s7HKTgXL4NcCpqbTPvX6r/?lang=pt",
+      "citation_text": "The peer-reviewed article identifies Maria Moaçara in the Jesuit Tapajó settlement as a female shaman/oracle who mediated relations between Indigenous people and the Portuguese."
+    },
+    {
+      "source_type": "primary_source_edition",
+      "title": "A ‘Relação’ de Jacinto de Carvalho (1719), um texto inédito de etnografia amazônica — scholarly edition",
+      "canonical_url": "https://www.scielo.br/j/bgoeldi/a/sSX5W64997j8HjzxKW9B3LM/?format=html&lang=pt",
+      "citation_text": "The scholarly edition distinguishes the title/expression Cunhã Moacara ('woman of great nobility') and notes Maria Moacara, described as a hereditary 'princess' of the Tapajó and principal oracle, intervening around 1677."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "gedemo-civ-leaders-20260903",
+    "requested_identity": "Princess Cunha Moacara",
+    "correction_note": "Correct the mod's Marajoaran ruler attribution to the historically documented Maria Moaçara of the Tapajó."
+  }
+}
