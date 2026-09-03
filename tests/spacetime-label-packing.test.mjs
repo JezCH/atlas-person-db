@@ -62,18 +62,18 @@ test("label placement is deterministic and sparse labels remain exactly on their
   assert.deepEqual(first.placed.map((item) => item.anchor_y), [40, 140, 240]);
 });
 
-test("outer chrome compaction preserves the prior text content budget", () => {
+test("Person label width ceiling is expanded beyond the old 148px truncation cap", () => {
   assert.equal(labels.DEFAULT_LABEL_CHROME_WIDTH, 4);
   assert.equal(labels.DEFAULT_MIN_LABEL_WIDTH, 30);
-  assert.equal(labels.DEFAULT_MAX_LABEL_WIDTH, 148);
+  assert.equal(labels.DEFAULT_MAX_LABEL_WIDTH, 384);
   assert.equal(labels.DEFAULT_MIN_LABEL_WIDTH - labels.DEFAULT_LABEL_CHROME_WIDTH, 26);
-  assert.equal(labels.DEFAULT_MAX_LABEL_WIDTH - labels.DEFAULT_LABEL_CHROME_WIDTH, 144);
-  assert.equal(labels.estimateWidth({ text: "12345678901234567890" }), 140);
+  assert.equal(labels.DEFAULT_MAX_LABEL_WIDTH - labels.DEFAULT_LABEL_CHROME_WIDTH, 380);
+  assert.equal(labels.estimateWidth({ text: "12345678901234567890" }), 156);
 });
 
 
 test("CJK names use wide glyph metrics instead of the Latin-width floor", () => {
-  assert.equal(labels.DEFAULT_CJK_CHAR_WIDTH, 10);
+  assert.equal(labels.DEFAULT_CJK_CHAR_WIDTH, 11.2);
   assert.ok(labels.estimateWidth({ text:"서하 경종" }) > 44);
   assert.ok(labels.estimateWidth({ text:"미나모토노 요시츠네" }) > labels.estimateWidth({ text:"Minamoto" }));
 });
@@ -98,4 +98,58 @@ test("a label wider than its own allowed zone defers instead of spilling across 
   assert.equal(result.placed.length, 0);
   assert.equal(result.deferred.length, 1);
   assert.equal(result.deferred[0].reason, "viewport_capacity");
+});
+
+
+test("minimum 500 percent world width can show the densest current Production-era name cluster without deferral", () => {
+  const names = [
+    "루츠 그라프 슈베린 폰 크로지크",
+    "칼 구스타프 에밀 만네르헤임",
+    "줄리어스 로버트 오펜하이머",
+    "마누엘 프라도 우가르테체",
+    "윌리엄 라이언 매켄지 킹",
+    "프랭클린 D. 루스벨트",
+    "페드로 아기레 세르다",
+    "수바스 찬드라 보스",
+    "제툴리우 바르가스",
+    "쁠랙 피분송크람",
+    "비드쿤 크비슬링",
+    "이스메트 이뇌뉘",
+    "루이 마운트배튼",
+    "엘리너 루스벨트",
+    "클레멘트 애틀리",
+    "해리 S. 트루먼",
+    "러키 루치아노",
+    "아돌프 히틀러",
+    "마하트마 간디",
+    "하워드 플로리",
+    "에르빈 롬멜",
+    "윈스턴 처칠",
+    "도조 히데키",
+    "벤 치플리",
+    "에바 페론",
+    "존 커틴"
+  ];
+  const width = 900 * 5 * 0.748;
+  const input = names.map((text, index) => ({
+    person_id: "dense-" + index,
+    text,
+    anchor_x: width / 2,
+    anchor_y: 100,
+    min_left: 0,
+    max_right: width
+  }));
+  const result = labels.packLabels(input, { width, height: 240 }, {
+    maxLabelWidth: labels.DEFAULT_MAX_LABEL_WIDTH,
+    maxHorizontalShift: width,
+    searchStep: 1,
+    anchorGap: 1,
+    gap: labels.DEFAULT_HORIZONTAL_GAP
+  });
+
+  assert.equal(result.placed.length, names.length);
+  assert.equal(result.deferred.length, 0);
+  assertNoRectangleOverlap(result.placed, labels.DEFAULT_HORIZONTAL_GAP);
+  assert.ok(labels.estimateWidth({ text: "자베르 알-아흐마드 알-자베르 알-사바" }) > 148);
+  for (const placement of result.placed) assert.equal(placement.label_y, placement.anchor_y);
 });
