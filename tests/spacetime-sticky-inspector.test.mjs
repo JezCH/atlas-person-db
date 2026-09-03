@@ -70,7 +70,28 @@ test("source refs are consolidated without losing placement slices",()=>{
   assert.equal(inspector.placementSlices(group).length,2);
 });
 
-const view=readFileSync(new URL("../atlas-person-spacetime-view.js",import.meta.url),"utf8");
+
+test("unresolved Activities remain present in the full Person inspector",()=>{
+  const unresolvedActivity={
+    id:"a-unresolved",
+    polity:{display_name:"Unknown placement polity"},
+    relation:{code:"rules"},
+    role:{code:"leader"},
+    start:{year:1900},
+    end:{year:1910}
+  };
+  const track={
+    primary_segments:[segment("a1",10,20)],
+    unresolved_activities:[{activity_id:"a-unresolved",reason:"spatial_unresolved",activity:unresolvedActivity}]
+  };
+  const groups=inspector.groupActivities(track);
+  assert.deepEqual(groups.map(g=>g.activity_id),["a1","a-unresolved"]);
+  const unresolved=groups.find(g=>g.activity_id==="a-unresolved");
+  assert.deepEqual(unresolved.classifications,["unresolved"]);
+  assert.equal(unresolved.unresolved_reason,"spatial_unresolved");
+  assert.equal(unresolved.midpoint_ordinal,1904);
+});
+\nconst view=readFileSync(new URL("../atlas-person-spacetime-view.js",import.meta.url),"utf8");
 const css=readFileSync(new URL("../atlas-person-spacetime-view.css",import.meta.url),"utf8");
 
 test("Production view uses right sticky Person/Activity inspector and distinct Activity selection state",()=>{
