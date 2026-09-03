@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:martin-luther:electorate-of-saxony:reformation:1517-1546:v1",
+  "person": {
+    "canonical_name_en": "Martin Luther",
+    "display_name_ko": "마르틴 루터",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-04",
+      "reason": "Direct NamuWiki document access was blocked by the provider during this reviewed registration batch; exact-person link verification remains outstanding and is not recorded as not_found.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Electorate of Saxony",
+    "display_name_ko": "작센 선제후국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "religious_activity",
+    "role": "Theologian and Reformer",
+    "role_display_name_ko": "신학자·종교개혁가",
+    "start_year": 1517,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1546,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Martin Luther's Reformation activity is represented from 1517, when he published the Ninety-Five Theses at Wittenberg, through his death in 1546. Wittenberg and Luther's principal teaching and reform work lay in the Electorate of Saxony, whose ruler Frederick the Wise later protected him. ATLAS records religious activity rather than governance and does not confuse him with Martin Luther King Jr."
+  },
+  "sources": [
+    {
+      "title": "Martin Luther — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/luther/",
+      "citation_text": "The Stanford Encyclopedia of Philosophy identifies Luther's 1517 Ninety-Five Theses as the beginning of the impact that became the Reformation, records his long professorship at Wittenberg, and follows his activity through his death in 1546.",
+      "source_type": "academic_reference"
+    }
+  ]
+}
