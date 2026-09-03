@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:augustine-of-hippo:roman-africa:c396-430:v1",
+  "person": {
+    "canonical_name_en": "Augustine of Hippo",
+    "display_name_ko": "히포의 아우구스티누스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Africa",
+    "display_name_ko": "로마령 아프리카",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "term",
+    "role": "Bishop of Hippo Regius",
+    "role_display_name_ko": "히포 레기우스 주교",
+    "start_year": 396,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 430,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Augustine was ordained priest at Hippo in 391 and succeeded to the bishopric about 396, serving until his death during the Vandal siege in 430. ATLAS records his major ecclesiastical office in Roman Africa; he was not a ruler of Romano-Maghreb, Phoenicia, or Rome."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Stanford Encyclopedia of Philosophy — Augustine of Hippo",
+      "canonical_url": "https://plato.stanford.edu/entries/augustine/",
+      "citation_text": "The Stanford Encyclopedia states that Augustine was ordained a priest at Hippo in 391, succeeded the local bishop about 396, and remained bishop until his death in 430."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-aksum-rome-daylam-vietnam-batch-20260903",
+    "requested_identity": "AUGUSTINE — ROMANO-MAGHREB, PHOENICIA, AND ROME",
+    "correction_note": "Register his historically significant episcopal office in Roman Africa rather than political sovereignty."
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:adud-al-dawla:buyid-fars-iraq:977-983:v1",
+  "person": {
+    "canonical_name_en": "Adud al-Dawla",
+    "display_name_ko": "아두드 앗다울라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Buyid Realm of Fars and Iraq",
+    "display_name_ko": "부와이흐 왕조령(파르스·이라크)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Supreme Buyid ruler",
+    "role_display_name_ko": "부와이흐 최고 통치자",
+    "start_year": 977,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 983,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "From 977 Adud al-Dawla directly ruled both Fars and Iraq and became the most powerful Buyid monarch, remaining in control until his death in March 983. ATLAS separates this expanded phase from his earlier Fars-only rule."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Encyclopaedia Iranica — Fārs iii. History in the Islamic Period",
+      "canonical_url": "https://www.iranicaonline.org/articles/fars-iii/?generate_pdf=1",
+      "citation_text": "Iranica explicitly gives Adud al-Dawla's rule in Fars and Iraq from 977 to 983."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Encyclopaedia Iranica — ʿAŻOD-AL-DAWLA, ABŪ ŠOJĀʾ FANNĀ ḴOSROW",
+      "canonical_url": "https://www.iranicaonline.org/articles/azod-al-dawla-abu-soja/",
+      "citation_text": "Iranica describes Adud al-Dawla as the greatest Buyid monarch and notes that at his death in 983 he directly ruled Fars, Iraq, and adjacent territories."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-aksum-rome-daylam-vietnam-batch-20260903",
+    "requested_identity": "ADUD AL-DAWLA — DAYLAM",
+    "correction_note": "Add the historically distinct expanded Fars-Iraq phase."
+  }
+}

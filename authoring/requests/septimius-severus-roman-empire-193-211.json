@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:septimius-severus:roman-empire:193-211:v1",
+  "person": {
+    "canonical_name_en": "Septimius Severus",
+    "display_name_ko": "셉티미우스 세베루스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 193,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 211,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Septimius Severus, born at Lepcis Magna in Roman Africa, became Roman emperor in 193 and ruled until his death at York in 211. His North African and Punic cultural background explains the mod's Romano-Maghreb/Phoenicia slots, but neither is a separate sovereign office."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "British Museum — Septimius Severus",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG140728",
+      "citation_text": "The British Museum identifies Septimius Severus as the African-born Roman emperor, born at Lepcis Magna and ruling until his death in 211."
+    },
+    {
+      "source_type": "reference",
+      "title": "Encyclopaedia Britannica — Lucius Septimius Severus",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Severus%2C_Lucius_Septimius",
+      "citation_text": "Britannica identifies Severus as Roman emperor and records his death on 4 February 211 after his imperial career beginning in 193."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-aksum-rome-daylam-vietnam-batch-20260903",
+    "requested_identity": "SEPTIMIUS SEVERUS — ROMANO-MAGHREB, PHOENICIA, AND ROME",
+    "correction_note": "Keep one Roman imperial reign; Maghreb/Phoenicia are origin or cultural framing, not separate rule."
+  }
+}
