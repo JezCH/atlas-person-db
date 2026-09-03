@@ -1,0 +1,64 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Caligula",
+    "display_name_ko": "칼리굴라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Roman Emperor",
+    "role_display_name_ko": "로마 황제",
+    "period_basis": "reign",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gaius Julius Caesar Augustus Germanicus, commonly called Caligula, was the third Roman emperor and ruled from 37 until his assassination in 41.",
+    "start_year": 37,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 41,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Caligula — PBS Roman Empire",
+      "canonical_url": "https://www.pbs.org/empires/romans/empire/caligula.html",
+      "citation_text": "Identifies Caligula as Roman emperor and gives his reign as 37–41 CE.",
+      "locator": "https://www.pbs.org/empires/romans/empire/caligula.html"
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Caligula — historical summary",
+      "canonical_url": "https://en.wikipedia.org/wiki/Caligula",
+      "citation_text": "Gives the imperial reign from 16 March 37 to 24 January 41.",
+      "locator": "https://en.wikipedia.org/wiki/Caligula"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-03",
+      "reason": "Direct NamuWiki verification returned no usable provider result. The user explicitly requested registration to continue after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "c2c-reviewed-14-20260903",
+    "requested_identity": "Caligula"
+  }
+}

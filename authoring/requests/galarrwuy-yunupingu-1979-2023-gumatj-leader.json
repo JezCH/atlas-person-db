@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Galarrwuy Yunupingu",
+    "display_name_ko": "갈라루이 유누핑구",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Gumatj clan",
+    "display_name_ko": "구맛지 씨족",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Gumatj clan leader",
+    "role_display_name_ko": "구맛지 씨족 지도자",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Civilization mod's surname-only Yunupingu leader slot is identified in CIV Gold material as Galarrwuy Yunupingu, not Mandawuy Yunupingu. NAIDOC identifies Galarrwuy as leader of the Gumatj Clan since 1979; ATLAS records that community leadership through his death in 2023.",
+    "start_year": 1979,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 2023,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Civilization IV Gold Mod leader roster",
+      "canonical_url": "https://civilization.fandom.com/wiki/User_blog:Ryan_sinbela/Civilization_IV_Gold_Mod",
+      "citation_text": "The CIV Gold roster expands the Aboriginal leader label to Galarrwuy Yunupingu, resolving the mod identity.",
+      "locator": "https://civilization.fandom.com/wiki/User_blog:Ryan_sinbela/Civilization_IV_Gold_Mod"
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Galarrwuy Yunupingu — NAIDOC Lifetime Achievement profile",
+      "canonical_url": "https://www.naidoc.org.au/awards/winner-profiles/galarrwuy-yunupingu",
+      "citation_text": "Official NAIDOC profile describes Galarrwuy as a prominent Aboriginal leader and states that he was leader of the Gumatj Clan since 1979.",
+      "locator": "https://www.naidoc.org.au/awards/winner-profiles/galarrwuy-yunupingu"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-03",
+      "reason": "Direct NamuWiki verification returned no usable provider result. The user explicitly requested registration to continue after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "c2c-reviewed-14-20260903",
+    "requested_identity": "Yunupingu",
+    "identity_resolution": "Galarrwuy Yunupingu, not Mandawuy Yunupingu"
+  }
+}

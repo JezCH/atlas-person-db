@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Atotoztli",
+    "display_name_ko": "아토토츠틀리",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Aztec Empire",
+    "display_name_ko": "아즈텍 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Dynastic political figure and possible ruler",
+    "role_display_name_ko": "왕조 정치인·통치 가능 인물",
+    "period_basis": "general_activity",
+    "confidence": "disputed",
+    "chronology_status": "reviewed",
+    "notes": "Atotoztli, daughter of Moctezuma I and mother of Axayacatl, Tizoc and Ahuitzotl, was unquestionably central to Mexica dynastic continuity. Later sources differ over whether and how long she ruled after her father. ATLAS therefore records a representative c.1469 political point with disputed confidence and does not assert a formal six-year or twelve-year reign.",
+    "start_year": 1469,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1469,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "“Atotoztli” la tlatoani mexica no reconocida — INPI",
+      "canonical_url": "https://www.gob.mx/inpi/es/articulos/atotoztli-la-tlatoani-mexica-no-reconocida?idiom=es",
+      "citation_text": "Mexico's INPI summarizes Atotoztli's dynastic importance and the conflicting historical claims that she ruled after Moctezuma I.",
+      "locator": "https://www.gob.mx/inpi/es/articulos/atotoztli-la-tlatoani-mexica-no-reconocida?idiom=es"
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Aztec women and rulership — RES 47 academic article scan",
+      "canonical_url": "https://latinamericanstudies.org/aztecs/Aztec-women.pdf",
+      "citation_text": "Academic discussion notes that some alphabetic sources posit that Atotoztli inherited the throne and ruled Tenochtitlan for a time, while the evidence remains contested.",
+      "locator": "https://latinamericanstudies.org/aztecs/Aztec-women.pdf"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-03",
+      "reason": "Direct NamuWiki verification returned no usable provider result. The user explicitly requested registration to continue after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "c2c-reviewed-14-20260903",
+    "requested_identity": "Atotoztli",
+    "normalization": "No uncontested tlatoani reign asserted"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Darius III",
+    "display_name_ko": "다리우스 3세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Achaemenid Empire",
+    "display_name_ko": "아케메네스 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "King of Kings",
+    "role_display_name_ko": "왕중왕",
+    "period_basis": "reign",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Darius III was the last reigning Achaemenid King of Kings. ATLAS records the conventional 336–330 BCE reign and does not merge him with the already registered Darius I.",
+    "start_year": -336,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -330,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Darius III (r. 336–330 BCE) — Achaemenica",
+      "canonical_url": "https://achaemenica.org/articles/darius-iii",
+      "citation_text": "Identifies Darius III as the last Achaemenid King of Kings and dates his reign to 336–330 BCE.",
+      "locator": "https://achaemenica.org/articles/darius-iii"
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Darius III — encyclopedia summary",
+      "canonical_url": "https://en.wikipedia.org/wiki/Darius_III",
+      "citation_text": "Independent summary of the same 336–330 BCE Achaemenid reign.",
+      "locator": "https://en.wikipedia.org/wiki/Darius_III"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-03",
+      "reason": "Direct NamuWiki verification returned no usable provider result. The user explicitly requested registration to continue after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "c2c-reviewed-14-20260903",
+    "requested_identity": "Darius III"
+  }
+}

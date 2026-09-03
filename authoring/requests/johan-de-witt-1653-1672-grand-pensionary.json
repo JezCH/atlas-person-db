@@ -1,0 +1,64 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Johan de Witt",
+    "display_name_ko": "요한 더 비트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Dutch Republic",
+    "display_name_ko": "네덜란드 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Grand Pensionary of Holland",
+    "role_display_name_ko": "홀란트 대연금공",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Johan de Witt served as Grand Pensionary of Holland from 1653 to 1672 and, during the First Stadtholderless Period, exercised dominant political leadership in the Dutch Republic. The role title remains the actual provincial office rather than an invented national presidency.",
+    "start_year": 1653,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1672,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Johan de Witt, Grand Pensionary of Holland — Rijksmuseum",
+      "canonical_url": "https://www.rijksmuseum.nl/en/collection/object/Johan-de-Witt-1625-1672-Grand-Pensionary-of-Holland--21ecc07896730d99648e3d45167ff9dd?tab=catalogue",
+      "citation_text": "States that De Witt was appointed Grand Pensionary in 1653 and exercised virtual control of government during the stadtholderless period.",
+      "locator": "https://www.rijksmuseum.nl/en/collection/object/Johan-de-Witt-1625-1672-Grand-Pensionary-of-Holland--21ecc07896730d99648e3d45167ff9dd?tab=catalogue"
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Johan de Witt archive — Nationaal Archief",
+      "canonical_url": "https://www.nationaalarchief.nl/onderzoeken/archief/3.01.17/invnr/B.2.1.3",
+      "citation_text": "National Archives catalog identifies Johan de Witt as Grand Pensionary of Holland, 1653–1672.",
+      "locator": "https://www.nationaalarchief.nl/onderzoeken/archief/3.01.17/invnr/B.2.1.3"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-03",
+      "reason": "Direct NamuWiki verification returned no usable provider result. The user explicitly requested registration to continue after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "c2c-reviewed-14-20260903",
+    "requested_identity": "Johan de Witt"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Mary I",
+    "display_name_ko": "메리 1세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Ireland",
+    "display_name_ko": "아일랜드 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Queen",
+    "role_display_name_ko": "여왕",
+    "period_basis": "reign",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Mary I concurrently held the separate Crown of Ireland during her 1553–1558 reign. ATLAS preserves the Irish crown as a distinct polity Activity, matching the project's treatment of later Tudor and Stuart monarchs.",
+    "start_year": 1553,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1558,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Queen Mary I — National Portrait Gallery",
+      "canonical_url": "https://www.npg.org.uk/collections/search/portrait/mw04265/Queen-Mary-I",
+      "citation_text": "States explicitly that Mary ruled as Queen of England and Ireland from July 1553 until November 1558.",
+      "locator": "https://www.npg.org.uk/collections/search/portrait/mw04265/Queen-Mary-I"
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Mary I — historical summary",
+      "canonical_url": "https://en.wikipedia.org/wiki/Mary_I",
+      "citation_text": "Identifies Mary I as Queen of England and Ireland from 1553 to 1558.",
+      "locator": "https://en.wikipedia.org/wiki/Mary_I"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-03",
+      "reason": "Direct NamuWiki verification returned no usable provider result. The user explicitly requested registration to continue after disclosure; no document absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "c2c-reviewed-14-20260903",
+    "requested_identity": "Mary I",
+    "concurrent_crown": "Kingdom of England authored separately"
+  }
+}
