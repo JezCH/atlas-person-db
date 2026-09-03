@@ -14,10 +14,13 @@
   const SPATIAL_HIERARCHY_POLICY = Object.freeze({
     taxonomy_basis: "atlas_internal_display_taxonomy",
     external_standard: null,
+    reference_frameworks: Object.freeze(["UN M49 geographic regions (reference only; not adopted as the ATLAS taxonomy)"]),
+    audit_document: "docs/spacetime-spatial-hierarchy-audit-20260903.md",
     width_basis: "equal_leaf_subregion",
     macro_width_basis: "sum_of_child_leaf_widths",
-    horizontal_order_basis: "atlas_map_like_display_order",
-    note: "This hierarchy is an ATLAS display taxonomy, not an attributed external geographic standard."
+    horizontal_order_basis: "representative_longitude_plus_geographic_continuity",
+    density_weighting: false,
+    note: "This hierarchy is an ATLAS historical-display taxonomy. External modern classifications are references only; Person density never determines geography or width."
   });
 
   const DEFAULT_SPATIAL_HIERARCHY = Object.freeze([
@@ -28,20 +31,20 @@
     ]) }),
     Object.freeze({ code: "europe", label: "유럽", subregions: Object.freeze([
       Object.freeze({ code: "britain-ireland", label: "영국·아일랜드" }),
-      Object.freeze({ code: "western-europe", label: "서유럽" }),
       Object.freeze({ code: "iberia", label: "이베리아" }),
-      Object.freeze({ code: "central-europe", label: "중부유럽" }),
+      Object.freeze({ code: "western-europe", label: "서유럽" }),
       Object.freeze({ code: "italy", label: "이탈리아" }),
+      Object.freeze({ code: "central-europe", label: "중부유럽" }),
       Object.freeze({ code: "northern-europe", label: "북유럽" }),
       Object.freeze({ code: "balkans", label: "발칸" }),
       Object.freeze({ code: "eastern-europe-russia", label: "동유럽·러시아" })
     ]) }),
     Object.freeze({ code: "africa", label: "아프리카", subregions: Object.freeze([
-      Object.freeze({ code: "north-africa-nile", label: "북아프리카·나일" }),
       Object.freeze({ code: "west-africa", label: "서아프리카" }),
+      Object.freeze({ code: "north-africa-nile", label: "북아프리카·나일" }),
       Object.freeze({ code: "central-africa", label: "중앙아프리카" }),
-      Object.freeze({ code: "east-africa-horn", label: "동아프리카·아프리카의 뿔" }),
-      Object.freeze({ code: "southern-africa", label: "남아프리카" })
+      Object.freeze({ code: "southern-africa", label: "남아프리카" }),
+      Object.freeze({ code: "east-africa-horn", label: "동아프리카·아프리카의 뿔" })
     ]) }),
     Object.freeze({ code: "west-asia", label: "서아시아", subregions: Object.freeze([
       Object.freeze({ code: "anatolia-caucasus", label: "아나톨리아·캅카스" }),
@@ -51,8 +54,8 @@
     ]) }),
     Object.freeze({ code: "south-asia", label: "남아시아", subregions: Object.freeze([
       Object.freeze({ code: "northwest-south-asia", label: "북서부" }),
-      Object.freeze({ code: "north-india-ganges", label: "북인도·갠지스" }),
-      Object.freeze({ code: "deccan-south-india", label: "데칸·남인도" })
+      Object.freeze({ code: "deccan-south-india", label: "데칸·남인도" }),
+      Object.freeze({ code: "north-india-ganges", label: "북인도·갠지스" })
     ]) }),
     Object.freeze({ code: "central-asia", label: "중앙아시아", subregions: Object.freeze([
       Object.freeze({ code: "western-central-asia", label: "서부 중앙아시아" }),
@@ -64,9 +67,9 @@
     ]) }),
     Object.freeze({ code: "east-asia", label: "동아시아", subregions: Object.freeze([
       Object.freeze({ code: "china", label: "중국권" }),
+      Object.freeze({ code: "manchuria-mongolia", label: "만주·몽골권" }),
       Object.freeze({ code: "korean-peninsula", label: "한반도" }),
-      Object.freeze({ code: "japan", label: "일본" }),
-      Object.freeze({ code: "manchuria-mongolia", label: "만주·몽골권" })
+      Object.freeze({ code: "japan", label: "일본" })
     ]) }),
     Object.freeze({ code: "oceania", label: "오세아니아", subregions: Object.freeze([
       Object.freeze({ code: "australasia", label: "오스트랄라시아" }),
