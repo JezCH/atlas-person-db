@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:juba-ii:kingdom-mauretania:-25-23:v1",
+  "person": {
+    "canonical_name_en": "Juba II",
+    "display_name_ko": "유바 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Mauretania",
+    "display_name_ko": "마우레타니아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": -25,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 23,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Juba II ruled the Roman client Kingdom of Mauretania from 25 BCE until 23 CE. The mod's Berbery slot is the same historical person and does not justify a second generic Berber polity."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "Berlin Münzkabinett — Mauretanien: Iuba II",
+      "canonical_url": "https://ikmk.smb.museum/object?id=18237791&lang=en",
+      "citation_text": "The Staatliche Museen coin catalogue identifies Iuba II as king of Mauretania from 25 BC to AD 23 and documents his dated royal coinage."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-berbery-ethiopia-inca-batch-20260903",
+    "requested_identity": "JUBA II — MAURETANIA / BERBERY",
+    "correction_note": "Register the single historical Mauretanian kingship once."
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:al-hakim-bi-amr-allah:fatimid-caliphate:996-1021:v1",
+  "person": {
+    "canonical_name_en": "al-Hakim bi-Amr Allah",
+    "display_name_ko": "알하킴 비아므르 알라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Fatimid Caliphate",
+    "display_name_ko": "파티마 칼리파국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Fatimid Caliph and Isma'ili Imam",
+    "role_display_name_ko": "파티마 칼리프·이스마일파 이맘",
+    "start_year": 996,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1021,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Al-Hakim bi-Amr Allah was the sixth Fatimid caliph and sixteenth Isma'ili imam from 996 to 1021. The mod's Berbero-Arabia, Arabia and Berbery labels are gameplay categories; ATLAS records the actual Fatimid Caliphate and creates no fictitious Arabia/Berbery reign."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Encyclopaedia Iranica — ḤĀKEM BE-AMR-ALLĀH",
+      "canonical_url": "https://www.iranicaonline.org/articles/hakem-be-amr-allah/",
+      "citation_text": "Iranica identifies al-Hakim as the sixth Fatimid caliph and sixteenth Isma'ili Imam, reigning 386–411 AH / 996–1021 CE."
+    },
+    {
+      "source_type": "institutional_reference",
+      "title": "Institute of Ismaili Studies — al-Hakim bi-Amr Allah",
+      "canonical_url": "https://www.iis.ac.uk/scholarly-contributions/al-hakim-bi-amr-allah/",
+      "citation_text": "The Institute of Ismaili Studies gives the same Fatimid reign, 996–1021."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-berbery-ethiopia-inca-batch-20260903",
+    "requested_identity": "AL-HAKIM BI-AMR ALLAH — BERBERO-ARABIA / ARABIA / BERBERY",
+    "correction_note": "Normalize all repeated game slots to the single Fatimid caliphate reign."
+  }
+}

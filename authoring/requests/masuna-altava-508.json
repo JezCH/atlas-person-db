@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:masuna:kingdom-moors-romans:508-attested:v1",
+  "person": {
+    "canonical_name_en": "Masuna",
+    "display_name_ko": "마수나",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of the Moors and Romans (Altava)",
+    "display_name_ko": "무어인과 로마인의 왕국(알타바)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "general_activity",
+    "role": "King of the Moors and Romans",
+    "role_display_name_ko": "무어인과 로마인의 왕",
+    "start_year": 508,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 508,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Masuna is securely known from an Altava inscription dated 508 that styles him rex gentium Maurorum et Romanorum. Because this inscription is the only secure source for the person and does not establish his accession or death, ATLAS stores 508 as a documented representative point rather than fabricating a multi-year reign. The mod's Mauretania/Berbery labels are normalized to this late-antique Mauro-Roman kingdom."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Yves Modéran — Masuna, Encyclopédie berbère",
+      "canonical_url": "https://journals.openedition.org/encyclopedieberbere/508",
+      "citation_text": "Modéran identifies Masuna from the 508 Altava inscription as rex gentium Maurorum et Romanorum and stresses that the inscription is the only secure source for the person."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Gabriel Camps — Rex gentium Maurorum et Romanorum",
+      "canonical_url": "https://www.persee.fr/doc/antaf_0066-4871_1984_num_20_1_1105",
+      "citation_text": "Camps discusses Masuna's recognition as king over both Moorish and Romanized populations in the late-antique Mauretanian successor polity."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-berbery-ethiopia-inca-batch-20260903",
+    "requested_identity": "MASUNA — BERBERY / MAURETANIA",
+    "correction_note": "Use the exact 508 epigraphic attestation and do not invent reign boundaries."
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:lalibela:zagwe-kingdom:c1181-c1221:v1",
+  "person": {
+    "canonical_name_en": "Lalibela",
+    "display_name_ko": "랄리벨라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Zagwe Kingdom",
+    "display_name_ko": "자그웨 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1181,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1221,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gebre Mesqel Lalibela is traditionally placed as a Zagwe ruler c.1181–c.1221. The Metropolitan Museum notes that both the reign dates and the attribution of the entire rock-hewn church complex rely partly on Ethiopian tradition, so ATLAS preserves approximate chronology rather than presenting the mod's Agawmeder/Ethiopia labels as separate states."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "The Metropolitan Museum of Art — The Rock-hewn Churches of Lalibela",
+      "canonical_url": "https://www.metmuseum.org/ko/essays/the-rock-hewn-churches-of-lalibela",
+      "citation_text": "The Met states that Ethiopian tradition attributes the church complex to King Gebre Mesqel Lalibela, whose reign is conventionally given as ca. 1181–1221, while noting uncertainty in the complex's precise dating."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-berbery-ethiopia-inca-batch-20260903",
+    "requested_identity": "LALIBELA — AGAWMEDER AND ETHIOPIA",
+    "correction_note": "Register the Zagwe ruler once with approximate chronology; do not split modern/ethnographic game labels into extra reigns."
+  }
+}

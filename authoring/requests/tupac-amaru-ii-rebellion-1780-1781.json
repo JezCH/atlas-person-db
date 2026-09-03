@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:tupac-amaru-ii:great-rebellion:1780-1781:v1",
+  "person": {
+    "canonical_name_en": "Túpac Amaru II",
+    "display_name_ko": "투팍 아마루 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Great Rebellion of Túpac Amaru II",
+    "display_name_ko": "투팍 아마루 2세 대반란",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Indigenous rebel leader",
+    "role_display_name_ko": "원주민 반란 지도자",
+    "start_year": 1780,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1781,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "José Gabriel Condorcanqui, who took the name Túpac Amaru II, led the great Andean rebellion beginning in November 1780 until his capture and execution in 1781. He invoked Inca legitimacy but was not sovereign ruler of a restored historical Inca Empire, so ATLAS records the rebellion movement rather than creating an anachronistic Inca reign."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Oxford Research Encyclopedia of Latin American History — The Age of Indigenous-Mestizo Rebellions in 18th-Century Peru",
+      "canonical_url": "https://academic.oup.com/edited-volume/61800/chapter-abstract/546396566",
+      "citation_text": "Oxford describes the Great Rebellion of Túpac Amaru II as an unprecedented mass movement that began in Cuzco in November 1780 and continued into 1781."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Wiley — Túpac Amaru Rebellion II and the Last Inca Revolt, 1780–1783",
+      "canonical_url": "https://doi.org/10.1002/9781405198073.wbierp1481",
+      "citation_text": "The reference identifies José Gabriel Condorcanqui, alias Túpac Amaru II, as leader of the major indigenous rebellion launched in 1780; he was executed in 1781."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-berbery-ethiopia-inca-batch-20260903",
+    "requested_identity": "TÚPAC AMARU II — INCA",
+    "correction_note": "Represent the 1780–1781 rebellion leadership, not a fictitious sovereign reign of the long-extinct Inca Empire."
+  }
+}
