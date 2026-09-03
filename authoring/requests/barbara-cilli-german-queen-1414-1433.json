@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:barbara-of-cilli:kingdom-germany:1414-1433:v1",
+  "person": {
+    "canonical_name_en": "Barbara of Cilli",
+    "display_name_ko": "바르바라 폰 칠리",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Germany (Holy Roman Kingdom)",
+    "display_name_ko": "독일 왕국(로마왕국)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "term",
+    "role": "Queen of the Romans",
+    "role_display_name_ko": "로마인의 왕비",
+    "start_year": 1414,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1433,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Barbara was crowned German queen / Queen of the Romans at Aachen in 1414. This consort title is separated from her later imperial title."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Neue Deutsche Biographie — Barbara von Cilli",
+      "canonical_url": "https://www.deutsche-biographie.de/gnd119334224.html#ndbcontent",
+      "citation_text": "NDB records Barbara as queen of Hungary from 1406, German queen from the 1414 coronation, empress from 1433, and queen and governor of Bohemia in 1437, while noting repeated regencies in Hungary."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-bosnia-egypt-sudan-batch-20260903",
+    "requested_identity": "BARBARA VON CILLI — GERMANY",
+    "correction_note": "Normalize the mod's Germany slot to her Queen of the Romans title."
+  }
+}

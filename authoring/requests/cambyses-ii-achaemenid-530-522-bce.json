@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cambyses-ii:achaemenid-empire:-530--522:v1",
+  "person": {
+    "canonical_name_en": "Cambyses II",
+    "display_name_ko": "캄비세스 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Achaemenid Empire",
+    "display_name_ko": "아케메네스 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King of Kings",
+    "role_display_name_ko": "샤한샤",
+    "start_year": -530,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -522,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Cambyses II succeeded Cyrus the Great as ruler of the Achaemenid Empire in 530 BCE and reigned until his death in 522 BCE."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Encyclopaedia Iranica — Cambyses",
+      "canonical_url": "https://www.iranicaonline.org/articles/cambyses-opers/",
+      "citation_text": "Iranica records Cambyses II as Achaemenid ruler 530–522 BCE and documents his brief appointment as king of Babylon in 538 BCE before his imperial succession."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-bosnia-egypt-sudan-batch-20260903",
+    "requested_identity": "CAMBYSES II — PERSIA",
+    "correction_note": "Register the principal Achaemenid imperial reign."
+  }
+}

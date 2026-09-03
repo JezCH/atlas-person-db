@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:stjepan-vukcic-kosaca:herzegovina:1448-1466:v1",
+  "person": {
+    "canonical_name_en": "Stjepan Vukčić Kosača",
+    "display_name_ko": "스체판 부크치치 코사차",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Herzegovina (Kosača Domain)",
+    "display_name_ko": "헤르체고비나(코사차 영지)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "de_facto_rule",
+    "role": "Herceg of Saint Sava",
+    "role_display_name_ko": "성 사바의 헤르체그",
+    "start_year": 1448,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1466,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "In 1448 Stjepan adopted the title Herceg of Saint Sava. His territory thereafter became known as Herzegovina and Croatian reference literature explicitly describes him there as an independent ruler."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "Hrvatska enciklopedija — Kosača, Stjepan Vukčić",
+      "canonical_url": "https://www.enciklopedija.hr/clanak/kosaca-stjepan-vukcic",
+      "citation_text": "The Croatian Encyclopedia identifies Stjepan as grand duke of the Bosnian state from 1435, his adoption of the herceg of Saint Sava title in 1448, and his independent rule in the territory thereafter known as Herzegovina until 1466."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-bosnia-egypt-sudan-batch-20260903",
+    "requested_identity": "STJEPAN VUKCIC — HERZEGOVINA",
+    "correction_note": "Model the autonomous Kosača domain that gave Herzegovina its name."
+  }
+}

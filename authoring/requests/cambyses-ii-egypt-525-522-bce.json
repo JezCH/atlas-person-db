@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:cambyses-ii:egypt-27th-dynasty:-525--522:v1",
+  "person": {
+    "canonical_name_en": "Cambyses II",
+    "display_name_ko": "캄비세스 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Twenty-Seventh Dynasty of Egypt",
+    "display_name_ko": "이집트 제27왕조",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Pharaoh",
+    "role_display_name_ko": "파라오",
+    "start_year": -525,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -522,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After conquering Egypt in 525 BCE, Cambyses was recognized as pharaoh. This concurrent Egyptian kingship is stored separately from his empire-wide Achaemenid reign; no fictional Perso-Egypt hybrid polity is created."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Encyclopaedia Iranica — Cambyses",
+      "canonical_url": "https://www.iranicaonline.org/articles/cambyses-opers/",
+      "citation_text": "Iranica records Cambyses II as Achaemenid ruler 530–522 BCE and documents his brief appointment as king of Babylon in 538 BCE before his imperial succession."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-bosnia-egypt-sudan-batch-20260903",
+    "requested_identity": "CAMBYSES II — PERSO-EGYPT AND EGYPT",
+    "correction_note": "Represent the real Egyptian pharaonic office."
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:muhammad-ahmad:mahdist-movement:1881-1885:v1",
+  "person": {
+    "canonical_name_en": "Muhammad Ahmad",
+    "display_name_ko": "무함마드 아흐마드",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Mahdist Movement",
+    "display_name_ko": "마흐디 운동",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Mahdi and revolutionary movement leader",
+    "role_display_name_ko": "마흐디·혁명운동 지도자",
+    "start_year": 1881,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1885,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "This complements the existing 1885 Mahdist State Activity by capturing Muhammad Ahmad's preceding leadership of the Mahdist movement from its launch in 1881 through the transition to state rule in 1885."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "M. E. Shibeika, The Sudan and the Mahdist Revolution of 1881-1885",
+      "canonical_url": "https://repository.royalholloway.ac.uk/items/4155426b-3f80-47da-b08a-81b48721bc0d/1/",
+      "citation_text": "Royal Holloway summarizes Muhammad Ahmad's launch of the Mahdist religious-political revolution in Egyptian Sudan in 1881 and its victories through 1885."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-02"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-bosnia-egypt-sudan-batch-20260903",
+    "requested_identity": "MUHAMMAD AHMAD AL-MAHDI — SUDAN",
+    "correction_note": "Complete the existing person with the 1881–1885 movement-leadership phase."
+  }
+}
