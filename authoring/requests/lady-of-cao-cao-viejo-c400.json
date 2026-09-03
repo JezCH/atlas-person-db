@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:lady-of-cao:cao-viejo-moche:ruler-ritual-leader:c400:v1",
+  "person": {
+    "canonical_name_en": "Lady of Cao",
+    "display_name_ko": "카오의 여인",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Cao Viejo (Moche)",
+    "display_name_ko": "카오 비에호(모체)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "general_activity",
+    "role": "Ruler and ritual leader",
+    "role_display_name_ko": "통치자·의례 지도자",
+    "start_year": 400,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 400,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "The Lady of Cao was a high-ranking Moche woman buried at Huaca Cao Viejo with crowns, diadems, clubs and other emblems of power. Peruvian archaeological scholarship and the El Brujo/Fundación Wiese research program interpret her as holding exceptionally high governmental and ritual authority comparable to major Moche lords. Her tomb belongs broadly to the fourth-fifth centuries CE and institutional material commonly places her around 400 CE. Because no personal reign interval survives, ATLAS uses c.400 as a representative leadership point rather than inventing a multi-year reign over all Moche society."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Régulo Franco Jordán — Poder, status e identidad de dos personajes femeninos de la élite Moche, Arqueológicas / Ministerio de Cultura del Perú",
+      "canonical_url": "https://revistas.cultura.gob.pe/index.php/arqueologicas/article/view/445",
+      "citation_text": "The peer-reviewed Ministry of Culture journal article identifies elite female burials at Huaca Cao Viejo as women who held important roles in power and ceremony, and discusses the exceptional status of the Lady of Cao context."
+    },
+    {
+      "source_type": "institutional_reference",
+      "title": "Fundación Wiese — Conoce la historia de la Señora de Cao",
+      "canonical_url": "https://www.fundacionwiese.org/recursos/historia-senora-de-cao",
+      "citation_text": "Fundación Wiese's El Brujo research presentation places the Lady of Cao around 400 CE and describes the emblems she bore in life as markers of power and divinity in Moche society."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "gedemo-civ-leaders-2-20260903",
+    "requested_identity": "Lady of Cao",
+    "correction_note": "Bind the archaeological person to Cao Viejo in the lower Chicama Moche sphere; do not model the entire Moche culture as one centralized polity ruled by her."
+  }
+}
