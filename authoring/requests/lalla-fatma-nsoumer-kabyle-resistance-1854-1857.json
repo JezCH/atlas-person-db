@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:lalla-fatma-nsoumer:kabyle-resistance:1854-1857:v1",
+  "person": {
+    "canonical_name_en": "Lalla Fatma N'Soumer",
+    "display_name_ko": "랄라 파트마 은수메르",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kabyle Resistance to the French Conquest",
+    "display_name_ko": "프랑스 정복에 맞선 카빌리아 저항",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "military_activity",
+    "role": "Spiritual and resistance leader",
+    "role_display_name_ko": "종교적·항쟁 지도자",
+    "start_year": 1854,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1857,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Lalla Fatma N'Soumer played an attested leadership role in mobilizing Kabyle resistance from 1854 and remained a central figure until her capture in July 1857. ATLAS does not make her a sovereign ruler of a timeless Kabylia or Berbery civilization."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Lalla Fatma N’Soumer (1830–1863): Spirituality, Resistance and Womanly Leadership in Colonial Algeria",
+      "canonical_url": "https://www.mdpi.com/2075-4698/8/4/126",
+      "citation_text": "The scholarly study identifies her attested role in mobilizing fighters in 1854 and traces her resistance leadership through her capture by French forces in July 1857."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Armed resistance in the Djurdjura Kabylia region, 1850–1857",
+      "canonical_url": "https://asjp.cerist.dz/en/article/247924",
+      "citation_text": "The Algerian historical journal article states that after Boubaghla's death in 1854 Lalla Fatma N'Soumer continued the resistance until July 1857."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-berbery-ethiopia-inca-batch-20260903",
+    "requested_identity": "LALLA FATMA — KABYLIA / BERBERY",
+    "correction_note": "Collapse both game slots into one historically attested Kabyle resistance Activity; no duplicate Berbery polity."
+  }
+}

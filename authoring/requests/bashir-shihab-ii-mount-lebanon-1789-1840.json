@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:bashir-shihab-ii:emirate-mount-lebanon:1789-1840:v1",
+  "person": {
+    "canonical_name_en": "Bashir Shihab II",
+    "display_name_ko": "바시르 시하브 2세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Emirate of Mount Lebanon",
+    "display_name_ko": "레바논산 토후국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Grand Emir",
+    "role_display_name_ko": "대에미르",
+    "start_year": 1789,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1840,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Bashir II Shihab ruled the Emirate of Mount Lebanon from 1789 until his removal in 1840. His temporary self-exile in the 1822 political crisis did not produce a separate durable successor reign in the standard regnal chronology, so ATLAS retains the conventional continuous emirate interval."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Oxford Academic — Beginnings: Mount Lebanon before 1840",
+      "canonical_url": "https://academic.oup.com/book/39829/chapter/339965693",
+      "citation_text": "Oxford scholarship describes Bashir II as the grand emir of Mount Lebanon, his 1822 self-exile and return, and his eventual dismissal from power in 1840."
+    },
+    {
+      "source_type": "academic_reference",
+      "title": "Bulletin of the School of Oriental and African Studies — Rival institutions",
+      "canonical_url": "https://www.cambridge.org/core/journals/bulletin-of-the-school-of-oriental-and-african-studies/article/rival-institutions-politics-religion-and-the-jam-iyyat-in-midnineteenthcentury-beirut/BA5BBDFF60BD4704577E6122E11CBEBD",
+      "citation_text": "The Cambridge article identifies Prince Bashir II as ruling from 1789 to 1840."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-berbery-ethiopia-inca-batch-20260903",
+    "requested_identity": "BASHIR SHIHAB II — LEBANON",
+    "correction_note": "Use the historical Emirate of Mount Lebanon rather than the modern Lebanese Republic."
+  }
+}
