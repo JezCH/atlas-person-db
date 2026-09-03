@@ -1,0 +1,66 @@
+name: ATLAS Spacetime Production Visual Acceptance
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "scripts/verify-spacetime-production-visual.mjs"
+      - ".github/workflows/atlas-spacetime-production-visual.yml"
+      - "tests/fixtures/spacetime-completion-contract.json"
+      - "tests/spacetime-completion-contract.test.mjs"
+      - "docs/spacetime-completion-contract.md"
+
+permissions:
+  contents: read
+
+jobs:
+  visual_acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      ATLAS_PRODUCTION_URL: https://atlas-person-db.vercel.app/#atlas-spacetime
+      ATLAS_EXPECTED_RUNTIME_SHA: d8e8fa3f56419223bb3a67427de9b68cb0ea10a8
+      ATLAS_VISUAL_OUT_DIR: artifacts/spacetime-visual-acceptance
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Korean browser fonts
+        shell: bash
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends fonts-noto-cjk
+          fc-cache -f
+      - name: Locate Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHROME_BIN="$(command -v google-chrome-stable || command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          test -n "$CHROME_BIN"
+          echo "CHROME_BIN=$CHROME_BIN" >> "$GITHUB_ENV"
+          "$CHROME_BIN" --version
+      - name: Run Production visual acceptance
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf "$ATLAS_VISUAL_OUT_DIR"
+          mkdir -p "$ATLAS_VISUAL_OUT_DIR"
+          "$CHROME_BIN"             --headless=new             --no-sandbox             --disable-gpu             --disable-dev-shm-usage             --remote-debugging-port=9222             --user-data-dir=/tmp/atlas-spacetime-visual-chrome             --window-size=1600,1000             about:blank >/tmp/atlas-spacetime-chrome.log 2>&1 &
+          CHROME_PID=$!
+          trap 'kill "$CHROME_PID" 2>/dev/null || true' EXIT
+          for _ in $(seq 1 40); do
+            if curl -fsS http://127.0.0.1:9222/json/version >/dev/null; then break; fi
+            sleep 0.25
+          done
+          curl -fsS http://127.0.0.1:9222/json/version >/dev/null
+          node scripts/verify-spacetime-production-visual.mjs
+          cat "$ATLAS_VISUAL_OUT_DIR/visual-acceptance.json"
+      - name: Upload visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-spacetime-production-visual-acceptance
+          path: artifacts/spacetime-visual-acceptance
+          if-no-files-found: error
+          retention-days: 30

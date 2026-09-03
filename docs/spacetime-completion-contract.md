@@ -1,6 +1,6 @@
 # ATLAS Spacetime Completion Contract
 
-Status: authoritative completion gate for the current Production `시공간 인물도`. Original-plan reconciliation is in progress after the post-completion audit found requirements that were not represented by the earlier 23-gate contract.
+Status: authoritative completion gate for the current Production `시공간 인물도`. Original-plan reconciliation is complete and all required capabilities are locked.
 
 ## Readable-scale decision
 
@@ -130,6 +130,28 @@ At sufficient zoom: label overlap count = 0, historical Y deviation = 0 px, defe
 
 These two dense-label gates are locked by the reproducible Production snapshot in `tests/fixtures/spacetime-dense-label-snapshot.json`. The snapshot is packed at 800% using the minimum 900 px base world, the shared 0.748 compression, and the production label engine; CI requires zero overlap, zero deferred labels, and zero historical-Y deviation for both permanent dense windows.
 
+## Final Production visual acceptance
+
+The original-plan browser/visual gate is locked by a real Chrome run against Production SHA `d8e8fa3f56419223bb3a67427de9b68cb0ea10a8`.
+
+Evidence:
+- GitHub Actions workflow: `ATLAS Spacetime Production Visual Acceptance`
+- successful run: **#6 / run 33701334810**
+- artifact: **9873632289** (`atlas-spacetime-production-visual-acceptance`)
+- viewport: **1600×1000**, DPR 1
+- browser: Google Chrome
+- 500% floor: reviewed Place effective opacity 0, visible Place count 0, visible Person label overlap 0
+- 800% detail: reviewed Place count 5, Place overlap 0, visible Person label overlap 0
+- macroregion/subregion normalized geometry invariant across 500%→800%
+- shared axis/header measured at 140px / 36px
+- sticky Person/Activity inspector occupies its reserved right column without map overlap
+- C6 spatial uncertainty rendered in the inspected detail viewport
+- Person → Activity selection drives the Activity-midpoint C9 Meanwhile state and a full-width line
+- runtime exceptions 0, application console errors 0
+- the only resource failure was the non-application `/favicon.ico` 404, recorded explicitly as ignorable
+
+The retained artifact contains `spacetime-500.png`, `spacetime-800.png`, `spacetime-activity-meanwhile.png`, and `visual-acceptance.json`. The screenshots were inspected after installing Noto CJK in the runner, so Korean UI text is visually validated rather than represented by missing-glyph boxes.
+
 ## Legacy prohibition
 
 The following may not return: overview/detail mode selector, density overview renderer, Person point-only renderer, logarithmic time overview, adaptive low-scale ticks, retired lane assignment, 100% reset, any below-500 camera entry, or local region/time compression.
@@ -168,6 +190,8 @@ DOM size scales with viewport + overscan, not total DB size. Minimap may retain 
 - `tests/spacetime-uncertainty-rendering.test.mjs`
 - `tests/spacetime-sticky-inspector.test.mjs`
 - `tests/spacetime-activity-meanwhile-link.test.mjs`
+- `scripts/verify-spacetime-production-visual.mjs`
+- `.github/workflows/atlas-spacetime-production-visual.yml`
 - `tests/spacetime-completion-contract.test.mjs`
 - `tests/spacetime-readable-scale-contract.test.mjs`
 
@@ -175,4 +199,4 @@ Changing the 500% floor, 0.748 shared compression, 900–1,275 px base-world bou
 
 ## Original-plan reconciliation
 
-The earlier 23-gate contract reached zero pending before a direct audit against the original C0-C11 design. That audit showed the contract itself was incomplete. C6 uncertainty rendering, Place-level spatial semantic LOD, C8 sticky Person/Activity inspector, and C9 Activity-selection-to-Meanwhile linkage are now locked; the only remaining required original-plan gate is final browser/visual acceptance. Final product completion must not be declared again until those gates are locked.
+The earlier 23-gate contract reached zero pending before a direct audit against the original C0-C11 design. That audit showed the contract itself was incomplete. C6 uncertainty rendering, Place-level spatial semantic LOD, C8 sticky Person/Activity inspector, C9 Activity-selection-to-Meanwhile linkage, and the final real-Chrome Production visual acceptance are now all locked. The reconciled completion contract has **0 pending required capabilities**.

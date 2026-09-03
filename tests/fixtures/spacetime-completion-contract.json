@@ -171,7 +171,7 @@
     {
       "id": "original-plan-visual-acceptance",
       "required": true,
-      "status": "pending"
+      "status": "locked"
     }
   ],
   "dense_label_verification": {
@@ -229,8 +229,8 @@
     "test": "tests/spacetime-data-parity.test.mjs"
   },
   "final_completion_verification": {
-    "status": "in_progress",
-    "required_pending_count": 1,
+    "status": "locked",
+    "required_pending_count": 0,
     "required_capability_count": 28
   },
   "spatial_uncertainty_verification": {
@@ -246,11 +246,9 @@
     "test": "tests/spacetime-uncertainty-rendering.test.mjs"
   },
   "original_plan_reconciliation": {
-    "status": "in_progress",
+    "status": "completed",
     "reopened_after_audit": true,
-    "remaining_required_capabilities": [
-      "original-plan-visual-acceptance"
-    ]
+    "remaining_required_capabilities": []
   },
   "sticky_inspector_verification": {
     "status": "locked",
@@ -313,5 +311,55 @@
     "high_zoom_header_marker": true,
     "high_zoom_canvas_top_guide": true,
     "test": "tests/spacetime-place-semantic-lod.test.mjs"
+  },
+  "original_plan_visual_acceptance_verification": {
+    "status": "locked",
+    "production_sha": "d8e8fa3f56419223bb3a67427de9b68cb0ea10a8",
+    "github_actions_workflow": "ATLAS Spacetime Production Visual Acceptance",
+    "workflow_run_id": 33701334810,
+    "workflow_run_number": 6,
+    "artifact_id": 9873632289,
+    "artifact_name": "atlas-spacetime-production-visual-acceptance",
+    "viewport": {
+      "width_px": 1600,
+      "height_px": 1000,
+      "device_scale_factor": 1
+    },
+    "browser": "Google Chrome",
+    "production_url": "https://atlas-person-db.vercel.app/#atlas-spacetime",
+    "runtime_nav_key_verified": true,
+    "runtime_modules_loaded": true,
+    "framework_error_overlay": false,
+    "minimum_zoom_percent": 500,
+    "maximum_zoom_percent": 800,
+    "reviewed_place_count": 5,
+    "reviewed_place_visible_at_500": 0,
+    "reviewed_place_visible_at_800": 5,
+    "reviewed_place_overlap_at_800": 0,
+    "visible_person_label_overlap_at_500": 0,
+    "visible_person_label_overlap_at_800": 0,
+    "normalized_macroregion_geometry_invariant": true,
+    "normalized_subregion_geometry_invariant": true,
+    "shared_axis_width_px": 140,
+    "header_height_px": 36,
+    "sticky_inspector_nonoverlap": true,
+    "spatial_uncertainty_rendered_count": 249,
+    "activity_selection_drives_meanwhile": true,
+    "activity_linked_line_full_width": true,
+    "console_error_count": 0,
+    "runtime_exception_count": 0,
+    "ignorable_resource_errors": [
+      {
+        "url": "/favicon.ico",
+        "status": 404
+      }
+    ],
+    "screenshot_files": [
+      "spacetime-500.png",
+      "spacetime-800.png",
+      "spacetime-activity-meanwhile.png"
+    ],
+    "report_file": "visual-acceptance.json",
+    "test": "scripts/verify-spacetime-production-visual.mjs"
   }
 }
