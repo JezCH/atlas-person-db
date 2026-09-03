@@ -166,7 +166,7 @@
     {
       "id": "activity-selection-meanwhile-link",
       "required": true,
-      "status": "pending"
+      "status": "locked"
     },
     {
       "id": "original-plan-visual-acceptance",
@@ -230,7 +230,7 @@
   },
   "final_completion_verification": {
     "status": "in_progress",
-    "required_pending_count": 3,
+    "required_pending_count": 2,
     "required_capability_count": 28
   },
   "spatial_uncertainty_verification": {
@@ -250,7 +250,6 @@
     "reopened_after_audit": true,
     "remaining_required_capabilities": [
       "spatial-place-semantic-lod",
-      "activity-selection-meanwhile-link",
       "original-plan-visual-acceptance"
     ]
   },
@@ -281,7 +280,21 @@
     "multi_place_slices_preserved": true,
     "counterparty_visible_but_not_primary": true,
     "selected_person_activity_visible_across_lod": true,
-    "meanwhile_mutation": false,
-    "test": "tests/spacetime-sticky-inspector.test.mjs"
+    "test": "tests/spacetime-sticky-inspector.test.mjs",
+    "activity_midpoint_consumed_by": "activity-selection-meanwhile-link"
+  },
+  "activity_meanwhile_link_verification": {
+    "status": "locked",
+    "selected_activity_midpoint_drives_meanwhile": true,
+    "shared_coordinate": "historical_ordinal",
+    "manual_selection_uses_same_ordinal_path": true,
+    "activity_source_label_visible": true,
+    "full_width_line": true,
+    "active_activity_not_alive_person_semantics": true,
+    "global_summary_search_independent": true,
+    "activity_link_clears_when_activity_identity_clears": true,
+    "manual_moment_survives_person_selection": true,
+    "unresolved_chronology_has_no_invented_moment": true,
+    "test": "tests/spacetime-activity-meanwhile-link.test.mjs"
   }
 }

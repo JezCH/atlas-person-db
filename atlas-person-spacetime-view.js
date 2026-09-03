@@ -61,7 +61,8 @@
   let cameraCenterOrdinal = null;
   let currentTimelineProjection = null;
   let pendingCameraAnchor = null;
-  let meanwhileYear = null;
+  let meanwhileSelectedOrdinal = null;
+  let meanwhileSelectionSource = null;
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -323,9 +324,17 @@
     renderInto(mount);
   }
 
+  function clearActivityLinkedMeanwhile() {
+    if (meanwhileSelectionSource === "activity") {
+      meanwhileSelectedOrdinal = null;
+      meanwhileSelectionSource = null;
+    }
+  }
+
   function selectPerson(mount, personId, options = {}) {
     const nextPersonId = personId || null;
     if (options.preserveActivity !== true || nextPersonId !== selectedPersonId) {
+      clearActivityLinkedMeanwhile();
       selectedActivityId = null;
       selectedTimeOrdinal = null;
     }
@@ -346,12 +355,19 @@
     selectedPersonId = track.person_id;
     selectedActivityId = activity.activity_id;
     selectedTimeOrdinal = activity.midpoint_ordinal;
+    if (Number.isInteger(selectedTimeOrdinal)) {
+      meanwhileSelectedOrdinal = selectedTimeOrdinal;
+      meanwhileSelectionSource = "activity";
+    } else {
+      clearActivityLinkedMeanwhile();
+    }
     pendingFocusPersonId = options.focus === true ? track.person_id : null;
     renderInto(mount);
     return true;
   }
 
   function clearSelection(mount) {
+    clearActivityLinkedMeanwhile();
     selectedPersonId = null;
     selectedActivityId = null;
     selectedTimeOrdinal = null;
@@ -362,13 +378,15 @@
   function setMeanwhileYear(mount, year) {
     const ordinal = model.historicalYearToOrdinal(Number(year));
     if (ordinal == null) return false;
-    meanwhileYear = model.ordinalToHistoricalYear(ordinal);
+    meanwhileSelectedOrdinal = ordinal;
+    meanwhileSelectionSource = "manual";
     renderInto(mount);
     return true;
   }
 
   function clearMeanwhile(mount) {
-    meanwhileYear = null;
+    meanwhileSelectedOrdinal = null;
+    meanwhileSelectionSource = null;
     renderInto(mount);
   }
 
@@ -376,10 +394,18 @@
     return model.REGION_DEFINITIONS.find((region) => region.code === code)?.label || code || "미확정";
   }
 
+  function meanwhileMomentLabel() {
+    if (!Number.isInteger(meanwhileSelectedOrdinal)) return "시점 미상";
+    const year = model.ordinalToHistoricalYear(meanwhileSelectedOrdinal);
+    return year == null ? "시점 미상" : model.yearLabel(year);
+  }
+
   function renderMeanwhile(summary) {
-    if (!summary || meanwhileYear == null) {
-      return '<section class="spacetime-meanwhile card is-empty" aria-label="동시대 탐색"><div><small>MEANWHILE</small><strong>동시대 보기</strong><span>연도축 또는 인물이 없는 시공간을 클릭하면 그 시점에 활동 중인 인물과 Activity를 비교합니다.</span></div></section>';
+    if (!summary || meanwhileSelectedOrdinal == null) {
+      return '<section class="spacetime-meanwhile card is-empty" aria-label="동시대 탐색"><div><small>MEANWHILE</small><strong>동시대 보기</strong><span>Activity를 선택하거나 연도축·빈 시공간을 클릭하면 그 시점에 실제 Activity가 활성인 인물들을 비교합니다.</span></div></section>';
     }
+    const momentLabel = meanwhileMomentLabel();
+    const sourceLabel = meanwhileSelectionSource === "activity" ? "선택 Activity 중간 시점" : "직접 선택 시점";
     const regionCounts = (summary.region_counts || []).map((item) =>
       `<span><b>${escapeHtml(meanwhileRegionLabel(item.code))}</b> ${item.unique_person_count}명</span>`
     ).join("");
@@ -387,8 +413,8 @@
     const activityRows = visibleEntries.length
       ? `<div class="spacetime-meanwhile-activities">${visibleEntries.map((entry) => `<button type="button" data-spacetime-meanwhile-person="${escapeHtml(entry.person_id)}"><strong>${escapeHtml(entry.display_name)}</strong><span>${escapeHtml(polityLabel(entry.activity))}</span><small>${escapeHtml(periodLabel(entry.activity))}</small></button>`).join("")}</div>`
       : '<p class="spacetime-empty-inline">이 시점에 주 위치가 확정된 활성 Activity가 없습니다.</p>';
-    return `<section class="spacetime-meanwhile card" aria-label="${escapeHtml(model.yearLabel(meanwhileYear))} 동시대 탐색">
-      <div class="spacetime-meanwhile-head"><div><small>MEANWHILE</small><strong>${escapeHtml(model.yearLabel(meanwhileYear))}</strong><span>active Person ${summary.unique_person_count}명 · active Activity ${summary.activity_count}건</span></div><button id="spacetimeMeanwhileClear" type="button">시점 해제</button></div>
+    return `<section class="spacetime-meanwhile card" aria-label="${escapeHtml(momentLabel)} 동시대 탐색">
+      <div class="spacetime-meanwhile-head"><div><small>MEANWHILE · ${escapeHtml(sourceLabel)}</small><strong>${escapeHtml(momentLabel)}</strong><span>active Person ${summary.unique_person_count}명 · active Activity ${summary.activity_count}건</span></div><button id="spacetimeMeanwhileClear" type="button">시점 해제</button></div>
       <div class="spacetime-meanwhile-regions" aria-label="대권역별 동시대 인물 수">${regionCounts}</div>
       ${activityRows}
       ${summary.entries.length > visibleEntries.length ? `<p class="spacetime-more">외 ${summary.entries.length - visibleEntries.length}개 활성 Activity</p>` : ""}
@@ -899,7 +925,7 @@
       const segmentTracks = performance.cullTrackSegments(state.visibleTracks, state.projection, state.contentWidth, cullRect, forced);
       const segmentIds = segmentTracks.flatMap((track) => (track.primary_segments || []).map((segment) => segment.stable_id || `${track.person_id}:${segment.start_ordinal}:${segment.end_ordinal}`));
       const personIds = personItems.map((item) => item.person_id);
-      const signature = `${personIds.join(",")}|${segmentIds.join(",")}|${selectedPersonId || ""}|${selectedActivityId || ""}|${state.meanwhileYear || ""}|${state.needle}|${state.lodWeights.labels}|${state.lodWeights.rails}|${state.lodWeights.activities}`;
+      const signature = `${personIds.join(",")}|${segmentIds.join(",")}|${selectedPersonId || ""}|${selectedActivityId || ""}|${state.meanwhileOrdinal ?? ""}|${state.needle}|${state.lodWeights.labels}|${state.lodWeights.rails}|${state.lodWeights.activities}`;
 
       if (signature !== lastSignature) {
         const labelPack = packTrackLabels(personItems, state.regions, state.timelineHeight, Boolean(state.needle));
@@ -1025,6 +1051,7 @@
     const visibleTracks = projectedTracks.map((item) => item.track);
     const activePersonIds = new Set(projectedTracks.map((item) => item.person_id));
     if (selectedPersonId && !activePersonIds.has(selectedPersonId)) {
+      clearActivityLinkedMeanwhile();
       selectedPersonId = null;
       selectedActivityId = null;
       selectedTimeOrdinal = null;
@@ -1037,10 +1064,11 @@
     const eras = buildEraBands(timeline, projection);
     const selectedTrack = compiled.partitioned.tracks.find((track) => track.person_id === selectedPersonId) || null;
     if (selectedTrack && selectedActivityId && !inspector.selectedActivity(selectedTrack, selectedActivityId)) {
+      clearActivityLinkedMeanwhile();
       selectedActivityId = null;
       selectedTimeOrdinal = null;
     }
-    const meanwhileOrdinal = meanwhileYear == null ? null : model.historicalYearToOrdinal(meanwhileYear);
+    const meanwhileOrdinal = meanwhileSelectedOrdinal;
     const meanwhileSummary = meanwhileOrdinal == null ? null : meanwhile.summarize(
       compiled.partitioned.tracks,
       meanwhileOrdinal,
@@ -1075,7 +1103,7 @@
         ${ticks.map((tick) => `<i class="spacetime-century-line${tick.major ? " is-major" : ""}" style="top:${tick.y}px"></i>`).join("")}
         ${regions.map((region) => `<i class="spacetime-region-line" style="left:${region.left}px;height:${timelineHeight}px"></i>`).join("")}
         ${spaceHeader.subregions.map((subregion) => `<i class="spacetime-subregion-line" style="left:${subregion.left}px;height:${timelineHeight}px;opacity:${spaceHeader.subregion_opacity}" title="${escapeHtml(subregion.label)}"></i>`).join("")}
-        ${meanwhileYear == null ? "" : `<div class="spacetime-meanwhile-line" style="top:${projection.yForYear(meanwhileYear)}px;width:${contentWidth}px"><span>${escapeHtml(model.yearLabel(meanwhileYear))}</span></div>`}
+        ${meanwhileOrdinal == null ? "" : `<div class="spacetime-meanwhile-line${meanwhileSelectionSource === "activity" ? " is-activity-linked" : ""}" style="top:${projection.yForOrdinal(meanwhileOrdinal)}px;width:${contentWidth}px"><span>${escapeHtml(meanwhileMomentLabel())}</span></div>`}
         <div id="spacetimeRailLayer" class="spacetime-runtime-layer"></div>
         <div id="spacetimeUncertaintyLayer" class="spacetime-runtime-layer"></div>
         <div id="spacetimeLabelLayer" class="spacetime-runtime-layer"></div>
@@ -1098,7 +1126,6 @@
       regions,
       lodWeights,
       needle,
-      meanwhileYear,
       meanwhileOrdinal,
       meanwhilePersonIds
     });
