@@ -156,7 +156,7 @@
     {
       "id": "spatial-place-semantic-lod",
       "required": true,
-      "status": "pending"
+      "status": "locked"
     },
     {
       "id": "sticky-person-activity-inspector",
@@ -230,7 +230,7 @@
   },
   "final_completion_verification": {
     "status": "in_progress",
-    "required_pending_count": 2,
+    "required_pending_count": 1,
     "required_capability_count": 28
   },
   "spatial_uncertainty_verification": {
@@ -249,7 +249,6 @@
     "status": "in_progress",
     "reopened_after_audit": true,
     "remaining_required_capabilities": [
-      "spatial-place-semantic-lod",
       "original-plan-visual-acceptance"
     ]
   },
@@ -296,5 +295,23 @@
     "manual_moment_survives_person_selection": true,
     "unresolved_chronology_has_no_invented_moment": true,
     "test": "tests/spacetime-activity-meanwhile-link.test.mjs"
+  },
+  "spatial_place_semantic_lod_verification": {
+    "status": "locked",
+    "source": "spatialCompile.REVIEWED_PLACE_BINDINGS",
+    "minimum_zoom_percent": 500,
+    "place_detail_start_percent": 720,
+    "place_detail_full_percent": 800,
+    "floor_stage": "subregion",
+    "detail_stage": "place",
+    "macroregion_geometry_invariant": true,
+    "subregion_geometry_invariant": true,
+    "person_density_independent": true,
+    "reviewed_only": true,
+    "presentation_anchor": "reviewed Place subregion center",
+    "exact_geographic_coordinate_claimed": false,
+    "high_zoom_header_marker": true,
+    "high_zoom_canvas_top_guide": true,
+    "test": "tests/spacetime-place-semantic-lod.test.mjs"
   }
 }
