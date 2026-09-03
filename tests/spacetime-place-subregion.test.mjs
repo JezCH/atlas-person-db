@@ -170,3 +170,46 @@ test("runtime reviewed binding table is locked to the canonical registry binding
 
   assert.deepEqual(runtimeFacts, registryFacts);
 });
+
+
+test("reviewed polity subregion compiles into the actual subregion band instead of macroregion center", () => {
+  const lookup = model.createSpatialLookup(spatialIndex);
+  const kushan = "7ccd9ba0-28fb-55d7-8ae8-60de77c38603";
+  const resolved = model.resolveActivityPlacement({
+    id: "activity-kushan-subregion",
+    polity: { id: kushan },
+    start: { year: 100 },
+    end: { year: 101 }
+  }, lookup);
+  assert.equal(resolved.status, "placed");
+  assert.equal(resolved.segments[0].subregion_code, "northwest-south-asia");
+
+  const compiled = spatialCompile.compileActivityPlacement(resolved, continuum).segments[0];
+  const band = continuum.bandForCode("northwest-south-asia");
+  const macro = continuum.bandForCode("south-asia");
+  assert.equal(compiled.spatial_precision, "subregion");
+  assert.equal(compiled.display_anchor_basis, "reviewed_polity_subregion");
+  assert.equal(compiled.subregion_code, "northwest-south-asia");
+  assert.equal(compiled.x_anchor, band.center_space);
+  assert.equal(compiled.x_min, band.min_space);
+  assert.equal(compiled.x_max, band.max_space);
+  assert.notEqual(compiled.x_anchor, macro.center_space);
+});
+
+test("invalid polity subregion compile fails closed instead of silently falling back to macroregion", () => {
+  const compiled = spatialCompile.compilePlacementSegment({
+    activity_id: "bad-subregion", polity_id: "p", region_code: "europe", subregion_code: "japan",
+    placement_basis: "polity_geography", confidence: "reviewed", source_refs: [], start_year: 100, end_year: 101
+  }, continuum);
+  assert.equal(compiled.status, "spatial_compile_unresolved");
+  assert.equal(compiled.reason, "reviewed_polity_subregion_invalid");
+  assert.equal(compiled.x_anchor, null);
+});
+
+test("model subregion parent contract stays synchronized with the visible spatial hierarchy", () => {
+  const expected = {};
+  for (const macro of spaceAxis.DEFAULT_SPATIAL_HIERARCHY) {
+    for (const subregion of macro.subregions) expected[subregion.code] = macro.code;
+  }
+  assert.deepEqual(model.SUBREGION_PARENT, expected);
+});

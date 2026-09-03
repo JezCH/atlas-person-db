@@ -22,6 +22,41 @@
   const PLACEMENT_BASES = new Set(["polity_geography", "polity_place_function"]);
   const PLACE_FUNCTION_TYPES = new Set(["capital", "royal_court", "royal_residence", "imperial_court_core", "political_center", "administrative_center"]);
   const SPATIAL_INDEX_SCHEMA = "atlas-polity-spatial-index/v2";
+  const SUBREGION_PARENT = Object.freeze({
+    "north-america": "americas",
+    "mesoamerica-caribbean": "americas",
+    "south-america": "americas",
+    "britain-ireland": "europe",
+    "western-europe": "europe",
+    "iberia": "europe",
+    "central-europe": "europe",
+    "italy": "europe",
+    "northern-europe": "europe",
+    "balkans": "europe",
+    "eastern-europe-russia": "europe",
+    "north-africa-nile": "africa",
+    "west-africa": "africa",
+    "central-africa": "africa",
+    "east-africa-horn": "africa",
+    "southern-africa": "africa",
+    "anatolia-caucasus": "west-asia",
+    "levant-mesopotamia": "west-asia",
+    "arabia": "west-asia",
+    "iranian-plateau": "west-asia",
+    "northwest-south-asia": "south-asia",
+    "north-india-ganges": "south-asia",
+    "deccan-south-india": "south-asia",
+    "western-central-asia": "central-asia",
+    "eastern-central-asia-steppe": "central-asia",
+    "mainland-southeast-asia": "southeast-asia",
+    "maritime-southeast-asia": "southeast-asia",
+    "australasia": "oceania",
+    "pacific-islands": "oceania",
+    "china": "east-asia",
+    "korean-peninsula": "east-asia",
+    "japan": "east-asia",
+    "manchuria-mongolia": "east-asia"
+  });
 
   function text(value) {
     return value == null ? "" : String(value).trim();
@@ -107,6 +142,24 @@
       if (id) resolved.add(id);
     }
 
+    if (value.polity_subregions != null && (!value.polity_subregions || typeof value.polity_subregions !== "object" || Array.isArray(value.polity_subregions))) {
+      errors.push("polity_subregions must be an object when present");
+    }
+    for (const [polityId, rawSubregionCode] of Object.entries(value.polity_subregions || {})) {
+      const id = text(polityId);
+      const subregionCode = text(rawSubregionCode);
+      const macroregionCode = text(value.polity_geography?.[id]);
+      if (!id || !Object.prototype.hasOwnProperty.call(value.polity_geography || {}, id)) {
+        errors.push(`polity_subregions polity ${id || "(empty)"}: matching polity_geography entry is required`);
+        continue;
+      }
+      if (!SUBREGION_PARENT[subregionCode]) {
+        errors.push(`polity_subregions polity ${id}: invalid subregion_code ${subregionCode || "(empty)"}`);
+      } else if (SUBREGION_PARENT[subregionCode] !== macroregionCode) {
+        errors.push(`polity_subregions polity ${id}: subregion ${subregionCode} is not a child of macroregion ${macroregionCode || "(empty)"}`);
+      }
+    }
+
     for (const [recordIndex, record] of (Array.isArray(value.place_function_records) ? value.place_function_records : []).entries()) {
       const polityId = text(record?.polity_id);
       if (!polityId) errors.push(`place_function_records[${recordIndex}]: polity_id is required`);
@@ -141,7 +194,11 @@
     }
     const lookup = new Map();
     for (const [polityId, regionCode] of Object.entries(index.polity_geography || {})) {
-      lookup.set(text(polityId), Object.freeze({ placement_basis: "polity_geography", region_code: text(regionCode) }));
+      lookup.set(text(polityId), Object.freeze({
+        placement_basis: "polity_geography",
+        region_code: text(regionCode),
+        subregion_code: text(index.polity_subregions?.[polityId]) || null
+      }));
     }
     for (const record of index.place_function_records || []) {
       lookup.set(text(record.polity_id), Object.freeze({ placement_basis: "polity_place_function", functions: Object.freeze(record.functions.slice()) }));
@@ -235,6 +292,7 @@
         activity_id: activityId,
         polity_id: polityId,
         region_code: text(record.region_code),
+        subregion_code: text(record.subregion_code) || null,
         placement_basis: "polity_geography",
         location_label: "정치체 권역",
         place_function_type: null,
@@ -304,6 +362,7 @@
   return Object.freeze({
     SPATIAL_INDEX_SCHEMA,
     REGION_DEFINITIONS,
+    SUBREGION_PARENT,
     historicalYearToOrdinal,
     ordinalToHistoricalYear,
     yearLabel,

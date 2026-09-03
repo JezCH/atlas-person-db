@@ -33,6 +33,7 @@ test("spatial index v2 uses one canonical temporal polity-place-function family"
   assert.equal(validation.valid, true, validation.errors.join(" | "));
   assert.equal(index.schema, "atlas-polity-spatial-index/v2");
   assert.equal(Object.keys(index.polity_geography).length, 325);
+  assert.equal(Object.keys(index.polity_subregions).length, 299);
   assert.equal(index.place_function_records.length, 11);
   assert.equal(index.review_queue.length, 2);
   assert.equal(Object.hasOwn(index, "capital_records"), false);
@@ -46,11 +47,18 @@ test("all canonical place functions retain reviewed source evidence", () => {
   assert.equal(functions.some((fn) => fn.source_refs.some((ref) => String(ref).startsWith("ATLAS reviewed"))), false);
 });
 
-test("direct reviewed coarse placement remains unchanged", () => {
+test("reviewed polity geography now retains stable subregion precision", () => {
   const lookup = model.createSpatialLookup(index);
-  for (const [polityId, region] of [[IDS.kushan,"south-asia"],[IDS.hun,"europe"],[IDS.daxi,"east-asia"]]) {
+  for (const [polityId, region, subregion] of [
+    [IDS.kushan, "south-asia", "northwest-south-asia"],
+    [IDS.hun, "europe", "central-europe"],
+    [IDS.daxi, "east-asia", "china"]
+  ]) {
     const placement = model.resolveActivityPlacement(activity(polityId, 100, 101, polityId), lookup);
-    assert.equal(placement.status, "placed"); assert.equal(placement.segments[0].placement_basis, "polity_geography"); assert.equal(placement.segments[0].region_code, region);
+    assert.equal(placement.status, "placed");
+    assert.equal(placement.segments[0].placement_basis, "polity_geography");
+    assert.equal(placement.segments[0].region_code, region);
+    assert.equal(placement.segments[0].subregion_code, subregion);
   }
 });
 
@@ -110,4 +118,23 @@ test("Seleucid Activity stays unresolved for representation, not because the mod
   assert.equal(review?.reason, "multiple_reviewed_royal_centers_require_activity_specific_spatial_representation");
   const result = model.resolveActivityPlacement(activity(IDS.seleucid,-305,-281,"seleucus"), model.createSpatialLookup(index));
   assert.equal(result.status,"spatial_unresolved");
+});
+
+
+test("polity subregion mappings must be children of their reviewed macroregions", () => {
+  const invalid = structuredClone(index);
+  invalid.polity_subregions[IDS.kushan] = "japan";
+  const validation = model.validateSpatialIndex(invalid);
+  assert.equal(validation.valid, false);
+  assert.match(validation.errors.join("\n"), /is not a child of macroregion south-asia/);
+});
+
+test("broad or transregional reviewed polities may intentionally remain macroregion-only", () => {
+  const india = "00ec4b0c-6002-5791-825c-43465632102d";
+  assert.equal(index.polity_geography[india], "south-asia");
+  assert.equal(index.polity_subregions[india], undefined);
+  const placement = model.resolveActivityPlacement(activity(india, 1947, 1948, "india"), model.createSpatialLookup(index));
+  assert.equal(placement.status, "placed");
+  assert.equal(placement.segments[0].region_code, "south-asia");
+  assert.equal(placement.segments[0].subregion_code, null);
 });
