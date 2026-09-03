@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:gallienus:roman-empire:253-268:v1",
+  "person": {
+    "canonical_name_en": "Gallienus",
+    "display_name_ko": "갈리에누스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 253,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 268,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gallienus was Roman emperor from 253 to 268, initially ruling jointly with his father Valerian until Valerian's capture in 260 and then as sole emperor. ATLAS uses one continuous imperial Activity because the constitutional office and polity did not change at 260."
+  },
+  "sources": [
+    {
+      "source_type": "secondary_reference",
+      "title": "Encyclopaedia Britannica — Gallienus (1911 edition)",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Gallienus%2C_Publius_Licinius_Egnatius",
+      "citation_text": "Britannica records Gallienus as joint emperor with Valerian from 253 to 260 and sole emperor from 260 until his death in 268."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-global-batch-20260903",
+    "requested_identity": "GALLIENUS — ROME",
+    "correction_note": "Register the continuous Roman imperial reign; note joint versus sole rule without inventing separate polities."
+  }
+}

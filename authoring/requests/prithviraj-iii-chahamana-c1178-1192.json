@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:prithviraj-iii:chahamana-ajmer:c1178-1192:v1",
+  "person": {
+    "canonical_name_en": "Prithviraj III",
+    "display_name_ko": "프리트비라지 3세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Chahamana Kingdom (Ajmer)",
+    "display_name_ko": "차하마나 왕국(아지메르)",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King",
+    "role_display_name_ko": "왕",
+    "start_year": 1178,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1192,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Prithviraj III, popularly remembered as Prithviraj Chauhan, was the Chahamana ruler centered on Ajmer and was defeated by the Ghurids in 1192. ATLAS uses the contemporary medieval polity rather than retrojecting modern Rajasthan or India, and marks the accession year approximate because regnal reconstruction varies by a year in modern references."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Cynthia Talbot, The Last Hindu Emperor",
+      "canonical_url": "https://www.cambridge.org/core/books/the-last-hindu-emperor/39C2F2225202C2630BF5616A62AF4D58",
+      "citation_text": "Cambridge University Press identifies Prithviraj Chauhan as the twelfth-century ruler of Ajmer defeated by Shihab al-Din in 1192, while emphasizing the later transformation of his historical memory."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-global-batch-20260903",
+    "requested_identity": "PRITHVIRAJ CHAUHAN — RAJASTHAN AND INDIA",
+    "correction_note": "Register the historical Chahamana ruler, not the later epic/nationalized legend or generic modern geography."
+  }
+}

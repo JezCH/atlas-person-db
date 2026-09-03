@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:inigo-arista:pamplona:c824-c851:v1",
+  "person": {
+    "canonical_name_en": "Íñigo Arista",
+    "display_name_ko": "이니고 아리스타",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Pamplona",
+    "display_name_ko": "팜플로나 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Ruler of Pamplona",
+    "role_display_name_ko": "팜플로나 지배자",
+    "start_year": 824,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 851,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Íñigo Arista (Basque Eneko Aritza) was the leading ruler of the emerging Pamplona monarchy in the first half of the ninth century. The origins of the kingdom and his exact accession are poorly documented; contemporary Arabic sources use lordly rather than later royal terminology. ATLAS therefore uses the conservative role 'Ruler of Pamplona' and approximate boundaries around the post-824 consolidation and his death in 851/852."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "Real Academia de la Historia — Íñigo Arista",
+      "canonical_url": "https://historia-hispanica.rah.es/biografias/23879-inigo-arista",
+      "citation_text": "The Royal Academy of History describes Íñigo Arista as the traditional first king/leading ruler of Pamplona, with documentary uncertainty around the origins of the monarchy and death in 851 or 852."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-global-batch-20260903",
+    "requested_identity": "ENEKO ARITZA — BASKONIA",
+    "correction_note": "Resolve the Basque form as Íñigo Arista and avoid overstating a precisely documented coronation or modern Basque state."
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:david-suzuki:canada:public-activity:1979-2023:v1",
+  "person": {
+    "canonical_name_en": "David Suzuki",
+    "display_name_ko": "데이비드 스즈키",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Canada",
+    "display_name_ko": "캐나다",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "general_activity",
+    "role": "Science broadcaster and environmental activist",
+    "role_display_name_ko": "과학 방송인·환경운동가",
+    "start_year": 1979,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 2023,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "David Suzuki is a Canadian geneticist, broadcaster and environmental activist, not a head of state or government. ATLAS uses his 1979–2023 tenure hosting CBC's The Nature of Things as a bounded representative period of nationally significant public activity. The mod's 'Columbia' is an alternate/fictitious gameplay civilization and is not registered as a historical polity."
+  },
+  "sources": [
+    {
+      "source_type": "institutional_reference",
+      "title": "David Suzuki Foundation — David Suzuki",
+      "canonical_url": "https://davidsuzuki.org/expert/david-suzuki/",
+      "citation_text": "The David Suzuki Foundation identifies Suzuki as a geneticist, broadcaster, environmental leader, UBC faculty member and host of CBC's The Nature of Things from 1979."
+    },
+    {
+      "source_type": "institutional_reference",
+      "title": "David Suzuki Foundation — How David Suzuki widened the tent for us",
+      "canonical_url": "https://davidsuzuki.org/expert-article/how-david-suzuki-widened-the-tent-for-us/",
+      "citation_text": "The Foundation states in April 2023 that Suzuki had hosted The Nature of Things for 44 years until his final episode that month."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-global-batch-20260903",
+    "requested_identity": "DAVID SUZUKI — COLUMBIA AND CANADA",
+    "correction_note": "Register his real Canadian public activity, not a fictional Columbia rulership or a Canadian governing office."
+  }
+}

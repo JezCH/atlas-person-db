@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:hamilcar-barca:carthaginian-iberia:-237-c-228:v1",
+  "person": {
+    "canonical_name_en": "Hamilcar Barca",
+    "display_name_ko": "하밀카르 바르카",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Carthaginian Iberia",
+    "display_name_ko": "카르타고령 이베리아",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "military_activity",
+    "role": "Commander in Iberia",
+    "role_display_name_ko": "이베리아 사령관",
+    "start_year": -237,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -228,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After the Mercenary War, Hamilcar led the Barcid expansion into Iberia from 237 BCE and exercised the expedition's military-political authority there until his death, conventionally dated to 228 BCE. This is the defensible historical core behind the mod's Punic-Iberia leader slot; it is not a separate Phoenician kingship."
+  },
+  "sources": [
+    {
+      "source_type": "secondary_reference",
+      "title": "Encyclopaedia Britannica — Hamilcar Barca (1911 edition)",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Hamilcar_Barca",
+      "citation_text": "The Britannica article describes Hamilcar as Carthaginian general and statesman, his suppression of the mercenary revolt by 237 BCE, subsequent expedition and territorial expansion in Spain, and death in 228 BCE."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-03",
+      "document_title": "하밀카르 바르카",
+      "url": "https://namu.wiki/w/%ED%95%98%EB%B0%80%EC%B9%B4%EB%A5%B4%20%EB%B0%94%EB%A5%B4%EC%B9%B4"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-global-batch-20260903",
+    "requested_identity": "HAMILCAR BARCA — PUNIC-IBERIA AND PHOENICIA",
+    "correction_note": "Add the Iberian command phase to the same Hamilcar Barca person; no Phoenicia Activity."
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:chagatai:chagatai-ulus:1227-c1241:v1",
+  "person": {
+    "canonical_name_en": "Chagatai",
+    "display_name_ko": "차가타이",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Chagatai Ulus",
+    "display_name_ko": "차가타이 울루스",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Ruler of the Chagatai appanage",
+    "role_display_name_ko": "차가타이 울루스 지배자",
+    "start_year": 1227,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1241,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After Chinggis Khan's death in 1227, his second son Chagatai ruled the Central Asian appanage that became the basis of the later Chagatai Khanate. Contemporary and dynastic terminology is more complex than the mod's simple 'Chagatai Khan' label, so ATLAS records him as ruler of the Chagatai ulus and does not retroject a fully independent later khanate. Modern scholarship varies between 1241 and 1242 for his death, so the terminal year is approximate."
+  },
+  "sources": [
+    {
+      "source_type": "academic_reference",
+      "title": "Bruno De Nicola, The Queen of the Chaghatayids",
+      "canonical_url": "https://www.cambridge.org/core/journals/journal-of-the-royal-asiatic-society/article/abs/queen-of-the-chaghatayids-orghina-khatun-and-the-rule-ofcentral-asia-1/17EAF573D22233343F0444CC14589D58",
+      "citation_text": "The Journal of the Royal Asiatic Society notes that after Chinggis Khan died in 1227, Chaghatai became ruler of the Central Asian lands that formed the origin of the later Chaghataid Khanate."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-03",
+      "document_title": "차가타이",
+      "url": "https://namu.wiki/w/%EC%B0%A8%EA%B0%80%ED%83%80%EC%9D%B4"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-global-batch-20260903",
+    "requested_identity": "CHAGATAI KHAN — CHAGATAI",
+    "correction_note": "Use the contemporary appanage/ulus rather than anachronistically asserting a mature independent Chagatai Khanate."
+  }
+}

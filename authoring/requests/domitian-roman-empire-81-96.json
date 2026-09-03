@@ -1,0 +1,55 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:domitian:roman-empire:81-96:v1",
+  "person": {
+    "canonical_name_en": "Domitian",
+    "display_name_ko": "도미티아누스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 81,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 96,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Domitian succeeded Titus as Roman emperor in 81 CE and ruled until his assassination in 96. The user's generic Rome label is normalized to the Roman Empire."
+  },
+  "sources": [
+    {
+      "source_type": "secondary_reference",
+      "title": "Encyclopaedia Britannica — Domitian (1911 edition)",
+      "canonical_url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Domitian",
+      "citation_text": "Britannica identifies Domitian as Roman emperor from 81 to 96 CE."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-03"
+    }
+  },
+  "review_context": {
+    "request_batch": "strudeler-global-batch-20260903",
+    "requested_identity": "DOMITIAN — ROME",
+    "correction_note": "Register the historically correct Roman Empire reign."
+  }
+}
