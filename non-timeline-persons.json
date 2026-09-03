@@ -2281,5 +2281,55 @@
       "batch": "strudeler-global-batch-20260903",
       "item": "KLAUS STORTEBEKER (POMERANIA AND GERMANY)"
     }
+  },
+  {
+    "person_name": "Laozi",
+    "politic_name": "Chu",
+    "display_name_ko": "노자",
+    "politic_display_name_ko": "초나라",
+    "historicity": "historical_tradition_disputed_identity",
+    "historicity_display_ko": "역사 전승·동일인 논쟁",
+    "timeline_status": "excluded",
+    "date_basis": "shiji_tradition_and_laozi_textual_history",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "도가의 전승상 사상가·《도덕경》 귀속 인물",
+    "reason": "Sima Qian's Shiji presents Laozi as a native of Chu and a Zhou archival official, but the reliability of that biography is disputed. Modern scholarship does not have a consensus on Laozi's identity, the authorship of the Daodejing, or a defensible person-specific activity interval; the text itself developed through multiple collections over time. ATLAS therefore preserves the traditional Chu association without fabricating a year-based Person rail.",
+    "sources": [
+      {
+        "title": "Laozi — Stanford Encyclopedia of Philosophy",
+        "url": "https://plato.stanford.edu/entries/laozi/"
+      }
+    ],
+    "map_policy": "Do not display on the historical year timeline unless a separate legendary, traditional, or unresolved-chronology overlay is enabled."
+  },
+  {
+    "person_name": "Zoroaster",
+    "politic_name": "Eastern Iranian communities",
+    "display_name_ko": "자라투스트라",
+    "politic_display_name_ko": "동부 이란계 공동체",
+    "historicity": "historical_uncertain_chronology",
+    "historicity_display_ko": "역사적 인물·연대 논쟁",
+    "timeline_status": "excluded",
+    "date_basis": "old_avestan_and_modern_scholarly_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "조로아스터교 창시자·예언자",
+    "reason": "Zoroaster (Zarathustra) is widely treated as the historical founder of the Mazdayasnian/Zoroastrian tradition and is associated by specialist scholarship with Eastern Iran. However, both his homeland and absolute date remain disputed, with no securely identified single polity and a scholarly chronology spanning a broad range despite a common preference near the turn of the first millennium BCE. ATLAS preserves the broad Eastern Iranian community association but does not manufacture an exact polity or personal activity interval.",
+    "sources": [
+      {
+        "title": "ZOROASTER iii. ZOROASTER IN THE AVESTA — Encyclopaedia Iranica",
+        "url": "https://www.iranicaonline.org/articles/zoroaster-iii-zoroaster-in-the-avesta/"
+      },
+      {
+        "title": "ZOROASTRIANISM i. HISTORICAL REVIEW UP TO THE ARAB CONQUEST — Encyclopaedia Iranica",
+        "url": "https://www.iranicaonline.org/articles/zoroastrianism-i-historical-review/"
+      }
+    ],
+    "map_policy": "Do not display on the historical year timeline unless a separate uncertain-chronology overlay is enabled."
   }
 ]
