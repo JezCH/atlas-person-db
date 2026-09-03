@@ -15,7 +15,7 @@ const EXPECTED_MACROS = [
 ];
 
 const EXPECTED_SPLIT_COUNTS = Object.freeze({
-  mesoamerica: 12,
+  mesoamerica: 13,
   caribbean: 3,
   "eastern-europe": 5,
   "russia-volga": 7,
@@ -23,7 +23,7 @@ const EXPECTED_SPLIT_COUNTS = Object.freeze({
   "nile-valley": 6,
   anatolia: 3,
   caucasus: 4,
-  levant: 10,
+  levant: 11,
   mesopotamia: 7,
   "sri-lanka-maldives": 2,
   manchuria: 4
