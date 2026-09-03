@@ -112,11 +112,11 @@
 .spacetime-frame{position:relative;padding:0;overflow:hidden}
 .spacetime-scroll{position:relative;overflow:auto;height:clamp(520px,72vh,860px);max-height:860px;min-height:520px;background:#f8fafc;overscroll-behavior:contain;scrollbar-gutter:stable}
 .spacetime-scroll:focus-visible{outline:2px solid #9db1cf;outline-offset:-2px}
-.spacetime-sticky-corner{position:sticky;z-index:50;top:0;left:0;width:var(--spacetime-axis-width,140px);height:var(--spacetime-header-height,36px);display:grid;grid-template-columns:var(--spacetime-era-axis-width,68px) var(--spacetime-year-axis-width,72px);align-items:center;text-align:center;background:#eef3f8;border-right:1px solid #cfd8e4;border-bottom:1px solid #cfd8e4;font-size:11px;font-weight:800;color:#64748b}
+.spacetime-sticky-corner{position:sticky;z-index:50;top:0;left:0;width:var(--spacetime-axis-width,112px);height:var(--spacetime-header-height,32px);display:grid;grid-template-columns:var(--spacetime-era-axis-width,48px) var(--spacetime-year-axis-width,64px);align-items:center;text-align:center;background:#eef3f8;border-right:1px solid #cfd8e4;border-bottom:1px solid #cfd8e4;font-size:11px;font-weight:800;color:#64748b}
 .spacetime-sticky-corner span{min-width:0}
 .spacetime-sticky-corner span+span{border-left:1px solid #d7e0ea}
 .spacetime-sticky-corner small{display:block;margin-top:1px;font-size:8px;font-weight:700;color:#8996a8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.spacetime-region-head{position:sticky;z-index:40;top:0;height:var(--spacetime-header-height,36px);margin-left:var(--spacetime-axis-width,140px);background:#eef3f8;border-bottom:1px solid #cfd8e4;overflow:hidden}
+.spacetime-region-head{position:sticky;z-index:40;top:0;height:var(--spacetime-header-height,32px);margin-left:var(--spacetime-axis-width,112px);background:#eef3f8;border-bottom:1px solid #cfd8e4;overflow:hidden}
 .spacetime-region-head-layer{position:absolute;inset:0;transition:opacity .18s ease;pointer-events:none}
 .spacetime-region-head-band{position:absolute;top:0;height:var(--spacetime-header-height,32px);display:flex;align-items:center;justify-content:center;gap:3px;border-right:1px solid #d7e0ea;overflow:hidden;padding:0 2px;box-sizing:border-box}
 .spacetime-region-head-band strong{font-size:10px;color:#26364d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -128,15 +128,15 @@
 .spacetime-place-head-marker{position:absolute;top:19px;transform:translateX(-50%);display:flex;align-items:center;gap:3px;max-width:78px;padding:1px 2px;border:1px solid rgba(92,112,143,.46);border-radius:999px;background:rgba(255,255,255,.94);box-shadow:0 1px 4px rgba(38,54,78,.08);box-sizing:border-box}
 .spacetime-place-head-marker i{flex:0 0 auto;width:5px;height:5px;border:1px solid #5f789d;border-radius:50%;background:#fff;box-sizing:border-box}
 .spacetime-place-head-marker strong{min-width:0;font-size:7px;line-height:10px;color:#3f5575;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.spacetime-era-axis{position:sticky;z-index:30;left:0;width:var(--spacetime-era-axis-width,68px);margin-top:0;background:#fff;border-right:1px solid #d7e0ea;transition:opacity .18s ease}
-.spacetime-era-axis>div{position:absolute;left:0;width:var(--spacetime-era-axis-width,68px);display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(77,91,110,.15);overflow:hidden}
+.spacetime-era-axis{position:sticky;z-index:30;left:0;width:var(--spacetime-era-axis-width,48px);margin-top:0;background:#fff;border-right:1px solid #d7e0ea;transition:opacity .18s ease}
+.spacetime-era-axis>div{position:absolute;left:0;width:var(--spacetime-era-axis-width,48px);display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(77,91,110,.15);overflow:hidden}
 .spacetime-era-axis>div span{writing-mode:vertical-rl;text-orientation:upright;transform:none;font-size:12px;font-weight:800;letter-spacing:.08em;line-height:1.35;opacity:.76}
-.spacetime-year-axis{position:absolute;z-index:29;left:var(--spacetime-era-axis-width,68px);top:var(--spacetime-header-height,36px);width:var(--spacetime-year-axis-width,72px);background:#fff;border-right:1px solid #cfd8e4}
+.spacetime-year-axis{position:absolute;z-index:29;left:var(--spacetime-era-axis-width,48px);top:var(--spacetime-header-height,32px);width:var(--spacetime-year-axis-width,64px);background:#fff;border-right:1px solid #cfd8e4}
 .spacetime-year-axis span{position:absolute;right:7px;transform:translateY(-50%);font-size:10px;font-variant-numeric:tabular-nums;color:#6b778a;white-space:nowrap}
 .spacetime-year-axis span.is-major{font-weight:800;color:#42536b}
 .spacetime-year-axis[data-axis-stage="decade"] span,.spacetime-year-axis[data-axis-stage="quarter-century"] span{font-size:9px}
 .spacetime-year-axis{cursor:crosshair}
-.spacetime-canvas{position:absolute;left:var(--spacetime-axis-width,140px);top:var(--spacetime-header-height,36px);background:#fff;contain:layout paint style}
+.spacetime-canvas{position:absolute;left:var(--spacetime-axis-width,112px);top:var(--spacetime-header-height,32px);background:#fff;contain:layout paint style}
 .spacetime-runtime-layer{position:absolute;inset:0;pointer-events:none;contain:layout style}
 .spacetime-runtime-layer button{pointer-events:auto}
 .spacetime-runtime-layer .spacetime-label-connector{pointer-events:none}
