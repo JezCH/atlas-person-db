@@ -65,10 +65,24 @@ test("space header is fixed to reviewed subregion hierarchy at the readable floo
   }
 });
 
-test("spatial hierarchy remains uniform and independent of Person density", () => {
+test("spatial hierarchy is leaf-uniform, density-independent, and map-like at the eastern edge", () => {
   const continuum = spaceAxis.createSpatialContinuum();
-  const macroWidths = continuum.macroregions.map((band) => band.max_space - band.min_space);
-  for (const width of macroWidths) assert.ok(Math.abs(width - 1/9) < 1e-12);
+  assert.equal(continuum.subregions.length, 33);
+  for (const band of continuum.subregions) {
+    assert.ok(Math.abs((band.max_space - band.min_space) - 1/33) < 1e-12);
+  }
+  for (const macro of spaceAxis.DEFAULT_SPATIAL_HIERARCHY) {
+    const band = continuum.bandForCode(macro.code);
+    assert.ok(Math.abs((band.max_space - band.min_space) - macro.subregions.length / 33) < 1e-12);
+  }
+  assert.deepEqual(
+    continuum.macroregions.slice(-3).map((band) => band.code),
+    ["southeast-asia", "east-asia", "oceania"]
+  );
+  assert.ok(continuum.bandForCode("east-asia").max_space <= continuum.bandForCode("oceania").min_space + 1e-12);
+  assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.taxonomy_basis, "atlas_internal_display_taxonomy");
+  assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.external_standard, null);
+  assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.width_basis, "equal_leaf_subregion");
 });
 
 
