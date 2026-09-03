@@ -19,6 +19,7 @@
     ["./atlas-person-spacetime-space-axis.js?v=20260901-compact-shared-chrome", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
     ["./atlas-person-spacetime-semantic-axis.js?v=20260826-p10", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
     ["./atlas-person-spacetime-uncertainty.js?v=20260903-c6", "ATLAS_PERSON_SPACETIME_UNCERTAINTY"],
+    ["./atlas-person-spacetime-inspector.js?v=20260903-c8", "ATLAS_PERSON_SPACETIME_INSPECTOR"],
     ["./atlas-person-spacetime-exploration.js?v=20260826-p11", "ATLAS_PERSON_SPACETIME_EXPLORATION"],
     ["./atlas-person-spacetime-meanwhile.js?v=20260902-active-activity", "ATLAS_PERSON_SPACETIME_MEANWHILE"],
     ["./atlas-person-spacetime-data-parity.js?v=20260902-final-parity", "ATLAS_PERSON_SPACETIME_DATA_PARITY"],
@@ -46,6 +47,8 @@
   let searchTextCache = new Map();
   let query = "";
   let selectedPersonId = null;
+  let selectedActivityId = null;
+  let selectedTimeOrdinal = null;
   let pendingFocusPersonId = null;
   let resizeBound = false;
   let resizeFrame = 0;
@@ -172,6 +175,7 @@
       spaceAxis: window.ATLAS_PERSON_SPACETIME_SPACE_AXIS,
       semanticAxis: window.ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS,
       uncertainty: window.ATLAS_PERSON_SPACETIME_UNCERTAINTY,
+      inspector: window.ATLAS_PERSON_SPACETIME_INSPECTOR,
       exploration: window.ATLAS_PERSON_SPACETIME_EXPLORATION,
       meanwhile: window.ATLAS_PERSON_SPACETIME_MEANWHILE,
       dataParity: window.ATLAS_PERSON_SPACETIME_DATA_PARITY,
@@ -319,7 +323,12 @@
   }
 
   function selectPerson(mount, personId, options = {}) {
-    selectedPersonId = personId || null;
+    const nextPersonId = personId || null;
+    if (options.preserveActivity !== true || nextPersonId !== selectedPersonId) {
+      selectedActivityId = null;
+      selectedTimeOrdinal = null;
+    }
+    selectedPersonId = nextPersonId;
     pendingFocusPersonId = options.focus === false ? null : selectedPersonId;
     if (selectedPersonId && options.detail) {
       cameraZoom = Math.max(cameraZoom, FOCUS_DETAIL_ZOOM);
@@ -328,8 +337,23 @@
     renderInto(mount);
   }
 
+  function selectActivity(mount, personId, activityId, options = {}) {
+    const { inspector } = runtime();
+    const track = compileAtlas().partitioned.tracks.find((item) => item.person_id === personId) || null;
+    const activity = inspector.selectedActivity(track, activityId);
+    if (!track || !activity) return false;
+    selectedPersonId = track.person_id;
+    selectedActivityId = activity.activity_id;
+    selectedTimeOrdinal = activity.midpoint_ordinal;
+    pendingFocusPersonId = options.focus === true ? track.person_id : null;
+    renderInto(mount);
+    return true;
+  }
+
   function clearSelection(mount) {
     selectedPersonId = null;
+    selectedActivityId = null;
+    selectedTimeOrdinal = null;
     pendingFocusPersonId = null;
     renderInto(mount);
   }
@@ -526,18 +550,64 @@
     return `<section class="spacetime-search-results card" aria-label="검색 결과"><div class="spacetime-search-results-head"><strong>검색 결과</strong><span>${items.length}명${items.length > visible.length ? ` · 상위 ${visible.length}명 표시` : ""}</span></div>${visible.length ? `<div class="spacetime-search-result-list">${visible.map((item) => `<button id="spacetimeSearchResult-${escapeHtml(item.person_id)}" type="button" data-spacetime-search-result="${escapeHtml(item.person_id)}"><strong>${escapeHtml(item.display_name)}</strong><span>${escapeHtml(polityLabel(item.representative?.activity))}</span><small>${escapeHtml(periodLabel(item.representative?.activity))}</small></button>`).join("")}</div>` : '<p class="spacetime-empty-inline">일치하는 위치 확정 Person track이 없습니다.</p>'}</section>`;
   }
 
-  function renderSelection(track, navigationCount = 0) {
-    if (!track) return "";
+  function ordinalLabel(ordinal) {
+    if (!Number.isInteger(ordinal)) return "시점 미상";
+    const year = model.ordinalToHistoricalYear(ordinal);
+    return year == null ? "시점 미상" : model.yearLabel(year);
+  }
+
+  function ordinalRangeLabel(startOrdinal, endOrdinal) {
+    if (!Number.isInteger(startOrdinal) || !Number.isInteger(endOrdinal)) return "기간 미상";
+    return `${ordinalLabel(startOrdinal)} – ${ordinalLabel(endOrdinal)}`;
+  }
+
+  function activityClassificationLabel(group) {
+    const classes = Array.isArray(group?.classifications) ? group.classifications : [];
+    if (classes.includes("primary")) return classes.length > 1 ? "주 위치 + 관계 참조" : "주 위치";
+    if (classes.includes("counterparty")) return "counterparty · 자기 위치 계산 제외";
+    return "공간 관계 검토";
+  }
+
+  function renderInspectorActivity(group) {
+    const activity = group.activity || {};
+    const selected = selectedActivityId === group.activity_id;
+    const relation = text(activity?.relation?.display_name) || text(activity?.relation?.code) || "관계 미상";
+    const role = text(activity?.role?.display_name) || text(activity?.role?.source_label) || text(activity?.role?.code) || "역할 미상";
+    const placements = (group.segments || []).map((segment) => renderSelectionEvidence(segment)).join("");
+    return `<article class="spacetime-inspector-activity${selected ? " is-selected" : ""}">
+      <button type="button" class="spacetime-inspector-activity-select" data-spacetime-inspector-activity="${escapeHtml(group.activity_id)}" data-spacetime-person="${escapeHtml(selectedPersonId)}" data-spacetime-activity="${escapeHtml(group.activity_id)}" aria-pressed="${selected ? "true" : "false"}">
+        <span><strong>${escapeHtml(polityLabel(activity))}</strong><small>${escapeHtml(periodLabel(activity))}</small></span>
+        <span>${escapeHtml(relation)} · ${escapeHtml(role)}</span>
+        <em>${escapeHtml(activityClassificationLabel(group))}</em>
+      </button>
+      <div class="spacetime-inspector-activity-evidence">${placements || '<p class="spacetime-empty-inline">공간 배치 slice 없음</p>'}</div>
+    </article>`;
+  }
+
+  function renderStickyInspector(track, navigationCount = 0) {
+    if (!track) {
+      return `<aside class="spacetime-sticky-inspector card is-empty" id="spacetimeInspector" aria-label="Person Activity inspector"><div><small>PERSON INSPECTOR</small><strong>인물을 선택하세요</strong><p>Person을 선택하면 전체 Activity와 ATLAS 시공간 배치 근거·출처를 이 패널에서 확인할 수 있습니다.</p></div></aside>`;
+    }
+    const { inspector } = runtime();
+    const activities = inspector.groupActivities(track);
+    const extent = inspector.personExtent(track);
     const canCycle = Number(navigationCount) > 1;
     const cycleDisabled = canCycle ? "" : ' disabled aria-disabled="true"';
-    const primary = track.primary_segments || [];
-    const counterparties = track.counterparty_segments || [];
-    const evidenceSegments = primary.slice(0, 5);
-    const activities = evidenceSegments.map((segment) => `${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`).join(" / ");
-    const evidence = evidenceSegments.length
-      ? `<div class="spacetime-selection-evidence" aria-label="선택 인물 공간 근거와 출처"><div class="spacetime-selection-evidence-title"><strong>공간 근거·출처</strong><span>${evidenceSegments.length}${primary.length > evidenceSegments.length ? ` / ${primary.length}` : ""}개 구간 표시</span></div><div class="spacetime-selection-evidence-list">${evidenceSegments.map(renderSelectionEvidence).join("")}</div></div>`
-      : "";
-    return `<div class="spacetime-selection" id="spacetimeSelection"><div><small>SELECTED PERSON TRACK</small><strong>${escapeHtml(track.display_name)}</strong><span>${escapeHtml(activities || "주 위치 Activity 없음")}</span></div><div class="spacetime-selection-meta"><span>${primary.length}개 주 위치 구간</span><span>${counterparties.length}개 counterparty 관계는 자기 위치에서 제외</span></div><div class="spacetime-selection-actions" role="group" aria-label="선택 인물 탐색"><button id="spacetimePrevPerson" type="button"${cycleDisabled}>이전 인물</button><button id="spacetimeFocusPerson" type="button">위치로</button><button id="spacetimeDetailPerson" type="button">자세히 보기</button><button id="spacetimeNextPerson" type="button"${cycleDisabled}>다음 인물</button><button id="spacetimeClearPerson" type="button">선택 해제</button></div>${evidence}</div>`;
+    const koName = text(track.preferred_name_ko) || text(track.display_name) || "이름 미상";
+    const secondaryName = text(track.canonical_name_en) && text(track.canonical_name_en) !== koName ? text(track.canonical_name_en) : "";
+    const selectedActivity = inspector.selectedActivity(track, selectedActivityId);
+    return `<aside class="spacetime-sticky-inspector card" id="spacetimeInspector" aria-label="${escapeHtml(track.display_name)} Person Activity inspector">
+      <header class="spacetime-inspector-person">
+        <small>PERSON INSPECTOR</small>
+        <strong>${escapeHtml(koName)}</strong>
+        ${secondaryName ? `<span>${escapeHtml(secondaryName)}</span>` : ""}
+        <p>${escapeHtml(extent ? ordinalRangeLabel(extent.start_ordinal, extent.end_ordinal) : "Activity 기간 미상")}</p>
+        ${selectedActivity && Number.isInteger(selectedTimeOrdinal) ? `<output>선택 Activity 기준 시점 · ${escapeHtml(ordinalLabel(selectedTimeOrdinal))}</output>` : ""}
+      </header>
+      <div class="spacetime-inspector-actions" role="group" aria-label="선택 인물 탐색"><button id="spacetimePrevPerson" type="button"${cycleDisabled}>이전</button><button id="spacetimeFocusPerson" type="button">위치로</button><button id="spacetimeDetailPerson" type="button">확대</button><button id="spacetimeNextPerson" type="button"${cycleDisabled}>다음</button><button id="spacetimeClearPerson" type="button">해제</button></div>
+      <section class="spacetime-inspector-activities"><div class="spacetime-inspector-section-title"><strong>Activities</strong><span>${activities.length}</span></div>${activities.map(renderInspectorActivity).join("") || '<p class="spacetime-empty-inline">Activity 없음</p>'}</section>
+      <footer class="spacetime-inspector-disclaimer">공간 정보는 인물의 실제 거주지·활동 영역이 아니라 ATLAS의 검토된 시공간 배치 기준입니다.</footer>
+    </aside>`;
   }
 
   function renderMinimap() {
@@ -548,6 +618,7 @@
     const { uncertainty } = runtime();
     return tracks.flatMap((track) => (track.primary_segments || []).flatMap((segment) => {
       const selected = selectedPersonId === track.person_id;
+      const activitySelected = selected && selectedActivityId === segment.activity_id;
       if (!uncertainty.visible(segment, activityOpacity, selected)) return [];
       const geometry = uncertainty.geometry(segment, contentWidth);
       const y1 = projection.yForOrdinal(segment.start_ordinal);
@@ -556,13 +627,13 @@
       const precision = spatialPrecisionLabel(segment);
       if (geometry.kind === "range") {
         const title = `ATLAS 시공간 배치 정밀도 범위 · ${precision} · 활동 영역이나 실제 이동 경로가 아닙니다`;
-        return [`<button type="button" class="spacetime-spatial-uncertainty ${escapeHtml(uncertainty.precisionClass(segment))}${selected ? " is-selected" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" style="left:${geometry.left}px;top:${y}px;width:${geometry.width}px" title="${escapeHtml(title)}" aria-label="${escapeHtml(`${track.display_name} · ${title}`)}"><i></i></button>`];
+        return [`<button type="button" class="spacetime-spatial-uncertainty ${escapeHtml(uncertainty.precisionClass(segment))}${selected ? " is-selected" : ""}${activitySelected ? " is-activity-selected" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" data-spacetime-activity="${escapeHtml(segment.activity_id)}" style="left:${geometry.left}px;top:${y}px;width:${geometry.width}px" title="${escapeHtml(title)}" aria-label="${escapeHtml(`${track.display_name} · ${title}`)}"><i></i></button>`];
       }
       if (geometry.kind === "multi-place") {
         const names = geometry.place_anchors.map((point) => point.place_name).filter(Boolean).join(" · ");
         const title = `복수 검토 Place 배치 기준: ${names || "복수 Place"} · 실제 이동 경로가 아닙니다`;
         const points = geometry.place_anchors.map((point) => `<i class="spacetime-multi-place-anchor" style="left:${point.x - geometry.left}px" title="${escapeHtml(point.place_name || "Place")}"></i>`).join("");
-        return [`<button type="button" class="spacetime-spatial-uncertainty is-multi-place${selected ? " is-selected" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" style="left:${geometry.left}px;top:${y}px;width:${geometry.width}px" title="${escapeHtml(title)}" aria-label="${escapeHtml(`${track.display_name} · ${title}`)}">${points}</button>`];
+        return [`<button type="button" class="spacetime-spatial-uncertainty is-multi-place${selected ? " is-selected" : ""}${activitySelected ? " is-activity-selected" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" data-spacetime-activity="${escapeHtml(segment.activity_id)}" style="left:${geometry.left}px;top:${y}px;width:${geometry.width}px" title="${escapeHtml(title)}" aria-label="${escapeHtml(`${track.display_name} · ${title}`)}">${points}</button>`];
       }
       return [];
     })).join("");
@@ -578,7 +649,7 @@
       const height = Math.max(2, Math.abs(y2 - y1));
       const x = segment.x_anchor * contentWidth;
       const meanwhileActive = meanwhileOrdinal != null && segment.start_ordinal <= meanwhileOrdinal && meanwhileOrdinal <= segment.end_ordinal;
-      return `<button type="button" class="spacetime-track-rail ${escapeHtml(uncertainty.precisionClass(segment))}${selectedPersonId === track.person_id ? " is-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" style="left:${x}px;top:${top}px;height:${height}px;opacity:${opacity}" title="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)} · ${placementBasisLabel(segment)}`)}" aria-label="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)} · ${placementBasisLabel(segment)}`)}"></button>`;
+      return `<button type="button" class="spacetime-track-rail ${escapeHtml(uncertainty.precisionClass(segment))}${selectedPersonId === track.person_id ? " is-selected" : ""}${selectedPersonId === track.person_id && selectedActivityId === segment.activity_id ? " is-activity-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" data-spacetime-activity="${escapeHtml(segment.activity_id)}" style="left:${x}px;top:${top}px;height:${height}px;opacity:${opacity}" title="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)} · ${placementBasisLabel(segment)}`)}" aria-label="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)} · ${placementBasisLabel(segment)}`)}"></button>`;
     })).join("");
   }
 
@@ -591,7 +662,7 @@
       const y = (y1 + y2) / 2;
       const x = segment.x_anchor * contentWidth;
       const meanwhileActive = meanwhileOrdinal != null && segment.start_ordinal <= meanwhileOrdinal && meanwhileOrdinal <= segment.end_ordinal;
-      return `<button type="button" class="spacetime-activity-glyph ${escapeHtml(uncertainty.precisionClass(segment))}${selectedPersonId === track.person_id ? " is-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" style="left:${x + 6}px;top:${y}px;opacity:${opacity}" title="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`)}" aria-label="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`)}"><span>${escapeHtml(polityLabel(segment.activity))}</span></button>`;
+      return `<button type="button" class="spacetime-activity-glyph ${escapeHtml(uncertainty.precisionClass(segment))}${selectedPersonId === track.person_id ? " is-selected" : ""}${selectedPersonId === track.person_id && selectedActivityId === segment.activity_id ? " is-activity-selected" : ""}${meanwhileActive ? " is-meanwhile-active" : ""}" data-spacetime-person="${escapeHtml(track.person_id)}" data-spacetime-activity="${escapeHtml(segment.activity_id)}" style="left:${x + 6}px;top:${y}px;opacity:${opacity}" title="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`)}" aria-label="${escapeHtml(`${track.display_name} · ${polityLabel(segment.activity)} · ${periodLabel(segment.activity)}`)}"><span>${escapeHtml(polityLabel(segment.activity))}</span></button>`;
     })).join("");
   }
 
@@ -824,7 +895,7 @@
       const segmentTracks = performance.cullTrackSegments(state.visibleTracks, state.projection, state.contentWidth, cullRect, forced);
       const segmentIds = segmentTracks.flatMap((track) => (track.primary_segments || []).map((segment) => segment.stable_id || `${track.person_id}:${segment.start_ordinal}:${segment.end_ordinal}`));
       const personIds = personItems.map((item) => item.person_id);
-      const signature = `${personIds.join(",")}|${segmentIds.join(",")}|${selectedPersonId || ""}|${state.meanwhileYear || ""}|${state.needle}|${state.lodWeights.labels}|${state.lodWeights.rails}|${state.lodWeights.activities}`;
+      const signature = `${personIds.join(",")}|${segmentIds.join(",")}|${selectedPersonId || ""}|${selectedActivityId || ""}|${state.meanwhileYear || ""}|${state.needle}|${state.lodWeights.labels}|${state.lodWeights.rails}|${state.lodWeights.activities}`;
 
       if (signature !== lastSignature) {
         const labelPack = packTrackLabels(personItems, state.regions, state.timelineHeight, Boolean(state.needle));
@@ -851,6 +922,11 @@
 
     const canvas = mount.querySelector(".spacetime-canvas");
     canvas?.addEventListener("click", (event) => {
+      const activityTarget = event.target.closest?.("[data-spacetime-activity]");
+      if (activityTarget && canvas.contains(activityTarget)) {
+        selectActivity(mount, activityTarget.dataset.spacetimePerson, activityTarget.dataset.spacetimeActivity, { focus: false });
+        return;
+      }
       const target = event.target.closest?.("[data-spacetime-person]");
       if (target && canvas.contains(target)) {
         selectPerson(mount, target.dataset.spacetimePerson, { focus: false });
@@ -928,7 +1004,7 @@
 
   function renderInto(mount) {
     const renderFocus = captureRenderFocus(mount);
-    const { timeProjection, spaceAxis, semanticAxis, exploration, meanwhile, lod } = runtime();
+    const { timeProjection, spaceAxis, semanticAxis, exploration, inspector, meanwhile, lod } = runtime();
     const timeline = timelineRange();
     const projection = timeProjection.createUniformTimeProjection(timeline.start_year, timeline.end_year, DEFAULT_TIMELINE_HEIGHT * cameraZoom * GLOBAL_EXTENT_COMPRESSION, cameraZoom);
     currentTimelineProjection = projection;
@@ -946,6 +1022,8 @@
     const activePersonIds = new Set(projectedTracks.map((item) => item.person_id));
     if (selectedPersonId && !activePersonIds.has(selectedPersonId)) {
       selectedPersonId = null;
+      selectedActivityId = null;
+      selectedTimeOrdinal = null;
       pendingFocusPersonId = null;
     }
     const navigationItems = exploration.orderItems(projectedTracks);
@@ -954,6 +1032,10 @@
     const ticks = timeAxis.ticks;
     const eras = buildEraBands(timeline, projection);
     const selectedTrack = compiled.partitioned.tracks.find((track) => track.person_id === selectedPersonId) || null;
+    if (selectedTrack && selectedActivityId && !inspector.selectedActivity(selectedTrack, selectedActivityId)) {
+      selectedActivityId = null;
+      selectedTimeOrdinal = null;
+    }
     const meanwhileOrdinal = meanwhileYear == null ? null : model.historicalYearToOrdinal(meanwhileYear);
     const meanwhileSummary = meanwhileOrdinal == null ? null : meanwhile.summarize(
       compiled.partitioned.tracks,
@@ -975,8 +1057,8 @@
     <section class="spacetime-precision-legend card"><strong>공간 배치 정밀도</strong><span><i class="is-place"></i>Place</span><span><i class="is-subregion"></i>Subregion 범위</span><span><i class="is-macroregion"></i>Macroregion 범위</span><small>점선 가로선은 ATLAS 시공간 배치 정밀도 범위이며, 인물의 활동 영역이나 실제 이동 경로가 아닙니다.</small></section>
     <section class="spacetime-status-row"><span><b>${visibleTracks.length}</b> ${needle ? "검색" : "전체"} Person track</span><span><b>${primarySegmentCount}</b> 전체 주 위치 구간</span><span><b>${counterpartyCount}</b> 전체 counterparty 제외</span><span><b>${compiled.unresolvedPosition.length}</b> 전체 위치 미확정</span><span><b>${compiled.unresolvedChronology.length}</b> 전체 연대 미확정</span><span><b id="spacetimeDomPersonCount">0</b> viewport Person DOM</span><span><b id="spacetimeDomSegmentCount">0</b> viewport segment DOM</span><span><b id="spacetimeDomLabelCount">0</b> 이름 표시</span><span><b id="spacetimeDeferredLabelCount">0</b> label defer</span><span><b>${escapeHtml(timeAxis.stage_label)}</b> 시간축</span><span><b>${escapeHtml(spaceHeader.stage_label)}</b> 공간축</span><span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> LOD</span><span><b>${escapeHtml(cameraZoomLabel())}</b> 시공간 줌</span></section>
     ${(compiled.unresolvedPosition.length || compiled.partitioned.relation_review.length) ? `<section class="spacetime-integrity-note card"><strong>근거 없는 위치는 자동 추정하지 않습니다.</strong><p>현재 canonical spatial index가 제공하는 검토된 macroregion만 좌표로 사용합니다. 세부 Place/subregion 근거가 없으면 macroregion보다 정밀한 좌표를 만들지 않으며, counterparty인 opposes는 자기 위치 계산에서 제외합니다.</p></section>` : ""}
-        ${renderSelection(selectedTrack, navigationItems.length)}
     ${renderMeanwhile(meanwhileSummary)}
+    <div class="spacetime-workspace">
     <section class="spacetime-frame card" style="--spacetime-axis-width:${AXIS_WIDTH}px;--spacetime-header-height:${CAMERA_HEADER_HEIGHT}px;--spacetime-era-axis-width:${ERA_AXIS_WIDTH}px;--spacetime-year-axis-width:${AXIS_WIDTH - ERA_AXIS_WIDTH}px"><div class="spacetime-scroll" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 Person track 및 등록 인물 밀도 분포">
       <div class="spacetime-sticky-corner"><span>시대</span><span>연도<small>${escapeHtml(timeAxis.stage_label)}</small></span></div>
       <div class="spacetime-region-head" style="width:${contentWidth}px">
@@ -996,6 +1078,8 @@
         <div id="spacetimeActivityLayer" class="spacetime-runtime-layer"></div>
       </div>
     </div>${renderMinimap()}</section>
+    ${renderStickyInspector(selectedTrack, navigationItems.length)}
+    </div>
     <section class="spacetime-unresolved-grid"><article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">PLACEMENT REVIEW</p><h3>위치 미확정</h3></div><strong>${compiled.unresolvedPosition.length}</strong></div><p>검토된 정치체 권역·장소 기능으로 가로 위치를 확정할 수 없어 좌표를 만들지 않은 Activity입니다.</p>${unresolvedRows(compiled.unresolvedPosition)}</article><article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">CHRONOLOGY REVIEW</p><h3>연대 미확정</h3></div><strong>${compiled.unresolvedChronology.length}</strong></div><p>Activity 시작·종료 연도를 둘 다 확정할 수 없는 경우 세로축에 임의 기간을 만들지 않습니다.</p>${unresolvedRows(compiled.unresolvedChronology)}</article></section>`;
 
     bindCameraViewport(mount, projection, navigationItems);
@@ -1048,6 +1132,7 @@
     mount.querySelector("#spacetimeCameraZoomIn")?.addEventListener("click", () => requestCameraZoom(mount, cameraZoom * CAMERA_ZOOM_STEP));
     mount.querySelector("#spacetimeCameraZoomReset")?.addEventListener("click", () => requestCameraZoom(mount, CAMERA_MIN_ZOOM));
     mount.querySelectorAll("[data-spacetime-search-result]").forEach((button) => button.addEventListener("click", () => selectPerson(mount, button.dataset.spacetimeSearchResult, { focus: true })));
+    mount.querySelectorAll("[data-spacetime-inspector-activity]").forEach((button) => button.addEventListener("click", () => selectActivity(mount, selectedPersonId, button.dataset.spacetimeInspectorActivity, { focus: false })));
     mount.querySelector("#spacetimePrevPerson")?.addEventListener("click", () => {
       const personId = exploration.adjacentPersonId(navigationItems, selectedPersonId, -1);
       if (personId) selectPerson(mount, personId, { focus: true });
@@ -1061,7 +1146,7 @@
       focusPersonInViewport(activeScroll, projection, navigationItems, selectedPersonId);
       activeScroll?.focus();
     });
-    mount.querySelector("#spacetimeDetailPerson")?.addEventListener("click", () => selectPerson(mount, selectedPersonId, { focus: true, detail: true }));
+    mount.querySelector("#spacetimeDetailPerson")?.addEventListener("click", () => selectPerson(mount, selectedPersonId, { focus: true, detail: true, preserveActivity: true }));
     mount.querySelector("#spacetimeClearPerson")?.addEventListener("click", () => clearSelection(mount));
     restoreRenderFocus(mount, renderFocus);
   }
