@@ -1,0 +1,64 @@
+{
+  "activity": {
+    "chronology_status": "reviewed",
+    "confidence": "well_established",
+    "end_calendar": "gregorian",
+    "end_certainty": "exact",
+    "end_day": 29,
+    "end_month": 10,
+    "end_year": 1923,
+    "notes": "Mustafa Kemal Atatürk chaired the Grand National Assembly from 24 April 1920 to 29 October 1923, as recorded in the Assembly's official list of speakers. The Ministry of Culture and Tourism describes the chairmanship in this period as equivalent to combined state and government leadership. This Activity represents national governing authority in the Ankara-based Government of the Grand National Assembly of Turkey, whose name is independently attested in the 1921 Moscow treaty and the 1923 Lausanne instruments published by the Ministry of Foreign Affairs. It is not an ordinary legislative speakership under the later republic. His re-election on 13 August 1923 did not interrupt the chairmanship; one continuous Activity is retained. The existing Turkey presidential Activity begins on 29 October 1923 and remains unchanged. No presidency before proclamation of the republic is asserted. This interval covers the Assembly chairmanship only and does not assert a separate executive-council premiership for its entire duration.",
+    "period_basis": "term",
+    "relation_type": "governs",
+    "role": "Chairman of the Grand National Assembly",
+    "role_display_name_ko": "대국민의회 의장",
+    "start_calendar": "gregorian",
+    "start_certainty": "exact",
+    "start_day": 24,
+    "start_month": 4,
+    "start_year": 1920
+  },
+  "external_references": {
+    "namuwiki": {
+      "checked_at": "2026-08-24",
+      "document_title": "무스타파 케말 아타튀르크",
+      "status": "linked",
+      "url": "https://namu.wiki/w/%EB%AC%B4%EC%8A%A4%ED%83%80%ED%8C%8C%20%EC%BC%80%EB%A7%90%20%EC%95%84%ED%83%80%ED%8A%80%EB%A5%B4%ED%81%AC"
+    }
+  },
+  "person": {
+    "canonical_name_en": "Mustafa Kemal Atatürk",
+    "display_name_ko": "무스타파 케말 아타튀르크",
+    "historicity": "historical",
+    "person_type": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Government of the Grand National Assembly of Turkey",
+    "display_name_ko": "튀르키예 대국민의회 정부",
+    "historicity": "historical",
+    "polity_type": "historical_polity"
+  },
+  "request_id": "authoring:mustafa-kemal-ataturk:grand-national-assembly-government:chairman:1920-1923:v1",
+  "review_status": "approved",
+  "schema": "atlas-human-authoring/v1",
+  "sources": [
+    {
+      "canonical_url": "https://www.tbmm.gov.tr/baskan/meclis-baskanlari",
+      "citation_text": "The official speakers list records Mustafa Kemal Atatürk's term as 24 April 1920 to 29 October 1923.",
+      "source_type": "government_reference",
+      "title": "TBMM Başkanları — Grand National Assembly of Türkiye"
+    },
+    {
+      "canonical_url": "https://www.ktb.gov.tr/EN-103908/biography-of-ataturk.html",
+      "citation_text": "Records election as Assembly speaker on 24 April 1920 and 13 August 1923, describes the office's state and government leadership, and records election as President of the Republic on 29 October 1923.",
+      "source_type": "government_reference",
+      "title": "Biography of Atatürk — Ministry of Culture and Tourism"
+    },
+    {
+      "canonical_url": "https://www.mfa.gov.tr/lausanne-peace-treaty----preamble.en.mfa",
+      "citation_text": "Identifies the Government of the Grand National Assembly of Turkey as the Turkish treaty party, establishing the historical political-government designation before proclamation of the republic.",
+      "source_type": "government_reference",
+      "title": "Lausanne Peace Treaty — Preamble — Ministry of Foreign Affairs"
+    }
+  ]
+}
