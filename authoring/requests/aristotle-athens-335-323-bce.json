@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:aristotle:athens:philosopher-lyceum:335-323-bce:v1",
+  "person": {
+    "canonical_name_en": "Aristotle",
+    "display_name_ko": "아리스토텔레스"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-04",
+      "document_title": "아리스토텔레스",
+      "url": "https://namu.wiki/w/%EC%95%84%EB%A6%AC%EC%8A%A4%ED%86%A0%ED%85%94%EB%A0%88%EC%8A%A4"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Athens",
+    "display_name_ko": "아테네"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Philosopher and founder of the Lyceum",
+    "role_display_name_ko": "철학자·리케이온 창립자",
+    "start_year": -335,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -323,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Aristotle returned to Athens in 335 BCE and established his own school at the Lyceum. He remained in Athens for this mature phase of philosophical and scientific research until 323 BCE, when anti-Macedonian sentiment after Alexander the Great's death prompted him to leave for Chalcis. ATLAS records 335-323 BCE as a representative Athenian intellectual-activity interval rather than using Aristotle's full lifespan or conflating it with his earlier Macedonian tutoring of Alexander."
+  },
+  "sources": [
+    {
+      "title": "Aristotle — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/aristotle/",
+      "citation_text": "The Stanford Encyclopedia of Philosophy records Aristotle's return to Athens in 335 BCE, his establishment of the Lyceum, and his departure from Athens in 323 BCE.",
+      "source_type": "scholarly_web"
+    }
+  ]
+}
