@@ -16,8 +16,8 @@
     external_standard: null,
     reference_frameworks: Object.freeze(["UN M49 geographic regions (reference only; not adopted as the ATLAS taxonomy)"]),
     audit_document: "docs/spacetime-spatial-hierarchy-audit-20260903.md",
-    migration_document: "docs/spacetime-spatial-taxonomy-migration-20260903.md",
-    taxonomy_revision: "2026-09-03-r2",
+    migration_document: "docs/spacetime-spatial-taxonomy-migration-20260903-r3.md",
+    taxonomy_revision: "2026-09-03-r3",
     width_basis: "equal_leaf_subregion",
     macro_width_basis: "sum_of_child_leaf_widths",
     horizontal_order_basis: "representative_longitude_plus_geographic_continuity",
@@ -67,7 +67,8 @@
       Object.freeze({ code: "northwest-south-asia", label: "남아시아 북서부" }),
       Object.freeze({ code: "north-india-ganges", label: "북인도·갠지스" }),
       Object.freeze({ code: "deccan-south-india", label: "데칸·남인도" }),
-      Object.freeze({ code: "sri-lanka-maldives", label: "스리랑카·몰디브" })
+      Object.freeze({ code: "maldives", label: "몰디브" }),
+      Object.freeze({ code: "sri-lanka", label: "스리랑카" })
     ]) }),
     Object.freeze({ code: "southeast-asia", label: "동남아시아", subregions: Object.freeze([
       Object.freeze({ code: "mainland-southeast-asia", label: "대륙부 동남아시아" }),
