@@ -164,7 +164,7 @@
 .spacetime-spatial-uncertainty.is-activity-selected{z-index:20;border-top-width:2px;border-top-color:#294f84;opacity:1}
 .spacetime-spatial-uncertainty.is-multi-place{border-top-style:dashed}
 .spacetime-multi-place-anchor{position:absolute;top:-4px;width:7px;height:7px;margin-left:-3px;border:1px solid rgba(76,101,139,.82);background:#fff;transform:rotate(45deg);box-sizing:border-box}
-.spacetime-activity-glyph{position:absolute;z-index:14;max-width:150px;height:22px;transform:translateY(-50%);padding:2px 7px;border:1px solid #cbd7e9;border-radius:6px;background:#fff;box-shadow:0 2px 7px rgba(35,50,74,.1);font-size:9px;color:#43536a;text-align:left;cursor:pointer;overflow:hidden}
+.spacetime-activity-glyph{position:absolute;z-index:14;max-width:150px;height:22px;transform:translateY(-50%);padding:2px 7px;border:1px solid #cbd7e9;border-radius:6px;background:#fff;box-shadow:0 2px 7px rgba(35,50,74,.1);font-size:9px;color:#43536a;text-align:left;cursor:pointer;overflow:hidden;box-sizing:border-box}
 .spacetime-activity-glyph span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .spacetime-activity-glyph:hover,.spacetime-activity-glyph.is-selected{z-index:22;border-color:#7089b7;background:#f6f9ff;box-shadow:0 4px 12px rgba(35,50,74,.16)}
 .spacetime-activity-glyph.is-meanwhile-active{z-index:21;border-color:#b68b3f;background:#fffaf0;color:#6b5427}
