@@ -103,6 +103,10 @@ Meanwhile is a selected-historical-moment comparison tool, not a second timeline
 
 This preserves the original exploration question: **who else was active elsewhere in the world at this historical moment?**
 
+Activity selection is now directly linked to Meanwhile. Selecting an inspectable Activity sets the shared historical ordinal to that Activity's midpoint and immediately drives the full-width Meanwhile line and global active-Activity summary. Manual year/canvas selection uses the same ordinal path. The UI identifies whether the moment came from an Activity or direct selection.
+
+Activity-linked moments are cleared when the Activity identity is cleared; manually chosen moments remain independent of Person selection. Activities without resolvable chronology never receive an invented midpoint.
+
 ## Dense-label acceptance
 
 Permanent dense windows:
@@ -149,6 +153,7 @@ DOM size scales with viewport + overscan, not total DB size. Minimap may retain 
 - `tests/spacetime-data-parity.test.mjs`
 - `tests/spacetime-uncertainty-rendering.test.mjs`
 - `tests/spacetime-sticky-inspector.test.mjs`
+- `tests/spacetime-activity-meanwhile-link.test.mjs`
 - `tests/spacetime-completion-contract.test.mjs`
 - `tests/spacetime-readable-scale-contract.test.mjs`
 
@@ -156,4 +161,4 @@ Changing the 500% floor, 0.748 shared compression, 900–1,275 px base-world bou
 
 ## Original-plan reconciliation
 
-The earlier 23-gate contract reached zero pending before a direct audit against the original C0-C11 design. That audit showed the contract itself was incomplete. C6 uncertainty rendering and C8 sticky Person/Activity inspector are now locked; the remaining required original-plan gates are Place-level spatial semantic LOD, Activity-selection-to-Meanwhile linkage, and final browser/visual acceptance. Final product completion must not be declared again until those gates are locked.
+The earlier 23-gate contract reached zero pending before a direct audit against the original C0-C11 design. That audit showed the contract itself was incomplete. C6 uncertainty rendering, C8 sticky Person/Activity inspector, and C9 Activity-selection-to-Meanwhile linkage are now locked; the remaining required original-plan gates are Place-level spatial semantic LOD and final browser/visual acceptance. Final product completion must not be declared again until those gates are locked.
