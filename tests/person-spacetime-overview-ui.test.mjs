@@ -50,7 +50,7 @@ test("world geometry remains stable and density-independent", () => {
 });
 
 test("subregion context is always available at the readable floor", () => {
-  assert.match(view, /semanticAxis\.buildSpaceHeaderPlan\(compiled\.continuum, contentWidth\)/);
+  assert.match(view, /semanticAxis\\.buildSpaceHeaderPlan\\(compiled\\.continuum, contentWidth, cameraZoom, spatialCompile\\.REVIEWED_PLACE_BINDINGS\\)/);
   assert.match(view, /spacetime-region-head-layer is-subregion/);
   assert.match(semanticAxis, /stage: "subregion"/);
   assert.match(semanticAxis, /subregion_opacity: 1/);
