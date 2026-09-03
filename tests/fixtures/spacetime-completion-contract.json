@@ -161,7 +161,7 @@
     {
       "id": "sticky-person-activity-inspector",
       "required": true,
-      "status": "pending"
+      "status": "locked"
     },
     {
       "id": "activity-selection-meanwhile-link",
@@ -230,7 +230,7 @@
   },
   "final_completion_verification": {
     "status": "in_progress",
-    "required_pending_count": 4,
+    "required_pending_count": 3,
     "required_capability_count": 28
   },
   "spatial_uncertainty_verification": {
@@ -250,9 +250,38 @@
     "reopened_after_audit": true,
     "remaining_required_capabilities": [
       "spatial-place-semantic-lod",
-      "sticky-person-activity-inspector",
       "activity-selection-meanwhile-link",
       "original-plan-visual-acceptance"
     ]
+  },
+  "sticky_inspector_verification": {
+    "status": "locked",
+    "right_sticky_panel": true,
+    "stable_reserved_column": true,
+    "person_header": [
+      "preferred_name_ko",
+      "canonical_name_en",
+      "full_activity_extent"
+    ],
+    "activity_fields": [
+      "polity",
+      "relation",
+      "role",
+      "start_end",
+      "spatial_precision",
+      "placement_basis",
+      "place_or_region",
+      "confidence",
+      "source_refs"
+    ],
+    "activity_identity_separate_from_person_identity": true,
+    "selected_activity_id": true,
+    "selected_time_ordinal_from_activity_midpoint": true,
+    "unresolved_activities_preserved": true,
+    "multi_place_slices_preserved": true,
+    "counterparty_visible_but_not_primary": true,
+    "selected_person_activity_visible_across_lod": true,
+    "meanwhile_mutation": false,
+    "test": "tests/spacetime-sticky-inspector.test.mjs"
   }
 }

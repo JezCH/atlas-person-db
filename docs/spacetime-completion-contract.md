@@ -71,17 +71,22 @@ The Production surface must provide continuous two-axis camera behavior at 500%-
 
 A Fit World action that produces a scale below 500% is prohibited.
 
-## Person inspector evidence
+## Sticky Person / Activity inspector
 
-Selecting a Person must expose the spatial evidence used by the renderer instead of showing only a name and Activity summary.
+The temporary top selection strip is retired. The Production workspace reserves a stable right-side inspector column so Person selection does not resize the map.
 
-For each displayed primary placement segment, the inspector shows:
-- spatial precision (`Place`, subregion, macroregion, or unresolved)
-- the historical placement basis and active Place-function evidence
-- historical spatial source references preserved from the resolver
-- display-precision source references used by reviewed Place bindings
+The sticky inspector header shows the preferred Korean/display name, canonical English/original name when distinct, and the full known Activity extent. Every Activity remains individually inspectable, including spatially or chronologically unresolved Activities.
 
-Counterparty relations remain excluded from primary Person placement evidence. Presentation anchors are still presentation data and are never described as exact geographic coordinates.
+Each Activity exposes:
+- Polity, relation, role, and start/end period
+- primary / counterparty / unresolved classification
+- spatial precision and historical placement basis
+- Place/subregion/macroregion evidence for every preserved spatial slice
+- historical/display confidence and source references
+
+A Person selection and an Activity selection are separate states. Selecting an Activity sets `selectedActivityId` and an Activity-midpoint `selectedTimeOrdinal`; it does **not** mutate Meanwhile yet. That linkage remains the following C9 gate.
+
+Multiple Place slices under one Activity remain distinct. Counterparty Activities remain visible in the inspector but never become primary Person placement. Presentation anchors are still presentation data and are never described as exact geographic coordinates.
 
 ## Meanwhile active-Activity exploration
 
@@ -143,6 +148,7 @@ DOM size scales with viewport + overscan, not total DB size. Minimap may retain 
 - `tests/spacetime-meanwhile-active-activity.test.mjs`
 - `tests/spacetime-data-parity.test.mjs`
 - `tests/spacetime-uncertainty-rendering.test.mjs`
+- `tests/spacetime-sticky-inspector.test.mjs`
 - `tests/spacetime-completion-contract.test.mjs`
 - `tests/spacetime-readable-scale-contract.test.mjs`
 
@@ -150,4 +156,4 @@ Changing the 500% floor, 0.748 shared compression, 900–1,275 px base-world bou
 
 ## Original-plan reconciliation
 
-The earlier 23-gate contract reached zero pending before a direct audit against the original C0-C11 design. That audit showed the contract itself was incomplete. C6 uncertainty rendering is now locked; the remaining required original-plan gates are Place-level spatial semantic LOD, sticky Person/Activity inspector, Activity-selection-to-Meanwhile linkage, and final browser/visual acceptance. Final product completion must not be declared again until those gates are locked.
+The earlier 23-gate contract reached zero pending before a direct audit against the original C0-C11 design. That audit showed the contract itself was incomplete. C6 uncertainty rendering and C8 sticky Person/Activity inspector are now locked; the remaining required original-plan gates are Place-level spatial semantic LOD, Activity-selection-to-Meanwhile linkage, and final browser/visual acceptance. Final product completion must not be declared again until those gates are locked.
