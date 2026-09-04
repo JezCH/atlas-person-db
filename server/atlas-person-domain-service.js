@@ -31,14 +31,15 @@ function normalizeDomain(value) {
 async function listRepresentativeDomains(client) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client with query() is required");
   const result = await client.query(`
-    select person_id::text, representative_domain, updated_at::text
-      from atlas_v2.person_representative_domains
-     order by person_id
+    select id::text as person_id, representative_domain
+      from atlas_v2.persons
+     where representative_domain is not null
+     order by id
   `);
   const rows = result.rows.map((row) => Object.freeze({
     person_id:String(row.person_id),
     representative_domain:String(row.representative_domain),
-    updated_at:row.updated_at == null ? null : String(row.updated_at)
+    updated_at:null
   }));
   const counts = Object.fromEntries(DOMAIN_DEFINITIONS.map((item) => [item.code, 0]));
   for (const row of rows) counts[row.representative_domain] = (counts[row.representative_domain] || 0) + 1;
@@ -50,24 +51,39 @@ async function listRepresentativeDomains(client) {
   });
 }
 
-async function currentDomain(client, personId, { forUpdate = false } = {}) {
+async function currentDomain(client, personId) {
   const result = await client.query(`
     select representative_domain
-      from atlas_v2.person_representative_domains
-     where person_id=$1::uuid${forUpdate ? " for update" : ""}
+      from atlas_v2.persons
+     where id=$1::uuid
   `, [personId]);
+  if (result.rowCount !== 1) throw new Error("PERSON_DOMAIN_TARGET_NOT_FOUND");
   return result.rows[0]?.representative_domain || null;
 }
 
-async function ensurePerson(client, personId) {
+async function lockPerson(client, personId) {
   await client.query("select pg_advisory_xact_lock(hashtext($1))", [`atlas-person-domain:${personId}`]);
   const result = await client.query(`
-    select id::text
+    select id::text, representative_domain
       from atlas_v2.persons
      where id=$1::uuid
      for update
   `, [personId]);
   if (result.rowCount !== 1) throw new Error("PERSON_DOMAIN_TARGET_NOT_FOUND");
+  return result.rows[0];
+}
+
+async function writeAudit(client, { requestId, personId, before, after }) {
+  await client.query(`
+    insert into atlas_v2.person_profile_mutation_audits(
+      request_id, person_id, operation, before_snapshot, after_snapshot
+    ) values($1,$2::uuid,'set_person_representative_domain',$3::jsonb,$4::jsonb)
+  `, [
+    requestId,
+    personId,
+    JSON.stringify({ representative_domain:before }),
+    JSON.stringify({ representative_domain:after })
+  ]);
 }
 
 async function setRepresentativeDomain(client, { person_id, representative_domain, request_id } = {}) {
@@ -79,8 +95,8 @@ async function setRepresentativeDomain(client, { person_id, representative_domai
 
   await client.query("BEGIN ISOLATION LEVEL SERIALIZABLE");
   try {
-    await ensurePerson(client, personId);
-    const before = await currentDomain(client, personId, { forUpdate:true });
+    const locked = await lockPerson(client, personId);
+    const before = locked.representative_domain || null;
     if (before === domain) {
       await client.query("COMMIT");
       return Object.freeze({
@@ -93,22 +109,13 @@ async function setRepresentativeDomain(client, { person_id, representative_domai
       });
     }
 
-    if (domain == null) {
-      await client.query(`delete from atlas_v2.person_representative_domains where person_id=$1::uuid`, [personId]);
-    } else {
-      await client.query(`
-        insert into atlas_v2.person_representative_domains(person_id,representative_domain,updated_at)
-        values($1::uuid,$2,now())
-        on conflict (person_id) do update
-          set representative_domain=excluded.representative_domain,
-              updated_at=now()
-      `, [personId, domain]);
-    }
-
     await client.query(`
-      insert into atlas_v2.person_representative_domain_audits(request_id,person_id,before_domain,after_domain)
-      values($1,$2::uuid,$3,$4)
-    `, [requestId, personId, before, domain]);
+      update atlas_v2.persons
+         set representative_domain=$2
+       where id=$1::uuid
+    `, [personId, domain]);
+
+    await writeAudit(client, { requestId, personId, before, after:domain });
 
     const verified = await currentDomain(client, personId);
     if (verified !== domain) throw new Error("PERSON_DOMAIN_VERIFICATION_FAILED");
