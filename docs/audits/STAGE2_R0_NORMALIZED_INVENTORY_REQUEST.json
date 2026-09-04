@@ -1,7 +1,7 @@
 {
   "schema": "atlas-audit-inventory/v1",
-  "request_revision": 2,
-  "purpose": "Stage 2 R0 normalized identity/reference inventory for exact duplicates and competing current Activity rows; reissued after the latest main Production deployment became healthy so the exact-SHA read-only inventory can run against the current deployment.",
+  "request_revision": 3,
+  "purpose": "Stage 2 R0 normalized identity/reference inventory for exact duplicates and competing current Activity rows; reissued after the latest main Production deployment became healthy so the exact-SHA read-only inventory can run against the current deployment. Revision 3 retriggers a fresh read-only Production baseline while investigating Activity b7aff6cc-95af-58e6-ba3b-5b2fc6be0600, which blocks the reviewed Yelu Dashi / Emperor Dezong merge.",
   "activity_ids": [
     "75a124e8-df55-5247-aa48-dc9d7934c10e",
     "da809f25-40ff-5c27-b10b-88d4acc4070d",
@@ -73,4 +73,3 @@
     "ec54cba5-8e17-52f9-8849-be88a3bbc81b"
   ]
 }
-
