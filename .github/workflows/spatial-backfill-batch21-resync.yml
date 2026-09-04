@@ -1,0 +1,109 @@
+name: Spatial Backfill Batch 21 Resync
+
+on:
+  push:
+    branches:
+      - agent/spatial-backfill-batch-21-final
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/spatial-backfill-batch-21-final
+          fetch-depth: 0
+
+      - name: Apply batch 21 data and coverage locks
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+
+          const spatialPath = 'atlas-polity-spatial-index.json';
+          const data = JSON.parse(fs.readFileSync(spatialPath, 'utf8'));
+
+          const macro = {
+            '24939b1b-e113-438f-987a-93c774ac44c5': 'west-asia',
+            '2db1d7db-012d-4d20-b273-6e79301da27a': 'europe',
+            '4571d2d1-b475-400f-90d1-195259a69524': 'west-asia',
+            '47f869f7-da91-41f6-b191-093a82c9585c': 'west-asia',
+            '88983df5-78cb-406b-a233-20ec193e09ff': 'east-asia',
+            'a378fb91-723e-450d-ad1b-ff4961459c3d': 'africa',
+            'c55c27af-c5b5-45d2-b786-e5bd90ec230d': 'west-asia',
+            'e4df03bd-306a-43f5-b12f-f45c7c660948': 'west-asia',
+            'eb26971e-91e7-4736-8448-4644ec516778': 'west-asia',
+            'ebc96806-32e7-404a-846f-9c36081bc68a': 'west-asia'
+          };
+          const subregion = {
+            '24939b1b-e113-438f-987a-93c774ac44c5': 'arabia',
+            '2db1d7db-012d-4d20-b273-6e79301da27a': 'balkans',
+            '4571d2d1-b475-400f-90d1-195259a69524': 'anatolia',
+            '47f869f7-da91-41f6-b191-093a82c9585c': 'iranian-plateau',
+            '88983df5-78cb-406b-a233-20ec193e09ff': 'china',
+            'a378fb91-723e-450d-ad1b-ff4961459c3d': 'nile-valley',
+            'c55c27af-c5b5-45d2-b786-e5bd90ec230d': 'iranian-plateau',
+            'e4df03bd-306a-43f5-b12f-f45c7c660948': 'mesopotamia',
+            'eb26971e-91e7-4736-8448-4644ec516778': 'anatolia',
+            'ebc96806-32e7-404a-846f-9c36081bc68a': 'mesopotamia'
+          };
+
+          if (Object.keys(data.polity_geography).length !== 555) throw new Error(`Unexpected macro baseline ${Object.keys(data.polity_geography).length}`);
+          if (Object.keys(data.polity_subregions).length !== 529) throw new Error(`Unexpected subregion baseline ${Object.keys(data.polity_subregions).length}`);
+
+          for (const id of Object.keys(macro)) {
+            if (Object.hasOwn(data.polity_geography, id)) throw new Error(`Macro id already present: ${id}`);
+          }
+          for (const id of Object.keys(subregion)) {
+            if (Object.hasOwn(data.polity_subregions, id)) throw new Error(`Subregion id already present: ${id}`);
+          }
+
+          Object.assign(data.polity_geography, macro);
+          Object.assign(data.polity_subregions, subregion);
+          data.generated_at = new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString().replace('Z', '+09:00');
+
+          if (Object.keys(data.polity_geography).length !== 565) throw new Error('Macro count did not reach 565');
+          if (Object.keys(data.polity_subregions).length !== 539) throw new Error('Subregion count did not reach 539');
+          fs.writeFileSync(spatialPath, JSON.stringify(data, null, 2) + '\n');
+
+          function replaceOnce(path, from, to) {
+            let text = fs.readFileSync(path, 'utf8');
+            const first = text.indexOf(from);
+            const last = text.lastIndexOf(from);
+            if (first < 0 || first !== last) throw new Error(`Expected exactly one match in ${path}: ${from}`);
+            text = text.replace(from, to);
+            fs.writeFileSync(path, text);
+          }
+
+          replaceOnce('tests/person-spacetime-spatial-index-coverage.test.mjs',
+            'assert.equal(Object.keys(index.polity_geography).length, 555);',
+            'assert.equal(Object.keys(index.polity_geography).length, 565);');
+          replaceOnce('tests/person-spacetime-spatial-index-coverage.test.mjs',
+            'assert.equal(Object.keys(index.polity_subregions).length, 529);',
+            'assert.equal(Object.keys(index.polity_subregions).length, 539);');
+
+          replaceOnce('tests/spacetime-taxonomy-migration.test.mjs', '  "nile-valley": 6,', '  "nile-valley": 7,');
+          replaceOnce('tests/spacetime-taxonomy-migration.test.mjs', '  anatolia: 5,', '  anatolia: 7,');
+          replaceOnce('tests/spacetime-taxonomy-migration.test.mjs', '  mesopotamia: 9,', '  mesopotamia: 11,');
+          replaceOnce('tests/spacetime-taxonomy-migration.test.mjs',
+            'assert.equal(Object.keys(index.polity_subregions).length, 529);',
+            'assert.equal(Object.keys(index.polity_subregions).length, 539);');
+
+          console.log('batch21 resync: macro 555->565, subregion 529->539');
+          NODE
+
+      - name: Commit exact resync and remove one-shot workflow
+        shell: bash
+        run: |
+          git diff --check
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/spatial-backfill-batch21-resync.yml
+          git add atlas-polity-spatial-index.json tests/person-spacetime-spatial-index-coverage.test.mjs tests/spacetime-taxonomy-migration.test.mjs
+          git diff --cached --check
+          git commit -m "Resync spatial backfill batch 21 on latest main"
+          git push origin HEAD:agent/spatial-backfill-batch-21-final
