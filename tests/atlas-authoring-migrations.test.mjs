@@ -57,7 +57,7 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
 
   const representativeDomain = migrations[7].sql;
   assert.match(representativeDomain, /ADD COLUMN IF NOT EXISTS representative_domain text/i);
-  assert.match(representativeDomain, /person_representative_domain_check/i);
+  assert.match(representativeDomain, /persons_representative_domain_check/i);
   assert.match(representativeDomain, /set_person_representative_domain/i);
   assert.doesNotMatch(representativeDomain, /CREATE TABLE\s+atlas_v2\.person_representative_domains/i);
 });
