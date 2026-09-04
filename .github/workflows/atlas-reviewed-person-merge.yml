@@ -1,5 +1,4 @@
 name: ATLAS Reviewed Person Merge
-# Replay marker: reviewed merge workflow is now present on the default branch.
 
 on:
   push:
@@ -11,7 +10,6 @@ on:
 permissions:
   contents: read
   id-token: write
-  issues: write
 
 concurrency:
   group: atlas-reviewed-person-merge-production
@@ -53,7 +51,6 @@ jobs:
           echo "MANIFEST_PATH=$MANIFEST_PATH" >> "$GITHUB_ENV"
           echo "SOURCE_PERSON_ID=$(jq -er '.source_person_id' "$MANIFEST_PATH")" >> "$GITHUB_ENV"
           echo "SURVIVOR_PERSON_ID=$(jq -er '.survivor_person_id' "$MANIFEST_PATH")" >> "$GITHUB_ENV"
-          echo "ISSUE_NUMBER=$(jq -er '.evidence.issue' "$MANIFEST_PATH")" >> "$GITHUB_ENV"
 
       - name: Wait for exact Production runtime
         shell: bash
@@ -135,7 +132,6 @@ jobs:
             and (.survivor_activities | length) == 1
             and .namuwiki.status == "linked"
           ' "$RESPONSE" >/dev/null
-          cp "$RESPONSE" /tmp/atlas-reviewed-person-merge-response.json
 
       - name: Exact Production read-back
         shell: bash
@@ -161,21 +157,3 @@ jobs:
             ([.persons[] | select(.id == $source)] | length) == 0
             and ([.persons[] | select(.id == $survivor)] | length) == 1
           ' "$ALL" >/dev/null
-
-      - name: Comment issue with verified merge
-        env:
-          GH_TOKEN: ${{ github.token }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          MERGE_AUDIT_ID="$(jq -r '.merge_audit_id' /tmp/atlas-reviewed-person-merge-response.json)"
-          BODY="✅ Reviewed Person merge completed in Production
-
-Survivor: \`$SURVIVOR_PERSON_ID\` — Yelü Dashi / 야율대석
-Removed duplicate: \`$SOURCE_PERSON_ID\` — Emperor Dezong of Western Liao / 서요 덕종
-Duplicate Activity retired before merge.
-Aliases preserved on survivor.
-NamuWiki reference preserved.
-Merge audit: \`$MERGE_AUDIT_ID\`
-Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-          gh api "repos/${GITHUB_REPOSITORY}/issues/${ISSUE_NUMBER}/comments" -f body="$BODY" >/dev/null
