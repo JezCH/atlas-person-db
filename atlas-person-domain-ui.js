@@ -74,47 +74,18 @@
     }
   }
 
-  function ensureLegend() {
-    const head = document.querySelector(".person-group-historical .person-group-head > div");
-    if (!head || head.querySelector(":scope > .person-domain-legend")) return;
-    const legend = document.createElement("div");
-    legend.className = "person-domain-legend";
-    legend.setAttribute("aria-label", "인물 대표 분야 색상 범례");
-    legend.innerHTML = DEFINITIONS.map((item) =>
-      `<span class="person-domain-legend-item" data-domain="${item.code}"><span class="person-domain-legend-swatch" aria-hidden="true"></span><span>${escapeHtml(item.label)}</span></span>`
-    ).join("");
-    head.append(legend);
-  }
-
   function decorateRow(row) {
     const personId = String(row?.dataset?.personId || "").trim();
     if (!personId) return;
     const domain = currentDomain(personId);
-    if (domain) row.dataset.representativeDomain = domain;
-    else delete row.dataset.representativeDomain;
-
-    const identity = row.querySelector(":scope > .person-table-identity") || row.querySelector(":scope > strong")?.parentElement;
-    if (!identity) return;
-    const oldChip = identity.querySelector?.(":scope > .person-domain-chip");
-    if (!domain) {
-      oldChip?.remove();
-      return;
+    if (domain) {
+      if (row.dataset.representativeDomain !== domain) row.dataset.representativeDomain = domain;
+    } else if (row.hasAttribute("data-representative-domain")) {
+      row.removeAttribute("data-representative-domain");
     }
-    const label = LABELS[domain] || domain;
-    if (oldChip) {
-      if (oldChip.dataset.domain !== domain) oldChip.dataset.domain = domain;
-      if (oldChip.textContent !== label) oldChip.textContent = label;
-      return;
-    }
-    const chip = document.createElement("span");
-    chip.className = "person-domain-chip";
-    chip.dataset.domain = domain;
-    chip.textContent = label;
-    identity.append(chip);
   }
 
   function decorateRows() {
-    ensureLegend();
     for (const row of document.querySelectorAll(".person-card[data-person-id]")) decorateRow(row);
     injectProfileEditors();
   }
