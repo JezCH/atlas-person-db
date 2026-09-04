@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-04T14:59:00+09:00",
+  "generated_at": "2026-09-04T16:44:41.290+09:00",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -608,7 +608,17 @@
     "fde52da0-f39b-43f0-a75a-96ba69243e20": "europe",
     "fe073a4c-d967-56e2-bb31-f74bdde1af87": "east-asia",
     "fe3ec27b-1ba3-4dc0-9758-b144320d6dc4": "east-asia",
-    "ff5f5bfa-2f12-442c-9621-d2d71c94382f": "europe"
+    "ff5f5bfa-2f12-442c-9621-d2d71c94382f": "europe",
+    "24939b1b-e113-438f-987a-93c774ac44c5": "west-asia",
+    "2db1d7db-012d-4d20-b273-6e79301da27a": "europe",
+    "4571d2d1-b475-400f-90d1-195259a69524": "west-asia",
+    "47f869f7-da91-41f6-b191-093a82c9585c": "west-asia",
+    "88983df5-78cb-406b-a233-20ec193e09ff": "east-asia",
+    "a378fb91-723e-450d-ad1b-ff4961459c3d": "africa",
+    "c55c27af-c5b5-45d2-b786-e5bd90ec230d": "west-asia",
+    "e4df03bd-306a-43f5-b12f-f45c7c660948": "west-asia",
+    "eb26971e-91e7-4736-8448-4644ec516778": "west-asia",
+    "ebc96806-32e7-404a-846f-9c36081bc68a": "west-asia"
   },
   "place_function_records": [
     {
@@ -1440,6 +1450,16 @@
     "fde52da0-f39b-43f0-a75a-96ba69243e20": "britain-ireland",
     "fe073a4c-d967-56e2-bb31-f74bdde1af87": "china",
     "fe3ec27b-1ba3-4dc0-9758-b144320d6dc4": "china",
-    "ff5f5bfa-2f12-442c-9621-d2d71c94382f": "western-europe"
+    "ff5f5bfa-2f12-442c-9621-d2d71c94382f": "western-europe",
+    "24939b1b-e113-438f-987a-93c774ac44c5": "arabia",
+    "2db1d7db-012d-4d20-b273-6e79301da27a": "balkans",
+    "4571d2d1-b475-400f-90d1-195259a69524": "anatolia",
+    "47f869f7-da91-41f6-b191-093a82c9585c": "iranian-plateau",
+    "88983df5-78cb-406b-a233-20ec193e09ff": "china",
+    "a378fb91-723e-450d-ad1b-ff4961459c3d": "nile-valley",
+    "c55c27af-c5b5-45d2-b786-e5bd90ec230d": "iranian-plateau",
+    "e4df03bd-306a-43f5-b12f-f45c7c660948": "mesopotamia",
+    "eb26971e-91e7-4736-8448-4644ec516778": "anatolia",
+    "ebc96806-32e7-404a-846f-9c36081bc68a": "mesopotamia"
   }
 }
