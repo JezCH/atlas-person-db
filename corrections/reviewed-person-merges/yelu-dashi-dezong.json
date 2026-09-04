@@ -28,7 +28,11 @@
     ],
     "duplicate_interval": "1124-1143",
     "reviewed_survivor_reason": "Yelü Dashi row is the reviewed normalized identity and carries the verified NamuWiki link.",
-    "execution_trigger_revision": 2,
-    "duplicate_activity_retired_in_production": true
+    "execution_trigger_revision": 6,
+    "duplicate_activity_retired_in_production": true,
+    "semantic_v2_blocker_correction_pr": 898,
+    "semantic_v2_blocker_correction_run": 33862861802,
+    "semantic_v2_blocker_activity_id": "b7aff6cc-95af-58e6-ba3b-5b2fc6be0600",
+    "retry_note": "Reuse the original approved manifest path and request_id so the existing Production revalidation requirement remains identity-compatible."
   }
 }
