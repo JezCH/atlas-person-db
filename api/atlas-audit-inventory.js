@@ -2,6 +2,7 @@
 
 // Read-only Production audit routing surface; this module performs no mutation.
 // Operational no-op: force an exact-SHA Production deployment for reviewed Stage 2 audit evidence.
+// Audit retrigger 2026-09-05: capture exact temporal metadata for the next Yelü Dashi merge blocker.
 const { createAuditInventoryHandler } = require("../server/atlas-audit-inventory-handler.js");
 const { createP11BaselineBCaptureHandler } = require("../server/atlas-p11-baseline-b-capture-handler.js");
 const { createPolityReferenceAuditHandler } = require("../server/atlas-polity-reference-audit-handler.js");
