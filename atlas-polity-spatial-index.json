@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-04T16:44:41.290+09:00",
+  "generated_at": "2026-09-04T17:12:06+09:00",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -618,7 +618,12 @@
     "c55c27af-c5b5-45d2-b786-e5bd90ec230d": "west-asia",
     "e4df03bd-306a-43f5-b12f-f45c7c660948": "west-asia",
     "eb26971e-91e7-4736-8448-4644ec516778": "west-asia",
-    "ebc96806-32e7-404a-846f-9c36081bc68a": "west-asia"
+    "ebc96806-32e7-404a-846f-9c36081bc68a": "west-asia",
+    "cb701d2d-3d6d-4248-b833-6e4e2082366e": "east-asia",
+    "2209e45b-be8f-4689-945d-804c643376d6": "west-asia",
+    "fdc28a83-997f-420b-8d6b-c78dc44a3e6d": "south-asia",
+    "55c6699e-a684-4532-97f9-bda99aa1c900": "africa",
+    "d2686b62-0192-40ef-a95a-b3b652b78b39": "africa"
   },
   "place_function_records": [
     {
@@ -1460,6 +1465,11 @@
     "c55c27af-c5b5-45d2-b786-e5bd90ec230d": "iranian-plateau",
     "e4df03bd-306a-43f5-b12f-f45c7c660948": "mesopotamia",
     "eb26971e-91e7-4736-8448-4644ec516778": "anatolia",
-    "ebc96806-32e7-404a-846f-9c36081bc68a": "mesopotamia"
+    "ebc96806-32e7-404a-846f-9c36081bc68a": "mesopotamia",
+    "cb701d2d-3d6d-4248-b833-6e4e2082366e": "korean-peninsula",
+    "2209e45b-be8f-4689-945d-804c643376d6": "arabia",
+    "fdc28a83-997f-420b-8d6b-c78dc44a3e6d": "northwest-south-asia",
+    "55c6699e-a684-4532-97f9-bda99aa1c900": "maghreb-north-africa",
+    "d2686b62-0192-40ef-a95a-b3b652b78b39": "maghreb-north-africa"
   }
 }
