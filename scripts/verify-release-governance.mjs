@@ -50,8 +50,9 @@ const expectedIgnore = "node scripts/vercel-ignore-build.mjs";
 if (vercel.ignoreCommand !== expectedIgnore) {
   fail(`Vercel ignoreCommand drifted; expected ${expectedIgnore}`);
 }
-if (vercel.git?.deploymentEnabled?.["agent/*"] !== false) {
-  fail("Vercel agent/* Git previews must remain disabled so branch churn cannot consume Production deployment quota");
+const deploymentEnabled = vercel.git?.deploymentEnabled;
+if (deploymentEnabled?.main !== true || deploymentEnabled?.["**"] !== false) {
+  fail("Vercel Git deployments must be main-only; all non-main branch deployments must remain disabled by the catch-all minimatch rule");
 }
 
 const safeSkipExamples = [
@@ -130,7 +131,7 @@ for (const clause of requiredReleaseClauses) {
 
 console.log(JSON.stringify({
   marker: "ATLAS_RELEASE_GOVERNANCE_OK",
-  vercel_agent_branch_previews_disabled: true,
+  vercel_non_main_branch_deployments_disabled: true,
   vercel_non_production_builds_skipped: true,
   vercel_production_builds_relevance_gated: true,
   vercel_unknown_state_fails_open_to_build: true,
