@@ -28,11 +28,13 @@
     ],
     "duplicate_interval": "1124-1143",
     "reviewed_survivor_reason": "Yelü Dashi row is the reviewed normalized identity and carries the verified NamuWiki link.",
-    "execution_trigger_revision": 5,
+    "execution_trigger_revision": 6,
     "duplicate_activity_retired_in_production": true,
     "semantic_v2_blocker_correction_pr": 898,
     "semantic_v2_blocker_correction_run": 33862861802,
     "semantic_v2_blocker_activity_id": "b7aff6cc-95af-58e6-ba3b-5b2fc6be0600",
-    "retry_note": "Retrigger the Production-bound reviewed merge artifact after its unrelated semantic-v2 blocker was corrected."
+    "p10_candidate_scope_fix_pr": 906,
+    "p10_candidate_scope_fix_merge_sha": "1653249fcdc75439ad1bf361eb6ff5fec88e2788",
+    "retry_note": "Retrigger the exact Production-bound reviewed merge artifact after P10 semantic validation was correctly scoped to nominated duplicate candidate Persons."
   }
 }
