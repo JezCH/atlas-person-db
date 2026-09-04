@@ -1,0 +1,6669 @@
+{
+  "generated_at": "2026-09-04T05:46:12.462Z",
+  "person_count": 1632,
+  "activity_count": 2129,
+  "unmapped_polity_count": 660,
+  "rows": [
+    {
+      "id": "fa684d65-cae7-49b8-9d0c-f12e1d03076d",
+      "name_en": "Acadian Resistance",
+      "name_ko": "아카디아 저항세력",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "조제프 브루사르"
+      ]
+    },
+    {
+      "id": "3ffddcfc-3b59-4018-897b-01f231d48e10",
+      "name_en": "Aghlabid Emirate of Ifriqiya",
+      "name_ko": "이프리키야 아글라브 토후국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이브라힘 2세"
+      ]
+    },
+    {
+      "id": "c20b5ee3-dc77-436c-b9b3-f59e81bd9010",
+      "name_en": "Ahwahneechee",
+      "name_ko": "아와니치",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "테나야"
+      ]
+    },
+    {
+      "id": "3050d178-7fea-43e8-ac6a-62e147b47dbb",
+      "name_en": "Ainu",
+      "name_ko": "아이누",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "샤쿠샤인"
+      ]
+    },
+    {
+      "id": "add09a6e-b1e5-4bb9-a30f-4716858d6958",
+      "name_en": "Akechi domain",
+      "name_ko": "아케치 영지",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아케치 미쓰히데"
+      ]
+    },
+    {
+      "id": "37901a60-0465-485e-aced-bf92814d0c93",
+      "name_en": "Åland",
+      "name_ko": "올란드",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "율리우스 순드블롬"
+      ]
+    },
+    {
+      "id": "92bfddd6-90ab-4544-9250-3dd10d6d0326",
+      "name_en": "Alash Autonomy",
+      "name_ko": "알라시 자치국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "알리한 부케이하노프"
+      ]
+    },
+    {
+      "id": "6bc0346c-854f-4cf3-844c-8e2352b9037c",
+      "name_en": "Alchon Huns",
+      "name_ko": "알촌 훈",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "토라마나"
+      ]
+    },
+    {
+      "id": "79fa797b-a418-43c7-8947-ddf920c93216",
+      "name_en": "Almohad Caliphate",
+      "name_ko": "무와히드 칼리파국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "압드 알 무민"
+      ]
+    },
+    {
+      "id": "5c4c759d-8d16-40bd-8da3-9b8841e66faf",
+      "name_en": "Almoravid Empire",
+      "name_ko": "무라비트 왕조",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "아부 바크르 이븐 우마르",
+        "자이나브 안나프자위야"
+      ]
+    },
+    {
+      "id": "45b5c3f2-f28b-42ea-857d-2d3450132dbe",
+      "name_en": "Amago clan",
+      "name_ko": "아마고 가문",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아마고 하루히사"
+      ]
+    },
+    {
+      "id": "502f18c3-41fc-4cb8-84cc-67f7e0454a9d",
+      "name_en": "Angevin Empire",
+      "name_ko": "앙주 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "헨리 2세"
+      ]
+    },
+    {
+      "id": "c43a7921-edd4-4499-a33f-d7fdf86028f9",
+      "name_en": "Antigonid Kingdom",
+      "name_ko": "안티고노스 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "안티고노스 1세 모노프탈모스"
+      ]
+    },
+    {
+      "id": "1bbcc9c3-06b3-47da-b9a4-147431e5fee0",
+      "name_en": "Aq Qoyunlu",
+      "name_ko": "아크 코윤루",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "우준 하산"
+      ]
+    },
+    {
+      "id": "34be68d6-2b96-4eac-a19c-a96b8ecf605c",
+      "name_en": "Armorican anti-Roman coalition of 56 BCE",
+      "name_ko": "기원전 56년 아르모리카 반로마 연합",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "비리도빅스"
+      ]
+    },
+    {
+      "id": "8b6f88e1-4c0d-43df-8bc6-d61dff56b018",
+      "name_en": "Arumer Zwarte Hoop (Frisian rebel movement)",
+      "name_ko": "아루메르 즈바르테 호프(프리슬란트 반란 세력)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "피어 헤를로프스 도니아"
+      ]
+    },
+    {
+      "id": "37374f6c-6f86-4fd2-97c8-df1ef1bffba6",
+      "name_en": "Âu Lạc",
+      "name_ko": "어우락",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "안양왕"
+      ]
+    },
+    {
+      "id": "2dc72079-950c-49b7-bf95-1107f0990c66",
+      "name_en": "Austria-Hungary",
+      "name_ko": "오스트리아-헝가리",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "프란츠 요제프 1세"
+      ]
+    },
+    {
+      "id": "e176d14c-1bf7-4655-8d23-4be77a5da1b3",
+      "name_en": "Austrian Empire",
+      "name_ko": "오스트리아 제국",
+      "activities": 5,
+      "person_count": 5,
+      "sample_persons": [
+        "프란츠 2세",
+        "루트비히 판 베토벤",
+        "클레멘스 폰 메테르니히",
+        "프란츠 요제프 1세"
+      ]
+    },
+    {
+      "id": "0e0d2c95-6ffb-40f2-8e2f-e98ab15c6f5a",
+      "name_en": "Autonomous State of South Kasai",
+      "name_ko": "남카사이 자치국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "알베르 칼론지"
+      ]
+    },
+    {
+      "id": "6bf5c13f-2c1b-4f90-bc50-dc7e178aae90",
+      "name_en": "Avar Khaganate",
+      "name_ko": "아바르 카간국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "바얀 1세"
+      ]
+    },
+    {
+      "id": "bc8c6e48-a672-4d5f-9692-bd7c751ad7a4",
+      "name_en": "Aymara",
+      "name_ko": "아이마라",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "투팍 카타리"
+      ]
+    },
+    {
+      "id": "44c72c42-134a-4bc5-8a4b-bf5e4f6a7a2c",
+      "name_en": "Bakumpai-Siang Dayak",
+      "name_ko": "바쿰파이-시앙 다야크",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "투멩궁 수라파티"
+      ]
+    },
+    {
+      "id": "77cf8084-1925-4050-a6d4-51813bf7cd93",
+      "name_en": "Barbaricini",
+      "name_ko": "바르바리키니",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "호스피토"
+      ]
+    },
+    {
+      "id": "d64f8912-de04-4428-a9c7-31284f4c312a",
+      "name_en": "Belize",
+      "name_ko": "벨리즈",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "엘미라 미니타 고든"
+      ]
+    },
+    {
+      "id": "9c0358cd-858d-460a-8453-2f1aabbda009",
+      "name_en": "Belo Monte (Canudos)",
+      "name_ko": "벨루 몬치(카누두스)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "안토니우 콘셀례이루"
+      ]
+    },
+    {
+      "id": "fe17946c-d8d8-4ccd-ab80-af91740d1fd2",
+      "name_en": "Bengal Presidency",
+      "name_ko": "벵골 관구",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "로버트 클라이브"
+      ]
+    },
+    {
+      "id": "8e5b3864-9c3a-49c4-8cc6-8272445276f9",
+      "name_en": "Bishopric of Riga",
+      "name_ko": "리가 주교령",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "리가의 알베르트"
+      ]
+    },
+    {
+      "id": "02799dee-d86d-4a11-8cae-0911ea72803b",
+      "name_en": "Boina Kingdom",
+      "name_ko": "보이나 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "라바히니"
+      ]
+    },
+    {
+      "id": "eef291e2-7f5c-4bbd-9700-fcf84d0562a2",
+      "name_en": "Bornu Empire",
+      "name_ko": "보르누 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "라비흐 아즈주바이르"
+      ]
+    },
+    {
+      "id": "a405607e-c7d4-4bd8-a57f-aced63b00b4e",
+      "name_en": "Bosnian Autonomy Movement",
+      "name_ko": "보스니아 자치 운동",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "후세인 그라다슈체비치"
+      ]
+    },
+    {
+      "id": "bdf20b00-637d-4885-9fc4-cda061afb746",
+      "name_en": "Bougainville Independence Movement",
+      "name_ko": "부건빌 독립운동",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "프랜시스 오나"
+      ]
+    },
+    {
+      "id": "afa43106-21d7-480f-8c42-06c3f59233ae",
+      "name_en": "Bunuba",
+      "name_ko": "부누바",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "잔다마라"
+      ]
+    },
+    {
+      "id": "03251aab-6b3b-4889-af00-7733e96926eb",
+      "name_en": "Burgundian State",
+      "name_ko": "부르고뉴국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "용담공 샤를"
+      ]
+    },
+    {
+      "id": "1e5de9e4-c8a3-4e55-88f1-daee0e9dcfbd",
+      "name_en": "Buryat Buddhist community",
+      "name_ko": "부랴트 불교 공동체",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "다시도르조 이티길로프"
+      ]
+    },
+    {
+      "id": "64e303be-fcda-46e4-8779-46bcc7698946",
+      "name_en": "Buyid Realm of Fars and Iraq",
+      "name_ko": "부와이흐 왕조령(파르스·이라크)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아두드 앗다울라"
+      ]
+    },
+    {
+      "id": "074510f4-f2e7-5795-8cfb-2a4206fa7254",
+      "name_en": "Byzantine Empire",
+      "name_ko": "비잔티움 제국",
+      "activities": 13,
+      "person_count": 11,
+      "sample_persons": [
+        "히파티아",
+        "벨리사리우스",
+        "유스티니아누스 1세",
+        "테오도라"
+      ]
+    },
+    {
+      "id": "ef2687fa-1db8-4a15-9ac0-f0bfa7880a94",
+      "name_en": "Cailín-centered Chono communities",
+      "name_ko": "카일린 중심 초노 공동체",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "마르틴 올레타"
+      ]
+    },
+    {
+      "id": "4c3e50cb-d76c-4b7c-b611-222849404142",
+      "name_en": "Chagatai Ulus",
+      "name_ko": "차가타이 울루스",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "차가타이"
+      ]
+    },
+    {
+      "id": "08a804bf-81c1-4206-85ed-47b139104915",
+      "name_en": "Chagossian Community",
+      "name_ko": "차고스인 공동체",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "루이 올리비에 방쿨트"
+      ]
+    },
+    {
+      "id": "8e2a0e63-9115-4236-8632-81f9c1979e80",
+      "name_en": "CHamoru",
+      "name_ko": "차모로",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "마타팡"
+      ]
+    },
+    {
+      "id": "6c9e3efd-60af-451e-8178-e07c2b5d9348",
+      "name_en": "Champa",
+      "name_ko": "참파",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "쩨 봉 응아"
+      ]
+    },
+    {
+      "id": "6991ca13-fafb-4fe8-ae44-515929f84e53",
+      "name_en": "Charrúa",
+      "name_ko": "차루아족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아바유바"
+      ]
+    },
+    {
+      "id": "4a4f1e75-8d23-498f-9550-5df4fa1b4bfa",
+      "name_en": "Chechen Republic of Ichkeria",
+      "name_ko": "체첸 이치케리야 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "조하르 두다예프"
+      ]
+    },
+    {
+      "id": "5a290036-5e47-4426-bd2e-eb1992126804",
+      "name_en": "Chechnya",
+      "name_ko": "체첸",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "베이불라트 타이미예프"
+      ]
+    },
+    {
+      "id": "4d6a9f98-8601-42df-a15c-4cbdcd82592c",
+      "name_en": "Chipewyan",
+      "name_ko": "치페와이언",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "타나델서"
+      ]
+    },
+    {
+      "id": "89deca8d-2f95-4252-b5b9-9726e44f86f9",
+      "name_en": "Comanche people",
+      "name_ko": "코만치족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아이언 재킷"
+      ]
+    },
+    {
+      "id": "c1f8638f-d600-4d8b-b9fa-a96c056e884c",
+      "name_en": "Communist Party of Kampuchea",
+      "name_ko": "캄푸치아 공산당",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "폴 포트"
+      ]
+    },
+    {
+      "id": "d66c84a2-0e69-4599-988a-2d76d180238f",
+      "name_en": "Conestoga Susquehannock",
+      "name_ko": "코네스토가 서스쿼해녹족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "시헤이스"
+      ]
+    },
+    {
+      "id": "338c10d9-9d42-4fb7-ba65-6cbebfeaac09",
+      "name_en": "Constitutional Protection Military Government",
+      "name_ko": "호법군정부",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "쑨원"
+      ]
+    },
+    {
+      "id": "6d630388-90c9-44c2-84f0-b84ee305b1fa",
+      "name_en": "Council of Lithuania",
+      "name_ko": "리투아니아 평의회",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "안타나스 스메토나"
+      ]
+    },
+    {
+      "id": "83f407e7-61af-4c5e-92f4-6ba0b7918101",
+      "name_en": "County of Luxembourg",
+      "name_ko": "룩셈부르크 백국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "에르메신데"
+      ]
+    },
+    {
+      "id": "45a8c3f3-cf7e-415a-a51c-b651b2761828",
+      "name_en": "County of Savoy",
+      "name_ko": "사보이 백국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "사보이의 아메데오 8세"
+      ]
+    },
+    {
+      "id": "a70cf4c7-ebce-440e-9dc8-81a2724f5aea",
+      "name_en": "County of Tyrol",
+      "name_ko": "티롤 백국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "티롤 여백작 마르가레테"
+      ]
+    },
+    {
+      "id": "35ab695a-1fe6-46ea-9da0-a2037aa653a3",
+      "name_en": "County of Vaudémont",
+      "name_ko": "보데몽 백국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "로렌의 르네 2세"
+      ]
+    },
+    {
+      "id": "0dd40529-fbc2-47b9-ba41-305f6dbbc9c4",
+      "name_en": "County of Zeeland",
+      "name_ko": "질란트 백국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "기욤 1세"
+      ]
+    },
+    {
+      "id": "2448cf13-737f-4f8c-94eb-c67f02e439f1",
+      "name_en": "Crimean Khanate",
+      "name_ko": "크림 칸국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "하즈 1세 기라이",
+        "토가이 베이"
+      ]
+    },
+    {
+      "id": "63828485-5db4-429f-a9d5-2523eacc11ee",
+      "name_en": "Cuman-Kipchak Confederation",
+      "name_ko": "쿠만-킵차크 연맹",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "투고르칸",
+        "콘차크"
+      ]
+    },
+    {
+      "id": "d6542085-d0fd-4928-940f-e3f474880bca",
+      "name_en": "Czechoslovak National Council",
+      "name_ko": "체코슬로바키아 국민평의회",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "밀란 라스티슬라우 슈테파니크"
+      ]
+    },
+    {
+      "id": "2798943e-f35d-4103-8021-0e89012c0425",
+      "name_en": "Dál Riata",
+      "name_ko": "달 리아타",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아에단 막 가브란"
+      ]
+    },
+    {
+      "id": "907319e4-3e71-4717-809f-8a66fee0730d",
+      "name_en": "Danish Royal Share of Schleswig-Holstein",
+      "name_ko": "덴마크 왕령 슐레스비히-홀슈타인",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "하인리히 란차우"
+      ]
+    },
+    {
+      "id": "65d2f1b4-9b42-4e64-b8b2-5b8a1af9edaa",
+      "name_en": "Darfur Sultanate",
+      "name_ko": "다르푸르 술탄국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "알리 디나르"
+      ]
+    },
+    {
+      "id": "8e0892b7-22f9-465c-b2c6-1f00191b7a7f",
+      "name_en": "Dolgans",
+      "name_ko": "돌간인",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "오그도 악쇼노바"
+      ]
+    },
+    {
+      "id": "9ae22c82-4c08-4390-b1e6-9068b8a55517",
+      "name_en": "Dominion of Pakistan",
+      "name_ko": "파키스탄 자치령",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "무함마드 알리 진나"
+      ]
+    },
+    {
+      "id": "fdcf30a9-5fc0-425f-b044-f9a806fcdb97",
+      "name_en": "Don Republic",
+      "name_ko": "돈 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "표트르 크라스노프"
+      ]
+    },
+    {
+      "id": "836a0b3b-41de-43db-8f3f-9542871e3f48",
+      "name_en": "Duchies of Schleswig and Holstein",
+      "name_ko": "슐레스비히·홀슈타인 공국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "프레데리크 1세"
+      ]
+    },
+    {
+      "id": "8a41195e-24f1-4c81-81b5-5820098a4491",
+      "name_en": "Duchy of Bar",
+      "name_ko": "바르 공국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "로렌의 르네 2세"
+      ]
+    },
+    {
+      "id": "07df9d9b-8e3e-479d-92e0-ba02fb2d9b51",
+      "name_en": "Duchy of Pomerania",
+      "name_ko": "포메라니아 공국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "보구스와프 10세"
+      ]
+    },
+    {
+      "id": "f48c1835-d324-4b02-9e41-efb4a70d9e26",
+      "name_en": "Duchy of Savoy",
+      "name_ko": "사보이 공국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "사보이의 아메데오 8세"
+      ]
+    },
+    {
+      "id": "e70a647f-01f4-44c0-a047-ee8a83dbb8ad",
+      "name_en": "Duchy of Warsaw",
+      "name_ko": "바르샤바 공국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "프리드리히 아우구스트 1세"
+      ]
+    },
+    {
+      "id": "7945d38f-57cf-4686-a9a6-bb675e8c4a1a",
+      "name_en": "Durrani Empire",
+      "name_ko": "두라니 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아흐마드 샤 두라니"
+      ]
+    },
+    {
+      "id": "80f15df0-6ffc-4fa1-ade9-05b6d6438d35",
+      "name_en": "Dutch Brazil (New Holland)",
+      "name_ko": "네덜란드령 브라질(뉴홀란트)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "요한 마우리츠 판 나사우지겐"
+      ]
+    },
+    {
+      "id": "25401991-b8df-454f-8fdc-652699c95958",
+      "name_en": "Dutch East India Company (VOC)",
+      "name_ko": "네덜란드 동인도 회사(VOC)",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "얀 피터르스존 쿤"
+      ]
+    },
+    {
+      "id": "5e472dc4-61f1-41b2-b520-0252b52bebdc",
+      "name_en": "East Francia",
+      "name_ko": "동프랑크 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "오토 1세"
+      ]
+    },
+    {
+      "id": "44a197bb-1b80-484e-9ea2-e29c3f9904fc",
+      "name_en": "East India Company",
+      "name_ko": "동인도 회사",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "로버트 클라이브"
+      ]
+    },
+    {
+      "id": "86e4798b-85fa-4a69-838f-7b75f87bc997",
+      "name_en": "Eastern Ganga Kingdom (Odisha)",
+      "name_ko": "동강가 왕국(오디샤)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "나라심하데바 1세"
+      ]
+    },
+    {
+      "id": "ca1f1ca3-5049-49c5-bb70-8c51b19a3b16",
+      "name_en": "Eastern Shoshone",
+      "name_ko": "동부 쇼쇼니",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "와샤키"
+      ]
+    },
+    {
+      "id": "59ba85f5-ed41-4876-81d7-28768a084f89",
+      "name_en": "Egypt Eyalet",
+      "name_ko": "이집트 에야레트",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이집트의 무함마드 알리"
+      ]
+    },
+    {
+      "id": "47f869f7-da91-41f6-b191-093a82c9585c",
+      "name_en": "Elam",
+      "name_ko": "엘람",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "슈트루크-나훈테 1세"
+      ]
+    },
+    {
+      "id": "1868fd1e-1fb4-4cbe-b880-25b8ba8ebf8d",
+      "name_en": "Empire of Nicaea",
+      "name_ko": "니케아 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "미하일 8세"
+      ]
+    },
+    {
+      "id": "bb92cac6-244e-4b82-8dc3-4b8014c23f06",
+      "name_en": "Empire of Trebizond",
+      "name_ko": "트라페준타 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "알렉시오스 2세 메가스 콤니노스"
+      ]
+    },
+    {
+      "id": "5247c9c0-ca50-452b-9e5a-d7e5585f096d",
+      "name_en": "European Communities",
+      "name_ko": "유럽 공동체",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "자크 들로르"
+      ]
+    },
+    {
+      "id": "cbe32fde-c91c-4071-b360-bdc77e27d47d",
+      "name_en": "European Union",
+      "name_ko": "유럽 연합",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "자크 들로르"
+      ]
+    },
+    {
+      "id": "e8a494af-a962-49e2-8b8c-236569c327df",
+      "name_en": "Far Eastern Republic",
+      "name_ko": "극동 공화국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "알렉산드르 크라스노쇼코프"
+      ]
+    },
+    {
+      "id": "79e75465-8903-495a-aa45-eed64364b96c",
+      "name_en": "Fatimid Caliphate",
+      "name_ko": "파티마 칼리파국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "압둘라 알마흐디",
+        "알하킴 비아므르 알라"
+      ]
+    },
+    {
+      "id": "b111eea9-3d73-40f1-9d7e-954156188967",
+      "name_en": "Finzenú",
+      "name_ko": "핀세누",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "핀세누의 토토"
+      ]
+    },
+    {
+      "id": "1b535d19-0108-486e-8edc-f13b79f1e8f1",
+      "name_en": "First East Turkestan Republic",
+      "name_ko": "제1동튀르키스탄 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "사비트 다몰라"
+      ]
+    },
+    {
+      "id": "4461d4af-ad8b-4bd2-8dce-697a94b7ad50",
+      "name_en": "First Turkic Khaganate",
+      "name_ko": "돌궐 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "부민 카간"
+      ]
+    },
+    {
+      "id": "819ae1cc-558d-49fe-a7cd-4a5ffd9f6d81",
+      "name_en": "Fraxinetum",
+      "name_ko": "프락시네툼",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "프락시네툼의 나스르 이븐 아흐마드"
+      ]
+    },
+    {
+      "id": "ea3a6fdc-476c-4feb-ab8b-0355c4631a72",
+      "name_en": "Funj Sultanate",
+      "name_ko": "푼즈 술탄국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아마라 둔카스"
+      ]
+    },
+    {
+      "id": "5ee9928c-e6f4-4107-b078-1ae908db9beb",
+      "name_en": "Ganden Phodrang",
+      "name_ko": "간덴 포드랑(티베트)",
+      "activities": 5,
+      "person_count": 2,
+      "sample_persons": [
+        "달라이 라마 5세(롭상 갸초)",
+        "툽텐 갸초"
+      ]
+    },
+    {
+      "id": "75c7198d-d6b4-4eed-b422-7c4c8f28b1bb",
+      "name_en": "Gbudwe Zande Kingdom",
+      "name_ko": "그부드웨 잔데 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "그부드웨"
+      ]
+    },
+    {
+      "id": "93bebce8-a3cb-4a40-9b50-638d2d079212",
+      "name_en": "Ghaznavid Empire",
+      "name_ko": "가즈니 왕조",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "술탄 마흐무드"
+      ]
+    },
+    {
+      "id": "7526035c-03f4-4bc4-8325-106637b13e45",
+      "name_en": "Ghost Dance movement",
+      "name_ko": "고스트 댄스 운동",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "워보카"
+      ]
+    },
+    {
+      "id": "5426f80a-e10c-4a4f-8adb-9c96e41a3f0e",
+      "name_en": "Ghurid Empire",
+      "name_ko": "구르 왕조",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "무이즈 앗딘 무함마드"
+      ]
+    },
+    {
+      "id": "d16ef45f-9721-4eaf-809f-c2ccdc499fb4",
+      "name_en": "Gojoseon",
+      "name_ko": "고조선",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "위만"
+      ]
+    },
+    {
+      "id": "7e0522d7-1ff9-4464-927b-4376bf35ed7a",
+      "name_en": "Golden Horde",
+      "name_ko": "킵차크 칸국",
+      "activities": 3,
+      "person_count": 3,
+      "sample_persons": [
+        "바투 칸",
+        "우즈베크 칸",
+        "토크타미시"
+      ]
+    },
+    {
+      "id": "0eec74a4-a2a4-43f3-b347-54370b94da14",
+      "name_en": "Gorkha Kingdom",
+      "name_ko": "고르카 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "프리트비 나라얀 샤"
+      ]
+    },
+    {
+      "id": "55407a83-2e02-4ea1-898a-c55bc06da69e",
+      "name_en": "Government of the Grand National Assembly",
+      "name_ko": "튀르키예 대국민의회 정부(앙카라 정부)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "무스타파 케말 아타튀르크"
+      ]
+    },
+    {
+      "id": "f307d9de-a73d-4dbd-966a-d31740c0dcec",
+      "name_en": "Government-in-exile of the Ukrainian People's Republic",
+      "name_ko": "우크라이나 인민공화국 망명정부",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "시몬 페틀류라"
+      ]
+    },
+    {
+      "id": "48f40b79-8c02-4d7c-86ae-55f944f607bc",
+      "name_en": "Great Rebellion of Túpac Amaru II",
+      "name_ko": "투팍 아마루 2세 대반란",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "투팍 아마루 2세"
+      ]
+    },
+    {
+      "id": "01f4ce7b-aaa3-473a-a6fd-9c95c4a85ff7",
+      "name_en": "Great Seljuk Empire",
+      "name_ko": "대셀주크 제국",
+      "activities": 3,
+      "person_count": 3,
+      "sample_persons": [
+        "알프 아르슬란",
+        "쿠탈미시",
+        "니잠 알물크"
+      ]
+    },
+    {
+      "id": "6117ed42-3fff-4aa9-bed0-78e4cc8af970",
+      "name_en": "Great Tellico (Overhill Cherokee)",
+      "name_ko": "그레이트 텔리코(오버힐 체로키)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "텔리코의 모이토이"
+      ]
+    },
+    {
+      "id": "df5c9e30-8676-43eb-b360-5e08627f0e2c",
+      "name_en": "Greco-Bactrian Kingdom",
+      "name_ko": "그레코-박트리아 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "박트리아의 데메트리오스 1세"
+      ]
+    },
+    {
+      "id": "2d13c907-3156-4f8a-8e1d-51cf4aa6c72f",
+      "name_en": "Grenada Kalinago",
+      "name_ko": "그레나다 칼리나고",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "카이루아네"
+      ]
+    },
+    {
+      "id": "73539591-8035-4f03-ab39-796ebea9276b",
+      "name_en": "Guge",
+      "name_ko": "구게",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "예셰 외"
+      ]
+    },
+    {
+      "id": "ff9063a6-3ca1-4f4c-bf73-991bf621c0eb",
+      "name_en": "Gumatj clan",
+      "name_ko": "구맛지 씨족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "갈라루이 유누핑구"
+      ]
+    },
+    {
+      "id": "104bf94c-5338-4244-9d76-7af9c86cfe50",
+      "name_en": "Gunditjmara",
+      "name_ko": "군디츠마라족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "타라러"
+      ]
+    },
+    {
+      "id": "58882a26-c066-4377-97f3-6374e9d7cb06",
+      "name_en": "Gupta Empire",
+      "name_ko": "굽타 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "쿠마라굽타 1세"
+      ]
+    },
+    {
+      "id": "5138ccd3-07ae-46c9-9965-5e074df695e5",
+      "name_en": "Gurjara-Pratihara Empire",
+      "name_ko": "구르자라-프라티하라 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "미히라 보자"
+      ]
+    },
+    {
+      "id": "e21c1074-51a8-4b3b-a672-ba94a8428bc9",
+      "name_en": "Hafsid Sultanate",
+      "name_ko": "하프스 술탄국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "아부 자카리야 야흐야",
+        "아부 암르 우스만"
+      ]
+    },
+    {
+      "id": "8d91aa0d-7a55-42d5-a2a8-919b91cfd9c3",
+      "name_en": "Hanseatic League",
+      "name_ko": "한자동맹",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "위르겐 불렌베버"
+      ]
+    },
+    {
+      "id": "bf8f4f5d-2a26-42c6-886c-0e3b0be399eb",
+      "name_en": "Hanthawaddy Kingdom",
+      "name_ko": "한따와디 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "신 사우부"
+      ]
+    },
+    {
+      "id": "784f0fca-9e79-4ccf-a5fe-1c03763a75b3",
+      "name_en": "Hasmonean Kingdom of Judea",
+      "name_ko": "하스몬 유대 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "살로메 알렉산드라"
+      ]
+    },
+    {
+      "id": "ca75e7a3-3535-421f-83b1-a5903343c614",
+      "name_en": "Haudenosaunee Confederacy (Six Nations of the Grand River)",
+      "name_ko": "하우데노사우니 연맹(그랜드리버 식스네이션스)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "데스카헤"
+      ]
+    },
+    {
+      "id": "1fa3c5ce-8fb3-4064-9839-5be073b94941",
+      "name_en": "Haush (Manek'enk)",
+      "name_ko": "하우시(마네켄크)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "테네니스크"
+      ]
+    },
+    {
+      "id": "bf524697-dd2b-4381-b413-2b6e776453d0",
+      "name_en": "Herzegovina (Kosača Domain)",
+      "name_ko": "헤르체고비나(코사차 영지)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "스체판 부크치치 코사차"
+      ]
+    },
+    {
+      "id": "c26bc9aa-a1a7-4c25-9d37-cf9b320220ab",
+      "name_en": "High Kingship of Ireland",
+      "name_ko": "아일랜드 최고왕권",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "말 셰흐날 막 말레 루아니",
+        "브리안 보루"
+      ]
+    },
+    {
+      "id": "06f4ac04-2ab7-4918-87ad-225441a512ba",
+      "name_en": "Ho-Chunk",
+      "name_ko": "호청크족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "글로리 오브 더 모닝"
+      ]
+    },
+    {
+      "id": "b11d8733-45b5-4165-9259-f15d861a3899",
+      "name_en": "Hōjō Ujiyasu territorial authority",
+      "name_ko": "호조 우지야스 세력권",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "호조 우지야스"
+      ]
+    },
+    {
+      "id": "5834a865-03e3-48a1-b49a-12c1d9a35ab4",
+      "name_en": "Hungarian Peasant Uprising of 1514",
+      "name_ko": "1514년 헝가리 농민 봉기",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "죄르지 도자"
+      ]
+    },
+    {
+      "id": "0ca4b318-0b60-49a4-91c9-5bbd362a6a34",
+      "name_en": "Hyderabad State",
+      "name_ko": "하이데라바드국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "미르 오스만 알리 칸"
+      ]
+    },
+    {
+      "id": "a378fb91-723e-450d-ad1b-ff4961459c3d",
+      "name_en": "Hyksos Fifteenth Dynasty",
+      "name_ko": "힉소스 제15왕조",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아페피"
+      ]
+    },
+    {
+      "id": "de7f98f0-8328-46d9-80a2-44482453cc88",
+      "name_en": "Icelandic Revolutionary Government of 1809",
+      "name_ko": "1809년 아이슬란드 혁명정부",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "예르겐 예르겐센"
+      ]
+    },
+    {
+      "id": "55c6699e-a684-4532-97f9-bda99aa1c900",
+      "name_en": "Idrisid State",
+      "name_ko": "이드리스 왕조국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이드리스 1세"
+      ]
+    },
+    {
+      "id": "36c6cfa3-3772-477d-9bfc-bfdd810fa787",
+      "name_en": "Ilergetes",
+      "name_ko": "일레르게테스족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "인디빌리스"
+      ]
+    },
+    {
+      "id": "bf88f81f-adf6-467b-aba2-66b11d96b477",
+      "name_en": "Ilkhanate",
+      "name_ko": "일 칸국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "가잔 칸"
+      ]
+    },
+    {
+      "id": "0c00c5d5-18ca-41cd-a5a6-64302f510a5e",
+      "name_en": "Imagawa Yoshimoto territorial authority",
+      "name_ko": "이마가와 요시모토 세력권",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이마가와 요시모토"
+      ]
+    },
+    {
+      "id": "31f1be4e-4e24-4728-9b1b-c62bf38bc19e",
+      "name_en": "Imperial State of Iran",
+      "name_ko": "이란 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "모하마드 레자 팔라비"
+      ]
+    },
+    {
+      "id": "7326adc8-b70d-4349-a37e-cfe67200fa03",
+      "name_en": "Indo-Greek Kingdom",
+      "name_ko": "인도-그리스 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "메난드로스 1세"
+      ]
+    },
+    {
+      "id": "d0487ba3-b605-4193-a8d9-9ceeb2fb526f",
+      "name_en": "Inughuit (Polar Inuit)",
+      "name_ko": "이누흐이트(극지 이누이트)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "툴루왁"
+      ]
+    },
+    {
+      "id": "b0cc75d1-346a-45ac-9a8d-e7155fa3dbeb",
+      "name_en": "Iraqi Kurdish National Movement",
+      "name_ko": "이라크 쿠르드 민족운동",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "무스타파 바르자니"
+      ]
+    },
+    {
+      "id": "ae3fdc04-1fc0-45b0-8dc2-1a8ecadb8e0d",
+      "name_en": "Irish Confederacy of the Nine Years' War",
+      "name_ko": "9년 전쟁 아일랜드 제후 연합",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "휴 오닐"
+      ]
+    },
+    {
+      "id": "a0a6810a-9ebf-4e63-acfe-572608fdf3e3",
+      "name_en": "Irish Free State",
+      "name_ko": "아일랜드 자유국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "에이먼 데 벌레라"
+      ]
+    },
+    {
+      "id": "abbc4049-41e4-4b74-a246-d7561b8d0b74",
+      "name_en": "Ishiyama Hongan-ji",
+      "name_ko": "이시야마 혼간지",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "혼간지 겐뇨"
+      ]
+    },
+    {
+      "id": "abcc7d46-63a2-4ebb-a561-0955a369000a",
+      "name_en": "Islamic Republic of Iran",
+      "name_ko": "이란 이슬람 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "루홀라 호메이니"
+      ]
+    },
+    {
+      "id": "7a70c17b-7c67-485b-9e39-3d7b3b97b98e",
+      "name_en": "Islamic State of Afghanistan",
+      "name_ko": "아프가니스탄 이슬람국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아흐마드 샤 마수드"
+      ]
+    },
+    {
+      "id": "8591a3f0-8453-445f-8144-7e0a98e7dec3",
+      "name_en": "Islands of Refreshment",
+      "name_ko": "리프레시먼트 제도",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "조너선 램버트"
+      ]
+    },
+    {
+      "id": "fa7be9b9-ca9e-42ec-b545-43d8fd192267",
+      "name_en": "Isle of Man",
+      "name_ko": "맨섬",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "일리엄 돈"
+      ]
+    },
+    {
+      "id": "677ffc52-fe61-4207-a12c-b24b57aa1cf1",
+      "name_en": "Italian unification movement (Risorgimento)",
+      "name_ko": "이탈리아 통일운동(리소르지멘토)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "주세페 가리발디"
+      ]
+    },
+    {
+      "id": "f7564dcc-b9b8-4826-b5a2-761d9c1461f7",
+      "name_en": "Italy",
+      "name_ko": "이탈리아",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "주세페 가리발디"
+      ]
+    },
+    {
+      "id": "8b335f26-bbc3-48db-9af7-66d29eaa8be5",
+      "name_en": "Itelmen",
+      "name_ko": "이텔멘",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "표도르 하르친"
+      ]
+    },
+    {
+      "id": "264b069b-994f-4a2c-8af1-7331c631a376",
+      "name_en": "January Uprising in Lithuania and Belarus",
+      "name_ko": "리투아니아·벨라루스 1월 봉기 세력",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "카스투시 칼리노우스키"
+      ]
+    },
+    {
+      "id": "851be7b2-6364-42fd-ad45-ec89db553612",
+      "name_en": "Jarawa",
+      "name_ko": "자라와",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "디히야"
+      ]
+    },
+    {
+      "id": "928ce704-e37c-42aa-8ac4-0b964b5fe732",
+      "name_en": "Jaxa",
+      "name_ko": "약사",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "니체포르 체르니호프스키"
+      ]
+    },
+    {
+      "id": "b333c8ba-a506-4e37-aea5-deb5e9d7ff80",
+      "name_en": "Jeriboca",
+      "name_ko": "헤리보카",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "쿠차카시케"
+      ]
+    },
+    {
+      "id": "3209f9ae-445d-4923-b40c-b416cb69e772",
+      "name_en": "Jordan",
+      "name_ko": "요르단",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "후세인 빈 탈랄"
+      ]
+    },
+    {
+      "id": "7e3a3d2a-ec89-4cbb-b504-daaa87c925f3",
+      "name_en": "Jumano",
+      "name_ko": "후마노족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "후안 사베아타"
+      ]
+    },
+    {
+      "id": "8ec4423d-16e9-46da-bab0-decc0035b65b",
+      "name_en": "Kaanul Kingdom (Calakmul)",
+      "name_ko": "카눌 왕국(칼라크물)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "유크놈 첸 2세"
+      ]
+    },
+    {
+      "id": "0cca63c5-1fc8-49e5-bf27-5f36f83ab6f5",
+      "name_en": "Kabyle Resistance to the French Conquest",
+      "name_ko": "프랑스 정복에 맞선 카빌리아 저항",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "랄라 파트마 은수메르"
+      ]
+    },
+    {
+      "id": "291e7253-4dc6-4793-a52f-b2e7f38e233d",
+      "name_en": "Kalmyk Khanate",
+      "name_ko": "칼미크 칸국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "아유카 칸"
+      ]
+    },
+    {
+      "id": "28d112cb-9eba-462f-9835-4b8e672292cd",
+      "name_en": "Kanak resistance",
+      "name_ko": "카나크 저항 세력",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아타이"
+      ]
+    },
+    {
+      "id": "e146e6ef-15f0-4bca-9e5d-b26672c65018",
+      "name_en": "Kangalas Ulus",
+      "name_ko": "한갈라스 울루스",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "티긴 다르한"
+      ]
+    },
+    {
+      "id": "d82533fd-bb46-43ba-8ab6-a1940a264ee1",
+      "name_en": "Karakorum-Altai District",
+      "name_ko": "카라코룸-알타이 자치구",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "그리고리 초로스구르킨"
+      ]
+    },
+    {
+      "id": "5dea7d5a-8c1c-45c9-bad6-06be53bff37a",
+      "name_en": "Karankawa",
+      "name_ko": "카란카와",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "조지프 마리아"
+      ]
+    },
+    {
+      "id": "b42bbc82-a669-4d6a-a88a-3dcae3b3cd8c",
+      "name_en": "Karen National Union (Kawthoolei)",
+      "name_ko": "카렌민족연합(코토레이)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "소 바 우 지"
+      ]
+    },
+    {
+      "id": "49951425-53b1-41ff-a0fd-45ee53396338",
+      "name_en": "Kashaya Pomo",
+      "name_ko": "카샤야 포모족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "에시 패리시"
+      ]
+    },
+    {
+      "id": "ebc96806-32e7-404a-846f-9c36081bc68a",
+      "name_en": "Kassite Babylonia",
+      "name_ko": "카시트 바빌로니아",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "부르나부리아시 1세"
+      ]
+    },
+    {
+      "id": "a0a49c85-184d-4b29-b64d-b3b6ad140626",
+      "name_en": "Kawésqar",
+      "name_ko": "카웨스카르",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "테르와 코요"
+      ]
+    },
+    {
+      "id": "baa43c48-c74e-41f4-9ba6-846d79ee5564",
+      "name_en": "Kayapo (Mẽbêngôkre)",
+      "name_ko": "카야포(Mẽbêngôkre)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "라오니 메투크티레"
+      ]
+    },
+    {
+      "id": "7deb7866-0eff-4123-8187-86a4be97a5e7",
+      "name_en": "Kazakh Khanate",
+      "name_ko": "카자흐 칸국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아블라이 칸"
+      ]
+    },
+    {
+      "id": "b2b1c5ff-699c-450d-8905-b66b9158402f",
+      "name_en": "Kazakh Soviet Socialist Republic",
+      "name_ko": "카자흐 소비에트 사회주의 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "누르술탄 나자르바예프"
+      ]
+    },
+    {
+      "id": "d3a7c1ef-e3bd-4a11-9cce-4c3e7bb7c6b0",
+      "name_en": "Khanate of Bukhara",
+      "name_ko": "부하라 칸국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "무함마드 샤이바니 칸"
+      ]
+    },
+    {
+      "id": "5f7aa96d-6a86-4c38-a74c-898deb8d03d8",
+      "name_en": "Khanate of Khiva",
+      "name_ko": "히바 칸국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아불 가지 바하두르 칸"
+      ]
+    },
+    {
+      "id": "fba4bb9c-4b2c-4e29-a38d-93d526289ff7",
+      "name_en": "Khanate of Kokand",
+      "name_ko": "코칸트 칸국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "노디라"
+      ]
+    },
+    {
+      "id": "f67af5a4-a2f5-492d-9220-92fe401bc167",
+      "name_en": "Khanate of Sibir",
+      "name_ko": "시비르 칸국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "쿠춤 칸"
+      ]
+    },
+    {
+      "id": "58503704-4626-4739-9df3-c67b15848b9d",
+      "name_en": "Khori-Tumed",
+      "name_ko": "호리투메드",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "보토후이 타르훈"
+      ]
+    },
+    {
+      "id": "95fc9762-58e2-4045-aba4-d555ca0ebd66",
+      "name_en": "Khoshut Khanate",
+      "name_ko": "코슈트 칸국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "구시 칸"
+      ]
+    },
+    {
+      "id": "e88b8ef5-e902-44b1-bd2a-471065914b84",
+      "name_en": "Khwarazmian Empire",
+      "name_ko": "호라즘 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "잘랄 앗딘 망구베르디"
+      ]
+    },
+    {
+      "id": "4e27e24d-f99f-4c04-bdfa-9f3ce53b6a91",
+      "name_en": "Kilwa Sultanate",
+      "name_ko": "킬와 술탄국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "알리 이븐 알하산",
+        "알하산 이븐 술라이만"
+      ]
+    },
+    {
+      "id": "660d3e55-22d6-46fa-8f93-5c389fb2247c",
+      "name_en": "Kingdom of Afghanistan",
+      "name_ko": "아프가니스탄 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "무함마드 자히르 샤"
+      ]
+    },
+    {
+      "id": "a93a24e6-b73a-4aac-8628-5962140a9db6",
+      "name_en": "Kingdom of Araucania and Patagonia",
+      "name_ko": "아라우카니아·파타고니아 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "오렐리 앙투안 드 투낭"
+      ]
+    },
+    {
+      "id": "8b7ad57e-7d39-4c6d-b8e7-2f56042e8504",
+      "name_en": "Kingdom of Bamum",
+      "name_ko": "바뭄 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이브라힘 은조야"
+      ]
+    },
+    {
+      "id": "8cb306f1-0c0a-4d4e-9f10-6cb463560620",
+      "name_en": "Kingdom of Benin",
+      "name_ko": "베냉 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "에우아레 1세"
+      ]
+    },
+    {
+      "id": "e3ca4f3c-3504-4830-b141-f4cdd0157763",
+      "name_en": "Kingdom of Bhutan",
+      "name_ko": "부탄 왕국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "지그메 도르지 왕축",
+        "지그메 싱게 왕축"
+      ]
+    },
+    {
+      "id": "88688560-e9bf-4a0c-bb9c-1bfe13b63270",
+      "name_en": "Kingdom of Buganda",
+      "name_ko": "부간다 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "무테사 1세"
+      ]
+    },
+    {
+      "id": "c9c9ed4f-17ff-496a-a2b3-d949c631eb22",
+      "name_en": "Kingdom of Bulgaria",
+      "name_ko": "불가리아 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "페르디난트 1세"
+      ]
+    },
+    {
+      "id": "f40b23a0-1714-4375-9b29-4547a36c7f2d",
+      "name_en": "Kingdom of Burgundy (Arles)",
+      "name_ko": "부르군트 왕국(아를 왕국)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "프리드리히 1세 바르바로사"
+      ]
+    },
+    {
+      "id": "205a2743-4f5a-48fe-82ad-7b94ce6069eb",
+      "name_en": "Kingdom of Chimor",
+      "name_ko": "치모르 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "냔센핀코"
+      ]
+    },
+    {
+      "id": "43a5b3df-4e3b-47a4-903e-d6d88d418109",
+      "name_en": "Kingdom of Croatia and Dalmatia",
+      "name_ko": "크로아티아·달마티아 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "페타르 크레시미르 4세"
+      ]
+    },
+    {
+      "id": "2689211c-9a3e-469e-baf5-f53a6ad7251a",
+      "name_en": "Kingdom of Croatia-Slavonia",
+      "name_ko": "크로아티아-슬라보니아 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이반 마주라니치"
+      ]
+    },
+    {
+      "id": "c243f89f-387f-4f0b-88bd-407eea581608",
+      "name_en": "Kingdom of Cyprus",
+      "name_ko": "키프로스 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "피에르 1세"
+      ]
+    },
+    {
+      "id": "2e64d7d1-6ece-4fc1-a332-4e159ab982e5",
+      "name_en": "Kingdom of Dacia",
+      "name_ko": "다키아 왕국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "부레비스타",
+        "데케발루스"
+      ]
+    },
+    {
+      "id": "119a310f-39e4-42e5-bf37-5743816636ca",
+      "name_en": "Kingdom of Dublin",
+      "name_ko": "더블린 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "고드레드 크로반"
+      ]
+    },
+    {
+      "id": "73e2c4b6-c071-4ca0-8309-9a866a60b8c2",
+      "name_en": "Kingdom of Fiji",
+      "name_ko": "피지 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "세루 에페니사 카코바우"
+      ]
+    },
+    {
+      "id": "665c8579-8e59-4787-bd80-1f208045927a",
+      "name_en": "Kingdom of Germany",
+      "name_ko": "독일 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "독일의 루돌프 1세"
+      ]
+    },
+    {
+      "id": "30efce91-95bb-483a-871d-7b4b4c98ab14",
+      "name_en": "Kingdom of Germany (Holy Roman Kingdom)",
+      "name_ko": "독일 왕국(로마왕국)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "바르바라 폰 칠리"
+      ]
+    },
+    {
+      "id": "645bd693-a323-4a2c-a5c0-71d72cc0b4e8",
+      "name_en": "Kingdom of Gwynedd",
+      "name_ko": "귀네드 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "카드왈론 압 카드반"
+      ]
+    },
+    {
+      "id": "0fbb1e5b-4661-4696-9d1f-ec77bbe2d75a",
+      "name_en": "Kingdom of Hejaz and Nejd",
+      "name_ko": "히자즈·나지드 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "압둘아지즈 이븐 사우드"
+      ]
+    },
+    {
+      "id": "2209e45b-be8f-4689-945d-804c643376d6",
+      "name_en": "Kingdom of Himyar",
+      "name_ko": "힘야르 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "두 누와스"
+      ]
+    },
+    {
+      "id": "736a1115-5f59-49d3-95e5-cd16a2634bcd",
+      "name_en": "Kingdom of Hormuz",
+      "name_ko": "호르무즈 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아흐마드 이븐 마지드"
+      ]
+    },
+    {
+      "id": "c3d1b6ad-742e-4abe-8ae4-5baa21a9fc05",
+      "name_en": "Kingdom of Hungary and Croatia",
+      "name_ko": "헝가리·크로아티아 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "바르바라 폰 칠리"
+      ]
+    },
+    {
+      "id": "77dd0282-ccf0-406b-b261-32d1270a72e5",
+      "name_en": "Kingdom of Imerina",
+      "name_ko": "이메리나 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "안드리아남포이니메리나"
+      ]
+    },
+    {
+      "id": "0c0eb202-5ff6-4280-b664-7764731b508b",
+      "name_en": "Kingdom of Jiujiang under Western Chu",
+      "name_ko": "서초의 구강국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "영포"
+      ]
+    },
+    {
+      "id": "b216ffe1-8101-4f70-8da8-d18a6df6940d",
+      "name_en": "Kingdom of Kandy",
+      "name_ko": "캔디 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "비말라다르마수리야 1세"
+      ]
+    },
+    {
+      "id": "b5999a20-dc94-4cae-b686-62ccbc4bae79",
+      "name_en": "Kingdom of Kasanje",
+      "name_ko": "카산제 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "카산제 칼룽가 카 킹구리"
+      ]
+    },
+    {
+      "id": "fdc28a83-997f-420b-8d6b-c78dc44a3e6d",
+      "name_en": "Kingdom of Kashmir",
+      "name_ko": "카슈미르 왕국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "디다"
+      ]
+    },
+    {
+      "id": "70956451-95ae-495a-9297-b8e2a8cfca06",
+      "name_en": "Kingdom of León",
+      "name_ko": "레온 왕국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "페르난도 1세",
+        "알폰소 9세"
+      ]
+    },
+    {
+      "id": "d2686b62-0192-40ef-a95a-b3b652b78b39",
+      "name_en": "Kingdom of Libya",
+      "name_ko": "리비아 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "리비아의 이드리스 1세"
+      ]
+    },
+    {
+      "id": "a91ef245-d5a8-480a-b27f-43bec3ddffbd",
+      "name_en": "Kingdom of Lithuania",
+      "name_ko": "리투아니아 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "민다우가스"
+      ]
+    },
+    {
+      "id": "f05b73c3-3eca-4c32-8a8e-0297a02a85a1",
+      "name_en": "Kingdom of Luba",
+      "name_ko": "루바 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "일룽가 숭구"
+      ]
+    },
+    {
+      "id": "4571d2d1-b475-400f-90d1-195259a69524",
+      "name_en": "Kingdom of Lydia",
+      "name_ko": "리디아 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "크로이소스"
+      ]
+    },
+    {
+      "id": "b1bf3f84-bc3a-44cb-996b-98f006edba10",
+      "name_en": "Kingdom of Madagascar",
+      "name_ko": "마다가스카르 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "라나발로나 1세"
+      ]
+    },
+    {
+      "id": "a7bac349-444e-4c3c-8ae6-61a54ac586b4",
+      "name_en": "Kingdom of Majorca",
+      "name_ko": "마요르카 왕국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "자우메 2세 (마요르카)"
+      ]
+    },
+    {
+      "id": "96a28134-38ab-4213-bd1f-00a808ecd845",
+      "name_en": "Kingdom of Makuria",
+      "name_ko": "마쿠리아 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "메르쿠리오스"
+      ]
+    },
+    {
+      "id": "3a8c6594-cbd7-4994-9f87-b3c5932c9ac9",
+      "name_en": "Kingdom of Mann and the Isles",
+      "name_ko": "맨과 군도 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "고드레드 크로반"
+      ]
+    },
+    {
+      "id": "c05edf28-d8ce-4d77-affa-8d41cecce8ee",
+      "name_en": "Kingdom of Mauretania",
+      "name_ko": "마우레타니아 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "유바 2세"
+      ]
+    },
+    {
+      "id": "4f2dc07e-84ff-4704-bcc6-ac43114615bb",
+      "name_en": "Kingdom of Merina",
+      "name_ko": "메리나 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "라다마 1세"
+      ]
+    },
+    {
+      "id": "c0e95372-3ea6-4b2d-996c-61a15d8e1648",
+      "name_en": "Kingdom of Mewar",
+      "name_ko": "메와르 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "라나 쿰바"
+      ]
+    },
+    {
+      "id": "71838f1f-0098-4ab1-bbc4-8679f1683c1d",
+      "name_en": "Kingdom of Montenegro",
+      "name_ko": "몬테네그로 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "니콜라 1세"
+      ]
+    },
+    {
+      "id": "ba461ca4-dd1b-4f3f-8682-ee67e59024d9",
+      "name_en": "Kingdom of Mrauk U",
+      "name_ko": "므라우우 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "민 라자기"
+      ]
+    },
+    {
+      "id": "d2cfa060-f641-4896-8ee9-33437967aa0b",
+      "name_en": "Kingdom of Munster",
+      "name_ko": "먼스터 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "브리안 보루"
+      ]
+    },
+    {
+      "id": "44f15fe6-5619-4abd-a955-5ea8f5da1222",
+      "name_en": "Kingdom of Mutapa",
+      "name_ko": "무타파 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "냐침바 무토타"
+      ]
+    },
+    {
+      "id": "b8fa1dd2-2710-4453-ab96-6a8db50c6d8b",
+      "name_en": "Kingdom of Mysore",
+      "name_ko": "마이소르 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "티푸 술탄"
+      ]
+    },
+    {
+      "id": "ee27c039-9d6f-4138-86a2-2b051de0b121",
+      "name_en": "Kingdom of Navarre",
+      "name_ko": "나바라 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "앙리 4세"
+      ]
+    },
+    {
+      "id": "7518462f-9769-413f-a245-cc3825b45d17",
+      "name_en": "Kingdom of Nepal",
+      "name_ko": "네팔 왕국",
+      "activities": 3,
+      "person_count": 2,
+      "sample_persons": [
+        "프리트비 나라얀 샤",
+        "트리부반"
+      ]
+    },
+    {
+      "id": "81ff499c-879e-452f-9893-6618ec580825",
+      "name_en": "Kingdom of Numidia",
+      "name_ko": "누미디아 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "마시니사"
+      ]
+    },
+    {
+      "id": "c5c4f6cb-ae44-4256-86e9-4e6f0d7068f4",
+      "name_en": "Kingdom of Pamplona",
+      "name_ko": "팜플로나 왕국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "이니고 아리스타",
+        "산초 3세"
+      ]
+    },
+    {
+      "id": "f070299a-de6b-4094-b3ad-c5dc24a541c3",
+      "name_en": "Kingdom of Pergamon",
+      "name_ko": "페르가몬 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아탈로스 1세"
+      ]
+    },
+    {
+      "id": "ac5b6164-e505-4b2f-96e6-cab9f6f3652e",
+      "name_en": "Kingdom of Qocho",
+      "name_ko": "고창회골",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "슝귈뤼그 카간"
+      ]
+    },
+    {
+      "id": "63c0aa8d-bc0b-42c5-9118-612b6c650646",
+      "name_en": "Kingdom of Romania",
+      "name_ko": "루마니아 왕국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "카롤 1세",
+        "이온 안토네스쿠"
+      ]
+    },
+    {
+      "id": "78744e34-820e-44ab-91b2-c289d41a3802",
+      "name_en": "Kingdom of Ruthenia",
+      "name_ko": "루테니아 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "다닐로 로마노비치"
+      ]
+    },
+    {
+      "id": "aab87366-4825-40ed-b0f9-78e293746c8d",
+      "name_en": "Kingdom of Rwanda",
+      "name_ko": "르완다 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "키겔리 4세 르와부기리"
+      ]
+    },
+    {
+      "id": "24939b1b-e113-438f-987a-93c774ac44c5",
+      "name_en": "Kingdom of Saba",
+      "name_ko": "사바 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "카리브일 와타르"
+      ]
+    },
+    {
+      "id": "c341f63e-9edc-44e4-8ca2-f1b35ed19aff",
+      "name_en": "Kingdom of Sardinia",
+      "name_ko": "사르데냐 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "비토리오 에마누엘레 2세"
+      ]
+    },
+    {
+      "id": "be139c7d-f43c-4bf6-8542-9a372d64c06d",
+      "name_en": "Kingdom of Saxony",
+      "name_ko": "작센 왕국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "프리드리히 아우구스트 1세",
+        "프리드리히 아우구스트 3세"
+      ]
+    },
+    {
+      "id": "63c4d67f-2190-4b71-bde6-69d1cda80a3f",
+      "name_en": "Kingdom of Serbia",
+      "name_ko": "세르비아 왕국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "스테판 우로시 4세 두샨",
+        "페타르 1세"
+      ]
+    },
+    {
+      "id": "613edab4-4903-4f1e-966c-9584f7cd259b",
+      "name_en": "Kingdom of Serbs, Croats and Slovenes",
+      "name_ko": "세르비아인·크로아티아인·슬로베니아인 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "페타르 1세"
+      ]
+    },
+    {
+      "id": "b8c3ef01-2492-46b3-8a5c-17a0a363296d",
+      "name_en": "Kingdom of Shewa",
+      "name_ko": "셰와 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "메넬리크 2세"
+      ]
+    },
+    {
+      "id": "2d90e042-a871-4bac-b429-b2c0d654fad5",
+      "name_en": "Kingdom of Sine",
+      "name_ko": "시네 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아마 주프 길란 파예 주프"
+      ]
+    },
+    {
+      "id": "f2f3a0b5-61c8-4cd8-9ce2-90a097f6defc",
+      "name_en": "Kingdom of Thailand",
+      "name_ko": "태국 왕국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "쁠랙 피분송크람"
+      ]
+    },
+    {
+      "id": "ebcb6b8b-f49e-4eeb-96c3-4d340f78d5a6",
+      "name_en": "Kingdom of the Burgundians",
+      "name_ko": "부르군트 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "군다하르"
+      ]
+    },
+    {
+      "id": "b157d3a1-42fa-4360-a14e-5956de4f9be5",
+      "name_en": "Kingdom of the Isles",
+      "name_ko": "군도 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "소머레드"
+      ]
+    },
+    {
+      "id": "ec9d77b4-e18e-4495-8232-c51e74b0d683",
+      "name_en": "Kingdom of the Massylii",
+      "name_ko": "마실리 왕국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "마시니사"
+      ]
+    },
+    {
+      "id": "a01c7ba1-ff5e-4af7-8876-bf75e955d901",
+      "name_en": "Kingdom of the Moors and Romans (Altava)",
+      "name_ko": "무어인과 로마인의 왕국(알타바)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "마수나"
+      ]
+    },
+    {
+      "id": "7f02c1d7-e015-418d-9cea-5e860cf3d214",
+      "name_en": "Kingdom of the Suebi",
+      "name_ko": "수에비 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "레킬라"
+      ]
+    },
+    {
+      "id": "63ccdb7d-c86a-4f12-b022-5dc46147694d",
+      "name_en": "Kingdom of the Two Sicilies",
+      "name_ko": "양시칠리아 왕국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "페르디난도 1세",
+        "페르디난도 2세"
+      ]
+    },
+    {
+      "id": "1cdf4741-293e-4b50-91b7-508161fd47b2",
+      "name_en": "Kingdom of Tonga",
+      "name_ko": "통가 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "살로테 투포우 3세"
+      ]
+    },
+    {
+      "id": "f5c5c3cd-d71b-454a-9a54-98b1b62c5db4",
+      "name_en": "Kingdom of Tungning",
+      "name_ko": "동녕 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "정성공"
+      ]
+    },
+    {
+      "id": "a31ddba2-592f-4ce7-a171-f5eaa8bbabe7",
+      "name_en": "Kingdom of Westphalia",
+      "name_ko": "베스트팔렌 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "제롬 보나파르트"
+      ]
+    },
+    {
+      "id": "a098ffac-513d-4847-9a59-8d45c6b31cc3",
+      "name_en": "Kingdom of Yugoslavia",
+      "name_ko": "유고슬라비아 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "페타르 2세"
+      ]
+    },
+    {
+      "id": "68fbf9e2-7f82-4200-a4e2-77ee845d5adc",
+      "name_en": "Kīngitanga",
+      "name_ko": "마오리 왕 운동",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "포타타우 테 웨로웨로",
+        "테 아타이랑기카후"
+      ]
+    },
+    {
+      "id": "5188352c-ac3e-4d61-bb78-f5500147ab77",
+      "name_en": "Kiowa",
+      "name_ko": "카이오와",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "도하산"
+      ]
+    },
+    {
+      "id": "c4f175af-8e99-4b7c-a4fd-294f570f7f65",
+      "name_en": "Kokang",
+      "name_ko": "코캉",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "올리브 양"
+      ]
+    },
+    {
+      "id": "c63ab742-c86c-4fe1-842c-330546340244",
+      "name_en": "Kong Empire",
+      "name_ko": "콩 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "세쿠 와타라"
+      ]
+    },
+    {
+      "id": "1742fd4e-6e63-4210-9081-fcb166b42d6f",
+      "name_en": "Korea under Japanese Rule",
+      "name_ko": "일제강점기 조선",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "유관순"
+      ]
+    },
+    {
+      "id": "acec01e1-8459-4496-b334-1caa9cea5456",
+      "name_en": "Kuban People's Republic",
+      "name_ko": "쿠반 인민공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "바실 이바니스"
+      ]
+    },
+    {
+      "id": "37aa6b8a-9167-46af-897e-06ee531c4162",
+      "name_en": "Kuikuro",
+      "name_ko": "쿠이쿠루",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이히쿠타하"
+      ]
+    },
+    {
+      "id": "c641a768-fd7f-4adc-ae56-64338921251c",
+      "name_en": "Kunghit Haida",
+      "name_ko": "쿵히트 하이다",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "코야"
+      ]
+    },
+    {
+      "id": "2f1c9873-ad68-4e35-b871-99840fcbecbc",
+      "name_en": "Kuwait",
+      "name_ko": "쿠웨이트",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "자베르 알-아흐마드 알-자베르 알-사바"
+      ]
+    },
+    {
+      "id": "03c7195a-4853-4b78-adc3-f3cb3c74d109",
+      "name_en": "Kuyuidika Northern Paiute",
+      "name_ko": "쿠유디카 북부 파이우트 공동체",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "트러키 추장"
+      ]
+    },
+    {
+      "id": "e8236d5a-5b93-4eea-b448-3549affec265",
+      "name_en": "Kyrgyzstan",
+      "name_ko": "키르기스스탄",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "로자 오툰바예바"
+      ]
+    },
+    {
+      "id": "e4df03bd-306a-43f5-b12f-f45c7c660948",
+      "name_en": "Lagash",
+      "name_ko": "라가시",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "에안나툼"
+      ]
+    },
+    {
+      "id": "868fe6f5-59dc-4f95-b8ea-7eccf5f32bff",
+      "name_en": "Lakisamne Yokuts",
+      "name_ko": "라키삼니 요쿠츠",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "에스타니슬라오"
+      ]
+    },
+    {
+      "id": "c7642cea-2a6d-43dc-b03f-5740d6cc53d6",
+      "name_en": "Lan Na",
+      "name_ko": "란나 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "망라이"
+      ]
+    },
+    {
+      "id": "b0bee257-faaf-4415-a08c-7b3a85937b3b",
+      "name_en": "Lan Xang",
+      "name_ko": "란쌍 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "파응움"
+      ]
+    },
+    {
+      "id": "8adee0a1-2edf-4bcc-a7a3-8b246a6636bb",
+      "name_en": "Lancastrians",
+      "name_ko": "랭커스터파",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "앙주의 마거릿"
+      ]
+    },
+    {
+      "id": "34896c16-a481-44b9-9b78-ac7260ed069d",
+      "name_en": "Laos",
+      "name_ko": "라오스",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "수파누봉"
+      ]
+    },
+    {
+      "id": "67ea837b-9ff6-4ade-ba49-00e73cf0b4b3",
+      "name_en": "Las Californias",
+      "name_ko": "라스칼리포르니아스",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "후니페로 세라"
+      ]
+    },
+    {
+      "id": "3959991c-9512-41ab-8e0e-c718eee53633",
+      "name_en": "Latvia",
+      "name_ko": "라트비아",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "야니스 착스테"
+      ]
+    },
+    {
+      "id": "886b9c7e-035a-490f-889d-f980b9346b4d",
+      "name_en": "Lebanon",
+      "name_ko": "레바논",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "마지드 아르슬란",
+        "푸아드 체하브"
+      ]
+    },
+    {
+      "id": "684b7679-48dd-42eb-bbd9-060e9be66a7d",
+      "name_en": "Lenca resistance",
+      "name_ko": "렌카 저항 연합",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "렘피라"
+      ]
+    },
+    {
+      "id": "a1e5baa6-51e0-433e-8087-d800dd1cb3a2",
+      "name_en": "Liao dynasty",
+      "name_ko": "요",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "요 성종"
+      ]
+    },
+    {
+      "id": "5037f747-2d30-4479-b321-6f01b5cba162",
+      "name_en": "Liberia",
+      "name_ko": "라이베리아",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "윌리엄 터브먼"
+      ]
+    },
+    {
+      "id": "c9e7a264-6a3b-4f5a-8029-3ef3347c3620",
+      "name_en": "Libyan Anti-Colonial Resistance",
+      "name_ko": "리비아 반식민 저항운동",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "오마르 무크타르"
+      ]
+    },
+    {
+      "id": "7e1a3ced-d4fc-4eb0-b12f-2752e5255014",
+      "name_en": "Libyan Arab Jamahiriya",
+      "name_ko": "리비아 아랍 자마히리야",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "무아마르 카다피"
+      ]
+    },
+    {
+      "id": "333274e4-e616-491c-8446-c4261f8b007d",
+      "name_en": "Libyan Arab Republic",
+      "name_ko": "리비아 아랍 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "무아마르 카다피"
+      ]
+    },
+    {
+      "id": "c53bb14c-43af-4192-9be3-04f2d4330f25",
+      "name_en": "Lickanantay",
+      "name_ko": "리칸안타이족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "토마스 파니리"
+      ]
+    },
+    {
+      "id": "bf3f2bd2-e2b7-498a-b0d9-114ec3d88b92",
+      "name_en": "Ligor",
+      "name_ko": "리고르",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "야마다 나가마사"
+      ]
+    },
+    {
+      "id": "169ef1c2-86eb-4591-a777-7c7b5437f183",
+      "name_en": "Lombard League",
+      "name_ko": "롬바르디아 동맹",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "귀도 다 란드리아노"
+      ]
+    },
+    {
+      "id": "858edb30-2100-4bc1-a366-ca9df138a9be",
+      "name_en": "Lordship of Milan",
+      "name_ko": "밀라노 영주국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "잔 갈레아초 비스콘티"
+      ]
+    },
+    {
+      "id": "51c7c947-9728-4209-b107-f9481d6b7ed3",
+      "name_en": "Lordship of Urbino",
+      "name_ko": "우르비노 영주국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "페데리코 다 몬테펠트로"
+      ]
+    },
+    {
+      "id": "88d136af-3e92-45e9-8899-609f8adfd59f",
+      "name_en": "Lordship of Valencia",
+      "name_ko": "발렌시아 영주령",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "엘 시드"
+      ]
+    },
+    {
+      "id": "d4c6c00a-5309-48b9-aaaf-80d43ca3700a",
+      "name_en": "Lotharingia",
+      "name_ko": "로타링기아",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "로타르 2세"
+      ]
+    },
+    {
+      "id": "f4dbe670-ebf9-4892-89e0-9628bca74654",
+      "name_en": "Loulan Kingdom",
+      "name_ko": "누란",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "안귀"
+      ]
+    },
+    {
+      "id": "8f3e41bc-8be1-43e1-a12e-4a1fec536199",
+      "name_en": "Lower Chinook",
+      "name_ko": "하류 치누크족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "콤콤리"
+      ]
+    },
+    {
+      "id": "fbc8181e-c389-4131-96b4-257bab0ccf4a",
+      "name_en": "Lunda Empire",
+      "name_ko": "룬다 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "야부 아 나웨지"
+      ]
+    },
+    {
+      "id": "68cdb56e-107f-45c2-8b84-55420aa0a3ad",
+      "name_en": "Lusitani",
+      "name_ko": "루시타니족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "비리아투스"
+      ]
+    },
+    {
+      "id": "96709ba6-218a-4292-b1fa-bebcc6c18c2a",
+      "name_en": "Maasai",
+      "name_ko": "마사이족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "음바티안"
+      ]
+    },
+    {
+      "id": "2f6e890f-1704-5c76-aa94-f18d7f905e06",
+      "name_en": "Macedonian Empire",
+      "name_ko": "마케도니아 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "알렉산드로스 대왕"
+      ]
+    },
+    {
+      "id": "ae657a68-ef30-4fe5-bc76-3da9d12128d2",
+      "name_en": "Magadha",
+      "name_ko": "마가다",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "마하비라"
+      ]
+    },
+    {
+      "id": "fd766155-572c-4169-868b-3150f493bd49",
+      "name_en": "Mahdist Movement",
+      "name_ko": "마흐디 운동",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "무함마드 아흐마드"
+      ]
+    },
+    {
+      "id": "d8c1e879-5135-424c-b169-fc48a7084b3e",
+      "name_en": "Mahdist State",
+      "name_ko": "마흐디국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "무함마드 아흐마드"
+      ]
+    },
+    {
+      "id": "e3da3007-529a-40ec-9934-7b70dfd11cb7",
+      "name_en": "Mamluk Sultanate",
+      "name_ko": "맘루크 술탄국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "샤자르 알두르",
+        "바이바르스 1세"
+      ]
+    },
+    {
+      "id": "828c4b7e-bc35-40a4-bf50-e6e6291a070f",
+      "name_en": "Mandan",
+      "name_ko": "만단",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "마토토페"
+      ]
+    },
+    {
+      "id": "8382a731-65c6-4479-8fb1-553141313e2b",
+      "name_en": "Mangazeya",
+      "name_ko": "망가제야",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "다비드 제레브초프"
+      ]
+    },
+    {
+      "id": "19704064-2ea9-4eef-b1d7-e56517edc45c",
+      "name_en": "Manghit Yurt (early Nogai Horde)",
+      "name_ko": "망기트 유르트(초기 노가이 오르다)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "에디구"
+      ]
+    },
+    {
+      "id": "bae4927f-8df4-41f9-8677-e2e0d6b027bf",
+      "name_en": "Manuʻa",
+      "name_ko": "마누아",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "투이 마누아 마텔리타"
+      ]
+    },
+    {
+      "id": "df263cd1-e567-4764-8df5-e2bc6a5e1d39",
+      "name_en": "Maravi Empire",
+      "name_ko": "마라비 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "칼롱가 무주라"
+      ]
+    },
+    {
+      "id": "8165603d-deb6-4455-97b4-e19b87af8ab4",
+      "name_en": "Margian Revolt against Darius I",
+      "name_ko": "다리우스 1세에 대한 마르기아 반란",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "프라다"
+      ]
+    },
+    {
+      "id": "1a97dec2-dc1c-4e44-8546-e19bc6117ad5",
+      "name_en": "Marquisate of Mantua",
+      "name_ko": "만토바 후국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이사벨라 데스테"
+      ]
+    },
+    {
+      "id": "3c7942cb-06d1-4b6d-bf21-394133e4035a",
+      "name_en": "Mataram Sultanate",
+      "name_ko": "마타람 술탄국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "술탄 아궁"
+      ]
+    },
+    {
+      "id": "298871f1-a3c5-4b3c-b3ab-3a2177faa680",
+      "name_en": "Maturuca Macuxi community",
+      "name_ko": "마투루카 마쿠시 공동체",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "베르날지나 조제 페드루"
+      ]
+    },
+    {
+      "id": "5b393728-e9da-4f60-9550-3d386e12dab5",
+      "name_en": "Mausjaur Sámi community",
+      "name_ko": "마우스야우르 사미 공동체",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "리쿠오 마야"
+      ]
+    },
+    {
+      "id": "92621dae-f2b1-4e4d-9fa3-3db959894e7a",
+      "name_en": "Medang Kingdom",
+      "name_ko": "메당 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "라카이 피카탄"
+      ]
+    },
+    {
+      "id": "c55c27af-c5b5-45d2-b786-e5bd90ec230d",
+      "name_en": "Media",
+      "name_ko": "메디아",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "키악사레스"
+      ]
+    },
+    {
+      "id": "2db1d7db-012d-4d20-b273-6e79301da27a",
+      "name_en": "Megara",
+      "name_ko": "메가라",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "테아게네스"
+      ]
+    },
+    {
+      "id": "a053e4e2-ede9-4d60-9ff7-c2affcffdd85",
+      "name_en": "Métis Provisional Government of Saskatchewan",
+      "name_ko": "서스캐처원 메티스 임시정부",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "루이 리엘"
+      ]
+    },
+    {
+      "id": "d220add8-7290-4ca9-8bf6-907919f59b4f",
+      "name_en": "Mexico-Tenochtitlan (Aztec Triple Alliance)",
+      "name_ko": "멕시코-테노치티틀란(아즈텍 삼국동맹)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "틀라카엘렐"
+      ]
+    },
+    {
+      "id": "3b364410-3f80-4d8e-9c1e-14f7b30ba7da",
+      "name_en": "Miami",
+      "name_ko": "마이애미",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "리틀 터틀"
+      ]
+    },
+    {
+      "id": "4c976fac-e937-4595-9c7e-0c076c2fb138",
+      "name_en": "Ming-occupied Đại Việt",
+      "name_ko": "명 점령기 대월",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "레러이"
+      ]
+    },
+    {
+      "id": "fd6aad9a-23ab-4bd6-83eb-5d7c312ebd7d",
+      "name_en": "Mississippi Ojibwe",
+      "name_ko": "미시시피 오지브웨족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "바고네기지그(작은 홀 인 더 데이)"
+      ]
+    },
+    {
+      "id": "2fc0442f-1d70-4e7e-9b31-6028ed4bd6cd",
+      "name_en": "Miyoshi regime",
+      "name_ko": "미요시 정권",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "미요시 나가요시"
+      ]
+    },
+    {
+      "id": "486460ce-17c8-44ff-bd8b-e8fef9fe3103",
+      "name_en": "Modoc people",
+      "name_ko": "모독족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "킨트푸아시"
+      ]
+    },
+    {
+      "id": "bf8dea9e-a39d-4251-9ccb-25259ecb3acb",
+      "name_en": "Mogami clan",
+      "name_ko": "모가미 가문",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "모가미 요시아키"
+      ]
+    },
+    {
+      "id": "512ca88c-21eb-492b-99f9-75661d9f032a",
+      "name_en": "Moghulistan",
+      "name_ko": "모굴리스탄",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "투글루크 티무르"
+      ]
+    },
+    {
+      "id": "9a33b030-1db9-4d32-bdda-4f4cdeb7ce06",
+      "name_en": "Mohave people",
+      "name_ko": "모하비족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이라타바"
+      ]
+    },
+    {
+      "id": "acf753ff-30db-4466-8452-02d9e7bca292",
+      "name_en": "Mohawk",
+      "name_ko": "모호크족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "조지프 브랜트"
+      ]
+    },
+    {
+      "id": "e9cafb34-2776-4feb-beb1-67d8bcf82f7b",
+      "name_en": "Mohnyin",
+      "name_ko": "모힌",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "사울론"
+      ]
+    },
+    {
+      "id": "b42a54aa-60c3-4559-9364-5f007550d12b",
+      "name_en": "Monaco",
+      "name_ko": "모나코",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "알베르 1세(모나코)"
+      ]
+    },
+    {
+      "id": "63b55f5f-41e2-4209-b5ac-e536dfe9449b",
+      "name_en": "Monarchy of the North",
+      "name_ko": "북부 군주국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "엔리케 드 파이바 쿠세이루"
+      ]
+    },
+    {
+      "id": "0e4e5693-30eb-457d-a20a-8ffa80d5f3d1",
+      "name_en": "Mongol Anti-Temujin Confederation",
+      "name_ko": "반테무진 몽골 연합",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "자무카"
+      ]
+    },
+    {
+      "id": "d54c540c-f3fb-5d05-9dc0-26af4ee9815a",
+      "name_en": "Mongol Empire",
+      "name_ko": "몽골 제국",
+      "activities": 5,
+      "person_count": 5,
+      "sample_persons": [
+        "보르테",
+        "칭기즈 칸",
+        "우구데이 칸",
+        "몽케 칸"
+      ]
+    },
+    {
+      "id": "488eb50f-a337-424c-84df-267cd6466274",
+      "name_en": "Mōri Motonari territorial authority",
+      "name_ko": "모리 모토나리 세력권",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "모리 모토나리"
+      ]
+    },
+    {
+      "id": "9aa5f2e7-7165-460b-bed3-363b3e59fb75",
+      "name_en": "Mowachaht (Yuquot)",
+      "name_ko": "모와차트(유쿼트)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "무퀸나(1795년 사망)"
+      ]
+    },
+    {
+      "id": "4aeceb7e-5001-4f91-84ab-2e56e8d6a916",
+      "name_en": "Mozambique",
+      "name_ko": "모잠비크",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "조아킹 시사누"
+      ]
+    },
+    {
+      "id": "f94b90a2-0816-45c0-b6be-81d5c8e38751",
+      "name_en": "Musulamii",
+      "name_ko": "무술라미족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "타크파리나스"
+      ]
+    },
+    {
+      "id": "7b81d7f9-4200-4deb-ac5f-ebfc7f627c7c",
+      "name_en": "Nabataean Kingdom",
+      "name_ko": "나바테아 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아레타스 3세"
+      ]
+    },
+    {
+      "id": "7437f36b-6fe8-4b3a-a1e6-4e62fb407d1e",
+      "name_en": "Nakwaxda'xw Kwakwaka'wakw",
+      "name_ko": "나콱다콰크와콰카왁",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "윌리 시위드"
+      ]
+    },
+    {
+      "id": "98cf8332-b35d-453b-9264-02d05332afbe",
+      "name_en": "Nama-Herero resistance coalition",
+      "name_ko": "나마·헤레로 저항 연합",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "야코프 모렝가"
+      ]
+    },
+    {
+      "id": "ed526f12-378c-4327-a7d7-e28a004aa24c",
+      "name_en": "Nanbu clan",
+      "name_ko": "난부씨",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "난부 하루마사"
+      ]
+    },
+    {
+      "id": "5771f3d5-269e-4b06-adaa-64b096c835ba",
+      "name_en": "Nanzhao",
+      "name_ko": "남조",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "권풍우"
+      ]
+    },
+    {
+      "id": "72ae9197-d8cd-4360-b21a-6a07f54bbfe8",
+      "name_en": "Nassau pirate community",
+      "name_ko": "나소 해적 공동체",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "벤저민 호니골드"
+      ]
+    },
+    {
+      "id": "8458c4a0-1a73-4919-ad7b-a325741f993d",
+      "name_en": "Navajo",
+      "name_ko": "나바호",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "마누엘리토",
+        "바르본시토"
+      ]
+    },
+    {
+      "id": "73d89d76-b756-4e73-9daf-2b6775f49ff4",
+      "name_en": "Ndebele Kingdom",
+      "name_ko": "은데벨레 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "로벵굴라"
+      ]
+    },
+    {
+      "id": "0d7a50f2-e6ea-4a02-aedc-67c9b1bd9bb3",
+      "name_en": "Nenets-Hanty Resistance",
+      "name_ko": "네네츠·한티 저항운동",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "바블료 네냥"
+      ]
+    },
+    {
+      "id": "42cd2790-11ad-451e-999d-6e3c61bc2348",
+      "name_en": "Neutral Confederacy (Chonnonton)",
+      "name_ko": "중립 연맹(촌논톤)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "추하리센"
+      ]
+    },
+    {
+      "id": "edb0fd82-bdfb-43cc-9cc1-1f2b0988a65e",
+      "name_en": "New France",
+      "name_ko": "누벨프랑스",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "사뮈엘 드 샹플랭"
+      ]
+    },
+    {
+      "id": "06a5269b-a50e-43e6-b7b9-cbc6326b543e",
+      "name_en": "New Netherland",
+      "name_ko": "뉴네덜란드",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "페터르 스튀베산트"
+      ]
+    },
+    {
+      "id": "93a4ab04-d73d-42c9-b493-0168a1b14a21",
+      "name_en": "Ngāi Tahu",
+      "name_ko": "응아이 타후",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "호네 투하와이키"
+      ]
+    },
+    {
+      "id": "79131306-48b1-4a71-8e45-a7e26a733cb7",
+      "name_en": "Ngāti Toa",
+      "name_ko": "응아티 토아",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "테 라우파라하"
+      ]
+    },
+    {
+      "id": "727787e4-637c-4751-84c0-6463a8c93716",
+      "name_en": "Nicaragua",
+      "name_ko": "니카라과",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아우구스토 세사르 산디노"
+      ]
+    },
+    {
+      "id": "c1e67ca4-6877-426a-95bd-d7f4114f4b4a",
+      "name_en": "Nipaguay Kumeyaay",
+      "name_ko": "니파과이 쿠메야이",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "치슬리"
+      ]
+    },
+    {
+      "id": "5bc5ea7d-35ea-42a2-bb9c-1f529d2bbdd3",
+      "name_en": "Nizari Ismaili state",
+      "name_ko": "니자리 이스마일파 국가",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "하산 이 사바흐"
+      ]
+    },
+    {
+      "id": "c098caf3-0103-4a98-945c-c4bdd5c57683",
+      "name_en": "Northern Alliance",
+      "name_ko": "북부동맹",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아흐마드 샤 마수드"
+      ]
+    },
+    {
+      "id": "f0b47b08-f534-483b-b601-c614e2ee7431",
+      "name_en": "Northern Arapaho",
+      "name_ko": "북부 아라파호",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "프리티 노즈"
+      ]
+    },
+    {
+      "id": "5a8ae363-01dd-4e14-b0cc-7e50a5acc3b7",
+      "name_en": "Northern Cheyenne",
+      "name_ko": "북부 샤이엔",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "로만 노즈(워키니)",
+        "버펄로 카프 로드 우먼"
+      ]
+    },
+    {
+      "id": "181bb7db-3af8-436d-af8d-97adfa980c66",
+      "name_en": "Northern War Ngāpuhi resistance",
+      "name_ko": "북부전쟁 응아푸히 저항 세력",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "호네 헤케"
+      ]
+    },
+    {
+      "id": "2b9eb85d-3f92-47cd-8f3d-59c9058c03b8",
+      "name_en": "Northumbria",
+      "name_ko": "노섬브리아",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "오스위우"
+      ]
+    },
+    {
+      "id": "b21755f5-d5da-42e3-b0f7-c827d567ab21",
+      "name_en": "Northwest Front",
+      "name_ko": "노스웨스트 프런트",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "해럴드 코빙턴"
+      ]
+    },
+    {
+      "id": "0e5b4520-429a-4c60-b351-131ddd6d67d6",
+      "name_en": "Obotrite Confederacy",
+      "name_ko": "오보트리트 연맹",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "니클로트"
+      ]
+    },
+    {
+      "id": "1f8f585f-3387-4d23-b4c0-5be3b01701d0",
+      "name_en": "Ocotelulco",
+      "name_ko": "오코텔롤코",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "막시스카친"
+      ]
+    },
+    {
+      "id": "9458cfaf-0509-4219-bb9e-e058ede93720",
+      "name_en": "Odawa",
+      "name_ko": "오다와족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "폰티액"
+      ]
+    },
+    {
+      "id": "419420b9-db02-46a2-b72e-344ee1df7e72",
+      "name_en": "Odrysian Kingdom",
+      "name_ko": "오드뤼사이 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "시탈케스"
+      ]
+    },
+    {
+      "id": "07a42911-7d36-462d-ab84-10022f20d41f",
+      "name_en": "Oglala Lakota",
+      "name_ko": "오글랄라 라코타",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "레드 클라우드"
+      ]
+    },
+    {
+      "id": "dba0de0b-43ad-4c41-aa1a-189e4c1a903e",
+      "name_en": "Ohio Valley Mingo communities",
+      "name_ko": "오하이오 계곡 밍고 공동체",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "로건"
+      ]
+    },
+    {
+      "id": "c387c66f-a460-48f0-a808-ee5b8d13b4e7",
+      "name_en": "Okla Hannali",
+      "name_ko": "옥라 한날리",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "푸시마타하"
+      ]
+    },
+    {
+      "id": "4d4eee6d-389b-4ab6-8bca-fda9314ff796",
+      "name_en": "Old Great Bulgaria",
+      "name_ko": "고대 대불가리아",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "쿠브라트"
+      ]
+    },
+    {
+      "id": "0ae95b55-b343-4f4d-9b0f-87fe9c41429a",
+      "name_en": "Omagua (Cambeba)",
+      "name_ko": "오마과(캄베바)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "파요레바"
+      ]
+    },
+    {
+      "id": "b53e20f3-8e52-480e-8910-1c4f1d8d7f29",
+      "name_en": "Omaha",
+      "name_ko": "오마하",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "블랙버드 추장"
+      ]
+    },
+    {
+      "id": "68c83ef6-0023-5af9-a6e8-26ccf5b8e116",
+      "name_en": "Omani Empire",
+      "name_ko": "오만 제국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "사이프 빈 술탄",
+        "사이드 빈 술탄"
+      ]
+    },
+    {
+      "id": "f5f72eb0-2b1e-4c6b-bdd3-57565b14163a",
+      "name_en": "Oneida",
+      "name_ko": "오네이다",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "스케난도아"
+      ]
+    },
+    {
+      "id": "e3c0d085-7920-4f04-a73c-bbe53c599ddb",
+      "name_en": "Orange Free State",
+      "name_ko": "오렌지 자유국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "요하네스 브란트(얀 브란트)"
+      ]
+    },
+    {
+      "id": "11159cab-7883-445c-9d7e-c71bbff751e2",
+      "name_en": "Orango",
+      "name_ko": "오랑구",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "오킨카 팜파"
+      ]
+    },
+    {
+      "id": "d1a74157-2c32-4a5d-8c67-955bed1dda68",
+      "name_en": "Organization of Ukrainian Nationalists (Bandera faction)",
+      "name_ko": "우크라이나 민족주의자 조직 반데라파",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "스테판 반데라"
+      ]
+    },
+    {
+      "id": "e3b60092-c15d-42e0-9095-5cbe42f4bb7b",
+      "name_en": "Oriental Province",
+      "name_ko": "동방주",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "후안 안토니오 라바예하"
+      ]
+    },
+    {
+      "id": "43e0fcbe-2d74-421a-ace5-dc1c5fef3560",
+      "name_en": "Osage",
+      "name_ko": "오세이지",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "파후스카(화이트 헤어 1세)"
+      ]
+    },
+    {
+      "id": "bcb090c2-7906-4c3e-91cf-99b02646764e",
+      "name_en": "Ostrogothic Confederation",
+      "name_ko": "동고트 정치연합",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "테오도리크 대왕"
+      ]
+    },
+    {
+      "id": "2faaf05f-7144-4195-abc8-55c7db869ffe",
+      "name_en": "Ōtomo Sōrin territorial authority",
+      "name_ko": "오토모 소린 세력권",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "오토모 소린"
+      ]
+    },
+    {
+      "id": "fde4d136-4ff9-4fea-baca-e349154911d5",
+      "name_en": "Otsjanep Asmat",
+      "name_ko": "오츠야넵 아스마트 공동체",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "핀"
+      ]
+    },
+    {
+      "id": "6d1520e2-0aff-5063-b2b7-95eb86daf372",
+      "name_en": "Ottoman Empire",
+      "name_ko": "오스만 제국",
+      "activities": 9,
+      "person_count": 8,
+      "sample_persons": [
+        "오스만 1세",
+        "오르한",
+        "메흐메트 2세",
+        "셀림 1세"
+      ]
+    },
+    {
+      "id": "0e03fa5d-c55c-4b78-a9ad-45e91ec1c228",
+      "name_en": "Oukwanyama Kingdom",
+      "name_ko": "우콰냐마 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "만두메 야 은데무파요"
+      ]
+    },
+    {
+      "id": "45d8bf4c-a22d-404e-bf44-ef14aa72755c",
+      "name_en": "Overhill Cherokee",
+      "name_ko": "오버힐 체로키",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아타쿨라쿨라"
+      ]
+    },
+    {
+      "id": "0ae92b43-72df-4717-badb-1e791da70446",
+      "name_en": "Oyo Empire",
+      "name_ko": "오요 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "오발로쿤"
+      ]
+    },
+    {
+      "id": "6416407c-a273-4b28-953b-63926e395aa0",
+      "name_en": "Pagan Kingdom",
+      "name_ko": "바간 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아나우라타"
+      ]
+    },
+    {
+      "id": "a54b71d7-407b-478c-bf81-4a0c10c5b400",
+      "name_en": "Pala Empire",
+      "name_ko": "팔라 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "다르마팔라"
+      ]
+    },
+    {
+      "id": "88defb71-c038-49c7-b744-6f826f441a54",
+      "name_en": "Palau",
+      "name_ko": "팔라우",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "쿠니오 나카무라"
+      ]
+    },
+    {
+      "id": "0401a7d3-bfad-44aa-aff3-c04a1dcc69e3",
+      "name_en": "Palenque El Limón",
+      "name_ko": "엘리몬 팔렝케",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "엘리몬의 레오노르"
+      ]
+    },
+    {
+      "id": "0a79a283-659b-4206-8597-ea47e3fd290c",
+      "name_en": "Panjshir resistance",
+      "name_ko": "판지시르 저항 세력",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아흐마드 샤 마수드"
+      ]
+    },
+    {
+      "id": "619f2c3d-ef0a-42e8-9287-0216dbf83297",
+      "name_en": "Papara (Tahiti)",
+      "name_ko": "파파라(타히티)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "푸레아"
+      ]
+    },
+    {
+      "id": "140d792f-9166-4ae5-88e1-de0e9efbde8b",
+      "name_en": "Papua New Guinea",
+      "name_ko": "파푸아뉴기니",
+      "activities": 3,
+      "person_count": 1,
+      "sample_persons": [
+        "마이클 소마레"
+      ]
+    },
+    {
+      "id": "98555f36-15aa-4985-8d48-1106c65efd1f",
+      "name_en": "Parthian Empire",
+      "name_ko": "파르티아 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "미트리다테스 2세"
+      ]
+    },
+    {
+      "id": "bd8c9deb-92f0-4a67-acf3-2c773417e63d",
+      "name_en": "Party of Democratic Kampuchea",
+      "name_ko": "민주 캄푸치아당",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "폴 포트"
+      ]
+    },
+    {
+      "id": "d000ea21-6475-473b-ad81-4a0a10a654da",
+      "name_en": "Pashalik of Yanina",
+      "name_ko": "야니나 파샬리크",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "야니나의 알리 파샤"
+      ]
+    },
+    {
+      "id": "d3bef56f-e7dc-4e7d-bb12-3fe068367dfe",
+      "name_en": "Payómkawichum (Luiseño)",
+      "name_ko": "파욤카위춤(루이세뇨)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "파블로 탁"
+      ]
+    },
+    {
+      "id": "2949cb6d-d69a-4216-810f-a938fa7b0a3a",
+      "name_en": "Peasant Republic of Dithmarschen",
+      "name_ko": "디트마르셴 농민공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "불프 이제브란트"
+      ]
+    },
+    {
+      "id": "857597b9-4554-4eff-9b00-2441c7e09a47",
+      "name_en": "Pechenegs",
+      "name_ko": "페체네그족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "쿠리야"
+      ]
+    },
+    {
+      "id": "29a81993-13e5-4bca-bf9b-d7421913dcd2",
+      "name_en": "Pelym Mansi Principality",
+      "name_ko": "펠림 만시 공국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아시카(아지카이)"
+      ]
+    },
+    {
+      "id": "790d1841-dc64-4813-96fc-e0f78afa22b3",
+      "name_en": "Penateka Comanche",
+      "name_ko": "페나테카 코만치",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "버펄로 험프"
+      ]
+    },
+    {
+      "id": "9b44bca9-5696-4a2e-98eb-9f888e805634",
+      "name_en": "People's Democratic Republic of Ethiopia",
+      "name_ko": "에티오피아 인민민주공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "멩기스투 하일레 마리암"
+      ]
+    },
+    {
+      "id": "3afe7694-2276-4a49-9991-d30ad84d3f1e",
+      "name_en": "People's Republic of Angola",
+      "name_ko": "앙골라 인민공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아고스티뉴 네투"
+      ]
+    },
+    {
+      "id": "56465969-a227-4bab-a5e8-938262fb72fb",
+      "name_en": "Peru–Bolivian Confederation",
+      "name_ko": "페루-볼리비아 연합",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "안드레스 데 산타 크루스"
+      ]
+    },
+    {
+      "id": "8cce76aa-c73d-4521-bda0-ba576fbb2403",
+      "name_en": "Philippine Revolutionary Government (Tejeros)",
+      "name_ko": "필리핀 혁명정부(테헤로스)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "에밀리오 아기날도"
+      ]
+    },
+    {
+      "id": "eb26971e-91e7-4736-8448-4644ec516778",
+      "name_en": "Phrygia",
+      "name_ko": "프리기아",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "미다스"
+      ]
+    },
+    {
+      "id": "84e6365e-cd43-42cd-874e-3c517cd8243a",
+      "name_en": "Piebald Horde",
+      "name_ko": "피에발드 호드",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "보냐"
+      ]
+    },
+    {
+      "id": "b30d3fdd-5a9f-484f-8ca2-bb4c3ef8127c",
+      "name_en": "Pimentel Barbosa Xavante community",
+      "name_ko": "피멘텔 바르보자 자반테 공동체",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아포에나"
+      ]
+    },
+    {
+      "id": "cfd14999-006b-4af1-800e-fd61eecec63e",
+      "name_en": "Plymouth Colony",
+      "name_ko": "플리머스 식민지",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "존 카버"
+      ]
+    },
+    {
+      "id": "cbbf9cc8-1045-413c-98fc-ad95e28f9073",
+      "name_en": "Polish Government-in-Exile",
+      "name_ko": "폴란드 망명정부",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "브와디스와프 시코르스키"
+      ]
+    },
+    {
+      "id": "72a0990d-afae-4a80-84ef-cc6eb8f4604d",
+      "name_en": "Ponca",
+      "name_ko": "폰카족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "화이트 이글"
+      ]
+    },
+    {
+      "id": "15dc2169-3792-4290-8112-31b65bc7677e",
+      "name_en": "Portugal",
+      "name_ko": "포르투갈",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "안토니우 드 올리베이라 살라자르"
+      ]
+    },
+    {
+      "id": "a1179341-adfc-47dc-8ea5-75b83b048da2",
+      "name_en": "Potiguara",
+      "name_ko": "포티과라족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "안토니우 필리피 카마랑"
+      ]
+    },
+    {
+      "id": "a865deba-4232-4345-8b11-24ee69bd1571",
+      "name_en": "Prince-Bishopric of Liège",
+      "name_ko": "리에주 주교후국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "에라르 드 라 마르크"
+      ]
+    },
+    {
+      "id": "9e475189-82e1-48f1-b4b9-01fe47ac3343",
+      "name_en": "Prince-Bishopric of Montenegro",
+      "name_ko": "몬테네그로 주교공국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "페타르 2세 페트로비치-네고시"
+      ]
+    },
+    {
+      "id": "9d274c63-5ef9-4873-9d86-f9ee800e33a4",
+      "name_en": "Prince-Bishopric of Sion",
+      "name_ko": "시옹 주교후국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "마테우스 시너"
+      ]
+    },
+    {
+      "id": "e51eaf7b-4dad-4edd-9939-9fefc98198ea",
+      "name_en": "Prince-Bishopric of Würzburg",
+      "name_ko": "뷔르츠부르크 주교후국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "율리우스 에히터 폰 메스펠브룬"
+      ]
+    },
+    {
+      "id": "4a92bbb3-6532-4dab-b515-837ad344ec6c",
+      "name_en": "Principality of Bulgaria",
+      "name_ko": "불가리아 공국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "페르디난트 1세"
+      ]
+    },
+    {
+      "id": "61114748-4013-47c9-9c50-1a814f7e54d2",
+      "name_en": "Principality of Chernigov",
+      "name_ko": "체르니히우 공국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이고리 스뱌토슬라비치"
+      ]
+    },
+    {
+      "id": "03824379-85aa-41f3-a2ef-82502832c26c",
+      "name_en": "Principality of Croatia",
+      "name_ko": "크로아티아 공국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "토미슬라브"
+      ]
+    },
+    {
+      "id": "2c9ebf4b-5ac6-4b1f-a2ba-848c58df80c9",
+      "name_en": "Principality of Elba",
+      "name_ko": "엘바 공국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "나폴레옹 1세"
+      ]
+    },
+    {
+      "id": "d7c3910c-cd34-444c-80a7-6107b7d7a71c",
+      "name_en": "Principality of Friedland",
+      "name_ko": "프리들란트 공국(후국)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "알브레히트 폰 발렌슈타인"
+      ]
+    },
+    {
+      "id": "f93d1a88-2225-43bf-9f7a-8722a7e49883",
+      "name_en": "Principality of Great Perm",
+      "name_ko": "대페름 공국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "미하일 예르몰라예비치"
+      ]
+    },
+    {
+      "id": "09ff1776-171f-435a-a444-4b0463e48137",
+      "name_en": "Principality of Hungary",
+      "name_ko": "헝가리 대공국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이슈트반 1세"
+      ]
+    },
+    {
+      "id": "c509f237-34d1-45ed-8b1a-37fb55176cb2",
+      "name_en": "Principality of Moldavia",
+      "name_ko": "몰다비아 공국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "슈테판 3세",
+        "미하이 비테아줄"
+      ]
+    },
+    {
+      "id": "a7049680-e80e-40a0-9aec-4efeaeb0f301",
+      "name_en": "Principality of Montenegro",
+      "name_ko": "몬테네그로 공국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "니콜라 1세"
+      ]
+    },
+    {
+      "id": "b0f6f245-0722-4bf4-98c6-51a2bd42f42c",
+      "name_en": "Principality of Novgorod-Seversk",
+      "name_ko": "노브고로드세베르스크 공국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이고리 스뱌토슬라비치"
+      ]
+    },
+    {
+      "id": "a1a4d698-ef07-4518-9b9a-c1ab5d5a5d8c",
+      "name_en": "Principality of Polotsk",
+      "name_ko": "폴라츠크 공국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "폴라츠크의 브세슬라프"
+      ]
+    },
+    {
+      "id": "1fa34f00-ab5b-4e46-971b-1fd7cb2aba71",
+      "name_en": "Principality of Salerno",
+      "name_ko": "살레르노 공국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "만소 1세"
+      ]
+    },
+    {
+      "id": "4343814f-c9a1-414c-b20b-fb8b2b1bc123",
+      "name_en": "Principality of Transylvania",
+      "name_ko": "트란실바니아 공국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "미하이 비테아줄"
+      ]
+    },
+    {
+      "id": "9f43ac5f-c96e-448c-81f8-112e2f6e8424",
+      "name_en": "Provisional Government of Ireland",
+      "name_ko": "아일랜드 임시정부",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "마이클 콜린스"
+      ]
+    },
+    {
+      "id": "4962a47d-91e7-469f-96c0-bd739fda4c19",
+      "name_en": "Provisional Government of National Defence",
+      "name_ko": "국방 임시정부",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "엘레프테리오스 베니젤로스"
+      ]
+    },
+    {
+      "id": "755e850a-3e74-43ad-927c-21153ab9a758",
+      "name_en": "Provisional Government of Negros",
+      "name_ko": "네그로스 임시정부",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아니세토 락손"
+      ]
+    },
+    {
+      "id": "990b571e-4d59-4eb3-bbce-06c59d9b70d3",
+      "name_en": "Provisional Government of Oregon",
+      "name_ko": "오리건 임시정부",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "오즈번 러셀"
+      ]
+    },
+    {
+      "id": "b72696d0-23e5-436e-a444-9fa9bc75685f",
+      "name_en": "Provisional Government of the Republic of Korea",
+      "name_ko": "대한민국 임시정부",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "김구"
+      ]
+    },
+    {
+      "id": "cf32afb7-e889-4ced-a3ee-a85554b0da0a",
+      "name_en": "Provisional Military Government of Socialist Ethiopia",
+      "name_ko": "에티오피아 사회주의 임시 군사정부",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "멩기스투 하일레 마리암"
+      ]
+    },
+    {
+      "id": "58b8b6af-7b5f-4228-9c33-cc0899d71d7a",
+      "name_en": "Pskov Republic",
+      "name_ko": "프스코프 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "프스코프의 도브몬트"
+      ]
+    },
+    {
+      "id": "db8b2a0e-869b-469b-bb56-f01fc6287ee1",
+      "name_en": "Pueblo Coalition",
+      "name_ko": "푸에블로 연합",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "포파이"
+      ]
+    },
+    {
+      "id": "93b870e9-1800-4d3e-93a2-940f77dfb268",
+      "name_en": "Qajar Dynasty",
+      "name_ko": "카자르 왕조",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "나세르 앗딘 샤 카자르"
+      ]
+    },
+    {
+      "id": "3e9c225a-a478-4509-8da2-43eb9ce35dfb",
+      "name_en": "Qara Khitai (Western Liao)",
+      "name_ko": "서요(카라 키타이)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "야율대석"
+      ]
+    },
+    {
+      "id": "32780dd8-6fa5-419b-80d6-5b620f9fc483",
+      "name_en": "Qarmatian State of Bahrayn",
+      "name_ko": "바레인 카르마트국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아부 타히르 알잔나비"
+      ]
+    },
+    {
+      "id": "653fadee-cba6-4eae-94c1-8d42d6e0f0e9",
+      "name_en": "Qatar",
+      "name_ko": "카타르",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "하마드 빈 할리파 알사니"
+      ]
+    },
+    {
+      "id": "e8ab76cf-c305-48e9-a88c-cd4c167b6340",
+      "name_en": "Qinghai Ma clique",
+      "name_ko": "칭하이 마가군벌",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "마부팡"
+      ]
+    },
+    {
+      "id": "bd8cf30d-de4c-4c98-b9c1-d9ffe6fa5062",
+      "name_en": "Quilombo dos Palmares",
+      "name_ko": "팔마레스 킬롬부",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "줌비 두스 파우마레스"
+      ]
+    },
+    {
+      "id": "ec211e2a-391b-4d88-a104-c1fc89013251",
+      "name_en": "Quiroste Ohlone",
+      "name_ko": "퀴로스테 올로니",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "차르킨"
+      ]
+    },
+    {
+      "id": "72c5aca6-0ef1-42a7-8b1a-925b3fe8d489",
+      "name_en": "Raj of Sarawak",
+      "name_ko": "사라왁 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "제임스 브룩"
+      ]
+    },
+    {
+      "id": "cc73ada3-d573-4200-911e-0aec4e71e927",
+      "name_en": "Rajahnate of Cebu",
+      "name_ko": "세부 라자국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "후마본"
+      ]
+    },
+    {
+      "id": "f8922bfd-ca59-41fa-a90e-c95b644ba92f",
+      "name_en": "Rashtrakuta Empire",
+      "name_ko": "라슈트라쿠타 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아모가바르샤 1세"
+      ]
+    },
+    {
+      "id": "812853fe-f16b-4e08-a2b5-9624ec8f864c",
+      "name_en": "Red River Provisional Government",
+      "name_ko": "레드리버 임시정부",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "루이 리엘"
+      ]
+    },
+    {
+      "id": "1ae74846-2a8c-4c45-af6c-8b426cb09279",
+      "name_en": "Reform UK",
+      "name_ko": "리폼 UK",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "나이절 패라지"
+      ]
+    },
+    {
+      "id": "138d2ceb-c37a-4fd2-ae7d-5d5be7a99703",
+      "name_en": "Republic of Abkhazia",
+      "name_ko": "압하지야 공화국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "블라디슬라프 아르진바",
+        "세르게이 바갑시"
+      ]
+    },
+    {
+      "id": "02e66261-7798-4144-b298-9bc41ee2215b",
+      "name_en": "Republic of Austria",
+      "name_ko": "오스트리아 공화국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "엥겔베르트 돌푸스",
+        "쿠르트 발트하임"
+      ]
+    },
+    {
+      "id": "d53f7c51-90b2-4e91-8156-025390407999",
+      "name_en": "Republic of Biafra",
+      "name_ko": "비아프라 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "추쿠에메카 오두메구 오주쿠"
+      ]
+    },
+    {
+      "id": "10563573-5f40-450e-a1ee-7694298e9d85",
+      "name_en": "Republic of Biak-na-Bato",
+      "name_ko": "비악나바토 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "에밀리오 아기날도"
+      ]
+    },
+    {
+      "id": "f5916e91-73fe-49e2-abfa-339988c21651",
+      "name_en": "Republic of Chad",
+      "name_ko": "차드 공화국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "이드리스 데비"
+      ]
+    },
+    {
+      "id": "a059470d-3985-4a0c-a3b0-e1de2f47e2f6",
+      "name_en": "Republic of Ecuador",
+      "name_ko": "에콰도르 공화국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "후안 호세 플로레스"
+      ]
+    },
+    {
+      "id": "6343da45-3a4d-4514-a6e1-b3d222128b86",
+      "name_en": "Republic of Estonia",
+      "name_ko": "에스토니아 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "레나르트 메리"
+      ]
+    },
+    {
+      "id": "f1959701-02e2-45d5-a527-8ea35c64cbcc",
+      "name_en": "Republic of Formosa",
+      "name_ko": "대만민주국(포르모사 공화국)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "류융푸"
+      ]
+    },
+    {
+      "id": "4895425d-17de-4353-a36f-53e9d7f34a9a",
+      "name_en": "Republic of Genoa",
+      "name_ko": "제노바 공화국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "시모네 보카네그라"
+      ]
+    },
+    {
+      "id": "50c107ff-1816-45df-9006-fa0cc07735f0",
+      "name_en": "Republic of Honduras",
+      "name_ko": "온두라스 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "라몬 비예다 모랄레스"
+      ]
+    },
+    {
+      "id": "03eae136-add2-4a17-b9b1-6f04e64a18a2",
+      "name_en": "Republic of Kalmykia",
+      "name_ko": "칼미키야 공화국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "키르산 일륨지노프"
+      ]
+    },
+    {
+      "id": "7ab7da46-b310-4e76-a327-ed12c131041a",
+      "name_en": "Republic of Kazakhstan",
+      "name_ko": "카자흐스탄 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "누르술탄 나자르바예프"
+      ]
+    },
+    {
+      "id": "b8a160cb-45e1-4d3e-a04c-118db0eba405",
+      "name_en": "Republic of Kosova",
+      "name_ko": "코소바 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이브라힘 루고바"
+      ]
+    },
+    {
+      "id": "2ca2fd4c-1d68-4771-beb7-706e4f53370b",
+      "name_en": "Republic of Liberia",
+      "name_ko": "라이베리아 공화국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "조지프 젱킨스 로버츠"
+      ]
+    },
+    {
+      "id": "4a817a8d-56db-49c1-a1a4-3c566bb51c48",
+      "name_en": "Republic of Lithuania",
+      "name_ko": "리투아니아 공화국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "안타나스 스메토나"
+      ]
+    },
+    {
+      "id": "d292cfd5-9ef0-418c-b1a0-12ef30aed31d",
+      "name_en": "Republic of Lower California",
+      "name_ko": "바하칼리포르니아 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "윌리엄 워커"
+      ]
+    },
+    {
+      "id": "595a1d18-0afc-4940-aa16-3f33ae2e38bb",
+      "name_en": "Republic of Macedonia",
+      "name_ko": "마케도니아 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "니콜라 그루에프스키"
+      ]
+    },
+    {
+      "id": "66723072-bd24-4f03-ac3f-80eb968be25c",
+      "name_en": "Republic of Mahabad",
+      "name_ko": "마하바드 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "무스타파 바르자니"
+      ]
+    },
+    {
+      "id": "cf76ecc3-b560-48dd-8770-461e492ab3b0",
+      "name_en": "Republic of Metz",
+      "name_ko": "메츠 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "티에보 드 외"
+      ]
+    },
+    {
+      "id": "a0251638-b6c8-46e1-8dea-77258580e7e9",
+      "name_en": "Republic of New Granada",
+      "name_ko": "누에바그라나다 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "프란시스코 데 파울라 산탄데르"
+      ]
+    },
+    {
+      "id": "4015e9b7-cfe1-4d00-899d-83c3f8c5c780",
+      "name_en": "Republic of Pisa",
+      "name_ko": "피사 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "우골리노 델라 게라르데스카"
+      ]
+    },
+    {
+      "id": "31f3241a-d772-4fe4-a1d1-870c60470dff",
+      "name_en": "Republic of Serbia",
+      "name_ko": "세르비아 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "알렉산다르 부치치"
+      ]
+    },
+    {
+      "id": "4458776f-6c31-4b93-950e-f2cdd16c852c",
+      "name_en": "Republic of Seychelles",
+      "name_ko": "세이셸 공화국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "프랑스알베르 르네"
+      ]
+    },
+    {
+      "id": "12f586f7-472f-4c27-8c65-878329e01c81",
+      "name_en": "Republic of Sierra Leone",
+      "name_ko": "시에라리온 공화국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "아흐마드 테잔 카바"
+      ]
+    },
+    {
+      "id": "9cb4d640-0b98-4fc1-9365-388398a3d659",
+      "name_en": "Republic of Slovenia",
+      "name_ko": "슬로베니아 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "밀란 쿠찬"
+      ]
+    },
+    {
+      "id": "4bf025fe-4624-4bc8-9d7c-4ab8f5ea4117",
+      "name_en": "Republic of Sonora",
+      "name_ko": "소노라 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "윌리엄 워커"
+      ]
+    },
+    {
+      "id": "9a7a7d9c-661b-4380-be49-c74833452f03",
+      "name_en": "Republic of Texas",
+      "name_ko": "텍사스 공화국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "샘 휴스턴"
+      ]
+    },
+    {
+      "id": "14ea7cd5-b0ee-4e63-a7a6-0995a9a3a018",
+      "name_en": "Republic of the Congo (Léopoldville)",
+      "name_ko": "콩고 공화국(레오폴드빌)",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "모이즈 촘베",
+        "파트리스 루뭄바"
+      ]
+    },
+    {
+      "id": "e18e4377-85c7-4cb6-8aa3-28a7c7f3dda9",
+      "name_en": "Republic of the Floridas",
+      "name_ko": "플로리다 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "그레거 맥그리거"
+      ]
+    },
+    {
+      "id": "13600a43-8d24-4f34-b2c7-46c200d3cd8e",
+      "name_en": "Republic of the Rif",
+      "name_ko": "리프 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아브드 엘 크림"
+      ]
+    },
+    {
+      "id": "4c470b00-92b6-4139-b997-198777a0e3d4",
+      "name_en": "Republic of the Rio Grande",
+      "name_ko": "리오그란데 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "안토니오 카날레스 로시요"
+      ]
+    },
+    {
+      "id": "6d89e23a-1eaf-4af3-a310-07ed03e828d6",
+      "name_en": "Republic of Upper Volta",
+      "name_ko": "오트볼타 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "토마 상카라"
+      ]
+    },
+    {
+      "id": "593ad49d-fa94-42cf-a885-cfb39b683690",
+      "name_en": "Republic of Uzbekistan",
+      "name_ko": "우즈베키스탄 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이슬람 카리모프"
+      ]
+    },
+    {
+      "id": "4d6cea58-b611-47ba-96c4-b51c7bed1400",
+      "name_en": "Republic of Vietnam",
+      "name_ko": "베트남 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "응오딘지엠"
+      ]
+    },
+    {
+      "id": "1b32e4a6-44fc-4cdb-9fcc-e742f23ef722",
+      "name_en": "Republic of Yucatán",
+      "name_ko": "유카탄 공화국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "산티아고 멘데스"
+      ]
+    },
+    {
+      "id": "c6a2181d-3263-4e46-9349-214b85eead32",
+      "name_en": "Republic of Zaire",
+      "name_ko": "자이르 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "모부투 세세 세코"
+      ]
+    },
+    {
+      "id": "70aedae1-9544-4e8a-bfd8-6feda3e142c7",
+      "name_en": "Respendial's Alans",
+      "name_ko": "레스펜디알계 알란족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "레스펜디알"
+      ]
+    },
+    {
+      "id": "e154c1b2-ee23-4ba7-a94f-c99940c75ca9",
+      "name_en": "Revolutionary Government of the Philippines",
+      "name_ko": "필리핀 혁명정부",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "에밀리오 아기날도"
+      ]
+    },
+    {
+      "id": "56440fda-9666-4dd1-9283-823ecb7aa0dc",
+      "name_en": "Rheged",
+      "name_ko": "레게드",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "우리엔"
+      ]
+    },
+    {
+      "id": "9e5deb63-7ac1-4a6a-8165-7861b14e6c37",
+      "name_en": "Rhodes",
+      "name_ko": "로도스",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "로도스의 아가토클레스"
+      ]
+    },
+    {
+      "id": "5102be0f-78fb-44cc-be1c-fe5eccab519f",
+      "name_en": "Rhodesia",
+      "name_ko": "로디지아",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이언 스미스"
+      ]
+    },
+    {
+      "id": "cbee1608-b40d-4e83-9ea0-4d46eea147c9",
+      "name_en": "Rio-Grandense Republic",
+      "name_ko": "히우그란덴시 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "벤투 곤살베스"
+      ]
+    },
+    {
+      "id": "ee1a3777-153b-4a60-b720-0fb3030db7fe",
+      "name_en": "Roi Mata's Domain",
+      "name_ko": "로이 마타의 중부 바누아투 권역",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "로이 마타"
+      ]
+    },
+    {
+      "id": "94ae5d33-1ba5-46f9-be5a-121b76f63a08",
+      "name_en": "Roman Africa",
+      "name_ko": "로마령 아프리카",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "히포의 아우구스티누스"
+      ]
+    },
+    {
+      "id": "b2a9d4a0-a2f3-402a-ba3e-f617109ac92d",
+      "name_en": "Roman Egypt",
+      "name_ko": "로마령 이집트",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "파코미우스"
+      ]
+    },
+    {
+      "id": "5d9a6186-bbe6-5d1a-ba93-02190ae4c417",
+      "name_en": "Roman Empire",
+      "name_ko": "로마 제국",
+      "activities": 25,
+      "person_count": 24,
+      "sample_persons": [
+        "리비아 드루실라",
+        "아우구스투스",
+        "티베리우스",
+        "예수"
+      ]
+    },
+    {
+      "id": "bc585200-e306-45cc-ae5d-eb21935c7821",
+      "name_en": "Romania",
+      "name_ko": "루마니아",
+      "activities": 4,
+      "person_count": 2,
+      "sample_persons": [
+        "카롤 1세",
+        "니콜라에 차우셰스쿠"
+      ]
+    },
+    {
+      "id": "a81055d7-ed0d-45a6-90c6-738e1a9ba94d",
+      "name_en": "Roxolani",
+      "name_ko": "록솔라니",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아마게"
+      ]
+    },
+    {
+      "id": "f7504f66-fad2-4eb8-b275-bdf0c41c6645",
+      "name_en": "Rozvi Empire",
+      "name_ko": "로즈비 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "창가미레 돔보"
+      ]
+    },
+    {
+      "id": "1b1a67c8-8509-431f-94ba-20030c2d97c8",
+      "name_en": "Russian Federation",
+      "name_ko": "러시아 연방",
+      "activities": 3,
+      "person_count": 3,
+      "sample_persons": [
+        "보리스 옐친",
+        "블라디미르 지리놉스키",
+        "드미트리 메드베데프"
+      ]
+    },
+    {
+      "id": "58565b57-6da8-4685-a6f4-20772b920382",
+      "name_en": "Russian SFSR",
+      "name_ko": "러시아 소비에트 연방 사회주의 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "보리스 옐친"
+      ]
+    },
+    {
+      "id": "fbc8a826-881a-4e9a-a19e-d92f52766c84",
+      "name_en": "Ruthenian Domain of the Polish Crown",
+      "name_ko": "폴란드 왕관령 루테니아",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "카지미에시 3세"
+      ]
+    },
+    {
+      "id": "a7cb80bd-272a-418e-9d1c-113edd42510f",
+      "name_en": "Sado Honma authority",
+      "name_ko": "사도 혼마 세력권",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "혼마 요시히사"
+      ]
+    },
+    {
+      "id": "0512000d-1a1f-424a-a4d3-26c57a6cdc9c",
+      "name_en": "Saint-Domingue",
+      "name_ko": "생도맹그",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "투생 루베르튀르"
+      ]
+    },
+    {
+      "id": "2801be2a-7026-4e70-9b86-b6bfefa77c73",
+      "name_en": "Salinas Grandes confederation",
+      "name_ko": "살리나스그란데스 연합",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "후안 칼푸쿠라"
+      ]
+    },
+    {
+      "id": "c959dbae-fdb6-4265-910c-99115a7ceae3",
+      "name_en": "Samanid Empire",
+      "name_ko": "사만 왕조",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이스마일 사마니"
+      ]
+    },
+    {
+      "id": "1a40ac8a-22f0-46b0-937f-50e058b1ed44",
+      "name_en": "Samarkand (Sogdiana)",
+      "name_ko": "사마르칸드(소그디아)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "바르후만"
+      ]
+    },
+    {
+      "id": "1eef7e39-3238-40d0-bd21-c92376df4fdf",
+      "name_en": "Santa Ynez Chumash",
+      "name_ko": "산타이네스 추마시",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "라파엘 솔라레스"
+      ]
+    },
+    {
+      "id": "a6a534bb-8bd6-4b7e-9ba8-9359efe3cb32",
+      "name_en": "Satake clan",
+      "name_ko": "사타케씨",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "사타케 요시시게"
+      ]
+    },
+    {
+      "id": "6388a19f-f0be-4fef-9742-b8e91c40eb60",
+      "name_en": "Satsuma Domain",
+      "name_ko": "사쓰마번",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "사이고 다카모리"
+      ]
+    },
+    {
+      "id": "791ef16f-77d2-473f-b6f6-2a6a74a8fa6e",
+      "name_en": "Saturiwa chiefdom",
+      "name_ko": "사투리와 추장국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "사투리와"
+      ]
+    },
+    {
+      "id": "769b9646-457c-4a45-b7af-76b0141c2c8e",
+      "name_en": "Saudi Arabia",
+      "name_ko": "사우디아라비아",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "압둘아지즈 이븐 사우드",
+        "파이살 빈 압둘아지즈 알사우드"
+      ]
+    },
+    {
+      "id": "d8477ae3-f78a-4053-a1ac-778df48b113b",
+      "name_en": "Saxons",
+      "name_ko": "색슨족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "비두킨트"
+      ]
+    },
+    {
+      "id": "d8b6351c-fed4-4c65-96a5-cb8c37ed2b66",
+      "name_en": "Second Mexican Empire",
+      "name_ko": "멕시코 제2제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "막시밀리아노 1세"
+      ]
+    },
+    {
+      "id": "d196f9f5-059c-411c-af45-af44a53838ff",
+      "name_en": "Second Polish Republic",
+      "name_ko": "폴란드 제2공화국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "유제프 피우수트스키"
+      ]
+    },
+    {
+      "id": "a1c6b0b4-ca71-420d-8d9f-502dc7914dd7",
+      "name_en": "Seleucid Empire",
+      "name_ko": "셀레우코스 제국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "셀레우코스 1세",
+        "안티오코스 3세 대왕"
+      ]
+    },
+    {
+      "id": "f44b7227-5d57-45bc-939c-1a02af67d136",
+      "name_en": "Selk'nam",
+      "name_ko": "셀크남",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "세리오트"
+      ]
+    },
+    {
+      "id": "c5ad30ab-f25e-4553-86b9-99be19526ac6",
+      "name_en": "Seminole Nation",
+      "name_ko": "세미놀",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "미카노피"
+      ]
+    },
+    {
+      "id": "e7a760eb-a669-4ccf-bacd-f21a38776e96",
+      "name_en": "Seneca Nation",
+      "name_ko": "세네카족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "콘플랜터"
+      ]
+    },
+    {
+      "id": "5c3598af-1d9a-423c-9852-3964cb3250bf",
+      "name_en": "Senegal",
+      "name_ko": "세네갈",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "레오폴 세다르 상고르"
+      ]
+    },
+    {
+      "id": "8250ffc9-98de-412e-8a0c-57390aa72df2",
+      "name_en": "Septinsular Republic",
+      "name_ko": "칠도 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "안토니오스 코무토스"
+      ]
+    },
+    {
+      "id": "9a26d673-abe1-4d66-b691-3afdaf01a586",
+      "name_en": "Serbian Empire",
+      "name_ko": "세르비아 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "스테판 우로시 4세 두샨"
+      ]
+    },
+    {
+      "id": "6c7ca9db-69fe-449d-8aeb-c2f7660ab809",
+      "name_en": "Seven Missions Guaraní",
+      "name_ko": "7개 선교촌 과라니",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "세페 티아라주"
+      ]
+    },
+    {
+      "id": "3fb00b9a-87d8-4a5d-9282-8bc444306204",
+      "name_en": "Shandong military regime",
+      "name_ko": "산둥 군벌 정권",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "장쭝창"
+      ]
+    },
+    {
+      "id": "88983df5-78cb-406b-a233-20ec193e09ff",
+      "name_en": "Shang",
+      "name_ko": "상",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "무정"
+      ]
+    },
+    {
+      "id": "e69eb534-9e2a-485c-9430-8df2ec2212a1",
+      "name_en": "Sharifate of Mecca",
+      "name_ko": "메카 샤리프국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "샤리프 후세인"
+      ]
+    },
+    {
+      "id": "c53ee1fc-faba-4c68-80b2-da2fd6b6b96e",
+      "name_en": "Shasta people",
+      "name_ko": "샤스타족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "서전트 샘보"
+      ]
+    },
+    {
+      "id": "54c16d53-573c-4b6d-ac87-639486a6262d",
+      "name_en": "Shilluk Kingdom",
+      "name_ko": "실루크 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "투고 와드 도코트"
+      ]
+    },
+    {
+      "id": "5afc1462-f44e-4f4e-a036-2ab7c591afc1",
+      "name_en": "Shimazu clan",
+      "name_ko": "시마즈 가문",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "시마즈 요시히로"
+      ]
+    },
+    {
+      "id": "17ae3c87-d037-424d-9c3d-e1ea5c48b4b0",
+      "name_en": "Shimazu territorial authority",
+      "name_ko": "시마즈 요시히사 세력권",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "시마즈 요시히사"
+      ]
+    },
+    {
+      "id": "32b8701a-dc45-41af-8892-a18359bb1826",
+      "name_en": "Shining Path",
+      "name_ko": "빛나는 길",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아비마엘 구스만"
+      ]
+    },
+    {
+      "id": "fefc599f-39df-41f7-9bed-dbfed4552f2a",
+      "name_en": "Shirvan",
+      "name_ko": "시르반",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이브라힘 1세"
+      ]
+    },
+    {
+      "id": "bc522558-7594-48b4-84b6-fda85af1af9e",
+      "name_en": "Sierra Leone Colony",
+      "name_ko": "시에라리온 식민지",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "토머스 피터스"
+      ]
+    },
+    {
+      "id": "85341335-9f4a-4c50-96b4-f23173b3fd9c",
+      "name_en": "Sikh Empire",
+      "name_ko": "시크 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "란지트 싱"
+      ]
+    },
+    {
+      "id": "50b250fe-e8c2-49ea-99cf-616bac080f92",
+      "name_en": "Siksika (Blackfoot)",
+      "name_ko": "시크시카(블랙풋)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "크로우풋"
+      ]
+    },
+    {
+      "id": "6f81d187-19f1-4f0a-9b9b-c06823382a90",
+      "name_en": "Silures",
+      "name_ko": "실루레스",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "카라타쿠스"
+      ]
+    },
+    {
+      "id": "f90b9be8-7338-46e8-99bc-51d2daab7fdf",
+      "name_en": "Sipán (Moche)",
+      "name_ko": "시판(모체)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "시판의 군주"
+      ]
+    },
+    {
+      "id": "8d5f99db-4990-477c-858b-8c6a0466b736",
+      "name_en": "Siraces",
+      "name_ko": "시라케스족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "조르시네스"
+      ]
+    },
+    {
+      "id": "670e211c-421b-4a3c-b91a-befb11933d20",
+      "name_en": "Skidi Pawnee",
+      "name_ko": "스키디 포니",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "페탈레샤로",
+        "크루키드 핸드"
+      ]
+    },
+    {
+      "id": "d8efd7f2-1913-4c70-adbf-21a3f01d9dc1",
+      "name_en": "Småland Peasant Rebels",
+      "name_ko": "스몰란드 농민 반란 세력",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "닐스 다케"
+      ]
+    },
+    {
+      "id": "e40a7202-2036-4d7a-a31b-e88598743e61",
+      "name_en": "Socialist Federal Republic of Yugoslavia",
+      "name_ko": "유고슬라비아 사회주의 연방공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "요시프 브로즈 티토"
+      ]
+    },
+    {
+      "id": "768950da-3df8-4041-bc5b-793e80017590",
+      "name_en": "Sogdian Samarkand",
+      "name_ko": "소그드계 사마르칸트",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "구라크"
+      ]
+    },
+    {
+      "id": "28294ea4-bf1d-4d9f-9518-4cf7194e24e2",
+      "name_en": "Sokoto Caliphate",
+      "name_ko": "소코토 칼리파국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "우스만 단 포디오"
+      ]
+    },
+    {
+      "id": "ea57a5b8-8553-40bb-b530-5eae8ab33801",
+      "name_en": "Somali Democratic Republic",
+      "name_ko": "소말리아 민주 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "모하메드 시아드 바레"
+      ]
+    },
+    {
+      "id": "4b532503-a686-452b-ad71-ba776efe17cf",
+      "name_en": "Somali Dervish State",
+      "name_ko": "소말리 데르비시 국가",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "모하메드 압둘라 하산"
+      ]
+    },
+    {
+      "id": "475a85a9-b966-4f31-b9df-2143d7d7f739",
+      "name_en": "South African Republic",
+      "name_ko": "트란스발 공화국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "파울 크뤼거"
+      ]
+    },
+    {
+      "id": "515ecbf7-0c13-41c9-8dd4-1bad81d18482",
+      "name_en": "Southern Rhodesia",
+      "name_ko": "남로디지아",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이언 스미스"
+      ]
+    },
+    {
+      "id": "9e227293-7ab8-5870-b05b-0b8c715738a4",
+      "name_en": "Spanish Empire",
+      "name_ko": "스페인 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "토이푸리나"
+      ]
+    },
+    {
+      "id": "9498cc06-a081-4179-8f2b-b60b881dab10",
+      "name_en": "Spanish State",
+      "name_ko": "스페인국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "프란시스코 프랑코"
+      ]
+    },
+    {
+      "id": "84519e07-7ff2-4a08-ad04-354849f2499d",
+      "name_en": "Squamish",
+      "name_ko": "스쿼미시",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "조 캐필라노"
+      ]
+    },
+    {
+      "id": "7db22a38-3fa8-456e-9def-4a94d3acb78c",
+      "name_en": "Srivijaya",
+      "name_ko": "스리위자야",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "스리 자야나사"
+      ]
+    },
+    {
+      "id": "33077220-c088-426e-94d3-a438267df4f1",
+      "name_en": "State of Abemama",
+      "name_ko": "아베마마국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "템비노크"
+      ]
+    },
+    {
+      "id": "80fe6a6d-40c1-4518-a7fc-de3dfb207c1e",
+      "name_en": "State of Brazil",
+      "name_ko": "브라질국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "멤 지 사"
+      ]
+    },
+    {
+      "id": "461a96d9-7e35-4bf9-a415-c0e38b95c0ac",
+      "name_en": "State of Burma",
+      "name_ko": "버마국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아웅 산"
+      ]
+    },
+    {
+      "id": "773aa6d1-0e3d-4dd5-95e7-1ea7ed575f3b",
+      "name_en": "State of Deseret",
+      "name_ko": "데저렛 주",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "브리검 영"
+      ]
+    },
+    {
+      "id": "29b6b4bd-f767-4995-9e36-d50ecba7db88",
+      "name_en": "State of Ecuador",
+      "name_ko": "에콰도르국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "후안 호세 플로레스"
+      ]
+    },
+    {
+      "id": "ee06472a-832c-4d2a-8dcb-d720df21d2e8",
+      "name_en": "State of Katanga",
+      "name_ko": "카탕가국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "모이즈 촘베"
+      ]
+    },
+    {
+      "id": "6596c324-a8e1-49ab-8d1d-cd4cbdfaa634",
+      "name_en": "State of Muskogee",
+      "name_ko": "머스코기국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "윌리엄 오거스터스 볼스"
+      ]
+    },
+    {
+      "id": "90d03d94-41bc-42b6-b910-f6c0c498bd20",
+      "name_en": "State of Vietnam",
+      "name_ko": "베트남국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "응오딘지엠"
+      ]
+    },
+    {
+      "id": "757c29dc-5fd7-49a0-9c30-3e09f0bd3a73",
+      "name_en": "Sulayhid Yemen",
+      "name_ko": "술라이히 왕조 예멘",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아르와 앗 술라이히"
+      ]
+    },
+    {
+      "id": "f2393b2d-2264-46fb-aa71-9b538a9a4cd2",
+      "name_en": "Sultanate of Gowa",
+      "name_ko": "고와 술탄국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "술탄 하사누딘"
+      ]
+    },
+    {
+      "id": "dfea8994-f42d-4b3b-99ac-e3c2b4a1cada",
+      "name_en": "Sultanate of Nejd",
+      "name_ko": "나지드 술탄국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "압둘아지즈 이븐 사우드"
+      ]
+    },
+    {
+      "id": "5516b403-b843-485d-8527-db48334fc169",
+      "name_en": "Sultanate of Rum",
+      "name_ko": "룸 술탄국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "카이쿠바드 1세"
+      ]
+    },
+    {
+      "id": "fa684146-5d35-4022-a5fc-99fd908c2b8f",
+      "name_en": "Sultanate of Sulu",
+      "name_ko": "술루 술탄국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "아짐 우드딘 1세"
+      ]
+    },
+    {
+      "id": "ae86f3f6-2857-4cdb-9850-e518bad4b86e",
+      "name_en": "Sultanate of Ternate",
+      "name_ko": "테르나테 술탄국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "바불라"
+      ]
+    },
+    {
+      "id": "cb571a73-78e9-4dd5-8b5d-dd4b7af74cc2",
+      "name_en": "Sultanate of Tidore",
+      "name_ko": "티도레 술탄국",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "누쿠 아미루딘"
+      ]
+    },
+    {
+      "id": "54dd3191-c2b3-4a84-9ee2-5dd2191715ea",
+      "name_en": "Sultanate of Zanzibar",
+      "name_ko": "잔지바르 술탄국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "바르가시 빈 사이드"
+      ]
+    },
+    {
+      "id": "829719ba-5961-4fc0-a829-81acab1a3398",
+      "name_en": "Suquamish and Duwamish",
+      "name_ko": "수콰미시·두와미시족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "시애틀"
+      ]
+    },
+    {
+      "id": "cbb99c50-0280-4661-8be9-a13dae1f1718",
+      "name_en": "Suriname",
+      "name_ko": "수리남",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "데시 바우테르서"
+      ]
+    },
+    {
+      "id": "96cb1159-e7fe-4ae2-8b35-b8b99be8ecc9",
+      "name_en": "Svalbard",
+      "name_ko": "스발바르",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "오드 올센 잉에뢰"
+      ]
+    },
+    {
+      "id": "48c5f1bc-afa3-42fc-abd1-499b807c1944",
+      "name_en": "Syracuse",
+      "name_ko": "시라쿠사",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "디오니시오스 1세",
+        "아르키메데스"
+      ]
+    },
+    {
+      "id": "355010ea-aff6-47f7-900c-4334b80da406",
+      "name_en": "Syria",
+      "name_ko": "시리아",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "아흐마드 알샤라"
+      ]
+    },
+    {
+      "id": "c4fbb704-8265-4af9-aeca-ec9f23e05b92",
+      "name_en": "Syrian Arab Republic",
+      "name_ko": "시리아 아랍 공화국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "하페즈 알아사드",
+        "바샤르 알아사드"
+      ]
+    },
+    {
+      "id": "bbc7a658-9288-415d-b5e2-b163e5405e5a",
+      "name_en": "Tachibana clan",
+      "name_ko": "다치바나 가문",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "다치바나 긴치요"
+      ]
+    },
+    {
+      "id": "cb701d2d-3d6d-4248-b833-6e4e2082366e",
+      "name_en": "Taebong",
+      "name_ko": "태봉",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "궁예"
+      ]
+    },
+    {
+      "id": "f35baf57-c61a-4cc3-ae0f-b92b24659794",
+      "name_en": "Taíno Boriquén",
+      "name_ko": "타이노 보리켄",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아궤이바나 2세"
+      ]
+    },
+    {
+      "id": "6965b90f-3a3b-481e-8e2e-ff650bc0f0af",
+      "name_en": "Takeda territorial authority",
+      "name_ko": "다케다 신겐 세력권",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "다케다 신겐"
+      ]
+    },
+    {
+      "id": "3a82169f-89ed-46f0-947e-02050ceff860",
+      "name_en": "Tamoyo Confederation",
+      "name_ko": "타모이오 연맹",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "쿠냠베베"
+      ]
+    },
+    {
+      "id": "1be60d66-e70c-4de1-be1d-81a667490b5b",
+      "name_en": "Tapajó",
+      "name_ko": "타파조",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "마리아 모아사라"
+      ]
+    },
+    {
+      "id": "eb2f8e2e-220b-4754-afe9-25449b1d35ec",
+      "name_en": "Tarabin Bedouin",
+      "name_ko": "타라빈 베두인",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "하마드 파샤 알수피"
+      ]
+    },
+    {
+      "id": "140523a3-3908-4719-980d-4fc61c709e15",
+      "name_en": "Tarenorerer's Palawa resistance",
+      "name_ko": "타레노레러의 팔라와 저항세력",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "타레노레러"
+      ]
+    },
+    {
+      "id": "9cc7fdbe-8bff-4967-9fc7-920da04a95ee",
+      "name_en": "Tartessos",
+      "name_ko": "타르테소스",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아르간토니오스"
+      ]
+    },
+    {
+      "id": "6d48c8ce-670d-4384-80d9-25c021503da6",
+      "name_en": "Te Kooti's Māori resistance",
+      "name_ko": "테 코티의 마오리 저항세력",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "테 코티 아리키랑이 테 투루키"
+      ]
+    },
+    {
+      "id": "fd339a4d-05db-457a-a906-2c49b1e0c91c",
+      "name_en": "Tehuelche",
+      "name_ko": "테우엘체",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "마리아 라 그란데"
+      ]
+    },
+    {
+      "id": "ad52a3f6-dca4-4b0d-9549-641be2e00816",
+      "name_en": "Teotihuacan",
+      "name_ko": "테오티우아칸",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "스피어스로어 아울"
+      ]
+    },
+    {
+      "id": "9c8d3c4b-d4f4-42a3-823a-f3c17f44cfee",
+      "name_en": "Tetrarchy of Herod Antipas",
+      "name_ko": "헤롯 안티파스 분봉국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "세례자 요한"
+      ]
+    },
+    {
+      "id": "c518302f-e43b-480c-888c-f44e6a927d59",
+      "name_en": "Teutonic Order",
+      "name_ko": "튜턴 기사단",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "헤르만 폰 잘차"
+      ]
+    },
+    {
+      "id": "0b8f547f-8bdf-49c8-96ea-9c57694fc168",
+      "name_en": "Third Polish Republic",
+      "name_ko": "폴란드 제3공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "레흐 바웬사"
+      ]
+    },
+    {
+      "id": "aa38d04d-532d-4851-8e05-27d0614fb9c0",
+      "name_en": "Third Saudi State",
+      "name_ko": "제3사우디국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "압둘아지즈 이븐 사우드"
+      ]
+    },
+    {
+      "id": "1d39b2f4-b591-479b-9064-fa2882a22d0e",
+      "name_en": "Three Kingdoms of England, Scotland and Ireland",
+      "name_ko": "잉글랜드·스코틀랜드·아일랜드 삼왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "찰스 2세"
+      ]
+    },
+    {
+      "id": "2b1b868c-d5af-4fd5-99f7-50e7a04f0bf5",
+      "name_en": "Tilantongo",
+      "name_ko": "틸란통고",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "8사슴 재규어 발톱"
+      ]
+    },
+    {
+      "id": "7447c261-b9f5-42c8-b114-aac5b0c3c829",
+      "name_en": "Timor-Leste",
+      "name_ko": "동티모르",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "샤나나 구스망"
+      ]
+    },
+    {
+      "id": "6539c314-ec29-42e0-a0c2-90991fb9ffd8",
+      "name_en": "Timurid Empire",
+      "name_ko": "티무르 제국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "티무르",
+        "샤 루흐"
+      ]
+    },
+    {
+      "id": "a6e97b4f-f363-4f45-b944-f7f042dd5f5f",
+      "name_en": "Tippu Tip's trading state",
+      "name_ko": "티푸 티프의 교역국가",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "티푸 티프"
+      ]
+    },
+    {
+      "id": "008d7423-7163-4585-ab3b-3d4af0774ef4",
+      "name_en": "Tír Eoghain (O'Neill Lordship)",
+      "name_ko": "티르 에오간(오닐 영지)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "휴 오닐"
+      ]
+    },
+    {
+      "id": "c6e43d5b-1f9f-4e6a-b7ed-867a907b3dcc",
+      "name_en": "Toluid ulus",
+      "name_ko": "톨루이 울루스",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "소르칵타니 베키"
+      ]
+    },
+    {
+      "id": "2908f6cf-009b-4d25-9402-2bcd7f5b9323",
+      "name_en": "Toyotomi Osaka regime",
+      "name_ko": "오사카 도요토미 정권",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "사나다 유키무라"
+      ]
+    },
+    {
+      "id": "1806cd0e-0052-4460-8a21-641ffa22f073",
+      "name_en": "Tr'ondëk Hwëch'in",
+      "name_ko": "트론덱 훼친",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아이작 추장"
+      ]
+    },
+    {
+      "id": "1183ac38-f2bc-45cc-bffb-930ce32fed65",
+      "name_en": "Trinidad and Tobago",
+      "name_ko": "트리니다드 토바고",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "에릭 윌리엄스"
+      ]
+    },
+    {
+      "id": "a211569c-8078-4ed5-9cf0-3563b7df07d4",
+      "name_en": "Tsenacommacah",
+      "name_ko": "체나코마카",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "포우하탄"
+      ]
+    },
+    {
+      "id": "8392e1bb-429d-403c-a94c-913b169f8e4f",
+      "name_en": "Tsenacomoco (Powhatan paramount chiefdom)",
+      "name_ko": "체나코마코(포와탄 연맹)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "포와탄(와훈세나코)"
+      ]
+    },
+    {
+      "id": "7e829e23-50c0-416f-9215-df3e3965ed3e",
+      "name_en": "Tsushima",
+      "name_ko": "쓰시마",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "소 요시토시"
+      ]
+    },
+    {
+      "id": "5b3bbbc7-19a8-441d-8d41-9f196306a617",
+      "name_en": "Tupiniquim of Piratininga",
+      "name_ko": "피라티닝가의 투피니킹족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "티비리사"
+      ]
+    },
+    {
+      "id": "28448862-277d-4738-9fb4-7f51a9e4c03a",
+      "name_en": "Turkey",
+      "name_ko": "튀르키예",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "무스타파 케말 아타튀르크",
+        "이스메트 이뇌뉘"
+      ]
+    },
+    {
+      "id": "d432e921-c0b8-4d9f-bb96-dd9903eeef5c",
+      "name_en": "Turkmenistan",
+      "name_ko": "투르크메니스탄",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "사파르무라트 니야조프"
+      ]
+    },
+    {
+      "id": "e0787d38-ce84-474b-bb6e-4fffa2833ad2",
+      "name_en": "Tuskaloosa Chiefdom",
+      "name_ko": "투스칼루사 정치체",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "투스칼루사"
+      ]
+    },
+    {
+      "id": "7840e523-aab2-44ac-ac94-7f448115c397",
+      "name_en": "Tututepec",
+      "name_ko": "투투테펙",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "8사슴 재규어 발톱"
+      ]
+    },
+    {
+      "id": "34b9a375-96fb-4c6a-8475-4bf263e98cec",
+      "name_en": "Tuvan People's Republic",
+      "name_ko": "투바 인민공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "돈두크 쿠울라르"
+      ]
+    },
+    {
+      "id": "ce684853-434c-4be0-bd2d-f34e57418db1",
+      "name_en": "Twenty-Seventh Dynasty of Egypt",
+      "name_ko": "이집트 제27왕조",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "캄비세스 2세"
+      ]
+    },
+    {
+      "id": "e5e55bc5-4cd6-44c5-818b-7f831133b327",
+      "name_en": "Tyrolean Rebellion of 1809",
+      "name_ko": "1809년 티롤 반란",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "안드레아스 호퍼"
+      ]
+    },
+    {
+      "id": "46568b86-0f93-4120-8b6a-b324c56d40de",
+      "name_en": "Udmurt Republic",
+      "name_ko": "우드무르트 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "알렉산드르 솔로비요프"
+      ]
+    },
+    {
+      "id": "0efc70ac-2bb4-4c2c-a765-f6c3a0607d56",
+      "name_en": "Uganda",
+      "name_ko": "우간다",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이디 아민"
+      ]
+    },
+    {
+      "id": "b8dc3471-f3d0-41ad-ade9-748a90c1056e",
+      "name_en": "UK Independence Party",
+      "name_ko": "영국 독립당",
+      "activities": 3,
+      "person_count": 1,
+      "sample_persons": [
+        "나이절 패라지"
+      ]
+    },
+    {
+      "id": "550fabcb-c9d3-47c9-9bce-2556cff130d1",
+      "name_en": "Ukraine",
+      "name_ko": "우크라이나",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "율리야 티모셴코"
+      ]
+    },
+    {
+      "id": "a6492720-5e09-4840-a12c-6226b865fba0",
+      "name_en": "Ukrainian State",
+      "name_ko": "우크라이나국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "파울로 스코로파드스키"
+      ]
+    },
+    {
+      "id": "5db33481-614d-4977-941e-b36884ffb87e",
+      "name_en": "Ukrainians of the Russian Far East",
+      "name_ko": "극동 우크라이나인 공동체",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "유리 흘루시코"
+      ]
+    },
+    {
+      "id": "e94d05ca-ffda-47c0-80df-11c5e541b110",
+      "name_en": "Unami Lenape",
+      "name_ko": "우나미 레나페",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "타마넨드"
+      ]
+    },
+    {
+      "id": "8c82abe5-142e-4e23-83cf-c7b29ea43aa5",
+      "name_en": "Uncompahgre Utes",
+      "name_ko": "운컴파그레 유트",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "우레이"
+      ]
+    },
+    {
+      "id": "66487afc-226e-4f7b-a97c-c3dac3608394",
+      "name_en": "UNITA-controlled territories in Angola",
+      "name_ko": "UNITA 지배 앙골라 지역",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "조나스 사빔비"
+      ]
+    },
+    {
+      "id": "6919b8ca-ea86-4e25-a538-3dd56498b255",
+      "name_en": "United Arab Emirates",
+      "name_ko": "아랍에미리트",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "자이드 빈 술탄 알 나흐얀"
+      ]
+    },
+    {
+      "id": "a602213a-dccb-4a23-96c3-e91dfc300a9f",
+      "name_en": "United Arab Republic",
+      "name_ko": "아랍 연합 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "가말 압델 나세르"
+      ]
+    },
+    {
+      "id": "3b8f7efc-40ae-5a33-8956-e9e852fbede4",
+      "name_en": "United Kingdom of Portugal, Brazil and the Algarves",
+      "name_ko": "포르투갈·브라질·알가르브 연합왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "마리아 1세"
+      ]
+    },
+    {
+      "id": "2a51da95-896a-4c0b-8279-3da0200f48db",
+      "name_en": "United Provinces of the Río de la Plata",
+      "name_ko": "리오데라플라타 연합주",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "호세 데 산 마르틴"
+      ]
+    },
+    {
+      "id": "31062c39-be42-400b-87f5-ee06c8c86ad3",
+      "name_en": "United Republic of Tanzania",
+      "name_ko": "탄자니아 연합공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "알리 하산 므위니"
+      ]
+    },
+    {
+      "id": "750bf6be-49e9-4215-95ff-a356ba1831cd",
+      "name_en": "United States of Brazil",
+      "name_ko": "브라질 합중국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아폰수 페나"
+      ]
+    },
+    {
+      "id": "a0e85099-3cb0-4b9d-94bb-234ae8fcb232",
+      "name_en": "United States of Indonesia",
+      "name_ko": "인도네시아 합중국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "수카르노"
+      ]
+    },
+    {
+      "id": "6796d7c2-aa3a-4e39-b1fe-dc8d179e5886",
+      "name_en": "Uru of Lake Poopó",
+      "name_ko": "포오포호의 우루족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "다니엘 마우리시오 초케"
+      ]
+    },
+    {
+      "id": "6c530241-e104-4fe8-8320-8fad5a34f5cc",
+      "name_en": "Uruguay",
+      "name_ko": "우루과이",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "호세 바트예 이 오르도녜스"
+      ]
+    },
+    {
+      "id": "51e7dd1f-f41a-4e62-a84b-465ac7d4378c",
+      "name_en": "Uruk",
+      "name_ko": "우루크",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "길가메시"
+      ]
+    },
+    {
+      "id": "6d53a9d6-b62a-4e2e-8cbd-d7e244cb1fd1",
+      "name_en": "Uwambo Yali",
+      "name_ko": "우암보 얄리 공동체",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "위마유크 완디크"
+      ]
+    },
+    {
+      "id": "9cc6bfac-dc17-43b7-976b-61a93873fc4e",
+      "name_en": "Uyghur Khaganate",
+      "name_ko": "위구르 카간국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "바얀초르 칸",
+        "뵈귀 카간"
+      ]
+    },
+    {
+      "id": "172d7980-5313-460e-bcd7-748787fc598a",
+      "name_en": "Uzbek Soviet Socialist Republic",
+      "name_ko": "우즈베크 소비에트 사회주의 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이슬람 카리모프"
+      ]
+    },
+    {
+      "id": "b2698b58-07aa-40fc-93af-e1eb714b47a3",
+      "name_en": "Vandals and Alans",
+      "name_ko": "반달족·알란족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "가이세리크"
+      ]
+    },
+    {
+      "id": "c45984c8-0ced-4e3f-bbf5-2376fa1c6250",
+      "name_en": "Vatican City",
+      "name_ko": "바티칸 시국",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "요한 바오로 1세",
+        "요한 바오로 2세"
+      ]
+    },
+    {
+      "id": "5b27cb25-51aa-43e3-8089-e831a97316f3",
+      "name_en": "Vermont Republic",
+      "name_ko": "버몬트 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이선 앨런"
+      ]
+    },
+    {
+      "id": "3a04b31b-c924-4f94-9437-7f4e44443551",
+      "name_en": "Viceroyalty of New Spain",
+      "name_ko": "누에바에스파냐 부왕령",
+      "activities": 2,
+      "person_count": 2,
+      "sample_persons": [
+        "안토니오 데 멘도사",
+        "후아나 이네스 데 라 크루스"
+      ]
+    },
+    {
+      "id": "e2fb0fd2-ed41-47b0-bcbe-92d3451dea35",
+      "name_en": "Viceroyalty of Peru",
+      "name_ko": "페루 부왕령",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "안토니오 데 멘도사"
+      ]
+    },
+    {
+      "id": "42fd4527-37ce-4928-93ce-40a507750a2b",
+      "name_en": "Vijayanagara Empire",
+      "name_ko": "비자야나가라 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "크리슈나데바라야"
+      ]
+    },
+    {
+      "id": "0ce478c6-146d-4651-acae-7e09878fe251",
+      "name_en": "Visigothic Kingdom",
+      "name_ko": "서고트 왕국",
+      "activities": 3,
+      "person_count": 3,
+      "sample_persons": [
+        "에우리크",
+        "테오도리크 대왕",
+        "레오비길드"
+      ]
+    },
+    {
+      "id": "01cd1acd-9321-4d25-bc30-4cbd561bcbd5",
+      "name_en": "Visigoths",
+      "name_ko": "서고트족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "알라리크"
+      ]
+    },
+    {
+      "id": "2319a4f2-d337-48d9-8752-bcf28c184399",
+      "name_en": "Volga Bulgaria",
+      "name_ko": "볼가 불가리아",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "알미시"
+      ]
+    },
+    {
+      "id": "04510bb0-829b-470b-828d-de401d011c38",
+      "name_en": "Vyatka Land",
+      "name_ko": "뱟카 땅",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이반 아니케예프"
+      ]
+    },
+    {
+      "id": "79349302-6b2f-4be0-b949-ad40f3e4660e",
+      "name_en": "Vychegda Perm",
+      "name_ko": "비체그다 페름",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "페름의 스테판"
+      ]
+    },
+    {
+      "id": "141bf465-2754-4dcb-907a-8fb20784e272",
+      "name_en": "Wallowa band of the Nez Perce",
+      "name_ko": "왈로와 네즈퍼스 밴드",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "조지프 추장"
+      ]
+    },
+    {
+      "id": "405c8370-8150-4b9e-bf7a-2c29604f7b0c",
+      "name_en": "Wampanoag Confederacy",
+      "name_ko": "왐파노아그 연맹",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "마사소이트"
+      ]
+    },
+    {
+      "id": "574c20f4-8795-4007-b2bb-86b52ee97ae1",
+      "name_en": "Washoe",
+      "name_ko": "와쇼족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "구말랑가"
+      ]
+    },
+    {
+      "id": "d9e76b4a-db90-41ac-af35-7b44bd9b3dd6",
+      "name_en": "Wassoulou Empire",
+      "name_ko": "와술루 제국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "사모리 투레"
+      ]
+    },
+    {
+      "id": "5b062c40-b5da-4b39-9f83-f727bdd26025",
+      "name_en": "Wendat of Michilimackinac",
+      "name_ko": "미실리마키낙 웬다트",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "콘디아롱크"
+      ]
+    },
+    {
+      "id": "519ae002-2f1d-4e1c-aadb-52027d428d5b",
+      "name_en": "West Indies Federation",
+      "name_ko": "서인도 연방",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "패트릭 뷰컨헵번"
+      ]
+    },
+    {
+      "id": "3cc77732-c317-4c82-b5ae-ee800a620622",
+      "name_en": "Western Arrernte",
+      "name_ko": "서부 아렌테족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "앨버트 나마치라"
+      ]
+    },
+    {
+      "id": "256edfeb-8f35-4cbe-adca-dd3a76169ad8",
+      "name_en": "Western Chagatai Khanate",
+      "name_ko": "서차가타이 칸국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "투글루크 티무르"
+      ]
+    },
+    {
+      "id": "77ee4f18-ba76-4e89-a925-431d00b1d214",
+      "name_en": "Western Jin Dynasty",
+      "name_ko": "서진",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "사마염"
+      ]
+    },
+    {
+      "id": "5a767535-b5a7-4b91-8751-c1ba3f05ca44",
+      "name_en": "Western Moreton Indigenous resistance alliance",
+      "name_ko": "서부 모턴 원주민 저항 연합",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "멀투게라"
+      ]
+    },
+    {
+      "id": "d8f789b5-74a4-416c-8299-e7887d50fe7e",
+      "name_en": "Whadjuk Noongar",
+      "name_ko": "와주크 눙가르",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "야간"
+      ]
+    },
+    {
+      "id": "9c5fc1af-5a18-471f-941a-718cd6ad562e",
+      "name_en": "Windward Maroons",
+      "name_ko": "윈드워드 마룬",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "마룬의 내니"
+      ]
+    },
+    {
+      "id": "50b54f72-e860-4b86-9bc6-fb5fa495bbbc",
+      "name_en": "Wiradjuri",
+      "name_ko": "위라주리",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "윈드라다인"
+      ]
+    },
+    {
+      "id": "79ac3af8-c1c0-4a60-acfa-085926956d64",
+      "name_en": "Wurundjeri",
+      "name_ko": "우룬제리",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "윌리엄 바라크"
+      ]
+    },
+    {
+      "id": "fb32c6b3-eb92-4e08-9fda-eee608ed9eb1",
+      "name_en": "Xaragua",
+      "name_ko": "하라과",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아나카오나"
+      ]
+    },
+    {
+      "id": "5c44fda5-d3de-4a7e-a1cd-63bd39c11873",
+      "name_en": "Xinjiang Province",
+      "name_ko": "신장성",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "성스차이"
+      ]
+    },
+    {
+      "id": "a956aa5e-f937-403f-8328-efe65327929a",
+      "name_en": "Xueyantuo Khaganate",
+      "name_ko": "설연타 칸국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "진주 칸"
+      ]
+    },
+    {
+      "id": "bd82c009-11e1-4cb6-a8e7-681a2f63b181",
+      "name_en": "Yaghan",
+      "name_ko": "야간족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "마세미켄시"
+      ]
+    },
+    {
+      "id": "8ed716e1-44b9-4cdd-8efd-ee19a4b63f40",
+      "name_en": "Yamal Nenets",
+      "name_ko": "야말 네네츠",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "바울리 피에토민"
+      ]
+    },
+    {
+      "id": "3647185e-7c70-4b21-85ad-5332b6b1c2ce",
+      "name_en": "Yanomami land-rights movement (Brazil)",
+      "name_ko": "브라질 야노마미 영토권 운동",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "다비 코페나와"
+      ]
+    },
+    {
+      "id": "441f0e3a-04a0-456e-bcb5-c12e7a35b769",
+      "name_en": "Yaqui Nation",
+      "name_ko": "야키 공동체",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "카헤메"
+      ]
+    },
+    {
+      "id": "4a4a36a1-a160-4848-bfda-054391a6a3a1",
+      "name_en": "Yellow Turbans",
+      "name_ko": "황건군",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "장각"
+      ]
+    },
+    {
+      "id": "29cc8e05-3693-4b82-9f86-950c2ed82e12",
+      "name_en": "Yellowknives Dene",
+      "name_ko": "옐로나이브스 데네",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "아카이초"
+      ]
+    },
+    {
+      "id": "6522e943-d931-4ead-acb3-264f962942c8",
+      "name_en": "Yenisei Kyrgyz Khaganate",
+      "name_ko": "예니세이 키르기스 카간국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "바르스 벡"
+      ]
+    },
+    {
+      "id": "13bc95f9-f95c-4cb1-a3c1-f15bb5547651",
+      "name_en": "Yettishar",
+      "name_ko": "예티샤르",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "야쿠브 베그"
+      ]
+    },
+    {
+      "id": "92b7002a-35a8-4548-853d-e340de1a1969",
+      "name_en": "Yidinji people",
+      "name_ko": "이딘지족",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "예이니"
+      ]
+    },
+    {
+      "id": "e59d56ce-c614-4348-90f0-f8f8c2d71a11",
+      "name_en": "Yolngu",
+      "name_ko": "욜ŋ우",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "웡구"
+      ]
+    },
+    {
+      "id": "d050c493-a3e0-4d5c-b16f-452c4d17cfcf",
+      "name_en": "Yorkists",
+      "name_ko": "요크파",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "에드워드 4세"
+      ]
+    },
+    {
+      "id": "3df30c69-5adc-49bb-b5ed-70b1bcbb9a86",
+      "name_en": "Yunnan Clique",
+      "name_ko": "윈난 군벌",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "룽윈"
+      ]
+    },
+    {
+      "id": "669833d5-7b55-422f-ad4a-3d0e75813396",
+      "name_en": "Zaachila",
+      "name_ko": "사아칠라",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "코시호에사"
+      ]
+    },
+    {
+      "id": "2e52f532-31c1-41e8-aca6-07c40d2a319a",
+      "name_en": "Zagwe Kingdom",
+      "name_ko": "자그웨 왕국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "랄리벨라"
+      ]
+    },
+    {
+      "id": "f0037b7d-4982-444e-927c-3043b130f98f",
+      "name_en": "Zambia",
+      "name_ko": "잠비아",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "케네스 카운다"
+      ]
+    },
+    {
+      "id": "f85e5e2e-4483-4289-86d8-a78bcae20d84",
+      "name_en": "Zangezur Armenian resistance",
+      "name_ko": "잔게주르 아르메니아 저항세력",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "안드라니크 오자니안"
+      ]
+    },
+    {
+      "id": "b5c8227b-b391-43f8-9168-ad9a05e62e1d",
+      "name_en": "Zanzibar",
+      "name_ko": "잔지바르",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "알리 하산 므위니"
+      ]
+    },
+    {
+      "id": "2bd982fb-88f2-42b6-bce6-459f0fbd87e6",
+      "name_en": "Zapatista Army of National Liberation (EZLN)",
+      "name_ko": "사파티스타 민족해방군(EZLN)",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "마르코스 부사령관"
+      ]
+    },
+    {
+      "id": "cb4a8b76-f2b5-417f-8276-76db43efebea",
+      "name_en": "Zaporozhian Sich",
+      "name_ko": "자포로지아 시치",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "이반 시르코"
+      ]
+    },
+    {
+      "id": "439086da-2147-49d7-b317-9871ec758d6d",
+      "name_en": "Zheltuga Republic",
+      "name_ko": "젤투가 공화국",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "카를 파시(아돌프 카를로비치 파스)"
+      ]
+    },
+    {
+      "id": "4b3b1761-c473-4b06-895d-14db3f653f14",
+      "name_en": "Zimbabwe",
+      "name_ko": "짐바브웨",
+      "activities": 2,
+      "person_count": 1,
+      "sample_persons": [
+        "로버트 무가베"
+      ]
+    },
+    {
+      "id": "d55d355e-58cc-40aa-8661-1e8c91bfcfca",
+      "name_en": "Zunbil Dynasty",
+      "name_ko": "준빌 왕조",
+      "activities": 1,
+      "person_count": 1,
+      "sample_persons": [
+        "자불리스탄의 초대 루트빌"
+      ]
+    }
+  ]
+}
