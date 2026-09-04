@@ -64,59 +64,6 @@
   padding-inline-start: 8px;
 }
 
-.person-domain-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  width: fit-content;
-  max-width: 100%;
-  margin-top: 3px;
-  font-size: 10px;
-  line-height: 1.25;
-  font-weight: 650;
-  color: #58616a;
-  white-space: nowrap;
-}
-
-.person-domain-chip::before,
-.person-domain-legend-swatch {
-  content: "";
-  width: 8px;
-  height: 8px;
-  flex: 0 0 8px;
-  border-radius: 50%;
-  background: var(--person-domain-color);
-  border: 1px solid var(--person-domain-edge, var(--person-domain-color));
-  box-sizing: border-box;
-}
-
-.person-domain-legend {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px 12px;
-  margin-top: 8px;
-  color: #65707a;
-  font-size: 10px;
-  line-height: 1.3;
-}
-
-.person-domain-legend-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  white-space: nowrap;
-}
-
-.person-domain-legend-item[data-domain="ruler"] { --person-domain-color: var(--atlas-person-domain-ruler); --person-domain-edge: var(--atlas-person-domain-ruler); }
-.person-domain-legend-item[data-domain="military"] { --person-domain-color: var(--atlas-person-domain-military); --person-domain-edge: var(--atlas-person-domain-military); }
-.person-domain-legend-item[data-domain="science"] { --person-domain-color: var(--atlas-person-domain-science); --person-domain-edge: var(--atlas-person-domain-science); }
-.person-domain-legend-item[data-domain="technology"] { --person-domain-color: var(--atlas-person-domain-technology); --person-domain-edge: var(--atlas-person-domain-technology); }
-.person-domain-legend-item[data-domain="commerce"] { --person-domain-color: var(--atlas-person-domain-commerce); --person-domain-edge: var(--atlas-person-domain-commerce); }
-.person-domain-legend-item[data-domain="culture"] { --person-domain-color: var(--atlas-person-domain-culture); --person-domain-edge: var(--atlas-person-domain-culture); }
-.person-domain-legend-item[data-domain="religion"] { --person-domain-color: var(--atlas-person-domain-religion); --person-domain-edge: var(--atlas-person-domain-religion-edge); }
-.person-domain-legend-item[data-domain="exploration"] { --person-domain-color: var(--atlas-person-domain-exploration); --person-domain-edge: var(--atlas-person-domain-exploration); }
-
 .person-domain-form select {
   min-height: 34px;
 }
@@ -129,13 +76,4 @@
 
 .person-domain-save-state.is-error {
   color: #a73c36;
-}
-
-@media (max-width: 760px) {
-  .person-domain-legend {
-    gap: 5px 9px;
-  }
-  .person-domain-chip {
-    font-size: 9px;
-  }
 }
