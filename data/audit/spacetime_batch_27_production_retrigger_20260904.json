@@ -1,0 +1,12 @@
+{
+  "kind": "spacetime_batch_production_retrigger",
+  "batch": 27,
+  "basis_main_sha": "604810f751e79e54e37fe4a588745b8f8ce59e4f",
+  "basis_pr": 888,
+  "reason": "Vercel Git integration did not create a Production deployment for the merged batch 27 main SHA. This audit-only commit retriggers the main push without changing spatial data.",
+  "expected_spatial_counts": {
+    "polity_geography": 590,
+    "polity_subregion": 564
+  },
+  "verification_policy": "Validate Production on the descendant main SHA, require READY state, verify the batch 27 spatial index counts, and confirm all 10 reviewed polity IDs from PR #888 are present before closing batch 27."
+}
