@@ -1,0 +1,34 @@
+{
+  "schema": "atlas-reviewed-person-merge/v1",
+  "request_id": "reviewed-person-merge:yelu-dashi-dezong:20260903:v1",
+  "review_status": "approved",
+  "survivor_person_id": "312c56af-d6e2-4713-8ef1-91877ee66f9b",
+  "source_person_id": "0274dd73-8573-5cd7-9013-3aed524d4f4d",
+  "requirement_key": "p10:yelu-dashi:western-liao-dezong:reviewed-same-person",
+  "expected": {
+    "source_activity_count_after_correction": 0,
+    "survivor_activity_id": "c739480b-0ee2-4d8b-983e-0c7965b66433",
+    "survivor_activity_start": 1124,
+    "survivor_activity_end": 1143,
+    "survivor_names": [
+      "Yelü Dashi",
+      "야율대석"
+    ],
+    "source_names": [
+      "Emperor Dezong of Western Liao",
+      "서요 덕종"
+    ]
+  },
+  "evidence": {
+    "issue": 848,
+    "historical_identity": "Dezong (德宗) is the temple name of Yelü Dashi (耶律大石), founder of Western Liao/Qara Khitai.",
+    "production_duplicate_rows": [
+      "0274dd73-8573-5cd7-9013-3aed524d4f4d",
+      "312c56af-d6e2-4713-8ef1-91877ee66f9b"
+    ],
+    "duplicate_interval": "1124-1143",
+    "reviewed_survivor_reason": "Yelü Dashi row is the reviewed normalized identity and carries the verified NamuWiki link.",
+    "execution_trigger_revision": 2,
+    "duplicate_activity_retired_in_production": true
+  }
+}
