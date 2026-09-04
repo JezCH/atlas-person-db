@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:rene-descartes:dutch-republic:1637:v1",
+  "person": {
+    "canonical_name_en": "René Descartes",
+    "display_name_ko": "르네 데카르트",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Dutch Republic",
+    "display_name_ko": "네덜란드 공화국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "period_basis": "intellectual_activity",
+    "role": "Philosopher and mathematician",
+    "role_display_name_ko": "철학자·수학자",
+    "start_year": 1637,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1637,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 1637 as Descartes's representative Dutch intellectual-activity year: while living in the Dutch Republic, he published the Discours de la méthode together with La Géométrie at Leiden, linking his philosophical method with the algebraic treatment of geometry."
+  },
+  "sources": [
+    {
+      "title": "René Descartes — Stanford Encyclopedia of Philosophy",
+      "canonical_url": "https://plato.stanford.edu/entries/descartes/",
+      "citation_text": "The Stanford Encyclopedia of Philosophy records Descartes's move to the Dutch Netherlands by the end of 1628 and his major philosophical, mathematical, and scientific work there before his move to Sweden in 1649.",
+      "source_type": "academic_reference"
+    },
+    {
+      "title": "Discours de la methode — Utrecht University Repository",
+      "canonical_url": "https://dbc.library.uu.nl/handle/20.500.14918/21863",
+      "citation_text": "Utrecht University records Descartes's Discours de la méthode as a 1637 book published at Leiden by Jan Maire.",
+      "source_type": "academic_reference"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-04",
+      "document_title": "르네 데카르트",
+      "url": "https://namu.wiki/w/%EB%A5%B4%EB%84%A4%20%EB%8D%B0%EC%B9%B4%EB%A5%B4%ED%8A%B8"
+    }
+  }
+}
