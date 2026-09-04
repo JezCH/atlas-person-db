@@ -7,7 +7,7 @@
   "requirement_key": "p10:yelu-dashi:western-liao-dezong:reviewed-same-person",
   "expected": {
     "source_activity_count_after_correction": 0,
-    "survivor_activity_id": "c739480b-0ee2-4d8b-983e-0c7965b66433",
+    "survivor_activity_id": "c5c48bce-88fe-52e0-a707-8bfaf1dbdbc7",
     "survivor_activity_start": 1124,
     "survivor_activity_end": 1143,
     "survivor_names": [
@@ -28,7 +28,7 @@
     ],
     "duplicate_interval": "1124-1143",
     "reviewed_survivor_reason": "Yelü Dashi row is the reviewed normalized identity and carries the verified NamuWiki link.",
-    "execution_trigger_revision": 2,
+    "execution_trigger_revision": 3,
     "duplicate_activity_retired_in_production": true
   }
 }
