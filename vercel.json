@@ -40,6 +40,10 @@
       "destination": "/api/atlas-read?__atlas_read_surface=admin-system-status"
     },
     {
+      "source": "/api/atlas-person-domain",
+      "destination": "/api/atlas-mutate?__atlas_mutation_surface=person-domain"
+    },
+    {
       "source": "/api/atlas-p11-baseline-b-capture",
       "destination": "/api/atlas-audit-inventory?__atlas_audit_surface=p11-baseline-b-capture"
     }
