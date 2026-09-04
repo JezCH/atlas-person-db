@@ -13,14 +13,16 @@ const {
 const root = path.resolve(new URL('..', import.meta.url).pathname);
 const baseline = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 
-test('authoring migration registry is ordered and contains durable lifecycle-safe ledger and Person reference migrations', () => {
-  assert.equal(AUTHORING_MIGRATION_PATHS.length, 7);
+test('authoring migration registry is ordered and contains durable lifecycle-safe Person migrations', () => {
+  assert.equal(AUTHORING_MIGRATION_PATHS.length, 8);
   assert.match(AUTHORING_MIGRATION_PATHS[0], /20260811_authoring_manifest_runs\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[1], /20260811_authoring_result_snapshot\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[2], /20260814_authoring_ledger_live_reference_lifecycle\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[3], /20260815_human_authoring_manifest_schema\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[4], /20260821_person_external_references\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[5], /20260821_human_authoring_external_reference_sync\.sql$/);
+  assert.match(AUTHORING_MIGRATION_PATHS[6], /20260902_ongoing_activity_terms\.sql$/);
+  assert.match(AUTHORING_MIGRATION_PATHS[7], /20260904_person_representative_domains\.sql$/);
   const migrations = readAuthoringMigrations();
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS manifest_schema text/i);
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS result_snapshot jsonb/i);
@@ -52,6 +54,12 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.match(humanAuthoringReferenceSync, /sync_human_authoring_external_references/i);
   assert.match(humanAuthoringReferenceSync, /person_external_references/i);
   assert.match(humanAuthoringReferenceSync, /checked_at/i);
+
+  const representativeDomain = migrations[7].sql;
+  assert.match(representativeDomain, /ADD COLUMN IF NOT EXISTS representative_domain text/i);
+  assert.match(representativeDomain, /person_representative_domain_check/i);
+  assert.match(representativeDomain, /set_person_representative_domain/i);
+  assert.doesNotMatch(representativeDomain, /CREATE TABLE\s+atlas_v2\.person_representative_domains/i);
 });
 
 test('current clean schema baseline remains the measured pre-lifecycle Production shape', () => {
