@@ -1,0 +1,73 @@
+name: ATLAS Batch 27 Autopatch
+
+on:
+  push:
+    branches:
+      - agent/spacetime-polity-placement-batch-27
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply batch 27 spatial bindings
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('node:fs');
+          const indexPath = 'atlas-polity-spatial-index.json';
+          const index = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+          const additions = [
+            ['abcc7d46-63a2-4ebb-a561-0955a369000a','west-asia','iranian-plateau'],
+            ['333274e4-e616-491c-8446-c4261f8b007d','africa','maghreb-north-africa'],
+            ['2949cb6d-d69a-4216-810f-a938fa7b0a3a','europe','central-europe'],
+            ['58b8b6af-7b5f-4228-9c33-cc0899d71d7a','europe','russia-volga'],
+            ['d53f7c51-90b2-4e91-8156-025390407999','africa','west-africa'],
+            ['f1959701-02e2-45d5-a527-8ea35c64cbcc','east-asia','china'],
+            ['03eae136-add2-4a17-b9b1-6f04e64a18a2','europe','russia-volga'],
+            ['b8a160cb-45e1-4d3e-a04c-118db0eba405','europe','balkans'],
+            ['d292cfd5-9ef0-418c-b1a0-12ef30aed31d','americas','mesoamerica'],
+            ['cf76ecc3-b560-48dd-8770-461e492ab3b0','europe','western-europe']
+          ];
+          for (const [id, macro, sub] of additions) {
+            if (index.polity_geography[id] || index.polity_subregions[id]) throw new Error(`already mapped: ${id}`);
+            index.polity_geography[id] = macro;
+            index.polity_subregions[id] = sub;
+          }
+          const sorted = (obj) => Object.fromEntries(Object.entries(obj).sort(([a],[b]) => a.localeCompare(b)));
+          index.polity_geography = sorted(index.polity_geography);
+          index.polity_subregions = sorted(index.polity_subregions);
+          index.generated_at = '2026-09-04T17:25:00+09:00';
+          fs.writeFileSync(indexPath, JSON.stringify(index, null, 2) + '\n');
+          function replaceExact(path, before, after) {
+            let text = fs.readFileSync(path, 'utf8');
+            if (!text.includes(before)) throw new Error(`${path}: missing expected text ${before}`);
+            text = text.replace(before, after);
+            fs.writeFileSync(path, text);
+          }
+          replaceExact('tests/person-spacetime-spatial-index-coverage.test.mjs','assert.equal(Object.keys(index.polity_geography).length, 580);','assert.equal(Object.keys(index.polity_geography).length, 590);');
+          replaceExact('tests/person-spacetime-spatial-index-coverage.test.mjs','assert.equal(Object.keys(index.polity_subregions).length, 554);','assert.equal(Object.keys(index.polity_subregions).length, 564);');
+          replaceExact('tests/spacetime-taxonomy-migration.test.mjs','  mesoamerica: 17,','  mesoamerica: 18,');
+          replaceExact('tests/spacetime-taxonomy-migration.test.mjs','  "russia-volga": 9,','  "russia-volga": 11,');
+          replaceExact('tests/spacetime-taxonomy-migration.test.mjs','  "maghreb-north-africa": 12,','  "maghreb-north-africa": 13,');
+          replaceExact('tests/spacetime-taxonomy-migration.test.mjs','assert.equal(Object.keys(index.polity_subregions).length, 554);','assert.equal(Object.keys(index.polity_subregions).length, 564);');
+          NODE
+      - name: Commit clean batch 27 diff
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rm .github/workflows/atlas-batch27-autopatch.yml
+          git add atlas-polity-spatial-index.json tests/person-spacetime-spatial-index-coverage.test.mjs tests/spacetime-taxonomy-migration.test.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Backfill clear spacetime polity placements batch 27'
+          git push origin HEAD:agent/spacetime-polity-placement-batch-27
