@@ -102,8 +102,8 @@
     }
     const label = LABELS[domain] || domain;
     if (oldChip) {
-      oldChip.dataset.domain = domain;
-      oldChip.textContent = label;
+      if (oldChip.dataset.domain !== domain) oldChip.dataset.domain = domain;
+      if (oldChip.textContent !== label) oldChip.textContent = label;
       return;
     }
     const chip = document.createElement("span");
