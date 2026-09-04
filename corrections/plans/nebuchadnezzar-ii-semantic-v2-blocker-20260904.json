@@ -1,0 +1,79 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "nebuchadnezzar_ii_semantic_v2_blocker_20260904",
+  "as_of": "2026-09-04",
+  "status": "REVIEWED_TARGETED_SEMANTIC_V2_BACKFILL",
+  "release_order": 950,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": [
+    "scripts/build-p9-completeness-repair-plan.mjs",
+    "stage2/catalogs/relation-types.v1.json",
+    "stage2/integration/p9-legacy-temporal-metadata-migration.v1.json",
+    "historical relation-semantics audit exact-role policy (PR #107 / run 31511164659)",
+    "ATLAS Audit Inventory run 33862298935 / Production SHA a228493f1c8ca3a04055153fadfcc04f53014ca3"
+  ],
+  "baseline": {
+    "deployment_sha": "a228493f1c8ca3a04055153fadfcc04f53014ca3",
+    "baseline_digest": "sha256:c9130d885a276346c3ad548bcdff2ca3a02ad1d23365e4670e62de85b5aa6e69"
+  },
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "reviewed_legacy_temporal_metadata_materialization_only": true,
+    "runtime_compile_override_writeback_forbidden": true,
+    "generic_relation_default_forbidden": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "p11_b7aff6cc-95af-58e6-ba3b-5b2fc6be0600",
+      "type": "rewrite_activity",
+      "activity_id": "b7aff6cc-95af-58e6-ba3b-5b2fc6be0600",
+      "baseline_before": {
+        "person_id": "037b92ed-fc9b-526e-b5c7-6075b361df6e",
+        "polity_id": "f15861e6-3769-5d40-87b8-be24fc1df20e",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": -605,
+        "activity_end": -562,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-2.json:4:5e1b1c0278d7d1ea",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "b7aff6cc-95af-58e6-ba3b-5b2fc6be0600",
+        "person_id": "037b92ed-fc9b-526e-b5c7-6075b361df6e",
+        "polity_id": "f15861e6-3769-5d40-87b8-be24fc1df20e",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": -605,
+        "activity_end": -562,
+        "activity_start_detail": {
+          "year": -605,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": -562,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-2.json:4:5e1b1c0278d7d1ea",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES"
+      }
+    }
+  ]
+}
