@@ -220,7 +220,13 @@ function detectPersonDuplicateCandidates({ names = [], activities = [], requirem
   emitIndexPairs(tokenIndex, "TOKEN_SET_NAME", 0.62, accumulator);
   emitRequiredPairs(requirements, livePersonIds, accumulator);
 
-  const activitiesByPerson = validatedActivityMap(activities);
+  const candidatePersonIds = new Set();
+  for (const candidate of accumulator.values()) {
+    candidatePersonIds.add(candidate.person_low_id);
+    candidatePersonIds.add(candidate.person_high_id);
+  }
+  const candidateActivities = (activities || []).filter((row) => candidatePersonIds.has(String(row?.person_id || "")));
+  const activitiesByPerson = validatedActivityMap(candidateActivities);
   const candidates = [];
   for (const candidate of accumulator.values()) {
     const context = contextEvidence(activitiesByPerson.get(candidate.person_low_id) || [], activitiesByPerson.get(candidate.person_high_id) || []);
