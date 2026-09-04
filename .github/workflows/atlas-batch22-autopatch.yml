@@ -1,0 +1,80 @@
+name: ATLAS Batch 22 Autopatch
+
+on:
+  push:
+    branches:
+      - agent/spacetime-polity-placement-batch-22
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply batch 22 spatial bindings
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('node:fs');
+          const indexPath = 'atlas-polity-spatial-index.json';
+          const index = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+          const additions = [
+            ['fa684d65-cae7-49b8-9d0c-f12e1d03076d','americas','north-america'],
+            ['bc8c6e48-a672-4d5f-9692-bd7c751ad7a4','americas','south-america'],
+            ['44c72c42-134a-4bc5-8a4b-bf5e4f6a7a2c','southeast-asia','maritime-southeast-asia'],
+            ['77cf8084-1925-4050-a6d4-51813bf7cd93','europe','italy'],
+            ['d64f8912-de04-4428-a9c7-31284f4c312a','americas','mesoamerica'],
+            ['9c0358cd-858d-460a-8453-2f1aabbda009','americas','south-america'],
+            ['8e5b3864-9c3a-49c4-8cc6-8272445276f9','europe','northern-europe'],
+            ['a405607e-c7d4-4bd8-a57f-aced63b00b4e','europe','balkans'],
+            ['bdf20b00-637d-4885-9fc4-cda061afb746','oceania','pacific-islands'],
+            ['afa43106-21d7-480f-8c42-06c3f59233ae','oceania','australasia']
+          ];
+          for (const [id, macro, sub] of additions) {
+            if (index.polity_geography[id] || index.polity_subregions[id]) throw new Error(`already mapped: ${id}`);
+            index.polity_geography[id] = macro;
+            index.polity_subregions[id] = sub;
+          }
+          const sorted = (obj) => Object.fromEntries(Object.entries(obj).sort(([a],[b]) => a.localeCompare(b)));
+          index.polity_geography = sorted(index.polity_geography);
+          index.polity_subregions = sorted(index.polity_subregions);
+          index.generated_at = '2026-09-04T14:53:00+09:00';
+          fs.writeFileSync(indexPath, JSON.stringify(index, null, 2) + '\n');
+
+          function replaceExact(path, before, after) {
+            let text = fs.readFileSync(path, 'utf8');
+            if (!text.includes(before)) throw new Error(`${path}: missing expected text ${before}`);
+            text = text.replace(before, after);
+            fs.writeFileSync(path, text);
+          }
+          replaceExact('tests/person-spacetime-spatial-index-coverage.test.mjs',
+            'assert.equal(Object.keys(index.polity_geography).length, 535);',
+            'assert.equal(Object.keys(index.polity_geography).length, 545);');
+          replaceExact('tests/person-spacetime-spatial-index-coverage.test.mjs',
+            'assert.equal(Object.keys(index.polity_subregions).length, 509);',
+            'assert.equal(Object.keys(index.polity_subregions).length, 519);');
+          replaceExact('tests/spacetime-taxonomy-migration.test.mjs',
+            '  mesoamerica: 15,',
+            '  mesoamerica: 16,');
+          replaceExact('tests/spacetime-taxonomy-migration.test.mjs',
+            'assert.equal(Object.keys(index.polity_subregions).length, 509);',
+            'assert.equal(Object.keys(index.polity_subregions).length, 519);');
+          NODE
+      - name: Commit clean batch 22 diff
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rm .github/workflows/atlas-batch22-autopatch.yml
+          git add atlas-polity-spatial-index.json tests/person-spacetime-spatial-index-coverage.test.mjs tests/spacetime-taxonomy-migration.test.mjs
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Backfill clear spacetime polity placements batch 22'
+          git push origin HEAD:agent/spacetime-polity-placement-batch-22
