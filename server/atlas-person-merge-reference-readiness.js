@@ -15,6 +15,7 @@ const EXPECTED_PERSON_FKS = Object.freeze([
 const EXPECTED_RELATIONSHIP_FKS = Object.freeze([
   Object.freeze({ key: "atlas_v2.authoring_manifest_runs.relationship_id", delete_action: "SET NULL" }),
   Object.freeze({ key: "atlas_v2.chronology_claims.person_politics_id", delete_action: "CASCADE" }),
+  Object.freeze({ key: "atlas_v2.person_politics_context_polities.person_politics_id", delete_action: "CASCADE" }),
   Object.freeze({ key: "atlas_v2.person_politics_sources.person_politics_id", delete_action: "CASCADE" }),
   Object.freeze({ key: "atlas_v2.relationship_descriptions.person_politics_id", delete_action: "CASCADE" })
 ]);
