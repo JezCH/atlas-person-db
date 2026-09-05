@@ -1,0 +1,23 @@
+{
+  "schema": "atlas-person-representative-domain-review-hold/v1",
+  "status": "editorial_review_required",
+  "production_snapshot_date": "2026-09-05",
+  "source_surface": "/api/atlas-person-read?limit=50",
+  "source_main_sha": "ffefa531e2cd6a412f1af4b1beeaec50138b9cd3",
+  "entries": [
+    {
+      "person_id": "331ed75d-99ca-5e31-8bf9-6f6d6e8d32d7",
+      "canonical_name_en": "Nefertiti",
+      "preferred_name_ko": "네페르티티",
+      "representative_domain": null,
+      "reason": "Production currently models her as Great Royal Wife with active_in/general_activity semantics and a prominent ceremonial/religious role, not as an explicit sovereign ruler. Ruler versus religion requires editorial judgment rather than office-name automation."
+    },
+    {
+      "person_id": "1780b365-11b0-4377-8d3e-0d1ffe9aa63f",
+      "canonical_name_en": "Jezebel",
+      "preferred_name_ko": "이세벨",
+      "representative_domain": null,
+      "reason": "Production models her as Queen consort and queen mother with active_in/general_activity semantics. Her representative identity spans court politics and religious conflict without an explicit sovereign-ruler relation, so automatic ruler assignment would exceed the agreed rule."
+    }
+  ]
+}
