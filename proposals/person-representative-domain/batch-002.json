@@ -5,15 +5,15 @@
   "source_surface": "/api/atlas-person-read?limit=50",
   "source_main_sha": "ffefa531e2cd6a412f1af4b1beeaec50138b9cd3",
   "entries": [
-    {"person_id":"d1234380-dd54-4608-90ca-67d0b05cf447","canonical_name_en":"Senusret III","preferred_name_ko":"세누스레트 3세","representative_domain":"ruler","basis":"Production records him as Pharaoh with sovereign reign semantics."},
-    {"person_id":"e4d6b96d-92c4-5b6c-b43a-14639526b087","canonical_name_en":"Hammurabi","preferred_name_ko":"함무라비","representative_domain":"ruler","basis":"Production records him as King, conqueror and lawgiver of the Old Babylonian Empire; sovereign identity takes priority."},
-    {"person_id":"b730c615-3945-47b2-bd3d-4736b2204177","canonical_name_en":"Hattusili I","preferred_name_ko":"하투실리 1세","representative_domain":"ruler","basis":"Production records him as Great King of the Hittite Kingdom with reign semantics."},
-    {"person_id":"52237f0f-0679-5c65-adaa-a36a9c535a6f","canonical_name_en":"Mursili I","preferred_name_ko":"무르실리 1세","representative_domain":"ruler","basis":"Production records him as Great King of the Hittite Kingdom with reign semantics."},
-    {"person_id":"901c7467-4f98-41a1-9d6f-3580862de812","canonical_name_en":"Apepi","preferred_name_ko":"아페피","representative_domain":"ruler","basis":"Production records him as Pharaoh of the Hyksos Fifteenth Dynasty."},
-    {"person_id":"f0b930fd-55e0-44c2-b046-6e743be4b3c1","canonical_name_en":"Burnaburiash I","preferred_name_ko":"부르나부리아시 1세","representative_domain":"ruler","basis":"Production records him as King of Kassite Babylonia."},
-    {"person_id":"52530876-ecec-5a85-87c5-90eab802ec50","canonical_name_en":"Hatshepsut","preferred_name_ko":"하트셉수트","representative_domain":"ruler","basis":"Production records her as Pharaoh of New Kingdom Egypt with reign semantics."},
-    {"person_id":"88cb58fa-a33a-4536-8615-68f5d201321c","canonical_name_en":"Amenhotep III","preferred_name_ko":"아멘호테프 3세","representative_domain":"ruler","basis":"Production records him as Pharaoh of New Kingdom Egypt with reign semantics."},
-    {"person_id":"c1aae794-9c62-54b0-83cb-e7359b352099","canonical_name_en":"Akhenaten","preferred_name_ko":"아케나톤","representative_domain":"ruler","basis":"Production records him as Pharaoh; his religious program does not displace sovereign identity under the project rule."},
-    {"person_id":"aa44d430-c945-47f7-be4f-2caf83dd5733","canonical_name_en":"Suppiluliuma I","preferred_name_ko":"수필룰리우마 1세","representative_domain":"ruler","basis":"Production records him as Great King of the Hittite Empire with sovereign reign semantics."}
+    {"person_id":"d1234380-dd54-4608-90ca-67d0b05cf447","canonical_name_en":"Senusret III","preferred_name_ko":"세누스레트 3세","representative_domain":"governance","basis":"Production records him as Pharaoh with sovereign reign semantics."},
+    {"person_id":"e4d6b96d-92c4-5b6c-b43a-14639526b087","canonical_name_en":"Hammurabi","preferred_name_ko":"함무라비","representative_domain":"governance","basis":"Production records him as King, conqueror and lawgiver of the Old Babylonian Empire; sovereign identity takes priority."},
+    {"person_id":"b730c615-3945-47b2-bd3d-4736b2204177","canonical_name_en":"Hattusili I","preferred_name_ko":"하투실리 1세","representative_domain":"governance","basis":"Production records him as Great King of the Hittite Kingdom with reign semantics."},
+    {"person_id":"52237f0f-0679-5c65-adaa-a36a9c535a6f","canonical_name_en":"Mursili I","preferred_name_ko":"무르실리 1세","representative_domain":"governance","basis":"Production records him as Great King of the Hittite Kingdom with reign semantics."},
+    {"person_id":"901c7467-4f98-41a1-9d6f-3580862de812","canonical_name_en":"Apepi","preferred_name_ko":"아페피","representative_domain":"governance","basis":"Production records him as Pharaoh of the Hyksos Fifteenth Dynasty."},
+    {"person_id":"f0b930fd-55e0-44c2-b046-6e743be4b3c1","canonical_name_en":"Burnaburiash I","preferred_name_ko":"부르나부리아시 1세","representative_domain":"governance","basis":"Production records him as King of Kassite Babylonia."},
+    {"person_id":"52530876-ecec-5a85-87c5-90eab802ec50","canonical_name_en":"Hatshepsut","preferred_name_ko":"하트셉수트","representative_domain":"governance","basis":"Production records her as Pharaoh of New Kingdom Egypt with reign semantics."},
+    {"person_id":"88cb58fa-a33a-4536-8615-68f5d201321c","canonical_name_en":"Amenhotep III","preferred_name_ko":"아멘호테프 3세","representative_domain":"governance","basis":"Production records him as Pharaoh of New Kingdom Egypt with reign semantics."},
+    {"person_id":"c1aae794-9c62-54b0-83cb-e7359b352099","canonical_name_en":"Akhenaten","preferred_name_ko":"아케나톤","representative_domain":"governance","basis":"Production records him as Pharaoh; his religious program does not displace sovereign identity under the project rule."},
+    {"person_id":"aa44d430-c945-47f7-be4f-2caf83dd5733","canonical_name_en":"Suppiluliuma I","preferred_name_ko":"수필룰리우마 1세","representative_domain":"governance","basis":"Production records him as Great King of the Hittite Empire with sovereign reign semantics."}
   ]
 }
