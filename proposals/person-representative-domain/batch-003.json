@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "proposal_only",
+  "production_snapshot_date": "2026-09-05",
+  "source_surface": "/api/atlas-person-read?limit=50",
+  "source_main_sha": "ffefa531e2cd6a412f1af4b1beeaec50138b9cd3",
+  "entries": [
+    {"person_id":"f9518a4b-bd24-48eb-9e42-55fb89eef03d","canonical_name_en":"Tutankhamun","preferred_name_ko":"투탕카멘","representative_domain":"ruler","basis":"Production records him as Pharaoh of New Kingdom Egypt with reign semantics."},
+    {"person_id":"18f04bb0-42c3-4575-ab41-e2bfa3e731c4","canonical_name_en":"Mursili II","preferred_name_ko":"무르실리 2세","representative_domain":"ruler","basis":"Production records him as King of the Hittite Empire with sovereign reign semantics."},
+    {"person_id":"a883fd2a-a3a1-4b99-bdce-82d9b0817ac5","canonical_name_en":"Muwatalli II","preferred_name_ko":"무와탈리 2세","representative_domain":"ruler","basis":"Production records him as Great King of the Hittite Empire; military command at Kadesh does not override sovereign identity."},
+    {"person_id":"554a98f3-c9d1-5314-a59d-6281a8f6524b","canonical_name_en":"Ramses II","preferred_name_ko":"람세스 2세","representative_domain":"ruler","basis":"Production role is Pharaoh and military commander; sovereign identity takes priority under the project rule."},
+    {"person_id":"3ae8bd24-fe2f-46a0-a814-cc653d4cdb9e","canonical_name_en":"Wu Ding","preferred_name_ko":"무정","representative_domain":"ruler","basis":"Production records him as King of Shang with reign semantics."},
+    {"person_id":"8ab70616-3de6-42f6-bbe0-03d1ccda7703","canonical_name_en":"Shutruk-Nakhunte I","preferred_name_ko":"슈트루크-나훈테 1세","representative_domain":"ruler","basis":"Production records him as King of Elam with sovereign reign semantics."},
+    {"person_id":"fca2b1ac-b428-42f5-a775-7502dde46fcb","canonical_name_en":"Ramesses III","preferred_name_ko":"람세스 3세","representative_domain":"ruler","basis":"Production records him as Pharaoh of New Kingdom Egypt with reign semantics."},
+    {"person_id":"32b207d7-c468-40e8-ae0f-fb2cd6bc8ea5","canonical_name_en":"David","preferred_name_ko":"다윗","representative_domain":"ruler","basis":"ATLAS historical record models him as King of the Kingdom of Israel; sovereign identity is representative."},
+    {"person_id":"be8a8b76-4dba-43fa-a8c6-91de33bee761","canonical_name_en":"Ahiram","preferred_name_ko":"아히람","representative_domain":"ruler","basis":"Production records him as King of the Kingdom of Byblos with reign semantics."},
+    {"person_id":"463b2510-1ce3-580b-a4cd-a5caeaeec4ba","canonical_name_en":"Solomon","preferred_name_ko":"솔로몬","representative_domain":"ruler","basis":"ATLAS historical record models him as King of the Kingdom of Israel with reign semantics."}
+  ]
+}
