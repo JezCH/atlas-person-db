@@ -8,6 +8,7 @@ const correctionOidc = require("../server/atlas-correction-github-oidc.js");
 
 const SHA = "a".repeat(40);
 const P11_WORKFLOW_REF = "JezCH/atlas-person-db/.github/workflows/atlas-p11-semantic-v2-backfill.yml@refs/heads/main";
+const SPATIAL_CANDIDATE_AUDIT_WORKFLOW_REF = "JezCH/atlas-person-db/.github/workflows/atlas-spatial-candidate-audit.yml@refs/heads/main";
 const UNRELATED_WORKFLOW_REF = "JezCH/atlas-person-db/.github/workflows/atlas-authoring-apply.yml@refs/heads/main";
 
 function trustPayload(oidc, workflowRef) {
@@ -25,7 +26,11 @@ function trustPayload(oidc, workflowRef) {
 }
 
 test("P11 semantic-v2 backfill is explicitly authorized for the audit audience without widening the workflow boundary", () => {
-  assert.deepEqual(auditOidc.ALLOWED_WORKFLOW_REFS, [auditOidc.EXPECTED_WORKFLOW_REF, P11_WORKFLOW_REF]);
+  assert.deepEqual(auditOidc.ALLOWED_WORKFLOW_REFS, [
+    auditOidc.EXPECTED_WORKFLOW_REF,
+    P11_WORKFLOW_REF,
+    SPATIAL_CANDIDATE_AUDIT_WORKFLOW_REF
+  ]);
   assert.equal(Object.isFrozen(auditOidc.ALLOWED_WORKFLOW_REFS), true);
   assert.doesNotThrow(() => auditOidc.verifyTrustClaims(trustPayload(auditOidc, auditOidc.EXPECTED_WORKFLOW_REF), SHA));
   assert.doesNotThrow(() => auditOidc.verifyTrustClaims(trustPayload(auditOidc, P11_WORKFLOW_REF), SHA));
