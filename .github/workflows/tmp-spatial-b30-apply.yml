@@ -1,0 +1,84 @@
+name: TEMP Spatial B30 Apply
+
+on:
+  push:
+    branches:
+      - ops/spatial-backfill-b30
+    paths:
+      - '.github/workflows/tmp-spatial-b30-apply.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ops/spatial-backfill-b30
+      - name: Apply reviewed B30 mappings and count locks
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          index_path = Path('atlas-polity-spatial-index.json')
+          data = json.loads(index_path.read_text())
+          geo = data['polity_geography']
+          sub = data['polity_subregions']
+
+          if len(geo) != 610 or len(sub) != 584:
+              raise SystemExit(f'Unexpected B30 baseline: geography={len(geo)} subregions={len(sub)}')
+
+          mappings = {
+              'a7bac349-444e-4c3c-8ae6-61a54ac586b4': ('europe', 'iberia'),
+              'b8fa1dd2-2710-4453-ab96-6a8db50c6d8b': ('south-asia', 'deccan-south-india'),
+              'd2cfa060-f641-4896-8ee9-33437967aa0b': ('europe', 'britain-ireland'),
+              'ee27c039-9d6f-4138-86a2-2b051de0b121': ('europe', 'iberia'),
+              '63c4d67f-2190-4b71-bde6-69d1cda80a3f': ('europe', 'balkans'),
+              '9a26d673-abe1-4d66-b691-3afdaf01a586': ('europe', 'balkans'),
+              'c5c4f6cb-ae44-4256-86e9-4e6f0d7068f4': ('europe', 'iberia'),
+              'f070299a-de6b-4094-b3ad-c5dc24a541c3': ('west-asia', 'anatolia'),
+              '63c0aa8d-bc0b-42c5-9118-612b6c650646': ('europe', 'balkans'),
+              'be139c7d-f43c-4bf6-8542-9a372d64c06d': ('europe', 'central-europe'),
+          }
+
+          collisions = [pid for pid in mappings if pid in geo or pid in sub]
+          if collisions:
+              raise SystemExit(f'B30 candidate already mapped: {collisions}')
+
+          for pid, (macro, leaf) in mappings.items():
+              geo[pid] = macro
+              sub[pid] = leaf
+
+          if len(geo) != 620 or len(sub) != 594:
+              raise SystemExit(f'Unexpected B30 result: geography={len(geo)} subregions={len(sub)}')
+
+          index_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n')
+
+          coverage = Path('tests/person-spacetime-spatial-index-coverage.test.mjs')
+          text = coverage.read_text()
+          old_geo = 'Object.keys(index.polity_geography).length, 610'
+          old_sub = 'Object.keys(index.polity_subregions).length, 584'
+          if old_geo not in text or old_sub not in text:
+              raise SystemExit('B30 coverage count-lock baseline missing')
+          text = text.replace(old_geo, 'Object.keys(index.polity_geography).length, 620')
+          text = text.replace(old_sub, 'Object.keys(index.polity_subregions).length, 594')
+          coverage.write_text(text)
+
+          taxonomy = Path('tests/spacetime-taxonomy-migration.test.mjs')
+          text = taxonomy.read_text()
+          if 'anatolia: 7' not in text or 'Object.keys(index.polity_subregions).length, 584' not in text:
+              raise SystemExit('B30 taxonomy count-lock baseline missing')
+          text = text.replace('anatolia: 7', 'anatolia: 8')
+          text = text.replace('Object.keys(index.polity_subregions).length, 584', 'Object.keys(index.polity_subregions).length, 594')
+          taxonomy.write_text(text)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add atlas-polity-spatial-index.json tests/person-spacetime-spatial-index-coverage.test.mjs tests/spacetime-taxonomy-migration.test.mjs
+          git commit -m 'spatial: backfill batch 30 polity placements'
+          git push origin HEAD:ops/spatial-backfill-b30
