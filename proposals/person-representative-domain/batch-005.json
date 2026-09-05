@@ -1,0 +1,17 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "proposal_only",
+  "production_snapshot_date": "2026-09-05",
+  "source_surface": "/api/atlas-person-read?limit=50",
+  "source_main_sha": "ffefa531e2cd6a412f1af4b1beeaec50138b9cd3",
+  "entries": [
+    {"person_id":"fa0cbc93-bdad-4968-aa7c-5f7beb4912d9","canonical_name_en":"Karib'il Watar","preferred_name_ko":"카리브일 와타르","representative_domain":"governance","basis":"Production records him as Sabaean Mukarrib with governance-category authority semantics."},
+    {"person_id":"25ee1777-8a7b-4b86-b00b-57c87e528f94","canonical_name_en":"Pheidon","preferred_name_ko":"페이돈","representative_domain":"governance","basis":"Production records him as King of Argos with reign semantics."},
+    {"person_id":"408275f9-0c4b-571f-a756-6983870e3737","canonical_name_en":"Ashurbanipal","preferred_name_ko":"아슈르바니팔","representative_domain":"governance","basis":"Production records him as King of the Neo-Assyrian Empire with reign semantics."},
+    {"person_id":"6049bd56-27db-5d5f-80ef-f319ee4d5a30","canonical_name_en":"Duke Mu of Qin","preferred_name_ko":"진 목공","representative_domain":"governance","basis":"Production records him as Duke ruling Qin with reign semantics."},
+    {"person_id":"8084b22e-9889-5569-bc9d-7fa4b449057b","canonical_name_en":"Duke Xiang of Song","preferred_name_ko":"송 양공","representative_domain":"governance","basis":"Production records him as Duke ruling Song with reign semantics."},
+    {"person_id":"daea0337-09c0-52d1-bb66-294b21188c85","canonical_name_en":"Duke Wen of Jin","preferred_name_ko":"진 문공","representative_domain":"governance","basis":"Production records him as Duke ruling Jin with reign semantics."},
+    {"person_id":"451c531e-86f0-4678-b377-4b6432aef6bf","canonical_name_en":"Theagenes of Megara","preferred_name_ko":"테아게네스","representative_domain":"governance","basis":"Production records him as Tyrant of Megara with governance-category authority semantics."},
+    {"person_id":"b05a6bac-9376-4e55-a516-c62e909103e7","canonical_name_en":"Periander","preferred_name_ko":"페리안드로스","representative_domain":"governance","basis":"Production records him as Tyrant of Corinth with governance-category authority semantics."}
+  ]
+}

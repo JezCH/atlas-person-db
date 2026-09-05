@@ -1,51 +1,57 @@
 :root {
-  --atlas-person-domain-ruler: #c79a24;
-  --atlas-person-domain-ruler-tint: rgba(199, 154, 36, 0.13);
-  --atlas-person-domain-military: #c94f47;
-  --atlas-person-domain-military-tint: rgba(201, 79, 71, 0.12);
-  --atlas-person-domain-science: #3478b8;
-  --atlas-person-domain-science-tint: rgba(52, 120, 184, 0.12);
-  --atlas-person-domain-technology: #66737d;
-  --atlas-person-domain-technology-tint: rgba(102, 115, 125, 0.13);
-  --atlas-person-domain-commerce: #3d8b5a;
-  --atlas-person-domain-commerce-tint: rgba(61, 139, 90, 0.12);
-  --atlas-person-domain-culture: #8a5caf;
-  --atlas-person-domain-culture-tint: rgba(138, 92, 175, 0.12);
-  --atlas-person-domain-religion: #ddd3b5;
+  --atlas-person-domain-governance: #d4af37;
+  --atlas-person-domain-governance-tint: rgba(212, 175, 55, 0.13);
+  --atlas-person-domain-military: #b83a3a;
+  --atlas-person-domain-military-tint: rgba(184, 58, 58, 0.12);
+  --atlas-person-domain-knowledge: #3f78c5;
+  --atlas-person-domain-knowledge-tint: rgba(63, 120, 197, 0.12);
+  --atlas-person-domain-technology: #59636d;
+  --atlas-person-domain-technology-tint: rgba(89, 99, 109, 0.13);
+  --atlas-person-domain-commerce: #2e8b57;
+  --atlas-person-domain-commerce-tint: rgba(46, 139, 87, 0.12);
+  --atlas-person-domain-culture: #9a5ba5;
+  --atlas-person-domain-culture-tint: rgba(154, 91, 165, 0.12);
+  --atlas-person-domain-religion: #e2d7b9;
   --atlas-person-domain-religion-edge: #857856;
-  --atlas-person-domain-religion-tint: rgba(221, 211, 181, 0.25);
-  --atlas-person-domain-exploration: #dd792c;
-  --atlas-person-domain-exploration-tint: rgba(221, 121, 44, 0.12);
+  --atlas-person-domain-religion-tint: rgba(226, 215, 185, 0.25);
+  --atlas-person-domain-exploration: #d96b1e;
+  --atlas-person-domain-exploration-tint: rgba(217, 107, 30, 0.12);
 }
 
 .person-card[data-representative-domain] {
-  --person-domain-color: #66737d;
-  --person-domain-edge: var(--person-domain-color);
-  --person-domain-tint: rgba(102, 115, 125, 0.08);
+  --person-domain-color: transparent;
+  --person-domain-edge: transparent;
+  --person-domain-tint: transparent;
 }
 
-.person-card[data-representative-domain="ruler"] {
-  --person-domain-color: var(--atlas-person-domain-ruler);
-  --person-domain-tint: var(--atlas-person-domain-ruler-tint);
+.person-card[data-representative-domain="governance"] {
+  --person-domain-color: var(--atlas-person-domain-governance);
+  --person-domain-edge: var(--atlas-person-domain-governance);
+  --person-domain-tint: var(--atlas-person-domain-governance-tint);
 }
 .person-card[data-representative-domain="military"] {
   --person-domain-color: var(--atlas-person-domain-military);
+  --person-domain-edge: var(--atlas-person-domain-military);
   --person-domain-tint: var(--atlas-person-domain-military-tint);
 }
-.person-card[data-representative-domain="science"] {
-  --person-domain-color: var(--atlas-person-domain-science);
-  --person-domain-tint: var(--atlas-person-domain-science-tint);
+.person-card[data-representative-domain="knowledge"] {
+  --person-domain-color: var(--atlas-person-domain-knowledge);
+  --person-domain-edge: var(--atlas-person-domain-knowledge);
+  --person-domain-tint: var(--atlas-person-domain-knowledge-tint);
 }
 .person-card[data-representative-domain="technology"] {
   --person-domain-color: var(--atlas-person-domain-technology);
+  --person-domain-edge: var(--atlas-person-domain-technology);
   --person-domain-tint: var(--atlas-person-domain-technology-tint);
 }
 .person-card[data-representative-domain="commerce"] {
   --person-domain-color: var(--atlas-person-domain-commerce);
+  --person-domain-edge: var(--atlas-person-domain-commerce);
   --person-domain-tint: var(--atlas-person-domain-commerce-tint);
 }
 .person-card[data-representative-domain="culture"] {
   --person-domain-color: var(--atlas-person-domain-culture);
+  --person-domain-edge: var(--atlas-person-domain-culture);
   --person-domain-tint: var(--atlas-person-domain-culture-tint);
 }
 .person-card[data-representative-domain="religion"] {
@@ -55,6 +61,7 @@
 }
 .person-card[data-representative-domain="exploration"] {
   --person-domain-color: var(--atlas-person-domain-exploration);
+  --person-domain-edge: var(--atlas-person-domain-exploration);
   --person-domain-tint: var(--atlas-person-domain-exploration-tint);
 }
 

@@ -4,14 +4,14 @@ const crypto = require("node:crypto");
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const DOMAIN_DEFINITIONS = Object.freeze([
-  Object.freeze({ code:"ruler", label_ko:"통치·정치 지도자" }),
+  Object.freeze({ code:"governance", label_ko:"통치·정치" }),
   Object.freeze({ code:"military", label_ko:"군사" }),
-  Object.freeze({ code:"science", label_ko:"학문·과학·사상" }),
+  Object.freeze({ code:"knowledge", label_ko:"학문·과학·사상" }),
   Object.freeze({ code:"technology", label_ko:"기술·공학·발명" }),
-  Object.freeze({ code:"commerce", label_ko:"상업·경제·무역" }),
+  Object.freeze({ code:"commerce", label_ko:"상업·경제" }),
   Object.freeze({ code:"culture", label_ko:"문화·예술" }),
-  Object.freeze({ code:"religion", label_ko:"종교" }),
-  Object.freeze({ code:"exploration", label_ko:"탐험·항해·개척" })
+  Object.freeze({ code:"religion", label_ko:"종교·신앙" }),
+  Object.freeze({ code:"exploration", label_ko:"탐험·항해" })
 ]);
 const DOMAIN_CODES = new Set(DOMAIN_DEFINITIONS.map((item) => item.code));
 

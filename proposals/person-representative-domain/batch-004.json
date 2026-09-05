@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "proposal_only",
+  "production_snapshot_date": "2026-09-05",
+  "source_surface": "/api/atlas-person-read?limit=50",
+  "source_main_sha": "ffefa531e2cd6a412f1af4b1beeaec50138b9cd3",
+  "entries": [
+    {"person_id":"71fa3e81-497c-479d-b05c-5f6010d992e4","canonical_name_en":"Hiram I of Tyre","preferred_name_ko":"히람 1세","representative_domain":"governance","basis":"Production records him as King of the Kingdom of Tyre with reign semantics."},
+    {"person_id":"e9046b2f-3e9e-403d-a234-58ea1231c850","canonical_name_en":"Pygmalion of Tyre","preferred_name_ko":"티레의 피그말리온","representative_domain":"governance","basis":"Production records him as King of the Kingdom of Tyre with reign semantics."},
+    {"person_id":"b6a7ecb6-28df-46da-8498-909c983ef5c0","canonical_name_en":"Alara","preferred_name_ko":"알라라","representative_domain":"governance","basis":"Production records him as King of the Kingdom of Kush."},
+    {"person_id":"c8ac5e56-ab74-4479-878b-24e10b65deec","canonical_name_en":"Piye","preferred_name_ko":"피이","representative_domain":"governance","basis":"Production records sovereign rule over Kush and pharaonic authority in Egypt; both point to governance."},
+    {"person_id":"d5dcc11d-b353-4fce-ae0d-c63bca04f4e4","canonical_name_en":"Tiglath-Pileser III","preferred_name_ko":"티글라트-필레세르 3세","representative_domain":"governance","basis":"Production records him as King of the Neo-Assyrian Empire and King of Babylon; sovereign identity is unambiguous."},
+    {"person_id":"9c73b699-aee1-5508-a393-9642f1083afa","canonical_name_en":"Duke Zhuang of Zheng","preferred_name_ko":"정 장공","representative_domain":"governance","basis":"Production records him as Duke ruling Zheng with reign semantics."},
+    {"person_id":"736ef04a-417a-42e2-938c-97b61f056d5e","canonical_name_en":"Midas","preferred_name_ko":"미다스","representative_domain":"governance","basis":"ATLAS historical record identifies the historical Midas as King of Phrygia."},
+    {"person_id":"fa6f39a5-2be2-4324-854a-27798db2a141","canonical_name_en":"Sennacherib","preferred_name_ko":"센나케립","representative_domain":"governance","basis":"Production records him as King of the Neo-Assyrian Empire with reign semantics."},
+    {"person_id":"b0962fc1-4cee-4bca-aa96-fc703adf988f","canonical_name_en":"Taharqa","preferred_name_ko":"타하르카","representative_domain":"governance","basis":"Production records him as both Kushite king and Egyptian pharaoh, including renewed Egyptian rule; sovereign identity is representative."},
+    {"person_id":"cbe04133-66f7-5b1b-a7cf-49f418a13e54","canonical_name_en":"Duke Huan of Qi","preferred_name_ko":"제 환공","representative_domain":"governance","basis":"Production records him as Duke ruling Qi with reign semantics."}
+  ]
+}
