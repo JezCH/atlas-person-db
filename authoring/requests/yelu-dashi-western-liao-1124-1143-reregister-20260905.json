@@ -1,0 +1,51 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:yelu-dashi:western-liao:1124-1143:reregister-20260905:v1",
+  "person": {
+    "canonical_name_en": "Yelü Dashi",
+    "display_name_ko": "야율대석",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Western Liao",
+    "display_name_ko": "서요",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Emperor",
+    "role_display_name_ko": "황제",
+    "start_year": 1124,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1143,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Yelü Dashi was the founder and first ruler of Western Liao (Qara Khitai). ATLAS retains the conventional 1124–1143 reign span, but marks the 1124 start approximate because specialist scholarship notes chronological inconsistencies in the Liao shi enthronement account. Dezong (德宗), rendered as Emperor Dezong of Western Liao / 서요 덕종, is Yelü Dashi's temple name and must not be modeled as a separate Person."
+  },
+  "sources": [
+    {
+      "title": "Michal Biran, The Empire of the Qara Khitai in Eurasian History: Between China and the Islamic World",
+      "citation_text": "Biran's specialist study treats Yelü Dashi as the founder of the Qara Khitai/Western Liao, discusses the chronological inconsistency surrounding the Liao shi's 1124 enthronement date, and places his death in 1143.",
+      "source_type": "academic_book"
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-05",
+      "document_title": "야율대석",
+      "url": "https://namu.wiki/w/%EC%95%BC%EC%9C%A8%EB%8C%80%EC%84%9D"
+    }
+  }
+}
