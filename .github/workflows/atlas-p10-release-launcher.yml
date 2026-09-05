@@ -1,5 +1,5 @@
 name: ATLAS P10 Release Launcher
-# Controlled CORE-1 closure checkpoint after the obsolete Western Liao duplicate Activity blocker was retired.
+# Controlled CORE closure launcher for governed P10 release and post-P10 P11 Baseline B capture.
 
 on:
   push:
@@ -67,6 +67,60 @@ jobs:
             exit 1
           fi
           echo "Controlled P10 revalidation workflow dispatched for ${GITHUB_SHA}."
+
+  dispatch_p11_baseline_b:
+    if: contains(github.event.head_commit.message, '[capture-p11-baseline-b]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Wait for exact main SHA to become Production runtime
+        shell: bash
+        env:
+          EXPECTED_SHA: ${{ github.sha }}
+          READINESS_URL: https://atlas-person-db.vercel.app/api/atlas-authoring-apply
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 75); do
+            body="$(curl --fail-with-body --silent --show-error "$READINESS_URL")"
+            runtime_sha="$(jq -r '.runtime_sha // ""' <<<"$body")"
+            if [[ "$runtime_sha" == "$EXPECTED_SHA" ]]; then
+              jq -e '
+                .ok==true and
+                .ready==true and
+                .readiness.person_merge.person_merge_lifecycle_version=="p10-v2-revalidated" and
+                .readiness.person_merge.required_person_merge_lifecycle_version=="p10-v2-revalidated"
+              ' <<<"$body" >/dev/null
+              echo "Exact Production runtime is ready for P11 capture: $runtime_sha"
+              exit 0
+            fi
+            echo "Waiting for Production $EXPECTED_SHA (currently ${runtime_sha:-unknown}) — attempt ${attempt}/75"
+            sleep 10
+          done
+          echo "Exact Production SHA did not become ready for P11 capture." >&2
+          exit 1
+
+      - name: Dispatch controlled P11 Baseline B capture
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CAPTURE_ID: p11_baseline_b_20260815_v2
+        run: |
+          set -euo pipefail
+          payload="$(jq -cn --arg capture "$CAPTURE_ID" '{ref:"main",inputs:{capture_id:$capture,approval:("CAPTURE:"+$capture)}}')"
+          status="$(curl --silent --show-error --output /tmp/p11-dispatch.json --write-out '%{http_code}' \
+            --request POST \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            -H 'Content-Type: application/json' \
+            --data "$payload" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/atlas-p11-baseline-b-capture.yml/dispatches")"
+          if [[ "$status" != "204" ]]; then
+            cat /tmp/p11-dispatch.json >&2 || true
+            echo "P11 workflow dispatch failed: HTTP $status" >&2
+            exit 1
+          fi
+          echo "Controlled P11 Baseline B capture dispatched for ${GITHUB_SHA}."
 
   dispatch_correction:
     if: contains(github.event.head_commit.message, '[launch-correction-snapshot]')
