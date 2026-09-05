@@ -10,7 +10,26 @@ const handler = require("../server/atlas-reviewed-person-merge-handler.js");
 const workflow = fs.readFileSync(new URL("../.github/workflows/atlas-reviewed-person-merge.yml", import.meta.url), "utf8");
 const api = fs.readFileSync(new URL("../api/atlas-authoring.js", import.meta.url), "utf8");
 const vercel = JSON.parse(fs.readFileSync(new URL("../vercel.json", import.meta.url), "utf8"));
-const mergeManifest = JSON.parse(fs.readFileSync(new URL("../corrections/reviewed-person-merges/yelu-dashi-dezong.json", import.meta.url), "utf8"));
+const mergeManifest = {
+  schema: "atlas-reviewed-person-merge/v1",
+  request_id: "reviewed-person-merge:test-fixture:v1",
+  review_status: "approved",
+  survivor_person_id: "312c56af-d6e2-4713-8ef1-91877ee66f9b",
+  source_person_id: "0274dd73-8573-5cd7-9013-3aed524d4f4d",
+  requirement_key: "p10:test-fixture",
+  expected: {
+    source_activity_count_after_correction: 0,
+    survivor_activity_id: "c739480b-0ee2-4d8b-983e-0c7965b66433",
+    survivor_activity_start: 1124,
+    survivor_activity_end: 1143,
+    survivor_names: ["Yelü Dashi", "야율대석"],
+    source_names: ["Emperor Dezong of Western Liao", "서요 덕종"]
+  },
+  evidence: {
+    issue: 848,
+    historical_identity: "Test fixture preserving the previously reviewed same-person contract."
+  }
+};
 const retireIntent = JSON.parse(fs.readFileSync(new URL("../corrections/intents/yelu-dashi-dezong-retire-duplicate-activity.json", import.meta.url), "utf8"));
 
 const SHA = "a".repeat(40);
@@ -43,8 +62,8 @@ test("reviewed Person merge OIDC trust is immutable to main push by repository o
   assert.throws(() => oidc.verifyClaims(trustedClaims({ workflow_ref:"wrong" }), SHA, 1000), /WORKFLOW_MISMATCH/);
 });
 
-test("Yelu Dashi reviewed merge manifest keeps the reviewed row and requires duplicate Activity retirement first", () => {
-  const parsed = handler.requireManifest(mergeManifest, "corrections/reviewed-person-merges/yelu-dashi-dezong.json");
+test("reviewed Person merge fixture keeps the reviewed row and requires duplicate Activity retirement first", () => {
+  const parsed = handler.requireManifest(mergeManifest, "corrections/reviewed-person-merges/test-fixture.json");
   assert.equal(parsed.survivorPersonId, "312c56af-d6e2-4713-8ef1-91877ee66f9b");
   assert.equal(parsed.sourcePersonId, "0274dd73-8573-5cd7-9013-3aed524d4f4d");
   assert.equal(parsed.survivorActivityId, "c739480b-0ee2-4d8b-983e-0c7965b66433");
@@ -61,7 +80,7 @@ test("reviewed merge payload rejects unapproved or unsafe manifests", () => {
   const base = {
     deployment_sha:SHA,
     workflow_sha:SHA,
-    manifest_path:"corrections/reviewed-person-merges/yelu-dashi-dezong.json",
+    manifest_path:"corrections/reviewed-person-merges/test-fixture.json",
     manifest:mergeManifest
   };
   assert.doesNotThrow(() => handler.requirePayload(base));
@@ -82,6 +101,12 @@ test("workflow waits for reviewed Activity correction before the physical merge 
   assert.match(workflow, /서요 덕종/);
   assert.match(workflow, /Emperor Dezong of Western Liao/);
   assert.match(workflow, /namuwiki\.document_title == "야율대석"/);
+});
+
+test("deletion-only reviewed merge cleanup is an explicit successful no-op", () => {
+  assert.match(workflow, /REVIEWED_MERGE_NOOP=true/);
+  assert.match(workflow, /deletion-only cleanup is a no-op/);
+  assert.match(workflow, /if: env\.REVIEWED_MERGE_NOOP != 'true'/);
 });
 
 test("reviewed merge reuses the consolidated authoring function and existing P10 merge service", () => {
