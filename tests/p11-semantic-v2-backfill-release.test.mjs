@@ -9,17 +9,16 @@ const workflow = fs.readFileSync(path.join(root, '.github/workflows/atlas-p11-se
 const release = JSON.parse(fs.readFileSync(path.join(root, 'stage2/releases/p11-semantic-v2-backfill-release.v1.json'), 'utf8'));
 const exceptions = JSON.parse(fs.readFileSync(path.join(root, 'stage2/contracts/p11-reviewed-semantic-v2-exceptions.v1.json'), 'utf8'));
 
-test('P11 semantic-v2 backfill release is exact-SHA, dry-run-first, bounded, and non-destructive', () => {
+test('P11 semantic-v2 backfill release is exact-SHA, current-delta-safe, dry-run-first, and non-destructive', () => {
   assert.equal(release.status, 'APPROVED_FOR_EXACT_SHA_PRODUCTION_CORRECTION_WORKFLOW');
-  assert.equal(release.execution_request, 'p11-semantic-v2-backfill-file-transport-retry-20260817');
+  assert.equal(release.execution_request, 'p11-semantic-v2-current-production-delta-20260906');
   assert.deepEqual(release.expected, {
-    semantic_v2_incomplete_before: 301,
-    relation_missing_before: 259,
-    relation_backfill_rows: 238,
-    temporal_backfill_rows: 301,
-    reviewed_relation_exceptions_live_after: 21,
     blocking_semantic_v2_incomplete_after: 0
   });
+  assert.equal(release.rules.current_production_delta_only, true);
+  assert.equal(release.rules.fixed_prebackfill_row_count_forbidden, true);
+  assert.equal(release.rules.strict_live_exception_filter_matches_baseline_b, true);
+  assert.equal(release.rules.reviewed_relation_exceptions_are_not_mutation_targets_when_temporally_complete, true);
   assert.equal(release.rules.exact_production_sha_required, true);
   assert.equal(release.rules.read_only_inventory_before_apply_required, true);
   assert.equal(release.rules.dry_run_before_each_apply_required, true);
@@ -45,7 +44,11 @@ test('P11 semantic-v2 backfill release is exact-SHA, dry-run-first, bounded, and
   assert.equal(workflow.includes('--data-binary "@${payload_file}"'), true);
   assert.equal(workflow.includes('--data "$payload"'), false);
   assert.match(workflow, /\/tmp\/atlas-p11-backfill\/requests/);
-  assert.match(workflow, /semantic_v2_incomplete == 21/);
-  assert.match(workflow, /null_counts\.relation_type_id == 21/);
+  assert.equal(workflow.includes('.operation_count == .blocking_semantic_v2_incomplete_before'), true);
+  assert.equal(workflow.includes('.semantic_v2_breakdown.semantic_v2_incomplete == $summary[0].reviewed_relation_exceptions_expected_after'), true);
+  assert.equal(workflow.includes('.semantic_v2_breakdown.null_counts.relation_type_id == $summary[0].reviewed_relation_exceptions_expected_after'), true);
+  assert.doesNotMatch(workflow, /semantic_v2_incomplete == 301/);
+  assert.doesNotMatch(workflow, /semantic_v2_incomplete == 21/);
+  assert.doesNotMatch(workflow, /null_counts\.relation_type_id == 21/);
   assert.doesNotMatch(workflow, /atlas-person-merge/i);
 });
