@@ -12,17 +12,23 @@ const {
 test("representative person domains stay fixed at eight editorial categories", () => {
   assert.deepEqual(
     DOMAIN_DEFINITIONS.map((item) => item.code),
-    ["ruler", "military", "science", "technology", "commerce", "culture", "religion", "exploration"]
+    ["governance", "military", "knowledge", "technology", "commerce", "culture", "religion", "exploration"]
+  );
+  assert.deepEqual(
+    DOMAIN_DEFINITIONS.map((item) => item.label_ko),
+    ["통치·정치", "군사", "학문·과학·사상", "기술·공학·발명", "상업·경제", "문화·예술", "종교·신앙", "탐험·항해"]
   );
 });
 
-test("representative domain accepts one controlled value or null", () => {
-  assert.equal(normalizeDomain(" ruler "), "ruler");
-  assert.equal(normalizeDomain("SCIENCE"), "science");
+test("representative domain accepts one canonical controlled value or null", () => {
+  assert.equal(normalizeDomain(" governance "), "governance");
+  assert.equal(normalizeDomain("KNOWLEDGE"), "knowledge");
   assert.equal(normalizeDomain(""), null);
   assert.equal(normalizeDomain(null), null);
+  assert.throws(() => normalizeDomain("ruler"), /PERSON_DOMAIN_VALUE_UNSUPPORTED/);
+  assert.throws(() => normalizeDomain("science"), /PERSON_DOMAIN_VALUE_UNSUPPORTED/);
   assert.throws(() => normalizeDomain("diplomacy"), /PERSON_DOMAIN_VALUE_UNSUPPORTED/);
-  assert.throws(() => normalizeDomain("science,technology"), /PERSON_DOMAIN_VALUE_UNSUPPORTED/);
+  assert.throws(() => normalizeDomain("knowledge,technology"), /PERSON_DOMAIN_VALUE_UNSUPPORTED/);
 });
 
 test("person domain target requires a UUID", () => {
