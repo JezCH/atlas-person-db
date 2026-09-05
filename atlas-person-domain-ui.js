@@ -3,14 +3,14 @@
 
   const ENDPOINT = "/api/atlas-person-domain";
   const DEFINITIONS = Object.freeze([
-    Object.freeze({ code:"ruler", label:"통치·정치 지도자" }),
+    Object.freeze({ code:"governance", label:"통치·정치" }),
     Object.freeze({ code:"military", label:"군사" }),
-    Object.freeze({ code:"science", label:"학문·과학·사상" }),
+    Object.freeze({ code:"knowledge", label:"학문·과학·사상" }),
     Object.freeze({ code:"technology", label:"기술·공학·발명" }),
-    Object.freeze({ code:"commerce", label:"상업·경제·무역" }),
+    Object.freeze({ code:"commerce", label:"상업·경제" }),
     Object.freeze({ code:"culture", label:"문화·예술" }),
-    Object.freeze({ code:"religion", label:"종교" }),
-    Object.freeze({ code:"exploration", label:"탐험·항해·개척" })
+    Object.freeze({ code:"religion", label:"종교·신앙" }),
+    Object.freeze({ code:"exploration", label:"탐험·항해" })
   ]);
   const LABELS = Object.freeze(Object.fromEntries(DEFINITIONS.map((item) => [item.code, item.label])));
   const domainByPerson = new Map();
