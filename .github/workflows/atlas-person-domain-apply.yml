@@ -1,0 +1,116 @@
+name: ATLAS Person Domain Apply
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/atlas-person-domain-apply.yml'
+      - 'server/atlas-github-oidc.js'
+      - 'server/atlas-person-domain-github-oidc.js'
+      - 'server/atlas-person-domain-handler.js'
+      - 'scripts/apply-person-domain-proposals.mjs'
+      - 'proposals/person-representative-domain/batch-001.json'
+      - 'proposals/person-representative-domain/batch-002.json'
+      - 'proposals/person-representative-domain/batch-003.json'
+      - 'proposals/person-representative-domain/batch-004.json'
+      - 'proposals/person-representative-domain/batch-005.json'
+      - 'proposals/person-representative-domain/hold-001.json'
+      - 'proposals/person-representative-domain/palette-smoke-001.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: atlas-person-domain-production
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: production
+    env:
+      ATLAS_PERSON_DOMAIN_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-person-domain
+      ATLAS_RUNTIME_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-authoring-apply
+      ATLAS_PERSON_DOMAIN_AUDIENCE: atlas-person-domain-api
+      ATLAS_EVIDENCE_DIR: artifacts/person-domain-apply
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate bounded Person domain apply client
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check scripts/apply-person-domain-proposals.mjs
+          node --test tests/atlas-person-domain-github-oidc.test.mjs tests/atlas-person-domain-service.test.mjs tests/atlas-person-domain-standard-v1.test.mjs
+
+      - name: Wait for exact Production runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$ATLAS_EVIDENCE_DIR"
+          ready=false
+          for attempt in $(seq 1 60); do
+            status="$(curl --silent --show-error --output "$ATLAS_EVIDENCE_DIR/runtime.json" --write-out '%{http_code}' "$ATLAS_RUNTIME_ENDPOINT")"
+            if [[ "$status" == "200" ]]; then
+              runtime_sha="$(jq -r '.runtime_sha // ""' "$ATLAS_EVIDENCE_DIR/runtime.json")"
+              if [[ "$runtime_sha" == "$GITHUB_SHA" ]]; then
+                echo "Exact Production runtime is live: $runtime_sha"
+                ready=true
+                break
+              fi
+              echo "Production runtime $runtime_sha is not exact workflow SHA $GITHUB_SHA (attempt ${attempt}/60)."
+            else
+              echo "Production runtime readiness returned HTTP $status (attempt ${attempt}/60)."
+            fi
+            sleep 5
+          done
+          [[ "$ready" == "true" ]] || { cat "$ATLAS_EVIDENCE_DIR/runtime.json" >&2 || true; echo 'Exact Production runtime did not become ready.' >&2; exit 1; }
+
+      - name: Acquire dedicated Person domain GitHub OIDC token
+        shell: bash
+        run: |
+          set -euo pipefail
+          oidc_token="$(curl --fail-with-body --silent --show-error \
+            -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_PERSON_DOMAIN_AUDIENCE}" | jq -er '.value')"
+          echo "::add-mask::${oidc_token}"
+          echo "ATLAS_PERSON_DOMAIN_OIDC_TOKEN=${oidc_token}" >> "$GITHUB_ENV"
+
+      - name: Apply and verify 8-domain Production smoke set
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/apply-person-domain-proposals.mjs smoke | tee "$ATLAS_EVIDENCE_DIR/smoke.jsonl"
+
+      - name: Apply and verify reviewed Batch 001 assignments
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/apply-person-domain-proposals.mjs batch | tee "$ATLAS_EVIDENCE_DIR/batch.jsonl"
+
+      - name: Final exact public read-back
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/apply-person-domain-proposals.mjs verify | tee "$ATLAS_EVIDENCE_DIR/verify.json"
+          curl --fail-with-body --silent --show-error "$ATLAS_PERSON_DOMAIN_ENDPOINT" | jq . > "$ATLAS_EVIDENCE_DIR/public-readback.json"
+          jq -e '.ok==true and .marker=="ATLAS_PERSON_REPRESENTATIVE_DOMAIN_V1"' "$ATLAS_EVIDENCE_DIR/public-readback.json" >/dev/null
+
+      - name: Upload immutable Person domain apply evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-person-domain-apply-${{ github.sha }}
+          path: artifacts/person-domain-apply
+          if-no-files-found: error
+          retention-days: 30

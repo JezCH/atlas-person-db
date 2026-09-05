@@ -50,6 +50,7 @@ test('historical C8 workflow manifest remains audit evidence while current workf
     'atlas-p11-baseline-b-capture.yml',
     'atlas-p11-baseline-b-readiness.yml',
     'atlas-p11-semantic-v2-backfill.yml',
+    'atlas-person-domain-apply.yml',
     'atlas-reviewed-person-merge.yml',
     'atlas-spacetime-production-visual.yml',
     'atlas-spatial-candidate-audit.yml',
@@ -138,6 +139,18 @@ test('historical C8 workflow manifest remains audit evidence while current workf
   assert.match(train2Workflow, /id-token:\s*write/);
   assert.match(train2Workflow, /APPLY:\$\{RELEASE_ID\}/);
   assert.doesNotMatch(train2Workflow, /SUPABASE_DB_URL/);
+
+  const personDomainWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-person-domain-apply.yml', import.meta.url), 'utf8');
+  assert.match(personDomainWorkflow, /^\s*push\s*:/m);
+  assert.match(personDomainWorkflow, /branches:\s*\n\s*- main/);
+  assert.match(personDomainWorkflow, /workflow_dispatch\s*:/m);
+  assert.match(personDomainWorkflow, /environment:\s*production/);
+  assert.match(personDomainWorkflow, /id-token:\s*write/);
+  assert.match(personDomainWorkflow, /atlas-person-domain-api/);
+  assert.match(personDomainWorkflow, /apply-person-domain-proposals\.mjs smoke/);
+  assert.match(personDomainWorkflow, /apply-person-domain-proposals\.mjs batch/);
+  assert.match(personDomainWorkflow, /apply-person-domain-proposals\.mjs verify/);
+  assert.doesNotMatch(personDomainWorkflow, /SUPABASE_DB_URL|DATABASE_URL|ATLAS_MUTATION_TOKEN/);
 
   const parityWorkflow = fs.readFileSync(new URL('../.github/workflows/atlas-stage2-train2-live-parity.yml', import.meta.url), 'utf8');
   assert.match(parityWorkflow, /\bpull_request\s*:/m);
