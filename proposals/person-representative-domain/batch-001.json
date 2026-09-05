@@ -8,7 +8,8 @@
     "cardinality": "exactly_one_or_null",
     "automatic_role_backfill": false,
     "secondary_domains": false,
-    "selection_rule": "representative historical identity, with sovereign rulers classified as governance unless a clearly dominant non-secular identity overrides it"
+    "selection_rule": "representative historical identity, with sovereign rulers and major de facto political powerholders classified as governance unless a clearly dominant non-governance identity overrides it",
+    "governance_scope": "sovereign rulers plus major regents, consorts, queen mothers, chief ministers, court powerholders, heads of government, dictators and de facto rulers when political power is their representative historical identity"
   },
   "entries": [
     {

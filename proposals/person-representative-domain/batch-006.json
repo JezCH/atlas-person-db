@@ -1,0 +1,27 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed_correction",
+  "production_snapshot_date": "2026-09-06",
+  "source_surface": "/api/atlas-person-read",
+  "source_main_sha": "3a4d16083ec00d5138a2130b34e834cf314efbf8",
+  "policy": {
+    "decision": "governance includes major political powerholders even without sovereign-ruler relation semantics",
+    "non_assertion": "assigning governance does not by itself assert independent sovereignty, kingship, or a specific constitutional office"
+  },
+  "entries": [
+    {
+      "person_id": "331ed75d-99ca-5e31-8bf9-6f6d6e8d32d7",
+      "canonical_name_en": "Nefertiti",
+      "preferred_name_ko": "네페르티티",
+      "representative_domain": "governance",
+      "basis": "Reviewed ATLAS visual standard classifies major royal political powerholders as governance without requiring an explicit sovereign-ruler relation. Nefertiti's representative identity as Great Royal Wife and central Amarna royal power figure is therefore governance; this does not assert independent pharaonic sovereignty."
+    },
+    {
+      "person_id": "1780b365-11b0-4377-8d3e-0d1ffe9aa63f",
+      "canonical_name_en": "Jezebel",
+      "preferred_name_ko": "이세벨",
+      "representative_domain": "governance",
+      "basis": "Production models her as queen consort and queen mother, and the reviewed ATLAS standard treats politically consequential court powerholders as governance. This classification represents political power and does not assert sovereign kingship."
+    }
+  ]
+}

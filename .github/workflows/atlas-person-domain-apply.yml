@@ -15,6 +15,7 @@ on:
       - 'proposals/person-representative-domain/batch-003.json'
       - 'proposals/person-representative-domain/batch-004.json'
       - 'proposals/person-representative-domain/batch-005.json'
+      - 'proposals/person-representative-domain/batch-006.json'
       - 'proposals/person-representative-domain/hold-001.json'
       - 'proposals/person-representative-domain/palette-smoke-001.json'
   workflow_dispatch:
@@ -92,7 +93,7 @@ jobs:
           set -euo pipefail
           node scripts/apply-person-domain-proposals.mjs smoke | tee "$ATLAS_EVIDENCE_DIR/smoke.jsonl"
 
-      - name: Apply and verify reviewed Batch 001 assignments
+      - name: Apply and verify reviewed representative-domain assignments
         shell: bash
         run: |
           set -euo pipefail
