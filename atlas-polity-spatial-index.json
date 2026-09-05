@@ -653,7 +653,17 @@
     "fde52da0-f39b-43f0-a75a-96ba69243e20": "europe",
     "fe073a4c-d967-56e2-bb31-f74bdde1af87": "east-asia",
     "fe3ec27b-1ba3-4dc0-9758-b144320d6dc4": "east-asia",
-    "ff5f5bfa-2f12-442c-9621-d2d71c94382f": "europe"
+    "ff5f5bfa-2f12-442c-9621-d2d71c94382f": "europe",
+    "6c9e3efd-60af-451e-8178-e07c2b5d9348": "southeast-asia",
+    "a91ef245-d5a8-480a-b27f-43bec3ddffbd": "europe",
+    "f05b73c3-3eca-4c32-8a8e-0297a02a85a1": "africa",
+    "96a28134-38ab-4213-bd1f-00a808ecd845": "africa",
+    "3a8c6594-cbd7-4994-9f87-b3c5932c9ac9": "europe",
+    "c05edf28-d8ce-4d77-affa-8d41cecce8ee": "africa",
+    "c0e95372-3ea6-4b2d-996c-61a15d8e1648": "south-asia",
+    "71838f1f-0098-4ab1-bbc4-8679f1683c1d": "europe",
+    "ba461ca4-dd1b-4f3f-8682-ee67e59024d9": "southeast-asia",
+    "81ff499c-879e-452f-9893-6618ec580825": "africa"
   },
   "place_function_records": [
     {
@@ -1530,6 +1540,16 @@
     "fde52da0-f39b-43f0-a75a-96ba69243e20": "britain-ireland",
     "fe073a4c-d967-56e2-bb31-f74bdde1af87": "china",
     "fe3ec27b-1ba3-4dc0-9758-b144320d6dc4": "china",
-    "ff5f5bfa-2f12-442c-9621-d2d71c94382f": "western-europe"
+    "ff5f5bfa-2f12-442c-9621-d2d71c94382f": "western-europe",
+    "6c9e3efd-60af-451e-8178-e07c2b5d9348": "mainland-southeast-asia",
+    "a91ef245-d5a8-480a-b27f-43bec3ddffbd": "central-europe",
+    "f05b73c3-3eca-4c32-8a8e-0297a02a85a1": "central-africa",
+    "96a28134-38ab-4213-bd1f-00a808ecd845": "nile-valley",
+    "3a8c6594-cbd7-4994-9f87-b3c5932c9ac9": "britain-ireland",
+    "c05edf28-d8ce-4d77-affa-8d41cecce8ee": "maghreb-north-africa",
+    "c0e95372-3ea6-4b2d-996c-61a15d8e1648": "northwest-south-asia",
+    "71838f1f-0098-4ab1-bbc4-8679f1683c1d": "balkans",
+    "ba461ca4-dd1b-4f3f-8682-ee67e59024d9": "mainland-southeast-asia",
+    "81ff499c-879e-452f-9893-6618ec580825": "maghreb-north-africa"
   }
 }
