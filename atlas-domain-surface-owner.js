@@ -29,13 +29,13 @@
     if (!document.querySelector('link[data-atlas-person-domain-palette="true"]')) {
       const link = document.createElement("link");
       link.rel = "stylesheet";
-      link.href = "./atlas-person-domain-palette.css?v=20260904-v1";
+      link.href = "./atlas-person-domain-palette.css?v=20260905-v2";
       link.dataset.atlasPersonDomainPalette = "true";
       document.head.append(link);
     }
     if (!document.querySelector('script[data-atlas-person-domain-ui="true"]')) {
       const script = document.createElement("script");
-      script.src = "./atlas-person-domain-ui.js?v=20260904-v1";
+      script.src = "./atlas-person-domain-ui.js?v=20260905-v2";
       script.async = true;
       script.dataset.atlasPersonDomainUi = "true";
       document.head.append(script);
