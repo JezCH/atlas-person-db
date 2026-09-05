@@ -22,23 +22,22 @@
     "start_year": 1124,
     "start_month": null,
     "start_day": null,
-    "start_certainty": "exact",
+    "start_certainty": "approximate",
     "start_calendar": "unspecified_historical",
     "end_year": 1143,
     "end_month": null,
     "end_day": null,
     "end_certainty": "exact",
     "end_calendar": "unspecified_historical",
-    "confidence": "well_established",
+    "confidence": "likely",
     "chronology_status": "reviewed",
-    "notes": "Yelü Dashi founded and ruled Western Liao (Qara Khitai) from 1124 to 1143. Dezong (德宗), rendered as Emperor Dezong of Western Liao / 서요 덕종, is his temple name and must not be modeled as a separate Person."
+    "notes": "Yelü Dashi was the founder and first ruler of Western Liao (Qara Khitai). ATLAS retains the conventional 1124–1143 reign span, but marks the 1124 start approximate because specialist scholarship notes chronological inconsistencies in the Liao shi enthronement account. Dezong (德宗), rendered as Emperor Dezong of Western Liao / 서요 덕종, is Yelü Dashi's temple name and must not be modeled as a separate Person."
   },
   "sources": [
     {
-      "title": "Yelü Dashi — Encyclopaedia Britannica",
-      "canonical_url": "https://www.britannica.com/biography/Yelu-Dashi",
-      "citation_text": "Encyclopaedia Britannica identifies Yelü Dashi as the founder of the Western Liao (Qara Khitai) dynasty and places his rule in 1124–1143.",
-      "source_type": "reference"
+      "title": "Michal Biran, The Empire of the Qara Khitai in Eurasian History: Between China and the Islamic World",
+      "citation_text": "Biran's specialist study treats Yelü Dashi as the founder of the Qara Khitai/Western Liao, discusses the chronological inconsistency surrounding the Liao shi's 1124 enthronement date, and places his death in 1143.",
+      "source_type": "academic_book"
     }
   ],
   "external_references": {
