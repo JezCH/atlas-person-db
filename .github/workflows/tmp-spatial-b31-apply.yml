@@ -1,0 +1,84 @@
+name: TEMP Spatial B31 Apply
+
+on:
+  push:
+    branches:
+      - ops/spatial-backfill-b31
+    paths:
+      - '.github/workflows/tmp-spatial-b31-apply.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ops/spatial-backfill-b31
+      - name: Apply reviewed B31 mappings and count locks
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          index_path = Path('atlas-polity-spatial-index.json')
+          data = json.loads(index_path.read_text())
+          geo = data['polity_geography']
+          sub = data['polity_subregions']
+
+          if len(geo) != 620 or len(sub) != 594:
+              raise SystemExit(f'Unexpected B31 baseline: geography={len(geo)} subregions={len(sub)}')
+
+          mappings = {
+              'ac5b6164-e505-4b2f-96e6-cab9f6f3652e': ('central-asia', 'eastern-central-asia-steppe'),
+              '78744e34-820e-44ab-91b2-c289d41a3802': ('europe', 'eastern-europe'),
+              'aab87366-4825-40ed-b0f9-78e293746c8d': ('africa', 'east-africa-horn'),
+              '2d90e042-a871-4bac-b429-b2c0d654fad5': ('africa', 'west-africa'),
+              'ec9d77b4-e18e-4495-8232-c51e74b0d683': ('africa', 'maghreb-north-africa'),
+              'a01c7ba1-ff5e-4af7-8876-bf75e955d901': ('africa', 'maghreb-north-africa'),
+              '1cdf4741-293e-4b50-91b7-508161fd47b2': ('oceania', 'pacific-islands'),
+              'a31ddba2-592f-4ce7-a171-f5eaa8bbabe7': ('europe', 'central-europe'),
+              '5188352c-ac3e-4d61-bb78-f5500147ab77': ('americas', 'north-america'),
+              'c4f175af-8e99-4b7c-a4fd-294f570f7f65': ('southeast-asia', 'mainland-southeast-asia'),
+          }
+
+          collisions = [pid for pid in mappings if pid in geo or pid in sub]
+          if collisions:
+              raise SystemExit(f'B31 candidate already mapped: {collisions}')
+
+          for pid, (macro, leaf) in mappings.items():
+              geo[pid] = macro
+              sub[pid] = leaf
+
+          if len(geo) != 630 or len(sub) != 604:
+              raise SystemExit(f'Unexpected B31 result: geography={len(geo)} subregions={len(sub)}')
+
+          index_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n')
+
+          coverage = Path('tests/person-spacetime-spatial-index-coverage.test.mjs')
+          text = coverage.read_text()
+          if 'Object.keys(index.polity_geography).length, 620' not in text or 'Object.keys(index.polity_subregions).length, 594' not in text:
+              raise SystemExit('B31 coverage count-lock baseline missing')
+          text = text.replace('Object.keys(index.polity_geography).length, 620', 'Object.keys(index.polity_geography).length, 630')
+          text = text.replace('Object.keys(index.polity_subregions).length, 594', 'Object.keys(index.polity_subregions).length, 604')
+          coverage.write_text(text)
+
+          taxonomy = Path('tests/spacetime-taxonomy-migration.test.mjs')
+          text = taxonomy.read_text()
+          required = ['"eastern-europe": 8', '"maghreb-north-africa": 15', 'Object.keys(index.polity_subregions).length, 594']
+          if any(x not in text for x in required):
+              raise SystemExit('B31 taxonomy count-lock baseline missing')
+          text = text.replace('"eastern-europe": 8', '"eastern-europe": 9')
+          text = text.replace('"maghreb-north-africa": 15', '"maghreb-north-africa": 17')
+          text = text.replace('Object.keys(index.polity_subregions).length, 594', 'Object.keys(index.polity_subregions).length, 604')
+          taxonomy.write_text(text)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add atlas-polity-spatial-index.json tests/person-spacetime-spatial-index-coverage.test.mjs tests/spacetime-taxonomy-migration.test.mjs
+          git commit -m 'spatial: backfill batch 31 polity placements'
+          git push origin HEAD:ops/spatial-backfill-b31
