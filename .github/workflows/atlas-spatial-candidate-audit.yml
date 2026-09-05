@@ -17,8 +17,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: atlas-spatial-candidate-audit-production
-  cancel-in-progress: false
+  group: atlas-spatial-candidate-audit-production-${{ github.event_name }}
+  cancel-in-progress: ${{ github.event_name == 'push' }}
 
 jobs:
   candidates:
@@ -67,42 +67,21 @@ jobs:
           done
           [[ "$fetched" == "true" ]] || { echo "Production deployment did not reach ${GITHUB_SHA} within retry window" >&2; exit 1; }
 
-      - name: Build unplaced polity candidate inventory
+      - name: Build deterministic unplaced polity candidate inventory
         shell: bash
         run: |
           set -euo pipefail
-          jq --slurpfile spatial atlas-polity-spatial-index.json '
-            [
-              .polities[]
-              | . as $p
-              | select(($spatial[0].polity_geography[$p.polity_id] // null) == null)
-              | ((.external_references // [])
-                  | map(select(.source_schema == "atlas_v2" and .source_table == "person_politics_v2" and .source_column == "polity_id"))
-                  | map(.count)
-                  | add // 0) as $activity_count
-              | select($activity_count > 0)
-              | {
-                  polity_id,
-                  canonical_key,
-                  polity_type,
-                  historicity,
-                  preferred_names: [.names[]? | select(.is_preferred == true) | {locale, name}],
-                  activity_reference_count: $activity_count
-                }
-            ]
-            | sort_by(-.activity_reference_count, .canonical_key)
-          ' polity-reference-audit-response.json > polity-spatial-unplaced-candidates.json
-
-          jq -n \
-            --arg deployment_sha "$GITHUB_SHA" \
-            --argjson geography_count "$(jq '.polity_geography | length' atlas-polity-spatial-index.json)" \
-            --argjson subregion_count "$(jq '.polity_subregions | length' atlas-polity-spatial-index.json)" \
-            --argjson candidate_count "$(jq 'length' polity-spatial-unplaced-candidates.json)" \
-            '{deployment_sha:$deployment_sha, geography_count:$geography_count, subregion_count:$subregion_count, unplaced_used_polity_count:$candidate_count}' \
-            | tee polity-spatial-candidate-summary.json
+          node scripts/build-spatial-polity-candidates.mjs \
+            --audit polity-reference-audit-response.json \
+            --spatial atlas-polity-spatial-index.json \
+            --expected-deployment-sha "$GITHUB_SHA" \
+            --out polity-spatial-unplaced-candidates.json \
+            --top polity-spatial-unplaced-candidates-top100.json \
+            --summary polity-spatial-candidate-summary.json \
+            --top-limit 100
 
           echo 'Top 100 currently used but spatially unplaced polities:'
-          jq '.[0:100]' polity-spatial-unplaced-candidates.json | tee polity-spatial-unplaced-candidates-top100.json
+          cat polity-spatial-unplaced-candidates-top100.json
 
       - name: Upload spatial candidate evidence
         uses: actions/upload-artifact@v4
