@@ -1,0 +1,118 @@
+name: ATLAS Spatial Candidate Audit
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/atlas-spatial-candidate-audit.yml'
+      - 'api/atlas-audit-inventory.js'
+      - 'server/atlas-polity-reference-audit-handler.js'
+      - 'server/atlas-audit-github-oidc.js'
+      - 'atlas-polity-spatial-index.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: atlas-spatial-candidate-audit-production
+  cancel-in-progress: false
+
+jobs:
+  candidates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: production
+    env:
+      ATLAS_AUDIT_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-audit-inventory?__atlas_audit_surface=polity-reference-audit
+      ATLAS_AUDIT_AUDIENCE: atlas-person-db-audit-inventory
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch exact-SHA Production polity catalog
+        shell: bash
+        run: |
+          set -euo pipefail
+          request_oidc() {
+            curl --fail-with-body --silent --show-error \
+              -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+              "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_AUDIT_AUDIENCE}" | jq -er '.value'
+          }
+
+          payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" '{deployment_sha:$deployment_sha}')"
+          fetched=false
+          for attempt in $(seq 1 60); do
+            oidc_token="$(request_oidc)"
+            status="$(curl --silent --show-error --output polity-reference-audit-response.json --write-out '%{http_code}' --request POST \
+              -H 'content-type: application/json' \
+              -H "authorization: Bearer ${oidc_token}" \
+              --data "$payload" \
+              "$ATLAS_AUDIT_ENDPOINT")"
+            if [[ "$status" == "200" ]]; then
+              jq -e '.ok == true and .marker == "ATLAS_POLITY_REFERENCE_AUDIT_V1" and .read_only == true and .committed == false and .complete == true and .deployment_sha == env.GITHUB_SHA' polity-reference-audit-response.json >/dev/null
+              fetched=true
+              break
+            fi
+            code="$(jq -r '.code // "UNKNOWN"' polity-reference-audit-response.json 2>/dev/null || printf 'UNKNOWN')"
+            if [[ "$status" == "404" || ( "$status" == "409" && "$code" == "DEPLOYMENT_SHA_MISMATCH" ) ]]; then
+              echo "Production polity audit for ${GITHUB_SHA} is not live yet (attempt ${attempt}/60); retrying."
+              sleep 10
+              continue
+            fi
+            cat polity-reference-audit-response.json >&2 || true
+            echo "Polity audit failed: HTTP ${status}, code ${code}" >&2
+            exit 1
+          done
+          [[ "$fetched" == "true" ]] || { echo "Production deployment did not reach ${GITHUB_SHA} within retry window" >&2; exit 1; }
+
+      - name: Build unplaced polity candidate inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          jq --slurpfile spatial atlas-polity-spatial-index.json '
+            [
+              .polities[]
+              | . as $p
+              | select(($spatial[0].polity_geography[$p.polity_id] // null) == null)
+              | ((.external_references // [])
+                  | map(select(.source_schema == "atlas_v2" and .source_table == "person_politics_v2" and .source_column == "polity_id"))
+                  | map(.count)
+                  | add // 0) as $activity_count
+              | select($activity_count > 0)
+              | {
+                  polity_id,
+                  canonical_key,
+                  polity_type,
+                  historicity,
+                  preferred_names: [.names[]? | select(.is_preferred == true) | {locale, name}],
+                  activity_reference_count: $activity_count
+                }
+            ]
+            | sort_by(-.activity_reference_count, .canonical_key)
+          ' polity-reference-audit-response.json > polity-spatial-unplaced-candidates.json
+
+          jq -n \
+            --arg deployment_sha "$GITHUB_SHA" \
+            --argjson geography_count "$(jq '.polity_geography | length' atlas-polity-spatial-index.json)" \
+            --argjson subregion_count "$(jq '.polity_subregions | length' atlas-polity-spatial-index.json)" \
+            --argjson candidate_count "$(jq 'length' polity-spatial-unplaced-candidates.json)" \
+            '{deployment_sha:$deployment_sha, geography_count:$geography_count, subregion_count:$subregion_count, unplaced_used_polity_count:$candidate_count}' \
+            | tee polity-spatial-candidate-summary.json
+
+          echo 'Top 100 currently used but spatially unplaced polities:'
+          jq '.[0:100]' polity-spatial-unplaced-candidates.json | tee polity-spatial-unplaced-candidates-top100.json
+
+      - name: Upload spatial candidate evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-spatial-candidates-${{ github.sha }}
+          path: |
+            polity-reference-audit-response.json
+            polity-spatial-candidate-summary.json
+            polity-spatial-unplaced-candidates.json
+            polity-spatial-unplaced-candidates-top100.json
+            atlas-polity-spatial-index.json
+          if-no-files-found: error
+          retention-days: 90
