@@ -8,21 +8,21 @@
     "cardinality": "exactly_one_or_null",
     "automatic_role_backfill": false,
     "secondary_domains": false,
-    "selection_rule": "representative historical identity, with sovereign rulers classified as ruler unless a clearly dominant non-secular identity overrides it"
+    "selection_rule": "representative historical identity, with sovereign rulers classified as governance unless a clearly dominant non-secular identity overrides it"
   },
   "entries": [
     {
       "person_id": "bf80de09-0474-4e16-bc34-e764339f83e2",
       "canonical_name_en": "Narmer",
       "preferred_name_ko": "나르메르",
-      "representative_domain": "ruler",
+      "representative_domain": "governance",
       "basis": "Production records him as Pharaoh with rules/reign semantics; sovereign kingship is the representative identity."
     },
     {
       "person_id": "01668de3-e5f1-43b5-b0af-b70067e167e1",
       "canonical_name_en": "Gilgamesh",
       "preferred_name_ko": "길가메시",
-      "representative_domain": "ruler",
+      "representative_domain": "governance",
       "basis": "ATLAS historical record models him as King of Uruk with rules/reign semantics."
     },
     {
@@ -36,28 +36,28 @@
       "person_id": "a761438e-ef97-471e-80f5-7079888fc921",
       "canonical_name_en": "Djoser",
       "preferred_name_ko": "조세르",
-      "representative_domain": "ruler",
+      "representative_domain": "governance",
       "basis": "Production records him as Pharaoh with rules/reign semantics."
     },
     {
       "person_id": "2f874619-c959-49e3-a555-7f156f45e286",
       "canonical_name_en": "Khufu",
       "preferred_name_ko": "쿠푸",
-      "representative_domain": "ruler",
+      "representative_domain": "governance",
       "basis": "Production records him as Pharaoh with rules/reign semantics; pyramid building does not displace sovereign identity under the project rule."
     },
     {
       "person_id": "d3c7eb1d-d98a-42e5-8cbd-86d433ffe46a",
       "canonical_name_en": "Eannatum",
       "preferred_name_ko": "에안나툼",
-      "representative_domain": "ruler",
+      "representative_domain": "governance",
       "basis": "Production records him as ruler of Lagash (Ensi) with rules/reign semantics."
     },
     {
       "person_id": "d8ce18d0-38ee-4d8a-be69-af757508daa4",
       "canonical_name_en": "Sargon of Akkad",
       "preferred_name_ko": "사르곤",
-      "representative_domain": "ruler",
+      "representative_domain": "governance",
       "basis": "Production records him as founding King of the Akkadian Empire with rules/reign semantics."
     },
     {
@@ -71,14 +71,14 @@
       "person_id": "86d7774d-b935-4aad-b1ea-f3ac63c81dec",
       "canonical_name_en": "Ur-Nammu",
       "preferred_name_ko": "우르남무",
-      "representative_domain": "ruler",
+      "representative_domain": "governance",
       "basis": "Production records him as founder and King of the Third Dynasty of Ur with rules/reign semantics."
     },
     {
       "person_id": "c0550447-9b3c-41f9-b77c-38024b54613c",
       "canonical_name_en": "Shulgi",
       "preferred_name_ko": "슐기",
-      "representative_domain": "ruler",
+      "representative_domain": "governance",
       "basis": "Production records him as King of the Third Dynasty of Ur with rules/reign semantics."
     }
   ]
