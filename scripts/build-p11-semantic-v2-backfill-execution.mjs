@@ -32,7 +32,33 @@ const exceptionIds = new Set((exceptionContract.exceptions || []).map((row) => S
 const repairById = new Map((repair.rows || []).map((row) => [String(row.activity_id).toLowerCase(), row]));
 const detailById = new Map((audit.rows || []).map((row) => [String(row.activity_id).toLowerCase(), row]));
 const incomplete = [...(audit.semantic_v2_breakdown?.incomplete_rows || [])].sort((a, b) => String(a.activity_id).localeCompare(String(b.activity_id)));
-const incById = new Map(incomplete.map((row) => [String(row.activity_id).toLowerCase(), row]));
+
+const field = (incompleteRow, detail, key) => Object.prototype.hasOwnProperty.call(incompleteRow || {}, key)
+  ? incompleteRow[key]
+  : detail?.[key];
+
+function isLiveReviewedRelationException(incompleteRow, detail) {
+  const activityId = String(incompleteRow.activity_id).toLowerCase();
+  if (!exceptionIds.has(activityId)) return false;
+  return field(incompleteRow, detail, 'relation_type_id') == null
+    && field(incompleteRow, detail, 'period_basis_id') != null
+    && field(incompleteRow, detail, 'activity_start_granularity') != null
+    && field(incompleteRow, detail, 'activity_start_certainty') != null
+    && field(incompleteRow, detail, 'activity_start_calendar') != null
+    && field(incompleteRow, detail, 'activity_end_granularity') != null
+    && field(incompleteRow, detail, 'activity_end_certainty') != null
+    && field(incompleteRow, detail, 'activity_end_calendar') != null;
+}
+
+const reviewedRelationExceptionsLive = [];
+const blockingIncomplete = [];
+for (const incompleteRow of incomplete) {
+  const activityId = String(incompleteRow.activity_id).toLowerCase();
+  const detail = detailById.get(activityId);
+  if (!detail) throw new Error(`P11_BACKFILL_ACTIVITY_EVIDENCE_MISSING:${activityId}`);
+  if (isLiveReviewedRelationException(incompleteRow, detail)) reviewedRelationExceptionsLive.push(incompleteRow);
+  else blockingIncomplete.push(incompleteRow);
+}
 
 function relationIdFor(activityId, repairRow, incompleteRow) {
   if (exceptionIds.has(activityId)) return null;
@@ -52,6 +78,7 @@ function relationIdFor(activityId, repairRow, incompleteRow) {
 
 function temporalDetailFor(activityId, repairRow, boundary) {
   if (repairRow?.temporal?.ready !== true) throw new Error(`P11_BACKFILL_TEMPORAL_UNREVIEWED:${activityId}`);
+  if (repairRow.temporal.class === 'ALREADY_COMPLETE') return null;
   const prefix = boundary === 'start' ? 'activity_start' : 'activity_end';
   if (repairRow.temporal[`${prefix}_granularity`] !== 'year') throw new Error(`P11_BACKFILL_TEMPORAL_GRANULARITY_DRIFT:${activityId}:${boundary}`);
   if (repairRow.temporal[`${prefix}_month`] != null || repairRow.temporal[`${prefix}_day`] != null) throw new Error(`P11_BACKFILL_TEMPORAL_PRECISION_FABRICATION:${activityId}:${boundary}`);
@@ -66,15 +93,33 @@ function temporalDetailFor(activityId, repairRow, boundary) {
   };
 }
 
-const operations = incomplete.map((incompleteRow) => {
+const operations = blockingIncomplete.map((incompleteRow) => {
   const activityId = String(incompleteRow.activity_id).toLowerCase();
   const detail = detailById.get(activityId);
   const repairRow = repairById.get(activityId);
   if (!detail || !repairRow) throw new Error(`P11_BACKFILL_ACTIVITY_EVIDENCE_MISSING:${activityId}`);
   if (!detail.person_id || !detail.polity_id || !detail.period_basis_id) throw new Error(`P11_BACKFILL_IDENTITY_EVIDENCE_INCOMPLETE:${activityId}`);
+  if (repairRow.disposition !== 'SEMANTIC_BACKFILL_READY' && !exceptionIds.has(activityId)) throw new Error(`P11_BACKFILL_BLOCKER_NOT_REVIEWED_READY:${activityId}`);
+
   const relationTypeId = relationIdFor(activityId, repairRow, incompleteRow);
   const startDetail = temporalDetailFor(activityId, repairRow, 'start');
   const endDetail = temporalDetailFor(activityId, repairRow, 'end');
+  const existingStartDetail = {
+    year: detail.activity_start,
+    month: detail.activity_start_month ?? null,
+    day: detail.activity_start_day ?? null,
+    granularity: detail.activity_start_granularity ?? null,
+    certainty: detail.activity_start_certainty ?? null,
+    calendar: detail.activity_start_calendar ?? null
+  };
+  const existingEndDetail = {
+    year: detail.activity_end,
+    month: detail.activity_end_month ?? null,
+    day: detail.activity_end_day ?? null,
+    granularity: detail.activity_end_granularity ?? null,
+    certainty: detail.activity_end_certainty ?? null,
+    calendar: detail.activity_end_calendar ?? null
+  };
   return {
     case_id: `p11_${activityId}`,
     type: 'rewrite_activity',
@@ -100,8 +145,8 @@ const operations = incomplete.map((incompleteRow) => {
       period_basis_id: detail.period_basis_id,
       activity_start: detail.activity_start,
       activity_end: detail.activity_end,
-      activity_start_detail: { year: detail.activity_start, ...startDetail },
-      activity_end_detail: { year: detail.activity_end, ...endDetail },
+      activity_start_detail: startDetail ? { year: detail.activity_start, ...startDetail } : existingStartDetail,
+      activity_end_detail: endDetail ? { year: detail.activity_end, ...endDetail } : existingEndDetail,
       confidence: detail.confidence,
       chronology_status: detail.chronology_status,
       legacy_source_key: detail.legacy_source_key,
@@ -110,8 +155,13 @@ const operations = incomplete.map((incompleteRow) => {
   };
 });
 
-const liveExceptionIds = operations.filter((operation) => operation.after.relation_type_id == null).map((operation) => operation.activity_id).sort();
-const undeclaredNull = liveExceptionIds.filter((id) => !exceptionIds.has(id));
+const reviewedRelationExceptionIdsLiveBefore = reviewedRelationExceptionsLive.map((row) => String(row.activity_id).toLowerCase()).sort();
+const operationIds = new Set(operations.map((operation) => operation.activity_id));
+const exceptionMutationOverlap = reviewedRelationExceptionIdsLiveBefore.filter((id) => operationIds.has(id));
+if (exceptionMutationOverlap.length) throw new Error(`P11_BACKFILL_REVIEWED_EXCEPTION_MUTATION_FORBIDDEN:${exceptionMutationOverlap.join(',')}`);
+
+const nullRelationOperations = operations.filter((operation) => operation.after.relation_type_id == null).map((operation) => operation.activity_id).sort();
+const undeclaredNull = nullRelationOperations.filter((id) => !exceptionIds.has(id));
 if (undeclaredNull.length) throw new Error(`P11_BACKFILL_UNDECLARED_RELATION_EXCEPTION:${undeclaredNull.join(',')}`);
 if (operations.some((operation) => !exceptionIds.has(operation.activity_id) && operation.after.relation_type_id == null)) throw new Error('P11_BACKFILL_GENERIC_NULL_RELATION_FORBIDDEN');
 
@@ -121,9 +171,9 @@ for (let offset = 0, part = 1; offset < operations.length; offset += chunkSize, 
   const chunk = operations.slice(offset, offset + chunkSize);
   const plan = {
     schema: 'atlas-stage2-correction-v2-execution-plan/v1',
-    batch_id: `p11_semantic_v2_legacy_backfill_batch${part}_20260817`,
-    as_of: '2026-08-17',
-    status: 'REVIEWED_P11_LEGACY_SEMANTIC_V2_BACKFILL',
+    batch_id: `p11_semantic_v2_current_delta_backfill_batch${part}_20260906`,
+    as_of: '2026-09-06',
+    status: 'REVIEWED_P11_CURRENT_DELTA_SEMANTIC_V2_BACKFILL',
     release_order: 649 + part,
     contract: 'stage2/contracts/correction-v2-current.v1.json',
     decision_authority: [
@@ -136,6 +186,8 @@ for (let offset = 0, part = 1; offset < operations.length; offset += chunkSize, 
     baseline: { deployment_sha: audit.deployment_sha, baseline_digest: audit.baseline_digest },
     execution_rules: {
       exact_live_before_snapshot_required: true,
+      current_blocking_delta_only: true,
+      reviewed_relation_exceptions_are_not_mutation_targets_when_temporally_complete: true,
       reviewed_legacy_temporal_metadata_materialization_only: true,
       runtime_compile_override_writeback_forbidden: true,
       generic_relation_default_forbidden: true,
@@ -153,20 +205,25 @@ for (let offset = 0, part = 1; offset < operations.length; offset += chunkSize, 
   planFiles.push(file);
 }
 
-function incRelationWasNull(activityId) {
-  return incById.get(activityId)?.relation_type_id == null;
-}
-
+const temporalBackfillRows = operations.filter((operation) => {
+  const repairRow = repairById.get(operation.activity_id);
+  return repairRow?.temporal?.class !== 'ALREADY_COMPLETE';
+}).length;
+const expectedReviewedExceptionsAfter = [...new Set([...reviewedRelationExceptionIdsLiveBefore, ...nullRelationOperations])].sort();
 const summary = {
   schema: 'atlas-p11-semantic-v2-backfill-execution-summary/v1',
   production_sha: audit.deployment_sha,
   baseline_digest: audit.baseline_digest,
   activity_count: Number(audit.counts?.activities || audit.row_count || 0),
-  semantic_v2_incomplete_before: operations.length,
-  relation_backfill_rows: operations.filter((operation) => operation.after.relation_type_id != null && incRelationWasNull(operation.activity_id)).length,
-  temporal_backfill_rows: operations.length,
-  reviewed_relation_exceptions_live: liveExceptionIds.length,
-  reviewed_relation_exception_ids_live: liveExceptionIds,
+  semantic_v2_incomplete_before: incomplete.length,
+  reviewed_relation_exceptions_live_before: reviewedRelationExceptionIdsLiveBefore.length,
+  reviewed_relation_exception_ids_live_before: reviewedRelationExceptionIdsLiveBefore,
+  blocking_semantic_v2_incomplete_before: operations.length,
+  operation_count: operations.length,
+  relation_backfill_rows: operations.filter((operation) => operation.after.relation_type_id != null && field(incomplete.find((row) => String(row.activity_id).toLowerCase() === operation.activity_id), detailById.get(operation.activity_id), 'relation_type_id') == null).length,
+  temporal_backfill_rows: temporalBackfillRows,
+  reviewed_relation_exceptions_expected_after: expectedReviewedExceptionsAfter.length,
+  reviewed_relation_exception_ids_expected_after: expectedReviewedExceptionsAfter,
   plan_count: planFiles.length,
   chunk_size: chunkSize,
   production_mutation_authorized: false
