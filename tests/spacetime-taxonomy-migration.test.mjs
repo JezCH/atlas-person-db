@@ -21,7 +21,7 @@ const EXPECTED_SPLIT_COUNTS = Object.freeze({
   "russia-volga": 11,
   "maghreb-north-africa": 15,
   "nile-valley": 8,
-  anatolia: 7,
+  anatolia: 8,
   caucasus: 6,
   levant: 12,
   mesopotamia: 11,
@@ -111,7 +111,7 @@ test("taxonomy r3 has one deterministic adjacency path and 40 equal active leave
 
   const counts = new Map();
   for (const code of Object.values(index.polity_subregions)) counts.set(code, (counts.get(code) || 0) + 1);
-  assert.equal(Object.keys(index.polity_subregions).length, 584);
+  assert.equal(Object.keys(index.polity_subregions).length, 594);
   for (const leaf of continuum.subregions) {
     assert.ok((counts.get(leaf.code) || 0) > 0, leaf.code + " must remain an active reviewed leaf");
   }
