@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:gustav-ii-adolf:retire-legacy-reign-1611-1632:20260906:v1",
+  "review_status": "approved",
+  "release_order": 500,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "b3db8f82-f693-5900-9532-ba3d80160cc9"
+  },
+  "evidence": {
+    "reason": "Current Production canonical read-back shows Gustav II Adolf has two Sweden / King / reign Activities for the same 1611-1632 interval. Preserve reviewed Activity e889c50c-3a9b-4b30-90ab-0822ad5dffd6, which carries relation=rules, exact year-level temporal metadata, chronology_status=reviewed, and confidence=well_established. Retire only the older legacy Activity b3db8f82-f693-5900-9532-ba3d80160cc9, which has relation=null, missing temporal metadata, chronology_status=exact_as_recorded, and confidence=legacy_asserted. Do not change the Person identity, names, NamuWiki reference, Sweden polity, role, or the reviewed survivor Activity.",
+    "person_id": "64e4d6fc-e2d5-5deb-84a2-cb0e50aab9a4",
+    "survivor_activity_id": "e889c50c-3a9b-4b30-90ab-0822ad5dffd6",
+    "retire_activity_id": "b3db8f82-f693-5900-9532-ba3d80160cc9",
+    "source_recovery_pr": 298,
+    "prepared_at_main": "c55d97b2cf5de7330a95e65750ec98a86822e140"
+  }
+}
