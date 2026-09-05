@@ -139,9 +139,10 @@ async function inspectPersonMergeReferenceReadiness(client) {
 async function assertPersonMergeReferenceReadiness(client) {
   const readiness = await inspectPersonMergeReferenceReadiness(client);
   if (!readiness.ready) {
-    const detailedCode = `P10_PERSON_MERGE_REFERENCE_SURFACE_DRIFT:${readiness.blockers.join(";")}`;
-    const error = new Error(detailedCode);
-    error.code=detailedCode; error.base_code="P10_PERSON_MERGE_REFERENCE_SURFACE_DRIFT"; error.readiness=readiness; throw error;
+    const baseCode = "P10_PERSON_MERGE_REFERENCE_SURFACE_DRIFT";
+    const detailedCode = process.env.VERCEL_ENV === "production" ? `${baseCode}:${readiness.blockers.join(";")}` : baseCode;
+    const error = new Error(`${baseCode}:${readiness.blockers.join(";")}`);
+    error.code=detailedCode; error.base_code=baseCode; error.readiness=readiness; throw error;
   }
   return readiness;
 }
