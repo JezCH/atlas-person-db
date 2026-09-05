@@ -14,7 +14,7 @@ const root = path.resolve(new URL('..', import.meta.url).pathname);
 const baseline = fs.readFileSync(path.join(root, 'db/schema/atlas_v2.current.sql'), 'utf8');
 
 test('authoring migration registry is ordered and contains durable lifecycle-safe Person migrations', () => {
-  assert.equal(AUTHORING_MIGRATION_PATHS.length, 8);
+  assert.equal(AUTHORING_MIGRATION_PATHS.length, 9);
   assert.match(AUTHORING_MIGRATION_PATHS[0], /20260811_authoring_manifest_runs\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[1], /20260811_authoring_result_snapshot\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[2], /20260814_authoring_ledger_live_reference_lifecycle\.sql$/);
@@ -23,6 +23,7 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.match(AUTHORING_MIGRATION_PATHS[5], /20260821_human_authoring_external_reference_sync\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[6], /20260902_ongoing_activity_terms\.sql$/);
   assert.match(AUTHORING_MIGRATION_PATHS[7], /20260904_person_representative_domains\.sql$/);
+  assert.match(AUTHORING_MIGRATION_PATHS[8], /20260905_person_representative_domain_standard_v1\.sql$/);
   const migrations = readAuthoringMigrations();
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS manifest_schema text/i);
   assert.match(migrations[1].sql, /ADD COLUMN IF NOT EXISTS result_snapshot jsonb/i);
@@ -60,6 +61,14 @@ test('authoring migration registry is ordered and contains durable lifecycle-saf
   assert.match(representativeDomain, /persons_representative_domain_check/i);
   assert.match(representativeDomain, /set_person_representative_domain/i);
   assert.doesNotMatch(representativeDomain, /CREATE TABLE\s+atlas_v2\.person_representative_domains/i);
+
+  const representativeDomainStandard = migrations[8].sql;
+  assert.match(representativeDomainStandard, /WHEN 'ruler' THEN 'governance'/i);
+  assert.match(representativeDomainStandard, /WHEN 'science' THEN 'knowledge'/i);
+  assert.match(representativeDomainStandard, /DROP CONSTRAINT IF EXISTS persons_representative_domain_check/i);
+  for (const domain of ['governance','military','knowledge','technology','commerce','culture','religion','exploration']) {
+    assert.match(representativeDomainStandard, new RegExp(`'${domain}'`));
+  }
 });
 
 test('current clean schema baseline remains the measured pre-lifecycle Production shape', () => {
