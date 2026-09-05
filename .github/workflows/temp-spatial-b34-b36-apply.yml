@@ -1,0 +1,99 @@
+name: TEMP Spatial B34-B36 Apply
+
+on:
+  push:
+    branches:
+      - ops/spatial-backfill-b34-b36
+    paths:
+      - .github/workflows/temp-spatial-b34-b36-apply.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ops/spatial-backfill-b34-b36
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Apply exact reviewed B34-B36 spatial mappings
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const spatialPath = 'atlas-polity-spatial-index.json';
+          const index = JSON.parse(fs.readFileSync(spatialPath, 'utf8'));
+          if (Object.keys(index.polity_geography).length !== 650 || Object.keys(index.polity_subregions).length !== 624) {
+            throw new Error('unexpected B34-B36 baseline');
+          }
+          const mappings = {
+            'bc585200-e306-45cc-ae5d-eb21935c7821': ['europe', 'balkans'],
+            'e21c1074-51a8-4b3b-a672-ba94a8428bc9': ['africa', 'maghreb-north-africa'],
+            'c26bc9aa-a1a7-4c25-9d37-cf9b320220ab': ['europe', 'britain-ireland'],
+            '4e27e24d-f99f-4c04-bdfa-9f3ce53b6a91': ['africa', 'east-africa-horn'],
+            '7e1a3ced-d4fc-4eb0-b12f-2752e5255014': ['africa', 'maghreb-north-africa'],
+            'cbb99c50-0280-4661-8be9-a13dae1f1718': ['americas', 'south-america'],
+            '355010ea-aff6-47f7-900c-4334b80da406': ['west-asia', 'levant'],
+            'f2f3a0b5-61c8-4cd8-9ce2-90a097f6defc': ['southeast-asia', 'mainland-southeast-asia'],
+            '63ccdb7d-c86a-4f12-b022-5dc46147694d': ['europe', 'italy'],
+            'c45984c8-0ced-4e3f-bbf5-2376fa1c6250': ['europe', 'italy'],
+            '98cf8332-b35d-453b-9264-02d05332afbe': ['africa', 'southern-africa'],
+            '8458c4a0-1a73-4919-ad7b-a325741f993d': ['americas', 'north-america'],
+            '5a8ae363-01dd-4e14-b0cc-7e50a5acc3b7': ['americas', 'north-america'],
+            'd000ea21-6475-473b-ad81-4a0a10a654da': ['europe', 'balkans'],
+            'a1a4d698-ef07-4518-9b9a-c1ab5d5a5d8c': ['europe', 'eastern-europe'],
+            '990b571e-4d59-4eb3-bbce-06c59d9b70d3': ['americas', 'north-america'],
+            'ec211e2a-391b-4d88-a104-c1fc89013251': ['americas', 'north-america'],
+            '138d2ceb-c37a-4fd2-ae7d-5d5be7a99703': ['west-asia', 'caucasus'],
+            '9a7a7d9c-661b-4380-be49-c74833452f03': ['americas', 'north-america'],
+            '550fabcb-c9d3-47c9-9bce-2556cff130d1': ['europe', 'eastern-europe'],
+            '14ea7cd5-b0ee-4e63-a7a6-0995a9a3a018': ['africa', 'central-africa'],
+            '1b32e4a6-44fc-4cdb-9fcc-e742f23ef722': ['americas', 'mesoamerica'],
+            '769b9646-457c-4a45-b7af-76b0141c2c8e': ['west-asia', 'arabia'],
+            'd196f9f5-059c-411c-af45-af44a53838ff': ['europe', 'central-europe'],
+            '670e211c-421b-4a3c-b91a-befb11933d20': ['americas', 'north-america'],
+            'fa684146-5d35-4022-a5fc-99fd908c2b8f': ['southeast-asia', 'maritime-southeast-asia'],
+            'cb571a73-78e9-4dd5-8b5d-dd4b7af74cc2': ['southeast-asia', 'maritime-southeast-asia'],
+            '7447c261-b9f5-42c8-b114-aac5b0c3c829': ['southeast-asia', 'maritime-southeast-asia'],
+            '6c530241-e104-4fe8-8320-8fad5a34f5cc': ['americas', 'south-america'],
+            'c4fbb704-8265-4af9-aeca-ec9f23e05b92': ['west-asia', 'levant'],
+          };
+          if (Object.keys(mappings).length !== 30) throw new Error('expected 30 reviewed mappings');
+          for (const [id, [macro, sub]] of Object.entries(mappings)) {
+            if (Object.hasOwn(index.polity_geography, id) || Object.hasOwn(index.polity_subregions, id)) {
+              throw new Error(`B34-B36 candidate already mapped: ${id}`);
+            }
+            index.polity_geography[id] = macro;
+            index.polity_subregions[id] = sub;
+          }
+          if (Object.keys(index.polity_geography).length !== 680) throw new Error('expected 680 geography mappings');
+          if (Object.keys(index.polity_subregions).length !== 654) throw new Error('expected 654 subregion mappings');
+          fs.writeFileSync(spatialPath, JSON.stringify(index, null, 2) + '\n');
+
+          const coveragePath = 'tests/person-spacetime-spatial-index-coverage.test.mjs';
+          let coverage = fs.readFileSync(coveragePath, 'utf8');
+          coverage = coverage.replace('assert.equal(Object.keys(index.polity_geography).length, 650);', 'assert.equal(Object.keys(index.polity_geography).length, 680);');
+          coverage = coverage.replace('assert.equal(Object.keys(index.polity_subregions).length, 624);', 'assert.equal(Object.keys(index.polity_subregions).length, 654);');
+          fs.writeFileSync(coveragePath, coverage);
+
+          const taxonomyPath = 'tests/spacetime-taxonomy-migration.test.mjs';
+          let taxonomy = fs.readFileSync(taxonomyPath, 'utf8');
+          taxonomy = taxonomy.replace('assert.equal(Object.keys(index.polity_subregions).length, 624);', 'assert.equal(Object.keys(index.polity_subregions).length, 654);');
+          taxonomy = taxonomy.replace('mesoamerica: 18,', 'mesoamerica: 19,');
+          taxonomy = taxonomy.replace('"eastern-europe": 10,', '"eastern-europe": 12,');
+          taxonomy = taxonomy.replace('"maghreb-north-africa": 17,', '"maghreb-north-africa": 19,');
+          taxonomy = taxonomy.replace('caucasus: 6,', 'caucasus: 7,');
+          taxonomy = taxonomy.replace('levant: 13,', 'levant: 15,');
+          fs.writeFileSync(taxonomyPath, taxonomy);
+          NODE
+          rm .github/workflows/temp-spatial-b34-b36-apply.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add atlas-polity-spatial-index.json tests/person-spacetime-spatial-index-coverage.test.mjs tests/spacetime-taxonomy-migration.test.mjs .github/workflows/temp-spatial-b34-b36-apply.yml
+          git commit -m "spatial: backfill batches 34 through 36 polity placements"
+          git push origin HEAD:ops/spatial-backfill-b34-b36
