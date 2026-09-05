@@ -1,5 +1,5 @@
 name: ATLAS P10 Release Launcher
-# Controlled rerun checkpoint after the reviewed Suleiman I relation correction was applied successfully in Production.
+# Controlled CORE-1 closure checkpoint after the obsolete Western Liao duplicate Activity blocker was retired.
 
 on:
   push:
