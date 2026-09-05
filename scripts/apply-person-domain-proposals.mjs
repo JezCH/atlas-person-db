@@ -13,6 +13,11 @@ const CANONICAL_CODES = Object.freeze([
   "governance","military","knowledge","technology",
   "commerce","culture","religion","exploration"
 ]);
+const BATCH_FILES = Object.freeze([
+  "batch-001.json","batch-002.json","batch-003.json",
+  "batch-004.json","batch-005.json","batch-006.json"
+]);
+const EXPECTED_REVIEWED_ASSIGNMENTS = 50;
 
 function fail(message, details = null) {
   const error = new Error(message);
@@ -51,15 +56,19 @@ function loadPlan() {
   if (JSON.stringify(smokeCodes) !== JSON.stringify(expectedCodes)) fail("Smoke set must cover each canonical domain exactly once", smokeCodes);
 
   const batch = [];
-  for (const name of ["batch-001.json","batch-002.json","batch-003.json","batch-004.json","batch-005.json"]) {
+  for (const name of BATCH_FILES) {
     const raw = readJson(name);
     for (const entry of raw.entries) batch.push(validateEntry(entry, { source:name }));
   }
-  if (batch.length !== 48) fail(`Reviewed batch must contain exactly 48 Persons; got ${batch.length}`);
+  if (batch.length !== EXPECTED_REVIEWED_ASSIGNMENTS) {
+    fail(`Reviewed batch must contain exactly ${EXPECTED_REVIEWED_ASSIGNMENTS} Persons; got ${batch.length}`);
+  }
 
   const holdRaw = readJson("hold-001.json");
   const hold = holdRaw.entries.map((entry) => validateEntry(entry, { allowNull:true, source:"hold-001.json" }));
-  if (hold.length !== 2 || hold.some((entry) => entry.representative_domain !== null)) fail("HOLD set must contain exactly 2 null-domain Persons");
+  if (hold.length !== 0 || hold.some((entry) => entry.representative_domain !== null)) {
+    fail("Reviewed HOLD set must be empty after the governance-powerholder correction");
+  }
 
   const holds = new Set(hold.map((entry) => entry.person_id));
   const assignments = new Map();
@@ -84,6 +93,10 @@ async function readCurrent() {
   const codes = Array.isArray(body.definitions) ? body.definitions.map((item) => item?.code).sort() : [];
   if (JSON.stringify(codes) !== JSON.stringify([...CANONICAL_CODES].sort())) fail("Production domain definition drift", codes);
   return body;
+}
+
+function currentDomainMap(body) {
+  return new Map(body.rows.map((row) => [String(row.person_id).toLowerCase(), String(row.representative_domain)]));
 }
 
 async function writeEntry(entry, ordinal) {
@@ -111,8 +124,23 @@ async function writeEntry(entry, ordinal) {
   console.log(JSON.stringify({ ordinal, person_id:entry.person_id, domain:entry.representative_domain, replay:body.replay === true }));
 }
 
+async function applyOnlyChanged(entries, label) {
+  const before = await readCurrent();
+  const current = currentDomainMap(before);
+  const pending = entries.filter((entry) => current.get(entry.person_id) !== entry.representative_domain);
+  console.log(JSON.stringify({
+    marker:"ATLAS_PERSON_DOMAIN_DELTA_V1",
+    mode:label,
+    reviewed:entries.length,
+    pending:pending.length,
+    skipped_unchanged:entries.length - pending.length
+  }));
+  for (let i = 0; i < pending.length; i++) await writeEntry(pending[i], i + 1);
+  return pending.length;
+}
+
 function verifyExpected(body, expectedEntries, holdEntries) {
-  const current = new Map(body.rows.map((row) => [String(row.person_id).toLowerCase(), String(row.representative_domain)]));
+  const current = currentDomainMap(body);
   for (const entry of expectedEntries) {
     if (current.get(entry.person_id) !== entry.representative_domain) {
       fail(`Production read-back mismatch for ${entry.person_id}`, { expected:entry.representative_domain, actual:current.get(entry.person_id) || null });
@@ -133,11 +161,11 @@ const plan = loadPlan();
 if (!["smoke","batch","verify"].includes(MODE)) fail(`Unsupported mode: ${MODE}`);
 
 if (MODE === "smoke") {
-  for (let i = 0; i < plan.smoke.length; i++) await writeEntry(plan.smoke[i], i + 1);
+  await applyOnlyChanged(plan.smoke, MODE);
   const body = await readCurrent();
   console.log(JSON.stringify({ marker:"ATLAS_PERSON_DOMAIN_APPLY_V1", mode:MODE, ...verifyExpected(body, plan.smoke, plan.hold) }, null, 2));
 } else if (MODE === "batch") {
-  for (let i = 0; i < plan.batch.length; i++) await writeEntry(plan.batch[i], i + 1);
+  await applyOnlyChanged(plan.batch, MODE);
   const body = await readCurrent();
   console.log(JSON.stringify({ marker:"ATLAS_PERSON_DOMAIN_APPLY_V1", mode:MODE, ...verifyExpected(body, [...plan.assignments.values()], plan.hold) }, null, 2));
 } else {
