@@ -31,11 +31,21 @@ const validRelationIds = new Set(relationIdByCode.values());
 const exceptionIds = new Set((exceptionContract.exceptions || []).map((row) => String(row.activity_id).toLowerCase()));
 const repairById = new Map((repair.rows || []).map((row) => [String(row.activity_id).toLowerCase(), row]));
 const detailById = new Map((audit.rows || []).map((row) => [String(row.activity_id).toLowerCase(), row]));
-const incomplete = [...(audit.semantic_v2_breakdown?.incomplete_rows || [])].sort((a, b) => String(a.activity_id).localeCompare(String(b.activity_id)));
+const auditIncomplete = [...(audit.semantic_v2_breakdown?.incomplete_rows || [])].sort((a, b) => String(a.activity_id).localeCompare(String(b.activity_id)));
 
 const field = (incompleteRow, detail, key) => Object.prototype.hasOwnProperty.call(incompleteRow || {}, key)
   ? incompleteRow[key]
   : detail?.[key];
+
+function isBaselineBIncomplete(incompleteRow, detail) {
+  const ongoingOpenEnd = detail?.chronology_status === 'ongoing' && field(incompleteRow, detail, 'activity_end') == null;
+  return field(incompleteRow, detail, 'relation_type_id') == null
+    || field(incompleteRow, detail, 'period_basis_id') == null
+    || field(incompleteRow, detail, 'activity_start_granularity') == null
+    || field(incompleteRow, detail, 'activity_start_calendar') == null
+    || ((field(incompleteRow, detail, 'activity_end_granularity') == null
+      || field(incompleteRow, detail, 'activity_end_calendar') == null) && !ongoingOpenEnd);
+}
 
 function isLiveReviewedRelationException(incompleteRow, detail) {
   const activityId = String(incompleteRow.activity_id).toLowerCase();
@@ -48,6 +58,16 @@ function isLiveReviewedRelationException(incompleteRow, detail) {
     && field(incompleteRow, detail, 'activity_end_granularity') != null
     && field(incompleteRow, detail, 'activity_end_certainty') != null
     && field(incompleteRow, detail, 'activity_end_calendar') != null;
+}
+
+const incomplete = [];
+const baselineBTransportExempt = [];
+for (const incompleteRow of auditIncomplete) {
+  const activityId = String(incompleteRow.activity_id).toLowerCase();
+  const detail = detailById.get(activityId);
+  if (!detail) throw new Error(`P11_BACKFILL_ACTIVITY_EVIDENCE_MISSING:${activityId}`);
+  if (isBaselineBIncomplete(incompleteRow, detail)) incomplete.push(incompleteRow);
+  else baselineBTransportExempt.push(incompleteRow);
 }
 
 const reviewedRelationExceptionsLive = [];
@@ -156,6 +176,7 @@ const operations = blockingIncomplete.map((incompleteRow) => {
 });
 
 const reviewedRelationExceptionIdsLiveBefore = reviewedRelationExceptionsLive.map((row) => String(row.activity_id).toLowerCase()).sort();
+const baselineBTransportExemptIdsBefore = baselineBTransportExempt.map((row) => String(row.activity_id).toLowerCase()).sort();
 const operationIds = new Set(operations.map((operation) => operation.activity_id));
 const exceptionMutationOverlap = reviewedRelationExceptionIdsLiveBefore.filter((id) => operationIds.has(id));
 if (exceptionMutationOverlap.length) throw new Error(`P11_BACKFILL_REVIEWED_EXCEPTION_MUTATION_FORBIDDEN:${exceptionMutationOverlap.join(',')}`);
@@ -187,6 +208,7 @@ for (let offset = 0, part = 1; offset < operations.length; offset += chunkSize, 
     execution_rules: {
       exact_live_before_snapshot_required: true,
       current_blocking_delta_only: true,
+      baseline_b_readiness_predicate_is_authoritative: true,
       reviewed_relation_exceptions_are_not_mutation_targets_when_temporally_complete: true,
       reviewed_legacy_temporal_metadata_materialization_only: true,
       runtime_compile_override_writeback_forbidden: true,
@@ -215,7 +237,10 @@ const summary = {
   production_sha: audit.deployment_sha,
   baseline_digest: audit.baseline_digest,
   activity_count: Number(audit.counts?.activities || audit.row_count || 0),
+  audit_semantic_v2_incomplete_before: auditIncomplete.length,
   semantic_v2_incomplete_before: incomplete.length,
+  baseline_b_transport_exempt_before: baselineBTransportExemptIdsBefore.length,
+  baseline_b_transport_exempt_ids_before: baselineBTransportExemptIdsBefore,
   reviewed_relation_exceptions_live_before: reviewedRelationExceptionIdsLiveBefore.length,
   reviewed_relation_exception_ids_live_before: reviewedRelationExceptionIdsLiveBefore,
   blocking_semantic_v2_incomplete_before: operations.length,
