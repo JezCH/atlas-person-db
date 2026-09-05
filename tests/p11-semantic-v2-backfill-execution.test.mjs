@@ -10,8 +10,10 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const script = path.join(root, 'scripts/build-p11-semantic-v2-backfill-execution.mjs');
 const rulesId = '7ca4de8f-01d4-542c-acc1-a06848c6742c';
 const exceptionId = '1446e736-96f8-5401-913f-022cb9b4b7c2';
+const spartacusId = '6c7e0f1c-d843-4b8a-a436-fad247840b31';
 const normalId = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
 const existingId = 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb';
+const ongoingId = 'cccccccc-cccc-4ccc-8ccc-cccccccccccc';
 
 function incomplete(id, relationTypeId = null) {
   return {
@@ -36,7 +38,7 @@ function incomplete(id, relationTypeId = null) {
   };
 }
 
-function detail(id) {
+function detail(id, overrides = {}) {
   return {
     activity_id: id,
     person_id: '11111111-1111-4111-8111-111111111111',
@@ -48,7 +50,8 @@ function detail(id) {
     confidence: 'legacy_asserted',
     chronology_status: 'exact_as_recorded',
     legacy_source_key: `fixture:${id}`,
-    source_count: 1
+    source_count: 1,
+    ...overrides
   };
 }
 
@@ -121,7 +124,10 @@ test('P11 backfill builder keeps reviewed null relation exceptions, materializes
   execFileSync(process.execPath, [script, '--audit', auditPath, '--repair', repairPath, '--out-dir', outDir, '--chunk-size', '2'], { cwd: root });
 
   const summary = JSON.parse(fs.readFileSync(path.join(outDir, 'summary.json'), 'utf8'));
+  assert.equal(summary.audit_semantic_v2_incomplete_before, 3);
   assert.equal(summary.semantic_v2_incomplete_before, 3);
+  assert.equal(summary.baseline_b_transport_exempt_before, 0);
+  assert.deepEqual(summary.baseline_b_transport_exempt_ids_before, []);
   assert.equal(summary.reviewed_relation_exceptions_live_before, 0);
   assert.deepEqual(summary.reviewed_relation_exception_ids_live_before, []);
   assert.equal(summary.blocking_semantic_v2_incomplete_before, 3);
@@ -138,6 +144,7 @@ test('P11 backfill builder keeps reviewed null relation exceptions, materializes
   const operations = plans.flatMap((plan) => {
     assert.ok(plan.operations.length <= 2);
     assert.equal(plan.execution_rules.current_blocking_delta_only, true);
+    assert.equal(plan.execution_rules.baseline_b_readiness_predicate_is_authoritative, true);
     assert.equal(plan.execution_rules.reviewed_relation_exceptions_are_not_mutation_targets_when_temporally_complete, true);
     assert.equal(plan.execution_rules.production_executable, false);
     assert.equal(plan.execution_rules.production_mutation_authorized, false);
@@ -158,6 +165,78 @@ test('P11 backfill builder keeps reviewed null relation exceptions, materializes
     assert.equal(operation.after.activity_start, 100);
     assert.equal(operation.after.activity_end, 110);
   }
+});
+
+test('P11 builder uses Baseline B scope, preserving ongoing open ends and reviewed Spartacus null polity without mutation', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'atlas-p11-baseline-scope-'));
+  const outDir = path.join(dir, 'out');
+  const normal = incomplete(normalId);
+  const ongoing = {
+    ...incomplete(ongoingId, rulesId),
+    activity_start: 2025,
+    activity_start_month: 1,
+    activity_start_day: 29,
+    activity_start_granularity: 'day',
+    activity_start_certainty: 'exact',
+    activity_start_calendar: 'gregorian',
+    activity_end: null
+  };
+  const spartacus = {
+    ...incomplete(spartacusId),
+    polity_id: null,
+    activity_start: -73,
+    activity_start_granularity: 'year',
+    activity_start_certainty: 'exact',
+    activity_start_calendar: 'unspecified_historical',
+    activity_end: -71,
+    activity_end_granularity: 'year',
+    activity_end_certainty: 'exact',
+    activity_end_calendar: 'unspecified_historical'
+  };
+  const audit = {
+    marker: 'ATLAS_AUDIT_INVENTORY_V1',
+    mode: 'full_stage2_baseline',
+    read_only: true,
+    committed: false,
+    deployment_sha: '0123456789012345678901234567890123456789',
+    baseline_digest: `sha256:${'b'.repeat(64)}`,
+    row_count: 3,
+    counts: { activities: 3 },
+    semantic_v2_breakdown: { incomplete_rows: [normal, ongoing, spartacus] },
+    rows: [
+      detail(normalId),
+      detail(ongoingId, { activity_start: 2025, activity_end: null, chronology_status: 'ongoing' }),
+      detail(spartacusId, { polity_id: null, activity_start: -73, activity_end: -71, chronology_status: 'reviewed' })
+    ]
+  };
+  const repair = {
+    schema: 'atlas-stage2-p9-completeness-repair-plan/v1',
+    status: 'READ_ONLY_PLANNER_NO_PRODUCTION_MUTATION',
+    rows: [
+      { activity_id: normalId, disposition: 'SEMANTIC_BACKFILL_READY', relation: { class: 'REVIEWED_RELATION', ready: true, relation_code: 'rules', relation_type_id: rulesId }, temporal: temporal() },
+      { activity_id: ongoingId, disposition: 'PRECONDITION_REQUIRED', relation: { class: 'ALREADY_PRESENT', ready: true, relation_type_id: rulesId }, temporal: { class: 'CHRONOLOGY_STATUS_UNMAPPED', ready: false, chronology_status: 'ongoing' } },
+      { activity_id: spartacusId, disposition: 'PRECONDITION_REQUIRED', relation: { class: 'UNRESOLVED_RELATION', ready: false }, temporal: { class: 'CHRONOLOGY_STATUS_UNMAPPED', ready: false, chronology_status: 'reviewed' } }
+    ]
+  };
+  const auditPath = path.join(dir, 'audit.json');
+  const repairPath = path.join(dir, 'repair.json');
+  fs.writeFileSync(auditPath, JSON.stringify(audit));
+  fs.writeFileSync(repairPath, JSON.stringify(repair));
+
+  execFileSync(process.execPath, [script, '--audit', auditPath, '--repair', repairPath, '--out-dir', outDir, '--chunk-size', '100'], { cwd: root });
+  const summary = JSON.parse(fs.readFileSync(path.join(outDir, 'summary.json'), 'utf8'));
+  assert.equal(summary.audit_semantic_v2_incomplete_before, 3);
+  assert.equal(summary.semantic_v2_incomplete_before, 2);
+  assert.equal(summary.baseline_b_transport_exempt_before, 1);
+  assert.deepEqual(summary.baseline_b_transport_exempt_ids_before, [ongoingId]);
+  assert.equal(summary.reviewed_relation_exceptions_live_before, 1);
+  assert.deepEqual(summary.reviewed_relation_exception_ids_live_before, [spartacusId]);
+  assert.equal(summary.blocking_semantic_v2_incomplete_before, 1);
+  assert.equal(summary.operation_count, 1);
+  assert.equal(summary.reviewed_relation_exceptions_expected_after, 1);
+  assert.deepEqual(summary.reviewed_relation_exception_ids_expected_after, [spartacusId]);
+  const plan = JSON.parse(fs.readFileSync(path.join(outDir, 'p11-semantic-v2-backfill-batch1.json'), 'utf8'));
+  assert.deepEqual(plan.operations.map((operation) => operation.activity_id), [normalId]);
 });
 
 test('P11 backfill builder fails closed for an unreviewed non-exception relation', () => {
