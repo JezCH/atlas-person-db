@@ -40,13 +40,14 @@ test('Vercel exposes exactly twelve physical ATLAS API functions on Hobby', () =
   assert.equal(apiFiles.length, 12);
 });
 
-test('logical read, NamuWiki link, reviewed Person merge and P11 capture URLs consolidate onto existing physical functions', () => {
+test('logical Person and audit surfaces consolidate onto existing physical functions', () => {
   assert.deepEqual(vercel.rewrites, [
     { source: '/api/atlas-reviewed-person-merge', destination: '/api/atlas-authoring?__atlas_authoring_surface=reviewed-person-merge' },
     { source: '/api/atlas-namuwiki-link', destination: '/api/atlas-authoring?__atlas_authoring_surface=namuwiki-link' },
     { source: '/api/atlas-person-read', destination: '/api/atlas-read?__atlas_read_surface=person' },
     { source: '/api/atlas-admin-inspector', destination: '/api/atlas-read?__atlas_read_surface=admin-inspector' },
     { source: '/api/atlas-admin-system-status', destination: '/api/atlas-read?__atlas_read_surface=admin-system-status' },
+    { source: '/api/atlas-person-domain', destination: '/api/atlas-mutate?__atlas_mutation_surface=person-domain' },
     { source: '/api/atlas-p11-baseline-b-capture', destination: '/api/atlas-audit-inventory?__atlas_audit_surface=p11-baseline-b-capture' }
   ]);
 });
@@ -61,6 +62,14 @@ test('consolidated read entrypoint preserves normalized, Person and authenticate
   assert.match(readApi, /atlas-admin-system-status-handler\.js/);
   assert.match(readApi, /createAdminSystemStatusHandler/);
   assert.doesNotMatch(readApi, /SUPABASE_DB_URL|ATLAS_SESSION_SECRET|ATLAS_MUTATION_TOKEN|postgres:\/\/|postgresql:\/\//);
+});
+
+test('consolidated mutation entrypoint preserves generic mutation and Person domain handlers', () => {
+  assert.match(mutateApi, /atlas-vercel-mutation-handler\.js/);
+  assert.match(mutateApi, /createVercelMutationHandler/);
+  assert.match(mutateApi, /atlas-person-domain-handler\.js/);
+  assert.match(mutateApi, /createPersonDomainHandler/);
+  assert.match(mutateApi, /surface === "person-domain"/);
 });
 
 test('database-backed browser entrypoints share one server PostgreSQL client boundary', () => {
