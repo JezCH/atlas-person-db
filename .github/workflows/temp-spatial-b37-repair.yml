@@ -1,0 +1,49 @@
+name: TEMP Spatial B37 Repair
+
+on:
+  push:
+    branches:
+      - ops/spatial-backfill-b37-b39
+    paths:
+      - .github/workflows/temp-spatial-b37-repair.yml
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ops/spatial-backfill-b37-b39
+          fetch-depth: 0
+      - name: Replace Turkey broad mapping with Papua New Guinea
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const p='atlas-polity-spatial-index.json';
+          const i=JSON.parse(fs.readFileSync(p,'utf8'));
+          const turkey='28448862-277d-4738-9fb4-7f51a9e4c03a';
+          const png='140d792f-9166-4ae5-88e1-de0e9efbde8b';
+          if (i.polity_geography[turkey] !== 'west-asia' || i.polity_subregions[turkey] !== 'anatolia') throw new Error('expected staged Turkey mapping');
+          if (!i.place_function_records.some((r)=>r.polity_id===turkey)) throw new Error('Turkey temporal place-function evidence missing');
+          if (Object.hasOwn(i.polity_geography,png) || Object.hasOwn(i.polity_subregions,png) || i.place_function_records.some((r)=>r.polity_id===png)) throw new Error('PNG is not a clean replacement');
+          delete i.polity_geography[turkey];
+          delete i.polity_subregions[turkey];
+          i.polity_geography[png]='oceania';
+          i.polity_subregions[png]='pacific-islands';
+          if (Object.keys(i.polity_geography).length!==710 || Object.keys(i.polity_subregions).length!==684) throw new Error('coverage count changed');
+          fs.writeFileSync(p,JSON.stringify(i,null,2)+'\n');
+          const tp='tests/spacetime-taxonomy-migration.test.mjs';
+          let t=fs.readFileSync(tp,'utf8');
+          t=t.replace('  anatolia: 9,','  anatolia: 8,');
+          fs.writeFileSync(tp,t);
+          NODE
+          rm .github/workflows/temp-spatial-b37-repair.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add atlas-polity-spatial-index.json tests/spacetime-taxonomy-migration.test.mjs .github/workflows/temp-spatial-b37-repair.yml
+          git commit -m "spatial: keep Turkey on temporal place functions"
+          git push origin HEAD:ops/spatial-backfill-b37-b39
