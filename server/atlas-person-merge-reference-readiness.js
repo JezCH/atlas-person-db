@@ -139,8 +139,9 @@ async function inspectPersonMergeReferenceReadiness(client) {
 async function assertPersonMergeReferenceReadiness(client) {
   const readiness = await inspectPersonMergeReferenceReadiness(client);
   if (!readiness.ready) {
-    const error = new Error(`P10_PERSON_MERGE_REFERENCE_SURFACE_DRIFT:${readiness.blockers.join(";")}`);
-    error.code="P10_PERSON_MERGE_REFERENCE_SURFACE_DRIFT"; error.readiness=readiness; throw error;
+    const detailedCode = `P10_PERSON_MERGE_REFERENCE_SURFACE_DRIFT:${readiness.blockers.join(";")}`;
+    const error = new Error(detailedCode);
+    error.code=detailedCode; error.base_code="P10_PERSON_MERGE_REFERENCE_SURFACE_DRIFT"; error.readiness=readiness; throw error;
   }
   return readiness;
 }
