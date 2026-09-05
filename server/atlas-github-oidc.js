@@ -10,15 +10,6 @@ const EXPECTED_REPOSITORY_ID = "1319427399";
 const EXPECTED_REF = "refs/heads/main";
 const EXPECTED_WORKFLOW_REF = "JezCH/atlas-person-db/.github/workflows/atlas-authoring-apply.yml@refs/heads/main";
 const ALLOWED_EVENTS = new Set(["push", "workflow_dispatch"]);
-const AUTHORING_POLICY = Object.freeze({
-  audience: EXPECTED_AUDIENCE,
-  repository: EXPECTED_REPOSITORY,
-  repositoryId: EXPECTED_REPOSITORY_ID,
-  ref: EXPECTED_REF,
-  workflowRef: EXPECTED_WORKFLOW_REF,
-  environment: "production",
-  allowedEvents: ALLOWED_EVENTS
-});
 
 let jwksCache = null;
 let jwksCachedAt = 0;
@@ -57,6 +48,19 @@ function verifyTemporalClaims(payload, nowSeconds) {
   if (Number.isFinite(payload?.iat) && payload.iat > nowSeconds + skew) throw new Error("GITHUB_OIDC_IAT_IN_FUTURE");
 }
 
+function verifyTrustClaims(payload, expectedSha) {
+  if (payload?.iss !== ISSUER) throw new Error("GITHUB_OIDC_ISSUER_MISMATCH");
+  const audiences = Array.isArray(payload?.aud) ? payload.aud : [payload?.aud];
+  if (!audiences.includes(EXPECTED_AUDIENCE)) throw new Error("GITHUB_OIDC_AUDIENCE_MISMATCH");
+  if (payload?.repository !== EXPECTED_REPOSITORY) throw new Error("GITHUB_OIDC_REPOSITORY_MISMATCH");
+  if (String(payload?.repository_id || "") !== EXPECTED_REPOSITORY_ID) throw new Error("GITHUB_OIDC_REPOSITORY_ID_MISMATCH");
+  if (payload?.ref !== EXPECTED_REF) throw new Error("GITHUB_OIDC_REF_MISMATCH");
+  if (payload?.workflow_ref !== EXPECTED_WORKFLOW_REF) throw new Error("GITHUB_OIDC_WORKFLOW_MISMATCH");
+  if (payload?.environment !== "production") throw new Error("GITHUB_OIDC_ENVIRONMENT_MISMATCH");
+  if (!ALLOWED_EVENTS.has(payload?.event_name)) throw new Error("GITHUB_OIDC_EVENT_MISMATCH");
+  if (payload?.sha !== expectedSha) throw new Error("GITHUB_OIDC_SHA_MISMATCH");
+}
+
 function normalizePolicy(policy = {}) {
   const allowedEvents = policy.allowedEvents instanceof Set
     ? policy.allowedEvents
@@ -86,13 +90,8 @@ function verifyTrustClaimsWithPolicy(payload, expectedSha, policy) {
   if (payload?.sha !== expectedSha) throw new Error("GITHUB_OIDC_SHA_MISMATCH");
 }
 
-function verifyTrustClaims(payload, expectedSha) {
-  return verifyTrustClaimsWithPolicy(payload, expectedSha, AUTHORING_POLICY);
-}
-
-async function verifyGitHubActionsOidcWithPolicy(token, { expectedSha, policy, fetchImpl = globalThis.fetch, now = Date.now } = {}) {
+async function verifySignedGithubOidcPayload(token, { fetchImpl = globalThis.fetch, now = Date.now } = {}) {
   const jwt = requireString(token, "GITHUB_OIDC_TOKEN_REQUIRED");
-  const sha = requireString(expectedSha, "GITHUB_OIDC_EXPECTED_SHA_REQUIRED");
   const parts = jwt.split(".");
   if (parts.length !== 3) throw new Error("GITHUB_OIDC_MALFORMED_TOKEN");
 
@@ -115,14 +114,22 @@ async function verifyGitHubActionsOidcWithPolicy(token, { expectedSha, policy, f
   const signature = Buffer.from(parts[2], "base64url");
   if (!crypto.verify("RSA-SHA256", signingInput, publicKey, signature)) throw new Error("GITHUB_OIDC_SIGNATURE_INVALID");
 
-  const nowSeconds = Math.floor(now() / 1000);
-  verifyTemporalClaims(payload, nowSeconds);
-  verifyTrustClaimsWithPolicy(payload, sha, policy);
+  verifyTemporalClaims(payload, Math.floor(now() / 1000));
+  return payload;
+}
+
+async function verifyGitHubActionsOidc(token, { expectedSha, fetchImpl = globalThis.fetch, now = Date.now } = {}) {
+  const sha = requireString(expectedSha, "GITHUB_OIDC_EXPECTED_SHA_REQUIRED");
+  const payload = await verifySignedGithubOidcPayload(token, { fetchImpl, now });
+  verifyTrustClaims(payload, sha);
   return Object.freeze(payload);
 }
 
-async function verifyGitHubActionsOidc(token, options = {}) {
-  return verifyGitHubActionsOidcWithPolicy(token, { ...options, policy: AUTHORING_POLICY });
+async function verifyGitHubActionsOidcWithPolicy(token, { expectedSha, policy, fetchImpl = globalThis.fetch, now = Date.now } = {}) {
+  const sha = requireString(expectedSha, "GITHUB_OIDC_EXPECTED_SHA_REQUIRED");
+  const payload = await verifySignedGithubOidcPayload(token, { fetchImpl, now });
+  verifyTrustClaimsWithPolicy(payload, sha, policy);
+  return Object.freeze(payload);
 }
 
 function resetJwksCacheForTests() {
@@ -138,7 +145,6 @@ module.exports = Object.freeze({
   verifyTemporalClaims,
   normalizePolicy,
   resetJwksCacheForTests,
-  AUTHORING_POLICY,
   ISSUER,
   JWKS_URL,
   EXPECTED_AUDIENCE,
