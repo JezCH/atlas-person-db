@@ -122,10 +122,14 @@ test('P11 backfill builder keeps reviewed null relation exceptions, materializes
 
   const summary = JSON.parse(fs.readFileSync(path.join(outDir, 'summary.json'), 'utf8'));
   assert.equal(summary.semantic_v2_incomplete_before, 3);
+  assert.equal(summary.reviewed_relation_exceptions_live_before, 0);
+  assert.deepEqual(summary.reviewed_relation_exception_ids_live_before, []);
+  assert.equal(summary.blocking_semantic_v2_incomplete_before, 3);
+  assert.equal(summary.operation_count, 3);
   assert.equal(summary.relation_backfill_rows, 1);
   assert.equal(summary.temporal_backfill_rows, 3);
-  assert.equal(summary.reviewed_relation_exceptions_live, 1);
-  assert.deepEqual(summary.reviewed_relation_exception_ids_live, [exceptionId]);
+  assert.equal(summary.reviewed_relation_exceptions_expected_after, 1);
+  assert.deepEqual(summary.reviewed_relation_exception_ids_expected_after, [exceptionId]);
   assert.equal(summary.plan_count, 2);
   assert.equal(summary.production_mutation_authorized, false);
 
@@ -133,6 +137,8 @@ test('P11 backfill builder keeps reviewed null relation exceptions, materializes
     .map((name) => JSON.parse(fs.readFileSync(path.join(outDir, name), 'utf8')));
   const operations = plans.flatMap((plan) => {
     assert.ok(plan.operations.length <= 2);
+    assert.equal(plan.execution_rules.current_blocking_delta_only, true);
+    assert.equal(plan.execution_rules.reviewed_relation_exceptions_are_not_mutation_targets_when_temporally_complete, true);
     assert.equal(plan.execution_rules.production_executable, false);
     assert.equal(plan.execution_rules.production_mutation_authorized, false);
     assert.equal(plan.execution_rules.runtime_compile_override_writeback_forbidden, true);
