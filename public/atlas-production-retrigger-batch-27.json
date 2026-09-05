@@ -1,0 +1,11 @@
+{
+  "kind": "production_retrigger_marker",
+  "batch": 27,
+  "basis_main_sha": "604810f751e79e54e37fe4a588745b8f8ce59e4f",
+  "basis_pr": 888,
+  "purpose": "Force a Vercel build after the batch 27 main push was skipped; this marker is not consumed by application runtime.",
+  "expected_spatial_counts": {
+    "polity_geography": 590,
+    "polity_subregion": 564
+  }
+}

@@ -1,6 +1,6 @@
 {
   "schema": "atlas-reviewed-person-merge/v1",
-  "request_id": "reviewed-person-merge:yelu-dashi-dezong:20260903:v1",
+  "request_id": "reviewed-person-merge:yelu-dashi-dezong:20260905:v2",
   "review_status": "approved",
   "survivor_person_id": "312c56af-d6e2-4713-8ef1-91877ee66f9b",
   "source_person_id": "0274dd73-8573-5cd7-9013-3aed524d4f4d",
@@ -28,15 +28,10 @@
     ],
     "duplicate_interval": "1124-1143",
     "reviewed_survivor_reason": "Yelü Dashi row is the reviewed normalized identity and carries the verified NamuWiki link.",
-    "execution_trigger_revision": 8,
+    "execution_trigger_revision": 5,
     "duplicate_activity_retired_in_production": true,
     "semantic_v2_blocker_correction_pr": 898,
     "semantic_v2_blocker_correction_run": 33862861802,
-    "semantic_v2_blocker_activity_id": "b7aff6cc-95af-58e6-ba3b-5b2fc6be0600",
-    "p10_candidate_scope_fix_pr": 906,
-    "p10_candidate_scope_fix_merge_sha": "1653249fcdc75439ad1bf361eb6ff5fec88e2788",
-    "person_merge_reference_readiness_fix_pr": 911,
-    "person_merge_reference_readiness_fix_merge_sha": "2a38e8753ac41719f1675ab75b02c192b9092a5d",
-    "retry_note": "Retrigger the exact Production-bound reviewed merge artifact after context-polity Person merge reference readiness was fixed and CI passed."
+    "semantic_v2_blocker_activity_id": "b7aff6cc-95af-58e6-ba3b-5b2fc6be0600"
   }
 }

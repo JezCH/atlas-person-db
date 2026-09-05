@@ -30,7 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
       - name: Resolve reviewed merge manifest
         shell: bash
@@ -52,23 +52,79 @@ jobs:
           echo "SOURCE_PERSON_ID=$(jq -er '.source_person_id' "$MANIFEST_PATH")" >> "$GITHUB_ENV"
           echo "SURVIVOR_PERSON_ID=$(jq -er '.survivor_person_id' "$MANIFEST_PATH")" >> "$GITHUB_ENV"
 
-      - name: Wait for exact Production runtime
+      - name: Resolve compatible Production runtime
         shell: bash
         run: |
           set -euo pipefail
+          runtime_ready=false
           for attempt in $(seq 1 75); do
-            body="$(curl --fail --silent --show-error "$READINESS_ENDPOINT")"
-            runtime_sha="$(jq -r '.runtime_sha // ""' <<<"$body")"
-            if [[ "$runtime_sha" == "$GITHUB_SHA" ]]; then
-              jq -e '.ok == true and .ready == true and .readiness.person_merge_contract_ready == true' <<<"$body" >/dev/null
-              echo "Exact Production runtime ready: $runtime_sha"
-              exit 0
+            status="$(curl --silent --show-error \
+              --output /tmp/atlas-reviewed-person-merge-readiness.json \
+              --write-out '%{http_code}' \
+              "$READINESS_ENDPOINT")"
+
+            if [[ "$status" == "404" ]]; then
+              echo "Production readiness route is not live yet (attempt ${attempt}/75); retrying in 10s."
+              sleep 10
+              continue
             fi
-            echo "Waiting for Production $GITHUB_SHA (currently ${runtime_sha:-unknown}) — attempt ${attempt}/75"
+            if [[ "$status" != "200" ]]; then
+              cat /tmp/atlas-reviewed-person-merge-readiness.json >&2 || true
+              echo "Reviewed merge readiness failed: HTTP ${status}" >&2
+              exit 1
+            fi
+
+            jq -e '
+              .ok == true
+              and .ready == true
+              and .readiness.person_merge_contract_ready == true
+              and (.runtime_sha | type == "string" and test("^[0-9a-f]{40}$"))
+            ' /tmp/atlas-reviewed-person-merge-readiness.json >/dev/null
+            runtime_sha="$(jq -er '.runtime_sha' /tmp/atlas-reviewed-person-merge-readiness.json)"
+
+            if ! git cat-file -e "${runtime_sha}^{commit}" 2>/dev/null; then
+              echo "Deployed runtime commit is unavailable in checkout: ${runtime_sha}" >&2
+              exit 1
+            fi
+            if ! git merge-base --is-ancestor "$runtime_sha" "$GITHUB_SHA"; then
+              echo "Deployed runtime ${runtime_sha} is not an ancestor of reviewed merge commit ${GITHUB_SHA}." >&2
+              exit 1
+            fi
+
+            git diff --name-only --diff-filter=ACDMRTUXB "$runtime_sha" "$GITHUB_SHA" -- > /tmp/atlas-reviewed-person-merge-runtime-diff.txt
+            set +e
+            ATLAS_RUNTIME_DIFF_FILE=/tmp/atlas-reviewed-person-merge-runtime-diff.txt node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import { requiresAuthoringRuntimeDeployment } from './scripts/vercel-ignore-build.mjs';
+
+          const text = fs.readFileSync(process.env.ATLAS_RUNTIME_DIFF_FILE, 'utf8').trim();
+          const paths = text ? text.split(/\r?\n/).filter(Boolean) : [];
+          if (requiresAuthoringRuntimeDeployment(paths)) {
+            console.error('REVIEWED_MERGE_RUNTIME_CODE_DRIFT: a newer Production runtime is required');
+            for (const path of paths) console.error(`  ${path}`);
+            process.exit(1);
+          }
+          console.log(`Reviewed merge delta is deployed-runtime-safe (${paths.length} path${paths.length === 1 ? '' : 's'}).`);
+          NODE
+            drift_status=$?
+            set -e
+
+            if [[ "$drift_status" == "0" ]]; then
+              echo "ATLAS_RUNTIME_SHA=${runtime_sha}" >> "$GITHUB_ENV"
+              echo "Compatible Production runtime ready: ${runtime_sha} for workflow ${GITHUB_SHA}."
+              runtime_ready=true
+              break
+            fi
+
+            if [[ "$attempt" == "75" ]]; then
+              echo "Production runtime never became compatible with reviewed merge commit ${GITHUB_SHA}." >&2
+              exit 1
+            fi
+            echo "Production runtime ${runtime_sha} is behind deployment-relevant changes (attempt ${attempt}/75); retrying in 10s."
             sleep 10
           done
-          echo "Production did not reach exact reviewed-merge SHA." >&2
-          exit 1
+
+          [[ "$runtime_ready" == "true" ]] || { echo "Compatible Production runtime was not resolved." >&2; exit 1; }
 
       - name: Wait for duplicate Activity correction
         shell: bash
@@ -108,7 +164,7 @@ jobs:
           set -euo pipefail
           RESPONSE="$RUNNER_TEMP/atlas-reviewed-person-merge-response.json"
           PAYLOAD="$(jq -cn \
-            --arg deployment_sha "$GITHUB_SHA" \
+            --arg deployment_sha "$ATLAS_RUNTIME_SHA" \
             --arg workflow_sha "$GITHUB_SHA" \
             --arg manifest_path "$MANIFEST_PATH" \
             --slurpfile manifest "$MANIFEST_PATH" \
@@ -133,7 +189,7 @@ jobs:
             and .namuwiki.status == "linked"
           ' "$RESPONSE" >/dev/null
 
-      - name: Exact Production read-back
+      - name: Production read-back
         shell: bash
         run: |
           set -euo pipefail

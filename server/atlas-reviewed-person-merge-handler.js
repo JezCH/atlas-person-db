@@ -326,7 +326,15 @@ function createReviewedPersonMergeHandler({
       });
     } catch (error) {
       const code = String(error?.code || error?.message || "REVIEWED_PERSON_MERGE_FAILED");
-      return json(res, statusForError(code), { ok:false,marker:MARKER,code });
+      const details = code === "P10_PERSON_MERGE_REFERENCE_SURFACE_DRIFT" && Array.isArray(error?.readiness?.blockers)
+        ? { blockers:error.readiness.blockers.map(String) }
+        : null;
+      return json(res, statusForError(code), {
+        ok:false,
+        marker:MARKER,
+        code,
+        ...(details ? { details } : {})
+      });
     } finally {
       if (client && typeof client.end === "function") {
         try { await client.end(); } catch {}

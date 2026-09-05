@@ -1,0 +1,7 @@
+{
+  "kind": "production_retrigger_marker",
+  "purpose": "Force an exact-SHA Production deployment for the single-row reviewed semantic-v2 correction that unblocks the Yelu Dashi / Emperor Dezong merge.",
+  "target_activity_id": "b7aff6cc-95af-58e6-ba3b-5b2fc6be0600",
+  "scope": "one existing Activity; preserve UUID, interval, role, polity, source links, notes, and legacy source key",
+  "verification_policy": "Correction workflow must snapshot exact live state, dry-run, apply, and verify on the same Production SHA."
+}

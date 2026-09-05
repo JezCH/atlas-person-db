@@ -1,0 +1,7 @@
+{
+  "kind": "production_retrigger_marker",
+  "purpose": "Force an exact-SHA Vercel Production deployment so the read-only Stage 2 audit can inspect the Yelu Dashi merge blocker before any correction.",
+  "blocker_activity_id": "b7aff6cc-95af-58e6-ba3b-5b2fc6be0600",
+  "mutation_authorized": false,
+  "verification_policy": "Require target main SHA READY in Production before accepting read-only audit evidence."
+}

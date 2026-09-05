@@ -18,6 +18,9 @@
     "test:stage2-entity-boundaries": "node scripts/verify-stage2-entity-boundaries-rehearsal.mjs",
     "test:stage2-semantic-key-rehearsal": "node scripts/verify-stage2-activity-semantic-key.mjs && node scripts/rehearse-stage2-p7-relation-resolution.mjs"
   },
+  "engines": {
+    "node": "22.x"
+  },
   "dependencies": {
     "pg": "^8.18.0"
   }

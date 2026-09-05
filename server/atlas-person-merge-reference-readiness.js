@@ -1,6 +1,7 @@
 "use strict";
 
 const PERSON_REFERENCE_POLICY_VERSION = "p10-person-reference-surface/v2";
+const CONTEXT_POLITY_RELATIONSHIP_FK_KEY = "atlas_v2.person_politics_context_polities.person_politics_id";
 
 const EXPECTED_PERSON_FKS = Object.freeze([
   Object.freeze({ key: "atlas_v2.authoring_manifest_runs.person_id", delete_action: "SET NULL" }),
@@ -15,6 +16,7 @@ const EXPECTED_PERSON_FKS = Object.freeze([
 const EXPECTED_RELATIONSHIP_FKS = Object.freeze([
   Object.freeze({ key: "atlas_v2.authoring_manifest_runs.relationship_id", delete_action: "SET NULL" }),
   Object.freeze({ key: "atlas_v2.chronology_claims.person_politics_id", delete_action: "CASCADE" }),
+  Object.freeze({ key: CONTEXT_POLITY_RELATIONSHIP_FK_KEY, delete_action: "CASCADE" }),
   Object.freeze({ key: "atlas_v2.person_politics_sources.person_politics_id", delete_action: "CASCADE" }),
   Object.freeze({ key: "atlas_v2.relationship_descriptions.person_politics_id", delete_action: "CASCADE" })
 ]);
@@ -89,10 +91,15 @@ async function inspectPersonMergeReferenceReadiness(client) {
   if (!client || typeof client.query !== "function") throw new Error("PostgreSQL client with query() is required");
   const requirementTable = await client.query(`select to_regclass('atlas_v2.person_duplicate_revalidation_requirements')::text as requirements`);
   const requirementLedgerPresent = Boolean(requirementTable.rows[0]?.requirements);
+  const contextPolityTable = await client.query(`select to_regclass('atlas_v2.person_politics_context_polities')::text as context_polities`);
+  const contextPolityTablePresent = Boolean(contextPolityTable.rows[0]?.context_polities);
   const expectedPersonSnapshots = [
     ...EXPECTED_NON_FK_PERSON_UUID_COLUMNS,
     ...(requirementLedgerPresent ? P10_REVALIDATION_REQUIREMENT_PERSON_UUID_COLUMNS : [])
   ].sort();
+  const expectedRelationshipFks = EXPECTED_RELATIONSHIP_FKS.filter(
+    (rule) => contextPolityTablePresent || rule.key !== CONTEXT_POLITY_RELATIONSHIP_FK_KEY
+  );
 
   const personFks = await foreignKeysTo(client,"atlas_v2.persons");
   const relationshipFks = await foreignKeysTo(client,"atlas_v2.person_politics_v2");
@@ -119,7 +126,7 @@ async function inspectPersonMergeReferenceReadiness(client) {
 
   const blockers = [];
   evaluateFkSurface("PERSON",personFks,EXPECTED_PERSON_FKS,blockers);
-  evaluateFkSurface("RELATIONSHIP",relationshipFks,EXPECTED_RELATIONSHIP_FKS,blockers);
+  evaluateFkSurface("RELATIONSHIP",relationshipFks,expectedRelationshipFks,blockers);
   for (const column of difference(nonFkPersonUuidColumns,expectedPersonSnapshots)) blockers.push(`PERSON_UUID_REFERENCE_UNREVIEWED:${column}`);
   for (const column of difference(expectedPersonSnapshots,nonFkPersonUuidColumns)) blockers.push(`PERSON_UUID_SNAPSHOT_MISSING:${column}`);
   for (const column of difference(nonFkRelationshipUuidColumns,EXPECTED_NON_FK_RELATIONSHIP_UUID_COLUMNS)) blockers.push(`RELATIONSHIP_UUID_REFERENCE_UNREVIEWED:${column}`);
@@ -130,6 +137,7 @@ async function inspectPersonMergeReferenceReadiness(client) {
   return Object.freeze({
     policy_version:PERSON_REFERENCE_POLICY_VERSION,ready:blockers.length===0,blockers:Object.freeze(blockers.sort()),
     requirement_ledger_present:requirementLedgerPresent,
+    context_polity_table_present:contextPolityTablePresent,
     expected_non_fk_person_uuid_columns:Object.freeze(expectedPersonSnapshots),
     person_fks:Object.freeze(personFks),relationship_fks:Object.freeze(relationshipFks),
     non_fk_person_uuid_columns:Object.freeze(nonFkPersonUuidColumns),non_fk_relationship_uuid_columns:Object.freeze(nonFkRelationshipUuidColumns),

@@ -6,6 +6,7 @@ const SAFE_SKIP_PREFIXES = Object.freeze([
   "requirements/",
   "tests/",
   "corrections/evidence/",
+  "corrections/reviewed-person-merges/",
   "research/",
   "authoring/requests/"
 ]);
@@ -14,15 +15,15 @@ const SAFE_SKIP_EXACT = new Set([
   ".github/workflows/atlas-integrity.yml"
 ]);
 
-// The deployed Human Authoring endpoints do not import the P10 duplicate
-// detector/review subsystem. GitHub Authoring therefore uses a narrower,
-// fail-closed runtime-compatibility boundary than Vercel's general build gate.
-// This does NOT make these files deployment-safe for Vercel itself; it only
-// proves that changing them cannot alter /api/atlas-authoring or
-// /api/atlas-authoring-apply in the already deployed runtime.
+// The deployed Human Authoring and reviewed Person merge endpoints can consume
+// reviewed data manifests from a newer GitHub commit while executing against an
+// older compatible Production runtime. Keep this boundary explicit and
+// fail-closed: only files that cannot change those deployed endpoint contracts
+// belong here.
 const AUTHORING_RUNTIME_SAFE_PREFIXES = Object.freeze([
   ".github/",
   "authoring/requests/",
+  "corrections/reviewed-person-merges/",
   "docs/",
   "requirements/",
   "research/",
@@ -45,6 +46,10 @@ function normalizePath(value) {
   return String(value || "").trim().replaceAll("\\", "/").replace(/^\.\//, "");
 }
 
+function normalizePaths(paths) {
+  return [...new Set((Array.isArray(paths) ? paths : []).map(normalizePath).filter(Boolean))];
+}
+
 export function isSafeToSkipPath(value) {
   const file = normalizePath(value);
   if (!file) return true;
@@ -56,8 +61,18 @@ export function isSafeToSkipPath(value) {
 }
 
 export function isAuthoringDataOnly(paths) {
-  const normalized = [...new Set((Array.isArray(paths) ? paths : []).map(normalizePath).filter(Boolean))];
+  const normalized = normalizePaths(paths);
   return normalized.length > 0 && normalized.every((file) => file.startsWith("authoring/requests/") && file.endsWith(".json"));
+}
+
+export function isReviewedMergeDataOnly(paths) {
+  const normalized = normalizePaths(paths);
+  return normalized.length > 0 && normalized.every((file) => file.startsWith("corrections/reviewed-person-merges/") && file.endsWith(".json"));
+}
+
+export function isRuntimeDataOnly(paths) {
+  const normalized = normalizePaths(paths);
+  return isAuthoringDataOnly(normalized) || isReviewedMergeDataOnly(normalized);
 }
 
 export function isSafeForDeployedAuthoringRuntimePath(value) {
@@ -70,13 +85,13 @@ export function isSafeForDeployedAuthoringRuntimePath(value) {
 }
 
 export function requiresAuthoringRuntimeDeployment(paths) {
-  const normalized = [...new Set((Array.isArray(paths) ? paths : []).map(normalizePath).filter(Boolean))];
+  const normalized = normalizePaths(paths);
   if (normalized.length === 0) return false;
   return normalized.some((file) => !isSafeForDeployedAuthoringRuntimePath(file));
 }
 
 export function shouldBuildForChangedPaths(paths) {
-  const normalized = [...new Set((Array.isArray(paths) ? paths : []).map(normalizePath).filter(Boolean))];
+  const normalized = normalizePaths(paths);
   if (normalized.length === 0) return false;
 
   // atlas-authoring-apply.yml historically imports this function. Preserve that
@@ -128,22 +143,22 @@ export function main(env = process.env) {
     return;
   }
 
-  // Authoring manifests are reviewed data, not deployable runtime code. Prove the
-  // current commit itself is authoring-data-only before relying on the older
-  // successful-deployment SHA. This prevents a harmless registration commit from
+  // Reviewed request/merge manifests are data, not deployable runtime code.
+  // Prove the current commit itself is data-only before relying on the older
+  // successful-deployment SHA. This prevents harmless reviewed-data commits from
   // consuming a Vercel build merely because an older SHA is absent from a shallow
   // clone. Any inability to prove the current commit delta falls back to the
   // conservative build path below.
   try {
     const currentOutput = git(["diff-tree", "--no-commit-id", "--name-only", "-r", "-m", "--first-parent", currentSha, "--"]);
     const currentPaths = parsePaths(currentOutput);
-    if (isAuthoringDataOnly(currentPaths)) {
-      exitSkip(`current commit contains only reviewed authoring request data (${currentPaths.length} path${currentPaths.length === 1 ? "" : "s"})`);
+    if (isRuntimeDataOnly(currentPaths)) {
+      exitSkip(`current commit contains only reviewed runtime-safe data (${currentPaths.length} path${currentPaths.length === 1 ? "" : "s"})`);
       for (const file of currentPaths) console.log(`[atlas-vercel-ignore]   ${file}`);
       return;
     }
   } catch {
-    logDecision("INFO", "could not prove current commit as authoring-data-only; falling back to deployment-diff gate");
+    logDecision("INFO", "could not prove current commit as runtime-safe data-only; falling back to deployment-diff gate");
   }
 
   // Fail open to a real build whenever the last successfully deployed SHA cannot
