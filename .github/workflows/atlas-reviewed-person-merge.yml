@@ -38,8 +38,14 @@ jobs:
           set -euo pipefail
           git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${GITHUB_SHA}" -- \
             'corrections/reviewed-person-merges/*.json' > /tmp/reviewed-person-merge-files.txt
-          test "$(grep -cve '^$' /tmp/reviewed-person-merge-files.txt)" = "1"
-          MANIFEST_PATH="$(grep -ve '^$' /tmp/reviewed-person-merge-files.txt)"
+          mapfile -t manifest_files < <(grep -ve '^$' /tmp/reviewed-person-merge-files.txt || true)
+          if [[ "${#manifest_files[@]}" == "0" ]]; then
+            echo "REVIEWED_MERGE_NOOP=true" >> "$GITHUB_ENV"
+            echo "No added or modified reviewed merge manifest; deletion-only cleanup is a no-op."
+            exit 0
+          fi
+          test "${#manifest_files[@]}" = "1"
+          MANIFEST_PATH="${manifest_files[0]}"
           jq -e '
             .schema == "atlas-reviewed-person-merge/v1"
             and .review_status == "approved"
@@ -53,6 +59,7 @@ jobs:
           echo "SURVIVOR_PERSON_ID=$(jq -er '.survivor_person_id' "$MANIFEST_PATH")" >> "$GITHUB_ENV"
 
       - name: Resolve compatible Production runtime
+        if: env.REVIEWED_MERGE_NOOP != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -127,6 +134,7 @@ jobs:
           [[ "$runtime_ready" == "true" ]] || { echo "Compatible Production runtime was not resolved." >&2; exit 1; }
 
       - name: Wait for duplicate Activity correction
+        if: env.REVIEWED_MERGE_NOOP != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -146,6 +154,7 @@ jobs:
           exit 1
 
       - name: Request dedicated GitHub OIDC token
+        if: env.REVIEWED_MERGE_NOOP != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -159,6 +168,7 @@ jobs:
           echo "OIDC_TOKEN_FILE=$TOKEN_FILE" >> "$GITHUB_ENV"
 
       - name: Execute reviewed Person merge
+        if: env.REVIEWED_MERGE_NOOP != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -190,6 +200,7 @@ jobs:
           ' "$RESPONSE" >/dev/null
 
       - name: Production read-back
+        if: env.REVIEWED_MERGE_NOOP != 'true'
         shell: bash
         run: |
           set -euo pipefail
