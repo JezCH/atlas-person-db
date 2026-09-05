@@ -1,0 +1,73 @@
+name: TEMP Spatial B33 Apply
+
+on:
+  push:
+    branches:
+      - ops/spatial-backfill-b33
+    paths:
+      - .github/workflows/temp-spatial-b33-apply.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ops/spatial-backfill-b33
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Apply exact reviewed B33 spatial mappings
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const spatialPath = 'atlas-polity-spatial-index.json';
+          const index = JSON.parse(fs.readFileSync(spatialPath, 'utf8'));
+          if (Object.keys(index.polity_geography).length !== 640 || Object.keys(index.polity_subregions).length !== 614) {
+            throw new Error('unexpected B33 baseline');
+          }
+          const mappings = {
+            '169ef1c2-86eb-4591-a777-7c7b5437f183': ['europe', 'italy'],
+            '858edb30-2100-4bc1-a366-ca9df138a9be': ['europe', 'italy'],
+            '51c7c947-9728-4209-b107-f9481d6b7ed3': ['europe', 'italy'],
+            '88d136af-3e92-45e9-8899-609f8adfd59f': ['europe', 'iberia'],
+            'f4dbe670-ebf9-4892-89e0-9628bca74654': ['central-asia', 'eastern-central-asia-steppe'],
+            '8f3e41bc-8be1-43e1-a12e-4a1fec536199': ['americas', 'north-america'],
+            'fbc8181e-c389-4131-96b4-257bab0ccf4a': ['africa', 'central-africa'],
+            '68cdb56e-107f-45c2-8b84-55420aa0a3ad': ['europe', 'iberia'],
+            '96709ba6-218a-4292-b1fa-bebcc6c18c2a': ['africa', 'east-africa-horn'],
+            '1a97dec2-dc1c-4e44-8546-e19bc6117ad5': ['europe', 'italy'],
+          };
+          for (const [id, [macro, sub]] of Object.entries(mappings)) {
+            if (Object.hasOwn(index.polity_geography, id) || Object.hasOwn(index.polity_subregions, id)) {
+              throw new Error(`B33 candidate already mapped: ${id}`);
+            }
+            index.polity_geography[id] = macro;
+            index.polity_subregions[id] = sub;
+          }
+          if (Object.keys(index.polity_geography).length !== 650) throw new Error('expected 650 geography mappings');
+          if (Object.keys(index.polity_subregions).length !== 624) throw new Error('expected 624 subregion mappings');
+          fs.writeFileSync(spatialPath, JSON.stringify(index, null, 2) + '\n');
+
+          const coveragePath = 'tests/person-spacetime-spatial-index-coverage.test.mjs';
+          let coverage = fs.readFileSync(coveragePath, 'utf8');
+          coverage = coverage.replace('assert.equal(Object.keys(index.polity_geography).length, 640);', 'assert.equal(Object.keys(index.polity_geography).length, 650);');
+          coverage = coverage.replace('assert.equal(Object.keys(index.polity_subregions).length, 614);', 'assert.equal(Object.keys(index.polity_subregions).length, 624);');
+          fs.writeFileSync(coveragePath, coverage);
+
+          const taxonomyPath = 'tests/spacetime-taxonomy-migration.test.mjs';
+          let taxonomy = fs.readFileSync(taxonomyPath, 'utf8');
+          taxonomy = taxonomy.replace('assert.equal(Object.keys(index.polity_subregions).length, 614);', 'assert.equal(Object.keys(index.polity_subregions).length, 624);');
+          fs.writeFileSync(taxonomyPath, taxonomy);
+          NODE
+          rm .github/workflows/temp-spatial-b33-apply.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add atlas-polity-spatial-index.json tests/person-spacetime-spatial-index-coverage.test.mjs tests/spacetime-taxonomy-migration.test.mjs .github/workflows/temp-spatial-b33-apply.yml
+          git commit -m "spatial: backfill batch 33 polity placements"
+          git push origin HEAD:ops/spatial-backfill-b33
