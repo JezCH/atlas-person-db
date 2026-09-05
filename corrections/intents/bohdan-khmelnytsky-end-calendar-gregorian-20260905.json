@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:bohdan-khmelnytsky:end-calendar-gregorian:20260905:v1",
+  "review_status": "approved",
+  "release_order": 100,
+  "operation": {
+    "type": "update_activity_temporal_metadata",
+    "relationship_id": "4958fcb1-15f8-41a7-b267-6dd2892c78dd",
+    "after": {
+      "activity_end_calendar": "gregorian"
+    }
+  },
+  "evidence": {
+    "reason": "Production currently stores the exact death endpoint as 1657-08-06 but labels that endpoint Julian. The Encyclopedia of the History of Ukraine gives the paired dates as 06.08 (27.07).1657, i.e. 6 August in the Gregorian/new-style representation and 27 July in the Julian/old-style representation. Preserve the existing 1657-08-06 endpoint and correct only its calendar metadata from julian to gregorian.",
+    "target_activity_id": "4958fcb1-15f8-41a7-b267-6dd2892c78dd",
+    "source": "Encyclopedia of the History of Ukraine, Bohdan Khmelnytsky",
+    "source_url": "https://www.history.org.ua/?termin=Khmelnytskyj_B"
+  }
+}

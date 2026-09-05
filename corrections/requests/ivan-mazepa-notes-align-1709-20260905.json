@@ -1,0 +1,31 @@
+{
+  "schema": "atlas-correction-manifest/v1.4",
+  "request_id": "correction:ivan-mazepa:notes-align-1709:20260905:v1",
+  "review_status": "approved",
+  "release_order": 100,
+  "evidence": {
+    "reason": "Production read-back after PR #916 confirms the Ivan Mazepa Activity endpoint is now 1709, but the pre-existing notes still state that the Activity ended with his 1708 break with Peter I. Align the notes with the corrected rules + Hetman + reign interval while preserving the Activity identity and all other fields.",
+    "source": "Encyclopedia of Ukraine, Ivan Mazepa; Hetman",
+    "source_url": "https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%5CM%5CA%5CMazepaIvan.htm"
+  },
+  "operations": [
+    {
+      "type": "update_activity_notes",
+      "relationship_id": "7f82f919-8a18-4e46-a6d9-995aee1ba35a",
+      "expected_before": {
+        "person_id": "fd5af895-4a51-4f36-a61a-250065cf5ba0",
+        "polity_id": "53eac379-ca08-4cae-b8cd-3f4adcc090e0",
+        "activity_start": 1687,
+        "activity_end": 1709,
+        "notes": "Ivan Mazepa was Hetman of the Cossack Hetmanate from 1687 until his break with Peter I in 1708. The user label 'Zaporozhia' is normalized to the Cossack Hetmanate, the polity he actually governed; he was not the ruler of the Zaporozhian Sich."
+      },
+      "expected_after": {
+        "person_id": "fd5af895-4a51-4f36-a61a-250065cf5ba0",
+        "polity_id": "53eac379-ca08-4cae-b8cd-3f4adcc090e0",
+        "activity_start": 1687,
+        "activity_end": 1709,
+        "notes": "Ivan Mazepa was Hetman of the Cossack Hetmanate from 1687 to 1709. He broke with Peter I in 1708; ATLAS retains 1709 as the end of this Hetman/reign Activity rather than treating the break itself as the end of his hetmancy. The user label 'Zaporozhia' is normalized to the Cossack Hetmanate, the polity he actually governed; he was not the ruler of the Zaporozhian Sich."
+      }
+    }
+  ]
+}
