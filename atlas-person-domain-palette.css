@@ -1,0 +1,79 @@
+:root {
+  --atlas-person-domain-ruler: #c79a24;
+  --atlas-person-domain-ruler-tint: rgba(199, 154, 36, 0.13);
+  --atlas-person-domain-military: #c94f47;
+  --atlas-person-domain-military-tint: rgba(201, 79, 71, 0.12);
+  --atlas-person-domain-science: #3478b8;
+  --atlas-person-domain-science-tint: rgba(52, 120, 184, 0.12);
+  --atlas-person-domain-technology: #66737d;
+  --atlas-person-domain-technology-tint: rgba(102, 115, 125, 0.13);
+  --atlas-person-domain-commerce: #3d8b5a;
+  --atlas-person-domain-commerce-tint: rgba(61, 139, 90, 0.12);
+  --atlas-person-domain-culture: #8a5caf;
+  --atlas-person-domain-culture-tint: rgba(138, 92, 175, 0.12);
+  --atlas-person-domain-religion: #ddd3b5;
+  --atlas-person-domain-religion-edge: #857856;
+  --atlas-person-domain-religion-tint: rgba(221, 211, 181, 0.25);
+  --atlas-person-domain-exploration: #dd792c;
+  --atlas-person-domain-exploration-tint: rgba(221, 121, 44, 0.12);
+}
+
+.person-card[data-representative-domain] {
+  --person-domain-color: #66737d;
+  --person-domain-edge: var(--person-domain-color);
+  --person-domain-tint: rgba(102, 115, 125, 0.08);
+}
+
+.person-card[data-representative-domain="ruler"] {
+  --person-domain-color: var(--atlas-person-domain-ruler);
+  --person-domain-tint: var(--atlas-person-domain-ruler-tint);
+}
+.person-card[data-representative-domain="military"] {
+  --person-domain-color: var(--atlas-person-domain-military);
+  --person-domain-tint: var(--atlas-person-domain-military-tint);
+}
+.person-card[data-representative-domain="science"] {
+  --person-domain-color: var(--atlas-person-domain-science);
+  --person-domain-tint: var(--atlas-person-domain-science-tint);
+}
+.person-card[data-representative-domain="technology"] {
+  --person-domain-color: var(--atlas-person-domain-technology);
+  --person-domain-tint: var(--atlas-person-domain-technology-tint);
+}
+.person-card[data-representative-domain="commerce"] {
+  --person-domain-color: var(--atlas-person-domain-commerce);
+  --person-domain-tint: var(--atlas-person-domain-commerce-tint);
+}
+.person-card[data-representative-domain="culture"] {
+  --person-domain-color: var(--atlas-person-domain-culture);
+  --person-domain-tint: var(--atlas-person-domain-culture-tint);
+}
+.person-card[data-representative-domain="religion"] {
+  --person-domain-color: var(--atlas-person-domain-religion);
+  --person-domain-edge: var(--atlas-person-domain-religion-edge);
+  --person-domain-tint: var(--atlas-person-domain-religion-tint);
+}
+.person-card[data-representative-domain="exploration"] {
+  --person-domain-color: var(--atlas-person-domain-exploration);
+  --person-domain-tint: var(--atlas-person-domain-exploration-tint);
+}
+
+.person-card[data-representative-domain] .person-table-identity {
+  box-shadow: inset 3px 0 0 var(--person-domain-edge);
+  background: linear-gradient(90deg, var(--person-domain-tint), rgba(255,255,255,0) 82%);
+  padding-inline-start: 8px;
+}
+
+.person-domain-form select {
+  min-height: 34px;
+}
+
+.person-domain-save-state {
+  margin: 4px 0 0;
+  color: #65707a;
+  font-size: 11px;
+}
+
+.person-domain-save-state.is-error {
+  color: #a73c36;
+}

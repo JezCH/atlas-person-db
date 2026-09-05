@@ -20,7 +20,8 @@ const expectedAuthoringMigrations = [
   '20260815_human_authoring_manifest_schema.sql',
   '20260821_person_external_references.sql',
   '20260821_human_authoring_external_reference_sync.sql',
-  '20260902_ongoing_activity_terms.sql'
+  '20260902_ongoing_activity_terms.sql',
+  '20260904_person_representative_domains.sql'
 ];
 
 const expectedCorrectionMigrations = [
