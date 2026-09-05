@@ -683,7 +683,17 @@
     "1cdf4741-293e-4b50-91b7-508161fd47b2": "oceania",
     "a31ddba2-592f-4ce7-a171-f5eaa8bbabe7": "europe",
     "5188352c-ac3e-4d61-bb78-f5500147ab77": "americas",
-    "c4f175af-8e99-4b7c-a4fd-294f570f7f65": "southeast-asia"
+    "c4f175af-8e99-4b7c-a4fd-294f570f7f65": "southeast-asia",
+    "c63ab742-c86c-4fe1-842c-330546340244": "africa",
+    "37aa6b8a-9167-46af-897e-06ee531c4162": "americas",
+    "868fe6f5-59dc-4f95-b8ea-7eccf5f32bff": "americas",
+    "c7642cea-2a6d-43dc-b03f-5740d6cc53d6": "southeast-asia",
+    "b0bee257-faaf-4415-a08c-7b3a85937b3b": "southeast-asia",
+    "34896c16-a481-44b9-9b78-ac7260ed069d": "southeast-asia",
+    "3959991c-9512-41ab-8e0e-c718eee53633": "europe",
+    "886b9c7e-035a-490f-889d-f980b9346b4d": "west-asia",
+    "5037f747-2d30-4479-b321-6f01b5cba162": "africa",
+    "bf3f2bd2-e2b7-498a-b0d9-114ec3d88b92": "southeast-asia"
   },
   "place_function_records": [
     {
@@ -1590,6 +1600,16 @@
     "1cdf4741-293e-4b50-91b7-508161fd47b2": "pacific-islands",
     "a31ddba2-592f-4ce7-a171-f5eaa8bbabe7": "central-europe",
     "5188352c-ac3e-4d61-bb78-f5500147ab77": "north-america",
-    "c4f175af-8e99-4b7c-a4fd-294f570f7f65": "mainland-southeast-asia"
+    "c4f175af-8e99-4b7c-a4fd-294f570f7f65": "mainland-southeast-asia",
+    "c63ab742-c86c-4fe1-842c-330546340244": "west-africa",
+    "37aa6b8a-9167-46af-897e-06ee531c4162": "south-america",
+    "868fe6f5-59dc-4f95-b8ea-7eccf5f32bff": "north-america",
+    "c7642cea-2a6d-43dc-b03f-5740d6cc53d6": "mainland-southeast-asia",
+    "b0bee257-faaf-4415-a08c-7b3a85937b3b": "mainland-southeast-asia",
+    "34896c16-a481-44b9-9b78-ac7260ed069d": "mainland-southeast-asia",
+    "3959991c-9512-41ab-8e0e-c718eee53633": "eastern-europe",
+    "886b9c7e-035a-490f-889d-f980b9346b4d": "levant",
+    "5037f747-2d30-4479-b321-6f01b5cba162": "west-africa",
+    "bf3f2bd2-e2b7-498a-b0d9-114ec3d88b92": "mainland-southeast-asia"
   }
 }
