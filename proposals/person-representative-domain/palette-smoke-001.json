@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "proposal_only",
+  "purpose": "one Production-backed Person per representative domain for later visual smoke verification",
+  "production_snapshot_date": "2026-09-05",
+  "entries": [
+    {"person_id":"afe59ea0-afac-5c0f-b767-b6aeaa680456","canonical_name_en":"Alexander the Great","preferred_name_ko":"알렉산드로스 대왕","representative_domain":"ruler","basis":"King and military commander; sovereign rule takes priority."},
+    {"person_id":"709be8f8-d49a-5845-8a03-1868aeb89491","canonical_name_en":"Hannibal Barca","preferred_name_ko":"한니발 바르카","representative_domain":"military","basis":"Production models his representative period as military_activity and General and statesman, without sovereign rule."},
+    {"person_id":"d2b6be8c-df56-44fe-848d-660fb8f9b89a","canonical_name_en":"Albert Einstein","preferred_name_ko":"알베르트 아인슈타인","representative_domain":"science","basis":"Production role is Physicist with intellectual_activity basis."},
+    {"person_id":"51ee3a3e-cb38-4c72-8711-091e77ed0d21","canonical_name_en":"Gustave Eiffel","preferred_name_ko":"귀스타브 에펠","representative_domain":"technology","basis":"Production role is Engineer and constructor of the Eiffel Tower."},
+    {"person_id":"aa816f19-b73e-48a9-9870-ab19f03c066f","canonical_name_en":"Jakob Fugger","preferred_name_ko":"야코프 푸거","representative_domain":"commerce","basis":"Production role is Banker and the record centers his mining, banking, and finance activity."},
+    {"person_id":"a565511a-c043-5c88-a2e5-dde042ed8959","canonical_name_en":"Leonardo da Vinci","preferred_name_ko":"레오나르도 다빈치","representative_domain":"culture","basis":"Production role is Artist, engineer and polymath with artistic_activity basis; artistic identity is the representative visualization choice."},
+    {"person_id":"0a0bb353-016d-459b-987d-f5d2ee6bf0ce","canonical_name_en":"Guru Nanak","preferred_name_ko":"구루 나나크","representative_domain":"religion","basis":"Production role is Sikh Guru and religious teacher with religious_activity basis."},
+    {"person_id":"9d020dd4-d6c7-4de0-a216-fd1378e65e05","canonical_name_en":"Marco Polo","preferred_name_ko":"마르코 폴로","representative_domain":"exploration","basis":"Production records merchant and traveler activity; the agreed editorial rule treats his representative historical identity as exploration/travel rather than commerce."}
+  ]
+}
