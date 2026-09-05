@@ -740,7 +740,6 @@
     "475a85a9-b966-4f31-b9df-2143d7d7f739": "africa",
     "96cb1159-e7fe-4ae2-8b35-b8b99be8ecc9": "europe",
     "48c5f1bc-afa3-42fc-abd1-499b807c1944": "europe",
-    "28448862-277d-4738-9fb4-7f51a9e4c03a": "west-asia",
     "4b3b1761-c473-4b06-895d-14db3f653f14": "africa",
     "6991ca13-fafb-4fe8-ae44-515929f84e53": "americas",
     "5a290036-5e47-4426-bd2e-eb1992126804": "west-asia",
@@ -763,7 +762,8 @@
     "ea3a6fdc-476c-4feb-ab8b-0355c4631a72": "africa",
     "2e64d7d1-6ece-4fc1-a332-4e159ab982e5": "europe",
     "291e7253-4dc6-4793-a52f-b2e7f38e233d": "europe",
-    "4a817a8d-56db-49c1-a1a4-3c566bb51c48": "europe"
+    "4a817a8d-56db-49c1-a1a4-3c566bb51c48": "europe",
+    "140d792f-9166-4ae5-88e1-de0e9efbde8b": "oceania"
   },
   "place_function_records": [
     {
@@ -1727,7 +1727,6 @@
     "475a85a9-b966-4f31-b9df-2143d7d7f739": "southern-africa",
     "96cb1159-e7fe-4ae2-8b35-b8b99be8ecc9": "northern-europe",
     "48c5f1bc-afa3-42fc-abd1-499b807c1944": "italy",
-    "28448862-277d-4738-9fb4-7f51a9e4c03a": "anatolia",
     "4b3b1761-c473-4b06-895d-14db3f653f14": "southern-africa",
     "6991ca13-fafb-4fe8-ae44-515929f84e53": "south-america",
     "5a290036-5e47-4426-bd2e-eb1992126804": "caucasus",
@@ -1750,6 +1749,7 @@
     "ea3a6fdc-476c-4feb-ab8b-0355c4631a72": "nile-valley",
     "2e64d7d1-6ece-4fc1-a332-4e159ab982e5": "balkans",
     "291e7253-4dc6-4793-a52f-b2e7f38e233d": "russia-volga",
-    "4a817a8d-56db-49c1-a1a4-3c566bb51c48": "central-europe"
+    "4a817a8d-56db-49c1-a1a4-3c566bb51c48": "central-europe",
+    "140d792f-9166-4ae5-88e1-de0e9efbde8b": "pacific-islands"
   }
 }
