@@ -673,7 +673,17 @@
     "c5c4f6cb-ae44-4256-86e9-4e6f0d7068f4": "europe",
     "f070299a-de6b-4094-b3ad-c5dc24a541c3": "west-asia",
     "63c0aa8d-bc0b-42c5-9118-612b6c650646": "europe",
-    "be139c7d-f43c-4bf6-8542-9a372d64c06d": "europe"
+    "be139c7d-f43c-4bf6-8542-9a372d64c06d": "europe",
+    "ac5b6164-e505-4b2f-96e6-cab9f6f3652e": "central-asia",
+    "78744e34-820e-44ab-91b2-c289d41a3802": "europe",
+    "aab87366-4825-40ed-b0f9-78e293746c8d": "africa",
+    "2d90e042-a871-4bac-b429-b2c0d654fad5": "africa",
+    "ec9d77b4-e18e-4495-8232-c51e74b0d683": "africa",
+    "a01c7ba1-ff5e-4af7-8876-bf75e955d901": "africa",
+    "1cdf4741-293e-4b50-91b7-508161fd47b2": "oceania",
+    "a31ddba2-592f-4ce7-a171-f5eaa8bbabe7": "europe",
+    "5188352c-ac3e-4d61-bb78-f5500147ab77": "americas",
+    "c4f175af-8e99-4b7c-a4fd-294f570f7f65": "southeast-asia"
   },
   "place_function_records": [
     {
@@ -1570,6 +1580,16 @@
     "c5c4f6cb-ae44-4256-86e9-4e6f0d7068f4": "iberia",
     "f070299a-de6b-4094-b3ad-c5dc24a541c3": "anatolia",
     "63c0aa8d-bc0b-42c5-9118-612b6c650646": "balkans",
-    "be139c7d-f43c-4bf6-8542-9a372d64c06d": "central-europe"
+    "be139c7d-f43c-4bf6-8542-9a372d64c06d": "central-europe",
+    "ac5b6164-e505-4b2f-96e6-cab9f6f3652e": "eastern-central-asia-steppe",
+    "78744e34-820e-44ab-91b2-c289d41a3802": "eastern-europe",
+    "aab87366-4825-40ed-b0f9-78e293746c8d": "east-africa-horn",
+    "2d90e042-a871-4bac-b429-b2c0d654fad5": "west-africa",
+    "ec9d77b4-e18e-4495-8232-c51e74b0d683": "maghreb-north-africa",
+    "a01c7ba1-ff5e-4af7-8876-bf75e955d901": "maghreb-north-africa",
+    "1cdf4741-293e-4b50-91b7-508161fd47b2": "pacific-islands",
+    "a31ddba2-592f-4ce7-a171-f5eaa8bbabe7": "central-europe",
+    "5188352c-ac3e-4d61-bb78-f5500147ab77": "north-america",
+    "c4f175af-8e99-4b7c-a4fd-294f570f7f65": "mainland-southeast-asia"
   }
 }
