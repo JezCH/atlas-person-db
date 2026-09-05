@@ -10,9 +10,11 @@ const EXPECTED_REPOSITORY_ID = "1319427399";
 const EXPECTED_REF = "refs/heads/main";
 const EXPECTED_WORKFLOW_REF = "JezCH/atlas-person-db/.github/workflows/atlas-audit-inventory.yml@refs/heads/main";
 const P11_SEMANTIC_V2_BACKFILL_WORKFLOW_REF = "JezCH/atlas-person-db/.github/workflows/atlas-p11-semantic-v2-backfill.yml@refs/heads/main";
+const SPATIAL_CANDIDATE_AUDIT_WORKFLOW_REF = "JezCH/atlas-person-db/.github/workflows/atlas-spatial-candidate-audit.yml@refs/heads/main";
 const ALLOWED_WORKFLOW_REFS = Object.freeze([
   EXPECTED_WORKFLOW_REF,
-  P11_SEMANTIC_V2_BACKFILL_WORKFLOW_REF
+  P11_SEMANTIC_V2_BACKFILL_WORKFLOW_REF,
+  SPATIAL_CANDIDATE_AUDIT_WORKFLOW_REF
 ]);
 const ALLOWED_EVENTS = new Set(["push", "workflow_dispatch"]);
 
@@ -115,5 +117,6 @@ module.exports = Object.freeze({
   EXPECTED_REF,
   EXPECTED_WORKFLOW_REF,
   P11_SEMANTIC_V2_BACKFILL_WORKFLOW_REF,
+  SPATIAL_CANDIDATE_AUDIT_WORKFLOW_REF,
   ALLOWED_WORKFLOW_REFS
 });
