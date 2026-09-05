@@ -1,0 +1,20 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:mao-zedong:retire-chairman-paramount-leader-1949-1976:20260902:v1",
+  "review_status": "approved",
+  "release_order": 781,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "80b1397f-83f2-5ffd-bb52-e3e7c61addaf"
+  },
+  "evidence": {
+    "reason": "Compound-role audit separated Mao's broad de facto supreme leadership from his formal state-head offices. Production now contains Paramount Leader 1949-1976 (24bfa798-1fae-4acd-a335-2eedd6a7b4ec), Chairman of the Central People's Government 1949-1954 (ca6c3bcf-96cb-47a9-967b-e699b5f944c1), and President 1954-1959 (ca83fa55-efee-4567-8c8d-9468dccd7c1e). Retire only the legacy compound Activity.",
+    "person_id": "44078197-7f99-5f12-a0cf-48c402798023",
+    "replacement_activity_ids": [
+      "24bfa798-1fae-4acd-a335-2eedd6a7b4ec",
+      "ca6c3bcf-96cb-47a9-967b-e699b5f944c1",
+      "ca83fa55-efee-4567-8c8d-9468dccd7c1e"
+    ],
+    "retire_activity_id": "80b1397f-83f2-5ffd-bb52-e3e7c61addaf"
+  }
+}
