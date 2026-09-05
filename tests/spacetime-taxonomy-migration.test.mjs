@@ -15,19 +15,19 @@ const EXPECTED_MACROS = [
 ];
 
 const EXPECTED_SPLIT_COUNTS = Object.freeze({
-  mesoamerica: 20,
+  mesoamerica: 21,
   caribbean: 8,
   "eastern-europe": 14,
   "russia-volga": 13,
   "maghreb-north-africa": 19,
-  "nile-valley": 11,
+  "nile-valley": 12,
   anatolia: 8,
   caucasus: 8,
-  levant: 17,
+  levant: 18,
   mesopotamia: 11,
   maldives: 1,
   "sri-lanka": 2,
-  manchuria: 5
+  manchuria: 6
 });
 
 const LEGACY_SPLIT_CODES = [
@@ -111,7 +111,7 @@ test("taxonomy r3 has one deterministic adjacency path and 40 equal active leave
 
   const counts = new Map();
   for (const code of Object.values(index.polity_subregions)) counts.set(code, (counts.get(code) || 0) + 1);
-  assert.equal(Object.keys(index.polity_subregions).length, 731);
+  assert.equal(Object.keys(index.polity_subregions).length, 761);
   for (const leaf of continuum.subregions) {
     assert.ok((counts.get(leaf.code) || 0) > 0, leaf.code + " must remain an active reviewed leaf");
   }
