@@ -1,0 +1,20 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:ivan-mazepa:end-year-1709:20260905:v1",
+  "review_status": "approved",
+  "release_order": 110,
+  "operation": {
+    "type": "update_activity_interval",
+    "relationship_id": "7f82f919-8a18-4e46-a6d9-995aee1ba35a",
+    "after": {
+      "activity_start": 1687,
+      "activity_end": 1709
+    }
+  },
+  "evidence": {
+    "reason": "The Production Activity is modeled as rules + Hetman + reign. The Encyclopedia of Ukraine identifies Ivan Mazepa as Hetman of Ukraine in 1687-1709 and its Hetman office chronology also lists Mazepa 1687-1709. His 1708 break with Peter I and Russian removal did not end all recognition of his hetmancy; for an office/reign Activity, 1709 is the historically standard endpoint. Preserve the existing start year and change only the end year from 1708 to 1709.",
+    "target_activity_id": "7f82f919-8a18-4e46-a6d9-995aee1ba35a",
+    "source": "Encyclopedia of Ukraine, Ivan Mazepa; Hetman",
+    "source_url": "https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%5CM%5CA%5CMazepaIvan.htm"
+  }
+}
