@@ -793,7 +793,24 @@
     "fba4bb9c-4b2c-4e29-a38d-93d526289ff7": "central-asia",
     "489d93de-4436-492a-a857-0c2530faba31": "africa",
     "b216ffe1-8101-4f70-8da8-d18a6df6940d": "south-asia",
-    "44f15fe6-5619-4abd-a955-5ea8f5da1222": "africa"
+    "44f15fe6-5619-4abd-a955-5ea8f5da1222": "africa",
+    "2448cf13-737f-4f8c-94eb-c67f02e439f1": "europe",
+    "02799dee-d86d-4a11-8cae-0911ea72803b": "africa",
+    "8e2a0e63-9115-4236-8632-81f9c1979e80": "oceania",
+    "6117ed42-3fff-4aa9-bed0-78e4cc8af970": "americas",
+    "7326adc8-b70d-4349-a37e-cfe67200fa03": "south-asia",
+    "f7564dcc-b9b8-4826-b5a2-761d9c1461f7": "europe",
+    "2f1c9873-ad68-4e35-b871-99840fcbecbc": "west-asia",
+    "b42a54aa-60c3-4559-9364-5f007550d12b": "europe",
+    "88defb71-c038-49c7-b744-6f826f441a54": "oceania",
+    "15dc2169-3792-4290-8112-31b65bc7677e": "europe",
+    "653fadee-cba6-4eae-94c1-8d42d6e0f0e9": "west-asia",
+    "5c3598af-1d9a-423c-9852-3964cb3250bf": "africa",
+    "6388a19f-f0be-4fef-9742-b8e91c40eb60": "east-asia",
+    "85341335-9f4a-4c50-96b4-f23173b3fd9c": "south-asia",
+    "f2393b2d-2264-46fb-aa71-9b538a9a4cd2": "southeast-asia",
+    "ae86f3f6-2857-4cdb-9850-e518bad4b86e": "southeast-asia",
+    "1183ac38-f2bc-45cc-bffb-930ce32fed65": "americas"
   },
   "place_function_records": [
     {
@@ -1810,6 +1827,23 @@
     "fba4bb9c-4b2c-4e29-a38d-93d526289ff7": "western-central-asia",
     "489d93de-4436-492a-a857-0c2530faba31": "nile-valley",
     "b216ffe1-8101-4f70-8da8-d18a6df6940d": "sri-lanka",
-    "44f15fe6-5619-4abd-a955-5ea8f5da1222": "southern-africa"
+    "44f15fe6-5619-4abd-a955-5ea8f5da1222": "southern-africa",
+    "2448cf13-737f-4f8c-94eb-c67f02e439f1": "eastern-europe",
+    "02799dee-d86d-4a11-8cae-0911ea72803b": "east-africa-horn",
+    "8e2a0e63-9115-4236-8632-81f9c1979e80": "pacific-islands",
+    "6117ed42-3fff-4aa9-bed0-78e4cc8af970": "north-america",
+    "7326adc8-b70d-4349-a37e-cfe67200fa03": "northwest-south-asia",
+    "f7564dcc-b9b8-4826-b5a2-761d9c1461f7": "italy",
+    "2f1c9873-ad68-4e35-b871-99840fcbecbc": "arabia",
+    "b42a54aa-60c3-4559-9364-5f007550d12b": "western-europe",
+    "88defb71-c038-49c7-b744-6f826f441a54": "pacific-islands",
+    "15dc2169-3792-4290-8112-31b65bc7677e": "iberia",
+    "653fadee-cba6-4eae-94c1-8d42d6e0f0e9": "arabia",
+    "5c3598af-1d9a-423c-9852-3964cb3250bf": "west-africa",
+    "6388a19f-f0be-4fef-9742-b8e91c40eb60": "japan",
+    "85341335-9f4a-4c50-96b4-f23173b3fd9c": "northwest-south-asia",
+    "f2393b2d-2264-46fb-aa71-9b538a9a4cd2": "maritime-southeast-asia",
+    "ae86f3f6-2857-4cdb-9850-e518bad4b86e": "maritime-southeast-asia",
+    "1183ac38-f2bc-45cc-bffb-930ce32fed65": "caribbean"
   }
 }
