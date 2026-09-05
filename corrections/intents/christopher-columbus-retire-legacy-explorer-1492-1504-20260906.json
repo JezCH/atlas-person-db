@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-correction-intent/v1",
+  "request_id": "correction:christopher-columbus:retire-legacy-explorer-1492-1504:20260906:v1",
+  "review_status": "approved",
+  "release_order": 100,
+  "operation": {
+    "type": "retire_activity",
+    "relationship_id": "1b65b2f7-40f1-4737-b788-c253a3294bf7"
+  },
+  "evidence": {
+    "reason": "Production canonical review found two overlapping Crown of Castile service Activities for Christopher Columbus covering the same 1492-1504 voyage span. Preserve the reviewed Activity 73f3c8c2-8a84-4ce3-a4eb-f78cdc6dce3d (Explorer and expedition commander) introduced through the reviewed Belize-Vyatka authoring batch and retire only the older generic Explorer Activity 1b65b2f7-40f1-4737-b788-c253a3294bf7. Do not modify the Person identity, NamuWiki reference, or any other Belize-Vyatka relationship.",
+    "person_id": "0bc91b70-2f5f-4be4-b411-6e8903009928",
+    "survivor_activity_id": "73f3c8c2-8a84-4ce3-a4eb-f78cdc6dce3d",
+    "retire_activity_id": "1b65b2f7-40f1-4737-b788-c253a3294bf7",
+    "source_authoring_pr": 796,
+    "prepared_at_main": "c69c4915b073fe2ac8a43eabf9132ccc34b85693"
+  }
+}
