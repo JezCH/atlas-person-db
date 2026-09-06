@@ -1,0 +1,34 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-06",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "ff3f7049e07db55bbe9bcad96385c7ef782a72fd",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "one reviewed representative domain per Person; dominant historical identity governs classification and sovereign political authority remains governance"
+  },
+  "entries": [
+    {"person_id":"308373b7-1bb5-5e02-9e95-a832a875c8a2","canonical_name_en":"Tokugawa Ieyasu","preferred_name_ko":"도쿠가와 이에야스","representative_domain":"governance"},
+    {"person_id":"98c57fef-32d1-551b-beb4-c562efe3e1e6","canonical_name_en":"Oda Nobunaga","preferred_name_ko":"오다 노부나가","representative_domain":"governance"},
+    {"person_id":"e51ad0be-e92b-5b2b-a8f4-9a81f35e57c9","canonical_name_en":"Sejong","preferred_name_ko":"세종","representative_domain":"governance"},
+    {"person_id":"1bfb0a27-9fa5-5b71-ab1f-d317b76ecf7d","canonical_name_en":"Genghis Khan","preferred_name_ko":"칭기즈 칸","representative_domain":"governance"},
+    {"person_id":"945b78a7-3941-5e05-a6c9-ce57e7395727","canonical_name_en":"Napoleon I","preferred_name_ko":"나폴레옹 1세","representative_domain":"governance"},
+    {"person_id":"a42872b9-887e-4b65-8875-c90825affb82","canonical_name_en":"Napoleon III","preferred_name_ko":"나폴레옹 3세","representative_domain":"governance"},
+    {"person_id":"50ba5bb7-0660-5089-ae67-d692cf282b24","canonical_name_en":"Charlemagne","preferred_name_ko":"카롤루스 대제","representative_domain":"governance"},
+    {"person_id":"ce85374b-a0ed-50b5-a32b-a35721da2c01","canonical_name_en":"Queen Victoria","preferred_name_ko":"빅토리아 여왕","representative_domain":"governance"},
+    {"person_id":"4e8481f3-2317-5e34-a2d5-0a8f181d171c","canonical_name_en":"George Washington","preferred_name_ko":"조지 워싱턴","representative_domain":"governance"},
+    {"person_id":"3f332527-806c-5b0f-a331-8dc54bde527b","canonical_name_en":"Abraham Lincoln","preferred_name_ko":"에이브러햄 링컨","representative_domain":"governance"},
+    {"person_id":"6e8defc2-6ee9-4f94-9ed5-3f4be96e7066","canonical_name_en":"Mustafa Kemal Atatürk","preferred_name_ko":"무스타파 케말 아타튀르크","representative_domain":"governance"},
+    {"person_id":"a518d1cd-860e-5d53-8ebd-196b509e1fcf","canonical_name_en":"Winston Churchill","preferred_name_ko":"윈스턴 처칠","representative_domain":"governance"},
+    {"person_id":"c2bdd489-0570-541f-ba07-a7717b72543f","canonical_name_en":"Franklin D. Roosevelt","preferred_name_ko":"프랭클린 D. 루스벨트","representative_domain":"governance"},
+    {"person_id":"a83074a7-3f27-4320-a944-065a1bdc883f","canonical_name_en":"Nelson Mandela","preferred_name_ko":"넬슨 만델라","representative_domain":"governance"},
+    {"person_id":"e2a6cf52-b9dc-5e33-ab28-b5e3f668359b","canonical_name_en":"Louis XIV","preferred_name_ko":"루이 14세","representative_domain":"governance"},
+    {"person_id":"072f2262-acbb-53a8-a63f-c3e798c24132","canonical_name_en":"Peter the Great","preferred_name_ko":"표트르 1세","representative_domain":"governance"},
+    {"person_id":"ed32430e-504d-5eb5-89bf-7f58ca43209d","canonical_name_en":"Catherine II","preferred_name_ko":"예카테리나 2세","representative_domain":"governance"},
+    {"person_id":"021b9e7c-92ee-532e-876d-fb58681107e9","canonical_name_en":"Suleiman I","preferred_name_ko":"쉴레이만 1세","representative_domain":"governance"},
+    {"person_id":"25f65f14-f78c-5f9b-a176-eedb1056d5d2","canonical_name_en":"Mehmed II","preferred_name_ko":"메흐메트 2세","representative_domain":"governance"},
+    {"person_id":"0208bbf2-0be2-481d-aece-b279fcd32a73","canonical_name_en":"Isaac Newton","preferred_name_ko":"아이작 뉴턴","representative_domain":"knowledge"}
+  ]
+}

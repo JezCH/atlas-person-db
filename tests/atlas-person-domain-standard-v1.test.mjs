@@ -31,6 +31,17 @@ const palette = Object.freeze({
 
 const readEntries = (names) => names.flatMap((name) => JSON.parse(fs.readFileSync(path.join(proposalDir, name), 'utf8')).entries);
 
+function assertBatchDistribution(fileName, expectedLength, expectedCounts) {
+  const batch = JSON.parse(fs.readFileSync(path.join(proposalDir, fileName), 'utf8'));
+  const counts = Object.fromEntries(Object.keys(palette).map((domain) => [domain, 0]));
+  for (const entry of batch.entries) counts[entry.representative_domain] += 1;
+  assert.equal(batch.entries.length, expectedLength);
+  assert.deepEqual(counts, expectedCounts);
+  assert.equal(batch.policy.automatic_role_backfill, false);
+  assert.equal(batch.policy.secondary_domains, false);
+  return batch;
+}
+
 test('final ATLAS representative-domain palette uses the eight exact canonical colors', () => {
   for (const [domain, hex] of Object.entries(palette)) {
     assert.match(css, new RegExp(`--atlas-person-domain-${domain}:\\s*${hex.replace('#','\\#')}`));
@@ -48,7 +59,7 @@ test('browser registry and reviewed proposals use canonical codes only', () => {
 });
 
 test('reviewed batch and HOLD sequences are contiguous and dynamically discoverable', () => {
-  assert.deepEqual(batchFiles, ['batch-001.json','batch-002.json','batch-003.json','batch-004.json','batch-005.json','batch-006.json','batch-007.json','batch-008.json','batch-009.json']);
+  assert.deepEqual(batchFiles, ['batch-001.json','batch-002.json','batch-003.json','batch-004.json','batch-005.json','batch-006.json','batch-007.json','batch-008.json','batch-009.json','batch-010.json','batch-011.json']);
   assert.deepEqual(holdFiles, ['hold-001.json','hold-002.json']);
   assert.match(applyClient, /discoverContiguous\("batch"\)/);
   assert.match(applyClient, /discoverContiguous\("hold"\)/);
@@ -66,11 +77,7 @@ test('reviewed batch Person ids and HOLD Person ids are unique and disjoint', ()
 });
 
 test('Batch 007 contains exactly the reviewed 21-Person distribution', () => {
-  const batch7 = JSON.parse(fs.readFileSync(path.join(proposalDir, 'batch-007.json'), 'utf8'));
-  const counts = Object.fromEntries(Object.keys(palette).map((domain) => [domain, 0]));
-  for (const entry of batch7.entries) counts[entry.representative_domain] += 1;
-  assert.equal(batch7.entries.length, 21);
-  assert.deepEqual(counts, {
+  assertBatchDistribution('batch-007.json', 21, {
     governance:4,
     military:1,
     knowledge:6,
@@ -80,16 +87,10 @@ test('Batch 007 contains exactly the reviewed 21-Person distribution', () => {
     religion:4,
     exploration:2
   });
-  assert.equal(batch7.policy.automatic_role_backfill, false);
-  assert.equal(batch7.policy.secondary_domains, false);
 });
 
 test('Batch 008 contains exactly the reviewed 19-Person science/technology distribution', () => {
-  const batch8 = JSON.parse(fs.readFileSync(path.join(proposalDir, 'batch-008.json'), 'utf8'));
-  const counts = Object.fromEntries(Object.keys(palette).map((domain) => [domain, 0]));
-  for (const entry of batch8.entries) counts[entry.representative_domain] += 1;
-  assert.equal(batch8.entries.length, 19);
-  assert.deepEqual(counts, {
+  const batch8 = assertBatchDistribution('batch-008.json', 19, {
     governance:0,
     military:0,
     knowledge:15,
@@ -99,18 +100,12 @@ test('Batch 008 contains exactly the reviewed 19-Person science/technology distr
     religion:0,
     exploration:0
   });
-  assert.equal(batch8.policy.automatic_role_backfill, false);
-  assert.equal(batch8.policy.secondary_domains, false);
   assert.equal(batch8.entries.some((entry) => entry.canonical_name_en === 'James Watt'), false);
   assert.equal(batch8.entries.some((entry) => entry.person_id === '87b9541e-cc28-46ca-a849-43a5a14ae162'), false);
 });
 
 test('Batch 009 contains exactly the reviewed 20-Person mixed distribution', () => {
-  const batch9 = JSON.parse(fs.readFileSync(path.join(proposalDir, 'batch-009.json'), 'utf8'));
-  const counts = Object.fromEntries(Object.keys(palette).map((domain) => [domain, 0]));
-  for (const entry of batch9.entries) counts[entry.representative_domain] += 1;
-  assert.equal(batch9.entries.length, 20);
-  assert.deepEqual(counts, {
+  const batch9 = assertBatchDistribution('batch-009.json', 20, {
     governance:1,
     military:0,
     knowledge:6,
@@ -120,9 +115,35 @@ test('Batch 009 contains exactly the reviewed 20-Person mixed distribution', () 
     religion:0,
     exploration:3
   });
-  assert.equal(batch9.policy.automatic_role_backfill, false);
-  assert.equal(batch9.policy.secondary_domains, false);
   assert.equal(batch9.entries.some((entry) => entry.person_id === '87b9541e-cc28-46ca-a849-43a5a14ae162'), false);
+});
+
+test('Batch 010 contains exactly the reviewed governance/religion distribution', () => {
+  const batch10 = assertBatchDistribution('batch-010.json', 20, {
+    governance:18,
+    military:0,
+    knowledge:0,
+    technology:0,
+    commerce:0,
+    culture:0,
+    religion:2,
+    exploration:0
+  });
+  assert.equal(batch10.entries.some((entry) => entry.person_id === '87b9541e-cc28-46ca-a849-43a5a14ae162'), false);
+});
+
+test('Batch 011 contains exactly the reviewed historical-leader distribution', () => {
+  const batch11 = assertBatchDistribution('batch-011.json', 20, {
+    governance:19,
+    military:0,
+    knowledge:1,
+    technology:0,
+    commerce:0,
+    culture:0,
+    religion:0,
+    exploration:0
+  });
+  assert.equal(batch11.entries.some((entry) => entry.person_id === '87b9541e-cc28-46ca-a849-43a5a14ae162'), false);
 });
 
 test('Pythagoras remains an unresolved knowledge/religion HOLD', () => {

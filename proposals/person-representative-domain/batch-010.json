@@ -1,0 +1,34 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-06",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "ff3f7049e07db55bbe9bcad96385c7ef782a72fd",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "one reviewed representative domain per Person; sovereign and major political powerholders follow the established governance rule while defining religious figures remain religion"
+  },
+  "entries": [
+    {"person_id":"9c776333-aa7a-4148-83eb-8d10a36b7175","canonical_name_en":"John the Baptist","preferred_name_ko":"세례자 요한","representative_domain":"religion"},
+    {"person_id":"4bf8192e-0e44-43f7-8971-05b0b1f74111","canonical_name_en":"Augustine of Hippo","preferred_name_ko":"히포의 아우구스티누스","representative_domain":"religion"},
+    {"person_id":"510d7e14-5701-408b-84c3-d824a71b2258","canonical_name_en":"Cambyses II","preferred_name_ko":"캄비세스 2세","representative_domain":"governance"},
+    {"person_id":"b66809be-d964-4a0e-be49-dfeabaa08f46","canonical_name_en":"Marcus Aurelius","preferred_name_ko":"마르쿠스 아우렐리우스","representative_domain":"governance"},
+    {"person_id":"f38652f9-e652-4839-95bf-983924e480f6","canonical_name_en":"Rechila","preferred_name_ko":"레킬라","representative_domain":"governance"},
+    {"person_id":"be816be0-2df4-4b74-bc66-b8f39caaf906","canonical_name_en":"Romulus Augustulus","preferred_name_ko":"로물루스 아우구스툴루스","representative_domain":"governance"},
+    {"person_id":"7f31e5b3-374c-5e88-89c7-ca44324cf52c","canonical_name_en":"Theodora","preferred_name_ko":"테오도라","representative_domain":"governance"},
+    {"person_id":"57cddb0e-5d2b-46c4-9340-48fbb23f7a68","canonical_name_en":"Æthelberht of Kent","preferred_name_ko":"에설버흐트","representative_domain":"governance"},
+    {"person_id":"9f7878e0-40ef-4b4a-b54b-bb84f8ffb866","canonical_name_en":"Leovigild","preferred_name_ko":"레오비길드","representative_domain":"governance"},
+    {"person_id":"0f1ebf19-b873-4a2d-8036-ccab8a2f09aa","canonical_name_en":"Áedán mac Gabráin","preferred_name_ko":"아에단 막 가브란","representative_domain":"governance"},
+    {"person_id":"73337642-19d5-4ad7-bbee-13616f3af6e3","canonical_name_en":"Abd al-Malik ibn Marwan","preferred_name_ko":"압드 알말리크 이븐 마르완","representative_domain":"governance"},
+    {"person_id":"eebb7b99-90a5-43b1-be1e-28c9c6473aad","canonical_name_en":"Al-Walid I","preferred_name_ko":"알왈리드 1세","representative_domain":"governance"},
+    {"person_id":"59aa7279-dc5d-4301-9051-ec778c7eba77","canonical_name_en":"Olga of Kiev","preferred_name_ko":"키이우의 올가","representative_domain":"governance"},
+    {"person_id":"b779e73c-dc07-5daa-a433-e79a2db29572","canonical_name_en":"Emperor Shizong of Later Zhou","preferred_name_ko":"후주 세종","representative_domain":"governance"},
+    {"person_id":"653d1788-5dcf-4309-965d-958df5709d00","canonical_name_en":"Eric the Victorious","preferred_name_ko":"에리크 세게르셸","representative_domain":"governance"},
+    {"person_id":"7855a33f-ad7d-44e9-a273-60a4d58828f0","canonical_name_en":"al-Hakim bi-Amr Allah","preferred_name_ko":"알하킴 비아므르 알라","representative_domain":"governance"},
+    {"person_id":"335e1747-8015-4771-8772-7c6a20c8761b","canonical_name_en":"Liu E","preferred_name_ko":"유아","representative_domain":"governance"},
+    {"person_id":"9c512d01-ba75-4031-a7a4-15e2f68fe881","canonical_name_en":"Władysław II the Exile","preferred_name_ko":"브와디스와프 2세","representative_domain":"governance"},
+    {"person_id":"a54e0213-c3f5-421e-a58a-72274798edee","canonical_name_en":"Baldwin III of Jerusalem","preferred_name_ko":"보두앵 3세","representative_domain":"governance"},
+    {"person_id":"e7f94caa-0712-4807-8419-10f7cc160a11","canonical_name_en":"Henry II of England","preferred_name_ko":"헨리 2세","representative_domain":"governance"}
+  ]
+}
