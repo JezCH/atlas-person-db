@@ -1,0 +1,41 @@
+{
+  "schema": "atlas-correction-manifest/v1",
+  "request_id": "p11-ahmad-al-mansur-duplicate-coalesce-20260906:v1",
+  "review_status": "approved",
+  "release_order": 500,
+  "evidence": {
+    "reason": "P11 current-delta semantic-v2 backfill dry-run identified one legacy Ahmad al-Mansur Activity that converges on an already reviewed canonical Activity under the Stage 2 semantic identity constraint. Preserve the reviewed canonical Activity and coalesce the legacy duplicate into it so relationship sources, chronology claims, and descriptions are preserved by the correction coalesce primitive. Do not weaken the semantic identity unique constraint and do not alter Person, Polity, Role, period basis, or chronology.",
+    "p11_failed_run": 34001739324,
+    "failed_artifact_id": 9979768034,
+    "keep_activity_id": "0d1c9869-1819-4a7a-b523-4d3498719a03",
+    "drop_activity_id": "f7c46f12-652b-5fce-9b1a-9944e88f9fa9",
+    "prepared_at_main": "8a99ef10fe63ce9cc59e45e9f82ab070e343d1bd"
+  },
+  "operations": [
+    {
+      "type": "coalesce_relationship",
+      "keep_relationship_id": "0d1c9869-1819-4a7a-b523-4d3498719a03",
+      "drop_relationship_id": "f7c46f12-652b-5fce-9b1a-9944e88f9fa9",
+      "expected_keep": {
+        "person_id": "3204674a-7283-57df-9999-525791d66262",
+        "polity_id": "fa19774c-ba5a-5a0a-a12b-788b99a056aa",
+        "role_id": "1a91542a-fc8f-5c4c-b4d2-f533d1af7fb8",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1578,
+        "activity_end": 1603,
+        "notes": "Sovereign reign of Ahmad al-Mansur in the Saadi Sultanate, 1578-1603.",
+        "legacy_source_key": null
+      },
+      "expected_drop": {
+        "person_id": "3204674a-7283-57df-9999-525791d66262",
+        "polity_id": "fa19774c-ba5a-5a0a-a12b-788b99a056aa",
+        "role_id": "1a91542a-fc8f-5c4c-b4d2-f533d1af7fb8",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1578,
+        "activity_end": 1603,
+        "notes": "Reigned as Saadi sultan of Morocco from 1578 until his death in 1603.",
+        "legacy_source_key": "pending-records-supplement-2.json:9:49fd990c1b9fa157"
+      }
+    }
+  ]
+}
