@@ -38,7 +38,7 @@ function createNormalizedReadHandler({ clientFactory, env = process.env } = {}) 
     try {
       client = await clientFactory(databaseUrl);
       const data = await readPersonPolitics({ client });
-      sendJson(res, 200, { ok: true, source: "runtime-person-politics-v1", data });
+      sendJson(res, 200, { ok: true, source: "v2-direct", data });
     } catch (error) {
       console.error("ATLAS normalized read failed", error);
       sendJson(res, client ? 500 : 503, {
