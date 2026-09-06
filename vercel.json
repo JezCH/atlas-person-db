@@ -48,6 +48,10 @@
     {
       "source": "/api/atlas-p11-baseline-b-capture",
       "destination": "/api/atlas-audit-inventory?__atlas_audit_surface=p11-baseline-b-capture"
+    },
+    {
+      "source": "/api/atlas-correction-migrations",
+      "destination": "/api/atlas-correction-apply?__atlas_correction_surface=migrations"
     }
   ],
   "headers": [
