@@ -60,7 +60,9 @@
     const minimum = positive(options.minLabelWidth ?? DEFAULT_MIN_LABEL_WIDTH, "minLabelWidth");
     const maximum = positive(options.maxLabelWidth ?? DEFAULT_MAX_LABEL_WIDTH, "maxLabelWidth");
     if (maximum < minimum) throw new RangeError("maxLabelWidth must be >= minLabelWidth");
-    return clamp(naturalWidth(label, options), minimum, maximum);
+    const chromeWidth = Math.max(0, Number(options.labelChromeWidth ?? DEFAULT_LABEL_CHROME_WIDTH) || 0);
+    const measured = Number((chromeWidth + estimatedTextWidth(label?.text, options)).toFixed(6));
+    return clamp(measured, minimum, maximum);
   }
   function normalizeLabel(label, options = {}) {
     const width = options.preserveFullTextWidth === false
