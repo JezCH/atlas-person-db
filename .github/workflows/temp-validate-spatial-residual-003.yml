@@ -1,0 +1,25 @@
+name: TEMP Validate Spatial Residual 003
+
+on:
+  push:
+    branches:
+      - agent/spatial-reviewed-residual-003
+    paths:
+      - spatial/reviewed-bindings/shards/post-b51-residual-003.bindings.json
+      - .github/workflows/temp-validate-spatial-residual-003.yml
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/spatial-reviewed-residual-003
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate reviewed shard against frozen baseline and taxonomy
+        run: node scripts/compile-spatial-bindings.mjs --validate-only
