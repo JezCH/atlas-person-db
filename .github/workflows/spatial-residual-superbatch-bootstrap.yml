@@ -1,0 +1,33 @@
+name: ATLAS Spatial Residual Superbatch Bootstrap
+
+on:
+  push:
+    branches:
+      - linear/spatial-residual-superbatch-20260906
+
+permissions:
+  contents: write
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Compile and validate reviewed spatial residual shards
+        run: |
+          node scripts/compile-spatial-bindings.mjs
+          node scripts/compile-spatial-bindings.mjs --check
+          node --test tests/spatial-binding-compiler.test.mjs tests/person-spacetime-spatial-index-coverage.test.mjs tests/spacetime-taxonomy-migration.test.mjs
+      - name: Commit generated canonical artifact and remove bootstrap workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add atlas-polity-spatial-index.json
+          git rm .github/workflows/spatial-residual-superbatch-bootstrap.yml
+          git commit -m "Compile reviewed spatial residual superbatch"
+          git push origin HEAD:${GITHUB_REF_NAME}

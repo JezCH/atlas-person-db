@@ -1,0 +1,23 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "post-b51-residual-006",
+  "baseline": "artifact:9979240371@4177c0f91765ffe66bf19c18b4bbd5169157f502",
+  "reviewed_at": "2026-09-06T01:34:00Z",
+  "bindings": [
+    {
+      "polity_id": "5b393728-e9da-4f60-9550-3d386e12dab5",
+      "region_code": "europe",
+      "subregion_code": "northern-europe"
+    },
+    {
+      "polity_id": "fde4d136-4ff9-4fea-baca-e349154911d5",
+      "region_code": "oceania",
+      "subregion_code": "pacific-islands"
+    },
+    {
+      "polity_id": "0401a7d3-bfad-44aa-aff3-c04a1dcc69e3",
+      "region_code": "americas",
+      "subregion_code": "south-america"
+    }
+  ]
+}
