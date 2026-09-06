@@ -30,6 +30,7 @@ test("period label preserves independent start and end certainty", () => {
 test("unknown and ongoing boundaries preserve the existing period contract", () => {
   assert.equal(temporal.periodLabel({ start: {}, end: {} }, yearLabel), "시작 미상 – 종료 미상");
   assert.equal(temporal.periodLabel({ start: { year: 0, certainty: "approximate" }, end: { year: 1210 } }, yearLabel), "시작 미상 – AD 1210");
+  assert.equal(temporal.periodLabel({ start: { year: 1200 }, end: { year: 0, certainty: "uncertain" } }, yearLabel), "AD 1200 – 종료 미상");
   assert.equal(
     temporal.periodLabel({ start: { year: 1200, certainty: "approximate" }, end: { status: "ongoing", as_of: "2026-09-06" } }, yearLabel),
     "약 AD 1200 – 현재 (2026-09-06 확인)"
