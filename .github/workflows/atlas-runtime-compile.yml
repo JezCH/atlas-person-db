@@ -18,7 +18,12 @@ concurrency:
 
 jobs:
   compile:
-    if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main')
+    # Compile after every terminal main-branch Authoring Apply, including a failure.
+    # A Human Authoring Apply can commit Authoring data and then fail only because
+    # its legacy public read-back is now Runtime-backed. Compiling that committed
+    # Authoring state breaks the post-cutover circular dependency without falling
+    # back to raw Authoring reads. A subsequent rerun can then verify Runtime.
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.head_branch == 'main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: production
