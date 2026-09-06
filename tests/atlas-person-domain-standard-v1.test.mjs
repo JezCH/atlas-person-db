@@ -59,11 +59,23 @@ test('browser registry and reviewed proposals use canonical codes only', () => {
 });
 
 test('reviewed batch and HOLD sequences are contiguous and dynamically discoverable', () => {
-  assert.deepEqual(batchFiles, ['batch-001.json','batch-002.json','batch-003.json','batch-004.json','batch-005.json','batch-006.json','batch-007.json','batch-008.json','batch-009.json','batch-010.json','batch-011.json']);
+  const expectedBatchFiles = Array.from({ length:41 }, (_, index) => `batch-${String(index + 1).padStart(3,'0')}.json`);
+  assert.deepEqual(batchFiles, expectedBatchFiles);
   assert.deepEqual(holdFiles, ['hold-001.json','hold-002.json']);
   assert.match(applyClient, /discoverContiguous\("batch"\)/);
   assert.match(applyClient, /discoverContiguous\("hold"\)/);
   assert.doesNotMatch(applyClient, /EXPECTED_REVIEWED_ASSIGNMENTS/);
+});
+
+test('cancelled duplicate-only legacy batch ordinals remain explicit zero-entry tombstones', () => {
+  for (const fileName of ['batch-022.json','batch-027.json','batch-028.json','batch-029.json','batch-030.json']) {
+    const batch = JSON.parse(fs.readFileSync(path.join(proposalDir, fileName), 'utf8'));
+    assert.equal(batch.status, 'reviewed');
+    assert.deepEqual(batch.entries, []);
+    assert.equal(typeof batch.tombstone?.legacy_task_key, 'string');
+    assert.equal(batch.policy.automatic_role_backfill, false);
+    assert.equal(batch.policy.secondary_domains, false);
+  }
 });
 
 test('reviewed batch Person ids and HOLD Person ids are unique and disjoint', () => {
@@ -144,6 +156,15 @@ test('Batch 011 contains exactly the reviewed historical-leader distribution', (
     exploration:0
   });
   assert.equal(batch11.entries.some((entry) => entry.person_id === '87b9541e-cc28-46ca-a849-43a5a14ae162'), false);
+});
+
+test('post-B011 reviewed expansion preserves canonical domains and no automatic backfill', () => {
+  for (const fileName of batchFiles.slice(11)) {
+    const batch = JSON.parse(fs.readFileSync(path.join(proposalDir, fileName), 'utf8'));
+    assert.equal(batch.policy.automatic_role_backfill, false);
+    assert.equal(batch.policy.secondary_domains, false);
+    for (const entry of batch.entries) assert.equal(Object.hasOwn(palette, entry.representative_domain), true);
+  }
 });
 
 test('Pythagoras remains an unresolved knowledge/religion HOLD', () => {
