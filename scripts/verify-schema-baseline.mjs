@@ -22,7 +22,8 @@ const expectedAuthoringMigrations = [
   '20260821_human_authoring_external_reference_sync.sql',
   '20260902_ongoing_activity_terms.sql',
   '20260904_person_representative_domains.sql',
-  '20260905_person_representative_domain_standard_v1.sql'
+  '20260905_person_representative_domain_standard_v1.sql',
+  '20260906_p13a_temporal_unknown_boundaries.sql'
 ];
 
 const expectedCorrectionMigrations = [
