@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-06",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "e137b0179916fb1a1bf3303526f0a52baaf1460b",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "one reviewed representative domain per Person; sovereign/territorial political authority remains governance"
+  },
+  "entries": [
+    {"person_id":"2435a5a0-41d1-4571-b128-b8c687a472a2","canonical_name_en":"Dae Heummu","preferred_name_ko":"문왕(발해)","representative_domain":"governance"},
+    {"person_id":"a32487f7-b1cc-588a-a665-0fc713731d7b","canonical_name_en":"Harun al-Rashid","preferred_name_ko":"하룬 알 라시드","representative_domain":"governance"},
+    {"person_id":"622e4881-01e2-498f-bb56-a1ea67076415","canonical_name_en":"Domitian","preferred_name_ko":"도미티아누스","representative_domain":"governance"},
+    {"person_id":"66536e02-f49b-4bd1-a203-1751367e6d9d","canonical_name_en":"Antigonus II Gonatas","preferred_name_ko":"안티고노스 2세 고나타스","representative_domain":"governance"},
+    {"person_id":"f22cc2f5-a7c1-5a4f-8a21-0446f4dd5398","canonical_name_en":"Ying Bu","preferred_name_ko":"영포","representative_domain":"governance"}
+  ]
+}
