@@ -1,0 +1,33 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "post-b51-residual-001",
+  "baseline": "artifact:9979240371@4177c0f91765ffe66bf19c18b4bbd5169157f502",
+  "reviewed_at": "2026-09-06T00:38:14Z",
+  "bindings": [
+    {
+      "polity_id": "4c3e50cb-d76c-4b7c-b611-222849404142",
+      "region_code": "central-asia",
+      "subregion_code": null
+    },
+    {
+      "polity_id": "502f18c3-41fc-4cb8-84cc-67f7e0454a9d",
+      "region_code": "europe",
+      "subregion_code": null
+    },
+    {
+      "polity_id": "7518462f-9769-413f-a245-cc3825b45d17",
+      "region_code": "south-asia",
+      "subregion_code": null
+    },
+    {
+      "polity_id": "7e0522d7-1ff9-4464-927b-4376bf35ed7a",
+      "region_code": "europe",
+      "subregion_code": "russia-volga"
+    },
+    {
+      "polity_id": "e3ca4f3c-3504-4830-b141-f4cdd0157763",
+      "region_code": "south-asia",
+      "subregion_code": null
+    }
+  ]
+}
