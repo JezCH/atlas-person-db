@@ -13,11 +13,6 @@ const CANONICAL_CODES = Object.freeze([
   "governance","military","knowledge","technology",
   "commerce","culture","religion","exploration"
 ]);
-const BATCH_FILES = Object.freeze([
-  "batch-001.json","batch-002.json","batch-003.json",
-  "batch-004.json","batch-005.json","batch-006.json"
-]);
-const EXPECTED_REVIEWED_ASSIGNMENTS = 50;
 
 function fail(message, details = null) {
   const error = new Error(message);
@@ -27,6 +22,23 @@ function fail(message, details = null) {
 
 function readJson(name) {
   return JSON.parse(fs.readFileSync(path.join(PROPOSAL_DIR, name), "utf8"));
+}
+
+function discoverContiguous(prefix) {
+  const pattern = new RegExp(`^${prefix}-(\\d{3})\\.json$`);
+  const files = fs.readdirSync(PROPOSAL_DIR)
+    .map((name) => ({ name, match:name.match(pattern) }))
+    .filter((item) => item.match)
+    .map((item) => ({ name:item.name, ordinal:Number(item.match[1]) }))
+    .sort((a,b) => a.ordinal - b.ordinal);
+  if (files.length === 0) fail(`No ${prefix}-NNN.json files found`);
+  for (let i = 0; i < files.length; i++) {
+    const expected = i + 1;
+    if (files[i].ordinal !== expected) {
+      fail(`Non-contiguous ${prefix} sequence: expected ${String(expected).padStart(3,"0")}, got ${String(files[i].ordinal).padStart(3,"0")}`);
+    }
+  }
+  return Object.freeze(files.map((item) => item.name));
 }
 
 function validateEntry(entry, { allowNull = false, source }) {
@@ -55,25 +67,41 @@ function loadPlan() {
   const expectedCodes = [...CANONICAL_CODES].sort();
   if (JSON.stringify(smokeCodes) !== JSON.stringify(expectedCodes)) fail("Smoke set must cover each canonical domain exactly once", smokeCodes);
 
+  const batchFiles = discoverContiguous("batch");
+  const holdFiles = discoverContiguous("hold");
+
   const batch = [];
-  for (const name of BATCH_FILES) {
+  const batchIds = new Set();
+  for (const name of batchFiles) {
     const raw = readJson(name);
-    for (const entry of raw.entries) batch.push(validateEntry(entry, { source:name }));
-  }
-  if (batch.length !== EXPECTED_REVIEWED_ASSIGNMENTS) {
-    fail(`Reviewed batch must contain exactly ${EXPECTED_REVIEWED_ASSIGNMENTS} Persons; got ${batch.length}`);
-  }
-
-  const holdRaw = readJson("hold-001.json");
-  const hold = holdRaw.entries.map((entry) => validateEntry(entry, { allowNull:true, source:"hold-001.json" }));
-  if (hold.length !== 0 || hold.some((entry) => entry.representative_domain !== null)) {
-    fail("Reviewed HOLD set must be empty after the governance-powerholder correction");
+    for (const item of raw.entries) {
+      const entry = validateEntry(item, { source:name });
+      if (batchIds.has(entry.person_id)) fail(`Duplicate reviewed batch Person: ${entry.person_id}`);
+      batchIds.add(entry.person_id);
+      batch.push(entry);
+    }
   }
 
-  const holds = new Set(hold.map((entry) => entry.person_id));
+  const hold = [];
+  const holdIds = new Set();
+  for (const name of holdFiles) {
+    const raw = readJson(name);
+    for (const item of raw.entries) {
+      const entry = validateEntry(item, { allowNull:true, source:name });
+      if (entry.representative_domain !== null) fail(`HOLD Person must remain null in ${name}: ${entry.person_id}`);
+      if (holdIds.has(entry.person_id)) fail(`Duplicate HOLD Person: ${entry.person_id}`);
+      holdIds.add(entry.person_id);
+      hold.push(entry);
+    }
+  }
+
+  for (const personId of holdIds) {
+    if (batchIds.has(personId)) fail(`HOLD Person appears in reviewed batch write set: ${personId}`);
+  }
+
   const assignments = new Map();
   for (const entry of [...smoke, ...batch]) {
-    if (holds.has(entry.person_id)) fail(`HOLD Person appears in write set: ${entry.person_id}`);
+    if (holdIds.has(entry.person_id)) fail(`HOLD Person appears in write set: ${entry.person_id}`);
     const prior = assignments.get(entry.person_id);
     if (prior && prior.representative_domain !== entry.representative_domain) {
       fail(`Conflicting representative_domain for ${entry.person_id}`, { prior, current:entry });
@@ -81,7 +109,7 @@ function loadPlan() {
     if (!prior) assignments.set(entry.person_id, entry);
   }
 
-  return Object.freeze({ smoke, batch, hold, assignments });
+  return Object.freeze({ smoke, batch, hold, assignments, batchFiles, holdFiles });
 }
 
 async function readCurrent() {
@@ -127,7 +155,11 @@ async function writeEntry(entry, ordinal) {
 async function applyOnlyChanged(entries, label) {
   const before = await readCurrent();
   const current = currentDomainMap(before);
-  const pending = entries.filter((entry) => current.get(entry.person_id) !== entry.representative_domain);
+  const conflicts = entries
+    .filter((entry) => current.has(entry.person_id) && current.get(entry.person_id) !== entry.representative_domain)
+    .map((entry) => ({ person_id:entry.person_id, expected:entry.representative_domain, actual:current.get(entry.person_id) }));
+  if (conflicts.length) fail("Reviewed Person domain conflicts with live Production; re-review required", conflicts);
+  const pending = entries.filter((entry) => !current.has(entry.person_id));
   console.log(JSON.stringify({
     marker:"ATLAS_PERSON_DOMAIN_DELTA_V1",
     mode:label,
