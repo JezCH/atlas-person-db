@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "post-b51-residual-009",
+  "baseline": "artifact:9979240371@4177c0f91765ffe66bf19c18b4bbd5169157f502",
+  "reviewed_at": "2026-09-06T02:09:44Z",
+  "bindings": [
+    {
+      "polity_id": "439086da-2147-49d7-b317-9871ec758d6d",
+      "region_code": "east-asia",
+      "subregion_code": "manchuria"
+    },
+    {
+      "polity_id": "d55d355e-58cc-40aa-8661-1e8c91bfcfca",
+      "region_code": "south-asia",
+      "subregion_code": "northwest-south-asia"
+    }
+  ]
+}
