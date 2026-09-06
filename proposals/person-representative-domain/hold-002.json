@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-person-representative-domain-review-hold/v1",
+  "status": "unresolved",
+  "production_snapshot_date": "2026-09-06",
+  "source_surface": "/api/atlas-person-read",
+  "source_main_sha": "2a7d2195bc233e878d42cc798827042206a93f97",
+  "policy": "Cross-domain cases remain unclassified until separately reviewed; HOLD entries are never written by the apply client.",
+  "entries": [
+    {
+      "person_id": "87b9541e-cc28-46ca-a849-43a5a14ae162",
+      "canonical_name_en": "Pythagoras",
+      "preferred_name_ko": "피타고라스",
+      "representative_domain": null,
+      "candidate_domains": ["knowledge", "religion"],
+      "reason": "Representative identity is materially cross-domain between knowledge and religion; do not force a classification."
+    }
+  ]
+}
