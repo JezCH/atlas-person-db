@@ -1,0 +1,32 @@
+{
+  "schema":"atlas-person-representative-domain-proposal/v1",
+  "status":"reviewed",
+  "production_snapshot_date":"2026-09-06",
+  "source_surface":"/api/atlas-person-domain",
+  "source_main_sha":"4ff8a6d700c09ba99a0a8e5e9cc65e78bbf9becb",
+  "legacy_task_key":"PERSON-DOMAIN-BATCH020-MODERN-POLITICAL-LEADERS-20260906",
+  "legacy_evidence_comment":5556537103,
+  "policy":{"automatic_role_backfill":false,"secondary_domains":false,"decision":"one reviewed representative domain per Person; dominant historical identity governs classification and sovereign/top political authority remains governance"},
+  "entries":[
+    {"person_id":"7b4de6dc-7162-4606-ab2c-2332243ee7b4","canonical_name_en":"Gamal Abdel Nasser","preferred_name_ko":"가말 압델 나세르","representative_domain":"governance"},
+    {"person_id":"d1698f13-2e02-427b-a4a9-33074f0b51ab","canonical_name_en":"Josip Broz Tito","preferred_name_ko":"요시프 브로즈 티토","representative_domain":"governance"},
+    {"person_id":"7387e775-311b-4d01-82bd-fdface6e3fab","canonical_name_en":"Nikita Khrushchev","preferred_name_ko":"니키타 흐루쇼프","representative_domain":"governance"},
+    {"person_id":"aca79591-7776-4973-9f58-de8db34ea20f","canonical_name_en":"Yasser Arafat","preferred_name_ko":"야세르 아라파트","representative_domain":"governance"},
+    {"person_id":"11624134-e89d-45e0-ada6-28d1b3eb4e0a","canonical_name_en":"Patrice Lumumba","preferred_name_ko":"파트리스 루뭄바","representative_domain":"governance"},
+    {"person_id":"19c1e838-09c0-473b-aa05-68e280ceabf0","canonical_name_en":"Norodom Sihanouk","preferred_name_ko":"노로돔 시아누크","representative_domain":"governance"},
+    {"person_id":"c31f9b04-ba85-4ead-a203-89a97dd7e121","canonical_name_en":"Nobusuke Kishi","preferred_name_ko":"기시 노부스케","representative_domain":"governance"},
+    {"person_id":"4057482e-ba8e-43c5-8681-5edda912df15","canonical_name_en":"Mahathir Mohamad","preferred_name_ko":"마하티르 모하맛","representative_domain":"governance"},
+    {"person_id":"d4a9212f-31ce-4ade-8ef2-2c5fafa8e7a7","canonical_name_en":"Manuel Noriega","preferred_name_ko":"마누엘 노리에가","representative_domain":"governance"},
+    {"person_id":"a597734d-8639-4ca2-83a2-0a76b4971e81","canonical_name_en":"Mohammad Mosaddegh","preferred_name_ko":"모하마드 모사데크","representative_domain":"governance"},
+    {"person_id":"d9573bcb-08ed-50fc-b310-cf17e1d5acce","canonical_name_en":"Chiang Kai-shek","preferred_name_ko":"장제스","representative_domain":"governance"},
+    {"person_id":"51b65864-b028-482e-a4b4-2695209fd9cf","canonical_name_en":"Lee Kuan Yew","preferred_name_ko":"리콴유","representative_domain":"governance"},
+    {"person_id":"c9b821d9-6c6f-5fee-953d-978b241ec2c6","canonical_name_en":"Park Chung Hee","preferred_name_ko":"박정희","representative_domain":"governance"},
+    {"person_id":"7c708352-4425-4f32-be5d-df438cfa3058","canonical_name_en":"Salvador Allende","preferred_name_ko":"살바도르 아옌데","representative_domain":"governance"},
+    {"person_id":"aa7d0ebb-678f-5f03-98f8-50d39283f831","canonical_name_en":"Deng Xiaoping","preferred_name_ko":"덩샤오핑","representative_domain":"governance"},
+    {"person_id":"4df8e552-f46c-4a06-ae79-03feb0f327cc","canonical_name_en":"Lester B. Pearson","preferred_name_ko":"레스터 피어슨","representative_domain":"governance"},
+    {"person_id":"1c555437-b363-4d63-8003-0f50f93bd390","canonical_name_en":"Pol Pot","preferred_name_ko":"폴 포트","representative_domain":"governance"},
+    {"person_id":"a6cb3903-1d37-4705-a180-eacd013c0955","canonical_name_en":"Harry S. Truman","preferred_name_ko":"해리 S. 트루먼","representative_domain":"governance"},
+    {"person_id":"4e43bb75-d0a5-50b3-afc2-72d9cb42f73a","canonical_name_en":"Charles de Gaulle","preferred_name_ko":"샤를 드골","representative_domain":"governance"},
+    {"person_id":"6bea25be-e49e-4324-b5d9-f2906ced049e","canonical_name_en":"Dwight D. Eisenhower","preferred_name_ko":"드와이트 D. 아이젠하워","representative_domain":"governance"}
+  ]
+}
