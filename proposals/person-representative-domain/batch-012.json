@@ -1,0 +1,36 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-06",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "4ff8a6d700c09ba99a0a8e5e9cc65e78bbf9becb",
+  "legacy_task_key": "PERSON-DOMAIN-BATCH012-BALANCED-REVIEWED-20260906",
+  "legacy_evidence_comment": 5556349471,
+  "reconstruction_note": "19 of the original 20 reviewed assignments retained; Erwin Rommel is excluded because PERSON-REGISTER-CHAMBERLAIN-ROMMEL-20260906 owns that Person/domain mutation in #977.",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "one reviewed representative domain per Person; dominant historical identity governs classification and sovereign/top political authority remains governance"
+  },
+  "entries": [
+    {"person_id":"0a975a8e-e9be-4144-b1a0-3301e8693d85","canonical_name_en":"Galileo Galilei","preferred_name_ko":"갈릴레오 갈릴레이","representative_domain":"knowledge"},
+    {"person_id":"d2fa20c9-e747-4d25-b3d4-a62d713a9c5f","canonical_name_en":"Nicolaus Copernicus","preferred_name_ko":"니콜라우스 코페르니쿠스","representative_domain":"knowledge"},
+    {"person_id":"5b3fc484-77e5-47d6-a57f-9d7477fe76a0","canonical_name_en":"Marie Curie","preferred_name_ko":"마리 퀴리","representative_domain":"knowledge"},
+    {"person_id":"e0b2112b-78ae-44b1-80dc-62374673ae59","canonical_name_en":"Louis Pasteur","preferred_name_ko":"루이 파스퇴르","representative_domain":"knowledge"},
+    {"person_id":"d30bbbd8-b1b0-466f-b65f-2c55da41062c","canonical_name_en":"John Locke","preferred_name_ko":"존 로크","representative_domain":"knowledge"},
+    {"person_id":"807aaae1-59f6-4552-8682-29afcb996254","canonical_name_en":"Thomas Edison","preferred_name_ko":"토머스 에디슨","representative_domain":"technology"},
+    {"person_id":"d5b45b07-e9c6-49d5-bb9e-224d64499c33","canonical_name_en":"Johannes Gutenberg","preferred_name_ko":"요하네스 구텐베르크","representative_domain":"technology"},
+    {"person_id":"7763a315-4385-404b-b0d6-92a074a2aa27","canonical_name_en":"Vincent van Gogh","preferred_name_ko":"빈센트 반 고흐","representative_domain":"culture"},
+    {"person_id":"c5ed48d6-967c-416e-83cc-929f77dcae73","canonical_name_en":"Snorri Sturluson","preferred_name_ko":"스노리 스튀르들뤼손","representative_domain":"culture"},
+    {"person_id":"ea13e48a-94ef-5648-98be-f74554778166","canonical_name_en":"Yi Sun-sin","preferred_name_ko":"이순신","representative_domain":"military"},
+    {"person_id":"5a938ac4-1dfd-40ae-b926-bc80750beac1","canonical_name_en":"Gang Gam-chan","preferred_name_ko":"강감찬","representative_domain":"military"},
+    {"person_id":"ef25df7d-4f2c-5ae0-b13b-598d5b2be627","canonical_name_en":"Belisarius","preferred_name_ko":"플라비우스 벨리사리우스","representative_domain":"military"},
+    {"person_id":"0e9a360e-175a-4b60-8194-5f15bd66faf4","canonical_name_en":"Minamoto no Yoshitsune","preferred_name_ko":"미나모토노 요시츠네","representative_domain":"military"},
+    {"person_id":"5ea35065-a0b6-5273-bc7b-e3f198b4284b","canonical_name_en":"Ibn Battuta","preferred_name_ko":"이븐 바투타","representative_domain":"exploration"},
+    {"person_id":"5c7ffbfc-4088-40f3-ba53-08bd03cea71a","canonical_name_en":"Leif Erikson","preferred_name_ko":"레이프 에이릭손","representative_domain":"exploration"},
+    {"person_id":"b4b47f39-00ec-4738-9108-d0340bed5bc9","canonical_name_en":"Erik the Red","preferred_name_ko":"에이리크 힌 라우디","representative_domain":"exploration"},
+    {"person_id":"d6c00cad-d087-4fc6-957c-bd13fcdef6eb","canonical_name_en":"Gallienus","preferred_name_ko":"갈리에누스","representative_domain":"governance"},
+    {"person_id":"7b649fb0-5ceb-4e8c-8fe7-0045226206ee","canonical_name_en":"Aurelian","preferred_name_ko":"아우렐리아누스","representative_domain":"governance"},
+    {"person_id":"b8346f48-9ea6-428f-a9e7-434ebecfb7c5","canonical_name_en":"Aretas III","preferred_name_ko":"아레타스 3세","representative_domain":"governance"}
+  ]
+}
