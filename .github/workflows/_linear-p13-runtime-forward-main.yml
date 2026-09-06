@@ -1,0 +1,30 @@
+name: Linear P13 Runtime Forward Main
+
+on:
+  push:
+    branches:
+      - agent/p13-compile-runtime-prework-20260906
+
+permissions:
+  contents: write
+
+jobs:
+  forward:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+      - name: Forward-integrate current main and remove helper
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git merge --no-commit --no-ff origin/main
+          git rm .github/workflows/_linear-p13-runtime-forward-main.yml
+          git commit -m "[p13-runtime] Forward-integrate completed P13 Authoring main"
+          git push origin HEAD:${{ github.ref_name }}
