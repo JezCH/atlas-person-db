@@ -22,7 +22,7 @@ const vercel = JSON.parse(fs.readFileSync(new URL('../vercel.json', import.meta.
 const index = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const admin = fs.readFileSync(new URL('../admin.html', import.meta.url), 'utf8');
 
-test('Vercel exposes exactly thirteen physical ATLAS API functions on Hobby', () => {
+test('Vercel exposes no more than twelve physical ATLAS API functions on Hobby', () => {
   assert.deepEqual(apiFiles, [
     'atlas-audit-inventory.js',
     'atlas-authoring-apply.js',
@@ -33,15 +33,14 @@ test('Vercel exposes exactly thirteen physical ATLAS API functions on Hobby', ()
     'atlas-mutate.js',
     'atlas-p10-revalidation-release.js',
     'atlas-read.js',
-    'atlas-runtime-compile.js',
     'atlas-session.js',
     'atlas-stage2-schema-release.js',
     'atlas-stage2-train2-release.js'
   ]);
-  assert.equal(apiFiles.length, 13);
+  assert.equal(apiFiles.length, 12);
 });
 
-test('logical Person, audit and correction surfaces consolidate onto existing physical functions', () => {
+test('logical Person, Runtime compile, audit and correction surfaces consolidate onto existing physical functions', () => {
   assert.deepEqual(vercel.rewrites, [
     { source: '/api/atlas-reviewed-person-merge', destination: '/api/atlas-authoring?__atlas_authoring_surface=reviewed-person-merge' },
     { source: '/api/atlas-namuwiki-link', destination: '/api/atlas-authoring?__atlas_authoring_surface=namuwiki-link' },
@@ -49,6 +48,7 @@ test('logical Person, audit and correction surfaces consolidate onto existing ph
     { source: '/api/atlas-admin-inspector', destination: '/api/atlas-read?__atlas_read_surface=admin-inspector' },
     { source: '/api/atlas-admin-system-status', destination: '/api/atlas-read?__atlas_read_surface=admin-system-status' },
     { source: '/api/atlas-person-domain', destination: '/api/atlas-mutate?__atlas_mutation_surface=person-domain' },
+    { source: '/api/atlas-runtime-compile', destination: '/api/atlas-mutate?__atlas_mutation_surface=runtime-compile' },
     { source: '/api/atlas-p11-baseline-b-capture', destination: '/api/atlas-audit-inventory?__atlas_audit_surface=p11-baseline-b-capture' },
     { source: '/api/atlas-correction-migrations', destination: '/api/atlas-correction-apply?__atlas_correction_surface=migrations' }
   ]);
@@ -66,12 +66,15 @@ test('consolidated read entrypoint preserves normalized, Person and authenticate
   assert.doesNotMatch(readApi, /SUPABASE_DB_URL|ATLAS_SESSION_SECRET|ATLAS_MUTATION_TOKEN|postgres:\/\/|postgresql:\/\//);
 });
 
-test('consolidated mutation entrypoint preserves generic mutation and Person domain handlers', () => {
+test('consolidated mutation entrypoint preserves generic mutation, Person domain and Runtime compile handlers', () => {
   assert.match(mutateApi, /atlas-vercel-mutation-handler\.js/);
   assert.match(mutateApi, /createVercelMutationHandler/);
   assert.match(mutateApi, /atlas-person-domain-handler\.js/);
   assert.match(mutateApi, /createPersonDomainHandler/);
+  assert.match(mutateApi, /atlas-runtime-compile-handler\.js/);
+  assert.match(mutateApi, /createRuntimeCompileHandler/);
   assert.match(mutateApi, /surface === "person-domain"/);
+  assert.match(mutateApi, /surface === "runtime-compile"/);
 });
 
 test('database-backed browser entrypoints share one server PostgreSQL client boundary', () => {
@@ -158,7 +161,7 @@ test('server runtime dependency is explicit and lock-backed', () => {
 
 test('browser pages do not load server entrypoints or pg', () => {
   for (const html of [index, admin]) {
-    assert.doesNotMatch(html, /api\/atlas-(?:admin-inspector|admin-system-status|audit-inventory|authoring|authoring-apply|correction-apply|duplicate-review|identity|mutate|p10-revalidation-release|person-read|read|session|stage2-schema-release|stage2-train2-release)\.js/);
+    assert.doesNotMatch(html, /api\/atlas-(?:admin-inspector|admin-system-status|audit-inventory|authoring|authoring-apply|correction-apply|duplicate-review|identity|mutate|p10-revalidation-release|person-read|read|runtime-compile|session|stage2-schema-release|stage2-train2-release)\.js/);
     assert.doesNotMatch(html, /node_modules\/pg|require\("pg"\)/);
   }
 });
