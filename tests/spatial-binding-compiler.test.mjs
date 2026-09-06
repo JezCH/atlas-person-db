@@ -13,6 +13,8 @@ import {
 const baseline = JSON.parse(readFileSync(new URL('../spatial/reviewed-bindings/0000-migrated-baseline.index.json', import.meta.url), 'utf8'));
 const canonicalRaw = readFileSync(new URL('../atlas-polity-spatial-index.json', import.meta.url), 'utf8');
 const canonical = JSON.parse(canonicalRaw);
+const shardsDir = fileURLToPath(new URL('../spatial/reviewed-bindings/shards', import.meta.url));
+const reviewedShards = loadReviewedBindingShards(shardsDir);
 
 function shard({ id, reviewedAt = '2026-09-06T00:10:00Z', bindings }) {
   return {
@@ -33,18 +35,17 @@ const IDS = Object.freeze({
   three: '00000000-0000-4000-8000-000000000003'
 });
 
-test('migrated baseline is exactly equivalent to the current canonical runtime index', () => {
-  const compiled = compileSpatialBindings({ baseline, shards: [] });
+test('canonical runtime index is exactly the deterministic compiler output for all reviewed sources', () => {
+  const compiled = compileSpatialBindings({ baseline, shards: reviewedShards });
   assert.deepEqual(compiled.index, canonical);
   assert.equal(serializeSpatialIndex(compiled.index), canonicalRaw);
   assert.deepEqual(compiled.stats, computeSpatialStats(canonical));
 });
 
-test('real reviewed shard directory validates independently of canonical release compilation', () => {
-  const shardsDir = fileURLToPath(new URL('../spatial/reviewed-bindings/shards', import.meta.url));
-  const shards = loadReviewedBindingShards(shardsDir);
-  const compiled = compileSpatialBindings({ baseline, shards });
+test('real reviewed shard directory validates independently', () => {
+  const compiled = compileSpatialBindings({ baseline, shards: reviewedShards });
   assert.ok(compiled.stats.geography_count >= Object.keys(baseline.polity_geography).length);
+  assert.ok(compiled.stats.subregion_count >= Object.keys(baseline.polity_subregions ?? {}).length);
 });
 
 test('new independent reviewed bindings compile without changing existing UUID semantics', () => {
