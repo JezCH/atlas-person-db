@@ -27,9 +27,9 @@ test("normalized read SQL preserves English canonical values and prefers Korean 
   assert.match(DIRECT_READ_SQL, /coalesce\(rko\.name, r\.source_label\).*role_display_name/s);
 });
 
-test("normalized read SQL is chronological first", () => {
+test("normalized read SQL is chronological first and leaves unresolved boundaries last", () => {
   const order = DIRECT_READ_SQL.split(/order by/i).at(-1);
-  assert.match(order, /^\s*pp\.activity_start,\s*pp\.activity_end,/s);
+  assert.match(order, /^\s*pp\.activity_start nulls last,\s*pp\.activity_end nulls last,/s);
 });
 
 test("normalized read service preserves authoritative id, canonical aliases and display aliases", async () => {
@@ -67,6 +67,31 @@ test("normalized read service preserves authoritative id, canonical aliases and 
     period_basis: "reign",
     notes: null
   }]);
+});
+
+test("normalized read service preserves unresolved boundaries as null instead of fabricating year zero", async () => {
+  const client = {
+    async query() {
+      return { rows: [{
+        id: "33333333-3333-4333-8333-333333333333",
+        person_name: "Unknown Start",
+        person_display_name: "Unknown Start",
+        politic_name: "Example Polity",
+        politic_display_name: "Example Polity",
+        activity_start: null,
+        activity_end: null,
+        chronology_status: "reviewed",
+        role: null,
+        role_display_name: null,
+        period_basis: "general_activity",
+        notes: null
+      }] };
+    }
+  };
+  const [row] = await readPersonPolitics({ client });
+  assert.equal(row.activity_start, null);
+  assert.equal(row.activity_end, null);
+  assert.equal(Object.hasOwn(row, "chronology_status"), false);
 });
 
 test("normalized read service falls back display values to canonical values", async () => {

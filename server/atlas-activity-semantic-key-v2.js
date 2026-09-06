@@ -8,6 +8,7 @@ const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-
 const GRANULARITIES = new Set(contract.temporal?.granularities || []);
 const CALENDARS = new Set(contract.temporal?.calendars || []);
 const CERTAINTIES = new Set(contract.temporal?.certainties || []);
+const UNKNOWN_BOUNDARY = Object.freeze({ year:null, month:null, day:null, granularity:null, certainty:null, calendar:null, status:"unknown" });
 
 function requiredUuid(value, label) {
   const normalized = String(value || "").trim().toLowerCase();
@@ -37,10 +38,25 @@ function optionalComponent(value, label, min, max) {
   return component;
 }
 
+function empty(value) {
+  return value == null || value === "";
+}
+
+function unresolvedBoundary(row, prefix) {
+  if (!empty(row?.[prefix])) return false;
+  const fields = ["month","day","granularity","certainty","calendar"];
+  if (fields.some((suffix) => !empty(row?.[`${prefix}_${suffix}`]))) {
+    throw new Error(`${prefix} unresolved boundary must leave all boundary fields null`);
+  }
+  return true;
+}
+
 const { EMPTY_END, validateOngoingActivity } = require("./atlas-ongoing-activity.js");
 
 function normalizeBoundary(row, prefix, { requireCertainty = false } = {}) {
   if (prefix === "activity_end" && validateOngoingActivity(row, { requireProvenance:requireCertainty })) return Object.freeze({ ...EMPTY_END, status:"ongoing" });
+  if (unresolvedBoundary(row, prefix)) return UNKNOWN_BOUNDARY;
+
   const year = historicalYear(row?.[prefix], prefix);
   const month = optionalComponent(row?.[`${prefix}_month`], `${prefix}_month`, 1, 12);
   const day = optionalComponent(row?.[`${prefix}_day`], `${prefix}_day`, 1, 31);
@@ -67,7 +83,7 @@ function normalizeBoundary(row, prefix, { requireCertainty = false } = {}) {
 }
 
 function assertKnownBoundaryOrder(start, end) {
-  if (end.status === "ongoing") return;
+  if (start.status === "unknown" || end.status === "unknown" || end.status === "ongoing") return;
   if (end.year < start.year) throw new Error("activity_end precedes activity_start by historical year");
   if (end.year !== start.year || end.calendar !== start.calendar) return;
   if (start.month !== null && end.month !== null && end.month < start.month) {
@@ -79,6 +95,7 @@ function assertKnownBoundaryOrder(start, end) {
 }
 
 function boundaryToken(boundary) {
+  if (boundary.status === "unknown") return "<UNKNOWN>";
   if (boundary.status === "ongoing") return "<ONGOING>";
   return [
     boundary.year,
@@ -139,10 +156,12 @@ module.exports = Object.freeze({
   GRANULARITIES,
   CALENDARS,
   CERTAINTIES,
+  UNKNOWN_BOUNDARY,
   requiredUuid,
   optionalUuid,
   historicalYear,
   optionalComponent,
+  unresolvedBoundary,
   normalizePrimaryPolityPair,
   canonicalSemanticParts,
   semanticKey,
