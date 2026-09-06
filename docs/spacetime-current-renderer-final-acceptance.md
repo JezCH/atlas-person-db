@@ -35,6 +35,21 @@ Person labels and Person rails carry `data-representative-domain`. Activity glyp
 
 The legacy point-only Person renderer remains prohibited, so the current semantic surface is the Person label + rail representation rather than a reintroduced point renderer.
 
+## Live browser label-box reconciliation
+
+The historical label engine remains the primary deterministic packer. A final browser-only guard, `atlas-person-spacetime-label-overlap-guard.js`, reconciles rare cross-pack box collisions that can appear after data growth even when each independently packed presentation band is internally valid.
+
+The guard is presentation-only:
+
+- it never writes label `top`, historical Y, rail Y, Activity chronology, world coordinates, or band geometry;
+- it may move a conflicting Person label only horizontally;
+- candidate movement is bounded to the label's declared spatial band;
+- selected and Meanwhile-active labels receive placement priority;
+- connector geometry is updated when a shifted label has a horizontal connector;
+- impossible capacity is reported rather than resolved by vertical displacement or local compression.
+
+This preserves the existing completion rule: browser-visible label overlap must be zero without moving historical Y or reducing the camera below 500%.
+
 ## Final exact-SHA Production gate
 
 Closure requires a manual run of `ATLAS Spacetime Production Visual Acceptance` with the exact merged Production GitHub SHA supplied as `expected_runtime_sha`.
@@ -44,6 +59,7 @@ The run fails closed unless all of the following succeed:
 1. `scripts/verify-spacetime-production-exact-sha.mjs`
    - requires a valid 40-character expected SHA;
    - compares the relevant Production spacetime/domain assets byte-for-byte against GitHub raw content at that exact SHA;
+   - includes the live overlap guard among the compared assets;
    - records SHA-256 evidence for every compared asset.
 2. `scripts/verify-spacetime-production-visual.mjs`
    - preserves the established real-Chrome 500%/800% geometry, overlap, LOD, inspector, uncertainty, Meanwhile, and runtime-error acceptance.
