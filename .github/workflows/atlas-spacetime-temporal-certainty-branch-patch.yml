@@ -6,9 +6,6 @@ on:
       - fix/spacetime-temporal-certainty
     paths:
       - .github/workflows/atlas-spacetime-temporal-certainty-branch-patch.yml
-  pull_request:
-    branches:
-      - main
 
 permissions:
   contents: write
@@ -155,10 +152,7 @@ jobs:
       - name: Run focused regression test
         run: node --test tests/atlas-person-spacetime-temporal-certainty.test.mjs
 
-      - name: Run full test suite
-        run: npm test
-
-      - name: Commit tested patch and remove one-shot workflow
+      - name: Persist focused patch and remove one-shot workflow
         shell: bash
         run: |
           rm .github/workflows/atlas-spacetime-temporal-certainty-branch-patch.yml
@@ -168,3 +162,6 @@ jobs:
           git diff --cached --check
           git commit -m "fix: preserve spacetime temporal certainty"
           git push origin HEAD:fix/spacetime-temporal-certainty
+
+      - name: Run full test suite
+        run: npm test
