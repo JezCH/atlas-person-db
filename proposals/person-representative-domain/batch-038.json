@@ -1,0 +1,11 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-06",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "e137b0179916fb1a1bf3303526f0a52baaf1460b",
+  "policy": {"automatic_role_backfill": false,"secondary_domains": false,"decision": "one reviewed representative domain per Person; sovereign ruler identity remains governance"},
+  "entries": [
+    {"person_id":"cd4f49fb-b534-4ea8-b100-0997d5075736","canonical_name_en":"Olaf II of Norway","preferred_name_ko":"올라프 2세","representative_domain":"governance"}
+  ]
+}
