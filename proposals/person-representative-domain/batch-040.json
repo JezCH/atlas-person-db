@@ -1,0 +1,12 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-06",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "e137b0179916fb1a1bf3303526f0a52baaf1460b",
+  "policy": {"automatic_role_backfill": false,"secondary_domains": false,"decision": "one reviewed representative domain per Person; defining non-sovereign armed leadership remains military"},
+  "entries": [
+    {"person_id":"f7512e5c-c3fc-5f29-9999-7ff245309ccc","canonical_name_en":"Gilbert du Motier, Marquis de Lafayette","preferred_name_ko":"라파예트 후작 질베르 뒤 모티에","representative_domain":"military"},
+    {"person_id":"62d43a03-b980-55f8-a992-d57346b62e70","canonical_name_en":"Tecumseh","preferred_name_ko":"테쿰세","representative_domain":"military"}
+  ]
+}
