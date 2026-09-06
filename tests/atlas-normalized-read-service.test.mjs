@@ -28,9 +28,9 @@ test("normalized read SQL preserves English canonical values and prefers Korean 
   assert.match(DIRECT_READ_SQL, /coalesce\(rko\.name, r\.source_label\).*role_display_name/s);
 });
 
-test("Runtime normalized read is chronological and ongoing end sorts last", () => {
+test("Runtime normalized read is chronological with unresolved/ongoing NULLs sorted last", () => {
   const order = DIRECT_READ_SQL.split(/order by/i).at(-1);
-  assert.match(order, /^\s*pp\.activity_start,\s*pp\.activity_end nulls last,/s);
+  assert.match(order, /^\s*pp\.activity_start nulls last,\s*pp\.activity_end nulls last,/s);
 });
 
 test("normalized read service preserves authoritative id, aliases and Runtime temporal values", async () => {
@@ -61,6 +61,16 @@ test("Runtime normalized read preserves verified ongoing end as null", async () 
   assert.equal(row.activity_start,2024);
   assert.equal(row.activity_end,null);
   assert.equal(row.chronology_status,"ongoing");
+});
+
+test("normalized read mapper never coerces a SQL NULL start into year zero", async () => {
+  const client={async query(){return {rows:[{
+    id:"44444444-4444-4444-8444-444444444444",person_name:"A",person_display_name:"A",politic_name:"B",politic_display_name:"B",
+    activity_start:null,activity_end:2,role:null,role_display_name:null,period_basis:"general_activity",notes:null
+  }]};}};
+  const [row]=await readPersonPolitics({client});
+  assert.equal(row.activity_start,null);
+  assert.notEqual(row.activity_start,0);
 });
 
 test("normalized read service falls back display values to canonical values", async () => {
