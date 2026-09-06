@@ -11,6 +11,7 @@
   const DEFAULT_CHAR_WIDTH = 6.8;
   const DEFAULT_CJK_CHAR_WIDTH = 10;
   const DEFAULT_LABEL_CHROME_WIDTH = 4;
+  const DEFAULT_LABEL_WIDTH_SAFETY = 6;
   const DEFAULT_HORIZONTAL_GAP = 2;
   const DEFAULT_ANCHOR_GAP = 4;
   const DEFAULT_SEARCH_STEP = 4;
@@ -45,17 +46,26 @@
     }
     return width;
   }
+  function naturalWidth(label, options = {}) {
+    const minimum = positive(options.minLabelWidth ?? DEFAULT_MIN_LABEL_WIDTH, "minLabelWidth");
+    const chromeWidth = Math.max(0, Number(options.labelChromeWidth ?? DEFAULT_LABEL_CHROME_WIDTH) || 0);
+    const safetyWidth = Math.max(0, Number(options.labelWidthSafety ?? DEFAULT_LABEL_WIDTH_SAFETY) || 0);
+    const explicit = Number(label?.width);
+    const measured = Number((chromeWidth + safetyWidth + estimatedTextWidth(label?.text, options)).toFixed(6));
+    return Math.max(minimum, measured, Number.isFinite(explicit) && explicit > 0 ? explicit : 0);
+  }
   function estimateWidth(label, options = {}) {
     const explicit = Number(label?.width);
     if (Number.isFinite(explicit) && explicit > 0) return explicit;
     const minimum = positive(options.minLabelWidth ?? DEFAULT_MIN_LABEL_WIDTH, "minLabelWidth");
     const maximum = positive(options.maxLabelWidth ?? DEFAULT_MAX_LABEL_WIDTH, "maxLabelWidth");
     if (maximum < minimum) throw new RangeError("maxLabelWidth must be >= minLabelWidth");
-    const measured = Number((DEFAULT_LABEL_CHROME_WIDTH + estimatedTextWidth(label?.text, options)).toFixed(6));
-    return clamp(measured, minimum, maximum);
+    return clamp(naturalWidth(label, options), minimum, maximum);
   }
   function normalizeLabel(label, options = {}) {
-    const width = estimateWidth(label, options);
+    const width = options.preserveFullTextWidth === false
+      ? estimateWidth(label, options)
+      : naturalWidth(label, options);
     const height = Number.isFinite(Number(label?.height)) && Number(label.height) > 0 ? Number(label.height) : positive(options.labelHeight ?? DEFAULT_LABEL_HEIGHT, "labelHeight");
     const minLeft = Number.isFinite(Number(label?.min_left)) ? Number(label.min_left) : null;
     const maxRight = Number.isFinite(Number(label?.max_right)) ? Number(label.max_right) : null;
@@ -66,13 +76,14 @@
     const safeGap = Math.max(0, Number(gap) || 0);
     return !(a.right + safeGap <= b.left + EPSILON || b.right + safeGap <= a.left + EPSILON || a.bottom + safeGap <= b.top + EPSILON || b.bottom + safeGap <= a.top + EPSILON);
   }
-  function candidateLeftPositions(label, viewportWidth, options = {}) {
-    const minLeft = clamp(Number.isFinite(label.min_left) ? label.min_left : 0, 0, viewportWidth);
-    const maxRight = clamp(Number.isFinite(label.max_right) ? label.max_right : viewportWidth, minLeft, viewportWidth);
-    const maxLeft = Math.max(minLeft, maxRight - label.width);
+  function candidatePositionsForRange(label, rangeLeft, rangeRight, options = {}) {
+    const minLeft = Number(rangeLeft);
+    const maxRight = Number(rangeRight);
+    if (!(maxRight > minLeft) || label.width > maxRight - minLeft + EPSILON) return [];
+    const maxLeft = maxRight - label.width;
     const anchorGap = Math.max(0, Number(options.anchorGap ?? DEFAULT_ANCHOR_GAP) || 0);
     const step = positive(options.searchStep ?? DEFAULT_SEARCH_STEP, "searchStep");
-    const maxShift = label.forced ? viewportWidth + label.width : positive(options.maxHorizontalShift ?? DEFAULT_MAX_HORIZONTAL_SHIFT, "maxHorizontalShift");
+    const maxShift = label.forced ? maxRight - minLeft + label.width : positive(options.maxHorizontalShift ?? DEFAULT_MAX_HORIZONTAL_SHIFT, "maxHorizontalShift");
     const preferredLeft = label.anchor_x + anchorGap;
     const preferredCenter = preferredLeft + label.width / 2;
     const values = new Set();
@@ -81,7 +92,8 @@
       const center = bounded + label.width / 2;
       if (Math.abs(center - label.anchor_x) <= maxShift + label.width / 2 + EPSILON) values.add(Number(bounded.toFixed(6)));
     };
-    add(preferredLeft); add(label.anchor_x - anchorGap - label.width);
+    add(preferredLeft);
+    add(label.anchor_x - anchorGap - label.width);
     for (let left = minLeft; left <= maxLeft + EPSILON; left += step) add(left);
     add(maxLeft);
     return [...values].sort((a, b) => {
@@ -89,6 +101,17 @@
       if (Math.abs(preferredDistance) > EPSILON) return preferredDistance;
       return Math.abs(a + label.width / 2 - label.anchor_x) - Math.abs(b + label.width / 2 - label.anchor_x) || a - b;
     });
+  }
+  function candidateLeftPositions(label, viewportWidth, options = {}) {
+    const hardLeft = 0;
+    const hardRight = viewportWidth;
+    const preferredLeft = clamp(Number.isFinite(label.min_left) ? label.min_left : hardLeft, hardLeft, hardRight);
+    const preferredRight = clamp(Number.isFinite(label.max_right) ? label.max_right : hardRight, preferredLeft, hardRight);
+    const preferred = candidatePositionsForRange(label, preferredLeft, preferredRight, options);
+    if (options.borrowHorizontalSpace === false) return preferred;
+    const borrowed = candidatePositionsForRange(label, hardLeft, hardRight, options);
+    const seen = new Set(preferred);
+    return [...preferred, ...borrowed.filter((left) => !seen.has(left))];
   }
   function connectorFor(label, rect, options = {}) {
     const threshold = Math.max(0, Number(options.connectorThreshold ?? DEFAULT_CONNECTOR_THRESHOLD) || 0);
@@ -106,10 +129,11 @@
     const placed = [], deferred = [];
     for (const label of normalized) {
       const preferredTop = label.anchor_y - label.height / 2;
-      const minLeft = clamp(Number.isFinite(label.min_left) ? label.min_left : 0, 0, viewport.width);
-      const maxRight = clamp(Number.isFinite(label.max_right) ? label.max_right : viewport.width, minLeft, viewport.width);
-      const allowedWidth = maxRight - minLeft;
-      if (preferredTop < -EPSILON || preferredTop + label.height > viewport.height + EPSILON || label.width > allowedWidth + EPSILON) { deferred.push(Object.freeze({ ...label, reason: "viewport_capacity" })); continue; }
+      const preferredLeft = clamp(Number.isFinite(label.min_left) ? label.min_left : 0, 0, viewport.width);
+      const preferredRight = clamp(Number.isFinite(label.max_right) ? label.max_right : viewport.width, preferredLeft, viewport.width);
+      const preferredWidth = preferredRight - preferredLeft;
+      const horizontalCapacity = options.borrowHorizontalSpace === false ? preferredWidth : viewport.width;
+      if (preferredTop < -EPSILON || preferredTop + label.height > viewport.height + EPSILON || label.width > horizontalCapacity + EPSILON) { deferred.push(Object.freeze({ ...label, reason: "viewport_capacity" })); continue; }
       let accepted = null;
       for (const left of candidateLeftPositions(label, viewport.width, options)) {
         const rect = rectFor(label, left);
@@ -121,5 +145,5 @@
     }
     return Object.freeze({ placed: Object.freeze(placed), deferred: Object.freeze(deferred), viewport });
   }
-  return Object.freeze({ DEFAULT_LABEL_HEIGHT, DEFAULT_MIN_LABEL_WIDTH, DEFAULT_MAX_LABEL_WIDTH, DEFAULT_CHAR_WIDTH, DEFAULT_CJK_CHAR_WIDTH, DEFAULT_LABEL_CHROME_WIDTH, DEFAULT_HORIZONTAL_GAP, DEFAULT_MAX_HORIZONTAL_SHIFT, isWideCodePoint, estimatedTextWidth, estimateWidth, normalizeLabel, rectFor, rectanglesOverlap, candidateLeftPositions, connectorFor, packLabels });
+  return Object.freeze({ DEFAULT_LABEL_HEIGHT, DEFAULT_MIN_LABEL_WIDTH, DEFAULT_MAX_LABEL_WIDTH, DEFAULT_CHAR_WIDTH, DEFAULT_CJK_CHAR_WIDTH, DEFAULT_LABEL_CHROME_WIDTH, DEFAULT_LABEL_WIDTH_SAFETY, DEFAULT_HORIZONTAL_GAP, DEFAULT_MAX_HORIZONTAL_SHIFT, isWideCodePoint, estimatedTextWidth, naturalWidth, estimateWidth, normalizeLabel, rectFor, rectanglesOverlap, candidateLeftPositions, connectorFor, packLabels });
 });
