@@ -12,6 +12,7 @@ const ASSETS = Object.freeze([
   "atlas-person-domain-ui.js",
   "atlas-person-spacetime-domain-colors.js",
   "atlas-person-spacetime-domain-colors.css",
+  "atlas-person-spacetime-label-overlap-guard.js",
   "atlas-person-spacetime-view.js",
   "atlas-person-spacetime-view.css",
   "atlas-person-spacetime-temporal-certainty.js"
