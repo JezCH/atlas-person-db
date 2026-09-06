@@ -1,0 +1,41 @@
+{
+  "schema": "atlas-runtime-projection-contract/v1",
+  "compiler_version": "runtime-person-politics-v1",
+  "authoring_source": "atlas_v2.person_politics_v2",
+  "runtime_projection": "atlas_v2.runtime_person_politics_v1",
+  "principles": {
+    "authoring_evidence_is_not_deleted_by_compile": true,
+    "runtime_is_a_sealed_snapshot": true,
+    "runtime_never_fabricates_unknown_temporal_values": true,
+    "admin_authoring_reads_may_retain_unresolved_evidence": true,
+    "public_runtime_reads_must_use_projection": true
+  },
+  "readiness": {
+    "relation_type_required": true,
+    "start_boundary": "known_complete",
+    "end_boundary": "known_complete_or_verified_ongoing",
+    "year_zero_forbidden": true,
+    "provenance_required": true,
+    "accepted_provenance": [
+      "normalized_source_link",
+      "legacy_import_source_with_locator"
+    ],
+    "certainty_values_runtime_safe": ["exact", "approximate", "uncertain"]
+  },
+  "exclusion_codes": [
+    "RELATION_TYPE_UNRESOLVED",
+    "START_BOUNDARY_UNRESOLVED",
+    "END_BOUNDARY_UNRESOLVED",
+    "ONGOING_VERIFICATION_UNRESOLVED",
+    "PROVENANCE_UNRESOLVED"
+  ],
+  "snapshot": {
+    "input_order": ["activity_id"],
+    "source_order": ["source_id", "source_locator_key"],
+    "input_fingerprint": "sha256 canonical-json",
+    "output_fingerprint": "sha256 canonical-json",
+    "runtime_rows_store_authoring_activity_values": true,
+    "runtime_rows_store_provenance_snapshot": true,
+    "live_authoring_join_from_runtime_forbidden": true
+  }
+}
