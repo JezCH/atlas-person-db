@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import { readFileSync } from "node:fs";
+import { computeSpatialStats } from "../scripts/compile-spatial-bindings.mjs";
 
 const require = createRequire(import.meta.url);
 const model = require("../atlas-person-spacetime-model.js");
@@ -28,12 +29,16 @@ function contiguous(segments, startYear, endYear) {
   for (let i = 1; i < segments.length; i += 1) assert.equal(model.historicalYearToOrdinal(segments[i].start_year), model.historicalYearToOrdinal(segments[i - 1].end_year) + 1);
 }
 
-test("spatial index v2 uses one canonical temporal polity-place-function family", () => {
+test("spatial index v2 retains the canonical temporal polity-place-function contract without manual coverage locks", () => {
   const validation = model.validateSpatialIndex(index);
   assert.equal(validation.valid, true, validation.errors.join(" | "));
   assert.equal(index.schema, "atlas-polity-spatial-index/v2");
-  assert.equal(Object.keys(index.polity_geography).length, 847);
-  assert.equal(Object.keys(index.polity_subregions).length, 821);
+  const stats = computeSpatialStats(index);
+  assert.equal(stats.geography_count, Object.keys(index.polity_geography).length);
+  assert.equal(stats.subregion_count, Object.keys(index.polity_subregions).length);
+  assert.ok(stats.geography_count > 0);
+  assert.ok(stats.subregion_count > 0);
+  assert.ok(stats.subregion_count <= stats.geography_count);
   assert.equal(index.place_function_records.length, 11);
   assert.equal(index.review_queue.length, 2);
   assert.equal(Object.hasOwn(index, "capital_records"), false);

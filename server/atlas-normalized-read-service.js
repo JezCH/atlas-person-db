@@ -45,8 +45,8 @@ left join lateral (
 join atlas_v2.period_bases pb
   on pb.id = pp.period_basis_id
 order by
-  pp.activity_start,
-  pp.activity_end,
+  pp.activity_start nulls last,
+  pp.activity_end nulls last,
   coalesce(pko.name, pen.name),
   coalesce(tko.name, ten.name),
   pp.id
@@ -63,7 +63,7 @@ async function readPersonPolitics({ client } = {}) {
     person_display_name: String(row.person_display_name ?? row.person_name),
     politic_name: String(row.politic_name),
     politic_display_name: String(row.politic_display_name ?? row.politic_name),
-    activity_start: Number(row.activity_start),
+    activity_start: row.activity_start == null ? null : Number(row.activity_start),
     activity_end: row.activity_end == null ? null : Number(row.activity_end),
     ...(row.chronology_status === "ongoing" ? { chronology_status:"ongoing" } : {}),
     role: row.role == null ? null : String(row.role),

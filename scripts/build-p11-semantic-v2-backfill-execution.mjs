@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -25,6 +26,10 @@ if (audit.marker !== 'ATLAS_AUDIT_INVENTORY_V1' || audit.mode !== 'full_stage2_b
 if (repair.schema !== 'atlas-stage2-p9-completeness-repair-plan/v1' || repair.status !== 'READ_ONLY_PLANNER_NO_PRODUCTION_MUTATION') throw new Error('P11_BACKFILL_REPAIR_PLAN_INVALID');
 if (exceptionContract.schema !== 'atlas-p11-reviewed-semantic-v2-exceptions/v1' || exceptionContract.rules?.exception_scope !== 'relation_type_id_only') throw new Error('P11_BACKFILL_EXCEPTION_CONTRACT_INVALID');
 if (relationCatalog.schema !== 'atlas-stage2-relation-type-catalog/v1') throw new Error('P11_BACKFILL_RELATION_CATALOG_INVALID');
+
+const baselineDigest = String(audit.baseline_digest || '').trim();
+if (!baselineDigest) throw new Error('P11_BACKFILL_BASELINE_DIGEST_REQUIRED');
+const executionScope = createHash('sha256').update(baselineDigest, 'utf8').digest('hex').slice(0, 20);
 
 const relationIdByCode = new Map((relationCatalog.person_polity_relation_types || []).map((row) => [String(row.code), String(row.id).toLowerCase()]));
 const validRelationIds = new Set(relationIdByCode.values());
@@ -192,7 +197,7 @@ for (let offset = 0, part = 1; offset < operations.length; offset += chunkSize, 
   const chunk = operations.slice(offset, offset + chunkSize);
   const plan = {
     schema: 'atlas-stage2-correction-v2-execution-plan/v1',
-    batch_id: `p11_semantic_v2_current_delta_backfill_batch${part}_20260906`,
+    batch_id: `p11_semantic_v2_current_delta_${executionScope}_batch${part}_20260906`,
     as_of: '2026-09-06',
     status: 'REVIEWED_P11_CURRENT_DELTA_SEMANTIC_V2_BACKFILL',
     release_order: 649 + part,
@@ -208,6 +213,7 @@ for (let offset = 0, part = 1; offset < operations.length; offset += chunkSize, 
     execution_rules: {
       exact_live_before_snapshot_required: true,
       current_blocking_delta_only: true,
+      baseline_scoped_idempotency: true,
       baseline_b_readiness_predicate_is_authoritative: true,
       reviewed_relation_exceptions_are_not_mutation_targets_when_temporally_complete: true,
       reviewed_legacy_temporal_metadata_materialization_only: true,
@@ -236,6 +242,7 @@ const summary = {
   schema: 'atlas-p11-semantic-v2-backfill-execution-summary/v1',
   production_sha: audit.deployment_sha,
   baseline_digest: audit.baseline_digest,
+  execution_scope: executionScope,
   activity_count: Number(audit.counts?.activities || audit.row_count || 0),
   audit_semantic_v2_incomplete_before: auditIncomplete.length,
   semantic_v2_incomplete_before: incomplete.length,

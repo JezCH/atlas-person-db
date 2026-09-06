@@ -39,7 +39,7 @@ function detail(activityId, relationTypeId, temporalComplete) {
   };
 }
 
-test('P11 current-delta builder preserves live reviewed exceptions and mutates blockers only', () => {
+test('P11 current-delta builder preserves live reviewed exceptions, mutates blockers only, and scopes batch identity to the audited baseline', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'atlas-p11-delta-'));
   const auditPath = path.join(dir, 'audit.json');
   const repairPath = path.join(dir, 'repair.json');
@@ -112,9 +112,37 @@ test('P11 current-delta builder preserves live reviewed exceptions and mutates b
   assert.equal(summary.reviewed_relation_exceptions_expected_after, 1);
   assert.deepEqual(summary.reviewed_relation_exception_ids_expected_after, [REVIEWED_EXCEPTION_ID]);
   assert.equal(summary.plan_count, 1);
+  assert.match(summary.execution_scope, /^[0-9a-f]{20}$/);
 
   const plan = JSON.parse(fs.readFileSync(path.join(outDir, 'p11-semantic-v2-backfill-batch1.json'), 'utf8'));
   assert.equal(plan.operations.length, 1);
   assert.equal(plan.operations[0].activity_id, BLOCKER_ID);
   assert.ok(!plan.operations.some((operation) => operation.activity_id === REVIEWED_EXCEPTION_ID));
+  assert.equal(plan.batch_id, `p11_semantic_v2_current_delta_${summary.execution_scope}_batch1_20260906`);
+  assert.equal(plan.execution_rules.baseline_scoped_idempotency, true);
+
+  const replayDir = path.join(dir, 'generated-replay');
+  const replay = spawnSync(process.execPath, [
+    'scripts/build-p11-semantic-v2-backfill-execution.mjs',
+    '--audit', auditPath,
+    '--repair', repairPath,
+    '--out-dir', replayDir,
+    '--chunk-size', '100'
+  ], { cwd: process.cwd(), encoding: 'utf8' });
+  assert.equal(replay.status, 0, replay.stderr || replay.stdout);
+  const replayPlan = JSON.parse(fs.readFileSync(path.join(replayDir, 'p11-semantic-v2-backfill-batch1.json'), 'utf8'));
+  assert.equal(replayPlan.batch_id, plan.batch_id);
+
+  const changedBaselineDir = path.join(dir, 'generated-changed-baseline');
+  fs.writeFileSync(auditPath, JSON.stringify({ ...audit, baseline_digest: 'sha256:fixture-after-partial-commit' }));
+  const changedBaseline = spawnSync(process.execPath, [
+    'scripts/build-p11-semantic-v2-backfill-execution.mjs',
+    '--audit', auditPath,
+    '--repair', repairPath,
+    '--out-dir', changedBaselineDir,
+    '--chunk-size', '100'
+  ], { cwd: process.cwd(), encoding: 'utf8' });
+  assert.equal(changedBaseline.status, 0, changedBaseline.stderr || changedBaseline.stdout);
+  const changedBaselinePlan = JSON.parse(fs.readFileSync(path.join(changedBaselineDir, 'p11-semantic-v2-backfill-batch1.json'), 'utf8'));
+  assert.notEqual(changedBaselinePlan.batch_id, plan.batch_id);
 });
