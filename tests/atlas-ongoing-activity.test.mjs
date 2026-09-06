@@ -16,8 +16,8 @@ function request() {
     sources:[{title:'Fixture source'}]
   };
 }
-function payload() {
-  return human.activityPayload({personId:id(1),polityId:id(2),roleId:id(3),relation:{id:id(4)},periodBasis:{id:id(5)},activity:human.normalizeHumanAuthoringRequest(request()).activity,sources:[]});
+function payload(raw = request()) {
+  return human.activityPayload({personId:id(1),polityId:id(2),roleId:id(3),relation:{id:id(4)},periodBasis:{id:id(5)},activity:human.normalizeHumanAuthoringRequest(raw).activity,sources:[]});
 }
 
 test('ongoing authoring preserves a null end through native normalization and Person readback', () => {
@@ -31,23 +31,31 @@ test('ongoing authoring preserves a null end through native normalization and Pe
   assert.equal(activity.end.year,null,'drawing through the verification year must never mutate the factual boundary');
 });
 
-test('ongoing semantic identity ignores verification date and remains distinct from a closed interval', () => {
+test('ongoing semantic identity ignores verification date and remains distinct from unknown and known closed intervals', () => {
   const row=payload();
   assert.equal(semantic.semanticKey(row),semantic.semanticKey({...row,ongoing_as_of:'2025-02-01'}));
   assert.match(semantic.semanticKey(row),/<ONGOING>$/);
   assert.notEqual(semantic.semanticKey(row),semantic.semanticKey({...row,chronology_status:'reviewed',activity_end:2025,activity_end_granularity:'year',activity_end_calendar:'gregorian',activity_end_certainty:'exact'}));
+  assert.notEqual(semantic.semanticKey(row),semantic.semanticKey({...row,chronology_status:'reviewed'}));
+  assert.match(semantic.semanticKey({...row,chronology_status:'reviewed'}),/<UNKNOWN>$/);
 });
 
-test('null does not silently turn an unknown or omitted closed endpoint into ongoing', () => {
-  const raw=request();raw.activity.chronology_status='reviewed';
-  assert.throws(()=>human.normalizeHumanAuthoringRequest(raw),/historical year/);
+test('all-null closed endpoint remains unknown and never silently becomes ongoing', () => {
+  const raw=request();
+  raw.activity.chronology_status='reviewed';
+  const normalized=human.normalizeHumanAuthoringRequest(raw);
+  assert.deepEqual(normalized.activity.end,{year:null,month:null,day:null,granularity:null,certainty:null,calendar:null});
+  const row=native.normalizeStage2NativeActivity(payload(raw));
+  assert.equal(row.chronology_status,'reviewed');
+  assert.match(semantic.semanticKey(row),/<UNKNOWN>$/);
+
   for(const field of ['end_year','end_month','end_day','end_certainty','end_calendar']) {
     const bad=request();bad.activity[field]=field.includes('certainty')?'exact':field.includes('calendar')?'gregorian':2025;
     assert.throws(()=>human.normalizeHumanAuthoringRequest(bad),/END_MUST_BE_NULL/);
   }
 });
 
-test('ongoing verification date is required, real, not future, and not before the start', () => {
+test('ongoing verification date is required, real, not future, and not before a known start', () => {
   const a=request().activity;
   for(const value of [null,'2025-02-30','9999-01-01','2024-06-02']) {
     assert.throws(()=>ongoing.validateOngoingActivity({...a,ongoing_as_of:value},{human:true,today:'2025-02-01'}),/ONGOING_ACTIVITY/);
@@ -55,6 +63,22 @@ test('ongoing verification date is required, real, not future, and not before th
   assert.equal(ongoing.validateOngoingActivity(a,{human:true,today:'2025-02-01'}),true);
 });
 
+test('ongoing verification remains required when the start boundary is unknown', () => {
+  const raw=request();
+  raw.activity.start_year=null;
+  raw.activity.start_month=null;
+  raw.activity.start_day=null;
+  raw.activity.start_certainty=null;
+  raw.activity.start_calendar=null;
+  assert.equal(ongoing.validateOngoingActivity(raw.activity,{human:true,today:'2025-02-01'}),true);
+  assert.throws(()=>ongoing.validateOngoingActivity({...raw.activity,ongoing_as_of:null},{human:true,today:'2025-02-01'}),/ONGOING_ACTIVITY_AS_OF_REQUIRED/);
+  const row=native.normalizeStage2NativeActivity(payload(raw));
+  const key=semantic.semanticKey(row);
+  assert.match(key,/<UNKNOWN>/);
+  assert.match(key,/<ONGOING>$/);
+});
+
 test('unresolved chronology still stays off the drawable timeline', () => {
   assert.equal(model.activityInterval({start:{year:2024},end:{year:null}}).partial,true);
+  assert.equal(model.activityInterval({start:{year:null},end:{year:2024}}).partial,true);
 });

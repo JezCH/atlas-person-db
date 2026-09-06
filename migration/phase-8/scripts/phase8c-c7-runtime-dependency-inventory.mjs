@@ -34,6 +34,7 @@ const intendedApiRoutes = [
   'api/atlas-p10-revalidation-release.js',
   'api/atlas-p11-baseline-b-capture.js',
   'api/atlas-read.js',
+  'api/atlas-runtime-compile.js',
   'api/atlas-session.js',
   'api/atlas-stage2-schema-release.js',
   'api/atlas-stage2-train2-release.js'

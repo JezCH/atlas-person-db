@@ -92,18 +92,29 @@ function normalizeNamuWikiReference(raw, { allowLegacyOmission = true } = {}) {
 }
 
 function normalizeBoundary(raw, prefix) {
-  const year = historicalYear(raw?.[`${prefix}_year`], `${prefix}_year`);
+  const yearValue = raw?.[`${prefix}_year`];
   const monthValue = raw?.[`${prefix}_month`];
   const dayValue = raw?.[`${prefix}_day`];
+  const certaintyValue = raw?.[`${prefix}_certainty`];
+  const calendarValue = raw?.[`${prefix}_calendar`];
+  const unresolved = yearValue == null || yearValue === "";
+  if (unresolved) {
+    if ([monthValue, dayValue, certaintyValue, calendarValue].some((value) => value != null && value !== "")) {
+      throw new Error(`HUMAN_AUTHORING_${prefix.toUpperCase()}_UNRESOLVED_BOUNDARY_MUST_BE_ALL_NULL`);
+    }
+    return Object.freeze({ year:null, month:null, day:null, granularity:null, certainty:null, calendar:null });
+  }
+
+  const year = historicalYear(yearValue, `${prefix}_year`);
   const month = monthValue == null || monthValue === "" ? null : Number(monthValue);
   const day = dayValue == null || dayValue === "" ? null : Number(dayValue);
   if (month != null && (!Number.isInteger(month) || month < 1 || month > 12)) throw new Error(`HUMAN_AUTHORING_${prefix.toUpperCase()}_MONTH_INVALID`);
   if (day != null && (!Number.isInteger(day) || day < 1 || day > 31)) throw new Error(`HUMAN_AUTHORING_${prefix.toUpperCase()}_DAY_INVALID`);
   if (day != null && month == null) throw new Error(`HUMAN_AUTHORING_${prefix.toUpperCase()}_DAY_REQUIRES_MONTH`);
   const granularity = day != null ? "day" : month != null ? "month" : "year";
-  const certainty = requiredText(raw?.[`${prefix}_certainty`], `HUMAN_AUTHORING_${prefix.toUpperCase()}_CERTAINTY_REQUIRED`);
+  const certainty = requiredText(certaintyValue, `HUMAN_AUTHORING_${prefix.toUpperCase()}_CERTAINTY_REQUIRED`);
   if (!CERTAINTIES.has(certainty)) throw new Error(`HUMAN_AUTHORING_${prefix.toUpperCase()}_CERTAINTY_INVALID`);
-  const calendar = optionalText(raw?.[`${prefix}_calendar`]) || "unspecified_historical";
+  const calendar = optionalText(calendarValue) || "unspecified_historical";
   if (!CALENDARS.has(calendar)) throw new Error(`HUMAN_AUTHORING_${prefix.toUpperCase()}_CALENDAR_INVALID`);
   return Object.freeze({ year, month, day, granularity, certainty, calendar });
 }
@@ -689,6 +700,7 @@ module.exports = Object.freeze({
   roleCodeFromLabel,
   roleCategoryForRelation,
   normalizeNamuWikiReference,
+  normalizeBoundary,
   automaticHumanRequestId,
   withResolvedHumanRequestId,
   normalizeHumanAuthoringRequest,

@@ -22,7 +22,7 @@ const vercel = JSON.parse(fs.readFileSync(new URL('../vercel.json', import.meta.
 const index = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const admin = fs.readFileSync(new URL('../admin.html', import.meta.url), 'utf8');
 
-test('Vercel exposes exactly twelve physical ATLAS API functions on Hobby', () => {
+test('Vercel exposes exactly thirteen physical ATLAS API functions on Hobby', () => {
   assert.deepEqual(apiFiles, [
     'atlas-audit-inventory.js',
     'atlas-authoring-apply.js',
@@ -33,11 +33,12 @@ test('Vercel exposes exactly twelve physical ATLAS API functions on Hobby', () =
     'atlas-mutate.js',
     'atlas-p10-revalidation-release.js',
     'atlas-read.js',
+    'atlas-runtime-compile.js',
     'atlas-session.js',
     'atlas-stage2-schema-release.js',
     'atlas-stage2-train2-release.js'
   ]);
-  assert.equal(apiFiles.length, 12);
+  assert.equal(apiFiles.length, 13);
 });
 
 test('logical Person, audit and correction surfaces consolidate onto existing physical functions', () => {
