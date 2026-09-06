@@ -28,6 +28,8 @@ node scripts/migrate-spatial-index-to-reviewed-baseline.mjs --force
 
 This is a mechanical snapshot refresh only. It must not trigger historical re-review of B46-B77.
 
+The migration helper is a cutover bootstrap tool, not a permanent authoring path. Once the terminal legacy canonical state has been absorbed and equivalence is green, the final cutover commit must remove `scripts/migrate-spatial-index-to-reviewed-baseline.mjs` and its migration-only test before merge. After that point the baseline is frozen and cannot be refreshed from hand-edited canonical data.
+
 ## New reviewed shard format
 
 Future broad geography reviews live as uniquely named files under `shards/` ending in `.bindings.json`.
@@ -92,10 +94,30 @@ node scripts/compile-spatial-bindings.mjs --check
 npm test
 ```
 
-The canonical file is a generated compatibility artifact. The independent shard files are the reviewed source payloads. This keeps current runtime consumers stable while reducing repeated canonical writes, CI cycles, and release cycles.
+The canonical file is a generated compatibility artifact. It is not an authoring source after cutover. Direct mapping edits to `atlas-polity-spatial-index.json` are superseded; reviewed mapping changes must enter through independent shards or an explicit reviewed correction mechanism and then be compiled.
+
+CI continuously proves this authority boundary by compiling the frozen baseline plus the real shard directory and requiring byte-for-byte equality with `atlas-polity-spatial-index.json`. Therefore either a shard that was not compiled or a manual canonical mapping edit fails the test suite.
+
+The independent shard files are the reviewed source payloads. This keeps current runtime consumers stable while reducing repeated canonical writes, CI cycles, and release cycles.
 
 ## B46-B77 transition rule
 
 The already READY B46-B77 payloads remain untouched and continue through the current throughput superbatch path. This structural track must not rewrite, translate, or re-review them.
 
 The cutover merge has a hard release-order dependency on the last legacy B46-B77 canonical update that the manager intends to absorb. At that boundary only, refresh the immutable migration baseline from the latest canonical index and rerun equivalence/compiler tests. No unrelated project re-audit is required.
+
+## Cutover cleanup completion gate
+
+The structural migration is not complete merely because the compiler exists. Before the cutover PR may merge, all of the following must be true in the final tree:
+
+1. the terminal legacy B46-B77 canonical state has been mechanically absorbed into `0000-migrated-baseline.index.json` without historical re-review;
+2. `compile(baseline + every real reviewed shard)` is byte-for-byte identical to `atlas-polity-spatial-index.json`;
+3. geography, subregion, and taxonomy split counts are derived from compiled data rather than hand-maintained batch constants;
+4. `atlas-polity-spatial-index.json` is treated only as generated runtime compatibility output, not as a parallel authoring source;
+5. the temporary migration refresh helper and its migration-only test are removed after the final baseline refresh, so there is no surviving path that can legitimize future hand edits by re-importing canonical output into the baseline;
+6. no persisted legacy spatial batch apply workflow/helper remains authoritative. The existing `atlas-spatial-candidate-audit.yml` and `build-spatial-polity-candidates.mjs` are read-only candidate discovery and are not legacy authoring paths;
+7. current runtime consumers continue reading the same canonical v2 index and all required CI is green.
+
+After this gate is satisfied, new broad coverage work is shard-native by default:
+
+`reviewed shard(s) -> compiler -> canonical runtime artifact`
