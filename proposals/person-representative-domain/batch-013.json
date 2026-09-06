@@ -1,0 +1,32 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-06",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "4ff8a6d700c09ba99a0a8e5e9cc65e78bbf9becb",
+  "legacy_task_key": "PERSON-DOMAIN-BATCH013-MEDIEVAL-RULERS-COMMANDERS-20260906",
+  "legacy_evidence_comment": 5556356563,
+  "policy": {"automatic_role_backfill":false,"secondary_domains":false,"decision":"one reviewed representative domain per Person; dominant historical identity governs classification and sovereign/top political authority remains governance"},
+  "entries": [
+    {"person_id":"fff7a34b-6bff-4e6e-9735-96d16a161a92","canonical_name_en":"Richard I","preferred_name_ko":"리처드 1세","representative_domain":"governance"},
+    {"person_id":"cb98f3c1-126c-4147-98b6-01044624679e","canonical_name_en":"Baldwin IV","preferred_name_ko":"보두앵 4세","representative_domain":"governance"},
+    {"person_id":"3107a58b-dc82-4942-9d1c-d1d5b0c4198b","canonical_name_en":"Ögedei Khan","preferred_name_ko":"오고타이 칸","representative_domain":"governance"},
+    {"person_id":"cc318f79-72a4-41a7-86d3-21382ac8b176","canonical_name_en":"Baybars","preferred_name_ko":"바이바르스","representative_domain":"governance"},
+    {"person_id":"11fbeb26-a0e2-5abc-b6aa-e4010ff52e62","canonical_name_en":"Hōjō Tokimune","preferred_name_ko":"호조 도키무네","representative_domain":"governance"},
+    {"person_id":"301411e9-1a12-58b5-8d65-90a81b7253c7","canonical_name_en":"Ram Khamhaeng","preferred_name_ko":"람캄행","representative_domain":"governance"},
+    {"person_id":"55f295a1-feb4-51bd-9041-0363b2c630fe","canonical_name_en":"Osman I","preferred_name_ko":"오스만 1세","representative_domain":"governance"},
+    {"person_id":"205b82a5-7368-404b-979b-eccb9a532207","canonical_name_en":"Gongmin of Goryeo","preferred_name_ko":"공민왕","representative_domain":"governance"},
+    {"person_id":"24d4d2a9-4b86-5cfb-abf3-eef6fb21f963","canonical_name_en":"Casimir III","preferred_name_ko":"카지미에시 3세","representative_domain":"governance"},
+    {"person_id":"841a5c88-cdd9-4a08-acda-051f33c80c18","canonical_name_en":"David IV","preferred_name_ko":"다비트 4세","representative_domain":"governance"},
+    {"person_id":"aa8db487-9b54-4f78-9125-bf5e030224c1","canonical_name_en":"Sigurd I","preferred_name_ko":"시구르 1세","representative_domain":"governance"},
+    {"person_id":"7c8b533a-06e3-4f31-acc6-40e4679b523b","canonical_name_en":"Matilda of Tuscany","preferred_name_ko":"토스카나의 마틸다","representative_domain":"governance"},
+    {"person_id":"2ed08b3a-35fa-4900-8bc5-f42de6306377","canonical_name_en":"Alp Arslan","preferred_name_ko":"알프 아르슬란","representative_domain":"governance"},
+    {"person_id":"c879b205-9b52-493b-b0b3-8b1149e56fdd","canonical_name_en":"William I of England","preferred_name_ko":"윌리엄 1세","representative_domain":"governance"},
+    {"person_id":"01abe414-c44f-4635-8b77-f986ba7dd5aa","canonical_name_en":"Yaroslav I","preferred_name_ko":"야로슬라프 1세","representative_domain":"governance"},
+    {"person_id":"19e941d1-a06f-5d44-9301-4a724c520e3a","canonical_name_en":"Emperor Taizu of Song","preferred_name_ko":"태조(북송)","representative_domain":"governance"},
+    {"person_id":"6767baba-82d1-5ba2-9cf3-b5143cd84010","canonical_name_en":"Cnut the Great","preferred_name_ko":"크누트 대왕","representative_domain":"governance"},
+    {"person_id":"253f8bbe-772f-545d-b3c6-a3ee0f2b9958","canonical_name_en":"Robert Guiscard","preferred_name_ko":"로베르 기스카르","representative_domain":"governance"},
+    {"person_id":"e170fae3-b8cc-4a69-9309-5c69269140fb","canonical_name_en":"Kusunoki Masashige","preferred_name_ko":"구스노키 마사시게","representative_domain":"military"},
+    {"person_id":"eee1e3e6-f474-5438-8a07-44c88027d0c7","canonical_name_en":"Köke Temür","preferred_name_ko":"코케 테무르","representative_domain":"military"}
+  ]
+}
