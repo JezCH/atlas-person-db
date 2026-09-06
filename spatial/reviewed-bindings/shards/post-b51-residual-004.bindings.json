@@ -1,0 +1,23 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "post-b51-residual-004",
+  "baseline": "artifact:9979240371@4177c0f91765ffe66bf19c18b4bbd5169157f502",
+  "reviewed_at": "2026-09-06T01:22:00Z",
+  "bindings": [
+    {
+      "polity_id": "e3da3007-529a-40ec-9934-7b70dfd11cb7",
+      "region_code": "africa",
+      "subregion_code": "nile-valley"
+    },
+    {
+      "polity_id": "6539c314-ec29-42e0-a0c2-90991fb9ffd8",
+      "region_code": "central-asia",
+      "subregion_code": "western-central-asia"
+    },
+    {
+      "polity_id": "28448862-277d-4738-9fb4-7f51a9e4c03a",
+      "region_code": "west-asia",
+      "subregion_code": "anatolia"
+    }
+  ]
+}
