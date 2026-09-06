@@ -6,6 +6,9 @@ on:
       - fix/spacetime-temporal-certainty
     paths:
       - .github/workflows/atlas-spacetime-temporal-certainty-branch-patch.yml
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: write
