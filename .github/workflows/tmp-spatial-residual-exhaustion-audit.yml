@@ -1,0 +1,38 @@
+name: Temporary Spatial Residual Exhaustion Audit
+
+on:
+  push:
+    branches:
+      - agent/spatial-residual-exhaustion-audit
+
+permissions:
+  contents: read
+  actions: read
+  issues: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compute untouched residual frontier
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/spatial-art
+          gh api repos/${GITHUB_REPOSITORY}/actions/artifacts/9979240371/zip > /tmp/spatial-art.zip
+          unzip -q /tmp/spatial-art.zip -d /tmp/spatial-art
+          gh api --paginate repos/${GITHUB_REPOSITORY}/issues/917/comments --jq '.[].body' > /tmp/issue-917-bodies.txt
+          python - <<'PY'
+          import json, pathlib, re
+          root = pathlib.Path('/tmp/spatial-art')
+          candidates = json.loads((root / 'polity-spatial-unplaced-candidates.json').read_text())
+          spatial = json.loads((root / 'atlas-polity-spatial-index.json').read_text())
+          issue_text = pathlib.Path('/tmp/issue-917-bodies.txt').read_text()
+          touched = set(re.findall(r'\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b', issue_text, re.I))
+          pf = {r.get('polity_id') for r in spatial.get('place_function_records', []) if r.get('polity_id')}
+          static = set(spatial.get('polity_geography', {}))
+          untouched = [c for c in candidates if c['polity_id'] not in touched and c['polity_id'] not in pf and c['polity_id'] not in static]
+          print(json.dumps({'candidate_count': len(candidates), 'issue_uuid_count': len(touched), 'frozen_pf_count': len(pf), 'untouched_count': len(untouched), 'untouched': untouched}, indent=2, ensure_ascii=False))
+          PY
