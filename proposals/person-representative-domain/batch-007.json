@@ -1,0 +1,35 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-06",
+  "source_surface": "/api/atlas-person-read",
+  "source_main_sha": "2a7d2195bc233e878d42cc798827042206a93f97",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "one reviewed representative domain per Person; unresolved cross-domain cases remain HOLD"
+  },
+  "entries": [
+    {"person_id":"4fa88c6e-53cc-5f79-a507-aaf9ef622c7c","canonical_name_en":"Cyrus the Great","preferred_name_ko":"키루스 대왕","representative_domain":"governance"},
+    {"person_id":"9b0e339e-27c5-5330-a2af-371a9459f426","canonical_name_en":"Darius I","preferred_name_ko":"다리우스 1세","representative_domain":"governance"},
+    {"person_id":"b38b88f4-2292-5705-9651-7c997d462a51","canonical_name_en":"Xerxes I","preferred_name_ko":"크세르크세스 1세","representative_domain":"governance"},
+    {"person_id":"727899b0-fab3-5519-8577-b91fc35dd5c1","canonical_name_en":"Pericles","preferred_name_ko":"페리클레스","representative_domain":"governance"},
+    {"person_id":"d5c962df-ae2c-4e82-bafb-550989ed44b2","canonical_name_en":"Sun Wu","preferred_name_ko":"손무","representative_domain":"military"},
+    {"person_id":"f5f06440-64dc-5b83-bf9f-8ceea93cc204","canonical_name_en":"Confucius","preferred_name_ko":"공자","representative_domain":"knowledge"},
+    {"person_id":"7c1ee280-92f3-4fe7-8e1f-cf9a4f18eca8","canonical_name_en":"Socrates","preferred_name_ko":"소크라테스","representative_domain":"knowledge"},
+    {"person_id":"798a4946-16ef-5a4b-a7bb-80934250bb90","canonical_name_en":"Plato","preferred_name_ko":"플라톤","representative_domain":"knowledge"},
+    {"person_id":"1ee551fc-6ad7-4c2f-80d4-5bbeb526132f","canonical_name_en":"Aristotle","preferred_name_ko":"아리스토텔레스","representative_domain":"knowledge"},
+    {"person_id":"ee2b07d6-f28a-4252-b437-e3e35f43755d","canonical_name_en":"Karl Marx","preferred_name_ko":"카를 마르크스","representative_domain":"knowledge"},
+    {"person_id":"6b384004-05a4-4bfd-b959-db12283fd122","canonical_name_en":"Mozi","preferred_name_ko":"묵자","representative_domain":"knowledge"},
+    {"person_id":"8e006020-b055-5d7c-8d18-2bf962a15396","canonical_name_en":"Gautama Buddha","preferred_name_ko":"석가모니","representative_domain":"religion"},
+    {"person_id":"d8281874-59eb-4507-9cff-7d665b362352","canonical_name_en":"Mahavira","preferred_name_ko":"마하비라","representative_domain":"religion"},
+    {"person_id":"d53f1105-927f-4188-8b5d-eaa1d8773691","canonical_name_en":"Thomas Aquinas","preferred_name_ko":"토마스 아퀴나스","representative_domain":"religion"},
+    {"person_id":"3c778add-f1aa-4211-9c7b-98ab20d22388","canonical_name_en":"Martin Luther","preferred_name_ko":"마르틴 루터","representative_domain":"religion"},
+    {"person_id":"e0e129b6-84fe-41f5-87c0-bfe5d1ae92f4","canonical_name_en":"James Watt","preferred_name_ko":"제임스 와트","representative_domain":"technology"},
+    {"person_id":"708ccac7-6dca-409f-8b4e-c12f598a5050","canonical_name_en":"John D. Rockefeller","preferred_name_ko":"존 데이비슨 록펠러","representative_domain":"commerce"},
+    {"person_id":"cc98bd67-4827-4dd9-89ec-40785f231da5","canonical_name_en":"Wolfgang Amadeus Mozart","preferred_name_ko":"볼프강 아마데우스 모차르트","representative_domain":"culture"},
+    {"person_id":"f363272d-fb69-47e6-8117-b3bf7d740f0b","canonical_name_en":"Ludwig van Beethoven","preferred_name_ko":"루트비히 판 베토벤","representative_domain":"culture"},
+    {"person_id":"0bc91b70-2f5f-4be4-b411-6e8903009928","canonical_name_en":"Christopher Columbus","preferred_name_ko":"크리스토퍼 콜럼버스","representative_domain":"exploration"},
+    {"person_id":"9d96d247-feeb-5069-bd11-98ea9ce1fdb7","canonical_name_en":"Zheng He","preferred_name_ko":"정화","representative_domain":"exploration"}
+  ]
+}
