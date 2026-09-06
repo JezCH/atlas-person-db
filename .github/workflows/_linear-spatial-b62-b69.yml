@@ -17,7 +17,7 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
           fetch-depth: 0
-      - name: Apply exact reviewed B62-B69 payload
+      - name: Apply reconciled reviewed B62-B69 payload
         shell: bash
         run: |
           node <<'NODE'
@@ -25,6 +25,7 @@ jobs:
           const indexPath = 'atlas-polity-spatial-index.json';
           const coveragePath = 'tests/person-spacetime-spatial-index-coverage.test.mjs';
           const taxonomyPath = 'tests/spacetime-taxonomy-migration.test.mjs';
+          const spanishEmpireId = '9e227293-7ab8-5870-b05b-0b8c715738a4';
 
           const exact = [
             ['c53bb14c-43af-4192-9be3-04f2d4330f25','americas','south-america'],
@@ -58,7 +59,6 @@ jobs:
             ['4b532503-a686-452b-ad71-ba776efe17cf','africa','east-africa-horn'],
             ['dfea8994-f42d-4b3b-99ac-e3c2b4a1cada','west-asia','arabia'],
             ['5516b403-b843-485d-8527-db48334fc169','west-asia','anatolia'],
-            ['9e227293-7ab8-5870-b05b-0b8c715738a4','europe','iberia'],
 
             ['ef2687fa-1db8-4a15-9ac0-f0bfa7880a94','americas','south-america'],
             ['684b7679-48dd-42eb-bbd9-060e9be66a7d','americas','mesoamerica'],
@@ -116,21 +116,25 @@ jobs:
             ['5b27cb25-51aa-43e3-8089-e831a97316f3','americas','north-america'],
           ];
 
-          if (exact.length !== 80 || new Set(exact.map(([id]) => id)).size !== 80) throw new Error('B62-B69 payload identity mismatch');
+          if (exact.length !== 79 || new Set(exact.map(([id]) => id)).size !== 79) throw new Error('B62-B69 reconciled payload identity mismatch');
           const index = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
           if (Object.keys(index.polity_geography).length !== 947 || Object.keys(index.polity_subregions).length !== 921) throw new Error(`unexpected baseline ${Object.keys(index.polity_geography).length}/${Object.keys(index.polity_subregions).length}`);
+          const spanishReview = (index.review_queue || []).filter((entry) => entry.polity_id === spanishEmpireId);
+          if (spanishReview.length !== 1 || spanishReview[0].reason !== 'transregional_empire_requires_activity_period_capital_review') throw new Error('Spanish Empire review_queue contract changed');
+          if (Object.hasOwn(index.polity_geography, spanishEmpireId) || Object.hasOwn(index.polity_subregions, spanishEmpireId)) throw new Error('Spanish Empire unexpectedly statically resolved');
           for (const [id, region, subregion] of exact) {
+            if ((index.review_queue || []).some((entry) => entry.polity_id === id)) throw new Error(`reconciled payload still intersects review_queue: ${id}`);
             if (Object.hasOwn(index.polity_geography, id) || Object.hasOwn(index.polity_subregions, id)) throw new Error(`payload UUID already present: ${id}`);
             index.polity_geography[id] = region;
             index.polity_subregions[id] = subregion;
           }
-          if (Object.keys(index.polity_geography).length !== 1027 || Object.keys(index.polity_subregions).length !== 1001) throw new Error('post-apply count mismatch');
+          if (Object.keys(index.polity_geography).length !== 1026 || Object.keys(index.polity_subregions).length !== 1000) throw new Error('post-apply count mismatch');
           fs.writeFileSync(indexPath, JSON.stringify(index, null, 2) + '\n');
 
           let coverage = fs.readFileSync(coveragePath, 'utf8');
           if (!coverage.includes('assert.equal(Object.keys(index.polity_geography).length, 947);') || !coverage.includes('assert.equal(Object.keys(index.polity_subregions).length, 921);')) throw new Error('coverage baseline locks missing');
-          coverage = coverage.replace('assert.equal(Object.keys(index.polity_geography).length, 947);', 'assert.equal(Object.keys(index.polity_geography).length, 1027);');
-          coverage = coverage.replace('assert.equal(Object.keys(index.polity_subregions).length, 921);', 'assert.equal(Object.keys(index.polity_subregions).length, 1001);');
+          coverage = coverage.replace('assert.equal(Object.keys(index.polity_geography).length, 947);', 'assert.equal(Object.keys(index.polity_geography).length, 1026);');
+          coverage = coverage.replace('assert.equal(Object.keys(index.polity_subregions).length, 921);', 'assert.equal(Object.keys(index.polity_subregions).length, 1000);');
           fs.writeFileSync(coveragePath, coverage);
 
           let taxonomy = fs.readFileSync(taxonomyPath, 'utf8');
@@ -143,7 +147,7 @@ jobs:
             ['  "nile-valley": 15,','  "nile-valley": 16,'],
             ['  anatolia: 9,','  anatolia: 10,'],
             ['  caucasus: 8,','  caucasus: 9,'],
-            ['assert.equal(Object.keys(index.polity_subregions).length, 921);','assert.equal(Object.keys(index.polity_subregions).length, 1001);'],
+            ['assert.equal(Object.keys(index.polity_subregions).length, 921);','assert.equal(Object.keys(index.polity_subregions).length, 1000);'],
           ];
           for (const [from, to] of replacements) {
             if (!taxonomy.includes(from)) throw new Error(`taxonomy baseline lock missing: ${from}`);
@@ -160,5 +164,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add atlas-polity-spatial-index.json tests/person-spacetime-spatial-index-coverage.test.mjs tests/spacetime-taxonomy-migration.test.mjs
           test "$(git diff --cached --name-only | wc -l)" -eq 3
-          git commit -m "[spatial] Apply reviewed B62-B69 superbatch"
+          git commit -m "[spatial] Apply reconciled B62-B69 superbatch"
           git push origin HEAD:${{ github.ref_name }}
