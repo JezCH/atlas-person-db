@@ -9,6 +9,8 @@ on:
       - 'stage2/releases/p11-semantic-v2-backfill-release.v1.json'
       - 'stage2/contracts/p11-reviewed-semantic-v2-exceptions.v1.json'
       - 'scripts/build-p11-semantic-v2-backfill-execution.mjs'
+      - 'server/atlas-correction-migrations.js'
+      - 'db/migrations/20260906_p11_reviewed_null_relation_constraint.sql'
       - '.github/workflows/atlas-p11-semantic-v2-backfill.yml'
 
 permissions:
