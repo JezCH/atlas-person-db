@@ -42,6 +42,13 @@
       "./atlas-person-spacetime-domain-colors.css?v=20260906-final-domain",
       "atlasPersonSpacetimeDomainColors"
     );
+    if (!document.querySelector('script[data-atlas-person-spacetime-label-overlap-guard="true"]')) {
+      const script = document.createElement("script");
+      script.src = "./atlas-person-spacetime-label-overlap-guard.js?v=20260906-global-live-guard";
+      script.async = true;
+      script.dataset.atlasPersonSpacetimeLabelOverlapGuard = "true";
+      document.head.append(script);
+    }
     if (!document.querySelector('script[data-atlas-person-spacetime-domain-colors="true"]')) {
       const script = document.createElement("script");
       script.src = "./atlas-person-spacetime-domain-colors.js?v=20260906-final-domain";
