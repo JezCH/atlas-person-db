@@ -1,6 +1,6 @@
 "use strict";
 
-const { readPersons, readPersonDetail } = require("./atlas-person-read-service.js");
+const { readPersons, readPersonDetail } = require("./atlas-runtime-person-read-service.js");
 const { readPersonListSemantics } = require("./atlas-person-list-semantic-service.js");
 const { requireDatabaseUrl, sendJson } = require("./atlas-normalized-read-handler.js");
 
@@ -23,21 +23,10 @@ function requestQueryValue(req, key) {
   }
 }
 
-function personIdFromRequest(req) {
-  return requestQueryValue(req, "person_id");
-}
-
-function personQueryFromRequest(req) {
-  return requestQueryValue(req, "q");
-}
-
-function namuwikiStatusFromRequest(req) {
-  return requestQueryValue(req, "namuwiki_status");
-}
-
-function listLimitFromRequest(req) {
-  return requestQueryValue(req, "limit");
-}
+function personIdFromRequest(req) { return requestQueryValue(req, "person_id"); }
+function personQueryFromRequest(req) { return requestQueryValue(req, "q"); }
+function namuwikiStatusFromRequest(req) { return requestQueryValue(req, "namuwiki_status"); }
+function listLimitFromRequest(req) { return requestQueryValue(req, "limit"); }
 
 function normalizeSearchText(value) {
   return String(value || "").normalize("NFKC").trim().toLocaleLowerCase("und").replace(/\s+/gu, " ");
@@ -48,8 +37,7 @@ function personMatchesQuery(person, query) {
   if (!needle) return true;
   const names = Array.isArray(person?.names) ? person.names.map((row) => row?.name) : [];
   const haystack = [person?.canonical_name_en, person?.preferred_name_ko, person?.display_name, ...names]
-    .map(normalizeSearchText)
-    .filter(Boolean);
+    .map(normalizeSearchText).filter(Boolean);
   return haystack.some((value) => value.includes(needle));
 }
 
@@ -87,69 +75,38 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
 
   return async function handler(req, res) {
     const method = String(req?.method || "GET").toUpperCase();
-    if (method !== "GET") {
-      sendJson(res, 405, { ok: false, error: "method not allowed" });
-      return;
-    }
+    if (method !== "GET") { sendJson(res, 405, { ok: false, error: "method not allowed" }); return; }
 
     const requestedPersonId = personIdFromRequest(req);
     if (requestedPersonId != null && !UUID_PATTERN.test(requestedPersonId)) {
-      sendJson(res, 400, {
-        ok: false,
-        code: "INVALID_PERSON_ID",
-        error: "valid person_id UUID is required"
-      });
-      return;
+      sendJson(res, 400, { ok:false, code:"INVALID_PERSON_ID", error:"valid person_id UUID is required" }); return;
     }
 
     const requestedQuery = personQueryFromRequest(req);
     if (requestedQuery === "__INVALID_MULTI__" || (requestedQuery != null && requestedQuery.length > MAX_QUERY_LENGTH)) {
-      sendJson(res, 400, {
-        ok: false,
-        code: "INVALID_PERSON_QUERY",
-        error: `q must be a single string of at most ${MAX_QUERY_LENGTH} characters`
-      });
-      return;
+      sendJson(res, 400, { ok:false, code:"INVALID_PERSON_QUERY", error:`q must be a single string of at most ${MAX_QUERY_LENGTH} characters` }); return;
     }
 
     const requestedNamuWikiStatus = namuwikiStatusFromRequest(req);
-    if (requestedNamuWikiStatus === "__INVALID_MULTI__" ||
-        (requestedNamuWikiStatus != null && !NAMUWIKI_STATUS_VALUES.includes(requestedNamuWikiStatus))) {
-      sendJson(res, 400, {
-        ok: false,
-        code: "INVALID_NAMUWIKI_STATUS",
-        error: `namuwiki_status must be one of: ${NAMUWIKI_STATUS_VALUES.join(", ")}`
-      });
-      return;
+    if (requestedNamuWikiStatus === "__INVALID_MULTI__" || (requestedNamuWikiStatus != null && !NAMUWIKI_STATUS_VALUES.includes(requestedNamuWikiStatus))) {
+      sendJson(res, 400, { ok:false, code:"INVALID_NAMUWIKI_STATUS", error:`namuwiki_status must be one of: ${NAMUWIKI_STATUS_VALUES.join(", ")}` }); return;
     }
 
     const requestedLimitValue = listLimitFromRequest(req);
     const requestedLimit = parseListLimit(requestedLimitValue);
     if (requestedLimitValue != null && requestedLimit == null) {
-      sendJson(res, 400, {
-        ok: false,
-        code: "INVALID_LIST_LIMIT",
-        error: `limit must be an integer from 1 to ${MAX_LIST_LIMIT}`
-      });
-      return;
+      sendJson(res, 400, { ok:false, code:"INVALID_LIST_LIMIT", error:`limit must be an integer from 1 to ${MAX_LIST_LIMIT}` }); return;
     }
 
     if (requestedPersonId && (requestedQuery || requestedNamuWikiStatus || requestedLimitValue != null)) {
-      sendJson(res, 400, {
-        ok: false,
-        code: "PERSON_READ_MODE_CONFLICT",
-        error: "person_id cannot be combined with q, namuwiki_status, or limit"
-      });
-      return;
+      sendJson(res, 400, { ok:false, code:"PERSON_READ_MODE_CONFLICT", error:"person_id cannot be combined with q, namuwiki_status, or limit" }); return;
     }
 
     let databaseUrl;
-    try {
-      databaseUrl = requireDatabaseUrl(env);
-    } catch (error) {
+    try { databaseUrl = requireDatabaseUrl(env); }
+    catch (error) {
       console.error("ATLAS Person read configuration error", error);
-      sendJson(res, 503, { ok: false, code: "SERVER_CONFIGURATION_ERROR", error: "Person read service is not configured" });
-      return;
+      sendJson(res, 503, { ok:false, code:"SERVER_CONFIGURATION_ERROR", error:"Person read service is not configured" }); return;
     }
 
     let client = null;
@@ -157,17 +114,8 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
       client = await clientFactory(databaseUrl);
       if (requestedPersonId) {
         const person = await readPersonDetail({ client, personId: requestedPersonId });
-        if (!person) {
-          sendJson(res, 404, { ok: false, code: "PERSON_NOT_FOUND", error: "Person not found" });
-          return;
-        }
-        sendJson(res, 200, {
-          ok: true,
-          source: "v2-person-read",
-          schema: "atlas-person-read/v1",
-          mode: "detail",
-          person
-        });
+        if (!person) { sendJson(res, 404, { ok:false, code:"PERSON_NOT_FOUND", error:"Person not found" }); return; }
+        sendJson(res, 200, { ok:true, source:"runtime-person-politics-v1", schema:"atlas-person-read/v1", mode:"detail", person });
         return;
       }
 
@@ -176,44 +124,29 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
       if (hasListFilter) {
         let filteredPersons = data.persons;
         if (requestedQuery) filteredPersons = filteredPersons.filter((person) => personMatchesQuery(person, requestedQuery));
-        if (requestedNamuWikiStatus) {
-          filteredPersons = filteredPersons.filter((person) => personMatchesNamuWikiStatus(person, requestedNamuWikiStatus));
-        }
+        if (requestedNamuWikiStatus) filteredPersons = filteredPersons.filter((person) => personMatchesNamuWikiStatus(person, requestedNamuWikiStatus));
         const matchedTotal = filteredPersons.length;
         if (requestedLimit != null) filteredPersons = filteredPersons.slice(0, requestedLimit);
         const persons = await readListSemantics({ client, persons: filteredPersons });
         sendJson(res, 200, {
-          ok: true,
-          source: "v2-person-read",
-          schema: "atlas-person-read/v1",
-          mode: "list",
-          ...data,
-          summary: filteredSummary(persons),
-          query: requestedQuery || null,
-          ...(requestedNamuWikiStatus ? { namuwiki_status: requestedNamuWikiStatus } : {}),
-          ...(requestedLimit != null ? { limit: requestedLimit, matched_total: matchedTotal } : {}),
-          persons
+          ok:true, source:"runtime-person-politics-v1", schema:"atlas-person-read/v1", mode:"list", ...data,
+          summary:filteredSummary(persons), query:requestedQuery || null,
+          ...(requestedNamuWikiStatus ? { namuwiki_status:requestedNamuWikiStatus } : {}),
+          ...(requestedLimit != null ? { limit:requestedLimit, matched_total:matchedTotal } : {}), persons
         });
         return;
       }
 
-      const persons = await readListSemantics({ client, persons: data.persons });
+      const persons = await readListSemantics({ client, persons:data.persons });
       sendJson(res, 200, {
-        ok: true,
-        source: "v2-person-read",
-        schema: "atlas-person-read/v1",
-        mode: "list",
-        ...data,
-        summary: data.summary,
-        query: null,
-        persons
+        ok:true, source:"runtime-person-politics-v1", schema:"atlas-person-read/v1", mode:"list", ...data,
+        summary:data.summary, query:null, persons
       });
     } catch (error) {
       console.error("ATLAS Person read failed", error);
       sendJson(res, client ? 500 : 503, {
-        ok: false,
-        code: client ? "PERSON_READ_FAILED" : "DATABASE_UNAVAILABLE",
-        error: client ? "Person read failed" : "database unavailable"
+        ok:false, code:client ? "PERSON_READ_FAILED" : "DATABASE_UNAVAILABLE",
+        error:client ? "Person read failed" : "database unavailable"
       });
     } finally {
       if (client && typeof client.end === "function") await client.end();
@@ -222,17 +155,7 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
 }
 
 module.exports = Object.freeze({
-  UUID_PATTERN,
-  MAX_QUERY_LENGTH,
-  MAX_LIST_LIMIT,
-  NAMUWIKI_STATUS_VALUES,
-  personIdFromRequest,
-  personQueryFromRequest,
-  namuwikiStatusFromRequest,
-  listLimitFromRequest,
-  normalizeSearchText,
-  personMatchesQuery,
-  personMatchesNamuWikiStatus,
-  parseListLimit,
-  createPersonReadHandler
+  UUID_PATTERN, MAX_QUERY_LENGTH, MAX_LIST_LIMIT, NAMUWIKI_STATUS_VALUES,
+  personIdFromRequest, personQueryFromRequest, namuwikiStatusFromRequest, listLimitFromRequest,
+  normalizeSearchText, personMatchesQuery, personMatchesNamuWikiStatus, parseListLimit, createPersonReadHandler
 });
