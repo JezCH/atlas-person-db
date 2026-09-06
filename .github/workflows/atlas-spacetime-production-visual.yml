@@ -7,18 +7,6 @@ on:
         description: Exact merged GitHub SHA expected on Production
         required: true
         type: string
-  pull_request:
-    branches: [main]
-    paths:
-      - "scripts/verify-spacetime-production-visual.mjs"
-      - "scripts/verify-spacetime-production-exact-sha.mjs"
-      - "scripts/verify-spacetime-production-domain-colors.mjs"
-      - ".github/workflows/atlas-spacetime-production-visual.yml"
-      - "tests/fixtures/spacetime-completion-contract.json"
-      - "tests/spacetime-completion-contract.test.mjs"
-      - "tests/spacetime-person-domain-colors.test.mjs"
-      - "docs/spacetime-completion-contract.md"
-      - "docs/spacetime-current-renderer-final-acceptance.md"
 
 permissions:
   contents: read
@@ -29,7 +17,7 @@ jobs:
     timeout-minutes: 10
     env:
       ATLAS_PRODUCTION_URL: https://atlas-person-db.vercel.app/#atlas-spacetime
-      ATLAS_EXPECTED_RUNTIME_SHA: ${{ github.event_name == 'workflow_dispatch' && inputs.expected_runtime_sha || 'd8e8fa3f56419223bb3a67427de9b68cb0ea10a8' }}
+      ATLAS_EXPECTED_RUNTIME_SHA: ${{ inputs.expected_runtime_sha }}
       ATLAS_VISUAL_OUT_DIR: artifacts/spacetime-visual-acceptance
     steps:
       - uses: actions/checkout@v4
@@ -50,7 +38,7 @@ jobs:
           test -n "$CHROME_BIN"
           echo "CHROME_BIN=$CHROME_BIN" >> "$GITHUB_ENV"
           "$CHROME_BIN" --version
-      - name: Run Production visual acceptance
+      - name: Run exact-SHA Production visual acceptance
         shell: bash
         run: |
           set -euo pipefail
@@ -72,13 +60,9 @@ jobs:
             sleep 0.25
           done
           curl -fsS http://127.0.0.1:9222/json/version >/dev/null
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            node scripts/verify-spacetime-production-exact-sha.mjs
-          fi
+          node scripts/verify-spacetime-production-exact-sha.mjs
           node scripts/verify-spacetime-production-visual.mjs
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            node scripts/verify-spacetime-production-domain-colors.mjs
-          fi
+          node scripts/verify-spacetime-production-domain-colors.mjs
           for report in "$ATLAS_VISUAL_OUT_DIR"/*.json; do
             echo "===== $report ====="
             cat "$report"
