@@ -1,11 +1,6 @@
 "use strict";
 
 const { createPostgresClient } = require("./atlas-postgres-client.js");
-const { MANIFEST_V1, createCorrectionManifestService: createV1Service } = require("./atlas-correction-manifest-service.js");
-const { MANIFEST_V1_1, createCorrectionManifestV11Service } = require("./atlas-correction-manifest-v1-1-service.js");
-const { MANIFEST_V1_2, createCorrectionManifestV12Service } = require("./atlas-correction-manifest-v1-2-service.js");
-const { MANIFEST_V1_3, createCorrectionManifestV13Service } = require("./atlas-correction-manifest-v1-3-service.js");
-const { MANIFEST_V1_4, createCorrectionManifestV14Service } = require("./atlas-correction-manifest-v1-4-service.js");
 const { MANIFEST_V2 } = require("./atlas-correction-manifest-v2-service.js");
 const { createCorrectionManifestV2DispatchService } = require("./atlas-correction-manifest-v2-dispatch-service.js");
 const {
@@ -23,10 +18,10 @@ const { queryFullStage2Baseline } = require("./atlas-audit-inventory-handler.js"
 const { applyCorrectionMigrations } = require("./atlas-correction-migrations.js");
 const { verifyGitHubActionsOidc } = require("./atlas-correction-github-oidc.js");
 
-const CORRECTION_PATH_RE = /^corrections\/(?:requests|intents|plans)\/[A-Za-z0-9._-]+\.json$/;
+const CORRECTION_PATH_RE = /^corrections\/(?:requests|plans)\/[A-Za-z0-9._-]+\.json$/;
 const CORRECTION_PLAN_PATH_RE = /^corrections\/plans\/[A-Za-z0-9._-]+\.json$/;
 const MODES = new Set(["snapshot", "dry_run", "apply", "full_stage2_baseline"]);
-const MANIFEST_SCHEMAS = new Set([MANIFEST_V1, MANIFEST_V1_1, MANIFEST_V1_2, MANIFEST_V1_3, MANIFEST_V1_4, MANIFEST_V2]);
+const MANIFEST_SCHEMAS = new Set([MANIFEST_V2]);
 const SNAPSHOT_MARKER = "ATLAS_CORRECTION_SNAPSHOT_V1";
 const BASELINE_MARKER = "ATLAS_CORRECTION_BASELINE_A_V2";
 
@@ -88,7 +83,7 @@ function requirePayload(body) {
     return { deploymentSha, sourcePath: null, mode, activityIds: null, manifest: null, schema: null, plan: null };
   }
 
-  const sourcePath = String(body?.manifest_path || body?.intent_path || body?.plan_path || "").trim();
+  const sourcePath = String(body?.manifest_path || body?.plan_path || "").trim();
   if (!CORRECTION_PATH_RE.test(sourcePath)) throw new Error("CORRECTION_SOURCE_PATH_NOT_ALLOWED");
 
   if (mode === "snapshot") {
@@ -111,11 +106,6 @@ function requirePayload(body) {
 }
 
 function createService(client, schema) {
-  if (schema === MANIFEST_V1) return createV1Service({ client });
-  if (schema === MANIFEST_V1_1) return createCorrectionManifestV11Service({ client });
-  if (schema === MANIFEST_V1_2) return createCorrectionManifestV12Service({ client });
-  if (schema === MANIFEST_V1_3) return createCorrectionManifestV13Service({ client });
-  if (schema === MANIFEST_V1_4) return createCorrectionManifestV14Service({ client });
   if (schema === MANIFEST_V2) return createCorrectionManifestV2DispatchService({ client });
   throw new Error("UNSUPPORTED_CORRECTION_MANIFEST_SCHEMA");
 }

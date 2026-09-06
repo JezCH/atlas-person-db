@@ -6,12 +6,11 @@ on:
       - main
     paths:
       - 'corrections/requests/*.json'
-      - 'corrections/intents/*.json'
       - 'corrections/plans/*.json'
   workflow_dispatch:
     inputs:
       manifest:
-        description: 'Path under corrections/requests/, corrections/intents/, or corrections/plans/'
+        description: 'Path under corrections/requests/ or corrections/plans/'
         required: true
         type: string
 
@@ -36,7 +35,7 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Resolve reviewed correction release plan
+      - name: Resolve reviewed v2 correction release plan
         shell: bash
         run: |
           set -euo pipefail
@@ -47,50 +46,20 @@ jobs:
             printf '%s\n' "${{ inputs.manifest }}" > /tmp/atlas-correction-candidates.txt
           else
             git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}" -- \
-              'corrections/requests/*.json' 'corrections/intents/*.json' 'corrections/plans/*.json' > /tmp/atlas-correction-candidates.txt
+              'corrections/requests/*.json' 'corrections/plans/*.json' > /tmp/atlas-correction-candidates.txt
           fi
 
           while IFS= read -r source_path; do
             [[ -n "$source_path" ]] || continue
             if [[ "$source_path" =~ ^corrections/requests/[A-Za-z0-9._-]+\.json$ ]]; then
               jq -e '
-                (.schema == "atlas-correction-manifest/v1" or .schema == "atlas-correction-manifest/v1.1" or .schema == "atlas-correction-manifest/v1.2" or .schema == "atlas-correction-manifest/v1.3" or .schema == "atlas-correction-manifest/v1.4" or .schema == "atlas-correction-manifest/v2") and
+                .schema == "atlas-correction-manifest/v2" and
                 .review_status == "approved" and
                 ((.release_order // 500) | type == "number") and
                 ((.release_order // 500) | floor == .)
               ' "$source_path" >/dev/null
               order="$(jq -er '.release_order // 500' "$source_path")"
               kind="request"
-            elif [[ "$source_path" =~ ^corrections/intents/[A-Za-z0-9._-]+\.json$ ]]; then
-              jq -e '
-                .schema == "atlas-correction-intent/v1" and
-                .review_status == "approved" and
-                (.request_id | type == "string" and length > 0) and
-                ((.release_order // 500) | type == "number") and
-                ((.release_order // 500) | floor == .) and
-                (.operation | type == "object") and
-                (.operation.type == "retire_activity" or .operation.type == "update_activity_interval" or .operation.type == "update_activity_temporal_metadata") and
-                (.operation.relationship_id | test("^[0-9a-fA-F-]{36}$")) and
-                (if .operation.type == "update_activity_interval" then
-                   (.operation.after.activity_start | type == "number") and
-                   (.operation.after.activity_end | type == "number") and
-                   (.operation.after.activity_start | floor == .) and
-                   (.operation.after.activity_end | floor == .) and
-                   (.operation.after.activity_end >= .operation.after.activity_start)
-                 elif .operation.type == "update_activity_temporal_metadata" then
-                   (.operation.after | type == "object") and
-                   ((.operation.after | keys | length) > 0) and
-                   ((.operation.after | keys) - ["activity_start_granularity","activity_start_certainty","activity_start_calendar","activity_end_granularity","activity_end_certainty","activity_end_calendar"] | length == 0) and
-                   (.operation.after | to_entries | all(
-                     if (.key | endswith("_granularity")) then (.value | IN("year","month","day"))
-                     elif (.key | endswith("_certainty")) then (.value | IN("exact","approximate","uncertain"))
-                     elif (.key | endswith("_calendar")) then (.value | IN("gregorian","julian","unspecified_historical","source_calendar"))
-                     else false end
-                   ))
-                 else true end)
-              ' "$source_path" >/dev/null
-              order="$(jq -er '.release_order // 500' "$source_path")"
-              kind="intent"
             elif [[ "$source_path" =~ ^corrections/plans/[A-Za-z0-9._-]+\.json$ ]]; then
               jq -e '
                 .schema == "atlas-stage2-correction-v2-execution-plan/v1" and
@@ -111,16 +80,14 @@ jobs:
           done < /tmp/atlas-correction-candidates.txt
 
           sort -n -k1,1 -k3,3 -o /tmp/atlas-correction-plan.tsv /tmp/atlas-correction-plan.tsv
-          [[ -s /tmp/atlas-correction-plan.tsv ]] || { echo 'No reviewed correction inputs selected.'; exit 0; }
+          [[ -s /tmp/atlas-correction-plan.tsv ]] || { echo 'No reviewed v2 correction inputs selected.'; exit 0; }
           cat /tmp/atlas-correction-plan.tsv
 
-      - name: Snapshot exact targets, dry-run, apply, then capture Baseline A v2 on the same Production SHA
+      - name: Dry-run, apply, then capture Baseline A v2 on the same Production SHA
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p /tmp/atlas-correction-evidence/snapshots \
-                   /tmp/atlas-correction-evidence/generated-manifests \
-                   /tmp/atlas-correction-evidence/responses
+          mkdir -p /tmp/atlas-correction-evidence/responses
           : > /tmp/atlas-correction-results.jsonl
 
           request_oidc() {
@@ -154,51 +121,11 @@ jobs:
           }
 
           expected_marker() {
-            case "$(jq -r '.schema' "$1")" in
-              atlas-correction-manifest/v1) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V1' ;;
-              atlas-correction-manifest/v1.1) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V1_1' ;;
-              atlas-correction-manifest/v1.2) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V1_2' ;;
-              atlas-correction-manifest/v1.3) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V1_3' ;;
-              atlas-correction-manifest/v1.4) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V1_4' ;;
-              atlas-correction-manifest/v2) printf '%s' 'ATLAS_CORRECTION_MANIFEST_V2' ;;
-              *) echo "Unsupported correction manifest schema in $1" >&2; return 1 ;;
-            esac
-          }
-
-          snapshot_intent_target() {
-            local intent="$1" output="$2" relationship_id payload
-            relationship_id="$(jq -er '.operation.relationship_id' "$intent")"
-            payload="$(jq -cn --arg deployment_sha "${GITHUB_SHA}" --arg intent_path "$intent" --arg relationship_id "$relationship_id" \
-              '{deployment_sha:$deployment_sha,intent_path:$intent_path,mode:"snapshot",activity_ids:[$relationship_id]}')"
-            post_with_deployment_retry "$payload" "$output" "correction snapshot"
-            jq -e --arg relationship_id "$relationship_id" '
-              .ok == true and .marker == "ATLAS_CORRECTION_SNAPSHOT_V1" and .mode == "snapshot" and
-              .read_only == true and .committed == false and .requested_count == 1 and .row_count == 1 and
-              (.snapshots[0].relationship.id | ascii_downcase) == ($relationship_id | ascii_downcase)
-            ' "$output" >/dev/null
-          }
-
-          synthesize_intent_manifest() {
-            local intent="$1" snapshot="$2" output="$3"
-            jq -n --slurpfile intent "$intent" --slurpfile snapshot "$snapshot" '
-              $intent[0] as $i | $snapshot[0].snapshots[0].relationship as $r |
-              def before: {person_id:($r.person_id|ascii_downcase),polity_id:($r.polity_id|ascii_downcase),role_id:(if $r.role_id==null then null else ($r.role_id|ascii_downcase) end),period_basis_id:($r.period_basis_id|ascii_downcase),activity_start:$r.activity_start,activity_end:$r.activity_end,notes:$r.notes,legacy_source_key:$r.legacy_source_key};
-              def temporal_before: {
-                id:($r.id|ascii_downcase),person_id:($r.person_id|ascii_downcase),polity_id:($r.polity_id|ascii_downcase),relation_type_id:(if $r.relation_type_id==null then null else ($r.relation_type_id|ascii_downcase) end),role_id:(if $r.role_id==null then null else ($r.role_id|ascii_downcase) end),period_basis_id:($r.period_basis_id|ascii_downcase),
-                activity_start:$r.activity_start,activity_start_month:$r.activity_start_month,activity_start_day:$r.activity_start_day,activity_start_granularity:$r.activity_start_granularity,activity_start_certainty:$r.activity_start_certainty,activity_start_calendar:$r.activity_start_calendar,
-                activity_end:$r.activity_end,activity_end_month:$r.activity_end_month,activity_end_day:$r.activity_end_day,activity_end_granularity:$r.activity_end_granularity,activity_end_certainty:$r.activity_end_certainty,activity_end_calendar:$r.activity_end_calendar,
-                confidence:$r.confidence,chronology_status:$r.chronology_status,legacy_source_key:$r.legacy_source_key,notes:$r.notes,source_locator:$r.source_locator,content_hash:$r.content_hash
-              };
-              if $i.operation.type=="update_activity_temporal_metadata" then
-                {schema:"atlas-correction-manifest/v1.2",request_id:$i.request_id,review_status:"approved",release_order:($i.release_order//500),evidence:{reviewed_intent:$i,exact_snapshot_deployment_sha:$snapshot[0].deployment_sha,exact_snapshot_source_path:$snapshot[0].source_path},operations:[{type:"update_activity_temporal_metadata",relationship_id:($i.operation.relationship_id|ascii_downcase),expected_before:temporal_before,expected_after:(temporal_before+$i.operation.after)}]}
-              else
-                {schema:"atlas-correction-manifest/v1.1",request_id:$i.request_id,review_status:"approved",release_order:($i.release_order//500),evidence:{reviewed_intent:$i,exact_snapshot_deployment_sha:$snapshot[0].deployment_sha,exact_snapshot_source_path:$snapshot[0].source_path},operations:[
-                  if $i.operation.type=="retire_activity" then {type:"retire_activity",relationship_id:($i.operation.relationship_id|ascii_downcase),expected:before}
-                  elif $i.operation.type=="update_activity_interval" then {type:"update_activity_interval",relationship_id:($i.operation.relationship_id|ascii_downcase),expected_before:before,expected_after:(before+{activity_start:$i.operation.after.activity_start,activity_end:$i.operation.after.activity_end})}
-                  else error("unsupported intent operation") end]}
-              end
-            ' > "$output"
-            jq -e '(.schema == "atlas-correction-manifest/v1.1" or .schema == "atlas-correction-manifest/v1.2") and .review_status == "approved" and (.operations | length == 1)' "$output" >/dev/null
+            if [[ "$(jq -r '.schema' "$1")" != "atlas-correction-manifest/v2" ]]; then
+              echo "Unsupported live correction manifest schema in $1" >&2
+              return 1
+            fi
+            printf '%s' 'ATLAS_CORRECTION_MANIFEST_V2'
           }
 
           call_correction() {
@@ -209,9 +136,9 @@ jobs:
               '{deployment_sha:$deployment_sha,manifest_path:$manifest_path,mode:$mode,manifest:$manifest[0]}')"
             post_with_deployment_retry "$payload" "$response" "correction ${mode}"
             if [[ "$mode" == "dry_run" ]]; then
-              jq -e --arg marker "$marker" '.ok == true and .marker == $marker and .dry_run == true and .committed == false' "$response" >/dev/null
+              jq -e --arg marker "$marker" '.ok == true and .marker == $marker and .schema == "atlas-correction-manifest/v2" and .dry_run == true and .committed == false' "$response" >/dev/null
             else
-              jq -e --arg marker "$marker" '.ok == true and .marker == $marker and .dry_run == false and .committed == true' "$response" >/dev/null
+              jq -e --arg marker "$marker" '.ok == true and .marker == $marker and .schema == "atlas-correction-manifest/v2" and .dry_run == false and .committed == true' "$response" >/dev/null
             fi
             jq -c --arg source_path "$source_path" --arg mode "$mode" '. + {workflow_source:$source_path,workflow_mode:$mode}' "$response" >> /tmp/atlas-correction-results.jsonl
           }
@@ -238,15 +165,8 @@ jobs:
               call_plan_correction "$source_path" "$source_path" apply
               continue
             fi
-
-            manifest="$source_path"
-            if [[ "$kind" == "intent" ]]; then
-              safe="$(safe_name "$source_path")"; snapshot="/tmp/atlas-correction-evidence/snapshots/${safe}.json"; manifest="/tmp/atlas-correction-evidence/generated-manifests/${safe}.manifest.json"
-              snapshot_intent_target "$source_path" "$snapshot"
-              synthesize_intent_manifest "$source_path" "$snapshot" "$manifest"
-            fi
-            call_correction "$manifest" "$source_path" dry_run
-            call_correction "$manifest" "$source_path" apply
+            call_correction "$source_path" "$source_path" dry_run
+            call_correction "$source_path" "$source_path" apply
           done < /tmp/atlas-correction-plan.tsv
 
           baseline_response="/tmp/atlas-correction-evidence/baseline-a.json"
