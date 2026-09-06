@@ -1,74 +1,156 @@
 :root {
   --atlas-person-domain-governance: #d4af37;
   --atlas-person-domain-governance-tint: rgba(212, 175, 55, 0.13);
+  --atlas-person-domain-governance-hover: rgba(212, 175, 55, 0.18);
+  --atlas-person-domain-governance-selected: rgba(212, 175, 55, 0.22);
   --atlas-person-domain-military: #b83a3a;
   --atlas-person-domain-military-tint: rgba(184, 58, 58, 0.12);
+  --atlas-person-domain-military-hover: rgba(184, 58, 58, 0.18);
+  --atlas-person-domain-military-selected: rgba(184, 58, 58, 0.22);
   --atlas-person-domain-knowledge: #3f78c5;
   --atlas-person-domain-knowledge-tint: rgba(63, 120, 197, 0.12);
+  --atlas-person-domain-knowledge-hover: rgba(63, 120, 197, 0.18);
+  --atlas-person-domain-knowledge-selected: rgba(63, 120, 197, 0.22);
   --atlas-person-domain-technology: #59636d;
   --atlas-person-domain-technology-tint: rgba(89, 99, 109, 0.13);
+  --atlas-person-domain-technology-hover: rgba(89, 99, 109, 0.18);
+  --atlas-person-domain-technology-selected: rgba(89, 99, 109, 0.22);
   --atlas-person-domain-commerce: #2e8b57;
   --atlas-person-domain-commerce-tint: rgba(46, 139, 87, 0.12);
+  --atlas-person-domain-commerce-hover: rgba(46, 139, 87, 0.18);
+  --atlas-person-domain-commerce-selected: rgba(46, 139, 87, 0.22);
   --atlas-person-domain-culture: #9a5ba5;
   --atlas-person-domain-culture-tint: rgba(154, 91, 165, 0.12);
+  --atlas-person-domain-culture-hover: rgba(154, 91, 165, 0.18);
+  --atlas-person-domain-culture-selected: rgba(154, 91, 165, 0.22);
   --atlas-person-domain-religion: #e2d7b9;
   --atlas-person-domain-religion-edge: #857856;
-  --atlas-person-domain-religion-tint: rgba(226, 215, 185, 0.25);
+  --atlas-person-domain-religion-tint: rgba(226, 215, 185, 0.30);
+  --atlas-person-domain-religion-hover: rgba(226, 215, 185, 0.38);
+  --atlas-person-domain-religion-selected: rgba(226, 215, 185, 0.46);
   --atlas-person-domain-exploration: #d96b1e;
   --atlas-person-domain-exploration-tint: rgba(217, 107, 30, 0.12);
+  --atlas-person-domain-exploration-hover: rgba(217, 107, 30, 0.18);
+  --atlas-person-domain-exploration-selected: rgba(217, 107, 30, 0.22);
 }
 
 .person-card[data-representative-domain] {
   --person-domain-color: transparent;
   --person-domain-edge: transparent;
   --person-domain-tint: transparent;
+  --person-domain-hover: transparent;
+  --person-domain-selected: transparent;
 }
 
 .person-card[data-representative-domain="governance"] {
   --person-domain-color: var(--atlas-person-domain-governance);
   --person-domain-edge: var(--atlas-person-domain-governance);
   --person-domain-tint: var(--atlas-person-domain-governance-tint);
+  --person-domain-hover: var(--atlas-person-domain-governance-hover);
+  --person-domain-selected: var(--atlas-person-domain-governance-selected);
 }
 .person-card[data-representative-domain="military"] {
   --person-domain-color: var(--atlas-person-domain-military);
   --person-domain-edge: var(--atlas-person-domain-military);
   --person-domain-tint: var(--atlas-person-domain-military-tint);
+  --person-domain-hover: var(--atlas-person-domain-military-hover);
+  --person-domain-selected: var(--atlas-person-domain-military-selected);
 }
 .person-card[data-representative-domain="knowledge"] {
   --person-domain-color: var(--atlas-person-domain-knowledge);
   --person-domain-edge: var(--atlas-person-domain-knowledge);
   --person-domain-tint: var(--atlas-person-domain-knowledge-tint);
+  --person-domain-hover: var(--atlas-person-domain-knowledge-hover);
+  --person-domain-selected: var(--atlas-person-domain-knowledge-selected);
 }
 .person-card[data-representative-domain="technology"] {
   --person-domain-color: var(--atlas-person-domain-technology);
   --person-domain-edge: var(--atlas-person-domain-technology);
   --person-domain-tint: var(--atlas-person-domain-technology-tint);
+  --person-domain-hover: var(--atlas-person-domain-technology-hover);
+  --person-domain-selected: var(--atlas-person-domain-technology-selected);
 }
 .person-card[data-representative-domain="commerce"] {
   --person-domain-color: var(--atlas-person-domain-commerce);
   --person-domain-edge: var(--atlas-person-domain-commerce);
   --person-domain-tint: var(--atlas-person-domain-commerce-tint);
+  --person-domain-hover: var(--atlas-person-domain-commerce-hover);
+  --person-domain-selected: var(--atlas-person-domain-commerce-selected);
 }
 .person-card[data-representative-domain="culture"] {
   --person-domain-color: var(--atlas-person-domain-culture);
   --person-domain-edge: var(--atlas-person-domain-culture);
   --person-domain-tint: var(--atlas-person-domain-culture-tint);
+  --person-domain-hover: var(--atlas-person-domain-culture-hover);
+  --person-domain-selected: var(--atlas-person-domain-culture-selected);
 }
 .person-card[data-representative-domain="religion"] {
   --person-domain-color: var(--atlas-person-domain-religion);
   --person-domain-edge: var(--atlas-person-domain-religion-edge);
   --person-domain-tint: var(--atlas-person-domain-religion-tint);
+  --person-domain-hover: var(--atlas-person-domain-religion-hover);
+  --person-domain-selected: var(--atlas-person-domain-religion-selected);
 }
 .person-card[data-representative-domain="exploration"] {
   --person-domain-color: var(--atlas-person-domain-exploration);
   --person-domain-edge: var(--atlas-person-domain-exploration);
   --person-domain-tint: var(--atlas-person-domain-exploration-tint);
+  --person-domain-hover: var(--atlas-person-domain-exploration-hover);
+  --person-domain-selected: var(--atlas-person-domain-exploration-selected);
 }
 
+/*
+ * Person-domain color is an identity skin, not a new badge/column.
+ * Keep the strongest color mass inside the existing sticky identity cell so the
+ * table remains quiet while repeated domain colors are readable at a glance.
+ */
 .person-card[data-representative-domain] .person-table-identity {
-  box-shadow: inset 3px 0 0 var(--person-domain-edge);
-  background: linear-gradient(90deg, var(--person-domain-tint), rgba(255,255,255,0) 82%);
-  padding-inline-start: 8px;
+  box-shadow: inset 5px 0 0 var(--person-domain-edge);
+  background: linear-gradient(
+    90deg,
+    var(--person-domain-tint) 0%,
+    var(--person-domain-tint) 42%,
+    rgba(255,255,255,0) 100%
+  );
+  padding-inline-start: 10px;
+}
+
+/* Table-view hover/selection rules are more specific than the base skin.
+ * Reassert the domain gradient at those states so interaction never erases it.
+ */
+.person-era-rows > .person-card[data-representative-domain]:hover .person-table-identity {
+  background: linear-gradient(
+    90deg,
+    var(--person-domain-hover) 0%,
+    var(--person-domain-hover) 42%,
+    rgba(255,255,255,0) 100%
+  );
+}
+
+.person-era-rows > .person-card[data-representative-domain].is-selected .person-table-identity {
+  background: linear-gradient(
+    90deg,
+    var(--person-domain-selected) 0%,
+    var(--person-domain-selected) 42%,
+    rgba(255,255,255,0) 100%
+  );
+}
+
+/* NamuWiki remains recognizable as a link, but the Person-domain underline is
+ * the stronger identity cue. Text stays neutral so eight colored link texts do
+ * not turn the table into a rainbow.
+ */
+.person-card[data-representative-domain] .person-main-name-link {
+  color: #34405f;
+  text-decoration-color: var(--person-domain-edge);
+  text-decoration-thickness: .11em;
+  text-underline-offset: .18em;
+}
+
+.person-card[data-representative-domain] .person-main-name-link:hover {
+  color: #202b40;
+  text-decoration-color: var(--person-domain-color);
+  text-decoration-thickness: .14em;
 }
 
 .person-domain-form select {
