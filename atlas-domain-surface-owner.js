@@ -25,21 +25,50 @@
     return window.ATLAS_MAIN_AUTHORITY_NAV?.getDomain?.() || normalizedHashDomain();
   }
 
-  function ensurePersonDomainAssets() {
-    if (!document.querySelector('link[data-atlas-person-domain-palette="true"]')) {
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href = "./atlas-person-domain-palette.css?v=20260905-v2";
-      link.dataset.atlasPersonDomainPalette = "true";
-      document.head.append(link);
-    }
-    if (!document.querySelector('script[data-atlas-person-domain-ui="true"]')) {
+  function ensureStylesheet(selector, href, datasetKey) {
+    let link = document.querySelector(selector);
+    if (link) return link;
+    link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = href;
+    link.dataset[datasetKey] = "true";
+    document.head.append(link);
+    return link;
+  }
+
+  function ensureSpacetimeDomainAssets() {
+    ensureStylesheet(
+      'link[data-atlas-person-spacetime-domain-colors="true"]',
+      "./atlas-person-spacetime-domain-colors.css?v=20260906-final-domain",
+      "atlasPersonSpacetimeDomainColors"
+    );
+    if (!document.querySelector('script[data-atlas-person-spacetime-domain-colors="true"]')) {
       const script = document.createElement("script");
+      script.src = "./atlas-person-spacetime-domain-colors.js?v=20260906-final-domain";
+      script.async = true;
+      script.dataset.atlasPersonSpacetimeDomainColors = "true";
+      document.head.append(script);
+    }
+  }
+
+  function ensurePersonDomainAssets() {
+    ensureStylesheet(
+      'link[data-atlas-person-domain-palette="true"]',
+      "./atlas-person-domain-palette.css?v=20260905-v2",
+      "atlasPersonDomainPalette"
+    );
+
+    let script = document.querySelector('script[data-atlas-person-domain-ui="true"]');
+    if (!script) {
+      script = document.createElement("script");
       script.src = "./atlas-person-domain-ui.js?v=20260905-v2";
       script.async = true;
       script.dataset.atlasPersonDomainUi = "true";
       document.head.append(script);
     }
+
+    if (window.ATLAS_PERSON_DOMAIN_UI) ensureSpacetimeDomainAssets();
+    else script.addEventListener("load", ensureSpacetimeDomainAssets, { once: true });
   }
 
   function ensurePersonRoot() {
