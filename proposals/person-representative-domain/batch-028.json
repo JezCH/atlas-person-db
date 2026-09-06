@@ -1,0 +1,14 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-06",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "e137b0179916fb1a1bf3303526f0a52baaf1460b",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "cancelled duplicate-only legacy batch retained as a zero-entry tombstone to preserve contiguous batch discovery"
+  },
+  "tombstone": {"legacy_task_key":"PERSON-DOMAIN-BATCH028-AUGUSTINE-RELIGION-20260906","reason":"full UUID re-audit cancelled duplicate-only payload"},
+  "entries": []
+}
