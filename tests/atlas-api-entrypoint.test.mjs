@@ -40,7 +40,7 @@ test('Vercel exposes exactly twelve physical ATLAS API functions on Hobby', () =
   assert.equal(apiFiles.length, 12);
 });
 
-test('logical Person and audit surfaces consolidate onto existing physical functions', () => {
+test('logical Person, audit and correction surfaces consolidate onto existing physical functions', () => {
   assert.deepEqual(vercel.rewrites, [
     { source: '/api/atlas-reviewed-person-merge', destination: '/api/atlas-authoring?__atlas_authoring_surface=reviewed-person-merge' },
     { source: '/api/atlas-namuwiki-link', destination: '/api/atlas-authoring?__atlas_authoring_surface=namuwiki-link' },
@@ -48,7 +48,8 @@ test('logical Person and audit surfaces consolidate onto existing physical funct
     { source: '/api/atlas-admin-inspector', destination: '/api/atlas-read?__atlas_read_surface=admin-inspector' },
     { source: '/api/atlas-admin-system-status', destination: '/api/atlas-read?__atlas_read_surface=admin-system-status' },
     { source: '/api/atlas-person-domain', destination: '/api/atlas-mutate?__atlas_mutation_surface=person-domain' },
-    { source: '/api/atlas-p11-baseline-b-capture', destination: '/api/atlas-audit-inventory?__atlas_audit_surface=p11-baseline-b-capture' }
+    { source: '/api/atlas-p11-baseline-b-capture', destination: '/api/atlas-audit-inventory?__atlas_audit_surface=p11-baseline-b-capture' },
+    { source: '/api/atlas-correction-migrations', destination: '/api/atlas-correction-apply?__atlas_correction_surface=migrations' }
   ]);
 });
 
@@ -104,9 +105,12 @@ test('server-only authoring apply endpoint delegates to its isolated handler', (
   assert.doesNotMatch(authoringApplyApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
 });
 
-test('server-only correction apply endpoint delegates to its isolated handler', () => {
+test('server-only correction apply endpoint consolidates correction apply and P11 migration handlers', () => {
   assert.match(correctionApplyApi, /atlas-correction-apply-handler\.js/);
   assert.match(correctionApplyApi, /createCorrectionApplyHandler/);
+  assert.match(correctionApplyApi, /atlas-correction-migrations-handler\.js/);
+  assert.match(correctionApplyApi, /createCorrectionMigrationsHandler/);
+  assert.match(correctionApplyApi, /surface === MIGRATIONS_SURFACE/);
   assert.doesNotMatch(correctionApplyApi, /SUPABASE_DB_URL|postgres:\/\/|postgresql:\/\//);
 });
 

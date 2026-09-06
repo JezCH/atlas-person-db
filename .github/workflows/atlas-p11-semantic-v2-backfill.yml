@@ -10,6 +10,8 @@ on:
       - 'stage2/contracts/p11-reviewed-semantic-v2-exceptions.v1.json'
       - 'scripts/build-p11-semantic-v2-backfill-execution.mjs'
       - 'server/atlas-correction-migrations.js'
+      - 'server/atlas-correction-migrations-handler.js'
+      - 'api/atlas-correction-migrations.js'
       - 'db/migrations/20260906_p11_reviewed_null_relation_constraint.sql'
       - '.github/workflows/atlas-p11-semantic-v2-backfill.yml'
 
@@ -30,6 +32,7 @@ jobs:
       AUDIT_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-audit-inventory
       AUDIT_AUDIENCE: atlas-person-db-audit-inventory
       CORRECTION_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-correction-apply
+      MIGRATION_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-correction-migrations
       CORRECTION_AUDIENCE: atlas-person-db-correction-apply
       RELEASE_FILE: stage2/releases/p11-semantic-v2-backfill-release.v1.json
       EXCEPTION_FILE: stage2/contracts/p11-reviewed-semantic-v2-exceptions.v1.json
@@ -108,6 +111,17 @@ jobs:
             echo "Production did not reach ${GITHUB_SHA} for ${label} within retry window" >&2
             return 1
           }
+
+          migration_payload_file="/tmp/atlas-p11-backfill/requests/correction-migrations.json"
+          jq -cn --arg sha "$GITHUB_SHA" '{deployment_sha:$sha}' > "$migration_payload_file"
+          call_json_with_retry "$MIGRATION_ENDPOINT" "$CORRECTION_AUDIENCE" "$migration_payload_file" /tmp/atlas-p11-backfill/responses/000-correction-migrations.json "P11 correction migrations"
+          jq -e --arg sha "$GITHUB_SHA" '
+            .ok == true and
+            .marker == "ATLAS_CORRECTION_MIGRATIONS_V1" and
+            .mode == "migrate" and
+            .committed == true and
+            .deployment_sha == $sha
+          ' /tmp/atlas-p11-backfill/responses/000-correction-migrations.json >/dev/null
 
           audit_payload_file="/tmp/atlas-p11-backfill/requests/full-stage2-baseline.json"
           jq -cn --arg sha "$GITHUB_SHA" '{deployment_sha:$sha,mode:"full_stage2_baseline"}' > "$audit_payload_file"
