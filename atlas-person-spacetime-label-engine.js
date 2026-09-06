@@ -64,10 +64,18 @@
     const measured = Number((chromeWidth + estimatedTextWidth(label?.text, options)).toFixed(6));
     return clamp(measured, minimum, maximum);
   }
+  function hasPresentationZone(label) {
+    return Number.isFinite(Number(label?.min_left)) || Number.isFinite(Number(label?.max_right));
+  }
+  function preservesFullText(label, options = {}) {
+    if (options.preserveFullTextWidth === true) return true;
+    if (options.preserveFullTextWidth === false) return false;
+    return hasPresentationZone(label);
+  }
   function normalizeLabel(label, options = {}) {
-    const width = options.preserveFullTextWidth === false
-      ? estimateWidth(label, options)
-      : naturalWidth(label, options);
+    const width = preservesFullText(label, options)
+      ? naturalWidth(label, options)
+      : estimateWidth(label, options);
     const height = Number.isFinite(Number(label?.height)) && Number(label.height) > 0 ? Number(label.height) : positive(options.labelHeight ?? DEFAULT_LABEL_HEIGHT, "labelHeight");
     const minLeft = Number.isFinite(Number(label?.min_left)) ? Number(label.min_left) : null;
     const maxRight = Number.isFinite(Number(label?.max_right)) ? Number(label.max_right) : null;
@@ -104,13 +112,19 @@
       return Math.abs(a + label.width / 2 - label.anchor_x) - Math.abs(b + label.width / 2 - label.anchor_x) || a - b;
     });
   }
+  function horizontalBorrowEnabled(label, viewportWidth, options = {}) {
+    if (options.borrowHorizontalSpace === true) return true;
+    if (options.borrowHorizontalSpace === false) return false;
+    const shift = Number(options.maxHorizontalShift);
+    return hasPresentationZone(label) && Number.isFinite(shift) && shift + EPSILON >= viewportWidth;
+  }
   function candidateLeftPositions(label, viewportWidth, options = {}) {
     const hardLeft = 0;
     const hardRight = viewportWidth;
     const preferredLeft = clamp(Number.isFinite(label.min_left) ? label.min_left : hardLeft, hardLeft, hardRight);
     const preferredRight = clamp(Number.isFinite(label.max_right) ? label.max_right : hardRight, preferredLeft, hardRight);
     const preferred = candidatePositionsForRange(label, preferredLeft, preferredRight, options);
-    if (options.borrowHorizontalSpace === false) return preferred;
+    if (!horizontalBorrowEnabled(label, viewportWidth, options)) return preferred;
     const borrowed = candidatePositionsForRange(label, hardLeft, hardRight, options);
     const seen = new Set(preferred);
     return [...preferred, ...borrowed.filter((left) => !seen.has(left))];
@@ -134,7 +148,7 @@
       const preferredLeft = clamp(Number.isFinite(label.min_left) ? label.min_left : 0, 0, viewport.width);
       const preferredRight = clamp(Number.isFinite(label.max_right) ? label.max_right : viewport.width, preferredLeft, viewport.width);
       const preferredWidth = preferredRight - preferredLeft;
-      const horizontalCapacity = options.borrowHorizontalSpace === false ? preferredWidth : viewport.width;
+      const horizontalCapacity = horizontalBorrowEnabled(label, viewport.width, options) ? viewport.width : preferredWidth;
       if (preferredTop < -EPSILON || preferredTop + label.height > viewport.height + EPSILON || label.width > horizontalCapacity + EPSILON) { deferred.push(Object.freeze({ ...label, reason: "viewport_capacity" })); continue; }
       let accepted = null;
       for (const left of candidateLeftPositions(label, viewport.width, options)) {
@@ -147,5 +161,5 @@
     }
     return Object.freeze({ placed: Object.freeze(placed), deferred: Object.freeze(deferred), viewport });
   }
-  return Object.freeze({ DEFAULT_LABEL_HEIGHT, DEFAULT_MIN_LABEL_WIDTH, DEFAULT_MAX_LABEL_WIDTH, DEFAULT_CHAR_WIDTH, DEFAULT_CJK_CHAR_WIDTH, DEFAULT_LABEL_CHROME_WIDTH, DEFAULT_LABEL_WIDTH_SAFETY, DEFAULT_HORIZONTAL_GAP, DEFAULT_MAX_HORIZONTAL_SHIFT, isWideCodePoint, estimatedTextWidth, naturalWidth, estimateWidth, normalizeLabel, rectFor, rectanglesOverlap, candidateLeftPositions, connectorFor, packLabels });
+  return Object.freeze({ DEFAULT_LABEL_HEIGHT, DEFAULT_MIN_LABEL_WIDTH, DEFAULT_MAX_LABEL_WIDTH, DEFAULT_CHAR_WIDTH, DEFAULT_CJK_CHAR_WIDTH, DEFAULT_LABEL_CHROME_WIDTH, DEFAULT_LABEL_WIDTH_SAFETY, DEFAULT_HORIZONTAL_GAP, DEFAULT_MAX_HORIZONTAL_SHIFT, isWideCodePoint, estimatedTextWidth, naturalWidth, estimateWidth, hasPresentationZone, preservesFullText, horizontalBorrowEnabled, normalizeLabel, rectFor, rectanglesOverlap, candidateLeftPositions, connectorFor, packLabels });
 });
