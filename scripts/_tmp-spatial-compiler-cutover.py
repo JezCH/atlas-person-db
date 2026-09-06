@@ -1,0 +1,104 @@
+from pathlib import Path
+import re
+import subprocess
+
+OLD = '29f3bdb86981614d0215cba4ccc89ab0e395afff'
+
+def run(*args):
+    subprocess.run(args, check=True)
+
+def capture(*args):
+    return subprocess.check_output(args, text=True)
+
+run('git', 'fetch', 'origin', OLD)
+Path('spatial/reviewed-bindings').mkdir(parents=True, exist_ok=True)
+Path('scripts/compile-spatial-bindings.mjs').write_text(capture('git', 'show', f'{OLD}:scripts/compile-spatial-bindings.mjs'))
+Path('spatial/reviewed-bindings/README.md').write_text(capture('git', 'show', f'{OLD}:spatial/reviewed-bindings/README.md'))
+Path('tests/spatial-binding-compiler.test.mjs').write_text(capture('git', 'show', f'{OLD}:tests/spatial-binding-compiler.test.mjs'))
+Path('spatial/reviewed-bindings/0000-migrated-baseline.index.json').write_text(Path('atlas-polity-spatial-index.json').read_text())
+
+coverage_path = Path('tests/person-spacetime-spatial-index-coverage.test.mjs')
+coverage = coverage_path.read_text()
+marker = 'import { readFileSync } from "node:fs";\n'
+if 'computeSpatialStats' not in coverage:
+    if marker not in coverage:
+        raise SystemExit('coverage import marker missing')
+    coverage = coverage.replace(marker, marker + 'import { computeSpatialStats } from "../scripts/compile-spatial-bindings.mjs";\n', 1)
+coverage = coverage.replace(
+    'test("spatial index v2 uses one canonical temporal polity-place-function family", () => {',
+    'test("spatial index v2 retains the canonical temporal polity-place-function contract without manual coverage locks", () => {',
+    1,
+)
+old = '  assert.equal(Object.keys(index.polity_geography).length, 1106);\n  assert.equal(Object.keys(index.polity_subregions).length, 1080);'
+new = '  const stats = computeSpatialStats(index);\n  assert.equal(stats.geography_count, Object.keys(index.polity_geography).length);\n  assert.equal(stats.subregion_count, Object.keys(index.polity_subregions).length);\n  assert.ok(stats.geography_count > 0);\n  assert.ok(stats.subregion_count > 0);\n  assert.ok(stats.subregion_count <= stats.geography_count);'
+if old not in coverage:
+    raise SystemExit('terminal coverage lock block missing')
+coverage_path.write_text(coverage.replace(old, new, 1))
+
+taxonomy_path = Path('tests/spacetime-taxonomy-migration.test.mjs')
+taxonomy = taxonomy_path.read_text()
+marker = 'import { createRequire } from "node:module";\n'
+if 'computeSpatialStats' not in taxonomy:
+    if marker not in taxonomy:
+        raise SystemExit('taxonomy import marker missing')
+    taxonomy = taxonomy.replace(marker, marker + 'import { computeSpatialStats } from "../scripts/compile-spatial-bindings.mjs";\n', 1)
+taxonomy, n1 = re.subn(r'const EXPECTED_SPLIT_COUNTS = Object\.freeze\(\{.*?\n\}\);\n\n', '', taxonomy, count=1, flags=re.S)
+taxonomy, n2 = re.subn(r'const EXPECTED_REMAPS = Object\.freeze\(\{.*?\n\}\);\n\n', '', taxonomy, count=1, flags=re.S)
+if n1 != 1 or n2 != 1:
+    raise SystemExit(f'manual lock blocks missing: split={n1} remap={n2}')
+old_block = '''  const counts = new Map();
+  for (const code of Object.values(index.polity_subregions)) counts.set(code, (counts.get(code) || 0) + 1);
+  assert.equal(Object.keys(index.polity_subregions).length, 1080);
+  for (const leaf of continuum.subregions) {
+    assert.ok((counts.get(leaf.code) || 0) > 0, leaf.code + " must remain an active reviewed leaf");
+  }'''
+new_block = '''  const stats = computeSpatialStats(index);
+  assert.equal(stats.subregion_count, Object.keys(index.polity_subregions).length);
+  for (const leaf of continuum.subregions) {
+    assert.ok((stats.subregion_counts[leaf.code] || 0) > 0, leaf.code + " must remain an active reviewed leaf");
+  }'''
+if old_block not in taxonomy:
+    raise SystemExit('taxonomy numeric count block missing')
+taxonomy = taxonomy.replace(old_block, new_block, 1)
+start = taxonomy.find('test("mixed legacy leaves are fully retired and exact reviewed polity remaps are locked", () => {')
+end = taxonomy.find('test("map-like adjacency decisions remain explicit inside each refined macroregion", () => {')
+if start < 0 or end < 0 or end <= start:
+    raise SystemExit('taxonomy remap test boundaries missing')
+replacement = '''test("mixed legacy leaves remain retired without per-batch numeric split locks", () => {
+  const values = new Set(Object.values(index.polity_subregions));
+  for (const code of LEGACY_SPLIT_CODES) assert.equal(values.has(code), false, code + " must be retired");
+
+  const knownLeaves = new Set(continuum.subregions.map((leaf) => leaf.code));
+  for (const [polityId, subregionCode] of Object.entries(index.polity_subregions)) {
+    assert.ok(knownLeaves.has(subregionCode), `${polityId}: unknown subregion ${subregionCode}`);
+    const leaf = continuum.bandForCode(subregionCode);
+    assert.equal(leaf.parent_code, index.polity_geography[polityId], `${polityId}: ${subregionCode} parent mismatch`);
+  }
+});
+
+'''
+taxonomy_path.write_text(taxonomy[:start] + replacement + taxonomy[end:])
+
+if Path('scripts/migrate-spatial-index-to-reviewed-baseline.mjs').exists() or Path('tests/spatial-baseline-migration.test.mjs').exists():
+    raise SystemExit('migration-only bootstrap unexpectedly exists on terminal main')
+legacy_workflows = list(Path('.github/workflows').glob('_linear-spatial-b*-*.yml'))
+if legacy_workflows:
+    raise SystemExit('persisted legacy apply workflow(s): ' + ', '.join(map(str, legacy_workflows)))
+
+run('node', 'scripts/compile-spatial-bindings.mjs', '--check')
+run('node', '--test', 'tests/spatial-binding-compiler.test.mjs', 'tests/person-spacetime-spatial-index-coverage.test.mjs', 'tests/spacetime-taxonomy-migration.test.mjs')
+if Path('atlas-polity-spatial-index.json').read_bytes() != Path('spatial/reviewed-bindings/0000-migrated-baseline.index.json').read_bytes():
+    raise SystemExit('baseline is not byte-identical to terminal canonical')
+
+run('git', 'config', 'user.name', 'github-actions[bot]')
+run('git', 'config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com')
+run('git', 'add', 'scripts/compile-spatial-bindings.mjs', 'spatial/reviewed-bindings/0000-migrated-baseline.index.json', 'spatial/reviewed-bindings/README.md', 'tests/spatial-binding-compiler.test.mjs', 'tests/person-spacetime-spatial-index-coverage.test.mjs', 'tests/spacetime-taxonomy-migration.test.mjs')
+for temp in [
+    'scripts/_tmp-spatial-compiler-cutover.py',
+    '.github/workflows/_linear-spatial-compiler-cutover-prep.yml',
+    '.github/workflows/_linear-spatial-compiler-cutover-v2.yml',
+]:
+    if Path(temp).exists():
+        run('git', 'rm', temp)
+run('git', 'commit', '-m', '[spatial] Rebase deterministic compiler onto terminal legacy baseline')
+run('git', 'push', 'origin', 'HEAD:linear/spatial-compiler-cutover-prep')
