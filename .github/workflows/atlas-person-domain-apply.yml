@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - '.github/workflows/atlas-person-domain-apply.yml'
+      - 'api/atlas-mutate.js'
+      - 'vercel.json'
       - 'server/atlas-github-oidc.js'
       - 'server/atlas-person-domain-github-oidc.js'
       - 'server/atlas-person-domain-handler.js'
