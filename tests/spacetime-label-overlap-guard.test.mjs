@@ -9,6 +9,12 @@ const require = createRequire(import.meta.url);
 const guard = require("../atlas-person-spacetime-label-overlap-guard.js");
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
+test("browser CSS pixel geometry is parsed as numeric world-space presentation geometry", () => {
+  assert.equal(guard.cssNumber("123.5px"), 123.5);
+  assert.equal(guard.cssNumber(" 48px "), 48);
+  assert.equal(guard.cssNumber("" , 7), 7);
+});
+
 test("live guard resolves a real box overlap by horizontal movement only", () => {
   const rows = [
     { id:"a", left:0, top:100, width:70, height:18, band_code:"band" },
