@@ -1,0 +1,164 @@
+name: Linear Spatial B54-B61 One-Shot
+
+on:
+  push:
+    branches:
+      - linear/spatial-b54-b61-superbatch
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+      - name: Apply exact reviewed B54-B61 payload
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const indexPath = 'atlas-polity-spatial-index.json';
+          const coveragePath = 'tests/person-spacetime-spatial-index-coverage.test.mjs';
+          const taxonomyPath = 'tests/spacetime-taxonomy-migration.test.mjs';
+
+          const exact = [
+            ['61114748-4013-47c9-9c50-1a814f7e54d2','europe','eastern-europe'],
+            ['f93d1a88-2225-43bf-9f7a-8722a7e49883','europe','russia-volga'],
+            ['b0f6f245-0722-4bf4-98c6-51a2bd42f42c','europe','eastern-europe'],
+            ['2c9ebf4b-5ac6-4b1f-a2ba-848c58df80c9','europe','italy'],
+            ['9cb4d640-0b98-4fc1-9365-388398a3d659','europe','balkans'],
+            ['6d89e23a-1eaf-4af3-a310-07ed03e828d6','africa','west-africa'],
+            ['29b6b4bd-f767-4995-9e36-d50ecba7db88','americas','south-america'],
+            ['6596c324-a8e1-49ab-8d1d-cd4cbdfaa634','americas','north-america'],
+            ['33077220-c088-426e-94d3-a438267df4f1','oceania','pacific-islands'],
+            ['80fe6a6d-40c1-4518-a7fc-de3dfb207c1e','americas','south-america'],
+
+            ['6343da45-3a4d-4514-a6e1-b3d222128b86','europe','northern-europe'],
+            ['66723072-bd24-4f03-ac3f-80eb968be25c','west-asia','iranian-plateau'],
+            ['a0251638-b6c8-46e1-8dea-77258580e7e9','americas','south-america'],
+            ['4bf025fe-4624-4bc8-9d7c-4ab8f5ea4117','americas','mesoamerica'],
+            ['e18e4377-85c7-4cb6-8aa3-28a7c7f3dda9','americas','north-america'],
+            ['5102be0f-78fb-44cc-be1c-fe5eccab519f','africa','southern-africa'],
+            ['515ecbf7-0c13-41c9-8dd4-1bad81d18482','africa','southern-africa'],
+            ['94ae5d33-1ba5-46f9-be5a-121b76f63a08','africa','maghreb-north-africa'],
+            ['b2a9d4a0-a2f3-402a-ba3e-f617109ac92d','africa','nile-valley'],
+            ['f7504f66-fad2-4eb8-b275-bdf0c41c6645','africa','southern-africa'],
+
+            ['58565b57-6da8-4685-a6f4-20772b920382','europe','russia-volga'],
+            ['0512000d-1a1f-424a-a4d3-26c57a6cdc9c','americas','caribbean'],
+            ['d8b6351c-fed4-4c65-96a5-cb8c37ed2b66','americas','mesoamerica'],
+            ['8250ffc9-98de-412e-8a0c-57390aa72df2','europe','balkans'],
+            ['3fb00b9a-87d8-4a5d-9282-8bc444306204','east-asia','china'],
+            ['54c16d53-573c-4b6d-ac87-639486a6262d','africa','nile-valley'],
+            ['bc522558-7594-48b4-84b6-fda85af1af9e','africa','west-africa'],
+            ['e40a7202-2036-4d7a-a31b-e88598743e61','europe','balkans'],
+            ['768950da-3df8-4041-bc5b-793e80017590','central-asia','western-central-asia'],
+            ['9498cc06-a081-4179-8f2b-b60b881dab10','europe','iberia'],
+
+            ['56465969-a227-4bab-a5e8-938262fb72fb','americas','south-america'],
+            ['8cce76aa-c73d-4521-bda0-ba576fbb2403','southeast-asia','maritime-southeast-asia'],
+            ['755e850a-3e74-43ad-927c-21153ab9a758','southeast-asia','maritime-southeast-asia'],
+            ['b72696d0-23e5-436e-a444-9fa9bc75685f','east-asia','korean-peninsula'],
+            ['93b870e9-1800-4d3e-93a2-940f77dfb268','west-asia','iranian-plateau'],
+            ['e8ab76cf-c305-48e9-a88c-cd4c167b6340','east-asia','china'],
+            ['812853fe-f16b-4e08-a2b5-9624ec8f864c','americas','north-america'],
+            ['e154c1b2-ee23-4ba7-a94f-c99940c75ca9','southeast-asia','maritime-southeast-asia'],
+            ['773aa6d1-0e3d-4dd5-95e7-1ea7ed575f3b','americas','north-america'],
+            ['c5ad30ab-f25e-4553-86b9-99be19526ac6','americas','north-america'],
+
+            ['828c4b7e-bc35-40a4-bf50-e6e6291a070f','americas','north-america'],
+            ['a053e4e2-ede9-4d60-9ff7-c2affcffdd85','americas','north-america'],
+            ['3b364410-3f80-4d8e-9c1e-14f7b30ba7da','americas','north-america'],
+            ['fd6aad9a-23ab-4bd6-83eb-5d7c312ebd7d','americas','north-america'],
+            ['486460ce-17c8-44ff-bd8b-e8fef9fe3103','americas','north-america'],
+            ['9a33b030-1db9-4d32-bdda-4f4cdeb7ce06','americas','north-america'],
+            ['acf753ff-30db-4466-8452-02d9e7bca292','americas','north-america'],
+            ['42cd2790-11ad-451e-999d-6e3c61bc2348','americas','north-america'],
+            ['f0b47b08-f534-483b-b601-c614e2ee7431','americas','north-america'],
+            ['9458cfaf-0509-4219-bb9e-e058ede93720','americas','north-america'],
+
+            ['07a42911-7d36-462d-ab84-10022f20d41f','americas','north-america'],
+            ['dba0de0b-43ad-4c41-aa1a-189e4c1a903e','americas','north-america'],
+            ['b53e20f3-8e52-480e-8910-1c4f1d8d7f29','americas','north-america'],
+            ['f5f72eb0-2b1e-4c6b-bdd3-57565b14163a','americas','north-america'],
+            ['43e0fcbe-2d74-421a-ace5-dc1c5fef3560','americas','north-america'],
+            ['45d8bf4c-a22d-404e-bf44-ef14aa72755c','americas','north-america'],
+            ['790d1841-dc64-4813-96fc-e0f78afa22b3','americas','north-america'],
+            ['72a0990d-afae-4a80-84ef-cc6eb8f4604d','americas','north-america'],
+            ['1eef7e39-3238-40d0-bd21-c92376df4fdf','americas','north-america'],
+            ['e7a760eb-a669-4ccf-bacd-f21a38776e96','americas','north-america'],
+
+            ['bae4927f-8df4-41f9-8677-e2e0d6b027bf','oceania','pacific-islands'],
+            ['93a4ab04-d73d-42c9-b493-0168a1b14a21','oceania','australasia'],
+            ['79131306-48b1-4a71-8e45-a7e26a733cb7','oceania','australasia'],
+            ['619f2c3d-ef0a-42e8-9287-0216dbf83297','oceania','pacific-islands'],
+            ['ee1a3777-153b-4a60-b720-0fb3030db7fe','oceania','pacific-islands'],
+            ['727787e4-637c-4751-84c0-6463a8c93716','americas','mesoamerica'],
+            ['0ae95b55-b343-4f4d-9b0f-87fe9c41429a','americas','south-america'],
+            ['13600a43-8d24-4f34-b2c7-46c200d3cd8e','africa','maghreb-north-africa'],
+            ['ea57a5b8-8553-40bb-b530-5eae8ab33801','africa','east-africa-horn'],
+            ['54dd3191-c2b3-4a84-9ee2-5dd2191715ea','africa','east-africa-horn'],
+
+            ['7e3a3d2a-ec89-4cbb-b504-daaa87c925f3','americas','north-america'],
+            ['c641a768-fd7f-4adc-ae56-64338921251c','americas','north-america'],
+            ['03c7195a-4853-4b78-adc3-f3cb3c74d109','americas','north-america'],
+            ['9aa5f2e7-7165-460b-bed3-363b3e59fb75','americas','north-america'],
+            ['7437f36b-6fe8-4b3a-a1e6-4e62fb407d1e','americas','north-america'],
+            ['50b250fe-e8c2-49ea-99cf-616bac080f92','americas','north-america'],
+            ['84519e07-7ff2-4a08-ad04-354849f2499d','americas','north-america'],
+            ['829719ba-5961-4fc0-a829-81acab1a3398','americas','north-america'],
+            ['c53ee1fc-faba-4c68-80b2-da2fd6b6b96e','americas','north-america'],
+            ['791ef16f-77d2-473f-b6f6-2a6a74a8fa6e','americas','north-america'],
+          ];
+
+          if (exact.length !== 80 || new Set(exact.map(([id]) => id)).size !== 80) throw new Error('B54-B61 payload identity mismatch');
+          const index = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+          if (Object.keys(index.polity_geography).length !== 867 || Object.keys(index.polity_subregions).length !== 841) {
+            throw new Error(`unexpected baseline ${Object.keys(index.polity_geography).length}/${Object.keys(index.polity_subregions).length}`);
+          }
+          for (const [id, region, subregion] of exact) {
+            if (Object.hasOwn(index.polity_geography, id) || Object.hasOwn(index.polity_subregions, id)) throw new Error(`payload UUID already present: ${id}`);
+            index.polity_geography[id] = region;
+            index.polity_subregions[id] = subregion;
+          }
+          if (Object.keys(index.polity_geography).length !== 947 || Object.keys(index.polity_subregions).length !== 921) throw new Error('post-apply count mismatch');
+          fs.writeFileSync(indexPath, JSON.stringify(index, null, 2) + '\n');
+
+          let coverage = fs.readFileSync(coveragePath, 'utf8');
+          if (!coverage.includes('assert.equal(Object.keys(index.polity_geography).length, 867);') || !coverage.includes('assert.equal(Object.keys(index.polity_subregions).length, 841);')) throw new Error('coverage baseline locks missing');
+          coverage = coverage.replace('assert.equal(Object.keys(index.polity_geography).length, 867);', 'assert.equal(Object.keys(index.polity_geography).length, 947);');
+          coverage = coverage.replace('assert.equal(Object.keys(index.polity_subregions).length, 841);', 'assert.equal(Object.keys(index.polity_subregions).length, 921);');
+          fs.writeFileSync(coveragePath, coverage);
+
+          let taxonomy = fs.readFileSync(taxonomyPath, 'utf8');
+          const replacements = [
+            ['  mesoamerica: 22,','  mesoamerica: 25,'],
+            ['  caribbean: 8,','  caribbean: 9,'],
+            ['  "eastern-europe": 14,','  "eastern-europe": 16,'],
+            ['  "russia-volga": 13,','  "russia-volga": 15,'],
+            ['  "maghreb-north-africa": 21,','  "maghreb-north-africa": 23,'],
+            ['  "nile-valley": 13,','  "nile-valley": 15,'],
+            ['assert.equal(Object.keys(index.polity_subregions).length, 841);','assert.equal(Object.keys(index.polity_subregions).length, 921);'],
+          ];
+          for (const [from, to] of replacements) {
+            if (!taxonomy.includes(from)) throw new Error(`taxonomy baseline lock missing: ${from}`);
+            taxonomy = taxonomy.replace(from, to);
+          }
+          fs.writeFileSync(taxonomyPath, taxonomy);
+          NODE
+      - name: Validate exact spatial delta
+        run: node --test tests/person-spacetime-spatial-index-coverage.test.mjs tests/spacetime-taxonomy-migration.test.mjs
+      - name: Commit exact three-file delta
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add atlas-polity-spatial-index.json tests/person-spacetime-spatial-index-coverage.test.mjs tests/spacetime-taxonomy-migration.test.mjs
+          test "$(git diff --cached --name-only | wc -l)" -eq 3
+          git commit -m "[spatial] Apply reviewed B54-B61 superbatch"
+          git push origin HEAD:${{ github.ref_name }}
