@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "post-b51-residual-002",
+  "baseline": "artifact:9979240371@4177c0f91765ffe66bf19c18b4bbd5169157f502",
+  "reviewed_at": "2026-09-06T00:45:00Z",
+  "bindings": [
+    {
+      "polity_id": "0eec74a4-a2a4-43f3-b347-54370b94da14",
+      "region_code": "south-asia",
+      "subregion_code": null
+    },
+    {
+      "polity_id": "5247c9c0-ca50-452b-9e5a-d7e5585f096d",
+      "region_code": "europe",
+      "subregion_code": null
+    },
+    {
+      "polity_id": "851be7b2-6364-42fd-ad45-ec89db553612",
+      "region_code": "south-asia",
+      "subregion_code": null
+    },
+    {
+      "polity_id": "86e4798b-85fa-4a69-838f-7b75f87bc997",
+      "region_code": "south-asia",
+      "subregion_code": null
+    },
+    {
+      "polity_id": "8d91aa0d-7a55-42d5-a2a8-919b91cfd9c3",
+      "region_code": "europe",
+      "subregion_code": null
+    },
+    {
+      "polity_id": "928ce704-e37c-42aa-8ac4-0b964b5fe732",
+      "region_code": "east-asia",
+      "subregion_code": "manchuria"
+    },
+    {
+      "polity_id": "b0cc75d1-346a-45ac-9a8d-e7155fa3dbeb",
+      "region_code": "west-asia",
+      "subregion_code": null
+    },
+    {
+      "polity_id": "cbe32fde-c91c-4071-b360-bdc77e27d47d",
+      "region_code": "europe",
+      "subregion_code": null
+    },
+    {
+      "polity_id": "d16ef45f-9721-4eaf-809f-c2ccdc499fb4",
+      "region_code": "east-asia",
+      "subregion_code": null
+    }
+  ]
+}
