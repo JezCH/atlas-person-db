@@ -14,7 +14,7 @@ select
   coalesce(rko.name, r.source_label)::text as role_display_name,
   pb.code::text as period_basis,
   pp.notes
-from atlas_v2.person_politics_v2 pp
+from atlas_v2.runtime_person_politics_v1 pp
 join atlas_v2.person_names pen
   on pen.person_id = pp.person_id
  and pen.locale = 'en'

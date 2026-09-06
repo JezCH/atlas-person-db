@@ -16,7 +16,7 @@ function responseCapture() {
   };
 }
 
-test("normalized read handler serves GET projection and closes database client", async () => {
+test("normalized read handler serves compiled Runtime projection and closes database client", async () => {
   let ended = 0;
   const client = {
     async query() {
@@ -43,7 +43,7 @@ test("normalized read handler serves GET projection and closes database client",
   assert.equal(res.statusCode, 200);
   assert.equal(res.headers["cache-control"], "no-store");
   assert.equal(body.ok, true);
-  assert.equal(body.source, "v2-direct");
+  assert.equal(body.source, "runtime-person-politics-v1");
   assert.equal(body.data.length, 1);
   assert.equal(ended, 1);
 });
