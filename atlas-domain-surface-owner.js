@@ -29,7 +29,7 @@
     if (!document.querySelector('link[data-atlas-person-domain-palette="true"]')) {
       const link = document.createElement("link");
       link.rel = "stylesheet";
-      link.href = "./atlas-person-domain-palette.css?v=20260905-v2";
+      link.href = "./atlas-person-domain-palette.css?v=20260906-contrast-v3";
       link.dataset.atlasPersonDomainPalette = "true";
       document.head.append(link);
     }
