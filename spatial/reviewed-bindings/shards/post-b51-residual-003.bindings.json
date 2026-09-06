@@ -1,0 +1,33 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "post-b51-residual-003",
+  "baseline": "artifact:9979240371@4177c0f91765ffe66bf19c18b4bbd5169157f502",
+  "reviewed_at": "2026-09-06T00:49:00Z",
+  "bindings": [
+    {
+      "polity_id": "264b069b-994f-4a2c-8af1-7331c631a376",
+      "region_code": "europe",
+      "subregion_code": null
+    },
+    {
+      "polity_id": "67ea837b-9ff6-4ade-ba49-00e73cf0b4b3",
+      "region_code": "americas",
+      "subregion_code": null
+    },
+    {
+      "polity_id": "b333c8ba-a506-4e37-aea5-deb5e9d7ff80",
+      "region_code": "americas",
+      "subregion_code": "south-america"
+    },
+    {
+      "polity_id": "c3d1b6ad-742e-4abe-8ae4-5baa21a9fc05",
+      "region_code": "europe",
+      "subregion_code": null
+    },
+    {
+      "polity_id": "d4c6c00a-5309-48b9-aaaf-80d43ca3700a",
+      "region_code": "europe",
+      "subregion_code": null
+    }
+  ]
+}
