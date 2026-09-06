@@ -1,7 +1,10 @@
 "use strict";
 
 const { createIdentityService } = require("./atlas-identity-service.js");
+const { createAuthoringObjectService } = require("./atlas-authoring-object-transaction.js");
 const { createMutationAuthorizer } = require("./atlas-session-auth.js");
+
+const AUTHORING_OBJECT_OPERATIONS = new Set(["create_source", "create_place"]);
 
 function sendJson(res, status, body) {
   res.statusCode = status;
@@ -43,7 +46,7 @@ function createIdentityHandler({ clientFactory, env = process.env, now } = {}) {
       return;
     }
 
-    const operation = String(req?.body?.operation || "").trim();
+    const operation = String(req?.body?.operation || "").trim().toLowerCase();
     const payload = req?.body?.payload;
     if (!operation || !payload || typeof payload !== "object" || Array.isArray(payload)) {
       sendJson(res, 400, { ok: false, error: "operation and object payload are required" });
@@ -53,7 +56,9 @@ function createIdentityHandler({ clientFactory, env = process.env, now } = {}) {
     let client = null;
     try {
       client = await clientFactory(connectionString);
-      const service = createIdentityService({ client });
+      const service = AUTHORING_OBJECT_OPERATIONS.has(operation)
+        ? createAuthoringObjectService({ client })
+        : createIdentityService({ client });
       const outcome = await service.mutate(operation, payload);
       sendJson(res, 200, { ok: true, outcome });
     } catch (error) {
@@ -63,8 +68,8 @@ function createIdentityHandler({ clientFactory, env = process.env, now } = {}) {
         return;
       }
       const message = error?.message || String(error);
-      const conflict = /(?:CONFLICT|COLLISION|REVIEW_REQUIRED)/.test(message);
-      const invalid = /required|UNSUPPORTED/.test(message);
+      const conflict = /(?:CONFLICT|COLLISION|AMBIGUOUS|REVIEW_REQUIRED)/.test(message);
+      const invalid = /required|UNSUPPORTED|INVALID|must be a UUID/.test(message);
       sendJson(res, conflict ? 409 : invalid ? 400 : 500, {
         ok: false,
         code: conflict ? "IDENTITY_REVIEW_REQUIRED" : invalid ? "INVALID_IDENTITY_REQUEST" : "IDENTITY_MUTATION_FAILED",
@@ -76,4 +81,4 @@ function createIdentityHandler({ clientFactory, env = process.env, now } = {}) {
   };
 }
 
-module.exports = Object.freeze({ createIdentityHandler, databaseUrl, sendJson });
+module.exports = Object.freeze({ AUTHORING_OBJECT_OPERATIONS, createIdentityHandler, databaseUrl, sendJson });
