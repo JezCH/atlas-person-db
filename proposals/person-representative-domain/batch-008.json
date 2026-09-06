@@ -1,0 +1,33 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-06",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "9651603f2fb203c9b496aff33b5a395c40a4779b",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "one reviewed representative domain per Person; scientist and engineer identities are classified by representative historical identity rather than Role automation"
+  },
+  "entries": [
+    {"person_id":"27e8ca3b-c6a6-4df8-a7ec-cf2bf8c66b38","canonical_name_en":"Al-Khwarizmi","preferred_name_ko":"알콰리즈미","representative_domain":"knowledge"},
+    {"person_id":"1aa5257a-3548-41de-b3d0-c461317f51aa","canonical_name_en":"Alan Turing","preferred_name_ko":"앨런 튜링","representative_domain":"knowledge"},
+    {"person_id":"f841000f-2bc6-41a0-9995-2dc19a30da94","canonical_name_en":"Antoine Lavoisier","preferred_name_ko":"앙투안 라부아지에","representative_domain":"knowledge"},
+    {"person_id":"bff150dc-7d25-4248-a17b-14b42e11edfd","canonical_name_en":"Archimedes","preferred_name_ko":"아르키메데스","representative_domain":"knowledge"},
+    {"person_id":"77799894-fcd0-4423-af3d-57291a806a15","canonical_name_en":"Claudius Ptolemy","preferred_name_ko":"클라우디오스 프톨레마이오스","representative_domain":"knowledge"},
+    {"person_id":"f9905d7b-48c0-4cd4-8378-c7a955859caa","canonical_name_en":"Edward Jenner","preferred_name_ko":"에드워드 제너","representative_domain":"knowledge"},
+    {"person_id":"4e9a52e5-4c23-476f-9a1e-0383e25f7702","canonical_name_en":"Ernest Rutherford","preferred_name_ko":"어니스트 러더퍼드","representative_domain":"knowledge"},
+    {"person_id":"2614127e-3fa8-421c-a1cc-59386c37fb41","canonical_name_en":"Fritz Haber","preferred_name_ko":"프리츠 하버","representative_domain":"knowledge"},
+    {"person_id":"b4acabec-5f13-4826-a291-e5b147c8e888","canonical_name_en":"Galen","preferred_name_ko":"갈레노스","representative_domain":"knowledge"},
+    {"person_id":"1535cf26-58cd-41d1-9166-ffffa8e0e3ff","canonical_name_en":"Gottfried Wilhelm Leibniz","preferred_name_ko":"고트프리트 빌헬름 라이프니츠","representative_domain":"knowledge"},
+    {"person_id":"ecede7e0-be63-4a7d-a160-bc42430eb5c1","canonical_name_en":"Gregor Mendel","preferred_name_ko":"그레고어 멘델","representative_domain":"knowledge"},
+    {"person_id":"01f38546-b212-4642-9b70-a1d903dc6937","canonical_name_en":"James Clerk Maxwell","preferred_name_ko":"제임스 클러크 맥스웰","representative_domain":"knowledge"},
+    {"person_id":"63d3df96-611d-4703-a8b6-fe0d21065387","canonical_name_en":"Johannes Kepler","preferred_name_ko":"요하네스 케플러","representative_domain":"knowledge"},
+    {"person_id":"5d2117da-787e-4852-8498-9bd129375464","canonical_name_en":"Max Planck","preferred_name_ko":"막스 플랑크","representative_domain":"knowledge"},
+    {"person_id":"c9260843-643d-4ad2-ba5b-dfed67655cfe","canonical_name_en":"Michael Faraday","preferred_name_ko":"마이클 패러데이","representative_domain":"knowledge"},
+    {"person_id":"11e18bc5-9e37-4e26-9241-5470be2921e7","canonical_name_en":"Orville Wright","preferred_name_ko":"오빌 라이트","representative_domain":"technology"},
+    {"person_id":"84939d77-7189-404b-b09d-8df8bb768607","canonical_name_en":"Sergei Korolev","preferred_name_ko":"세르게이 코롤료프","representative_domain":"technology"},
+    {"person_id":"19906b24-88bd-4358-bf72-8b245de5c495","canonical_name_en":"Tim Berners-Lee","preferred_name_ko":"팀 버너스리","representative_domain":"technology"},
+    {"person_id":"1b7a05c5-fb65-42ff-898e-cebe1c209c9c","canonical_name_en":"Wilbur Wright","preferred_name_ko":"윌버 라이트","representative_domain":"technology"}
+  ]
+}
