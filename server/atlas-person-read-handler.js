@@ -1,6 +1,6 @@
 "use strict";
 
-const { readPersons, readPersonDetail } = require("./atlas-person-read-service.js");
+const { readPersons, readPersonDetail } = require("./atlas-runtime-person-read-service.js");
 const { readPersonListSemantics } = require("./atlas-person-list-semantic-service.js");
 const { requireDatabaseUrl, sendJson } = require("./atlas-normalized-read-handler.js");
 
@@ -163,7 +163,7 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
         }
         sendJson(res, 200, {
           ok: true,
-          source: "v2-person-read",
+          source: "runtime-person-politics-v1",
           schema: "atlas-person-read/v1",
           mode: "detail",
           person
@@ -184,7 +184,7 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
         const persons = await readListSemantics({ client, persons: filteredPersons });
         sendJson(res, 200, {
           ok: true,
-          source: "v2-person-read",
+          source: "runtime-person-politics-v1",
           schema: "atlas-person-read/v1",
           mode: "list",
           ...data,
@@ -200,7 +200,7 @@ function createPersonReadHandler({ clientFactory, env = process.env, readListSem
       const persons = await readListSemantics({ client, persons: data.persons });
       sendJson(res, 200, {
         ok: true,
-        source: "v2-person-read",
+        source: "runtime-person-politics-v1",
         schema: "atlas-person-read/v1",
         mode: "list",
         ...data,
