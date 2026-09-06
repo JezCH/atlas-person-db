@@ -88,10 +88,10 @@
   }
 
   function periodLabel(activity) {
-  const temporalCertainty = window.ATLAS_PERSON_SPACETIME_TEMPORAL_CERTAINTY;
-  if (!temporalCertainty?.periodLabel) throw new Error("ATLAS_SPACETIME_TEMPORAL_CERTAINTY_RUNTIME_MISSING");
-  return temporalCertainty.periodLabel(activity, model.yearLabel);
-}
+    const temporalCertainty = window.ATLAS_PERSON_SPACETIME_TEMPORAL_CERTAINTY;
+    if (!temporalCertainty?.periodLabel) throw new Error("ATLAS_SPACETIME_TEMPORAL_CERTAINTY_RUNTIME_MISSING");
+    return temporalCertainty.periodLabel(activity, model.yearLabel);
+  }
 
   function placementBasisLabel(segment) {
     if (segment?.historical_placement_basis !== "polity_place_function") return "검토된 정치체 권역";
