@@ -131,11 +131,11 @@ async function semanticCollisions(client, row, excludeId = null) {
        and relation_type_id is not distinct from $3::uuid
        and role_id is not distinct from $4::uuid
        and period_basis_id=$5::uuid
-       and activity_start=$6
+       and activity_start is not distinct from $6::integer
        and activity_start_month is not distinct from $7::smallint
        and activity_start_day is not distinct from $8::smallint
-       and activity_start_granularity=$9
-       and activity_start_calendar=$10
+       and activity_start_granularity is not distinct from $9::text
+       and activity_start_calendar is not distinct from $10::text
        and activity_end is not distinct from $11::integer
        and activity_end_month is not distinct from $12::smallint
        and activity_end_day is not distinct from $13::smallint
