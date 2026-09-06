@@ -4,6 +4,7 @@ const { createPerson, createPolity, createRole, normalizeExact } = require("./at
 const { createStage2NativeActivityTx, loadStage2NativeActivity } = require("./atlas-stage2-native-activity-service.js");
 const { requiredUuid, historicalYear } = require("./atlas-activity-semantic-key-v2.js");
 const { manifestHash, readLedger } = require("./atlas-authoring-manifest-service.js");
+const { DOMAIN_CODES } = require("./atlas-person-domain-service.js");
 
 const { EMPTY_END, validateOngoingActivity } = require("./atlas-ongoing-activity.js");
 
@@ -28,6 +29,23 @@ function optionalText(value) {
 function requiredObject(value, code) {
   if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error(code);
   return value;
+}
+
+function hasOwn(object, key) {
+  return Boolean(object && Object.prototype.hasOwnProperty.call(object, key));
+}
+
+function normalizeRepresentativeDomainReview(person) {
+  if (!hasOwn(person, "representative_domain")) {
+    return Object.freeze({ reviewed:false, value:null });
+  }
+  if (person.representative_domain === null) {
+    return Object.freeze({ reviewed:true, value:null });
+  }
+  if (typeof person.representative_domain !== "string" || !DOMAIN_CODES.has(person.representative_domain)) {
+    throw new Error("HUMAN_AUTHORING_REPRESENTATIVE_DOMAIN_INVALID");
+  }
+  return Object.freeze({ reviewed:true, value:person.representative_domain });
 }
 
 function roleCodeFromLabel(value) {
@@ -163,6 +181,7 @@ function normalizeHumanAuthoringRequest(raw, { allowLegacyNamuWikiOmission = tru
   if (request.schema !== HUMAN_AUTHORING_SCHEMA) throw new Error("HUMAN_AUTHORING_SCHEMA_REQUIRED");
   const requestId = requiredText(request.request_id, "HUMAN_AUTHORING_REQUEST_ID_REQUIRED");
   const person = requiredObject(request.person, "HUMAN_AUTHORING_PERSON_REQUIRED");
+  const representativeDomainReview = normalizeRepresentativeDomainReview(person);
   const polity = request.polity == null ? null : requiredObject(request.polity, "HUMAN_AUTHORING_POLITY_INVALID");
   const activity = requiredObject(request.activity, "HUMAN_AUTHORING_ACTIVITY_REQUIRED");
   const relationCode = optionalText(activity.relation_type);
@@ -187,7 +206,9 @@ function normalizeHumanAuthoringRequest(raw, { allowLegacyNamuWikiOmission = tru
       display_name_ko:optionalText(person.display_name_ko),
       canonical_key:optionalText(person.canonical_key),
       person_type:optionalText(person.person_type) || "historical",
-      historicity:optionalText(person.historicity) || "historical"
+      historicity:optionalText(person.historicity) || "historical",
+      representative_domain_reviewed:representativeDomainReview.reviewed,
+      representative_domain:representativeDomainReview.value
     }),
     polity:polity == null ? null : Object.freeze({
       canonical_name_en:requiredText(polity.canonical_name_en, "HUMAN_AUTHORING_POLITY_EN_REQUIRED"),
@@ -243,6 +264,59 @@ async function resolveOrCreatePerson(client, person) {
   if (!person.display_name_ko) throw new Error("HUMAN_AUTHORING_NEW_PERSON_KO_REQUIRED");
   const created = await createPerson(client, { ...person, allow_display_name_collision:false });
   return Object.freeze({ id:String(created.id).toLowerCase(), disposition:created.replay ? "reused" : "created" });
+}
+
+async function resolveRepresentativeDomainWithinTransaction(client, { personId, reviewed, requested }) {
+  await client.query("select pg_advisory_xact_lock(hashtext($1))", [`atlas-person-domain:${personId}`]);
+  const locked = await client.query(`
+    select representative_domain
+      from atlas_v2.persons
+     where id=$1::uuid
+     for update`, [personId]);
+  if (locked.rows.length !== 1) throw new Error("HUMAN_AUTHORING_REPRESENTATIVE_DOMAIN_PERSON_NOT_FOUND");
+  const before = locked.rows[0]?.representative_domain == null ? null : String(locked.rows[0].representative_domain);
+
+  if (!reviewed) {
+    return Object.freeze({
+      representative_domain:before,
+      requested_representative_domain:null,
+      reviewed:false,
+      disposition:"legacy_omission_preserved"
+    });
+  }
+
+  if (requested == null) {
+    return Object.freeze({
+      representative_domain:before,
+      requested_representative_domain:null,
+      reviewed:true,
+      disposition:before == null ? "reviewed_unclassified" : "preserved_existing"
+    });
+  }
+
+  if (before === requested) {
+    return Object.freeze({
+      representative_domain:before,
+      requested_representative_domain:requested,
+      reviewed:true,
+      disposition:"reused"
+    });
+  }
+  if (before != null) throw new Error("HUMAN_AUTHORING_REPRESENTATIVE_DOMAIN_CONFLICT");
+
+  const updated = await client.query(`
+    update atlas_v2.persons
+       set representative_domain=$2
+     where id=$1::uuid
+     returning representative_domain`, [personId, requested]);
+  const after = updated.rows[0]?.representative_domain == null ? null : String(updated.rows[0].representative_domain);
+  if (after !== requested) throw new Error("HUMAN_AUTHORING_REPRESENTATIVE_DOMAIN_VERIFICATION_FAILED");
+  return Object.freeze({
+    representative_domain:after,
+    requested_representative_domain:requested,
+    reviewed:true,
+    disposition:"set"
+  });
 }
 
 async function resolveOrCreatePolity(client, polity) {
@@ -418,7 +492,7 @@ function activityPayload({ personId, polityId, roleId, relation, periodBasis, ac
   });
 }
 
-function buildSnapshot({ person, polity, role, relation, periodBasis, sources, activity, transport, externalReferences }) {
+function buildSnapshot({ person, personDomain, polity, role, relation, periodBasis, sources, activity, transport, externalReferences }) {
   return Object.freeze({
     version:1,
     schema:HUMAN_AUTHORING_SCHEMA,
@@ -426,7 +500,13 @@ function buildSnapshot({ person, polity, role, relation, periodBasis, sources, a
     transport:transport || null,
     external_references:externalReferences || Object.freeze({ namuwiki:null }),
     entities:Object.freeze({
-      person,
+      person:Object.freeze({
+        ...person,
+        representative_domain:personDomain.representative_domain,
+        representative_domain_requested:personDomain.requested_representative_domain,
+        representative_domain_reviewed:personDomain.reviewed,
+        representative_domain_disposition:personDomain.disposition
+      }),
       polity,
       role,
       relation_type:Object.freeze({ id:relation.id, code:relation.code }),
@@ -462,9 +542,16 @@ function outcome(requestId, replay, snapshot) {
     role_id:snapshot.entities.role.id,
     relationship_id:snapshot.entities.activity.id,
     source_ids:snapshot.entities.sources.map((source) => source.id),
+    representative_domain:snapshot.entities.person.representative_domain ?? null,
+    representative_domain_disposition:snapshot.entities.person.representative_domain_disposition ?? null,
     external_references:snapshot.external_references || Object.freeze({ namuwiki:null }),
     result:snapshot
   });
+}
+
+function requiresRepresentativeDomainReview(transport) {
+  const kind = String(transport?.kind || "");
+  return kind === "admin_session" || kind === "admin_bearer";
 }
 
 async function applyPreparedWithinTransaction(client, prepared, { transport = null, catalogCache = null, allowLegacyNamuWikiOmission = false } = {}) {
@@ -476,11 +563,19 @@ async function applyPreparedWithinTransaction(client, prepared, { transport = nu
     const snapshot = await verifyReplay(client, ledger);
     return outcome(request.requestId, true, snapshot);
   }
+  if (requiresRepresentativeDomainReview(transport) && request.person.representative_domain_reviewed !== true) {
+    throw new Error("HUMAN_AUTHORING_REPRESENTATIVE_DOMAIN_REVIEW_REQUIRED");
+  }
   const relation = request.activity.relation_type == null
     ? Object.freeze({ id:null, code:null })
     : await resolveCatalogCodeCached(client, catalogCache, { table:"person_polity_relation_types", code:request.activity.relation_type, unresolvedCode:"HUMAN_AUTHORING_RELATION_TYPE_UNRESOLVED" });
   const periodBasis = await resolveCatalogCodeCached(client, catalogCache, { table:"period_bases", code:request.activity.period_basis, unresolvedCode:"HUMAN_AUTHORING_PERIOD_BASIS_UNRESOLVED" });
   const person = await resolveOrCreatePerson(client, request.person);
+  const personDomain = await resolveRepresentativeDomainWithinTransaction(client, {
+    personId:person.id,
+    reviewed:request.person.representative_domain_reviewed === true,
+    requested:request.person.representative_domain
+  });
   const polity = request.polity == null
     ? Object.freeze({ id:null, disposition:"none" })
     : await resolveOrCreatePolity(client, request.polity);
@@ -494,7 +589,7 @@ async function applyPreparedWithinTransaction(client, prepared, { transport = nu
   const sources = await resolveOrCreateSources(client, request.requestId, request.sources);
   const payload = activityPayload({ personId:person.id, polityId:polity.id, roleId:role.id, relation, periodBasis, activity:request.activity, sources });
   const created = await createStage2NativeActivityTx(client).create(payload, { requestId:request.requestId });
-  const snapshot = buildSnapshot({ person, polity, role, relation, periodBasis, sources, activity:created, transport, externalReferences:Object.freeze({ namuwiki }) });
+  const snapshot = buildSnapshot({ person, personDomain, polity, role, relation, periodBasis, sources, activity:created, transport, externalReferences:Object.freeze({ namuwiki }) });
   await client.query(`insert into atlas_v2.authoring_manifest_runs(request_id,manifest_hash,manifest_schema,person_id,relationship_id,result_snapshot) values($1,$2,$3,$4::uuid,$5::uuid,$6::jsonb)`, [request.requestId, hash, HUMAN_AUTHORING_SCHEMA, person.id, created.id, JSON.stringify(snapshot)]);
   return outcome(request.requestId, false, snapshot);
 }
@@ -699,6 +794,7 @@ module.exports = Object.freeze({
   CALENDARS,
   roleCodeFromLabel,
   roleCategoryForRelation,
+  normalizeRepresentativeDomainReview,
   normalizeNamuWikiReference,
   normalizeBoundary,
   automaticHumanRequestId,
@@ -708,11 +804,14 @@ module.exports = Object.freeze({
   activityPayload,
   resolveCatalogCode,
   resolveOrCreatePerson,
+  resolveRepresentativeDomainWithinTransaction,
   resolveOrCreatePolity,
   resolveOrCreateRole,
   resolveOrCreateSources,
   currentNamuWikiReference,
   resolveNamuWikiReference,
+  buildSnapshot,
+  requiresRepresentativeDomainReview,
   applyPreparedWithinTransaction,
   lockRequestIds,
   createHumanAuthoringService,
