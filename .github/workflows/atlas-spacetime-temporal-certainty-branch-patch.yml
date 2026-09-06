@@ -41,10 +41,7 @@ jobs:
       - name: Verify focused regression
         run: node --test tests/atlas-person-spacetime-temporal-certainty.test.mjs
 
-      - name: Verify full suite
-        run: npm test
-
-      - name: Commit fix and remove one-shot workflow
+      - name: Persist formatting and remove one-shot workflow
         shell: bash
         run: |
           rm .github/workflows/atlas-spacetime-temporal-certainty-branch-patch.yml
@@ -54,3 +51,6 @@ jobs:
           git diff --cached --check
           git commit -m "style: normalize spacetime temporal certainty integration"
           git push origin HEAD:fix/spacetime-temporal-certainty
+
+      - name: Run full suite for evidence
+        run: npm test
