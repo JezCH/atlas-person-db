@@ -1,0 +1,15 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-06",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "e137b0179916fb1a1bf3303526f0a52baaf1460b",
+  "policy": {"automatic_role_backfill": false,"secondary_domains": false,"decision": "one reviewed representative domain per Person; sovereign ruler identity remains governance"},
+  "entries": [
+    {"person_id":"7ae7c200-ac84-5011-90b5-a08d0f9bd1eb","canonical_name_en":"Emperor Taizu of Liao","preferred_name_ko":"요 태조","representative_domain":"governance"},
+    {"person_id":"688e7025-910a-54f7-9690-33cea2ee475a","canonical_name_en":"Li Cunxu","preferred_name_ko":"이존욱","representative_domain":"governance"},
+    {"person_id":"779f4448-f43a-4e71-b4d1-660b34081f3f","canonical_name_en":"Æthelstan","preferred_name_ko":"애설스탠","representative_domain":"governance"},
+    {"person_id":"fd9ac687-a116-5575-807b-f5a6cb5ff5f0","canonical_name_en":"Emperor Taizong of Liao","preferred_name_ko":"요 태종","representative_domain":"governance"},
+    {"person_id":"2c5c4bb8-c962-43ef-81a8-c4d26896f97a","canonical_name_en":"Gwangjong of Goryeo","preferred_name_ko":"고려 광종","representative_domain":"governance"}
+  ]
+}
