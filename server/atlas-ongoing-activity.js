@@ -21,6 +21,7 @@ function validateOngoingActivity(raw, { human = false, requireProvenance = true,
   const parsed = new Date(`${asOf}T00:00:00Z`);
   if (!Number.isFinite(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== asOf || asOf > today) throw new Error("ONGOING_ACTIVITY_AS_OF_INVALID");
   const startYear = raw?.[human ? "start_year" : "activity_start"];
+  if (startYear == null || startYear === "") return true;
   const startMonth = raw?.[human ? "start_month" : "activity_start_month"];
   const startDay = raw?.[human ? "start_day" : "activity_start_day"];
   const [year, month, day] = asOf.split("-").map(Number);
