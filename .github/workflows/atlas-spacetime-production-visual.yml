@@ -1,14 +1,24 @@
 name: ATLAS Spacetime Production Visual Acceptance
 
 on:
+  workflow_dispatch:
+    inputs:
+      expected_runtime_sha:
+        description: Exact merged GitHub SHA expected on Production
+        required: true
+        type: string
   pull_request:
     branches: [main]
     paths:
       - "scripts/verify-spacetime-production-visual.mjs"
+      - "scripts/verify-spacetime-production-exact-sha.mjs"
+      - "scripts/verify-spacetime-production-domain-colors.mjs"
       - ".github/workflows/atlas-spacetime-production-visual.yml"
       - "tests/fixtures/spacetime-completion-contract.json"
       - "tests/spacetime-completion-contract.test.mjs"
+      - "tests/spacetime-person-domain-colors.test.mjs"
       - "docs/spacetime-completion-contract.md"
+      - "docs/spacetime-current-renderer-final-acceptance.md"
 
 permissions:
   contents: read
@@ -19,7 +29,7 @@ jobs:
     timeout-minutes: 10
     env:
       ATLAS_PRODUCTION_URL: https://atlas-person-db.vercel.app/#atlas-spacetime
-      ATLAS_EXPECTED_RUNTIME_SHA: d8e8fa3f56419223bb3a67427de9b68cb0ea10a8
+      ATLAS_EXPECTED_RUNTIME_SHA: ${{ github.event_name == 'workflow_dispatch' && inputs.expected_runtime_sha || 'd8e8fa3f56419223bb3a67427de9b68cb0ea10a8' }}
       ATLAS_VISUAL_OUT_DIR: artifacts/spacetime-visual-acceptance
     steps:
       - uses: actions/checkout@v4
@@ -46,7 +56,15 @@ jobs:
           set -euo pipefail
           rm -rf "$ATLAS_VISUAL_OUT_DIR"
           mkdir -p "$ATLAS_VISUAL_OUT_DIR"
-          "$CHROME_BIN"             --headless=new             --no-sandbox             --disable-gpu             --disable-dev-shm-usage             --remote-debugging-port=9222             --user-data-dir=/tmp/atlas-spacetime-visual-chrome             --window-size=1600,1000             about:blank >/tmp/atlas-spacetime-chrome.log 2>&1 &
+          "$CHROME_BIN" \
+            --headless=new \
+            --no-sandbox \
+            --disable-gpu \
+            --disable-dev-shm-usage \
+            --remote-debugging-port=9222 \
+            --user-data-dir=/tmp/atlas-spacetime-visual-chrome \
+            --window-size=1600,1000 \
+            about:blank >/tmp/atlas-spacetime-chrome.log 2>&1 &
           CHROME_PID=$!
           trap 'kill "$CHROME_PID" 2>/dev/null || true' EXIT
           for _ in $(seq 1 40); do
@@ -54,8 +72,17 @@ jobs:
             sleep 0.25
           done
           curl -fsS http://127.0.0.1:9222/json/version >/dev/null
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            node scripts/verify-spacetime-production-exact-sha.mjs
+          fi
           node scripts/verify-spacetime-production-visual.mjs
-          cat "$ATLAS_VISUAL_OUT_DIR/visual-acceptance.json"
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            node scripts/verify-spacetime-production-domain-colors.mjs
+          fi
+          for report in "$ATLAS_VISUAL_OUT_DIR"/*.json; do
+            echo "===== $report ====="
+            cat "$report"
+          done
       - name: Upload visual evidence
         if: always()
         uses: actions/upload-artifact@v4
