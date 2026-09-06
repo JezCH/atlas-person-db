@@ -1,0 +1,32 @@
+{
+  "schema":"atlas-person-representative-domain-proposal/v1",
+  "status":"reviewed",
+  "production_snapshot_date":"2026-09-06",
+  "source_surface":"/api/atlas-person-domain",
+  "source_main_sha":"4ff8a6d700c09ba99a0a8e5e9cc65e78bbf9becb",
+  "legacy_task_key":"PERSON-DOMAIN-BATCH016-LATE-MEDIEVAL-MIXED-20260906",
+  "legacy_evidence_comment":5556468340,
+  "policy":{"automatic_role_backfill":false,"secondary_domains":false,"decision":"one reviewed representative domain per Person; dominant historical identity governs classification and sovereign/top political authority remains governance"},
+  "entries":[
+    {"person_id":"9ca2fed6-3ed7-5e37-b373-c3dafe40707a","canonical_name_en":"Chen Youliang","preferred_name_ko":"진우량","representative_domain":"governance"},
+    {"person_id":"80488fd6-7072-5c89-8e7b-06ff183fd162","canonical_name_en":"Ming Yuzhen","preferred_name_ko":"명옥진","representative_domain":"governance"},
+    {"person_id":"3e0ec2d6-691c-5402-adf9-672338931420","canonical_name_en":"Hongwu Emperor","preferred_name_ko":"홍무제","representative_domain":"governance"},
+    {"person_id":"3919967f-613a-4040-8e22-0d82fcf61126","canonical_name_en":"Timur","preferred_name_ko":"티무르","representative_domain":"governance"},
+    {"person_id":"39cf8276-a1b3-547f-9ce6-5e27ebff70c3","canonical_name_en":"Jadwiga","preferred_name_ko":"야드비가","representative_domain":"governance"},
+    {"person_id":"472d03a0-3183-4d66-8855-666b680423eb","canonical_name_en":"Vytautas","preferred_name_ko":"비타우타스","representative_domain":"governance"},
+    {"person_id":"d5765513-e68f-4eda-a4ac-3c6be2665a80","canonical_name_en":"Margaret I","preferred_name_ko":"마르그레테 1세","representative_domain":"governance"},
+    {"person_id":"37634648-d825-557a-ba1f-4e2534f28fd8","canonical_name_en":"Yongle Emperor","preferred_name_ko":"영락제","representative_domain":"governance"},
+    {"person_id":"47f01f42-049b-49d9-960c-6516578dec44","canonical_name_en":"Henry V","preferred_name_ko":"헨리 5세","representative_domain":"governance"},
+    {"person_id":"6fc63517-26f8-48d6-952f-842b6b08e7af","canonical_name_en":"Moctezuma I","preferred_name_ko":"몬테수마 1세","representative_domain":"governance"},
+    {"person_id":"708f56be-dc03-5182-8ab7-c2406cdb9796","canonical_name_en":"Constantine XI","preferred_name_ko":"콘스탄티노스 11세","representative_domain":"governance"},
+    {"person_id":"4119cc86-69d6-5afe-912f-6be39332611c","canonical_name_en":"Matthias Corvinus","preferred_name_ko":"마차시 1세","representative_domain":"governance"},
+    {"person_id":"3d8a3729-3ac1-4627-9560-7ac4ed05053b","canonical_name_en":"Lorenzo de' Medici","preferred_name_ko":"로렌초 데 메디치","representative_domain":"governance"},
+    {"person_id":"eb02f6c0-14c7-59bc-8e7e-c54ef2536c9c","canonical_name_en":"Isabella I","preferred_name_ko":"이사벨 1세","representative_domain":"governance"},
+    {"person_id":"4919dfd5-9e05-48a7-861c-5d3ea0a3bb69","canonical_name_en":"Henry VII","preferred_name_ko":"헨리 7세","representative_domain":"governance"},
+    {"person_id":"6f217b91-f8e3-4ab4-932f-e72ad1eb536d","canonical_name_en":"Bertrand du Guesclin","preferred_name_ko":"베르트랑 뒤 게클랭","representative_domain":"military"},
+    {"person_id":"ade6fb59-27b4-49ee-92df-cdfaee646572","canonical_name_en":"Choe Yeong","preferred_name_ko":"최영","representative_domain":"military"},
+    {"person_id":"6ef0043a-62ab-48de-b718-4ee97fe3de57","canonical_name_en":"Jan Žižka","preferred_name_ko":"얀 지슈카","representative_domain":"military"},
+    {"person_id":"26d34228-d337-43e0-8f17-b3c9b7860e28","canonical_name_en":"Choe Museon","preferred_name_ko":"최무선","representative_domain":"technology"},
+    {"person_id":"cf713baa-a70c-519c-aa69-3926f944063c","canonical_name_en":"Henry the Navigator","preferred_name_ko":"엔히크 항해왕자","representative_domain":"exploration"}
+  ]
+}
