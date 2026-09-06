@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import {
   REVIEWED_BINDING_SHARD_SCHEMA,
   compileSpatialBindings,
@@ -40,7 +41,8 @@ test('migrated baseline is exactly equivalent to the current canonical runtime i
 });
 
 test('real reviewed shard directory validates independently of canonical release compilation', () => {
-  const shards = loadReviewedBindingShards(new URL('../spatial/reviewed-bindings/shards', import.meta.url));
+  const shardsDir = fileURLToPath(new URL('../spatial/reviewed-bindings/shards', import.meta.url));
+  const shards = loadReviewedBindingShards(shardsDir);
   const compiled = compileSpatialBindings({ baseline, shards });
   assert.ok(compiled.stats.geography_count >= Object.keys(baseline.polity_geography).length);
 });
