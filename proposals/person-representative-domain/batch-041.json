@@ -1,0 +1,11 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-06",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "e137b0179916fb1a1bf3303526f0a52baaf1460b",
+  "policy": {"automatic_role_backfill": false,"secondary_domains": false,"decision": "one reviewed representative domain per Person; de-facto top political authority remains governance"},
+  "entries": [
+    {"person_id":"8080898d-a04d-55ea-85e0-9bf9e334604d","canonical_name_en":"Enomoto Takeaki","preferred_name_ko":"에노모토 다케아키","representative_domain":"governance"}
+  ]
+}
