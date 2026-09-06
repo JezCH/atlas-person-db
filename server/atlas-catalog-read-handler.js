@@ -4,10 +4,12 @@ const { requireDatabaseUrl, sendJson } = require("./atlas-normalized-read-handle
 
 const MAX_QUERY_LENGTH = 120;
 const MAX_RESULTS = 20;
-const SUPPORTED_KINDS = Object.freeze(["polity", "role"]);
+const SUPPORTED_KINDS = Object.freeze(["polity", "role", "source", "place"]);
 
 const POLITY_LOOKUP_SQL = `
-select p.polity_type,
+select p.id::text,
+       p.canonical_key,
+       p.polity_type,
        p.historicity,
        en.name as canonical_name_en,
        ko.name as display_name_ko
@@ -28,7 +30,8 @@ select p.polity_type,
  limit $3`;
 
 const ROLE_LOOKUP_SQL = `
-select r.code,
+select r.id::text,
+       r.code,
        r.category,
        r.source_label,
        en.name as canonical_name_en,
@@ -53,6 +56,61 @@ select r.code,
           r.code
  limit $3`;
 
+const SOURCE_LOOKUP_SQL = `
+select s.id::text,
+       s.source_key,
+       s.source_type,
+       s.title,
+       s.canonical_url,
+       s.citation_text
+  from atlas_v2.sources s
+ where s.source_key ilike $1
+    or s.title ilike $1
+    or coalesce(s.canonical_url,'') ilike $1
+    or coalesce(s.citation_text,'') ilike $1
+ order by case when s.source_key ilike $2 or s.title ilike $2 or coalesce(s.canonical_url,'') ilike $2 then 0 else 1 end,
+          s.title,
+          s.id
+ limit $3`;
+
+const PLACE_LOOKUP_SQL = `
+select p.id::text,
+       p.canonical_key,
+       p.place_type,
+       p.historicity,
+       en.name as canonical_name_en,
+       ko.name as display_name_ko,
+       coalesce((
+         select jsonb_agg(
+           jsonb_build_object('source_id',ps.source_id::text,'source_locator_key',ps.source_locator_key)
+           order by ps.source_id::text,ps.source_locator_key
+         )
+           from atlas_v2.place_sources ps
+          where ps.place_id=p.id
+       ), '[]'::jsonb) as source_links
+  from atlas_v2.places p
+  left join atlas_v2.place_names en
+    on en.place_id=p.id and en.locale='en' and en.is_preferred=true
+  left join atlas_v2.place_names ko
+    on ko.place_id=p.id and ko.locale='ko' and ko.is_preferred=true
+ where p.canonical_key ilike $1
+    or exists (
+      select 1
+        from atlas_v2.place_names pn
+       where pn.place_id=p.id and pn.name ilike $1
+    )
+ order by case when p.canonical_key ilike $2 or en.name ilike $2 or ko.name ilike $2 then 0 else 1 end,
+          en.name nulls last,
+          p.id
+ limit $3`;
+
+const LOOKUP_SQL_BY_KIND = Object.freeze({
+  polity: POLITY_LOOKUP_SQL,
+  role: ROLE_LOOKUP_SQL,
+  source: SOURCE_LOOKUP_SQL,
+  place: PLACE_LOOKUP_SQL
+});
+
 function singleQueryValue(req, key) {
   const direct = req?.query?.[key];
   if (Array.isArray(direct)) return direct.length === 1 ? String(direct[0] || "").trim() : "__INVALID_MULTI__";
@@ -72,7 +130,8 @@ function singleQueryValue(req, key) {
 async function searchCatalog({ client, kind, query }) {
   const pattern = `%${query}%`;
   const exact = query;
-  const sql = kind === "polity" ? POLITY_LOOKUP_SQL : ROLE_LOOKUP_SQL;
+  const sql = LOOKUP_SQL_BY_KIND[kind];
+  if (!sql) throw new Error("INVALID_CATALOG_KIND");
   const result = await client.query(sql, [pattern, exact, MAX_RESULTS]);
   return result.rows || [];
 }
@@ -150,6 +209,9 @@ module.exports = Object.freeze({
   SUPPORTED_KINDS,
   POLITY_LOOKUP_SQL,
   ROLE_LOOKUP_SQL,
+  SOURCE_LOOKUP_SQL,
+  PLACE_LOOKUP_SQL,
+  LOOKUP_SQL_BY_KIND,
   singleQueryValue,
   searchCatalog,
   createCatalogReadHandler
