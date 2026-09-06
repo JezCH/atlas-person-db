@@ -1,0 +1,53 @@
+name: Repair Linear Spatial B62-B69 One-Shot
+
+on:
+  push:
+    branches:
+      - linear/spatial-b62-b69-superbatch
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+      - name: Add exact review-queue cleanup guard
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('.github/workflows/_linear-spatial-b62-b69.yml')
+          text = p.read_text()
+          old = """          if (Object.keys(index.polity_geography).length !== 1027 || Object.keys(index.polity_subregions).length !== 1001) throw new Error('post-apply count mismatch');
+          fs.writeFileSync(indexPath, JSON.stringify(index, null, 2) + '\\n');
+"""
+          new = """          if (Object.keys(index.polity_geography).length !== 1027 || Object.keys(index.polity_subregions).length !== 1001) throw new Error('post-apply count mismatch');
+          const payloadIds = new Set(exact.map(([id]) => id));
+          const reviewQueueBefore = Array.isArray(index.review_queue) ? index.review_queue : [];
+          const resolvedQueued = reviewQueueBefore.filter((entry) => payloadIds.has(entry?.polity_id));
+          if (resolvedQueued.length !== 1 || resolvedQueued[0]?.polity_id !== '9e227293-7ab8-5870-b05b-0b8c715738a4') {
+            throw new Error(`unexpected resolved review_queue overlap: ${resolvedQueued.map((entry) => entry?.polity_id).join(',')}`);
+          }
+          index.review_queue = reviewQueueBefore.filter((entry) => !payloadIds.has(entry?.polity_id));
+          if (index.review_queue.length !== reviewQueueBefore.length - 1) throw new Error('review_queue cleanup count mismatch');
+          fs.writeFileSync(indexPath, JSON.stringify(index, null, 2) + '\\n');
+"""
+          if old not in text:
+              raise SystemExit('target block not found exactly')
+          p.write_text(text.replace(old, new, 1))
+          PY
+      - name: Commit repaired one-shot and remove repair helper
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/workflows/_linear-spatial-b62-b69.yml
+          git rm .github/workflows/_linear-spatial-b62-b69-repair.yml
+          git commit -m "fix: retire resolved review queue entry in B62-B69 one-shot"
+          git push origin HEAD:${{ github.ref_name }}
