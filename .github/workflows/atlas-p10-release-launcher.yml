@@ -1,5 +1,5 @@
 name: ATLAS P10 Release Launcher
-# Controlled CORE closure launcher for governed P10 release and post-P10 P11 Baseline B capture.
+# Controlled CORE closure launcher for governed P10 release and post-P10 P11 Baseline B capture; final P11 current-delta checkpoint 2026-09-06.
 
 on:
   push:
