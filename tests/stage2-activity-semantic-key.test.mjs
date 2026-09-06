@@ -112,3 +112,83 @@ test('known same-calendar month/day reversal is rejected while unresolved precis
   };
   assert.doesNotThrow(() => semantics.semanticKey(mixedPrecision));
 });
+
+test('fully unresolved temporal boundaries are canonical and distinct from known and ongoing boundaries', () => {
+  const unknownStart = {
+    ...BASE,
+    activity_start: null,
+    activity_start_month: null,
+    activity_start_day: null,
+    activity_start_granularity: null,
+    activity_start_certainty: null,
+    activity_start_calendar: null
+  };
+  const unknownEnd = {
+    ...BASE,
+    activity_end: null,
+    activity_end_month: null,
+    activity_end_day: null,
+    activity_end_granularity: null,
+    activity_end_certainty: null,
+    activity_end_calendar: null
+  };
+  const ongoingEnd = { ...unknownEnd, chronology_status:'ongoing', ongoing_as_of:'2026-09-06' };
+
+  assert.match(semantics.semanticKey(unknownStart), /<UNKNOWN>/);
+  assert.match(semantics.semanticKey(unknownEnd), /<UNKNOWN>$/);
+  assert.match(semantics.semanticKey(ongoingEnd), /<ONGOING>$/);
+  assert.notEqual(semantics.semanticKey(unknownEnd), semantics.semanticKey(ongoingEnd));
+  assert.notEqual(semantics.semanticKey(unknownStart), semantics.semanticKey(BASE));
+});
+
+test('an unresolved boundary must be all-null rather than a partial tuple', () => {
+  assert.throws(
+    () => semantics.semanticKey({
+      ...BASE,
+      activity_start:null,
+      activity_start_month:null,
+      activity_start_day:null,
+      activity_start_granularity:'year',
+      activity_start_certainty:null,
+      activity_start_calendar:null
+    }),
+    /unresolved boundary must leave all boundary fields null/
+  );
+  assert.throws(
+    () => semantics.semanticKey({
+      ...BASE,
+      activity_end:null,
+      activity_end_month:null,
+      activity_end_day:null,
+      activity_end_granularity:null,
+      activity_end_certainty:'uncertain',
+      activity_end_calendar:null
+    }),
+    /unresolved boundary must leave all boundary fields null/
+  );
+});
+
+test('boundary ordering is enforced only when both endpoints are known', () => {
+  const unknownStart = {
+    ...BASE,
+    activity_start:null,
+    activity_start_month:null,
+    activity_start_day:null,
+    activity_start_granularity:null,
+    activity_start_certainty:null,
+    activity_start_calendar:null,
+    activity_end:1900
+  };
+  const unknownEnd = {
+    ...BASE,
+    activity_start:2000,
+    activity_end:null,
+    activity_end_month:null,
+    activity_end_day:null,
+    activity_end_granularity:null,
+    activity_end_certainty:null,
+    activity_end_calendar:null
+  };
+  assert.doesNotThrow(() => semantics.semanticKey(unknownStart));
+  assert.doesNotThrow(() => semantics.semanticKey(unknownEnd));
+});
