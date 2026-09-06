@@ -23,7 +23,8 @@ const expectedAuthoringMigrations = [
   '20260902_ongoing_activity_terms.sql',
   '20260904_person_representative_domains.sql',
   '20260905_person_representative_domain_standard_v1.sql',
-  '20260906_p13a_temporal_unknown_boundaries.sql'
+  '20260906_p13a_temporal_unknown_boundaries.sql',
+  '20260906_p13_source_place_objects.sql'
 ];
 
 const expectedCorrectionMigrations = [
@@ -195,6 +196,20 @@ try {
      where schemaname='atlas_v2' and indexname='person_profile_mutation_audits_person_idx'`);
   same(profileAuditIndex.rows.map((row) => row.indexname), ['person_profile_mutation_audits_person_idx'], 'person profile audit index');
 
+  const placeTables = await client.query(`
+    select table_name
+      from information_schema.tables
+     where table_schema='atlas_v2'
+       and table_name in ('places','place_names','place_sources')
+     order by table_name`);
+  same(placeTables.rows.map((row) => row.table_name), ['place_names','place_sources','places'], 'P13 Place authoring tables');
+  const placeSourceDeleteRule = await client.query(`
+    select rc.delete_rule
+      from information_schema.referential_constraints rc
+     where rc.constraint_schema='atlas_v2'
+       and rc.constraint_name='place_sources_source_id_fkey'`);
+  same(placeSourceDeleteRule.rows.map((row) => row.delete_rule), ['RESTRICT'], 'P13 Source provenance delete rule');
+
   const firstCorrectionReplay = await applyCorrectionMigrations(client);
   const secondCorrectionReplay = await applyCorrectionMigrations(client);
   assertCorrectionMigrationRegistry(firstCorrectionReplay, 'first correction replay');
@@ -225,6 +240,8 @@ try {
     authoring_migrations: firstAuthoringReplay.applied.length,
     authoring_migration_replay: true,
     person_profile_authoring_tables: profileTables.rows.length,
+    p13_place_authoring_tables: placeTables.rows.length,
+    p13_source_provenance_restrict: true,
     correction_migrations: firstCorrectionReplay.applied.length,
     correction_migration_replay: true,
     correction_manifest_schemas: ['atlas-correction-manifest/v1','atlas-correction-manifest/v1.1','atlas-correction-manifest/v1.2','atlas-correction-manifest/v1.3','atlas-correction-manifest/v2'],
