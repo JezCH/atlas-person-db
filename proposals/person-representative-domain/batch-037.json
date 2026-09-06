@@ -1,0 +1,13 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-06",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "e137b0179916fb1a1bf3303526f0a52baaf1460b",
+  "policy": {"automatic_role_backfill": false,"secondary_domains": false,"decision": "one reviewed representative domain per Person; sovereign ruler identity remains governance"},
+  "entries": [
+    {"person_id":"348175fe-fdc0-51dd-8c07-f0c6dce5a78a","canonical_name_en":"Li Siyuan","preferred_name_ko":"이사원","representative_domain":"governance"},
+    {"person_id":"e6487f0c-c9e2-52f2-adfa-23a08eed96f2","canonical_name_en":"Guo Wei","preferred_name_ko":"곽위","representative_domain":"governance"},
+    {"person_id":"472df92e-5a78-5767-acb5-bd4ec1708433","canonical_name_en":"Emperor Jingzong of Western Xia","preferred_name_ko":"경종(서하)","representative_domain":"governance"}
+  ]
+}
