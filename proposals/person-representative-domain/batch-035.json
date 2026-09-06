@@ -1,0 +1,14 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-06",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "e137b0179916fb1a1bf3303526f0a52baaf1460b",
+  "policy": {"automatic_role_backfill": false,"secondary_domains": false,"decision": "one reviewed representative domain per Person; sovereign/top executive authority remains governance while defining non-sovereign command remains military"},
+  "entries": [
+    {"person_id":"bcafeb78-74ab-4101-8f2c-56bde95d165e","canonical_name_en":"Malcolm Turnbull","preferred_name_ko":"맬컴 턴불","representative_domain":"governance"},
+    {"person_id":"850aa1f8-9225-55d8-b71e-0995a0c74a8b","canonical_name_en":"Mansa Musa","preferred_name_ko":"만사 무사","representative_domain":"governance"},
+    {"person_id":"4d41c520-366f-4c3c-a8d7-6a5800b9fe49","canonical_name_en":"Majorian","preferred_name_ko":"마요리아누스","representative_domain":"governance"},
+    {"person_id":"b146643c-5e7b-483f-a992-4732e84de643","canonical_name_en":"Gaius Marius","preferred_name_ko":"가이우스 마리우스","representative_domain":"military"}
+  ]
+}
