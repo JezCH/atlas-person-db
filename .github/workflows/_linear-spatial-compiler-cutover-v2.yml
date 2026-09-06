@@ -1,0 +1,20 @@
+name: Linear Spatial Compiler Cutover V2
+on:
+  push:
+    branches:
+      - linear/spatial-compiler-cutover-prep
+permissions:
+  contents: write
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: linear/spatial-compiler-cutover-prep
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare and validate cutover
+        run: python scripts/_tmp-spatial-compiler-cutover.py
