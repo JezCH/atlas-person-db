@@ -2,22 +2,22 @@
   "schema": "atlas-reviewed-spatial-bindings/v1",
   "shard_id": "post-b51-residual-004",
   "baseline": "artifact:9979240371@4177c0f91765ffe66bf19c18b4bbd5169157f502",
-  "reviewed_at": "2026-09-06T01:22:00Z",
+  "reviewed_at": "2026-09-06T01:24:00Z",
   "bindings": [
     {
-      "polity_id": "e3da3007-529a-40ec-9934-7b70dfd11cb7",
-      "region_code": "africa",
-      "subregion_code": "nile-valley"
+      "polity_id": "b8dc3471-f3d0-41ad-ade9-748a90c1056e",
+      "region_code": "europe",
+      "subregion_code": "britain-ireland"
     },
     {
-      "polity_id": "6539c314-ec29-42e0-a0c2-90991fb9ffd8",
-      "region_code": "central-asia",
-      "subregion_code": "western-central-asia"
+      "polity_id": "d1a74157-2c32-4a5d-8c67-955bed1dda68",
+      "region_code": "europe",
+      "subregion_code": "eastern-europe"
     },
     {
-      "polity_id": "28448862-277d-4738-9fb4-7f51a9e4c03a",
-      "region_code": "west-asia",
-      "subregion_code": "anatolia"
+      "polity_id": "1ae74846-2a8c-4c45-af6c-8b426cb09279",
+      "region_code": "europe",
+      "subregion_code": "britain-ireland"
     }
   ]
 }
