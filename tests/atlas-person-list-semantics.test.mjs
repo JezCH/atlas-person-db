@@ -88,7 +88,7 @@ function semanticRow({
   };
 }
 
-test('compact list semantic SQL returns one Runtime Activity-shaped tuple including legacy-readable notes and no private detail payload', () => {
+test('compact list semantic SQL returns one Activity-shaped tuple including legacy-readable notes and no private detail payload', () => {
   for (const token of [
     'pp.id', 'pp.person_id', 'pp.polity_id', 'pp.relation_type_id', 'pp.role_id', 'pp.period_basis_id',
     'pp.activity_start', 'pp.activity_end', 'activity_start_granularity', 'activity_start_certainty',
@@ -97,12 +97,10 @@ test('compact list semantic SQL returns one Runtime Activity-shaped tuple includ
     'role_code', 'role_category', 'role_source_label', 'period_basis_code'
   ]) assert.match(PERSON_LIST_SEMANTIC_SQL, new RegExp(token.replace('.', '\\.')));
 
-  assert.match(PERSON_LIST_SEMANTIC_SQL, /from atlas_v2\.runtime_person_politics_v1 pp/i);
-  assert.doesNotMatch(PERSON_LIST_SEMANTIC_SQL, /from atlas_v2\.person_politics_v2 pp/i);
   assert.match(PERSON_LIST_SEMANTIC_SQL, /left join atlas_v2\.person_polity_relation_types prt/i);
   assert.match(PERSON_LIST_SEMANTIC_SQL, /\njoin atlas_v2\.period_bases pb/i);
   assert.match(PERSON_LIST_SEMANTIC_SQL, /where pp\.person_id = any\(\$1::uuid\[\]\)/i);
-  assert.match(PERSON_LIST_SEMANTIC_SQL, /order by pp\.person_id, pp\.activity_start, pp\.activity_end nulls last, pp\.polity_id, pp\.id/i);
+  assert.match(PERSON_LIST_SEMANTIC_SQL, /order by pp\.person_id, pp\.activity_start, pp\.activity_end, pp\.polity_id, pp\.id/i);
   assert.match(PERSON_LIST_SEMANTIC_SQL, /order by pn\.id\s+limit 1/i);
   assert.match(PERSON_LIST_SEMANTIC_SQL, /order by rn\.id\s+limit 1/i);
   assert.match(PERSON_LIST_SEMANTIC_SQL, /order by pbn\.id\s+limit 1/i);

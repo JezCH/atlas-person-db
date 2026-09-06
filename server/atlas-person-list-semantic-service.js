@@ -86,7 +86,7 @@ select
     order by pbn.id
     limit 1
   ) as period_basis_name_ko
-from atlas_v2.runtime_person_politics_v1 pp
+from atlas_v2.person_politics_v2 pp
 left join atlas_v2.person_polity_relation_types prt
   on prt.id = pp.relation_type_id
 left join atlas_v2.roles r
@@ -94,7 +94,7 @@ left join atlas_v2.roles r
 join atlas_v2.period_bases pb
   on pb.id = pp.period_basis_id
 where pp.person_id = any($1::uuid[])
-order by pp.person_id, pp.activity_start, pp.activity_end nulls last, pp.polity_id, pp.id
+order by pp.person_id, pp.activity_start, pp.activity_end, pp.polity_id, pp.id
 `;
 
 function projectCompactActivity(row) {

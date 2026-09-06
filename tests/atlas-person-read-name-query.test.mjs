@@ -11,7 +11,7 @@ const {
   personMatchesNamuWikiStatus,
   createPersonReadHandler
 } = require('../server/atlas-person-read-handler.js');
-const { PERSON_READ_SQL } = require('../server/atlas-runtime-person-read-service.js');
+const { PERSON_READ_SQL } = require('../server/atlas-person-read-service.js');
 
 function mockResponse() {
   return {

@@ -11,7 +11,7 @@ const {
   ACTIVITY_SOURCE_SQL,
   readPersons,
   readPersonDetail
-} = require('../server/atlas-runtime-person-read-service.js');
+} = require('../server/atlas-person-read-service.js');
 const { createPersonReadHandler } = require('../server/atlas-person-read-handler.js');
 
 const PERSON_ID = '00000000-0000-4000-8000-000000000001';
@@ -40,10 +40,7 @@ function detailPersonRow() {
       { locale: 'en', name: 'Ateas', name_type: 'canonical', is_preferred: true },
       { locale: 'ko', name: '아테아스', name_type: 'display', is_preferred: true }
     ],
-    descriptions: [],
-    activity_count: 1,
-    first_activity_year: -360,
-    last_activity_year: -339
+    descriptions: []
   };
 }
 
