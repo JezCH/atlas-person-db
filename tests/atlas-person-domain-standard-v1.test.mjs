@@ -48,7 +48,7 @@ test('browser registry and reviewed proposals use canonical codes only', () => {
 });
 
 test('reviewed batch and HOLD sequences are contiguous and dynamically discoverable', () => {
-  assert.deepEqual(batchFiles, ['batch-001.json','batch-002.json','batch-003.json','batch-004.json','batch-005.json','batch-006.json','batch-007.json']);
+  assert.deepEqual(batchFiles, ['batch-001.json','batch-002.json','batch-003.json','batch-004.json','batch-005.json','batch-006.json','batch-007.json','batch-008.json']);
   assert.deepEqual(holdFiles, ['hold-001.json','hold-002.json']);
   assert.match(applyClient, /discoverContiguous\("batch"\)/);
   assert.match(applyClient, /discoverContiguous\("hold"\)/);
@@ -82,6 +82,27 @@ test('Batch 007 contains exactly the reviewed 21-Person distribution', () => {
   });
   assert.equal(batch7.policy.automatic_role_backfill, false);
   assert.equal(batch7.policy.secondary_domains, false);
+});
+
+test('Batch 008 contains exactly the reviewed 19-Person science/technology distribution', () => {
+  const batch8 = JSON.parse(fs.readFileSync(path.join(proposalDir, 'batch-008.json'), 'utf8'));
+  const counts = Object.fromEntries(Object.keys(palette).map((domain) => [domain, 0]));
+  for (const entry of batch8.entries) counts[entry.representative_domain] += 1;
+  assert.equal(batch8.entries.length, 19);
+  assert.deepEqual(counts, {
+    governance:0,
+    military:0,
+    knowledge:15,
+    technology:4,
+    commerce:0,
+    culture:0,
+    religion:0,
+    exploration:0
+  });
+  assert.equal(batch8.policy.automatic_role_backfill, false);
+  assert.equal(batch8.policy.secondary_domains, false);
+  assert.equal(batch8.entries.some((entry) => entry.canonical_name_en === 'James Watt'), false);
+  assert.equal(batch8.entries.some((entry) => entry.person_id === '87b9541e-cc28-46ca-a849-43a5a14ae162'), false);
 });
 
 test('Pythagoras remains an unresolved knowledge/religion HOLD', () => {
