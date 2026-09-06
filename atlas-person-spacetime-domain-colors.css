@@ -1,0 +1,65 @@
+.spacetime-track-label[data-representative-domain],
+.spacetime-track-rail[data-representative-domain] {
+  --spacetime-person-domain-color: transparent;
+  --spacetime-person-domain-edge: transparent;
+  --spacetime-person-domain-tint: transparent;
+}
+
+.spacetime-track-label[data-representative-domain="governance"],
+.spacetime-track-rail[data-representative-domain="governance"] {
+  --spacetime-person-domain-color: var(--atlas-person-domain-governance);
+  --spacetime-person-domain-edge: var(--atlas-person-domain-governance);
+  --spacetime-person-domain-tint: var(--atlas-person-domain-governance-tint);
+}
+.spacetime-track-label[data-representative-domain="military"],
+.spacetime-track-rail[data-representative-domain="military"] {
+  --spacetime-person-domain-color: var(--atlas-person-domain-military);
+  --spacetime-person-domain-edge: var(--atlas-person-domain-military);
+  --spacetime-person-domain-tint: var(--atlas-person-domain-military-tint);
+}
+.spacetime-track-label[data-representative-domain="knowledge"],
+.spacetime-track-rail[data-representative-domain="knowledge"] {
+  --spacetime-person-domain-color: var(--atlas-person-domain-knowledge);
+  --spacetime-person-domain-edge: var(--atlas-person-domain-knowledge);
+  --spacetime-person-domain-tint: var(--atlas-person-domain-knowledge-tint);
+}
+.spacetime-track-label[data-representative-domain="technology"],
+.spacetime-track-rail[data-representative-domain="technology"] {
+  --spacetime-person-domain-color: var(--atlas-person-domain-technology);
+  --spacetime-person-domain-edge: var(--atlas-person-domain-technology);
+  --spacetime-person-domain-tint: var(--atlas-person-domain-technology-tint);
+}
+.spacetime-track-label[data-representative-domain="commerce"],
+.spacetime-track-rail[data-representative-domain="commerce"] {
+  --spacetime-person-domain-color: var(--atlas-person-domain-commerce);
+  --spacetime-person-domain-edge: var(--atlas-person-domain-commerce);
+  --spacetime-person-domain-tint: var(--atlas-person-domain-commerce-tint);
+}
+.spacetime-track-label[data-representative-domain="culture"],
+.spacetime-track-rail[data-representative-domain="culture"] {
+  --spacetime-person-domain-color: var(--atlas-person-domain-culture);
+  --spacetime-person-domain-edge: var(--atlas-person-domain-culture);
+  --spacetime-person-domain-tint: var(--atlas-person-domain-culture-tint);
+}
+.spacetime-track-label[data-representative-domain="religion"],
+.spacetime-track-rail[data-representative-domain="religion"] {
+  --spacetime-person-domain-color: var(--atlas-person-domain-religion);
+  --spacetime-person-domain-edge: var(--atlas-person-domain-religion-edge);
+  --spacetime-person-domain-tint: var(--atlas-person-domain-religion-tint);
+}
+.spacetime-track-label[data-representative-domain="exploration"],
+.spacetime-track-rail[data-representative-domain="exploration"] {
+  --spacetime-person-domain-color: var(--atlas-person-domain-exploration);
+  --spacetime-person-domain-edge: var(--atlas-person-domain-exploration);
+  --spacetime-person-domain-tint: var(--atlas-person-domain-exploration-tint);
+}
+
+.spacetime-track-label[data-representative-domain]:not(.is-selected):not(.is-meanwhile-active):not(:hover) {
+  border-color: var(--spacetime-person-domain-edge);
+  background: linear-gradient(90deg, var(--spacetime-person-domain-tint), rgba(255,255,255,.94) 82%);
+  box-shadow: inset 3px 0 0 var(--spacetime-person-domain-edge), 0 1px 5px rgba(35,50,74,.08);
+}
+
+.spacetime-track-rail[data-representative-domain]:not(.is-selected):not(.is-meanwhile-active):not(.is-activity-selected):not(:hover) {
+  background: var(--spacetime-person-domain-color);
+}
