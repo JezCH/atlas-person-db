@@ -20,6 +20,7 @@
     ["./atlas-person-spacetime-presentation-layout.js?v=20260903-south-asia-r3", "ATLAS_PERSON_SPACETIME_PRESENTATION_LAYOUT"],
     ["./atlas-person-spacetime-semantic-axis.js?v=20260903-place-lod", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
     ["./atlas-person-spacetime-uncertainty.js?v=20260903-c6", "ATLAS_PERSON_SPACETIME_UNCERTAINTY"],
+    ["./atlas-person-spacetime-temporal-certainty.js?v=20260906-boundary-certainty", "ATLAS_PERSON_SPACETIME_TEMPORAL_CERTAINTY"],
     ["./atlas-person-spacetime-inspector.js?v=20260903-c8", "ATLAS_PERSON_SPACETIME_INSPECTOR"],
     ["./atlas-person-spacetime-exploration.js?v=20260826-p11", "ATLAS_PERSON_SPACETIME_EXPLORATION"],
     ["./atlas-person-spacetime-meanwhile.js?v=20260902-active-activity", "ATLAS_PERSON_SPACETIME_MEANWHILE"],
@@ -87,10 +88,10 @@
   }
 
   function periodLabel(activity) {
-    const start = Number.isInteger(activity?.start?.year) && activity.start.year !== 0 ? model.yearLabel(activity.start.year) : "시작 미상";
-    const end = activity?.end?.status === "ongoing" ? `현재 (${activity.end.as_of} 확인)` : Number.isInteger(activity?.end?.year) && activity.end.year !== 0 ? model.yearLabel(activity.end.year) : "종료 미상";
-    return `${start} – ${end}`;
-  }
+  const temporalCertainty = window.ATLAS_PERSON_SPACETIME_TEMPORAL_CERTAINTY;
+  if (!temporalCertainty?.periodLabel) throw new Error("ATLAS_SPACETIME_TEMPORAL_CERTAINTY_RUNTIME_MISSING");
+  return temporalCertainty.periodLabel(activity, model.yearLabel);
+}
 
   function placementBasisLabel(segment) {
     if (segment?.historical_placement_basis !== "polity_place_function") return "검토된 정치체 권역";
@@ -179,6 +180,7 @@
       presentationLayout: window.ATLAS_PERSON_SPACETIME_PRESENTATION_LAYOUT,
       semanticAxis: window.ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS,
       uncertainty: window.ATLAS_PERSON_SPACETIME_UNCERTAINTY,
+      temporalCertainty: window.ATLAS_PERSON_SPACETIME_TEMPORAL_CERTAINTY,
       inspector: window.ATLAS_PERSON_SPACETIME_INSPECTOR,
       exploration: window.ATLAS_PERSON_SPACETIME_EXPLORATION,
       meanwhile: window.ATLAS_PERSON_SPACETIME_MEANWHILE,
