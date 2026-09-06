@@ -1,0 +1,17 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-06",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "67f584a9b410f4179ba1408ed53e45ae59124b71",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "cancelled duplicate-only legacy batch retained as a zero-entry tombstone to preserve contiguous batch discovery"
+  },
+  "tombstone": {
+    "legacy_task_key": "PERSON-DOMAIN-BATCH022-KNOWLEDGE-TECH-EXPLORATION-20260906",
+    "reason": "full UUID re-audit found all five proposed Persons already assigned in earlier reviewed batches"
+  },
+  "entries": []
+}
