@@ -9,6 +9,7 @@ on:
       - 'api/atlas-audit-inventory.js'
       - 'server/atlas-polity-reference-audit-handler.js'
       - 'server/atlas-audit-github-oidc.js'
+      - 'scripts/build-spatial-polity-candidates.mjs'
       - 'atlas-polity-spatial-index.json'
   workflow_dispatch:
 
@@ -67,7 +68,7 @@ jobs:
           done
           [[ "$fetched" == "true" ]] || { echo "Production deployment did not reach ${GITHUB_SHA} within retry window" >&2; exit 1; }
 
-      - name: Build deterministic unplaced polity candidate inventory
+      - name: Build deterministic undispositioned polity candidate inventory
         shell: bash
         run: |
           set -euo pipefail
@@ -80,7 +81,7 @@ jobs:
             --summary polity-spatial-candidate-summary.json \
             --top-limit 100
 
-          echo 'Top 100 currently used but spatially unplaced polities:'
+          echo 'Top 100 currently used polities without a reviewed Spatial disposition:'
           cat polity-spatial-unplaced-candidates-top100.json
 
       - name: Upload spatial candidate evidence
