@@ -69,8 +69,8 @@ test('candidate inventory contains only Activity-used polities without any revie
   assert.equal(result.candidates[0].activity_reference_count, 3);
   assert.equal(result.summary.undispositioned_used_polity_count, 1);
   assert.equal(result.summary.unplaced_used_polity_count, 1);
-  assert.equal(result.summary.place_function_record_count, 1);
-  assert.equal(result.summary.review_queue_count, 1);
+  assert.equal(result.summary.temporal_reviewed_used_polity_count, 1);
+  assert.equal(result.summary.explicit_review_queue_used_polity_count, 1);
 });
 
 test('temporal place functions and explicit review queue entries are dispositions, not unplaced debt', () => {
