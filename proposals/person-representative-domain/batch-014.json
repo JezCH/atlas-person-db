@@ -1,0 +1,34 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-07",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "37b9ee4e52c18dc6b4ab8f56f31167684b5a95b8",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "one reviewed representative domain per Person; sovereign rulers, national political leaders, and reviewed de facto top political powerholders are governance when political rule is the representative historical identity"
+  },
+  "entries": [
+    {"person_id":"f3b10422-f815-49bb-be2f-6c9574d2b973","canonical_name_en":"John Adams","preferred_name_ko":"존 애덤스","representative_domain":"governance"},
+    {"person_id":"43a9aeb1-89c1-4e91-bc7d-2bebb66aa548","canonical_name_en":"Hu Jintao","preferred_name_ko":"후진타오","representative_domain":"governance"},
+    {"person_id":"bc74b0b3-9f03-42d7-89b2-32844f866395","canonical_name_en":"Ion Antonescu","preferred_name_ko":"이온 안토네스쿠","representative_domain":"governance"},
+    {"person_id":"60fd935f-37f6-577c-9010-fb590220980f","canonical_name_en":"Hideki Tojo","preferred_name_ko":"도조 히데키","representative_domain":"governance"},
+    {"person_id":"24dd45bd-74aa-561d-b977-0cbe9560d2f2","canonical_name_en":"John Curtin","preferred_name_ko":"존 커틴","representative_domain":"governance"},
+    {"person_id":"d6e3ee3c-f08e-54e5-bb19-20799cc6aca4","canonical_name_en":"Gajah Mada","preferred_name_ko":"가자 마다","representative_domain":"governance"},
+    {"person_id":"8eeef0e6-bb27-4ca6-bc38-cfe8431db1ad","canonical_name_en":"Porfirio Díaz","preferred_name_ko":"포르피리오 디아스","representative_domain":"governance"},
+    {"person_id":"e448141c-da14-4926-b2ce-96fd2b75dc7d","canonical_name_en":"Julio Argentino Roca","preferred_name_ko":"훌리오 아르헨티노 로카","representative_domain":"governance"},
+    {"person_id":"07616aa6-c848-4e8f-b5ca-adcd62031687","canonical_name_en":"Francis I of France","preferred_name_ko":"프랑수아 1세","representative_domain":"governance"},
+    {"person_id":"449b224b-2b5d-5c6c-aa9d-b3a63de00192","canonical_name_en":"Charles V","preferred_name_ko":"카를 5세","representative_domain":"governance"},
+    {"person_id":"f46932ea-224f-5bee-8df4-a02c46c243b9","canonical_name_en":"Kangxi Emperor","preferred_name_ko":"강희제","representative_domain":"governance"},
+    {"person_id":"3aa8a72f-b6a5-4e2f-8753-e983d6a028a0","canonical_name_en":"Galdan Khan","preferred_name_ko":"갈단 칸","representative_domain":"governance"},
+    {"person_id":"3a70999f-fb39-4b2c-ae5d-6d1c00076f0d","canonical_name_en":"Charles XII of Sweden","preferred_name_ko":"칼 12세","representative_domain":"governance"},
+    {"person_id":"18eaa940-d4b3-4b46-9397-81d04f84e9ea","canonical_name_en":"Vlad III","preferred_name_ko":"블라드 3세","representative_domain":"governance"},
+    {"person_id":"7c679576-24e1-5c23-adfa-a2592228135c","canonical_name_en":"Emperor Taizu of Jin","preferred_name_ko":"금 태조","representative_domain":"governance"},
+    {"person_id":"0eadcb6a-84f4-53e1-9b1c-01f1ddd3fe5d","canonical_name_en":"Emperor Taizong of Jin","preferred_name_ko":"금 태종","representative_domain":"governance"},
+    {"person_id":"1a360101-20de-5db6-935f-958e558bd8db","canonical_name_en":"Emperor Shenzong of Song","preferred_name_ko":"북송 신종","representative_domain":"governance"},
+    {"person_id":"7be5ac59-4c78-5e0a-a08a-0a8b2c2f4bb1","canonical_name_en":"Harald Bluetooth","preferred_name_ko":"하랄 블로탄","representative_domain":"governance"},
+    {"person_id":"7aadf58a-1a3d-44e5-8fb2-e32e913415a5","canonical_name_en":"Llywelyn the Great","preferred_name_ko":"허웰린 압 요르웨르스","representative_domain":"governance"},
+    {"person_id":"fdabaa81-4234-568a-b3ba-68f9d8647941","canonical_name_en":"Harald Hardrada","preferred_name_ko":"하랄 3세 하르드라다","representative_domain":"governance"}
+  ]
+}
