@@ -94,7 +94,7 @@ test('one polity cannot be both a static binding and a HOLD disposition', () => 
         reviewQueue: [{ polity_id: IDS.three, reason: 'requires_review' }]
       })]
     }),
-    /CONFLICTING_POLITY_BINDING|CONFLICTING_SPATIAL_DISPOSITION/
+    /DUPLICATE_SPATIAL_DISPOSITION|CONFLICTING_SPATIAL_DISPOSITION/
   );
 });
 
