@@ -1,0 +1,27 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-07",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "88d91f5117eaeeb8a2851f6872951428f4c2d653",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "one reviewed representative domain per Person; sovereign rulers and reviewed de facto top political powerholders are governance when political rule is the representative historical identity, while ecclesiastical leadership, military command, and intellectual authorship retain their reviewed representative domains"
+  },
+  "entries": [
+    {"person_id":"9d52e56e-3870-5507-a8ab-8f80640311fd","canonical_name_en":"Niccolò Machiavelli","preferred_name_ko":"니콜로 마키아벨리","representative_domain":"knowledge"},
+    {"person_id":"eb1e02b0-af95-4f69-99bc-c29b7915f710","canonical_name_en":"Gregory I","preferred_name_ko":"그레고리오 1세","representative_domain":"religion"},
+    {"person_id":"0172d632-8eaf-4095-92d8-b6620a3980ba","canonical_name_en":"Pope Leo I","preferred_name_ko":"레오 1세(교황)","representative_domain":"religion"},
+    {"person_id":"424e09aa-f5b2-4225-b01d-3939b448c68a","canonical_name_en":"Pope Urban II","preferred_name_ko":"우르바노 2세","representative_domain":"religion"},
+    {"person_id":"4d7b9099-ef40-4871-8af2-46bd1f8246a7","canonical_name_en":"Aterui","preferred_name_ko":"아테루이","representative_domain":"military"},
+    {"person_id":"975ad0a4-dece-54fc-a641-29b2e8ebf1e6","canonical_name_en":"Emperor Wen of Sui","preferred_name_ko":"수 문제","representative_domain":"governance"},
+    {"person_id":"0325df09-38b7-42cd-8645-d2280b14ee89","canonical_name_en":"Jinheung of Silla","preferred_name_ko":"진흥왕","representative_domain":"governance"},
+    {"person_id":"409e0d8a-4149-5a89-a037-023abbba0d9c","canonical_name_en":"Jia Sidao","preferred_name_ko":"가사도","representative_domain":"governance"},
+    {"person_id":"c5f831b4-ca83-5fb5-8477-278c4ec0323c","canonical_name_en":"Emperor Huizong of Yuan","preferred_name_ko":"원 혜종","representative_domain":"governance"},
+    {"person_id":"6efc4197-024c-5e13-9b72-4e6a685b6cd3","canonical_name_en":"Zhang Shicheng","preferred_name_ko":"장사성","representative_domain":"governance"},
+    {"person_id":"aa7c758f-b6c3-4a9c-b888-bd15e0427ed9","canonical_name_en":"Shapur II","preferred_name_ko":"샤푸르 2세","representative_domain":"governance"},
+    {"person_id":"59a24b72-83fb-435e-9251-c94b6f11ae72","canonical_name_en":"Hyeonjong of Goryeo","preferred_name_ko":"고려 현종","representative_domain":"governance"},
+    {"person_id":"809b30e8-6286-50fb-a854-2bf63864bd77","canonical_name_en":"Moctezuma II","preferred_name_ko":"몬테수마 2세","representative_domain":"governance"}
+  ]
+}
