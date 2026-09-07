@@ -169,6 +169,22 @@ test('Batch 012 contains exactly the reviewed balanced distribution', () => {
   assert.equal(batch12.entries.some((entry) => entry.person_id === '87b9541e-cc28-46ca-a849-43a5a14ae162'), false);
 });
 
+test('Batch 013 contains exactly the reviewed medieval rulers/commanders distribution', () => {
+  const batch13 = assertBatchDistribution('batch-013.json', 20, {
+    governance:18,
+    military:2,
+    knowledge:0,
+    technology:0,
+    commerce:0,
+    culture:0,
+    religion:0,
+    exploration:0
+  });
+  assert.equal(batch13.entries.some((entry) => entry.person_id === 'fff7a34b-6bff-4e6e-9735-96d16a161a92' && entry.representative_domain === 'governance'), true);
+  assert.equal(batch13.entries.some((entry) => entry.person_id === 'e170fae3-b8cc-4a69-9309-5c69269140fb' && entry.representative_domain === 'military'), true);
+  assert.equal(batch13.entries.some((entry) => entry.person_id === '87b9541e-cc28-46ca-a849-43a5a14ae162'), false);
+});
+
 test('Pythagoras remains an unresolved knowledge/religion HOLD', () => {
   const hold2 = JSON.parse(fs.readFileSync(path.join(proposalDir, 'hold-002.json'), 'utf8'));
   assert.equal(hold2.status, 'unresolved');
