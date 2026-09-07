@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-07",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "b49a12f3090d2db3f17bfed63c7e831d7848ceab",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "one reviewed representative domain per Person; national head-of-government/state leadership or sovereign rule controls for these exact Persons"
+  },
+  "entries": [
+    {"person_id":"b3feccc3-210e-4549-b970-d093a319c6b6","canonical_name_en":"Jan Smuts","preferred_name_ko":"얀 스뮈츠","representative_domain":"governance"},
+    {"person_id":"f44baebf-9996-4c03-9f3d-5f9ee9e6ee7e","canonical_name_en":"Zog I","preferred_name_ko":"조구 1세","representative_domain":"governance"},
+    {"person_id":"3f4d5781-d570-491d-a2fc-686c15180657","canonical_name_en":"Getúlio Vargas","preferred_name_ko":"제툴리우 바르가스","representative_domain":"governance"},
+    {"person_id":"375f8052-96cc-5c13-9874-d649f111dde9","canonical_name_en":"Jayavarman VII","preferred_name_ko":"자야바르만 7세","representative_domain":"governance"}
+  ]
+}
