@@ -57,6 +57,15 @@ function assertIsoInstant(value, label) {
   return new Date(input).toISOString();
 }
 
+function normalizeReviewDecision(raw, label) {
+  const decision = asObject(raw, label);
+  const polityId = text(decision.polity_id);
+  const reason = text(decision.reason);
+  assertCanonicalUuid(polityId, `${label}.polity_id`);
+  if (!reason) fail('INVALID_SPATIAL_REVIEW_REASON', `${label}.reason is required`);
+  return Object.freeze({ polity_id: polityId, reason });
+}
+
 export function validateCanonicalBaseline(baseline) {
   asObject(baseline, 'baseline');
   if (baseline.schema !== CANONICAL_SPATIAL_INDEX_SCHEMA) {
@@ -81,6 +90,15 @@ export function validateCanonicalBaseline(baseline) {
     if (!parent) fail('UNKNOWN_SPATIAL_SUBREGION', `baseline polity ${polityId}: ${subregionCode}`);
     if (parent !== regionCode) fail('SPATIAL_SUBREGION_PARENT_MISMATCH', `baseline polity ${polityId}: ${subregionCode} is not a child of ${regionCode}`);
   }
+  const reviewSeen = new Set();
+  for (const [index, raw] of (baseline.review_queue || []).entries()) {
+    const decision = normalizeReviewDecision(raw, `baseline review_queue[${index}]`);
+    if (reviewSeen.has(decision.polity_id)) fail('DUPLICATE_SPATIAL_REVIEW_DECISION', `baseline review_queue duplicate ${decision.polity_id}`);
+    if (baseline.polity_geography?.[decision.polity_id] != null) {
+      fail('CONFLICTING_SPATIAL_DISPOSITION', `baseline polity ${decision.polity_id} has both static geography and review_queue disposition`);
+    }
+    reviewSeen.add(decision.polity_id);
+  }
   return baseline;
 }
 
@@ -95,17 +113,24 @@ function normalizeShard(shardEntry) {
   const reviewedAt = assertIsoInstant(shard.reviewed_at, `${source} reviewed_at`);
   const baseline = text(shard.baseline);
   if (!baseline) fail('INVALID_SPATIAL_BINDING_BASELINE', `${source}: baseline is required`);
-  if (!Array.isArray(shard.bindings) || shard.bindings.length === 0) fail('INVALID_SPATIAL_BINDINGS', `${source}: bindings must be a non-empty array`);
+
+  const rawBindings = shard.bindings == null ? [] : shard.bindings;
+  const rawReviewQueue = shard.review_queue == null ? [] : shard.review_queue;
+  if (!Array.isArray(rawBindings)) fail('INVALID_SPATIAL_BINDINGS', `${source}: bindings must be an array when present`);
+  if (!Array.isArray(rawReviewQueue)) fail('INVALID_SPATIAL_REVIEW_QUEUE', `${source}: review_queue must be an array when present`);
+  if (rawBindings.length === 0 && rawReviewQueue.length === 0) {
+    fail('INVALID_SPATIAL_BINDINGS', `${source}: at least one binding or review_queue decision is required`);
+  }
 
   const taxonomy = taxonomyContract();
   const localSeen = new Set();
-  const bindings = shard.bindings.map((raw, index) => {
+  const bindings = rawBindings.map((raw, index) => {
     const binding = asObject(raw, `${source} bindings[${index}]`);
     const polityId = text(binding.polity_id);
     const regionCode = text(binding.region_code);
     const subregionCode = binding.subregion_code == null ? null : text(binding.subregion_code);
     assertCanonicalUuid(polityId, `${source} bindings[${index}].polity_id`);
-    if (localSeen.has(polityId)) fail('DUPLICATE_POLITY_BINDING', `${source}: duplicate polity_id ${polityId}`);
+    if (localSeen.has(polityId)) fail('DUPLICATE_SPATIAL_DISPOSITION', `${source}: duplicate polity_id ${polityId}`);
     localSeen.add(polityId);
     if (!taxonomy.macroCodes.has(regionCode)) fail('UNKNOWN_SPATIAL_MACROREGION', `${source} polity ${polityId}: ${regionCode || '(empty)'}`);
     if (subregionCode) {
@@ -116,7 +141,14 @@ function normalizeShard(shardEntry) {
     return Object.freeze({ polity_id: polityId, region_code: regionCode, subregion_code: subregionCode });
   }).sort((left, right) => left.polity_id.localeCompare(right.polity_id, 'en'));
 
-  return Object.freeze({ source, shard_id: shardId, reviewed_at: reviewedAt, baseline, bindings });
+  const reviewQueue = rawReviewQueue.map((raw, index) => {
+    const decision = normalizeReviewDecision(raw, `${source} review_queue[${index}]`);
+    if (localSeen.has(decision.polity_id)) fail('DUPLICATE_SPATIAL_DISPOSITION', `${source}: duplicate polity_id ${decision.polity_id}`);
+    localSeen.add(decision.polity_id);
+    return decision;
+  }).sort((left, right) => left.polity_id.localeCompare(right.polity_id, 'en'));
+
+  return Object.freeze({ source, shard_id: shardId, reviewed_at: reviewedAt, baseline, bindings, review_queue: reviewQueue });
 }
 
 function sourceMapping(regionCode, subregionCode = null) {
@@ -150,9 +182,16 @@ export function compileSpatialBindings({ baseline, shards = [] }) {
 
   const polityGeography = { ...(baseline.polity_geography || {}) };
   const politySubregions = { ...(baseline.polity_subregions || {}) };
+  const reviewQueue = structuredClone(baseline.review_queue || []);
   const seen = new Map();
   for (const [polityId, regionCode] of Object.entries(polityGeography)) {
-    seen.set(polityId, { source: 'baseline', mapping: sourceMapping(regionCode, politySubregions[polityId] || null) });
+    seen.set(polityId, { source: 'baseline', kind: 'binding', mapping: sourceMapping(regionCode, politySubregions[polityId] || null) });
+  }
+  for (const [index, raw] of reviewQueue.entries()) {
+    const decision = normalizeReviewDecision(raw, `baseline review_queue[${index}]`);
+    const previous = seen.get(decision.polity_id);
+    if (previous) fail('CONFLICTING_SPATIAL_DISPOSITION', `${decision.polity_id}: baseline has both binding and review_queue disposition`);
+    seen.set(decision.polity_id, { source: 'baseline review_queue', kind: 'review', reason: decision.reason });
   }
 
   for (const shard of normalizedShards) {
@@ -160,13 +199,25 @@ export function compileSpatialBindings({ baseline, shards = [] }) {
       const nextMapping = sourceMapping(binding.region_code, binding.subregion_code);
       const previous = seen.get(binding.polity_id);
       if (previous) {
+        if (previous.kind === 'review') {
+          fail('CONFLICTING_SPATIAL_DISPOSITION', `${binding.polity_id}: ${previous.source}=review; ${shard.source}=${mappingLabel(nextMapping)}`);
+        }
         const same = previous.mapping.region_code === nextMapping.region_code && previous.mapping.subregion_code === nextMapping.subregion_code;
         const code = same ? 'DUPLICATE_POLITY_BINDING' : 'CONFLICTING_POLITY_BINDING';
         fail(code, `${binding.polity_id}: ${previous.source}=${mappingLabel(previous.mapping)}; ${shard.source}=${mappingLabel(nextMapping)}`);
       }
-      seen.set(binding.polity_id, { source: shard.source, mapping: nextMapping });
+      seen.set(binding.polity_id, { source: shard.source, kind: 'binding', mapping: nextMapping });
       polityGeography[binding.polity_id] = binding.region_code;
       if (binding.subregion_code) politySubregions[binding.polity_id] = binding.subregion_code;
+    }
+    for (const decision of shard.review_queue) {
+      const previous = seen.get(decision.polity_id);
+      if (previous) {
+        const code = previous.kind === 'review' ? 'DUPLICATE_SPATIAL_REVIEW_DECISION' : 'CONFLICTING_SPATIAL_DISPOSITION';
+        fail(code, `${decision.polity_id}: ${previous.source} already owns a ${previous.kind} disposition; ${shard.source}=review`);
+      }
+      seen.set(decision.polity_id, { source: shard.source, kind: 'review', reason: decision.reason });
+      reviewQueue.push({ polity_id: decision.polity_id, reason: decision.reason });
     }
   }
 
@@ -175,9 +226,11 @@ export function compileSpatialBindings({ baseline, shards = [] }) {
     if (key === 'generated_at') compiled[key] = generatedAtFor(baseline, normalizedShards);
     else if (key === 'polity_geography') compiled[key] = polityGeography;
     else if (key === 'polity_subregions') compiled[key] = politySubregions;
+    else if (key === 'review_queue') compiled[key] = reviewQueue;
     else compiled[key] = structuredClone(value);
   }
   if (!Object.prototype.hasOwnProperty.call(compiled, 'polity_subregions')) compiled.polity_subregions = politySubregions;
+  if (!Object.prototype.hasOwnProperty.call(compiled, 'review_queue')) compiled.review_queue = reviewQueue;
 
   const validation = model.validateSpatialIndex(compiled);
   if (!validation.valid) fail('COMPILED_SPATIAL_INDEX_INVALID', validation.errors.join(' | '));
@@ -194,6 +247,7 @@ export function computeSpatialStats(index) {
   return Object.freeze({
     geography_count: Object.keys(index.polity_geography || {}).length,
     subregion_count: Object.keys(index.polity_subregions || {}).length,
+    review_queue_count: (index.review_queue || []).length,
     macroregion_counts: Object.freeze(macroregionCounts),
     subregion_counts: Object.freeze(subregionCounts)
   });
