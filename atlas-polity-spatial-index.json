@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-06T02:20:08.000Z",
+  "generated_at": "2026-09-07T01:08:42.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -1198,7 +1198,32 @@
     "d55d355e-58cc-40aa-8661-1e8c91bfcfca": "south-asia",
     "2bd982fb-88f2-42b6-bce6-459f0fbd87e6": "americas",
     "f85e5e2e-4483-4289-86d8-a78bcae20d84": "west-asia",
-    "c1e67ca4-6877-426a-95bd-d7f4114f4b4a": "americas"
+    "c1e67ca4-6877-426a-95bd-d7f4114f4b4a": "americas",
+    "0d7a50f2-e6ea-4a02-aedc-67c9b1bd9bb3": "central-asia",
+    "10d79c8a-ff02-4d3f-a446-3b12d4e5dbcb": "west-asia",
+    "19704064-2ea9-4eef-b1d7-e56517edc45c": "central-asia",
+    "1b1a67c8-8509-431f-94ba-20030c2d97c8": "europe",
+    "1e5de9e4-c8a3-4e55-88f1-daee0e9dcfbd": "central-asia",
+    "29a81993-13e5-4bca-bf9b-d7421913dcd2": "central-asia",
+    "34b9a375-96fb-4c6a-8475-4bf263e98cec": "central-asia",
+    "58503704-4626-4739-9df3-c67b15848b9d": "central-asia",
+    "5db33481-614d-4977-941e-b36884ffb87e": "east-asia",
+    "5ee9928c-e6f4-4107-b078-1ae908db9beb": "central-asia",
+    "6522e943-d931-4ead-acb3-264f962942c8": "central-asia",
+    "73539591-8035-4f03-ab39-796ebea9276b": "central-asia",
+    "8382a731-65c6-4479-8fb1-553141313e2b": "central-asia",
+    "84e6365e-cd43-42cd-874e-3c517cd8243a": "central-asia",
+    "8591a3f0-8453-445f-8144-7e0a98e7dec3": "africa",
+    "8b335f26-bbc3-48db-9af7-66d29eaa8be5": "east-asia",
+    "8e0892b7-22f9-465c-b2c6-1f00191b7a7f": "central-asia",
+    "8ed716e1-44b9-4cdd-8efd-ee19a4b63f40": "central-asia",
+    "95fc9762-58e2-4045-aba4-d555ca0ebd66": "central-asia",
+    "a68d9fb6-f892-436b-9a31-e7585f134c3e": "west-asia",
+    "b2698b58-07aa-40fc-93af-e1eb714b47a3": "africa",
+    "c67f38fb-9ac1-446e-ac66-ca3245f60bbc": "west-asia",
+    "e146e6ef-15f0-4bca-9e5d-b26672c65018": "east-asia",
+    "e8a494af-a962-49e2-8b8c-236569c327df": "east-asia",
+    "f67af5a4-a2f5-492d-9220-92fe401bc167": "central-asia"
   },
   "place_function_records": [
     {
@@ -1499,6 +1524,34 @@
     {
       "polity_id": "a1c6b0b4-ca71-420d-8d9f-502dc7914dd7",
       "reason": "multiple_reviewed_royal_centers_require_activity_specific_spatial_representation"
+    },
+    {
+      "polity_id": "08a804bf-81c1-4206-85ed-47b139104915",
+      "reason": "displaced_transnational_community_requires_activity_specific_spatial_review"
+    },
+    {
+      "polity_id": "25401991-b8df-454f-8fdc-652699c95958",
+      "reason": "corporate_imperial_polity_requires_activity_specific_spatial_representation"
+    },
+    {
+      "polity_id": "44a197bb-1b80-484e-9ea2-e29c3f9904fc",
+      "reason": "corporate_imperial_polity_requires_activity_specific_spatial_representation"
+    },
+    {
+      "polity_id": "63828485-5db4-429f-a9d5-2523eacc11ee",
+      "reason": "transregional_nomadic_confederation_requires_activity_period_spatial_review"
+    },
+    {
+      "polity_id": "857597b9-4554-4eff-9b00-2441c7e09a47",
+      "reason": "migratory_nomadic_confederation_requires_temporal_spatial_review"
+    },
+    {
+      "polity_id": "a602213a-dccb-4a23-96c3-e91dfc300a9f",
+      "reason": "cross_macroregion_union_requires_multi_region_spatial_representation"
+    },
+    {
+      "polity_id": "eb2f8e2e-220b-4754-afe9-25449b1d35ec",
+      "reason": "cross_macroregion_tribal_polity_requires_activity_specific_spatial_review"
     }
   ],
   "polity_subregions": {
@@ -2598,6 +2651,19 @@
     "d55d355e-58cc-40aa-8661-1e8c91bfcfca": "northwest-south-asia",
     "2bd982fb-88f2-42b6-bce6-459f0fbd87e6": "mesoamerica",
     "f85e5e2e-4483-4289-86d8-a78bcae20d84": "caucasus",
-    "c1e67ca4-6877-426a-95bd-d7f4114f4b4a": "north-america"
+    "c1e67ca4-6877-426a-95bd-d7f4114f4b4a": "north-america",
+    "10d79c8a-ff02-4d3f-a446-3b12d4e5dbcb": "levant",
+    "19704064-2ea9-4eef-b1d7-e56517edc45c": "western-central-asia",
+    "1b1a67c8-8509-431f-94ba-20030c2d97c8": "russia-volga",
+    "1e5de9e4-c8a3-4e55-88f1-daee0e9dcfbd": "eastern-central-asia-steppe",
+    "34b9a375-96fb-4c6a-8475-4bf263e98cec": "eastern-central-asia-steppe",
+    "58503704-4626-4739-9df3-c67b15848b9d": "eastern-central-asia-steppe",
+    "5db33481-614d-4977-941e-b36884ffb87e": "manchuria",
+    "6522e943-d931-4ead-acb3-264f962942c8": "eastern-central-asia-steppe",
+    "8591a3f0-8453-445f-8144-7e0a98e7dec3": "southern-africa",
+    "a68d9fb6-f892-436b-9a31-e7585f134c3e": "levant",
+    "b2698b58-07aa-40fc-93af-e1eb714b47a3": "maghreb-north-africa",
+    "c67f38fb-9ac1-446e-ac66-ca3245f60bbc": "levant",
+    "e8a494af-a962-49e2-8b8c-236569c327df": "manchuria"
   }
 }
