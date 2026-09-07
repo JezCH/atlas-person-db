@@ -1,0 +1,21 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-07",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "0d5fe7423f04e34e8565b3f3109d0c6c760ecc72",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "apply only the seven explicit human-reviewed representative-domain assignments already queued from completed registrations; no reclassification or inferred Role-to-Domain mapping"
+  },
+  "entries": [
+    {"person_id":"eb6b2a77-059f-4042-a283-31ec67c6f97f","canonical_name_en":"Subutai","preferred_name_ko":"수부타이","representative_domain":"military"},
+    {"person_id":"3ea668dd-8ea8-40df-a8ef-b6d30863e510","canonical_name_en":"Georgy Zhukov","preferred_name_ko":"게오르기 주코프","representative_domain":"military"},
+    {"person_id":"24be4ff2-9b28-4f58-8d12-083d3adc5368","canonical_name_en":"Prince Eugene of Savoy","preferred_name_ko":"사부아 공자 외젠","representative_domain":"military"},
+    {"person_id":"0e77ec0e-5d06-4e4f-83fa-9745d7e48283","canonical_name_en":"Maurice of Nassau","preferred_name_ko":"마우리츠 판 나사우","representative_domain":"military"},
+    {"person_id":"9b4bac9b-19df-4dc8-9354-38c8dcaeffc7","canonical_name_en":"Ahuitzotl","preferred_name_ko":"아위소틀","representative_domain":"governance"},
+    {"person_id":"e196e8a2-abb6-4dfc-9758-498abfadbda4","canonical_name_en":"Choe Chung-heon","preferred_name_ko":"최충헌","representative_domain":"governance"},
+    {"person_id":"fa374536-7763-4259-b52b-c2a718387bab","canonical_name_en":"Cheok Jun-gyeong","preferred_name_ko":"척준경","representative_domain":"military"}
+  ]
+}
