@@ -45,10 +45,10 @@
   "external_references": {},
   "review_deferrals": {
     "namuwiki": {
-      "reason_code": "provider_search_unverified",
+      "reason_code": "provider_access_blocked",
       "attempted_at": "2026-09-07",
-      "reason": "A provider-scoped web search returned no verifiable NamuWiki result; no URL is invented and no absence is asserted.",
-      "authorization": "user_requested_registration_after_disclosed_unverified_provider_result"
+      "reason": "Direct NamuWiki provider verification is unavailable in this session; no URL is invented and no absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
     }
   },
   "review_context": {
