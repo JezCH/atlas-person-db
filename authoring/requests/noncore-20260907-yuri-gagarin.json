@@ -1,0 +1,60 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "noncore-space-technology-reviewed-20260907:yuri-gagarin",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Yuri Gagarin",
+    "display_name_ko": "유리 가가린",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Soviet Union",
+    "display_name_ko": "소련",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Cosmonaut and Vostok 1 pilot",
+    "role_display_name_ko": "우주비행사·보스토크 1호 조종사",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "NASA records that on 12 April 1961 Yuri Gagarin became the first human to orbit Earth aboard Vostok 1 and that the flight lasted 108 minutes. ATLAS records the exact mission day only, rather than extending the rail across his training, later public career, or lifespan.",
+    "start_year": 1961,
+    "start_month": 4,
+    "start_day": 12,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1961,
+    "end_month": 4,
+    "end_day": 12,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "title": "Yuri Gagarin: First Human in Space - NASA Science",
+      "canonical_url": "https://science.nasa.gov/resource/yuri-gagarin-first-human-in-space/",
+      "citation_text": "NASA는 1961년 4월 12일 유리 가가린이 보스토크 1호로 지구 궤도를 돈 최초의 인간이 되었으며 비행이 108분간 지속되었다고 설명한다.",
+      "source_type": "web_bibliographic_reference",
+      "locator": "April 12, 1961; first human to orbit Earth; Vostok 1; 108-minute flight"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_search_unverified",
+      "attempted_at": "2026-09-07",
+      "reason": "A provider-scoped web search returned no verifiable NamuWiki result; no URL is invented and no absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_unverified_provider_result"
+    }
+  },
+  "review_context": {
+    "request_batch": "PERSON-REGISTER-GAGARIN-ARMSTRONG-CARRIER-20260907",
+    "production_screen": "new_person",
+    "representative_domain_review": "exploration",
+    "spatial_readiness": "reuse_existing_polity_spatial_identity"
+  }
+}
