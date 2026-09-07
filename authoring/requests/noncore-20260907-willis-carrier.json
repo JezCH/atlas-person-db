@@ -1,0 +1,60 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "noncore-space-technology-reviewed-20260907:willis-carrier",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Willis Carrier",
+    "display_name_ko": "윌리스 캐리어",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Inventor",
+    "role_display_name_ko": "발명가",
+    "period_basis": "intellectual_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The National Inventors Hall of Fame records Carrier's first scientific air-conditioning installation in operation in 1902 and his disclosure of the Rational Psychrometric Formulae in 1911. ATLAS uses 1902-1911 as a bounded invention-and-systematization phase rather than his full engineering career or lifespan.",
+    "start_year": 1902,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1911,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "title": "Willis Haviland Carrier - National Inventors Hall of Fame",
+      "canonical_url": "https://www.invent.org/inductees/willis-haviland-carrier",
+      "citation_text": "미국 National Inventors Hall of Fame는 캐리어의 최초 과학적 공조 설비가 1902년에 가동됐고 1911년 Rational Psychrometric Formulae를 공개했다고 설명한다.",
+      "source_type": "web_bibliographic_reference",
+      "locator": "1902 first scientific air-conditioning installation; 1911 Rational Psychrometric Formulae"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_search_unverified",
+      "attempted_at": "2026-09-07",
+      "reason": "Provider-scoped search returned no verifiable result; no URL is invented and no absence is asserted.",
+      "authorization": "user_requested_registration"
+    }
+  },
+  "review_context": {
+    "request_batch": "PERSON-REGISTER-GAGARIN-ARMSTRONG-CARRIER-20260907",
+    "production_screen": "new_person",
+    "representative_domain_review": "technology",
+    "spatial_readiness": "reuse_existing_polity_spatial_identity"
+  }
+}
