@@ -16,23 +16,23 @@ const canonical = JSON.parse(canonicalRaw);
 const shardsDir = fileURLToPath(new URL('../spatial/reviewed-bindings/shards', import.meta.url));
 const reviewedShards = loadReviewedBindingShards(shardsDir);
 
-function shard({ id, reviewedAt = '2026-09-06T00:10:00Z', bindings }) {
-  return {
-    source: `${id}.bindings.json`,
-    value: {
-      schema: REVIEWED_BINDING_SHARD_SCHEMA,
-      shard_id: id,
-      baseline: 'test-baseline',
-      reviewed_at: reviewedAt,
-      bindings
-    }
+function shard({ id, reviewedAt = '2026-09-06T00:10:00Z', bindings = [], reviewQueue }) {
+  const value = {
+    schema: REVIEWED_BINDING_SHARD_SCHEMA,
+    shard_id: id,
+    baseline: 'test-baseline',
+    reviewed_at: reviewedAt,
+    bindings
   };
+  if (reviewQueue !== undefined) value.review_queue = reviewQueue;
+  return { source: `${id}.bindings.json`, value };
 }
 
 const IDS = Object.freeze({
   one: '00000000-0000-4000-8000-000000000001',
   two: '00000000-0000-4000-8000-000000000002',
-  three: '00000000-0000-4000-8000-000000000003'
+  three: '00000000-0000-4000-8000-000000000003',
+  four: '00000000-0000-4000-8000-000000000004'
 });
 
 test('canonical runtime index is exactly the deterministic compiler output for all reviewed sources', () => {
@@ -46,6 +46,7 @@ test('real reviewed shard directory validates independently', () => {
   const compiled = compileSpatialBindings({ baseline, shards: reviewedShards });
   assert.ok(compiled.stats.geography_count >= Object.keys(baseline.polity_geography).length);
   assert.ok(compiled.stats.subregion_count >= Object.keys(baseline.polity_subregions ?? {}).length);
+  assert.ok(compiled.stats.review_queue_count >= (baseline.review_queue ?? []).length);
 });
 
 test('new independent reviewed bindings compile without changing existing UUID semantics', () => {
@@ -66,6 +67,35 @@ test('new independent reviewed bindings compile without changing existing UUID s
   assert.equal(compiled.index.polity_subregions[IDS.two], undefined);
   assert.equal(compiled.stats.geography_count, before.geography_count + 2);
   assert.equal(compiled.stats.subregion_count, before.subregion_count + 1);
+});
+
+test('reviewed HOLD dispositions compile into the canonical review queue', () => {
+  const before = computeSpatialStats(baseline);
+  const reason = 'transregional_polity_requires_activity_specific_spatial_review';
+  const compiled = compileSpatialBindings({
+    baseline,
+    shards: [shard({
+      id: 'worker-hold',
+      reviewQueue: [{ polity_id: IDS.four, reason }]
+    })]
+  });
+  assert.equal(compiled.index.polity_geography[IDS.four], undefined);
+  assert.deepEqual(compiled.index.review_queue.find((entry) => entry.polity_id === IDS.four), { polity_id: IDS.four, reason });
+  assert.equal(compiled.stats.review_queue_count, before.review_queue_count + 1);
+});
+
+test('one polity cannot be both a static binding and a HOLD disposition', () => {
+  assert.throws(
+    () => compileSpatialBindings({
+      baseline,
+      shards: [shard({
+        id: 'static-and-hold',
+        bindings: [{ polity_id: IDS.three, region_code: 'europe', subregion_code: 'italy' }],
+        reviewQueue: [{ polity_id: IDS.three, reason: 'requires_review' }]
+      })]
+    }),
+    /CONFLICTING_POLITY_BINDING|CONFLICTING_SPATIAL_DISPOSITION/
+  );
 });
 
 test('compiler output is deterministic regardless of shard input order', () => {
