@@ -1,0 +1,60 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "noncore-space-technology-reviewed-20260907:neil-armstrong",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Neil Armstrong",
+    "display_name_ko": "닐 암스트롱",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "United States",
+    "display_name_ko": "미국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "NASA astronaut and Apollo 11 commander",
+    "role_display_name_ko": "NASA 우주비행사·아폴로 11호 사령관",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "NASA records Armstrong as Apollo 11 commander. The mission ran from 16 July 1969 through 24 July 1969, and during it Armstrong became the first person to set foot on the Moon. ATLAS uses only this bounded mission interval.",
+    "start_year": 1969,
+    "start_month": 7,
+    "start_day": 16,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1969,
+    "end_month": 7,
+    "end_day": 24,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "title": "Apollo 11 - NASA",
+      "canonical_url": "https://www.nasa.gov/mission/apollo-11/",
+      "citation_text": "NASA는 암스트롱을 아폴로 11호 사령관이자 달 표면에 처음 발을 디딘 인간으로 설명한다.",
+      "source_type": "web_bibliographic_reference",
+      "locator": "Apollo 11 mission; July 16-24, 1969; Neil Armstrong"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-07",
+      "reason": "Direct NamuWiki provider verification is unavailable in this session; no URL is invented and no absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "PERSON-REGISTER-GAGARIN-ARMSTRONG-CARRIER-20260907",
+    "production_screen": "new_person",
+    "representative_domain_review": "exploration",
+    "spatial_readiness": "reuse_existing_polity_spatial_identity"
+  }
+}
