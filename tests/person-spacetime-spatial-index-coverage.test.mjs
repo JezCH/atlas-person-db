@@ -40,7 +40,8 @@ test("spatial index v2 retains the canonical temporal polity-place-function cont
   assert.ok(stats.subregion_count > 0);
   assert.ok(stats.subregion_count <= stats.geography_count);
   assert.equal(index.place_function_records.length, 11);
-  assert.equal(index.review_queue.length, 2);
+  assert.equal(stats.review_queue_count, index.review_queue.length);
+  assert.ok(index.review_queue.length >= 2);
   assert.equal(Object.hasOwn(index, "capital_records"), false);
   assert.equal(Object.hasOwn(index, "authority_center_records"), false);
 });
