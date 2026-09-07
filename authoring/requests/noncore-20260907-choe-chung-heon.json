@@ -1,0 +1,60 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "noncore-goryeo-reviewed-20260907:choe-chung-heon",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Choe Chung-heon",
+    "display_name_ko": "최충헌",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Goryeo",
+    "display_name_ko": "고려",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "De facto ruler and supreme military-regime authority",
+    "role_display_name_ko": "무신정권 최고 집권자·교정별감",
+    "period_basis": "de_facto_rule",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Academy of Korean Studies records that Choe Chung-heon removed Yi Ui-min and seized political power in 1196, subsequently became the supreme authority of the military regime and Gyojeong Byeolgam, and died in 1219. ATLAS records 1196-1219 as a bounded period of de facto political rule in Goryeo, not as a formal royal reign.",
+    "start_year": 1196,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1219,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "title": "최충헌 - 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0057707",
+      "citation_text": "한국민족문화대백과사전은 최충헌이 1196년 이의민을 제거하고 정권을 장악하여 무신 정권의 최고 권력자가 되었고, 교정별감을 역임했으며 1219년에 사망했다고 서술한다.",
+      "source_type": "web_bibliographic_reference",
+      "locator": "정의·내용 요약·주요 활동: 1196년 정권 장악, 교정별감과 최고 권력, 1219년 사망"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-07",
+      "reason": "Direct NamuWiki provider verification is unavailable in this session; no URL is invented and no absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "PERSON-REGISTER-CHOE-CHUNG-HEON-CHEOK-JUN-GYEONG-20260907",
+    "production_screen": "new_person",
+    "representative_domain_review": "governance",
+    "spatial_readiness": "reuse_existing_polity_spatial_identity"
+  }
+}
