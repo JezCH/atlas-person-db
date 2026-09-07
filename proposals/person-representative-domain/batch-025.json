@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-07",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "851dc8f92a155a2cb8844285c2ba58caefb971ab",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "one reviewed representative domain per Person; medieval sovereign or top territorial ruler controls for these exact retained Persons after dedup correction"
+  },
+  "entries": [
+    {"person_id":"b7a244ee-cee2-4877-a4e2-267f6769e274","canonical_name_en":"Harold Godwinson","preferred_name_ko":"해럴드 2세","representative_domain":"governance"},
+    {"person_id":"7389cfc6-584a-45a2-a937-a21122501d39","canonical_name_en":"Svatopluk I","preferred_name_ko":"스바토플루크 1세","representative_domain":"governance"}
+  ]
+}
