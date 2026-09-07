@@ -35,6 +35,12 @@ function assertSpatialContract(spatial) {
   asObject(spatial, 'spatial index');
   asObject(spatial.polity_geography, 'spatial index polity_geography');
   asObject(spatial.polity_subregions, 'spatial index polity_subregions');
+  if (spatial.place_function_records != null && !Array.isArray(spatial.place_function_records)) {
+    throw new Error('spatial index place_function_records must be an array when present');
+  }
+  if (spatial.review_queue != null && !Array.isArray(spatial.review_queue)) {
+    throw new Error('spatial index review_queue must be an array when present');
+  }
 }
 
 function activityReferenceCount(polity) {
@@ -67,17 +73,45 @@ function stableCandidateSort(left, right) {
   return String(left.polity_id ?? '').localeCompare(String(right.polity_id ?? ''), 'en');
 }
 
+function dispositionSets(spatial) {
+  const temporal = new Set(
+    (spatial.place_function_records || [])
+      .map((record) => record?.polity_id)
+      .filter((polityId) => typeof polityId === 'string' && polityId)
+  );
+  const reviewedUnresolved = new Set(
+    (spatial.review_queue || [])
+      .map((record) => record?.polity_id)
+      .filter((polityId) => typeof polityId === 'string' && polityId)
+  );
+  return { temporal, reviewedUnresolved };
+}
+
 export function buildSpatialPolityCandidates({ audit, spatial, expectedDeploymentSha = null, topLimit = 100 }) {
   assertAuditContract(audit, expectedDeploymentSha);
   assertSpatialContract(spatial);
 
+  const { temporal, reviewedUnresolved } = dispositionSets(spatial);
+  let temporalUsedPolityCount = 0;
+  let explicitReviewUsedPolityCount = 0;
+
   const candidates = audit.polities
-    .filter((polity) => {
-      const polityId = polity?.polity_id;
-      return typeof polityId === 'string' && polityId && spatial.polity_geography[polityId] == null;
-    })
     .map((polity) => ({ polity, activityCount: activityReferenceCount(polity) }))
     .filter(({ activityCount }) => activityCount > 0)
+    .filter(({ polity }) => {
+      const polityId = polity?.polity_id;
+      if (typeof polityId !== 'string' || !polityId) return false;
+      if (spatial.polity_geography[polityId] != null) return false;
+      if (temporal.has(polityId)) {
+        temporalUsedPolityCount += 1;
+        return false;
+      }
+      if (reviewedUnresolved.has(polityId)) {
+        explicitReviewUsedPolityCount += 1;
+        return false;
+      }
+      return true;
+    })
     .map(({ polity, activityCount }) => ({
       polity_id: polity.polity_id,
       canonical_key: polity.canonical_key ?? null,
@@ -92,6 +126,9 @@ export function buildSpatialPolityCandidates({ audit, spatial, expectedDeploymen
     deployment_sha: audit.deployment_sha ?? null,
     geography_count: Object.keys(spatial.polity_geography).length,
     subregion_count: Object.keys(spatial.polity_subregions).length,
+    temporal_reviewed_used_polity_count: temporalUsedPolityCount,
+    explicit_review_queue_used_polity_count: explicitReviewUsedPolityCount,
+    undispositioned_used_polity_count: candidates.length,
     unplaced_used_polity_count: candidates.length
   };
 
