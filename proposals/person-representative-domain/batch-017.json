@@ -1,0 +1,34 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-07",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "29bbfa16815980f7d07860e731eca5d61ca419d3",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "one reviewed representative domain per Person; dominant historical identity controls, with sovereign/top political authority and reviewed de-facto powerholders mapped to governance while intellectual, technical, cultural, exploratory, and ecclesiastical identities retain their reviewed domains"
+  },
+  "entries": [
+    {"person_id":"4ac78579-a8ce-56b9-a901-89f0b34317b9","canonical_name_en":"Benjamin Franklin","preferred_name_ko":"벤저민 프랭클린","representative_domain":"knowledge"},
+    {"person_id":"74d914dc-3c46-444b-ab23-f1b9c124a569","canonical_name_en":"Cesare Beccaria","preferred_name_ko":"체사레 베카리아","representative_domain":"knowledge"},
+    {"person_id":"928045d7-e218-543d-9df8-9b96c8f65781","canonical_name_en":"Ada Lovelace","preferred_name_ko":"에이다 러브레이스","representative_domain":"technology"},
+    {"person_id":"a2c8b64d-8f37-432c-bfd3-c6a2bc542551","canonical_name_en":"Jane Austen","preferred_name_ko":"제인 오스틴","representative_domain":"culture"},
+    {"person_id":"d20abd93-4c12-596b-a361-085c50d56a95","canonical_name_en":"Sacagawea","preferred_name_ko":"사카자위아","representative_domain":"exploration"},
+    {"person_id":"ebd12cb5-8da8-4b1d-8f19-d0480d7e5ccf","canonical_name_en":"Pius IX","preferred_name_ko":"비오 9세","representative_domain":"religion"},
+    {"person_id":"1f27e9b6-fe17-46e4-893a-0e63ac2d06bd","canonical_name_en":"Pasquale Paoli","preferred_name_ko":"파스콸레 파올리","representative_domain":"governance"},
+    {"person_id":"f5fa66e4-336f-45b6-99b2-4cb609ba2923","canonical_name_en":"Stanisław II Augustus","preferred_name_ko":"스타니스와프 2세 아우구스트","representative_domain":"governance"},
+    {"person_id":"2595d093-b3a9-484e-b65e-6d7fa5cec770","canonical_name_en":"Jeongjo of Joseon","preferred_name_ko":"정조","representative_domain":"governance"},
+    {"person_id":"de8aab73-cb73-5214-b28e-0e1f7dfee9c0","canonical_name_en":"Maria I of Portugal","preferred_name_ko":"마리아 1세","representative_domain":"governance"},
+    {"person_id":"06f72efc-e557-5992-b4f9-05c5eb0c050a","canonical_name_en":"Maximilien Robespierre","preferred_name_ko":"로베스피에르","representative_domain":"governance"},
+    {"person_id":"e7eb30c2-a682-5e46-8936-01da7fa59962","canonical_name_en":"Kamehameha I","preferred_name_ko":"카메하메하 1세","representative_domain":"governance"},
+    {"person_id":"e14ce84d-0fd6-4ba8-8c04-6906c8174c63","canonical_name_en":"Ramón Freire","preferred_name_ko":"라몬 프레이레","representative_domain":"governance"},
+    {"person_id":"b5df625a-ac9e-4400-8416-0c1f2d6cff09","canonical_name_en":"Ranavalona I","preferred_name_ko":"라나발로나 1세","representative_domain":"governance"},
+    {"person_id":"bdf1f0b4-9730-4e55-b066-5e3eb3e9a276","canonical_name_en":"Leopold I of Belgium","preferred_name_ko":"레오폴드 1세","representative_domain":"governance"},
+    {"person_id":"74f4afe8-bbb2-4f29-b6be-56fa46b0f6c1","canonical_name_en":"Isabella II of Spain","preferred_name_ko":"이사벨 2세","representative_domain":"governance"},
+    {"person_id":"fc954d0b-d83b-4310-b093-787904232ee5","canonical_name_en":"Franz Joseph I","preferred_name_ko":"프란츠 요제프 1세","representative_domain":"governance"},
+    {"person_id":"1fd2d94d-38f5-47c2-89e7-5d923809d8f9","canonical_name_en":"Benito Juárez","preferred_name_ko":"베니토 후아레스","representative_domain":"governance"},
+    {"person_id":"e078d493-4f97-5d1f-832b-4289e76440d6","canonical_name_en":"Empress Myeongseong","preferred_name_ko":"명성황후","representative_domain":"governance"},
+    {"person_id":"f14bd56a-8c24-591c-811a-e731bccc4eeb","canonical_name_en":"Emperor Meiji","preferred_name_ko":"메이지 천황","representative_domain":"governance"}
+  ]
+}
