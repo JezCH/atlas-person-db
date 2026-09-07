@@ -31,6 +31,14 @@ const palette = Object.freeze({
 
 const readEntries = (names) => names.flatMap((name) => JSON.parse(fs.readFileSync(path.join(proposalDir, name), 'utf8')).entries);
 
+function assertContiguousSequence(files, prefix) {
+  assert.ok(files.length > 0);
+  assert.deepEqual(
+    files,
+    Array.from({ length:files.length }, (_, index) => `${prefix}-${String(index + 1).padStart(3, '0')}.json`)
+  );
+}
+
 function assertBatchDistribution(fileName, expectedLength, expectedCounts) {
   const batch = JSON.parse(fs.readFileSync(path.join(proposalDir, fileName), 'utf8'));
   const counts = Object.fromEntries(Object.keys(palette).map((domain) => [domain, 0]));
@@ -59,8 +67,8 @@ test('browser registry and reviewed proposals use canonical codes only', () => {
 });
 
 test('reviewed batch and HOLD sequences are contiguous and dynamically discoverable', () => {
-  assert.deepEqual(batchFiles, ['batch-001.json','batch-002.json','batch-003.json','batch-004.json','batch-005.json','batch-006.json','batch-007.json','batch-008.json','batch-009.json','batch-010.json','batch-011.json']);
-  assert.deepEqual(holdFiles, ['hold-001.json','hold-002.json']);
+  assertContiguousSequence(batchFiles, 'batch');
+  assertContiguousSequence(holdFiles, 'hold');
   assert.match(applyClient, /discoverContiguous\("batch"\)/);
   assert.match(applyClient, /discoverContiguous\("hold"\)/);
   assert.doesNotMatch(applyClient, /EXPECTED_REVIEWED_ASSIGNMENTS/);
@@ -144,6 +152,21 @@ test('Batch 011 contains exactly the reviewed historical-leader distribution', (
     exploration:0
   });
   assert.equal(batch11.entries.some((entry) => entry.person_id === '87b9541e-cc28-46ca-a849-43a5a14ae162'), false);
+});
+
+test('Batch 012 contains exactly the reviewed balanced distribution', () => {
+  const batch12 = assertBatchDistribution('batch-012.json', 20, {
+    governance:3,
+    military:5,
+    knowledge:5,
+    technology:2,
+    commerce:0,
+    culture:2,
+    religion:0,
+    exploration:3
+  });
+  assert.equal(batch12.entries.some((entry) => entry.person_id === '1539ff3b-f3fc-492d-9828-34874f338eed' && entry.representative_domain === 'military'), true);
+  assert.equal(batch12.entries.some((entry) => entry.person_id === '87b9541e-cc28-46ca-a849-43a5a14ae162'), false);
 });
 
 test('Pythagoras remains an unresolved knowledge/religion HOLD', () => {
