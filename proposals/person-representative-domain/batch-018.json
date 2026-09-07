@@ -1,0 +1,34 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-07",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "9a9c84d5b9ba7e30c1ba5f27ebac6af1434a97f5",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "one reviewed representative domain per Person; dominant historical identity controls, separating sovereign/de-facto political authority from non-sovereign military command and medical scholarship"
+  },
+  "entries": [
+    {"person_id":"108f55ab-3e8b-40e3-aded-8ed291174e49","canonical_name_en":"Heo Jun","preferred_name_ko":"허준","representative_domain":"knowledge"},
+    {"person_id":"e5707968-fc11-4dd7-9972-de4b1eb207c8","canonical_name_en":"Kwon Yul","preferred_name_ko":"권율","representative_domain":"military"},
+    {"person_id":"352b4b15-b074-43cd-a532-5a5f87c3741f","canonical_name_en":"Miyamoto Musashi","preferred_name_ko":"미야모토 무사시","representative_domain":"military"},
+    {"person_id":"3ea2118b-6eed-4c3a-a770-97fdd230a577","canonical_name_en":"Cuauhtémoc","preferred_name_ko":"콰우테목","representative_domain":"governance"},
+    {"person_id":"cf7944bc-a673-41f3-9463-381627fb2ab4","canonical_name_en":"Mary, Queen of Scots","preferred_name_ko":"메리 스튜어트","representative_domain":"governance"},
+    {"person_id":"57b00bae-2420-4ddd-b374-f70c81479bff","canonical_name_en":"Ivan IV","preferred_name_ko":"이반 4세","representative_domain":"governance"},
+    {"person_id":"8cda708e-eb60-590e-8749-853a5ef4a6c3","canonical_name_en":"Philip II of Spain","preferred_name_ko":"펠리페 2세","representative_domain":"governance"},
+    {"person_id":"35f7fd10-5974-541b-9815-5b93ff043cae","canonical_name_en":"Seonjo of Joseon","preferred_name_ko":"선조","representative_domain":"governance"},
+    {"person_id":"91b6365a-4192-5fcb-836e-3250f60d6e02","canonical_name_en":"William the Silent","preferred_name_ko":"빌럼 1세(오라녀)","representative_domain":"governance"},
+    {"person_id":"86b612af-c2f5-5b2c-8061-c4abb37d072e","canonical_name_en":"Wanli Emperor","preferred_name_ko":"만력제","representative_domain":"governance"},
+    {"person_id":"78ded7fd-b5b5-50a2-9e6b-bca7d99f43c8","canonical_name_en":"Amina of Zazzau","preferred_name_ko":"아미나","representative_domain":"governance"},
+    {"person_id":"10c0c302-4cdb-5fd2-a029-8d1a6c3287cf","canonical_name_en":"Toyotomi Hideyoshi","preferred_name_ko":"도요토미 히데요시","representative_domain":"governance"},
+    {"person_id":"75270079-7198-48c6-b695-b9fe172440b9","canonical_name_en":"Christian IV","preferred_name_ko":"크리스티안 4세","representative_domain":"governance"},
+    {"person_id":"c77a6f54-3a2c-48d5-b20c-09ed7d54463f","canonical_name_en":"Henry IV of France","preferred_name_ko":"앙리 4세","representative_domain":"governance"},
+    {"person_id":"5f509c89-dd34-4ed2-bf81-111036bb7733","canonical_name_en":"Ryu Seong-ryong","preferred_name_ko":"류성룡","representative_domain":"governance"},
+    {"person_id":"64e4d6fc-e2d5-5deb-84a2-cb0e50aab9a4","canonical_name_en":"Gustavus Adolphus","preferred_name_ko":"구스타브 2세 아돌프","representative_domain":"governance"},
+    {"person_id":"11eef195-4b20-57dc-8d84-c96b9aff77b5","canonical_name_en":"Nurhaci","preferred_name_ko":"천명제","representative_domain":"governance"},
+    {"person_id":"153ce6aa-9c21-47f4-90cd-7b80430df2b2","canonical_name_en":"Philip IV of Spain","preferred_name_ko":"펠리페 4세","representative_domain":"governance"},
+    {"person_id":"14654029-2f54-43ef-b97b-5e66de7a6831","canonical_name_en":"Cardinal Richelieu","preferred_name_ko":"리슐리외 추기경","representative_domain":"governance"},
+    {"person_id":"f19f4847-cac8-5d61-a6c5-bcf3c6a6b0a4","canonical_name_en":"Nzinga Mbande","preferred_name_ko":"은징가 음반데","representative_domain":"governance"}
+  ]
+}
