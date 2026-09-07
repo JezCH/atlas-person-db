@@ -89,6 +89,9 @@ test('builds a deterministic used-but-unplaced polity queue from authoritative U
     deployment_sha: DEPLOYMENT_SHA,
     geography_count: 3,
     subregion_count: 2,
+    temporal_reviewed_used_polity_count: 0,
+    explicit_review_queue_used_polity_count: 0,
+    undispositioned_used_polity_count: 2,
     unplaced_used_polity_count: 2
   });
   assert.deepEqual(result.candidates.map((entry) => entry.polity_id), ['used-five', 'used-one']);
