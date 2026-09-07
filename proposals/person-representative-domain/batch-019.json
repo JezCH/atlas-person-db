@@ -1,0 +1,34 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-07",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "cb328423f5a24888e012463cfa8b3182ca82df87",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "one reviewed representative domain per Person; dominant historical identity controls, separating sovereign/top political authority from non-sovereign military identity"
+  },
+  "entries": [
+    {"person_id":"a098e80f-f3b9-4aaa-a643-c5d4dc4da1b9","canonical_name_en":"Manfred von Richthofen","preferred_name_ko":"만프레트 폰 리히트호펜","representative_domain":"military"},
+    {"person_id":"6e905b8a-8d9a-5022-83c4-900431c20c5a","canonical_name_en":"Li Zicheng","preferred_name_ko":"이자성","representative_domain":"governance"},
+    {"person_id":"065d7eb3-096d-5166-85a9-18d528851434","canonical_name_en":"Zhang Xianzhong","preferred_name_ko":"장헌충","representative_domain":"governance"},
+    {"person_id":"ecd101dc-83b0-578a-8486-f4c0466d4ff6","canonical_name_en":"Oliver Cromwell","preferred_name_ko":"올리버 크롬웰","representative_domain":"governance"},
+    {"person_id":"05da99ee-874c-416a-a8bf-aeb254b1afe8","canonical_name_en":"Charles XI of Sweden","preferred_name_ko":"칼 11세","representative_domain":"governance"},
+    {"person_id":"fc33b90d-b556-4c87-b698-605ec7163b49","canonical_name_en":"Osei Kofi Tutu I","preferred_name_ko":"오세이 코피 투투 1세","representative_domain":"governance"},
+    {"person_id":"ce04d4f1-63c0-5f81-a207-8c962e9cc508","canonical_name_en":"Yongzheng Emperor","preferred_name_ko":"옹정제","representative_domain":"governance"},
+    {"person_id":"469cc2f9-da4c-4e14-86e2-7abf69fb0d35","canonical_name_en":"Elizabeth of Russia","preferred_name_ko":"옐리자베타 페트로브나","representative_domain":"governance"},
+    {"person_id":"2194bdbe-d89e-4831-a721-661a45509606","canonical_name_en":"Victor Emmanuel II","preferred_name_ko":"비토리오 에마누엘레 2세","representative_domain":"governance"},
+    {"person_id":"b5526a78-a46c-449d-b69d-0201f688e43c","canonical_name_en":"Gojong of Korea","preferred_name_ko":"고종","representative_domain":"governance"},
+    {"person_id":"1b610095-2357-47fa-898e-46a591e62b3d","canonical_name_en":"Christian IX","preferred_name_ko":"크리스티안 9세","representative_domain":"governance"},
+    {"person_id":"1cd161df-fa84-57de-8dc5-a09c7e344b0e","canonical_name_en":"Chulalongkorn (Rama V)","preferred_name_ko":"라마 5세","representative_domain":"governance"},
+    {"person_id":"c9924ddf-74ae-471d-b860-7b6275eef473","canonical_name_en":"Oscar II","preferred_name_ko":"오스카르 2세","representative_domain":"governance"},
+    {"person_id":"ffc1670b-694b-4b4d-a4d5-234b0d4539f8","canonical_name_en":"José Manuel Balmaceda","preferred_name_ko":"호세 마누엘 발마세다","representative_domain":"governance"},
+    {"person_id":"6cbf381a-d8f6-5391-8484-a9bf373edee8","canonical_name_en":"Wilhelmina","preferred_name_ko":"빌헬미나 여왕","representative_domain":"governance"},
+    {"person_id":"fe12952f-e81a-49dc-be64-96a2d6dc4c12","canonical_name_en":"Liliʻuokalani","preferred_name_ko":"릴리우오칼라니","representative_domain":"governance"},
+    {"person_id":"69e5f538-12cf-49cd-bf7e-89597ca7ac97","canonical_name_en":"Jorge Montt","preferred_name_ko":"호르헤 몬트","representative_domain":"governance"},
+    {"person_id":"4dfceb56-f4f7-4928-a285-35466c72976b","canonical_name_en":"Nicholas II","preferred_name_ko":"니콜라이 2세","representative_domain":"governance"},
+    {"person_id":"bce94016-8f0d-5f14-9582-431a25602665","canonical_name_en":"Sun Yat-sen","preferred_name_ko":"쑨원","representative_domain":"governance"},
+    {"person_id":"610e2100-c61b-42e5-b9f0-26c349558253","canonical_name_en":"Georges Clemenceau","preferred_name_ko":"조르주 클레망소","representative_domain":"governance"}
+  ]
+}
