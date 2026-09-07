@@ -1,0 +1,25 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-07",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "13bc055430fa2efea5ac1b9355ff8c30f2e4be7a",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "one reviewed representative domain per Person; territorial/top political authority is governance, while conquistador command of conquest and colonial warfare is military"
+  },
+  "entries": [
+    {"person_id":"d4351b4c-4463-42c2-b943-27ac20f429a9","canonical_name_en":"John Hunyadi","preferred_name_ko":"후녀디 야노시","representative_domain":"governance"},
+    {"person_id":"647e69eb-943a-4ed9-89e4-26f68809d606","canonical_name_en":"Takeda Shingen","preferred_name_ko":"다케다 신겐","representative_domain":"governance"},
+    {"person_id":"1310c298-605b-5228-9c17-80b3b91f186d","canonical_name_en":"Uesugi Kenshin","preferred_name_ko":"우에스기 겐신","representative_domain":"governance"},
+    {"person_id":"a8667f29-e089-4eec-b996-705d7647f1e4","canonical_name_en":"Jean Parisot de Valette","preferred_name_ko":"장 파리소 드 라 발레트","representative_domain":"governance"},
+    {"person_id":"cfc93a34-bd82-55e8-9e7c-92b99cf40833","canonical_name_en":"Christina of Sweden","preferred_name_ko":"크리스티나 여왕","representative_domain":"governance"},
+    {"person_id":"d8f03db4-0c00-493e-91dd-86118f17cc22","canonical_name_en":"John IV of Portugal","preferred_name_ko":"주앙 4세","representative_domain":"governance"},
+    {"person_id":"a27c6f27-4223-52c3-ad04-cc5632c1928c","canonical_name_en":"Shō Shin","preferred_name_ko":"쇼신왕","representative_domain":"governance"},
+    {"person_id":"9dd76816-8ad2-5ac9-b965-d8324e41e2d3","canonical_name_en":"John II of Portugal","preferred_name_ko":"주앙 2세","representative_domain":"governance"},
+    {"person_id":"c586abbe-f30b-41b1-bbdf-895890d56e8e","canonical_name_en":"Hernán Cortés","preferred_name_ko":"에르난 코르테스","representative_domain":"military"},
+    {"person_id":"32124c4d-3c10-4802-9f4b-c717a156c563","canonical_name_en":"Francisco Pizarro","preferred_name_ko":"프란시스코 피사로","representative_domain":"military"},
+    {"person_id":"eef1ea13-c99e-48bb-b691-8380832b2595","canonical_name_en":"Pedro de Valdivia","preferred_name_ko":"페드로 데 발디비아","representative_domain":"military"}
+  ]
+}
