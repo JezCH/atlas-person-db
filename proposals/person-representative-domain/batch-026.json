@@ -1,0 +1,15 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-07",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "44aea63d368bceb3ba7642384282d9b83ac7cb38",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "one reviewed representative domain per Person; sovereign political authority controls for this exact retained Person after dedup correction"
+  },
+  "entries": [
+    {"person_id":"0cf5d179-539f-409a-86ae-3dcaf30c0199","canonical_name_en":"Hirohito","preferred_name_ko":"히로히토","representative_domain":"governance"}
+  ]
+}
