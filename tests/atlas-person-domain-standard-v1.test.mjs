@@ -28,15 +28,26 @@ const palette = Object.freeze({
   religion:'#e2d7b9',
   exploration:'#d96b1e'
 });
+const cancelledSequenceOrdinals = Object.freeze({
+  batch:new Set([22]),
+  hold:new Set()
+});
 
 const readEntries = (names) => names.flatMap((name) => JSON.parse(fs.readFileSync(path.join(proposalDir, name), 'utf8')).entries);
 
 function assertContiguousSequence(files, prefix) {
   assert.ok(files.length > 0);
-  assert.deepEqual(
-    files,
-    Array.from({ length:files.length }, (_, index) => `${prefix}-${String(index + 1).padStart(3, '0')}.json`)
-  );
+  const cancelled = cancelledSequenceOrdinals[prefix] || new Set();
+  const lastMatch = files.at(-1).match(/-(\d{3})\.json$/);
+  assert.ok(lastMatch);
+  const maxOrdinal = Number(lastMatch[1]);
+  const expected = Array.from({ length:maxOrdinal }, (_, index) => index + 1)
+    .filter((ordinal) => !cancelled.has(ordinal))
+    .map((ordinal) => `${prefix}-${String(ordinal).padStart(3, '0')}.json`);
+  assert.deepEqual(files, expected);
+  for (const ordinal of cancelled) {
+    assert.equal(files.includes(`${prefix}-${String(ordinal).padStart(3, '0')}.json`), false);
+  }
 }
 
 function assertBatchDistribution(fileName, expectedLength, expectedCounts) {
@@ -66,11 +77,13 @@ test('browser registry and reviewed proposals use canonical codes only', () => {
   assert.doesNotMatch(proposals, /"representative_domain"\s*:\s*"(?:ruler|science)"/);
 });
 
-test('reviewed batch and HOLD sequences are contiguous and dynamically discoverable', () => {
+test('reviewed batch and HOLD sequences are contiguous except explicitly cancelled ordinals and dynamically discoverable', () => {
   assertContiguousSequence(batchFiles, 'batch');
   assertContiguousSequence(holdFiles, 'hold');
   assert.match(applyClient, /discoverContiguous\("batch"\)/);
   assert.match(applyClient, /discoverContiguous\("hold"\)/);
+  assert.match(applyClient, /batch:new Set\(\[22\]\)/);
+  assert.match(applyClient, /Cancelled \$\{prefix\} ordinal must not have a manifest/);
   assert.doesNotMatch(applyClient, /EXPECTED_REVIEWED_ASSIGNMENTS/);
 });
 
