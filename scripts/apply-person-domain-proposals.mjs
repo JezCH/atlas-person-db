@@ -14,7 +14,7 @@ const CANONICAL_CODES = Object.freeze([
   "commerce","culture","religion","exploration"
 ]);
 const CANCELLED_SEQUENCE_ORDINALS = Object.freeze({
-  batch:new Set([22]),
+  batch:new Set([22,27,28,29,30]),
   hold:new Set()
 });
 
