@@ -1,0 +1,17 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-07",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "298d2d1926598d3e9f3350e341baaf656d000c2b",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "close the already-reviewed representative-domain remainder of PERSON-REGISTER-CHAMBERLAIN-ROMMEL-20260906 after exact UUID creation; preserve Dreyfus HOLD and do not replay Rommel"
+  },
+  "entries": [
+    {"person_id":"8cdc774f-ee4c-4c3d-a257-06d1f2e2b0e9","canonical_name_en":"Neville Chamberlain","preferred_name_ko":"네빌 체임벌린","representative_domain":"governance"},
+    {"person_id":"8c3f7629-d06d-48c5-8aea-bfb7b9cc285c","canonical_name_en":"Douglas MacArthur","preferred_name_ko":"더글러스 맥아더","representative_domain":"military"},
+    {"person_id":"f3b8b165-4d77-46e5-b84e-8f23c613b5be","canonical_name_en":"Joseph Goebbels","preferred_name_ko":"요제프 괴벨스","representative_domain":"governance"}
+  ]
+}
