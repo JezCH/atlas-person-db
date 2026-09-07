@@ -13,6 +13,10 @@ const CANONICAL_CODES = Object.freeze([
   "governance","military","knowledge","technology",
   "commerce","culture","religion","exploration"
 ]);
+const CANCELLED_SEQUENCE_ORDINALS = Object.freeze({
+  batch:new Set([22]),
+  hold:new Set()
+});
 
 function fail(message, details = null) {
   const error = new Error(message);
@@ -32,11 +36,18 @@ function discoverContiguous(prefix) {
     .map((item) => ({ name:item.name, ordinal:Number(item.match[1]) }))
     .sort((a,b) => a.ordinal - b.ordinal);
   if (files.length === 0) fail(`No ${prefix}-NNN.json files found`);
-  for (let i = 0; i < files.length; i++) {
-    const expected = i + 1;
-    if (files[i].ordinal !== expected) {
-      fail(`Non-contiguous ${prefix} sequence: expected ${String(expected).padStart(3,"0")}, got ${String(files[i].ordinal).padStart(3,"0")}`);
+  const cancelled = CANCELLED_SEQUENCE_ORDINALS[prefix] || new Set();
+  const byOrdinal = new Map(files.map((item) => [item.ordinal, item]));
+  const maxOrdinal = files.at(-1).ordinal;
+  for (let expected = 1; expected <= maxOrdinal; expected++) {
+    if (byOrdinal.has(expected)) {
+      if (cancelled.has(expected)) {
+        fail(`Cancelled ${prefix} ordinal must not have a manifest: ${String(expected).padStart(3,"0")}`);
+      }
+      continue;
     }
+    if (cancelled.has(expected)) continue;
+    fail(`Non-contiguous ${prefix} sequence: expected ${String(expected).padStart(3,"0")}, got gap`);
   }
   return Object.freeze(files.map((item) => item.name));
 }
