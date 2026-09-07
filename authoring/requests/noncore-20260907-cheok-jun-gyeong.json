@@ -1,0 +1,60 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "noncore-goryeo-reviewed-20260907:cheok-jun-gyeong",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Cheok Jun-gyeong",
+    "display_name_ko": "척준경",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Goryeo",
+    "display_name_ko": "고려",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Goryeo military officer and Jurchen campaign commander",
+    "role_display_name_ko": "고려 무신·여진정벌 지휘관",
+    "period_basis": "military_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Academy of Korean Studies records Cheok Jun-gyeong's rise through the Jurchen campaigns: military merit in 1104, major victories while serving under Yun Gwan in 1107, and appointment as Northeast Frontier Military Commissioner in 1119. ATLAS uses 1104-1119 as a conservative representative military-service interval and does not extend the rail through his later civil offices, the 1126 Yi Ja-gyeom crisis, exile, or 1144 death.",
+    "start_year": 1104,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1119,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "title": "척준경 - 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0055748",
+      "citation_text": "한국민족문화대백과사전은 척준경이 1104년 여진정벌에서 공을 세우고 1107년 윤관을 따라 여러 전투에서 승리했으며 1119년 동북면병마사가 되었다고 서술한다.",
+      "source_type": "web_bibliographic_reference",
+      "locator": "주요 활동: 1104년 여진정벌, 1107년 윤관 휘하 전투, 1119년 동북면병마사"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-07",
+      "reason": "Direct NamuWiki provider verification is unavailable in this session; no URL is invented and no absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "PERSON-REGISTER-CHOE-CHUNG-HEON-CHEOK-JUN-GYEONG-20260907",
+    "production_screen": "new_person",
+    "representative_domain_review": "military",
+    "spatial_readiness": "reuse_existing_polity_spatial_identity"
+  }
+}
