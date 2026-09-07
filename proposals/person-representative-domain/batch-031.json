@@ -1,0 +1,24 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-07",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "10617db52994bdd39f9df4d4f89c3dc8ab8befeb",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "one reviewed representative domain per Person; top or de-facto political authority maps to governance, while Ahmad Shah Massoud remains military because command/resistance is the defining historical identity"
+  },
+  "entries": [
+    {"person_id":"850a5400-1497-4aeb-af73-789083e5e670","canonical_name_en":"Agustín de Iturbide","preferred_name_ko":"아구스틴 데 이투르비데","representative_domain":"governance"},
+    {"person_id":"7e2d3116-1974-4fe3-9c5d-42599ceb9865","canonical_name_en":"Alberto Fujimori","preferred_name_ko":"알베르토 후지모리","representative_domain":"governance"},
+    {"person_id":"6b1b9f1f-b8eb-4ce8-a208-76f8a52003f0","canonical_name_en":"Alexander II of Russia","preferred_name_ko":"알렉산드르 2세","representative_domain":"governance"},
+    {"person_id":"840e4582-6ede-430e-b72d-fe62892708f7","canonical_name_en":"Ali Pasha of Yanina","preferred_name_ko":"야니나의 알리 파샤","representative_domain":"governance"},
+    {"person_id":"acf5eb5a-d817-435b-a51f-a03e67df0e74","canonical_name_en":"Bögü Khagan","preferred_name_ko":"뵈귀 카간","representative_domain":"governance"},
+    {"person_id":"03729648-bf35-4b41-9ca6-cbe5414e03c4","canonical_name_en":"Dan Quayle","preferred_name_ko":"댄 퀘일","representative_domain":"governance"},
+    {"person_id":"618cc5fb-43c9-40cd-a3ae-b52023855230","canonical_name_en":"Francisco Macías Nguema","preferred_name_ko":"프란시스코 마시아스 응게마","representative_domain":"governance"},
+    {"person_id":"8d602ee8-f8bd-4d17-a9a6-f011ab6e8c2e","canonical_name_en":"Nicolae Ceaușescu","preferred_name_ko":"니콜라에 차우셰스쿠","representative_domain":"governance"},
+    {"person_id":"e5fd285f-f981-4487-a294-b1e4bab26df3","canonical_name_en":"Vidkun Quisling","preferred_name_ko":"비드쿤 크비슬링","representative_domain":"governance"},
+    {"person_id":"593cec30-0fc9-418e-9dff-cefc73ab314e","canonical_name_en":"Ahmad Shah Massoud","preferred_name_ko":"아흐마드 샤 마수드","representative_domain":"military"}
+  ]
+}
