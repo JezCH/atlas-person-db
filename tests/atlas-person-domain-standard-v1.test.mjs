@@ -29,7 +29,7 @@ const palette = Object.freeze({
   exploration:'#d96b1e'
 });
 const cancelledSequenceOrdinals = Object.freeze({
-  batch:new Set([22]),
+  batch:new Set([22,27,28,29,30]),
   hold:new Set()
 });
 
@@ -82,7 +82,7 @@ test('reviewed batch and HOLD sequences are contiguous except explicitly cancell
   assertContiguousSequence(holdFiles, 'hold');
   assert.match(applyClient, /discoverContiguous\("batch"\)/);
   assert.match(applyClient, /discoverContiguous\("hold"\)/);
-  assert.match(applyClient, /batch:new Set\(\[22\]\)/);
+  assert.match(applyClient, /batch:new Set\(\[22,27,28,29,30\]\)/);
   assert.match(applyClient, /Cancelled \$\{prefix\} ordinal must not have a manifest/);
   assert.doesNotMatch(applyClient, /EXPECTED_REVIEWED_ASSIGNMENTS/);
 });
