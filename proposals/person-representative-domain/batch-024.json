@@ -1,0 +1,16 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-07",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "6324b1f035ac3e947a39f812ebcecacd7041b446",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "one reviewed representative domain per Person; ancient/medieval sovereign or de-facto top territorial ruler controls for these exact retained Persons after dedup correction"
+  },
+  "entries": [
+    {"person_id":"7f0a08a4-ef28-45ec-a851-25a65fd78bc4","canonical_name_en":"Zhenzhu Pijia Qaghan","preferred_name_ko":"진주비가가한","representative_domain":"governance"},
+    {"person_id":"fcad8cae-a15f-4d42-8f16-75d9a50bfb17","canonical_name_en":"Alfonso I of Asturias","preferred_name_ko":"알폰소 1세","representative_domain":"governance"}
+  ]
+}
