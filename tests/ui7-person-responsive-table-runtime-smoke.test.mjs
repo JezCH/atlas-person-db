@@ -99,8 +99,8 @@ test('UI7 table keeps status folding and groups visible rows under the derived e
 
   const eraGroup = grid.children[1];
   assert.ok(eraGroup.className.includes('person-era-group'));
-  assert.equal(eraGroup.dataset.atlasEra, 'ancient');
-  assert.equal(eraGroup.children[0].children[0].textContent, '고대');
+  assert.equal(eraGroup.dataset.atlasEra, 'early-civilization');
+  assert.equal(eraGroup.children[0].children[0].textContent, '초기문명');
   assert.equal(eraGroup.children[1].children.length, 2);
 
   assert.deepEqual(

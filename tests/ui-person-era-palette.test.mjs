@@ -7,13 +7,16 @@ const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 
 test('ATLAS era bands use the reviewed accessible categorical palette', () => {
   const expected = [
+    ['person-era-early-civilization', '#F0E2D2', '#74523A'],
     ['person-era-ancient', '#F3E8CF', '#6A4B18'],
     ['person-era-classical', '#E4EAF3', '#354F73'],
-    ['person-era-medieval', '#E4EDE5', '#3E5B46'],
+    ['person-era-early-medieval', '#E4EDE5', '#3E5B46'],
+    ['person-era-late-medieval', '#E2ECE8', '#3F625B'],
     ['person-era-early-modern', '#EDE4EE', '#65486B'],
     ['person-era-industrial-imperial', '#E5E7E8', '#4E5963'],
     ['person-era-world-wars', '#E8E6D9', '#4B5237'],
-    ['person-era-contemporary', '#E1EEF1', '#315E68'],
+    ['person-era-cold-war', '#E3E9F0', '#3D566F'],
+    ['person-era-information', '#E1EEF1', '#315E68'],
     ['person-era-unknown', '#ECEFF2', '#616A75']
   ];
   for (const [className, background, foreground] of expected) {
@@ -23,7 +26,7 @@ test('ATLAS era bands use the reviewed accessible categorical palette', () => {
 
 test('era palette loads after the base table stylesheet and before canonical geometry', () => {
   const base = 'atlas-person-table-view.css?v=20260817-era-band-r2';
-  const paletteAsset = 'atlas-person-era-palette.css?v=20260816-era-palette-v1';
+  const paletteAsset = 'atlas-person-era-palette.css?v=20260909-era-10-band-v1';
   const geometry = 'atlas-person-table-alignment.css?v=20260817-table-geometry-r2';
   assert.ok(html.includes(base));
   assert.ok(html.includes(paletteAsset));

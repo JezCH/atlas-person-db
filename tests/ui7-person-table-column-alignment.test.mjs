@@ -23,15 +23,18 @@ test('Person table composes an era band with the existing four Person data cells
 test('era classification uses the agreed shared ATLAS global cut points and preserves unknown chronology', () => {
   assert.match(source, /window\.ATLAS_PERSON_ERA_MODEL/);
   assert.match(source, /eraModel\.eraForYear\(year\)/);
-  assert.doesNotMatch(source, /year < -480|year < 500|year < 1492|year < 1750|year < 1914|year < 1945/);
-  assert.match(eraModelSource, /end_year: -481/);
-  assert.match(eraModelSource, /start_year: -480, end_year: 499/);
-  assert.match(eraModelSource, /start_year: 500, end_year: 1491/);
-  assert.match(eraModelSource, /start_year: 1492, end_year: 1749/);
-  assert.match(eraModelSource, /start_year: 1750, end_year: 1913/);
-  assert.match(eraModelSource, /start_year: 1914, end_year: 1944/);
-  assert.match(eraModelSource, /start_year: 1945, end_year: null/);
-  for (const label of ['고대', '고전', '중세', '근세', '산업·제국', '세계대전', '현대', '전설, 신화, 연대미상']) {
+  assert.doesNotMatch(source, /year < -1000|year < -600|year < 600|year < 1000|year < 1492|year < 1750|year < 1914|year < 1945|year < 1991/);
+  assert.match(eraModelSource, /code: "early-civilization"[^\n]*end_year: -1001/);
+  assert.match(eraModelSource, /code: "ancient"[^\n]*start_year: -1000[^\n]*end_year: -601/);
+  assert.match(eraModelSource, /code: "classical"[^\n]*start_year: -600[^\n]*end_year: 599/);
+  assert.match(eraModelSource, /code: "early-medieval"[^\n]*start_year: 600[^\n]*end_year: 999/);
+  assert.match(eraModelSource, /code: "late-medieval"[^\n]*start_year: 1000[^\n]*end_year: 1491/);
+  assert.match(eraModelSource, /code: "early-modern"[^\n]*start_year: 1492[^\n]*end_year: 1749/);
+  assert.match(eraModelSource, /code: "industrial-imperial"[^\n]*start_year: 1750[^\n]*end_year: 1913/);
+  assert.match(eraModelSource, /code: "world-wars"[^\n]*start_year: 1914[^\n]*end_year: 1944/);
+  assert.match(eraModelSource, /code: "cold-war"[^\n]*start_year: 1945[^\n]*end_year: 1990/);
+  assert.match(eraModelSource, /code: "information"[^\n]*start_year: 1991[^\n]*end_year: null/);
+  for (const label of ['초기문명', '고대', '고전', '전기중세', '후기중세', '근세', '산업·제국', '세계대전', '냉전', '정보화', '전설, 신화, 연대미상']) {
     assert.match(eraModelSource, new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
   assert.match(source, /groupRowsByEra\(grid\)/);
@@ -75,6 +78,6 @@ test('canonical geometry layer loads directly after the table presentation asset
 test('era band presentation and geometry use fresh browser cache keys', () => {
   assert.match(html, /atlas-person-table-view\.css\?v=20260817-era-band-r2/);
   assert.match(html, /atlas-person-table-alignment\.css\?v=20260817-table-geometry-r2/);
-  assert.match(html, /atlas-person-era-model\.js\?v=20260819-era-model-r2/);
+  assert.match(html, /atlas-person-era-model\.js\?v=20260909-era-10-band-v1/);
   assert.match(html, /atlas-person-table-view\.js\?v=20260819-era-model-r2/);
 });
