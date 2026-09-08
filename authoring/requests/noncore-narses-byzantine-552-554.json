@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:narses:byzantine-empire:military-activity:552-554:v1",
+  "person": {
+    "canonical_name_en": "Narses",
+    "display_name_ko": "나르세스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-09",
+      "reason": "The exact-person NamuWiki review could not be verified through the available provider/search path. Registration continues under the explicit provider-access deferral; this is not a not_found decision.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Byzantine Empire",
+    "display_name_ko": "비잔티움 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Byzantine general and commander in Italy",
+    "role_display_name_ko": "비잔티움 장군·이탈리아 원정 지휘관",
+    "start_year": 552,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 554,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Narses returned to Italy as Justinian’s commander and completed the decisive phase of the Byzantine reconquest, defeating Totila in 552 and a Frankish-Alemannic army in 554. ATLAS records this narrow, source-backed military interval rather than his full court career."
+  },
+  "sources": [
+    {
+      "title": "Narses — The Columbia Encyclopedia / Encyclopedia.com",
+      "canonical_url": "https://www.encyclopedia.com/reference/encyclopedias-almanacs-transcripts-and-maps/narses",
+      "citation_text": "The Columbia Encyclopedia identifies Narses as a Byzantine official and general and records his defeat of Totila in 552 and of a Frankish and Alemannic army at Capua in 554.",
+      "source_type": "reference_work"
+    }
+  ]
+}
