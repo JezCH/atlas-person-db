@@ -1,0 +1,13 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "global-s-republic-of-geneva-20260908",
+  "baseline": "ed88425aeeed84377d6376e2772269c401ef0e9a",
+  "reviewed_at": "2026-09-08T04:45:00.000Z",
+  "bindings": [
+    {
+      "polity_id": "8fb963f3-8941-4c35-857b-23c55b2b6cdd",
+      "region_code": "europe",
+      "subregion_code": "central-europe"
+    }
+  ]
+}
