@@ -88,7 +88,7 @@ test('era navigation assets load after the shared era model/table grouping and b
   const tableJs = 'atlas-person-table-view.js?v=20260819-era-model-r2';
   const navJs = 'atlas-person-era-navigation.js?v=20260817-era-search-toolbar-v2';
   const mainJs = 'atlas-person-main.js?v=20260821-person-profile-v1';
-  const paletteCss = 'atlas-person-era-palette.css?v=20260909-era-10-band-v1';
+  const paletteCss = 'atlas-person-era-palette.css?v=20260909-era-10-band-v2';
   const navCssAsset = 'atlas-person-era-navigation.css?v=20260817-era-search-toolbar-v3';
   const geometryCss = 'atlas-person-table-alignment.css?v=20260817-table-geometry-r2';
 
