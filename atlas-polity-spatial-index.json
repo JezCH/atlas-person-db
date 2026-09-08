@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-08T04:45:00.000Z",
+  "generated_at": "2026-09-08T04:54:00.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -1161,6 +1161,7 @@
     "13bc95f9-f95c-4cb1-a3c1-f15bb5547651": "central-asia",
     "d050c493-a3e0-4d5c-b16f-452c4d17cfcf": "europe",
     "8fb963f3-8941-4c35-857b-23c55b2b6cdd": "europe",
+    "1eaa48b6-dc60-49d6-91c4-49db556f4ddf": "europe",
     "4c3e50cb-d76c-4b7c-b611-222849404142": "central-asia",
     "502f18c3-41fc-4cb8-84cc-67f7e0454a9d": "europe",
     "7518462f-9769-413f-a245-cc3825b45d17": "south-asia",
@@ -2637,6 +2638,7 @@
     "13bc95f9-f95c-4cb1-a3c1-f15bb5547651": "eastern-central-asia-steppe",
     "d050c493-a3e0-4d5c-b16f-452c4d17cfcf": "britain-ireland",
     "8fb963f3-8941-4c35-857b-23c55b2b6cdd": "central-europe",
+    "1eaa48b6-dc60-49d6-91c4-49db556f4ddf": "western-europe",
     "7e0522d7-1ff9-4464-927b-4376bf35ed7a": "russia-volga",
     "928ce704-e37c-42aa-8ac4-0b964b5fe732": "manchuria",
     "b333c8ba-a506-4e37-aea5-deb5e9d7ff80": "south-america",
