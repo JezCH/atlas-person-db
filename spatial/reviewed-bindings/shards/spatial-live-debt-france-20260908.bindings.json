@@ -1,0 +1,13 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "spatial-live-debt-france-20260908",
+  "baseline": "5fd95eed38c8afe660004a480041d1e6580bf243",
+  "reviewed_at": "2026-09-08T07:04:41.000Z",
+  "bindings": [
+    {
+      "polity_id": "1eaa48b6-dc60-49d6-91c4-49db556f4ddf",
+      "region_code": "europe",
+      "subregion_code": "western-europe"
+    }
+  ]
+}
