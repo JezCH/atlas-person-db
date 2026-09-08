@@ -1,0 +1,19 @@
+{
+  "proposal_id": "atpd-b046-20260908",
+  "label": "Person Representative Domain Batch 046 — GLOBAL-S cohort",
+  "description": "Reviewed representative-domain assignments from GLOBAL-S-GRADE-PERSON-COHORT-20260906. Values are copied from explicit human review context; no Role-to-Domain inference is used.",
+  "review_status": "approved",
+  "assignments": [
+    {"person_id":"dfa49bd5-8672-4f78-8ab6-72932a6726d9","canonical_name_en":"William Shakespeare","preferred_name_ko":"윌리엄 셰익스피어","representative_domain":"culture","rationale":"GLOBAL-S reviewed decision: culture is Shakespeare's canonical representative domain."},
+    {"person_id":"767be668-2242-4de5-b435-f97f10860a03","canonical_name_en":"Immanuel Kant","preferred_name_ko":"임마누엘 칸트","representative_domain":"knowledge","rationale":"GLOBAL-S reviewed decision: knowledge is Kant's canonical representative domain."},
+    {"person_id":"f2740ecc-a868-4156-bc68-bf8f0d9fc4fc","canonical_name_en":"Johann Sebastian Bach","preferred_name_ko":"요한 제바스티안 바흐","representative_domain":"culture","rationale":"GLOBAL-S reviewed decision: culture is Bach's canonical representative domain."},
+    {"person_id":"b66d01f1-cb09-4e7d-b9d2-7eb00055244e","canonical_name_en":"Dante Alighieri","preferred_name_ko":"단테 알리기에리","representative_domain":"culture","rationale":"GLOBAL-S reviewed decision: culture is Dante's canonical representative domain."},
+    {"person_id":"dd1d4143-86fe-4008-b43b-668aadb90823","canonical_name_en":"Michelangelo","preferred_name_ko":"미켈란젤로 부오나로티","representative_domain":"culture","rationale":"GLOBAL-S reviewed decision: culture is Michelangelo's canonical representative domain."},
+    {"person_id":"3ed8688c-709b-4d65-ac88-6fc4a5c2b6ab","canonical_name_en":"Al-Ghazali","preferred_name_ko":"알가잘리","representative_domain":"religion","rationale":"GLOBAL-S reviewed decision: religion is Al-Ghazali's canonical representative domain."},
+    {"person_id":"abc01682-4ad1-43bf-a5d9-d665140daf3b","canonical_name_en":"Ibn Khaldun","preferred_name_ko":"이븐 할둔","representative_domain":"knowledge","rationale":"GLOBAL-S reviewed decision: knowledge is Ibn Khaldun's canonical representative domain."},
+    {"person_id":"5853a9a3-50a3-4faf-af2c-615b5c86dcd4","canonical_name_en":"Zhu Xi","preferred_name_ko":"주희","representative_domain":"knowledge","rationale":"GLOBAL-S reviewed decision: knowledge is Zhu Xi's canonical representative domain."},
+    {"person_id":"e321ced7-1d39-485f-bce7-69db19816417","canonical_name_en":"John Calvin","preferred_name_ko":"장 칼뱅","representative_domain":"religion","rationale":"GLOBAL-S reviewed decision: religion is Calvin's canonical representative domain."},
+    {"person_id":"b135825f-e1bc-4a86-b813-0a3de5d63045","canonical_name_en":"Zhuangzi","preferred_name_ko":"장자","representative_domain":"knowledge","rationale":"GLOBAL-S reviewed decision: knowledge is Zhuangzi's canonical representative domain."},
+    {"person_id":"be0af966-3bbe-4ef4-b237-06225bb1f6bb","canonical_name_en":"Sigmund Freud","preferred_name_ko":"지그문트 프로이트","representative_domain":"knowledge","rationale":"GLOBAL-S reviewed decision: knowledge is Freud's canonical representative domain."}
+  ]
+}
