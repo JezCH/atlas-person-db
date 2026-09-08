@@ -1,0 +1,29 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-08",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "794bfd8fccd82827ddfac61f16cba6cf6b0deadc",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "apply only the fifteen explicit human-reviewed representative-domain assignments deferred from completed Person registrations; no reclassification, no inferred Role-to-Domain mapping, and no per-Person hard-coded color because the shared Person domain registry remains authoritative"
+  },
+  "entries": [
+    {"person_id":"86f6fb40-cfaf-4602-a622-5907b322bdf8","canonical_name_en":"Yuri Gagarin","preferred_name_ko":"유리 가가린","representative_domain":"exploration"},
+    {"person_id":"a239445c-9503-4116-b26f-e560f2e595e4","canonical_name_en":"Neil Armstrong","preferred_name_ko":"닐 암스트롱","representative_domain":"exploration"},
+    {"person_id":"84b20280-c133-4da7-9919-59db77c81346","canonical_name_en":"Willis Carrier","preferred_name_ko":"윌리스 캐리어","representative_domain":"technology"},
+    {"person_id":"283c3c8f-0071-4729-bb87-227c89b97bb5","canonical_name_en":"Diogenes","preferred_name_ko":"디오게네스","representative_domain":"knowledge"},
+    {"person_id":"c2d9696d-99e2-4edd-a42e-2ce21d0ff696","canonical_name_en":"Jack Churchill","preferred_name_ko":"잭 처칠","representative_domain":"military"},
+    {"person_id":"e64be21d-fc1d-405b-a75c-5692524bbefe","canonical_name_en":"Adrian Carton de Wiart","preferred_name_ko":"에이드리언 카턴 드 와이어트","representative_domain":"military"},
+    {"person_id":"d5196fd6-4d6e-46a4-b5db-3b6a4647ece5","canonical_name_en":"Simo Häyhä","preferred_name_ko":"시모 해위해","representative_domain":"military"},
+    {"person_id":"9b0ed6bb-83b7-4b0e-8905-2c2670675ca5","canonical_name_en":"Léo Major","preferred_name_ko":"레오 메이저","representative_domain":"military"},
+    {"person_id":"88155117-6866-41a8-8a40-c80ad3e16589","canonical_name_en":"Vasily Arkhipov","preferred_name_ko":"바실리 아르히포프","representative_domain":"military"},
+    {"person_id":"57c344e4-ad5f-4d23-a4f9-0fb0e38d755f","canonical_name_en":"Stanislav Petrov","preferred_name_ko":"스타니슬라프 페트로프","representative_domain":"military"},
+    {"person_id":"9e1b13fa-b0a1-41e3-9403-af214aecd82c","canonical_name_en":"Aimo Koivunen","preferred_name_ko":"아이모 코이부넨","representative_domain":"military"},
+    {"person_id":"e94f9359-c526-463f-950d-7759ec0628b9","canonical_name_en":"Witold Pilecki","preferred_name_ko":"비톨트 필레츠키","representative_domain":"military"},
+    {"person_id":"98e2abee-1fd9-45b2-8db7-33bdf6d981ce","canonical_name_en":"Julie d'Aubigny","preferred_name_ko":"쥘리 도비니","representative_domain":"culture"},
+    {"person_id":"473db34c-badf-4fa5-8cec-526b0aafd19b","canonical_name_en":"Audie Murphy","preferred_name_ko":"오디 머피","representative_domain":"military"},
+    {"person_id":"434c91f6-417a-44b9-9c57-958941518d4f","canonical_name_en":"John Brown","preferred_name_ko":"존 브라운","representative_domain":"governance"}
+  ]
+}
