@@ -1,0 +1,30 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-08",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "81a0be425738f5de19248d6ff7a1ac2200b2da8c",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "apply only the 16 explicit human-reviewed CIV7 representative-domain assignments from the completed historical registration cohort; no inferred Role-to-Domain mapping"
+  },
+  "entries": [
+    {"person_id":"f7233956-8e2d-465e-94e6-c405c9ff7793","canonical_name_en":"Al-Idrisi","preferred_name_ko":"알 이드리시","representative_domain":"exploration"},
+    {"person_id":"64a73852-6d78-4682-a8cb-48680fc39cf2","canonical_name_en":"Al-Masudi","preferred_name_ko":"알 마수디","representative_domain":"exploration"},
+    {"person_id":"b5289bf5-0fd2-4a57-b0a0-114acbd18cb4","canonical_name_en":"Arete of Cyrene","preferred_name_ko":"키레네의 아레테","representative_domain":"knowledge"},
+    {"person_id":"0912bdab-405a-42f9-b63b-791b7a729922","canonical_name_en":"Aspasia","preferred_name_ko":"아스파시아","representative_domain":"knowledge"},
+    {"person_id":"8bcb4f4d-0363-4a32-a17c-ad0e40454e0c","canonical_name_en":"Ban Zhao","preferred_name_ko":"반소","representative_domain":"knowledge"},
+    {"person_id":"3edd38af-2b54-4b7c-9989-5a228b65226e","canonical_name_en":"Emiliano Zapata","preferred_name_ko":"에밀리아노 사파타","representative_domain":"governance"},
+    {"person_id":"4013e0db-b7b2-4a15-8348-390c5f762770","canonical_name_en":"Ibn Fadlan","preferred_name_ko":"이븐 파들란","representative_domain":"exploration"},
+    {"person_id":"4593467a-6dea-4d07-a40f-597185fe0f25","canonical_name_en":"Ibn Rushd","preferred_name_ko":"이븐 루시드","representative_domain":"knowledge"},
+    {"person_id":"b47fb78d-4cb4-4dfb-a576-fe304c60ac30","canonical_name_en":"Ibn Sina","preferred_name_ko":"이븐 시나","representative_domain":"knowledge"},
+    {"person_id":"efed2423-c2df-4b32-8079-a5316fec1409","canonical_name_en":"Murasaki Shikibu","preferred_name_ko":"무라사키 시키부","representative_domain":"culture"},
+    {"person_id":"e68a74a8-0ed2-43c9-88cc-7e96a015c5aa","canonical_name_en":"Nikolaos Plastiras","preferred_name_ko":"니콜라오스 플라스티라스","representative_domain":"governance"},
+    {"person_id":"75521f03-45cc-4879-969d-84a4de4203bc","canonical_name_en":"Omar Khayyam","preferred_name_ko":"오마르 하이얌","representative_domain":"knowledge"},
+    {"person_id":"db71eca3-9ce5-40a3-9d9d-fbc7ec8a8ddf","canonical_name_en":"Rumi","preferred_name_ko":"잘랄루딘 루미","representative_domain":"culture"},
+    {"person_id":"4679aae4-3dd5-4747-b413-6b492fcb345d","canonical_name_en":"Sojourner Truth","preferred_name_ko":"소저너 트루스","representative_domain":"governance"},
+    {"person_id":"2c7253f9-d629-47ec-9e7d-3912e9d40c4f","canonical_name_en":"Susan B. Anthony","preferred_name_ko":"수전 B. 앤서니","representative_domain":"governance"},
+    {"person_id":"26933848-04ba-46af-8475-c3de2556ef2c","canonical_name_en":"Ziryab","preferred_name_ko":"지르얍","representative_domain":"culture"}
+  ]
+}
