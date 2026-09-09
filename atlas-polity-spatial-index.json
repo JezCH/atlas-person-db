@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-08T07:04:41.000Z",
+  "generated_at": "2026-09-09T07:37:00.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -1160,6 +1160,7 @@
     "29cc8e05-3693-4b82-9f86-950c2ed82e12": "americas",
     "13bc95f9-f95c-4cb1-a3c1-f15bb5547651": "central-asia",
     "d050c493-a3e0-4d5c-b16f-452c4d17cfcf": "europe",
+    "b787ca69-b1d0-4724-8fcb-40a45567380e": "south-asia",
     "8fb963f3-8941-4c35-857b-23c55b2b6cdd": "europe",
     "4c3e50cb-d76c-4b7c-b611-222849404142": "central-asia",
     "502f18c3-41fc-4cb8-84cc-67f7e0454a9d": "europe",

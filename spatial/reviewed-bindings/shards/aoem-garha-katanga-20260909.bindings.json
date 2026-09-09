@@ -1,0 +1,13 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "aoem-garha-katanga-20260909",
+  "baseline": "5d551aadf6607dff1fd35a6e314e60b8e751351c",
+  "reviewed_at": "2026-09-09T07:37:00Z",
+  "bindings": [
+    {
+      "polity_id": "b787ca69-b1d0-4724-8fcb-40a45567380e",
+      "region_code": "south-asia",
+      "subregion_code": null
+    }
+  ]
+}
