@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "noncore-roman-trung-reviewed-20260909:marcus-aemilius-lepidus",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Marcus Aemilius Lepidus",
+    "display_name_ko": "마르쿠스 아이밀리우스 레피두스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Republic",
+    "display_name_ko": "로마 공화정",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Triumvir",
+    "role_display_name_ko": "삼두정치 위원",
+    "period_basis": "de_facto_rule",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Lepidus joined Octavian and Mark Antony in the legally constituted Second Triumvirate in 43 BCE. The triumvirs exercised extraordinary governing authority over the Roman Republic. Lepidus was stripped of his triumviral political power by Octavian after the Sicilian crisis in 36 BCE. ATLAS therefore records a Roman Republic governs + de_facto_rule Activity for 43–36 BCE, reusing the same Triumvir semantics already used for Mark Antony rather than creating the Second Triumvirate as a separate sovereign polity.",
+    "start_year": -43,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -36,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "title": "triumviri",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548206294",
+      "citation_text": "Oxford Classical Dictionary entry on the triumviri explains the legally constituted Second Triumvirate of Antony, Lepidus and Octavian beginning in 43 BCE and its extraordinary authority over the Roman Republic.",
+      "source_type": "academic_reference",
+      "locator": "Second Triumvirate created by lex Titia in 43 BCE; Antony, Lepidus and Octavian"
+    },
+    {
+      "title": "Marcus Aemilius Lepidus",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548062636",
+      "citation_text": "Oxford Classical Dictionary biographical entry records Lepidus joining the triumvirate in 43 BCE and being ousted from triumviral power by Octavian in 36 BCE.",
+      "source_type": "academic_reference",
+      "locator": "Lepidus: triumvir from 43 BCE; removal from triumviral power in 36 BCE"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-09",
+      "reason": "Direct NamuWiki provider verification is unavailable in this session; no URL is invented and no absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "PERSON-REGISTER-ROMAN-TRUNG-GRACCHI-COHORT-20260909",
+    "production_screen": "new_person",
+    "representative_domain_review": "governance",
+    "spatial_readiness": "reuse_existing_polity_spatial_identity"
+  }
+}

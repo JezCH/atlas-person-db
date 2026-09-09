@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "noncore-roman-trung-reviewed-20260909:trung-nhi",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Trung Nhi",
+    "display_name_ko": "쯩니",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Trung Sisters' Realm",
+    "display_name_ko": "쯩 자매 정권",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "Queen and military leader",
+    "role_display_name_ko": "여왕·군사 지도자",
+    "period_basis": "reign",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Trung Nhi and her elder sister Trung Trac jointly led the uprising beginning in 40 CE and the resistance until the Han reconquest in 43. Recent Vietnamese scholarship describes the sisters as proclaiming themselves rulers after taking the regional strongholds, while older narrative traditions more explicitly center Trung Trac as sovereign. ATLAS therefore reuses the existing Trung Sisters' Realm and 40–43 chronology for Trung Nhi but records the rulership assertion at likely rather than well_established confidence instead of inventing a distinct title or polity.",
+    "start_year": 40,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 43,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "title": "Cuộc khởi nghĩa Hai Bà Trưng năm 40-43 sau Công nguyên",
+      "canonical_url": "https://baotanglichsu.vn/VI/Articles/3098/13485/cuoc-khoi-nghia-hai-ba-trung-nam-40-43-sau-cong-nguyen.html",
+      "citation_text": "Vietnam National Museum of History account of the Trưng sisters' uprising, identifying Trưng Trắc and Trưng Nhị as the two sisters who led the revolt beginning in 40 and continued resistance until the Han reconquest in 43.",
+      "source_type": "museum_historical_reference",
+      "locator": "Khởi nghĩa Hai Bà Trưng: outbreak in 40 CE; campaigns and defeat in 43 CE"
+    },
+    {
+      "title": "The Trưng Sisters in Early Vietnamese Historical Memory",
+      "canonical_url": "https://doi.org/10.54631/VS.2026.101626247",
+      "citation_text": "Do T., Russian Journal of Vietnamese Studies (2026), discusses early-source traditions of Trưng Trắc and Trưng Nhị, their capture of numerous strongholds in the 40 CE uprising, and traditions that the sisters proclaimed themselves rulers.",
+      "source_type": "academic_journal_article",
+      "locator": "DOI 10.54631/VS.2026.101626247; discussion of the 40–43 uprising and rulership traditions"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-09",
+      "reason": "Direct NamuWiki provider verification is unavailable in this session; no URL is invented and no absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "PERSON-REGISTER-ROMAN-TRUNG-GRACCHI-COHORT-20260909",
+    "production_screen": "new_person",
+    "representative_domain_review": "governance",
+    "spatial_readiness": "reuse_existing_polity_spatial_identity"
+  }
+}

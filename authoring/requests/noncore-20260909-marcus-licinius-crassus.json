@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "noncore-roman-trung-reviewed-20260909:marcus-licinius-crassus",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Marcus Licinius Crassus",
+    "display_name_ko": "마르쿠스 리키니우스 크라수스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Republic",
+    "display_name_ko": "로마 공화정",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Consul, statesman and First Triumvirate member",
+    "role_display_name_ko": "집정관·정치가·제1차 삼두정치 구성원",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS uses 70–53 BCE as a representative public-leadership interval for Crassus, beginning with his first consulship and ending with his death at Carrhae. The interval includes his informal political alliance with Caesar and Pompey from 60 BCE and his second consulship in 55 BCE, but it does not assert one continuous constitutional office. The First Triumvirate was an informal alliance, so ATLAS does not create it as a sovereign polity or encode 'triumvir' as a formal magistracy for Crassus.",
+    "start_year": -70,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -53,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "title": "The World between Empires: Art and Identity in the Ancient Middle East",
+      "canonical_url": "https://resources.metmuseum.org/resources/metpublications/pdf/The_World_between_Empires_Art_and_Identity_in_the_Ancient_Middle_East.pdf",
+      "citation_text": "Metropolitan Museum of Art publication describing the informal alliance formed by Pompey, Caesar and Marcus Licinius Crassus in 60 BCE, Crassus's Syrian command, and his death at Carrhae in 53 BCE.",
+      "source_type": "museum_academic_publication",
+      "locator": "Roman eastern expansion context: First Triumvirate alliance in 60 BCE; Crassus in Syria; Carrhae 53 BCE"
+    },
+    {
+      "title": "Marcus Licinius Crassus",
+      "canonical_url": "https://www.britannica.com/biography/Marcus-Licinius-Crassus",
+      "citation_text": "Encyclopaedia Britannica biographical reference for Crassus's consulships, alliance with Caesar and Pompey, and death in 53 BCE.",
+      "source_type": "encyclopedic_reference",
+      "locator": "Consul 70 and 55 BCE; First Triumvirate alliance; death 53 BCE"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-09",
+      "reason": "Direct NamuWiki provider verification is unavailable in this session; no URL is invented and no absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "PERSON-REGISTER-ROMAN-TRUNG-GRACCHI-COHORT-20260909",
+    "production_screen": "new_person",
+    "representative_domain_review": "HOLD",
+    "representative_domain_note": "Governance versus commerce is not forced during registration; retain unresolved until dedicated representative-domain review.",
+    "spatial_readiness": "reuse_existing_polity_spatial_identity"
+  }
+}
