@@ -1,0 +1,85 @@
+name: AOEM Mulan Registry Append
+
+on:
+  push:
+    branches:
+      - agent/register-philip-tribhuwana-narses-durgavati-mulan-20260908
+    paths:
+      - .github/workflows/aoem-mulan-registry-append.yml
+
+permissions:
+  contents: write
+
+jobs:
+  append:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/register-philip-tribhuwana-narses-durgavati-mulan-20260908
+          fetch-depth: 0
+      - name: Append Hua Mulan without reformatting registry
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('non-timeline-persons.json')
+          text = path.read_text(encoding='utf-8')
+          data = json.loads(text)
+          if not isinstance(data, list):
+              raise SystemExit('non-timeline registry must be a JSON array')
+          for row in data:
+              if str(row.get('person_name', '')).strip().casefold() == 'hua mulan' or str(row.get('display_name_ko', '')).strip() == '화목란':
+                  raise SystemExit('Hua Mulan already exists in non-timeline registry')
+
+          item = {
+            'person_name': 'Hua Mulan',
+            'display_name_ko': '화목란',
+            'politic_name': 'Northern Chinese Mulan tradition',
+            'politic_display_name_ko': '북중국 목란 전승',
+            'historicity': 'legendary',
+            'historicity_display_ko': '전설',
+            'timeline_status': 'excluded',
+            'date_basis': 'ballad_and_later_literary_tradition_without_secure_personal_chronology',
+            'traditional_year': None,
+            'traditional_year_alternative': None,
+            'activity_start': None,
+            'activity_end': None,
+            'role_ko': '전설적 여성 전사',
+            'reason': 'Hua Mulan is preserved through the Ballad of Mulan and later literary traditions, but no secure contemporary evidence identifies a datable historical individual named Mulan. Archaeological evidence for women warriors in the broader steppe world does not establish Mulan herself. ATLAS therefore preserves the cultural figure without inventing a polity-specific reign or Activity interval.',
+            'sources': [
+              {
+                'title': 'Researchers Uncover New Evidence That Warrior Women Inspired Legend of Mulan — Smithsonian Magazine',
+                'url': 'https://www.smithsonianmag.com/smart-news/researchers-uncover-new-evidence-warrior-women-inspired-legend-mulan-180974774/'
+              }
+            ],
+            'map_policy': 'Retain in the Person registry; do not display on the historical year timeline unless a separate legendary or literary-tradition overlay is enabled.',
+            'request_context': {
+              'batch': 'aoem-person-register-20260908',
+              'item': 5
+            }
+          }
+
+          stripped = text.rstrip()
+          if not stripped.endswith(']'):
+              raise SystemExit('registry does not end with JSON array close')
+          body = stripped[:-1].rstrip()
+          rendered = json.dumps(item, ensure_ascii=False, indent=2)
+          rendered = '\n'.join('  ' + line for line in rendered.splitlines())
+          new_text = body + ',\n' + rendered + '\n]\n'
+          parsed = json.loads(new_text)
+          if len(parsed) != len(data) + 1 or parsed[-1].get('person_name') != 'Hua Mulan':
+              raise SystemExit('post-write semantic validation failed')
+          path.write_text(new_text, encoding='utf-8')
+          PY
+      - name: Commit registry append
+        shell: bash
+        run: |
+          git config user.name 'atlas-actions-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add non-timeline-persons.json
+          git diff --cached --check
+          git commit -m 'Add Hua Mulan to non-timeline registry'
+          git push origin HEAD:agent/register-philip-tribhuwana-narses-durgavati-mulan-20260908
