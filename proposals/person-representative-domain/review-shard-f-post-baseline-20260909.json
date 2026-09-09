@@ -1,0 +1,24 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-09",
+  "source_surface": "/api/atlas-person-domain + /api/atlas-read?__atlas_read_surface=person",
+  "source_main_sha": "d9e83a4cac80e72326e326c36b099b81b6f826a7",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "post-Baseline-B shard-f delta only; classify from representative historical identity after individual review, not from Role-to-Domain automation; James, brother of Jesus is religion because his durable historical identity is leadership within the early Christian/Jerusalem Jesus movement"
+  },
+  "review_scope": {
+    "partition": "SHA1(person_id) first hex == f",
+    "baseline_cut": "after baseline_b_run 34003389292",
+    "reconciled_recent_unassigned_persons": 12,
+    "new_shard_f_matches": 1,
+    "holds": 0
+  },
+  "entries": [
+    {"person_id":"8183eb0a-8e11-43d5-bad4-81ca6e6a2053","canonical_name_en":"James, brother of Jesus","preferred_name_ko":"예수의 형제 야고보","representative_domain":"religion"}
+  ],
+  "materialization_mode": "review_only_not_apply_sequence",
+  "serialization_note": "Combine with the surviving baseline shard-f reviewed write set only at the eventual #977 claim boundary after a fresh live non-null conflict check."
+}
