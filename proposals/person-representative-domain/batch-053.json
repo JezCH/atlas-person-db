@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-10",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "79506d57d04f6f3325b816f007285d78aac69601",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Close only the five explicit representative_domain decisions already reviewed in PERSON-REGISTER-ROMAN-TRUNG-GRACCHI-COHORT-20260909 after its successful Production authoring apply. Assign governance where the reviewed registration context explicitly records governance; do not infer from Role. Marcus Licinius Crassus remains explicit HOLD/null and is excluded from this batch."
+  },
+  "entries": [
+    {"person_id":"4cd53cd8-0642-4856-b18c-9c667ff46c2c","canonical_name_en":"Gaius Sempronius Gracchus","preferred_name_ko":"가이우스 셈프로니우스 그라쿠스","representative_domain":"governance"},
+    {"person_id":"d344743b-be3e-4598-a6db-44a2be020219","canonical_name_en":"Lucius Cornelius Sulla","preferred_name_ko":"루키우스 코르넬리우스 술라","representative_domain":"governance"},
+    {"person_id":"421a0b12-c0d8-4518-a214-2c61e16e0286","canonical_name_en":"Marcus Aemilius Lepidus","preferred_name_ko":"마르쿠스 아이밀리우스 레피두스","representative_domain":"governance"},
+    {"person_id":"665410da-eace-402f-9b4f-6463ecc6dbe7","canonical_name_en":"Tiberius Sempronius Gracchus","preferred_name_ko":"티베리우스 셈프로니우스 그라쿠스","representative_domain":"governance"},
+    {"person_id":"bf5b0491-0ec4-47f9-b35c-e807c3720c86","canonical_name_en":"Trung Nhi","preferred_name_ko":"쯩니","representative_domain":"governance"}
+  ]
+}
