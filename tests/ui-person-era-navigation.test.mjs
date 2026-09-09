@@ -13,7 +13,7 @@ test('era navigation consumes rendered era bands instead of creating a second ch
   assert.match(navSource, /\.person-era-band/);
   assert.match(navSource, /aria-label/);
   assert.match(navSource, /atlasEra/);
-  assert.doesNotMatch(navSource, /BC 480|AD 499|AD 1492|AD 1750|AD 1914|AD 1945/);
+  assert.doesNotMatch(navSource, /BC 1000|AD 599|AD 1492|AD 1750|AD 1914|AD 1945|AD 1991/);
   assert.match(eraModelSource, /const ERAS = Object\.freeze\(\[/);
   assert.match(tableSource, /window\.ATLAS_PERSON_ERA_MODEL/);
   assert.match(tableSource, /eraModel\.eraForYear\(year\)/);
@@ -84,11 +84,11 @@ test('era navigation is sticky, responsive, and uses larger desktop but slightly
 });
 
 test('era navigation assets load after the shared era model/table grouping and before Person Main initializes', () => {
-  const eraModelJs = 'atlas-person-era-model.js?v=20260819-era-model-r2';
+  const eraModelJs = 'atlas-person-era-model.js?v=20260909-era-10-band-v1';
   const tableJs = 'atlas-person-table-view.js?v=20260819-era-model-r2';
   const navJs = 'atlas-person-era-navigation.js?v=20260817-era-search-toolbar-v2';
   const mainJs = 'atlas-person-main.js?v=20260821-person-profile-v1';
-  const paletteCss = 'atlas-person-era-palette.css?v=20260816-era-palette-v1';
+  const paletteCss = 'atlas-person-era-palette.css?v=20260909-era-10-band-v2';
   const navCssAsset = 'atlas-person-era-navigation.css?v=20260817-era-search-toolbar-v3';
   const geometryCss = 'atlas-person-table-alignment.css?v=20260817-table-geometry-r2';
 
