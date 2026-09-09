@@ -1,0 +1,58 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:rani-durgavati:garha-katanga:regency:c1550-1564:v1",
+  "person": {
+    "canonical_name_en": "Rani Durgavati",
+    "display_name_ko": "라니 두르가바티",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-09",
+      "reason": "The exact-person NamuWiki review could not be verified through the available provider/search path. Registration continues under the explicit provider-access deferral; this is not a not_found decision.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Garha-Katanga",
+    "display_name_ko": "가르하-카탕가 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "period_basis": "term",
+    "role": "Regent",
+    "role_display_name_ko": "섭정",
+    "start_year": 1550,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1564,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "After Dalpat Shah’s death around 1550, Rani Durgavati governed the Gond kingdom of Garha-Katanga as regent for her minor son Vir Narayan and remained its effective ruler until her death resisting the Mughal invasion in 1564. The start boundary is marked approximate because official Indian sources differ on the precise year of Dalpat Shah’s death."
+  },
+  "sources": [
+    {
+      "title": "Rani Durgavati — Digital District Repository, Ministry of Culture, Government of India",
+      "canonical_url": "https://cmsadmin.amritmahotsav.nic.in/district-reopsitory-detail.htm?24717=",
+      "citation_text": "The Ministry of Culture describes Durgavati as queen of the Gond kingdom of Garha-Katanga, explains the name Garha-Katanga, and states that after Dalpat Shah’s death she installed the minor Bir Narayan and took the reins of government.",
+      "source_type": "government_reference"
+    },
+    {
+      "title": "Aaj Savere — Akashvani News",
+      "canonical_url": "https://newsonair.gov.in/bulletins-detail/aaj-savere-202/",
+      "citation_text": "Akashvani identifies Rani Durgavati as queen regent of Gondwana from 1550 to 1564 during the minority of Vir Narayan and records her death in 1564 while resisting Mughal expansion.",
+      "source_type": "government_broadcast_reference"
+    }
+  ]
+}

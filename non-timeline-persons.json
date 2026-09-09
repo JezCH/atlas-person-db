@@ -2362,5 +2362,32 @@
       }
     ],
     "map_policy": "Retain in the Person registry; do not display on the historical year timeline until a defensible person-specific polity/location binding is reviewed. A separate uncertain-biography overlay may display the eighth-century scholarly floruit."
+  },
+  {
+    "person_name": "Hua Mulan",
+    "display_name_ko": "화목란",
+    "politic_name": "Northern Chinese Mulan tradition",
+    "politic_display_name_ko": "북중국 목란 전승",
+    "historicity": "legendary",
+    "historicity_display_ko": "전설",
+    "timeline_status": "excluded",
+    "date_basis": "ballad_and_later_literary_tradition_without_secure_personal_chronology",
+    "traditional_year": null,
+    "traditional_year_alternative": null,
+    "activity_start": null,
+    "activity_end": null,
+    "role_ko": "전설적 여성 전사",
+    "reason": "Hua Mulan is preserved through the Ballad of Mulan and later literary traditions, but no secure contemporary evidence identifies a datable historical individual named Mulan. Archaeological evidence for women warriors in the broader steppe world does not establish Mulan herself. ATLAS therefore preserves the cultural figure without inventing a polity-specific reign or Activity interval.",
+    "sources": [
+      {
+        "title": "Researchers Uncover New Evidence That Warrior Women Inspired Legend of Mulan — Smithsonian Magazine",
+        "url": "https://www.smithsonianmag.com/smart-news/researchers-uncover-new-evidence-warrior-women-inspired-legend-mulan-180974774/"
+      }
+    ],
+    "map_policy": "Retain in the Person registry; do not display on the historical year timeline unless a separate legendary or literary-tradition overlay is enabled.",
+    "request_context": {
+      "batch": "aoem-person-register-20260908",
+      "item": 5
+    }
   }
 ]

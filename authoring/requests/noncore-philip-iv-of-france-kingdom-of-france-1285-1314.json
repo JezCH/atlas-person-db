@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:philip-iv-of-france:kingdom-of-france:reign:1285-1314:v1",
+  "person": {
+    "canonical_name_en": "Philip IV of France",
+    "display_name_ko": "필리프 4세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-09",
+      "reason": "The exact-person NamuWiki review could not be verified through the available provider/search path. Registration continues under the explicit provider-access deferral; this is not a not_found decision.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of France",
+    "display_name_ko": "프랑스 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King of France",
+    "role_display_name_ko": "프랑스 국왕",
+    "start_year": 1285,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1314,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Philip IV of France, called Philip the Fair, was king of France from 1285 to 1314. ATLAS records only this French royal reign and keeps him distinct from the separately existing Philip IV of Spain."
+  },
+  "sources": [
+    {
+      "title": "Fitzwilliam Museum — Leaves from Laurent d’Orléans, La Somme le roi",
+      "canonical_url": "https://www.fitzmuseum.cam.ac.uk/illuminated/manuscript/discover/leaves-from-laurent-dorleans-la-somme-le-roi",
+      "citation_text": "The Fitzwilliam Museum identifies Philip IV of France with the royal dates 1285–1314 in its discussion of a manuscript likely made for Philip IV and Jeanne of Navarre.",
+      "source_type": "museum_reference"
+    }
+  ]
+}
