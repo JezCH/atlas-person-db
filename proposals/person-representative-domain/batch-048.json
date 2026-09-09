@@ -1,0 +1,23 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-09",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "9a3e822fb197e7019b6b5d6a5bf352518e379868",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "apply only these nine explicit human-reviewed representative-domain assignments from the clear ancient continuation beyond Batch 047; use religion only where the Person's durable historical representation is prophetic/religious, use governance for sovereign rulers, perform no automatic Role-to-Domain inference or reclassification, exclude boundary cases such as Esther and Ezra for separate review, and exclude Isaiah and Nehemiah because their SHA1(person_id) shard 8 was reserved by a parallel review worker before this Batch 048 materialization"
+  },
+  "entries": [
+    {"person_id":"8544225f-d368-473a-8202-bf3553c39f26","canonical_name_en":"Sargon II","preferred_name_ko":"사르곤 2세","representative_domain":"governance"},
+    {"person_id":"d783f57a-8b1f-4ac7-874a-1ffd560f51ef","canonical_name_en":"Hezekiah","preferred_name_ko":"히스기야","representative_domain":"governance"},
+    {"person_id":"624fc9c0-c9b4-46dc-bfa5-0ae858e1f50d","canonical_name_en":"Esarhaddon","preferred_name_ko":"에사르하돈","representative_domain":"governance"},
+    {"person_id":"cc10a2d9-8e44-4449-b8df-e98ec78e3d9c","canonical_name_en":"Josiah","preferred_name_ko":"요시야","representative_domain":"governance"},
+    {"person_id":"1d922a8f-5afe-49d2-9950-0861a0425dee","canonical_name_en":"Jeremiah","preferred_name_ko":"예레미야","representative_domain":"religion"},
+    {"person_id":"c22fbb2d-5628-4895-b0a2-947b2ff64a70","canonical_name_en":"Necho II","preferred_name_ko":"네코 2세","representative_domain":"governance"},
+    {"person_id":"e8eaba4f-50aa-4fe3-a00a-a7311680ddf9","canonical_name_en":"Daniel","preferred_name_ko":"다니엘","representative_domain":"religion"},
+    {"person_id":"6883c6ff-c06f-4ccb-a212-306a9d6c7081","canonical_name_en":"Ezekiel","preferred_name_ko":"에스겔","representative_domain":"religion"},
+    {"person_id":"ff5d5de9-79e6-46ac-8702-c0915333378f","canonical_name_en":"Artaxerxes I","preferred_name_ko":"아르타크세르크세스 1세","representative_domain":"governance"}
+  ]
+}
