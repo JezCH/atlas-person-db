@@ -1,0 +1,34 @@
+{
+  "schema": "atlas-person-representative-domain-review-hold/v1",
+  "status": "unresolved",
+  "production_snapshot_date": "2026-09-09",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "68843a2b53e88959b75ab865a0f2df980cde35d2",
+  "policy": "Cross-domain, insufficient-dominance, and identity-conflict cases remain unclassified until separately reviewed; HOLD entries are never written by the apply client.",
+  "entries": [
+    {
+      "person_id": "88e7d380-b76d-41be-acd5-ce1469a9c48a",
+      "canonical_name_en": "Isabel Moctezuma",
+      "representative_domain": null,
+      "reason": "dynastic heiress/royal consort and encomienda holder, but no substantive state rule or single dominant allowed domain"
+    },
+    {
+      "person_id": "b74f7383-b029-477c-a16f-20951de53f04",
+      "canonical_name_en": "Daniel Mauricio Choque",
+      "representative_domain": null,
+      "reason": "community former representative and cultural/language informant; no single dominant allowed domain"
+    },
+    {
+      "person_id": "ef6ece40-2a70-5399-b124-0c411c962d18",
+      "canonical_name_en": "Yasovarman IV",
+      "representative_domain": null,
+      "reason": "canonical_key conflicts with preferred names/activity identifying Jayavarman IV; identity reconciliation required before domain"
+    },
+    {
+      "person_id": "f9ac6303-f933-4b82-b661-9812b1be636b",
+      "canonical_name_en": "Davi Kopenawa",
+      "representative_domain": null,
+      "reason": "authoritative sources support simultaneous shaman/political leader/activist/author identities; no forced single domain"
+    }
+  ]
+}
