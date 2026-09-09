@@ -1,0 +1,25 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-09",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "93aa9fb85848f63a1a1eb68f89a76a9b9398bf8f",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "apply only the eleven explicit human-reviewed representative-domain assignments in the earliest currently unassigned Production chronological frontier; classify prophets by their representative religious identity and historical kings by their representative sovereign governing identity, perform no automatic Role-to-Domain inference or reclassification, and keep the shared Person domain registry authoritative"
+  },
+  "entries": [
+    {"person_id":"59deea38-c3c1-45f4-9f6c-03900abafd09","canonical_name_en":"Samuel","preferred_name_ko":"사무엘","representative_domain":"religion"},
+    {"person_id":"f3946713-806b-4c0a-bb3e-b62ac505c9de","canonical_name_en":"Saul","preferred_name_ko":"사울","representative_domain":"governance"},
+    {"person_id":"ca324332-2c01-47ab-8a0e-4ac8607d3c2a","canonical_name_en":"Omri","preferred_name_ko":"오므리","representative_domain":"governance"},
+    {"person_id":"26e28f80-84ad-49ce-9974-5afae4c6abe5","canonical_name_en":"Ahab","preferred_name_ko":"아합","representative_domain":"governance"},
+    {"person_id":"d70ad209-0fcc-4798-816d-b62370ecaab0","canonical_name_en":"Elijah","preferred_name_ko":"엘리야","representative_domain":"religion"},
+    {"person_id":"a00c27d8-66d0-45f6-85f6-d5290af198c0","canonical_name_en":"Elisha","preferred_name_ko":"엘리사","representative_domain":"religion"},
+    {"person_id":"d03210fd-ff46-44b8-b7b0-18fffd639840","canonical_name_en":"Hazael","preferred_name_ko":"하사엘","representative_domain":"governance"},
+    {"person_id":"6cf6b2fd-3d0b-474f-8eaa-214616e49ad3","canonical_name_en":"Jehu","preferred_name_ko":"예후","representative_domain":"governance"},
+    {"person_id":"7194b9cd-826c-4600-9147-719dd7ae654e","canonical_name_en":"Mesha","preferred_name_ko":"메사","representative_domain":"governance"},
+    {"person_id":"55657a4d-277a-4884-9718-d68f2f894678","canonical_name_en":"Jonah son of Amittai","preferred_name_ko":"아미타이의 아들 요나","representative_domain":"religion"},
+    {"person_id":"7aeb8094-8496-41fa-937e-fcd72bde462f","canonical_name_en":"Amos","preferred_name_ko":"아모스","representative_domain":"religion"}
+  ]
+}
