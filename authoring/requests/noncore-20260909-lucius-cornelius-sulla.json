@@ -1,0 +1,67 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "noncore-roman-trung-reviewed-20260909:lucius-cornelius-sulla",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Lucius Cornelius Sulla",
+    "display_name_ko": "루키우스 코르넬리우스 술라",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Republic",
+    "display_name_ko": "로마 공화정",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "governs",
+    "role": "Dictator",
+    "role_display_name_ko": "독재관",
+    "period_basis": "de_facto_rule",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Sulla seized Rome in 82 BCE and was empowered as dictator with extraordinary authority for constitutional reorganization. Modern scholarship conventionally treats the Sullan dictatorship as 82–79 BCE, ending with his resignation. ATLAS models this bounded extraordinary-rule interval under the Roman Republic rather than extending a synthetic rail over his earlier military and consular career.",
+    "start_year": -82,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -79,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "title": "The Dictatorship of L. Cornelius Sulla, 82–79 BCE",
+      "canonical_url": "https://academic.oup.com/edited-volume/61673/chapter-abstract/548723827",
+      "citation_text": "Oxford Classical Dictionary chapter treating Sulla's dictatorship as 82–79 BCE and analyzing the extraordinary constitutional authority exercised during that interval.",
+      "source_type": "academic_reference",
+      "locator": "Chapter title and discussion: dictatorship of L. Cornelius Sulla, 82–79 BCE"
+    },
+    {
+      "title": "The lex Valeria and Sulla's empowerment as dictator (82–79 BCE)",
+      "canonical_url": "https://www.persee.fr/doc/ccgg_1016-9008_2004_num_15_1_858",
+      "citation_text": "Frederik J. Vervaet, Cahiers du Centre Gustave Glotz 15 (2004), examines the legal empowerment and chronology of Sulla's dictatorship from 82 to 79 BCE.",
+      "source_type": "academic_journal_article",
+      "locator": "DOI 10.3406/ccgg.2004.858; dictatorship 82–79 BCE"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-09",
+      "reason": "Direct NamuWiki provider verification is unavailable in this session; no URL is invented and no absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "PERSON-REGISTER-ROMAN-TRUNG-GRACCHI-COHORT-20260909",
+    "production_screen": "new_person",
+    "representative_domain_review": "governance",
+    "spatial_readiness": "reuse_existing_polity_spatial_identity"
+  }
+}
