@@ -1,0 +1,60 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "noncore-roman-trung-reviewed-20260909:gaius-sempronius-gracchus",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Gaius Sempronius Gracchus",
+    "display_name_ko": "가이우스 셈프로니우스 그라쿠스",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Republic",
+    "display_name_ko": "로마 공화정",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Tribune of the Plebs",
+    "role_display_name_ko": "호민관",
+    "period_basis": "term",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Gaius Sempronius Gracchus served successive tribunate terms in 123 and 122 BCE and pursued the reform program associated with the Gracchi. ATLAS records the bounded 123–122 BCE tribunate period rather than using his lifespan or creating a fictitious Gracchan political entity.",
+    "start_year": -123,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": -122,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "title": "로마 공화정기 그라쿠스(Gracchus) 형제의 개혁",
+      "canonical_url": "https://emeritus.snu.ac.kr/wp-content/uploads/sites/208/migrated/%EB%AA%85%EC%98%88%EA%B5%90%EC%88%98%ED%9A%8C%EB%B3%B4%202017%2C%20%EC%A0%9C13%ED%98%B8.pdf",
+      "citation_text": "허승일, 서울대학교 명예교수회보 2017 제13호. The study identifies Gaius Gracchus as plebeian tribune in 123–122 BCE and examines the reform program of the Gracchi brothers.",
+      "source_type": "academic_article",
+      "locator": "그라쿠스 형제의 개혁: 가이우스의 기원전 123–122년 호민관 활동"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-09",
+      "reason": "Direct NamuWiki provider verification is unavailable in this session; no URL is invented and no absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "PERSON-REGISTER-ROMAN-TRUNG-GRACCHI-COHORT-20260909",
+    "production_screen": "new_person",
+    "representative_domain_review": "governance",
+    "spatial_readiness": "reuse_existing_polity_spatial_identity"
+  }
+}
