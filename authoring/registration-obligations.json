@@ -1,0 +1,92 @@
+{
+  "schema": "atlas-registration-obligations/v1",
+  "policy": {
+    "promotion_trigger": "retrospective_full_coverage_audit_or_backfill",
+    "rule": "any applicable obligation important enough to require retrospective coverage becomes mandatory at ingest for new records",
+    "applicability": "only_applicable_new_or_unreviewed_records",
+    "completion": "all_applicable_obligations_resolved_or_explicit_evidence_backed_hold",
+    "no_unspecified_future_debt": true,
+    "execution": {
+      "bounded_screen_once": true,
+      "bundle_review_once": true,
+      "parallelize_independent_research": true,
+      "reuse_existing_canonical_state": true,
+      "prefer_same_authoring_transaction": true,
+      "companion_write_only_when_canonical_writer_cannot_persist": true,
+      "materialize_companion_before_registration_done": true,
+      "batch_cohort_transport": true,
+      "one_preflight_per_cohort": true,
+      "one_authoring_apply_per_cohort": true,
+      "one_runtime_publication_per_resulting_authoritative_state": true,
+      "one_terminal_readback_pass": true,
+      "stop_at_proven_terminal_state": true,
+      "no_reassurance_reads": true,
+      "no_feature_specific_registration_api": true,
+      "no_feature_specific_registration_wrapper": true,
+      "no_separate_workflow_unless_distinct_writer_boundary_requires_it": true,
+      "serialize_only_actual_shared_write_boundary": true
+    }
+  },
+  "obligations": [
+    {
+      "id": "person.identity_historicity_timeline",
+      "applies_when": "new_person",
+      "review_phase": "REVIEW",
+      "persistence": "human_authoring",
+      "hold_allowed": true
+    },
+    {
+      "id": "person.representative_domain",
+      "applies_when": "new_person",
+      "review_phase": "REVIEW",
+      "persistence": "human_authoring_same_transaction",
+      "hold_allowed": true,
+      "automatic_inference_forbidden": true
+    },
+    {
+      "id": "person.external_references.namuwiki",
+      "applies_when": "new_or_unreviewed_person",
+      "review_phase": "REVIEW",
+      "persistence": "human_authoring_or_exact_companion_write",
+      "hold_allowed": true,
+      "provider_blockage_terminal": false,
+      "absence_requires_exhaustive_search_evidence": true
+    },
+    {
+      "id": "activity.temporal_source_truth",
+      "applies_when": "new_activity",
+      "review_phase": "REVIEW",
+      "persistence": "human_authoring_same_transaction",
+      "hold_allowed": true,
+      "sentinel_values_forbidden": true,
+      "ongoing_registration_forbidden": true,
+      "historical_unknown_boundary_allowed": true,
+      "living_status_is_not_gate": true
+    },
+    {
+      "id": "polity.spacetime_placement",
+      "applies_when": "new_polity",
+      "review_phase": "POST_RESOLUTION_REVIEW",
+      "persistence": "canonical_spatial_writer_or_exact_companion_write",
+      "hold_allowed": true,
+      "hold_blocks_registration_done": true,
+      "existing_bound_polity_adds_no_write": true
+    },
+    {
+      "id": "place.historical_relation",
+      "applies_when": "historical_relation_requires_place",
+      "review_phase": "REVIEW",
+      "persistence": "human_authoring_or_canonical_place_writer",
+      "conditional": true,
+      "placeholder_creation_forbidden": true
+    },
+    {
+      "id": "runtime.publication_disposition",
+      "applies_when": "authoring_state_changed",
+      "review_phase": "PUBLISH_VERIFY",
+      "persistence": "runtime_projection_owner",
+      "hold_allowed": true,
+      "duplicate_compile_for_same_authoritative_state_forbidden": true
+    }
+  ]
+}
