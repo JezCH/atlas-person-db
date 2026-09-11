@@ -1,0 +1,24 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "source-citation:gracchi-shared-source:2026-09-12:v1",
+  "release_order": 500,
+  "evidence": {
+    "decision": "Tiberius and Gaius Sempronius Gracchus reuse one bibliographic Source, but its global citation_text was authored with a Gaius-only sentence. Keep the shared Source identity and each Activity's distinct locator; rewrite only the shared citation_text to a neutral description of the article.",
+    "source_id": "c29edee2-9cf6-4b00-b8b6-57079ccf286c",
+    "tiberius_person_id": "665410da-eace-402f-9b4f-6463ecc6dbe7",
+    "tiberius_activity_id": "0fb7bdde-df92-4018-b023-543090cf382e",
+    "gaius_person_id": "4cd53cd8-0642-4856-b18c-9c667ff46c2c",
+    "gaius_activity_id": "15ccc4dc-c5e7-4cfc-b7c2-686d33005090"
+  },
+  "operations": [
+    {
+      "type": "rewrite_source_citation",
+      "case_id": "gracchi-shared-source-neutral-citation",
+      "source_id": "c29edee2-9cf6-4b00-b8b6-57079ccf286c",
+      "expected_canonical_url": "https://emeritus.snu.ac.kr/wp-content/uploads/sites/208/migrated/%EB%AA%85%EC%98%88%EA%B5%90%EC%88%98%ED%9A%8C%EB%B3%B4%202017%2C%20%EC%A0%9C13%ED%98%B8.pdf",
+      "expected_citation_text": "허승일, 서울대학교 명예교수회보 2017 제13호. The study identifies Gaius Gracchus as plebeian tribune in 123–122 BCE and examines the reform program of the Gracchi brothers.",
+      "replacement_citation_text": "허승일, 서울대학교 명예교수회보 2017 제13호. 로마 공화정기 그라쿠스 형제의 개혁을 다룬 연구."
+    }
+  ]
+}
