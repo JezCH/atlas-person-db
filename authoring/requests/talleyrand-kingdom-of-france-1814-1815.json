@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "human:talleyrand-kingdom-of-france-foreign-minister-1814-1815a:20260911",
+  "person": {"canonical_name_en": "Charles-Maurice de Talleyrand-Périgord", "display_name_ko": "샤를모리스 드 탈레랑", "canonical_key": "Charles-Maurice de Talleyrand-Périgord", "person_type": "historical", "historicity": "historical"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-09-11"}},
+  "polity": {"canonical_name_en": "Kingdom of France"},
+  "activity": {
+    "relation_type": "serves", "period_basis": "term", "role": "Minister of Foreign Affairs", "role_code": "minister_of_foreign_affairs", "role_display_name_ko": "외무장관", "role_category": "service",
+    "start_year": 1814, "start_month": 5, "start_day": 13, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1815, "end_month": 3, "end_day": 20, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Louis XVIII appointed Talleyrand foreign minister during the First Restoration. This Activity ends on 20 March 1815 at Napoleon's return to Paris; ATLAS does not bridge the Hundred Days as if Talleyrand continuously held a French royal ministry."
+  },
+  "sources": [
+    {"title": "TALLEYRAND-PERIGORD, Charles-Maurice de", "canonical_url": "https://www.napoleon.org/en/history-of-the-two-empires/biographies/talleyrand-perigord-charles-maurice-de/", "source_type": "institutional_biography", "citation_text": "Fondation Napoléon biography listing Talleyrand's Restoration foreign-ministry terms", "locator": "Office chronology: Minister for Foreign Affairs, 13 May 1814–20 March 1815"},
+    {"title": "Papiers de Charles-Maurice de Talleyrand", "canonical_url": "https://archivesdiplomatiques.diplomatie.gouv.fr/ark:/14366/fr879ljbzmnt", "source_type": "government_archive", "citation_text": "French Diplomatic Archives biographical notice for Charles-Maurice de Talleyrand", "locator": "Biographical history: Minister of Foreign Affairs under Louis XVIII and French representative at the Congress of Vienna"}
+  ]
+}

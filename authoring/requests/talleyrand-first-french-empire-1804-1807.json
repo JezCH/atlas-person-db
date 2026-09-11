@@ -1,0 +1,19 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "human:talleyrand-first-french-empire-foreign-minister-1804-1807:20260911",
+  "person": {"canonical_name_en": "Charles-Maurice de Talleyrand-Périgord", "display_name_ko": "샤를모리스 드 탈레랑", "canonical_key": "Charles-Maurice de Talleyrand-Périgord", "person_type": "historical", "historicity": "historical"},
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-09-11"}},
+  "polity": {"canonical_name_en": "First French Empire"},
+  "activity": {
+    "relation_type": "serves", "period_basis": "term", "role": "Minister of Foreign Affairs", "role_code": "minister_of_foreign_affairs", "role_display_name_ko": "외무장관", "role_category": "service",
+    "start_year": 1804, "start_month": 5, "start_day": 18, "start_certainty": "exact", "start_calendar": "gregorian",
+    "end_year": 1807, "end_month": 8, "end_day": 9, "end_certainty": "exact", "end_calendar": "gregorian",
+    "confidence": "well_established", "chronology_status": "reviewed",
+    "notes": "Talleyrand continued as Napoleon's foreign minister after the First Empire was proclaimed, remaining in office until 9 August 1807. ATLAS separates this from the preceding republican segment because the polity changed while the office continued."
+  },
+  "sources": [
+    {"title": "TALLEYRAND-PERIGORD, Charles-Maurice de", "canonical_url": "https://www.napoleon.org/en/history-of-the-two-empires/biographies/talleyrand-perigord-charles-maurice-de/", "source_type": "institutional_biography", "citation_text": "Fondation Napoléon biography listing Talleyrand as foreign minister through 9 August 1807", "locator": "Office chronology: Minister for Foreign Relations, 22 November 1799–9 August 1807"},
+    {"title": "Papiers de Charles-Maurice de Talleyrand", "canonical_url": "https://archivesdiplomatiques.diplomatie.gouv.fr/ark:/14366/fr879ljbzmnt", "source_type": "government_archive", "citation_text": "French Diplomatic Archives biographical notice for Charles-Maurice de Talleyrand", "locator": "Biographical history: resignation from the Ministry of Foreign Relations in August 1807"}
+  ]
+}
