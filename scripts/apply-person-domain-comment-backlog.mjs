@@ -30,6 +30,7 @@ const RELEVANT_TASK_MARKERS = Object.freeze([
   "PERSON-DOMAIN-SHARD9-MICROBATCH-",
   "PERSON-DOMAIN-SHARD-9-PARALLEL-REVIEW-",
   "PERSON-DOMAIN-SHARD-C-MICROBATCH-",
+  "PERSON-DOMAIN-SHARDC-MICROBATCH-",
   "PERSON-DOMAIN-SHARDD-MICROBATCH-"
 ]);
 const DOMAINS = Object.freeze(["governance","military","knowledge","technology","commerce","culture","religion","exploration"]);
