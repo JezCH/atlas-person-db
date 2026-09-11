@@ -12,7 +12,6 @@ const {
   requireManifest
 } = require("../server/atlas-correction-source-citation-v2-service.js");
 const {
-  POLITY_RETIRE_OPERATION_TYPE,
   createCorrectionManifestV2DispatchService
 } = require("../server/atlas-correction-manifest-v2-dispatch-service.js");
 
@@ -79,7 +78,7 @@ test("v2 dispatcher forbids mixing Source citation rewrite with another operatio
   const client = { query: async () => { throw new Error("query must not be reached"); } };
   const service = createCorrectionManifestV2DispatchService({ client });
   assert.throws(
-    () => service.execute({ operations: [validOperation(), { type: POLITY_RETIRE_OPERATION_TYPE }] }, { dryRun: true }),
+    () => service.execute({ operations: [validOperation(), { type: "standard-operation-for-mixed-family-test" }] }, { dryRun: true }),
     /CORRECTION_V2_SOURCE_CITATION_MIXED_OPERATION_FAMILY_FORBIDDEN/
   );
 });
