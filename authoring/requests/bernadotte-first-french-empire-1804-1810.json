@@ -1,0 +1,48 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "human:jean-baptiste-bernadotte-first-french-empire-marshal-1804-1810:20260911",
+  "person": {
+    "canonical_name_en": "Jean-Baptiste Bernadotte",
+    "display_name_ko": "장바티스트 베르나도트",
+    "canonical_key": "Jean-Baptiste Bernadotte",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "First French Empire"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Marshal of the Empire",
+    "role_code": "marshal_of_the_empire",
+    "role_display_name_ko": "제국 원수",
+    "role_category": "service",
+    "start_year": 1804,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1810,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Jean-Baptiste Bernadotte was appointed Marshal of France in 1804 and remained a major Napoleonic military figure before his election as successor to the Swedish throne in 1810. ATLAS ends this representative French-imperial military segment in 1810 rather than extending it into his Swedish political career."
+  },
+  "sources": [
+    {
+      "title": "Karl XIV Johan",
+      "canonical_url": "https://www.kungahuset.se/english/royal-house/the-bernadotte-dynasty/karl-xiv-johan",
+      "source_type": "royal_house_biography",
+      "citation_text": "Royal Court of Sweden biography of Karl XIV Johan (Jean Baptiste Bernadotte)",
+      "locator": "Biography: appointed Marshal of France in 1804; named successor to the Swedish throne in 1810"
+    },
+    {
+      "title": "Karl XIV Johan, King of Sweden and Norway (Jean-Baptiste Bernadotte)",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG56777",
+      "source_type": "museum_biography",
+      "citation_text": "British Museum biographical record for Jean-Baptiste Bernadotte / Karl XIV Johan",
+      "locator": "Biography: French Revolutionary and Napoleonic general, Marshal of France in 1804, Swedish heir in 1810"
+    }
+  ]
+}
