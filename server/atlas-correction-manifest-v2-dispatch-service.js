@@ -13,6 +13,10 @@ const {
   OPERATION_TYPE: POLITY_RETIRE_OPERATION_TYPE,
   createCorrectionPolityRetireV2Service
 } = require("./atlas-correction-polity-retire-v2-service.js");
+const {
+  OPERATION_TYPE: SOURCE_CITATION_OPERATION_TYPE,
+  createCorrectionSourceCitationV2Service
+} = require("./atlas-correction-source-citation-v2-service.js");
 
 function operationTypes(rawManifest) {
   return Array.isArray(rawManifest?.operations)
@@ -25,6 +29,7 @@ function createCorrectionManifestV2DispatchService({ client } = {}) {
   const roleMergeService = createCorrectionRoleMergeV2Service({ client });
   const roleScopeService = createCorrectionRoleScopeV2Service({ client });
   const polityRetireService = createCorrectionPolityRetireV2Service({ client });
+  const sourceCitationService = createCorrectionSourceCitationV2Service({ client });
 
   return Object.freeze({
     execute(rawManifest, options) {
@@ -32,6 +37,7 @@ function createCorrectionManifestV2DispatchService({ client } = {}) {
       const hasCaseMerge = types.includes(ROLE_MERGE_OPERATION_TYPE);
       const hasScopeMerge = types.includes(ROLE_SCOPE_OPERATION_TYPE);
       const hasPolityRetire = types.includes(POLITY_RETIRE_OPERATION_TYPE);
+      const hasSourceCitation = types.includes(SOURCE_CITATION_OPERATION_TYPE);
       const hasRoleCatalogMutation = hasCaseMerge || hasScopeMerge;
 
       if (hasCaseMerge && !types.every((type) => type === ROLE_MERGE_OPERATION_TYPE)) {
@@ -43,6 +49,9 @@ function createCorrectionManifestV2DispatchService({ client } = {}) {
       if (hasPolityRetire && !types.every((type) => type === POLITY_RETIRE_OPERATION_TYPE)) {
         throw new Error("CORRECTION_V2_POLITY_RETIRE_MIXED_OPERATION_FAMILY_FORBIDDEN");
       }
+      if (hasSourceCitation && !types.every((type) => type === SOURCE_CITATION_OPERATION_TYPE)) {
+        throw new Error("CORRECTION_V2_SOURCE_CITATION_MIXED_OPERATION_FAMILY_FORBIDDEN");
+      }
       if (hasRoleCatalogMutation && hasCaseMerge && hasScopeMerge) {
         throw new Error("CORRECTION_V2_ROLE_CATALOG_MIXED_OPERATION_FAMILY_FORBIDDEN");
       }
@@ -50,6 +59,7 @@ function createCorrectionManifestV2DispatchService({ client } = {}) {
       if (hasCaseMerge) return roleMergeService.execute(rawManifest, options);
       if (hasScopeMerge) return roleScopeService.execute(rawManifest, options);
       if (hasPolityRetire) return polityRetireService.execute(rawManifest, options);
+      if (hasSourceCitation) return sourceCitationService.execute(rawManifest, options);
       return standardService.execute(rawManifest, options);
     }
   });
@@ -59,6 +69,7 @@ module.exports = Object.freeze({
   ROLE_MERGE_OPERATION_TYPE,
   ROLE_SCOPE_OPERATION_TYPE,
   POLITY_RETIRE_OPERATION_TYPE,
+  SOURCE_CITATION_OPERATION_TYPE,
   operationTypes,
   createCorrectionManifestV2DispatchService
 });
