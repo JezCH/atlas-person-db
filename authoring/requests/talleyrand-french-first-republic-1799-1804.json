@@ -9,9 +9,8 @@
     "person_type": "historical",
     "historicity": "historical"
   },
-  "polity": {
-    "canonical_name_en": "French First Republic"
-  },
+  "external_references": {"namuwiki": {"status": "not_found", "checked_at": "2026-09-11"}},
+  "polity": {"canonical_name_en": "French First Republic"},
   "activity": {
     "relation_type": "serves",
     "period_basis": "term",
@@ -34,19 +33,7 @@
     "notes": "Talleyrand returned as Minister of Foreign Relations on 22 November 1799 under the Consulate. ATLAS closes the republican segment at the constitutional proclamation of the First French Empire on 18 May 1804; his ministerial service continued without a personal-office interruption into the imperial segment."
   },
   "sources": [
-    {
-      "title": "TALLEYRAND-PERIGORD, Charles-Maurice de",
-      "canonical_url": "https://www.napoleon.org/en/history-of-the-two-empires/biographies/talleyrand-perigord-charles-maurice-de/",
-      "source_type": "institutional_biography",
-      "citation_text": "Fondation Napoléon biography listing Talleyrand's return to the foreign ministry on 22 November 1799 and service through 9 August 1807",
-      "locator": "Office chronology: Minister for Foreign Relations from 22 November 1799"
-    },
-    {
-      "title": "Papiers de Charles-Maurice de Talleyrand",
-      "canonical_url": "https://archivesdiplomatiques.diplomatie.gouv.fr/ark:/14366/fr879ljbzmnt",
-      "source_type": "government_archive",
-      "citation_text": "French Diplomatic Archives biographical notice for Charles-Maurice de Talleyrand",
-      "locator": "Biographical history: return to the Ministry of Foreign Relations under Bonaparte"
-    }
+    {"title": "TALLEYRAND-PERIGORD, Charles-Maurice de", "canonical_url": "https://www.napoleon.org/en/history-of-the-two-empires/biographies/talleyrand-perigord-charles-maurice-de/", "source_type": "institutional_biography", "citation_text": "Fondation Napoléon biography listing Talleyrand's return to the foreign ministry on 22 November 1799 and service through 9 August 1807", "locator": "Office chronology: Minister for Foreign Relations from 22 November 1799"},
+    {"title": "Papiers de Charles-Maurice de Talleyrand", "canonical_url": "https://archivesdiplomatiques.diplomatie.gouv.fr/ark:/14366/fr879ljbzmnt", "source_type": "government_archive", "citation_text": "French Diplomatic Archives biographical notice for Charles-Maurice de Talleyrand", "locator": "Biographical history: return to the Ministry of Foreign Relations under Bonaparte"}
   ]
 }
