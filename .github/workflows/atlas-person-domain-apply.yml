@@ -12,6 +12,7 @@ on:
       - 'server/atlas-person-domain-github-oidc.js'
       - 'server/atlas-person-domain-handler.js'
       - 'scripts/apply-person-domain-proposals.mjs'
+      - 'scripts/apply-person-domain-comment-backlog.mjs'
       - 'proposals/person-representative-domain/batch-*.json'
       - 'proposals/person-representative-domain/hold-*.json'
       - 'proposals/person-representative-domain/palette-smoke-001.json'
@@ -19,6 +20,7 @@ on:
 
 permissions:
   contents: read
+  issues: read
   id-token: write
 
 concurrency:
@@ -28,7 +30,7 @@ concurrency:
 jobs:
   apply:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     environment: production
     env:
       ATLAS_PERSON_DOMAIN_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-person-domain
@@ -44,11 +46,12 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Validate bounded Person domain apply client
+      - name: Validate bounded Person domain apply clients
         shell: bash
         run: |
           set -euo pipefail
           node --check scripts/apply-person-domain-proposals.mjs
+          node --check scripts/apply-person-domain-comment-backlog.mjs
           node --test tests/atlas-person-domain-github-oidc.test.mjs tests/atlas-person-domain-service.test.mjs tests/atlas-person-domain-standard-v1.test.mjs
 
       - name: Wait for exact Production runtime
@@ -74,6 +77,14 @@ jobs:
           done
           [[ "$ready" == "true" ]] || { cat "$ATLAS_EVIDENCE_DIR/runtime.json" >&2 || true; echo 'Exact Production runtime did not become ready.' >&2; exit 1; }
 
+      - name: Plan and validate comment-backed reviewed backlog
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          node scripts/apply-person-domain-comment-backlog.mjs plan | tee "$ATLAS_EVIDENCE_DIR/comment-backlog-plan.log"
+
       - name: Acquire dedicated Person domain GitHub OIDC token
         shell: bash
         run: |
@@ -90,11 +101,17 @@ jobs:
           set -euo pipefail
           node scripts/apply-person-domain-proposals.mjs smoke | tee "$ATLAS_EVIDENCE_DIR/smoke.jsonl"
 
-      - name: Apply and verify reviewed representative-domain assignments
+      - name: Apply and verify reviewed representative-domain manifests
         shell: bash
         run: |
           set -euo pipefail
           node scripts/apply-person-domain-proposals.mjs batch | tee "$ATLAS_EVIDENCE_DIR/batch.jsonl"
+
+      - name: Apply and verify comment-backed reviewed backlog
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/apply-person-domain-comment-backlog.mjs apply | tee "$ATLAS_EVIDENCE_DIR/comment-backlog-apply.jsonl"
 
       - name: Final exact public read-back
         shell: bash
@@ -102,7 +119,7 @@ jobs:
           set -euo pipefail
           node scripts/apply-person-domain-proposals.mjs verify | tee "$ATLAS_EVIDENCE_DIR/verify.json"
           curl --fail-with-body --silent --show-error "$ATLAS_PERSON_DOMAIN_ENDPOINT" | jq . > "$ATLAS_EVIDENCE_DIR/public-readback.json"
-          jq -e '.ok==true and .marker=="ATLAS_PERSON_REPRESENTATIVE_DOMAIN_V1"' "$ATLAS_EVIDENCE_DIR/public-readback.json" >/dev/null
+          jq -e '.ok==true and .marker=="ATLAS_PERSON_REPRESENTATIVE_DOMAIN_V1" and .assigned>=1518' "$ATLAS_EVIDENCE_DIR/public-readback.json" >/dev/null
 
       - name: Upload immutable Person domain apply evidence
         if: always()
