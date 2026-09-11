@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "human:jean-baptiste-bernadotte-sweden-norway-king-1818-1844:20260911",
+  "person": {
+    "canonical_name_en": "Jean-Baptiste Bernadotte",
+    "display_name_ko": "장바티스트 베르나도트",
+    "canonical_key": "Jean-Baptiste Bernadotte",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Sweden–Norway"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "King of Sweden and Norway",
+    "role_code": "king_of_sweden_and_norway",
+    "role_display_name_ko": "스웨덴·노르웨이 국왕",
+    "role_category": "ruler",
+    "start_year": 1818,
+    "start_month": 2,
+    "start_day": 5,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1844,
+    "end_month": 3,
+    "end_day": 8,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Jean-Baptiste Bernadotte succeeded Charles XIII on 5 February 1818 and ruled the union as Karl XIV Johan of Sweden and Karl III Johan of Norway until his death on 8 March 1844. ATLAS keeps his stable biographical identity under Bernadotte while recording the royal office and union polity in this Activity."
+  },
+  "sources": [
+    {
+      "title": "Karl XIV Johan",
+      "canonical_url": "https://www.kungahuset.se/english/royal-house/the-bernadotte-dynasty/karl-xiv-johan",
+      "source_type": "royal_house_biography",
+      "citation_text": "Royal Court of Sweden biography of Karl XIV Johan (Jean Baptiste Bernadotte)",
+      "locator": "Biography: King from 1818 to 1844; died 8 March 1844"
+    },
+    {
+      "title": "Karl XIV Johan, King of Sweden and Norway (Jean-Baptiste Bernadotte)",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG56777",
+      "source_type": "museum_biography",
+      "citation_text": "British Museum biographical record for Jean-Baptiste Bernadotte / Karl XIV Johan",
+      "locator": "Biography: succeeded Charles XIII in 1818 and became King as Charles XIV John of Sweden and Charles III John of Norway"
+    }
+  ]
+}
