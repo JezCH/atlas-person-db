@@ -1,6 +1,7 @@
 {
   "schema": "atlas-human-authoring/v1",
   "review_status": "approved",
+
   "request_id": "human:talleyrand-french-first-republic-foreign-minister-1797-1799:20260911",
   "person": {
     "canonical_name_en": "Charles-Maurice de Talleyrand-Périgord",
