@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "human:talleyrand-french-first-republic-foreign-minister-1797-1799:20260911",
+  "person": {
+    "canonical_name_en": "Charles-Maurice de Talleyrand-Périgord",
+    "display_name_ko": "샤를모리스 드 탈레랑",
+    "canonical_key": "Charles-Maurice de Talleyrand-Périgord",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "French First Republic"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Minister of Foreign Affairs",
+    "role_code": "minister_of_foreign_affairs",
+    "role_display_name_ko": "외무장관",
+    "role_category": "service",
+    "start_year": 1797,
+    "start_month": 7,
+    "start_day": 15,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1799,
+    "end_month": 7,
+    "end_day": 20,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Talleyrand served as Minister of Foreign Relations under the Directory from 15 July 1797 until 20 July 1799. This Activity is kept separate from his later return to the same ministry after the coup of 18 Brumaire."
+  },
+  "sources": [
+    {
+      "title": "TALLEYRAND-PERIGORD, Charles-Maurice de",
+      "canonical_url": "https://www.napoleon.org/en/history-of-the-two-empires/biographies/talleyrand-perigord-charles-maurice-de/",
+      "source_type": "institutional_biography",
+      "citation_text": "Fondation Napoléon biography listing Talleyrand's ministerial terms",
+      "locator": "Office chronology: Minister for Foreign Relations, 15 July 1797–20 July 1799"
+    },
+    {
+      "title": "Papiers de Charles-Maurice de Talleyrand",
+      "canonical_url": "https://archivesdiplomatiques.diplomatie.gouv.fr/ark:/14366/fr879ljbzmnt",
+      "source_type": "government_archive",
+      "citation_text": "French Diplomatic Archives biographical notice for Charles-Maurice de Talleyrand",
+      "locator": "Biographical history: appointment by the Directory as Minister of Foreign Relations"
+    }
+  ]
+}
