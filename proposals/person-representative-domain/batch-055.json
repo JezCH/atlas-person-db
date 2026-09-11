@@ -1,0 +1,32 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-11",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "192724247f61b93d6c1f08fefceebc6ced6ae098",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Apply only the two explicit human-reviewed representative-domain assignments created with the 2026-09-11 Talleyrand/Bernadotte registration; do not infer domains from Role and do not modify any existing Person-domain assignment."
+  },
+  "review_scope": {
+    "task_key": "PERSON-AUTHORING-TALLEYRAND-BERNADOTTE-20260911",
+    "reviewed_assignments": 2,
+    "reviewed_holds": 0,
+    "rationale": "Talleyrand's historical representative identity is statecraft and high political-diplomatic power; Bernadotte's representative identity culminates in crown-prince leadership, kingship, and dynastic state leadership. Both therefore map to ATLAS governance rather than military despite Bernadotte's earlier marshal career."
+  },
+  "entries": [
+    {
+      "person_id": "0b6a34b4-89d0-4728-876e-923f5030b0eb",
+      "canonical_name_en": "Charles-Maurice de Talleyrand-Périgord",
+      "preferred_name_ko": "샤를모리스 드 탈레랑",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "12cf31de-4baf-4324-9dcc-48682d2a9a41",
+      "canonical_name_en": "Jean-Baptiste Bernadotte",
+      "preferred_name_ko": "장바티스트 베르나도트",
+      "representative_domain": "governance"
+    }
+  ]
+}
