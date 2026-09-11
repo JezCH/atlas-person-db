@@ -9,6 +9,12 @@
     "person_type": "historical",
     "historicity": "historical"
   },
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-11"
+    }
+  },
   "polity": {
     "canonical_name_en": "French First Republic"
   },
