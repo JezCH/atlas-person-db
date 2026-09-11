@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "human:jean-baptiste-bernadotte-sweden-crown-prince-1810-1818:20260911",
+  "person": {
+    "canonical_name_en": "Jean-Baptiste Bernadotte",
+    "display_name_ko": "장바티스트 베르나도트",
+    "canonical_key": "Jean-Baptiste Bernadotte",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Sweden"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "term",
+    "role": "Crown Prince",
+    "role_code": "crown_prince",
+    "role_display_name_ko": "왕세자",
+    "role_category": "service",
+    "start_year": 1810,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 1818,
+    "end_month": 2,
+    "end_day": 5,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "The Swedish Riksdag selected Jean Baptiste Bernadotte as successor to the throne in 1810. ATLAS records the crown-prince phase separately from his later kingship and uses Sweden rather than retroactively treating the entire 1810–1818 period as royal rule over the Sweden–Norway union."
+  },
+  "sources": [
+    {
+      "title": "Karl XIV Johan",
+      "canonical_url": "https://www.kungahuset.se/english/royal-house/the-bernadotte-dynasty/karl-xiv-johan",
+      "source_type": "royal_house_biography",
+      "citation_text": "Royal Court of Sweden biography of Karl XIV Johan (Jean Baptiste Bernadotte)",
+      "locator": "Biography: named successor to the Swedish throne by the Parliamentary Session in Örebro in 1810; king from 1818"
+    },
+    {
+      "title": "Karl XIV Johan, King of Sweden and Norway (Jean-Baptiste Bernadotte)",
+      "canonical_url": "https://www.britishmuseum.org/collection/term/BIOG56777",
+      "source_type": "museum_biography",
+      "citation_text": "British Museum biographical record for Jean-Baptiste Bernadotte / Karl XIV Johan",
+      "locator": "Biography: elected heir-presumptive in 1810 and became Crown Prince before succeeding in 1818"
+    }
+  ]
+}
