@@ -79,7 +79,28 @@ jobs:
           done
           [[ "$ready" == "true" ]] || { cat "$ATLAS_EVIDENCE_DIR/runtime.json" >&2 || true; echo 'Exact Production runtime did not become ready.' >&2; exit 1; }
 
+      - name: Resolve bounded reviewed-batch scope
+        id: scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          bounded=false
+          batch_file=""
+          if [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
+            parent="$(git rev-parse "${GITHUB_SHA}^")"
+            mapfile -t batch_files < <(git diff --name-only "$parent" "$GITHUB_SHA" -- 'proposals/person-representative-domain/batch-*.json')
+            mapfile -t hold_files < <(git diff --name-only "$parent" "$GITHUB_SHA" -- 'proposals/person-representative-domain/hold-*.json')
+            if [[ "${#batch_files[@]}" -eq 1 && "${#hold_files[@]}" -eq 0 ]]; then
+              bounded=true
+              batch_file="$(basename "${batch_files[0]}")"
+            fi
+          fi
+          echo "bounded=$bounded" >> "$GITHUB_OUTPUT"
+          echo "batch_file=$batch_file" >> "$GITHUB_OUTPUT"
+          printf '{"bounded":%s,"batch_file":"%s"}\n' "$bounded" "$batch_file" | tee "$ATLAS_EVIDENCE_DIR/scope.json"
+
       - name: Plan and validate comment-backed reviewed backlog
+        if: ${{ steps.scope.outputs.bounded != 'true' }}
         shell: bash
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -98,6 +119,7 @@ jobs:
           echo "ATLAS_PERSON_DOMAIN_OIDC_TOKEN=${oidc_token}" >> "$GITHUB_ENV"
 
       - name: Apply and verify 8-domain Production smoke set
+        if: ${{ steps.scope.outputs.bounded != 'true' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -115,11 +137,18 @@ jobs:
 
       - name: Apply and verify reviewed representative-domain manifests
         shell: bash
+        env:
+          BOUNDED_BATCH_FILE: ${{ steps.scope.outputs.batch_file }}
         run: |
           set -euo pipefail
-          node scripts/apply-person-domain-proposals.mjs batch | tee "$ATLAS_EVIDENCE_DIR/batch.jsonl"
+          if [[ "${{ steps.scope.outputs.bounded }}" == "true" ]]; then
+            node scripts/apply-person-domain-proposals.mjs file "$BOUNDED_BATCH_FILE" | tee "$ATLAS_EVIDENCE_DIR/batch.jsonl"
+          else
+            node scripts/apply-person-domain-proposals.mjs batch | tee "$ATLAS_EVIDENCE_DIR/batch.jsonl"
+          fi
 
       - name: Apply and verify comment-backed reviewed backlog with renewable OIDC
+        if: ${{ steps.scope.outputs.bounded != 'true' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -127,9 +156,15 @@ jobs:
 
       - name: Final exact public read-back
         shell: bash
+        env:
+          BOUNDED_BATCH_FILE: ${{ steps.scope.outputs.batch_file }}
         run: |
           set -euo pipefail
-          node scripts/apply-person-domain-proposals.mjs verify | tee "$ATLAS_EVIDENCE_DIR/verify.json"
+          if [[ "${{ steps.scope.outputs.bounded }}" == "true" ]]; then
+            node scripts/apply-person-domain-proposals.mjs file "$BOUNDED_BATCH_FILE" | tee "$ATLAS_EVIDENCE_DIR/verify.json"
+          else
+            node scripts/apply-person-domain-proposals.mjs verify | tee "$ATLAS_EVIDENCE_DIR/verify.json"
+          fi
           curl --fail-with-body --silent --show-error "$ATLAS_PERSON_DOMAIN_ENDPOINT" | jq . > "$ATLAS_EVIDENCE_DIR/public-readback.json"
           jq -e '.ok==true and .marker=="ATLAS_PERSON_REPRESENTATIVE_DOMAIN_V1" and .assigned>=1518' "$ATLAS_EVIDENCE_DIR/public-readback.json" >/dev/null
 
