@@ -24,8 +24,8 @@ const palette = Object.freeze({
   knowledge:'#3f78c5',
   technology:'#59636d',
   commerce:'#2e8b57',
-  culture:'#9a5ba5',
-  religion:'#e2d7b9',
+  culture:'#b44c7a',
+  religion:'#6d3e8e',
   exploration:'#d96b1e'
 });
 const cancelledSequenceOrdinals = Object.freeze({
