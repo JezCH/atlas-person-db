@@ -19,15 +19,23 @@
   --atlas-person-domain-commerce-tint: rgba(46, 139, 87, 0.12);
   --atlas-person-domain-commerce-hover: rgba(46, 139, 87, 0.18);
   --atlas-person-domain-commerce-selected: rgba(46, 139, 87, 0.22);
-  --atlas-person-domain-culture: #9a5ba5;
-  --atlas-person-domain-culture-tint: rgba(154, 91, 165, 0.12);
-  --atlas-person-domain-culture-hover: rgba(154, 91, 165, 0.18);
-  --atlas-person-domain-culture-selected: rgba(154, 91, 165, 0.22);
-  --atlas-person-domain-religion: #e2d7b9;
-  --atlas-person-domain-religion-edge: #857856;
-  --atlas-person-domain-religion-tint: rgba(226, 215, 185, 0.46);
-  --atlas-person-domain-religion-hover: rgba(226, 215, 185, 0.54);
-  --atlas-person-domain-religion-selected: rgba(226, 215, 185, 0.62);
+  --atlas-person-domain-culture: #b44c7a;
+  --atlas-person-domain-culture-tint: rgba(180, 76, 122, 0.12);
+  --atlas-person-domain-culture-hover: rgba(180, 76, 122, 0.18);
+  --atlas-person-domain-culture-selected: rgba(180, 76, 122, 0.22);
+
+  /*
+   * Religion deliberately separates categorical identity from surface mood.
+   * Liturgical Violet is the high-contrast accent used by bars, underlines,
+   * borders, and spacetime rails. Warm Ivory remains the religious surface
+   * language so white UI does not erase the category or turn it graphite-gray.
+   */
+  --atlas-person-domain-religion: #6d3e8e;
+  --atlas-person-domain-religion-edge: #6d3e8e;
+  --atlas-person-domain-religion-surface: #e2d7b9;
+  --atlas-person-domain-religion-tint: rgba(226, 215, 185, 0.72);
+  --atlas-person-domain-religion-hover: rgba(226, 215, 185, 0.80);
+  --atlas-person-domain-religion-selected: rgba(226, 215, 185, 0.88);
   --atlas-person-domain-exploration: #d96b1e;
   --atlas-person-domain-exploration-tint: rgba(217, 107, 30, 0.12);
   --atlas-person-domain-exploration-hover: rgba(217, 107, 30, 0.18);
@@ -101,8 +109,8 @@
 
 /*
  * Person-domain color is an identity skin, not a new badge/column.
- * Keep the strongest color mass inside the existing sticky identity cell so the
- * table remains quiet while repeated domain colors are readable at a glance.
+ * Accent and surface are deliberately independent: the edge must identify a
+ * category on white UI, while the gradient may use a quieter surface language.
  */
 .person-card[data-representative-domain] .person-table-identity {
   box-shadow: inset 5px 0 0 var(--person-domain-edge);
@@ -113,15 +121,6 @@
     rgba(255,255,255,0) 100%
   );
   padding-inline-start: 10px;
-}
-
-/* Religion is deliberately bright. Keep Warm Ivory as the visible identity
- * stripe and reserve the darker companion tone for a one-pixel boundary only.
- */
-.person-card[data-representative-domain="religion"] .person-table-identity {
-  box-shadow:
-    inset 5px 0 0 var(--person-domain-color),
-    inset 6px 0 0 var(--person-domain-edge);
 }
 
 /* Table-view hover/selection rules are more specific than the base skin.
