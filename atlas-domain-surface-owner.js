@@ -39,7 +39,7 @@
   function ensureSpacetimeDomainAssets() {
     ensureStylesheet(
       'link[data-atlas-person-spacetime-domain-colors="true"]',
-      "./atlas-person-spacetime-domain-colors.css?v=20260912-domain-accent-surface-v3",
+      "./atlas-person-spacetime-domain-colors.css?v=20260912-final-white-ui-palette-v4",
       "atlasPersonSpacetimeDomainColors"
     );
     if (!document.querySelector('script[data-atlas-person-spacetime-label-overlap-guard="true"]')) {
@@ -61,7 +61,7 @@
   function ensurePersonDomainAssets() {
     ensureStylesheet(
       'link[data-atlas-person-domain-palette="true"]',
-      "./atlas-person-domain-palette.css?v=20260912-domain-accent-surface-v3",
+      "./atlas-person-domain-palette.css?v=20260912-final-white-ui-palette-v4",
       "atlasPersonDomainPalette"
     );
 
