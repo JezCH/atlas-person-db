@@ -46,10 +46,10 @@
   "external_references": {},
   "review_deferrals": {
     "namuwiki": {
-      "reason_code": "provider_access_not_required_for_current_registration",
+      "reason_code": "provider_access_blocked",
       "attempted_at": "2026-09-12",
-      "reason": "Registration proceeds from archaeological and official-source evidence; no NamuWiki URL is invented or inferred.",
-      "authorization": "user_requested_registration"
+      "reason": "Direct NamuWiki provider verification is unavailable in this session; no URL is invented and no absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
     }
   },
   "review_context": {
