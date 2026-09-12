@@ -8,7 +8,7 @@ const css = fs.readFileSync(path.join(root, 'atlas-person-domain-palette.css'), 
 const owner = fs.readFileSync(path.join(root, 'atlas-domain-surface-owner.js'), 'utf8');
 
 test('Person domain contrast asset is cache-busted without changing the UI surface contract', () => {
-  assert.match(owner, /atlas-person-domain-palette\.css\?v=20260912-religion-pearl/);
+  assert.match(owner, /atlas-person-domain-palette\.css\?v=20260912-religion-sacred-sepia/);
 });
 
 test('Person table domain skin has a strong existing-cell edge and does not add a badge or dot', () => {
@@ -27,16 +27,17 @@ test('domain identity remains visible through hover and selection without replac
   assert.match(css, /var\(--person-domain-selected\) 42%/);
 });
 
-test('domain-aware Person links keep neutral text and use the domain as the underline cue', () => {
+test('domain-aware Person links keep neutral text and use the domain edge as the underline cue', () => {
   assert.match(css, /\.person-card\[data-representative-domain\]\s+\.person-main-name-link\s*\{[^}]*color:\s*#34405f/s);
   assert.match(css, /text-decoration-color:\s*var\(--person-domain-edge\)/);
   assert.match(css, /text-decoration-thickness:\s*\.11em/);
+  assert.match(css, /\.person-card\[data-representative-domain\]\s+\.person-main-name-link:hover\s*\{[^}]*text-decoration-color:\s*var\(--person-domain-edge\)/s);
 });
 
-test('bright religion identity has an explicit darker edge and stronger state tints', () => {
+test('bright religion identity uses pearl white with a sacred sepia edge and visible warm tints', () => {
   assert.match(css, /--atlas-person-domain-religion:\s*#f1f0eb/);
-  assert.match(css, /--atlas-person-domain-religion-edge:\s*#8b8d8a/);
-  assert.match(css, /--atlas-person-domain-religion-tint:\s*rgba\(241, 240, 235, 0\.30\)/);
-  assert.match(css, /--atlas-person-domain-religion-hover:\s*rgba\(241, 240, 235, 0\.38\)/);
-  assert.match(css, /--atlas-person-domain-religion-selected:\s*rgba\(241, 240, 235, 0\.46\)/);
+  assert.match(css, /--atlas-person-domain-religion-edge:\s*#a67c52/);
+  assert.match(css, /--atlas-person-domain-religion-tint:\s*rgba\(166, 124, 82, 0\.18\)/);
+  assert.match(css, /--atlas-person-domain-religion-hover:\s*rgba\(166, 124, 82, 0\.24\)/);
+  assert.match(css, /--atlas-person-domain-religion-selected:\s*rgba\(166, 124, 82, 0\.30\)/);
 });
