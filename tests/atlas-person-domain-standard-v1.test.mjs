@@ -38,7 +38,7 @@ const readEntries = (names) => names.flatMap((name) => JSON.parse(fs.readFileSyn
 function assertContiguousSequence(files, prefix) {
   assert.ok(files.length > 0);
   const cancelled = cancelledSequenceOrdinals[prefix] || new Set();
-  const lastMatch = files.at(-1).match(/-(\d+)\.json$/);
+  const lastMatch = files.at(-1).match(/-(\d{3})\.json$/);
   assert.ok(lastMatch);
   const maxOrdinal = Number(lastMatch[1]);
   const expected = Array.from({ length:maxOrdinal }, (_, index) => index + 1)
