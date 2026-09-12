@@ -8,7 +8,7 @@ const css = fs.readFileSync(path.join(root, 'atlas-person-domain-palette.css'), 
 const owner = fs.readFileSync(path.join(root, 'atlas-domain-surface-owner.js'), 'utf8');
 
 test('Person domain contrast asset is cache-busted without changing the UI surface contract', () => {
-  assert.match(owner, /atlas-person-domain-palette\.css\?v=20260906-contrast-v3/);
+  assert.match(owner, /atlas-person-domain-palette\.css\?v=20260912-religion-pearl/);
 });
 
 test('Person table domain skin has a strong existing-cell edge and does not add a badge or dot', () => {
