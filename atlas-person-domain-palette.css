@@ -24,10 +24,10 @@
   --atlas-person-domain-culture-hover: rgba(154, 91, 165, 0.18);
   --atlas-person-domain-culture-selected: rgba(154, 91, 165, 0.22);
   --atlas-person-domain-religion: #f1f0eb;
-  --atlas-person-domain-religion-edge: #8b8d8a;
-  --atlas-person-domain-religion-tint: rgba(241, 240, 235, 0.30);
-  --atlas-person-domain-religion-hover: rgba(241, 240, 235, 0.38);
-  --atlas-person-domain-religion-selected: rgba(241, 240, 235, 0.46);
+  --atlas-person-domain-religion-edge: #a67c52;
+  --atlas-person-domain-religion-tint: rgba(166, 124, 82, 0.18);
+  --atlas-person-domain-religion-hover: rgba(166, 124, 82, 0.24);
+  --atlas-person-domain-religion-selected: rgba(166, 124, 82, 0.30);
   --atlas-person-domain-exploration: #d96b1e;
   --atlas-person-domain-exploration-tint: rgba(217, 107, 30, 0.12);
   --atlas-person-domain-exploration-hover: rgba(217, 107, 30, 0.18);
@@ -149,7 +149,7 @@
 
 .person-card[data-representative-domain] .person-main-name-link:hover {
   color: #202b40;
-  text-decoration-color: var(--person-domain-color);
+  text-decoration-color: var(--person-domain-edge);
   text-decoration-thickness: .14em;
 }
 
