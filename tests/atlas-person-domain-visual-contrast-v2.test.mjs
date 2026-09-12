@@ -8,7 +8,7 @@ const css = fs.readFileSync(path.join(root, 'atlas-person-domain-palette.css'), 
 const owner = fs.readFileSync(path.join(root, 'atlas-domain-surface-owner.js'), 'utf8');
 
 test('Person domain contrast asset is cache-busted without changing the UI surface contract', () => {
-  assert.match(owner, /atlas-person-domain-palette\.css\?v=20260906-contrast-v3/);
+  assert.match(owner, /atlas-person-domain-palette\.css\?v=20260912-religion-pearl/);
 });
 
 test('Person table domain skin has a strong existing-cell edge and does not add a badge or dot', () => {
@@ -34,8 +34,9 @@ test('domain-aware Person links keep neutral text and use the domain as the unde
 });
 
 test('bright religion identity has an explicit darker edge and stronger state tints', () => {
-  assert.match(css, /--atlas-person-domain-religion-edge:\s*#857856/);
-  assert.match(css, /--atlas-person-domain-religion-tint:\s*rgba\(226, 215, 185, 0\.30\)/);
-  assert.match(css, /--atlas-person-domain-religion-hover:\s*rgba\(226, 215, 185, 0\.38\)/);
-  assert.match(css, /--atlas-person-domain-religion-selected:\s*rgba\(226, 215, 185, 0\.46\)/);
+  assert.match(css, /--atlas-person-domain-religion:\s*#f1f0eb/);
+  assert.match(css, /--atlas-person-domain-religion-edge:\s*#8b8d8a/);
+  assert.match(css, /--atlas-person-domain-religion-tint:\s*rgba\(241, 240, 235, 0\.30\)/);
+  assert.match(css, /--atlas-person-domain-religion-hover:\s*rgba\(241, 240, 235, 0\.38\)/);
+  assert.match(css, /--atlas-person-domain-religion-selected:\s*rgba\(241, 240, 235, 0\.46\)/);
 });

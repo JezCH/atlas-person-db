@@ -61,7 +61,7 @@
   function ensurePersonDomainAssets() {
     ensureStylesheet(
       'link[data-atlas-person-domain-palette="true"]',
-      "./atlas-person-domain-palette.css?v=20260906-contrast-v3",
+      "./atlas-person-domain-palette.css?v=20260912-religion-pearl",
       "atlasPersonDomainPalette"
     );
 

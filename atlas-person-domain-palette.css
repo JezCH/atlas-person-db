@@ -23,11 +23,11 @@
   --atlas-person-domain-culture-tint: rgba(154, 91, 165, 0.12);
   --atlas-person-domain-culture-hover: rgba(154, 91, 165, 0.18);
   --atlas-person-domain-culture-selected: rgba(154, 91, 165, 0.22);
-  --atlas-person-domain-religion: #e2d7b9;
-  --atlas-person-domain-religion-edge: #857856;
-  --atlas-person-domain-religion-tint: rgba(226, 215, 185, 0.30);
-  --atlas-person-domain-religion-hover: rgba(226, 215, 185, 0.38);
-  --atlas-person-domain-religion-selected: rgba(226, 215, 185, 0.46);
+  --atlas-person-domain-religion: #f1f0eb;
+  --atlas-person-domain-religion-edge: #8b8d8a;
+  --atlas-person-domain-religion-tint: rgba(241, 240, 235, 0.30);
+  --atlas-person-domain-religion-hover: rgba(241, 240, 235, 0.38);
+  --atlas-person-domain-religion-selected: rgba(241, 240, 235, 0.46);
   --atlas-person-domain-exploration: #d96b1e;
   --atlas-person-domain-exploration-tint: rgba(217, 107, 30, 0.12);
   --atlas-person-domain-exploration-hover: rgba(217, 107, 30, 0.18);
