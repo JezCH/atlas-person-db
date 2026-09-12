@@ -8,9 +8,9 @@ const css = fs.readFileSync(path.join(root, 'atlas-person-domain-palette.css'), 
 const spacetimeCss = fs.readFileSync(path.join(root, 'atlas-person-spacetime-domain-colors.css'), 'utf8').toLowerCase();
 const owner = fs.readFileSync(path.join(root, 'atlas-domain-surface-owner.js'), 'utf8');
 
-test('final white-UI domain assets are cache-busted without changing the surface contract', () => {
-  assert.match(owner, /atlas-person-domain-palette\.css\?v=20260912-final-white-ui-palette-v4/);
-  assert.match(owner, /atlas-person-spacetime-domain-colors\.css\?v=20260912-final-white-ui-palette-v4/);
+test('religion silver assets are cache-busted without changing the surface contract', () => {
+  assert.match(owner, /atlas-person-domain-palette\.css\?v=20260912-religion-silver-v5/);
+  assert.match(owner, /atlas-person-spacetime-domain-colors\.css\?v=20260912-religion-silver-v5/);
 });
 
 test('Person table domain skin keeps a strong existing-cell edge and adds no badge or dot', () => {
@@ -35,7 +35,7 @@ test('domain-aware Person links keep neutral text and use the domain edge as the
   assert.match(css, /text-decoration-thickness:\s*\.11em/);
 });
 
-test('white-background palette deepens Gold and Steel while restoring Imperial Purple', () => {
+test('non-religion white-background palette remains unchanged', () => {
   assert.match(css, /--atlas-person-domain-governance:\s*#b08b00/);
   assert.match(css, /--atlas-person-domain-governance-surface:\s*#d4af37/);
   assert.match(css, /--atlas-person-domain-technology:\s*#3b4147/);
@@ -47,17 +47,16 @@ test('white-background palette deepens Gold and Steel while restoring Imperial P
   assert.match(css, /--atlas-person-domain-exploration:\s*#d96b1e/);
 });
 
-test('religion uses Pearl Sky with Slate framing and an Ice/Pearl surface on white', () => {
+test('religion uses one plain silver accent and keeps the quiet Pearl surface', () => {
   assert.match(css, /--atlas-person-domain-religion:\s*#afc1cc/);
-  assert.match(css, /--atlas-person-domain-religion-edge:\s*#74838e/);
+  assert.match(css, /--atlas-person-domain-religion-edge:\s*#87939d/);
   assert.match(css, /--atlas-person-domain-religion-surface:\s*#dce8ef/);
   assert.match(css, /--atlas-person-domain-religion-tint:\s*rgba\(220, 232, 239, 0\.78\)/);
-  assert.match(css, /--atlas-person-domain-religion-hover:\s*rgba\(220, 232, 239, 0\.86\)/);
-  assert.match(css, /--atlas-person-domain-religion-selected:\s*rgba\(220, 232, 239, 0\.94\)/);
-  assert.match(css, /\.person-card\[data-representative-domain="religion"\]\s+\.person-table-identity\s*\{[^}]*inset 1px 0 0 var\(--person-domain-edge\)[^}]*inset 5px 0 0 var\(--person-domain-color\)[^}]*inset 6px 0 0 var\(--person-domain-edge\)/s);
+  assert.doesNotMatch(css, /\.person-card\[data-representative-domain="religion"\]\s+\.person-table-identity\s*\{/);
 });
 
-test('religion spacetime label and rail preserve the bright Pearl body with a dark outline', () => {
-  assert.match(spacetimeCss, /\.spacetime-track-label\[data-representative-domain="religion"\][^{]*\{[^}]*inset 1px 0 0 var\(--spacetime-person-domain-edge\)[^}]*inset 3px 0 0 var\(--spacetime-person-domain-color\)[^}]*inset 4px 0 0 var\(--spacetime-person-domain-edge\)/s);
-  assert.match(spacetimeCss, /\.spacetime-track-rail\[data-representative-domain="religion"\][^{]*\{[^}]*box-shadow:\s*inset 0 0 0 1px var\(--spacetime-person-domain-edge\)/s);
+test('religion spacetime rail uses the same plain silver accent without a category-specific outline', () => {
+  assert.match(spacetimeCss, /data-representative-domain="religion"[\s\S]*--spacetime-person-domain-color:\s*var\(--atlas-person-domain-religion-edge\)/);
+  assert.doesNotMatch(spacetimeCss, /\.spacetime-track-label\[data-representative-domain="religion"\]:not/);
+  assert.doesNotMatch(spacetimeCss, /\.spacetime-track-rail\[data-representative-domain="religion"\]:not/);
 });

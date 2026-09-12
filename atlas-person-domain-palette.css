@@ -36,11 +36,10 @@
   --atlas-person-domain-culture-hover: rgba(154, 91, 165, 0.18);
   --atlas-person-domain-culture-selected: rgba(154, 91, 165, 0.22);
 
-  /* Religion is intentionally a bright special color. Pearl Sky is the body;
-   * Slate only outlines it, while an Ice/Pearl surface keeps the cell distinct
-   * from the white canvas without turning Religion into another saturated hue. */
+  /* Religion keeps the quiet Pearl surface but uses one plain Silver accent.
+   * No category-specific outline or nested stripe is used. */
   --atlas-person-domain-religion: #afc1cc;
-  --atlas-person-domain-religion-edge: #74838e;
+  --atlas-person-domain-religion-edge: #87939d;
   --atlas-person-domain-religion-surface: #dce8ef;
   --atlas-person-domain-religion-tint: rgba(220, 232, 239, 0.78);
   --atlas-person-domain-religion-hover: rgba(220, 232, 239, 0.86);
@@ -131,15 +130,6 @@
     rgba(255,255,255,0) 100%
   );
   padding-inline-start: 10px;
-}
-
-/* Pearl Sky is intentionally bright. Frame the 4px Pearl body with 1px Slate
- * on each side instead of darkening the category into a generic gray. */
-.person-card[data-representative-domain="religion"] .person-table-identity {
-  box-shadow:
-    inset 1px 0 0 var(--person-domain-edge),
-    inset 5px 0 0 var(--person-domain-color),
-    inset 6px 0 0 var(--person-domain-edge);
 }
 
 /* Table-view hover/selection rules are more specific than the base skin.
