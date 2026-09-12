@@ -1,0 +1,53 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-12",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "eb1022a43f56070eb3151aa9690b7e0ee23e9a3a",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Apply only these five explicit human-reviewed current-canonical Production NULL assignments from deterministic SHA1(lowercase person_id UUID string) shard 5. Preserve any existing non-null value as authoritative and fail closed on conflict. No role-to-domain automation and no scope expansion."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-WORKER-A-DELTA-MICROBATCH-16-20260912",
+    "partition": "SHA1(lowercase person_id UUID string) first hex == 5",
+    "reviewed_assignments": 5,
+    "reviewed_holds": 0,
+    "production_precheck_assigned_snapshot": 1522,
+    "execution_scope": "bounded_5_person_current_canonical_null_delta",
+    "rationale": "Livia Drusilla is represented primarily by her sustained political authority and influence within the Augustan regime; Lobengula was king of the Ndebele Kingdom; the Lord of Sipán was the paramount Moche ruler represented at Sipán; Ma Bufang exercised substantive regional governing authority in Qinghai in addition to military command; Manuel Amador Guerrero was the first constitutional president of Panama. Governance is therefore the representative domain for all five after individual historical review."
+  },
+  "entries": [
+    {
+      "person_id": "145f8762-30cf-52a4-a869-5ff2d12c2a55",
+      "canonical_name_en": "Livia Drusilla",
+      "preferred_name_ko": "리비아 드루실라",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "5134065e-18a1-487b-87df-cbea05fe0d72",
+      "canonical_name_en": "Lobengula",
+      "preferred_name_ko": "로벵굴라",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "fba700f3-bb2c-46fd-be76-ad9345fe7d81",
+      "canonical_name_en": "Lord of Sipán",
+      "preferred_name_ko": "시판의 군주",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "e9d40eda-f98b-479d-980c-1ede14c4acea",
+      "canonical_name_en": "Ma Bufang",
+      "preferred_name_ko": "마부팡",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "e4407670-323a-4597-9db3-288ea50d7f61",
+      "canonical_name_en": "Manuel Amador Guerrero",
+      "preferred_name_ko": "마누엘 아마도르 게레로",
+      "representative_domain": "governance"
+    }
+  ]
+}
