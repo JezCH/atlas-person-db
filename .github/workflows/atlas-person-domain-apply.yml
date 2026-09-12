@@ -13,6 +13,7 @@ on:
       - 'server/atlas-person-domain-handler.js'
       - 'scripts/apply-person-domain-proposals.mjs'
       - 'scripts/apply-person-domain-comment-backlog.mjs'
+      - 'scripts/apply-person-domain-comment-backlog-renewable.mjs'
       - 'proposals/person-representative-domain/batch-*.json'
       - 'proposals/person-representative-domain/hold-*.json'
       - 'proposals/person-representative-domain/palette-smoke-001.json'
@@ -52,6 +53,7 @@ jobs:
           set -euo pipefail
           node --check scripts/apply-person-domain-proposals.mjs
           node --check scripts/apply-person-domain-comment-backlog.mjs
+          node --check scripts/apply-person-domain-comment-backlog-renewable.mjs
           node --test tests/atlas-person-domain-github-oidc.test.mjs tests/atlas-person-domain-service.test.mjs tests/atlas-person-domain-standard-v1.test.mjs
 
       - name: Wait for exact Production runtime
@@ -101,17 +103,27 @@ jobs:
           set -euo pipefail
           node scripts/apply-person-domain-proposals.mjs smoke | tee "$ATLAS_EVIDENCE_DIR/smoke.jsonl"
 
+      - name: Refresh Person domain GitHub OIDC token before reviewed manifests
+        shell: bash
+        run: |
+          set -euo pipefail
+          oidc_token="$(curl --fail-with-body --silent --show-error \
+            -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_PERSON_DOMAIN_AUDIENCE}" | jq -er '.value')"
+          echo "::add-mask::${oidc_token}"
+          echo "ATLAS_PERSON_DOMAIN_OIDC_TOKEN=${oidc_token}" >> "$GITHUB_ENV"
+
       - name: Apply and verify reviewed representative-domain manifests
         shell: bash
         run: |
           set -euo pipefail
           node scripts/apply-person-domain-proposals.mjs batch | tee "$ATLAS_EVIDENCE_DIR/batch.jsonl"
 
-      - name: Apply and verify comment-backed reviewed backlog
+      - name: Apply and verify comment-backed reviewed backlog with renewable OIDC
         shell: bash
         run: |
           set -euo pipefail
-          node scripts/apply-person-domain-comment-backlog.mjs apply | tee "$ATLAS_EVIDENCE_DIR/comment-backlog-apply.jsonl"
+          node scripts/apply-person-domain-comment-backlog-renewable.mjs | tee "$ATLAS_EVIDENCE_DIR/comment-backlog-apply.jsonl"
 
       - name: Final exact public read-back
         shell: bash
