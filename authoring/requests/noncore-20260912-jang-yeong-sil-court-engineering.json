@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "noncore-jang-yeong-sil-reviewed-20260912:court-engineering",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Jang Yeong-sil",
+    "display_name_ko": "장영실",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Joseon",
+    "display_name_ko": "조선",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Court Engineer and Scientific Instrument Maker",
+    "role_code": "court_engineer_scientific_instrument_maker",
+    "role_display_name_ko": "궁중 기술자·과학기기 제작자",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS records 1423-1442 as Jang Yeong-sil's evidence-bounded Joseon court technical-service interval. He was appointed to the Sanguiwon in 1423 and subsequently designed or supervised major clocks and astronomical instruments; the 1442 royal-palanquin case is the last secure boundary used here because the Annals record withdrawal of his office credentials after the investigation.",
+    "start_year": 1423,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1442,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "title": "장영실 - 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0048697",
+      "citation_text": "한국학중앙연구원 한국민족문화대백과사전 '장영실'. 1423년 상의원별좌 임명으로 궁중기술자 활동을 시작한 뒤 물시계와 천문관측기기 제작을 주도한 경력을 정리한다.",
+      "source_type": "scholarly_reference",
+      "locator": "생애 및 활동사항: 1423년 상의원별좌 임명과 이후 궁중 기술·천문기기 제작"
+    },
+    {
+      "title": "세종실록 96권, 세종 24년 5월 3일 임술 2번째 기사",
+      "canonical_url": "https://sillok.history.go.kr/id/kda_12405003_002",
+      "citation_text": "국사편찬위원회 조선왕조실록, 세종 24년(1442) 5월 3일. 장영실을 포함한 관련자들의 직첩 회수와 처벌 결정을 기록한다.",
+      "source_type": "primary_source",
+      "locator": "1442-05-03: 장영실 직첩 회수 결정"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-12",
+      "reason": "Direct NamuWiki provider verification is unavailable in this session; no URL is invented and no absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "PERSON-REGISTER-KOREAN-SCHOLARS-20260912",
+    "production_screen": "new_person",
+    "representative_domain_review": "technology",
+    "spatial_readiness": "reuse_existing_polity_spatial_identity"
+  }
+}

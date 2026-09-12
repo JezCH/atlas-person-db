@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "noncore-jeong-yak-yong-reviewed-20260912:intellectual-activity",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Jeong Yak-yong",
+    "display_name_ko": "정약용",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Joseon",
+    "display_name_ko": "조선",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Silhak Scholar and Reform Thinker",
+    "role_code": "silhak_scholar_reform_thinker",
+    "role_display_name_ko": "실학자·개혁사상가",
+    "period_basis": "intellectual_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS records 1801-1818 as Jeong Yak-yong's representative mature intellectual activity interval. During his exile, especially at Gangjin, he concentrated on scholarship, teaching, writing, and the formulation of reform thought; this interval is used as a representative scholarly phase rather than his full lifespan or earlier government career.",
+    "start_year": 1801,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1818,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "title": "정약용 - 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0050549",
+      "citation_text": "한국학중앙연구원 한국민족문화대백과사전 '정약용'. 1801년 유배 이후 1818년 해배까지 강진 유배 기간에 학문 연구·강학·저술에 전념하고 실학적 학문과 사회개혁안을 성숙시켰음을 설명한다.",
+      "source_type": "scholarly_reference",
+      "locator": "생애: 1801년 유배부터 1818년 해배까지의 학문 연구·저술·개혁사상 정리"
+    },
+    {
+      "title": "다산초당 - 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0013467",
+      "citation_text": "한국학중앙연구원 한국민족문화대백과사전 '다산초당'. 정약용이 강진 유배 중 1808년부터 1818년까지 다산초당에서 생활하며 목민심서 등을 저술하고 실학을 집대성했음을 설명한다.",
+      "source_type": "scholarly_reference",
+      "locator": "내용: 1808-1818 다산초당 생활, 저술과 실학 집대성"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-12",
+      "reason": "Direct NamuWiki provider verification is unavailable in this session; no URL is invented and no absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "PERSON-REGISTER-KOREAN-SCHOLARS-20260912",
+    "production_screen": "new_person",
+    "representative_domain_review": "knowledge",
+    "spatial_readiness": "reuse_existing_polity_spatial_identity"
+  }
+}
