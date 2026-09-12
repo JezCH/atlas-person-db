@@ -1,18 +1,19 @@
 {
   "schema": "atlas-correction-manifest/v2",
   "review_status": "approved",
-  "request_id": "polity-name:byzantine-to-eastern-roman-ko:2026-09-13:v1",
+  "request_id": "polity-name:byzantine-to-eastern-roman-ko:2026-09-13:v2",
   "release_order": 500,
   "evidence": {
     "decision": "Rename only the existing polity's preferred Korean display name from 비잔티움 제국 to 동로마제국. Preserve the existing Polity UUID and every linked Person, Activity, spatial, territory, and source relationship.",
-    "polity_id": "a4349e04-e83f-46d3-a6a6-59320eea2e99",
+    "polity_id": "074510f4-f2e7-5795-8cfb-2a4206fa7254",
+    "identity_basis": "Durable project correction log identifies 074510f4-f2e7-5795-8cfb-2a4206fa7254 as the corrected deterministic UUID for Byzantine Empire; the prior attempted UUID was rejected by Production dry-run as missing before any mutation.",
     "identity_rule": "existing polity identity must be reused; no new polity may be created"
   },
   "operations": [
     {
       "type": "replace_polity_preferred_name",
       "case_id": "byzantine-to-eastern-roman-ko-preferred-name",
-      "polity_id": "a4349e04-e83f-46d3-a6a6-59320eea2e99",
+      "polity_id": "074510f4-f2e7-5795-8cfb-2a4206fa7254",
       "locale": "ko",
       "expected_name": "비잔티움 제국",
       "replacement_name": "동로마제국"
