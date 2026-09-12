@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "noncore-kim-jeong-ho-reviewed-20260912:cartography",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Kim Jeong-ho",
+    "display_name_ko": "김정호",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Joseon",
+    "display_name_ko": "조선",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Geographer and Cartographer",
+    "role_code": "geographer_cartographer",
+    "role_display_name_ko": "지리학자·지도제작자",
+    "period_basis": "intellectual_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "ATLAS records 1834-1864 as Kim Jeong-ho's representative documented cartographic activity, from Cheonggudo in 1834 through the revised Daedongyeojido edition in 1864. This is an evidence-bounded activity interval rather than an exact lifespan: biographical records are sparse and his commonly cited birth and death years are themselves estimates.",
+    "start_year": 1834,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 1864,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "title": "김정호 - 한국민족문화대백과사전",
+      "canonical_url": "https://encykorea.aks.ac.kr/Article/E0010423",
+      "citation_text": "한국학중앙연구원 한국민족문화대백과사전 '김정호'. 김정호를 조선 후기의 지리학자로 설명하고, 1834년 청구도 편찬과 이후 지도·지리지 제작 활동을 정리한다.",
+      "source_type": "scholarly_reference",
+      "locator": "정의·개설·활동사항: 1834년 청구도와 지속적인 지도·지리지 제작"
+    },
+    {
+      "title": "대동여지도 - 우리역사넷",
+      "canonical_url": "https://contents.history.go.kr/mobile/kc/view.do?code=kc_age_30&levelId=kc_r300275",
+      "citation_text": "국사편찬위원회 우리역사넷 '대동여지도'. 김정호가 1861년 대동여지도를 완성했으며 1864년 수정 판본이 간행되었음을 설명한다.",
+      "source_type": "official_history_reference",
+      "locator": "대동여지도 개요 및 제작 과정: 1861년 간행, 1864년 수정판"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-12",
+      "reason": "Direct NamuWiki provider verification is unavailable in this session; no URL is invented and no absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "PERSON-REGISTER-KOREAN-SCHOLARS-20260912",
+    "production_screen": "new_person",
+    "representative_domain_review": "knowledge",
+    "spatial_readiness": "reuse_existing_polity_spatial_identity"
+  }
+}
