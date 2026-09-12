@@ -5,10 +5,12 @@ import path from 'node:path';
 
 const root = path.resolve(new URL('..', import.meta.url).pathname);
 const css = fs.readFileSync(path.join(root, 'atlas-person-domain-palette.css'), 'utf8').toLowerCase();
+const spacetimeCss = fs.readFileSync(path.join(root, 'atlas-person-spacetime-domain-colors.css'), 'utf8').toLowerCase();
 const owner = fs.readFileSync(path.join(root, 'atlas-domain-surface-owner.js'), 'utf8');
 
-test('Person domain contrast asset is cache-busted without changing the UI surface contract', () => {
-  assert.match(owner, /atlas-person-domain-palette\.css\?v=20260912-religion-sacred-sepia/);
+test('Person domain contrast assets are cache-busted without changing the UI surface contract', () => {
+  assert.match(owner, /atlas-person-domain-palette\.css\?v=20260912-religion-warm-ivory-renderer/);
+  assert.match(owner, /atlas-person-spacetime-domain-colors\.css\?v=20260912-religion-warm-ivory-renderer/);
 });
 
 test('Person table domain skin has a strong existing-cell edge and does not add a badge or dot', () => {
@@ -34,10 +36,16 @@ test('domain-aware Person links keep neutral text and use the domain edge as the
   assert.match(css, /\.person-card\[data-representative-domain\]\s+\.person-main-name-link:hover\s*\{[^}]*text-decoration-color:\s*var\(--person-domain-edge\)/s);
 });
 
-test('bright religion identity uses pearl white with a sacred sepia edge and visible warm tints', () => {
-  assert.match(css, /--atlas-person-domain-religion:\s*#f1f0eb/);
-  assert.match(css, /--atlas-person-domain-religion-edge:\s*#a67c52/);
-  assert.match(css, /--atlas-person-domain-religion-tint:\s*rgba\(166, 124, 82, 0\.18\)/);
-  assert.match(css, /--atlas-person-domain-religion-hover:\s*rgba\(166, 124, 82, 0\.24\)/);
-  assert.match(css, /--atlas-person-domain-religion-selected:\s*rgba\(166, 124, 82, 0\.30\)/);
+test('religion restores Warm Ivory as the visible identity while the dark tone is outline-only', () => {
+  assert.match(css, /--atlas-person-domain-religion:\s*#e2d7b9/);
+  assert.match(css, /--atlas-person-domain-religion-edge:\s*#857856/);
+  assert.match(css, /--atlas-person-domain-religion-tint:\s*rgba\(226, 215, 185, 0\.46\)/);
+  assert.match(css, /--atlas-person-domain-religion-hover:\s*rgba\(226, 215, 185, 0\.54\)/);
+  assert.match(css, /--atlas-person-domain-religion-selected:\s*rgba\(226, 215, 185, 0\.62\)/);
+  assert.match(css, /\.person-card\[data-representative-domain="religion"\]\s+\.person-table-identity\s*\{[^}]*inset 5px 0 0 var\(--person-domain-color\)[^}]*inset 6px 0 0 var\(--person-domain-edge\)/s);
+});
+
+test('religion spacetime labels and rails keep Warm Ivory visible with a thin darker outline', () => {
+  assert.match(spacetimeCss, /\.spacetime-track-label\[data-representative-domain="religion"\][^{]*\{[^}]*inset 3px 0 0 var\(--spacetime-person-domain-color\)[^}]*inset 4px 0 0 var\(--spacetime-person-domain-edge\)/s);
+  assert.match(spacetimeCss, /\.spacetime-track-rail\[data-representative-domain="religion"\][^{]*\{[^}]*box-shadow:\s*inset 0 0 0 1px var\(--spacetime-person-domain-edge\)/s);
 });
