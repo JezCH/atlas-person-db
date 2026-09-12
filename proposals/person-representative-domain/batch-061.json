@@ -1,0 +1,39 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-12",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "ffa37e6bfa936f10834d11c4abc5a190048113a6",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Apply only these three explicit human-reviewed representative-domain assignments. Preserve any existing non-null Production value as authoritative and fail closed on conflict; perform no Role-to-Domain automation or unrelated reclassification."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-KOREAN-SCHOLARS-20260912",
+    "reviewed_assignments": 3,
+    "reviewed_holds": 0,
+    "execution_scope": "bounded_post_registration_follow_up_under_explicit_user_single_writer_override",
+    "rationale": "Kim Jeong-ho is chiefly represented by the production and systematization of geographic knowledge through landmark cartography, so knowledge is stronger than exploration. Jeong Yak-yong is chiefly represented by Silhak scholarship, reform thought, and an extensive intellectual corpus despite his government service, so knowledge is primary. Jang Yeong-sil is chiefly represented by engineering, invention, clocks, and astronomical instrument making, so technology is primary."
+  },
+  "entries": [
+    {
+      "person_id": "d36801fe-ba76-445a-afa3-c0882c24ae9d",
+      "canonical_name_en": "Kim Jeong-ho",
+      "preferred_name_ko": "김정호",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "b4b95ce7-f1c6-4b66-ad68-df28e8c8285b",
+      "canonical_name_en": "Jeong Yak-yong",
+      "preferred_name_ko": "정약용",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "e19c1fb8-09d5-493b-a5b8-d63659b0d591",
+      "canonical_name_en": "Jang Yeong-sil",
+      "preferred_name_ko": "장영실",
+      "representative_domain": "technology"
+    }
+  ]
+}
