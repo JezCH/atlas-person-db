@@ -8,6 +8,7 @@ const ENDPOINT = String(process.env.ATLAS_PERSON_DOMAIN_ENDPOINT || "https://atl
 const WORKFLOW_SHA = String(process.env.GITHUB_SHA || process.env.ATLAS_WORKFLOW_SHA || "").trim().toLowerCase();
 const OIDC_TOKEN = String(process.env.ATLAS_PERSON_DOMAIN_OIDC_TOKEN || "").trim();
 const MODE = String(process.argv[2] || "verify").trim().toLowerCase();
+const TARGET = String(process.argv[3] || "").trim();
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const CANONICAL_CODES = Object.freeze([
   "governance","military","knowledge","technology",
@@ -123,6 +124,17 @@ function loadPlan() {
   return Object.freeze({ smoke, batch, hold, assignments, batchFiles, holdFiles });
 }
 
+function selectBatchFile(plan, target) {
+  const name = String(target || "").trim();
+  if (!/^batch-\d{3}\.json$/.test(name) || path.basename(name) !== name) {
+    fail(`Bounded batch mode requires an exact batch-NNN.json basename: ${name || "<empty>"}`);
+  }
+  if (!plan.batchFiles.includes(name)) fail(`Reviewed batch manifest is not in the contiguous plan: ${name}`);
+  const entries = plan.batch.filter((entry) => entry.source === name);
+  if (entries.length === 0) fail(`Reviewed batch manifest has no writable entries: ${name}`);
+  return Object.freeze({ name, entries:Object.freeze(entries) });
+}
+
 async function readCurrent() {
   const response = await fetch(ENDPOINT, { headers:{ accept:"application/json" }, cache:"no-store" });
   const body = await response.json().catch(() => null);
@@ -201,7 +213,7 @@ function verifyExpected(body, expectedEntries, holdEntries) {
 }
 
 const plan = loadPlan();
-if (!["smoke","batch","verify"].includes(MODE)) fail(`Unsupported mode: ${MODE}`);
+if (!["smoke","batch","file","verify"].includes(MODE)) fail(`Unsupported mode: ${MODE}`);
 
 if (MODE === "smoke") {
   await applyOnlyChanged(plan.smoke, MODE);
@@ -211,6 +223,11 @@ if (MODE === "smoke") {
   await applyOnlyChanged(plan.batch, MODE);
   const body = await readCurrent();
   console.log(JSON.stringify({ marker:"ATLAS_PERSON_DOMAIN_APPLY_V1", mode:MODE, ...verifyExpected(body, [...plan.assignments.values()], plan.hold) }, null, 2));
+} else if (MODE === "file") {
+  const selected = selectBatchFile(plan, TARGET);
+  await applyOnlyChanged(selected.entries, `${MODE}:${selected.name}`);
+  const body = await readCurrent();
+  console.log(JSON.stringify({ marker:"ATLAS_PERSON_DOMAIN_APPLY_V1", mode:MODE, source:selected.name, ...verifyExpected(body, selected.entries, []) }, null, 2));
 } else {
   const body = await readCurrent();
   console.log(JSON.stringify({ marker:"ATLAS_PERSON_DOMAIN_APPLY_V1", mode:MODE, ...verifyExpected(body, [...plan.assignments.values()], plan.hold) }, null, 2));
