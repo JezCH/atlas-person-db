@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "noncore-fu-hao-reviewed-20260912:royal-consort",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Fu Hao",
+    "display_name_ko": "부호",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Shang",
+    "display_name_ko": "상",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Royal Consort",
+    "role_code": "royal_consort",
+    "role_display_name_ko": "왕실 배우자",
+    "period_basis": "general_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Fu Hao is securely attested by Shang oracle-bone inscriptions and by her intact tomb at Yinxu as a royal consort of King Wu Ding. ATLAS uses a broad approximate c.1250-c.1200 BCE activity interval bounded by Wu Ding's reign and the tomb's archaeological dating, rather than treating Fu Hao's unknown lifespan or Wu Ding's full reign as an exact consort term.",
+    "start_year": -1250,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -1200,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "title": "Hello, Yinxu⑥丨Tomb of China's First Female General, Fu Hao.",
+      "canonical_url": "https://english.henan.gov.cn/2023/10-30/2838629.html",
+      "citation_text": "The People's Government of Henan Province, 'Hello, Yinxu⑥丨Tomb of China's First Female General, Fu Hao.', 2023. The article identifies Fu Hao as a consort of Shang king Wu Ding and a female military leader, and describes her intact Yinxu tomb and its agreement with oracle-bone records.",
+      "source_type": "official_government_reference",
+      "locator": "Fu Hao identified as consort of King Wu Ding; tomb corroborated by contemporary oracle-bone records"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-12",
+      "reason": "Direct NamuWiki provider verification is unavailable in this session; no URL is invented and no absence is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
+  "review_context": {
+    "request_batch": "PERSON-REGISTER-FU-HAO-20260912",
+    "production_screen": "new_person",
+    "representative_domain_review": "military",
+    "spatial_readiness": "reuse_existing_polity_spatial_identity"
+  }
+}
