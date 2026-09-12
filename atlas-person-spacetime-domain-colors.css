@@ -43,7 +43,7 @@
 }
 .spacetime-track-label[data-representative-domain="religion"],
 .spacetime-track-rail[data-representative-domain="religion"] {
-  --spacetime-person-domain-color: var(--atlas-person-domain-religion);
+  --spacetime-person-domain-color: var(--atlas-person-domain-religion-edge);
   --spacetime-person-domain-edge: var(--atlas-person-domain-religion-edge);
   --spacetime-person-domain-tint: var(--atlas-person-domain-religion-tint);
 }
@@ -60,20 +60,6 @@
   box-shadow: inset 3px 0 0 var(--spacetime-person-domain-edge), 0 1px 5px rgba(35,50,74,.08);
 }
 
-/* Keep the bright Religion cue recognizably Pearl rather than Slate: a 2px
- * Pearl body is framed by 1px Slate boundaries on the white canvas. */
-.spacetime-track-label[data-representative-domain="religion"]:not(.is-selected):not(.is-meanwhile-active):not(:hover) {
-  box-shadow:
-    inset 1px 0 0 var(--spacetime-person-domain-edge),
-    inset 3px 0 0 var(--spacetime-person-domain-color),
-    inset 4px 0 0 var(--spacetime-person-domain-edge),
-    0 1px 5px rgba(35,50,74,.08);
-}
-
 .spacetime-track-rail[data-representative-domain]:not(.is-selected):not(.is-meanwhile-active):not(.is-activity-selected):not(:hover) {
   background: var(--spacetime-person-domain-color);
-}
-
-.spacetime-track-rail[data-representative-domain="religion"]:not(.is-selected):not(.is-meanwhile-active):not(.is-activity-selected):not(:hover) {
-  box-shadow: inset 0 0 0 1px var(--spacetime-person-domain-edge);
 }
