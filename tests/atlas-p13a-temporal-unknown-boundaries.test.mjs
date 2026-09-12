@@ -41,6 +41,33 @@ function payload(raw) {
   });
 }
 
+function genericOngoingPayload() {
+  return {
+    person_id:id(1),
+    polity_id:id(2),
+    role_id:id(3),
+    relation_type_id:id(4),
+    period_basis_id:id(5),
+    activity_start:1900,
+    activity_start_month:null,
+    activity_start_day:null,
+    activity_start_granularity:'year',
+    activity_start_certainty:'exact',
+    activity_start_calendar:'gregorian',
+    activity_end:null,
+    activity_end_month:null,
+    activity_end_day:null,
+    activity_end_granularity:null,
+    activity_end_certainty:null,
+    activity_end_calendar:null,
+    confidence:'well_established',
+    chronology_status:'ongoing',
+    ongoing_as_of:'2026-01-01',
+    notes:null,
+    source_links:[]
+  };
+}
+
 function nullStart(raw) {
   for (const field of ['start_year','start_month','start_day','start_certainty','start_calendar']) raw.activity[field]=null;
   return raw;
@@ -81,12 +108,9 @@ test('Human Authoring rejects partial unresolved tuples', () => {
   assert.throws(()=>human.normalizeHumanAuthoringRequest(end),/END_UNRESOLVED_BOUNDARY_MUST_BE_ALL_NULL/);
 });
 
-test('unknown closed end and ongoing end stay semantically distinct', () => {
+test('historical unknown closed end and generic ongoing end stay semantically distinct', () => {
   const closed=native.normalizeStage2NativeActivity(payload(nullEnd(request())));
-  const ongoingRaw=nullEnd(request());
-  ongoingRaw.activity.chronology_status='ongoing';
-  ongoingRaw.activity.ongoing_as_of='2026-01-01';
-  const ongoingRow=native.normalizeStage2NativeActivity(payload(ongoingRaw));
+  const ongoingRow=native.normalizeStage2NativeActivity(genericOngoingPayload());
   assert.match(semantic.semanticKey(closed),/<UNKNOWN>$/);
   assert.match(semantic.semanticKey(ongoingRow),/<ONGOING>$/);
   assert.notEqual(semantic.semanticKey(closed),semantic.semanticKey(ongoingRow));

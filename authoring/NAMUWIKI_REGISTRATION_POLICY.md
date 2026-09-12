@@ -1,81 +1,99 @@
 # NamuWiki reference policy for Person registration
 
-This policy applies to every new `atlas-human-authoring/v1` Person registration created after this contract is merged. The explicit provider-access deferral below is the only exception to the normal required-decision rule.
+This policy applies to every new or genuinely unreviewed `atlas-human-authoring/v1` Person registration created after this contract is merged.
+
+NamuWiki is part of the registration review bundle. It is not a routine post-registration cleanup pass.
 
 ## Required registration decision
 
-Before the registration request is committed, the operator must check whether the exact historical Person has a NamuWiki document. Do not infer a URL from the Korean display name and do not accept a same-name, disambiguation, or adjacent-topic page without confirming that it is the intended Person.
+Before a new registration can be declared complete, the operator must determine whether the exact historical Person has an independent NamuWiki document.
 
-Every new human-authoring request must contain exactly one explicit decision under `external_references.namuwiki`.
+Use the same search standard as the rolling #820 re-audit:
 
-When a document exists:
+1. preferred Korean display name and spacing variants;
+2. canonical English name and transliteration variants;
+3. local/native name, aliases, regnal names, titles, sobriquets, dynasty-qualified forms, and disambiguation forms;
+4. external indexed search or mirror discovery when direct provider search is blocked;
+5. related dynasty/Polity/event/list pages and reverse-link target recovery to discover the actual document title;
+6. same-Person verification against homonyms, mentions, redirects to different people, and broken targets.
+
+A provider block, one failed direct fetch, or one failed exact-title search is not evidence that a document does not exist.
+
+## Linked decision
+
+When an independent Person document is verified:
 
 ```json
 "external_references": {
   "namuwiki": {
     "status": "linked",
-    "checked_at": "2026-08-21",
-    "document_title": "임호텝",
-    "url": "https://namu.wiki/w/%EC%9E%84%ED%98%B8%ED%85%9D"
+    "checked_at": "2026-09-08",
+    "document_title": "exact document title",
+    "url": "https://namu.wiki/w/..."
   }
 }
 ```
 
-When no Person document can be found after the check:
+The title and canonical `https://namu.wiki/w/...` URL must identify the same historical Person.
+
+## Confirmed not-found decision
+
+`not_found` is allowed only after an exhaustive search, never merely because provider access failed.
+
+New pushed manifests must include compact search evidence:
 
 ```json
 "external_references": {
   "namuwiki": {
     "status": "not_found",
-    "checked_at": "2026-08-21"
+    "checked_at": "2026-09-08",
+    "search_evidence": {
+      "exhaustive": true,
+      "attempted_variants": ["한글 표기", "English / native variant"],
+      "evidence_note": "Briefly state the search paths used and why no independent same-Person document was verified."
+    }
   }
 }
 ```
 
-Omission, `unknown`, guessed URLs, non-NamuWiki URLs, and a `not_found` record carrying a title or URL are not valid decisions for a new human-authoring registration.
+The evidence is intentionally compact. It proves that a real search happened without creating a separate research artifact or verbose checklist for every Person.
 
-## Explicit provider-access deferral for GitHub batches
+If exhaustive review cannot support either `linked` or confirmed `not_found`, keep the registration in explicit HOLD/unresolved state. Do not fabricate a decision merely to finish the batch.
 
-When a provider access restriction has been disclosed and the user instructs registration to continue, historical Person/Activity registration may proceed through the existing authenticated GitHub transport while the NamuWiki review remains pending. This exception does not turn a failed search or blocked page into `not_found`.
+## Provider access is not a completion exception
 
-The reviewed manifest must omit `external_references.namuwiki` and include:
+`provider_access_blocked` may be recorded as an operational fact while research continues, but it is not a terminal registration outcome for a new/unreviewed Person.
 
-```json
-"review_deferrals": {
-  "namuwiki": {
-    "reason_code": "provider_access_blocked",
-    "attempted_at": "2026-09-02",
-    "reason": "Describe the actual provider restriction and outstanding review.",
-    "authorization": "user_requested_registration_after_disclosed_block"
-  }
-}
-```
+A blocked direct provider path should trigger alternate indexed/mirror/related-page discovery, not automatic deferral to a later cleanup campaign.
 
-The immutable Git manifest is the pending-review record. No fabricated NamuWiki decision or URL is written; the Person remains unreviewed unless a reviewed value already exists, which the service reuses. Link verification is outstanding even after Person/Activity registration succeeds and must be reported separately. Do not claim complete NamuWiki review for these records.
+Legacy immutable pre-v7 manifests remain replayable under their historical contract; this exception exists for replay compatibility only and must not be used for newly prepared requests.
 
-This is a bounded GitHub batch exception. Bare omission, `unknown` decisions, and simultaneous decisions plus deferrals remain invalid for new manifests. The Admin path, OIDC authentication, source requirements, historical review, duplicate checks, transaction boundaries, overwrite protections, and canonical read-back are unchanged. Complete the reference review later through the existing NamuWiki link workflow once verified evidence is available.
+## Efficient execution
+
+NamuWiki review follows the universal registration ingest policy:
+
+- perform it in the same bundled REVIEW as the rest of the Person;
+- reuse an already-proven linked state for an existing reviewed Person;
+- parallelize independent Person searches in cohorts;
+- store the decision in the canonical Human Authoring request/ledger where supported;
+- use a companion NamuWiki write only when the canonical writer boundary truly requires it;
+- do not create a second registration API, per-Person workflow, or separate research database;
+- do not repeat the search after authoritative verification unless a concrete mismatch or later re-audit requirement exists.
 
 ## Authoritative storage and read path
 
-The NamuWiki decision is part of the human-authoring request itself. The normal authoring transaction persists the normalized decision in the existing immutable `atlas_v2.authoring_manifest_runs.result_snapshot.external_references.namuwiki` ledger snapshot together with the Person/Activity result. No separate NamuWiki database table or second write is required.
+The NamuWiki decision is part of the Human Authoring request. The normal authoring path persists the normalized decision in the existing immutable `atlas_v2.authoring_manifest_runs.result_snapshot.external_references.namuwiki` ledger snapshot together with the Person/Activity result.
 
-The Person read service exposes the latest explicit NamuWiki decision recorded for that Person. A `linked` decision is consumed by the Person main table so the visible Person name itself receives the existing visually distinct NamuWiki hyperlink. A `not_found` decision intentionally creates no hyperlink but remains machine-readable for reporting and future re-checks.
+A verified linked decision is consumed by the Person read surface so the visible Person name can use the existing NamuWiki hyperlink behavior. A confirmed `not_found` decision intentionally creates no link but remains machine-readable.
 
-The absence of a link is not equivalent to `not_found`; only an explicit stored decision is authoritative.
+Absence of a link is never equivalent to `not_found`; only an explicit reviewed stored decision is authoritative.
 
-## Admin and GitHub registration paths
+## Completion report
 
-The normal Admin `/api/atlas-authoring` path fails closed if the NamuWiki decision is omitted. The form requires the operator to select `linked` or `not_found`; linked records require the exact document title and canonical `https://namu.wiki/w/...` URL.
+Every new Person registration completion report must state one of:
 
-For reviewed GitHub batch registrations, changed `atlas-human-authoring/v1` manifests are rejected by CI when the NamuWiki decision is omitted or invalid. Legacy pre-cutover GitHub requests remain replayable without being bulk-edited merely to satisfy the newer metadata contract.
+- `나무위키: 연결됨 — <document_title>`;
+- `나무위키: 전수검색 후 문서 미확인` with the stored search evidence;
+- `나무위키: HOLD` when review is genuinely unresolved.
 
-Existing reviewed legacy UI mappings, such as Imhotep, remain compatibility fallbacks until those Persons obtain an authoritative ledger decision through a later reviewed authoring request.
-
-## Registration completion report
-
-Every registration completion report must state the NamuWiki outcome explicitly:
-
-- `나무위키: 연결됨 — <document_title>` when `status` is `linked`.
-- `나무위키: 문서 없음` when `status` is `not_found`.
-
-The operator must never silently treat an unchecked or unresolved state as `문서 없음`.
+Unchecked/provider-blocked state must never be reported as `문서 없음` or as a completed NamuWiki review.

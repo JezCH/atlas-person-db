@@ -16,12 +16,40 @@ function request() {
     sources:[{title:'Fixture source'}]
   };
 }
+function genericOngoingPayload() {
+  return {
+    person_id:id(1),
+    polity_id:id(2),
+    role_id:id(3),
+    relation_type_id:id(4),
+    period_basis_id:id(5),
+    activity_start:2024,
+    activity_start_month:6,
+    activity_start_day:3,
+    activity_start_granularity:'day',
+    activity_start_certainty:'exact',
+    activity_start_calendar:'gregorian',
+    activity_end:null,
+    activity_end_month:null,
+    activity_end_day:null,
+    activity_end_granularity:null,
+    activity_end_certainty:null,
+    activity_end_calendar:null,
+    confidence:'well_established',
+    chronology_status:'ongoing',
+    ongoing_as_of:'2025-01-31',
+    notes:null,
+    source_links:[]
+  };
+}
 function payload(raw = request()) {
   return human.activityPayload({personId:id(1),polityId:id(2),roleId:id(3),relation:{id:id(4)},periodBasis:{id:id(5)},activity:human.normalizeHumanAuthoringRequest(raw).activity,sources:[]});
 }
 
-test('ongoing authoring preserves a null end through native normalization and Person readback', () => {
-  const row = native.normalizeStage2NativeActivity(payload());
+test('ordinary Human Authoring rejects ongoing registration while generic ongoing normalization and readback remain intact', () => {
+  assert.throws(()=>human.normalizeHumanAuthoringRequest(request()),/HUMAN_AUTHORING_ONGOING_ACTIVITY_FORBIDDEN/);
+
+  const row = native.normalizeStage2NativeActivity(genericOngoingPayload());
   assert.equal(row.activity_end,null);
   assert.equal(row.ongoing_as_of,'2025-01-31');
   const end = personRead.normalizeBoundary({...row,ongoing_as_of:row.ongoing_as_of},'activity_end');
@@ -32,7 +60,7 @@ test('ongoing authoring preserves a null end through native normalization and Pe
 });
 
 test('ongoing semantic identity ignores verification date and remains distinct from unknown and known closed intervals', () => {
-  const row=payload();
+  const row=native.normalizeStage2NativeActivity(genericOngoingPayload());
   assert.equal(semantic.semanticKey(row),semantic.semanticKey({...row,ongoing_as_of:'2025-02-01'}));
   assert.match(semantic.semanticKey(row),/<ONGOING>$/);
   assert.notEqual(semantic.semanticKey(row),semantic.semanticKey({...row,chronology_status:'reviewed',activity_end:2025,activity_end_granularity:'year',activity_end_calendar:'gregorian',activity_end_certainty:'exact'}));
@@ -40,39 +68,36 @@ test('ongoing semantic identity ignores verification date and remains distinct f
   assert.match(semantic.semanticKey({...row,chronology_status:'reviewed'}),/<UNKNOWN>$/);
 });
 
-test('all-null closed endpoint remains unknown and never silently becomes ongoing', () => {
+test('all-null closed endpoint remains historical unknown and never silently becomes ongoing', () => {
   const raw=request();
   raw.activity.chronology_status='reviewed';
+  delete raw.activity.ongoing_as_of;
   const normalized=human.normalizeHumanAuthoringRequest(raw);
   assert.deepEqual(normalized.activity.end,{year:null,month:null,day:null,granularity:null,certainty:null,calendar:null});
   const row=native.normalizeStage2NativeActivity(payload(raw));
   assert.equal(row.chronology_status,'reviewed');
   assert.match(semantic.semanticKey(row),/<UNKNOWN>$/);
-
-  for(const field of ['end_year','end_month','end_day','end_certainty','end_calendar']) {
-    const bad=request();bad.activity[field]=field.includes('certainty')?'exact':field.includes('calendar')?'gregorian':2025;
-    assert.throws(()=>human.normalizeHumanAuthoringRequest(bad),/END_MUST_BE_NULL/);
-  }
 });
 
-test('ongoing verification date is required, real, not future, and not before a known start', () => {
-  const a=request().activity;
+test('generic ongoing verification date is required, real, not future, and not before a known start', () => {
+  const a=genericOngoingPayload();
   for(const value of [null,'2025-02-30','9999-01-01','2024-06-02']) {
-    assert.throws(()=>ongoing.validateOngoingActivity({...a,ongoing_as_of:value},{human:true,today:'2025-02-01'}),/ONGOING_ACTIVITY/);
+    assert.throws(()=>ongoing.validateOngoingActivity({...a,ongoing_as_of:value},{today:'2025-02-01'}),/ONGOING_ACTIVITY/);
   }
-  assert.equal(ongoing.validateOngoingActivity(a,{human:true,today:'2025-02-01'}),true);
+  assert.equal(ongoing.validateOngoingActivity(a,{today:'2025-02-01'}),true);
 });
 
-test('ongoing verification remains required when the start boundary is unknown', () => {
-  const raw=request();
-  raw.activity.start_year=null;
-  raw.activity.start_month=null;
-  raw.activity.start_day=null;
-  raw.activity.start_certainty=null;
-  raw.activity.start_calendar=null;
-  assert.equal(ongoing.validateOngoingActivity(raw.activity,{human:true,today:'2025-02-01'}),true);
-  assert.throws(()=>ongoing.validateOngoingActivity({...raw.activity,ongoing_as_of:null},{human:true,today:'2025-02-01'}),/ONGOING_ACTIVITY_AS_OF_REQUIRED/);
-  const row=native.normalizeStage2NativeActivity(payload(raw));
+test('generic ongoing verification remains required when the start boundary is unknown', () => {
+  const raw=genericOngoingPayload();
+  raw.activity_start=null;
+  raw.activity_start_month=null;
+  raw.activity_start_day=null;
+  raw.activity_start_granularity=null;
+  raw.activity_start_certainty=null;
+  raw.activity_start_calendar=null;
+  assert.equal(ongoing.validateOngoingActivity(raw,{today:'2025-02-01'}),true);
+  assert.throws(()=>ongoing.validateOngoingActivity({...raw,ongoing_as_of:null},{today:'2025-02-01'}),/ONGOING_ACTIVITY_AS_OF_REQUIRED/);
+  const row=native.normalizeStage2NativeActivity(raw);
   const key=semantic.semanticKey(row);
   assert.match(key,/<UNKNOWN>/);
   assert.match(key,/<ONGOING>$/);

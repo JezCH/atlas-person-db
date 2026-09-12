@@ -10,6 +10,12 @@ function ongoingAsOf(raw) {
 
 function validateOngoingActivity(raw, { human = false, requireProvenance = true, today = new Date().toISOString().slice(0, 10) } = {}) {
   if (raw?.chronology_status !== "ongoing") return false;
+
+  // Ordinary Human Authoring is the canonical Person-registration boundary.
+  // The temporal model still supports ongoing intervals for legacy/runtime use,
+  // but a new registration must have a historically closed Activity endpoint.
+  if (human) throw new Error("HUMAN_AUTHORING_ONGOING_ACTIVITY_FORBIDDEN");
+
   const prefix = human ? "end" : "activity_end";
   const yearField = human ? "end_year" : "activity_end";
   for (const field of [yearField, ...["month","day","granularity","certainty","calendar"].map(s => `${prefix}_${s}`)]) {
