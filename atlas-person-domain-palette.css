@@ -36,10 +36,10 @@
   --atlas-person-domain-culture-hover: rgba(154, 91, 165, 0.18);
   --atlas-person-domain-culture-selected: rgba(154, 91, 165, 0.22);
 
-  /* Religion keeps the quiet Pearl surface but uses one plain Silver accent.
+  /* Religion keeps the quiet Pearl surface but uses one plain Silver Blue accent.
    * No category-specific outline or nested stripe is used. */
   --atlas-person-domain-religion: #afc1cc;
-  --atlas-person-domain-religion-edge: #87939d;
+  --atlas-person-domain-religion-edge: #879eac;
   --atlas-person-domain-religion-surface: #dce8ef;
   --atlas-person-domain-religion-tint: rgba(220, 232, 239, 0.78);
   --atlas-person-domain-religion-hover: rgba(220, 232, 239, 0.86);

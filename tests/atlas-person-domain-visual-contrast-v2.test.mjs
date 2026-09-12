@@ -8,8 +8,8 @@ const css = fs.readFileSync(path.join(root, 'atlas-person-domain-palette.css'), 
 const spacetimeCss = fs.readFileSync(path.join(root, 'atlas-person-spacetime-domain-colors.css'), 'utf8').toLowerCase();
 const owner = fs.readFileSync(path.join(root, 'atlas-domain-surface-owner.js'), 'utf8');
 
-test('religion silver assets are cache-busted without changing the surface contract', () => {
-  assert.match(owner, /atlas-person-domain-palette\.css\?v=20260912-religion-silver-v5/);
+test('religion silver-blue palette asset is cache-busted without changing the spacetime stylesheet contract', () => {
+  assert.match(owner, /atlas-person-domain-palette\.css\?v=20260912-religion-silver-blue-v6/);
   assert.match(owner, /atlas-person-spacetime-domain-colors\.css\?v=20260912-religion-silver-v5/);
 });
 
@@ -47,15 +47,15 @@ test('non-religion white-background palette remains unchanged', () => {
   assert.match(css, /--atlas-person-domain-exploration:\s*#d96b1e/);
 });
 
-test('religion uses one plain silver accent and keeps the quiet Pearl surface', () => {
+test('religion uses one plain silver-blue accent and keeps the quiet Pearl surface', () => {
   assert.match(css, /--atlas-person-domain-religion:\s*#afc1cc/);
-  assert.match(css, /--atlas-person-domain-religion-edge:\s*#87939d/);
+  assert.match(css, /--atlas-person-domain-religion-edge:\s*#879eac/);
   assert.match(css, /--atlas-person-domain-religion-surface:\s*#dce8ef/);
   assert.match(css, /--atlas-person-domain-religion-tint:\s*rgba\(220, 232, 239, 0\.78\)/);
   assert.doesNotMatch(css, /\.person-card\[data-representative-domain="religion"\]\s+\.person-table-identity\s*\{/);
 });
 
-test('religion spacetime rail uses the same plain silver accent without a category-specific outline', () => {
+test('religion spacetime rail continues to use the shared plain accent without a category-specific outline', () => {
   assert.match(spacetimeCss, /data-representative-domain="religion"[\s\S]*--spacetime-person-domain-color:\s*var\(--atlas-person-domain-religion-edge\)/);
   assert.doesNotMatch(spacetimeCss, /\.spacetime-track-label\[data-representative-domain="religion"\]:not/);
   assert.doesNotMatch(spacetimeCss, /\.spacetime-track-rail\[data-representative-domain="religion"\]:not/);
