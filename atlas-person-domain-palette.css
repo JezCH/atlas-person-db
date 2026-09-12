@@ -23,11 +23,11 @@
   --atlas-person-domain-culture-tint: rgba(154, 91, 165, 0.12);
   --atlas-person-domain-culture-hover: rgba(154, 91, 165, 0.18);
   --atlas-person-domain-culture-selected: rgba(154, 91, 165, 0.22);
-  --atlas-person-domain-religion: #f1f0eb;
-  --atlas-person-domain-religion-edge: #a67c52;
-  --atlas-person-domain-religion-tint: rgba(166, 124, 82, 0.18);
-  --atlas-person-domain-religion-hover: rgba(166, 124, 82, 0.24);
-  --atlas-person-domain-religion-selected: rgba(166, 124, 82, 0.30);
+  --atlas-person-domain-religion: #e2d7b9;
+  --atlas-person-domain-religion-edge: #857856;
+  --atlas-person-domain-religion-tint: rgba(226, 215, 185, 0.46);
+  --atlas-person-domain-religion-hover: rgba(226, 215, 185, 0.54);
+  --atlas-person-domain-religion-selected: rgba(226, 215, 185, 0.62);
   --atlas-person-domain-exploration: #d96b1e;
   --atlas-person-domain-exploration-tint: rgba(217, 107, 30, 0.12);
   --atlas-person-domain-exploration-hover: rgba(217, 107, 30, 0.18);
@@ -113,6 +113,15 @@
     rgba(255,255,255,0) 100%
   );
   padding-inline-start: 10px;
+}
+
+/* Religion is deliberately bright. Keep Warm Ivory as the visible identity
+ * stripe and reserve the darker companion tone for a one-pixel boundary only.
+ */
+.person-card[data-representative-domain="religion"] .person-table-identity {
+  box-shadow:
+    inset 5px 0 0 var(--person-domain-color),
+    inset 6px 0 0 var(--person-domain-edge);
 }
 
 /* Table-view hover/selection rules are more specific than the base skin.
