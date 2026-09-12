@@ -1,0 +1,26 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-12",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "e423f4c410189e5bbe13d52de2edc1715d548102",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Apply only this explicit human-reviewed representative-domain assignment for Fu Hao. Preserve any existing non-null Production value as authoritative and fail closed on conflict; perform no Role-to-Domain automation or unrelated reclassification."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-FU-HAO-20260912",
+    "reviewed_assignments": 1,
+    "reviewed_holds": 0,
+    "rationale": "Fu Hao is represented most distinctly by securely attested military command in contemporary Shang oracle-bone and archaeological evidence. Her royal-consort status remains an important separate Activity, but military command is the stronger Person-level representative domain."
+  },
+  "entries": [
+    {
+      "person_id": "cf1f64c5-fc73-4a9b-a733-eea811e42321",
+      "canonical_name_en": "Fu Hao",
+      "preferred_name_ko": "부호",
+      "representative_domain": "military"
+    }
+  ]
+}
