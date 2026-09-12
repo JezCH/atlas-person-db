@@ -19,13 +19,13 @@ const proposals = [...batchFiles,'palette-smoke-001.json']
   .join('\n');
 
 const palette = Object.freeze({
-  governance:'#d4af37',
+  governance:'#b08b00',
   military:'#b83a3a',
   knowledge:'#3f78c5',
-  technology:'#59636d',
+  technology:'#3b4147',
   commerce:'#2e8b57',
-  culture:'#b44c7a',
-  religion:'#6d3e8e',
+  culture:'#9a5ba5',
+  religion:'#afc1cc',
   exploration:'#d96b1e'
 });
 const cancelledSequenceOrdinals = Object.freeze({
@@ -61,7 +61,7 @@ function assertBatchDistribution(fileName, expectedLength, expectedCounts) {
   return batch;
 }
 
-test('final ATLAS representative-domain palette uses the eight exact canonical colors', () => {
+test('final ATLAS representative-domain palette uses the eight exact canonical accent colors', () => {
   for (const [domain, hex] of Object.entries(palette)) {
     assert.match(css, new RegExp(`--atlas-person-domain-${domain}:\\s*${hex.replace('#','\\#')}`));
     assert.match(css, new RegExp(`data-representative-domain="${domain}"`));
