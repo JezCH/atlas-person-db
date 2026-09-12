@@ -1,0 +1,33 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-12",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "8dcef44e15e53d30dd9746f5a5d8c4524556b1dc",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Recovery batch for the two entries that did not apply in batch-061 because that manifest carried stale/wrong Person UUIDs. Apply only the current canonical Production Person IDs verified by exact-name Runtime read-back. Preserve any existing non-null value as authoritative and fail closed on conflict."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-KOREAN-SCHOLARS-RECOVERY-20260912",
+    "reviewed_assignments": 2,
+    "reviewed_holds": 0,
+    "execution_scope": "bounded_recovery_under_explicit_user_single_writer_override",
+    "rationale": "Jeong Yak-yong remains knowledge based on his primary historical representation as a Silhak scholar and reform thinker. Jang Yeong-sil remains technology based on his primary historical representation as an engineer, inventor, clockmaker, and scientific-instrument maker. The semantic decisions are unchanged; only the canonical Person UUIDs are corrected after Production Runtime read-back."
+  },
+  "entries": [
+    {
+      "person_id": "b5c9ad45-ead8-44f2-ba57-c1a480419b38",
+      "canonical_name_en": "Jeong Yak-yong",
+      "preferred_name_ko": "정약용",
+      "representative_domain": "knowledge"
+    },
+    {
+      "person_id": "f36a764f-1e7c-42d4-bbbc-c9b0a7fcb451",
+      "canonical_name_en": "Jang Yeong-sil",
+      "preferred_name_ko": "장영실",
+      "representative_domain": "technology"
+    }
+  ]
+}
