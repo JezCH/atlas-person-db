@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "noncore-fu-hao-reviewed-20260912:military-commander",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Fu Hao",
+    "display_name_ko": "부호",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Shang",
+    "display_name_ko": "상",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "role": "Military Commander",
+    "role_code": "military_commander",
+    "role_display_name_ko": "군사 지휘관",
+    "period_basis": "military_activity",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Contemporary Shang oracle-bone evidence records Fu Hao in military activity, while her intact Yinxu tomb contained weapons and insignia associated with command. ATLAS records a broad approximate c.1250-c.1200 BCE military-activity interval because individual campaign dates are not securely reducible to one exact modern year range.",
+    "start_year": -1250,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -1200,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "title": "Hello, Yinxu⑥丨Tomb of China's First Female General, Fu Hao.",
+      "canonical_url": "https://english.henan.gov.cn/2023/10-30/2838629.html",
+      "citation_text": "The People's Government of Henan Province, 'Hello, Yinxu⑥丨Tomb of China's First Female General, Fu Hao.', 2023. The article identifies Fu Hao as a consort of Shang king Wu Ding and a female military leader, and describes her intact Yinxu tomb and its agreement with oracle-bone records.",
+      "source_type": "official_government_reference",
+      "locator": "Fu Hao described as China's first known female general overseeing external military affairs"
+    },
+    {
+      "title": "War and Sacrifice: The Tomb of Fu Hao",
+      "canonical_url": "https://smarthistory.org/tomb-of-fu-hao/",
+      "citation_text": "Cortney E. Chaffin, Smarthistory, 'War and Sacrifice: The Tomb of Fu Hao.' The study synthesizes oracle-bone inscriptions and archaeological evidence for Fu Hao as a royal consort, military commander, ritual practitioner, and administrator in the thirteenth century BCE.",
+      "source_type": "scholarly_educational_reference",
+      "locator": "Who was Fu Hao?; discussion of oracle-bone military command and weapons from Tomb 5"
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_not_required_for_current_registration",
+      "attempted_at": "2026-09-12",
+      "reason": "Registration proceeds from archaeological and official/scholarly evidence; no NamuWiki URL is invented or inferred.",
+      "authorization": "user_requested_registration"
+    }
+  },
+  "review_context": {
+    "request_batch": "PERSON-REGISTER-FU-HAO-20260912",
+    "production_screen": "same_batch_person_reuse",
+    "representative_domain_review": "military",
+    "spatial_readiness": "reuse_existing_polity_spatial_identity"
+  }
+}
