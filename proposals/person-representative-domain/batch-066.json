@@ -1,0 +1,36 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-13",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "005339939829d41535b9ef1ee71106b36dd336c7",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Close representative_domain inside the same registration cycle for the two newly committed New Testament Persons. Apply only these explicit reviewed religion assignments, preserve any unexpected non-null Production value as authoritative/fail-closed, and do not infer any additional Person from Role."
+  },
+  "review_scope": {
+    "task_key": "PERSON-REGISTER-NT-SS-JOHN-JUDAS-20260913",
+    "registration_pr": 1095,
+    "registration_main_sha": "005339939829d41535b9ef1ee71106b36dd336c7",
+    "registration_apply_run": 34755832602,
+    "reviewed_assignments": 2,
+    "reviewed_holds": 0,
+    "execution_scope": "same_registration_cycle_domain_closure_2_persons",
+    "rationale": "John son of Zebedee is represented primarily as an apostle and early Christian leader, while Judas Iscariot's enduring historical significance is inseparable from his role within the Jesus movement and Christian tradition. Religion is therefore the least misleading representative domain for both. Identity guards from the registration manifests remain authoritative."
+  },
+  "entries": [
+    {
+      "person_id": "c812a020-5be1-4ab0-9bd7-ea96afdf7b36",
+      "canonical_name_en": "John son of Zebedee",
+      "preferred_name_ko": "사도 요한",
+      "representative_domain": "religion"
+    },
+    {
+      "person_id": "26a3617c-0898-4698-ab6b-d43e04f75baf",
+      "canonical_name_en": "Judas Iscariot",
+      "preferred_name_ko": "가룟 유다",
+      "representative_domain": "religion"
+    }
+  ]
+}
