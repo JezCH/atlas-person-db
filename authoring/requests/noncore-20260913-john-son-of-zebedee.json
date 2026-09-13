@@ -1,0 +1,60 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "noncore-nt-ss-20260913:john-son-of-zebedee",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "John son of Zebedee",
+    "display_name_ko": "사도 요한",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Roman Empire",
+    "display_name_ko": "로마 제국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Apostle and early Christian leader",
+    "role_display_name_ko": "사도·초기 기독교 지도자",
+    "period_basis": "general_activity",
+    "confidence": "likely",
+    "chronology_status": "reviewed",
+    "notes": "Representative interval for John son of Zebedee's participation in the Jesus movement and the earliest Jerusalem/Samaria Christian mission traditions; not a lifespan. This Person is not automatically identified with the author of the Gospel of John, the author of the Johannine epistles, or John of Patmos.",
+    "start_year": 28,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": 40,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "bibliographic_reference",
+      "title": "New Testament — Mark 1:19–20; Acts 3:1–4:22; Acts 8:14–25",
+      "citation_text": "Early Christian sources identify John son of Zebedee as one of Jesus' disciples and place John alongside Peter in early Jerusalem and Samaritan mission traditions."
+    }
+  ],
+  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-13",
+      "reason": "Direct canonical NamuWiki target verification was not available; no URL is invented and no absence is asserted.",
+      "authorization": "user_requested_registration_after_review"
+    }
+  },
+  "review_context": {
+    "request_batch": "PERSON-REGISTER-NT-SS-JOHN-JUDAS-20260913",
+    "production_screen": "new_person",
+    "selection_threshold": "SS",
+    "representative_domain_review": "religion",
+    "identity_guard": "John son of Zebedee is distinct by default from John of Patmos and from the anonymous/traditional author identity of the Gospel of John.",
+    "spatial_readiness": "reuse_existing_roman_empire_spatial_identity"
+  }
+}
