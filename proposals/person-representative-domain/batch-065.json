@@ -1,0 +1,54 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-13",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "918a33bc91e1b5163fce584198b68b584764f966",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Close representative_domain inside the same registration cycle for the five newly committed Judges-era Persons. Apply only these explicit reviewed assignments, preserve any unexpected non-null Production value as authoritative/fail-closed, and do not infer any additional Person from Role."
+  },
+  "review_scope": {
+    "task_key": "DATA-BIBLICAL-JUDGES-DISPUTED-20260913",
+    "registration_pr": 1091,
+    "registration_main_sha": "918a33bc91e1b5163fce584198b68b584764f966",
+    "registration_apply_run": 34752643978,
+    "reviewed_assignments": 5,
+    "reviewed_holds": 0,
+    "execution_scope": "same_registration_cycle_domain_closure_5_persons",
+    "rationale": "Deborah is represented primarily by her leadership/judging function in premonarchic Israel, so governance is preferred over her prophetic identity. Barak and Sisera are explicitly remembered as military commanders. Gideon's durable narrative identity is the military deliverer who defeats Midian, so military is preferred over generic judge/governance. Jael's historical-cultural significance in this record is the decisive killing of Sisera in the conflict tradition, so military is the least misleading available representative domain."
+  },
+  "entries": [
+    {
+      "person_id": "6cd74ed4-2570-4f87-abc6-4805b69ca4ea",
+      "canonical_name_en": "Deborah",
+      "preferred_name_ko": "드보라",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "efe4b68a-b679-4cf2-98a1-c247a6f8dea9",
+      "canonical_name_en": "Barak",
+      "preferred_name_ko": "바락",
+      "representative_domain": "military"
+    },
+    {
+      "person_id": "71149327-09a5-42f5-abf3-edaaad607e5d",
+      "canonical_name_en": "Sisera",
+      "preferred_name_ko": "시스라",
+      "representative_domain": "military"
+    },
+    {
+      "person_id": "c3199a21-ad18-41f1-8e2c-6826f0b578da",
+      "canonical_name_en": "Gideon",
+      "preferred_name_ko": "기드온",
+      "representative_domain": "military"
+    },
+    {
+      "person_id": "93f70e9a-0c86-4834-b38d-c986f74e216d",
+      "canonical_name_en": "Jael",
+      "preferred_name_ko": "야엘",
+      "representative_domain": "military"
+    }
+  ]
+}
