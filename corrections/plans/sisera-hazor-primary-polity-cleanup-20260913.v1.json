@@ -1,0 +1,47 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "sisera_hazor_primary_polity_cleanup_20260913_v1",
+  "as_of": "2026-09-13",
+  "status": "REVIEWED_TARGETED_ACTIVITY_POLITY_CORRECTION",
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User-requested correction after exact Production read-back of PR #1093. Preserve the existing Sisera Person identity and the newly reviewed Hazor Activity; retire only the obsolete Israel conflict-theater workaround Activity, transferring all normalized source links before deletion. Preserve disputed confidence, uncertain -1200..-1100 chronology, and representative_domain=military.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "retire_source_transfer_before_delete_required": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "sisera_retire_israel_conflict_theater_activity",
+      "type": "retire_activity",
+      "activity_id": "584a1759-17a3-4d89-b799-438c95e66f87",
+      "baseline_before": {
+        "person_id": "71149327-09a5-42f5-abf3-edaaad607e5d",
+        "polity_id": "7c1bc8d0-03bb-49bb-8d58-f339e1543553",
+        "role_id": "2a1af717-f521-4cf9-8f3d-f58407e58434",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": -1200,
+        "activity_end": -1100,
+        "confidence": "disputed",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true,
+      "replacement_activity_ids": [
+        "c3ce736c-f855-478a-bdcb-e8bfe7220e37"
+      ]
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "retire_activity_count": 1,
+    "production_mutation_authorized": false
+  }
+}
