@@ -1,0 +1,29 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-13",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "836aa307d6cd4906356d00c94c27eb75f77c5964",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Apply only the explicit human-reviewed current-canonical Production NULL assignment for Emilio Aguinaldo in deterministic SHA1(lowercase person_id UUID string) shard 0. Preserve any existing non-null value as authoritative and fail closed on conflict. No role-to-domain automation and no scope expansion."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-WORKER-0-3-DELTA-MICROBATCH-03-20260913",
+    "partition": "SHA1(lowercase person_id UUID string) first hex == 0",
+    "reviewed_assignments": 1,
+    "reviewed_holds": 0,
+    "production_precheck_assigned_snapshot": 1527,
+    "execution_scope": "bounded_1_person_current_canonical_null_delta",
+    "rationale": "Emilio Aguinaldo is represented primarily by his repeated exercise of top political authority as president or head of successive Philippine revolutionary governments and the First Philippine Republic. The prior reviewed decision is governance, and the current canonical Person record preserves five governing activities from 1897 through 1901; governance therefore remains the representative domain over his military identity."
+  },
+  "entries": [
+    {
+      "person_id": "27e3e10c-7c47-48ee-b823-f62f570f15c4",
+      "canonical_name_en": "Emilio Aguinaldo",
+      "preferred_name_ko": "에밀리오 아기날도",
+      "representative_domain": "governance"
+    }
+  ]
+}
