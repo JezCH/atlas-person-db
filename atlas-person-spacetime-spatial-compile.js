@@ -177,19 +177,12 @@
       });
     }
 
-    return Object.freeze({
-      ...baseCompiledSegment(segment, macro), status: "placed", reason: null,
-      x_anchor: macro.center_space, x_min: macro.min_space, x_max: macro.max_space,
-      spatial_precision: "macroregion", display_anchor_basis: "canonical_macroregion",
-      display_confidence: text(segment?.confidence) || "reviewed",
-      display_source_refs: normalizedRefs(segment?.source_refs),
-      display_place_points: compiledDisplayPlacePoints(segment, continuum, macro)
-    });
+    return unresolvedSegment(segment, macro, "macroregion_only_unresolved");
   }
 
   function compileActivityPlacement(placementResult, continuum = spaceAxisApi.createSpatialContinuum()) {
     if (!placementResult || placementResult.status !== "placed") {
-      return Object.freeze({ activity_id: text(placementResult?.activity_id), polity_id: text(placementResult?.polity_id), status: text(placementResult?.status) || "spatial_compile_unresolved", reason: text(placementResult?.chronology_reason) || text(placementResult?.status) || null, segments: Object.freeze([]) });
+      return Object.freeze({ activity_id: text(placementResult?.activity_id), polity_id: text(placementResult?.polity_id), status: text(placementResult?.status) || "spatial_compile_unresolved", reason: text(placementResult?.reason) || text(placementResult?.chronology_reason) || text(placementResult?.status) || null, segments: Object.freeze([]) });
     }
     const compiled = (placementResult.segments || []).map((segment) => compilePlacementSegment(segment, continuum));
     const unresolved = compiled.find((segment) => segment.status !== "placed");
