@@ -26,16 +26,9 @@
   function presentationBand(segment, continuum) {
     if (!segment || !continuum?.bandForCode) return null;
     const subregion = text(segment.subregion_code);
-    if (subregion) {
-      const band = continuum.bandForCode(subregion);
-      if (band?.kind === "subregion") return band;
-    }
-    const macroregion = text(segment.macroregion_code);
-    if (macroregion) {
-      const band = continuum.bandForCode(macroregion);
-      if (band?.kind === "macroregion") return band;
-    }
-    return null;
+    if (!subregion) return null;
+    const band = continuum.bandForCode(subregion);
+    return band?.kind === "subregion" ? band : null;
   }
 
   function laneAssignments(tracks, continuum) {
@@ -209,7 +202,7 @@
   function applyTrackPresentation(item, layout) {
     if (!item) return null;
     const geometry = geometryForSegment(layout, item.representative);
-    if (!geometry) return Object.freeze({ ...item, historical_x: item.x, presentation_band_code: item.macroregion_code || null });
+    if (!geometry) return Object.freeze({ ...item, historical_x: item.x, presentation_band_code: null });
     return Object.freeze({
       ...item,
       historical_x: item.x,
