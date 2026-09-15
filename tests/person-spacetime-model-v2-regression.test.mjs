@@ -9,6 +9,7 @@ function geographyIndex(region = "east-asia") {
   return {
     schema: model.SPATIAL_INDEX_SCHEMA,
     polity_geography: { "polity-a": region },
+    polity_subregions: { "polity-a": "korean-peninsula" },
     place_function_records: [],
     review_queue: []
   };
@@ -29,12 +30,13 @@ function placeFunctionIndex() {
   };
 }
 
-test("v2 direct geography places an activity without place-function data", () => {
+test("v2 reviewed leaf geography places an activity without place-function data", () => {
   const lookup = model.createSpatialLookup(geographyIndex("east-asia"));
   const placement = model.resolveActivityPlacement({ id: "activity-a", polity: { id: "polity-a" }, start: { year: 100 }, end: { year: 120 } }, lookup);
   assert.equal(placement.status, "placed");
   assert.equal(placement.segments.length, 1);
   assert.equal(placement.segments[0].region_code, "east-asia");
+  assert.equal(placement.segments[0].subregion_code, "korean-peninsula");
   assert.equal(placement.segments[0].placement_basis, "polity_geography");
   assert.equal(placement.segments[0].place_name, null);
 });
