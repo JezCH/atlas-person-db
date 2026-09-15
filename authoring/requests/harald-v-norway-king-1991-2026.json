@@ -53,7 +53,14 @@
       "citation_text": "The Royal House records that Harald V succeeded Olav V as King of Norway on 17 January 1991."
     }
   ],
-  "external_references": {},
+  "review_deferrals": {
+    "namuwiki": {
+      "reason_code": "provider_access_blocked",
+      "attempted_at": "2026-09-15",
+      "reason": "Direct NamuWiki document access for the Harald V candidate returned a non-retryable provider access error, and web search did not produce a verifiable canonical subject document. No absence decision is asserted.",
+      "authorization": "user_requested_registration_after_disclosed_block"
+    }
+  },
   "review_context": {
     "request_batch": "harald-v-registration-20260915",
     "requested_item": 1,
