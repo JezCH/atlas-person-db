@@ -48,11 +48,13 @@ test("spatial continuum stays leaf-uniform and independent of data density", () 
 });
 
 test("spatial compile never invents precision", () => {
-  const c=spaceAxis.createSpatialContinuum(), europe=c.bandForCode("europe");
+  const c=spaceAxis.createSpatialContinuum();
   const raw={status:"placed",activity_id:"a",polity_id:"p",segments:[{activity_id:"a",polity_id:"p",region_code:"europe",place_id:"place-paris",place_name:"Paris",place_function_type:"capital",start_year:1800,end_year:1810,placement_basis:"polity_place_function",confidence:"reviewed",source_refs:["s"]}]};
   const compiled=spatialCompile.compileActivityPlacement(raw,c);
-  assert.equal(compiled.segments[0].spatial_precision,"macroregion");
-  assert.equal(compiled.segments[0].x_anchor,europe.center_space);
+  assert.equal(compiled.status,"spatial_compile_unresolved");
+  assert.equal(compiled.reason,"macroregion_only_unresolved");
+  assert.equal(compiled.segments[0].spatial_precision,"unresolved");
+  assert.equal(compiled.segments[0].x_anchor,null);
 });
 
 test("opposes stays counterparty only", () => {
