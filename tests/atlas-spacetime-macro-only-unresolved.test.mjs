@@ -23,6 +23,21 @@ function activity(polityId) {
   };
 }
 
+function reviewedPlaceFunctionRecord(polityId) {
+  return {
+    polity_id: polityId,
+    functions: [{
+      start_year: 100,
+      end_year: 110,
+      function_type: "capital",
+      place_name: "Reviewed Capital",
+      region_code: "east-asia",
+      confidence: "well_established",
+      source_refs: ["reviewed-source"]
+    }]
+  };
+}
+
 test("every current macro-only polity is unplaced in the canonical lookup", () => {
   const validation = model.validateSpatialIndex(spatialIndex);
   assert.equal(validation.valid, true, validation.errors?.join(" | "));
@@ -42,6 +57,38 @@ test("every current macro-only polity is unplaced in the canonical lookup", () =
   }
 
   console.log(`macro-only unresolved polities: ${macroOnly.length}`, byMacroregion);
+});
+
+test("macro-only polity geography may coexist with reviewed temporal place functions", () => {
+  const index = {
+    schema: model.SPATIAL_INDEX_SCHEMA,
+    polity_geography: { "macro-plus-function": "east-asia" },
+    polity_subregions: {},
+    place_function_records: [reviewedPlaceFunctionRecord("macro-plus-function")],
+    review_queue: []
+  };
+  const validation = model.validateSpatialIndex(index);
+  assert.equal(validation.valid, true, validation.errors.join(" | "));
+
+  const lookup = model.createSpatialLookup(index);
+  assert.equal(lookup.get("macro-plus-function")?.placement_basis, "polity_place_function");
+  const placement = model.resolveActivityPlacement(activity("macro-plus-function"), lookup);
+  assert.equal(placement.status, "placed");
+  assert.equal(placement.segments[0].placement_basis, "polity_place_function");
+  assert.equal(placement.segments[0].region_code, "east-asia");
+});
+
+test("reviewed leaf geography still conflicts with another resolver for the same polity", () => {
+  const index = {
+    schema: model.SPATIAL_INDEX_SCHEMA,
+    polity_geography: { "leaf-plus-function": "east-asia" },
+    polity_subregions: { "leaf-plus-function": "korean-peninsula" },
+    place_function_records: [reviewedPlaceFunctionRecord("leaf-plus-function")],
+    review_queue: []
+  };
+  const validation = model.validateSpatialIndex(index);
+  assert.equal(validation.valid, false);
+  assert.ok(validation.errors.some((message) => message.includes("already resolved by reviewed polity_subregions")));
 });
 
 test("manual macroregion-only polity records are rejected defensively", () => {
