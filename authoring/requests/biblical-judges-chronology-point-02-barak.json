@@ -1,0 +1,61 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "request_id": "biblical-judges-chronology-20260913:barak-point",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Barak",
+    "display_name_ko": "바락",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Israel",
+    "display_name_ko": "이스라엘",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "active_in",
+    "role": "Military commander",
+    "role_display_name_ko": "군사 지휘관",
+    "period_basis": "general_activity",
+    "confidence": "disputed",
+    "chronology_status": "reviewed",
+    "notes": "Representative chronological point at c.1125 BCE for Barak in the Deborah-Barak/Sisera conflict tradition. This is not a lifespan, tenure, or claim of exact campaign dating. ATLAS uses one uncertain point instead of the former 1200-1100 BCE broad scholarly era window so that a debated historical placement is not rendered as a 100-year personal activity rail.",
+    "start_year": -1125,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "uncertain",
+    "start_calendar": "unspecified_historical",
+    "end_year": -1125,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "uncertain",
+    "end_calendar": "unspecified_historical"
+  },
+  "sources": [
+    {
+      "source_type": "bibliographic_reference",
+      "title": "Hebrew Bible — Judges 4–5",
+      "citation_text": "Primary textual source for Barak as the commander summoned by Deborah in the Sisera conflict tradition."
+    },
+    {
+      "source_type": "bibliographic_reference",
+      "title": "Eric H. Cline, The Battles of Armageddon: Megiddo and the Jezreel Valley from the Bronze Age to the Nuclear Age",
+      "citation_text": "Cline's historical synthesis treats the Deborah-Barak-Sisera episode under the chronological heading 1125 BCE. ATLAS uses that date only as an uncertain representative anchor, not as an exact event date.",
+      "locator": "Chapter: Deborah, Barak, and Sisera, 1125 B.C."
+    }
+  ],
+  "external_references": {
+    "namuwiki": {
+      "status": "not_found",
+      "checked_at": "2026-09-13"
+    }
+  },
+  "review_context": {
+    "request_batch": "biblical-judges-chronology-tightening-20260913",
+    "chronology_policy": "Replace a broad era window with one uncertain representative point when person-specific start/end boundaries are not defensible.",
+    "supersedes_activity_id": "35eebcec-2cb7-4143-b28f-d06a0b6ce969",
+    "replacement_point_is_exact_date": false
+  }
+}
