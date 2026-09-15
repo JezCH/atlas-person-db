@@ -1,0 +1,82 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "john_baptist_chronology_20260915_v1",
+  "as_of": "2026-09-15",
+  "status": "REVIEWED_TARGETED_ACTIVITY_CHRONOLOGY_CORRECTION",
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User-requested ATLAS chronology correction. Preserve John the Baptist Person and Activity identity, Herod Antipas polity context, religious role/basis, approximate boundary semantics, likely confidence, reviewed status, and all existing normalized source links. Replace only the representative c.29 point with a conventional approximate c.29–30 interval; this is not a claim that either boundary or the execution year is exact. Jesus chronology is explicitly out of scope.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "semantic_identity_change_forbidden": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "existing_source_policy": "Preserve the two exact normalized source links already attached to the Activity: Cambridge University Press and Oxford Bibliographies.",
+    "reviewed_chronology_basis": "Josephus, Antiquities 18.5.2 independently reports John’s execution without a precise calendar year; scholarship notes chronology tension around Antipas and Aretas. ATLAS therefore uses c.29–30 only as an approximate representative display interval.",
+    "josephus_url": "https://penelope.uchicago.edu/josephus/ant-18.html",
+    "murphy_oconnor_url": "https://www.cambridge.org/core/journals/new-testament-studies/article/abs/john-the-baptist-and-jesus-history-and-hypotheses/78374820644EDA8340B78334F58D1622",
+    "new_source_materialization_deferred": true,
+    "new_source_materialization_reason": "No active governed Production workflow currently materializes new atlas_v2.sources rows from reviewed correction plans. Do not invent normalized source UUIDs or locator identities."
+  },
+  "operations": [
+    {
+      "case_id": "john_baptist_c29_point_to_c29_30_interval",
+      "type": "rewrite_activity",
+      "activity_id": "3d3170f9-7d04-4916-a8d9-1e8f83a4819b",
+      "baseline_before": {
+        "person_id": "9c776333-aa7a-4148-83eb-8d10a36b7175",
+        "polity_id": "9c8d3c4b-d4f4-42a3-823a-f3c17f44cfee",
+        "role_id": "7b1f2567-cbdb-4152-82e4-10f9aad09333",
+        "period_basis_id": "71d6a7c6-2bbe-53b6-b898-067623ab27dc",
+        "activity_start": 29,
+        "activity_end": 29,
+        "confidence": "likely",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "3d3170f9-7d04-4916-a8d9-1e8f83a4819b",
+        "person_id": "9c776333-aa7a-4148-83eb-8d10a36b7175",
+        "polity_id": "9c8d3c4b-d4f4-42a3-823a-f3c17f44cfee",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "7b1f2567-cbdb-4152-82e4-10f9aad09333",
+        "period_basis_id": "71d6a7c6-2bbe-53b6-b898-067623ab27dc",
+        "activity_start": 29,
+        "activity_end": 30,
+        "activity_start_detail": {
+          "year": 29,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 30,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "likely",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "John the Baptist was a historical first-century Jewish preacher whose public preaching is commonly placed around 29 CE. Herod Antipas later imprisoned and executed him, but the exact execution chronology is disputed: Josephus independently reports the execution without supplying a precise calendar year, and scholarship notes tension between the New Testament sequence and the chronology surrounding Antipas and Aretas. ATLAS therefore records an approximate c.29–30 CE religious-activity interval as a conventional display range, not as a claim that either boundary is exact.",
+        "add_source_links": []
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "production_mutation_authorized": false
+  }
+}
