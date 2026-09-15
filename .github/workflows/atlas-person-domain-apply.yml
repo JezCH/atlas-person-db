@@ -86,18 +86,20 @@ jobs:
           set -euo pipefail
           bounded=false
           batch_file=""
+          hold_file_count=0
           if [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
             parent="$(git rev-parse "${GITHUB_SHA}^")"
             mapfile -t batch_files < <(git diff --name-only "$parent" "$GITHUB_SHA" -- 'proposals/person-representative-domain/batch-*.json')
             mapfile -t hold_files < <(git diff --name-only "$parent" "$GITHUB_SHA" -- 'proposals/person-representative-domain/hold-*.json')
-            if [[ "${#batch_files[@]}" -eq 1 && "${#hold_files[@]}" -eq 0 ]]; then
+            hold_file_count="${#hold_files[@]}"
+            if [[ "${#batch_files[@]}" -eq 1 ]]; then
               bounded=true
               batch_file="$(basename "${batch_files[0]}")"
             fi
           fi
           echo "bounded=$bounded" >> "$GITHUB_OUTPUT"
           echo "batch_file=$batch_file" >> "$GITHUB_OUTPUT"
-          printf '{"bounded":%s,"batch_file":"%s"}\n' "$bounded" "$batch_file" | tee "$ATLAS_EVIDENCE_DIR/scope.json"
+          printf '{"bounded":%s,"batch_file":"%s","hold_file_count":%s}\n' "$bounded" "$batch_file" "$hold_file_count" | tee "$ATLAS_EVIDENCE_DIR/scope.json"
 
       - name: Plan and validate comment-backed reviewed backlog
         if: ${{ steps.scope.outputs.bounded != 'true' }}
