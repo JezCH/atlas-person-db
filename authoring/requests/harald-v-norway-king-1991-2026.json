@@ -1,0 +1,62 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:harald-v:norway:king:1991-2026:v1",
+  "person": {
+    "canonical_name_en": "Harald V",
+    "display_name_ko": "하랄 5세",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Norway",
+    "display_name_ko": "노르웨이",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "rules",
+    "role": "King",
+    "role_display_name_ko": "국왕",
+    "period_basis": "reign",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Harald V succeeded his father Olav V as King of Norway on 17 January 1991 and remained king until his death on 28 August 2026. The Norwegian Royal House records both boundaries explicitly. His earlier service as Crown Prince Regent during Olav V's illness in spring 1990 is historically attested but is not folded into this reign interval because the official biography does not fix an exact regency start day.",
+    "start_year": 1991,
+    "start_month": 1,
+    "start_day": 17,
+    "start_certainty": "exact",
+    "start_calendar": "gregorian",
+    "end_year": 2026,
+    "end_month": 8,
+    "end_day": 28,
+    "end_certainty": "exact",
+    "end_calendar": "gregorian"
+  },
+  "sources": [
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "The King of Norway for 35 years — The Royal House of Norway",
+      "canonical_url": "https://www.kongehuset.no/for-pressen/information-in-english/the-king-of-norway-for-35-years-en",
+      "citation_text": "The Norwegian Royal House states that Harald V was King of Norway from 17 January 1991 until his death on 28 August 2026."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Kong Haralds biografi — Det norske kongehus",
+      "canonical_url": "https://www.kongehuset.no/historie/alt-for-norge/kong-harald-v/kong-haralds-biografi",
+      "citation_text": "The official biography records Harald's accession on 17 January 1991, death on 28 August 2026, and his service as Crown Prince Regent when Olav V became ill in spring 1990."
+    },
+    {
+      "source_type": "web_bibliographic_reference",
+      "title": "Kong Harald avlegger ed til Grunnloven — Det norske kongehus",
+      "canonical_url": "https://www.kongehuset.no/taler-og-budskap/kong-harald-v/kong-harald-avlegger-ed-til-grunnloven",
+      "citation_text": "The Royal House records that Harald V succeeded Olav V as King of Norway on 17 January 1991."
+    }
+  ],
+  "external_references": {},
+  "review_context": {
+    "request_batch": "harald-v-registration-20260915",
+    "requested_item": 1,
+    "notes": "Production exact-name dedup for Harald V returned zero matches on 2026-09-15. Crown Prince Regent service is preserved as a reviewed follow-up audit rather than assigned an invented exact start date."
+  }
+}
