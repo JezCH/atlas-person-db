@@ -135,12 +135,12 @@ test("polity subregion mappings must be children of their reviewed macroregions"
   assert.match(validation.errors.join("\n"), /is not a child of macroregion south-asia/);
 });
 
-test("broad or transregional reviewed polities may intentionally remain macroregion-only", () => {
+test("broad or transregional reviewed polities remain unresolved when they are macroregion-only", () => {
   const india = "00ec4b0c-6002-5791-825c-43465632102d";
   assert.equal(index.polity_geography[india], "south-asia");
   assert.equal(index.polity_subregions[india], undefined);
   const placement = model.resolveActivityPlacement(activity(india, 1947, 1948, "india"), model.createSpatialLookup(index));
-  assert.equal(placement.status, "placed");
-  assert.equal(placement.segments[0].region_code, "south-asia");
-  assert.equal(placement.segments[0].subregion_code, null);
+  assert.equal(placement.status, "spatial_unresolved");
+  assert.equal(placement.reason, "placement_missing");
+  assert.deepEqual(placement.segments, []);
 });
