@@ -1,0 +1,78 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "john_baptist_chronology_20260916_v1",
+  "as_of": "2026-09-16",
+  "status": "REVIEWED_TARGETED_ACTIVITY_CHRONOLOGY_CORRECTION",
+  "release_order": 500,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "Durable NONCORE #977 reviewed decision PERSON-CHRONOLOGY-JOHN-BAPTIST-20260915, resumed after fastest-first queue drain. Fresh Production read on 2026-09-16 revalidated the exact Person, Activity, polity, active_in relation, prophet_and_baptizer role, religious_activity period basis, c.29 point chronology, likely confidence, reviewed status, and two existing normalized academic source links. Apply only the reviewed chronology delta c.29..c.29 -> c.29..c.30 while keeping both boundaries approximate and preserving every existing identity/source relation.",
+  "baseline": {
+    "deployment_sha": "8f4e49c814d31dfc6b2b3067c6a727bfbf4ff729"
+  },
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "semantic_identity_change_forbidden": false,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "john_baptist_expand_reviewed_approximate_activity_to_30_ce",
+      "type": "rewrite_activity",
+      "activity_id": "3d3170f9-7d04-4916-a8d9-1e8f83a4819b",
+      "baseline_before": {
+        "person_id": "9c776333-aa7a-4148-83eb-8d10a36b7175",
+        "polity_id": "9c8d3c4b-d4f4-42a3-823a-f3c17f44cfee",
+        "role_id": "7b1f2567-cbdb-4152-82e4-10f9aad09333",
+        "period_basis_id": "71d6a7c6-2bbe-53b6-b898-067623ab27dc",
+        "activity_start": 29,
+        "activity_end": 29,
+        "confidence": "likely",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "3d3170f9-7d04-4916-a8d9-1e8f83a4819b",
+        "person_id": "9c776333-aa7a-4148-83eb-8d10a36b7175",
+        "polity_id": "9c8d3c4b-d4f4-42a3-823a-f3c17f44cfee",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "7b1f2567-cbdb-4152-82e4-10f9aad09333",
+        "period_basis_id": "71d6a7c6-2bbe-53b6-b898-067623ab27dc",
+        "activity_start": 29,
+        "activity_end": 30,
+        "activity_start_detail": {
+          "year": 29,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 30,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "likely",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "John the Baptist was a historical first-century Jewish preacher known for repentance preaching and a distinctive baptismal practice. ATLAS records his public religious activity as approximately 29–30 CE: the beginning is anchored around 29 CE, while the end remains approximate because the execution chronology under Herod Antipas is debated. This interval is intentionally approximate and must not be read as an exact execution date.",
+        "add_source_links": []
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "production_mutation_authorized": false
+  }
+}
