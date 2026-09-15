@@ -44,6 +44,7 @@ test("every current macro-only polity is unplaced in the canonical lookup", () =
 
   const macroOnly = model.macroOnlyPolityIds(spatialIndex);
   assert.ok(macroOnly.length > 0, "fixture must contain at least one macro-only polity");
+  console.log(`macro-only polity ids: ${JSON.stringify(macroOnly)}`);
 
   const lookup = model.createSpatialLookup(spatialIndex);
   const byMacroregion = {};
