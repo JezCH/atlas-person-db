@@ -198,15 +198,18 @@ test('Batch 013 contains exactly the reviewed medieval rulers/commanders distrib
   assert.equal(batch13.entries.some((entry) => entry.person_id === '87b9541e-cc28-46ca-a849-43a5a14ae162'), false);
 });
 
-test('Pythagoras remains an unresolved knowledge/religion HOLD', () => {
+test('Pythagoras HOLD history is preserved and retired by the later reviewed knowledge decision', () => {
   const hold2 = JSON.parse(fs.readFileSync(path.join(proposalDir, 'hold-002.json'), 'utf8'));
-  assert.equal(hold2.status, 'unresolved');
-  assert.equal(hold2.entries.length, 1);
-  const pythagoras = hold2.entries[0];
+  const batch67 = JSON.parse(fs.readFileSync(path.join(proposalDir, 'batch-067.json'), 'utf8'));
+  assert.equal(hold2.status, 'resolved');
+  assert.equal(hold2.entries.length, 0);
+  assert.equal(hold2.former_entries.length, 1);
+  const pythagoras = hold2.former_entries[0];
   assert.equal(pythagoras.person_id, '87b9541e-cc28-46ca-a849-43a5a14ae162');
   assert.equal(pythagoras.canonical_name_en, 'Pythagoras');
   assert.equal(pythagoras.representative_domain, null);
   assert.deepEqual(pythagoras.candidate_domains, ['knowledge','religion']);
+  assert.equal(batch67.entries.some((entry) => entry.person_id === pythagoras.person_id && entry.representative_domain === 'knowledge'), true);
 });
 
 test('Person-domain workflow observes future reviewed batch and HOLD files through globs', () => {
