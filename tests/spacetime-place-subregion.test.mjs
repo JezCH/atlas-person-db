@@ -103,23 +103,25 @@ test("reviewed bindings activate through the real spatial-index resolver, not on
 test("matching place_name alone never upgrades spatial precision", () => {
   const rome = registry.bindings.find((binding) => binding.place_id === "place-rome");
   const compiled = spatialCompile.compilePlacementSegment(sourceSegment(rome, { source_refs: ["unreviewed different source"] }), continuum);
-  const europe = continuum.bandForCode("europe");
 
-  assert.equal(compiled.status, "placed");
+  assert.equal(compiled.status, "spatial_compile_unresolved");
+  assert.equal(compiled.reason, "macroregion_only_unresolved");
   assert.equal(compiled.place_id, null);
   assert.equal(compiled.subregion_code, null);
-  assert.equal(compiled.spatial_precision, "macroregion");
-  assert.equal(compiled.x_anchor, europe.center_space);
-  assert.equal(compiled.x_min, europe.min_space);
-  assert.equal(compiled.x_max, europe.max_space);
+  assert.equal(compiled.spatial_precision, "unresolved");
+  assert.equal(compiled.x_anchor, null);
+  assert.equal(compiled.x_min, null);
+  assert.equal(compiled.x_max, null);
 });
 
 test("matching source evidence in another polity never upgrades spatial precision", () => {
   const rome = registry.bindings.find((binding) => binding.place_id === "place-rome");
   const compiled = spatialCompile.compilePlacementSegment(sourceSegment(rome, { polity_id: "polity-example" }), continuum);
-  assert.equal(compiled.status, "placed");
-  assert.equal(compiled.spatial_precision, "macroregion");
+  assert.equal(compiled.status, "spatial_compile_unresolved");
+  assert.equal(compiled.reason, "macroregion_only_unresolved");
+  assert.equal(compiled.spatial_precision, "unresolved");
   assert.equal(compiled.subregion_code, null);
+  assert.equal(compiled.x_anchor, null);
 });
 
 test("a reviewed exact binding conflicting with the resolved macroregion fails closed", () => {
@@ -131,7 +133,7 @@ test("a reviewed exact binding conflicting with the resolved macroregion fails c
   assert.equal(compiled.x_anchor, null);
 });
 
-test("unreviewed compound Place strings remain at existing macroregion precision", () => {
+test("unreviewed compound Place strings remain unresolved without reviewed leaf precision", () => {
   const compiled = spatialCompile.compilePlacementSegment({
     activity_id: "activity-compound",
     polity_id: "6d1520e2-0aff-5063-b2b7-95eb86daf372",
@@ -145,9 +147,11 @@ test("unreviewed compound Place strings remain at existing macroregion precision
     start_year: 1299,
     end_year: 1362
   }, continuum);
-  assert.equal(compiled.status, "placed");
-  assert.equal(compiled.spatial_precision, "macroregion");
+  assert.equal(compiled.status, "spatial_compile_unresolved");
+  assert.equal(compiled.reason, "macroregion_only_unresolved");
+  assert.equal(compiled.spatial_precision, "unresolved");
   assert.equal(compiled.subregion_code, null);
+  assert.equal(compiled.x_anchor, null);
 });
 
 test("runtime reviewed binding table is locked to the canonical registry binding facts", () => {

@@ -138,6 +138,13 @@
     return errors.map((message) => `place_function_records[${recordIndex}] polity ${polityId || "(empty)"} function ${functionIndex}: ${message}`);
   }
 
+  function macroOnlyPolityIds(index) {
+    return Object.freeze(Object.keys(index?.polity_geography || {})
+      .map(text)
+      .filter((polityId) => polityId && !text(index?.polity_subregions?.[polityId]))
+      .sort());
+  }
+
   function validateSpatialIndex(value) {
     const errors = [];
     if (!value || typeof value !== "object") return Object.freeze({ valid: false, errors: Object.freeze(["spatial index must be an object"]) });
@@ -154,7 +161,6 @@
       const regionCode = text(rawRegionCode);
       if (!id) errors.push("polity_geography contains an empty polity_id");
       if (!REGION_CODES.has(regionCode)) errors.push(`polity_geography polity ${id || "(empty)"}: invalid region_code ${regionCode || "(empty)"}`);
-      if (id) resolved.add(id);
     }
 
     if (value.polity_subregions != null && (!value.polity_subregions || typeof value.polity_subregions !== "object" || Array.isArray(value.polity_subregions))) {
@@ -172,13 +178,15 @@
         errors.push(`polity_subregions polity ${id}: invalid subregion_code ${subregionCode || "(empty)"}`);
       } else if (SUBREGION_PARENT[subregionCode] !== macroregionCode) {
         errors.push(`polity_subregions polity ${id}: subregion ${subregionCode} is not a child of macroregion ${macroregionCode || "(empty)"}`);
+      } else if (id) {
+        resolved.add(id);
       }
     }
 
     for (const [recordIndex, record] of (Array.isArray(value.place_function_records) ? value.place_function_records : []).entries()) {
       const polityId = text(record?.polity_id);
       if (!polityId) errors.push(`place_function_records[${recordIndex}]: polity_id is required`);
-      if (resolved.has(polityId)) errors.push(`place_function_records[${recordIndex}]: polity_id ${polityId} is already resolved by polity_geography`);
+      if (resolved.has(polityId)) errors.push(`place_function_records[${recordIndex}]: polity_id ${polityId} is already resolved by reviewed polity_subregions`);
       if (polityId) resolved.add(polityId);
       if (!Array.isArray(record?.functions) || !record.functions.length) {
         errors.push(`place_function_records[${recordIndex}] polity ${polityId || "(empty)"}: functions must be a non-empty array`);
@@ -209,10 +217,12 @@
     }
     const lookup = new Map();
     for (const [polityId, regionCode] of Object.entries(index.polity_geography || {})) {
+      const subregionCode = text(index.polity_subregions?.[polityId]);
+      if (!subregionCode) continue;
       lookup.set(text(polityId), Object.freeze({
         placement_basis: "polity_geography",
         region_code: text(regionCode),
-        subregion_code: text(index.polity_subregions?.[polityId]) || null
+        subregion_code: subregionCode
       }));
     }
     for (const record of index.place_function_records || []) {
@@ -300,14 +310,16 @@
     if (!polityId) return Object.freeze({ activity_id: activityId, polity_id: polityId, status: "polity_unresolved", segments: Object.freeze([]) });
 
     const record = spatialLookup instanceof Map ? spatialLookup.get(polityId) : null;
-    if (!record) return Object.freeze({ activity_id: activityId, polity_id: polityId, status: "spatial_unresolved", segments: Object.freeze([]) });
+    if (!record) return Object.freeze({ activity_id: activityId, polity_id: polityId, status: "spatial_unresolved", reason: "placement_missing", segments: Object.freeze([]) });
 
     if (record.placement_basis === "polity_geography") {
+      const subregionCode = text(record.subregion_code);
+      if (!subregionCode) return Object.freeze({ activity_id: activityId, polity_id: polityId, status: "spatial_unresolved", reason: "macroregion_only_unresolved", segments: Object.freeze([]) });
       return Object.freeze({ activity_id: activityId, polity_id: polityId, status: "placed", segments: Object.freeze([Object.freeze({
         activity_id: activityId,
         polity_id: polityId,
         region_code: text(record.region_code),
-        subregion_code: text(record.subregion_code) || null,
+        subregion_code: subregionCode,
         placement_basis: "polity_geography",
         location_label: "정치체 권역",
         place_function_type: null,
@@ -383,6 +395,7 @@
     yearLabel,
     normalizeInterval,
     activityInterval,
+    macroOnlyPolityIds,
     validateSpatialIndex,
     createSpatialLookup,
     resolveActivityPlacement,

@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 const require=createRequire(import.meta.url);
 const model=require("../atlas-person-spacetime-model.js");
 
-function geographyIndex(region="east-asia"){return {schema:model.SPATIAL_INDEX_SCHEMA,polity_geography:{"polity-a":region},place_function_records:[],review_queue:[]};}
+function geographyIndex(region="east-asia"){return {schema:model.SPATIAL_INDEX_SCHEMA,polity_geography:{"polity-a":region},polity_subregions:{"polity-a":"korean-peninsula"},place_function_records:[],review_queue:[]};}
 function placeFunctionIndex(){return {schema:model.SPATIAL_INDEX_SCHEMA,polity_geography:{},place_function_records:[{polity_id:"polity-a",functions:[
   {start_year:100,end_year:109,function_type:"capital",place_name:"Old Capital",region_code:"west-asia",confidence:"well_established",source_refs:["source:old"]},
   {start_year:110,end_year:130,function_type:"capital",place_name:"New Capital",region_code:"east-asia",confidence:"well_established",source_refs:["source:new"]}
@@ -22,9 +22,9 @@ test("century ticks cross BCE and CE without year zero",()=>{
   assert.equal(ticks.some(t=>t.year===0),false);
 });
 
-test("reviewed polity geography places an activity without invented precision",()=>{
+test("reviewed polity leaf geography places an activity without invented precision",()=>{
   const placement=model.resolveActivityPlacement({id:"a",polity:{id:"polity-a"},start:{year:100},end:{year:120}},model.createSpatialLookup(geographyIndex()));
-  assert.equal(placement.status,"placed"); assert.equal(placement.segments[0].region_code,"east-asia"); assert.equal(placement.segments[0].placement_basis,"polity_geography");
+  assert.equal(placement.status,"placed"); assert.equal(placement.segments[0].region_code,"east-asia"); assert.equal(placement.segments[0].subregion_code,"korean-peninsula"); assert.equal(placement.segments[0].placement_basis,"polity_geography");
 });
 
 test("missing reviewed spatial record stays unresolved",()=>{
