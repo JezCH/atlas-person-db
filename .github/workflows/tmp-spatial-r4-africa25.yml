@@ -1,0 +1,75 @@
+name: Temporary Spatial r4 Africa25
+
+on:
+  push:
+    branches:
+      - codex/spatial-r4-africa25-prod-20260917
+
+permissions:
+  contents: write
+
+jobs:
+  finalize-africa:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Extend exact migration contract with Africa25
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          manifest = json.loads(Path('spatial/taxonomy-migrations/r4-9m45l-africa-east-horn.v1.json').read_text())
+          assert len(manifest['migrations']) == 25
+          assert sum(m['to']['subregion_code'] == 'east-africa' for m in manifest['migrations']) == 15
+          assert sum(m['to']['subregion_code'] == 'horn-of-africa' for m in manifest['migrations']) == 10
+
+          path = Path('tests/spatial-taxonomy-r4-compiler.test.mjs')
+          text = path.read_text()
+          marker = 'const expected = new Map(['
+          start = text.index(marker) + len(marker)
+          end = text.index(']);', start)
+          existing = text[start:end]
+          for m in manifest['migrations']:
+              pid = m['polity_id']
+              leaf = m['to']['subregion_code']
+              if pid not in existing:
+                  existing += f"\n  ['{pid}', '{leaf}'],"
+          path.write_text(text[:start] + existing + text[end:])
+          PY
+      - name: Generate canonical and verify Africa25
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/compile-spatial-bindings-r4.mjs
+          node scripts/compile-spatial-bindings-r4.mjs --check
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          manifest = json.loads(Path('spatial/taxonomy-migrations/r4-9m45l-africa-east-horn.v1.json').read_text())
+          index = json.loads(Path('atlas-polity-spatial-index.json').read_text())
+          for m in manifest['migrations']:
+              assert index['polity_subregions'][m['polity_id']] == m['to']['subregion_code'], m['polity_id']
+          assert 'east-africa-horn' not in set(index.get('polity_subregions', {}).values())
+          print('Africa25 canonical verification: PASS')
+          PY
+      - name: Run focused r4 tests
+        run: node --test tests/spatial-taxonomy-r4-compiler.test.mjs tests/spacetime-place-subregion.test.mjs
+      - name: Commit canonical result and remove temporary workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/tmp-spatial-r4-africa25.yml
+          git add atlas-polity-spatial-index.json tests/spatial-taxonomy-r4-compiler.test.mjs
+          git commit -m 'spatial: materialize Africa25 r4 migration'
+          git push origin HEAD:${GITHUB_REF_NAME}
