@@ -108,6 +108,30 @@ Do not pay PR/CI/deploy/read-back cost for every microbatch unless isolation is 
 
 ## 7. Verification proportional to risk
 
+### Durable validation rule
+
+Persistent tests and CI gates must verify durable invariants, not point-in-time project snapshots.
+
+Prefer contract-level properties that remain meaningful as valid project state evolves, such as:
+
+- identity uniqueness and referential integrity;
+- schema and taxonomy validity;
+- allowed state transitions and parent/child consistency;
+- deterministic compilation from canonical inputs;
+- expected-before-state checks for reviewed mutations;
+- fail-closed rejection of stale, conflicting, destructive, or unauthorized writes.
+
+Do not make long-lived gates depend on transient facts merely because they were true during one migration or review wave, including:
+
+- a specific PR, issue, branch, release-train, or migration phase name;
+- an exact current record count or batch membership unless that count itself is a contractual invariant;
+- a particular file/shard owning a record when ownership is implementation detail rather than contract;
+- the assumption that a reviewed item must remain in its historical pre-migration state forever.
+
+If a one-time migration needs exact snapshot acceptance, keep that evidence scoped to the migration/checkpoint. Once valid state advances, retire or replace that point-in-time gate with the durable invariant it was meant to protect.
+
+When correct current state has advanced beyond a stale test assumption, fix the stale test or contract if the durable invariant is still satisfied. Do not mutate correct data merely to satisfy obsolete historical test state.
+
 ### Low-risk content/data mutation using an unchanged governed writer
 
 Required:
