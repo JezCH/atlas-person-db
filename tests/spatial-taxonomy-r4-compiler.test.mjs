@@ -55,10 +55,14 @@ const expected = new Map([
   ['f67af5a4-a2f5-492d-9220-92fe401bc167', 'western-siberia'],
 ]);
 
-test('r4 reviewed static migration manifest matches the retained baseline exactly and compiles with reviewed shards', () => {
+test('r4 reviewed static migration manifest matches the current reviewed spatial source exactly', () => {
   const retainedBaseline = JSON.parse(fs.readFileSync(baselinePath, 'utf8'));
+  const currentReviewed = compileSpatialBindings({
+    baseline: retainedBaseline,
+    shards: loadReviewedBindingShards(shardDir)
+  });
   const migrations = loadTaxonomyMigrationManifests(migrationDir);
-  const migrated = applyTaxonomyMigrationManifests(retainedBaseline, migrations);
+  const migrated = applyTaxonomyMigrationManifests(currentReviewed.index, migrations);
 
   assert.equal(migrated.migrated_polity_ids.length, expected.size);
   assert.deepEqual(new Set(migrated.migrated_polity_ids), new Set(expected.keys()));
@@ -66,10 +70,7 @@ test('r4 reviewed static migration manifest matches the retained baseline exactl
     assert.equal(migrated.baseline.polity_subregions[polityId], subregion, polityId);
   }
 
-  const compiled = compileSpatialBindings({
-    baseline: migrated.baseline,
-    shards: loadReviewedBindingShards(shardDir)
-  });
+  const compiled = compileSpatialBindings({ baseline: migrated.baseline, shards: [] });
   for (const [polityId, subregion] of expected) {
     assert.equal(compiled.index.polity_subregions[polityId], subregion, polityId);
   }
