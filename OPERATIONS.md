@@ -1,6 +1,6 @@
 # ATLAS Operations
 
-> `WORK_EXECUTION.md` is the authoritative project-wide execution rule. Older operational wording that requires broader locking, whole-project revalidation, universal exact-SHA deployment proof, or full queue replay is superseded.
+> `WORK_EXECUTION.md` is the authoritative project-wide execution rule. Older operational wording that requires broader locking, whole-project revalidation, duplicate deployment proof, or full queue replay is superseded.
 
 ## 1. Required Production environment
 
@@ -61,11 +61,11 @@ Examples: reviewed representative_domain, NamuWiki reference, ordinary Spatial b
 Required:
 
 1. exact target identity or deterministic resolver;
-2. writer validation;
+2. the canonical writer's own validation/security contract;
 3. apply the reviewed batch;
 4. one batched read-back of the changed records.
 
-A fresh Vercel deployment or proof that current GitHub `main` equals Production is **not required solely because unrelated commits exist on `main`**.
+Do not add a second manual deployment/SHA proof beyond what the writer itself already enforces. If that writer currently fail-closes on exact deployed SHA/OIDC/environment identity, satisfy it; changing that transport contract is a separate CORE task.
 
 ### C. Code/UI change without live data mutation
 
@@ -95,19 +95,18 @@ Fail closed. Preserve explicit evidence, rollback/replay planning, conflict hand
 
 A merge to `main` is not automatically a reason to inspect Production.
 
-Use exact-SHA deployment verification when correctness depends on newly deployed code, including schema/runtime cutovers, writer/transport changes, or a live UI/API fix being accepted in Production.
+Use exact-SHA deployment verification when the canonical writer requires it or when correctness depends on newly deployed code, including schema/runtime cutovers, writer/transport changes, or a live UI/API fix being accepted in Production.
 
 For those cases:
 
 ```text
 required CI
 → merge
-→ identify resulting main SHA
-→ verify Production deployed the required version
-→ run focused smoke/postcondition checks
+→ canonical deployment/writer proof
+→ focused smoke/postcondition checks
 ```
 
-For unchanged-writer ordinary data operations, use writer compatibility + exact target/read-back instead of waiting for unrelated repository commits to deploy.
+Do not duplicate the proof manually after the writer/workflow already verified the required deployment identity.
 
 Do not repeatedly poll deployment state. Check it only when the operation actually depends on deployment.
 
@@ -171,7 +170,7 @@ After a write that actually affects compiled output, rebuild or invalidate only 
 
 Do not maintain a second manually edited Runtime truth store.
 
-Exact deployed-code proof is required when compiler/runtime correctness depends on code changed in the same release; it is not a universal prerequisite for unrelated content writes.
+Exact deployed-code proof is required when the canonical runtime/compiler/writer contract requires it or when correctness depends on code changed in the same release. Do not add duplicate proof outside that canonical gate.
 
 ## 10. Incident rules
 
