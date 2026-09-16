@@ -2,19 +2,46 @@ name: ATLAS P10 Person Duplicate V2 Revalidation
 
 on:
   pull_request:
-    paths-ignore:
-      - 'authoring/requests/*.json'
-      - 'non-timeline-persons.json'
+    paths:
+      - '.github/workflows/atlas-p10-person-duplicate-v2-revalidation.yml'
+      - 'scripts/rehearse-p10-*.mjs'
+      - 'server/atlas-duplicate-*.js'
+      - 'server/atlas-person-*.js'
+      - 'server/atlas-authoring-migrations.js'
+      - 'server/atlas-authoring-manifest-dispatch-service.js'
+      - 'server/atlas-correction-migrations.js'
+      - 'server/atlas-stage2-schema-release.js'
+      - 'server/atlas-stage2-native-activity-service.js'
+      - 'db/schema/**'
+      - 'migration/phase-10/**'
+      - 'package.json'
+      - 'package-lock.json'
   push:
     branches:
       - main
-    paths-ignore:
-      - 'authoring/requests/*.json'
-      - 'non-timeline-persons.json'
+    paths:
+      - '.github/workflows/atlas-p10-person-duplicate-v2-revalidation.yml'
+      - 'scripts/rehearse-p10-*.mjs'
+      - 'server/atlas-duplicate-*.js'
+      - 'server/atlas-person-*.js'
+      - 'server/atlas-authoring-migrations.js'
+      - 'server/atlas-authoring-manifest-dispatch-service.js'
+      - 'server/atlas-correction-migrations.js'
+      - 'server/atlas-stage2-schema-release.js'
+      - 'server/atlas-stage2-native-activity-service.js'
+      - 'db/schema/**'
+      - 'migration/phase-10/**'
+      - 'package.json'
+      - 'package-lock.json'
   workflow_dispatch:
 
 permissions:
   contents: read
+
+# This workflow is read-only validation. Newer commits supersede older results.
+concurrency:
+  group: atlas-validation-p10-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   rehearse:

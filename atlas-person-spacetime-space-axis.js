@@ -16,8 +16,8 @@
     external_standard: null,
     reference_frameworks: Object.freeze(["UN M49 geographic regions (reference only; not adopted as the ATLAS taxonomy)"]),
     audit_document: "docs/spacetime-spatial-hierarchy-audit-20260903.md",
-    migration_document: "docs/spacetime-spatial-taxonomy-migration-20260903-r3.md",
-    taxonomy_revision: "2026-09-03-r3",
+    migration_document: "docs/spacetime-spatial-taxonomy-migration-20260916-r4.md",
+    taxonomy_revision: "2026-09-16-r4",
     width_basis: "equal_leaf_subregion",
     macro_width_basis: "sum_of_child_leaf_widths",
     horizontal_order_basis: "representative_longitude_plus_geographic_continuity",
@@ -48,7 +48,8 @@
       Object.freeze({ code: "maghreb-north-africa", label: "마그레브·북아프리카" }),
       Object.freeze({ code: "central-africa", label: "중앙아프리카" }),
       Object.freeze({ code: "southern-africa", label: "남아프리카" }),
-      Object.freeze({ code: "east-africa-horn", label: "동아프리카·아프리카의 뿔" }),
+      Object.freeze({ code: "east-africa", label: "동아프리카" }),
+      Object.freeze({ code: "horn-of-africa", label: "아프리카의 뿔" }),
       Object.freeze({ code: "nile-valley", label: "나일 유역" })
     ]) }),
     Object.freeze({ code: "west-asia", label: "서아시아", subregions: Object.freeze([
@@ -59,11 +60,14 @@
       Object.freeze({ code: "arabia", label: "아라비아" }),
       Object.freeze({ code: "iranian-plateau", label: "이란고원" })
     ]) }),
-    Object.freeze({ code: "central-asia", label: "중앙아시아", subregions: Object.freeze([
+    Object.freeze({ code: "central-asia", label: "중앙유라시아", subregions: Object.freeze([
       Object.freeze({ code: "western-central-asia", label: "서부 중앙아시아" }),
-      Object.freeze({ code: "eastern-central-asia-steppe", label: "동부 중앙아시아·내륙아시아" })
+      Object.freeze({ code: "western-siberia", label: "서시베리아" }),
+      Object.freeze({ code: "eastern-central-asia-steppe", label: "동부 중앙아시아·내륙아시아" }),
+      Object.freeze({ code: "tibetan-plateau", label: "티베트고원" })
     ]) }),
     Object.freeze({ code: "south-asia", label: "남아시아", subregions: Object.freeze([
+      Object.freeze({ code: "himalayas", label: "히말라야" }),
       Object.freeze({ code: "northwest-south-asia", label: "남아시아 북서부" }),
       Object.freeze({ code: "north-india-ganges", label: "북인도·갠지스" }),
       Object.freeze({ code: "deccan-south-india", label: "데칸·남인도" }),
@@ -78,7 +82,8 @@
       Object.freeze({ code: "china", label: "중국권" }),
       Object.freeze({ code: "manchuria", label: "만주" }),
       Object.freeze({ code: "korean-peninsula", label: "한반도" }),
-      Object.freeze({ code: "japan", label: "일본열도" })
+      Object.freeze({ code: "japan", label: "일본열도" }),
+      Object.freeze({ code: "eastern-siberia-far-east", label: "동시베리아·극동" })
     ]) }),
     Object.freeze({ code: "oceania", label: "오세아니아", subregions: Object.freeze([
       Object.freeze({ code: "australasia", label: "오스트레일리아·뉴질랜드" }),
@@ -147,6 +152,29 @@
       });
       leafOffset = maxLeafOffset;
     });
+
+    // Phase-1 r4 compatibility: the immutable r3 baseline still contains
+    // east-africa-horn until exact-UUID polity migration is applied in Phase 2.
+    // Keep it addressable as one virtual band spanning the two new active leaves,
+    // but do not add it to the active 45-leaf taxonomy.
+    const eastAfrica = byCode.get("east-africa");
+    const hornOfAfrica = byCode.get("horn-of-africa");
+    if (eastAfrica?.parent_code === "africa" && hornOfAfrica?.parent_code === "africa") {
+      const legacyMin = Math.min(eastAfrica.min_space, hornOfAfrica.min_space);
+      const legacyMax = Math.max(eastAfrica.max_space, hornOfAfrica.max_space);
+      byCode.set("east-africa-horn", Object.freeze({
+        kind: "subregion",
+        code: "east-africa-horn",
+        label: "동아프리카·아프리카의 뿔",
+        parent_code: "africa",
+        min_space: legacyMin,
+        max_space: legacyMax,
+        center_space: (legacyMin + legacyMax) / 2,
+        ordinal: null,
+        legacy_alias: true
+      }));
+    }
+
     const bandForCode = (code) => byCode.get(text(code)) || null;
     const macroForCode = (code) => {
       const band = bandForCode(code);

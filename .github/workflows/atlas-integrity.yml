@@ -11,33 +11,85 @@ permissions:
   contents: read
   actions: read
 
+# Validation runs are replaceable. A newer commit on the same PR/ref makes the
+# older validation result obsolete, unlike Production mutation workflows.
+concurrency:
+  group: atlas-integrity-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   classify:
     runs-on: ubuntu-latest
     outputs:
-      registration_data_only: ${{ steps.classify.outputs.registration_data_only }}
+      registration: ${{ steps.classify.outputs.registration }}
+      governance: ${{ steps.classify.outputs.governance }}
+      ui: ${{ steps.classify.outputs.ui }}
+      full: ${{ steps.classify.outputs.full }}
+      base_sha: ${{ steps.range.outputs.base_sha }}
+      head_sha: ${{ steps.range.outputs.head_sha }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - id: range
+        name: Resolve changed commit range
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE_SHA: ${{ github.event.before }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          base_sha=''
+          head_sha="$HEAD_SHA"
+
+          case "$EVENT_NAME" in
+            pull_request)
+              base_sha="$PR_BASE_SHA"
+              ;;
+            push)
+              base_sha="$PUSH_BEFORE_SHA"
+              ;;
+            workflow_dispatch)
+              # Manual integrity runs are deliberately conservative and use the
+              # full lane because there is no natural change range to optimize.
+              ;;
+          esac
+
+          if [[ ! "$base_sha" =~ ^[0-9a-f]{40}$ || "$base_sha" =~ ^0{40}$ ]]; then
+            base_sha=''
+          elif ! git cat-file -e "${base_sha}^{commit}" 2>/dev/null; then
+            base_sha=''
+          fi
+
+          if [[ ! "$head_sha" =~ ^[0-9a-f]{40}$ ]] || ! git cat-file -e "${head_sha}^{commit}" 2>/dev/null; then
+            head_sha=''
+          fi
+
+          echo "base_sha=$base_sha" >> "$GITHUB_OUTPUT"
+          echo "head_sha=$head_sha" >> "$GITHUB_OUTPUT"
+
       - id: classify
-        name: Classify PR scope
+        name: Classify durable dependency impacts
         shell: bash
         run: |
           set -euo pipefail
-          registration_data_only=false
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            git diff --name-only --diff-filter=ACMRTUXB "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}" > /tmp/atlas-changed.txt
-            if [[ -s /tmp/atlas-changed.txt ]] && ! grep -Evq '^(authoring/requests/[A-Za-z0-9._-]+\.json|non-timeline-persons\.json)$' /tmp/atlas-changed.txt; then
-              registration_data_only=true
-            fi
+          : > /tmp/atlas-changed.txt
+          base_sha='${{ steps.range.outputs.base_sha }}'
+          head_sha='${{ steps.range.outputs.head_sha }}'
+
+          if [[ -n "$base_sha" && -n "$head_sha" ]]; then
+            git diff --name-only --diff-filter=ACMRTUXB "$base_sha" "$head_sha" -- > /tmp/atlas-changed.txt
           fi
-          echo "registration_data_only=${registration_data_only}" >> "$GITHUB_OUTPUT"
-          echo "registration_data_only=${registration_data_only}"
+
+          cat /tmp/atlas-changed.txt
+          node scripts/classify-ci-impact.mjs < /tmp/atlas-changed.txt >> "$GITHUB_OUTPUT"
 
   registration_validation:
     needs: classify
-    if: needs.classify.outputs.registration_data_only == 'true'
+    if: needs.classify.outputs.registration == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
@@ -51,18 +103,84 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mapfile -t manifests < <(git diff --name-only --diff-filter=ACMRTUXB "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}" -- 'authoring/requests/*.json')
+          base_sha='${{ needs.classify.outputs.base_sha }}'
+          head_sha='${{ needs.classify.outputs.head_sha }}'
+          [[ -n "$base_sha" && -n "$head_sha" ]]
+
+          mapfile -t manifests < <(git diff --name-only --diff-filter=ACMRTUXB "$base_sha" "$head_sha" -- 'authoring/requests/*.json')
           if [[ "${#manifests[@]}" -gt 0 ]]; then
             node scripts/validate-authoring-request-files.mjs "${manifests[@]}"
           fi
 
-          if git diff --name-only --diff-filter=ACMRTUXB "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}" -- | grep -qx 'non-timeline-persons.json'; then
+          if git diff --name-only --diff-filter=ACMRTUXB "$base_sha" "$head_sha" -- | grep -qx 'non-timeline-persons.json'; then
             node scripts/validate-non-timeline-persons.mjs non-timeline-persons.json
+          fi
+
+  governance_validation:
+    needs: classify
+    if: needs.classify.outputs.governance == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate current requirements and release governance
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/verify-atlas-requirements.mjs
+          node scripts/verify-release-governance.mjs
+
+  ui_validation:
+    needs: classify
+    if: needs.classify.outputs.ui == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Syntax check changed UI JavaScript
+        shell: bash
+        run: |
+          set -euo pipefail
+          base_sha='${{ needs.classify.outputs.base_sha }}'
+          head_sha='${{ needs.classify.outputs.head_sha }}'
+          [[ -n "$base_sha" && -n "$head_sha" ]]
+
+          while IFS= read -r path; do
+            case "$path" in
+              *.js|*.mjs|*.cjs)
+                [[ -f "$path" ]] && node --check "$path"
+                ;;
+            esac
+          done < <(git diff --name-only --diff-filter=ACMRTUXB "$base_sha" "$head_sha" --)
+      - name: Run focused UI contract tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -d '' tests_to_run < <(find tests -maxdepth 1 -type f \( \
+            -name '*ui*.test.mjs' -o \
+            -name '*spacetime*.test.mjs' -o \
+            -name '*browser*.test.mjs' -o \
+            -name '*presentation*.test.mjs' -o \
+            -name '*table*.test.mjs' -o \
+            -name '*era*.test.mjs' \
+          \) -print0)
+          if [[ "${#tests_to_run[@]}" -gt 0 ]]; then
+            node --test "${tests_to_run[@]}"
+          else
+            echo 'No focused UI contract tests found; syntax checks are the applicable gate.'
           fi
 
   full_test:
     needs: classify
-    if: needs.classify.outputs.registration_data_only != 'true'
+    if: needs.classify.outputs.full == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     services:
@@ -132,28 +250,38 @@ jobs:
 
   test:
     name: test
-    needs: [classify, registration_validation, full_test]
+    needs: [classify, registration_validation, governance_validation, ui_validation, full_test]
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
-      - name: Enforce the correct integrity path
+      - name: Enforce every selected integrity lane
         shell: bash
         run: |
           set -euo pipefail
-          [[ "${{ needs.classify.result }}" == "success" ]] || { echo 'Scope classification failed.' >&2; exit 1; }
-          if [[ "${{ needs.classify.outputs.registration_data_only }}" == "true" ]]; then
-            [[ "${{ needs.registration_validation.result }}" == "success" ]] || { echo 'Registration data validation failed.' >&2; exit 1; }
-            echo 'Required test context passed through the registration-data fast path.'
-          else
-            [[ "${{ needs.full_test.result }}" == "success" ]] || { echo 'Full integrity suite failed.' >&2; exit 1; }
-            echo 'Required test context passed through the full integrity suite.'
+          [[ "${{ needs.classify.result }}" == "success" ]] || { echo 'Impact classification failed.' >&2; exit 1; }
+
+          registration='${{ needs.classify.outputs.registration }}'
+          governance='${{ needs.classify.outputs.governance }}'
+          ui='${{ needs.classify.outputs.ui }}'
+          full='${{ needs.classify.outputs.full }}'
+
+          [[ "$registration" == 'true' || "$governance" == 'true' || "$ui" == 'true' || "$full" == 'true' ]] || {
+            echo 'Classifier selected no integrity lane.' >&2
+            exit 1
+          }
+
+          if [[ "$registration" == 'true' ]]; then
+            [[ "${{ needs.registration_validation.result }}" == 'success' ]] || { echo 'Registration validation failed.' >&2; exit 1; }
+          fi
+          if [[ "$governance" == 'true' ]]; then
+            [[ "${{ needs.governance_validation.result }}" == 'success' ]] || { echo 'Governance validation failed.' >&2; exit 1; }
+          fi
+          if [[ "$ui" == 'true' ]]; then
+            [[ "${{ needs.ui_validation.result }}" == 'success' ]] || { echo 'UI validation failed.' >&2; exit 1; }
+          fi
+          if [[ "$full" == 'true' ]]; then
+            [[ "${{ needs.full_test.result }}" == 'success' ]] || { echo 'Full integrity suite failed.' >&2; exit 1; }
           fi
 
-# Historical Baseline A P3-P9 integration/rehearsal scripts remain immutable evidence
-# in the repository and in their successful release workflows. They are intentionally
-# not replayed on every current PR after the P5-P9 Production release. That includes
-# the P9 replacement rehearsal, which requires the legacy v1 index to exist before
-# proving its removal and therefore is not a validator for the already-cut-over schema.
-# Current P10 and P11 gates run in their dedicated workflows, so a historical
-# branch-only assertion cannot force completed Production phases back to PENDING.
+          echo "Required integrity lanes passed: registration=$registration governance=$governance ui=$ui full=$full"

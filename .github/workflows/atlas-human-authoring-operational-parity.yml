@@ -2,19 +2,44 @@ name: ATLAS Human Authoring Operational Parity
 
 on:
   pull_request:
-    paths-ignore:
-      - 'authoring/requests/*.json'
-      - 'non-timeline-persons.json'
+    paths:
+      - '.github/workflows/atlas-human-authoring-operational-parity.yml'
+      - 'scripts/rehearse-human-authoring-operational-parity.mjs'
+      - 'server/atlas-human-authoring-service.js'
+      - 'server/atlas-authoring-*.js'
+      - 'server/atlas-correction-migrations.js'
+      - 'server/atlas-stage2-schema-release.js'
+      - 'server/atlas-stage2-p9-db-cutover.js'
+      - 'server/atlas-identity-service.js'
+      - 'server/atlas-stage2-native-activity-service.js'
+      - 'db/schema/**'
+      - 'package.json'
+      - 'package-lock.json'
   push:
     branches:
       - main
-    paths-ignore:
-      - 'authoring/requests/*.json'
-      - 'non-timeline-persons.json'
+    paths:
+      - '.github/workflows/atlas-human-authoring-operational-parity.yml'
+      - 'scripts/rehearse-human-authoring-operational-parity.mjs'
+      - 'server/atlas-human-authoring-service.js'
+      - 'server/atlas-authoring-*.js'
+      - 'server/atlas-correction-migrations.js'
+      - 'server/atlas-stage2-schema-release.js'
+      - 'server/atlas-stage2-p9-db-cutover.js'
+      - 'server/atlas-identity-service.js'
+      - 'server/atlas-stage2-native-activity-service.js'
+      - 'db/schema/**'
+      - 'package.json'
+      - 'package-lock.json'
   workflow_dispatch:
 
 permissions:
   contents: read
+
+# This workflow is read-only validation. Newer commits supersede older results.
+concurrency:
+  group: atlas-validation-human-authoring-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   rehearsal:

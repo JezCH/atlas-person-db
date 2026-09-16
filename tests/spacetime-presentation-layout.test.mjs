@@ -48,7 +48,7 @@ test("subregion tracks use a compact rail corridor and the remaining band width 
   assert.ok(ga.label_width > (right-left) * 0.72, "refined taxonomy keeps most of the band available to the name");
 });
 
-test("equal leaf width restores readable label room at the 500 percent floor", () => {
+test("equal 45-leaf width preserves readable label room at the 500 percent floor", () => {
   const probes = [
     segment("europe-name", "central-europe", 100, 150),
     segment("china-name", "china", 100, 150),
@@ -61,14 +61,15 @@ test("equal leaf width restores readable label room at the 500 percent floor", (
     CONTENT_WIDTH
   );
 
-  const expectedLeafWidth = CONTENT_WIDTH / 40;
-  assert.ok(expectedLeafWidth > 119, "500% wide-desktop floor should keep each refined leaf above 120px");
+  const expectedLeafWidth = CONTENT_WIDTH / 45;
+  assert.ok(expectedLeafWidth > 105, "500% wide-desktop floor should keep each r4 leaf above 105px");
 
   for (const s of probes) {
     const g = layout.geometryForSegment(presentation, s);
-    const box = layout.activityBox(presentation, s, 100, { minWidth: 30, maxWidth: 148 });
-    assert.ok(g.label_width >= 100, `${s.subregion_code}: ordinary name zone must not collapse`);
-    assert.equal(box.width, 100, `${s.subregion_code}: a 100px natural label should fit without forced shrink`);
+    const naturalWidth = Math.floor(g.label_width);
+    const box = layout.activityBox(presentation, s, naturalWidth, { minWidth: 30, maxWidth: 148 });
+    assert.ok(g.label_width >= expectedLeafWidth * 0.8, `${s.subregion_code}: ordinary name zone must retain at least 80% of the leaf width`);
+    assert.equal(box.width, naturalWidth, `${s.subregion_code}: a label sized to the available r4 zone should fit without forced shrink`);
     assert.ok(box.left >= g.band_left - 1e-9);
     assert.ok(box.left + box.width <= g.band_right + 1e-9);
   }
