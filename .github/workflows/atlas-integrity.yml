@@ -15,29 +15,58 @@ jobs:
   classify:
     runs-on: ubuntu-latest
     outputs:
-      registration_data_only: ${{ steps.classify.outputs.registration_data_only }}
+      scope: ${{ steps.classify.outputs.scope }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - id: classify
-        name: Classify PR scope
+        name: Classify change impact
         shell: bash
         run: |
           set -euo pipefail
-          registration_data_only=false
+          scope=full
+
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
             git diff --name-only --diff-filter=ACMRTUXB "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}" > /tmp/atlas-changed.txt
-            if [[ -s /tmp/atlas-changed.txt ]] && ! grep -Evq '^(authoring/requests/[A-Za-z0-9._-]+\.json|non-timeline-persons\.json)$' /tmp/atlas-changed.txt; then
-              registration_data_only=true
+            cat /tmp/atlas-changed.txt
+
+            if [[ ! -s /tmp/atlas-changed.txt ]]; then
+              scope=governance
+            elif ! grep -Evq '^(authoring/requests/[A-Za-z0-9._-]+\.json|non-timeline-persons\.json)$' /tmp/atlas-changed.txt; then
+              scope=registration
+            else
+              governance_only=true
+              ui_only=true
+
+              while IFS= read -r path; do
+                case "$path" in
+                  *.md|docs/*|requirements/*)
+                    ;;
+                  *) governance_only=false ;;
+                esac
+
+                case "$path" in
+                  *.css|*.html|public/*|app.js|admin.js|asset-loader.js|mobile-ui.js|detail-panel-collapse.js|table-sort-controls.js|compact-era-format.js|era-format.js|status-summary.js|atlas-admin-*.js|atlas-domain-surface-owner.js|atlas-main-authority-nav.js|atlas-person-browser-reader.js|atlas-person-domain-ui.js|atlas-person-era-model.js|atlas-person-era-navigation.js|atlas-person-external-references.js|atlas-person-header-sorting.js|atlas-person-main.js|atlas-person-profile-editor.js|atlas-person-spacetime-*.js|atlas-person-table-view.js|atlas-responsive-shell.js|atlas-ui-*.js)
+                    ;;
+                  *) ui_only=false ;;
+                esac
+              done < /tmp/atlas-changed.txt
+
+              if [[ "$governance_only" == true ]]; then
+                scope=governance
+              elif [[ "$ui_only" == true ]]; then
+                scope=ui
+              fi
             fi
           fi
-          echo "registration_data_only=${registration_data_only}" >> "$GITHUB_OUTPUT"
-          echo "registration_data_only=${registration_data_only}"
+
+          echo "scope=${scope}" >> "$GITHUB_OUTPUT"
+          echo "ATLAS CI scope: ${scope}"
 
   registration_validation:
     needs: classify
-    if: needs.classify.outputs.registration_data_only == 'true'
+    if: needs.classify.outputs.scope == 'registration'
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
@@ -60,9 +89,67 @@ jobs:
             node scripts/validate-non-timeline-persons.mjs non-timeline-persons.json
           fi
 
+  governance_validation:
+    needs: classify
+    if: needs.classify.outputs.scope == 'governance'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate current requirements and release governance
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/verify-atlas-requirements.mjs
+          node scripts/verify-release-governance.mjs
+
+  ui_validation:
+    needs: classify
+    if: needs.classify.outputs.scope == 'ui'
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Syntax check changed UI JavaScript
+        shell: bash
+        run: |
+          set -euo pipefail
+          while IFS= read -r path; do
+            case "$path" in
+              *.js|*.mjs|*.cjs)
+                [[ -f "$path" ]] && node --check "$path"
+                ;;
+            esac
+          done < <(git diff --name-only --diff-filter=ACMRTUXB "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}")
+      - name: Run focused UI and spacetime contract tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -d '' tests_to_run < <(find tests -maxdepth 1 -type f \( \
+            -name '*ui*.test.mjs' -o \
+            -name '*spacetime*.test.mjs' -o \
+            -name '*browser*.test.mjs' -o \
+            -name '*presentation*.test.mjs' -o \
+            -name '*table*.test.mjs' -o \
+            -name '*era*.test.mjs' \
+          \) -print0)
+          if [[ "${#tests_to_run[@]}" -gt 0 ]]; then
+            node --test "${tests_to_run[@]}"
+          else
+            echo 'No focused UI contract tests found; syntax checks are the applicable gate.'
+          fi
+
   full_test:
     needs: classify
-    if: needs.classify.outputs.registration_data_only != 'true'
+    if: needs.classify.outputs.scope == 'full'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     services:
@@ -132,28 +219,39 @@ jobs:
 
   test:
     name: test
-    needs: [classify, registration_validation, full_test]
+    needs: [classify, registration_validation, governance_validation, ui_validation, full_test]
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
-      - name: Enforce the correct integrity path
+      - name: Enforce the selected integrity path
         shell: bash
         run: |
           set -euo pipefail
           [[ "${{ needs.classify.result }}" == "success" ]] || { echo 'Scope classification failed.' >&2; exit 1; }
-          if [[ "${{ needs.classify.outputs.registration_data_only }}" == "true" ]]; then
-            [[ "${{ needs.registration_validation.result }}" == "success" ]] || { echo 'Registration data validation failed.' >&2; exit 1; }
-            echo 'Required test context passed through the registration-data fast path.'
-          else
-            [[ "${{ needs.full_test.result }}" == "success" ]] || { echo 'Full integrity suite failed.' >&2; exit 1; }
-            echo 'Required test context passed through the full integrity suite.'
-          fi
+          scope="${{ needs.classify.outputs.scope }}"
+          case "$scope" in
+            registration)
+              [[ "${{ needs.registration_validation.result }}" == "success" ]] || { echo 'Registration validation failed.' >&2; exit 1; }
+              ;;
+            governance)
+              [[ "${{ needs.governance_validation.result }}" == "success" ]] || { echo 'Governance validation failed.' >&2; exit 1; }
+              ;;
+            ui)
+              [[ "${{ needs.ui_validation.result }}" == "success" ]] || { echo 'UI validation failed.' >&2; exit 1; }
+              ;;
+            full)
+              [[ "${{ needs.full_test.result }}" == "success" ]] || { echo 'Full integrity suite failed.' >&2; exit 1; }
+              ;;
+            *)
+              echo "Unknown CI scope: $scope" >&2
+              exit 1
+              ;;
+          esac
+          echo "Required test context passed through the ${scope} impact path."
 
 # Historical Baseline A P3-P9 integration/rehearsal scripts remain immutable evidence
 # in the repository and in their successful release workflows. They are intentionally
-# not replayed on every current PR after the P5-P9 Production release. That includes
-# the P9 replacement rehearsal, which requires the legacy v1 index to exist before
-# proving its removal and therefore is not a validator for the already-cut-over schema.
-# Current P10 and P11 gates run in their dedicated workflows, so a historical
-# branch-only assertion cannot force completed Production phases back to PENDING.
+# not replayed on every current PR after the P5-P9 Production release. Current P10/P11
+# and Human Authoring rehearsals are separately path-scoped to their direct dependency
+# surfaces instead of running on unrelated changes.
