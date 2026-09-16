@@ -9,6 +9,7 @@ const model = require('../atlas-person-spacetime-model.js');
 const spaceAxis = require('../atlas-person-spacetime-space-axis.js');
 
 export const REVIEWED_BINDING_SHARD_SCHEMA = 'atlas-reviewed-spatial-bindings/v1';
+export const REVIEWED_CORRECTION_SCHEMA = 'atlas-reviewed-spatial-corrections/v1';
 export const CANONICAL_SPATIAL_INDEX_SCHEMA = 'atlas-polity-spatial-index/v2';
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
@@ -151,6 +152,61 @@ function normalizeShard(shardEntry) {
   return Object.freeze({ source, shard_id: shardId, reviewed_at: reviewedAt, baseline, bindings, review_queue: reviewQueue });
 }
 
+function normalizeCorrectionManifest(correctionEntry) {
+  const source = text(correctionEntry?.source) || '(memory correction)';
+  const manifest = asObject(correctionEntry?.value, `correction ${source}`);
+  if (manifest.schema !== REVIEWED_CORRECTION_SCHEMA) {
+    fail('INVALID_SPATIAL_CORRECTION_SCHEMA', `${source}: schema must be ${REVIEWED_CORRECTION_SCHEMA}`);
+  }
+  const correctionId = text(manifest.correction_id);
+  if (!SHARD_ID_PATTERN.test(correctionId)) fail('INVALID_SPATIAL_CORRECTION_ID', `${source}: invalid correction_id ${correctionId || '(empty)'}`);
+  const reviewedAt = assertIsoInstant(manifest.reviewed_at, `${source} reviewed_at`);
+  const baseline = text(manifest.baseline);
+  if (!baseline) fail('INVALID_SPATIAL_CORRECTION_BASELINE', `${source}: baseline is required`);
+  if (!Array.isArray(manifest.review_refs) || manifest.review_refs.length === 0 || manifest.review_refs.some((ref) => !text(ref))) {
+    fail('INVALID_SPATIAL_CORRECTION_PROVENANCE', `${source}: non-empty review_refs are required`);
+  }
+  if (!Array.isArray(manifest.corrections) || manifest.corrections.length === 0) {
+    fail('INVALID_SPATIAL_CORRECTIONS', `${source}: corrections must be a non-empty array`);
+  }
+
+  const taxonomy = taxonomyContract();
+  const localSeen = new Set();
+  const corrections = manifest.corrections.map((raw, index) => {
+    const correction = asObject(raw, `${source} corrections[${index}]`);
+    const polityId = text(correction.polity_id);
+    const expectedRegionCode = text(correction.expected_region_code);
+    const expectedSubregionCode = correction.expected_subregion_code == null ? null : text(correction.expected_subregion_code);
+    const regionCode = text(correction.region_code);
+    const subregionCode = text(correction.subregion_code);
+    assertCanonicalUuid(polityId, `${source} corrections[${index}].polity_id`);
+    if (localSeen.has(polityId)) fail('DUPLICATE_SPATIAL_CORRECTION', `${source}: duplicate polity_id ${polityId}`);
+    localSeen.add(polityId);
+    if (!taxonomy.macroCodes.has(expectedRegionCode)) fail('UNKNOWN_SPATIAL_MACROREGION', `${source} polity ${polityId}: expected ${expectedRegionCode || '(empty)'}`);
+    if (expectedSubregionCode !== null) fail('INVALID_SPATIAL_PRECISION_CORRECTION', `${source} polity ${polityId}: expected_subregion_code must be null`);
+    if (regionCode !== expectedRegionCode) fail('SPATIAL_CORRECTION_MACRO_CROSSING', `${source} polity ${polityId}: ${expectedRegionCode} -> ${regionCode}`);
+    const parent = taxonomy.subregionParent.get(subregionCode);
+    if (!parent) fail('UNKNOWN_SPATIAL_SUBREGION', `${source} polity ${polityId}: ${subregionCode || '(empty)'}`);
+    if (parent !== regionCode) fail('SPATIAL_SUBREGION_PARENT_MISMATCH', `${source} polity ${polityId}: ${subregionCode} is not a child of ${regionCode}`);
+    return Object.freeze({
+      polity_id: polityId,
+      expected_region_code: expectedRegionCode,
+      expected_subregion_code: null,
+      region_code: regionCode,
+      subregion_code: subregionCode
+    });
+  }).sort((left, right) => left.polity_id.localeCompare(right.polity_id, 'en'));
+
+  return Object.freeze({
+    source,
+    correction_id: correctionId,
+    reviewed_at: reviewedAt,
+    baseline,
+    review_refs: Object.freeze(manifest.review_refs.map((ref) => text(ref))),
+    corrections
+  });
+}
+
 function sourceMapping(regionCode, subregionCode = null) {
   return Object.freeze({ region_code: regionCode, subregion_code: subregionCode || null });
 }
@@ -159,18 +215,23 @@ function mappingLabel(mapping) {
   return `${mapping.region_code}/${mapping.subregion_code || '(macro-only)'}`;
 }
 
-function generatedAtFor(baseline, shards) {
+function generatedAtFor(baseline, shards, corrections) {
   const instants = [];
   if (text(baseline.generated_at)) instants.push(assertIsoInstant(baseline.generated_at, 'baseline generated_at'));
   for (const shard of shards) instants.push(shard.reviewed_at);
+  for (const correction of corrections) instants.push(correction.reviewed_at);
   if (!instants.length) return baseline.generated_at ?? null;
   return instants.reduce((latest, value) => Date.parse(value) > Date.parse(latest) ? value : latest);
 }
 
-export function compileSpatialBindings({ baseline, shards = [] }) {
+export function compileSpatialBindings({ baseline, shards = [], corrections = [] }) {
   validateCanonicalBaseline(baseline);
   const normalizedShards = shards.map(normalizeShard).sort((left, right) => {
     const idOrder = left.shard_id.localeCompare(right.shard_id, 'en');
+    return idOrder || left.source.localeCompare(right.source, 'en');
+  });
+  const normalizedCorrections = corrections.map(normalizeCorrectionManifest).sort((left, right) => {
+    const idOrder = left.correction_id.localeCompare(right.correction_id, 'en');
     return idOrder || left.source.localeCompare(right.source, 'en');
   });
 
@@ -178,6 +239,16 @@ export function compileSpatialBindings({ baseline, shards = [] }) {
   for (const shard of normalizedShards) {
     if (shardIds.has(shard.shard_id)) fail('DUPLICATE_SPATIAL_SHARD_ID', `duplicate shard_id ${shard.shard_id}`);
     shardIds.add(shard.shard_id);
+  }
+  const correctionIds = new Set();
+  const correctedPolities = new Set();
+  for (const manifest of normalizedCorrections) {
+    if (correctionIds.has(manifest.correction_id)) fail('DUPLICATE_SPATIAL_CORRECTION_ID', `duplicate correction_id ${manifest.correction_id}`);
+    correctionIds.add(manifest.correction_id);
+    for (const correction of manifest.corrections) {
+      if (correctedPolities.has(correction.polity_id)) fail('DUPLICATE_SPATIAL_CORRECTION', `duplicate correction target ${correction.polity_id}`);
+      correctedPolities.add(correction.polity_id);
+    }
   }
 
   const polityGeography = { ...(baseline.polity_geography || {}) };
@@ -221,9 +292,31 @@ export function compileSpatialBindings({ baseline, shards = [] }) {
     }
   }
 
+  for (const manifest of normalizedCorrections) {
+    for (const correction of manifest.corrections) {
+      const previous = seen.get(correction.polity_id);
+      if (!previous) fail('UNKNOWN_SPATIAL_CORRECTION_TARGET', `${manifest.source}: ${correction.polity_id} is not owned by the compiled baseline`);
+      if (previous.kind !== 'binding' || previous.source !== 'baseline') {
+        fail('INVALID_SPATIAL_CORRECTION_OWNER', `${manifest.source}: ${correction.polity_id} must be owned by baseline, found ${previous.source}/${previous.kind}`);
+      }
+      const currentRegion = polityGeography[correction.polity_id] ?? null;
+      const currentSubregion = politySubregions[correction.polity_id] ?? null;
+      if (currentRegion !== correction.expected_region_code || currentSubregion !== correction.expected_subregion_code) {
+        fail('SPATIAL_CORRECTION_STALE_BEFORE', `${manifest.source}: ${correction.polity_id} expected ${correction.expected_region_code}/${correction.expected_subregion_code || '(macro-only)'} but found ${currentRegion || '(none)'}/${currentSubregion || '(macro-only)'}`);
+      }
+      polityGeography[correction.polity_id] = correction.region_code;
+      politySubregions[correction.polity_id] = correction.subregion_code;
+      seen.set(correction.polity_id, {
+        source: manifest.source,
+        kind: 'binding',
+        mapping: sourceMapping(correction.region_code, correction.subregion_code)
+      });
+    }
+  }
+
   const compiled = {};
   for (const [key, value] of Object.entries(baseline)) {
-    if (key === 'generated_at') compiled[key] = generatedAtFor(baseline, normalizedShards);
+    if (key === 'generated_at') compiled[key] = generatedAtFor(baseline, normalizedShards, normalizedCorrections);
     else if (key === 'polity_geography') compiled[key] = polityGeography;
     else if (key === 'polity_subregions') compiled[key] = politySubregions;
     else if (key === 'review_queue') compiled[key] = reviewQueue;
@@ -269,6 +362,18 @@ export function loadReviewedBindingShards(shardsDir) {
     }));
 }
 
+export function loadReviewedCorrectionManifests(correctionsDir) {
+  if (!fs.existsSync(correctionsDir)) return [];
+  return fs.readdirSync(correctionsDir, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith('.corrections.json'))
+    .map((entry) => entry.name)
+    .sort((left, right) => left.localeCompare(right, 'en'))
+    .map((name) => ({
+      source: name,
+      value: JSON.parse(fs.readFileSync(path.join(correctionsDir, name), 'utf8'))
+    }));
+}
+
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 }
@@ -277,6 +382,7 @@ function parseArgs(argv) {
   const options = {
     baselinePath: 'spatial/reviewed-bindings/0000-migrated-baseline.index.json',
     shardsDir: 'spatial/reviewed-bindings/shards',
+    correctionsDir: 'spatial/reviewed-binding-corrections',
     outPath: 'atlas-polity-spatial-index.json',
     check: false,
     validateOnly: false
@@ -287,6 +393,7 @@ function parseArgs(argv) {
     switch (arg) {
       case '--baseline': options.baselinePath = value; index += 1; break;
       case '--shards-dir': options.shardsDir = value; index += 1; break;
+      case '--corrections-dir': options.correctionsDir = value; index += 1; break;
       case '--out': options.outPath = value; index += 1; break;
       case '--check': options.check = true; break;
       case '--validate-only': options.validateOnly = true; break;
@@ -301,7 +408,8 @@ export function main(argv = process.argv.slice(2)) {
   const options = parseArgs(argv);
   const baseline = readJson(options.baselinePath);
   const shards = loadReviewedBindingShards(options.shardsDir);
-  const result = compileSpatialBindings({ baseline, shards });
+  const corrections = loadReviewedCorrectionManifests(options.correctionsDir);
+  const result = compileSpatialBindings({ baseline, shards, corrections });
   const serialized = serializeSpatialIndex(result.index);
 
   if (options.validateOnly) {
