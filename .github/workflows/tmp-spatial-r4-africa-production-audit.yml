@@ -1,0 +1,43 @@
+name: Temporary Spatial r4 Africa Production Audit
+
+on:
+  push:
+    branches:
+      - codex/spatial-r4-production-cutover-20260916
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  audit:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: production
+    env:
+      ATLAS_AUDIT_ENDPOINT: https://atlas-person-db.vercel.app/api/atlas-audit-inventory?__atlas_audit_surface=polity-reference-audit
+      ATLAS_AUDIT_AUDIENCE: atlas-person-db-audit-inventory
+      PRODUCTION_SHA: ebfd1080a340f28494a492a74e737d2919d9ede0
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch current Production polity catalog
+        shell: bash
+        run: |
+          set -euo pipefail
+          oidc_token="$(curl --fail-with-body --silent --show-error \
+            -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ATLAS_AUDIT_AUDIENCE}" | jq -er '.value')"
+          payload="$(jq -cn --arg deployment_sha "${PRODUCTION_SHA}" '{deployment_sha:$deployment_sha}')"
+          curl --fail-with-body --silent --show-error --request POST \
+            -H 'content-type: application/json' \
+            -H "authorization: Bearer ${oidc_token}" \
+            --data "$payload" \
+            "$ATLAS_AUDIT_ENDPOINT" > polity-reference-audit-response.json
+          jq -e '.ok == true and .complete == true and .deployment_sha == env.PRODUCTION_SHA' polity-reference-audit-response.json >/dev/null
+      - name: Upload audit snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: tmp-spatial-r4-africa-production-audit
+          path: polity-reference-audit-response.json
+          retention-days: 1
