@@ -1,0 +1,76 @@
+name: Temporary Spatial r4 Finalizer
+
+on:
+  push:
+    branches:
+      - codex/spatial-r4-final-cutover-20260916
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Remove retired runtime alias and update contract test
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          model = Path('atlas-person-spacetime-model.js')
+          text = model.read_text()
+          needle = '    "east-africa-horn": "africa",\n'
+          if needle not in text:
+              raise SystemExit('runtime legacy model alias not found')
+          model.write_text(text.replace(needle, '', 1))
+
+          axis = Path('atlas-person-spacetime-space-axis.js')
+          text = axis.read_text()
+          start = text.index('    // Phase-1 r4 compatibility:')
+          end = text.index('    const bandForCode', start)
+          axis.write_text(text[:start] + text[end:])
+
+          test_path = Path('tests/spacetime-place-subregion.test.mjs')
+          text = test_path.read_text()
+          marker = 'test("Phase-2 r4 model recognizes active leaves while preserving the deprecated Africa compatibility alias"'
+          start = text.index(marker)
+          replacement = '''test("final r4 model exposes only the active 45-leaf taxonomy with no Africa legacy alias", () => {\n  const active = new Set();\n  for (const macro of spaceAxis.DEFAULT_SPATIAL_HIERARCHY) {\n    for (const subregion of macro.subregions) active.add(subregion.code);\n  }\n\n  assert.equal(active.size, 45);\n  assert.equal(active.has("east-africa-horn"), false);\n  assert.equal(Object.prototype.hasOwnProperty.call(model.SUBREGION_PARENT, "east-africa-horn"), false);\n  assert.equal(continuum.bandForCode("east-africa-horn"), null);\n\n  for (const [subregionCode, macroregionCode] of Object.entries(model.SUBREGION_PARENT)) {\n    assert.equal(active.has(subregionCode), true, `${subregionCode} must be present in the final r4 display taxonomy`);\n    assert.equal(continuum.bandForCode(subregionCode).parent_code, macroregionCode);\n  }\n});\n'''
+          test_path.write_text(text[:start] + replacement)
+          PY
+      - name: Generate and verify canonical r4 index
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/compile-spatial-bindings-r4.mjs
+          node scripts/compile-spatial-bindings-r4.mjs --check
+          if grep -q '"east-africa-horn"' atlas-polity-spatial-index.json; then
+            echo 'retired east-africa-horn remains in canonical output' >&2
+            exit 1
+          fi
+      - name: Run focused r4 tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --test tests/spatial-taxonomy-r4-compiler.test.mjs tests/spacetime-place-subregion.test.mjs tests/spatial-taxonomy-r4-canonical-sync.test.mjs
+      - name: Commit generated final r4 state
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add atlas-person-spacetime-model.js atlas-person-spacetime-space-axis.js atlas-polity-spatial-index.json tests/spacetime-place-subregion.test.mjs
+          if git diff --cached --quiet; then
+            echo 'No generated changes.'
+            exit 0
+          fi
+          git commit -m 'Finalize r4 runtime taxonomy and canonical index'
+          git push origin HEAD:${GITHUB_REF_NAME}
