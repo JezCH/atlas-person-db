@@ -10,6 +10,8 @@ on:
       - 'server/atlas-polity-reference-audit-handler.js'
       - 'server/atlas-audit-github-oidc.js'
       - 'scripts/build-spatial-polity-candidates.mjs'
+      - 'scripts/compile-spatial-bindings*.mjs'
+      - 'spatial/**'
       - 'atlas-polity-spatial-index.json'
   workflow_dispatch:
 
