@@ -2,15 +2,16 @@
 
 > Status: **PRODUCTION THROUGH P9 COMPLETE / P10 CURRENT / P11 REPAIR READY, FINAL PRODUCTION EVIDENCE UNPROVEN**
 >
-> As of: **2026-08-19**  
+> As of: **2026-09-16**  
 > Machine registry: `requirements/atlas-requirements.v1.json`  
 > Validator: `scripts/verify-atlas-requirements.mjs`  
+> Execution policy: `WORK_EXECUTION.md`  
 > Release policy: `RELEASE_GOVERNANCE.md`  
 > Current release evidence: `docs/release/STAGE2_CURRENT_STATUS_2026-08-19.md`
 
 ATLAS의 기준은 **100% traceable**, **0 known contradictions**, **0 silently omitted requirements**, **unknown stays unknown**이다. 역사적 사실은 구현 편의가 아니라 reviewed primary/academic evidence로 판정하며, 근거가 부족하면 unresolved를 보존한다.
 
-이 문서는 현재 요구사항의 사람용 기준본이다. 과거 Baseline A 숫자·과거 branch 상태·실패한 workflow run은 역사적 증거로 보존하되 **현재 실행 위치로 재해석하지 않는다.** 현재 단계 판정은 machine registry와 `docs/release/STAGE2_CURRENT_STATUS_2026-08-19.md`가 함께 고정한다.
+이 문서는 현재 요구사항의 사람용 기준본이다. 과거 Baseline A 숫자·과거 branch 상태·실패한 workflow run은 역사적 증거로 보존하되 **현재 실행 위치로 재해석하지 않는다.** 현재 실행 절차는 `WORK_EXECUTION.md`가 우선하며, 아래의 과거 Train 1/Train 2 언급은 완료된 역사적 release evidence일 뿐 현재 작업을 직렬화하거나 release-train 절차를 반복하게 하는 규칙이 아니다.
 
 ## 1. Binding constitution
 
@@ -28,7 +29,7 @@ ATLAS의 기준은 **100% traceable**, **0 known contradictions**, **0 silently 
 | `ATLAS-RQ-0010` | Person–Polity Relation is explicit: `rules`, `governs`, `serves`, `active_in`, `opposes`, `claims_rule`; no generic default. |
 | `ATLAS-RQ-0011` | Final Activity identity = Person + Polity + Relation + Role/NULL + Period Basis + interpreted full start/end boundaries. |
 | `ATLAS-RQ-0012` | Source provenance/locator/claims/descriptions/before-state survive correction and merge. |
-| `ATLAS-RQ-0013` | Use Vercel-minimized release trains; exhaust branch/research/CI work before unavoidable live dependency barriers. |
+| `ATLAS-RQ-0013` | Use risk-proportional release governance: preserve canonical writer/security gates while avoiding global serialization, duplicate verification, unnecessary deployments, and obsolete release-train ceremony. |
 | `ATLAS-RQ-0014` | Person is a first-class Authoring object, not merely the name column of an Activity row. |
 | `ATLAS-RQ-0015` | Place and Source are first-class Authoring entities. Place identity is not Polity identity; Source identity is not merely an Activity locator. |
 | `ATLAS-RQ-0016` | Compile emits Runtime-ready state. Unresolved Authoring assertions must never appear as valid Runtime truth merely because they exist in the authoring database. |

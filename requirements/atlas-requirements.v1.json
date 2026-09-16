@@ -2,7 +2,7 @@
   "schema": "atlas-requirements/v1",
   "version": 1,
   "finalized": true,
-  "as_of": "2026-08-16",
+  "as_of": "2026-09-16",
   "roadmap": ["P0","P1","P2","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P13","P14"],
   "requirements": [
     {"id":"ATLAS-RQ-0001","status":"ACTIVE","title":"Historical accuracy over completeness"},
@@ -17,7 +17,7 @@
     {"id":"ATLAS-RQ-0010","status":"ACTIVE","title":"Final Person-Polity relation is explicit"},
     {"id":"ATLAS-RQ-0011","status":"ACTIVE","title":"Final Activity identity includes relation and full temporal boundaries"},
     {"id":"ATLAS-RQ-0012","status":"ACTIVE","title":"Source provenance survives correction and merge"},
-    {"id":"ATLAS-RQ-0013","status":"ACTIVE","title":"Use Vercel-minimized release trains","evidence_paths":["RELEASE_GOVERNANCE.md","vercel.json"]},
+    {"id":"ATLAS-RQ-0013","status":"ACTIVE","title":"Use risk-proportional release governance and avoid unnecessary deployment/process churn","evidence_paths":["WORK_EXECUTION.md","RELEASE_GOVERNANCE.md","vercel.json"]},
     {"id":"ATLAS-RQ-0014","status":"ACTIVE","title":"Person is a first-class Authoring object, not an Activity-row label"},
     {"id":"ATLAS-RQ-0015","status":"ACTIVE","title":"Place and Source are first-class Authoring entities"},
     {"id":"ATLAS-RQ-0016","status":"ACTIVE","title":"Compile emits Runtime-ready state and unresolved Authoring never masquerades as Runtime truth"},
