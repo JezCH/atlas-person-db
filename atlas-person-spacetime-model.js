@@ -42,6 +42,8 @@
     "maghreb-north-africa": "africa",
     "central-africa": "africa",
     "southern-africa": "africa",
+    "east-africa": "africa",
+    "horn-of-africa": "africa",
     "east-africa-horn": "africa",
     "nile-valley": "africa",
 
@@ -53,11 +55,14 @@
     "iranian-plateau": "west-asia",
 
     "western-central-asia": "central-asia",
+    "western-siberia": "central-asia",
     "eastern-central-asia-steppe": "central-asia",
+    "tibetan-plateau": "central-asia",
 
     "northwest-south-asia": "south-asia",
     "north-india-ganges": "south-asia",
     "deccan-south-india": "south-asia",
+    "himalayas": "south-asia",
     "maldives": "south-asia",
     "sri-lanka": "south-asia",
 
@@ -68,6 +73,7 @@
     "manchuria": "east-asia",
     "korean-peninsula": "east-asia",
     "japan": "east-asia",
+    "eastern-siberia-far-east": "east-asia",
 
     "australasia": "oceania",
     "pacific-islands": "oceania"
