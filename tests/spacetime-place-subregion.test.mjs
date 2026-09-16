@@ -210,10 +210,25 @@ test("invalid polity subregion compile fails closed instead of silently falling 
   assert.equal(compiled.x_anchor, null);
 });
 
-test("model subregion parent contract stays synchronized with the visible spatial hierarchy", () => {
-  const expected = {};
+test("Phase-1 r4 keeps the legacy model contract until exact polity migration", () => {
+  const active = new Set();
   for (const macro of spaceAxis.DEFAULT_SPATIAL_HIERARCHY) {
-    for (const subregion of macro.subregions) expected[subregion.code] = macro.code;
+    for (const subregion of macro.subregions) active.add(subregion.code);
   }
-  assert.deepEqual(model.SUBREGION_PARENT, expected);
+
+  assert.equal(active.has("east-africa-horn"), false);
+  assert.equal(model.SUBREGION_PARENT["east-africa-horn"], "africa");
+  assert.equal(continuum.bandForCode("east-africa-horn").legacy_alias, true);
+
+  const phase1NewLeaves = ["east-africa", "horn-of-africa", "western-siberia", "tibetan-plateau", "himalayas", "eastern-siberia-far-east"];
+  for (const code of phase1NewLeaves) {
+    assert.equal(active.has(code), true, `${code} must be active in the r4 display taxonomy`);
+    assert.equal(Object.prototype.hasOwnProperty.call(model.SUBREGION_PARENT, code), false, `${code} must remain outside the legacy model until Phase 2 migration`);
+  }
+
+  for (const [subregionCode, macroregionCode] of Object.entries(model.SUBREGION_PARENT)) {
+    if (subregionCode === "east-africa-horn") continue;
+    assert.equal(active.has(subregionCode), true, `${subregionCode} must remain present in the r4 display taxonomy during Phase 1`);
+    assert.equal(continuum.bandForCode(subregionCode).parent_code, macroregionCode);
+  }
 });
