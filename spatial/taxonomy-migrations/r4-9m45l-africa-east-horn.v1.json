@@ -1,0 +1,37 @@
+{
+  "schema": "atlas-spatial-taxonomy-migration/v1",
+  "migration_id": "spatial-taxonomy-r4-africa-east-horn-20260917",
+  "reviewed_at": "2026-09-17T00:00:00Z",
+  "source_refs": [
+    "https://github.com/JezCH/atlas-person-db/issues/977",
+    "https://unstats.un.org/unsd/methodology/m49/"
+  ],
+  "migrations": [
+    { "polity_id": "4c8e0efc-e5c8-44d2-8b44-02df8c794aac", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "east-africa" }, "reason": "Kenya; reviewed East African placement." },
+    { "polity_id": "4d56294b-c22d-4e54-9f55-fc7852765226", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "east-africa" }, "reason": "Kilwa Sultanate; reviewed Swahili Coast East African core." },
+    { "polity_id": "88688560-e9bf-4a0c-bb9c-1bfe13b63270", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "east-africa" }, "reason": "Sultanate of Zanzibar; reviewed Swahili Coast East African core." },
+    { "polity_id": "8f2899e1-9a31-4964-a5b1-e1cf8a5e3bf9", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "east-africa" }, "reason": "German East Africa; reviewed East African placement." },
+    { "polity_id": "aab87366-4825-40ed-b0f9-78e293746c8d", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "east-africa" }, "reason": "Rwanda; reviewed Great Lakes East African placement." },
+    { "polity_id": "4458776f-6c31-4b93-950e-f2cdd16c852c", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "east-africa" }, "reason": "Rwanda polity context; reviewed Great Lakes East African placement." },
+    { "polity_id": "b1bf3f84-bc3a-44cb-996b-98f006edba10", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "east-africa" }, "reason": "Maasai; reviewed Kenya-Tanzania East African core." },
+    { "polity_id": "0efc70ac-2bb4-4c2c-a765-f6c3a0607d56", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "east-africa" }, "reason": "Buganda; reviewed Great Lakes East African placement." },
+    { "polity_id": "96709ba6-218a-4292-b1fa-bebcc6c18c2a", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "east-africa" }, "reason": "Merina Kingdom; Madagascar is carried by the r4 East Africa leaf." },
+    { "polity_id": "02799dee-d86d-4a11-8cae-0911ea72803b", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "east-africa" }, "reason": "Boina Kingdom; Madagascar is carried by the r4 East Africa leaf." },
+    { "polity_id": "54dd3191-c2b3-4a84-9ee2-5dd2191715ea", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "east-africa" }, "reason": "Sakalava; Madagascar is carried by the r4 East Africa leaf." },
+    { "polity_id": "4b532503-a686-452b-ad71-ba776efe17cf", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "east-africa" }, "reason": "Republic of Madagascar; Madagascar is carried by the r4 East Africa leaf." },
+    { "polity_id": "b5c8227b-b391-43f8-9168-ad9a05e62e1d", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "east-africa" }, "reason": "Merina Kingdom under Radama I; Madagascar is carried by the r4 East Africa leaf." },
+    { "polity_id": "2e52f532-31c1-41e8-aca6-07c40d2a319a", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "east-africa" }, "reason": "Seychelles; carried by the r4 East Africa leaf." },
+    { "polity_id": "77dd0282-ccf0-406b-b261-32d1270a72e5", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "east-africa" }, "reason": "Kingdom of Imerina; Madagascar is carried by the r4 East Africa leaf." },
+
+    { "polity_id": "6c370a25-09c3-5897-8516-9aa664abda91", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "horn-of-africa" }, "reason": "Adal Sultanate; reviewed Horn of Africa core." },
+    { "polity_id": "db21d06f-3505-4f1c-8cdf-e7810330c3be", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "horn-of-africa" }, "reason": "Zagwe dynasty; reviewed Ethiopian Highlands Horn of Africa core." },
+    { "polity_id": "f2dcb5c8-08cb-4d46-995f-d3a5ca7f1808", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "horn-of-africa" }, "reason": "Provisional Military Government of Ethiopia; reviewed Horn of Africa placement." },
+    { "polity_id": "4e27e24d-f99f-4c04-bdfa-9f3ce53b6a91", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "horn-of-africa" }, "reason": "Somali Dervish State; reviewed Horn of Africa core." },
+    { "polity_id": "4f2dc07e-84ff-4704-bcc6-ac43114615bb", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "horn-of-africa" }, "reason": "Eritrea; reviewed Horn of Africa placement." },
+    { "polity_id": "9b44bca9-5696-4a2e-98eb-9f888e805634", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "horn-of-africa" }, "reason": "People's Democratic Republic of Ethiopia; reviewed Horn of Africa placement." },
+    { "polity_id": "cf32afb7-e889-4ced-a3ee-a85554b0da0a", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "horn-of-africa" }, "reason": "Somali Democratic Republic; reviewed Horn of Africa placement." },
+    { "polity_id": "ea57a5b8-8553-40bb-b530-5eae8ab33801", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "horn-of-africa" }, "reason": "Ethiopian Empire; reviewed Horn of Africa core." },
+    { "polity_id": "31062c39-be42-400b-87f5-ee06c8c86ad3", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "horn-of-africa" }, "reason": "Aksumite Empire; reviewed Horn of Africa core." },
+    { "polity_id": "b8c3ef01-2492-46b3-8a5c-17a0a363296d", "from": { "region_code": "africa", "subregion_code": "east-africa-horn" }, "to": { "region_code": "africa", "subregion_code": "horn-of-africa" }, "reason": "Kingdom of Shewa; Ethiopian Highlands Horn of Africa core." }
+  ]
+}
