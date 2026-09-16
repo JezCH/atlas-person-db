@@ -36,6 +36,11 @@ on:
 permissions:
   contents: read
 
+# This workflow is read-only validation. Newer commits supersede older results.
+concurrency:
+  group: atlas-validation-human-authoring-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   rehearsal:
     runs-on: ubuntu-latest
