@@ -1,6 +1,9 @@
 export const SPATIAL_TAXONOMY_MIGRATION_SCHEMA = 'atlas-spatial-taxonomy-migration/v1';
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+const MANIFEST_KEYS = new Set(['schema', 'migration_id', 'reviewed_at', 'source_refs', 'migrations']);
+const ENTRY_KEYS = new Set(['polity_id', 'from', 'to', 'reason']);
+const MAPPING_KEYS = new Set(['region_code', 'subregion_code']);
 
 function fail(code, message) {
   const error = new Error(`${code}: ${message}`);
@@ -19,8 +22,15 @@ function asObject(value, label) {
   return value;
 }
 
+function assertOnlyKeys(value, allowed, label) {
+  for (const key of Object.keys(value)) {
+    if (!allowed.has(key)) fail('UNSUPPORTED_SPATIAL_TAXONOMY_MIGRATION_FIELD', `${label}.${key} is not allowed`);
+  }
+}
+
 function normalizeMapping(raw, label) {
   const value = asObject(raw, label);
+  assertOnlyKeys(value, MAPPING_KEYS, label);
   const regionCode = text(value.region_code);
   const subregionCode = value.subregion_code == null ? null : text(value.subregion_code);
   if (!regionCode) fail('INVALID_SPATIAL_TAXONOMY_MIGRATION', `${label}.region_code is required`);
@@ -53,6 +63,7 @@ function assertMappingInTaxonomy(mapping, label, { macroCodes, subregionParent, 
 
 export function normalizeSpatialTaxonomyMigration(raw, taxonomy) {
   const manifest = asObject(raw, 'migration manifest');
+  assertOnlyKeys(manifest, MANIFEST_KEYS, 'migration manifest');
   if (manifest.schema !== SPATIAL_TAXONOMY_MIGRATION_SCHEMA) {
     fail('INVALID_SPATIAL_TAXONOMY_MIGRATION_SCHEMA', `schema must be ${SPATIAL_TAXONOMY_MIGRATION_SCHEMA}`);
   }
@@ -69,6 +80,7 @@ export function normalizeSpatialTaxonomyMigration(raw, taxonomy) {
   const migrations = manifest.migrations.map((rawEntry, index) => {
     const label = `migration ${migrationId}[${index}]`;
     const entry = asObject(rawEntry, label);
+    assertOnlyKeys(entry, ENTRY_KEYS, label);
     const polityId = text(entry.polity_id);
     const reason = text(entry.reason);
     if (!UUID_PATTERN.test(polityId)) {
