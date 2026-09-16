@@ -1,0 +1,34 @@
+{
+  "schema": "atlas-reviewed-spatial-corrections/v1",
+  "correction_id": "macro-only-existing-leaf-22-20260915",
+  "reviewed_at": "2026-09-15T13:39:29Z",
+  "baseline": "spatial/reviewed-bindings/0000-migrated-baseline.index.json",
+  "review_refs": [
+    "https://github.com/JezCH/atlas-person-db/issues/977#issuecomment-5681143766",
+    "SPATIAL-MACRO-ONLY-REVIEW-BATCH-02..06"
+  ],
+  "corrections": [
+    {"polity_id":"80810807-0abb-5255-b40c-1945f4073eb1","label":"Shakya","expected_region_code":"south-asia","expected_subregion_code":null,"region_code":"south-asia","subregion_code":"north-india-ganges"},
+    {"polity_id":"264b069b-994f-4a2c-8af1-7331c631a376","label":"January Uprising in Lithuania and Belarus","expected_region_code":"europe","expected_subregion_code":null,"region_code":"europe","subregion_code":"eastern-europe"},
+    {"polity_id":"4d4eee6d-389b-4ab6-8bca-fda9314ff796","label":"Old Great Bulgaria","expected_region_code":"europe","expected_subregion_code":null,"region_code":"europe","subregion_code":"eastern-europe"},
+    {"polity_id":"efc86adb-7fc7-5efe-9c4d-7cd8e224890f","label":"Swedish Empire","expected_region_code":"europe","expected_subregion_code":null,"region_code":"europe","subregion_code":"northern-europe"},
+    {"polity_id":"ba7a7e2d-3ba5-5a54-a98f-88294d3429f7","label":"Dutch Revolt","expected_region_code":"europe","expected_subregion_code":null,"region_code":"europe","subregion_code":"western-europe"},
+    {"polity_id":"cfe1faef-3a82-5b6c-b542-cff2bd667c6c","label":"Gaul","expected_region_code":"europe","expected_subregion_code":null,"region_code":"europe","subregion_code":"western-europe"},
+    {"polity_id":"d4c6c00a-5309-48b9-aaaf-80d43ca3700a","label":"Lotharingia","expected_region_code":"europe","expected_subregion_code":null,"region_code":"europe","subregion_code":"central-europe"},
+    {"polity_id":"d8477ae3-f78a-4053-a1ac-778df48b113b","label":"Saxons","expected_region_code":"europe","expected_subregion_code":null,"region_code":"europe","subregion_code":"central-europe"},
+    {"polity_id":"16add357-f450-515d-87d6-fc32835d0e13","label":"Nassau Pirate Republic","expected_region_code":"americas","expected_subregion_code":null,"region_code":"americas","subregion_code":"caribbean"},
+    {"polity_id":"1fa78018-e3af-55c3-8b8e-1bf7ad1c4b08","label":"Iroquois Confederacy","expected_region_code":"americas","expected_subregion_code":null,"region_code":"americas","subregion_code":"north-america"},
+    {"polity_id":"67ea837b-9ff6-4ade-ba49-00e73cf0b4b3","label":"Las Californias","expected_region_code":"americas","expected_subregion_code":null,"region_code":"americas","subregion_code":"north-america"},
+    {"polity_id":"c591bebb-90a3-5a96-90c5-9870ddd7f637","label":"Haudenosaunee Confederacy","expected_region_code":"americas","expected_subregion_code":null,"region_code":"americas","subregion_code":"north-america"},
+    {"polity_id":"18f27d4e-a522-59f3-92c3-09ca5202de0d","label":"Roman Judaea","expected_region_code":"west-asia","expected_subregion_code":null,"region_code":"west-asia","subregion_code":"levant"},
+    {"polity_id":"b82ec632-5365-5f62-8aec-550548d63f83","label":"Medina","expected_region_code":"west-asia","expected_subregion_code":null,"region_code":"west-asia","subregion_code":"arabia"},
+    {"polity_id":"a127a8aa-6e17-5045-9bd6-de4df7b53390","label":"Kingdoms of Ndongo and Matamba","expected_region_code":"africa","expected_subregion_code":null,"region_code":"africa","subregion_code":"central-africa"},
+    {"polity_id":"769e6a5e-b49b-5fec-9a2b-fa78999763a1","label":"Maori","expected_region_code":"oceania","expected_subregion_code":null,"region_code":"oceania","subregion_code":"australasia"},
+    {"polity_id":"031bdca0-d5e8-51e8-9f59-2db5ee51c55f","label":"Jiaozhou","expected_region_code":"southeast-asia","expected_subregion_code":null,"region_code":"southeast-asia","subregion_code":"mainland-southeast-asia"},
+    {"polity_id":"14113865-1569-521a-bae5-8ae070f4817d","label":"Ming dynasty","expected_region_code":"east-asia","expected_subregion_code":null,"region_code":"east-asia","subregion_code":"china"},
+    {"polity_id":"54433b65-1eb1-5c41-b440-6c4de8e18417","label":"Oda Clan","expected_region_code":"east-asia","expected_subregion_code":null,"region_code":"east-asia","subregion_code":"japan"},
+    {"polity_id":"d16ef45f-9721-4eaf-809f-c2ccdc499fb4","label":"Gojoseon","expected_region_code":"east-asia","expected_subregion_code":null,"region_code":"east-asia","subregion_code":"manchuria"},
+    {"polity_id":"e07ee32e-e126-5511-9d3d-d29e4444bd9c","label":"Uesugi Clan","expected_region_code":"east-asia","expected_subregion_code":null,"region_code":"east-asia","subregion_code":"japan"},
+    {"polity_id":"e1548cb1-f89d-538b-9fb2-bad02ad87f8e","label":"Toyotomi Regime","expected_region_code":"east-asia","expected_subregion_code":null,"region_code":"east-asia","subregion_code":"japan"}
+  ]
+}
