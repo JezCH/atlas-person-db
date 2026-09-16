@@ -210,7 +210,7 @@ test("invalid polity subregion compile fails closed instead of silently falling 
   assert.equal(compiled.x_anchor, null);
 });
 
-test("Phase-1 r4 keeps the legacy model contract until exact polity migration", () => {
+test("Phase-2 r4 model recognizes active leaves while preserving the deprecated Africa compatibility alias", () => {
   const active = new Set();
   for (const macro of spaceAxis.DEFAULT_SPATIAL_HIERARCHY) {
     for (const subregion of macro.subregions) active.add(subregion.code);
@@ -220,15 +220,15 @@ test("Phase-1 r4 keeps the legacy model contract until exact polity migration", 
   assert.equal(model.SUBREGION_PARENT["east-africa-horn"], "africa");
   assert.equal(continuum.bandForCode("east-africa-horn").legacy_alias, true);
 
-  const phase1NewLeaves = ["east-africa", "horn-of-africa", "western-siberia", "tibetan-plateau", "himalayas", "eastern-siberia-far-east"];
-  for (const code of phase1NewLeaves) {
+  const phase2Leaves = ["east-africa", "horn-of-africa", "western-siberia", "tibetan-plateau", "himalayas", "eastern-siberia-far-east"];
+  for (const code of phase2Leaves) {
     assert.equal(active.has(code), true, `${code} must be active in the r4 display taxonomy`);
-    assert.equal(Object.prototype.hasOwnProperty.call(model.SUBREGION_PARENT, code), false, `${code} must remain outside the legacy model until Phase 2 migration`);
+    assert.equal(model.SUBREGION_PARENT[code], continuum.bandForCode(code).parent_code, `${code} must be recognized by the Phase-2 model contract`);
   }
 
   for (const [subregionCode, macroregionCode] of Object.entries(model.SUBREGION_PARENT)) {
     if (subregionCode === "east-africa-horn") continue;
-    assert.equal(active.has(subregionCode), true, `${subregionCode} must remain present in the r4 display taxonomy during Phase 1`);
+    assert.equal(active.has(subregionCode), true, `${subregionCode} must remain present in the active r4 display taxonomy`);
     assert.equal(continuum.bandForCode(subregionCode).parent_code, macroregionCode);
   }
 });
