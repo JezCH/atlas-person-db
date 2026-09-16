@@ -295,9 +295,9 @@ export function compileSpatialBindings({ baseline, shards = [], corrections = []
   for (const manifest of normalizedCorrections) {
     for (const correction of manifest.corrections) {
       const previous = seen.get(correction.polity_id);
-      if (!previous) fail('UNKNOWN_SPATIAL_CORRECTION_TARGET', `${manifest.source}: ${correction.polity_id} is not owned by the compiled baseline`);
-      if (previous.kind !== 'binding' || previous.source !== 'baseline') {
-        fail('INVALID_SPATIAL_CORRECTION_OWNER', `${manifest.source}: ${correction.polity_id} must be owned by baseline, found ${previous.source}/${previous.kind}`);
+      if (!previous) fail('UNKNOWN_SPATIAL_CORRECTION_TARGET', `${manifest.source}: ${correction.polity_id} is not owned by the composed spatial inputs`);
+      if (previous.kind !== 'binding') {
+        fail('INVALID_SPATIAL_CORRECTION_OWNER', `${manifest.source}: ${correction.polity_id} must resolve to a binding before correction, found ${previous.source}/${previous.kind}`);
       }
       const currentRegion = polityGeography[correction.polity_id] ?? null;
       const currentSubregion = politySubregions[correction.polity_id] ?? null;
