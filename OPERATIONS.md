@@ -1,5 +1,7 @@
 # ATLAS Operations
 
+> `WORK_EXECUTION.md` is the authoritative project-wide execution rule. Older operational wording that requires broader locking, whole-project revalidation, duplicate deployment proof, or full queue replay is superseded.
+
 ## 1. Required Production environment
 
 Vercel Production server environment:
@@ -8,256 +10,194 @@ Vercel Production server environment:
 - `ATLAS_MUTATION_TOKEN` — server-to-server mutation bearer credential.
 - `ATLAS_ADMIN_PASSWORD` — human administrator login password.
 
-Recommended before the next Production release:
+Recommended:
 
 - `ATLAS_SESSION_SECRET` — independent high-entropy session-signing secret.
 - `SUPABASE_DB_CA` — Supabase database CA certificate PEM.
 
-Environment variables must never be embedded in browser JavaScript or committed to Git.
+Secrets must never be embedded in browser JavaScript or committed to Git.
 
-### Session-secret migration
-
-Current code prefers `ATLAS_SESSION_SECRET`. If it is absent, it temporarily falls back to `ATLAS_MUTATION_TOKEN` so an existing Production deployment is not broken merely by the code rollout.
-
-Operational target:
-
-1. Generate a new independent high-entropy value.
-2. Configure `ATLAS_SESSION_SECRET` in Vercel Production.
-3. Redeploy Production.
-4. Existing browser sessions signed by the old fallback secret become invalid and admins log in again.
-5. Server bearer clients continue using `ATLAS_MUTATION_TOKEN` unchanged.
-
-The fallback exists only for migration compatibility; new environments should set both secrets independently.
-
-### PostgreSQL TLS hardening
-
-`server/atlas-postgres-client.js` is the single runtime DB client boundary.
-
-If `SUPABASE_DB_CA` is configured, certificate verification is enabled (`rejectUnauthorized: true`). Obtain the current Server root certificate from the Supabase database SSL settings; do not invent or copy a certificate from another project.
-
-Without `SUPABASE_DB_CA`, the client currently preserves the already-deployed TLS compatibility mode. The operational target is to configure the project CA and, where appropriate, enable Supabase SSL enforcement/verify-full behavior.
-
-For Vercel/serverless traffic, use the Supabase connection method appropriate for transient connections; keep prepared-statement limitations of transaction pooling in mind if the client/query strategy changes later.
+`server/atlas-postgres-client.js` remains the runtime DB client boundary. Never bypass the server boundary with browser-side DB credentials.
 
 ## 2. Local / CI verification
 
-Install exactly the committed dependencies:
+Install committed dependencies:
 
 ```bash
 npm ci
 ```
 
-Run application contracts:
+Run tests proportional to the changed surface.
+
+Typical application/runtime checks:
 
 ```bash
 npm test
 npm run test:runtime
 ```
 
-Schema verification needs a disposable PostgreSQL database:
+Schema verification uses a disposable PostgreSQL database only:
 
 ```bash
 DATABASE_URL=postgresql://... npm run test:schema
 ```
 
-Never point `test:schema` at the live ATLAS database. The baseline intentionally requires a clean target.
+Never point schema tests at the live ATLAS database.
 
-## 3. Pull request release gate
+Do not rerun unrelated broad suites merely because `main` advanced. Repository-required CI still applies to merged code.
 
-Before merge:
+## 3. Change classes and required verification
 
-1. PR is based on current `main`.
-2. `.github/workflows/atlas-integrity.yml` succeeds on the exact PR head.
-3. No unresolved review thread blocks the change.
-4. DB structure changes include both a reviewed migration strategy and an updated `db/schema/atlas_v2.current.sql` when they become Production-authorized.
-5. No data-destructive live DB action is hidden inside ordinary CI.
-6. If GitHub branch/ruleset protection is actually enforceable, it must require `ATLAS Integrity`.
-7. If protection is unavailable for the current private-repository/account configuration, do not create a decorative non-enforced ruleset. Instead use the fail-closed release procedure below.
+### A. Research / review / checkpoint only
 
-Current protection availability decision: `docs/release/P0_MAIN_PROTECTION_AVAILABILITY_2026-08-12.md`.
+No queue claim, Production proof, deployment, or runtime smoke is required.
 
-### Fail-closed release procedure when GitHub protection is unavailable
+Persist the decision/checkpoint and continue.
 
-All of the following are mandatory:
+### B. Ordinary content/data mutation through an unchanged governed writer
 
-- exact PR head SHA has green `ATLAS Integrity`;
-- unresolved review threads are zero;
-- merge uses the exact expected head SHA so a moved PR cannot be merged accidentally;
-- resulting `main` SHA is read after merge;
-- no Production mutation occurs until Vercel Production proves that exact `main` SHA;
-- authoring/correction/audit transports continue to reject SHA mismatch.
+Examples: reviewed representative_domain, NamuWiki reference, ordinary Spatial binding, existing compatible authoring/correction request.
 
-If any proof is missing, stop. Green CI on some other SHA is not sufficient.
+Required:
+
+1. exact target identity or deterministic resolver;
+2. the canonical writer's own validation/security contract;
+3. apply the reviewed batch;
+4. one batched read-back of the changed records.
+
+Do not add a second manual deployment/SHA proof beyond what the writer itself already enforces. If that writer currently fail-closes on exact deployed SHA/OIDC/environment identity, satisfy it; changing that transport contract is a separate CORE task.
+
+### C. Code/UI change without live data mutation
+
+Required:
+
+1. focused tests;
+2. repository-required CI;
+3. merge.
+
+Verify Production only when the task explicitly requires live behavior verification or when the code cannot be accepted without it.
+
+### D. Schema/runtime/new-or-changed writer contract
+
+Keep the strong gate:
+
+1. reviewed code/migration;
+2. required CI;
+3. migration/replay safety;
+4. exact deployed version when a live mutation depends on the changed code;
+5. focused Production smoke/read-back.
+
+### E. Destructive / identity-changing operations
+
+Fail closed. Preserve explicit evidence, rollback/replay planning, conflict handling, and exact postcondition verification.
 
 ## 4. Production deployment
 
-A merge to `main` is not itself proof that Production changed.
+A merge to `main` is not automatically a reason to inspect Production.
 
-Release sequence:
+Use exact-SHA deployment verification when the canonical writer requires it or when correctness depends on newly deployed code, including schema/runtime cutovers, writer/transport changes, or a live UI/API fix being accepted in Production.
+
+For those cases:
 
 ```text
-PR exact head PASS
-→ exact-head merge to main
-→ determine exact main SHA
-→ Vercel Production deploy that SHA
-→ verify deployed SHA/status
-→ smoke current API boundaries
+required CI
+→ merge
+→ canonical deployment/writer proof
+→ focused smoke/postcondition checks
 ```
 
-Minimum smoke expectations after a current deployment:
+Do not duplicate the proof manually after the writer/workflow already verified the required deployment identity.
 
-- `GET /api/atlas-read` → 200, `source: v2-direct`.
-- `GET /api/atlas-session` → 200 JSON and authenticated true/false, not function crash.
-- protected endpoint without auth → 401, not 500.
-- admin page exposes authentication gate before protected tools.
+Do not repeatedly poll deployment state. Check it only when the operation actually depends on deployment.
 
-Authoring transport 변경이 포함된 release에서는 `.github/workflows/atlas-authoring-apply.yml`이 exact Production SHA를 기다린 뒤 기존 approved manifest를 idempotent replay하는 것도 확인합니다. replay는 새 historical row를 만들면 안 됩니다.
+## 5. Batching and deployment efficiency
 
-Do not run candidate rebuild, identity creation, or other writes against a stale Production deployment.
+Review long content work in small safe units, normally 5–12 records, and checkpoint each unit.
 
-## 5. Vercel deployment quota
+Release/apply reviewed work in the largest safe superbatch supported by the same writer and contract.
 
-Avoid pushing many tiny commits solely to trigger deployments. Complete a coherent unit locally/CI first, then push a small number of reviewed heads. If Vercel reports a deployment/build quota limit, stop retrying and wait for the platform limit rather than creating junk commits.
-
-Production-dependent operations are grouped into release trains. Branch-only requirements, research, rehearsals and CI should be exhausted first, but unrelated future product migrations must not be stuffed into Train 1 just because they can be drafted without Production access.
+Avoid many tiny commits, PRs, Production runs, or read-backs when one coherent batch provides the same safety.
 
 ## 6. Schema baseline and migrations
 
 `db/schema/atlas_v2.current.sql`:
 
-- is for a **clean PostgreSQL target**;
-- rejects an already-existing `atlas_v2` schema;
+- is for a clean PostgreSQL target;
 - contains no application data;
 - must not recreate retired legacy tables/views.
 
-Future structural change procedure:
+Structural change procedure:
 
-1. inventory the live dependency surface when needed;
+1. inspect only the directly affected live dependency surface;
 2. write a narrowly scoped migration;
 3. prove it on a disposable database / reviewed live procedure;
-4. apply only with explicit authorization when destructive;
-5. update current baseline to the resulting schema;
-6. keep historical evidence under `migration/`.
+4. apply with explicit authorization when destructive;
+5. update the current baseline;
+6. retain historical evidence under `migration/` when useful.
 
-Never rebuild the retired MVP schema as an intermediate compatibility step.
+Do not rebuild retired compatibility layers as an intermediate step.
 
-## 7. Data authoring sequence
+## 7. Data authoring
 
-### Preferred GitHub/ChatGPT route
+For reviewed Person × Polity Activity requests, use the current governed authoring contract and exact normalized identities.
 
-For a reviewed new Person × Polity Activity request, create one `authoring/requests/*.json` manifest.
+Core rules remain:
 
-Use `atlas-authoring-manifest/v2` for new work:
+- UUID is authoritative identity;
+- no fuzzy identity creation;
+- no historical year `0` or invented placeholder boundary;
+- unsupported facts remain unknown;
+- Source/provenance is preserved;
+- Runtime readiness does not justify mutating historical truth.
 
-```text
-reviewed manifest
-→ create/reuse Person
-→ optional create/reuse Polity
-→ optional create/reuse Role
-→ create Activity
-→ write authoring audit ledger
-→ commit all or rollback all
-```
+Registration completeness may include representative_domain, NamuWiki, Spatial readiness, and other canonical obligations, but review them once and materialize companion payloads in the same completion chain. Do not repeatedly reopen the same Person for already-decided obligations.
 
-- If the Polity already exists, omit `polity_identity` and reference its exact normalized name in `activity.politic_name`.
-- If the Role already exists, omit `role_identity` and reference an exact resolver token in `activity.role`.
-- If either vocabulary item is genuinely new, declare it in the same v2 manifest.
-- Declared Polity/Role identity and Activity reference must match exactly; do not use fuzzy inference to connect them.
-- `review_status` must be `approved` before the Production workflow will select the manifest.
-- Stable `request_id` makes exact replay idempotent; never recycle a request id for changed content.
-- Historical year `0` is invalid. Unknown boundary is not encoded as 0 or an arbitrary placeholder year.
-
-Existing v1 manifests remain valid but cannot declare new Polity/Role identities.
-
-### Admin route
-
-Interactive administrators may still create Person/Polity/Role through `/api/atlas-identity` and then create the Activity through `/api/atlas-mutate`.
-
-If a Person/Polity name collision is reported, review the existing identity instead of bypassing it with direct SQL.
-
-After authoring, inspect the normalized read projection and rebuild duplicate candidates when review is desired.
-
-### Final product authoring boundary
-
-The current Person × Polity writer is not the whole final Authoring System. P13 must add the established first-class Person / Place / Source object workflows and explicit Compile → Runtime projection without replacing normalized UUID identity with UI strings.
-
-Important operational rules for that phase:
-
-- optional Person profile facts remain unknown when unsupported;
-- Place is reusable and separate from Polity/Territory;
-- Source citation metadata is separate from assertion locators and file/hash metadata;
-- a Person Activity with an unresolved boundary remains Authoring/review state rather than receiving a fake year;
-- AI research creates reviewed candidates only and uses the same normalized writer after approval;
-- Runtime consumes compiled readiness state, not every raw Authoring assertion.
+Independent writers do not need to become one giant synchronous transaction.
 
 ## 8. Duplicate review and merge operations
 
-### Current state
+Candidate review is non-destructive.
 
-- Candidate rebuild is active and non-destructive.
-- MERGE / KEEP_SEPARATE / REVIEW decisions are active and non-destructive.
-- **Physical Person merge is currently disabled** until final semantic-key-v2 reconciliation and P10 candidate revalidation are both active.
-- The server returns `PERSON_MERGE_BLOCKED_UNTIL_P10_V2_REVALIDATION` before opening a DB connection for an attempted early `EXECUTE_APPROVED_MERGE`.
-- The Admin UI consumes the same server lifecycle state and must not offer survivor/relationship execution controls while `allowed=false`.
+Physical identity merge or other destructive identity-changing action must use the governed merge/correction path, never manual SQL deletion.
 
-### P10 execution state
-
-Only after P10 revalidation:
-
-- actual approved merge is destructive to the source Person and must use the application merge executor, never manual table deletion;
-- survivor Person is explicit;
-- relationship conflict groups require explicit v2-aware resolution;
-- live evidence is revalidated;
-- provenance/claims/descriptions are preserved;
-- the whole merge is SERIALIZABLE and audited;
-- after merge, verify audit and rebuild candidate state.
-
-Do not re-enable the UI merely because P9 code exists. Both reconciliation semantic version **and** P10 lifecycle version must be ready.
+Before execution, revalidate the specific live evidence/conflict groups involved. Do not rerun unrelated whole-database audits.
 
 ## 9. Compile / Runtime operations
 
-Current `/api/atlas-read` is a transitional direct projection from normalized Authoring data.
+Authoritative Authoring remains distinct from compiled/runtime representation.
 
-Final P13 release acceptance requires:
+After a write that actually affects compiled output, rebuild or invalidate only the affected projection as supported by the current compiler contract.
 
-```text
-Authoring data
-→ deterministic Compile/readiness validation
-→ Runtime projection/materialization
-→ list/search/detail consumers
-```
+Do not maintain a second manually edited Runtime truth store.
 
-Compiler rules must be deterministic and reproducible from authoritative Authoring UUIDs/assertions. An assertion rejected as Runtime-not-ready must remain reviewable in Authoring and must not be mutated merely to satisfy Runtime convenience.
-
-After any authoritative write that changes compiled output, the accepted runtime flow must either recompile deterministically or invalidate/rebuild the affected projection. Do not maintain a second manually edited Runtime truth store.
+Exact deployed-code proof is required when the canonical runtime/compiler/writer contract requires it or when correctness depends on code changed in the same release. Do not add duplicate proof outside that canonical gate.
 
 ## 10. Incident rules
 
 If an endpoint returns `SERVER_CONFIGURATION_ERROR`:
 
-- inspect server environment variables;
+- inspect server environment configuration;
 - do not create browser-side fallback credentials.
 
 If it returns `DATABASE_UNAVAILABLE`:
 
-- verify connection string/network/Supabase state;
-- do not bypass the server boundary with direct browser DB access.
+- verify connection/network/Supabase state;
+- do not bypass the server boundary.
 
-If Production behavior disagrees with GitHub `main`:
+If Production behavior disagrees with expected source and the task depends on live code:
 
-- identify the deployed SHA first;
-- do not debug as though the undeployed source were live.
+- identify the deployed version once;
+- debug that version, not an undeployed branch.
 
-If authoring returns an identity/reference `MISMATCH`, `COLLISION`, `AMBIGUOUS`, or `UNRESOLVED` error:
+If authoring returns `MISMATCH`, `COLLISION`, `AMBIGUOUS`, or `UNRESOLVED`:
 
-- correct or review the manifest/vocabulary;
-- do not bypass the normalized identity resolver with raw SQL.
+- correct/review the exact identity or manifest;
+- do not bypass the normalized resolver with raw SQL.
 
-If physical merge returns `PERSON_MERGE_BLOCKED_UNTIL_P10_V2_REVALIDATION`:
+## 11. Historical files and queue logs
 
-- this is the intended lifecycle gate, not a schema failure;
-- keep review decisions, but do not attempt manual deletes or bypass the interlock.
+`migration/` and old issue comments are audit/history.
 
-## 11. Historical files
+They are not normal bootstrap inputs when a current checkpoint/snapshot exists.
 
-`migration/` is audit/history. Root runtime and current docs are the active source of truth. Completed one-time migration scripts may be retained only when they are useful audit evidence; they must not be treated as reusable production entrypoints.
+New conversations follow `WORK_EXECUTION.md`: current resume point → targeted resource check → forward progress. Full historical replay is exceptional recovery work only.

@@ -2,6 +2,8 @@
 
 이 문서는 현재 ATLAS runtime의 강제 불변조건을 정의합니다. 과거 Phase 문서와 충돌하면 이 문서와 현재 코드/DB reconstruction contract가 우선합니다.
 
+실행 절차 자체는 `WORK_EXECUTION.md`가 우선합니다. 이 문서의 보안·identity·writer fail-closed 불변조건은 Lean 실행 규칙으로 약화되지 않습니다.
+
 ## 1. Authority
 
 - `atlas_v2.*`가 유일한 application data authority입니다.
@@ -180,43 +182,30 @@ full boundary에는 year/month/day/granularity/calendar interpretation이 포함
 
 현재 repository integrity CI source of truth는 `.github/workflows/atlas-integrity.yml`입니다.
 
-반드시 검증:
+Repository-required checks remain authoritative for merged code. Additional verification should be targeted to the changed surface rather than inherited from obsolete migration-era release trains.
 
-- exact locked dependencies (`npm ci`)
-- all `tests/*.test.mjs`
-- active JS syntax
-- requirements source of truth
-- Vercel-minimized release governance
-- R0 future-semantic equivalence while the R0 request is staged
-- zero reachable legacy runtime
-- fresh PostgreSQL baseline + current ordered migrations rebuild
-
-Production authoring operation은 `.github/workflows/atlas-authoring-apply.yml`, Production correction operation은 `.github/workflows/atlas-correction-apply.yml`이며 integrity CI를 대체하거나 병렬 architecture gate로 취급하지 않습니다.
+Production authoring/correction workflows retain their own canonical security and writer checks; those checks must not be bypassed, but workers do not duplicate the same proof externally after the workflow has already established it.
 
 과거 Phase workflow를 현재 gate로 병렬 유지하지 않습니다.
 
 ## 14. Release governance
 
-`main` commit과 Production deployment는 동일하다고 추정하지 않습니다.
+Current release policy source of truth:
 
-상세 release-train 정책은 `RELEASE_GOVERNANCE.md`가 source of truth입니다.
+1. `WORK_EXECUTION.md` — project-wide execution/queue/resume/verification rules.
+2. `RELEASE_GOVERNANCE.md` — risk-proportional release classes.
+3. canonical writer/workflow code — security/fail-closed transport invariants.
 
-- branch/PR research, docs, code, disposable PostgreSQL rehearsal, manifest preparation은 Vercel Production build를 이유로 main에 조기 merge하지 않습니다.
-- `vercel.json`은 non-Production build를 skip해야 합니다.
-- main merge/deployment는 live-state dependency barrier마다 하나의 coherent Production train으로 묶습니다.
-- 현재 Baseline A가 R0/R1 live result에 의존하므로 Train 1(current-schema cleanup)과 Train 2(Stage 2 transition)는 구조적으로 분리합니다. 미래 Baseline A를 추측해서 배포 횟수를 줄이지 않습니다.
-- 한 exact deployed SHA에서 migration/correction/backfill/cutover 등 여러 operation을 순서대로 실행할 수 있으면 별도 배포로 쪼개지 않습니다.
+The old Stage 2 / Train 1 / Train 2 release sequencing is historical migration evidence, not a current general execution rule.
 
-Release 완료 조건:
+Current invariants:
 
-1. PR exact head ATLAS Integrity PASS.
-2. reviewed merge to `main`.
-3. Vercel Production deployed SHA가 merge된 main SHA와 일치.
-4. production smoke가 read/session/protected API boundary를 확인.
-5. authoring transport 변경 시 approved manifest replay가 exact deployment SHA에서 idempotently 성공.
-6. authoring replay 결과 snapshot이 live normalized UUID binding 검증을 통과.
-7. correction request가 있는 경우 같은 main SHA에서 correction dry-run이 먼저 성공하고 `committed=false`임을 확인.
-8. correction apply가 `committed=true`로 성공한 뒤 result artifact와 live post-state를 검증.
-9. 해당 train의 live-state 결과(Baseline A/B 등)가 후속 branch work의 authoritative input으로 capture된다.
+- `main` movement alone does not trigger whole-project revalidation.
+- research/review/branch preparation does not require shared-writer ownership.
+- independent resources are not globally serialized.
+- long content work uses microbatch review + safe superbatch release.
+- schema/runtime/new-writer/destructive changes retain strong exact-code/migration/postcondition gates.
+- ordinary content operations use the canonical writer's required security checks and one focused completion verification; no duplicate release ceremony is added outside that gate.
+- Production behavior is never inferred from undeployed source when the task actually depends on live code.
 
-배포되지 않은 main 코드를 Production 기능으로 간주하지 않습니다.
+Operating rule: **Minimum sufficient verification. Maximum safe forward progress.**
