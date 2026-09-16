@@ -6,6 +6,7 @@ import { pathToFileURL } from 'node:url';
 
 import {
   compileSpatialBindings,
+  computeSpatialStats,
   loadReviewedBindingShards,
   serializeSpatialIndex
 } from './compile-spatial-bindings.mjs';
@@ -101,10 +102,14 @@ function parseArgs(argv) {
 export function main(argv = process.argv.slice(2)) {
   const options = parseArgs(argv);
   const retainedBaseline = readJson(options.baselinePath);
-  const migrations = loadTaxonomyMigrationManifests(options.migrationDir);
-  const migrated = applyTaxonomyMigrationManifests(retainedBaseline, migrations);
   const shards = loadReviewedBindingShards(options.shardsDir);
-  const result = compileSpatialBindings({ baseline: migrated.baseline, shards });
+  const currentReviewed = compileSpatialBindings({ baseline: retainedBaseline, shards });
+  const migrations = loadTaxonomyMigrationManifests(options.migrationDir);
+  const migrated = applyTaxonomyMigrationManifests(currentReviewed.index, migrations);
+  const result = Object.freeze({
+    index: migrated.baseline,
+    stats: computeSpatialStats(migrated.baseline)
+  });
   const serialized = serializeSpatialIndex(result.index);
 
   if (options.validateOnly) {
