@@ -74,3 +74,5 @@ jobs:
           fi
           git commit -m 'Finalize r4 runtime taxonomy and canonical index'
           git push origin HEAD:${GITHUB_REF_NAME}
+
+# one-shot workflow; delete before opening the final PR
