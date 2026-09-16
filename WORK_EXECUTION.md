@@ -4,7 +4,7 @@
 >
 > Goal: preserve historical/data/runtime safety while removing procedural work that does not directly reduce risk.
 >
-> This file supersedes older queue/release/process rules wherever they conflict.
+> This file supersedes older queue/release/process rules wherever they conflict. It does **not** weaken fail-closed security or invariants already enforced by a canonical writer/endpoint.
 
 ## 1. Default behavior: do the work, not the ceremony
 
@@ -113,15 +113,17 @@ Do not pay PR/CI/deploy/read-back cost for every microbatch unless isolation is 
 Required:
 
 - exact target/UUID or deterministic resolver;
-- writer validation;
+- the writer's built-in validation/security contract;
 - one post-write read-back of the changed records, preferably batched.
 
-Not required merely by habit:
+Do **not** add extra process merely by habit:
 
-- proving current GitHub `main` equals Vercel Production;
-- full runtime smoke suite;
+- whole runtime smoke suites;
 - unrelated schema checks;
-- repeated read-backs.
+- repeated read-backs;
+- a second external deployment/SHA proof beyond what the canonical writer itself already enforces.
+
+If the canonical writer/endpoint itself fail-closes on exact deployed SHA, OIDC identity, environment, or other transport proof, that remains mandatory until the writer contract is deliberately changed through CORE.
 
 ### Code/UI change without Production data mutation
 
@@ -146,11 +148,11 @@ Keep the strong gate:
 
 Keep fail-closed protections, explicit evidence, rollback/replay plan, and exact postcondition verification.
 
-## 8. Exact-SHA rule is conditional, not universal
+## 8. Exact-SHA rule is scoped, not duplicated
 
-Exact GitHub-main ↔ Production-SHA equality is mandatory only when correctness of the operation depends on code introduced or changed by that release, including schema/runtime cutovers or mutation-transport changes.
+Exact SHA proof remains mandatory wherever the canonical architecture/writer requires it or where correctness depends on code introduced by that release, including schema/runtime cutovers or mutation-transport changes.
 
-Ordinary content/data writes through an already-deployed unchanged compatible writer do not wait for a fresh Vercel deployment solely because `main` has unrelated commits.
+The Lean rule removes **duplicate external ceremony**, not built-in transport safety. A worker must not independently re-prove unrelated repository/deployment state after the canonical writer has already provided the required exact-SHA/security proof.
 
 ## 9. Completion verification happens once
 
@@ -203,8 +205,8 @@ Do not:
 - re-audit the entire DB/repo after unrelated `main` changes;
 - wait for a global writer when the resource is independent;
 - hold queue ownership while only researching or waiting for CI;
-- create one PR/release per 5–10 reviewed records by default;
-- require a fresh Vercel deployment for unchanged-writer content writes;
+- create one PR/release per 5–12 reviewed records by default;
+- add deployment/SHA proof beyond the canonical writer's own required gate;
 - repeatedly poll writer/deployment state;
 - re-run broad smoke suites for unrelated changes;
 - reopen settled historical judgments without new conflicting evidence;
@@ -215,11 +217,11 @@ Do not:
 Use this precedence:
 
 1. historical/data correctness and no-fabrication rules;
-2. destructive/schema/runtime safety controls;
+2. security plus destructive/schema/runtime safety controls enforced by canonical code/contracts;
 3. this Lean execution protocol;
 4. older queue/release/process wording.
 
-Older rules that impose broader locking, whole-project revalidation, universal exact-SHA deployment proof, or mandatory full event replay are superseded.
+Older rules that impose broader locking, whole-project revalidation, duplicate deployment proof, or mandatory full event replay are superseded.
 
 ## 14. Operating maxim
 
