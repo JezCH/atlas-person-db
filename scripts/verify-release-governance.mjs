@@ -140,6 +140,7 @@ const requiredExecutionClauses = [
   "The project does not have one global NONCORE writer.",
   "Delta-only integration",
   "Microbatch review, superbatch release",
+  "Persistent tests and CI gates must verify durable invariants, not point-in-time project snapshots.",
   "Completion verification happens once",
   "full historical fold is exceptional recovery work, not normal bootstrap"
 ];
@@ -153,6 +154,7 @@ console.log(JSON.stringify({
   resource_scoped_concurrency: true,
   delta_only_integration: true,
   microbatch_review_superbatch_release: true,
+  invariant_based_validation: true,
   duplicate_release_ceremony_forbidden: true,
   canonical_writer_security_preserved: true,
   vercel_non_main_branch_deployments_disabled: true,
