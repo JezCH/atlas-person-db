@@ -1,0 +1,41 @@
+name: Temporary Spatial r4 canonical generator
+
+on:
+  push:
+    branches:
+      - codex/spatial-r4-production-cutover-20260916
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Generate deterministic r4 canonical index
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/compile-spatial-bindings-r4.mjs
+          node scripts/compile-spatial-bindings-r4.mjs --check
+          git diff -- atlas-polity-spatial-index.json
+      - name: Commit generated canonical index
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- atlas-polity-spatial-index.json; then
+            echo 'Canonical index is already synchronized.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add atlas-polity-spatial-index.json
+          git commit -m 'Generate canonical r4 spatial index [skip ci]'
+          git push origin HEAD:${GITHUB_REF_NAME}
