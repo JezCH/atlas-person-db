@@ -1,177 +1,172 @@
-# ATLAS Release Governance — Vercel-Minimized Release Trains
+# ATLAS Release Governance — Lean v2
 
-> Status: binding project release policy.
+> Status: binding release policy.
 >
-> Goal: complete as much research, implementation, migration rehearsal, manifest preparation and CI validation as possible **without consuming a Vercel Production build**, then cross each unavoidable live-data dependency barrier with one coherent Production release.
+> `WORK_EXECUTION.md` is the project-wide execution authority. This file defines only release-specific safety. Older Stage/Train-specific release policy is historical and no longer governs ordinary current work.
 
-## 1. Core rule
+## 1. Core principle
 
-A merge to `main` is treated as a scarce Production-deployment event.
+Release controls must be proportional to the actual risk of the change.
 
-Branch-only documentation, research, PostgreSQL rehearsal, tests, evidence preparation and non-live historical modeling stay on the active release branch until a live-state barrier requires Production. Preview/non-Production builds are skipped when safely classifiable. Runtime/API/server/schema/package/Vercel/correction-operation changes remain deployment-relevant. Any unknown path, missing previous successful deployment SHA, unavailable shallow-clone commit, or failed diff **builds rather than skips**.
+Do not convert every merge or data write into a Production release train.
 
-Mixed commits build if even one changed path is deployment-relevant.
+Use the smallest verification set that proves the changed surface is correct.
 
-## 2. Release-train state machine
+## 2. Release classes
 
-```text
-PREPARE_BRANCH_ONLY
-→ CI_PROVEN
-→ READY_FOR_PRODUCTION
-→ ONE_MAIN_MERGE
-→ EXACT_SHA_DEPLOYED
-→ ORDERED_PRODUCTION_OPERATIONS
-→ LIVE_POSTCONDITIONS_VERIFIED
-→ LIVE_BASELINE_CAPTURED_IF_REQUIRED
-→ CLOSED
-```
+### Class 0 — no release boundary
 
-No state is skipped when the next state depends on live data produced by the previous state.
+Includes:
 
-## 3. Hard live dependency: Baseline A v2
+- research;
+- review;
+- issue/checkpoint updates;
+- historical decision records;
+- branch-only preparation.
 
-Stage 2 live UUID binding cannot be finalized before R0/R1 actually run in Production. Therefore **at least two Production deployments are structurally unavoidable** when Stage 2 code must bind to the real post-cleanup UUID state.
+No Production/deployment proof is required.
 
-### Production Train 1 — Current-schema cleanup
+### Class 1 — ordinary content/data write through an unchanged compatible writer
 
-One exact deployed `main` SHA carries:
+Includes typical reviewed:
 
-- requirements/release governance;
-- correction v1.1 transport;
-- R0 future-semantic equivalence;
-- reviewed R0/R1 current-schema package;
-- Baseline A v2 capture tooling.
+- Person-domain assignments;
+- NamuWiki references;
+- Spatial bindings/taxonomy data;
+- existing-contract authoring/correction manifests.
 
-After deployment, the same SHA runs dry-run/apply operations and then captures **Baseline A v2** in one `REPEATABLE READ READ ONLY` snapshot. The snapshot contains all Activity rows plus complete Person/name, Polity/name including raw `name_type`, Role/name, Period Basis/name and Source catalogs. Its digest covers `{rows, counts,catalogs}`. This prevents a second Vercel deployment or ad-hoc live query merely to recover unreferenced identity/name/source rows.
-
-### Production Train 2 — Stage 2 transition
-
-Only after validated Baseline A v2:
-
-- fresh Stage 2 integration branch from updated `main`;
-- reviewed surviving UUID and Polity name-kind bindings;
-- non-destructive Stage 2 schema transition: additive objects plus reviewed backward-compatible constraint relaxation for Stage 2-native Activity provenance;
-- correction v2;
-- historical/People/Event/provenance backfill;
-- P8 semantic gate;
-- P9 semantic-key v2 cutover;
-- P10 v2-aware Person merge;
-- Baseline B/end-state constraints where safe.
-
-The target is one coherent deployed SHA with ordered operations. A third Production deployment is permitted only if post-cutover code genuinely cannot be safely included in Train 2; it is not the default.
-
-## 4. Train 1 batching contract
-
-Before Train 1 merge, branch-only work should include every Baseline-A-independent item that can be reviewed and tested:
-
-- requirements and release governance;
-- correction v1.1 and R0/R1 evidence;
-- Baseline A v2 exact-SHA full-identity snapshot/intake;
-- Stage 2 domain, temporal, provenance, Relation, Governance and semantic-key contracts;
-- Polity naming semantic boundary and People/Event model;
-- disposable PostgreSQL rehearsals;
-- all Baseline-A-independent historical model decisions, with irreducible uncertainty explicit;
-- Person physical-merge interlock until P10.
-
-Do not merge an incomplete subset merely because one item is finished.
-
-## 5. Ordered operations on one deployed SHA
-
-Train 1:
+Required:
 
 ```text
-exact SHA verification
-→ R0 real rollback dry-run
-→ R0 apply
-→ R1 Franklin/Bismarck dry-run + apply
-→ Muhammad exact same-SHA read-only target snapshot
-→ synthesized exact v1.1 dry-run + apply
-→ post-state verification
-→ Baseline A v2 full identity snapshot + digest
-→ one evidence artifact
+reviewed batch
+→ exact identity/target validation
+→ governed writer apply
+→ one batched post-write read-back
 ```
 
-Train 2:
+Do not require a new Vercel deployment solely because repository `main` contains unrelated newer commits.
+
+### Class 2 — code/UI change
+
+Required:
 
 ```text
-exact SHA verification
-→ non-destructive schema transition
-→ reviewed identity/name-kind binding
-→ structural + People/Event + historical backfill
-→ P8 semantic cutover gate
-→ P9 cutover
-→ P10 candidate revalidation + Person merge
-→ Baseline B / final constraints
+focused tests
+→ repository-required CI
+→ merge
 ```
 
-On failure, stop the train. Never patch Production ad hoc.
+Production deployment/read-back is required only when live behavior is part of the acceptance condition.
 
-## 6. Branch / PR policy
+### Class 3 — schema/runtime/compiler/writer-contract change
 
-- Prefer one active release-candidate branch per live dependency barrier.
-- Draft PRs may accumulate many reviewed commits because Preview deployment is skipped.
-- Do not split one coherent release merely to create small deployable PRs.
-- Old 346-row Stage 2 stacked PRs are evidence sources, never a deployment sequence or UUID authority.
-- Documentation/research-only commits may remain intentionally undeployed until the next deployment-relevant commit.
+Required:
 
-## 7. Exact-SHA / protection policy
+```text
+reviewed implementation/migration
+→ required CI
+→ migration/replay proof
+→ merge
+→ exact deployed version when live execution depends on that code
+→ focused Production verification
+```
 
-GitHub-enforced branch protection is preferred **only when the repository/account can actually enforce it**. A visible but non-enforced ruleset is not a safety control and must not be treated as one.
+### Class 4 — destructive / identity-changing / irreversible operation
 
-Current repository decision is recorded in `docs/release/P0_MAIN_PROTECTION_AVAILABILITY_2026-08-12.md`.
+Use fail-closed execution with explicit reviewed targets, rollback/replay strategy where possible, exact preconditions, and exact postconditions.
 
-Before any Production mutation, one of the following release-control modes must be true:
+## 3. Exact-SHA policy
 
-### Mode A — platform-enforced protection available
+Exact code SHA proof is a tool, not a universal ceremony.
 
-- `main` protection/ruleset is actually enforced;
-- `ATLAS Integrity` is a required check;
-- ordinary release flow still uses exact-head and exact-Production-SHA verification.
+It is mandatory when a live operation depends on code introduced or changed by that release, for example:
 
-### Mode B — protection unavailable under current repository/account configuration
+- schema migration endpoint changes;
+- runtime/compiler cutover;
+- mutation transport changes;
+- destructive executor changes;
+- live UI/API release acceptance tied to a specific commit.
 
-The release must fail closed unless **all** conditions are proven:
+It is not mandatory for an ordinary content/data mutation using a previously deployed unchanged compatible writer.
 
-- release occurs through the reviewed release PR;
-- `ATLAS Integrity` succeeded on the exact PR head SHA;
-- unresolved review threads are zero;
-- merge is executed with that exact expected head SHA;
-- resulting `main` SHA is read after merge;
-- operation SHA equals Vercel Production SHA;
-- authoring/correction/audit transports reject SHA mismatch;
-- code existing on `main` is not considered live until matching Production deployment exists.
+For those operations, exact identity + writer contract + post-write read-back is the correctness proof.
 
-If any proof is missing, the train stops. No Production mutation is authorized.
+## 4. Main advancement
 
-When GitHub protection becomes enforceable later, enable it and require `ATLAS Integrity`; this is future hardening, not a reason to create a decorative non-enforced ruleset now.
+A newer `main` does not invalidate completed review automatically.
 
-## 8. Vercel budget invariant
+Before integration, inspect only the task-owned paths/contracts and direct dependencies.
 
-The objective is **minimum deployments consistent with correct live-data dependency ordering**.
+If the delta does not touch them, continue. Do not repeat historical review, whole-repository audits, or whole-Production verification.
 
-Never reduce deployment count by guessing a future Production baseline, bypassing SHA proof, merging Persons early, inventing historical data, or combining stages whose correctness depends on a live result that does not yet exist. Conversely, multiple operations that can safely run against one exact deployed SHA belong to the same train.
+## 5. Batching
 
-## 9. Build-skip safety invariant
+Research/review should checkpoint frequently in small units.
 
-The ignored-build classifier is optimization, not correctness. Uncertainty defaults to BUILD. Deployment-relevant classes include API/server, DB schema/migration, runtime assets/package, `vercel.json`, correction requests/intents, and Production authoring/correction/audit workflows. Deletions and renames count in the diff.
+Release should batch aggressively when reviewed items share the same writer and safety contract.
 
-## 10. Stage 2 additive schema release authorization
+Preferred pattern:
 
-Stage 2 additive schema release is never triggered automatically by `push` or `pull_request`.
+```text
+5–12 record review/checkpoints
+→ accumulated reviewed payload
+→ largest safe superbatch
+→ one apply
+→ one batched verification
+```
 
-The release currently contains six ordered non-destructive components: five additive Stage 2 capability components plus one backward-compatible provenance constraint relaxation. The sixth component makes `person_politics_v2.legacy_source_key` nullable for genuinely Stage 2-native Activity fragments while keeping existing imported keys unique and forbidding blank non-null values. New fragments must use normalized Source links and Correction v2 audit evidence; **inventing a fake legacy import key is forbidden**.
+One microbatch does not imply one PR, deployment, apply run, or read-back.
 
-The Production migration path is intentionally separate from ordinary authoring and correction transports. It may run only through `.github/workflows/atlas-stage2-schema-release.yml` by explicit `workflow_dispatch` on `main`, with the GitHub `production` environment and a dedicated OIDC audience. The operator must provide the exact reviewed `release_id` and type `APPLY:<release_id>` exactly.
+## 6. Concurrency
 
-The server endpoint then independently requires all of the following before opening a write path:
+Release ownership is resource-scoped.
 
-- Vercel Production is the same exact `main` SHA as the workflow run;
-- the OIDC token belongs to the dedicated Stage 2 schema workflow, repository, environment and SHA;
-- the local release package still has exact reviewed component Git blob SHAs;
-- P6 effective prebinding is closed at 54/54 with zero remaining Activities;
-- the live Baseline A v2 digest and authoritative 338 Activity / 302 Person / 212 Polity / 20 Source cardinalities still match the release baseline;
-- any existing release-ledger rows match the exact component SHA and contain no unknown component.
+Independent content writers and code paths may progress concurrently. Merely sharing the repository or `main` branch is not a reason to serialize them.
 
-The workflow performs a read-only live preflight first. Only after that preflight succeeds may it call `apply`. Each schema component is atomic and restart-safe; a retry skips only an already-recorded component with the exact same blob SHA. After apply, the Baseline A digest must remain unchanged and all six release components must be present in the release ledger.
+Exclusive release ownership is required only where simultaneous changes could produce an actual conflict or invalid state.
 
-The release JSON intentionally keeps `production_apply_authorized: false`: a checked-in data file cannot authorize its own Production execution. Authorization comes only from the exact-SHA manual workflow + typed approval + dedicated OIDC + live preflight combination.
+## 7. CI policy
+
+Repository-required checks remain mandatory for merges covered by branch protection.
+
+Beyond those checks, add targeted tests based on the affected surface.
+
+Do not add unrelated broad verification solely because it appeared in an older release train.
+
+## 8. Production verification
+
+Verify only the layer the task actually changed.
+
+Examples:
+
+- content write → changed records;
+- UI live fix → changed interaction/view;
+- runtime compiler change → affected projection and relevant smoke;
+- schema migration → migrated objects/constraints and dependent path.
+
+Do not repeatedly verify unrelated endpoints or settled layers.
+
+## 9. No ad-hoc unsafe bypasses
+
+Lean process does not mean bypassing canonical safety.
+
+Still forbidden:
+
+- invented historical data;
+- raw SQL bypass of normalized identity/writer contracts;
+- destructive mutation without reviewed targets;
+- schema/runtime mutation against incompatible deployed code;
+- hidden data-destructive action inside ordinary CI;
+- treating a different commit's green CI as proof for changed code when an exact-code gate is actually required.
+
+## 10. Historical release-train rules
+
+The former Stage 2 / Train 1 / Train 2 procedures are retained in Git history as evidence of that migration era.
+
+They are not current general release rules and must not be replayed by new conversations unless a task explicitly investigates that historical migration.
+
+## 11. Operating rule
+
+> Minimum sufficient verification. Maximum safe forward progress.
+
+If a release step does not materially reduce the risk of the specific change, it must not block the release.
