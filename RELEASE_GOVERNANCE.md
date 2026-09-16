@@ -10,7 +10,7 @@ Release controls must be proportional to the actual risk of the change.
 
 Do not convert every merge or data write into a Production release train.
 
-Use the smallest verification set that proves the changed surface is correct.
+Use the smallest verification set that proves the changed surface is correct, while preserving any fail-closed checks already enforced by the canonical writer/workflow.
 
 ## 2. Release classes
 
@@ -40,11 +40,12 @@ Required:
 ```text
 reviewed batch
 → exact identity/target validation
-→ governed writer apply
+→ canonical writer/workflow validation
+→ apply
 → one batched post-write read-back
 ```
 
-Do not require a new Vercel deployment solely because repository `main` contains unrelated newer commits.
+Do not add a second manual deployment/SHA proof beyond what the canonical writer already enforces. If that writer currently requires exact deployed SHA/OIDC/environment proof, satisfy it; changing that writer contract is a CORE change, not a shortcut in release procedure.
 
 ### Class 2 — code/UI change
 
@@ -67,7 +68,7 @@ reviewed implementation/migration
 → required CI
 → migration/replay proof
 → merge
-→ exact deployed version when live execution depends on that code
+→ canonical exact deployed-version proof when live execution depends on that code
 → focused Production verification
 ```
 
@@ -77,9 +78,9 @@ Use fail-closed execution with explicit reviewed targets, rollback/replay strate
 
 ## 3. Exact-SHA policy
 
-Exact code SHA proof is a tool, not a universal ceremony.
+Exact SHA proof is a canonical safety primitive where the architecture or writer requires it; it is not a reason to duplicate orchestration work outside that gate.
 
-It is mandatory when a live operation depends on code introduced or changed by that release, for example:
+It remains mandatory for flows whose writer/workflow verifies exact deployment identity and for changes such as:
 
 - schema migration endpoint changes;
 - runtime/compiler cutover;
@@ -87,9 +88,7 @@ It is mandatory when a live operation depends on code introduced or changed by t
 - destructive executor changes;
 - live UI/API release acceptance tied to a specific commit.
 
-It is not mandatory for an ordinary content/data mutation using a previously deployed unchanged compatible writer.
-
-For those operations, exact identity + writer contract + post-write read-back is the correctness proof.
+Once the canonical workflow has proven the required SHA/security identity, workers do not independently repeat the same proof unless troubleshooting conflicting evidence.
 
 ## 4. Main advancement
 
@@ -111,7 +110,7 @@ Preferred pattern:
 5–12 record review/checkpoints
 → accumulated reviewed payload
 → largest safe superbatch
-→ one apply
+→ one apply chain
 → one batched verification
 ```
 
@@ -135,7 +134,7 @@ Do not add unrelated broad verification solely because it appeared in an older r
 
 ## 8. Production verification
 
-Verify only the layer the task actually changed.
+Verify only the layer the task actually changed, plus any security/integrity checks already enforced by the canonical workflow.
 
 Examples:
 
@@ -156,6 +155,7 @@ Still forbidden:
 - raw SQL bypass of normalized identity/writer contracts;
 - destructive mutation without reviewed targets;
 - schema/runtime mutation against incompatible deployed code;
+- bypassing exact-SHA/OIDC/environment validation that the canonical writer itself enforces;
 - hidden data-destructive action inside ordinary CI;
 - treating a different commit's green CI as proof for changed code when an exact-code gate is actually required.
 
@@ -169,4 +169,4 @@ They are not current general release rules and must not be replayed by new conve
 
 > Minimum sufficient verification. Maximum safe forward progress.
 
-If a release step does not materially reduce the risk of the specific change, it must not block the release.
+If a release step does not materially reduce the risk of the specific change, and is not already a canonical writer/security invariant, it must not block the release.
