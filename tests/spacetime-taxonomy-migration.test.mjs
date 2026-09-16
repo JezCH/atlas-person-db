@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
-import { computeSpatialStats } from "../scripts/compile-spatial-bindings.mjs";
+import { compileSpatialBindings, computeSpatialStats } from "../scripts/compile-spatial-bindings.mjs";
 
 const require = createRequire(import.meta.url);
 const spaceAxis = require("../atlas-person-spacetime-space-axis.js");
@@ -15,7 +15,7 @@ const EXPECTED_MACROS = [
   "south-asia","southeast-asia","east-asia","oceania"
 ];
 
-const LEGACY_SPLIT_CODES = [
+const RETIRED_SPLIT_CODES = [
   "mesoamerica-caribbean",
   "eastern-europe-russia",
   "north-africa-nile",
@@ -25,32 +25,72 @@ const LEGACY_SPLIT_CODES = [
   "sri-lanka-maldives"
 ];
 
-test("taxonomy r3 has one deterministic adjacency path and 40 equal active leaves", () => {
-  assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.taxonomy_revision, "2026-09-03-r3");
+const R4_PHASE1_PENDING_LEAVES = new Set([
+  "east-africa",
+  "horn-of-africa",
+  "western-siberia",
+  "tibetan-plateau",
+  "himalayas",
+  "eastern-siberia-far-east"
+]);
+
+test("taxonomy r4 has one deterministic adjacency path and 45 equal active leaves", () => {
+  assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.taxonomy_revision, "2026-09-16-r4");
   assert.deepEqual(continuum.macroregions.map((band) => band.code), EXPECTED_MACROS);
   assert.deepEqual(index.regions.map((region) => region.code), EXPECTED_MACROS);
-  assert.equal(continuum.subregions.length, 40);
+  assert.equal(continuum.subregions.length, 45);
   for (const band of continuum.subregions) {
-    assert.ok(Math.abs((band.max_space - band.min_space) - 1 / 40) < 1e-12);
+    assert.ok(Math.abs((band.max_space - band.min_space) - 1 / 45) < 1e-12);
   }
 
   const stats = computeSpatialStats(index);
   assert.equal(stats.subregion_count, Object.keys(index.polity_subregions).length);
   for (const leaf of continuum.subregions) {
-    assert.ok((stats.subregion_counts[leaf.code] || 0) > 0, leaf.code + " must remain an active reviewed leaf");
+    const count = stats.subregion_counts[leaf.code] || 0;
+    if (R4_PHASE1_PENDING_LEAVES.has(leaf.code)) assert.equal(count, 0, leaf.code + " remains unmigrated during hierarchy-first Phase 1");
+    else assert.ok(count > 0, leaf.code + " must remain an active reviewed leaf");
   }
 });
 
-test("mixed legacy leaves remain retired without per-batch numeric split locks", () => {
+test("retired r3 leaves stay retired while east-africa-horn is baseline-only Phase-1 compatibility", () => {
   const values = new Set(Object.values(index.polity_subregions));
-  for (const code of LEGACY_SPLIT_CODES) assert.equal(values.has(code), false, code + " must be retired");
+  for (const code of RETIRED_SPLIT_CODES) assert.equal(values.has(code), false, code + " must be retired");
 
-  const knownLeaves = new Set(continuum.subregions.map((leaf) => leaf.code));
+  assert.equal(values.has("east-africa-horn"), true, "Phase 1 keeps the immutable baseline assignment until exact-UUID migration");
+  assert.equal(continuum.subregions.some((leaf) => leaf.code === "east-africa-horn"), false, "legacy compatibility must not become an active r4 leaf");
+  const legacyBand = continuum.bandForCode("east-africa-horn");
+  assert.ok(legacyBand);
+  assert.equal(legacyBand.legacy_alias, true);
+  assert.equal(legacyBand.parent_code, "africa");
+  assert.equal(legacyBand.min_space, continuum.bandForCode("east-africa").min_space);
+  assert.equal(legacyBand.max_space, continuum.bandForCode("horn-of-africa").max_space);
+
+  const activeLeaves = new Set(continuum.subregions.map((leaf) => leaf.code));
   for (const [polityId, subregionCode] of Object.entries(index.polity_subregions)) {
-    assert.ok(knownLeaves.has(subregionCode), `${polityId}: unknown subregion ${subregionCode}`);
+    if (subregionCode === "east-africa-horn") continue;
+    assert.ok(activeLeaves.has(subregionCode), `${polityId}: unknown subregion ${subregionCode}`);
     const leaf = continuum.bandForCode(subregionCode);
     assert.equal(leaf.parent_code, index.polity_geography[polityId], `${polityId}: ${subregionCode} parent mismatch`);
   }
+});
+
+test("new reviewed shards cannot author the retired east-africa-horn code", () => {
+  const baseline = structuredClone(index);
+  const candidate = {
+    schema: "atlas-reviewed-spatial-bindings/v1",
+    shard_id: "r4-legacy-reject-probe",
+    reviewed_at: "2026-09-16T00:00:00Z",
+    baseline: "r4 phase-1 probe",
+    bindings: [{
+      polity_id: "00000000-0000-4000-8000-000000000001",
+      region_code: "africa",
+      subregion_code: "east-africa-horn"
+    }]
+  };
+  assert.throws(
+    () => compileSpatialBindings({ baseline, shards: [{ source: "probe.bindings.json", value: candidate }] }),
+    /UNKNOWN_SPATIAL_SUBREGION/
+  );
 });
 
 test("map-like adjacency decisions remain explicit inside each refined macroregion", () => {
@@ -61,11 +101,11 @@ test("map-like adjacency decisions remain explicit inside each refined macroregi
 
   assert.deepEqual(hierarchy.americas, ["north-america","mesoamerica","caribbean","south-america"]);
   assert.deepEqual(hierarchy.europe, ["britain-ireland","iberia","western-europe","italy","central-europe","northern-europe","balkans","eastern-europe","russia-volga"]);
-  assert.deepEqual(hierarchy.africa, ["west-africa","maghreb-north-africa","central-africa","southern-africa","east-africa-horn","nile-valley"]);
+  assert.deepEqual(hierarchy.africa, ["west-africa","maghreb-north-africa","central-africa","southern-africa","east-africa","horn-of-africa","nile-valley"]);
   assert.deepEqual(hierarchy["west-asia"], ["levant","anatolia","caucasus","mesopotamia","arabia","iranian-plateau"]);
-  assert.deepEqual(hierarchy["central-asia"], ["western-central-asia","eastern-central-asia-steppe"]);
-  assert.deepEqual(hierarchy["south-asia"], ["northwest-south-asia","north-india-ganges","deccan-south-india","maldives","sri-lanka"]);
+  assert.deepEqual(hierarchy["central-asia"], ["western-central-asia","western-siberia","eastern-central-asia-steppe","tibetan-plateau"]);
+  assert.deepEqual(hierarchy["south-asia"], ["himalayas","northwest-south-asia","north-india-ganges","deccan-south-india","maldives","sri-lanka"]);
   assert.deepEqual(hierarchy["southeast-asia"], ["mainland-southeast-asia","maritime-southeast-asia"]);
-  assert.deepEqual(hierarchy["east-asia"], ["china","manchuria","korean-peninsula","japan"]);
+  assert.deepEqual(hierarchy["east-asia"], ["china","manchuria","korean-peninsula","japan","eastern-siberia-far-east"]);
   assert.deepEqual(hierarchy.oceania, ["australasia","pacific-islands"]);
 });
