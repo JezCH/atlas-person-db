@@ -1,0 +1,177 @@
+{
+  "schema": "atlas-spatial-taxonomy-migration/v1",
+  "migration_id": "spatial-taxonomy-r4-final-static-14-20260916",
+  "source_refs": [
+    "https://github.com/JezCH/atlas-person-db/issues/977#issuecomment-5698633530"
+  ],
+  "migrations": [
+    {
+      "polity_id": "00ec4b0c-6002-5791-825c-43465632102d",
+      "from": {
+        "region_code": "south-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "south-asia",
+        "subregion_code": "north-india-ganges"
+      },
+      "reason": "India; final project consolidation uses the North India/Ganges representative rail under the capital/government-center rule rather than keeping a broad macro-only placement."
+    },
+    {
+      "polity_id": "4c3e50cb-d76c-4b7c-b611-222849404142",
+      "from": {
+        "region_code": "central-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "central-asia",
+        "subregion_code": "eastern-central-asia-steppe"
+      },
+      "reason": "Chagatai Ulus; final project consolidation uses the eastern Central Asia/Inner Asia representative rail for its durable political center."
+    },
+    {
+      "polity_id": "5247c9c0-ca50-452b-9e5a-d7e5585f096d",
+      "from": {
+        "region_code": "europe",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "europe",
+        "subregion_code": "western-europe"
+      },
+      "reason": "European Communities; final project consolidation uses the Western Europe representative rail under the political-center rule."
+    },
+    {
+      "polity_id": "82203ec1-60b7-5f5c-bab2-9b8df1fd8040",
+      "from": {
+        "region_code": "south-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "south-asia",
+        "subregion_code": "north-india-ganges"
+      },
+      "reason": "British Raj; final project consolidation uses the North India/Ganges representative rail under the government-center rule."
+    },
+    {
+      "polity_id": "851be7b2-6364-42fd-ad45-ec89db553612",
+      "from": {
+        "region_code": "south-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "southeast-asia",
+        "subregion_code": "maritime-southeast-asia"
+      },
+      "reason": "Jarawa; final project boundary consolidation extends the Maritime Southeast Asia coarse historical rail westward to the Andaman-Nicobar fringe."
+    },
+    {
+      "polity_id": "86e4798b-85fa-4a69-838f-7b75f87bc997",
+      "from": {
+        "region_code": "south-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "south-asia",
+        "subregion_code": "north-india-ganges"
+      },
+      "reason": "Eastern Ganga Kingdom (Odisha); final project boundary consolidation includes Odisha/Kalinga in the North India/Ganges coarse historical rail."
+    },
+    {
+      "polity_id": "8d91aa0d-7a55-42d5-a2a8-919b91cfd9c3",
+      "from": {
+        "region_code": "europe",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "europe",
+        "subregion_code": "central-europe"
+      },
+      "reason": "Hanseatic League; final project consolidation uses Central Europe as the representative rail for its durable political-commercial center."
+    },
+    {
+      "polity_id": "8e0892b7-22f9-465c-b2c6-1f00191b7a7f",
+      "from": {
+        "region_code": "central-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "east-asia",
+        "subregion_code": "eastern-siberia-far-east"
+      },
+      "reason": "Dolgans; final project consolidation uses the Eastern Siberia/Far East rail rather than retaining macro-only placement."
+    },
+    {
+      "polity_id": "b0cc75d1-346a-45ac-9a8d-e7155fa3dbeb",
+      "from": {
+        "region_code": "west-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "west-asia",
+        "subregion_code": "iranian-plateau"
+      },
+      "reason": "Iraqi Kurdish National Movement; final project boundary consolidation includes the Zagros highland fringe in the Iranian Plateau rail and does not create a separate Kurdistan leaf."
+    },
+    {
+      "polity_id": "b787ca69-b1d0-4724-8fcb-40a45567380e",
+      "from": {
+        "region_code": "south-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "south-asia",
+        "subregion_code": "deccan-south-india"
+      },
+      "reason": "Garha-Katanga; final project boundary consolidation includes the central-Indian highlands/Gondwana in the Deccan/South India coarse historical rail."
+    },
+    {
+      "polity_id": "c3d1b6ad-742e-4abe-8ae4-5baa21a9fc05",
+      "from": {
+        "region_code": "europe",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "europe",
+        "subregion_code": "central-europe"
+      },
+      "reason": "Kingdom of Hungary and Croatia; final project consolidation uses Central Europe as the representative rail under the political-center rule."
+    },
+    {
+      "polity_id": "cbe32fde-c91c-4071-b360-bdc77e27d47d",
+      "from": {
+        "region_code": "europe",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "europe",
+        "subregion_code": "western-europe"
+      },
+      "reason": "European Union; final project consolidation uses the Western Europe representative rail under the political-center rule."
+    },
+    {
+      "polity_id": "cc1a203a-c6bc-5011-a6d2-b3fd6a9b3c53",
+      "from": {
+        "region_code": "west-asia",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "africa",
+        "subregion_code": "nile-valley"
+      },
+      "reason": "Ayyubid Sultanate; final project consolidation uses the Cairo-centered Nile Valley representative rail."
+    },
+    {
+      "polity_id": "fc5e9dc5-f431-530a-bb1e-15539190f13c",
+      "from": {
+        "region_code": "europe",
+        "subregion_code": null
+      },
+      "to": {
+        "region_code": "europe",
+        "subregion_code": "britain-ireland"
+      },
+      "reason": "North Sea Empire; final project consolidation uses Britain/Ireland as the representative rail under the ruler/government-center rule."
+    }
+  ]
+}
