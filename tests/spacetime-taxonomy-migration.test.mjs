@@ -42,18 +42,14 @@ test("taxonomy r4 has one deterministic adjacency path and 45 equal active leave
   }
 });
 
-test("retired r3 leaves stay retired while east-africa-horn remains compatibility-only", () => {
+test("retired r3 leaves and the former east-africa-horn alias are unreachable in canonical runtime taxonomy", () => {
   const values = new Set(Object.values(index.polity_subregions));
   for (const code of RETIRED_SPLIT_CODES) assert.equal(values.has(code), false, code + " must be retired");
 
   assert.equal(values.has("east-africa-horn"), false, "canonical r4 data must contain no legacy Africa assignment");
-  assert.equal(continuum.subregions.some((leaf) => leaf.code === "east-africa-horn"), false, "legacy compatibility must not become an active r4 leaf");
-  const legacyBand = continuum.bandForCode("east-africa-horn");
-  assert.ok(legacyBand);
-  assert.equal(legacyBand.legacy_alias, true);
-  assert.equal(legacyBand.parent_code, "africa");
-  assert.equal(legacyBand.min_space, continuum.bandForCode("east-africa").min_space);
-  assert.equal(legacyBand.max_space, continuum.bandForCode("horn-of-africa").max_space);
+  assert.equal(continuum.subregions.some((leaf) => leaf.code === "east-africa-horn"), false, "legacy Africa code must not be an active r4 leaf");
+  assert.equal(continuum.bandForCode("east-africa-horn"), null, "legacy Africa code must not resolve through the runtime/display continuum");
+  assert.equal(continuum.macroForCode("east-africa-horn"), null, "legacy Africa code must not resolve to a runtime/display macroregion");
 
   const activeLeaves = new Set(continuum.subregions.map((leaf) => leaf.code));
   for (const [polityId, subregionCode] of Object.entries(index.polity_subregions)) {
@@ -69,7 +65,7 @@ test("new reviewed shards cannot author the retired east-africa-horn code", () =
     schema: "atlas-reviewed-spatial-bindings/v1",
     shard_id: "r4-legacy-reject-probe",
     reviewed_at: "2026-09-16T00:00:00Z",
-    baseline: "r4 phase-1 probe",
+    baseline: "r4 retirement probe",
     bindings: [{
       polity_id: "00000000-0000-4000-8000-000000000001",
       region_code: "africa",
