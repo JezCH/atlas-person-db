@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: '22'
       - name: Apply staged migration fix
-        run: python .github/tmp/r4_stage_patch.py
+        run: python .github/tmp/r4_stage_patch_v2.py
       - name: Install dependencies
         run: npm ci
       - name: Focused spatial regression tests
