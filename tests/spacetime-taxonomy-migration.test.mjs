@@ -25,15 +25,6 @@ const RETIRED_SPLIT_CODES = [
   "sri-lanka-maldives"
 ];
 
-const R4_PHASE1_PENDING_LEAVES = new Set([
-  "east-africa",
-  "horn-of-africa",
-  "western-siberia",
-  "tibetan-plateau",
-  "himalayas",
-  "eastern-siberia-far-east"
-]);
-
 test("taxonomy r4 has one deterministic adjacency path and 45 equal active leaves", () => {
   assert.equal(spaceAxis.SPATIAL_HIERARCHY_POLICY.taxonomy_revision, "2026-09-16-r4");
   assert.deepEqual(continuum.macroregions.map((band) => band.code), EXPECTED_MACROS);
@@ -47,16 +38,15 @@ test("taxonomy r4 has one deterministic adjacency path and 45 equal active leave
   assert.equal(stats.subregion_count, Object.keys(index.polity_subregions).length);
   for (const leaf of continuum.subregions) {
     const count = stats.subregion_counts[leaf.code] || 0;
-    if (R4_PHASE1_PENDING_LEAVES.has(leaf.code)) assert.equal(count, 0, leaf.code + " remains unmigrated during hierarchy-first Phase 1");
-    else assert.ok(count > 0, leaf.code + " must remain an active reviewed leaf");
+    assert.ok(count > 0, leaf.code + " must remain an active reviewed leaf");
   }
 });
 
-test("retired r3 leaves stay retired while east-africa-horn is baseline-only Phase-1 compatibility", () => {
+test("retired r3 leaves stay retired while east-africa-horn remains compatibility-only", () => {
   const values = new Set(Object.values(index.polity_subregions));
   for (const code of RETIRED_SPLIT_CODES) assert.equal(values.has(code), false, code + " must be retired");
 
-  assert.equal(values.has("east-africa-horn"), true, "Phase 1 keeps the immutable baseline assignment until exact-UUID migration");
+  assert.equal(values.has("east-africa-horn"), false, "canonical r4 data must contain no legacy Africa assignment");
   assert.equal(continuum.subregions.some((leaf) => leaf.code === "east-africa-horn"), false, "legacy compatibility must not become an active r4 leaf");
   const legacyBand = continuum.bandForCode("east-africa-horn");
   assert.ok(legacyBand);
@@ -67,7 +57,6 @@ test("retired r3 leaves stay retired while east-africa-horn is baseline-only Pha
 
   const activeLeaves = new Set(continuum.subregions.map((leaf) => leaf.code));
   for (const [polityId, subregionCode] of Object.entries(index.polity_subregions)) {
-    if (subregionCode === "east-africa-horn") continue;
     assert.ok(activeLeaves.has(subregionCode), `${polityId}: unknown subregion ${subregionCode}`);
     const leaf = continuum.bandForCode(subregionCode);
     assert.equal(leaf.parent_code, index.polity_geography[polityId], `${polityId}: ${subregionCode} parent mismatch`);
