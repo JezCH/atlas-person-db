@@ -210,15 +210,15 @@ test("invalid polity subregion compile fails closed instead of silently falling 
   assert.equal(compiled.x_anchor, null);
 });
 
-test("Phase-2 r4 model recognizes active leaves while preserving the deprecated Africa compatibility alias", () => {
+test("Phase-2 r4 model recognizes only active leaves after Africa alias retirement", () => {
   const active = new Set();
   for (const macro of spaceAxis.DEFAULT_SPATIAL_HIERARCHY) {
     for (const subregion of macro.subregions) active.add(subregion.code);
   }
 
   assert.equal(active.has("east-africa-horn"), false);
-  assert.equal(model.SUBREGION_PARENT["east-africa-horn"], "africa");
-  assert.equal(continuum.bandForCode("east-africa-horn").legacy_alias, true);
+  assert.equal(model.SUBREGION_PARENT["east-africa-horn"], undefined);
+  assert.equal(continuum.bandForCode("east-africa-horn"), null);
 
   const phase2Leaves = ["east-africa", "horn-of-africa", "western-siberia", "tibetan-plateau", "himalayas", "eastern-siberia-far-east"];
   for (const code of phase2Leaves) {
@@ -227,7 +227,6 @@ test("Phase-2 r4 model recognizes active leaves while preserving the deprecated 
   }
 
   for (const [subregionCode, macroregionCode] of Object.entries(model.SUBREGION_PARENT)) {
-    if (subregionCode === "east-africa-horn") continue;
     assert.equal(active.has(subregionCode), true, `${subregionCode} must remain present in the active r4 display taxonomy`);
     assert.equal(continuum.bandForCode(subregionCode).parent_code, macroregionCode);
   }

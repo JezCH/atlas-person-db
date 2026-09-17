@@ -44,7 +44,6 @@
     "southern-africa": "africa",
     "east-africa": "africa",
     "horn-of-africa": "africa",
-    "east-africa-horn": "africa",
     "nile-valley": "africa",
 
     "levant": "west-asia",
