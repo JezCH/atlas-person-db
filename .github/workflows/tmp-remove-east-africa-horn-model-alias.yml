@@ -1,0 +1,73 @@
+name: Temporary retire east-africa-horn model alias
+
+on:
+  push:
+    branches:
+      - codex/spatial-r4-remove-east-africa-horn-alias-20260917
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Remove retired model alias and update focused invariant
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          model_path = Path('atlas-person-spacetime-model.js')
+          model = model_path.read_text()
+          needle = '    "east-africa-horn": "africa",\n'
+          if model.count(needle) != 1:
+              raise SystemExit(f'expected exactly one model alias, found {model.count(needle)}')
+          model_path.write_text(model.replace(needle, ''))
+
+          test_path = Path('tests/spacetime-place-subregion.test.mjs')
+          source = test_path.read_text()
+          pattern = re.compile(r'test\("Phase-2 r4 model recognizes active leaves while preserving the deprecated Africa compatibility alias", \(\) => \{.*?\n\}\);\n\n(?=test\("subregion tracks use a compact rail corridor)', re.S)
+          replacement = '''test("Phase-2 r4 model recognizes only active leaves after Africa alias retirement", () => {
+            const active = new Set();
+            for (const macro of spaceAxis.DEFAULT_SPATIAL_HIERARCHY) {
+              for (const subregion of macro.subregions) active.add(subregion.code);
+            }
+
+            assert.equal(active.has("east-africa-horn"), false);
+            assert.equal(model.SUBREGION_PARENT["east-africa-horn"], undefined);
+            assert.equal(continuum.bandForCode("east-africa-horn"), null);
+
+            const phase2Leaves = ["east-africa", "horn-of-africa", "western-siberia", "tibetan-plateau", "himalayas", "eastern-siberia-far-east"];
+            for (const code of phase2Leaves) {
+              assert.equal(active.has(code), true, `${code} must be active in the r4 display taxonomy`);
+              assert.equal(model.SUBREGION_PARENT[code], continuum.bandForCode(code).parent_code, `${code} must be recognized by the Phase-2 model contract`);
+            }
+
+            for (const [subregionCode, macroregionCode] of Object.entries(model.SUBREGION_PARENT)) {
+              assert.equal(active.has(subregionCode), true, `${subregionCode} must remain present in the active r4 display taxonomy`);
+              assert.equal(continuum.bandForCode(subregionCode).parent_code, macroregionCode);
+            }
+          });
+
+          '''
+          updated, count = pattern.subn(replacement, source, count=1)
+          if count != 1:
+              raise SystemExit(f'expected exactly one stale alias test block, replaced {count}')
+          test_path.write_text(updated)
+      - name: Run focused taxonomy/model tests
+        run: node --test tests/spacetime-place-subregion.test.mjs tests/spacetime-taxonomy-migration.test.mjs
+      - name: Commit patch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add atlas-person-spacetime-model.js tests/spacetime-place-subregion.test.mjs
+          git commit -m 'spatial: remove retired Africa alias from model contract'
+          git push origin HEAD:${GITHUB_REF_NAME}
