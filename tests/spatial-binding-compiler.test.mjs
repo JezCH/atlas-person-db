@@ -9,11 +9,16 @@ import {
   loadReviewedBindingShards,
   serializeSpatialIndex
 } from '../scripts/compile-spatial-bindings.mjs';
+import {
+  applyTaxonomyMigrationManifests,
+  loadTaxonomyMigrationManifests
+} from '../scripts/compile-spatial-bindings-r4.mjs';
 
 const baseline = JSON.parse(readFileSync(new URL('../spatial/reviewed-bindings/0000-migrated-baseline.index.json', import.meta.url), 'utf8'));
 const canonicalRaw = readFileSync(new URL('../atlas-polity-spatial-index.json', import.meta.url), 'utf8');
 const canonical = JSON.parse(canonicalRaw);
 const shardsDir = fileURLToPath(new URL('../spatial/reviewed-bindings/shards', import.meta.url));
+const migrationDir = fileURLToPath(new URL('../spatial/taxonomy-migrations', import.meta.url));
 const reviewedShards = loadReviewedBindingShards(shardsDir);
 
 function shard({ id, reviewedAt = '2026-09-06T00:10:00Z', bindings = [], reviewQueue }) {
@@ -35,11 +40,15 @@ const IDS = Object.freeze({
   four: '00000000-0000-4000-8000-000000000004'
 });
 
-test('canonical runtime index is exactly the deterministic compiler output for all reviewed sources', () => {
-  const compiled = compileSpatialBindings({ baseline, shards: reviewedShards });
-  assert.deepEqual(compiled.index, canonical);
-  assert.equal(serializeSpatialIndex(compiled.index), canonicalRaw);
-  assert.deepEqual(compiled.stats, computeSpatialStats(canonical));
+test('canonical runtime index is exactly the deterministic r4 compiler output for all reviewed sources', () => {
+  const reviewed = compileSpatialBindings({ baseline, shards: reviewedShards });
+  const migrated = applyTaxonomyMigrationManifests(
+    reviewed.index,
+    loadTaxonomyMigrationManifests(migrationDir)
+  );
+  assert.deepEqual(migrated.baseline, canonical);
+  assert.equal(serializeSpatialIndex(migrated.baseline), canonicalRaw);
+  assert.deepEqual(computeSpatialStats(migrated.baseline), computeSpatialStats(canonical));
 });
 
 test('real reviewed shard directory validates independently', () => {
