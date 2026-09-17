@@ -1,0 +1,45 @@
+name: Temporary Spatial r4 Africa 25 Generator
+
+on:
+  push:
+    branches:
+      - codex/spatial-r4-africa-25-cutover-20260917
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Generate and verify canonical r4 index
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/compile-spatial-bindings-r4.mjs
+          node scripts/compile-spatial-bindings-r4.mjs --check
+      - name: Run focused spatial r4 tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --test tests/spatial-taxonomy-r4-compiler.test.mjs tests/spatial-taxonomy-r4-canonical-sync.test.mjs tests/spacetime-place-subregion.test.mjs
+      - name: Commit generated canonical index
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add atlas-polity-spatial-index.json
+          if git diff --cached --quiet; then
+            echo 'No generated canonical change.'
+            exit 0
+          fi
+          git commit -m 'spatial: regenerate canonical index for Africa 25 migration'
+          git push origin HEAD:${GITHUB_REF_NAME}
