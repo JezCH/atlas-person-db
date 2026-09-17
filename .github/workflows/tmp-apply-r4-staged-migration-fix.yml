@@ -1,0 +1,41 @@
+name: Temporary apply r4 staged migration fix
+
+on:
+  push:
+    branches:
+      - codex/spatial-r4-remove-east-africa-horn-alias-20260917
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply staged migration fix
+        run: python .github/tmp/r4_stage_patch.py
+      - name: Install dependencies
+        run: npm ci
+      - name: Focused spatial regression tests
+        run: node --test tests/spatial-binding-compiler.test.mjs tests/spatial-taxonomy-r4-compiler.test.mjs tests/spatial-taxonomy-migration.test.mjs tests/spacetime-taxonomy-migration.test.mjs tests/spacetime-place-subregion.test.mjs
+      - name: Deterministic r4 compiler check
+        run: node scripts/compile-spatial-bindings-r4.mjs --check
+      - name: Full test suite
+        run: npm test
+      - name: Diff sanity
+        run: git diff --check
+      - name: Commit validated fix
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add scripts/compile-spatial-bindings.mjs scripts/compile-spatial-bindings-r4.mjs tests/spatial-binding-compiler.test.mjs tests/spatial-taxonomy-r4-compiler.test.mjs
+          git diff --cached --quiet && { echo 'no patch produced'; exit 1; }
+          git commit -m 'fix: stage retired spatial migrations before strict validation'
+          git push origin HEAD:${GITHUB_REF_NAME}
