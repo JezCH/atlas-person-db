@@ -1,0 +1,94 @@
+name: Temporary fix r4 migration validation order
+
+on:
+  push:
+    branches:
+      - codex/spatial-r4-remove-east-africa-horn-alias-20260917
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Patch migration-before-validation pipeline and regression guards
+        shell: python
+        run: |
+          from pathlib import Path
+
+          def replace_exact(path, old, new):
+              p = Path(path)
+              text = p.read_text()
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{path}: expected exactly one match, found {count}: {old!r}')
+              p.write_text(text.replace(old, new, 1))
+
+          # Generic/current compiler must know only the active taxonomy. Retired
+          # source codes belong exclusively to the migration layer.
+          replace_exact(
+              'scripts/compile-spatial-bindings.mjs',
+              "const LEGACY_BASELINE_SUBREGION_PARENT = new Map([\n  ['east-africa-horn', 'africa']\n]);\n\n",
+              ''
+          )
+          replace_exact(
+              'scripts/compile-spatial-bindings.mjs',
+              '    const parent = taxonomy.subregionParent.get(subregionCode) || LEGACY_BASELINE_SUBREGION_PARENT.get(subregionCode);',
+              '    const parent = taxonomy.subregionParent.get(subregionCode);'
+          )
+          replace_exact(
+              'scripts/compile-spatial-bindings.mjs',
+              "    if (Object.prototype.hasOwnProperty.call(subregionCounts, code)) subregionCounts[code] += 1;\n    else if (!LEGACY_BASELINE_SUBREGION_PARENT.has(code)) fail('UNKNOWN_SPATIAL_SUBREGION', `stats: ${code}`);",
+              "    if (Object.prototype.hasOwnProperty.call(subregionCounts, code)) subregionCounts[code] += 1;\n    else fail('UNKNOWN_SPATIAL_SUBREGION', `stats: ${code}`);"
+          )
+
+          # Apply exact-UUID taxonomy migrations to the retained historical source
+          # before handing data to the strict current-taxonomy compiler.
+          replace_exact(
+              'scripts/compile-spatial-bindings-r4.mjs',
+              "  const retainedBaseline = readJson(options.baselinePath);\n  const shards = loadReviewedBindingShards(options.shardsDir);\n  const currentReviewed = compileSpatialBindings({ baseline: retainedBaseline, shards });\n  const migrations = loadTaxonomyMigrationManifests(options.migrationDir);\n  const migrated = applyTaxonomyMigrationManifests(currentReviewed.index, migrations);\n  const result = Object.freeze({\n    index: migrated.baseline,\n    stats: computeSpatialStats(migrated.baseline)\n  });",
+              "  const retainedBaseline = readJson(options.baselinePath);\n  const migrations = loadTaxonomyMigrationManifests(options.migrationDir);\n  const migrated = applyTaxonomyMigrationManifests(retainedBaseline, migrations);\n  const shards = loadReviewedBindingShards(options.shardsDir);\n  const result = compileSpatialBindings({ baseline: migrated.baseline, shards });"
+          )
+
+          # Generic compiler tests use the already-migrated current baseline.
+          replace_exact(
+              'tests/spatial-binding-compiler.test.mjs',
+              "const baseline = JSON.parse(readFileSync(new URL('../spatial/reviewed-bindings/0000-migrated-baseline.index.json', import.meta.url), 'utf8'));\nconst canonicalRaw = readFileSync(new URL('../atlas-polity-spatial-index.json', import.meta.url), 'utf8');\nconst canonical = JSON.parse(canonicalRaw);\nconst shardsDir = fileURLToPath(new URL('../spatial/reviewed-bindings/shards', import.meta.url));\nconst migrationDir = fileURLToPath(new URL('../spatial/taxonomy-migrations', import.meta.url));\nconst reviewedShards = loadReviewedBindingShards(shardsDir);",
+              "const retainedBaseline = JSON.parse(readFileSync(new URL('../spatial/reviewed-bindings/0000-migrated-baseline.index.json', import.meta.url), 'utf8'));\nconst canonicalRaw = readFileSync(new URL('../atlas-polity-spatial-index.json', import.meta.url), 'utf8');\nconst canonical = JSON.parse(canonicalRaw);\nconst shardsDir = fileURLToPath(new URL('../spatial/reviewed-bindings/shards', import.meta.url));\nconst migrationDir = fileURLToPath(new URL('../spatial/taxonomy-migrations', import.meta.url));\nconst reviewedShards = loadReviewedBindingShards(shardsDir);\nconst migrationManifests = loadTaxonomyMigrationManifests(migrationDir);\nconst baseline = applyTaxonomyMigrationManifests(retainedBaseline, migrationManifests).baseline;"
+          )
+          replace_exact(
+              'tests/spatial-binding-compiler.test.mjs',
+              "test('canonical runtime index is exactly the deterministic r4 compiler output for all reviewed sources', () => {\n  const reviewed = compileSpatialBindings({ baseline, shards: reviewedShards });\n  const migrated = applyTaxonomyMigrationManifests(\n    reviewed.index,\n    loadTaxonomyMigrationManifests(migrationDir)\n  );\n  assert.deepEqual(migrated.baseline, canonical);\n  assert.equal(serializeSpatialIndex(migrated.baseline), canonicalRaw);\n  assert.deepEqual(computeSpatialStats(migrated.baseline), computeSpatialStats(canonical));\n});",
+              "test('canonical runtime index is exactly the deterministic r4 compiler output for all reviewed sources', () => {\n  const reviewed = compileSpatialBindings({ baseline, shards: reviewedShards });\n  assert.deepEqual(reviewed.index, canonical);\n  assert.equal(serializeSpatialIndex(reviewed.index), canonicalRaw);\n  assert.deepEqual(computeSpatialStats(reviewed.index), computeSpatialStats(canonical));\n});"
+          )
+
+          # The r4 fixture itself must enforce the sequencing contract and prove
+          # the final compiler output contains no retired source code.
+          replace_exact(
+              'tests/spatial-taxonomy-r4-compiler.test.mjs',
+              "test('r4 reviewed static migration manifest matches the current reviewed spatial source exactly', () => {\n  const retainedBaseline = JSON.parse(fs.readFileSync(baselinePath, 'utf8'));\n  const currentReviewed = compileSpatialBindings({\n    baseline: retainedBaseline,\n    shards: loadReviewedBindingShards(shardDir)\n  });\n  const migrations = loadTaxonomyMigrationManifests(migrationDir);\n  const migrated = applyTaxonomyMigrationManifests(currentReviewed.index, migrations);\n\n  assert.equal(migrated.migrated_polity_ids.length, expected.size);\n  assert.deepEqual(new Set(migrated.migrated_polity_ids), new Set(expected.keys()));\n  for (const [polityId, subregion] of expected) {\n    assert.equal(migrated.baseline.polity_subregions[polityId], subregion, polityId);\n  }\n\n  const compiled = compileSpatialBindings({ baseline: migrated.baseline, shards: [] });\n  for (const [polityId, subregion] of expected) {\n    assert.equal(compiled.index.polity_subregions[polityId], subregion, polityId);\n  }\n});",
+              "test('r4 reviewed static migration manifest is applied before strict current-taxonomy compilation', () => {\n  const retainedBaseline = JSON.parse(fs.readFileSync(baselinePath, 'utf8'));\n  assert.throws(\n    () => compileSpatialBindings({ baseline: retainedBaseline, shards: [] }),\n    { code: 'INVALID_SPATIAL_BASELINE' }\n  );\n\n  const migrations = loadTaxonomyMigrationManifests(migrationDir);\n  const migrated = applyTaxonomyMigrationManifests(retainedBaseline, migrations);\n\n  assert.equal(migrated.migrated_polity_ids.length, expected.size);\n  assert.deepEqual(new Set(migrated.migrated_polity_ids), new Set(expected.keys()));\n  for (const [polityId, subregion] of expected) {\n    assert.equal(migrated.baseline.polity_subregions[polityId], subregion, polityId);\n  }\n\n  const compiled = compileSpatialBindings({\n    baseline: migrated.baseline,\n    shards: loadReviewedBindingShards(shardDir)\n  });\n  for (const [polityId, subregion] of expected) {\n    assert.equal(compiled.index.polity_subregions[polityId], subregion, polityId);\n  }\n  assert.equal(\n    Object.values(compiled.index.polity_subregions).includes('east-africa-horn'),\n    false,\n    'strict compiled output must contain zero retired east-africa-horn assignments'\n  );\n});"
+          )
+      - name: Install dependencies
+        run: npm ci
+      - name: Run focused spatial regression tests
+        run: node --test tests/spatial-binding-compiler.test.mjs tests/spatial-taxonomy-r4-compiler.test.mjs tests/spatial-taxonomy-migration.test.mjs tests/spacetime-taxonomy-migration.test.mjs tests/spacetime-place-subregion.test.mjs
+      - name: Verify deterministic r4 output
+        run: node scripts/compile-spatial-bindings-r4.mjs --check
+      - name: Run full test suite
+        run: npm test
+      - name: Commit validated fix
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add scripts/compile-spatial-bindings.mjs scripts/compile-spatial-bindings-r4.mjs tests/spatial-binding-compiler.test.mjs tests/spatial-taxonomy-r4-compiler.test.mjs
+          git commit -m 'fix: migrate retired spatial codes before strict validation'
+          git push origin HEAD:${GITHUB_REF_NAME}
