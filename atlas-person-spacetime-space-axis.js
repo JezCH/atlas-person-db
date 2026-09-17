@@ -153,28 +153,6 @@
       leafOffset = maxLeafOffset;
     });
 
-    // Phase-1 r4 compatibility: the immutable r3 baseline still contains
-    // east-africa-horn until exact-UUID polity migration is applied in Phase 2.
-    // Keep it addressable as one virtual band spanning the two new active leaves,
-    // but do not add it to the active 45-leaf taxonomy.
-    const eastAfrica = byCode.get("east-africa");
-    const hornOfAfrica = byCode.get("horn-of-africa");
-    if (eastAfrica?.parent_code === "africa" && hornOfAfrica?.parent_code === "africa") {
-      const legacyMin = Math.min(eastAfrica.min_space, hornOfAfrica.min_space);
-      const legacyMax = Math.max(eastAfrica.max_space, hornOfAfrica.max_space);
-      byCode.set("east-africa-horn", Object.freeze({
-        kind: "subregion",
-        code: "east-africa-horn",
-        label: "동아프리카·아프리카의 뿔",
-        parent_code: "africa",
-        min_space: legacyMin,
-        max_space: legacyMax,
-        center_space: (legacyMin + legacyMax) / 2,
-        ordinal: null,
-        legacy_alias: true
-      }));
-    }
-
     const bandForCode = (code) => byCode.get(text(code)) || null;
     const macroForCode = (code) => {
       const band = bandForCode(code);
