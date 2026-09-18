@@ -1,0 +1,180 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "person_opposes_own_side_rewrite3_20260919_v1",
+  "as_of": "2026-09-19",
+  "status": "REVIEWED_OPPOSES_OWN_SIDE_CONTEXT_REPAIR",
+  "release_order": 568,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User-directed continuation of #977 PERSON-POLITY-OPPOSES-INDEPENDENCE-AUDIT-20260919 checkpoint 5737460442. Exact live Production rows revalidated on 2026-09-19 after unrelated representative-domain changes. Apply only the three reviewed corrections: Harriet Tubman United States opposes -> active_in; Jose Rizal Captaincy General of the Philippines opposes -> Philippines active_in; Che Guevara Cuba opposes -> active_in. No deletions and no changes to chronology, role, period basis, confidence, or normalized source links.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "semantic_identity_change_forbidden": false,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "checkpoint_issue": 977,
+    "checkpoint_comment": 5737460442,
+    "active_in_relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+    "live_revalidation": "Production person read and polity catalog rechecked on current main descendant 9d7aa5047f890095c5e057ec859ffca917ba7334. Philippines polity exact UUID exists; 26th of July Movement polity catalog search returns zero.",
+    "editorial_rule": "Prefer a person's own political community or civic/resistance context when historically supportable. Use opposes only when the modeled polity is genuinely the counterparty and an own-side context cannot be represented without invention or distortion."
+  },
+  "operations": [
+    {
+      "case_id": "harriet_tubman_us_opposes_to_active_in",
+      "type": "rewrite_activity",
+      "activity_id": "7981dd26-4200-57d9-b4d4-bbd97f13e28f",
+      "baseline_before": {
+        "person_id": "de41d98d-2ca9-5858-ac9f-1de3cc7c8136",
+        "polity_id": "7d09bc56-1ea0-515e-a3e7-9863361b6f15",
+        "role_id": "39c4516d-c0bd-5239-9e48-949d01edf3e4",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1849,
+        "activity_end": 1860,
+        "confidence": "legacy_asserted",
+        "chronology_status": "reviewed_stage2_phase",
+        "legacy_source_key": "pending-records-supplement-4.json:19:4fcd6a044dec6643",
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "7981dd26-4200-57d9-b4d4-bbd97f13e28f",
+        "person_id": "de41d98d-2ca9-5858-ac9f-1de3cc7c8136",
+        "polity_id": "7d09bc56-1ea0-515e-a3e7-9863361b6f15",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "39c4516d-c0bd-5239-9e48-949d01edf3e4",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1849,
+        "activity_end": 1860,
+        "activity_start_detail": {
+          "year": 1849,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1860,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "reviewed_stage2_phase",
+        "legacy_source_key": "pending-records-supplement-4.json:19:4fcd6a044dec6643",
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "From her 1849 escape through her Underground Railroad missions, Tubman's abolitionist activity took place in the United States. ATLAS uses United States / active_in as civic and geographic context; her opposition was to slavery and fugitive-slave enforcement rather than to the United States polity as a whole.",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "jose_rizal_philippines_own_side_active_in",
+      "type": "rewrite_activity",
+      "activity_id": "ca30481f-9e6a-5482-bf88-5b7b594f2f55",
+      "baseline_before": {
+        "person_id": "821eba4d-47af-5e0f-b183-be624f960b93",
+        "polity_id": "5cb5c96f-f860-577e-98cc-753d13ef5c03",
+        "role_id": "ffafc8ed-f301-59e3-b2a5-100afa8041b3",
+        "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
+        "activity_start": 1882,
+        "activity_end": 1896,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-4.json:20:c71592a51ca657d8",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "ca30481f-9e6a-5482-bf88-5b7b594f2f55",
+        "person_id": "821eba4d-47af-5e0f-b183-be624f960b93",
+        "polity_id": "4bfbe8d6-8ff7-5b48-83cb-7f890d7c3c19",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "ffafc8ed-f301-59e3-b2a5-100afa8041b3",
+        "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
+        "activity_start": 1882,
+        "activity_end": 1896,
+        "activity_start_detail": {
+          "year": 1882,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1896,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-4.json:20:c71592a51ca657d8",
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Activity period begins with Rizal's departure for Spain and ends with his execution by Spanish colonial authorities. ATLAS represents his reformist and nationalist activity under Philippines / active_in as the Philippine national-community context rather than as affiliation with the colonial Captaincy General.",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "che_guevara_cuba_opposes_to_active_in",
+      "type": "rewrite_activity",
+      "activity_id": "caf26f15-0322-4a2c-aad0-24e8b86447e3",
+      "baseline_before": {
+        "person_id": "7c46440f-3ab9-4291-b03f-519d6251b3bc",
+        "polity_id": "b9166088-bab0-4cd3-a8d0-bf2c7cb102c5",
+        "role_id": "0118a920-1e9e-4562-a108-dc66edf63607",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": 1956,
+        "activity_end": 1959,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "caf26f15-0322-4a2c-aad0-24e8b86447e3",
+        "person_id": "7c46440f-3ab9-4291-b03f-519d6251b3bc",
+        "polity_id": "b9166088-bab0-4cd3-a8d0-bf2c7cb102c5",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "0118a920-1e9e-4562-a108-dc66edf63607",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": 1956,
+        "activity_end": 1959,
+        "activity_start_detail": {
+          "year": 1956,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1959,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Ernesto 'Che' Guevara landed in Cuba with Fidel Castro's expedition in December 1956 and became a leading commander of the 26th of July Movement during the guerrilla war that overthrew Fulgencio Batista's government in January 1959. ATLAS uses Cuba / active_in as the territorial and national context of that revolutionary activity; this does not imply service to or affiliation with Batista's government.",
+        "add_source_links": []
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 3,
+    "production_mutation_authorized": false
+  }
+}
