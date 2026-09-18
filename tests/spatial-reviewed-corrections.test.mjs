@@ -9,7 +9,8 @@ import {
 } from '../scripts/compile-spatial-bindings.mjs';
 import {
   compileSpatialBindingsR4,
-  loadTaxonomyMigrationManifests
+  loadTaxonomyMigrationManifests,
+  prepareCurrentTaxonomyBaseline
 } from '../scripts/compile-spatial-bindings-r4.mjs';
 
 const baseline = JSON.parse(fs.readFileSync('spatial/reviewed-bindings/0000-migrated-baseline.index.json', 'utf8'));
@@ -82,6 +83,11 @@ test('post-r4 reviewed correction closes every remaining macro-only mapping with
 });
 
 test('reviewed correction overlay fails closed when an expected source mapping drifts', () => {
+  const currentBaseline = prepareCurrentTaxonomyBaseline(baseline, migrations).baseline;
+  const polityId = Object.keys(currentBaseline.polity_geography)[0];
+  assert.ok(polityId, 'current r4 baseline must expose at least one static polity mapping');
+  const actualRegion = currentBaseline.polity_geography[polityId];
+  const wrongRegion = actualRegion === 'europe' ? 'east-asia' : 'europe';
   const fake = [{
     source: 'drift.corrections.json',
     value: {
@@ -90,15 +96,15 @@ test('reviewed correction overlay fails closed when an expected source mapping d
       baseline: 'test',
       reviewed_at: '2026-09-18T05:35:00Z',
       changes: [{
-        polity_id: AZAD_HIND,
-        expected: { region_code: 'europe', subregion_code: null },
+        polity_id: polityId,
+        expected: { region_code: wrongRegion, subregion_code: null },
         disposition: 'review_queue',
         reason: 'synthetic drift guard'
       }]
     }
   }];
   assert.throws(
-    () => compileSpatialBindings({ baseline, corrections: fake }),
+    () => compileSpatialBindings({ baseline: currentBaseline, corrections: fake }),
     { code: 'SPATIAL_CORRECTION_SOURCE_MISMATCH' }
   );
 });
