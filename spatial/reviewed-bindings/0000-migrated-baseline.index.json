@@ -2543,5 +2543,76 @@
     "29cc8e05-3693-4b82-9f86-950c2ed82e12": "north-america",
     "13bc95f9-f95c-4cb1-a3c1-f15bb5547651": "eastern-central-asia-steppe",
     "d050c493-a3e0-4d5c-b16f-452c4d17cfcf": "britain-ireland"
-  }
+  },
+  "activity_spatial_overrides": [
+    {
+      "activity_id": "19fc5c65-cf80-4409-a0de-86195f46b102",
+      "expected_polity_id": "01f4ce7b-aaa3-473a-a6fd-9c95c4a85ff7",
+      "expected_start_year": 1064,
+      "expected_end_year": 1092,
+      "region_code": "west-asia",
+      "subregion_code": "iranian-plateau",
+      "location_label": "Isfahan",
+      "reason": "Nizam al-Mulk's Great Seljuk service spans the existing polity-place-function gap; Isfahan is the reviewed activity-level court anchor through Malik Shah's reign, without asserting continuous physical presence.",
+      "source_refs": [
+        "Encyclopaedia Iranica: MALEKŠĀH — Isfahan can be considered the Seljuq capital during Malik Shah's reign",
+        "Encyclopaedia Iranica: NEẒĀM-AL-MOLK — vizier under Alp Arslan and Malik Shah until 1092"
+      ]
+    },
+    {
+      "activity_id": "bdd5ba3f-52c5-4461-9476-099918187856",
+      "expected_polity_id": "01f4ce7b-aaa3-473a-a6fd-9c95c4a85ff7",
+      "expected_start_year": 1074,
+      "expected_end_year": 1079,
+      "region_code": "west-asia",
+      "subregion_code": "iranian-plateau",
+      "location_label": "Isfahan",
+      "reason": "Omar Khayyam's 1074-1079 Seljuq scientific service is specifically associated with Malik Shah's Isfahan court and observatory.",
+      "source_refs": [
+        "Encyclopaedia Iranica: ḴAYYĀM, OMAR — work under Malik Shah and the Jalali calendar project at Isfahan"
+      ]
+    },
+    {
+      "activity_id": "54208459-1778-4a94-bf37-84d4d5c242b8",
+      "expected_polity_id": "01f4ce7b-aaa3-473a-a6fd-9c95c4a85ff7",
+      "expected_start_year": 1091,
+      "expected_end_year": 1095,
+      "region_code": "west-asia",
+      "subregion_code": "mesopotamia",
+      "location_label": "Baghdad",
+      "reason": "Al-Ghazali's authored 1091-1095 activity is his Nizamiyya professorship in Baghdad; an activity-specific Baghdad anchor is more accurate than extending a single Great Seljuk capital through the post-1092 succession crisis.",
+      "source_refs": [
+        "Stanford Encyclopedia of Philosophy: al-Ghazali — appointed to the Nizamiyya in Baghdad in 1091 and left Baghdad in 1095",
+        "Encyclopaedia Iranica: ḠAZĀLĪ, ABŪ ḤĀMED — professor at the Neẓāmiya in Baghdad from 1091 for four years"
+      ]
+    },
+    {
+      "activity_id": "c350d83a-ab5e-4c12-a48a-3157fb76509d",
+      "expected_polity_id": "6539c314-ec29-42e0-a0c2-90991fb9ffd8",
+      "expected_start_year": 1405,
+      "expected_end_year": 1447,
+      "region_code": "south-asia",
+      "subregion_code": "northwest-south-asia",
+      "location_label": "Herat",
+      "reason": "Shah Rukh ruled from Herat for the authored 1405-1447 interval; ATLAS r4 places historical Herat/Afghanistan in the northwest South Asia leaf.",
+      "source_refs": [
+        "Encyclopaedia Iranica: HERAT iii. HISTORY, MEDIEVAL PERIOD — Herat became the main Timurid capital under Shah Rukh until 1447",
+        "The Metropolitan Museum of Art: The Art of the Timurid Period (ca. 1370–1507) — Herat became the Timurid capital and major cultural center"
+      ]
+    },
+    {
+      "activity_id": "747c2472-b051-4412-8f7b-51f551a1ec17",
+      "expected_polity_id": "68c83ef6-0023-5af9-a6e8-26ccf5b8e116",
+      "expected_start_year": 1692,
+      "expected_end_year": 1711,
+      "region_code": "west-asia",
+      "subregion_code": "arabia",
+      "location_label": "Rustaq",
+      "reason": "Saif bin Sultan's Ya'rubid reign predates the later Muscat/Zanzibar capital sequence; Rustaq is the reviewed Omani authority center for this activity.",
+      "source_refs": [
+        "The National Museum of Oman: Architectural Heritage — Rustaq was a Ya'rubid capital and authority center",
+        "Oman Ministry of Foreign Affairs: History — Al Rustaq is a former capital of Oman"
+      ]
+    }
+  ]
 }
