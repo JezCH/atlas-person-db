@@ -29,7 +29,7 @@
     ["./atlas-person-spacetime-performance.js?v=20260826-p13", "ATLAS_PERSON_SPACETIME_PERFORMANCE"],
     ["./atlas-person-spacetime-spatial-compile.js?v=20260903-taxonomy-r2", "ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE"],
     ["./atlas-person-spacetime-person-tracks.js?v=20260902-inspector-evidence", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
-    ["./atlas-person-spacetime-political-placement.js?v=20260826-inplace-p8", "ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT"],
+    ["./atlas-person-spacetime-political-placement.js?v=20260918-opposition-context", "ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT"],
     ["./atlas-person-spacetime-lod.js?v=20260831-500-floor", "ATLAS_PERSON_SPACETIME_LOD"],
     ["./atlas-person-spacetime-label-engine.js?v=20260903-cjk-band-zone", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
   ]);
@@ -1137,7 +1137,7 @@
     const primarySegmentCount = compiled.partitioned.tracks.reduce((sum, track) => sum + (track.primary_segments?.length || 0), 0);
 
     mount.innerHTML = `<section class="spacetime-toolbar card">
-      <div class="spacetime-toolbar-copy"><p class="eyebrow">PERSON SPACETIME ATLAS</p><h2>시공간 인물도</h2><p>시공간 인물도는 500%를 최소·기본 축척으로 사용합니다. 시간과 공간은 하나의 전역 카메라 배율로 함께 확대되며, 물리 캔버스 크기에는 모든 시대와 모든 지역에 동일한 0.748 압축만 적용합니다. 가로 base world는 900px 하한·1,275px 상한을 사용하므로 넓은 화면에서도 세계 자체가 불필요하게 늘어나지 않습니다. 특정 시대나 특정 지역의 빈 공간만 따로 접지 않습니다. 검색·선택·줌은 normalized world 좌표를 바꾸지 않으며, opposes는 자기 위치를 결정하지 않습니다.</p><div class="spacetime-explore-help">방향키 이동 · PageUp/PageDown 큰 이동 · Shift+↑/↓ 이전/다음 인물 · F 선택 위치 · +/- 시공간 확대 · Esc 선택 해제</div></div>
+      <div class="spacetime-toolbar-copy"><p class="eyebrow">PERSON SPACETIME ATLAS</p><h2>시공간 인물도</h2><p>시공간 인물도는 500%를 최소·기본 축척으로 사용합니다. 시간과 공간은 하나의 전역 카메라 배율로 함께 확대되며, 물리 캔버스 크기에는 모든 시대와 모든 지역에 동일한 0.748 압축만 적용합니다. 가로 base world는 900px 하한·1,275px 상한을 사용하므로 넓은 화면에서도 세계 자체가 불필요하게 늘어나지 않습니다. 특정 시대나 특정 지역의 빈 공간만 따로 접지 않습니다. 검색·선택·줌은 normalized world 좌표를 바꾸지 않습니다. 자기 정치체가 없는 opposition-only Activity는 상대 정치체 권역을 대립 맥락 배치로 사용하지만, 이를 소속·복무로 해석하지 않습니다.</p><div class="spacetime-explore-help">방향키 이동 · PageUp/PageDown 큰 이동 · Shift+↑/↓ 이전/다음 인물 · F 선택 위치 · +/- 시공간 확대 · Esc 선택 해제</div></div>
       <div class="spacetime-controls">
         <label>검색<input id="spacetimeSearch" type="search" value="${escapeHtml(query)}" placeholder="인물·정치체·역할 검색" /></label>
         <div class="spacetime-camera" role="group" aria-label="시공간 확대"><span>시공간 확대</span><button id="spacetimeCameraZoomOut" type="button" aria-label="시공간 축소">−</button><output id="spacetimeCameraZoomValue">${escapeHtml(cameraZoomLabel())}</output><button id="spacetimeCameraZoomIn" type="button" aria-label="시공간 확대">+</button><button id="spacetimeCameraZoomReset" type="button">500%</button></div>

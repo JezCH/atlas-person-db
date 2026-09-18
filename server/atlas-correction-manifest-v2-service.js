@@ -50,7 +50,11 @@ function normalizeActivity(raw, label) {
   for (const field of ACTIVITY_FIELDS) {
     let value = raw[field] ?? null;
     if (ACTIVITY_UUID_FIELDS.has(field)) {
-      value = requireUuid(value, `CORRECTION_V2_${label}_${field.toUpperCase()}_INVALID`, field === "relation_type_id" || field === "role_id");
+      value = requireUuid(
+        value,
+        `CORRECTION_V2_${label}_${field.toUpperCase()}_INVALID`,
+        field === "polity_id" || field === "relation_type_id" || field === "role_id"
+      );
     }
     out[field] = value;
   }

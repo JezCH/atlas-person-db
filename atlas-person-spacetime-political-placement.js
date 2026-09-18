@@ -33,12 +33,19 @@
       else if (classification === "counterparty") counterpartySegments.push(enriched);
       else unclassifiedSegments.push(enriched);
     }
-    const extent = extentForSegments(primarySegments);
+    const counterpartyContextFallback = primarySegments.length === 0 && counterpartySegments.length > 0;
+    const displaySegments = primarySegments.length ? primarySegments : counterpartySegments;
+    const extent = extentForSegments(displaySegments);
     return Object.freeze({
       ...track,
-      primary_spatial_status: primarySegments.length ? "placed" : "unresolved",
-      primary_segments: Object.freeze(primarySegments), counterparty_segments: Object.freeze(counterpartySegments), unclassified_segments: Object.freeze(unclassifiedSegments),
+      primary_spatial_status: displaySegments.length ? "placed" : "unresolved",
+      primary_spatial_basis: primarySegments.length ? "primary_relation" : counterpartyContextFallback ? "counterparty_context" : "unresolved",
+      semantic_primary_segments: Object.freeze(primarySegments),
+      primary_segments: Object.freeze(displaySegments),
+      counterparty_segments: Object.freeze(counterpartySegments),
+      unclassified_segments: Object.freeze(unclassifiedSegments),
       primary_time_extent: extent?.time || null, primary_space_extent: extent?.space || null,
+      counterparty_context_fallback: counterpartyContextFallback,
       counterparty_overlay_available: counterpartySegments.length > 0, requires_relation_review: unclassifiedSegments.length > 0
     });
   }
