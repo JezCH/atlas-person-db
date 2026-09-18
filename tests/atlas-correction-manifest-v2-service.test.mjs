@@ -101,3 +101,44 @@ test('Correction v2 relation count delta tracks composite source links, not inve
     polity_relation_sources: 1
   });
 });
+
+
+test('Correction v2 accepts a reviewed rewrite from legacy null polity to a canonical polity', () => {
+  const base = {
+    id: '10000000-0000-4000-8000-000000000001',
+    person_id: '10000000-0000-4000-8000-000000000002',
+    polity_id: null,
+    relation_type_id: null,
+    role_id: '10000000-0000-4000-8000-000000000003',
+    period_basis_id: '10000000-0000-4000-8000-000000000004',
+    activity_start: -73,
+    activity_start_month: null,
+    activity_start_day: null,
+    activity_start_granularity: 'year',
+    activity_start_certainty: 'exact',
+    activity_start_calendar: 'unspecified_historical',
+    activity_end: -71,
+    activity_end_month: null,
+    activity_end_day: null,
+    activity_end_granularity: 'year',
+    activity_end_certainty: 'exact',
+    activity_end_calendar: 'unspecified_historical',
+    confidence: 'well_established',
+    chronology_status: 'reviewed',
+    legacy_source_key: null,
+    notes: 'legacy null polity',
+    source_locator: null,
+    content_hash: null
+  };
+  const before = engine.normalizeActivity(base, 'OP1_BEFORE');
+  assert.equal(before.polity_id, null);
+  assert.equal(before.relation_type_id, null);
+
+  const after = engine.normalizeActivity({
+    ...base,
+    polity_id: '10000000-0000-4000-8000-000000000005',
+    relation_type_id: '10000000-0000-4000-8000-000000000006'
+  }, 'OP1_AFTER');
+  assert.equal(after.polity_id, '10000000-0000-4000-8000-000000000005');
+  assert.equal(after.relation_type_id, '10000000-0000-4000-8000-000000000006');
+});
