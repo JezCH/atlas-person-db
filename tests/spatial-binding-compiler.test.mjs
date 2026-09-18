@@ -7,6 +7,7 @@ import {
   compileSpatialBindings,
   computeSpatialStats,
   loadReviewedBindingShards,
+  loadReviewedSpatialCorrections,
   serializeSpatialIndex
 } from '../scripts/compile-spatial-bindings.mjs';
 import {
@@ -19,8 +20,10 @@ const retainedBaseline = JSON.parse(readFileSync(new URL('../spatial/reviewed-bi
 const canonicalRaw = readFileSync(new URL('../atlas-polity-spatial-index.json', import.meta.url), 'utf8');
 const canonical = JSON.parse(canonicalRaw);
 const shardsDir = fileURLToPath(new URL('../spatial/reviewed-bindings/shards', import.meta.url));
+const correctionsDir = fileURLToPath(new URL('../spatial/reviewed-bindings/corrections', import.meta.url));
 const migrationDir = fileURLToPath(new URL('../spatial/taxonomy-migrations', import.meta.url));
 const reviewedShards = loadReviewedBindingShards(shardsDir);
+const reviewedCorrections = loadReviewedSpatialCorrections(correctionsDir);
 const migrationManifests = loadTaxonomyMigrationManifests(migrationDir);
 const baseline = prepareCurrentTaxonomyBaseline(retainedBaseline, migrationManifests).baseline;
 
@@ -44,14 +47,14 @@ const IDS = Object.freeze({
 });
 
 test('canonical runtime index is exactly the deterministic staged r4 compiler output for all reviewed sources', () => {
-  const reviewed = compileSpatialBindingsR4({ baseline: retainedBaseline, shards: reviewedShards, manifests: migrationManifests });
+  const reviewed = compileSpatialBindingsR4({ baseline: retainedBaseline, shards: reviewedShards, manifests: migrationManifests, corrections: reviewedCorrections });
   assert.deepEqual(reviewed.index, canonical);
   assert.equal(serializeSpatialIndex(reviewed.index), canonicalRaw);
   assert.deepEqual(computeSpatialStats(reviewed.index), computeSpatialStats(canonical));
 });
 
 test('real reviewed shard directory validates independently', () => {
-  const compiled = compileSpatialBindings({ baseline, shards: reviewedShards });
+  const compiled = compileSpatialBindings({ baseline, shards: reviewedShards, corrections: reviewedCorrections });
   assert.ok(compiled.stats.geography_count >= Object.keys(baseline.polity_geography).length);
   assert.ok(compiled.stats.subregion_count >= Object.keys(baseline.polity_subregions ?? {}).length);
   assert.ok(compiled.stats.review_queue_count >= (baseline.review_queue ?? []).length);

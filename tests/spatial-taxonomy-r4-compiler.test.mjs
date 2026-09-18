@@ -4,7 +4,8 @@ import assert from 'node:assert/strict';
 
 import {
   compileSpatialBindings,
-  loadReviewedBindingShards
+  loadReviewedBindingShards,
+  loadReviewedSpatialCorrections
 } from '../scripts/compile-spatial-bindings.mjs';
 import {
   compileSpatialBindingsR4,
@@ -13,6 +14,7 @@ import {
 
 const baselinePath = 'spatial/reviewed-bindings/0000-migrated-baseline.index.json';
 const shardDir = 'spatial/reviewed-bindings/shards';
+const correctionDir = 'spatial/reviewed-bindings/corrections';
 const migrationDir = 'spatial/taxonomy-migrations';
 
 const expected = new Map([
@@ -98,7 +100,8 @@ test('r4 stages retired-source migrations before strict compile and active-sourc
   const retainedBaseline = JSON.parse(fs.readFileSync(baselinePath, 'utf8'));
   assert.throws(() => compileSpatialBindings({ baseline: retainedBaseline, shards: [] }), { code: 'INVALID_SPATIAL_BASELINE' });
   const migrations = loadTaxonomyMigrationManifests(migrationDir);
-  const compiled = compileSpatialBindingsR4({ baseline: retainedBaseline, shards: loadReviewedBindingShards(shardDir), manifests: migrations });
+  const corrections = loadReviewedSpatialCorrections(correctionDir);
+  const compiled = compileSpatialBindingsR4({ baseline: retainedBaseline, shards: loadReviewedBindingShards(shardDir), manifests: migrations, corrections });
   assert.equal(compiled.migrated_polity_ids.length, expected.size);
   assert.deepEqual(new Set(compiled.migrated_polity_ids), new Set(expected.keys()));
   for (const [polityId, subregion] of expected) assert.equal(compiled.index.polity_subregions[polityId], subregion, polityId);

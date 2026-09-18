@@ -95,6 +95,19 @@ The compiler rejects:
 
 Existing dispositioned UUIDs cannot be silently overridden by a later shard. Corrections to an already reviewed mapping or HOLD require an explicit correction path rather than a backfill shard.
 
+
+## Reviewed correction overlay
+
+Baseline-owned spatial dispositions are corrected through uniquely named `corrections/*.corrections.json` files. The frozen baseline remains immutable.
+
+A correction must carry the exact expected current macro/leaf mapping and fails closed if the source mapping has drifted. Supported reviewed outcomes are:
+
+- `place_function`: replace a static mapping with reviewed time-dependent political-center/capital functions;
+- `review_queue`: replace a static mapping with an explicit reviewed non-static disposition when a fixed place would create false precision;
+- `remove_orphan`: remove a stale spatial mapping only when exact current Production audit evidence proves that no live Polity with that UUID remains.
+
+The correction overlay is applied before ordinary shard compilation. Ordinary shards still cannot override an existing binding, place-function disposition, or review-queue disposition. A correction file is therefore not a general escape hatch for duplicate/conflict guards.
+
 ## Parallel worker contract
 
 A parallel worker may finish historical review and produce one or more independent shard payloads without editing the canonical runtime index or numeric count locks.

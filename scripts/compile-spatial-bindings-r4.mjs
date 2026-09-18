@@ -8,6 +8,7 @@ import {
   compileSpatialBindings,
   computeSpatialStats,
   loadReviewedBindingShards,
+  loadReviewedSpatialCorrections,
   serializeSpatialIndex
 } from './compile-spatial-bindings.mjs';
 import {
@@ -137,9 +138,9 @@ export function prepareCurrentTaxonomyBaseline(retainedBaseline, manifests) {
   });
 }
 
-export function compileSpatialBindingsR4({ baseline, shards = [], manifests = [] }) {
+export function compileSpatialBindingsR4({ baseline, shards = [], manifests = [], corrections = [] }) {
   const prepared = prepareCurrentTaxonomyBaseline(baseline, manifests);
-  const reviewed = compileSpatialBindings({ baseline: prepared.baseline, shards });
+  const reviewed = compileSpatialBindings({ baseline: prepared.baseline, shards, corrections });
   const migrated = applyTaxonomyMigrationManifests(reviewed.index, prepared.postcompile);
   const migratedPolityIds = [...prepared.migrated_polity_ids, ...migrated.migrated_polity_ids].sort();
   if (JSON.stringify(migratedPolityIds) !== JSON.stringify(prepared.migration_polity_ids)) {
@@ -156,6 +157,7 @@ function parseArgs(argv) {
   const options = {
     baselinePath: 'spatial/reviewed-bindings/0000-migrated-baseline.index.json',
     shardsDir: 'spatial/reviewed-bindings/shards',
+    correctionsDir: 'spatial/reviewed-bindings/corrections',
     migrationDir: 'spatial/taxonomy-migrations',
     outPath: 'atlas-polity-spatial-index.json',
     check: false,
@@ -167,6 +169,7 @@ function parseArgs(argv) {
     switch (arg) {
       case '--baseline': options.baselinePath = value; index += 1; break;
       case '--shards-dir': options.shardsDir = value; index += 1; break;
+      case '--corrections-dir': options.correctionsDir = value; index += 1; break;
       case '--migration-dir': options.migrationDir = value; index += 1; break;
       case '--out': options.outPath = value; index += 1; break;
       case '--check': options.check = true; break;
@@ -182,8 +185,9 @@ export function main(argv = process.argv.slice(2)) {
   const options = parseArgs(argv);
   const retainedBaseline = readJson(options.baselinePath);
   const shards = loadReviewedBindingShards(options.shardsDir);
+  const corrections = loadReviewedSpatialCorrections(options.correctionsDir);
   const migrations = loadTaxonomyMigrationManifests(options.migrationDir);
-  const result = compileSpatialBindingsR4({ baseline: retainedBaseline, shards, manifests: migrations });
+  const result = compileSpatialBindingsR4({ baseline: retainedBaseline, shards, manifests: migrations, corrections });
   const serialized = serializeSpatialIndex(result.index);
 
   if (options.validateOnly) {
