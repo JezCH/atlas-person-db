@@ -97,7 +97,7 @@ test("unreviewed Place names never upgrade spatial precision", () => {
   assert.equal(segment.x_max, null);
 });
 
-test("real Roman Empire capital changes fail closed when only part of the Place sequence has reviewed leaf binding", () => {
+test("real Roman Empire capital changes compile both reviewed Place segments", () => {
   const lookup = model.createSpatialLookup(spatialIndex);
   const continuum = spaceAxis.createSpatialContinuum();
   const activity = {
@@ -115,9 +115,9 @@ test("real Roman Empire capital changes fail closed when only part of the Place 
   assert.ok(resolved.segments.every((segment) => segment.active_place_functions.length === 1));
 
   const compiled = spatialCompile.compileActivityPlacement(resolved, continuum);
-  assert.equal(compiled.status, "spatial_compile_unresolved");
-  assert.equal(compiled.reason, "macroregion_only_unresolved");
+  assert.equal(compiled.status, "placed");
+  assert.equal(compiled.reason, null);
   assert.deepEqual(compiled.segments.map((segment) => segment.place_name), ["Rome", "Constantinople"]);
-  assert.deepEqual(compiled.segments.map((segment) => segment.spatial_precision), ["place", "unresolved"]);
+  assert.deepEqual(compiled.segments.map((segment) => segment.spatial_precision), ["place", "place"]);
   assert.deepEqual(compiled.segments.map((segment) => [segment.start_year, segment.end_year]), [[-27, 329], [330, 395]]);
 });
