@@ -1,0 +1,175 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-19",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "7ddf1fdfaf383dda387d7504c638d9bbbfa403de",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Close only exact current-NULL Persons with an explicit prior human-reviewed decision or a clear manual Person-level representative-domain judgment under the existing ATLAS eight-domain policy. Cross-domain, current-officeholder/current-political, and identity/rekey cases remain excluded for explicit review."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-NULL-CLOSURE-20260919",
+    "queue_issue": 977,
+    "exact_null_inventory": 41,
+    "assignment_count": 24,
+    "distribution": {
+      "governance": 19,
+      "military": 1,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 1,
+      "religion": 3,
+      "exploration": 0
+    },
+    "exclusions": "17 residual NULL Persons: explicit policy HOLD, cross-domain/user-decision, or identity/rekey review"
+  },
+  "entries": [
+    {
+      "person_id": "04dafe82-b93c-4752-9826-6e74a40e4056",
+      "canonical_name_en": "Rafael Solares",
+      "preferred_name_ko": "라파엘 솔라레스",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "07fd00e7-89bb-4a46-9c55-6b28ddb0d4ed",
+      "canonical_name_en": "Saw Ba U Gyi",
+      "preferred_name_ko": "소 바 우 지",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "09b544e3-7721-4c28-b045-d9bb943396e4",
+      "canonical_name_en": "José Martí",
+      "preferred_name_ko": "호세 마르티",
+      "representative_domain": "culture"
+    },
+    {
+      "person_id": "0b882eae-86cb-43d1-8e84-2c812741f4fe",
+      "canonical_name_en": "Offa",
+      "preferred_name_ko": "오파",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "19a14c1f-7551-46d8-99b9-8d5b6c4d71f1",
+      "canonical_name_en": "Rani Durgavati",
+      "preferred_name_ko": "라니 두르가바티",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "217c3e50-32fb-49ee-bae4-34962bdadbde",
+      "canonical_name_en": "Simone Boccanegra",
+      "preferred_name_ko": "시모네 보카네그라",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "22a7d731-9edd-48f0-a593-e4167875782b",
+      "canonical_name_en": "Pompey the Great",
+      "preferred_name_ko": "그나이우스 폼페이우스 마그누스",
+      "representative_domain": "military"
+    },
+    {
+      "person_id": "2585f2b8-d108-4275-89ad-0459a9c28996",
+      "canonical_name_en": "Kārlis Ulmanis",
+      "preferred_name_ko": "카를리스 울마니스",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "ec8721f6-0af9-4a62-ad6e-d1d372ac5131",
+      "canonical_name_en": "Philip IV of France",
+      "preferred_name_ko": "필리프 4세",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "1d6c841c-1fe7-46a3-8445-3ae1f79d7f6b",
+      "canonical_name_en": "Herod Antipas",
+      "preferred_name_ko": "헤롯 안티파스",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "269c7204-cb88-473a-bc77-1f36f939bd3b",
+      "canonical_name_en": "Pedro I of Brazil",
+      "preferred_name_ko": "페드루 1세",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "3ece8404-6a75-45aa-961a-997737e6c409",
+      "canonical_name_en": "Tenenisk",
+      "preferred_name_ko": "테네니스크",
+      "representative_domain": "religion"
+    },
+    {
+      "person_id": "4c560945-daf7-4ed2-bfc9-98e2de9bd993",
+      "canonical_name_en": "Claudius",
+      "preferred_name_ko": "클라우디우스",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "506b493d-7bee-47cf-ae26-7f8fe6a4824a",
+      "canonical_name_en": "Isaiah",
+      "preferred_name_ko": "이사야",
+      "representative_domain": "religion"
+    },
+    {
+      "person_id": "56139d23-8a0b-45b1-bc9c-67bec982be82",
+      "canonical_name_en": "Nehemiah",
+      "preferred_name_ko": "느헤미야",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "6e4f0f46-6fed-5d7b-b887-2d346aa8ad48",
+      "canonical_name_en": "Pachacuti",
+      "preferred_name_ko": "파차쿠티",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "706e6449-02a8-5830-a75e-88b20247eee0",
+      "canonical_name_en": "Parameswara",
+      "preferred_name_ko": "파라메스와라",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "828b9672-8a2a-4436-b114-87afc8e52a85",
+      "canonical_name_en": "Odaenathus",
+      "preferred_name_ko": "오다에나투스",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "8e24ea34-006e-4143-91b2-bbb4443c55f8",
+      "canonical_name_en": "Mary, mother of Jesus",
+      "preferred_name_ko": "성모 마리아",
+      "representative_domain": "religion"
+    },
+    {
+      "person_id": "90bb4107-0330-462e-b3a6-773150be2e83",
+      "canonical_name_en": "Plaek Phibunsongkhram",
+      "preferred_name_ko": "쁠랙 피분송크람",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "a9b1f443-ab51-4bda-8f69-263208a6be00",
+      "canonical_name_en": "Otto I",
+      "preferred_name_ko": "오토 1세",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "ab63da8f-72b5-4b1e-8f9f-11b2eab4dfb1",
+      "canonical_name_en": "Imagawa Yoshimoto",
+      "preferred_name_ko": "이마가와 요시모토",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "ecef9995-b6e5-4792-bd31-c690f1bec2b9",
+      "canonical_name_en": "Pedro Aguirre Cerda",
+      "preferred_name_ko": "페드로 아기레 세르다",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "f61cc119-d01b-446e-9a4d-f539cd3c8958",
+      "canonical_name_en": "Margherita of Savoy",
+      "preferred_name_ko": "마르게리타 디 사보이아",
+      "representative_domain": "governance"
+    }
+  ]
+}
