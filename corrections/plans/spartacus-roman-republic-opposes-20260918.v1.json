@@ -2,8 +2,8 @@
   "schema": "atlas-stage2-correction-v2-execution-plan/v1",
   "batch_id": "spartacus_roman_republic_opposes_20260918_v1",
   "as_of": "2026-09-18",
-  "status": "REVIEWED_TARGETED_ACTIVITY_POLITY_RELATION_CORRECTION",
-  "release_order": 500,
+  "status": "REVIEWED_TARGETED_ACTIVITY_POLITY_RELATION_CORRECTION_RETRY_LIVE_NULL_20260918",
+  "release_order": 566,
   "contract": "stage2/contracts/correction-v2-current.v1.json",
   "decision_authority": "User-requested correction on 2026-09-18 after exact Production read-back. The approved original Human Authoring request already defines Spartacus's 73-71 BCE rebellion as Roman Republic + opposes; current Production has drifted to polity=null/relation=null with a note that incorrectly treats opponent context as a reason to omit the polity. Restore the canonical reviewed semantics while preserving Activity identity, chronology, role, period basis, confidence, and all normalized source links.",
   "execution_rules": {
@@ -25,7 +25,7 @@
     "reviewed_relation_type_id": "5d2d3af6-6e53-5af1-8423-f76c2263afe4",
     "spatial_binding": "europe / italy",
     "rationale": "Spartacus's modeled Activity is the Third Servile War against the Roman Republic. ATLAS relation semantics represent an opponent polity with opposes; polity=null loses a known political relationship and prevents canonical spatial placement. This does not imply allegiance, service, or membership in the Roman Republic.",
-    "execution_retry": "Retry after PR #1125 fixed correction-v2 exact-before handling for legacy polity=null and added opposition-only spacetime counterparty-context placement."
+    "execution_retry": "Retry because the current Person table and spacetime table still surface Spartacus with unknown polity after PR #1126, and #977 has no independent successful Correction Apply / exact post-apply read-back for that retry. Canonical workflow must dry-run against the exact live null-polity baseline and fail closed on any drift."
   },
   "operations": [
     {
