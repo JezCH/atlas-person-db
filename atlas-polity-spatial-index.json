@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-09T07:37:00.000Z",
+  "generated_at": "2026-09-18T05:35:00.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -217,7 +217,6 @@
     "4571d2d1-b475-400f-90d1-195259a69524": "west-asia",
     "45b5c3f2-f28b-42ea-857d-2d3450132dbe": "east-asia",
     "45ea6210-7f4b-4270-96a3-bec278d65ff9": "africa",
-    "46534f7e-9247-5644-b5ad-9525c3d4f5d6": "east-asia",
     "46740a29-a891-5ff8-9804-0f8aba62e71e": "east-asia",
     "4758cbf5-3f11-4f4d-9cce-489a1b17f8e5": "africa",
     "47f869f7-da91-41f6-b191-093a82c9585c": "west-asia",
@@ -243,11 +242,9 @@
     "51c037b5-f299-4b88-b837-7256ca952b0a": "southeast-asia",
     "521d06a9-e617-42ef-b03b-e14b158789f9": "americas",
     "523a6c6a-a16a-4e40-bbdf-fc705a4f1e9d": "west-asia",
-    "524642ff-33fb-52f3-8623-e4a877b1997a": "europe",
     "52616889-d8df-47f6-88f1-1ee6f54464b7": "europe",
     "52baf3d3-4c6a-4fe8-be80-c9e6cff58c4f": "europe",
     "52e87703-d742-5a74-ad81-7d4cc3aafed9": "africa",
-    "53943675-7711-5053-9f2e-f149f727aa54": "east-asia",
     "53eac379-ca08-4cae-b8cd-3f4adcc090e0": "europe",
     "53ebd964-cad0-4179-b65e-b7a521bade44": "americas",
     "5403c578-0c9e-4ddf-9ba9-61e5efecd06d": "central-asia",
@@ -277,7 +274,6 @@
     "5ef95784-d760-499e-94bc-542854f0ebf8": "africa",
     "5f739f09-84c0-42ad-ac3f-8c531f468d5d": "east-asia",
     "5fb816f2-2d44-55f9-a9c4-35e31625df38": "east-asia",
-    "5fce7b7e-7e6c-5f91-96b6-ebcd925b0a90": "south-asia",
     "60338aff-3760-559d-a237-f48cb6cec711": "southeast-asia",
     "60a7d552-3f31-464d-b1e5-3d4be4f8f0ef": "europe",
     "60d35355-b385-55d4-8d5c-f9b27cad29a3": "central-asia",
@@ -426,7 +422,6 @@
     "a0cc4495-782a-4d17-b93c-6eb90c253ef1": "east-asia",
     "a127a8aa-6e17-5045-9bd6-de4df7b53390": "africa",
     "a15acba9-0a67-4259-8b6a-fce4d630b252": "europe",
-    "a1697cdb-1085-545c-850e-1bbc25cdb61b": "west-asia",
     "a2aff586-74cd-4bdc-bd87-ed43d4d247bf": "americas",
     "a37819ec-8c89-5b3b-8ce4-96b1e06b7eda": "americas",
     "a378fb91-723e-450d-ad1b-ff4961459c3d": "africa",
@@ -1163,7 +1158,6 @@
     "b787ca69-b1d0-4724-8fcb-40a45567380e": "south-asia",
     "8fb963f3-8941-4c35-857b-23c55b2b6cdd": "europe",
     "4c3e50cb-d76c-4b7c-b611-222849404142": "central-asia",
-    "502f18c3-41fc-4cb8-84cc-67f7e0454a9d": "europe",
     "7518462f-9769-413f-a245-cc3825b45d17": "south-asia",
     "7e0522d7-1ff9-4464-927b-4376bf35ed7a": "europe",
     "e3ca4f3c-3504-4830-b141-f4cdd0157763": "south-asia",
@@ -1186,15 +1180,11 @@
     "d1a74157-2c32-4a5d-8c67-955bed1dda68": "europe",
     "4d4eee6d-389b-4ab6-8bca-fda9314ff796": "europe",
     "b21755f5-d5da-42e3-b0f7-c827d567ab21": "americas",
-    "bcb090c2-7906-4c3e-91cf-99b02646764e": "europe",
     "0401a7d3-bfad-44aa-aff3-c04a1dcc69e3": "americas",
     "5b393728-e9da-4f60-9550-3d386e12dab5": "europe",
     "fde4d136-4ff9-4fea-baca-e349154911d5": "oceania",
-    "70aedae1-9544-4e8a-bfd8-6feda3e142c7": "europe",
     "8d5f99db-4990-477c-858b-8c6a0466b736": "west-asia",
-    "a81055d7-ed0d-45a6-90c6-738e1a9ba94d": "europe",
     "d8477ae3-f78a-4053-a1ac-778df48b113b": "europe",
-    "01cd1acd-9321-4d25-bc30-4cbd561bcbd5": "europe",
     "c6e43d5b-1f9f-4e6a-b7ed-867a907b3dcc": "central-asia",
     "439086da-2147-49d7-b317-9871ec758d6d": "east-asia",
     "d55d355e-58cc-40aa-8661-1e8c91bfcfca": "south-asia",
@@ -1517,6 +1507,66 @@
           ]
         }
       ]
+    },
+    {
+      "polity_id": "5fce7b7e-7e6c-5f91-96b6-ebcd925b0a90",
+      "functions": [
+        {
+          "start_year": 1943,
+          "end_year": 1943,
+          "function_type": "political_center",
+          "place_name": "Singapore",
+          "place_id": null,
+          "region_code": "southeast-asia",
+          "confidence": "well_established",
+          "source_refs": [
+            "Press Information Bureau, Government of India: Anniversary of the formation of Azad Hind Government (21 Oct 1943)",
+            "Publications Division, Government of India: Builders of Modern India — Subhas Chandra Bose"
+          ]
+        },
+        {
+          "start_year": 1944,
+          "end_year": 1945,
+          "function_type": "political_center",
+          "place_name": "Rangoon",
+          "place_id": null,
+          "region_code": "southeast-asia",
+          "confidence": "well_established",
+          "source_refs": [
+            "Government of India / IGNCA chronology: Bose civil and military headquarters moved to Burma in January 1944",
+            "Odisha Review: headquarters of the Provisional Government, Indian Independence League and Supreme Command shifted from Singapore to Rangoon"
+          ]
+        }
+      ]
+    },
+    {
+      "polity_id": "a1697cdb-1085-545c-850e-1bbc25cdb61b",
+      "functions": [
+        {
+          "start_year": 632,
+          "end_year": 656,
+          "function_type": "capital",
+          "place_name": "Medina",
+          "place_id": null,
+          "region_code": "west-asia",
+          "confidence": "well_established",
+          "source_refs": [
+            "Cambridge University Press: Rituals of Islamic Monarchy — the conquest society c. 628–c. 660"
+          ]
+        },
+        {
+          "start_year": 656,
+          "end_year": 661,
+          "function_type": "capital",
+          "place_name": "Kufa",
+          "place_id": null,
+          "region_code": "west-asia",
+          "confidence": "well_established",
+          "source_refs": [
+            "Encyclopaedia Iranica: Kufa — Ali (r. 656–61) chose Kufa as his capital"
+          ]
+        }
+      ]
     }
   ],
   "review_queue": [
@@ -1555,6 +1605,26 @@
     {
       "polity_id": "eb2f8e2e-220b-4754-afe9-25449b1d35ec",
       "reason": "cross_macroregion_tribal_polity_requires_activity_specific_spatial_review"
+    },
+    {
+      "polity_id": "01cd1acd-9321-4d25-bc30-4cbd561bcbd5",
+      "reason": "Alaric's 395-410 Visigoth polity was mobile from the Balkans into Italy before the later territorial Visigothic kingdom; no single capital is historically defensible for the authored activity."
+    },
+    {
+      "polity_id": "502f18c3-41fc-4cb8-84cc-67f7e0454a9d",
+      "reason": "Henry II's Angevin kingship was governed through an itinerant cross-Channel royal court rather than a single durable political center; forcing one place-function would create false precision."
+    },
+    {
+      "polity_id": "70aedae1-9544-4e8a-bfd8-6feda3e142c7",
+      "reason": "Respendial's Alan following is attested in the Rhine-crossing migration crisis around 406 and continued westward; no fixed political center is established for the authored activity."
+    },
+    {
+      "polity_id": "a81055d7-ed0d-45a6-90c6-738e1a9ba94d",
+      "reason": "The Roxolani were a nomadic Sarmatian polity whose historical geography shifted across the Pontic-Danubian steppe; the Amage episode does not establish a sufficiently precise fixed capital."
+    },
+    {
+      "polity_id": "bcb090c2-7906-4c3e-91cf-99b02646764e",
+      "reason": "Theodoric's pre-493 Ostrogothic confederation was a mobile Balkan warband polity seeking a permanent homeland and then moving into Italy; the territorial Italian kingdom begins only after this activity."
     }
   ],
   "polity_subregions": {
