@@ -10,7 +10,11 @@ import {
   loadReviewedBindingShards,
   serializeSpatialIndex
 } from './compile-spatial-bindings.mjs';
-import { applySpatialTaxonomyMigration } from './spatial-taxonomy-migration.mjs';
+import {
+  applySpatialTaxonomyMigration,
+  normalizeSpatialTaxonomyMigration,
+  SPATIAL_TAXONOMY_MIGRATION_SCHEMA
+} from './spatial-taxonomy-migration.mjs';
 
 const require = createRequire(import.meta.url);
 const spaceAxis = require('../atlas-person-spacetime-space-axis.js');
@@ -73,6 +77,81 @@ export function applyTaxonomyMigrationManifests(baseline, manifests) {
   return Object.freeze({ baseline: current, migrated_polity_ids: Object.freeze([...seen.keys()].sort()) });
 }
 
+
+function migrationPhaseEntry(source, normalized, phase, migrations) {
+  if (!migrations.length) return null;
+  return Object.freeze({
+    source: `${source}#${phase}`,
+    value: Object.freeze({
+      schema: SPATIAL_TAXONOMY_MIGRATION_SCHEMA,
+      migration_id: `${normalized.migration_id}:${phase}`,
+      migrations: Object.freeze(migrations.map((migration) => Object.freeze({
+        polity_id: migration.polity_id,
+        from: migration.from,
+        to: migration.to,
+        reason: migration.reason
+      })))
+    })
+  });
+}
+
+export function partitionTaxonomyMigrationManifests(manifests) {
+  const taxonomy = taxonomyContract();
+  const precompile = [];
+  const postcompile = [];
+  const seen = new Map();
+
+  for (const manifestEntry of manifests) {
+    const source = manifestEntry?.source || '(memory)';
+    const normalized = normalizeSpatialTaxonomyMigration(manifestEntry?.value, taxonomy);
+    const retiredSource = [];
+    const activeSource = [];
+    for (const migration of normalized.migrations) {
+      const previous = seen.get(migration.polity_id);
+      if (previous) fail('DUPLICATE_SPATIAL_TAXONOMY_MIGRATION', `${migration.polity_id}: ${previous} and ${source}`);
+      seen.set(migration.polity_id, source);
+      if (migration.from.subregion_code && LEGACY_SUBREGION_PARENT.has(migration.from.subregion_code)) retiredSource.push(migration);
+      else activeSource.push(migration);
+    }
+    const before = migrationPhaseEntry(source, normalized, 'precompile-retired-source', retiredSource);
+    const after = migrationPhaseEntry(source, normalized, 'postcompile-active-source', activeSource);
+    if (before) precompile.push(before);
+    if (after) postcompile.push(after);
+  }
+
+  return Object.freeze({
+    precompile: Object.freeze(precompile),
+    postcompile: Object.freeze(postcompile),
+    migration_polity_ids: Object.freeze([...seen.keys()].sort())
+  });
+}
+
+export function prepareCurrentTaxonomyBaseline(retainedBaseline, manifests) {
+  const phases = partitionTaxonomyMigrationManifests(manifests);
+  const migrated = applyTaxonomyMigrationManifests(retainedBaseline, phases.precompile);
+  return Object.freeze({
+    baseline: migrated.baseline,
+    migrated_polity_ids: migrated.migrated_polity_ids,
+    postcompile: phases.postcompile,
+    migration_polity_ids: phases.migration_polity_ids
+  });
+}
+
+export function compileSpatialBindingsR4({ baseline, shards = [], manifests = [] }) {
+  const prepared = prepareCurrentTaxonomyBaseline(baseline, manifests);
+  const reviewed = compileSpatialBindings({ baseline: prepared.baseline, shards });
+  const migrated = applyTaxonomyMigrationManifests(reviewed.index, prepared.postcompile);
+  const migratedPolityIds = [...prepared.migrated_polity_ids, ...migrated.migrated_polity_ids].sort();
+  if (JSON.stringify(migratedPolityIds) !== JSON.stringify(prepared.migration_polity_ids)) {
+    fail('SPATIAL_TAXONOMY_MIGRATION_COVERAGE_MISMATCH', 'not every reviewed taxonomy migration was applied exactly once');
+  }
+  return Object.freeze({
+    index: migrated.baseline,
+    stats: computeSpatialStats(migrated.baseline),
+    migrated_polity_ids: Object.freeze(migratedPolityIds)
+  });
+}
+
 function parseArgs(argv) {
   const options = {
     baselinePath: 'spatial/reviewed-bindings/0000-migrated-baseline.index.json',
@@ -103,17 +182,12 @@ export function main(argv = process.argv.slice(2)) {
   const options = parseArgs(argv);
   const retainedBaseline = readJson(options.baselinePath);
   const shards = loadReviewedBindingShards(options.shardsDir);
-  const currentReviewed = compileSpatialBindings({ baseline: retainedBaseline, shards });
   const migrations = loadTaxonomyMigrationManifests(options.migrationDir);
-  const migrated = applyTaxonomyMigrationManifests(currentReviewed.index, migrations);
-  const result = Object.freeze({
-    index: migrated.baseline,
-    stats: computeSpatialStats(migrated.baseline)
-  });
+  const result = compileSpatialBindingsR4({ baseline: retainedBaseline, shards, manifests: migrations });
   const serialized = serializeSpatialIndex(result.index);
 
   if (options.validateOnly) {
-    process.stdout.write(`${JSON.stringify({ ...result.stats, migrated_polity_count: migrated.migrated_polity_ids.length }, null, 2)}\n`);
+    process.stdout.write(`${JSON.stringify({ ...result.stats, migrated_polity_count: result.migrated_polity_ids.length }, null, 2)}\n`);
     return result;
   }
   if (options.check) {
@@ -122,7 +196,7 @@ export function main(argv = process.argv.slice(2)) {
   } else {
     fs.writeFileSync(options.outPath, serialized, 'utf8');
   }
-  process.stdout.write(`${JSON.stringify({ ...result.stats, migrated_polity_count: migrated.migrated_polity_ids.length }, null, 2)}\n`);
+  process.stdout.write(`${JSON.stringify({ ...result.stats, migrated_polity_count: result.migrated_polity_ids.length }, null, 2)}\n`);
   return result;
 }
 
