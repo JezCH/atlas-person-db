@@ -1,0 +1,94 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "cao_cao_eastern_han_pre_wei_correction_20260918_v1",
+  "as_of": "2026-09-18",
+  "status": "REVIEWED_BACKPROJECTION_CORRECTION",
+  "release_order": 566,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User-reviewed 2026-09-18 correction. The legacy 196-220 Cao Wei Activity back-projects the empire founded by Cao Pi in 220 onto Cao Cao. Companion Activities now model Cao Cao's separate pre-imperial Wei authority as Duke (213-215) and King (216-220). Rewrite the legacy Activity to Cao Cao's de facto control of the Eastern Han court from 196 through 212.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "companion_preimperial_wei_activities_must_remain_unchanged": true,
+    "formal_cao_wei_must_not_be_backprojected_before_220": true,
+    "preserve_existing_normalized_source_links_and_locators": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "person_id": "fc01525a-f719-5add-86f9-6dac152cba8a",
+    "original_activity_id": "7eefdc4d-8aec-5689-b4d8-6b1745240581",
+    "eastern_han_polity_id": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+    "preimperial_wei_polity_id": "8053a905-8cee-4b43-8f56-c827291f7498",
+    "duke_activity_id": "c264831d-8133-43c2-8120-56a7876855be",
+    "king_activity_id": "ec3097e7-adce-4bf3-b6e9-1642c3535cef",
+    "reviewed_source_id": "ed427f95-76a3-4393-8284-e2f053d02818",
+    "reviewed_source_url": "https://www.chinaknowledge.de/History/Division/caowei.html",
+    "rationale": "Cao Cao took control of Emperor Xian and the Han court in 196. His distinct Wei authority begins with his investiture as Duke of Wei in 213, then King of Wei in 216. The formal Cao-Wei empire begins under Cao Pi in 220."
+  },
+  "operations": [
+    {
+      "case_id": "cao_cao_remove_cao_wei_backprojection",
+      "type": "rewrite_activity",
+      "activity_id": "7eefdc4d-8aec-5689-b4d8-6b1745240581",
+      "baseline_before": {
+        "person_id": "fc01525a-f719-5add-86f9-6dac152cba8a",
+        "polity_id": "3d57e0c5-f656-5bf4-9bf1-b485cefd5f9c",
+        "role_id": "b5419978-2a7d-58c4-b990-f09a82a6997d",
+        "period_basis_id": "19bbe662-2a30-5a7e-8073-8d19e1e2299c",
+        "activity_start": 196,
+        "activity_end": 220,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-5.json:30:de080aba91390aa9",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "7eefdc4d-8aec-5689-b4d8-6b1745240581",
+        "person_id": "fc01525a-f719-5add-86f9-6dac152cba8a",
+        "polity_id": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "b5419978-2a7d-58c4-b990-f09a82a6997d",
+        "period_basis_id": "19bbe662-2a30-5a7e-8073-8d19e1e2299c",
+        "activity_start": 196,
+        "activity_end": 212,
+        "activity_start_detail": {
+          "year": 196,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 212,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": "pending-records-supplement-5.json:30:de080aba91390aa9",
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "This Activity represents Cao Cao's de facto control of Emperor Xian and the Eastern Han court from 196 through 212. ATLAS ends this primary Han-court phase before Cao Cao's investiture as Duke of Wei in 213; the separate pre-imperial Wei polity Activities model his Duke and King phases. The formal Cao-Wei empire is not back-projected onto Cao Cao.",
+        "add_source_links": [
+          {
+            "source_id": "ed427f95-76a3-4393-8284-e2f053d02818",
+            "source_locator_key": "https://www.chinaknowledge.de/History/Division/caowei.html"
+          }
+        ]
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "companion_activity_count": 2,
+    "cao_wei_backprojection_removed": true,
+    "production_mutation_authorized": false
+  }
+}
