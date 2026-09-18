@@ -1,0 +1,35 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-19",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "3a0902ab65fa9fd8b877a8b7b303b86e99fd5161",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Nodira's current canonical Activity explicitly records substantive de facto regency/governing authority in Kokand from 1822-1842. Under the established governance rule for regents and actual political powerholders, governance is representative despite her major poetic legacy."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-NULL-CLOSURE-20260919",
+    "queue_issue": 977,
+    "assignment_count": 1,
+    "distribution": {
+      "governance": 1,
+      "military": 0,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "2a6a8a66-37d2-489e-a4d7-1e83c24c8ced",
+      "canonical_name_en": "Nodira",
+      "preferred_name_ko": "노디라",
+      "representative_domain": "governance"
+    }
+  ]
+}
