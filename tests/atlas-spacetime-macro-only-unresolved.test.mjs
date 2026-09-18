@@ -38,25 +38,10 @@ function reviewedPlaceFunctionRecord(polityId) {
   };
 }
 
-test("every current macro-only polity is unplaced in the canonical lookup", () => {
+test("canonical post-r4 index contains no residual macro-only static polity mappings", () => {
   const validation = model.validateSpatialIndex(spatialIndex);
   assert.equal(validation.valid, true, validation.errors?.join(" | "));
-
-  const macroOnly = model.macroOnlyPolityIds(spatialIndex);
-  assert.ok(macroOnly.length > 0, "fixture must contain at least one macro-only polity");
-
-  const lookup = model.createSpatialLookup(spatialIndex);
-  const byMacroregion = {};
-  for (const polityId of macroOnly) {
-    const macroregion = spatialIndex.polity_geography[polityId];
-    byMacroregion[macroregion] = (byMacroregion[macroregion] || 0) + 1;
-    assert.equal(lookup.has(polityId), false, `${polityId} must not be treated as spatially resolved`);
-    const placement = model.resolveActivityPlacement(activity(polityId), lookup);
-    assert.equal(placement.status, "spatial_unresolved", `${polityId} must stay unresolved`);
-    assert.equal(placement.segments.length, 0, `${polityId} must not emit a placement segment`);
-  }
-
-  console.log(`macro-only unresolved polities: ${macroOnly.length}`, byMacroregion);
+  assert.deepEqual(model.macroOnlyPolityIds(spatialIndex), []);
 });
 
 test("macro-only polity geography may coexist with reviewed temporal place functions", () => {
