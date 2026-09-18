@@ -73,6 +73,27 @@ test("opposes stays counterparty only", () => {
   assert.equal(track.primary_segments[0].activity_id,"primary");
 });
 
+test("opposition-only activity remains renderable through counterparty context without becoming affiliation", () => {
+  const c=spaceAxis.createSpatialContinuum();
+  const person={id:"person-opposition-only",display_name:"Opposition only",activity_summaries:[
+    {id:"opposes-only",start:{year:-73},end:{year:-71},relation:{code:"opposes"},polity:{id:"roman-republic"}}
+  ]};
+  const compiled=personTracks.compilePersonTracks([person],[
+    compiledPlacement("opposes-only","europe",c,"opposes",-73,-71)
+  ]);
+  const partitioned=politicalPlacement.partitionTracks(compiled);
+  assert.equal(partitioned.tracks.length,1);
+  assert.equal(partitioned.primary_unresolved.length,0);
+  const track=partitioned.tracks[0];
+  assert.equal(track.counterparty_context_fallback,true);
+  assert.equal(track.primary_spatial_basis,"counterparty_context");
+  assert.equal(track.semantic_primary_segments.length,0);
+  assert.equal(track.primary_segments.length,1);
+  assert.equal(track.primary_segments[0].activity_id,"opposes-only");
+  assert.equal(track.primary_segments[0].political_spatial_class,"counterparty");
+  assert.equal(track.counterparty_segments.length,1);
+});
+
 test("label engine moves only horizontally or defers", () => {
   const packed=labelEngine.packLabels([
     {person_id:"a",text:"Alpha",anchor_x:100,anchor_y:120,width:72},
