@@ -1,0 +1,35 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-19",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "9d7aa5047f890095c5e057ec859ffca917ba7334",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Nikola Gruevski is a former Prime Minister (2006-2016), not a current officeholder. Under the user-established current-officeholder exclusion, his completed executive political rule is a clear governance assignment."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-NULL-CLOSURE-20260919",
+    "queue_issue": 977,
+    "assignment_count": 1,
+    "distribution": {
+      "governance": 1,
+      "military": 0,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "8937be77-17e2-4e7d-b1a8-8172667a6e41",
+      "canonical_name_en": "Nikola Gruevski",
+      "preferred_name_ko": "니콜라 그루에프스키",
+      "representative_domain": "governance"
+    }
+  ]
+}
