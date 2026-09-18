@@ -1,0 +1,87 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "spartacus_roman_republic_opposes_repair_after_drift_20260918_v2",
+  "as_of": "2026-09-18",
+  "status": "REVIEWED_TARGETED_ACTIVITY_POLITY_RELATION_REPAIR_AFTER_REPLAY_DRIFT",
+  "release_order": 567,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User-confirmed 2026-09-18 live regression: both Person table and spacetime table still show Spartacus with unknown polity. Exact Production Baseline A captured after the Hannibal correction at deployment 8de2776553ca9deb6d0033cbe2d595d74f565c3d confirms Activity 6c7e0f1c-d843-4b8a-a436-fad247840b31 is again polity=null with the legacy opponent-context note. The prior correction batch has replay history and now fail-closes with CORRECTION_V2_REPLAY_REWRITE_DRIFT, so this is a new reviewed repair batch, not a replay.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "semantic_identity_change_forbidden": false,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "approved_authoring_manifest": "authoring/requests/spartacus-roman-republic-73-71-bce.json",
+    "person_id": "e727f13f-f80b-42bd-a482-ef9efd87fdac",
+    "activity_id": "6c7e0f1c-d843-4b8a-a436-fad247840b31",
+    "reviewed_polity": "Roman Republic",
+    "reviewed_polity_id": "ea997325-953a-5c95-b5ea-3c34b47ceb56",
+    "reviewed_relation": "opposes",
+    "reviewed_relation_type_id": "5d2d3af6-6e53-5af1-8423-f76c2263afe4",
+    "spatial_binding": "europe / italy",
+    "rationale": "Spartacus's modeled Activity is the Third Servile War against the Roman Republic. ATLAS relation semantics represent an opponent polity with opposes; polity=null loses a known political relationship and prevents canonical spatial placement. This does not imply allegiance, service, or membership in the Roman Republic.",
+    "execution_retry": "Fresh repair batch after replay drift. Exact Production Baseline A artifact 10550113173 at deployment 8de2776553ca9deb6d0033cbe2d595d74f565c3d shows polity_id=null, role 8bca320e-8625-5c7f-8dea-090398b4b13a, period basis 3194b4d0-0d2f-57ed-a5fb-d7f008015fa2, interval 73-71 BCE, confidence well_established, chronology reviewed, legacy_source_key null, source_count 1."
+  },
+  "operations": [
+    {
+      "case_id": "spartacus_restore_roman_republic_opposes_after_drift",
+      "type": "rewrite_activity",
+      "activity_id": "6c7e0f1c-d843-4b8a-a436-fad247840b31",
+      "baseline_before": {
+        "person_id": "e727f13f-f80b-42bd-a482-ef9efd87fdac",
+        "polity_id": null,
+        "role_id": "8bca320e-8625-5c7f-8dea-090398b4b13a",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": -73,
+        "activity_end": -71,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "6c7e0f1c-d843-4b8a-a436-fad247840b31",
+        "person_id": "e727f13f-f80b-42bd-a482-ef9efd87fdac",
+        "polity_id": "ea997325-953a-5c95-b5ea-3c34b47ceb56",
+        "relation_type_id": "5d2d3af6-6e53-5af1-8423-f76c2263afe4",
+        "role_id": "8bca320e-8625-5c7f-8dea-090398b4b13a",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": -73,
+        "activity_end": -71,
+        "activity_start_detail": {
+          "year": -73,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": -71,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+        "reviewed_notes": "Spartacus led the major slave revolt against the Roman Republic traditionally called the Third Servile War from 73 to 71 BCE. ATLAS binds this Activity to the Roman Republic with relation opposes because the polity is the historically explicit opponent of the rebellion; this binding does not imply allegiance, service, or membership.",
+        "add_source_links": []
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "production_mutation_authorized": false
+  }
+}
