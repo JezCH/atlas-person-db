@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-19",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "2d27a7936429bea3d9be26723392737b7770bb58",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Apply the user's reviewed Person-level representative-domain decisions for the 17-person color audit. Po'pay and Miguel Hidalgo y Costilla are political/revolutionary leaders whose representative domain is governance. Nodira is represented primarily by her enduring poetic and literary legacy, so the immediately preceding governance assignment is explicitly superseded by culture."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-USER-REVIEW-17-20260919",
+    "queue_issue": 977,
+    "assignment_count": 3,
+    "distribution": {
+      "governance": 2,
+      "military": 0,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 1,
+      "religion": 0,
+      "exploration": 0
+    },
+    "already_matching_production": 14,
+    "corrections": 1,
+    "new_assignments": 2
+  },
+  "entries": [
+    {
+      "person_id": "2a6a8a66-37d2-489e-a4d7-1e83c24c8ced",
+      "canonical_name_en": "Nodira",
+      "preferred_name_ko": "노디라",
+      "representative_domain": "culture",
+      "previous_representative_domain": "governance",
+      "supersedes_source": "batch-072.json"
+    },
+    {
+      "person_id": "932971a6-68d9-44ec-9d05-2550c8f42562",
+      "canonical_name_en": "Po'pay",
+      "preferred_name_ko": "포파이",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "d962cc75-2c36-42df-98c6-a3989060d5df",
+      "canonical_name_en": "Miguel Hidalgo y Costilla",
+      "preferred_name_ko": "미겔 이달고 이 코스티야",
+      "representative_domain": "governance"
+    }
+  ]
+}

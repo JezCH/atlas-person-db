@@ -87,12 +87,27 @@ test('reviewed batch and HOLD sequences are contiguous except explicitly cancell
   assert.doesNotMatch(applyClient, /EXPECTED_REVIEWED_ASSIGNMENTS/);
 });
 
-test('reviewed batch Person ids and HOLD Person ids are unique and disjoint', () => {
-  const batch = readEntries(batchFiles);
+test('reviewed batch Person ids are unique unless an explicit supersede chain records a later correction', () => {
+  const batch = batchFiles.flatMap((name) => {
+    const parsed = JSON.parse(fs.readFileSync(path.join(proposalDir, name), 'utf8'));
+    return parsed.entries.map((entry) => ({ ...entry, source:name }));
+  });
   const holds = readEntries(holdFiles);
-  assert.equal(new Set(batch.map((entry) => entry.person_id)).size, batch.length);
+  const latest = new Map();
+  for (const entry of batch) {
+    const prior = latest.get(entry.person_id);
+    if (prior) {
+      assert.equal(entry.previous_representative_domain, prior.representative_domain);
+      assert.equal(entry.supersedes_source, prior.source);
+      assert.notEqual(entry.representative_domain, prior.representative_domain);
+    } else {
+      assert.equal(entry.previous_representative_domain, undefined);
+      assert.equal(entry.supersedes_source, undefined);
+    }
+    latest.set(entry.person_id, entry);
+  }
   assert.equal(new Set(holds.map((entry) => entry.person_id)).size, holds.length);
-  const batchIds = new Set(batch.map((entry) => entry.person_id));
+  const batchIds = new Set(latest.keys());
   assert.equal(holds.some((entry) => batchIds.has(entry.person_id)), false);
   assert.equal(holds.every((entry) => entry.representative_domain === null), true);
 });
@@ -196,6 +211,27 @@ test('Batch 013 contains exactly the reviewed medieval rulers/commanders distrib
   assert.equal(batch13.entries.some((entry) => entry.person_id === 'fff7a34b-6bff-4e6e-9735-96d16a161a92' && entry.representative_domain === 'governance'), true);
   assert.equal(batch13.entries.some((entry) => entry.person_id === 'e170fae3-b8cc-4a69-9309-5c69269140fb' && entry.representative_domain === 'military'), true);
   assert.equal(batch13.entries.some((entry) => entry.person_id === '87b9541e-cc28-46ca-a849-43a5a14ae162'), false);
+});
+
+test('Batch 073 records the user-reviewed Nodira correction and two new governance assignments', () => {
+  const batch73 = assertBatchDistribution('batch-073.json', 3, {
+    governance:2,
+    military:0,
+    knowledge:0,
+    technology:0,
+    commerce:0,
+    culture:1,
+    religion:0,
+    exploration:0
+  });
+  const byName = new Map(batch73.entries.map((entry) => [entry.canonical_name_en, entry]));
+  assert.equal(byName.get('Po\'pay').representative_domain, 'governance');
+  assert.equal(byName.get('Miguel Hidalgo y Costilla').representative_domain, 'governance');
+  assert.equal(byName.get('Nodira').representative_domain, 'culture');
+  assert.equal(byName.get('Nodira').previous_representative_domain, 'governance');
+  assert.equal(byName.get('Nodira').supersedes_source, 'batch-072.json');
+  assert.match(applyClient, /expected_previous/);
+  assert.match(applyClient, /applyOnlyChanged\(\[\.\.\.plan\.assignments\.values\(\)\], MODE\)/);
 });
 
 test('Pythagoras HOLD history is preserved and retired by the later reviewed knowledge decision', () => {

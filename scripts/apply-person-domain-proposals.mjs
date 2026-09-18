@@ -62,9 +62,24 @@ function validateEntry(entry, { allowNull = false, source }) {
   } else if (!CANONICAL_CODES.includes(domain)) {
     fail(`Unsupported representative_domain in ${source}: ${domain}`);
   }
+  const previousDomain = entry?.previous_representative_domain == null
+    ? null
+    : String(entry.previous_representative_domain).trim().toLowerCase();
+  if (previousDomain != null && !CANONICAL_CODES.includes(previousDomain)) {
+    fail(`Unsupported previous_representative_domain in ${source}: ${previousDomain}`);
+  }
+  const supersedesSource = String(entry?.supersedes_source || "").trim();
+  if ((previousDomain == null) !== (supersedesSource === "")) {
+    fail(`Reviewed domain correction must provide both previous_representative_domain and supersedes_source in ${source}: ${personId}`);
+  }
+  if (previousDomain != null && previousDomain === domain) {
+    fail(`Reviewed domain correction must change the domain in ${source}: ${personId}`);
+  }
   return Object.freeze({
     person_id:personId,
     representative_domain:domain,
+    previous_representative_domain:previousDomain,
+    supersedes_source:supersedesSource || null,
     canonical_name_en:String(entry?.canonical_name_en || "").trim(),
     preferred_name_ko:String(entry?.preferred_name_ko || "").trim(),
     source
@@ -83,13 +98,20 @@ function loadPlan() {
   const holdFiles = discoverContiguous("hold");
 
   const batch = [];
-  const batchIds = new Set();
+  const batchIds = new Map();
   for (const name of batchFiles) {
     const raw = readJson(name);
     for (const item of raw.entries) {
       const entry = validateEntry(item, { source:name });
-      if (batchIds.has(entry.person_id)) fail(`Duplicate reviewed batch Person: ${entry.person_id}`);
-      batchIds.add(entry.person_id);
+      const prior = batchIds.get(entry.person_id);
+      if (prior) {
+        const validCorrection = entry.previous_representative_domain === prior.representative_domain
+          && entry.supersedes_source === prior.source;
+        if (!validCorrection) fail(`Duplicate reviewed batch Person without explicit supersede chain: ${entry.person_id}`, { prior, current:entry });
+      } else if (entry.previous_representative_domain != null || entry.supersedes_source != null) {
+        fail(`Reviewed domain correction has no prior batch assignment: ${entry.person_id}`, entry);
+      }
+      batchIds.set(entry.person_id, entry);
       batch.push(entry);
     }
   }
@@ -116,9 +138,15 @@ function loadPlan() {
     if (holdIds.has(entry.person_id)) fail(`HOLD Person appears in write set: ${entry.person_id}`);
     const prior = assignments.get(entry.person_id);
     if (prior && prior.representative_domain !== entry.representative_domain) {
-      fail(`Conflicting representative_domain for ${entry.person_id}`, { prior, current:entry });
+      const validCorrection = entry.previous_representative_domain === prior.representative_domain
+        && entry.supersedes_source === prior.source;
+      if (!validCorrection) {
+        fail(`Conflicting representative_domain for ${entry.person_id}`, { prior, current:entry });
+      }
+      assignments.set(entry.person_id, entry);
+    } else if (!prior) {
+      assignments.set(entry.person_id, entry);
     }
-    if (!prior) assignments.set(entry.person_id, entry);
   }
 
   return Object.freeze({ smoke, batch, hold, assignments, batchFiles, holdFiles });
@@ -178,11 +206,32 @@ async function writeEntry(entry, ordinal) {
 async function applyOnlyChanged(entries, label) {
   const before = await readCurrent();
   const current = currentDomainMap(before);
-  const conflicts = entries
-    .filter((entry) => current.has(entry.person_id) && current.get(entry.person_id) !== entry.representative_domain)
-    .map((entry) => ({ person_id:entry.person_id, expected:entry.representative_domain, actual:current.get(entry.person_id) }));
+  const conflicts = [];
+  const pending = [];
+  for (const entry of entries) {
+    const hasCurrent = current.has(entry.person_id);
+    const actual = hasCurrent ? current.get(entry.person_id) : null;
+    if (actual === entry.representative_domain) continue;
+    if (entry.previous_representative_domain != null) {
+      if (actual === entry.previous_representative_domain) {
+        pending.push(entry);
+        continue;
+      }
+      conflicts.push({
+        person_id:entry.person_id,
+        expected:entry.representative_domain,
+        expected_previous:entry.previous_representative_domain,
+        actual
+      });
+      continue;
+    }
+    if (!hasCurrent) {
+      pending.push(entry);
+      continue;
+    }
+    conflicts.push({ person_id:entry.person_id, expected:entry.representative_domain, actual });
+  }
   if (conflicts.length) fail("Reviewed Person domain conflicts with live Production; re-review required", conflicts);
-  const pending = entries.filter((entry) => !current.has(entry.person_id));
   console.log(JSON.stringify({
     marker:"ATLAS_PERSON_DOMAIN_DELTA_V1",
     mode:label,
@@ -220,7 +269,7 @@ if (MODE === "smoke") {
   const body = await readCurrent();
   console.log(JSON.stringify({ marker:"ATLAS_PERSON_DOMAIN_APPLY_V1", mode:MODE, ...verifyExpected(body, plan.smoke, plan.hold) }, null, 2));
 } else if (MODE === "batch") {
-  await applyOnlyChanged(plan.batch, MODE);
+  await applyOnlyChanged([...plan.assignments.values()], MODE);
   const body = await readCurrent();
   console.log(JSON.stringify({ marker:"ATLAS_PERSON_DOMAIN_APPLY_V1", mode:MODE, ...verifyExpected(body, [...plan.assignments.values()], plan.hold) }, null, 2));
 } else if (MODE === "file") {
