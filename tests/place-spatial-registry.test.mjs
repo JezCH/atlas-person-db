@@ -6,6 +6,7 @@ import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 const registryApi = require("../atlas-place-spatial-registry.js");
 const registry = JSON.parse(readFileSync(new URL("../atlas-place-spatial-registry.json", import.meta.url), "utf8"));
+const spatialIndex = JSON.parse(readFileSync(new URL("../atlas-polity-spatial-index.json", import.meta.url), "utf8"));
 
 function reviewedPlace(overrides = {}) {
   return {
@@ -26,10 +27,10 @@ function reviewedPlace(overrides = {}) {
 test("canonical registry validates reviewed C2 Place identities and exact bindings", () => {
   const validation = registryApi.validatePlaceRegistry(registry);
   assert.equal(validation.valid, true, validation.errors.join("\n"));
-  assert.equal(registry.places.length, 5);
-  assert.equal(registry.bindings.length, 5);
-  assert.equal(registryApi.createPlaceLookup(registry).size, 5);
-  assert.equal(registryApi.createReviewedBindingLookup(registry).size, 5);
+  assert.equal(registry.places.length, 20);
+  assert.equal(registry.bindings.length, 22);
+  assert.equal(registryApi.createPlaceLookup(registry).size, 20);
+  assert.equal(registryApi.createReviewedBindingLookup(registry).size, 22);
 });
 
 test("reviewed Place identity can carry reviewed coordinates and a real subregion parent", () => {
@@ -105,4 +106,38 @@ test("binding lookup is exact and does not bind a matching place_name without re
   assert.ok(lookup.has(registryApi.bindingSignature(rome)));
   assert.equal(lookup.has(registryApi.bindingSignature({ ...rome, source_refs: ["different source"] })), false);
   assert.equal(lookup.has(registryApi.bindingSignature({ ...rome, polity_id: "polity-example" })), false);
+});
+
+
+test("every canonical temporal place-function has an exact reviewed Place-to-leaf binding", () => {
+  const placeLookup = registryApi.createPlaceLookup(registry);
+  const bindingLookup = registryApi.createReviewedBindingLookup(registry);
+  let functionCount = 0;
+  const missing = [];
+  const macroMismatches = [];
+
+  for (const record of spatialIndex.place_function_records || []) {
+    for (const fn of record.functions || []) {
+      functionCount += 1;
+      const signature = registryApi.bindingSignature({
+        polity_id: record.polity_id,
+        function_type: fn.function_type,
+        place_name: fn.place_name,
+        source_refs: fn.source_refs
+      });
+      const binding = bindingLookup.get(signature);
+      if (!binding) {
+        missing.push(`${record.polity_id}:${fn.function_type}:${fn.place_name}`);
+        continue;
+      }
+      const place = placeLookup.get(binding.place_id);
+      if (!place || place.macroregion_code !== fn.region_code) {
+        macroMismatches.push(`${record.polity_id}:${fn.place_name} expected ${fn.region_code}, got ${place?.macroregion_code || "(missing)"}`);
+      }
+    }
+  }
+
+  assert.equal(functionCount, 23);
+  assert.deepEqual(missing, [], `missing exact reviewed bindings:\n${missing.join("\n")}`);
+  assert.deepEqual(macroMismatches, [], `place-function macroregion mismatches:\n${macroMismatches.join("\n")}`);
 });
