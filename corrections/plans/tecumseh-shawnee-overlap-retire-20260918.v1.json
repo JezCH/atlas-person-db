@@ -1,0 +1,68 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "tecumseh_shawnee_overlap_retire_20260918_v1",
+  "as_of": "2026-09-18",
+  "status": "REVIEWED_STRUCTURAL_OVERLAP_RETIRE_AWAITING_DESTRUCTIVE_APPROVAL",
+  "release_order": 561,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User-reviewed 2026-09-18 structural correction combined with the existing reviewed P7 Tecumseh chronology decision in stage2/execution/p7-tecumseh-chronology-execution.v1.json. Preserve the canonical 1808-1813 Tecumseh's Confederacy Activity and retire the overlapping Shawnee 1805-1813 legacy Activity rather than fabricating a second primary political track or filling its null relation.",
+  "baseline": {
+    "deployment_sha": "f45d6f294759765f697a5516d44150f3d43e6fa8",
+    "baseline_digest": "sha256:b49eb98760547da42b703ea22ccf72adb28b7b3324079aa79aa7f1e79172c5da"
+  },
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_confederacy_survivor_exact_activity": true,
+    "retired_source_must_be_preserved_on_reviewed_survivor": true,
+    "source_transfer_deduplicate_by_normalized_link_identity": true,
+    "shawnee_peoplegroup_must_not_be_recast_as_a_second_primary_polity_activity": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "destructive_user_approval_required_before_merge": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "prior_reviewed_execution": "stage2/execution/p7-tecumseh-chronology-execution.v1.json",
+    "survivor_activity_id": "5be7f060-46d1-58f9-ad7c-3b03458c198a",
+    "survivor_polity": "Tecumseh's Confederacy",
+    "survivor_interval": "1808-1813",
+    "survivor_relation": "rules",
+    "retired_activity_id": "932998e2-839b-5818-99bb-37221498cadd",
+    "retired_polity": "Shawnee",
+    "retired_interval": "1805-1813",
+    "rationale": "The reviewed P7 model already treats the confederacy as the primary political Activity from 1808. The overlapping Shawnee row duplicates the same leadership span with a null relation. Retiring the duplicate preserves a single canonical primary track while retaining its source evidence on the Confederacy survivor."
+  },
+  "operations": [
+    {
+      "case_id": "tecumseh_retire_overlapping_shawnee_primary_activity",
+      "type": "retire_activity",
+      "activity_id": "932998e2-839b-5818-99bb-37221498cadd",
+      "baseline_before": {
+        "person_id": "62d43a03-b980-55f8-a992-d57346b62e70",
+        "polity_id": "bbe212e8-c68a-533d-b4c0-2736859d4a75",
+        "role_id": "4b971cea-249f-51d7-81e2-f611eb3e4a30",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": 1805,
+        "activity_end": 1813,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-4.json:18:ecded672d22b6e1b",
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT",
+      "source_transfer_policy": "COPY_ALL_RETIRED_NORMALIZED_SOURCE_LINKS_AND_LOCATORS_TO_REVIEWED_SURVIVORS_DEDUP_BY_NORMALIZED_LINK_IDENTITY_BEFORE_DELETE",
+      "silent_source_drop_forbidden": true,
+      "replacement_activity_ids": [
+        "5be7f060-46d1-58f9-ad7c-3b03458c198a"
+      ]
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "retired_activity_count": 1,
+    "replacement_survivor_count": 1,
+    "production_mutation_authorized": false
+  }
+}
