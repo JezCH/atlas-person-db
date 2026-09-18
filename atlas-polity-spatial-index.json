@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-18T05:35:00.000Z",
+  "generated_at": "2026-09-18T10:31:00.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -1216,6 +1216,8 @@
     "e146e6ef-15f0-4bca-9e5d-b26672c65018": "east-asia",
     "e8a494af-a962-49e2-8b8c-236569c327df": "east-asia",
     "f67af5a4-a2f5-492d-9220-92fe401bc167": "central-asia",
+    "83abbfa2-d755-4631-9345-1a98d4553751": "west-asia",
+    "a47f57af-8ac2-4724-81b0-43074c64f84c": "europe",
     "1eaa48b6-dc60-49d6-91c4-49db556f4ddf": "europe"
   },
   "place_function_records": [
@@ -2739,6 +2741,8 @@
     "b2698b58-07aa-40fc-93af-e1eb714b47a3": "maghreb-north-africa",
     "c67f38fb-9ac1-446e-ac66-ca3245f60bbc": "levant",
     "e8a494af-a962-49e2-8b8c-236569c327df": "manchuria",
+    "83abbfa2-d755-4631-9345-1a98d4553751": "levant",
+    "a47f57af-8ac2-4724-81b0-43074c64f84c": "northern-europe",
     "1eaa48b6-dc60-49d6-91c4-49db556f4ddf": "western-europe",
     "00ec4b0c-6002-5791-825c-43465632102d": "north-india-ganges",
     "4c3e50cb-d76c-4b7c-b611-222849404142": "eastern-central-asia-steppe",
