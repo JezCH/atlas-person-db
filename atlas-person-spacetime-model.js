@@ -214,6 +214,8 @@
       const locationLabel = text(record?.location_label);
       const reason = text(record?.reason);
       const sourceRefs = Array.isArray(record?.source_refs) ? record.source_refs.map(text).filter(Boolean) : [];
+      const overrideMode = text(record?.override_mode);
+      const overrideSegments = Array.isArray(record?.segments) ? record.segments : [];
 
       if (!UUID_PATTERN.test(activityId)) errors.push(`${prefix}: activity_id must be a lowercase canonical UUID`);
       if (activityOverrideSeen.has(activityId)) errors.push(`${prefix}: duplicate activity_id ${activityId}`);
@@ -221,13 +223,63 @@
       if (expectedPolityId != null && !UUID_PATTERN.test(expectedPolityId)) errors.push(`${prefix}: expected_polity_id must be a lowercase canonical UUID or null`);
       if (!Number.isInteger(expectedStartYear) || expectedStartYear === 0) errors.push(`${prefix}: expected_start_year must be a historical integer year`);
       if (!Number.isInteger(expectedEndYear) || expectedEndYear === 0) errors.push(`${prefix}: expected_end_year must be a historical integer year`);
-      if (Number.isInteger(expectedStartYear) && Number.isInteger(expectedEndYear) && expectedStartYear > expectedEndYear) errors.push(`${prefix}: expected_start_year must not be after expected_end_year`);
-      if (!REGION_CODES.has(regionCode)) errors.push(`${prefix}: invalid region_code ${regionCode || "(empty)"}`);
-      if (!SUBREGION_PARENT[subregionCode]) errors.push(`${prefix}: invalid subregion_code ${subregionCode || "(empty)"}`);
-      else if (SUBREGION_PARENT[subregionCode] !== regionCode) errors.push(`${prefix}: subregion ${subregionCode} is not a child of macroregion ${regionCode || "(empty)"}`);
-      if (!locationLabel) errors.push(`${prefix}: location_label is required`);
+      if (Number.isInteger(expectedStartYear) && Number.isInteger(expectedEndYear) && historicalYearToOrdinal(expectedStartYear) > historicalYearToOrdinal(expectedEndYear)) errors.push(`${prefix}: expected_start_year must not be after expected_end_year`);
       if (!reason) errors.push(`${prefix}: reason is required`);
       if (!Array.isArray(record?.source_refs) || !sourceRefs.length) errors.push(`${prefix}: source_refs must be a non-empty array`);
+
+      if (overrideSegments.length) {
+        if (!new Set(["timeline_segments", "multi_anchor"]).has(overrideMode)) errors.push(`${prefix}: override_mode must be timeline_segments or multi_anchor when segments are present`);
+        const normalizedSegments = [];
+        for (const [segmentIndex, segment] of overrideSegments.entries()) {
+          const segmentPrefix = `${prefix}.segments[${segmentIndex}]`;
+          const segmentStartYear = Number(segment?.start_year);
+          const segmentEndYear = Number(segment?.end_year);
+          const segmentRegionCode = text(segment?.region_code);
+          const segmentSubregionCode = text(segment?.subregion_code);
+          const segmentLocationLabel = text(segment?.location_label);
+          const segmentSourceRefs = Array.isArray(segment?.source_refs) ? segment.source_refs.map(text).filter(Boolean) : [];
+          if (!Number.isInteger(segmentStartYear) || segmentStartYear === 0) errors.push(`${segmentPrefix}: start_year must be a historical integer year`);
+          if (!Number.isInteger(segmentEndYear) || segmentEndYear === 0) errors.push(`${segmentPrefix}: end_year must be a historical integer year`);
+          const segmentStartOrdinal = Number.isInteger(segmentStartYear) && segmentStartYear !== 0 ? historicalYearToOrdinal(segmentStartYear) : null;
+          const segmentEndOrdinal = Number.isInteger(segmentEndYear) && segmentEndYear !== 0 ? historicalYearToOrdinal(segmentEndYear) : null;
+          if (segmentStartOrdinal != null && segmentEndOrdinal != null && segmentStartOrdinal > segmentEndOrdinal) errors.push(`${segmentPrefix}: start_year must not be after end_year`);
+          if (segmentStartOrdinal != null && Number.isInteger(expectedStartYear) && expectedStartYear !== 0 && segmentStartOrdinal < historicalYearToOrdinal(expectedStartYear)) errors.push(`${segmentPrefix}: starts before expected Activity interval`);
+          if (segmentEndOrdinal != null && Number.isInteger(expectedEndYear) && expectedEndYear !== 0 && segmentEndOrdinal > historicalYearToOrdinal(expectedEndYear)) errors.push(`${segmentPrefix}: ends after expected Activity interval`);
+          if (!REGION_CODES.has(segmentRegionCode)) errors.push(`${segmentPrefix}: invalid region_code ${segmentRegionCode || "(empty)"}`);
+          if (!SUBREGION_PARENT[segmentSubregionCode]) errors.push(`${segmentPrefix}: invalid subregion_code ${segmentSubregionCode || "(empty)"}`);
+          else if (SUBREGION_PARENT[segmentSubregionCode] !== segmentRegionCode) errors.push(`${segmentPrefix}: subregion ${segmentSubregionCode} is not a child of macroregion ${segmentRegionCode || "(empty)"}`);
+          if (!segmentLocationLabel) errors.push(`${segmentPrefix}: location_label is required`);
+          if (!segmentSourceRefs.length) errors.push(`${segmentPrefix}: source_refs must be a non-empty array`);
+          if (segmentStartOrdinal != null && segmentEndOrdinal != null) normalizedSegments.push({ startOrdinal: segmentStartOrdinal, endOrdinal: segmentEndOrdinal });
+        }
+        if (overrideMode === "timeline_segments" && normalizedSegments.length === overrideSegments.length && Number.isInteger(expectedStartYear) && Number.isInteger(expectedEndYear)) {
+          const ordered = normalizedSegments.slice().sort((a, b) => a.startOrdinal - b.startOrdinal || a.endOrdinal - b.endOrdinal);
+          const expectedStartOrdinal = historicalYearToOrdinal(expectedStartYear);
+          const expectedEndOrdinal = historicalYearToOrdinal(expectedEndYear);
+          if (ordered[0]?.startOrdinal !== expectedStartOrdinal || ordered[ordered.length - 1]?.endOrdinal !== expectedEndOrdinal) errors.push(`${prefix}: timeline_segments must cover the full expected Activity interval`);
+          for (let i = 1; i < ordered.length; i += 1) {
+            if (ordered[i].startOrdinal !== ordered[i - 1].endOrdinal + 1) errors.push(`${prefix}: timeline_segments must be contiguous and non-overlapping`);
+          }
+        }
+        if (overrideMode === "multi_anchor" && normalizedSegments.length === overrideSegments.length && Number.isInteger(expectedStartYear) && Number.isInteger(expectedEndYear)) {
+          if (normalizedSegments.length < 2) errors.push(`${prefix}: multi_anchor requires at least two reviewed anchors`);
+          const ordered = normalizedSegments.slice().sort((a, b) => a.startOrdinal - b.startOrdinal || a.endOrdinal - b.endOrdinal);
+          const expectedStartOrdinal = historicalYearToOrdinal(expectedStartYear);
+          const expectedEndOrdinal = historicalYearToOrdinal(expectedEndYear);
+          let coveredThrough = expectedStartOrdinal - 1;
+          for (const segment of ordered) {
+            if (segment.startOrdinal > coveredThrough + 1) errors.push(`${prefix}: multi_anchor segments must cover the full expected Activity interval without gaps`);
+            coveredThrough = Math.max(coveredThrough, segment.endOrdinal);
+          }
+          if (coveredThrough < expectedEndOrdinal) errors.push(`${prefix}: multi_anchor segments must cover the full expected Activity interval without gaps`);
+        }
+      } else {
+        if (overrideMode) errors.push(`${prefix}: override_mode requires a non-empty segments array`);
+        if (!REGION_CODES.has(regionCode)) errors.push(`${prefix}: invalid region_code ${regionCode || "(empty)"}`);
+        if (!SUBREGION_PARENT[subregionCode]) errors.push(`${prefix}: invalid subregion_code ${subregionCode || "(empty)"}`);
+        else if (SUBREGION_PARENT[subregionCode] !== regionCode) errors.push(`${prefix}: subregion ${subregionCode} is not a child of macroregion ${regionCode || "(empty)"}`);
+        if (!locationLabel) errors.push(`${prefix}: location_label is required`);
+      }
     }
 
     const reviewSeen = new Set();
@@ -270,9 +322,18 @@
         expected_polity_id: record.expected_polity_id == null ? null : text(record.expected_polity_id),
         expected_start_year: Number(record.expected_start_year),
         expected_end_year: Number(record.expected_end_year),
+        override_mode: text(record.override_mode) || null,
         region_code: text(record.region_code),
         subregion_code: text(record.subregion_code),
         location_label: text(record.location_label),
+        segments: Object.freeze((Array.isArray(record.segments) ? record.segments : []).map((segment) => Object.freeze({
+          start_year: Number(segment.start_year),
+          end_year: Number(segment.end_year),
+          region_code: text(segment.region_code),
+          subregion_code: text(segment.subregion_code),
+          location_label: text(segment.location_label),
+          source_refs: Object.freeze([...new Set((Array.isArray(segment.source_refs) ? segment.source_refs : []).map(text).filter(Boolean))])
+        }))),
         reason: text(record.reason),
         source_refs: Object.freeze([...new Set(record.source_refs.map(text).filter(Boolean))])
       }));
@@ -365,23 +426,32 @@
       if (activityOverride.expected_start_year !== interval.start_year || activityOverride.expected_end_year !== interval.end_year) {
         return Object.freeze({ activity_id: activityId, polity_id: polityId, status: "spatial_unresolved", reason: "activity_override_interval_mismatch", segments: Object.freeze([]) });
       }
-      return Object.freeze({ activity_id: activityId, polity_id: polityId, status: "placed", segments: Object.freeze([Object.freeze({
-        activity_id: activityId,
-        polity_id: polityId,
+      const overrideSegments = activityOverride.segments?.length ? activityOverride.segments : [Object.freeze({
+        start_year: interval.start_year,
+        end_year: interval.end_year,
         region_code: activityOverride.region_code,
         subregion_code: activityOverride.subregion_code,
-        placement_basis: "activity_override",
         location_label: activityOverride.location_label,
+        source_refs: activityOverride.source_refs
+      })];
+      return Object.freeze({ activity_id: activityId, polity_id: polityId, status: "placed", segments: Object.freeze(overrideSegments.map((segment) => Object.freeze({
+        activity_id: activityId,
+        polity_id: polityId,
+        region_code: segment.region_code,
+        subregion_code: segment.subregion_code,
+        placement_basis: "activity_override",
+        activity_override_mode: activityOverride.override_mode || "single",
+        location_label: segment.location_label,
         place_function_type: null,
         place_name: null,
         place_id: null,
         active_place_functions: Object.freeze([]),
         confidence: "reviewed",
-        source_refs: activityOverride.source_refs,
-        start_year: interval.start_year,
-        end_year: interval.end_year,
+        source_refs: segment.source_refs?.length ? segment.source_refs : activityOverride.source_refs,
+        start_year: segment.start_year,
+        end_year: segment.end_year,
         partial_activity_interval: false
-      })]) });
+      }))) });
     }
 
     if (!polityId) return Object.freeze({ activity_id: activityId, polity_id: polityId, status: "polity_unresolved", segments: Object.freeze([]) });
