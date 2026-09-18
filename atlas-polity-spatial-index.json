@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-18T11:55:00.000Z",
+  "generated_at": "2026-09-18T12:20:00.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -3031,6 +3031,211 @@
         "Chagos Refugees Group: Our History — Olivier Bancoult and other Chagossian leaders established the CRG in 1983 after exile to Mauritius and Seychelles",
         "Chagos Refugees Group: About Us — CRG is a community-led organization located in Mauritius and the UK and was established in 1983",
         "UK Parliament written evidence CHA0009 — the Chagos Refugees Group was established in 1983 to defend Chagossian rights"
+      ]
+    },
+    {
+      "activity_id": "55e1fea7-11d4-4717-845a-4cbca5dccd0e",
+      "expected_polity_id": "a1c6b0b4-ca71-420d-8d9f-502dc7914dd7",
+      "expected_start_year": -305,
+      "expected_end_year": -281,
+      "override_mode": "multi_anchor",
+      "segments": [
+        {
+          "start_year": -305,
+          "end_year": -281,
+          "region_code": "west-asia",
+          "subregion_code": "mesopotamia",
+          "location_label": "Seleucia on the Tigris",
+          "source_refs": [
+            "Encyclopaedia Iranica: CAPITAL CITIES — Seleucus I established Seleucia on the Tigris as the capital",
+            "Encyclopaedia Iranica: SELEUCID EMPIRE — Seleucia on the Tigris was one of Seleucus I's capitals"
+          ]
+        },
+        {
+          "start_year": -300,
+          "end_year": -281,
+          "region_code": "west-asia",
+          "subregion_code": "levant",
+          "location_label": "Antioch on the Orontes",
+          "source_refs": [
+            "Encyclopaedia Iranica: ANTIOCH (1) — founded in 300 BCE by Seleucus I and capital of the Seleucids",
+            "Encyclopaedia Iranica: SELEUCUS — Antioch and Seleucia on the Tigris were among Seleucus I's capitals"
+          ]
+        }
+      ],
+      "reason": "Seleucus I's Seleucid kingship cannot be represented by a single fixed leaf. The reviewed Activity uses multiple royal centers: Seleucia on the Tigris throughout the reign-scale interval and Antioch after its foundation in 300 BCE. Multi-anchor rendering records centers without inventing an itinerary or exclusive capital sequence.",
+      "source_refs": [
+        "Encyclopaedia Iranica: SELEUCID EMPIRE — Seleucid state had no fixed capital and used multiple royal residences",
+        "Encyclopaedia Iranica: CAPITAL CITIES — Seleucus I established Seleucia on the Tigris as capital",
+        "Encyclopaedia Iranica: ANTIOCH (1) — Antioch founded in 300 BCE by Seleucus I and became a Seleucid capital"
+      ]
+    },
+    {
+      "activity_id": "86a61ce2-f235-4930-9795-a6f9db0787fc",
+      "expected_polity_id": "a1c6b0b4-ca71-420d-8d9f-502dc7914dd7",
+      "expected_start_year": -222,
+      "expected_end_year": -187,
+      "override_mode": "multi_anchor",
+      "segments": [
+        {
+          "start_year": -222,
+          "end_year": -187,
+          "region_code": "west-asia",
+          "subregion_code": "levant",
+          "location_label": "Antioch",
+          "source_refs": [
+            "Encyclopaedia Iranica: SELEUCID EMPIRE — Antioch was one of the residences of the peripatetic Seleucid court"
+          ]
+        },
+        {
+          "start_year": -222,
+          "end_year": -187,
+          "region_code": "west-asia",
+          "subregion_code": "mesopotamia",
+          "location_label": "Seleucia on the Tigris / Babylonia",
+          "source_refs": [
+            "Encyclopaedia Iranica: SELEUCID EMPIRE — Babylonia remained a core region and Seleucia on the Tigris was a royal residence"
+          ]
+        },
+        {
+          "start_year": -222,
+          "end_year": -187,
+          "region_code": "west-asia",
+          "subregion_code": "iranian-plateau",
+          "location_label": "Ecbatana",
+          "source_refs": [
+            "Encyclopaedia Iranica: SELEUCID EMPIRE — Ecbatana functioned as a Seleucid royal residence",
+            "Encyclopaedia Iranica: ECBATANA — Antiochus III used Ecbatana during his reign"
+          ]
+        }
+      ],
+      "reason": "Antiochus III ruled a transregional Seleucid state whose court was explicitly peripatetic and had no fixed capital. Three reviewed royal-center anchors — Antioch, Seleucia/Babylonia, and Ecbatana — preserve that structure without fabricating a year-by-year route for his long campaigns.",
+      "source_refs": [
+        "Encyclopaedia Iranica: SELEUCID EMPIRE — no fixed capital; peripatetic court used Antioch, Seleucia on the Tigris, Ecbatana and other residences",
+        "Encyclopaedia Iranica: ECBATANA — Ecbatana remained an important Seleucid royal center during Antiochus III"
+      ]
+    },
+    {
+      "activity_id": "3fb5ed9e-7df3-42c1-98d2-33969a7876c4",
+      "expected_polity_id": "01cd1acd-9321-4d25-bc30-4cbd561bcbd5",
+      "expected_start_year": 395,
+      "expected_end_year": 410,
+      "override_mode": "timeline_segments",
+      "segments": [
+        {
+          "start_year": 395,
+          "end_year": 400,
+          "region_code": "europe",
+          "subregion_code": "balkans",
+          "location_label": "Balkan / eastern imperial sphere",
+          "source_refs": [
+            "Oxford Classical Dictionary: Alaric — early operations focused on the Balkans and eastern half of the empire"
+          ]
+        },
+        {
+          "start_year": 401,
+          "end_year": 402,
+          "region_code": "europe",
+          "subregion_code": "italy",
+          "location_label": "First Italian invasion",
+          "source_refs": [
+            "Oxford Classical Dictionary: Alaric — first shift of operations into Italy occurred in the 401–402 invasion"
+          ]
+        },
+        {
+          "start_year": 403,
+          "end_year": 407,
+          "region_code": "europe",
+          "subregion_code": "balkans",
+          "location_label": "Balkan sphere before permanent western move",
+          "source_refs": [
+            "Oxford Classical Dictionary: Alaric — the permanent shift from Balkans/east to Italy/west came only after 408"
+          ]
+        },
+        {
+          "start_year": 408,
+          "end_year": 410,
+          "region_code": "europe",
+          "subregion_code": "italy",
+          "location_label": "Italy / Rome campaign",
+          "source_refs": [
+            "Oxford Classical Dictionary: Alaric — operations shifted permanently to Italy and the west after 408; Rome was sacked in 410"
+          ]
+        }
+      ],
+      "reason": "Alaric's 395–410 Visigothic leadership was mobile rather than capital-based. The reviewed timeline records only the two well-supported geographic phases and the first Italian incursion, rather than assigning a fictitious static Visigothic capital.",
+      "source_refs": [
+        "Oxford Classical Dictionary: Alaric (Peter Heather, 2015) — focus moved from Balkans/east to Italy/west, first in 402 and permanently after 408",
+        "Oxford Academic: Goths and Romans 332–489, 'Alaric and the Move to Gaul' — Alaric and Constantinople 395–401; Alaric and Stilicho 401–408; sack of Rome"
+      ]
+    },
+    {
+      "activity_id": "42b9e5cc-02f9-49d0-9968-9476a24918e7",
+      "expected_polity_id": "bcb090c2-7906-4c3e-91cf-99b02646764e",
+      "expected_start_year": 474,
+      "expected_end_year": 493,
+      "override_mode": "timeline_segments",
+      "segments": [
+        {
+          "start_year": 474,
+          "end_year": 487,
+          "region_code": "europe",
+          "subregion_code": "balkans",
+          "location_label": "Macedonia / Roman Balkans",
+          "source_refs": [
+            "British Academy / Oxford Academic: Goths in the Roman Balkans c.350–500 — Amal-led Goths were in Macedonia from 473 until departure for Italy in 488–489"
+          ]
+        },
+        {
+          "start_year": 488,
+          "end_year": 493,
+          "region_code": "europe",
+          "subregion_code": "italy",
+          "location_label": "Italian conquest / Ravenna",
+          "source_refs": [
+            "Jordanes, Getica (Fordham Medieval Sourcebook) — Theodoric departed through Sirmium and Pannonia into Italy, advanced to Ravenna, and became ruler in 493"
+          ]
+        }
+      ],
+      "reason": "Theodoric's pre-493 Ostrogothic polity was mobile. The reviewed split follows the documented Balkan/Macedonian phase through 487 and the Italian conquest beginning in 488, ending with the establishment of rule in 493.",
+      "source_refs": [
+        "British Academy / Oxford Academic: Goths in the Roman Balkans c.350–500 — Amal Goths in Macedonia 473 to departure for Italy 488–489",
+        "Jordanes, Getica via Fordham Medieval Sourcebook — march from Sirmium/Pannonia into Italy and three-year struggle for Ravenna ending in 493"
+      ]
+    },
+    {
+      "activity_id": "b39b76a1-e17b-46c0-a49d-4ffc91d1948a",
+      "expected_polity_id": "502f18c3-41fc-4cb8-84cc-67f7e0454a9d",
+      "expected_start_year": 1154,
+      "expected_end_year": 1189,
+      "override_mode": "multi_anchor",
+      "segments": [
+        {
+          "start_year": 1154,
+          "end_year": 1189,
+          "region_code": "europe",
+          "subregion_code": "britain-ireland",
+          "location_label": "England / insular Angevin realm",
+          "source_refs": [
+            "Cambridge University Press: Restoration and Reform, 1153–1165 — Henry II spent about thirteen of his thirty-five regnal years in England, Wales or Ireland"
+          ]
+        },
+        {
+          "start_year": 1154,
+          "end_year": 1189,
+          "region_code": "europe",
+          "subregion_code": "western-europe",
+          "location_label": "Normandy–Anjou / continental Angevin realm",
+          "source_refs": [
+            "Cambridge University Press: Restoration and Reform, 1153–1165 — about fifteen regnal years in Normandy and seven elsewhere in France",
+            "Oxford Academic: The Angevin Empire 1154–1189 — composite dominion joined by Henry II, with Tours a key strategic connector"
+          ]
+        }
+      ],
+      "reason": "Henry II's Angevin dominion had no defensible single capital or leaf and his government was itinerant across insular and continental possessions. Two concurrent reviewed anchors preserve the Britain/Ireland and western-European poles without pretending that either was an exclusive permanent center.",
+      "source_refs": [
+        "Oxford Academic: The Angevin Empire 1154–1189 — large composite dominion from Britain to the Pyrenees, tied together by Henry II",
+        "Cambridge University Press: Restoration and Reform, 1153–1165 — itinerary summary: c.15 years Normandy, 7 elsewhere France, 13 England/Wales/Ireland"
       ]
     }
   ]
