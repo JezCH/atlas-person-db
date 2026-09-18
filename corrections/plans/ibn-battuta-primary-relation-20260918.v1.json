@@ -1,0 +1,82 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "ibn_battuta_primary_relation_20260918_v1",
+  "as_of": "2026-09-18",
+  "status": "REVIEWED_PRIMARY_RELATION_REPAIR_WITH_SEPARATE_SPATIAL_OVERRIDE",
+  "release_order": 567,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User-reviewed 2026-09-18 structural/spatial correction. Keep the legacy Marinid Sultanate as Ibn Battuta's representative polity association and fill the missing primary relation with active_in, while his world travel is modeled separately by an Activity-level reviewed multi-anchor spatial override rather than by pretending that the full 1325-1355 interval occurred in the Maghreb.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_activity_identity": true,
+    "preserve_polity_role_period_and_interval": true,
+    "preserve_existing_normalized_source_links_and_locators": true,
+    "spatial_route_must_not_be_encoded_by_relation_mutation": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "person_id": "5ea35065-a0b6-5273-bc7b-e3f198b4284b",
+    "activity_id": "1446e736-96f8-5401-913f-022cb9b4b7c2",
+    "polity_id": "4d16c8d9-adb4-5bee-985f-6e90d267d7e0",
+    "spatial_followup": "Activity-level multi_anchor override in spatial canonical index; relation alone must not determine his displayed world-travel location."
+  },
+  "operations": [
+    {
+      "case_id": "ibn_battuta_marinid_active_in",
+      "type": "rewrite_activity",
+      "activity_id": "1446e736-96f8-5401-913f-022cb9b4b7c2",
+      "baseline_before": {
+        "person_id": "5ea35065-a0b6-5273-bc7b-e3f198b4284b",
+        "polity_id": "4d16c8d9-adb4-5bee-985f-6e90d267d7e0",
+        "role_id": "b2a7a240-0654-5480-b028-01dd617aabd1",
+        "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
+        "activity_start": 1325,
+        "activity_end": 1355,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-4.json:15:3fdd97514a155dfd",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "1446e736-96f8-5401-913f-022cb9b4b7c2",
+        "person_id": "5ea35065-a0b6-5273-bc7b-e3f198b4284b",
+        "polity_id": "4d16c8d9-adb4-5bee-985f-6e90d267d7e0",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "b2a7a240-0654-5480-b028-01dd617aabd1",
+        "period_basis_id": "59746055-a8af-5002-adf4-3cbbcddc2e38",
+        "activity_start": 1325,
+        "activity_end": 1355,
+        "activity_start_detail": {
+          "year": 1325,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1355,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-4.json:15:3fdd97514a155dfd",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 1,
+    "production_mutation_authorized": false
+  }
+}
