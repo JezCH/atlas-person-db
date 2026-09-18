@@ -1,0 +1,35 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-19",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "c2fc92c651ef57ecfbd1df74a67e8bc838ac81c0",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Correct a stale identity-rekey mistake: current Production independently contains Uli I and Vonya as distinct Persons. Assign only Uli I, whose canonical Person Activity is Mansa of the Mali Empire, to governance."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-NULL-CLOSURE-20260919",
+    "queue_issue": 977,
+    "assignment_count": 1,
+    "distribution": {
+      "governance": 1,
+      "military": 0,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "6038648e-6b7d-4bf4-8bbe-550aecbc3c44",
+      "canonical_name_en": "Uli I",
+      "preferred_name_ko": "울리 1세",
+      "representative_domain": "governance"
+    }
+  ]
+}
