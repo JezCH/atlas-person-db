@@ -1,0 +1,18 @@
+{
+  "schema": "atlas-reviewed-spatial-bindings/v1",
+  "shard_id": "post-r4-live-residual-2-20260918",
+  "baseline": "5e78a0113f6648f8876c1e40abe3d84a539d57fb",
+  "reviewed_at": "2026-09-18T10:31:00Z",
+  "bindings": [
+    {
+      "polity_id": "83abbfa2-d755-4631-9345-1a98d4553751",
+      "region_code": "west-asia",
+      "subregion_code": "levant"
+    },
+    {
+      "polity_id": "a47f57af-8ac2-4724-81b0-43074c64f84c",
+      "region_code": "europe",
+      "subregion_code": "northern-europe"
+    }
+  ]
+}
