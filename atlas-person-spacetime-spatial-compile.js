@@ -257,13 +257,14 @@
     const reviewedSubregionCode = text(segment?.subregion_code);
     if (reviewedSubregionCode) {
       const range = compileSubregionRange(continuum, macro.code, reviewedSubregionCode);
-      if (!range) return unresolvedSegment(segment, macro, "reviewed_polity_subregion_invalid");
+      const activityOverride = text(segment?.placement_basis) === "activity_override";
+      if (!range) return unresolvedSegment(segment, macro, activityOverride ? "reviewed_activity_subregion_invalid" : "reviewed_polity_subregion_invalid");
       return Object.freeze({
         ...baseCompiledSegment(segment, macro),
         subregion_code: range.subregion_code,
         status: "placed", reason: null,
         x_anchor: range.x_anchor, x_min: range.x_min, x_max: range.x_max,
-        spatial_precision: "subregion", display_anchor_basis: "reviewed_polity_subregion",
+        spatial_precision: "subregion", display_anchor_basis: activityOverride ? "reviewed_activity_subregion" : "reviewed_polity_subregion",
         display_confidence: "reviewed",
         display_source_refs: normalizedRefs(segment?.source_refs),
         display_place_points: compiledDisplayPlacePoints(segment, continuum, macro)
