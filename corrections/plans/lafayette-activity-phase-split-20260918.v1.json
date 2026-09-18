@@ -1,0 +1,314 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "lafayette_activity_phase_split_20260918_v1",
+  "as_of": "2026-09-18",
+  "status": "REVIEWED_STRUCTURAL_ACTIVITY_PHASE_SPLIT",
+  "release_order": 563,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User-reviewed 2026-09-18 structural correction. The legacy 1777-1830 Kingdom of France Activity collapses discontinuous American Revolutionary service, French Revolutionary military/political service, the Hundred Days legislature, and Restoration parliamentary activity into one continuous French polity track. Split into historically distinct phases and preserve gaps instead of filling a null relation on the legacy span. Chronology cross-checked against the Library of Congress Marquis de Lafayette Papers biographical chronology.",
+  "baseline": {
+    "deployment_sha": "faa45761466a2825fd722666cf5159d58af83cbf",
+    "baseline_digest": "sha256:56a29b43400877d0e04463aadce31270ccbc060ca5fe608508e8852ce8fc59c6"
+  },
+  "uuid_allocation": {
+    "algorithm": "uuid5",
+    "repository_namespace": "672fd6c6-f921-5ce9-86dc-c90a8796c53a",
+    "name_format": "correction:activity:<original_activity_uuid>:<fragment_id>",
+    "runtime_allocation_forbidden": true,
+    "uuid_is_identity": true
+  },
+  "execution_rules": {
+    "split_discontinuous_us_and_french_phases": true,
+    "one_split_survivor_preserves_original_activity_uuid": true,
+    "new_fragment_legacy_source_key_must_be_null": true,
+    "existing_normalized_source_links_and_locators_copied_to_all_split_fragments": true,
+    "preserve_documented_activity_gaps": true,
+    "no_continuous_kingdom_of_france_track_1777_1830": true,
+    "no_fabricated_month_or_day": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "person_id": "f7512e5c-c3fc-5f29-9999-7ff245309ccc",
+    "original_activity_id": "7b7dcdaf-9f40-5004-a479-ae457fa21790",
+    "chronology_source": {
+      "title": "Marquis de Lafayette Papers — Biographical Notes",
+      "publisher": "Library of Congress",
+      "url": "https://findingaids.loc.gov/repositories/19/resources/2219",
+      "reviewed_points": [
+        "1777 arrived in the United States and was appointed major general in the American army",
+        "1779 returned to France; 1780 returned to Boston and resumed American service; 1781 returned to France after the Virginia/Yorktown campaign",
+        "1789 Estates-General/National Assembly/National Guard; 1791 resigned National Guard command; 1792 commanded part of the French army then left France",
+        "1815 elected to the Chamber of Representatives during the Hundred Days",
+        "1818-1824 served in the Chamber of Deputies; reelected in 1827; 1830 supported the July Revolution and again commanded the National Guard"
+      ]
+    }
+  },
+  "new_activity_uuid_allocations": [
+    {
+      "case_id": "lafayette_discontinuous_primary_track",
+      "fragment_id": "american_service_1780_1781",
+      "activity_uuid": "e7208fc1-74b8-5483-8126-2ffa6779c99f"
+    },
+    {
+      "case_id": "lafayette_discontinuous_primary_track",
+      "fragment_id": "french_revolution_1789_1792",
+      "activity_uuid": "49fca0c0-b779-5c3d-be69-a910cacf7874"
+    },
+    {
+      "case_id": "lafayette_discontinuous_primary_track",
+      "fragment_id": "hundred_days_1815",
+      "activity_uuid": "e221070b-2484-55f6-a25e-fb35e8ca5cc9"
+    },
+    {
+      "case_id": "lafayette_discontinuous_primary_track",
+      "fragment_id": "restoration_deputy_1818_1824",
+      "activity_uuid": "ad709c50-698d-597f-b860-abd8935b3ef5"
+    },
+    {
+      "case_id": "lafayette_discontinuous_primary_track",
+      "fragment_id": "restoration_deputy_1827_1830",
+      "activity_uuid": "b0b8e81a-14d7-5497-b0a9-d201fd0f9c24"
+    }
+  ],
+  "operations": [
+    {
+      "case_id": "lafayette_discontinuous_primary_track",
+      "type": "split_activity",
+      "activity_id": "7b7dcdaf-9f40-5004-a479-ae457fa21790",
+      "baseline_before": {
+        "person_id": "f7512e5c-c3fc-5f29-9999-7ff245309ccc",
+        "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+        "role_id": "48b28fca-64e8-5b8b-b39f-cde12e8830ea",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": 1777,
+        "activity_end": 1830,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-4.json:6:24fc13fcbb37089c",
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "source_copy_policy": "COPY_ALL_EXISTING_NORMALIZED_ACTIVITY_SOURCE_LINKS_AND_LOCATORS_TO_ALL_FRAGMENTS",
+      "fragments": [
+        {
+          "survivor": true,
+          "activity_id": "7b7dcdaf-9f40-5004-a479-ae457fa21790",
+          "person_id": "f7512e5c-c3fc-5f29-9999-7ff245309ccc",
+          "polity_id": "7d09bc56-1ea0-515e-a3e7-9863361b6f15",
+          "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+          "role_id": "48b28fca-64e8-5b8b-b39f-cde12e8830ea",
+          "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+          "activity_start": 1777,
+          "activity_end": 1779,
+          "activity_start_detail": {
+            "year": 1777,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end_detail": {
+            "year": 1779,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "approximate",
+            "calendar": "gregorian"
+          },
+          "confidence": "legacy_asserted",
+          "chronology_status": "reviewed",
+          "legacy_source_key": "pending-records-supplement-4.json:6:24fc13fcbb37089c",
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "Lafayette's first American Revolutionary service phase begins with his 1777 arrival and appointment as a major general in the American army and ends with his return to France in 1779. ATLAS uses serves toward the United States; the year-only end does not claim continuous physical presence through all of 1779.",
+          "add_source_links": []
+        },
+        {
+          "survivor": false,
+          "activity_id": "e7208fc1-74b8-5483-8126-2ffa6779c99f",
+          "person_id": "f7512e5c-c3fc-5f29-9999-7ff245309ccc",
+          "polity_id": "7d09bc56-1ea0-515e-a3e7-9863361b6f15",
+          "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+          "role_id": "48b28fca-64e8-5b8b-b39f-cde12e8830ea",
+          "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+          "activity_start": 1780,
+          "activity_end": 1781,
+          "activity_start_detail": {
+            "year": 1780,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end_detail": {
+            "year": 1781,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "legacy_asserted",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "Lafayette returned to the United States in 1780, resumed Continental Army service, commanded in Virginia and the Yorktown campaign, and returned to France in 1781. This is a second United States serves fragment rather than a false continuous 1777-1830 French track.",
+          "source_copy_policy": "COPY_EXISTING",
+          "add_source_links": []
+        },
+        {
+          "survivor": false,
+          "activity_id": "49fca0c0-b779-5c3d-be69-a910cacf7874",
+          "person_id": "f7512e5c-c3fc-5f29-9999-7ff245309ccc",
+          "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+          "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+          "role_id": "48b28fca-64e8-5b8b-b39f-cde12e8830ea",
+          "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+          "activity_start": 1789,
+          "activity_end": 1792,
+          "activity_start_detail": {
+            "year": 1789,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end_detail": {
+            "year": 1792,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "legacy_asserted",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "This fragment covers Lafayette's French Revolutionary public and military service under the Kingdom of France: Estates-General/National Assembly activity, command of the National Guard, and command of part of the French army before he left France in 1792. Relation serves is limited to this documented service phase.",
+          "source_copy_policy": "COPY_EXISTING",
+          "add_source_links": []
+        },
+        {
+          "survivor": false,
+          "activity_id": "e221070b-2484-55f6-a25e-fb35e8ca5cc9",
+          "person_id": "f7512e5c-c3fc-5f29-9999-7ff245309ccc",
+          "polity_id": "3ff63558-6761-5585-9dcf-f9a6da53606a",
+          "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+          "role_id": "48b28fca-64e8-5b8b-b39f-cde12e8830ea",
+          "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+          "activity_start": 1815,
+          "activity_end": 1815,
+          "activity_start_detail": {
+            "year": 1815,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end_detail": {
+            "year": 1815,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "legacy_asserted",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "Lafayette reentered national politics during the Hundred Days and was elected to the Chamber of Representatives in 1815. ATLAS models this as active_in the First French Empire rather than military service or rule.",
+          "source_copy_policy": "COPY_EXISTING",
+          "add_source_links": []
+        },
+        {
+          "survivor": false,
+          "activity_id": "ad709c50-698d-597f-b860-abd8935b3ef5",
+          "person_id": "f7512e5c-c3fc-5f29-9999-7ff245309ccc",
+          "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+          "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+          "role_id": "48b28fca-64e8-5b8b-b39f-cde12e8830ea",
+          "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+          "activity_start": 1818,
+          "activity_end": 1824,
+          "activity_start_detail": {
+            "year": 1818,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end_detail": {
+            "year": 1824,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "legacy_asserted",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "This fragment records Lafayette's 1818-1824 service in the Chamber of Deputies during the Restoration. The relation is active_in because it represents political activity within the Kingdom of France rather than sovereign or executive authority.",
+          "source_copy_policy": "COPY_EXISTING",
+          "add_source_links": []
+        },
+        {
+          "survivor": false,
+          "activity_id": "b0b8e81a-14d7-5497-b0a9-d201fd0f9c24",
+          "person_id": "f7512e5c-c3fc-5f29-9999-7ff245309ccc",
+          "polity_id": "2fcc634c-9806-5fe8-96fe-e4310124908a",
+          "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+          "role_id": "48b28fca-64e8-5b8b-b39f-cde12e8830ea",
+          "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+          "activity_start": 1827,
+          "activity_end": 1830,
+          "activity_start_detail": {
+            "year": 1827,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end_detail": {
+            "year": 1830,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "legacy_asserted",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "Lafayette was reelected to the Chamber of Deputies in 1827 and played a leading public role in the July Revolution of 1830, including renewed command of the National Guard. The fragment ends in the transition year 1830; no later July Monarchy polity identity is fabricated here.",
+          "source_copy_policy": "COPY_EXISTING",
+          "add_source_links": []
+        }
+      ],
+      "gap_overlap_policy": "PRESERVE_DISCONTINUOUS_DOCUMENTED_PHASES; YEAR_LEVEL_1779_AND_1780_BOUNDARIES_DO_NOT_ASSERT_CONTINUOUS_PHYSICAL_PRESENCE; NO_ACTIVITY_ASSERTED_FOR_1782_1788_1793_1814_1816_1817_1825_1826"
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 1,
+    "split_operations": 1,
+    "survivor_fragments": 1,
+    "new_activity_fragments": 5,
+    "relation_corrections": 6,
+    "discontinuous_gaps_preserved": true,
+    "production_mutation_authorized": false
+  }
+}
