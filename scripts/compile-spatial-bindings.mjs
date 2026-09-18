@@ -13,10 +13,6 @@ export const CANONICAL_SPATIAL_INDEX_SCHEMA = 'atlas-polity-spatial-index/v2';
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 const SHARD_ID_PATTERN = /^[a-z0-9][a-z0-9._-]*$/;
-const LEGACY_BASELINE_SUBREGION_PARENT = new Map([
-  ['east-africa-horn', 'africa']
-]);
-
 function fail(code, message) {
   const error = new Error(`${code}: ${message}`);
   error.code = code;
@@ -89,7 +85,7 @@ export function validateCanonicalBaseline(baseline) {
   }
   for (const [polityId, subregionCode] of Object.entries(baseline.polity_subregions || {})) {
     const regionCode = baseline.polity_geography?.[polityId];
-    const parent = taxonomy.subregionParent.get(subregionCode) || LEGACY_BASELINE_SUBREGION_PARENT.get(subregionCode);
+    const parent = taxonomy.subregionParent.get(subregionCode);
     if (!parent) fail('UNKNOWN_SPATIAL_SUBREGION', `baseline polity ${polityId}: ${subregionCode}`);
     if (parent !== regionCode) fail('SPATIAL_SUBREGION_PARENT_MISMATCH', `baseline polity ${polityId}: ${subregionCode} is not a child of ${regionCode}`);
   }
@@ -248,7 +244,7 @@ export function computeSpatialStats(index) {
   for (const code of Object.values(index.polity_geography || {})) macroregionCounts[code] += 1;
   for (const code of Object.values(index.polity_subregions || {})) {
     if (Object.prototype.hasOwnProperty.call(subregionCounts, code)) subregionCounts[code] += 1;
-    else if (!LEGACY_BASELINE_SUBREGION_PARENT.has(code)) fail('UNKNOWN_SPATIAL_SUBREGION', `stats: ${code}`);
+    else fail('UNKNOWN_SPATIAL_SUBREGION', `stats: ${code}`);
   }
   return Object.freeze({
     geography_count: Object.keys(index.polity_geography || {}).length,
