@@ -7,7 +7,7 @@ import {
   loadReviewedBindingShards
 } from '../scripts/compile-spatial-bindings.mjs';
 import {
-  applyTaxonomyMigrationManifests,
+  compileSpatialBindingsR4,
   loadTaxonomyMigrationManifests
 } from '../scripts/compile-spatial-bindings-r4.mjs';
 
@@ -94,25 +94,15 @@ const expected = new Map([
   ['b8c3ef01-2492-46b3-8a5c-17a0a363296d', 'horn-of-africa'],
 ]);
 
-test('r4 reviewed static migration manifest matches the current reviewed spatial source exactly', () => {
+test('r4 stages retired-source migrations before strict compile and active-source migrations after shard merge', () => {
   const retainedBaseline = JSON.parse(fs.readFileSync(baselinePath, 'utf8'));
-  const currentReviewed = compileSpatialBindings({
-    baseline: retainedBaseline,
-    shards: loadReviewedBindingShards(shardDir)
-  });
+  assert.throws(() => compileSpatialBindings({ baseline: retainedBaseline, shards: [] }), { code: 'INVALID_SPATIAL_BASELINE' });
   const migrations = loadTaxonomyMigrationManifests(migrationDir);
-  const migrated = applyTaxonomyMigrationManifests(currentReviewed.index, migrations);
-
-  assert.equal(migrated.migrated_polity_ids.length, expected.size);
-  assert.deepEqual(new Set(migrated.migrated_polity_ids), new Set(expected.keys()));
-  for (const [polityId, subregion] of expected) {
-    assert.equal(migrated.baseline.polity_subregions[polityId], subregion, polityId);
-  }
-
-  const compiled = compileSpatialBindings({ baseline: migrated.baseline, shards: [] });
-  for (const [polityId, subregion] of expected) {
-    assert.equal(compiled.index.polity_subregions[polityId], subregion, polityId);
-  }
+  const compiled = compileSpatialBindingsR4({ baseline: retainedBaseline, shards: loadReviewedBindingShards(shardDir), manifests: migrations });
+  assert.equal(compiled.migrated_polity_ids.length, expected.size);
+  assert.deepEqual(new Set(compiled.migrated_polity_ids), new Set(expected.keys()));
+  for (const [polityId, subregion] of expected) assert.equal(compiled.index.polity_subregions[polityId], subregion, polityId);
+  assert.equal(Object.values(compiled.index.polity_subregions).includes('east-africa-horn'), false, 'strict compiled output must contain zero retired east-africa-horn assignments');
 });
 
 test('r4 canonical hierarchy exposes 9 macroregions and 45 active leaves through the compiler target contract', async () => {
