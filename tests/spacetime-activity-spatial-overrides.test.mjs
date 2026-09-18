@@ -28,6 +28,48 @@ const EXPECTED = new Map([
   ["f5d38634-6cc2-4fdb-8b8c-535ee16c5340", ["08a804bf-81c1-4206-85ed-47b139104915", 1983, 1983, "africa", "east-africa", "Mauritius (Chagos Refugees Group)"]]
 ]);
 
+
+const EXPECTED_COMPLEX = new Map([
+  ["55e1fea7-11d4-4717-845a-4cbca5dccd0e", {
+    polity_id: "a1c6b0b4-ca71-420d-8d9f-502dc7914dd7", start: -305, end: -281, mode: "multi_anchor",
+    segments: [
+      [-305, -281, "west-asia", "mesopotamia", "Seleucia on the Tigris"],
+      [-300, -281, "west-asia", "levant", "Antioch on the Orontes"]
+    ]
+  }],
+  ["86a61ce2-f235-4930-9795-a6f9db0787fc", {
+    polity_id: "a1c6b0b4-ca71-420d-8d9f-502dc7914dd7", start: -222, end: -187, mode: "multi_anchor",
+    segments: [
+      [-222, -187, "west-asia", "levant", "Antioch"],
+      [-222, -187, "west-asia", "mesopotamia", "Seleucia on the Tigris / Babylonia"],
+      [-222, -187, "west-asia", "iranian-plateau", "Ecbatana"]
+    ]
+  }],
+  ["3fb5ed9e-7df3-42c1-98d2-33969a7876c4", {
+    polity_id: "01cd1acd-9321-4d25-bc30-4cbd561bcbd5", start: 395, end: 410, mode: "timeline_segments",
+    segments: [
+      [395, 400, "europe", "balkans", "Balkan / eastern imperial sphere"],
+      [401, 402, "europe", "italy", "First Italian invasion"],
+      [403, 407, "europe", "balkans", "Balkan sphere before permanent western move"],
+      [408, 410, "europe", "italy", "Italy / Rome campaign"]
+    ]
+  }],
+  ["42b9e5cc-02f9-49d0-9968-9476a24918e7", {
+    polity_id: "bcb090c2-7906-4c3e-91cf-99b02646764e", start: 474, end: 493, mode: "timeline_segments",
+    segments: [
+      [474, 487, "europe", "balkans", "Macedonia / Roman Balkans"],
+      [488, 493, "europe", "italy", "Italian conquest / Ravenna"]
+    ]
+  }],
+  ["b39b76a1-e17b-46c0-a49d-4ffc91d1948a", {
+    polity_id: "502f18c3-41fc-4cb8-84cc-67f7e0454a9d", start: 1154, end: 1189, mode: "multi_anchor",
+    segments: [
+      [1154, 1189, "europe", "britain-ireland", "England / insular Angevin realm"],
+      [1154, 1189, "europe", "western-europe", "Normandy–Anjou / continental Angevin realm"]
+    ]
+  }]
+]);
+
 function activity(activityId, polityId, startYear, endYear) {
   return {
     id: activityId,
@@ -40,10 +82,11 @@ function activity(activityId, polityId, startYear, endYear) {
 test("canonical Activity overrides are exact reviewed UUID/interval facts", () => {
   const validation = model.validateSpatialIndex(index);
   assert.equal(validation.valid, true, validation.errors.join("\n"));
-  assert.equal(index.activity_spatial_overrides.length, 17);
-  assert.deepEqual(new Set(index.activity_spatial_overrides.map((row) => row.activity_id)), new Set(EXPECTED.keys()));
+  const simpleRows = index.activity_spatial_overrides.filter((row) => !Array.isArray(row.segments) || row.segments.length === 0);
+  assert.equal(simpleRows.length, EXPECTED.size);
+  assert.deepEqual(new Set(simpleRows.map((row) => row.activity_id)), new Set(EXPECTED.keys()));
 
-  for (const row of index.activity_spatial_overrides) {
+  for (const row of simpleRows) {
     const expected = EXPECTED.get(row.activity_id);
     assert.ok(expected, row.activity_id);
     assert.deepEqual(
@@ -95,4 +138,64 @@ test("invalid Activity override leaf-parent combinations are rejected", () => {
   const validation = model.validateSpatialIndex(broken);
   assert.equal(validation.valid, false);
   assert.match(validation.errors.join("\n"), /subregion japan is not a child of macroregion /);
+});
+
+
+test("five complex Activity overrides preserve reviewed multi-anchor or timeline semantics", () => {
+  const validation = model.validateSpatialIndex(index);
+  assert.equal(validation.valid, true, validation.errors.join("\n"));
+  const complexRows = index.activity_spatial_overrides.filter((row) => Array.isArray(row.segments) && row.segments.length > 0);
+  assert.equal(complexRows.length, 5);
+  assert.deepEqual(new Set(complexRows.map((row) => row.activity_id)), new Set(EXPECTED_COMPLEX.keys()));
+
+  const lookup = model.createSpatialLookup(index);
+  for (const row of complexRows) {
+    const expected = EXPECTED_COMPLEX.get(row.activity_id);
+    assert.ok(expected, row.activity_id);
+    assert.equal(row.expected_polity_id, expected.polity_id, row.activity_id);
+    assert.equal(row.expected_start_year, expected.start, row.activity_id);
+    assert.equal(row.expected_end_year, expected.end, row.activity_id);
+    assert.equal(row.override_mode, expected.mode, row.activity_id);
+    assert.deepEqual(
+      row.segments.map((segment) => [segment.start_year, segment.end_year, segment.region_code, segment.subregion_code, segment.location_label]),
+      expected.segments,
+      row.activity_id
+    );
+    assert.ok(row.segments.every((segment) => Array.isArray(segment.source_refs) && segment.source_refs.length > 0), row.activity_id);
+
+    const resolved = model.resolveActivityPlacement(activity(row.activity_id, expected.polity_id, expected.start, expected.end), lookup);
+    assert.equal(resolved.status, "placed", row.activity_id);
+    assert.equal(resolved.segments.length, expected.segments.length, row.activity_id);
+    assert.ok(resolved.segments.every((segment) => segment.placement_basis === "activity_override"), row.activity_id);
+    assert.ok(resolved.segments.every((segment) => segment.activity_override_mode === expected.mode), row.activity_id);
+    assert.deepEqual(
+      resolved.segments.map((segment) => [segment.start_year, segment.end_year, segment.region_code, segment.subregion_code, segment.location_label]),
+      expected.segments,
+      row.activity_id
+    );
+
+    const compiled = compile.compileActivityPlacement(resolved);
+    assert.equal(compiled.status, "placed", row.activity_id);
+    assert.equal(compiled.segments.length, expected.segments.length, row.activity_id);
+    assert.ok(compiled.segments.every((segment) => segment.spatial_precision === "subregion"), row.activity_id);
+    assert.ok(compiled.segments.every((segment) => segment.display_anchor_basis === "reviewed_activity_subregion"), row.activity_id);
+  }
+});
+
+test("timeline-segment overrides fail closed on gaps or overlaps", () => {
+  const broken = structuredClone(index);
+  const alaric = broken.activity_spatial_overrides.find((row) => row.activity_id === "3fb5ed9e-7df3-42c1-98d2-33969a7876c4");
+  alaric.segments[1].start_year = 402;
+  const validation = model.validateSpatialIndex(broken);
+  assert.equal(validation.valid, false);
+  assert.match(validation.errors.join("\n"), /timeline_segments must be contiguous and non-overlapping/);
+});
+
+test("multi-anchor overrides fail closed when reviewed anchors leave an Activity interval gap", () => {
+  const broken = structuredClone(index);
+  const seleucus = broken.activity_spatial_overrides.find((row) => row.activity_id === "55e1fea7-11d4-4717-845a-4cbca5dccd0e");
+  seleucus.segments[0].start_year = -304;
+  const validation = model.validateSpatialIndex(broken);
+  assert.equal(validation.valid, false);
+  assert.match(validation.errors.join("\n"), /multi_anchor segments must cover the full expected Activity interval without gaps/);
 });
