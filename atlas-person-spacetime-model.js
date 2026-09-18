@@ -19,7 +19,8 @@
   ]);
   const REGION_CODES = new Set(REGION_DEFINITIONS.map((item) => item.code));
   const ALLOWED_CONFIDENCE = new Set(["well_established", "likely", "speculative", "disputed", "unknown"]);
-  const PLACEMENT_BASES = new Set(["polity_geography", "polity_place_function"]);
+  const PLACEMENT_BASES = new Set(["polity_geography", "polity_place_function", "activity_override"]);
+  const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
   const PLACE_FUNCTION_TYPES = new Set(["capital", "royal_court", "royal_residence", "imperial_court_core", "political_center", "administrative_center"]);
   const SPATIAL_INDEX_SCHEMA = "atlas-polity-spatial-index/v2";
   const SUBREGION_PARENT = Object.freeze({
@@ -159,6 +160,7 @@
     if (Object.prototype.hasOwnProperty.call(value, "capital_records")) errors.push("capital_records is obsolete in v2");
     if (Object.prototype.hasOwnProperty.call(value, "authority_center_records")) errors.push("authority_center_records is obsolete in v2");
     if (value.review_queue != null && !Array.isArray(value.review_queue)) errors.push("review_queue must be an array when present");
+    if (value.activity_spatial_overrides != null && !Array.isArray(value.activity_spatial_overrides)) errors.push("activity_spatial_overrides must be an array when present");
 
     const resolved = new Set();
     for (const [polityId, rawRegionCode] of Object.entries(value.polity_geography || {})) {
@@ -200,6 +202,34 @@
       }
     }
 
+    const activityOverrideSeen = new Set();
+    for (const [index, record] of (Array.isArray(value.activity_spatial_overrides) ? value.activity_spatial_overrides : []).entries()) {
+      const prefix = `activity_spatial_overrides[${index}]`;
+      const activityId = text(record?.activity_id);
+      const expectedPolityId = record?.expected_polity_id == null ? null : text(record.expected_polity_id);
+      const expectedStartYear = record?.expected_start_year == null ? null : Number(record.expected_start_year);
+      const expectedEndYear = record?.expected_end_year == null ? null : Number(record.expected_end_year);
+      const regionCode = text(record?.region_code);
+      const subregionCode = text(record?.subregion_code);
+      const locationLabel = text(record?.location_label);
+      const reason = text(record?.reason);
+      const sourceRefs = Array.isArray(record?.source_refs) ? record.source_refs.map(text).filter(Boolean) : [];
+
+      if (!UUID_PATTERN.test(activityId)) errors.push(`${prefix}: activity_id must be a lowercase canonical UUID`);
+      if (activityOverrideSeen.has(activityId)) errors.push(`${prefix}: duplicate activity_id ${activityId}`);
+      if (activityId) activityOverrideSeen.add(activityId);
+      if (expectedPolityId != null && !UUID_PATTERN.test(expectedPolityId)) errors.push(`${prefix}: expected_polity_id must be a lowercase canonical UUID or null`);
+      if (!Number.isInteger(expectedStartYear) || expectedStartYear === 0) errors.push(`${prefix}: expected_start_year must be a historical integer year`);
+      if (!Number.isInteger(expectedEndYear) || expectedEndYear === 0) errors.push(`${prefix}: expected_end_year must be a historical integer year`);
+      if (Number.isInteger(expectedStartYear) && Number.isInteger(expectedEndYear) && expectedStartYear > expectedEndYear) errors.push(`${prefix}: expected_start_year must not be after expected_end_year`);
+      if (!REGION_CODES.has(regionCode)) errors.push(`${prefix}: invalid region_code ${regionCode || "(empty)"}`);
+      if (!SUBREGION_PARENT[subregionCode]) errors.push(`${prefix}: invalid subregion_code ${subregionCode || "(empty)"}`);
+      else if (SUBREGION_PARENT[subregionCode] !== regionCode) errors.push(`${prefix}: subregion ${subregionCode} is not a child of macroregion ${regionCode || "(empty)"}`);
+      if (!locationLabel) errors.push(`${prefix}: location_label is required`);
+      if (!reason) errors.push(`${prefix}: reason is required`);
+      if (!Array.isArray(record?.source_refs) || !sourceRefs.length) errors.push(`${prefix}: source_refs must be a non-empty array`);
+    }
+
     const reviewSeen = new Set();
     for (const [index, record] of (Array.isArray(value.review_queue) ? value.review_queue : []).entries()) {
       const polityId = text(record?.polity_id);
@@ -232,6 +262,20 @@
     }
     for (const record of index.place_function_records || []) {
       lookup.set(text(record.polity_id), Object.freeze({ placement_basis: "polity_place_function", functions: Object.freeze(record.functions.slice()) }));
+    }
+    for (const record of index.activity_spatial_overrides || []) {
+      lookup.set(`@activity:${text(record.activity_id)}`, Object.freeze({
+        placement_basis: "activity_override",
+        activity_id: text(record.activity_id),
+        expected_polity_id: record.expected_polity_id == null ? null : text(record.expected_polity_id),
+        expected_start_year: Number(record.expected_start_year),
+        expected_end_year: Number(record.expected_end_year),
+        region_code: text(record.region_code),
+        subregion_code: text(record.subregion_code),
+        location_label: text(record.location_label),
+        reason: text(record.reason),
+        source_refs: Object.freeze([...new Set(record.source_refs.map(text).filter(Boolean))])
+      }));
     }
     return lookup;
   }
@@ -312,6 +356,34 @@
     if (!interval) return Object.freeze({ activity_id: activityId, polity_id: polityId, status: "chronology_unresolved", chronology_reason: "missing_boundaries", segments: Object.freeze([]) });
     if (interval.partial) return Object.freeze({ activity_id: activityId, polity_id: polityId, status: "chronology_unresolved", chronology_reason: "incomplete_boundary", segments: Object.freeze([]) });
     if (interval.reversed_input) return Object.freeze({ activity_id: activityId, polity_id: polityId, status: "chronology_unresolved", chronology_reason: "reversed_boundaries", segments: Object.freeze([]) });
+    const activityOverride = spatialLookup instanceof Map ? spatialLookup.get(`@activity:${activityId}`) : null;
+    if (activityOverride) {
+      const currentPolityId = polityId || null;
+      if (activityOverride.expected_polity_id !== currentPolityId) {
+        return Object.freeze({ activity_id: activityId, polity_id: polityId, status: "spatial_unresolved", reason: "activity_override_polity_mismatch", segments: Object.freeze([]) });
+      }
+      if (activityOverride.expected_start_year !== interval.start_year || activityOverride.expected_end_year !== interval.end_year) {
+        return Object.freeze({ activity_id: activityId, polity_id: polityId, status: "spatial_unresolved", reason: "activity_override_interval_mismatch", segments: Object.freeze([]) });
+      }
+      return Object.freeze({ activity_id: activityId, polity_id: polityId, status: "placed", segments: Object.freeze([Object.freeze({
+        activity_id: activityId,
+        polity_id: polityId,
+        region_code: activityOverride.region_code,
+        subregion_code: activityOverride.subregion_code,
+        placement_basis: "activity_override",
+        location_label: activityOverride.location_label,
+        place_function_type: null,
+        place_name: null,
+        place_id: null,
+        active_place_functions: Object.freeze([]),
+        confidence: "reviewed",
+        source_refs: activityOverride.source_refs,
+        start_year: interval.start_year,
+        end_year: interval.end_year,
+        partial_activity_interval: false
+      })]) });
+    }
+
     if (!polityId) return Object.freeze({ activity_id: activityId, polity_id: polityId, status: "polity_unresolved", segments: Object.freeze([]) });
 
     const record = spatialLookup instanceof Map ? spatialLookup.get(polityId) : null;
