@@ -94,5 +94,5 @@ test("invalid Activity override leaf-parent combinations are rejected", () => {
   broken.activity_spatial_overrides[0].subregion_code = "japan";
   const validation = model.validateSpatialIndex(broken);
   assert.equal(validation.valid, false);
-  assert.match(validation.errors.join("\n"), /not a child of macroregion west-asia/);
+  assert.match(validation.errors.join("\n"), /subregion japan is not a child of macroregion /);
 });
