@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-18T10:31:00.000Z",
+  "generated_at": "2026-09-18T11:55:00.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -2798,6 +2798,48 @@
   },
   "activity_spatial_overrides": [
     {
+      "activity_id": "b8bd254a-612a-4a21-a625-ddc55ab9b763",
+      "expected_polity_id": "a81055d7-ed0d-45a6-90c6-738e1a9ba94d",
+      "expected_start_year": -165,
+      "expected_end_year": -140,
+      "region_code": "europe",
+      "subregion_code": "eastern-europe",
+      "location_label": "Pontic steppe (Dnieper–Don)",
+      "reason": "Amage's Roxolani activity is best represented at the broad Pontic-steppe leaf. This is a reviewed activity anchor for the Roxolani polity, not a claim that Amage remained at one fixed settlement.",
+      "source_refs": [
+        "Encyclopaedia Iranica: AMAZONS ii. — Polyaenus 8.56 identifies Amage as ruler of the Roxolani c. 165–140 BCE",
+        "Encyclopedia of the Hellenic World, Black Sea: Sarmatians — Roxolani occupied the steppes between the Don (Tanais) and Dnieper (Borysthenes)"
+      ]
+    },
+    {
+      "activity_id": "5060c16c-b79d-42a2-92b0-d3c842fc86b4",
+      "expected_polity_id": "70aedae1-9544-4e8a-bfd8-6feda3e142c7",
+      "expected_start_year": 406,
+      "expected_end_year": 406,
+      "region_code": "europe",
+      "subregion_code": "central-europe",
+      "location_label": "Rhine frontier (Mainz area)",
+      "reason": "Respendial's authored one-year activity is the Alan intervention immediately before and during the 406 Rhine crossing; the Mainz/Rhine frontier is a defensible event-level anchor without inventing a permanent Alan capital.",
+      "source_refs": [
+        "Gregory of Tours, Histories 2.9 (Frigeridus fragment) — Respendial's Alans intervened in the Vandal–Frankish fighting preceding the Rhine crossing",
+        "Prosper of Aquitaine / modern Crossing of the Rhine chronology — the 406 crossing is conventionally located on the Rhine frontier near Mainz"
+      ]
+    },
+    {
+      "activity_id": "fc4903bd-ab41-43c9-904d-3a0c0e0126e1",
+      "expected_polity_id": "857597b9-4554-4eff-9b00-2441c7e09a47",
+      "expected_start_year": 972,
+      "expected_end_year": 972,
+      "region_code": "europe",
+      "subregion_code": "eastern-europe",
+      "location_label": "Dnieper rapids / Khortytsia",
+      "reason": "Kurya's authored 972 activity is directly tied by the Primary Chronicle to the Pecheneg ambush of Sviatoslav at the Dnieper rapids, giving an exact event-level eastern-European anchor without asserting a fixed Pecheneg capital.",
+      "source_refs": [
+        "Russian Primary Chronicle, year 6480/972 — Kurya, prince of the Pechenegs, attacked Sviatoslav at the Dnieper rapids",
+        "Archaeology of Ukraine historical review — chronicle passage locates Kurya's 972 attack at the Dnieper rapids"
+      ]
+    },
+    {
       "activity_id": "19fc5c65-cf80-4409-a0de-86195f46b102",
       "expected_polity_id": "01f4ce7b-aaa3-473a-a6fd-9c95c4a85ff7",
       "expected_start_year": 1064,
@@ -2825,6 +2867,20 @@
       ]
     },
     {
+      "activity_id": "4e73f2ee-c6eb-46cc-a0aa-a54dc8e879d0",
+      "expected_polity_id": "63828485-5db4-429f-a9d5-2523eacc11ee",
+      "expected_start_year": 1091,
+      "expected_end_year": 1096,
+      "region_code": "europe",
+      "subregion_code": "eastern-europe",
+      "location_label": "Pereyaslav–Trubezh steppe frontier",
+      "reason": "Tugorkan's Cuman activity culminated on the Trubezh near Pereyaslavl in 1096 and belongs to the Pontic steppe/Rus frontier. The broad eastern-Europe leaf is precise enough for the nomadic confederation without inventing a fixed capital.",
+      "source_refs": [
+        "Russian Primary Chronicle / Tale of Igor chronology — Tugorkan was defeated and killed on the Trubezh near Pereyaslavl in 1096",
+        "Historical Cuman geography — Cuman groupings occupied the Dnieper/Donets/Don steppe north of the Black Sea"
+      ]
+    },
+    {
       "activity_id": "54208459-1778-4a94-bf37-84d4d5c242b8",
       "expected_polity_id": "01f4ce7b-aaa3-473a-a6fd-9c95c4a85ff7",
       "expected_start_year": 1091,
@@ -2836,6 +2892,19 @@
       "source_refs": [
         "Stanford Encyclopedia of Philosophy: al-Ghazali — appointed to the Nizamiyya in Baghdad in 1091 and left Baghdad in 1095",
         "Encyclopaedia Iranica: ḠAZĀLĪ, ABŪ ḤĀMED — professor at the Neẓāmiya in Baghdad from 1091 for four years"
+      ]
+    },
+    {
+      "activity_id": "6787936c-046b-4b6e-882f-2f96079c9881",
+      "expected_polity_id": "63828485-5db4-429f-a9d5-2523eacc11ee",
+      "expected_start_year": 1171,
+      "expected_end_year": 1203,
+      "region_code": "europe",
+      "subregion_code": "eastern-europe",
+      "location_label": "Donets–Dnieper Cuman steppe",
+      "reason": "Konchak led the Don grouping of the Cumans and repeatedly operated against the Chernihiv, Pereyaslavl and Kyiv principalities; the eastern-Europe steppe leaf is a reviewed broad activity anchor, not a fixed-capital claim.",
+      "source_refs": [
+        "Encyclopedia of History of Ukraine: KONCHAK — khan of the Don Cuman grouping; campaigns against Chernihiv, Pereyaslavl and Kyiv lands"
       ]
     },
     {
@@ -2853,6 +2922,34 @@
       ]
     },
     {
+      "activity_id": "fa94fed6-a7db-4dfa-ad96-709f541e30cf",
+      "expected_polity_id": "25401991-b8df-454f-8fdc-652699c95958",
+      "expected_start_year": 1618,
+      "expected_end_year": 1623,
+      "region_code": "southeast-asia",
+      "subregion_code": "maritime-southeast-asia",
+      "location_label": "Batavia (Jakarta)",
+      "reason": "Coen's first governor-general activity is centered on the VOC's Batavia/Jacatra headquarters, which he established as the company's durable political-administrative center in Java.",
+      "source_refs": [
+        "Indonesian National Archives, Sejarah Nusantara: Governor Generals — Jan Pieterszoon Coen served 1619–1623",
+        "Treccani: Jan Pieterszoon Coen — founded Batavia on the ruins of Jacatra in 1619"
+      ]
+    },
+    {
+      "activity_id": "397bf9a7-0108-4feb-841b-e1966abf168e",
+      "expected_polity_id": "25401991-b8df-454f-8fdc-652699c95958",
+      "expected_start_year": 1627,
+      "expected_end_year": 1629,
+      "region_code": "southeast-asia",
+      "subregion_code": "maritime-southeast-asia",
+      "location_label": "Batavia (Jakarta)",
+      "reason": "Coen returned to Batavia for his second governor-general term and died there during the 1629 siege; Batavia is the reviewed activity-level administrative anchor.",
+      "source_refs": [
+        "Indonesian National Archives, Sejarah Nusantara: Governor Generals — Jan Pieterszoon Coen served again 1627–1629",
+        "Treccani: Jan Pieterszoon Coen — second governorship and defense of Batavia"
+      ]
+    },
+    {
       "activity_id": "747c2472-b051-4412-8f7b-51f551a1ec17",
       "expected_polity_id": "68c83ef6-0023-5af9-a6e8-26ccf5b8e116",
       "expected_start_year": 1692,
@@ -2864,6 +2961,76 @@
       "source_refs": [
         "The National Museum of Oman: Architectural Heritage — Rustaq was a Ya'rubid capital and authority center",
         "Oman Ministry of Foreign Affairs: History — Al Rustaq is a former capital of Oman"
+      ]
+    },
+    {
+      "activity_id": "7fad023c-4544-4675-ad74-0ff44dd0d67a",
+      "expected_polity_id": "44a197bb-1b80-484e-9ea2-e29c3f9904fc",
+      "expected_start_year": 1757,
+      "expected_end_year": 1757,
+      "region_code": "south-asia",
+      "subregion_code": "north-india-ganges",
+      "location_label": "Plassey / Bengal",
+      "reason": "Clive's authored 1757 East India Company military activity is the Plassey campaign in Bengal; an exact activity anchor is preferable to assigning the transregional Company a polity-wide static leaf.",
+      "source_refs": [
+        "National Army Museum: Clive at Plassey, 1757 — Clive commanded the East India Company's army at Plassey in Bengal"
+      ]
+    },
+    {
+      "activity_id": "baf5a91d-e054-407d-9ce9-4f8f28f1b68e",
+      "expected_polity_id": "9e227293-7ab8-5870-b05b-0b8c715738a4",
+      "expected_start_year": 1785,
+      "expected_end_year": 1785,
+      "region_code": "americas",
+      "subregion_code": "north-america",
+      "location_label": "Mission San Gabriel, California",
+      "reason": "Toypurina's authored opposition activity is the 1785 Indigenous revolt at Mission San Gabriel in Alta California; this event-level anchor avoids using a transregional Spanish-imperial capital.",
+      "source_refs": [
+        "U.S. National Park Service: Mission San Gabriel Archangel — Toypurina and other Indigenous leaders attempted a rebellion at the mission in 1785",
+        "Smithsonian National Museum of the American Indian, NK360: Toypurina, Nicolás José, and the 1785 Mission San Gabriel Revolt"
+      ]
+    },
+    {
+      "activity_id": "32ad5a54-9dbe-46b4-bfd1-859dab6dca91",
+      "expected_polity_id": "eb2f8e2e-220b-4754-afe9-25449b1d35ec",
+      "expected_start_year": 1915,
+      "expected_end_year": 1915,
+      "region_code": "west-asia",
+      "subregion_code": "levant",
+      "location_label": "Negev–Sinai Tarabin core",
+      "reason": "Hamad Pasha al-Sufi's authored 1915 activity is as a Tarabin Bedouin war leader. The Tarabin's reviewed Negev–Sinai tribal core is more faithful than inventing a single capital or attaching the polity to the Ottoman center.",
+      "source_refs": [
+        "Historical accounts of the Negev Bedouin — Hamad Pasha al-Sufi led 1,500 Tarabin, Tiyaha and Azazma in the Ottoman Suez offensive",
+        "Tarabin historical geography — the tribe's core lay across the Negev and Sinai Peninsula"
+      ]
+    },
+    {
+      "activity_id": "e65edaa4-645a-479f-be81-6414ff2f71ba",
+      "expected_polity_id": "a602213a-dccb-4a23-96c3-e91dfc300a9f",
+      "expected_start_year": 1958,
+      "expected_end_year": 1970,
+      "region_code": "africa",
+      "subregion_code": "nile-valley",
+      "location_label": "Cairo",
+      "reason": "The United Arab Republic's capital and central foreign-policy administration were in Cairo throughout Nasser's presidency; this provides an exact activity-level political center without reducing the whole cross-macro union to Egypt.",
+      "source_refs": [
+        "U.S. Department of State, FRUS 1958–1960, vol. XIII, doc. 194 — UAR political questions with foreign governments were to be handled by the Foreign Office in Cairo; Nasser assumed the presidency",
+        "United Arab Republic constitutional/state references — Cairo was the capital"
+      ]
+    },
+    {
+      "activity_id": "f5d38634-6cc2-4fdb-8b8c-535ee16c5340",
+      "expected_polity_id": "08a804bf-81c1-4206-85ed-47b139104915",
+      "expected_start_year": 1983,
+      "expected_end_year": 1983,
+      "region_code": "africa",
+      "subregion_code": "east-africa",
+      "location_label": "Mauritius (Chagos Refugees Group)",
+      "reason": "Bancoult's authored 1983 Chagossian-rights activity is the founding of the Chagos Refugees Group in the resettled community in Mauritius; this represents the activity's actual advocacy base rather than the displaced Chagos homeland.",
+      "source_refs": [
+        "Chagos Refugees Group: Our History — Olivier Bancoult and other Chagossian leaders established the CRG in 1983 after exile to Mauritius and Seychelles",
+        "Chagos Refugees Group: About Us — CRG is a community-led organization located in Mauritius and the UK and was established in 1983",
+        "UK Parliament written evidence CHA0009 — the Chagos Refugees Group was established in 1983 to defend Chagossian rights"
       ]
     }
   ]
