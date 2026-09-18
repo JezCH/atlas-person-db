@@ -1,6 +1,6 @@
 {
   "schema": "atlas-polity-spatial-index/v2",
-  "generated_at": "2026-09-18T12:20:00.000Z",
+  "generated_at": "2026-09-18T14:08:00.000Z",
   "policy": {
     "primary": "Use reviewed broad polity geography when the polity has an unambiguous horizontal placement.",
     "ambiguous_fallback": "When broad polity geography is transregional, compile placement from reviewed temporal polity-place functions instead of a special-purpose capital field.",
@@ -2984,6 +2984,312 @@
       "source_refs": [
         "Oxford Academic: The Angevin Empire 1154–1189 — large composite dominion from Britain to the Pyrenees, tied together by Henry II",
         "Cambridge University Press: Restoration and Reform, 1153–1165 — itinerary summary: c.15 years Normandy, 7 elsewhere France, 13 England/Wales/Ireland"
+      ]
+    },
+    {
+      "activity_id": "1446e736-96f8-5401-913f-022cb9b4b7c2",
+      "expected_polity_id": "4d16c8d9-adb4-5bee-985f-6e90d267d7e0",
+      "expected_start_year": 1325,
+      "expected_end_year": 1355,
+      "override_mode": "multi_anchor",
+      "segments": [
+        {
+          "start_year": 1325,
+          "end_year": 1325,
+          "region_code": "africa",
+          "subregion_code": "maghreb-north-africa",
+          "location_label": "Tangier–Maghreb route to Egypt",
+          "source_refs": [
+            "UC Berkeley ORIAS, The Travels of Ibn Battuta / The Journey — reviewed journey chronology 1325-1355"
+          ]
+        },
+        {
+          "start_year": 1326,
+          "end_year": 1326,
+          "region_code": "africa",
+          "subregion_code": "nile-valley",
+          "location_label": "Cairo / Nile Valley",
+          "source_refs": [
+            "UC Berkeley ORIAS, The Travels of Ibn Battuta / The Journey — reviewed journey chronology 1325-1355"
+          ]
+        },
+        {
+          "start_year": 1326,
+          "end_year": 1326,
+          "region_code": "west-asia",
+          "subregion_code": "levant",
+          "location_label": "Jerusalem–Damascus corridor",
+          "source_refs": [
+            "UC Berkeley ORIAS, The Travels of Ibn Battuta / The Journey — reviewed journey chronology 1325-1355"
+          ]
+        },
+        {
+          "start_year": 1326,
+          "end_year": 1326,
+          "region_code": "west-asia",
+          "subregion_code": "arabia",
+          "location_label": "Medina–Mecca / Hajj",
+          "source_refs": [
+            "UC Berkeley ORIAS, The Travels of Ibn Battuta / The Journey — reviewed journey chronology 1325-1355"
+          ]
+        },
+        {
+          "start_year": 1326,
+          "end_year": 1327,
+          "region_code": "west-asia",
+          "subregion_code": "mesopotamia",
+          "location_label": "Iraq / Baghdad",
+          "source_refs": [
+            "UC Berkeley ORIAS, The Travels of Ibn Battuta / The Journey — reviewed journey chronology 1325-1355"
+          ]
+        },
+        {
+          "start_year": 1326,
+          "end_year": 1327,
+          "region_code": "west-asia",
+          "subregion_code": "iranian-plateau",
+          "location_label": "Persia / Tabriz",
+          "source_refs": [
+            "UC Berkeley ORIAS, The Travels of Ibn Battuta / The Journey — reviewed journey chronology 1325-1355"
+          ]
+        },
+        {
+          "start_year": 1328,
+          "end_year": 1330,
+          "region_code": "africa",
+          "subregion_code": "east-africa",
+          "location_label": "East African coast",
+          "source_refs": [
+            "UC Berkeley ORIAS, The Travels of Ibn Battuta / The Journey — reviewed journey chronology 1325-1355"
+          ]
+        },
+        {
+          "start_year": 1328,
+          "end_year": 1330,
+          "region_code": "west-asia",
+          "subregion_code": "arabia",
+          "location_label": "Red Sea / Arabian Sea / Arabia",
+          "source_refs": [
+            "UC Berkeley ORIAS, The Travels of Ibn Battuta / The Journey — reviewed journey chronology 1325-1355"
+          ]
+        },
+        {
+          "start_year": 1330,
+          "end_year": 1331,
+          "region_code": "west-asia",
+          "subregion_code": "anatolia",
+          "location_label": "Anatolia",
+          "source_refs": [
+            "UC Berkeley ORIAS, The Travels of Ibn Battuta / The Journey — reviewed journey chronology 1325-1355"
+          ]
+        },
+        {
+          "start_year": 1332,
+          "end_year": 1333,
+          "region_code": "europe",
+          "subregion_code": "russia-volga",
+          "location_label": "Golden Horde / Volga–Black Sea steppe",
+          "source_refs": [
+            "UC Berkeley ORIAS, The Travels of Ibn Battuta / The Journey — reviewed journey chronology 1325-1355"
+          ]
+        },
+        {
+          "start_year": 1332,
+          "end_year": 1333,
+          "region_code": "central-asia",
+          "subregion_code": "western-central-asia",
+          "location_label": "Chagatai / Central Asian route",
+          "source_refs": [
+            "UC Berkeley ORIAS, The Travels of Ibn Battuta / The Journey — reviewed journey chronology 1325-1355"
+          ]
+        },
+        {
+          "start_year": 1334,
+          "end_year": 1341,
+          "region_code": "south-asia",
+          "subregion_code": "north-india-ganges",
+          "location_label": "Delhi",
+          "source_refs": [
+            "UC Berkeley ORIAS, The Travels of Ibn Battuta / The Journey — reviewed journey chronology 1325-1355"
+          ]
+        },
+        {
+          "start_year": 1341,
+          "end_year": 1344,
+          "region_code": "south-asia",
+          "subregion_code": "deccan-south-india",
+          "location_label": "Southern India / Malabar",
+          "source_refs": [
+            "UC Berkeley ORIAS, The Travels of Ibn Battuta / The Journey — reviewed journey chronology 1325-1355"
+          ]
+        },
+        {
+          "start_year": 1341,
+          "end_year": 1344,
+          "region_code": "south-asia",
+          "subregion_code": "maldives",
+          "location_label": "Maldive Islands",
+          "source_refs": [
+            "UC Berkeley ORIAS, The Travels of Ibn Battuta / The Journey — reviewed journey chronology 1325-1355"
+          ]
+        },
+        {
+          "start_year": 1341,
+          "end_year": 1344,
+          "region_code": "south-asia",
+          "subregion_code": "sri-lanka",
+          "location_label": "Sri Lanka",
+          "source_refs": [
+            "UC Berkeley ORIAS, The Travels of Ibn Battuta / The Journey — reviewed journey chronology 1325-1355"
+          ]
+        },
+        {
+          "start_year": 1345,
+          "end_year": 1346,
+          "region_code": "southeast-asia",
+          "subregion_code": "maritime-southeast-asia",
+          "location_label": "Sumatra / Strait of Malacca",
+          "source_refs": [
+            "UC Berkeley ORIAS, The Travels of Ibn Battuta / The Journey — reviewed journey chronology 1325-1355"
+          ]
+        },
+        {
+          "start_year": 1345,
+          "end_year": 1346,
+          "region_code": "east-asia",
+          "subregion_code": "china",
+          "location_label": "Yuan China",
+          "source_refs": [
+            "UC Berkeley ORIAS, The Travels of Ibn Battuta / The Journey — reviewed journey chronology 1325-1355"
+          ]
+        },
+        {
+          "start_year": 1346,
+          "end_year": 1349,
+          "region_code": "southeast-asia",
+          "subregion_code": "maritime-southeast-asia",
+          "location_label": "Return route via Sumatra",
+          "source_refs": [
+            "UC Berkeley ORIAS, Return Home: 1346-1349 — Sumatra, India, Arabia/Persia, Baghdad, Syria, Cairo, Mecca, Tunisia and Morocco return journey"
+          ]
+        },
+        {
+          "start_year": 1346,
+          "end_year": 1349,
+          "region_code": "south-asia",
+          "subregion_code": "deccan-south-india",
+          "location_label": "Return route via India",
+          "source_refs": [
+            "UC Berkeley ORIAS, Return Home: 1346-1349 — Sumatra, India, Arabia/Persia, Baghdad, Syria, Cairo, Mecca, Tunisia and Morocco return journey"
+          ]
+        },
+        {
+          "start_year": 1346,
+          "end_year": 1349,
+          "region_code": "west-asia",
+          "subregion_code": "arabia",
+          "location_label": "Arabian coast / Mecca on return",
+          "source_refs": [
+            "UC Berkeley ORIAS, Return Home: 1346-1349 — Sumatra, India, Arabia/Persia, Baghdad, Syria, Cairo, Mecca, Tunisia and Morocco return journey"
+          ]
+        },
+        {
+          "start_year": 1346,
+          "end_year": 1349,
+          "region_code": "west-asia",
+          "subregion_code": "iranian-plateau",
+          "location_label": "Hormuz / Persia on return",
+          "source_refs": [
+            "UC Berkeley ORIAS, Return Home: 1346-1349 — Sumatra, India, Arabia/Persia, Baghdad, Syria, Cairo, Mecca, Tunisia and Morocco return journey"
+          ]
+        },
+        {
+          "start_year": 1346,
+          "end_year": 1349,
+          "region_code": "west-asia",
+          "subregion_code": "mesopotamia",
+          "location_label": "Baghdad on return",
+          "source_refs": [
+            "UC Berkeley ORIAS, Return Home: 1346-1349 — Sumatra, India, Arabia/Persia, Baghdad, Syria, Cairo, Mecca, Tunisia and Morocco return journey"
+          ]
+        },
+        {
+          "start_year": 1346,
+          "end_year": 1349,
+          "region_code": "west-asia",
+          "subregion_code": "levant",
+          "location_label": "Damascus–Aleppo–Palestine on return",
+          "source_refs": [
+            "UC Berkeley ORIAS, Return Home: 1346-1349 — Sumatra, India, Arabia/Persia, Baghdad, Syria, Cairo, Mecca, Tunisia and Morocco return journey"
+          ]
+        },
+        {
+          "start_year": 1346,
+          "end_year": 1349,
+          "region_code": "africa",
+          "subregion_code": "nile-valley",
+          "location_label": "Cairo on return",
+          "source_refs": [
+            "UC Berkeley ORIAS, Return Home: 1346-1349 — Sumatra, India, Arabia/Persia, Baghdad, Syria, Cairo, Mecca, Tunisia and Morocco return journey"
+          ]
+        },
+        {
+          "start_year": 1346,
+          "end_year": 1349,
+          "region_code": "africa",
+          "subregion_code": "maghreb-north-africa",
+          "location_label": "Return to North Africa / Morocco",
+          "source_refs": [
+            "UC Berkeley ORIAS, Return Home: 1346-1349 — Sumatra, India, Arabia/Persia, Baghdad, Syria, Cairo, Mecca, Tunisia and Morocco return journey"
+          ]
+        },
+        {
+          "start_year": 1349,
+          "end_year": 1350,
+          "region_code": "europe",
+          "subregion_code": "iberia",
+          "location_label": "al-Andalus",
+          "source_refs": [
+            "UC Berkeley ORIAS, The Travels of Ibn Battuta / The Journey — reviewed journey chronology 1325-1355"
+          ]
+        },
+        {
+          "start_year": 1349,
+          "end_year": 1351,
+          "region_code": "africa",
+          "subregion_code": "maghreb-north-africa",
+          "location_label": "Morocco / Fez",
+          "source_refs": [
+            "UC Berkeley ORIAS, The Travels of Ibn Battuta / The Journey — reviewed journey chronology 1325-1355"
+          ]
+        },
+        {
+          "start_year": 1351,
+          "end_year": 1354,
+          "region_code": "africa",
+          "subregion_code": "west-africa",
+          "location_label": "Sahara–Mali journey",
+          "source_refs": [
+            "UC Berkeley ORIAS, Journey to Mali — left Fez autumn 1351, Sahara crossing 1352, Mali, left Takadda September 1353, returned Fez 1354"
+          ]
+        },
+        {
+          "start_year": 1354,
+          "end_year": 1355,
+          "region_code": "africa",
+          "subregion_code": "maghreb-north-africa",
+          "location_label": "Fez / Rihla",
+          "source_refs": [
+            "UC Berkeley ORIAS, Writing the Rihla: 1355 — returned Fez 1354 and dictated the Rihla in Fez"
+          ]
+        }
+      ],
+      "reason": "Ibn Battuta's 1325-1355 Activity is an itinerant world-travel record, not a continuous physical presence in the representative Marinid polity. Reviewed multi-anchor placement records the broad regions explicitly attested in the journey chronology. Overlapping same-year anchors encode multiple attested travel regions within year-granularity data and do not assert simultaneity or a precise within-year route.",
+      "source_refs": [
+        "UC Berkeley ORIAS, The Travels of Ibn Battuta / The Journey — reviewed journey chronology 1325-1355",
+        "UC Berkeley ORIAS, Return Home: 1346-1349 — Sumatra, India, Arabia/Persia, Baghdad, Syria, Cairo, Mecca, Tunisia and Morocco return journey",
+        "UC Berkeley ORIAS, Journey to Mali — left Fez autumn 1351, Sahara crossing 1352, Mali, left Takadda September 1353, returned Fez 1354",
+        "UC Berkeley ORIAS, Writing the Rihla: 1355 — returned Fez 1354 and dictated the Rihla in Fez"
       ]
     }
   ]
