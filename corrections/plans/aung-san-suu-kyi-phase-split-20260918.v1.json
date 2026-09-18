@@ -1,0 +1,163 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "aung_san_suu_kyi_phase_split_20260918_v1",
+  "as_of": "2026-09-18",
+  "status": "REVIEWED_STRUCTURAL_ACTIVITY_PHASE_SPLIT",
+  "release_order": 562,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User-reviewed 2026-09-18 structural correction: the legacy 1988-2021 Myanmar Activity must not carry State Counsellor across the entire interval. Split the pre-State-Counsellor political leadership phase from the 2016-2021 State Counsellor term, preserving one primary Myanmar track without fabricating an office before 2016.",
+  "baseline": {
+    "deployment_sha": "f45d6f294759765f697a5516d44150f3d43e6fa8",
+    "baseline_digest": "sha256:b49eb98760547da42b703ea22ccf72adb28b7b3324079aa79aa7f1e79172c5da"
+  },
+  "uuid_allocation": {
+    "algorithm": "uuid5",
+    "repository_namespace": "672fd6c6-f921-5ce9-86dc-c90a8796c53a",
+    "name_format": "correction:activity:<original_activity_uuid>:<fragment_id>",
+    "runtime_allocation_forbidden": true,
+    "uuid_is_identity": true
+  },
+  "execution_rules": {
+    "split_pre_government_and_state_counsellor_phases": true,
+    "one_split_survivor_preserves_original_activity_uuid": true,
+    "new_fragment_legacy_source_key_must_be_null": true,
+    "existing_normalized_source_links_and_locators_copied_to_all_split_fragments": true,
+    "no_state_counsellor_role_before_2016": true,
+    "no_opposes_relation_inferred_for_broad_pre_2016_phase": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "person_id": "7b73f803-2a44-559c-acd1-b1fe1b64d0e4",
+    "original_activity_id": "e5337054-ff56-58fd-a105-ea6d71d4ef33",
+    "polity_id": "aca31394-486c-55b7-aa9e-5351d229948d",
+    "reviewed_facts": [
+      {
+        "source": "NobelPrize.org — Aung San Suu Kyi biographical chronology",
+        "url": "https://www.nobelprize.org/prizes/peace/1991/kyi/biographical/",
+        "claim": "NLD formed 24 September 1988 with Aung San Suu Kyi as general-secretary; this anchors the pre-government political leadership phase."
+      },
+      {
+        "source": "Myanmar Digital News — Ministry of State Counsellor Office retrospective",
+        "url": "https://mdn.gov.mm/en/mosco-working-national-tasks-coordinating-policies-envisioned-state-counsellor-pursue-goal-peace",
+        "claim": "State Counsellor law enacted 6 April 2016."
+      },
+      {
+        "source": "NobelPrize.org — Aung San Suu Kyi facts",
+        "url": "https://www.nobelprize.org/prizes/peace/1991/kyi/facts/",
+        "claim": "Military seized power and Aung San Suu Kyi was arrested on 1 February 2021, ending the modeled State Counsellor phase."
+      }
+    ]
+  },
+  "new_activity_uuid_allocations": [
+    {
+      "case_id": "aung_san_suu_kyi_pre_state_counsellor_and_term_split",
+      "fragment_id": "pre_state_counsellor_1988_2016",
+      "activity_uuid": "3a937942-607c-5412-afa6-072ef963b897"
+    }
+  ],
+  "operations": [
+    {
+      "case_id": "aung_san_suu_kyi_pre_state_counsellor_and_term_split",
+      "type": "split_activity",
+      "activity_id": "e5337054-ff56-58fd-a105-ea6d71d4ef33",
+      "baseline_before": {
+        "person_id": "7b73f803-2a44-559c-acd1-b1fe1b64d0e4",
+        "polity_id": "aca31394-486c-55b7-aa9e-5351d229948d",
+        "role_id": "86710123-1595-5e25-8240-0204c58736d1",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1988,
+        "activity_end": 2021,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-11.json:4:d8d797eaf0f73b24",
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "source_copy_policy": "COPY_ALL_EXISTING_NORMALIZED_ACTIVITY_SOURCE_LINKS_AND_LOCATORS_TO_ALL_FRAGMENTS",
+      "fragments": [
+        {
+          "survivor": true,
+          "activity_id": "e5337054-ff56-58fd-a105-ea6d71d4ef33",
+          "person_id": "7b73f803-2a44-559c-acd1-b1fe1b64d0e4",
+          "polity_id": "aca31394-486c-55b7-aa9e-5351d229948d",
+          "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+          "role_id": "86710123-1595-5e25-8240-0204c58736d1",
+          "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+          "activity_start": 2016,
+          "activity_end": 2021,
+          "activity_start_detail": {
+            "year": 2016,
+            "month": 4,
+            "day": 6,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end_detail": {
+            "year": 2021,
+            "month": 2,
+            "day": 1,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "legacy_asserted",
+          "chronology_status": "reviewed",
+          "legacy_source_key": "pending-records-supplement-11.json:4:d8d797eaf0f73b24",
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "This survivor records Aung San Suu Kyi's State Counsellor term in Myanmar from the office's enactment on 6 April 2016 through 1 February 2021. The relation is governs and the period basis is term; the title is not projected backward onto her earlier political activity.",
+          "add_source_links": []
+        },
+        {
+          "survivor": false,
+          "activity_id": "3a937942-607c-5412-afa6-072ef963b897",
+          "person_id": "7b73f803-2a44-559c-acd1-b1fe1b64d0e4",
+          "polity_id": "aca31394-486c-55b7-aa9e-5351d229948d",
+          "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+          "role_id": "c1427322-a8af-44ce-adf1-37733e978816",
+          "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+          "activity_start": 1988,
+          "activity_end": 2016,
+          "activity_start_detail": {
+            "year": 1988,
+            "month": 9,
+            "day": 24,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "activity_end_detail": {
+            "year": 2016,
+            "month": 4,
+            "day": 5,
+            "granularity": "day",
+            "certainty": "exact",
+            "calendar": "gregorian"
+          },
+          "confidence": "legacy_asserted",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "This Stage-2-native fragment represents Aung San Suu Kyi's pre-State-Counsellor political leadership in Myanmar beginning with the formation of the National League for Democracy on 24 September 1988. The generic Party leader role and active_in relation are used for the primary political-activity track; this boundary does not claim that all party leadership ended on 5 April 2016, only that the modeled primary phase transitions to the State Counsellor term on 6 April 2016.",
+          "source_copy_policy": "COPY_EXISTING",
+          "add_source_links": []
+        }
+      ],
+      "gap_overlap_policy": "EXACT_DAY_BOUNDARY_PRE_STATE_COUNSELLOR_PHASE_ENDS_2016_04_05_AND_STATE_COUNSELLOR_TERM_STARTS_2016_04_06_NO_GAP_OR_OVERLAP"
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 1,
+    "split_operations": 1,
+    "survivor_fragments": 1,
+    "new_activity_fragments": 1,
+    "relation_corrections": 2,
+    "state_counsellor_role_backprojection_removed": true,
+    "production_mutation_authorized": false
+  }
+}
