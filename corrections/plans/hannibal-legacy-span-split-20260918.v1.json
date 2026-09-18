@@ -1,0 +1,199 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "hannibal_legacy_span_split_20260918_v1",
+  "as_of": "2026-09-18",
+  "status": "REVIEWED_STRUCTURAL_ACTIVITY_PHASE_SPLIT",
+  "release_order": 564,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User-reviewed 2026-09-18 structural correction. The legacy 221-183 BCE Carthage Activity incorrectly carries Hannibal's entire exile through a single polity. Split only securely supported phases: Carthage through 196 BCE, Seleucid service 195-190 BCE, and a securely attested Armenian adviser point in 188 BCE. Preserve uncertain transition gaps. The separately authored Kingdom of Bithynia c.184-c.183 BCE Activity remains unchanged.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "one_split_survivor_preserves_original_activity_uuid": true,
+    "new_fragment_legacy_source_key_must_be_null": true,
+    "uncertain_transition_years_must_remain_gaps": true,
+    "bithynia_companion_activity_must_remain_unchanged": true,
+    "no_fabricated_month_or_day": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "person_id": "709be8f8-d49a-5845-8a03-1868aeb89491",
+    "original_activity_id": "839d0e53-fbc8-5b69-99e9-adb8acb2c5e5",
+    "companion_bithynia_activity_id": "8cf404f1-e127-4963-8057-8d6d07a6aa01",
+    "companion_bithynia_polity_id": "5a2433b4-6001-434c-abee-0e6077e12f54",
+    "reviewed_source_id": "836a39cb-e27d-4680-bdc7-7db36dfad723",
+    "reviewed_source_url": "https://www.livius.org/articles/person/hannibal-3-barca/",
+    "rationale": [
+      "Livius records Hannibal as Carthaginian suffete in 196 BCE and his flight to Antiochus in 195 BCE.",
+      "Hannibal served Antiochus and was defeated commanding a Seleucid naval force in 190 BCE.",
+      "After the Seleucid defeat and Peace of Apamea, Livius/Strabo tradition places Hannibal with Artaxias and associates him with Artaxata, founded in 188 BCE.",
+      "Bithynian service is already modeled separately at c.184-c.183 BCE; no continuous 189-185 bridge is asserted."
+    ]
+  },
+  "new_activity_uuid_allocations": [
+    {
+      "case_id": "hannibal_carthage_exile_phase_split",
+      "fragment_id": "seleucid_195_190_bce",
+      "activity_uuid": "f61310eb-65e8-58f9-a09d-a5dcbb8ebfc8"
+    },
+    {
+      "case_id": "hannibal_carthage_exile_phase_split",
+      "fragment_id": "armenia_188_bce",
+      "activity_uuid": "7082ff3c-a1e6-53ae-939d-a8655740f196"
+    }
+  ],
+  "operations": [
+    {
+      "case_id": "hannibal_carthage_exile_phase_split",
+      "type": "split_activity",
+      "activity_id": "839d0e53-fbc8-5b69-99e9-adb8acb2c5e5",
+      "baseline_before": {
+        "person_id": "709be8f8-d49a-5845-8a03-1868aeb89491",
+        "polity_id": "b67c7d6e-7175-5fbe-ad0e-e4cb482dfee4",
+        "role_id": "f9da19e5-ea62-52d1-a973-e02d4638379d",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": -221,
+        "activity_end": -183,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records.json:4:2b9b1773f7afcddd",
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "source_copy_policy": "COPY_ALL_EXISTING_NORMALIZED_ACTIVITY_SOURCE_LINKS_AND_LOCATORS_TO_ALL_FRAGMENTS",
+      "fragments": [
+        {
+          "survivor": true,
+          "activity_id": "839d0e53-fbc8-5b69-99e9-adb8acb2c5e5",
+          "person_id": "709be8f8-d49a-5845-8a03-1868aeb89491",
+          "polity_id": "b67c7d6e-7175-5fbe-ad0e-e4cb482dfee4",
+          "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+          "role_id": "f9da19e5-ea62-52d1-a973-e02d4638379d",
+          "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+          "activity_start": -221,
+          "activity_end": -196,
+          "activity_start_detail": {
+            "year": -221,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "unspecified_historical"
+          },
+          "activity_end_detail": {
+            "year": -196,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "unspecified_historical"
+          },
+          "confidence": "legacy_asserted",
+          "chronology_status": "reviewed",
+          "legacy_source_key": "pending-records.json:4:2b9b1773f7afcddd",
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "This survivor covers Hannibal's Carthaginian command and statesmanship from 221 BCE through his suffete year in 196 BCE. His 195 BCE flight to the Seleucid court begins a separate Activity; exile is no longer projected onto Carthage.",
+          "add_source_links": [
+            {
+              "source_id": "836a39cb-e27d-4680-bdc7-7db36dfad723",
+              "source_locator_key": "https://www.livius.org/articles/person/hannibal-3-barca/"
+            }
+          ]
+        },
+        {
+          "survivor": false,
+          "activity_id": "f61310eb-65e8-58f9-a09d-a5dcbb8ebfc8",
+          "person_id": "709be8f8-d49a-5845-8a03-1868aeb89491",
+          "polity_id": "a1c6b0b4-ca71-420d-8d9f-502dc7914dd7",
+          "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+          "role_id": "4deca239-92b6-56ba-bb4c-6b388d5ded9a",
+          "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+          "activity_start": -195,
+          "activity_end": -190,
+          "activity_start_detail": {
+            "year": -195,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "unspecified_historical"
+          },
+          "activity_end_detail": {
+            "year": -190,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "unspecified_historical"
+          },
+          "confidence": "well_established",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "Hannibal fled Carthage for Antiochus III's Seleucid court in 195 BCE, advised the king during the Syrian War, and held a naval command that was defeated off Side in 190 BCE. ATLAS ends the secure service phase at that documented naval command rather than inventing a continuous Seleucid span through the later flight.",
+          "source_copy_policy": "COPY_EXISTING",
+          "add_source_links": [
+            {
+              "source_id": "836a39cb-e27d-4680-bdc7-7db36dfad723",
+              "source_locator_key": "https://www.livius.org/articles/person/hannibal-3-barca/"
+            }
+          ]
+        },
+        {
+          "survivor": false,
+          "activity_id": "7082ff3c-a1e6-53ae-939d-a8655740f196",
+          "person_id": "709be8f8-d49a-5845-8a03-1868aeb89491",
+          "polity_id": "e39222dc-bebe-422f-8b75-97db9709cee7",
+          "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+          "role_id": "50345070-d3b2-4496-90b0-957a4b61cc0f",
+          "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+          "activity_start": -188,
+          "activity_end": -188,
+          "activity_start_detail": {
+            "year": -188,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "unspecified_historical"
+          },
+          "activity_end_detail": {
+            "year": -188,
+            "month": null,
+            "day": null,
+            "granularity": "year",
+            "certainty": "exact",
+            "calendar": "unspecified_historical"
+          },
+          "confidence": "well_established",
+          "chronology_status": "reviewed",
+          "legacy_source_key": null,
+          "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
+          "reviewed_notes": "After the Seleucid defeat, Hannibal is securely associated with Artaxias of Armenia and the foundation tradition of Artaxata in 188 BCE. ATLAS records only the securely attested 188 BCE adviser point and leaves later transition years unasserted until his separate Bithynian service phase.",
+          "source_copy_policy": "COPY_EXISTING",
+          "add_source_links": [
+            {
+              "source_id": "836a39cb-e27d-4680-bdc7-7db36dfad723",
+              "source_locator_key": "https://www.livius.org/articles/person/hannibal-3-barca/"
+            }
+          ]
+        }
+      ],
+      "gap_overlap_policy": "CARTHAGE_ENDS_196_BCE; SELEUCID_SERVICE_195_190_BCE; 189_BCE_UNASSERTED; ARMENIA_POINT_188_BCE; 187_185_BCE_UNASSERTED; EXISTING_BITHYNIA_ACTIVITY_BEGINS_C184_BCE"
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 1,
+    "split_operations": 1,
+    "survivor_fragments": 1,
+    "new_activity_fragments": 2,
+    "companion_bithynia_activity_unchanged": true,
+    "uncertain_transition_gaps_preserved": true,
+    "production_mutation_authorized": false
+  }
+}
