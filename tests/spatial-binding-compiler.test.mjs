@@ -10,16 +10,19 @@ import {
   serializeSpatialIndex
 } from '../scripts/compile-spatial-bindings.mjs';
 import {
-  applyTaxonomyMigrationManifests,
-  loadTaxonomyMigrationManifests
+  compileSpatialBindingsR4,
+  loadTaxonomyMigrationManifests,
+  prepareCurrentTaxonomyBaseline
 } from '../scripts/compile-spatial-bindings-r4.mjs';
 
-const baseline = JSON.parse(readFileSync(new URL('../spatial/reviewed-bindings/0000-migrated-baseline.index.json', import.meta.url), 'utf8'));
+const retainedBaseline = JSON.parse(readFileSync(new URL('../spatial/reviewed-bindings/0000-migrated-baseline.index.json', import.meta.url), 'utf8'));
 const canonicalRaw = readFileSync(new URL('../atlas-polity-spatial-index.json', import.meta.url), 'utf8');
 const canonical = JSON.parse(canonicalRaw);
 const shardsDir = fileURLToPath(new URL('../spatial/reviewed-bindings/shards', import.meta.url));
 const migrationDir = fileURLToPath(new URL('../spatial/taxonomy-migrations', import.meta.url));
 const reviewedShards = loadReviewedBindingShards(shardsDir);
+const migrationManifests = loadTaxonomyMigrationManifests(migrationDir);
+const baseline = prepareCurrentTaxonomyBaseline(retainedBaseline, migrationManifests).baseline;
 
 function shard({ id, reviewedAt = '2026-09-06T00:10:00Z', bindings = [], reviewQueue }) {
   const value = {
@@ -40,15 +43,11 @@ const IDS = Object.freeze({
   four: '00000000-0000-4000-8000-000000000004'
 });
 
-test('canonical runtime index is exactly the deterministic r4 compiler output for all reviewed sources', () => {
-  const reviewed = compileSpatialBindings({ baseline, shards: reviewedShards });
-  const migrated = applyTaxonomyMigrationManifests(
-    reviewed.index,
-    loadTaxonomyMigrationManifests(migrationDir)
-  );
-  assert.deepEqual(migrated.baseline, canonical);
-  assert.equal(serializeSpatialIndex(migrated.baseline), canonicalRaw);
-  assert.deepEqual(computeSpatialStats(migrated.baseline), computeSpatialStats(canonical));
+test('canonical runtime index is exactly the deterministic staged r4 compiler output for all reviewed sources', () => {
+  const reviewed = compileSpatialBindingsR4({ baseline: retainedBaseline, shards: reviewedShards, manifests: migrationManifests });
+  assert.deepEqual(reviewed.index, canonical);
+  assert.equal(serializeSpatialIndex(reviewed.index), canonicalRaw);
+  assert.deepEqual(computeSpatialStats(reviewed.index), computeSpatialStats(canonical));
 });
 
 test('real reviewed shard directory validates independently', () => {
