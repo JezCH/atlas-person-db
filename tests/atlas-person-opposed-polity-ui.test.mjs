@@ -4,16 +4,16 @@ import fs from 'node:fs';
 
 const source = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url), 'utf8');
 
-test('main Person rows do not render an opposed counterparty as the person polity', () => {
+test('main Person rows render opposed counterparty polity together with its relation', () => {
   const compactStart = source.indexOf('function compactActivityHtml(activity)');
   const compactEnd = source.indexOf('function compactActivitiesHtml(person)');
   assert.ok(compactStart >= 0 && compactEnd > compactStart);
   const compact = source.slice(compactStart, compactEnd);
 
-  assert.match(compact, /String\(relation\)\.trim\(\)\.toLowerCase\(\) !== "opposes"/);
-  assert.match(compact, /const polityHead = showAffiliatedPolity/);
+  assert.doesNotMatch(compact, /String\(relation\)\.trim\(\)\.toLowerCase\(\) !== "opposes"/);
+  assert.doesNotMatch(compact, /showAffiliatedPolity/);
+  assert.match(compact, /const polityHead = `<span class="person-card-activity-head"><b>\$\{escapeHtml\(polity\)\}<\/b><span class="person-relation-badge">\$\{escapeHtml\(relation\)\}<\/span><\/span>`/);
   assert.match(compact, /\$\{polityHead\}/);
-  assert.doesNotMatch(compact, /return `<span[^`]+<b>\$\{escapeHtml\(polity\)\}<\/b><span class="person-relation-badge">\$\{escapeHtml\(relation\)\}<\/span>/s);
 });
 
 test('Person detail keeps the opposed polity and relation for historical context', () => {
