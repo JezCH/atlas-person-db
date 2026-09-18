@@ -67,6 +67,214 @@ const EXPECTED_COMPLEX = new Map([
       [1154, 1189, "europe", "britain-ireland", "England / insular Angevin realm"],
       [1154, 1189, "europe", "western-europe", "Normandy–Anjou / continental Angevin realm"]
     ]
+  }],
+  ["1446e736-96f8-5401-913f-022cb9b4b7c2", {
+    polity_id: "4d16c8d9-adb4-5bee-985f-6e90d267d7e0", start: 1325, end: 1355, mode: "multi_anchor",
+    segments: [
+          [
+                1325,
+                1325,
+                "africa",
+                "maghreb-north-africa",
+                "Tangier–Maghreb route to Egypt"
+          ],
+          [
+                1326,
+                1326,
+                "africa",
+                "nile-valley",
+                "Cairo / Nile Valley"
+          ],
+          [
+                1326,
+                1326,
+                "west-asia",
+                "levant",
+                "Jerusalem–Damascus corridor"
+          ],
+          [
+                1326,
+                1326,
+                "west-asia",
+                "arabia",
+                "Medina–Mecca / Hajj"
+          ],
+          [
+                1326,
+                1327,
+                "west-asia",
+                "mesopotamia",
+                "Iraq / Baghdad"
+          ],
+          [
+                1326,
+                1327,
+                "west-asia",
+                "iranian-plateau",
+                "Persia / Tabriz"
+          ],
+          [
+                1328,
+                1330,
+                "africa",
+                "east-africa",
+                "East African coast"
+          ],
+          [
+                1328,
+                1330,
+                "west-asia",
+                "arabia",
+                "Red Sea / Arabian Sea / Arabia"
+          ],
+          [
+                1330,
+                1331,
+                "west-asia",
+                "anatolia",
+                "Anatolia"
+          ],
+          [
+                1332,
+                1333,
+                "europe",
+                "russia-volga",
+                "Golden Horde / Volga–Black Sea steppe"
+          ],
+          [
+                1332,
+                1333,
+                "central-asia",
+                "western-central-asia",
+                "Chagatai / Central Asian route"
+          ],
+          [
+                1334,
+                1341,
+                "south-asia",
+                "north-india-ganges",
+                "Delhi"
+          ],
+          [
+                1341,
+                1344,
+                "south-asia",
+                "deccan-south-india",
+                "Southern India / Malabar"
+          ],
+          [
+                1341,
+                1344,
+                "south-asia",
+                "maldives",
+                "Maldive Islands"
+          ],
+          [
+                1341,
+                1344,
+                "south-asia",
+                "sri-lanka",
+                "Sri Lanka"
+          ],
+          [
+                1345,
+                1346,
+                "southeast-asia",
+                "maritime-southeast-asia",
+                "Sumatra / Strait of Malacca"
+          ],
+          [
+                1345,
+                1346,
+                "east-asia",
+                "china",
+                "Yuan China"
+          ],
+          [
+                1346,
+                1349,
+                "southeast-asia",
+                "maritime-southeast-asia",
+                "Return route via Sumatra"
+          ],
+          [
+                1346,
+                1349,
+                "south-asia",
+                "deccan-south-india",
+                "Return route via India"
+          ],
+          [
+                1346,
+                1349,
+                "west-asia",
+                "arabia",
+                "Arabian coast / Mecca on return"
+          ],
+          [
+                1346,
+                1349,
+                "west-asia",
+                "iranian-plateau",
+                "Hormuz / Persia on return"
+          ],
+          [
+                1346,
+                1349,
+                "west-asia",
+                "mesopotamia",
+                "Baghdad on return"
+          ],
+          [
+                1346,
+                1349,
+                "west-asia",
+                "levant",
+                "Damascus–Aleppo–Palestine on return"
+          ],
+          [
+                1346,
+                1349,
+                "africa",
+                "nile-valley",
+                "Cairo on return"
+          ],
+          [
+                1346,
+                1349,
+                "africa",
+                "maghreb-north-africa",
+                "Return to North Africa / Morocco"
+          ],
+          [
+                1349,
+                1350,
+                "europe",
+                "iberia",
+                "al-Andalus"
+          ],
+          [
+                1349,
+                1351,
+                "africa",
+                "maghreb-north-africa",
+                "Morocco / Fez"
+          ],
+          [
+                1351,
+                1354,
+                "africa",
+                "west-africa",
+                "Sahara–Mali journey"
+          ],
+          [
+                1354,
+                1355,
+                "africa",
+                "maghreb-north-africa",
+                "Fez / Rihla"
+          ]
+    ]
   }]
 ]);
 
@@ -142,11 +350,11 @@ test("invalid Activity override leaf-parent combinations are rejected", () => {
 });
 
 
-test("five complex Activity overrides preserve reviewed multi-anchor or timeline semantics", () => {
+test("six complex Activity overrides preserve reviewed multi-anchor or timeline semantics", () => {
   const validation = model.validateSpatialIndex(index);
   assert.equal(validation.valid, true, validation.errors.join("\n"));
   const complexRows = index.activity_spatial_overrides.filter((row) => Array.isArray(row.segments) && row.segments.length > 0);
-  assert.equal(complexRows.length, 5);
+  assert.equal(complexRows.length, 6);
   assert.deepEqual(new Set(complexRows.map((row) => row.activity_id)), new Set(EXPECTED_COMPLEX.keys()));
 
   const lookup = model.createSpatialLookup(index);
