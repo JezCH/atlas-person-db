@@ -19,7 +19,7 @@ test("Production Place LOD consumes only the reviewed binding registry",()=>{
   assert.equal(floor.stage,"subregion");
   assert.equal(detail.place_opacity,1);
   assert.equal(detail.stage,"place");
-  assert.equal(detail.places.length,spatialCompile.REVIEWED_PLACE_BINDINGS.length);
+  assert.equal(detail.places.length,new Set(spatialCompile.REVIEWED_PLACE_BINDINGS.map(p=>p.place_id)).size);
   assert.deepEqual(new Set(detail.places.map(p=>p.place_id)),new Set(spatialCompile.REVIEWED_PLACE_BINDINGS.map(p=>p.place_id)));
   assert.ok(detail.places.every(p=>p.exact_geographic_coordinate_claimed===false));
 });
