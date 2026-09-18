@@ -1,0 +1,318 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "person_null_relation_safe8_20260918_v1",
+  "as_of": "2026-09-18",
+  "status": "REVIEWED_LEGACY_PRIMARY_RELATION_REPAIR",
+  "release_order": 560,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User-reviewed 2026-09-18 audit of the complete Production set of Activities with non-null polity and null primary relation. Apply only the eight cases approved as relation-only repairs; the remaining six structurally incorrect Activities are explicitly excluded for separate split/polity/period correction.",
+  "baseline": {
+    "deployment_sha": "0cff7963315092d02f7836f04cb11f45ad7de084",
+    "baseline_digest": "sha256:37bcffd1855cb99f46fe84a06ef54cca0b64ea2114649173e8c2f3f213714b09",
+    "evidence_run": 35339413549,
+    "evidence_artifact_id": 10544691130
+  },
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "semantic_identity_change_forbidden": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "evidence": {
+    "relation_catalog": "stage2/catalogs/relation-types.v1.json",
+    "active_in_relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+    "governs_relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+    "excluded_structural_cases": [
+      "Hannibal",
+      "Cao Cao",
+      "Ibn Battuta",
+      "Gilbert du Motier, Marquis de Lafayette",
+      "Tecumseh",
+      "Aung San Suu Kyi"
+    ],
+    "scope_note": "No bulk conversion of resistance/rebellion active_in records. These eight exact Activity UUIDs only."
+  },
+  "operations": [
+    {
+      "case_id": "brennus_galatia_gallic_coalition_active_in",
+      "type": "rewrite_activity",
+      "activity_id": "814f1293-3566-5f7f-a699-acb6249d420e",
+      "baseline_before": {
+        "person_id": "c3fe207e-7a1a-525c-a836-96d448e5e048",
+        "polity_id": "925c43c1-6c00-5dc0-9ca2-0094df722dc4",
+        "role_id": "7309ce45-ec5d-546c-acfd-d5fab6537a02",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": -280,
+        "activity_end": -279,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement.json:25:68d98460de623f5e",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "814f1293-3566-5f7f-a699-acb6249d420e",
+        "person_id": "c3fe207e-7a1a-525c-a836-96d448e5e048",
+        "polity_id": "925c43c1-6c00-5dc0-9ca2-0094df722dc4",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "7309ce45-ec5d-546c-acfd-d5fab6537a02",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": -280,
+        "activity_end": -279,
+        "activity_start_detail": null,
+        "activity_end_detail": null,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement.json:25:68d98460de623f5e",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "yuan_shao_eastern_han_active_in",
+      "type": "rewrite_activity",
+      "activity_id": "36a3ade9-b108-5358-8732-be7b3f6637f9",
+      "baseline_before": {
+        "person_id": "2452e991-f4ae-553a-b2a7-abf073d5cd9e",
+        "polity_id": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+        "role_id": "a33083bd-9e14-5381-ab33-2d75738f262c",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 189,
+        "activity_end": 190,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-6.json:5:85e881cd2e6c7bae",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "36a3ade9-b108-5358-8732-be7b3f6637f9",
+        "person_id": "2452e991-f4ae-553a-b2a7-abf073d5cd9e",
+        "polity_id": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "a33083bd-9e14-5381-ab33-2d75738f262c",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 189,
+        "activity_end": 190,
+        "activity_start_detail": null,
+        "activity_end_detail": null,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-6.json:5:85e881cd2e6c7bae",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "liu_yao_eastern_han_governs",
+      "type": "rewrite_activity",
+      "activity_id": "989d2115-e02f-53e6-bc68-90cf557bdd17",
+      "baseline_before": {
+        "person_id": "e31458eb-dca8-5fbd-95aa-719fab18121d",
+        "polity_id": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+        "role_id": "a33083bd-9e14-5381-ab33-2d75738f262c",
+        "period_basis_id": "19bbe662-2a30-5a7e-8073-8d19e1e2299c",
+        "activity_start": 194,
+        "activity_end": 198,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-7.json:15:e8377d342570d99e",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "989d2115-e02f-53e6-bc68-90cf557bdd17",
+        "person_id": "e31458eb-dca8-5fbd-95aa-719fab18121d",
+        "polity_id": "3a29a08a-d111-50d5-916f-f5c11b5eabaf",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "a33083bd-9e14-5381-ab33-2d75738f262c",
+        "period_basis_id": "19bbe662-2a30-5a7e-8073-8d19e1e2299c",
+        "activity_start": 194,
+        "activity_end": 198,
+        "activity_start_detail": null,
+        "activity_end_detail": null,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-7.json:15:e8377d342570d99e",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "meng_huo_nanzhong_active_in",
+      "type": "rewrite_activity",
+      "activity_id": "e4988193-016b-5ca2-ba4a-8a85cbecf6e7",
+      "baseline_before": {
+        "person_id": "a35330e1-cea3-5b9a-925c-d111e5a260f1",
+        "polity_id": "cd8a061a-ac2e-580f-8795-409606aa74d7",
+        "role_id": "8eff75f4-b121-5bc9-b01f-f848141cea56",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 225,
+        "activity_end": 225,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-7.json:19:366021fe2449f2d5",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "e4988193-016b-5ca2-ba4a-8a85cbecf6e7",
+        "person_id": "a35330e1-cea3-5b9a-925c-d111e5a260f1",
+        "polity_id": "cd8a061a-ac2e-580f-8795-409606aa74d7",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "8eff75f4-b121-5bc9-b01f-f848141cea56",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 225,
+        "activity_end": 225,
+        "activity_start_detail": null,
+        "activity_end_detail": null,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-7.json:19:366021fe2449f2d5",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "ingolfr_arnarson_settlement_iceland_active_in",
+      "type": "rewrite_activity",
+      "activity_id": "39615465-6343-5d4e-8718-9e20f3344119",
+      "baseline_before": {
+        "person_id": "8e47af37-4308-5cd1-a7af-7354af1c50c6",
+        "polity_id": "92bb4f6f-3784-5cb2-ae06-d6064f2dedd5",
+        "role_id": "225ff326-c052-51a9-8fa2-b9f82dcfbaa6",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 874,
+        "activity_end": 900,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-5.json:20:0ab6a1aca205e86c",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "39615465-6343-5d4e-8718-9e20f3344119",
+        "person_id": "8e47af37-4308-5cd1-a7af-7354af1c50c6",
+        "polity_id": "92bb4f6f-3784-5cb2-ae06-d6064f2dedd5",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "225ff326-c052-51a9-8fa2-b9f82dcfbaa6",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 874,
+        "activity_end": 900,
+        "activity_start_detail": null,
+        "activity_end_detail": null,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-5.json:20:0ab6a1aca205e86c",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "leonardo_da_vinci_florence_active_in",
+      "type": "rewrite_activity",
+      "activity_id": "a47f314a-3b0a-5e2c-a188-a8aaf2ecc90d",
+      "baseline_before": {
+        "person_id": "a565511a-c043-5c88-a2e5-dde042ed8959",
+        "polity_id": "00626a6e-afee-5830-8b0d-c08999857e82",
+        "role_id": "f90b0d20-a4ea-515e-8ad0-2c7113b29ff8",
+        "period_basis_id": "7e26c1ed-b4d9-547a-ac42-af523ec12d1b",
+        "activity_start": 1472,
+        "activity_end": 1519,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-5.json:9:0f6843d8006b936e",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "a47f314a-3b0a-5e2c-a188-a8aaf2ecc90d",
+        "person_id": "a565511a-c043-5c88-a2e5-dde042ed8959",
+        "polity_id": "00626a6e-afee-5830-8b0d-c08999857e82",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "f90b0d20-a4ea-515e-8ad0-2c7113b29ff8",
+        "period_basis_id": "7e26c1ed-b4d9-547a-ac42-af523ec12d1b",
+        "activity_start": 1472,
+        "activity_end": 1519,
+        "activity_start_detail": null,
+        "activity_end_detail": null,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-5.json:9:0f6843d8006b936e",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "edward_teach_republic_pirates_active_in",
+      "type": "rewrite_activity",
+      "activity_id": "b43cfb03-3d45-5566-a7d8-cabb37c93115",
+      "baseline_before": {
+        "person_id": "b258dd75-aeb6-5603-bda8-ccb6fd078327",
+        "polity_id": "aa2811b8-a509-5db2-82e8-5e133d99ae40",
+        "role_id": "f6e3f653-182d-53f1-813e-3d210f05aca7",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": 1716,
+        "activity_end": 1718,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-4.json:12:e396d4fc2c23db9b",
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "b43cfb03-3d45-5566-a7d8-cabb37c93115",
+        "person_id": "b258dd75-aeb6-5603-bda8-ccb6fd078327",
+        "polity_id": "aa2811b8-a509-5db2-82e8-5e133d99ae40",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "f6e3f653-182d-53f1-813e-3d210f05aca7",
+        "period_basis_id": "3194b4d0-0d2f-57ed-a5fb-d7f008015fa2",
+        "activity_start": 1716,
+        "activity_end": 1718,
+        "activity_start_detail": null,
+        "activity_end_detail": null,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement-4.json:12:e396d4fc2c23db9b",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "sacagawea_lemhi_shoshone_active_in",
+      "type": "rewrite_activity",
+      "activity_id": "c73146d6-0558-502f-8e81-11343e41f963",
+      "baseline_before": {
+        "person_id": "d20abd93-4c12-596b-a361-085c50d56a95",
+        "polity_id": "b4661c32-d567-56e3-b61f-d27a77d72897",
+        "role_id": "a5550966-a461-5870-baa0-df9bce5b60e6",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1804,
+        "activity_end": 1806,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement.json:15:c635b3f320096c5a",
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "c73146d6-0558-502f-8e81-11343e41f963",
+        "person_id": "d20abd93-4c12-596b-a361-085c50d56a95",
+        "polity_id": "b4661c32-d567-56e3-b61f-d27a77d72897",
+        "relation_type_id": "f33d2789-2e65-50c1-af3e-91335bcbd3ca",
+        "role_id": "a5550966-a461-5870-baa0-df9bce5b60e6",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1804,
+        "activity_end": 1806,
+        "activity_start_detail": null,
+        "activity_end_detail": null,
+        "confidence": "legacy_asserted",
+        "chronology_status": "exact_as_recorded",
+        "legacy_source_key": "pending-records-supplement.json:15:c635b3f320096c5a",
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 8,
+    "production_mutation_authorized": false
+  }
+}
