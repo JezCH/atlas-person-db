@@ -1,0 +1,152 @@
+{
+  "schema": "atlas-reviewed-spatial-corrections/v1",
+  "correction_id": "post-r4-temporal-and-orphan-cleanup-20260918",
+  "baseline": "04fa6687f38d0022e2c2a0939a0f5c3f2f6944a5",
+  "reviewed_at": "2026-09-18T05:35:00Z",
+  "changes": [
+    {
+      "polity_id": "5fce7b7e-7e6c-5f91-96b6-ebcd925b0a90",
+      "expected": {
+        "region_code": "south-asia",
+        "subregion_code": null
+      },
+      "disposition": "place_function",
+      "reason": "Azad Hind was a government-in-exile whose operating center shifted from Singapore to Rangoon; a static South Asia leaf misrepresents the live 1943-1945 Bose activity.",
+      "functions": [
+        {
+          "start_year": 1943,
+          "end_year": 1943,
+          "function_type": "political_center",
+          "place_name": "Singapore",
+          "place_id": null,
+          "region_code": "southeast-asia",
+          "confidence": "well_established",
+          "source_refs": [
+            "Press Information Bureau, Government of India: Anniversary of the formation of Azad Hind Government (21 Oct 1943)",
+            "Publications Division, Government of India: Builders of Modern India — Subhas Chandra Bose"
+          ]
+        },
+        {
+          "start_year": 1944,
+          "end_year": 1945,
+          "function_type": "political_center",
+          "place_name": "Rangoon",
+          "place_id": null,
+          "region_code": "southeast-asia",
+          "confidence": "well_established",
+          "source_refs": [
+            "Government of India / IGNCA chronology: Bose civil and military headquarters moved to Burma in January 1944",
+            "Odisha Review: headquarters of the Provisional Government, Indian Independence League and Supreme Command shifted from Singapore to Rangoon"
+          ]
+        }
+      ]
+    },
+    {
+      "polity_id": "a1697cdb-1085-545c-850e-1bbc25cdb61b",
+      "expected": {
+        "region_code": "west-asia",
+        "subregion_code": null
+      },
+      "disposition": "place_function",
+      "reason": "The Rashidun political center was Medina under the first three caliphs and shifted to Kufa under Ali; temporal capital coverage is more accurate than one static leaf.",
+      "functions": [
+        {
+          "start_year": 632,
+          "end_year": 656,
+          "function_type": "capital",
+          "place_name": "Medina",
+          "place_id": null,
+          "region_code": "west-asia",
+          "confidence": "well_established",
+          "source_refs": [
+            "Cambridge University Press: Rituals of Islamic Monarchy — the conquest society c. 628–c. 660"
+          ]
+        },
+        {
+          "start_year": 656,
+          "end_year": 661,
+          "function_type": "capital",
+          "place_name": "Kufa",
+          "place_id": null,
+          "region_code": "west-asia",
+          "confidence": "well_established",
+          "source_refs": [
+            "Encyclopaedia Iranica: Kufa — Ali (r. 656–61) chose Kufa as his capital"
+          ]
+        }
+      ]
+    },
+    {
+      "polity_id": "502f18c3-41fc-4cb8-84cc-67f7e0454a9d",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": null
+      },
+      "disposition": "review_queue",
+      "reason": "Henry II's Angevin kingship was governed through an itinerant cross-Channel royal court rather than a single durable political center; forcing one place-function would create false precision."
+    },
+    {
+      "polity_id": "01cd1acd-9321-4d25-bc30-4cbd561bcbd5",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": null
+      },
+      "disposition": "review_queue",
+      "reason": "Alaric's 395-410 Visigoth polity was mobile from the Balkans into Italy before the later territorial Visigothic kingdom; no single capital is historically defensible for the authored activity."
+    },
+    {
+      "polity_id": "bcb090c2-7906-4c3e-91cf-99b02646764e",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": null
+      },
+      "disposition": "review_queue",
+      "reason": "Theodoric's pre-493 Ostrogothic confederation was a mobile Balkan warband polity seeking a permanent homeland and then moving into Italy; the territorial Italian kingdom begins only after this activity."
+    },
+    {
+      "polity_id": "70aedae1-9544-4e8a-bfd8-6feda3e142c7",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": null
+      },
+      "disposition": "review_queue",
+      "reason": "Respendial's Alan following is attested in the Rhine-crossing migration crisis around 406 and continued westward; no fixed political center is established for the authored activity."
+    },
+    {
+      "polity_id": "a81055d7-ed0d-45a6-90c6-738e1a9ba94d",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": null
+      },
+      "disposition": "review_queue",
+      "reason": "The Roxolani were a nomadic Sarmatian polity whose historical geography shifted across the Pontic-Danubian steppe; the Amage episode does not establish a sufficiently precise fixed capital."
+    },
+    {
+      "polity_id": "46534f7e-9247-5644-b5ad-9525c3d4f5d6",
+      "expected": {
+        "region_code": "east-asia",
+        "subregion_code": null
+      },
+      "disposition": "remove_orphan",
+      "reason": "Exact-sha Production polity-reference audit at 04fa6687f38d0022e2c2a0939a0f5c3f2f6944a5 contains no live polity with this UUID; retain no stale spatial binding."
+    },
+    {
+      "polity_id": "524642ff-33fb-52f3-8623-e4a877b1997a",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": null
+      },
+      "disposition": "remove_orphan",
+      "reason": "Exact-sha Production polity-reference audit at 04fa6687f38d0022e2c2a0939a0f5c3f2f6944a5 contains no live polity with this UUID; retain no stale spatial binding."
+    },
+    {
+      "polity_id": "53943675-7711-5053-9f2e-f149f727aa54",
+      "expected": {
+        "region_code": "east-asia",
+        "subregion_code": null
+      },
+      "disposition": "remove_orphan",
+      "reason": "Exact-sha Production polity-reference audit at 04fa6687f38d0022e2c2a0939a0f5c3f2f6944a5 contains no live polity with this UUID; retain no stale spatial binding."
+    }
+  ]
+}
