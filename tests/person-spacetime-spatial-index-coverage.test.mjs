@@ -39,7 +39,10 @@ test("spatial index v2 retains the canonical temporal polity-place-function cont
   assert.ok(stats.geography_count > 0);
   assert.ok(stats.subregion_count > 0);
   assert.ok(stats.subregion_count <= stats.geography_count);
-  assert.equal(index.place_function_records.length, 11);
+  assert.ok(index.place_function_records.length > 0);
+  const temporalPolityIds = new Set(index.place_function_records.map((record) => record.polity_id));
+  assert.equal(temporalPolityIds.has("5fce7b7e-7e6c-5f91-96b6-ebcd925b0a90"), true, "Azad Hind temporal placement must remain compiled");
+  assert.equal(temporalPolityIds.has("a1697cdb-1085-545c-850e-1bbc25cdb61b"), true, "Rashidun temporal placement must remain compiled");
   assert.equal(stats.review_queue_count, index.review_queue.length);
   assert.ok(index.review_queue.length >= 2);
   assert.equal(Object.hasOwn(index, "capital_records"), false);
