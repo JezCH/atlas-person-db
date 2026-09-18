@@ -1,0 +1,50 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "request_id": "authoring:hannibal-barca:kingdom-of-bithynia:c184-c183-bce:v1",
+  "person": {
+    "canonical_name_en": "Hannibal Barca",
+    "display_name_ko": "한니발 바르카",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Kingdom of Bithynia",
+    "display_name_ko": "비티니아 왕국",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "activity": {
+    "relation_type": "serves",
+    "period_basis": "military_activity",
+    "role": "Military officer and naval commander",
+    "role_display_name_ko": "군인·해군 지휘관",
+    "start_year": -184,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "approximate",
+    "start_calendar": "unspecified_historical",
+    "end_year": -183,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "approximate",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "This Activity represents Hannibal Barca's final securely attested Bithynian military-service phase. After leaving the Seleucid sphere and later reaching the court of Prusias of Bithynia, Hannibal supported Bithynia against Pergamon and is credited with a naval victory conventionally dated to 184 BCE. His death at Libyssa is usually placed around 183/182 BCE. ATLAS therefore records only c.184-c.183 BCE here, with approximate year bounds, rather than inventing a precise date for his arrival in Bithynia."
+  },
+  "sources": [
+    {
+      "title": "Hannibal Barca",
+      "canonical_url": "https://www.livius.org/articles/person/hannibal-3-barca/",
+      "citation_text": "Livius places Hannibal with Prusias of Bithynia after his Armenian stay, records his naval victory over the Pergamene fleet in 184 BCE, and dates his death to winter 183/182 BCE.",
+      "source_type": "web_bibliographic_reference"
+    },
+    {
+      "title": "Eutropius, Short History, Book 4",
+      "canonical_url": "https://www.livius.org/sources/content/eutropius-short-history/eutropius-short-history-4/",
+      "citation_text": "Eutropius states that after Antiochus' defeat Hannibal fled to Prusias, king of Bithynia, and later died there when Roman surrender demands threatened him.",
+      "source_type": "primary_source_translation"
+    }
+  ]
+}
