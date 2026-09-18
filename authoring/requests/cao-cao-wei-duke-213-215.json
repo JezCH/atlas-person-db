@@ -1,0 +1,52 @@
+{
+  "schema": "atlas-human-authoring/v1",
+  "review_status": "approved",
+  "person": {
+    "canonical_name_en": "Cao Cao",
+    "display_name_ko": "조조",
+    "person_type": "historical",
+    "historicity": "historical"
+  },
+  "polity": {
+    "canonical_name_en": "Wei under Cao Cao",
+    "display_name_ko": "조조의 위 정권",
+    "polity_type": "historical_polity",
+    "historicity": "historical"
+  },
+  "external_references": {
+    "namuwiki": {
+      "status": "linked",
+      "checked_at": "2026-09-18",
+      "document_title": "조조",
+      "url": "https://namu.wiki/w/%EC%A1%B0%EC%A1%B0"
+    }
+  },
+  "sources": [
+    {
+      "title": "Empire of Cao-Wei 曹魏",
+      "canonical_url": "https://www.chinaknowledge.de/History/Division/caowei.html",
+      "citation_text": "ChinaKnowledge distinguishes Cao Cao's pre-220 authority from the Cao-Wei empire founded by Cao Pi in 220, and records Cao Cao as Duke of Wei in 213 and King of Wei in 216.",
+      "source_type": "web_bibliographic_reference"
+    }
+  ],
+  "request_id": "authoring:cao-cao:wei-under-cao-cao:duke:213-215:v1",
+  "activity": {
+    "relation_type": "rules",
+    "period_basis": "reign",
+    "role": "Duke",
+    "role_display_name_ko": "위공",
+    "start_year": 213,
+    "start_month": null,
+    "start_day": null,
+    "start_certainty": "exact",
+    "start_calendar": "unspecified_historical",
+    "end_year": 215,
+    "end_month": null,
+    "end_day": null,
+    "end_certainty": "exact",
+    "end_calendar": "unspecified_historical",
+    "confidence": "well_established",
+    "chronology_status": "reviewed",
+    "notes": "Cao Cao was invested as Duke of Wei in 213. ATLAS models the pre-imperial Wei authority under Cao Cao as a distinct polity from the Cao-Wei empire founded by Cao Pi in 220. Because this Activity uses year granularity, the Duke phase is represented as 213-215 and the King phase begins in 216."
+  }
+}
