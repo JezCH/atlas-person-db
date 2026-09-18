@@ -1,0 +1,35 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-19",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "b298a83b14710f92ac347c91ed7698c22a4ad135",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Apply the already-established ATLAS Person Domain Color Standard: Mahatma Gandhi is explicitly treated as a political-movement leader whose representative domain is governance."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-NULL-CLOSURE-20260919",
+    "queue_issue": 977,
+    "assignment_count": 1,
+    "distribution": {
+      "governance": 1,
+      "military": 0,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "b8d7ce6b-c6ee-5ba0-80f2-51b59c50126d",
+      "canonical_name_en": "Mahatma Gandhi",
+      "preferred_name_ko": "마하트마 간디",
+      "representative_domain": "governance"
+    }
+  ]
+}
