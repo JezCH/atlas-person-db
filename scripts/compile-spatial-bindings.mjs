@@ -311,8 +311,6 @@ export function compileSpatialBindings({ baseline, shards = [], corrections = []
     const idOrder = left.correction_id.localeCompare(right.correction_id, 'en');
     return idOrder || left.source.localeCompare(right.source, 'en');
   });
-  const correctedBaseline = applyNormalizedSpatialCorrections(baseline, normalizedCorrections);
-  validateCanonicalBaseline(correctedBaseline);
   const normalizedShards = shards.map(normalizeShard).sort((left, right) => {
     const idOrder = left.shard_id.localeCompare(right.shard_id, 'en');
     return idOrder || left.source.localeCompare(right.source, 'en');
@@ -324,11 +322,12 @@ export function compileSpatialBindings({ baseline, shards = [], corrections = []
     shardIds.add(shard.shard_id);
   }
 
-  const polityGeography = { ...(correctedBaseline.polity_geography || {}) };
-  const politySubregions = { ...(correctedBaseline.polity_subregions || {}) };
-  const placeFunctionRecords = structuredClone(correctedBaseline.place_function_records || []);
-  const reviewQueue = structuredClone(correctedBaseline.review_queue || []);
+  const polityGeography = { ...(baseline.polity_geography || {}) };
+  const politySubregions = { ...(baseline.polity_subregions || {}) };
+  const placeFunctionRecords = structuredClone(baseline.place_function_records || []);
+  const reviewQueue = structuredClone(baseline.review_queue || []);
   const seen = new Map();
+
   for (const [polityId, regionCode] of Object.entries(polityGeography)) {
     seen.set(polityId, { source: 'baseline', kind: 'binding', mapping: sourceMapping(regionCode, politySubregions[polityId] || null) });
   }
@@ -373,22 +372,25 @@ export function compileSpatialBindings({ baseline, shards = [], corrections = []
     }
   }
 
-  const compiled = {};
-  for (const [key, value] of Object.entries(correctedBaseline)) {
-    if (key === 'generated_at') compiled[key] = generatedAtFor(baseline, normalizedShards, normalizedCorrections);
-    else if (key === 'polity_geography') compiled[key] = polityGeography;
-    else if (key === 'polity_subregions') compiled[key] = politySubregions;
-    else if (key === 'place_function_records') compiled[key] = placeFunctionRecords;
-    else if (key === 'review_queue') compiled[key] = reviewQueue;
-    else compiled[key] = structuredClone(value);
+  const merged = {};
+  for (const [key, value] of Object.entries(baseline)) {
+    if (key === 'generated_at') merged[key] = generatedAtFor(baseline, normalizedShards);
+    else if (key === 'polity_geography') merged[key] = polityGeography;
+    else if (key === 'polity_subregions') merged[key] = politySubregions;
+    else if (key === 'place_function_records') merged[key] = placeFunctionRecords;
+    else if (key === 'review_queue') merged[key] = reviewQueue;
+    else merged[key] = structuredClone(value);
   }
-  if (!Object.prototype.hasOwnProperty.call(compiled, 'polity_subregions')) compiled.polity_subregions = politySubregions;
-  if (!Object.prototype.hasOwnProperty.call(compiled, 'place_function_records')) compiled.place_function_records = placeFunctionRecords;
-  if (!Object.prototype.hasOwnProperty.call(compiled, 'review_queue')) compiled.review_queue = reviewQueue;
+  if (!Object.prototype.hasOwnProperty.call(merged, 'polity_subregions')) merged.polity_subregions = politySubregions;
+  if (!Object.prototype.hasOwnProperty.call(merged, 'place_function_records')) merged.place_function_records = placeFunctionRecords;
+  if (!Object.prototype.hasOwnProperty.call(merged, 'review_queue')) merged.review_queue = reviewQueue;
 
-  const validation = model.validateSpatialIndex(compiled);
+  const corrected = applyNormalizedSpatialCorrections(merged, normalizedCorrections);
+  corrected.generated_at = generatedAtFor(baseline, normalizedShards, normalizedCorrections);
+
+  const validation = model.validateSpatialIndex(corrected);
   if (!validation.valid) fail('COMPILED_SPATIAL_INDEX_INVALID', validation.errors.join(' | '));
-  return Object.freeze({ index: compiled, stats: computeSpatialStats(compiled) });
+  return Object.freeze({ index: corrected, stats: computeSpatialStats(corrected) });
 }
 
 export function computeSpatialStats(index) {
