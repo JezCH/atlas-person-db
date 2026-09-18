@@ -28,14 +28,19 @@
 
   const REVIEWED_PLACE_BINDINGS = Object.freeze([
     Object.freeze({
-      place_id: "place-rome", polity_id: "5d9a6186-bbe6-5d1a-ba93-02190ae4c417", function_type: "capital", place_name: "Rome",
-      macroregion_code: "europe", subregion_code: "italy",
-      source_refs: Object.freeze(["1911 Encyclopaedia Britannica: Constantine (emperors)"])
+      place_id: "place-isfahan", polity_id: "01f4ce7b-aaa3-473a-a6fd-9c95c4a85ff7", function_type: "capital", place_name: "Isfahan",
+      macroregion_code: "west-asia", subregion_code: "iranian-plateau",
+      source_refs: Object.freeze(["British Museum Collections Online: Seljuq dynasty (x41057)"])
     }),
     Object.freeze({
-      place_id: "place-pella", polity_id: "2f6e890f-1704-5c76-aa94-f18d7f905e06", function_type: "capital", place_name: "Pella",
+      place_id: "place-constantinople", polity_id: "074510f4-f2e7-5795-8cfb-2a4206fa7254", function_type: "capital", place_name: "Constantinople",
       macroregion_code: "europe", subregion_code: "balkans",
-      source_refs: Object.freeze(["Hellenic Ministry of Culture, Cultural Egnatia: Pella", "Hellenic Ministry of Culture and Sports, Odysseus: Pella"])
+      source_refs: Object.freeze(["1911 Encyclopaedia Britannica: Constantinople"])
+    }),
+    Object.freeze({
+      place_id: "place-nicaea", polity_id: "074510f4-f2e7-5795-8cfb-2a4206fa7254", function_type: "capital", place_name: "Nicaea",
+      macroregion_code: "west-asia", subregion_code: "anatolia",
+      source_refs: Object.freeze(["1911 Encyclopaedia Britannica: Nicaea"])
     }),
     Object.freeze({
       place_id: "place-ankara", polity_id: "28448862-277d-4738-9fb4-7f51a9e4c03a", function_type: "capital", place_name: "Ankara",
@@ -43,14 +48,94 @@
       source_refs: Object.freeze(["Atatürk Ansiklopedisi: Ankara’nın Başkent Oluşu"])
     }),
     Object.freeze({
+      place_id: "place-pella", polity_id: "2f6e890f-1704-5c76-aa94-f18d7f905e06", function_type: "capital", place_name: "Pella",
+      macroregion_code: "europe", subregion_code: "balkans",
+      source_refs: Object.freeze(["Hellenic Ministry of Culture and Sports, Odysseus: Pella","Hellenic Ministry of Culture, Cultural Egnatia: Pella"])
+    }),
+    Object.freeze({
       place_id: "place-rio-de-janeiro", polity_id: "3b8f7efc-40ae-5a33-8956-e9e852fbede4", function_type: "capital", place_name: "Rio de Janeiro",
       macroregion_code: "americas", subregion_code: "south-america",
       source_refs: Object.freeze(["Governo do Brasil: Linha do Tempo da Independência"])
     }),
     Object.freeze({
+      place_id: "place-constantinople", polity_id: "5d9a6186-bbe6-5d1a-ba93-02190ae4c417", function_type: "capital", place_name: "Constantinople",
+      macroregion_code: "europe", subregion_code: "balkans",
+      source_refs: Object.freeze(["1911 Encyclopaedia Britannica: Constantinople"])
+    }),
+    Object.freeze({
+      place_id: "place-rome", polity_id: "5d9a6186-bbe6-5d1a-ba93-02190ae4c417", function_type: "capital", place_name: "Rome",
+      macroregion_code: "europe", subregion_code: "italy",
+      source_refs: Object.freeze(["1911 Encyclopaedia Britannica: Constantine (emperors)"])
+    }),
+    Object.freeze({
+      place_id: "place-rangoon", polity_id: "5fce7b7e-7e6c-5f91-96b6-ebcd925b0a90", function_type: "political_center", place_name: "Rangoon",
+      macroregion_code: "southeast-asia", subregion_code: "mainland-southeast-asia",
+      source_refs: Object.freeze(["Government of India / IGNCA chronology: Bose civil and military headquarters moved to Burma in January 1944","Odisha Review: headquarters of the Provisional Government, Indian Independence League and Supreme Command shifted from Singapore to Rangoon"])
+    }),
+    Object.freeze({
+      place_id: "place-singapore", polity_id: "5fce7b7e-7e6c-5f91-96b6-ebcd925b0a90", function_type: "political_center", place_name: "Singapore",
+      macroregion_code: "southeast-asia", subregion_code: "maritime-southeast-asia",
+      source_refs: Object.freeze(["Press Information Bureau, Government of India: Anniversary of the formation of Azad Hind Government (21 Oct 1943)","Publications Division, Government of India: Builders of Modern India — Subhas Chandra Bose"])
+    }),
+    Object.freeze({
       place_id: "place-samarkand", polity_id: "6539c314-ec29-42e0-a0c2-90991fb9ffd8", function_type: "capital", place_name: "Samarkand",
       macroregion_code: "central-asia", subregion_code: "western-central-asia",
       source_refs: Object.freeze(["The Metropolitan Museum of Art: The Art of the Timurid Period (ca. 1370–1507)"])
+    }),
+    Object.freeze({
+      place_id: "place-muscat", polity_id: "68c83ef6-0023-5af9-a6e8-26ccf5b8e116", function_type: "capital", place_name: "Muscat",
+      macroregion_code: "west-asia", subregion_code: "arabia",
+      source_refs: Object.freeze(["National Museum of Oman: Architectural Heritage — Muscat"])
+    }),
+    Object.freeze({
+      place_id: "place-stone-town-zanzibar", polity_id: "68c83ef6-0023-5af9-a6e8-26ccf5b8e116", function_type: "capital", place_name: "Stone Town, Zanzibar",
+      macroregion_code: "africa", subregion_code: "east-africa",
+      source_refs: Object.freeze(["National Museum of Oman: Architectural Heritage — Muscat","Oman Ministry of Foreign Affairs: History"])
+    }),
+    Object.freeze({
+      place_id: "place-bursa", polity_id: "6d1520e2-0aff-5063-b2b7-95eb86daf372", function_type: "capital", place_name: "Bursa",
+      macroregion_code: "west-asia", subregion_code: "anatolia",
+      source_refs: Object.freeze(["Republic of Türkiye Bursa Governorship: Tarihçe"])
+    }),
+    Object.freeze({
+      place_id: "place-constantinople", polity_id: "6d1520e2-0aff-5063-b2b7-95eb86daf372", function_type: "capital", place_name: "Constantinople",
+      macroregion_code: "europe", subregion_code: "balkans",
+      source_refs: Object.freeze(["1911 Encyclopaedia Britannica: Constantinople"])
+    }),
+    Object.freeze({
+      place_id: "place-edirne", polity_id: "6d1520e2-0aff-5063-b2b7-95eb86daf372", function_type: "capital", place_name: "Edirne",
+      macroregion_code: "europe", subregion_code: "balkans",
+      source_refs: Object.freeze(["Türkiye Culture Portal: Edirne - Genel Bilgiler"])
+    }),
+    Object.freeze({
+      place_id: "place-sogut", polity_id: "6d1520e2-0aff-5063-b2b7-95eb86daf372", function_type: "capital", place_name: "Söğüt",
+      macroregion_code: "west-asia", subregion_code: "anatolia",
+      source_refs: Object.freeze(["Republic of Türkiye Ministry of National Education, Söğüt District: İlçemiz - Söğüt"])
+    }),
+    Object.freeze({
+      place_id: "place-kufa", polity_id: "a1697cdb-1085-545c-850e-1bbc25cdb61b", function_type: "capital", place_name: "Kufa",
+      macroregion_code: "west-asia", subregion_code: "mesopotamia",
+      source_refs: Object.freeze(["Encyclopaedia Iranica: Kufa — Ali (r. 656–61) chose Kufa as his capital"])
+    }),
+    Object.freeze({
+      place_id: "place-medina", polity_id: "a1697cdb-1085-545c-850e-1bbc25cdb61b", function_type: "capital", place_name: "Medina",
+      macroregion_code: "west-asia", subregion_code: "arabia",
+      source_refs: Object.freeze(["Cambridge University Press: Rituals of Islamic Monarchy — the conquest society c. 628–c. 660"])
+    }),
+    Object.freeze({
+      place_id: "place-shangdu-dadu-court-core", polity_id: "d54c540c-f3fb-5d05-9dc0-26af4ee9815a", function_type: "imperial_court_core", place_name: "Kublai court in North China (Shangdu–Dadu)",
+      macroregion_code: "east-asia", subregion_code: "china",
+      source_refs: Object.freeze(["Cambridge History of the Mongol Empire: Mongolia in the Mongol Empire","Metropolitan Museum of Art: China, 1000–1400 A.D. chronology","UNESCO World Heritage Centre: Site of Xanadu"])
+    }),
+    Object.freeze({
+      place_id: "place-avarga-karakorum-court-core", polity_id: "d54c540c-f3fb-5d05-9dc0-26af4ee9815a", function_type: "imperial_court_core", place_name: "Mongolian imperial court core (Avarga–Karakorum)",
+      macroregion_code: "central-asia", subregion_code: "eastern-central-asia-steppe",
+      source_refs: Object.freeze(["Cambridge Antiquity: Mapping Karakorum, the capital of the Mongol Empire","Cambridge Modern Asian Studies: The cosmopolitanism of Karakorum, capital of the Mongol empire in Mongolia","UNESCO World Heritage Centre: Archaeological Site at Khuduu Aral and Surrounding Cultural Landscape"])
+    }),
+    Object.freeze({
+      place_id: "place-cairo", polity_id: "e3da3007-529a-40ec-9934-7b70dfd11cb7", function_type: "capital", place_name: "Cairo",
+      macroregion_code: "africa", subregion_code: "nile-valley",
+      source_refs: Object.freeze(["Getty Thesaurus of Geographic Names: Mamluk Sultanate (TGN 6003667)"])
     })
   ]);
 
@@ -66,6 +151,14 @@
   }
 
   function reviewedPlaceBindingForSegment(segment) {
+    const representativeFunction = (Array.isArray(segment?.active_place_functions) ? segment.active_place_functions : []).find((fn) =>
+      text(fn?.function_type) === text(segment?.place_function_type) &&
+      text(fn?.place_name) === text(segment?.place_name)
+    );
+    if (representativeFunction) {
+      const exact = reviewedPlaceBindingForFunction(segment?.polity_id, representativeFunction);
+      if (exact) return exact;
+    }
     return reviewedPlaceBindingForFunction(segment?.polity_id, {
       function_type: segment?.place_function_type,
       place_name: segment?.place_name,
