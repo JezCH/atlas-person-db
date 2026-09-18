@@ -2,8 +2,8 @@
   "schema": "atlas-stage2-correction-v2-execution-plan/v1",
   "batch_id": "hannibal_legacy_span_split_20260918_v1",
   "as_of": "2026-09-18",
-  "status": "REVIEWED_STRUCTURAL_ACTIVITY_PHASE_SPLIT",
-  "release_order": 564,
+  "status": "REVIEWED_STRUCTURAL_ACTIVITY_PHASE_SPLIT_BASELINE_KEY_CORRECTED",
+  "release_order": 565,
   "contract": "stage2/contracts/correction-v2-current.v1.json",
   "decision_authority": "User-reviewed 2026-09-18 structural correction. The legacy 221-183 BCE Carthage Activity incorrectly carries Hannibal's entire exile through a single polity. Split only securely supported phases: Carthage through 196 BCE, Seleucid service 195-190 BCE, and a securely attested Armenian adviser point in 188 BCE. Preserve uncertain transition gaps. The separately authored Kingdom of Bithynia c.184-c.183 BCE Activity remains unchanged.",
   "execution_rules": {
@@ -59,7 +59,7 @@
         "activity_end": -183,
         "confidence": "legacy_asserted",
         "chronology_status": "exact_as_recorded",
-        "legacy_source_key": "pending-records.json:4:2b9b1773f7afcddd",
+        "legacy_source_key": "pending-records.json:4:259265f7de747fd4",
         "source_count": 1
       },
       "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
@@ -93,7 +93,7 @@
           },
           "confidence": "legacy_asserted",
           "chronology_status": "reviewed",
-          "legacy_source_key": "pending-records.json:4:2b9b1773f7afcddd",
+          "legacy_source_key": "pending-records.json:4:259265f7de747fd4",
           "notes_policy": "REPLACE_WITH_REVIEWED_NOTES",
           "reviewed_notes": "This survivor covers Hannibal's Carthaginian command and statesmanship from 221 BCE through his suffete year in 196 BCE. His 195 BCE flight to the Seleucid court begins a separate Activity; exile is no longer projected onto Carthage.",
           "add_source_links": [
@@ -195,5 +195,8 @@
     "companion_bithynia_activity_unchanged": true,
     "uncertain_transition_gaps_preserved": true,
     "production_mutation_authorized": false
+  },
+  "baseline": {
+    "deployment_sha": "5d75e2f48e3f563a194cdb02cdf4a7a432631996"
   }
 }
