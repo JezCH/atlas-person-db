@@ -82,7 +82,7 @@ function activity(activityId, polityId, startYear, endYear) {
 test("canonical Activity overrides are exact reviewed UUID/interval facts", () => {
   const validation = model.validateSpatialIndex(index);
   assert.equal(validation.valid, true, validation.errors.join("\n"));
-  // Keep legacy single-leaf overrides distinct from the five reviewed complex overrides.
+  // Keep legacy single-leaf overrides distinct from the five reviewed complex Activity overrides.
   const simpleRows = index.activity_spatial_overrides.filter((row) => !Array.isArray(row.segments) || row.segments.length === 0);
   assert.equal(simpleRows.length, EXPECTED.size);
   assert.deepEqual(new Set(simpleRows.map((row) => row.activity_id)), new Set(EXPECTED.keys()));
