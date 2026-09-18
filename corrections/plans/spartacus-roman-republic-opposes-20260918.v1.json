@@ -24,7 +24,8 @@
     "reviewed_relation": "opposes",
     "reviewed_relation_type_id": "5d2d3af6-6e53-5af1-8423-f76c2263afe4",
     "spatial_binding": "europe / italy",
-    "rationale": "Spartacus's modeled Activity is the Third Servile War against the Roman Republic. ATLAS relation semantics represent an opponent polity with opposes; polity=null loses a known political relationship and prevents canonical spatial placement. This does not imply allegiance, service, or membership in the Roman Republic."
+    "rationale": "Spartacus's modeled Activity is the Third Servile War against the Roman Republic. ATLAS relation semantics represent an opponent polity with opposes; polity=null loses a known political relationship and prevents canonical spatial placement. This does not imply allegiance, service, or membership in the Roman Republic.",
+    "execution_retry": "Retry after PR #1125 fixed correction-v2 exact-before handling for legacy polity=null and added opposition-only spacetime counterparty-context placement."
   },
   "operations": [
     {
