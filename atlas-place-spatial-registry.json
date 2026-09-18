@@ -1,6 +1,6 @@
 {
   "schema": "atlas-place-spatial-registry/v1",
-  "generated_at": "2026-08-26T16:05:00+09:00",
+  "generated_at": "2026-09-18T10:48:00.000Z",
   "policy": {
     "identity_display_separation": "Historical Place identity and reviewed geographic evidence belong here; runtime display anchors do not.",
     "no_guessing": "Do not infer coordinates, subregions, or canonical identity from a Person name, modern nationality, or an unreviewed place-name string.",
@@ -10,6 +10,246 @@
     "evidence_separation": "Place spatial_source_refs support the reviewed geographic Place placement; binding source_refs identify the exact reviewed polity-place function fact and therefore need not be the same sources."
   },
   "places": [
+    {
+      "place_id": "place-ankara",
+      "canonical_name": "Ankara",
+      "historical_names": [],
+      "macroregion_code": "west-asia",
+      "subregion_code": "anatolia",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://www.britannica.com/place/Ankara",
+        "https://www.britannica.com/place/Turkey"
+      ],
+      "review_note": "Reviewed only to the stable Anatolia subregion. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-avarga-karakorum-court-core",
+      "canonical_name": "Mongolian imperial court core (Avarga–Karakorum)",
+      "historical_names": [
+        "Karakorum court core",
+        "Kharkhorum court core"
+      ],
+      "macroregion_code": "central-asia",
+      "subregion_code": "eastern-central-asia-steppe",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://whc.unesco.org/en/list/1081"
+      ],
+      "review_note": "Reviewed as a broad historical court-core Place in the eastern Central Asian steppe; it is intentionally not collapsed to a guessed single point. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-bursa",
+      "canonical_name": "Bursa",
+      "historical_names": [],
+      "macroregion_code": "west-asia",
+      "subregion_code": "anatolia",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://whc.unesco.org/en/list/1452",
+        "https://www.britannica.com/place/Turkey"
+      ],
+      "review_note": "Reviewed to the Anatolia leaf; UNESCO locates Bursa in north-western Turkey and ATLAS assigns Asian Turkey to Anatolia. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-cairo",
+      "canonical_name": "Cairo",
+      "historical_names": [],
+      "macroregion_code": "africa",
+      "subregion_code": "nile-valley",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://whc.unesco.org/en/list/89"
+      ],
+      "review_note": "Reviewed to the Nile Valley leaf; UNESCO describes Cairo at the tip of the Nile Delta and directly connected to the Nile. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-constantinople",
+      "canonical_name": "Constantinople",
+      "historical_names": [
+        "Istanbul"
+      ],
+      "macroregion_code": "europe",
+      "subregion_code": "balkans",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Constantinople"
+      ],
+      "review_note": "Reviewed to the Balkans leaf because the historic city core stands on the European/western side of the Bosporus. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-edirne",
+      "canonical_name": "Edirne",
+      "historical_names": [
+        "Adrianople",
+        "Hadrianopolis"
+      ],
+      "macroregion_code": "europe",
+      "subregion_code": "balkans",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Adrianople_%28city%29",
+        "https://www.britannica.com/place/Turkey"
+      ],
+      "review_note": "Reviewed to the Balkans leaf; Edirne/Adrianople is in Turkish Thrace, the European part of Turkey. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-isfahan",
+      "canonical_name": "Isfahan",
+      "historical_names": [
+        "Esfahan"
+      ],
+      "macroregion_code": "west-asia",
+      "subregion_code": "iranian-plateau",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://www.iranicaonline.org/articles/isfahan/"
+      ],
+      "review_note": "Reviewed to the Iranian Plateau leaf from Encyclopaedia Iranica historical geography. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-kufa",
+      "canonical_name": "Kufa",
+      "historical_names": [
+        "Kūfa"
+      ],
+      "macroregion_code": "west-asia",
+      "subregion_code": "mesopotamia",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://www.iranicaonline.org/articles/kufa/"
+      ],
+      "review_note": "Reviewed to the Mesopotamia leaf; Encyclopaedia Iranica locates Kufa south of Baghdad in Iraq. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-medina",
+      "canonical_name": "Medina",
+      "historical_names": [
+        "Al-Medina",
+        "Yathrib"
+      ],
+      "macroregion_code": "west-asia",
+      "subregion_code": "arabia",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Medina"
+      ],
+      "review_note": "Reviewed to the Arabia leaf; Medina is in the Hejaz of western Arabia. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-muscat",
+      "canonical_name": "Muscat",
+      "historical_names": [
+        "Muskat",
+        "Maskat"
+      ],
+      "macroregion_code": "west-asia",
+      "subregion_code": "arabia",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Muscat"
+      ],
+      "review_note": "Reviewed to the Arabia leaf; Muscat is on the south-east coast of Arabia in Oman. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-nicaea",
+      "canonical_name": "Nicaea",
+      "historical_names": [
+        "İznik",
+        "Iznik"
+      ],
+      "macroregion_code": "west-asia",
+      "subregion_code": "anatolia",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://www.britannica.com/place/Iznik",
+        "https://www.britannica.com/place/Turkey"
+      ],
+      "review_note": "Reviewed to the Anatolia leaf; Nicaea is modern İznik in northwestern Turkey. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-pella",
+      "canonical_name": "Pella",
+      "historical_names": [],
+      "macroregion_code": "europe",
+      "subregion_code": "balkans",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://www.britannica.com/place/Pella-ancient-city-Greece",
+        "https://www.britannica.com/place/Macedonia-ancient-kingdom-Europe"
+      ],
+      "review_note": "Reviewed only to the stable Balkans subregion. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-rangoon",
+      "canonical_name": "Rangoon",
+      "historical_names": [
+        "Yangon"
+      ],
+      "macroregion_code": "southeast-asia",
+      "subregion_code": "mainland-southeast-asia",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://myanmar.gov.mm/en/-/yangon?redirect=%2Fen%2Ftravel-myanmar",
+        "https://www.ycdc.gov.mm/frontend_about_yangon/3"
+      ],
+      "review_note": "Reviewed to the Mainland Southeast Asia leaf; Rangoon/Yangon is in Lower Myanmar. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-rio-de-janeiro",
+      "canonical_name": "Rio de Janeiro",
+      "historical_names": [],
+      "macroregion_code": "americas",
+      "subregion_code": "south-america",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://www.britannica.com/place/Rio-de-Janeiro-Brazil",
+        "https://www.britannica.com/place/Brazil"
+      ],
+      "review_note": "Reviewed only to the stable South America subregion. No runtime point coordinate is asserted."
+    },
     {
       "place_id": "place-rome",
       "canonical_name": "Rome",
@@ -29,54 +269,6 @@
       "review_note": "Reviewed only to the stable Italy subregion. No runtime point coordinate is asserted."
     },
     {
-      "place_id": "place-pella",
-      "canonical_name": "Pella",
-      "historical_names": [],
-      "macroregion_code": "europe",
-      "subregion_code": "balkans",
-      "coordinate_precision": "unknown",
-      "latitude": null,
-      "longitude": null,
-      "review_status": "reviewed",
-      "spatial_source_refs": [
-        "https://www.britannica.com/place/Pella-ancient-city-Greece",
-        "https://www.britannica.com/place/Macedonia-ancient-kingdom-Europe"
-      ],
-      "review_note": "Reviewed only to the stable Balkans subregion. No runtime point coordinate is asserted."
-    },
-    {
-      "place_id": "place-ankara",
-      "canonical_name": "Ankara",
-      "historical_names": [],
-      "macroregion_code": "west-asia",
-      "subregion_code": "anatolia",
-      "coordinate_precision": "unknown",
-      "latitude": null,
-      "longitude": null,
-      "review_status": "reviewed",
-      "spatial_source_refs": [
-        "https://www.britannica.com/place/Ankara",
-        "https://www.britannica.com/place/Turkey"
-      ],
-      "review_note": "Reviewed only to the stable Anatolia subregion. No runtime point coordinate is asserted."
-    },
-    {
-      "place_id": "place-rio-de-janeiro",
-      "canonical_name": "Rio de Janeiro",
-      "historical_names": [],
-      "macroregion_code": "americas",
-      "subregion_code": "south-america",
-      "coordinate_precision": "unknown",
-      "latitude": null,
-      "longitude": null,
-      "review_status": "reviewed",
-      "spatial_source_refs": [
-        "https://www.britannica.com/place/Rio-de-Janeiro-Brazil",
-        "https://www.britannica.com/place/Brazil"
-      ],
-      "review_note": "Reviewed only to the stable South America subregion. No runtime point coordinate is asserted."
-    },
-    {
       "place_id": "place-samarkand",
       "canonical_name": "Samarkand",
       "historical_names": [],
@@ -91,16 +283,114 @@
         "https://www.britannica.com/topic/Timurid-dynasty"
       ],
       "review_note": "Reviewed only to the stable Western Central Asia subregion. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-shangdu-dadu-court-core",
+      "canonical_name": "Kublai court in North China (Shangdu–Dadu)",
+      "historical_names": [
+        "Shangdu–Dadu court core",
+        "Xanadu–Dadu court core"
+      ],
+      "macroregion_code": "east-asia",
+      "subregion_code": "china",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://whc.unesco.org/en/list/1389"
+      ],
+      "review_note": "Reviewed as a broad historical court-core Place within the China leaf; it intentionally preserves the Shangdu–Dadu composite rather than inventing one point. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-singapore",
+      "canonical_name": "Singapore",
+      "historical_names": [],
+      "macroregion_code": "southeast-asia",
+      "subregion_code": "maritime-southeast-asia",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://www.mfa.gov.sg/about-singapore/"
+      ],
+      "review_note": "Reviewed to the Maritime Southeast Asia leaf; Singapore is an island city-state in Southeast Asia. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-sogut",
+      "canonical_name": "Söğüt",
+      "historical_names": [
+        "Sogut"
+      ],
+      "macroregion_code": "west-asia",
+      "subregion_code": "anatolia",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://bilecik.gov.tr/sogut",
+        "https://sogut.gov.tr/cografi-yapi"
+      ],
+      "review_note": "Reviewed to the Anatolia leaf from Bilecik Governorate geographic evidence. No runtime point coordinate is asserted."
+    },
+    {
+      "place_id": "place-stone-town-zanzibar",
+      "canonical_name": "Stone Town, Zanzibar",
+      "historical_names": [
+        "Stone Town"
+      ],
+      "macroregion_code": "africa",
+      "subregion_code": "east-africa",
+      "coordinate_precision": "unknown",
+      "latitude": null,
+      "longitude": null,
+      "review_status": "reviewed",
+      "spatial_source_refs": [
+        "https://whc.unesco.org/en/list/173"
+      ],
+      "review_note": "Reviewed to the East Africa leaf from UNESCO's classification of Stone Town as an East African Swahili coastal trading town. No runtime point coordinate is asserted."
     }
   ],
   "bindings": [
     {
-      "place_id": "place-rome",
-      "polity_id": "5d9a6186-bbe6-5d1a-ba93-02190ae4c417",
+      "place_id": "place-isfahan",
+      "polity_id": "01f4ce7b-aaa3-473a-a6fd-9c95c4a85ff7",
       "function_type": "capital",
-      "place_name": "Rome",
+      "place_name": "Isfahan",
       "source_refs": [
-        "1911 Encyclopaedia Britannica: Constantine (emperors)"
+        "British Museum Collections Online: Seljuq dynasty (x41057)"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-constantinople",
+      "polity_id": "074510f4-f2e7-5795-8cfb-2a4206fa7254",
+      "function_type": "capital",
+      "place_name": "Constantinople",
+      "source_refs": [
+        "1911 Encyclopaedia Britannica: Constantinople"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-nicaea",
+      "polity_id": "074510f4-f2e7-5795-8cfb-2a4206fa7254",
+      "function_type": "capital",
+      "place_name": "Nicaea",
+      "source_refs": [
+        "1911 Encyclopaedia Britannica: Nicaea"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-ankara",
+      "polity_id": "28448862-277d-4738-9fb4-7f51a9e4c03a",
+      "function_type": "capital",
+      "place_name": "Ankara",
+      "source_refs": [
+        "Atatürk Ansiklopedisi: Ankara’nın Başkent Oluşu"
       ],
       "review_status": "reviewed"
     },
@@ -116,16 +406,6 @@
       "review_status": "reviewed"
     },
     {
-      "place_id": "place-ankara",
-      "polity_id": "28448862-277d-4738-9fb4-7f51a9e4c03a",
-      "function_type": "capital",
-      "place_name": "Ankara",
-      "source_refs": [
-        "Atatürk Ansiklopedisi: Ankara’nın Başkent Oluşu"
-      ],
-      "review_status": "reviewed"
-    },
-    {
       "place_id": "place-rio-de-janeiro",
       "polity_id": "3b8f7efc-40ae-5a33-8956-e9e852fbede4",
       "function_type": "capital",
@@ -136,12 +416,169 @@
       "review_status": "reviewed"
     },
     {
+      "place_id": "place-constantinople",
+      "polity_id": "5d9a6186-bbe6-5d1a-ba93-02190ae4c417",
+      "function_type": "capital",
+      "place_name": "Constantinople",
+      "source_refs": [
+        "1911 Encyclopaedia Britannica: Constantinople"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-rome",
+      "polity_id": "5d9a6186-bbe6-5d1a-ba93-02190ae4c417",
+      "function_type": "capital",
+      "place_name": "Rome",
+      "source_refs": [
+        "1911 Encyclopaedia Britannica: Constantine (emperors)"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-rangoon",
+      "polity_id": "5fce7b7e-7e6c-5f91-96b6-ebcd925b0a90",
+      "function_type": "political_center",
+      "place_name": "Rangoon",
+      "source_refs": [
+        "Government of India / IGNCA chronology: Bose civil and military headquarters moved to Burma in January 1944",
+        "Odisha Review: headquarters of the Provisional Government, Indian Independence League and Supreme Command shifted from Singapore to Rangoon"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-singapore",
+      "polity_id": "5fce7b7e-7e6c-5f91-96b6-ebcd925b0a90",
+      "function_type": "political_center",
+      "place_name": "Singapore",
+      "source_refs": [
+        "Press Information Bureau, Government of India: Anniversary of the formation of Azad Hind Government (21 Oct 1943)",
+        "Publications Division, Government of India: Builders of Modern India — Subhas Chandra Bose"
+      ],
+      "review_status": "reviewed"
+    },
+    {
       "place_id": "place-samarkand",
       "polity_id": "6539c314-ec29-42e0-a0c2-90991fb9ffd8",
       "function_type": "capital",
       "place_name": "Samarkand",
       "source_refs": [
         "The Metropolitan Museum of Art: The Art of the Timurid Period (ca. 1370–1507)"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-muscat",
+      "polity_id": "68c83ef6-0023-5af9-a6e8-26ccf5b8e116",
+      "function_type": "capital",
+      "place_name": "Muscat",
+      "source_refs": [
+        "National Museum of Oman: Architectural Heritage — Muscat"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-stone-town-zanzibar",
+      "polity_id": "68c83ef6-0023-5af9-a6e8-26ccf5b8e116",
+      "function_type": "capital",
+      "place_name": "Stone Town, Zanzibar",
+      "source_refs": [
+        "National Museum of Oman: Architectural Heritage — Muscat",
+        "Oman Ministry of Foreign Affairs: History"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-bursa",
+      "polity_id": "6d1520e2-0aff-5063-b2b7-95eb86daf372",
+      "function_type": "capital",
+      "place_name": "Bursa",
+      "source_refs": [
+        "Republic of Türkiye Bursa Governorship: Tarihçe"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-constantinople",
+      "polity_id": "6d1520e2-0aff-5063-b2b7-95eb86daf372",
+      "function_type": "capital",
+      "place_name": "Constantinople",
+      "source_refs": [
+        "1911 Encyclopaedia Britannica: Constantinople"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-edirne",
+      "polity_id": "6d1520e2-0aff-5063-b2b7-95eb86daf372",
+      "function_type": "capital",
+      "place_name": "Edirne",
+      "source_refs": [
+        "Türkiye Culture Portal: Edirne - Genel Bilgiler"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-sogut",
+      "polity_id": "6d1520e2-0aff-5063-b2b7-95eb86daf372",
+      "function_type": "capital",
+      "place_name": "Söğüt",
+      "source_refs": [
+        "Republic of Türkiye Ministry of National Education, Söğüt District: İlçemiz - Söğüt"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-kufa",
+      "polity_id": "a1697cdb-1085-545c-850e-1bbc25cdb61b",
+      "function_type": "capital",
+      "place_name": "Kufa",
+      "source_refs": [
+        "Encyclopaedia Iranica: Kufa — Ali (r. 656–61) chose Kufa as his capital"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-medina",
+      "polity_id": "a1697cdb-1085-545c-850e-1bbc25cdb61b",
+      "function_type": "capital",
+      "place_name": "Medina",
+      "source_refs": [
+        "Cambridge University Press: Rituals of Islamic Monarchy — the conquest society c. 628–c. 660"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-shangdu-dadu-court-core",
+      "polity_id": "d54c540c-f3fb-5d05-9dc0-26af4ee9815a",
+      "function_type": "imperial_court_core",
+      "place_name": "Kublai court in North China (Shangdu–Dadu)",
+      "source_refs": [
+        "Cambridge History of the Mongol Empire: Mongolia in the Mongol Empire",
+        "UNESCO World Heritage Centre: Site of Xanadu",
+        "Metropolitan Museum of Art: China, 1000–1400 A.D. chronology"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-avarga-karakorum-court-core",
+      "polity_id": "d54c540c-f3fb-5d05-9dc0-26af4ee9815a",
+      "function_type": "imperial_court_core",
+      "place_name": "Mongolian imperial court core (Avarga–Karakorum)",
+      "source_refs": [
+        "UNESCO World Heritage Centre: Archaeological Site at Khuduu Aral and Surrounding Cultural Landscape",
+        "Cambridge Antiquity: Mapping Karakorum, the capital of the Mongol Empire",
+        "Cambridge Modern Asian Studies: The cosmopolitanism of Karakorum, capital of the Mongol empire in Mongolia"
+      ],
+      "review_status": "reviewed"
+    },
+    {
+      "place_id": "place-cairo",
+      "polity_id": "e3da3007-529a-40ec-9934-7b70dfd11cb7",
+      "function_type": "capital",
+      "place_name": "Cairo",
+      "source_refs": [
+        "Getty Thesaurus of Geographic Names: Mamluk Sultanate (TGN 6003667)"
       ],
       "review_status": "reviewed"
     }
