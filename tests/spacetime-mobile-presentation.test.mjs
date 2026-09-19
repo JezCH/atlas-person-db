@@ -16,9 +16,10 @@ function numericConstant(name) {
   return Number(match[1]);
 }
 
-test("mobile presentation keeps semantic zoom at the reviewed 500 to 800 percent contract", () => {
-  assert.equal(numericConstant("CAMERA_MIN_ZOOM"), 5);
-  assert.equal(numericConstant("CAMERA_MAX_ZOOM"), 8);
+test("mobile presentation keeps a 500 default inside the 300 to 1200 percent contract", () => {
+  assert.equal(numericConstant("CAMERA_MIN_ZOOM"), 3);
+  assert.equal(numericConstant("CAMERA_DEFAULT_ZOOM"), 5);
+  assert.equal(numericConstant("CAMERA_MAX_ZOOM"), 12);
   assert.equal(numericConstant("MOBILE_VIEWPORT_MAX_WIDTH"), 760);
   assert.equal(numericConstant("MOBILE_AXIS_WIDTH"), 80);
   assert.equal(numericConstant("MOBILE_ERA_AXIS_WIDTH"), 36);
@@ -49,11 +50,12 @@ test("mobile vertical chrome is compact without changing timeline geometry", () 
   assert.match(css, /@media\(max-width:560px\)\{\.spacetime-minimap\{width:100%\}\.spacetime-minimap-surface\{height:84px\}/);
 });
 
-test("mobile 500 percent header prioritizes macroregions and defers leaf labels until zoom", () => {
+test("mobile 300 to 500 percent overview prioritizes macroregions and defers leaf labels", () => {
   assert.match(view, /data-spacetime-zoom="\$\{Math\.round\(cameraZoom \* 100\)\}"/);
-  assert.match(css, /data-spacetime-zoom="500"\] \.spacetime-region-head-layer\.is-macro\{opacity:1!important\}/);
-  assert.match(css, /data-spacetime-zoom="500"\] \.spacetime-region-head-layer\.is-subregion\{opacity:0!important\}/);
-  assert.match(css, /data-spacetime-zoom="500"\] \.spacetime-subregion-line\{opacity:\.16!important\}/);
+  assert.match(view, /data-spacetime-overview="\$\{cameraZoom <= CAMERA_DEFAULT_ZOOM \? "true" : "false"\}"/);
+  assert.match(css, /data-spacetime-overview="true"\] \.spacetime-region-head-layer\.is-macro\{opacity:1!important\}/);
+  assert.match(css, /data-spacetime-overview="true"\] \.spacetime-region-head-layer\.is-subregion\{opacity:0!important\}/);
+  assert.match(css, /data-spacetime-overview="true"\] \.spacetime-subregion-line\{opacity:\.16!important\}/);
 });
 
 test("mobile status surface keeps only core chips visible until expanded", () => {
