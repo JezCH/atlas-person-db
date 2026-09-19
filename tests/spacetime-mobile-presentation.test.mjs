@@ -59,9 +59,11 @@ test("mobile spacetime sticky headers stay below the mobile app bar", () => {
   assert.match(css, /\.spacetime-frame\.is-mobile-presentation \.spacetime-region-head\{z-index:30;/);
 });
 
-test("mobile minimap stays below the mobile app bar", () => {
-  assert.match(mobileCss, /\.mobile-appbar \{[\s\S]*?z-index:40;/);
-  assert.match(css, /\.spacetime-frame\.is-mobile-presentation \.spacetime-minimap\{z-index:25\}/);
+test("mobile minimap is a non-overlay sidecar panel", () => {
+  assert.match(view, /<aside class="spacetime-sidecar">[\s\S]*?\$\{renderMinimap\(\)\}[\s\S]*?\$\{renderStickyInspector/);
+  assert.match(css, /\.spacetime-sidecar\{display:grid;gap:10px;min-width:0;align-self:start\}/);
+  assert.match(css, /\.spacetime-minimap\{position:relative;right:auto;bottom:auto;z-index:1;width:100%/);
+  assert.doesNotMatch(css, /\.spacetime-frame\.is-mobile-presentation \.spacetime-minimap/);
 });
 
 test("mobile region header shares the first row with era and year headers", () => {
