@@ -26,7 +26,7 @@ test('authority navigation loads the current spacetime renderer without a stale 
   assert.match(spacetimeView, /atlas-person-spacetime-data-parity\.js\?v=20260902-final-parity/);
   assert.match(spacetimeView, /atlas-person-spacetime-uncertainty\.js\?v=20260903-c6/);
   assert.match(spacetimeView, /atlas-person-spacetime-inspector\.js\?v=20260903-c8/);
-  assert.match(spacetimeView, /atlas-person-spacetime-semantic-axis\.js\?v=20260903-place-lod/);
+  assert.match(spacetimeView, /atlas-person-spacetime-semantic-axis\.js\?v=20260920-range-300-1200/);
   assert.match(spacetimeView, /ATLAS_CLIENT_DATA_STORE/);
   assert.match(spacetimeView, /dataStore\.loadSpatialIndex/);
   assert.match(spacetimeView, /dataStore\.loadPersons/);
