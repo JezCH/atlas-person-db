@@ -7,9 +7,11 @@ const css = readFileSync(new URL("../atlas-person-spacetime-view.css", import.me
 const lod = readFileSync(new URL("../atlas-person-spacetime-lod.js", import.meta.url), "utf8");
 const semanticAxis = readFileSync(new URL("../atlas-person-spacetime-semantic-axis.js", import.meta.url), "utf8");
 
-test("spacetime opens directly at the readable 500 percent floor", () => {
-  assert.match(view, /const CAMERA_MIN_ZOOM = 5;/);
-  assert.match(view, /let cameraZoom = CAMERA_MIN_ZOOM;/);
+test("spacetime opens at 500 percent default inside a wider zoom range", () => {
+  assert.match(view, /const CAMERA_MIN_ZOOM = 3;/);
+  assert.match(view, /const CAMERA_DEFAULT_ZOOM = 5;/);
+  assert.match(view, /const CAMERA_MAX_ZOOM = 12;/);
+  assert.match(view, /let cameraZoom = CAMERA_DEFAULT_ZOOM;/);
   assert.match(view, /const GLOBAL_EXTENT_COMPRESSION = 0\.748;/);
   assert.match(view, /baseWorldWidth \* cameraZoom \* GLOBAL_EXTENT_COMPRESSION/);
   assert.match(view, /DEFAULT_TIMELINE_HEIGHT \* cameraZoom \* GLOBAL_EXTENT_COMPRESSION/);
@@ -18,7 +20,7 @@ test("spacetime opens directly at the readable 500 percent floor", () => {
   assert.doesNotMatch(view, /DETAIL_SPACE_ZOOM/);
 });
 
-test("below-floor overview representations are physically absent", () => {
+test("alternate density overview representations remain physically absent", () => {
   assert.equal(existsSync(new URL("../atlas-person-spacetime-density.js", import.meta.url)), false);
   assert.doesNotMatch(view, /density\.buildDensityField/);
   assert.doesNotMatch(view, /spacetimeDensityCanvas/);
@@ -29,8 +31,8 @@ test("below-floor overview representations are physically absent", () => {
   assert.doesNotMatch(css, /is-overview/);
 });
 
-test("minimum representation is Person labels plus rails", () => {
-  assert.match(lod, /const MIN_SUPPORTED_ZOOM = 5;/);
+test("minimum 300 percent representation remains Person labels plus rails", () => {
+  assert.match(lod, /const MIN_SUPPORTED_ZOOM = 3;/);
   assert.match(lod, /labels: 1/);
   assert.match(lod, /rails: 1/);
   assert.doesNotMatch(lod, /density_fade_start/);
@@ -49,7 +51,7 @@ test("world geometry remains stable and density-independent", () => {
   assert.doesNotMatch(view, /buildRegionMeta/);
 });
 
-test("subregion context is always available at the readable floor", () => {
+test("subregion context remains available across the widened range", () => {
   assert.match(view, /semanticAxis\.buildSpaceHeaderPlan\(compiled\.continuum, contentWidth, cameraZoom, spatialCompile\.REVIEWED_PLACE_BINDINGS\)/);
   assert.match(view, /spacetime-region-head-layer is-subregion/);
   assert.match(semanticAxis, /PLACE_DETAIL_START_ZOOM = 7\.2/);
