@@ -6,7 +6,7 @@
 })(typeof globalThis !== "undefined" ? globalThis : this, () => {
   "use strict";
 
-  const MIN_SUPPORTED_ZOOM = 5;
+  const MIN_SUPPORTED_ZOOM = 3;
   const DEFAULT_THRESHOLDS = Object.freeze({
     activity_start: 5.6,
     activity_full: 7.2
