@@ -9,6 +9,7 @@ const main = fs.readFileSync(new URL('../atlas-person-main.js', import.meta.url)
 const nonTimelineData = JSON.parse(fs.readFileSync(new URL('../non-timeline-persons.json', import.meta.url), 'utf8'));
 const assetLoader = fs.readFileSync(new URL('../asset-loader.js', import.meta.url), 'utf8');
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+const dataStore = fs.readFileSync(new URL('../atlas-client-data-store.js', import.meta.url), 'utf8');
 
 test('shared Korean localization runtime owns reusable enum vocabulary without DOM mutation', () => {
   assert.match(i18n, /window\.ATLAS_UI_I18N/);
@@ -30,7 +31,8 @@ test('authority copy is externalized and includes the canonical spacetime place-
 });
 
 test('unknown-chronology presentation reuses reviewed Korean registry labels without a standalone legend UI', () => {
-  assert.match(main, /non-timeline-persons\.json/);
+  assert.match(main, /dataStore\.loadNonTimelinePersons/);
+  assert.match(dataStore, /non-timeline-persons\.json/);
   assert.match(main, /politic_display_name_ko/);
   assert.match(main, /historicity_display_ko/);
   assert.doesNotMatch(html, /non-timeline-list\.js/);
@@ -46,7 +48,7 @@ test('unknown-chronology presentation reuses reviewed Korean registry labels wit
 test('Main and Admin load the same localization authority before dependent presentation code', () => {
   const i18nIndex = html.indexOf('atlas-ui-localization.js?v=20260819-ko-r2');
   const tableIndex = html.indexOf('atlas-person-table-view.js?v=20260819-era-model-r2');
-  const catalogIndex = html.indexOf('atlas-ui-authority-catalog.ko.js?v=20260819-ko-r2');
+  const catalogIndex = html.indexOf('atlas-ui-authority-catalog.ko.js?v=20260919-control-center-v1');
   const navIndex = html.indexOf('atlas-main-authority-nav.js?v=');
   assert.ok(i18nIndex >= 0 && i18nIndex < tableIndex);
   assert.ok(catalogIndex >= 0 && catalogIndex < navIndex);

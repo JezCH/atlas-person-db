@@ -13,6 +13,7 @@ const handler = fs.readFileSync(new URL('../server/atlas-human-authoring-handler
 const personRead = fs.readFileSync(new URL('../server/atlas-person-read-service.js', import.meta.url), 'utf8');
 const admin = fs.readFileSync(new URL('../atlas-admin-identity.js', import.meta.url), 'utf8');
 const runtime = fs.readFileSync(new URL('../atlas-person-external-references.js', import.meta.url), 'utf8');
+const clientStore = fs.readFileSync(new URL('../atlas-client-data-store.js', import.meta.url), 'utf8');
 const policy = fs.readFileSync(new URL('../authoring/NAMUWIKI_REGISTRATION_POLICY.md', import.meta.url), 'utf8');
 const sop = fs.readFileSync(new URL('../authoring/REGISTRATION_SOP.md', import.meta.url), 'utf8');
 const humanDoc = fs.readFileSync(new URL('../authoring/HUMAN_AUTHORING.md', import.meta.url), 'utf8');
@@ -160,8 +161,11 @@ test('normal Admin registration supports reviewed-state reuse while still report
   assert.match(admin, /나무위키: 기존 검토값 없음/);
 });
 
-test('main Person table uses authoritative Person read metadata without hardcoded Person fallback', () => {
-  assert.match(runtime, /READ_ENDPOINT = "\/api\/atlas-person-read"/);
+test('main Person table uses the shared authoritative Person snapshot without hardcoded Person fallback', () => {
+  assert.match(runtime, /ATLAS_CLIENT_DATA_STORE/);
+  assert.match(runtime, /dataStore\.loadPersons/);
+  assert.match(clientStore, /personReader\.ENDPOINT/);
+  assert.match(clientStore, /personReader\.listPersons\(\)/);
   assert.match(runtime, /external_references\?\.namuwiki/);
   assert.match(runtime, /statusForPerson/);
   assert.match(runtime, /row\.dataset\.namuwikiStatus = status\.status/);

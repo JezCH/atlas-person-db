@@ -12,6 +12,7 @@ const batchFiles = sequencedFiles('batch');
 const holdFiles = sequencedFiles('hold');
 const css = fs.readFileSync(path.join(root, 'atlas-person-domain-palette.css'), 'utf8').toLowerCase();
 const ui = fs.readFileSync(path.join(root, 'atlas-person-domain-ui.js'), 'utf8');
+const registry = fs.readFileSync(path.join(root, 'atlas-person-domain-registry.js'), 'utf8');
 const applyClient = fs.readFileSync(path.join(root, 'scripts/apply-person-domain-proposals.mjs'), 'utf8');
 const workflow = fs.readFileSync(path.join(root, '.github/workflows/atlas-person-domain-apply.yml'), 'utf8');
 const proposals = [...batchFiles,'palette-smoke-001.json']
@@ -72,8 +73,11 @@ test('final ATLAS representative-domain palette uses the eight exact canonical a
 });
 
 test('browser registry and reviewed proposals use canonical codes only', () => {
-  for (const domain of Object.keys(palette)) assert.match(ui, new RegExp(`code:\"${domain}\"`));
-  assert.doesNotMatch(ui, /code:\"ruler\"|code:\"science\"/);
+  for (const domain of Object.keys(palette)) assert.match(registry, new RegExp(`code:"${domain}"`));
+  assert.match(ui, /ATLAS_PERSON_DOMAIN_REGISTRY/);
+  assert.match(ui, /domainRegistry\.DEFINITIONS/);
+  assert.match(ui, /domainRegistry\.LABELS/);
+  assert.doesNotMatch(registry, /code:"ruler"|code:"science"/);
   assert.doesNotMatch(proposals, /"representative_domain"\s*:\s*"(?:ruler|science)"/);
 });
 

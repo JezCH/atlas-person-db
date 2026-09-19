@@ -1,7 +1,11 @@
 (() => {
   "use strict";
 
-  const READ_ENDPOINT = "/api/atlas-person-read";
+  const dataStore = window.ATLAS_CLIENT_DATA_STORE;
+  if (!dataStore) {
+    console.error("ATLAS Person external references require shared data store");
+    return;
+  }
   let liveReferencesByPersonId = Object.freeze({});
   let liveReferencesLoaded = false;
 
@@ -89,21 +93,11 @@
     }
   }
 
-  async function loadLiveReferences() {
-    if (typeof fetch !== "function") return false;
+  async function loadLiveReferences({ force = false } = {}) {
     try {
-      const response = await fetch(READ_ENDPOINT, {
-        method:"GET",
-        credentials:"same-origin",
-        cache:"no-store",
-        headers:{ accept:"application/json" }
-      });
-      const payload = await response.json();
-      if (!response.ok || payload?.ok !== true || payload?.mode !== "list" || !Array.isArray(payload.persons)) {
-        throw new Error(`Person read failed (${response.status})`);
-      }
+      const payload = await dataStore.loadPersons({ force });
       const next = {};
-      for (const person of payload.persons) {
+      for (const person of payload.persons || []) {
         const id = String(person?.id || "").trim().toLowerCase();
         const entry = inlineEntry(person);
         if (id && entry) next[id] = entry;

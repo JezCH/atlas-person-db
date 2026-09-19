@@ -86,5 +86,5 @@ test('UI7 assets load as a presentation layer after shared era ownership and bef
   assert.match(html, /atlas-person-era-model\.js\?v=20260909-era-10-band-v1/);
   assert.match(html, /atlas-person-table-view\.js\?v=20260819-era-model-r2/);
   assert.ok(html.indexOf('atlas-person-era-model.js?v=20260909-era-10-band-v1') < html.indexOf('atlas-person-table-view.js?v=20260819-era-model-r2'));
-  assert.ok(html.indexOf('atlas-person-table-view.js?v=20260819-era-model-r2') < html.indexOf('atlas-person-main.js?v=20260821-person-profile-v1'));
+  assert.ok(html.indexOf('atlas-person-table-view.js?v=20260819-era-model-r2') < html.indexOf('atlas-person-main.js?v=20260919-shared-store-v1'));
 });

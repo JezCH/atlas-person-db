@@ -1,18 +1,19 @@
 (() => {
   "use strict";
 
-  const ENDPOINT = "/api/atlas-person-domain";
-  const DEFINITIONS = Object.freeze([
-    Object.freeze({ code:"governance", label:"통치·정치" }),
-    Object.freeze({ code:"military", label:"군사" }),
-    Object.freeze({ code:"knowledge", label:"학문·과학·사상" }),
-    Object.freeze({ code:"technology", label:"기술·공학·발명" }),
-    Object.freeze({ code:"commerce", label:"상업·경제" }),
-    Object.freeze({ code:"culture", label:"문화·예술" }),
-    Object.freeze({ code:"religion", label:"종교·신앙" }),
-    Object.freeze({ code:"exploration", label:"탐험·항해" })
-  ]);
-  const LABELS = Object.freeze(Object.fromEntries(DEFINITIONS.map((item) => [item.code, item.label])));
+  const dataStore = window.ATLAS_CLIENT_DATA_STORE;
+  if (!dataStore) {
+    console.error("ATLAS Person domain UI requires shared data store");
+    return;
+  }
+  const ENDPOINT = dataStore.SOURCES.personDomains.url;
+  const domainRegistry = window.ATLAS_PERSON_DOMAIN_REGISTRY;
+  if (!domainRegistry) {
+    console.error("ATLAS Person domain UI requires Person domain registry");
+    return;
+  }
+  const DEFINITIONS = domainRegistry.DEFINITIONS;
+  const LABELS = domainRegistry.LABELS;
   const domainByPerson = new Map();
   const writer = window.ATLAS_SERVER_WRITE_ADAPTER?.createAdapter?.() || null;
   let loaded = false;
@@ -48,18 +49,9 @@
     if (!force && loaded) return domainByPerson;
     if (!force && loadPromise) return loadPromise;
     loadPromise = (async () => {
-      const response = await fetch(ENDPOINT, {
-        method:"GET",
-        credentials:"same-origin",
-        cache:"no-store",
-        headers:{ accept:"application/json" }
-      });
-      const body = await readJson(response);
-      if (!response.ok || body?.ok !== true || !Array.isArray(body.rows)) {
-        throw new Error(body?.code || `PERSON_DOMAIN_READ_FAILED_${response.status}`);
-      }
+      const result = await dataStore.loadPersonDomains({ force });
       domainByPerson.clear();
-      for (const row of body.rows) {
+      for (const row of result.rows || []) {
         const personId = String(row?.person_id || "").trim();
         const domain = String(row?.representative_domain || "").trim();
         if (personId && LABELS[domain]) domainByPerson.set(personId, domain);
@@ -175,6 +167,7 @@
       }
       if (domain) domainByPerson.set(personId, domain);
       else domainByPerson.delete(personId);
+      dataStore.patchPersonDomain(personId, domain);
       state.textContent = body.replay ? "변경 없음" : "저장 완료";
       scheduleDecorate();
     } catch (error) {

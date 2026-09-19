@@ -2,6 +2,7 @@
   "use strict";
 
   const reader = window.ATLAS_PERSON_BROWSER_READER;
+  const dataStore = window.ATLAS_CLIENT_DATA_STORE;
   const externalReferences = window.ATLAS_PERSON_EXTERNAL_REFERENCES;
   const profileWriter = window.ATLAS_SERVER_WRITE_ADAPTER?.createAdapter?.() || null;
   const mainArea = document.querySelector(".main-area");
@@ -9,7 +10,7 @@
   const legacyContent = mainArea?.querySelector(":scope > .content-grid");
   const topbar = mainArea?.querySelector(":scope > .topbar");
 
-  if (!reader || !mainArea || !toolbar || !legacyContent || !topbar) {
+  if (!reader || !dataStore || !mainArea || !toolbar || !legacyContent || !topbar) {
     console.error("ATLAS Person Main could not initialize required dependencies");
     return;
   }
@@ -168,18 +169,6 @@
       .filter((row) => !registryIdentityKeys(row).some((key) => firstClassNames.has(key)))
       .filter((row) => !needle || registrySearchText(row).includes(needle))
       .map(registryPerson);
-  }
-
-  async function loadUnknownChronologyRegistry() {
-    try {
-      const response = await fetch(`./non-timeline-persons.json?v=${Date.now()}`, { cache: "no-store" });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const rows = await response.json();
-      return Array.isArray(rows) ? rows : [];
-    } catch (error) {
-      console.error("ATLAS unknown-chronology registry load failed", error);
-      return [];
-    }
   }
 
   function boundaryMeta(boundary) {
@@ -417,10 +406,13 @@
     }
   }
 
-  async function loadPersons({ keepSelection = true } = {}) {
+  async function loadPersons({ keepSelection = true, force = false } = {}) {
     const groups = document.getElementById("personMainGroups");
     try {
-      const [result, registryRows] = await Promise.all([reader.listPersons(), loadUnknownChronologyRegistry()]);
+      const [result, registryRows] = await Promise.all([
+        dataStore.loadPersons({ force }),
+        dataStore.loadNonTimelinePersons({ force })
+      ]);
       persons = result.persons.slice();
       unknownChronologyRegistry = registryRows.slice();
       facetCatalog = result.facet_catalog || reader.facetCatalog(persons);
@@ -475,9 +467,9 @@
       if (outcome?.committed !== true) {
         return showOperationalMessage(outcomeError(outcome, "Person 정보 저장에 실패했습니다."));
       }
+      await loadPersons({ keepSelection:true, force:true });
       if (operation === "set_person_external_reference") await externalReferences?.reload?.();
       showOperationalMessage(operation === "set_person_korean_name" ? "한국어 이름을 전체 화면에 반영했습니다." : "나무위키 문서를 연결했습니다.");
-      await loadPersons({ keepSelection:true });
     } catch (error) {
       showOperationalMessage(error?.message || "Person 정보 저장에 실패했습니다.");
     } finally {
@@ -515,7 +507,7 @@
 
   function refreshAfterDialogClose() {
     const dialog = document.getElementById("editorDialog");
-    dialog?.addEventListener("close", () => loadPersons({ keepSelection: true }), { once: true });
+    dialog?.addEventListener("close", () => loadPersons({ keepSelection: true, force: true }), { once: true });
   }
 
   function refreshAfterLegacyRowsChange(timeoutMs = 15000) {
@@ -625,7 +617,7 @@
       renderGroups();
     });
     add?.addEventListener("click", openLegacyCreate);
-    refresh?.addEventListener("click", () => loadPersons({ keepSelection: true }));
+    refresh?.addEventListener("click", () => loadPersons({ keepSelection: true, force: true }));
     excelExport?.addEventListener("click", exportLegacyExcel);
     excelImport?.addEventListener("click", importLegacyExcel);
     moreButton?.addEventListener("click", (event) => {

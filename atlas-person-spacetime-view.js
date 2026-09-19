@@ -1,10 +1,9 @@
 (() => {
   "use strict";
 
-  const reader = window.ATLAS_PERSON_BROWSER_READER;
+  const dataStore = window.ATLAS_CLIENT_DATA_STORE;
   const model = window.ATLAS_PERSON_SPACETIME_MODEL;
   const eraModel = window.ATLAS_PERSON_ERA_MODEL;
-  const SPATIAL_INDEX_URL = "./atlas-polity-spatial-index.json";
   const AXIS_WIDTH = 140;
   const ERA_AXIS_WIDTH = 68;
   const DEFAULT_TIMELINE_HEIGHT = 4200;
@@ -34,7 +33,7 @@
     ["./atlas-person-spacetime-label-engine.js?v=20260903-cjk-band-zone", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
   ]);
 
-  if (!reader || !model || !eraModel) {
+  if (!dataStore || !model || !eraModel) {
     console.error("ATLAS spacetime view could not initialize required dependencies");
     return;
   }
@@ -425,10 +424,8 @@
     </section>`;
   }
 
-  async function fetchSpatialIndex() {
-    const response = await fetch(SPATIAL_INDEX_URL, { cache: "no-store", credentials: "same-origin", headers: { accept: "application/json" } });
-    if (!response.ok) throw new Error(`SPATIAL_INDEX_HTTP_${response.status}`);
-    const payload = await response.json();
+  async function fetchSpatialIndex({ force = false } = {}) {
+    const payload = await dataStore.loadSpatialIndex({ force });
     const validation = model.validateSpatialIndex(payload);
     if (!validation.valid) {
       const error = new Error(`INVALID_SPATIAL_INDEX: ${validation.errors.join(" | ")}`);
@@ -441,7 +438,7 @@
   async function ensureData() {
     if (loadPromise) return loadPromise;
     const generation = dataLoadGeneration;
-    loadPromise = Promise.all([reader.listPersons(), fetchSpatialIndex()]).then(([personResult, placement]) => {
+    loadPromise = Promise.all([dataStore.loadPersons(), fetchSpatialIndex()]).then(([personResult, placement]) => {
       if (generation !== dataLoadGeneration) return false;
       persons = personResult.persons || [];
       spatialIndex = placement;

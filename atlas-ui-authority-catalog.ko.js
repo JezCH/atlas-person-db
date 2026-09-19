@@ -6,13 +6,13 @@
   window.ATLAS_UI_AUTHORITY_CATALOG_KO = Object.freeze({
     dashboard: entry({
       label: "대시보드",
-      eyebrow: "ATLAS 정보 제공 범위",
-      status_code: "partial",
-      status_label: "부분 제공",
-      summary: "현재 메인 화면이 공개할 수 있는 기준 도메인과 아직 별도 조회 기능이 필요한 영역을 한눈에 보여줍니다.",
-      available: "인물 중심 공개 조회, 인물 활동 의미 정보, 시공간 인물도가 현재 제공됩니다.",
-      missing: "전 도메인을 합산하는 독립 기준 대시보드 조회 모델은 아직 없습니다.",
-      principle: "없는 지표를 계산해 완성된 것처럼 보이지 않고 준비 여부 자체를 정보로 표시합니다."
+      eyebrow: "ATLAS CONTROL CENTER",
+      status_code: "ready",
+      status_label: "사용 가능",
+      summary: "Person·Domain·Spatial·Non-timeline 기준 원본에서 데이터·작업·품질 상태를 실시간으로 파생해 보여줍니다.",
+      available: "인물·Runtime Activity·사용 중 정치체·대표 분야·나무위키·Spatial·Non-timeline 현황을 동일한 기준 원본에서 집계합니다.",
+      missing: "별도 대시보드 저장 테이블은 두지 않습니다. Place·Event·Source 등 독립 기준 조회가 완성되면 같은 projection에 추가합니다.",
+      principle: "대시보드 숫자는 복제 저장하거나 하드코딩하지 않고 각 canonical read snapshot에서만 파생합니다."
     }),
     persons: entry({
       label: "인물",

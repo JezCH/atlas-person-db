@@ -8,15 +8,19 @@ const reader = fs.readFileSync(new URL('../atlas-person-browser-reader.js', impo
 const nav = fs.readFileSync(new URL('../atlas-person-era-navigation.js', import.meta.url), 'utf8');
 const css = fs.readFileSync(new URL('../atlas-person-main.css', import.meta.url), 'utf8');
 const mobile = fs.readFileSync(new URL('../mobile-ui.js', import.meta.url), 'utf8');
+const dataStore = fs.readFileSync(new URL('../atlas-client-data-store.js', import.meta.url), 'utf8');
 
-test('Main loads the Person reader before the Person-centered screen module', () => {
+test('Main loads the Person reader and shared data store before the Person-centered screen module', () => {
   assert.match(html, /atlas-person-main\.css/);
   assert.doesNotMatch(html, /atlas-person-main-filters\.css/);
   const readerIndex = html.indexOf('atlas-person-browser-reader.js');
+  const storeIndex = html.indexOf('atlas-client-data-store.js');
   const mainIndex = html.indexOf('atlas-person-main.js');
   assert.ok(readerIndex >= 0);
-  assert.ok(mainIndex > readerIndex);
+  assert.ok(storeIndex > readerIndex);
+  assert.ok(mainIndex > storeIndex);
   assert.match(main, /ATLAS_PERSON_BROWSER_READER/);
+  assert.match(main, /ATLAS_CLIENT_DATA_STORE/);
 });
 
 test('Person-centered Main renders all historicity groups in one chronology table', () => {
@@ -25,7 +29,8 @@ test('Person-centered Main renders all historicity groups in one chronology tabl
   assert.match(main, /\.\.\.groups\.other_or_uncertain/);
   assert.match(main, /\.\.\.visibleUnknownRegistryPersons\(\)/);
   assert.match(main, /개인 활동연대를 방어할 수 없는 인물은 모두 ‘전설, 신화, 연대미상’에 함께 표시합니다/);
-  assert.match(main, /non-timeline-persons\.json/);
+  assert.match(main, /dataStore\.loadNonTimelinePersons/);
+  assert.match(dataStore, /non-timeline-persons\.json/);
   assert.doesNotMatch(main, /OTHER \/ UNCERTAIN HISTORICITY/);
   assert.match(reader, /partitionByHistoricity/);
   assert.match(reader, /PRIMARY_HISTORICITY_VALUE = "historical"/);
@@ -123,11 +128,12 @@ test('existing Activity authoring DOM is moved into a separate expandable tool i
   assert.match(html, /id="editorDialog"/);
 });
 
-test('Person Main is read-only and does not embed Admin-only or mutation surfaces', () => {
+test('Person Main is read-only and consumes the shared list snapshot without embedding Admin-only mutation surfaces', () => {
   assert.doesNotMatch(main, /\/api\/atlas-(?:mutate|identity|authoring|duplicate-review|admin-inspector|admin-system-status|audit-inventory)/);
   assert.doesNotMatch(main, /SUPABASE_DB_URL|ATLAS_SESSION_SECRET|ATLAS_MUTATION_TOKEN|authorization|bearer\s/i);
-  assert.match(main, /reader\.listPersons\(\)/);
-  assert.match(main, /reader\.readPerson\(personId\)/);
+  assert.match(main, /dataStore\.loadPersons/);
+  assert.match(dataStore, /personReader\.listPersons\(\)/);
+  assert.match(main, /reader\.readPerson\(personId/);
 });
 
 test('source links are restricted to HTTP(S) and user-visible strings are escaped', () => {
