@@ -1,0 +1,37 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:hungary-principality-after-reviewed-merge:2026-09-19:v1",
+  "release_order": 595,
+  "evidence": {
+    "decision": "Reviewed same-identity merge: Principality of Hungary is folded into the surviving Kingdom of Hungary UUID only after its 997-c.1000 state-form name is preserved as a temporal polity designation and the sole Activity is relinked.",
+    "review_checkpoint": "#977 POLITY-IDENTITY-REVIEW-16-20260919"
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:hungary-principality-after-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "09ff1776-171f-435a-a444-4b0463e48137",
+        "canonical_key": "Principality of Hungary",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Principality of Hungary",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "헝가리 대공국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
