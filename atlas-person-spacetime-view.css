@@ -201,18 +201,18 @@
 .person-spacetime-mount{width:100%;max-width:100%;min-width:0;overflow-x:clip;contain:inline-size}
 .spacetime-workspace,.spacetime-frame,.spacetime-scroll{width:100%;max-width:100%;min-width:0}
 .spacetime-frame{overflow:hidden}
-.spacetime-scroll{scrollbar-gutter:auto;touch-action:pan-x pan-y}
-.spacetime-toolbar{display:grid;grid-template-columns:1fr;gap:6px;max-width:100%;padding:8px;overflow:visible}
-.spacetime-controls{display:grid;grid-template-columns:1fr;gap:6px;width:100%;min-width:0}
-.spacetime-controls label{display:grid;grid-template-columns:44px minmax(0,1fr);gap:7px;width:100%;min-width:0;align-items:center}
-.spacetime-controls input{width:100%;min-width:0;height:44px}
-.spacetime-camera{display:grid;grid-template-columns:44px minmax(68px,1fr) 44px 72px;gap:6px;width:100%;min-width:0}
+.spacetime-scroll{height:54vh;min-height:400px;scrollbar-gutter:auto;touch-action:pan-x pan-y}
+.spacetime-toolbar{display:grid;grid-template-columns:1fr;gap:4px;max-width:100%;padding:5px 6px;overflow:visible}
+.spacetime-controls{display:grid;grid-template-columns:1fr;gap:4px;width:100%;min-width:0}
+.spacetime-controls label{display:grid;grid-template-columns:38px minmax(0,1fr);gap:5px;width:100%;min-width:0;align-items:center}
+.spacetime-controls input{width:100%;min-width:0;height:38px}
+.spacetime-camera{display:grid;grid-template-columns:38px minmax(62px,1fr) 38px 64px;gap:4px;width:100%;min-width:0}
 .spacetime-camera>span{display:none}
-.spacetime-camera button,.spacetime-camera output{height:44px;min-width:0;width:100%}
+.spacetime-camera button,.spacetime-camera output{height:38px;min-width:0;width:100%}
 .spacetime-camera button#spacetimeCameraZoomReset{min-width:0}
 .spacetime-precision-legend{display:none}
-.spacetime-status-row{max-width:100%;display:flex;flex-wrap:wrap;gap:5px;overflow:visible;margin-bottom:7px}
-.spacetime-status-row>span{font-size:10px}
+.spacetime-status-row{max-width:100%;display:flex;flex-wrap:wrap;gap:3px;overflow:visible;margin-bottom:4px}
+.spacetime-status-row>span{font-size:9px;padding:2px 5px}
 .spacetime-status-more{display:block;flex:0 0 100%;min-width:0}
 .spacetime-status-more>summary{display:inline-flex;align-items:center;gap:4px;padding:4px 7px;border:1px solid #dbe3ee;border-radius:999px;background:#f8fafc;color:#64748b;font-size:10px;font-weight:800;cursor:pointer;list-style:none}
 .spacetime-status-more>summary::-webkit-details-marker{display:none}
@@ -221,6 +221,19 @@
 .spacetime-status-more:not([open])>.spacetime-status-more-content{display:none!important}
 .spacetime-status-more[open]>.spacetime-status-more-content{display:flex!important;flex-wrap:wrap;gap:4px;margin-top:5px}
 .spacetime-meanwhile{max-width:100%}
+.spacetime-meanwhile.is-empty{min-height:18px;margin-bottom:3px;padding:0}
+.spacetime-meanwhile.is-empty>div{gap:5px}
+.spacetime-meanwhile.is-empty small{font-size:8px}
+.spacetime-meanwhile.is-empty strong{font-size:11px}
+.spacetime-meanwhile.is-empty span{display:none}
+.spacetime-sticky-inspector.is-empty{min-height:0;padding:8px 10px}
+.spacetime-sticky-inspector.is-empty>div{display:flex;align-items:baseline;gap:7px}
+.spacetime-sticky-inspector.is-empty strong{font-size:12px}
+.spacetime-sticky-inspector.is-empty p{display:none}
+.spacetime-minimap{padding:6px}
+.spacetime-minimap-head{margin-bottom:4px}
+.spacetime-minimap-surface{height:92px}
+.spacetime-minimap-status{margin-top:3px}
 .spacetime-frame.is-mobile-presentation[data-spacetime-zoom="500"] .spacetime-region-head-layer.is-macro{opacity:1!important}
 .spacetime-frame.is-mobile-presentation[data-spacetime-zoom="500"] .spacetime-region-head-layer.is-subregion{opacity:0!important}
 .spacetime-frame.is-mobile-presentation[data-spacetime-zoom="500"] .spacetime-subregion-line{opacity:.16!important}
@@ -230,4 +243,4 @@
 .spacetime-frame.is-mobile-presentation .spacetime-region-head{z-index:30;margin-top:calc(-1 * var(--spacetime-header-height,34px))}
 .spacetime-frame.is-mobile-presentation .spacetime-time-axis{margin-top:0}
 }
-@media(max-width:560px){.spacetime-minimap{width:100%}.spacetime-minimap-surface{height:120px}.spacetime-minimap-head strong{font-size:9px}}
+@media(max-width:560px){.spacetime-minimap{width:100%}.spacetime-minimap-surface{height:84px}.spacetime-minimap-head strong{font-size:9px}}
