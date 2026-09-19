@@ -242,3 +242,40 @@ test("legacy status summary reuses shared Person Runtime instead of issuing a du
 test("dashboard has no no-op shared-source update listener", () => {
   assert.doesNotMatch(dashboardSource, /addEventListener\(["']atlas-client-data-source-updated["']/);
 });
+
+
+test("KPI drill-down preserves metric units and only exposes exact Person target sets", () => {
+  const persons = [
+    { id:"p1", external_references:{ namuwiki:{status:"linked"} }, facets:{polities:[]}, activity_summaries:[] },
+    { id:"p2", external_references:{}, facets:{polities:[]}, activity_summaries:[] },
+    { id:"p3", external_references:{ namuwiki:{status:"not_found"} }, facets:{polities:[]}, activity_summaries:[] }
+  ];
+  const attention = model.buildAttentionQueue({
+    personResult:{persons},
+    domainResult:{by_person_id:{p1:"governance"}},
+    spatialIndex:null
+  });
+  const drill = model.buildKpiDrilldown({personResult:{persons},attentionQueue:attention});
+  assert.deepEqual(drill.persons.person_ids,["p1","p2","p3"]);
+  assert.equal(drill.persons.mode,"all_persons");
+  assert.deepEqual(drill.domain.person_ids,["p2","p3"]);
+  assert.deepEqual(drill.namuwiki.person_ids,["p2"]);
+  assert.equal(drill.activities.available,false);
+  assert.equal(drill.activities.unavailable_reason,"ACTIVITY_UNIT_DRILLDOWN_NOT_EXPOSED");
+  assert.equal(drill.polities.available,false);
+  assert.equal(drill.spatial.available,false);
+  assert.equal(drill.spatial.unavailable_reason,"SPATIAL_KPI_IS_ACTIVITY_UNIT_USE_ATTENTION_PERSON_TARGETS");
+});
+
+test("KPI cards reuse Person Main drill-down without converting Activity or Polity metrics into Person counts", () => {
+  assert.match(dashboardSource, /data-dashboard-kpi/);
+  assert.match(dashboardSource, /kpiCard\(\{code:"persons"/);
+  assert.match(dashboardSource, /kpiCard\(\{code:"domain"/);
+  assert.match(dashboardSource, /kpiCard\(\{code:"namuwiki"/);
+  assert.match(dashboardSource, /ATLAS_PERSON_MAIN\?\.setDashboardFilter/);
+  assert.match(dashboardSource, /ATLAS_PERSON_MAIN\?\.clearDashboardFilter/);
+  assert.doesNotMatch(dashboardSource, /data-dashboard-kpi="activities"/);
+  assert.doesNotMatch(dashboardSource, /data-dashboard-kpi="polities"/);
+  assert.doesNotMatch(dashboardSource, /data-dashboard-kpi="spatial"/);
+  assert.doesNotMatch(dashboardSource, /fetch\s*\(/);
+});
