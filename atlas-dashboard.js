@@ -145,6 +145,27 @@
     </table></div>`;
   }
 
+  function formatTimestamp(value) {
+    if (!value) return "—";
+    const date=new Date(value);
+    if (!Number.isFinite(date.getTime())) return "—";
+    return new Intl.DateTimeFormat("ko-KR",{dateStyle:"short",timeStyle:"short"}).format(date);
+  }
+
+  function sourceFreshnessTable(freshness) {
+    const rows=(freshness?.rows || []).map((row)=>`<tr>
+      <th scope="row"><strong>${escapeHtml(row.label)}</strong><small>${escapeHtml(row.key)}</small></th>
+      <td><span class="dashboard-unit-badge">${escapeHtml(row.status)}</span></td>
+      <td title="${escapeHtml(row.data_timestamp_unavailable_reason || row.data_basis || "")}">${escapeHtml(formatTimestamp(row.data_at))}</td>
+      <td>${escapeHtml(row.data_basis || "not exposed")}</td>
+      <td>${escapeHtml(formatTimestamp(row.read_at))}</td>
+    </tr>`).join("");
+    return `<div class="dashboard-completeness-wrap"><table class="dashboard-completeness dashboard-source-freshness">
+      <thead><tr><th scope="col">SOURCE</th><th scope="col">STATUS</th><th scope="col">SOURCE TIMESTAMP</th><th scope="col">BASIS</th><th scope="col">LAST READ</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>`;
+  }
+
   function sourceCard(source) {
     const ready = source.status === "ready";
     const loading = source.status === "loading";
@@ -176,6 +197,7 @@
     const sys = snapshot.system_strip;
     const heatmap = snapshot.coverage_heatmap;
     const completeness = snapshot.completeness_matrix;
+    const freshness = snapshot.source_freshness;
     const sourceIssues = (snapshot.sources || []).filter((source) => source?.status !== "ready");
     const incompleteCards = [
       ["Representative Domain",b.domain],
@@ -218,6 +240,15 @@
           <p class="eyebrow">SOURCE ISSUES</p>
           <div class="dashboard-source-list">${sourceIssues.map(sourceCard).join("")}</div>
         </div>` : ""}
+      </section>
+
+      <section class="dashboard-panel card" aria-label="기준 원본 timestamp와 읽기 시각">
+        <div class="dashboard-panel-head"><div><p class="eyebrow">SOURCE FRESHNESS</p><h3>원본 시각 추적</h3></div><span>source timestamp ${value(freshness.data_timestamp_known)}/${value(freshness.total_sources)} known</span></div>
+        ${sourceFreshnessTable(freshness)}
+        <div class="dashboard-progress-meta">
+          <span>Source timestamp와 browser last read를 구분</span>
+          <span>timestamp 미노출 source는 — · 임의 fresh/stale 판정 없음</span>
+        </div>
       </section>
 
       <section class="dashboard-panel card">
