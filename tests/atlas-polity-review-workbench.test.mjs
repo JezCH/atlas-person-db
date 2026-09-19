@@ -14,6 +14,11 @@ test('polity review candidate registry separates confirmed merges, review candid
   assert.match(candidates, /Liao Dynasty \/ Liao dynasty/);
   assert.match(candidates, /Israel identity 과통합/);
   assert.match(candidates, /Kingdom of Italy identity 과통합/);
+  assert.match(candidates, /Kingdom of Israel identity 내부 과통합/);
+  assert.match(candidates, /PRODUCTION_APPLIED_RETIRED/);
+  assert.match(candidates, /REVIEWED_MERGE_READY/);
+  assert.match(candidates, /REVIEWED_MERGE_BLOCKED_SPATIAL/);
+  assert.match(candidates, /REVIEWED_SPLIT_REQUIRED/);
 });
 
 test('polity review exposes explicit human decision options without direct Production mutation', () => {
@@ -24,6 +29,11 @@ test('polity review exposes explicit human decision options without direct Produ
   assert.match(workbench, /localStorage/);
   assert.match(workbench, /atlas-polity-review-decisions\/v1/);
   assert.match(workbench, /결정 JSON 내보내기/);
+  assert.match(workbench, /검토 판정/);
+  assert.match(workbench, /내 입력/);
+  assert.match(workbench, /reviewed_decision/);
+  assert.match(workbench, /user_decision/);
+  assert.match(workbench, /disabled/);
   assert.doesNotMatch(workbench, /\/api\/|atlas-mutate|ATLAS_MUTATION_TOKEN|SUPABASE_DB_URL/);
 });
 
