@@ -364,7 +364,7 @@ test("Recent Delta model preserves canonical chronology and explicit coverage ga
 test("Dashboard Recent Delta shows tracked mutations without inventing untracked delete counts", () => {
   assert.match(dashboardSource, /RECENT DELTA/);
   assert.match(dashboardSource, /최근 추적 변경/);
-  assert.match(dashboardSource, /Coverage gap/);
+  assert.match(dashboardSource, /추적 누락/);
   assert.doesNotMatch(dashboardSource, /delete(?:d)? persons?\s*[:=]\s*\$?\{?0/i);
 });
 
@@ -556,7 +556,7 @@ test("Completeness Matrix only drills down exact Person target sets and never co
   assert.match(dashboardSource,/data-dashboard-completeness/);
   assert.match(dashboardSource,/item\.unit !== "person"/);
   assert.match(dashboardSource,/code:\x60completeness_\$\{item\.code\}\x60/);
-  assert.match(dashboardSource,/Person과 Activity 단위를 합산하지 않음/);
+  assert.match(dashboardSource,/인물과 활동 단위는 합산하지 않음/);
   assert.doesNotMatch(dashboardSource,/fetch\s*\(/);
 });
 
@@ -624,7 +624,7 @@ test("Dashboard replaces duplicate Recent Delta cards with one timeline view whi
   assert.match(dashboardSource,/RECENT ACTIVITY TIMELINE/);
   assert.match(dashboardSource,/dashboard-timeline-entry/);
   assert.match(dashboardSource,/timeline\.person_scoped_count/);
-  assert.match(dashboardSource,/Coverage gap/);
+  assert.match(dashboardSource,/추적 누락/);
   assert.doesNotMatch(dashboardSource,/function recentDeltaCard/);
   assert.doesNotMatch(dashboardSource,/fetch\s*\(/);
 });
