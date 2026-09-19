@@ -11,6 +11,7 @@ const spatialModel = require("../atlas-person-spacetime-model.js");
 const domainUiSource = fs.readFileSync(new URL("../atlas-person-domain-ui.js", import.meta.url), "utf8");
 const storeSource = fs.readFileSync(new URL("../atlas-client-data-store.js", import.meta.url), "utf8");
 const dashboardSource = fs.readFileSync(new URL("../atlas-dashboard.js", import.meta.url), "utf8");
+const dashboardCssSource = fs.readFileSync(new URL("../atlas-dashboard.css", import.meta.url), "utf8");
 const externalSource = fs.readFileSync(new URL("../atlas-person-external-references.js", import.meta.url), "utf8");
 const mainSource = fs.readFileSync(new URL("../atlas-person-main.js", import.meta.url), "utf8");
 const spacetimeSource = fs.readFileSync(new URL("../atlas-person-spacetime-view.js", import.meta.url), "utf8");
@@ -626,4 +627,23 @@ test("Dashboard replaces duplicate Recent Delta cards with one timeline view whi
   assert.match(dashboardSource,/Coverage gap/);
   assert.doesNotMatch(dashboardSource,/function recentDeltaCard/);
   assert.doesNotMatch(dashboardSource,/fetch\s*\(/);
+});
+
+test("Dashboard only expands shared source details when a source is not ready", () => {
+  assert.match(dashboardSource, /sourceIssues = \(snapshot\.sources \|\| \[\]\)\.filter\(\(source\) => source\?\.status !== "ready"\)/);
+  assert.match(dashboardSource, /SOURCE ISSUES/);
+  assert.match(dashboardSource, /sourceIssues\.map\(sourceCard\)/);
+  assert.doesNotMatch(dashboardSource, /<p class="eyebrow">SOURCE HEALTH<\/p><h3>기준 원본 상태<\/h3>/);
+  assert.doesNotMatch(dashboardSource, /snapshot\.sources\.map\(sourceCard\)/);
+});
+
+test("Incomplete Reasons suppresses known zero-work cards but preserves unknown reason sources", () => {
+  assert.match(dashboardSource, /function shouldRenderBreakdown\(item\)/);
+  assert.match(dashboardSource, /item\?\.total == null\) return item\?\.available !== true/);
+  assert.match(dashboardSource, /return Number\(item\.total\) > 0/);
+  assert.match(dashboardSource, /incompleteCards\.map\(\(\[label,item\]\) => breakdownCard\(label,item\)\)/);
+});
+
+test("single lower Dashboard panel expands across the full lower grid", () => {
+  assert.match(dashboardCssSource, /dashboard-lower-grid>\.dashboard-panel:only-child\{grid-column:1\/-1\}/);
 });
