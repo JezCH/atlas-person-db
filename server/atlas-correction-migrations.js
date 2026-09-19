@@ -19,6 +19,11 @@ const POST_STAGE2_MIGRATION_PATHS = Object.freeze([
   path.resolve(__dirname, "../db/migrations/20260906_p11_reviewed_null_relation_constraint.sql")
 ]);
 
+const CORRECTION_APPLY_POST_STAGE2_MIGRATION_PATHS = Object.freeze([
+  path.resolve(__dirname, "../db/migrations/20260822_person_politics_context_polities.sql"),
+  path.resolve(__dirname, "../db/migrations/20260906_p11_reviewed_null_relation_constraint.sql")
+]);
+
 function readMigrationPaths(migrationPaths, { readFile = fs.readFileSync } = {}) {
   return migrationPaths.map((migrationPath) => ({
     path: migrationPath,
@@ -32,6 +37,10 @@ function readCorrectionMigrations(options = {}) {
 
 function readPostStage2Migrations(options = {}) {
   return readMigrationPaths(POST_STAGE2_MIGRATION_PATHS, options);
+}
+
+function readCorrectionApplyPostStage2Migrations(options = {}) {
+  return readMigrationPaths(CORRECTION_APPLY_POST_STAGE2_MIGRATION_PATHS, options);
 }
 
 async function stage2SemanticSchemaReady(client) {
@@ -65,11 +74,15 @@ async function applyPostStage2Migrations(client, options = {}) {
 async function applyCorrectionMigrations(client, options = {}) {
   const result = await applyMigrationPaths(client, CORRECTION_MIGRATION_PATHS, options);
 
-  // Production correction execution happens after the reviewed Stage 2 schema
-  // release. Apply post-Stage2 structural migrations there without polluting
-  // the bounded correction-ledger registry. Fresh pre-Stage2 baseline rebuilds
-  // deliberately skip this phase and apply it explicitly after P5.
-  if (await stage2SemanticSchemaReady(client)) await applyPostStage2Migrations(client, options);
+  // Correction Apply is a replay path. Only schema/constraint migrations that
+  // are safe to execute repeatedly may run here. The 2026-08-23/24 migrations
+  // contain identity-bound historical data rewrites; replaying them can undo a
+  // later reviewed correction (Spartacus was deterministically reverted from
+  // Roman Republic/opposes to null/null this way). Keep those data migrations
+  // available only through the explicit full post-Stage2 reconstruction path.
+  if (await stage2SemanticSchemaReady(client)) {
+    await applyMigrationPaths(client, CORRECTION_APPLY_POST_STAGE2_MIGRATION_PATHS, options);
+  }
 
   return result;
 }
@@ -77,8 +90,10 @@ async function applyCorrectionMigrations(client, options = {}) {
 module.exports = Object.freeze({
   CORRECTION_MIGRATION_PATHS,
   POST_STAGE2_MIGRATION_PATHS,
+  CORRECTION_APPLY_POST_STAGE2_MIGRATION_PATHS,
   readCorrectionMigrations,
   readPostStage2Migrations,
+  readCorrectionApplyPostStage2Migrations,
   stage2SemanticSchemaReady,
   applyCorrectionMigrations,
   applyPostStage2Migrations
