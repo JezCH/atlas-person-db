@@ -111,6 +111,29 @@
     return `<div class="dashboard-heatmap-wrap"><table class="dashboard-heatmap"><thead><tr><th scope="col">ERA \ REGION</th>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
   }
 
+  function completenessTable(matrix) {
+    const rows=(matrix?.rows || []).map((row)=>{
+      const known=row?.available === true;
+      const incomplete=known ? value(row.incomplete) : "—";
+      const actionable=known && row.unit === "person" && Array.isArray(row.person_ids) && row.person_ids.length > 0;
+      const incompleteCell=actionable
+        ? `<button type="button" data-dashboard-completeness="${escapeHtml(row.code)}" title="${escapeHtml(`${row.label} 미완료 ${row.incomplete}명 보기`)}">${incomplete}</button>`
+        : `<span>${incomplete}</span>`;
+      return `<tr data-completeness-unit="${escapeHtml(row.unit)}">
+        <th scope="row"><strong>${escapeHtml(row.label)}</strong><small>${escapeHtml(row.source)}</small></th>
+        <td><span class="dashboard-unit-badge">${escapeHtml(row.unit)}</span></td>
+        <td>${known ? value(row.complete) : "—"}</td>
+        <td>${incompleteCell}</td>
+        <td>${known ? pct(row.percentage) : "—"}</td>
+        <td>${known ? value(row.total) : `<span title="${escapeHtml(row.unavailable_reason || "SOURCE_UNAVAILABLE")}">—</span>`}</td>
+      </tr>`;
+    }).join("");
+    return `<div class="dashboard-completeness-wrap"><table class="dashboard-completeness">
+      <thead><tr><th scope="col">CHECK</th><th scope="col">UNIT</th><th scope="col">COMPLETE</th><th scope="col">INCOMPLETE</th><th scope="col">COVERAGE</th><th scope="col">TOTAL</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>`;
+  }
+
   function sourceCard(source) {
     const ready = source.status === "ready";
     const loading = source.status === "loading";
@@ -140,6 +163,7 @@
     const rd = snapshot.recent_delta;
     const sys = snapshot.system_strip;
     const heatmap = snapshot.coverage_heatmap;
+    const completeness = snapshot.completeness_matrix;
     const domainRows = model.DOMAIN_CODES.map((code) => `<div class="dashboard-domain-row" data-domain="${escapeHtml(code)}">
       <span class="dashboard-domain-swatch" aria-hidden="true"></span><span>${escapeHtml(domainRegistry.LABELS[code] || code)}</span><b>${value(snapshot.domain_breakdown[code])}</b>
     </div>`).join("");
@@ -182,6 +206,15 @@
           <span>Known outstanding checks <b>${value(a.known_outstanding_checks)}</b></span>
           <span>Known affected persons <b>${value(a.known_affected_persons)}</b></span>
           <span>${a.complete ? "전체 범주 확인됨" : `부분 집계 · ${value(a.available_categories)}/${value(a.total_categories)} 범주만 대상 집합 확인`}</span>
+        </div>
+      </section>
+
+      <section class="dashboard-panel card" aria-label="데이터 완성도 행렬">
+        <div class="dashboard-panel-head"><div><p class="eyebrow">COMPLETENESS MATRIX</p><h3>축별 완성도</h3></div><span>Person 3 checks · Activity 2 checks</span></div>
+        ${completenessTable(completeness)}
+        <div class="dashboard-progress-meta">
+          <span>Person과 Activity 단위를 합산하지 않음</span>
+          <span>— = canonical source unavailable</span>
         </div>
       </section>
 
@@ -271,6 +304,16 @@
       window.ATLAS_PERSON_MAIN?.setDashboardFilter?.({
         code:`kpi_${item.code}`,
         label:item.label,
+        personIds:item.person_ids
+      });
+    }));
+    root.querySelectorAll("[data-dashboard-completeness]").forEach((button) => button.addEventListener("click", () => {
+      const item=completeness?.rows?.find((row)=>row.code === button.dataset.dashboardCompleteness);
+      if (!item?.drilldown_available || item.unit !== "person" || !Array.isArray(item.person_ids) || !item.person_ids.length) return;
+      window.ATLAS_MAIN_AUTHORITY_NAV?.showDomain?.("persons");
+      window.ATLAS_PERSON_MAIN?.setDashboardFilter?.({
+        code:`completeness_${item.code}`,
+        label:`${item.label} 미완료`,
         personIds:item.person_ids
       });
     }));
