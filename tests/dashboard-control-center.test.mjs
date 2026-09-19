@@ -242,3 +242,19 @@ test("legacy status summary reuses shared Person Runtime instead of issuing a du
 test("dashboard has no no-op shared-source update listener", () => {
   assert.doesNotMatch(dashboardSource, /addEventListener\(["']atlas-client-data-source-updated["']/);
 });
+
+
+test("dashboard KPI order keeps actionable coverage ahead of passive counts on narrow layouts", () => {
+  const persons = dashboardSource.indexOf("PERSONS");
+  const domain = dashboardSource.indexOf("DOMAIN COVERAGE");
+  const namuwiki = dashboardSource.indexOf("NAMUWIKI REVIEW");
+  const spatial = dashboardSource.indexOf("SPATIAL READY");
+  const activities = dashboardSource.indexOf("RUNTIME ACTIVITIES");
+  const polities = dashboardSource.indexOf("USED POLITIES");
+  assert.ok(persons >= 0 && domain > persons && namuwiki > domain && spatial > namuwiki);
+  assert.ok(activities > spatial && polities > activities);
+});
+
+test("NamuWiki KPI exposes absolute remaining work without mental subtraction", () => {
+  assert.match(dashboardSource, /NAMUWIKI REVIEW[\s\S]*잔여 \$\{value\(w\.namuwiki\.remaining\)\}/);
+});
