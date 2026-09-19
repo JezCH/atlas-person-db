@@ -45,6 +45,7 @@ test('logical Person, Runtime compile, audit and correction surfaces consolidate
     { source: '/api/atlas-reviewed-person-merge', destination: '/api/atlas-authoring?__atlas_authoring_surface=reviewed-person-merge' },
     { source: '/api/atlas-namuwiki-link', destination: '/api/atlas-authoring?__atlas_authoring_surface=namuwiki-link' },
     { source: '/api/atlas-person-read', destination: '/api/atlas-read?__atlas_read_surface=person' },
+    { source: '/api/atlas-polity-read', destination: '/api/atlas-read?__atlas_read_surface=polity' },
     { source: '/api/atlas-admin-inspector', destination: '/api/atlas-read?__atlas_read_surface=admin-inspector' },
     { source: '/api/atlas-admin-system-status', destination: '/api/atlas-read?__atlas_read_surface=admin-system-status' },
     { source: '/api/atlas-person-domain', destination: '/api/atlas-mutate?__atlas_mutation_surface=person-domain' },

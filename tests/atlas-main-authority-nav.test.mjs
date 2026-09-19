@@ -22,6 +22,8 @@ test('Main navigation exposes all authority domains through static controls plus
   assert.match(nav, /ATLAS_DASHBOARD/);
   assert.match(nav, /atlasPolityReviewMount/);
   assert.match(nav, /ATLAS_POLITY_REVIEW_WORKBENCH/);
+  assert.match(nav, /atlas-polity-browser-reader\.js/);
+  assert.match(nav, /ATLAS_POLITY_BROWSER_READER/);
   assert.match(nav, /atlas-polity-review-candidates\.js/);
   assert.doesNotMatch(nav, /authority-domain-card/);
 });
@@ -30,8 +32,8 @@ test('future authority shells state readiness from the Korean catalog instead of
   assert.match(catalog, /백엔드 조회 필요/);
   assert.match(catalog, /향후 단계 · P14/);
   assert.match(catalog, /부분 조회/);
-  assert.match(catalog, /정치체 identity 중복·표기 통일·폐기·분리 후보를 케이스별로 검토/);
-  assert.match(catalog, /실제 relink·retire·split은 기존 correction writer/);
+  assert.match(catalog, /정치체 전체 통계와 실제 Person·Activity 연대/);
+  assert.match(catalog, /실제 relink·retire·split과 시대별 state-form·국호·상징 authoring/);
   assert.match(catalog, /독립 출처 목록·상세 조회와 first-class Source authoring은 P13에서 완성해야 합니다/);
   assert.match(catalog, /인물 → 활동 → 정치체 → 영토 → 지리 형상/);
   assert.match(nav, /ATLAS_UI_AUTHORITY_CATALOG_KO/);

@@ -35,11 +35,11 @@
       label: "정치체",
       eyebrow: "정치체 기준 정보",
       status_code: "partial",
-      status_label: "검토 작업대",
-      summary: "정치체 identity 중복·표기 통일·폐기·분리 후보를 케이스별로 검토하고 결정을 기록합니다.",
-      available: "현재 Production Activity와 catalog 감사에서 잡힌 병합 확정군, 추가 통합 검토군, 과통합 분리 검토군을 한 화면에서 비교할 수 있습니다.",
-      missing: "검토 화면의 선택은 Production을 직접 변경하지 않습니다. 실제 relink·retire·split은 기존 correction writer와 exact-before 검증을 거쳐 별도로 적용합니다.",
-      principle: "이름 유사도만으로 자동 병합하지 않고 UUID·활동 연대·역사적 연속성·기존 reviewed decision을 함께 확인합니다."
+      status_label: "통계 + 검토",
+      summary: "정치체 전체 통계와 실제 Person·Activity 연대를 보면서 identity 중복·표기 통일·폐기·분리 후보를 검토합니다.",
+      available: "전체 정치체·인물 연결/미연결·Activity 통계와 각 후보 정치체의 연결 인물, 활동 연대, 역할·관계를 live Authoring 기준으로 비교할 수 있습니다.",
+      missing: "검토 화면의 선택은 Production을 직접 변경하지 않습니다. 실제 relink·retire·split과 시대별 state-form·국호·상징 authoring은 검토된 canonical writer를 통해 별도로 적용합니다.",
+      principle: "Identity 통합과 시대별 표현 통합을 구분합니다. 이름 유사도만으로 병합하지 않고 UUID·연결 인물·활동 연대·역사적 연속성·기존 reviewed decision을 함께 확인합니다."
     }),
     places: entry({
       label: "장소",
