@@ -319,6 +319,12 @@ async function collectMobileDom(client) {
         scroll_probe:after
       };
     };
+    const visible=(el)=>{const r=el.getBoundingClientRect();const st=getComputedStyle(el);return r.width>0&&r.height>0&&st.display!=="none"&&st.visibility!=="hidden";};
+    const touchTargets=qa("#atlasDashboardMount .dashboard-control-center button:not(:disabled), #atlasDashboardMount .dashboard-control-center a.btn")
+      .filter(visible)
+      .map((el)=>{const r=el.getBoundingClientRect();return {tag:el.tagName,text:(el.textContent||"").trim().replace(/\\s+/g," ").slice(0,80),width:r.width,height:r.height};});
+    const progressMeta=qa("#atlasDashboardMount .dashboard-progress-meta").map((el)=>{const st=getComputedStyle(el);return {flex_wrap:st.flexWrap,client_width:el.clientWidth,scroll_width:el.scrollWidth,height:el.getBoundingClientRect().height};});
+    const panelHeads=qa("#atlasDashboardMount .dashboard-panel-head").map((el)=>({client_width:el.clientWidth,scroll_width:el.scrollWidth,height:el.getBoundingClientRect().height}));
     return {
       viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio},
       global_scroll:{client_width:doc.clientWidth,scroll_width:doc.scrollWidth,overflow_x:doc.scrollWidth-doc.clientWidth},
@@ -327,6 +333,9 @@ async function collectMobileDom(client) {
       completeness_wrap:scrollProbe(complete),
       timeline:scrollProbe(timeline),
       timeline_entry_count:qa(".dashboard-timeline-entry").length,
+      touch_targets:touchTargets,
+      progress_meta:progressMeta,
+      panel_heads:panelHeads,
       dashboard_width:q("#atlasDashboardMount .dashboard-control-center")?.getBoundingClientRect().width || 0
     };
   })()`);
@@ -462,6 +471,15 @@ async function main() {
     if (mobileDom.timeline.scroll_height > mobileDom.timeline.client_height) {
       assert(mobileDom.timeline.scroll_probe > 0, "Mobile timeline had overflow but did not actually scroll", mobileDom.timeline);
     }
+    assert(mobileDom.touch_targets.length > 0, "Mobile Dashboard exposes no actionable controls", mobileDom);
+    const undersizedTargets=mobileDom.touch_targets.filter((row)=>row.width < 44 || row.height < 44);
+    assert(undersizedTargets.length === 0, "Mobile Dashboard has touch targets below 44px", { undersized:undersizedTargets, all:mobileDom.touch_targets });
+    const nowrapMeta=mobileDom.progress_meta.filter((row)=>row.flex_wrap !== "wrap");
+    assert(nowrapMeta.length === 0, "Mobile Dashboard metadata rows do not wrap", { nowrap:nowrapMeta, all:mobileDom.progress_meta });
+    const overflowingMeta=mobileDom.progress_meta.filter((row)=>row.scroll_width > row.client_width + 1);
+    assert(overflowingMeta.length === 0, "Mobile Dashboard metadata rows overflow horizontally", { overflow:overflowingMeta, all:mobileDom.progress_meta });
+    const overflowingHeads=mobileDom.panel_heads.filter((row)=>row.scroll_width > row.client_width + 1);
+    assert(overflowingHeads.length === 0, "Mobile Dashboard panel headers overflow horizontally", { overflow:overflowingHeads, all:mobileDom.panel_heads });
     const mobileScreenshot=await screenshot(client, "dashboard-mobile.png");
 
     const majorNetworkErrors=resourceErrors.filter((row)=>{
