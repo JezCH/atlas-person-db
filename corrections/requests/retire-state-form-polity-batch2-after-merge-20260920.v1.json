@@ -1,0 +1,90 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:state-form-batch2-after-reviewed-merge:2026-09-20:v1",
+  "release_order": 599,
+  "evidence": {
+    "decision": "Reviewed same-identity state-form cleanup after temporal designation preservation and exact Production Activity relinks.",
+    "review_checkpoint": "#977 POLITY-IDENTITY-REVIEW-16-20260919",
+    "designation_relink_merge_sha": "8eb1659aeb1699b36bc20eaff393a47a3e694428",
+    "correction_apply_run": 35451138427,
+    "production_readback": "All three source Polities returned activity_count=0 after relink; survivor reads preserve original Activity UUIDs and period-correct temporal designation labels. Retirement service rechecks every live reference fail-closed before delete."
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:friedland-principality-after-temporal-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "d7c3910c-cd34-444c-80a7-6107b7d7a71c",
+        "canonical_key": "Principality of Friedland",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Principality of Friedland",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "프리들란트 공국(후국)",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:state-of-vietnam-after-temporal-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "90d03d94-41bc-42b6-b910-f6c0c498bd20",
+        "canonical_key": "State of Vietnam",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "State of Vietnam",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "베트남국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:central-african-empire-after-temporal-merge",
+      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "expected_polity": {
+        "id": "21c2fd7d-84ee-4674-9a7e-46db1be6266c",
+        "canonical_key": "Central African Empire",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Central African Empire",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "중앙아프리카 제국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
