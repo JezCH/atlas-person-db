@@ -1057,7 +1057,110 @@
     refresh();
   }
 
+  function bindPinchCameraZoom(mount) {
+    if (!mount || mount.__spacetimePinchZoomBound) return;
+    mount.__spacetimePinchZoomBound = true;
+
+    const pointers = new Map();
+    let pinch = null;
+    let animationFrame = 0;
+
+    const pairGeometry = () => {
+      const points = Array.from(pointers.values()).slice(0, 2);
+      if (points.length < 2) return null;
+      const [a, b] = points;
+      const distance = Math.hypot(b.x - a.x, b.y - a.y);
+      return {
+        distance,
+        client_x: (a.x + b.x) / 2,
+        client_y: (a.y + b.y) / 2
+      };
+    };
+
+    const releaseCapture = (pointerId) => {
+      try {
+        if (mount.hasPointerCapture?.(pointerId)) mount.releasePointerCapture(pointerId);
+      } catch {}
+    };
+
+    const applyPendingZoom = () => {
+      animationFrame = 0;
+      const pending = pinch?.pending;
+      if (!pending) return;
+      pinch.pending = null;
+      const scroll = mount.querySelector(".spacetime-scroll");
+      if (!scroll) return;
+      const rect = scroll.getBoundingClientRect();
+      requestCameraZoom(
+        mount,
+        pending.zoom,
+        pending.client_x - rect.left,
+        pending.client_y - rect.top
+      );
+    };
+
+    mount.addEventListener("pointerdown", (event) => {
+      if (event.pointerType !== "touch") return;
+      const scroll = event.target?.closest?.(".spacetime-scroll");
+      if (!scroll || !mount.contains(scroll)) return;
+
+      pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      if (pointers.size !== 2) return;
+
+      const geometry = pairGeometry();
+      if (!geometry || geometry.distance <= 0) return;
+      pinch = {
+        start_distance: geometry.distance,
+        start_zoom: cameraZoom,
+        pending: null
+      };
+
+      for (const pointerId of pointers.keys()) {
+        try { mount.setPointerCapture?.(pointerId); } catch {}
+      }
+      event.preventDefault();
+    }, { passive: false });
+
+    mount.addEventListener("pointermove", (event) => {
+      if (!pointers.has(event.pointerId)) return;
+      pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      if (!pinch || pointers.size < 2) return;
+
+      const geometry = pairGeometry();
+      if (!geometry || geometry.distance <= 0) return;
+      event.preventDefault();
+
+      pinch.pending = {
+        zoom: clampCameraZoom(pinch.start_zoom * (geometry.distance / pinch.start_distance)),
+        client_x: geometry.client_x,
+        client_y: geometry.client_y
+      };
+
+      if (!animationFrame) animationFrame = requestAnimationFrame(applyPendingZoom);
+    }, { passive: false });
+
+    const finishPointer = (event) => {
+      if (!pointers.has(event.pointerId)) return;
+      if (pinch?.pending) applyPendingZoom();
+      pointers.delete(event.pointerId);
+      releaseCapture(event.pointerId);
+
+      if (pointers.size < 2) {
+        pinch = null;
+        if (animationFrame) {
+          cancelAnimationFrame(animationFrame);
+          animationFrame = 0;
+        }
+        for (const pointerId of pointers.keys()) releaseCapture(pointerId);
+      }
+    };
+
+    mount.addEventListener("pointerup", finishPointer);
+    mount.addEventListener("pointercancel", finishPointer);
+  }
+
   function bindCameraViewport(mount, projection, navigationItems) {
+    bindPinchCameraZoom(mount);
     const scroll = mount.querySelector(".spacetime-scroll");
     if (!scroll) return;
     const { exploration } = runtime();

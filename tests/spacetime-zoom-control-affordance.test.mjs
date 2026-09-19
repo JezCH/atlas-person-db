@@ -6,6 +6,7 @@ import { readFileSync } from "node:fs";
 const controlSource = readFileSync(new URL("../atlas-person-spacetime-control-state.js", import.meta.url), "utf8");
 const controlCss = readFileSync(new URL("../atlas-person-spacetime-control-state.css", import.meta.url), "utf8");
 const viewSource = readFileSync(new URL("../atlas-person-spacetime-view.js", import.meta.url), "utf8");
+const viewCss = readFileSync(new URL("../atlas-person-spacetime-view.css", import.meta.url), "utf8");
 const indexSource = readFileSync(new URL("../index.html", import.meta.url), "utf8");
 
 function loadControlApi() {
@@ -106,6 +107,26 @@ test("visible bounds stay aligned with the unified renderer camera contract", ()
   assert.match(viewSource, /id="spacetimeCameraZoomReset"[^>]*>500%<\/button>/);
   assert.doesNotMatch(viewSource, /spacetimeTimeZoom/);
   assert.doesNotMatch(viewSource, />100%<\/button>/);
+});
+
+test("touch pinch inside spacetime controls the internal 500 to 800 percent camera", () => {
+  assert.match(viewSource, /function bindPinchCameraZoom\(mount\)/);
+  assert.match(viewSource, /event\.pointerType !== "touch"/);
+  assert.match(viewSource, /event\.target\?\.closest\?\.\("\.spacetime-scroll"\)/);
+  assert.match(viewSource, /start_zoom: cameraZoom/);
+  assert.match(viewSource, /geometry\.distance \/ pinch\.start_distance/);
+  assert.match(viewSource, /zoom: clampCameraZoom\(pinch\.start_zoom \* \(geometry\.distance \/ pinch\.start_distance\)\)/);
+  assert.match(viewSource, /requestCameraZoom\([\s\S]*?pending\.zoom,[\s\S]*?pending\.client_x - rect\.left,[\s\S]*?pending\.client_y - rect\.top/);
+  assert.match(viewSource, /bindPinchCameraZoom\(mount\);/);
+  assert.match(viewCss, /\.spacetime-scroll\{height:54vh;min-height:400px;scrollbar-gutter:auto;touch-action:pan-x pan-y\}/);
+});
+
+test("pinch outside spacetime remains browser page zoom", () => {
+  assert.match(indexSource, /<meta name="viewport" content="width=device-width, initial-scale=1\.0" \/>/);
+  assert.doesNotMatch(indexSource, /user-scalable\s*=\s*no/i);
+  assert.doesNotMatch(indexSource, /maximum-scale\s*=\s*1/i);
+  assert.match(viewSource, /const scroll = event\.target\?\.closest\?\.\("\.spacetime-scroll"\);/);
+  assert.match(viewSource, /if \(!scroll \|\| !mount\.contains\(scroll\)\) return;/);
 });
 
 test("normalized horizontal camera center remains stable when the unified world extent changes", () => {
