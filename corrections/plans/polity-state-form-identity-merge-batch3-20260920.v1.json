@@ -1,0 +1,383 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_state_form_identity_merge_batch3_20260920_v1",
+  "as_of": "2026-09-20",
+  "status": "REVIEWED_POLITY_IDENTITY_MERGE_WITH_TEMPORAL_DESIGNATIONS",
+  "release_order": 600,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "#977 POLITY-IDENTITY-REVIEW-16-20260919; batch3 live recheck 2026-09-20",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "temporal_designation_must_precede_or_commit_with_activity_relink": true,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "polity-merge-ecuador-state-into-republic",
+      "type": "rewrite_activity",
+      "activity_id": "aeb1e92f-a3c7-4fd9-aa84-622295d3e880",
+      "baseline_before": {
+        "person_id": "7470798e-9910-43ce-8e88-8d3759a83fd0",
+        "polity_id": "29b6b4bd-f767-4995-9e36-d50ecba7db88",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1830,
+        "activity_end": 1834,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "aeb1e92f-a3c7-4fd9-aa84-622295d3e880",
+        "person_id": "7470798e-9910-43ce-8e88-8d3759a83fd0",
+        "polity_id": "a059470d-3985-4a0c-a3b0-e1de2f47e2f6",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "2f9e499f-050f-51ba-b2b7-1cc2935e5126",
+        "period_basis_id": "e78bcf72-81e3-5db8-a76a-8c2ca9c6d745",
+        "activity_start": 1830,
+        "activity_end": 1834,
+        "activity_start_detail": {
+          "year": 1830,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 1834,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-romania-kingdom-carol-into-romania",
+      "type": "rewrite_activity",
+      "activity_id": "e0df1a74-47db-4259-919b-3a106475f131",
+      "baseline_before": {
+        "person_id": "4b73b9a2-153a-4e43-8034-cc087fd6c32b",
+        "polity_id": "63c0aa8d-bc0b-42c5-9118-612b6c650646",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1881,
+        "activity_end": 1914,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "e0df1a74-47db-4259-919b-3a106475f131",
+        "person_id": "4b73b9a2-153a-4e43-8034-cc087fd6c32b",
+        "polity_id": "bc585200-e306-45cc-ae5d-eb21935c7821",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 1881,
+        "activity_end": 1914,
+        "activity_start_detail": {
+          "year": 1881,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1914,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-romania-kingdom-antonescu-into-romania",
+      "type": "rewrite_activity",
+      "activity_id": "e0b1fa83-0022-4b93-8eca-cfbab3d4c3eb",
+      "baseline_before": {
+        "person_id": "bc74b0b3-9f03-42d7-89b2-32844f866395",
+        "polity_id": "63c0aa8d-bc0b-42c5-9118-612b6c650646",
+        "role_id": "87887548-7d9b-440b-955d-39a31b283a22",
+        "period_basis_id": "19bbe662-2a30-5a7e-8073-8d19e1e2299c",
+        "activity_start": 1940,
+        "activity_end": 1944,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "e0b1fa83-0022-4b93-8eca-cfbab3d4c3eb",
+        "person_id": "bc74b0b3-9f03-42d7-89b2-32844f866395",
+        "polity_id": "bc585200-e306-45cc-ae5d-eb21935c7821",
+        "relation_type_id": "67a57b37-1853-5f2a-b7ab-e6b2d32b56b6",
+        "role_id": "87887548-7d9b-440b-955d-39a31b283a22",
+        "period_basis_id": "19bbe662-2a30-5a7e-8073-8d19e1e2299c",
+        "activity_start": 1940,
+        "activity_end": 1944,
+        "activity_start_detail": {
+          "year": 1940,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "activity_end_detail": {
+          "year": 1944,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "gregorian"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    },
+    {
+      "case_id": "polity-merge-ostrogothic-confederation-into-kingdom",
+      "type": "rewrite_activity",
+      "activity_id": "42b9e5cc-02f9-49d0-9968-9476a24918e7",
+      "baseline_before": {
+        "person_id": "a8a350bb-2455-48a4-8498-3b49b99484f8",
+        "polity_id": "bcb090c2-7906-4c3e-91cf-99b02646764e",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 474,
+        "activity_end": 493,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 3
+      },
+      "live_before": "SYNTHESIZE_FROM_EXACT_SAME_SHA_SNAPSHOT_BEFORE_DRY_RUN",
+      "after": {
+        "activity_id": "42b9e5cc-02f9-49d0-9968-9476a24918e7",
+        "person_id": "a8a350bb-2455-48a4-8498-3b49b99484f8",
+        "polity_id": "8cb0aec8-6228-4db6-88ad-584a21925ee1",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "8290e1c0-fbc9-5efb-a65a-ca2c5ed432c3",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 474,
+        "activity_end": 493,
+        "activity_start_detail": {
+          "year": 474,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "approximate",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end_detail": {
+          "year": 493,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "source_links_policy": "PRESERVE_ALL_EXISTING_NORMALIZED_SOURCE_LINKS_AND_LOCATORS"
+      }
+    }
+  ],
+  "stage2_assertions": [
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "ecuador-state-temporal-designation-1830-1834",
+      "exact_before": {
+        "designation_absent_id": "6180cb24-0ef5-590d-aaba-2c4bb1075fd2"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "6180cb24-0ef5-590d-aaba-2c4bb1075fd2",
+          "polity_id": "a059470d-3985-4a0c-a3b0-e1de2f47e2f6",
+          "designation_type": "state_form",
+          "valid_from_year": 1830,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "unspecified_historical",
+          "valid_to_year": 1834,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "unspecified_historical",
+          "confidence": "reviewed",
+          "notes": "Reviewed temporal state-form label preserving the existing ATLAS State of Ecuador phase for the modeled 1830-1834 presidential Activity on the stable Ecuador identity."
+        },
+        "names": [
+          {
+            "id": "2de3a3a1-5e37-5ffa-a551-fa4df317eab0",
+            "polity_designation_id": "6180cb24-0ef5-590d-aaba-2c4bb1075fd2",
+            "locale": "en",
+            "name": "State of Ecuador",
+            "is_preferred": true
+          },
+          {
+            "id": "e2285fe2-8a85-55fe-9aa8-68b6213d9bc4",
+            "polity_designation_id": "6180cb24-0ef5-590d-aaba-2c4bb1075fd2",
+            "locale": "ko",
+            "name": "에콰도르국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "6180cb24-0ef5-590d-aaba-2c4bb1075fd2",
+            "source_id": "9e0f4fbe-e2a5-4290-a44b-a55db6697171",
+            "source_locator_key": "https://biblioteca.bne.gob.ec/cgi-bin/koha/opac-authoritiesdetail.pl?authid=2727"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "romania-kingdom-temporal-designation-1881-1944",
+      "exact_before": {
+        "designation_absent_id": "6202b7d0-0406-52c5-9eaa-feefafe0831f"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "6202b7d0-0406-52c5-9eaa-feefafe0831f",
+          "polity_id": "bc585200-e306-45cc-ae5d-eb21935c7821",
+          "designation_type": "state_form",
+          "valid_from_year": 1881,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "exact",
+          "valid_from_calendar": "gregorian",
+          "valid_to_year": 1944,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "gregorian",
+          "confidence": "reviewed",
+          "notes": "Reviewed temporal state-form designation covering the currently modeled Kingdom of Romania Activities from 1881 through 1944 on the stable Romania identity. The bound follows reviewed modeled coverage and does not claim to encode the monarchy's full constitutional endpoint."
+        },
+        "names": [
+          {
+            "id": "79ab9f0c-0b26-5620-9c4c-e94cb626eadf",
+            "polity_designation_id": "6202b7d0-0406-52c5-9eaa-feefafe0831f",
+            "locale": "en",
+            "name": "Kingdom of Romania",
+            "is_preferred": true
+          },
+          {
+            "id": "1150a72f-e693-5dd7-ab4d-9ad220237ca1",
+            "polity_designation_id": "6202b7d0-0406-52c5-9eaa-feefafe0831f",
+            "locale": "ko",
+            "name": "루마니아 왕국",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "6202b7d0-0406-52c5-9eaa-feefafe0831f",
+            "source_id": "b3e7b14a-4e53-4306-bc1c-5ba989a7598a",
+            "source_locator_key": "https://agerpres.ro/documentare/2019/09/24/o-personalitate-pe-zi-carol-i-primul-rege-al-romaniei-domnitor-din-1866-rege-1881-1914--376303"
+          },
+          {
+            "polity_designation_id": "6202b7d0-0406-52c5-9eaa-feefafe0831f",
+            "source_id": "a387b95e-d478-4353-9396-29539d7279a5",
+            "source_locator_key": "https://en.wikipedia.org/wiki/Ion_Antonescu"
+          }
+        ]
+      }
+    },
+    {
+      "type": "assert_polity_designation",
+      "decision_id": "ostrogothic-confederation-temporal-label-474-493",
+      "exact_before": {
+        "designation_absent_id": "42bdcd4b-80a7-545e-9849-da2064f07ce0"
+      },
+      "exact_after": {
+        "designation": {
+          "id": "42bdcd4b-80a7-545e-9849-da2064f07ce0",
+          "polity_id": "8cb0aec8-6228-4db6-88ad-584a21925ee1",
+          "designation_type": "conventional_temporal_label",
+          "valid_from_year": 474,
+          "valid_from_month": null,
+          "valid_from_day": null,
+          "valid_from_granularity": "year",
+          "valid_from_certainty": "approximate",
+          "valid_from_calendar": "unspecified_historical",
+          "valid_to_year": 493,
+          "valid_to_month": null,
+          "valid_to_day": null,
+          "valid_to_granularity": "year",
+          "valid_to_certainty": "exact",
+          "valid_to_calendar": "unspecified_historical",
+          "confidence": "reviewed",
+          "notes": "Reviewed conventional temporal label preserving ATLAS's editorial 'Ostrogothic Confederation' label for Theodoric's c.474-493 pre-Italian phase on the stable Ostrogothic identity. This is not asserted as a contemporary formal state name."
+        },
+        "names": [
+          {
+            "id": "d5ea9d2d-f271-5ab5-8820-a38782c3c6c4",
+            "polity_designation_id": "42bdcd4b-80a7-545e-9849-da2064f07ce0",
+            "locale": "en",
+            "name": "Ostrogothic Confederation",
+            "is_preferred": true
+          },
+          {
+            "id": "04dfc234-0b04-51b7-baf0-f7e00e17871a",
+            "polity_designation_id": "42bdcd4b-80a7-545e-9849-da2064f07ce0",
+            "locale": "ko",
+            "name": "동고트 정치연합",
+            "is_preferred": true
+          }
+        ],
+        "source_links": [
+          {
+            "polity_designation_id": "42bdcd4b-80a7-545e-9849-da2064f07ce0",
+            "source_id": "9ec0de7f-041b-4849-a85b-f9db4f17a1c2",
+            "source_locator_key": "https://academic.oup.com/yale-scholarship-online/book/51625/chapter-abstract/418369205"
+          }
+        ]
+      }
+    }
+  ],
+  "polity_relation_assertions": [],
+  "result": {
+    "activity_targets": 4,
+    "activity_relinks": 4,
+    "polity_designation_assertions": 3,
+    "production_mutation_authorized": false
+  }
+}
