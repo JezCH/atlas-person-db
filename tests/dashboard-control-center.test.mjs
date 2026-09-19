@@ -214,7 +214,7 @@ test("incomplete breakdown only exposes reasons supported by canonical state", (
 
 test("breakdown UI keeps unavailable reasons visibly unknown and never invents dashboard reason taxonomies", () => {
   assert.match(dashboardSource, /snapshot\.incomplete_breakdown/);
-  assert.match(dashboardSource, /Reason unavailable/);
+  assert.match(dashboardSource, /사유 미확인/);
   assert.match(dashboardSource, /unavailable_reason/);
   assert.doesNotMatch(dashboardSource, /Historical ambiguity|Conflict review|Explicit HOLD/);
   assert.doesNotMatch(dashboardSource, /fetch\s*\(/);
@@ -308,9 +308,9 @@ test("Data Quality excludes Person work counters already exposed by Needs Attent
   const block = dashboardSource.slice(start,end);
   assert.doesNotMatch(block, /분야 미분류|나무위키 미검토|domain_unclassified|namuwiki_missing/);
   assert.match(block, /Spatial 미해결/);
-  assert.match(block, /Spatial review queue/);
-  assert.match(block, /Runtime Activity 없음/);
-  assert.match(block, /Non-timeline registry/);
+  assert.match(block, /Spatial 검토 대기/);
+  assert.match(block, /활동 연결 없음/);
+  assert.match(block, /비연대표 등록/);
 });
 
 test("quality snapshot keeps only non-duplicated structural and exception counters", () => {
@@ -411,7 +411,7 @@ test("System Strip distinguishes known Production main identity from unknown run
 test("Dashboard System / Production Strip reports deployed identity without claiming GitHub main parity", () => {
   assert.match(dashboardSource, /SYSTEM \/ PRODUCTION/);
   assert.match(dashboardSource, /DEPLOYED GIT/);
-  assert.match(dashboardSource, /GitHub Actions 상태는 runtime identity와 별도/);
+  assert.match(dashboardSource, /배포 식별 정보와 CI 상태는 별도/);
   assert.doesNotMatch(dashboardSource, /main parity|GitHub main exact|CI success|Actions success/i);
 });
 
@@ -713,10 +713,10 @@ test("Source Freshness never promotes loaded_at into canonical data freshness", 
 
 test("Dashboard Source Freshness exposes source timestamp basis and last read without arbitrary stale thresholds", () => {
   assert.match(dashboardSource,/SOURCE FRESHNESS/);
-  assert.match(dashboardSource,/SOURCE TIMESTAMP/);
-  assert.match(dashboardSource,/LAST READ/);
-  assert.match(dashboardSource,/Source timestamp와 browser last read를 구분/);
-  assert.match(dashboardSource,/임의 fresh\/stale 판정 없음/);
+  assert.match(dashboardSource,/원본 시각/);
+  assert.match(dashboardSource,/마지막 읽기/);
+  assert.match(dashboardSource,/원본 갱신 시각과 브라우저 마지막 읽기 시각을 구분/);
+  assert.match(dashboardSource,/최신\/지연 상태를 임의 판정하지 않음/);
   assert.doesNotMatch(dashboardSource,/stale_after|freshness_threshold|hours_old|days_old/i);
   assert.doesNotMatch(dashboardSource,/fetch\s*\(/);
 });
@@ -727,4 +727,24 @@ test("Source Freshness derives from existing sourceStates and canonical payload 
   assert.match(dashboardModelSource,/spatialIndex\?\.generated_at/);
   assert.match(dashboardModelSource,/recentDelta\?\.latest_at/);
   assert.doesNotMatch(storeSource,/sourceFreshness|source-freshness/i);
+});
+
+test("Dashboard operator copy hides implementation jargon while preserving canonical data contracts", () => {
+  assert.match(dashboardSource, /기준 원본에서 파생/);
+  assert.match(dashboardSource, /확인된 미완료 건/);
+  assert.match(dashboardSource, /인물 3항목 · 활동 2항목/);
+  assert.match(dashboardSource, /10개 시대 구간 × Spatial 대권역/);
+  assert.match(dashboardSource, /추적 범위 확인 완료/);
+  assert.match(dashboardSource, /분야 8색 체계 적용/);
+  assert.doesNotMatch(dashboardSource, /canonical snapshots only|Known outstanding checks|Known affected persons|Person 3 checks|canonical 10 Era bands|공식 8색 token 재사용/);
+});
+
+test("Dashboard source freshness localizes display labels without changing freshness fields", () => {
+  assert.match(dashboardSource, /function sourceStatusLabel\(status\)/);
+  assert.match(dashboardSource, /function timestampBasisLabel\(basis\)/);
+  assert.match(dashboardSource, /생성 시각/);
+  assert.match(dashboardSource, /최근 추적 변경/);
+  assert.match(dashboardSource, /원본 시각/);
+  assert.match(dashboardSource, /마지막 읽기/);
+  assert.doesNotMatch(dashboardSource, />SOURCE TIMESTAMP<|>LAST READ<|>BASIS<|>STATUS</);
 });
