@@ -1,0 +1,215 @@
+{
+  "schema": "atlas-correction-manifest/v2",
+  "review_status": "approved",
+  "request_id": "polity-retirement:confirmed-identity-duplicates:2026-09-19:v1",
+  "release_order": 593,
+  "evidence": {
+    "decision": "User-approved confirmed polity identity cleanup. Production reference audit on exact main SHA 74d50b05f7bdeb711d49befcb548e5c339b2c7ca confirmed all eight targets have zero external references and are external orphans after reviewed relinks. Northern Yuan is excluded because its temporal-spatial distinction must be preserved before any retirement. Toyotomi Regime is excluded and intentionally retained.",
+    "audit_marker": "ATLAS_POLITY_REFERENCE_AUDIT_V1",
+    "audit_deployment_sha": "74d50b05f7bdeb711d49befcb548e5c339b2c7ca",
+    "audit_workflow_run": 35443614519,
+    "audit_artifact_id": 10585155455
+  },
+  "operations": [
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:liao-case-duplicate",
+      "review_reason": "GOVERNANCE_CONTEXT_DUPLICATE_POLITY",
+      "expected_polity": {
+        "id": "a1e5baa6-51e0-433e-8087-d800dd1cb3a2",
+        "canonical_key": "Liao dynasty",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Liao dynasty",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "요",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:ming-case-duplicate",
+      "review_reason": "GOVERNANCE_CONTEXT_DUPLICATE_POLITY",
+      "expected_polity": {
+        "id": "14113865-1569-521a-bae5-8ae070f4817d",
+        "canonical_key": "Ming dynasty",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Ming dynasty",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "명나라",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:tsardom-of-russia-state-form",
+      "review_reason": "GOVERNANCE_CONTEXT_DUPLICATE_POLITY",
+      "expected_polity": {
+        "id": "8e0c3472-867d-5165-89c2-cb7866f6a5ed",
+        "canonical_key": "Tsardom of Russia",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Tsardom of Russia",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "러시아 차르국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:empire-of-japan-state-form",
+      "review_reason": "GOVERNANCE_CONTEXT_DUPLICATE_POLITY",
+      "expected_polity": {
+        "id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
+        "canonical_key": "Empire of Japan",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Empire of Japan",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "일본 제국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:shakya-alias",
+      "review_reason": "GOVERNANCE_CONTEXT_DUPLICATE_POLITY",
+      "expected_polity": {
+        "id": "80810807-0abb-5255-b40c-1945f4073eb1",
+        "canonical_key": "Shakya",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Shakya",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "샤카족",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:haudenosaunee-alias",
+      "review_reason": "GOVERNANCE_CONTEXT_DUPLICATE_POLITY",
+      "expected_polity": {
+        "id": "c591bebb-90a3-5a96-90c5-9870ddd7f637",
+        "canonical_key": "Haudenosaunee Confederacy",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Haudenosaunee Confederacy",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "하우데노사우니 연맹",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:swedish-empire-state-form",
+      "review_reason": "GOVERNANCE_CONTEXT_DUPLICATE_POLITY",
+      "expected_polity": {
+        "id": "efc86adb-7fc7-5efe-9c4d-7cd8e224890f",
+        "canonical_key": "Swedish Empire",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Swedish Empire",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "스웨덴 제국",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 3,
+      "expected_external_reference_total": 0
+    },
+    {
+      "type": "retire_polity_if_orphan",
+      "case_id": "polity-retire:qara-khitai-western-liao-alias",
+      "review_reason": "GOVERNANCE_CONTEXT_DUPLICATE_POLITY",
+      "expected_polity": {
+        "id": "3e9c225a-a478-4509-8da2-43eb9ce35dfb",
+        "canonical_key": "Qara Khitai (Western Liao)",
+        "polity_type": "historical_polity",
+        "historicity": "historical"
+      },
+      "expected_preferred_names": [
+        {
+          "locale": "en",
+          "name": "Qara Khitai (Western Liao)",
+          "is_preferred": true
+        },
+        {
+          "locale": "ko",
+          "name": "서요(카라 키타이)",
+          "is_preferred": true
+        }
+      ],
+      "expected_owned_reference_total": 2,
+      "expected_external_reference_total": 0
+    }
+  ]
+}
