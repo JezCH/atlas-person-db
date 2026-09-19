@@ -174,7 +174,9 @@
   }
 
   function activityLine(activity) {
+    const designation = activity.polity_designation_name_ko || activity.polity_designation_name_en || "";
     const semantics = [
+      designation,
       activity.relation_code,
       activity.role_name || activity.role_code,
       activity.period_basis
