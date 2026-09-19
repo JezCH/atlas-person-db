@@ -647,3 +647,66 @@ test("Incomplete Reasons suppresses known zero-work cards but preserves unknown 
 test("single lower Dashboard panel expands across the full lower grid", () => {
   assert.match(dashboardCssSource, /dashboard-lower-grid>\.dashboard-panel:only-child\{grid-column:1\/-1\}/);
 });
+
+
+test("Source Freshness separates intrinsic source timestamps from browser read timestamps", () => {
+  const freshness=model.buildSourceFreshness({
+    spatialIndex:{generated_at:"2026-09-18T14:08:00.000Z"},
+    recentDelta:{available:true,latest_at:"2026-09-19T03:00:00.000Z"},
+    sourceStates:{
+      persons:{label:"Person Runtime",status:"ready",loaded_at:"2026-09-19T05:00:00.000Z"},
+      personDomains:{label:"Person Domain",status:"ready",loaded_at:"2026-09-19T05:00:01.000Z"},
+      spatialIndex:{label:"Spatial Index",status:"ready",loaded_at:"2026-09-19T05:00:02.000Z"},
+      nonTimeline:{label:"Non-timeline Registry",status:"ready",loaded_at:"2026-09-19T05:00:03.000Z"},
+      recentDelta:{label:"Recent Delta",status:"ready",loaded_at:"2026-09-19T05:00:04.000Z"},
+      systemIdentity:{label:"Runtime Identity",status:"ready",loaded_at:"2026-09-19T05:00:05.000Z"}
+    }
+  });
+  const byKey=Object.fromEntries(freshness.rows.map((row)=>[row.key,row]));
+  assert.equal(freshness.total_sources,6);
+  assert.equal(freshness.data_timestamp_known,2);
+  assert.equal(freshness.data_timestamp_unknown,4);
+  assert.equal(freshness.read_timestamp_known,6);
+  assert.equal(byKey.spatialIndex.data_at,"2026-09-18T14:08:00.000Z");
+  assert.equal(byKey.spatialIndex.data_basis,"generated_at");
+  assert.equal(byKey.recentDelta.data_at,"2026-09-19T03:00:00.000Z");
+  assert.equal(byKey.recentDelta.data_basis,"latest_tracked_mutation");
+  assert.equal(byKey.persons.data_at,null);
+  assert.equal(byKey.persons.read_at,"2026-09-19T05:00:00.000Z");
+  assert.equal(byKey.persons.data_timestamp_unavailable_reason,"PERSON_RUNTIME_DATA_TIMESTAMP_NOT_EXPOSED");
+});
+
+test("Source Freshness never promotes loaded_at into canonical data freshness", () => {
+  const freshness=model.buildSourceFreshness({
+    spatialIndex:null,
+    recentDelta:{available:false,latest_at:null},
+    sourceStates:{
+      persons:{label:"Person Runtime",status:"ready",loaded_at:"2026-09-19T05:00:00.000Z"},
+      recentDelta:{label:"Recent Delta",status:"error",loaded_at:null}
+    }
+  });
+  const byKey=Object.fromEntries(freshness.rows.map((row)=>[row.key,row]));
+  assert.equal(byKey.persons.data_at,null);
+  assert.equal(byKey.persons.data_timestamp_known,false);
+  assert.equal(byKey.persons.read_timestamp_known,true);
+  assert.equal(byKey.recentDelta.data_at,null);
+  assert.equal(byKey.recentDelta.data_timestamp_unavailable_reason,"RECENT_DELTA_SOURCE_UNAVAILABLE");
+});
+
+test("Dashboard Source Freshness exposes source timestamp basis and last read without arbitrary stale thresholds", () => {
+  assert.match(dashboardSource,/SOURCE FRESHNESS/);
+  assert.match(dashboardSource,/SOURCE TIMESTAMP/);
+  assert.match(dashboardSource,/LAST READ/);
+  assert.match(dashboardSource,/Source timestamp와 browser last read를 구분/);
+  assert.match(dashboardSource,/임의 fresh\/stale 판정 없음/);
+  assert.doesNotMatch(dashboardSource,/stale_after|freshness_threshold|hours_old|days_old/i);
+  assert.doesNotMatch(dashboardSource,/fetch\s*\(/);
+});
+
+test("Source Freshness derives from existing sourceStates and canonical payload timestamps without a new store source", () => {
+  const dashboardModelSource=fs.readFileSync(new URL("../atlas-dashboard-model.js",import.meta.url),"utf8");
+  assert.match(dashboardModelSource,/function buildSourceFreshness/);
+  assert.match(dashboardModelSource,/spatialIndex\?\.generated_at/);
+  assert.match(dashboardModelSource,/recentDelta\?\.latest_at/);
+  assert.doesNotMatch(storeSource,/sourceFreshness|source-freshness/i);
+});
