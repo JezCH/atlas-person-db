@@ -6,6 +6,7 @@ const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const nav = fs.readFileSync(new URL('../atlas-main-authority-nav.js', import.meta.url), 'utf8');
 const catalog = fs.readFileSync(new URL('../atlas-ui-authority-catalog.ko.js', import.meta.url), 'utf8');
 const css = fs.readFileSync(new URL('../atlas-main-authority-nav.css', import.meta.url), 'utf8');
+const dashboardCss = fs.readFileSync(new URL('../atlas-dashboard.css', import.meta.url), 'utf8');
 
 test('Main navigation exposes all authority domains through static controls plus the current spacetime extension', () => {
   for (const domain of ['dashboard', 'persons', 'polities', 'places', 'events', 'sources', 'geometry']) {
@@ -15,8 +16,11 @@ test('Main navigation exposes all authority domains through static controls plus
   assert.match(nav, /"dashboard", "persons", "spacetime", "polities", "places", "events", "sources", "geometry"/);
   assert.match(nav, /dataAtlasDomain|dataset\.atlasDomain|data-atlas-domain="spacetime"/i);
   assert.match(catalog, /spacetime: entry/);
-  assert.match(html, /atlas-main-authority-nav\.css\?v=20260815-ui5/);
-  assert.match(html, /atlas-main-authority-nav\.js\?v=20260903-spacetime-south-asia-r3/);
+  assert.match(html, /atlas-main-authority-nav\.css\?v=20260919-control-center-v1/);
+  assert.match(html, /atlas-main-authority-nav\.js\?v=20260919-control-center-v1/);
+  assert.match(nav, /atlasDashboardMount/);
+  assert.match(nav, /ATLAS_DASHBOARD/);
+  assert.doesNotMatch(nav, /authority-domain-card/);
 });
 
 test('future authority shells state readiness from the Korean catalog instead of fabricating first-class data', () => {
@@ -54,11 +58,15 @@ test('mobile Person search remains fail-closed outside Persons if the legacy she
   assert.match(nav, /setMobileSearchEnabled\(isPersons/);
 });
 
-test('authority shell layout remains responsive', () => {
+test('authority shell and control-center Dashboard remain responsive without the retired shortcut grid', () => {
   assert.match(css, /authority-state-grid/);
-  assert.match(css, /authority-dashboard-grid/);
+  assert.doesNotMatch(css, /authority-dashboard-grid|authority-domain-card/);
   assert.match(css, /@media \(max-width: 900px\)/);
   assert.match(css, /@media \(max-width: 700px\)/);
+  assert.match(dashboardCss, /dashboard-kpi-grid/);
+  assert.match(dashboardCss, /dashboard-main-grid/);
+  assert.match(dashboardCss, /@media\(max-width:900px\)/);
+  assert.match(dashboardCss, /@media\(max-width:600px\)/);
 });
 
 test('Main authority shell never embeds Admin-only secrets or audit endpoints', () => {
