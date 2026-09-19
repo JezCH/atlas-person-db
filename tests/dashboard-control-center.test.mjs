@@ -11,6 +11,7 @@ const spatialModel = require("../atlas-person-spacetime-model.js");
 const domainUiSource = fs.readFileSync(new URL("../atlas-person-domain-ui.js", import.meta.url), "utf8");
 const storeSource = fs.readFileSync(new URL("../atlas-client-data-store.js", import.meta.url), "utf8");
 const dashboardSource = fs.readFileSync(new URL("../atlas-dashboard.js", import.meta.url), "utf8");
+const dashboardCssSource = fs.readFileSync(new URL("../atlas-dashboard.css", import.meta.url), "utf8");
 const externalSource = fs.readFileSync(new URL("../atlas-person-external-references.js", import.meta.url), "utf8");
 const mainSource = fs.readFileSync(new URL("../atlas-person-main.js", import.meta.url), "utf8");
 const spacetimeSource = fs.readFileSync(new URL("../atlas-person-spacetime-view.js", import.meta.url), "utf8");
@@ -644,5 +645,5 @@ test("Incomplete Reasons suppresses known zero-work cards but preserves unknown 
 });
 
 test("single lower Dashboard panel expands across the full lower grid", () => {
-  assert.match(dashboardCss, /dashboard-lower-grid>\.dashboard-panel:only-child\{grid-column:1\/-1\}/);
+  assert.match(dashboardCssSource, /dashboard-lower-grid>\.dashboard-panel:only-child\{grid-column:1\/-1\}/);
 });
