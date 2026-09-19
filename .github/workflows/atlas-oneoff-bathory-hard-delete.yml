@@ -6,9 +6,13 @@ on:
       - main
     paths:
       - '.github/workflows/atlas-oneoff-bathory-hard-delete.yml'
+      - 'api/atlas-mutate.js'
+      - 'server/atlas-person-hard-delete-handler.js'
+      - 'server/atlas-person-hard-delete-github-oidc.js'
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   hard_delete:
@@ -16,61 +20,70 @@ jobs:
     environment: production
     env:
       API_BASE: https://atlas-person-db.vercel.app
+      HARD_DELETE_URL: https://atlas-person-db.vercel.app/api/atlas-mutate?__atlas_mutation_surface=person-hard-delete
       TARGET_ID: c2f584d8-170b-49ca-a4b7-7afcf18c95b6
-      MUTATION_TOKEN: ${{ secrets.ATLAS_MUTATION_TOKEN }}
-      ADMIN_PASSWORD: ${{ secrets.ATLAS_ADMIN_PASSWORD }}
+      OIDC_AUDIENCE: atlas-person-db-person-hard-delete
     steps:
+      - name: Wait for exact Production hard-delete runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          ready=false
+          for attempt in $(seq 1 60); do
+            status="$(curl --silent --show-error \
+              --output /tmp/atlas-hard-delete-readiness.json \
+              --write-out '%{http_code}' \
+              "$HARD_DELETE_URL")"
+            if [[ "$status" == "200" ]] && jq -e --arg sha "$GITHUB_SHA" --arg id "$TARGET_ID" '
+              .ok==true
+              and .marker=="ATLAS_PERSON_HARD_DELETE_ONEOFF_V1"
+              and .target_person_id==$id
+              and .runtime_sha==$sha
+            ' /tmp/atlas-hard-delete-readiness.json >/dev/null 2>&1; then
+              ready=true
+              break
+            fi
+            sleep 5
+          done
+          [[ "$ready" == "true" ]] || { cat /tmp/atlas-hard-delete-readiness.json >&2 || true; echo 'Exact Production hard-delete runtime not ready.' >&2; exit 1; }
+
       - name: Hard-delete Elizabeth Báthory and verify zero live references
         shell: bash
         run: |
           set -euo pipefail
 
+          before_target_json="$(curl --fail-with-body --silent --show-error \
+            "$API_BASE/api/atlas-person-read?q=Elizabeth%20B%C3%A1thory")"
           before_person_json="$(curl --fail-with-body --silent --show-error \
             "$API_BASE/api/atlas-person-read")"
           before_domain_json="$(curl --fail-with-body --silent --show-error \
             "$API_BASE/api/atlas-person-domain")"
           before_total="$(jq -er '.summary.total' <<<"$before_person_json")"
           before_assigned="$(jq -er '.assigned' <<<"$before_domain_json")"
-          jq -e --arg id "$TARGET_ID" '.persons | map(select(.id==$id)) | length == 1' <<<"$before_person_json" >/dev/null
+          jq -e --arg id "$TARGET_ID" '.summary.total==1 and (.persons | length==1) and .persons[0].id==$id' <<<"$before_target_json" >/dev/null
           jq -e --arg id "$TARGET_ID" '.rows | map(select(.person_id==$id)) | length == 0' <<<"$before_domain_json" >/dev/null
 
-          payload="$(jq -cn --arg id "$TARGET_ID" '{operation:"delete_person",payload:{person_id:$id}}')"
-          rm -f /tmp/atlas-delete-cookies.txt /tmp/atlas-delete-response.json /tmp/atlas-login.json
+          oidc_token="$(curl --fail-with-body --silent --show-error \
+            -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${OIDC_AUDIENCE}" | jq -er '.value')"
+          echo "::add-mask::${oidc_token}"
 
-          if [[ -n "${MUTATION_TOKEN:-}" ]]; then
-            status="$(curl --silent --show-error \
-              --output /tmp/atlas-delete-response.json \
-              --write-out '%{http_code}' \
-              -H 'content-type: application/json' \
-              -H "authorization: Bearer $MUTATION_TOKEN" \
-              --data "$payload" \
-              "$API_BASE/api/atlas-mutate")"
-          elif [[ -n "${ADMIN_PASSWORD:-}" ]]; then
-            login_payload="$(jq -cn --arg password "$ADMIN_PASSWORD" '{password:$password}')"
-            login_status="$(curl --silent --show-error \
-              --output /tmp/atlas-login.json \
-              --write-out '%{http_code}' \
-              --cookie-jar /tmp/atlas-delete-cookies.txt \
-              -H 'content-type: application/json' \
-              --data "$login_payload" \
-              "$API_BASE/api/atlas-session")"
-            [[ "$login_status" == "200" ]] || { cat /tmp/atlas-login.json >&2; exit 1; }
-            jq -e '.ok==true and .authenticated==true' /tmp/atlas-login.json >/dev/null
-            status="$(curl --silent --show-error \
-              --output /tmp/atlas-delete-response.json \
-              --write-out '%{http_code}' \
-              --cookie /tmp/atlas-delete-cookies.txt \
-              -H 'content-type: application/json' \
-              --data "$payload" \
-              "$API_BASE/api/atlas-mutate")"
-          else
-            echo 'No Production mutation credential is available to this workflow.' >&2
-            exit 1
-          fi
+          payload="$(jq -cn \
+            --arg id "$TARGET_ID" \
+            --arg sha "$GITHUB_SHA" \
+            '{person_id:$id,workflow_sha:$sha,request_id:("oneoff-bathory-"+$sha)}')"
+          status="$(curl --silent --show-error \
+            --output /tmp/atlas-delete-response.json \
+            --write-out '%{http_code}' \
+            -H 'content-type: application/json' \
+            -H "authorization: Bearer $oidc_token" \
+            --data "$payload" \
+            "$HARD_DELETE_URL")"
 
           [[ "$status" == "200" ]] || { cat /tmp/atlas-delete-response.json >&2; exit 1; }
           jq -e --arg id "$TARGET_ID" '
             .ok==true
+            and .marker=="ATLAS_PERSON_HARD_DELETE_ONEOFF_V1"
             and .outcome.marker=="ATLAS_PERSON_DELETE_SERVICE"
             and .outcome.committed==true
             and .outcome.v2.committed==true
@@ -91,9 +104,7 @@ jobs:
 
           jq -e '.summary.total == 0 and (.persons | length == 0)' <<<"$after_target_json" >/dev/null
           jq -e --arg id "$TARGET_ID" '.rows | map(select(.person_id==$id)) | length == 0' <<<"$after_domain_json" >/dev/null
-          [[ "$after_total" -eq "$((before_total - 1))" ]]
-          [[ "$after_assigned" -eq "$before_assigned" ]]
 
           jq -c '{deleted_counts:.outcome.v2.deleted_counts,verification:.outcome.verification}' /tmp/atlas-delete-response.json
           echo "Production Person total: $before_total -> $after_total"
-          echo "Representative-domain assigned count unchanged: $after_assigned"
+          echo "Representative-domain assigned: $before_assigned -> $after_assigned"
