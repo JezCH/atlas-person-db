@@ -112,11 +112,11 @@
 
       <section class="dashboard-kpi-grid" aria-label="핵심 통계">
         ${kpiCard({code:"persons",label:"PERSONS",primary:value(k.persons),detail:`historical ${value(k.historical)} · 기타 ${value(k.other_historicity)}`,drilldown:kd.persons})}
+        ${kpiCard({code:"domain",label:"DOMAIN COVERAGE",primary:pct(w.domain.percentage),detail:`${value(w.domain.done)} / ${value(w.domain.total)} · 잔여 ${value(w.domain.remaining)}`,drilldown:kd.domain})}
+        ${kpiCard({code:"namuwiki",label:"NAMUWIKI REVIEW",primary:pct(w.namuwiki.percentage),detail:`${value(w.namuwiki.done)} / ${value(w.namuwiki.total)} · 잔여 ${value(w.namuwiki.remaining)}`,drilldown:kd.namuwiki})}
+        ${kpiCard({code:"spatial",label:"SPATIAL READY",primary:pct(w.spatial.percentage),detail:`${value(w.spatial.done)} / ${value(w.spatial.total)} · 잔여 ${value(w.spatial.remaining)}`,drilldown:kd.spatial})}
         ${kpiCard({code:"activities",label:"RUNTIME ACTIVITIES",primary:value(k.activities),detail:"Person Runtime projection",drilldown:kd.activities})}
         ${kpiCard({code:"polities",label:"USED POLITIES",primary:value(k.polities),detail:"현재 Person Activity에서 참조",drilldown:kd.polities})}
-        ${kpiCard({code:"domain",label:"DOMAIN COVERAGE",primary:pct(w.domain.percentage),detail:`잔여 ${value(w.domain.remaining)}`,drilldown:kd.domain})}
-        ${kpiCard({code:"namuwiki",label:"NAMUWIKI REVIEW",primary:pct(w.namuwiki.percentage),detail:`연결 ${value(w.namuwiki.linked)} · 없음확인 ${value(w.namuwiki.not_found)}`,drilldown:kd.namuwiki})}
-        ${kpiCard({code:"spatial",label:"SPATIAL READY",primary:pct(w.spatial.percentage),detail:`잔여 ${value(w.spatial.remaining)}`,drilldown:kd.spatial})}
       </section>
 
       <section class="dashboard-panel card">
