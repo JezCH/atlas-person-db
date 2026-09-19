@@ -66,7 +66,11 @@
     const placed = [];
     const unresolved = [];
     for (const row of rows) {
-      const band = bandsInput?.[row.band_code] || { left: 0, width: Math.max(row.left + row.width, finite(options.canvasWidth)) };
+      const canvasWidth = Math.max(0, finite(options.canvasWidth));
+      const declaredBand = bandsInput?.[row.band_code] || { left: 0, width: Math.max(row.left + row.width, canvasWidth) };
+      const band = options.borrowWorld === true && canvasWidth > 0
+        ? { left: 0, width: canvasWidth }
+        : declaredBand;
       let accepted = null;
       for (const left of candidateLefts(row, band, options)) {
         const candidate = { ...row, left };
@@ -134,7 +138,7 @@
       band_code: String(element.dataset.spacetimeBand || "").trim(),
       priority: element.classList.contains("is-selected") ? 0 : element.classList.contains("is-meanwhile-active") ? 1 : 2
     }));
-    const result = resolvePositions(rows, bands, { canvasWidth });
+    const result = resolvePositions(rows, bands, { canvasWidth, borrowWorld:true, maxShift:canvasWidth });
     let shifted = 0;
     labels.forEach((element, index) => {
       const next = result.positions[String(index)];
