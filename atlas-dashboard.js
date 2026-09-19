@@ -74,6 +74,11 @@
     </article>`;
   }
 
+  function shouldRenderBreakdown(item) {
+    if (item?.total == null) return item?.available !== true;
+    return Number(item.total) > 0;
+  }
+
   function recentDeltaCard(row) {
     const person = row?.display_name || (row?.person_id ? row.person_id : "Project-wide");
     const count = Number(row?.change_count || 0);
@@ -164,6 +169,13 @@
     const sys = snapshot.system_strip;
     const heatmap = snapshot.coverage_heatmap;
     const completeness = snapshot.completeness_matrix;
+    const sourceIssues = (snapshot.sources || []).filter((source) => source?.status !== "ready");
+    const incompleteCards = [
+      ["Representative Domain",b.domain],
+      ["NamuWiki",b.namuwiki],
+      ["Spatial",b.spatial],
+      ["Runtime Exclusion",b.runtime]
+    ].filter(([,item]) => shouldRenderBreakdown(item));
     const domainRows = model.DOMAIN_CODES.map((code) => `<div class="dashboard-domain-row" data-domain="${escapeHtml(code)}">
       <span class="dashboard-domain-swatch" aria-hidden="true"></span><span>${escapeHtml(domainRegistry.LABELS[code] || code)}</span><b>${value(snapshot.domain_breakdown[code])}</b>
     </div>`).join("");
@@ -195,6 +207,10 @@
           <span>${sys.identity_complete ? "Runtime identity complete" : "Runtime identity partial"}</span>
           <span>GitHub Actions 상태는 runtime identity와 별도</span>
         </div>
+        ${sourceIssues.length ? `<div class="dashboard-source-issues" aria-label="비정상 source 상세">
+          <p class="eyebrow">SOURCE ISSUES</p>
+          <div class="dashboard-source-list">${sourceIssues.map(sourceCard).join("")}</div>
+        </div>` : ""}
       </section>
 
       <section class="dashboard-panel card">
@@ -263,21 +279,15 @@
       </section>
 
       <section class="dashboard-lower-grid" aria-label="미완료 사유">
-        ${breakdownCard("Representative Domain", b.domain)}
-        ${breakdownCard("NamuWiki", b.namuwiki)}
-        ${breakdownCard("Spatial", b.spatial)}
-        ${breakdownCard("Runtime Exclusion", b.runtime)}
+        ${incompleteCards.length
+          ? incompleteCards.map(([label,item]) => breakdownCard(label,item)).join("")
+          : '<article class="dashboard-panel card"><div class="dashboard-panel-head"><div><p class="eyebrow">INCOMPLETE REASONS</p><h3>미완료 원인 없음</h3></div><span>0</span></div></article>'}
       </section>
 
       <section class="dashboard-lower-grid">
         <article class="dashboard-panel card">
           <div class="dashboard-panel-head"><div><p class="eyebrow">PERSON DOMAINS</p><h3>대표 분야 분포</h3></div><span>공식 8색 token 재사용</span></div>
           <div class="dashboard-domain-list">${domainRows}</div>
-        </article>
-
-        <article class="dashboard-panel card">
-          <div class="dashboard-panel-head"><div><p class="eyebrow">SOURCE HEALTH</p><h3>기준 원본 상태</h3></div><span>대시보드용 복제 DB 없음</span></div>
-          <div class="dashboard-source-list">${snapshot.sources.map(sourceCard).join("")}</div>
         </article>
       </section>
 
