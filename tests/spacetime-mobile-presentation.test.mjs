@@ -8,6 +8,7 @@ const spaceAxis = require("../atlas-person-spacetime-space-axis.js");
 const view = readFileSync(new URL("../atlas-person-spacetime-view.js", import.meta.url), "utf8");
 const css = readFileSync(new URL("../atlas-person-spacetime-view.css", import.meta.url), "utf8");
 const authorityCss = readFileSync(new URL("../atlas-main-authority-nav.css", import.meta.url), "utf8");
+const mobileCss = readFileSync(new URL("../mobile-compact.css", import.meta.url), "utf8");
 
 function numericConstant(name) {
   const match = view.match(new RegExp(`const ${name} = ([\\d.]+);`));
@@ -50,6 +51,12 @@ test("mobile status surface keeps only core chips visible until expanded", () =>
   assert.match(view, /<summary>상태 더보기<\/summary>/);
   assert.match(css, /\.spacetime-status-more:not\(\[open\]\)>\.spacetime-status-more-content\{display:none!important\}/);
   assert.match(css, /\.spacetime-status-more\[open\]>\.spacetime-status-more-content\{display:flex!important/);
+});
+
+test("mobile spacetime sticky headers stay below the mobile app bar", () => {
+  assert.match(mobileCss, /\.mobile-appbar \{[\s\S]*?z-index:40;/);
+  assert.match(css, /\.spacetime-frame\.is-mobile-presentation \.spacetime-sticky-corner\{z-index:35\}/);
+  assert.match(css, /\.spacetime-frame\.is-mobile-presentation \.spacetime-region-head\{z-index:30\}/);
 });
 
 test("mobile presentation applies one uniform physical projection scale to both world axes", () => {
