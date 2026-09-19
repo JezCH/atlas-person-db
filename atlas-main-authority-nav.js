@@ -80,32 +80,20 @@
     return "is-future";
   }
 
-  function dashboardHtml() {
-    return `<section class="authority-dashboard-grid">${DOMAIN_ORDER.map((key) => {
-      const domain = DOMAINS[key];
-      return `<button type="button" class="authority-domain-card" data-authority-jump="${escapeHtml(key)}">
-        <span class="authority-status ${statusClass(domain.status_code)}">${escapeHtml(domain.status_label)}</span>
-        <strong>${escapeHtml(domain.label)}</strong>
-        <p>${escapeHtml(domain.summary)}</p>
-      </button>`;
-    }).join("")}</section>`;
-  }
-
   function domainHtml(key) {
     const domain = DOMAINS[key];
     if (!domain) return "";
+    if (key === "dashboard") return '<div id="atlasDashboardMount" class="atlas-dashboard-mount"></div>';
     if (key === "spacetime") return '<div id="personSpacetimeMount" class="person-spacetime-mount"></div>';
-    const dashboard = key === "dashboard" ? dashboardHtml() : "";
     return `<div class="authority-shell-head card">
       <div><p class="eyebrow">${escapeHtml(domain.eyebrow)}</p><h2>${escapeHtml(domain.label)}</h2><p>${escapeHtml(domain.summary)}</p></div>
       <span class="authority-status ${statusClass(domain.status_code)}">${escapeHtml(domain.status_label)}</span>
     </div>
-    ${dashboard}
-    ${key === "dashboard" ? "" : `<section class="authority-state-grid">
+    <section class="authority-state-grid">
       <article class="card"><small>현재 제공</small><h3>현재 제공</h3><p>${escapeHtml(domain.available)}</p></article>
       <article class="card"><small>아직 기준 기능 아님</small><h3>아직 없는 기능</h3><p>${escapeHtml(domain.missing)}</p></article>
       <article class="card"><small>구조 원칙</small><h3>구조 원칙</h3><p>${escapeHtml(domain.principle)}</p></article>
-    </section>`}`;
+    </section>`;
   }
 
   function appendStylesheetOnce(href) {
@@ -140,7 +128,7 @@
     if (spacetimeAssetsPromise) return spacetimeAssetsPromise;
     appendStylesheetOnce("./atlas-person-spacetime-view.css?v=20260903-taxonomy-r2");
     spacetimeAssetsPromise = loadScriptOnce("./atlas-person-spacetime-model.js?v=20260903-south-asia-r3", () => Boolean(window.ATLAS_PERSON_SPACETIME_MODEL))
-      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20260903-south-asia-r3", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
+      .then(() => loadScriptOnce("./atlas-person-spacetime-view.js?v=20260919-shared-store-v1", () => Boolean(window.ATLAS_PERSON_SPACETIME_VIEW)))
       .then(() => window.ATLAS_PERSON_SPACETIME_VIEW)
       .catch((error) => {
         spacetimeAssetsPromise = null;
@@ -214,6 +202,7 @@
     authoringTools.hidden = !isPersons;
     shell.hidden = isPersons;
     if (!isPersons) shell.innerHTML = domainHtml(next);
+    if (next === "dashboard") window.ATLAS_DASHBOARD?.mount?.(shell.querySelector("#atlasDashboardMount"));
     setNavigationActive(next);
     setTopbar(next);
     setMobileSearchEnabled(isPersons, DOMAINS[next].label);
@@ -240,10 +229,6 @@
 
   document.querySelector(".nav-list")?.addEventListener("click", handleNavigationClick);
   document.querySelector(".mobile-nav")?.addEventListener("click", handleNavigationClick);
-  shell.addEventListener("click", (event) => {
-    const jump = event.target.closest("[data-authority-jump]");
-    if (jump) showDomain(jump.dataset.authorityJump, { updateHash: true });
-  });
   window.addEventListener("hashchange", () => showDomain(normalizeHash(window.location.hash)));
 
   showDomain(normalizeHash(window.location.hash));
