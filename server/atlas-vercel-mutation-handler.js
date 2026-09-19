@@ -13,6 +13,45 @@ const {
   createMutationAuthorizer
 } = require("./atlas-session-auth.js");
 const planner = require("./atlas-p9-mutation-planner.js");
+const {
+  verifyGitHubActionsOidcWithPolicy,
+  EXPECTED_REPOSITORY,
+  EXPECTED_REPOSITORY_ID,
+  EXPECTED_REF
+} = require("./atlas-github-oidc.js");
+
+const ONEOFF_BATHORY_DELETE_ID = "c2f584d8-170b-49ca-a4b7-7afcf18c95b6";
+const ONEOFF_BATHORY_DELETE_POLICY = Object.freeze({
+  audience:"atlas-person-delete-api",
+  repository:EXPECTED_REPOSITORY,
+  repositoryId:EXPECTED_REPOSITORY_ID,
+  ref:EXPECTED_REF,
+  workflowRef:"JezCH/atlas-person-db/.github/workflows/atlas-oneoff-bathory-hard-delete.yml@refs/heads/main",
+  environment:"production",
+  allowedEvents:new Set(["push"])
+});
+
+async function authorizeOneoffBathoryDelete(request = {}, {
+  env = process.env,
+  verifyOidc = verifyGitHubActionsOidcWithPolicy
+} = {}) {
+  if (String(request?.body?.operation || "").trim() !== "delete_person") {
+    return { authorized:false, reason:"unauthorized" };
+  }
+  if (String(request?.body?.payload?.person_id || "").trim() !== ONEOFF_BATHORY_DELETE_ID) {
+    return { authorized:false, reason:"unauthorized" };
+  }
+  const token = bearerToken(request.headers || {});
+  if (!token) return { authorized:false, reason:"unauthorized" };
+
+  try {
+    const expectedSha = requireEnv(env, "VERCEL_GIT_COMMIT_SHA");
+    await verifyOidc(token, { expectedSha, policy:ONEOFF_BATHORY_DELETE_POLICY });
+    return { authorized:true, method:"github_oidc_oneoff" };
+  } catch {
+    return { authorized:false, reason:"unauthorized" };
+  }
+}
 
 function sendResponse(res, response) {
   res.statusCode = response.status;
@@ -20,7 +59,7 @@ function sendResponse(res, response) {
   res.end(response.body);
 }
 
-function createVercelMutationHandler({ clientFactory, env = process.env, transactionOptions = {}, now } = {}) {
+function createVercelMutationHandler({ clientFactory, env = process.env, transactionOptions = {}, now, verifyOneoffOidc } = {}) {
   if (typeof clientFactory !== "function") throw new Error("clientFactory is required");
 
   return async function handler(req, res) {
@@ -42,7 +81,13 @@ function createVercelMutationHandler({ clientFactory, env = process.env, transac
       return;
     }
 
-    const auth = await authorize(request);
+    let auth = await authorize(request);
+    if (!auth?.authorized) {
+      auth = await authorizeOneoffBathoryDelete(request, {
+        env,
+        ...(verifyOneoffOidc ? { verifyOidc:verifyOneoffOidc } : {})
+      });
+    }
     if (!auth?.authorized) {
       sendResponse(res, jsonResponse(401, { ok: false, error: auth?.reason || "unauthorized" }));
       return;
@@ -85,5 +130,8 @@ module.exports = Object.freeze({
   bearerToken,
   safeTokenEqual,
   requireEnv,
-  sendResponse
+  sendResponse,
+  authorizeOneoffBathoryDelete,
+  ONEOFF_BATHORY_DELETE_ID,
+  ONEOFF_BATHORY_DELETE_POLICY
 });
