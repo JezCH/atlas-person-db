@@ -229,11 +229,5 @@
     refresh();
   }
 
-  window.addEventListener("atlas-client-data-source-updated", () => {
-    if (window.ATLAS_MAIN_AUTHORITY_NAV?.getDomain?.() === "dashboard" && mountedRoot?.isConnected) {
-      // 다른 화면의 authoritative write가 shared store를 갱신하면 다음 dashboard 진입/새로고침에서 동일 값을 사용한다.
-    }
-  });
-
   window.ATLAS_DASHBOARD = Object.freeze({ mount, refresh });
 })();
