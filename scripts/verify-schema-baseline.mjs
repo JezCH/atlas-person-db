@@ -5,7 +5,7 @@ import { createRequire } from 'node:module';
 import pg from 'pg';
 
 const require = createRequire(import.meta.url);
-const { AUTHORING_MIGRATION_PATHS, applyAuthoringMigrations } = require('../server/atlas-authoring-migrations.js');
+const { AUTHORING_MIGRATION_PATHS, AUTHORING_APPLY_MIGRATION_PATHS, applyAuthoringMigrations } = require('../server/atlas-authoring-migrations.js');
 const { CORRECTION_MIGRATION_PATHS, applyCorrectionMigrations } = require('../server/atlas-correction-migrations.js');
 const { Client } = pg;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -23,6 +23,20 @@ const expectedAuthoringMigrations = [
   '20260902_ongoing_activity_terms.sql',
   '20260904_person_representative_domains.sql',
   '20260905_person_representative_domain_standard_v1.sql',
+  '20260906_p13a_temporal_unknown_boundaries.sql',
+  '20260906_p13_source_place_objects.sql'
+];
+
+const expectedAuthoringReplayMigrations = [
+  '20260811_authoring_manifest_runs.sql',
+  '20260811_authoring_result_snapshot.sql',
+  '20260814_authoring_ledger_live_reference_lifecycle.sql',
+  '20260815_human_authoring_manifest_schema.sql',
+  '20260821_person_external_references.sql',
+  '20260821_human_authoring_external_reference_sync.sql',
+  '20260902_ongoing_activity_terms.sql',
+  '20260904_person_representative_domains.sql',
+  '20260919_person_representative_domain_standard_replay_safe.sql',
   '20260906_p13a_temporal_unknown_boundaries.sql',
   '20260906_p13_source_place_objects.sql'
 ];
@@ -86,10 +100,14 @@ function same(actual, expected, label) {
 function assertAuthoringMigrationRegistry(result, label) {
   const registered = AUTHORING_MIGRATION_PATHS.map((item) => path.basename(item));
   if (JSON.stringify(registered) !== JSON.stringify(expectedAuthoringMigrations)) {
-    throw new Error(`${label} registry drift\nactual=${JSON.stringify(registered)}\nexpected=${JSON.stringify(expectedAuthoringMigrations)}`);
+    throw new Error(`${label} full registry drift\nactual=${JSON.stringify(registered)}\nexpected=${JSON.stringify(expectedAuthoringMigrations)}`);
   }
-  if (JSON.stringify(result.applied) !== JSON.stringify(expectedAuthoringMigrations)) {
-    throw new Error(`${label} apply drift\nactual=${JSON.stringify(result.applied)}\nexpected=${JSON.stringify(expectedAuthoringMigrations)}`);
+  const replayRegistered = AUTHORING_APPLY_MIGRATION_PATHS.map((item) => path.basename(item));
+  if (JSON.stringify(replayRegistered) !== JSON.stringify(expectedAuthoringReplayMigrations)) {
+    throw new Error(`${label} replay registry drift\nactual=${JSON.stringify(replayRegistered)}\nexpected=${JSON.stringify(expectedAuthoringReplayMigrations)}`);
+  }
+  if (JSON.stringify(result.applied) !== JSON.stringify(expectedAuthoringReplayMigrations)) {
+    throw new Error(`${label} apply drift\nactual=${JSON.stringify(result.applied)}\nexpected=${JSON.stringify(expectedAuthoringReplayMigrations)}`);
   }
 }
 
