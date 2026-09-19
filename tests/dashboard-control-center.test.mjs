@@ -488,3 +488,78 @@ test("Dashboard heatmap reuses canonical spatial resolver and renders zero as re
   assert.match(dashboardSource,/data-heatmap-level/);
   assert.doesNotMatch(dashboardSource,/fetch\s*\(/);
 });
+
+
+test("Completeness Matrix keeps Person and Activity units separate and preserves unavailable sources as unknown", () => {
+  const P1="00000000-0000-4000-8000-000000000001";
+  const P2="00000000-0000-4000-8000-000000000002";
+  const X="00000000-0000-4000-8000-000000000101";
+  const A1="00000000-0000-4000-8000-000000000201";
+  const A2="00000000-0000-4000-8000-000000000202";
+  const persons=[
+    {id:P1,activity_count:1,external_references:{namuwiki:{status:"linked"}},facets:{polities:[{id:X}]},activity_summaries:[{id:A1,polity:{id:X},start:{year:100},end:{year:120}}]},
+    {id:P2,activity_count:0,external_references:{},facets:{polities:[{id:X}]},activity_summaries:[{id:A2,polity:{id:X},start:{year:130},end:{year:null}}]}
+  ];
+  const matrix=model.buildCompletenessMatrix({
+    personResult:{persons},
+    domainResult:null,
+    spatialIndex:null
+  });
+  const byCode=Object.fromEntries(matrix.rows.map((row)=>[row.code,row]));
+  assert.equal(matrix.person_check_count,3);
+  assert.equal(matrix.activity_check_count,2);
+  assert.equal(byCode.domain.available,false);
+  assert.equal(byCode.domain.complete,null);
+  assert.equal(byCode.domain.incomplete,null);
+  assert.equal(byCode.domain.total,null);
+  assert.equal(byCode.namuwiki.unit,"person");
+  assert.equal(byCode.namuwiki.complete,1);
+  assert.deepEqual(byCode.namuwiki.person_ids,[P2]);
+  assert.equal(byCode.runtime_activity.incomplete,1);
+  assert.deepEqual(byCode.runtime_activity.person_ids,[P2]);
+  assert.equal(byCode.chronology.unit,"activity");
+  assert.equal(byCode.chronology.complete,1);
+  assert.equal(byCode.chronology.incomplete,1);
+  assert.equal(byCode.chronology.person_ids,null);
+  assert.equal(byCode.spatial.available,false);
+  assert.equal(byCode.spatial.total,null);
+});
+
+test("Completeness Matrix Spatial row reuses the canonical Activity resolver", () => {
+  const X="00000000-0000-4000-8000-000000000101";
+  const A1="00000000-0000-4000-8000-000000000201";
+  const A2="00000000-0000-4000-8000-000000000202";
+  const persons=[{id:"p1",activity_count:2,external_references:{namuwiki:{status:"not_found"}},facets:{polities:[{id:X}]},activity_summaries:[
+    {id:A1,polity:{id:X},start:{year:100},end:{year:120}},
+    {id:A2,polity:{id:X},start:{year:130},end:{year:150}}
+  ]}];
+  const spatialIndex={
+    schema:spatialModel.SPATIAL_INDEX_SCHEMA,
+    polity_geography:{[X]:"europe"},
+    polity_subregions:{[X]:"western-europe"},
+    place_function_records:[],
+    review_queue:[],
+    activity_spatial_overrides:[]
+  };
+  const matrix=model.buildCompletenessMatrix({personResult:{persons},domainResult:{by_person_id:{p1:"governance"}},spatialIndex});
+  const spatial=matrix.rows.find((row)=>row.code==="spatial");
+  assert.equal(spatial.available,true);
+  assert.equal(spatial.unit,"activity");
+  assert.equal(spatial.complete,2);
+  assert.equal(spatial.incomplete,0);
+  assert.equal(spatial.percentage,100);
+});
+
+test("Completeness Matrix only drills down exact Person target sets and never converts Activity counts into Person targets", () => {
+  assert.match(dashboardSource,/COMPLETENESS MATRIX/);
+  assert.match(dashboardSource,/data-dashboard-completeness/);
+  assert.match(dashboardSource,/item\.unit !== "person"/);
+  assert.match(dashboardSource,/code:\x60completeness_\$\{item\.code\}\x60/);
+  assert.match(dashboardSource,/Person과 Activity 단위를 합산하지 않음/);
+  assert.doesNotMatch(dashboardSource,/fetch\s*\(/);
+});
+
+test("Completeness Matrix is derived from existing canonical snapshots without a new source", () => {
+  assert.match(fs.readFileSync(new URL("../atlas-dashboard-model.js",import.meta.url),"utf8"),/function buildCompletenessMatrix/);
+  assert.doesNotMatch(storeSource,/completeness/i);
+});
