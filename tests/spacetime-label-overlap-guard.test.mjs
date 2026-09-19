@@ -83,7 +83,7 @@ test("browser integration never writes label top/Y geometry", () => {
 test("surface owner loads the guard without modifying the core spacetime renderer", () => {
   const owner = fs.readFileSync(path.join(root, "atlas-domain-surface-owner.js"), "utf8");
   const view = fs.readFileSync(path.join(root, "atlas-person-spacetime-view.js"), "utf8");
-  assert.match(owner, /atlas-person-spacetime-label-overlap-guard\.js/);
+  assert.match(owner, /atlas-person-spacetime-label-overlap-guard\.js\?v=20260920-world-name-overlay/);
   assert.match(view, /const CAMERA_MIN_ZOOM = 5;/);
   assert.match(view, /const CAMERA_MAX_ZOOM = 8;/);
   assert.match(view, /const GLOBAL_EXTENT_COMPRESSION = 0\.748;/);
