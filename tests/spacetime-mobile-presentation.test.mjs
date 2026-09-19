@@ -59,6 +59,11 @@ test("mobile spacetime sticky headers stay below the mobile app bar", () => {
   assert.match(css, /\.spacetime-frame\.is-mobile-presentation \.spacetime-region-head\{z-index:30\}/);
 });
 
+test("mobile minimap stays below the mobile app bar", () => {
+  assert.match(mobileCss, /\.mobile-appbar \{[\s\S]*?z-index:40;/);
+  assert.match(css, /\.spacetime-frame\.is-mobile-presentation \.spacetime-minimap\{z-index:25\}/);
+});
+
 test("mobile presentation applies one uniform physical projection scale to both world axes", () => {
   assert.match(view, /DEFAULT_TIMELINE_HEIGHT \* cameraZoom \* GLOBAL_EXTENT_COMPRESSION \* responsive\.extentScale/);
   assert.match(view, /baseWorldWidth \* cameraZoom \* GLOBAL_EXTENT_COMPRESSION \* responsive\.extentScale/);
