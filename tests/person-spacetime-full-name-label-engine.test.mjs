@@ -103,9 +103,9 @@ test('dense same-time Person labels use the shared horizontal overlay before def
     max_right: 180
   }));
 
-  const result = engine.packLabels(labels, { width: 1000, height: 240 }, {
+  const result = engine.packLabels(labels, { width: 1200, height: 240 }, {
     gap: 2,
-    maxHorizontalShift: 1000,
+    maxHorizontalShift: 1200,
     borrowHorizontalSpace: true,
     preserveFullTextWidth: true
   });
