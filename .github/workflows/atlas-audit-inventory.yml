@@ -138,6 +138,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          if [[ ! -f scripts/build-person-necessity-audit-export.mjs ]]; then
+            echo 'Person necessity exporter is not present on current main; skip retired auxiliary export.'
+            exit 0
+          fi
           node scripts/build-person-necessity-audit-export.mjs \
             --audit audit-inventory-response.json \
             --out person-necessity-audit-inventory.json \
