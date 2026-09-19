@@ -1,17 +1,6 @@
 name: ATLAS Dashboard Production Acceptance
 
 on:
-  pull_request:
-    paths:
-      - "atlas-dashboard.js"
-      - "atlas-dashboard-model.js"
-      - "atlas-dashboard.css"
-      - "atlas-client-data-store.js"
-      - "atlas-main-authority-nav.js"
-      - "atlas-person-main.js"
-      - "index.html"
-      - "scripts/verify-dashboard-production-acceptance.mjs"
-      - ".github/workflows/atlas-dashboard-production-acceptance.yml"
   push:
     branches:
       - main
@@ -58,19 +47,8 @@ jobs:
           set -euo pipefail
           if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
             EXPECTED_SHA="$DISPATCH_SHA"
-          elif [[ "$EVENT_NAME" == "push" ]]; then
-            EXPECTED_SHA="$GITHUB_SHA"
           else
-            EXPECTED_SHA="$(node --input-type=module - <<'NODE'
-          const url = "https://atlas-person-db.vercel.app/api/atlas-read?__atlas_read_surface=runtime-identity&acceptance_probe=" + Date.now();
-          const response = await fetch(url, { cache:"no-store", headers:{ accept:"application/json", "cache-control":"no-cache" } });
-          if (!response.ok) throw new Error("runtime identity HTTP " + response.status);
-          const payload = await response.json();
-          const sha = String(payload?.identity?.git_commit_sha || "").trim();
-          if (!/^[0-9a-f]{40}$/i.test(sha)) throw new Error("invalid Production runtime SHA: " + sha);
-          process.stdout.write(sha);
-          NODE
-          )"
+            EXPECTED_SHA="$GITHUB_SHA"
           fi
           [[ "$EXPECTED_SHA" =~ ^[0-9a-fA-F]{40}$ ]]
           echo "ATLAS_EXPECTED_RUNTIME_SHA=$EXPECTED_SHA" >> "$GITHUB_ENV"
