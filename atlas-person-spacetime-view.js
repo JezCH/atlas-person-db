@@ -1200,8 +1200,10 @@
         <div class="spacetime-region-head-layer is-subregion" style="opacity:${spaceHeader.subregion_opacity}">${spaceHeader.subregions.map((region) => `<div class="spacetime-region-head-band" data-spacetime-band="${escapeHtml(region.code)}" style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${escapeHtml(region.parent_code)}</small></div>`).join("")}</div>
         <div class="spacetime-region-head-layer is-place" style="opacity:${spaceHeader.place_opacity}">${spaceHeader.places.map((place) => `<div class="spacetime-place-head-marker" style="left:${place.x}px" title="${escapeHtml(`검토 Place · ${place.place_name} · ${place.subregion_code}의 presentation anchor · 정확한 지리 좌표 아님`)}"><i></i><strong>${escapeHtml(place.place_name)}</strong></div>`).join("")}</div>
       </div>
-      <div class="spacetime-era-axis" style="height:${timelineHeight}px;opacity:${timeAxis.era_opacity}">${eras.map((era) => `<div class="person-era-${escapeHtml(era.code)}" style="top:${era.top}px;height:${era.height}px"><span>${escapeHtml(era.label)}</span></div>`).join("")}</div>
-      <div class="spacetime-year-axis" data-axis-stage="${escapeHtml(timeAxis.stage)}" style="height:${timelineHeight}px">${ticks.map((tick) => `<span class="${tick.major ? "is-major" : ""}" style="top:${tick.y}px">${escapeHtml(tick.label)}</span>`).join("")}</div>
+      <div class="spacetime-time-axis" style="height:${timelineHeight}px">
+        <div class="spacetime-era-axis" style="opacity:${timeAxis.era_opacity}">${eras.map((era) => `<div class="person-era-${escapeHtml(era.code)}" style="top:${era.top}px;height:${era.height}px"><span>${escapeHtml(era.label)}</span></div>`).join("")}</div>
+        <div class="spacetime-year-axis" data-axis-stage="${escapeHtml(timeAxis.stage)}">${ticks.map((tick) => `<span class="${tick.major ? "is-major" : ""}" style="top:${tick.y}px">${escapeHtml(tick.label)}</span>`).join("")}</div>
+      </div>
       <div class="spacetime-canvas${selectedPersonId ? " has-person-selection" : ""}" style="width:${contentWidth}px;height:${timelineHeight}px">
         ${ticks.map((tick) => `<i class="spacetime-century-line${tick.major ? " is-major" : ""}" style="top:${tick.y}px"></i>`).join("")}
         ${regions.map((region) => `<i class="spacetime-region-line" style="left:${region.left}px;height:${timelineHeight}px"></i>`).join("")}

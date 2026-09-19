@@ -127,10 +127,11 @@
 .spacetime-place-head-marker{position:absolute;top:19px;transform:translateX(-50%);display:flex;align-items:center;gap:3px;max-width:92px;padding:1px 4px 1px 2px;border:1px solid rgba(92,112,143,.46);border-radius:999px;background:rgba(255,255,255,.94);box-shadow:0 1px 4px rgba(38,54,78,.08);box-sizing:border-box}
 .spacetime-place-head-marker i{flex:0 0 auto;width:5px;height:5px;border:1px solid #5f789d;border-radius:50%;background:#fff;box-sizing:border-box}
 .spacetime-place-head-marker strong{min-width:0;font-size:8px;line-height:11px;color:#3f5575;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.spacetime-era-axis{position:sticky;z-index:30;left:0;width:var(--spacetime-era-axis-width,68px);margin-top:0;background:#fff;border-right:1px solid #d7e0ea;transition:opacity .18s ease}
+.spacetime-time-axis{position:sticky;z-index:28;left:0;width:var(--spacetime-axis-width,140px);margin-top:calc(-1 * var(--spacetime-header-height,36px))}
+.spacetime-era-axis{position:absolute;z-index:2;left:0;top:0;width:var(--spacetime-era-axis-width,68px);height:100%;background:#fff;border-right:1px solid #d7e0ea;transition:opacity .18s ease}
 .spacetime-era-axis>div{position:absolute;left:0;width:var(--spacetime-era-axis-width,68px);display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(77,91,110,.15);overflow:hidden}
 .spacetime-era-axis>div span{writing-mode:vertical-rl;text-orientation:upright;transform:none;font-size:12px;font-weight:800;letter-spacing:.08em;line-height:1.35;opacity:.76}
-.spacetime-year-axis{position:absolute;z-index:29;left:var(--spacetime-era-axis-width,68px);top:var(--spacetime-header-height,36px);width:var(--spacetime-year-axis-width,72px);background:#fff;border-right:1px solid #cfd8e4}
+.spacetime-year-axis{position:absolute;z-index:1;left:var(--spacetime-era-axis-width,68px);top:0;width:var(--spacetime-year-axis-width,72px);height:100%;background:#fff;border-right:1px solid #cfd8e4}
 .spacetime-year-axis span{position:absolute;right:7px;transform:translateY(-50%);font-size:10px;font-variant-numeric:tabular-nums;color:#6b778a;white-space:nowrap}
 .spacetime-year-axis span.is-major{font-weight:800;color:#42536b}
 .spacetime-year-axis[data-axis-stage="decade"] span,.spacetime-year-axis[data-axis-stage="quarter-century"] span{font-size:9px}
@@ -226,6 +227,7 @@
 .spacetime-frame.is-mobile-presentation[data-spacetime-zoom="500"] .spacetime-region-head-layer.is-macro .spacetime-region-head-band small{display:none}
 .spacetime-frame.is-mobile-presentation .spacetime-sticky-corner{z-index:35}
 .spacetime-frame.is-mobile-presentation .spacetime-region-head{z-index:30;margin-top:calc(-1 * var(--spacetime-header-height,34px))}
+.spacetime-frame.is-mobile-presentation .spacetime-time-axis{margin-top:0}
 .spacetime-frame.is-mobile-presentation .spacetime-minimap{z-index:25}
 }
 @media(max-width:560px){.spacetime-minimap{width:156px}.spacetime-minimap-surface{height:96px}.spacetime-minimap-head strong{font-size:9px}}

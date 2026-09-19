@@ -5,6 +5,7 @@ import { readFileSync } from "node:fs";
 
 const controlSource = readFileSync(new URL("../atlas-person-spacetime-control-state.js", import.meta.url), "utf8");
 const viewSource = readFileSync(new URL("../atlas-person-spacetime-view.js", import.meta.url), "utf8");
+const cssSource = readFileSync(new URL("../atlas-person-spacetime-view.css", import.meta.url), "utf8");
 
 function loadControlApi() {
   const window = {};
@@ -25,6 +26,15 @@ test("retired overview-detail snapshot adapter is absent", () => {
   assert.equal(loadControlApi().captureHorizontalCamera, undefined);
   assert.equal(loadControlApi().restoreHorizontalCamera, undefined);
   assert.doesNotMatch(controlSource, /spacetimeHorizontalMode/);
+});
+
+test("era and year columns share one sticky horizontal freeze pane", () => {
+  assert.match(viewSource, /<div class="spacetime-time-axis" style="height:\$\{timelineHeight\}px">/);
+  assert.match(viewSource, /<div class="spacetime-era-axis"/);
+  assert.match(viewSource, /<div class="spacetime-year-axis"/);
+  assert.match(cssSource, /\.spacetime-time-axis\{position:sticky;z-index:28;left:0;width:var\(--spacetime-axis-width,140px\)/);
+  assert.match(cssSource, /\.spacetime-year-axis\{position:absolute;z-index:1;left:var\(--spacetime-era-axis-width,68px\);top:0;/);
+  assert.match(cssSource, /\.spacetime-frame\.is-mobile-presentation \.spacetime-time-axis\{margin-top:0\}/);
 });
 
 test("window resize restores normalized horizontal center", () => {
