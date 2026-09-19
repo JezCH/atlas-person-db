@@ -17,6 +17,8 @@ const {
 
 const OPERATION_TYPE = "retire_polity_if_orphan";
 const REVIEW_REASON = "GOVERNANCE_CONTEXT_DUPLICATE_POLITY";
+const REVIEW_REASON_SAME_IDENTITY_STATE_FORM = "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE";
+const REVIEW_REASONS = new Set([REVIEW_REASON, REVIEW_REASON_SAME_IDENTITY_STATE_FORM]);
 const SNAPSHOT_SCHEMA = "atlas-correction-polity-retirement/v1";
 const MAX_OPERATIONS = 20;
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -78,7 +80,8 @@ function requirePreferredNames(raw, index) {
 function requireOperation(raw, index) {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error("CORRECTION_POLITY_RETIRE_OPERATION_OBJECT_REQUIRED");
   if (String(raw.type || "").trim() !== OPERATION_TYPE) throw new Error("CORRECTION_POLITY_RETIRE_OPERATION_UNSUPPORTED");
-  if (String(raw.review_reason || "").trim() !== REVIEW_REASON) throw new Error("CORRECTION_POLITY_RETIRE_REVIEW_REASON_REQUIRED");
+  const reviewReason = String(raw.review_reason || "").trim();
+  if (!REVIEW_REASONS.has(reviewReason)) throw new Error("CORRECTION_POLITY_RETIRE_REVIEW_REASON_REQUIRED");
   const caseId = String(raw.case_id || "").trim();
   if (!caseId) throw new Error("CORRECTION_POLITY_RETIRE_CASE_ID_REQUIRED");
   const expectedOwned = Number(raw.expected_owned_reference_total);
@@ -88,7 +91,7 @@ function requireOperation(raw, index) {
   return Object.freeze({
     type: OPERATION_TYPE,
     case_id: caseId,
-    review_reason: REVIEW_REASON,
+    review_reason: reviewReason,
     expected_polity: requireExpectedPolity(raw.expected_polity, index),
     expected_preferred_names: requirePreferredNames(raw.expected_preferred_names, index),
     expected_owned_reference_total: expectedOwned,
@@ -370,6 +373,8 @@ function createCorrectionPolityRetireV2Service({ client } = {}) {
 module.exports = Object.freeze({
   OPERATION_TYPE,
   REVIEW_REASON,
+  REVIEW_REASON_SAME_IDENTITY_STATE_FORM,
+  REVIEW_REASONS,
   SNAPSHOT_SCHEMA,
   MAX_OPERATIONS,
   OWNED_COUNT_KEYS,
