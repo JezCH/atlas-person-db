@@ -408,6 +408,61 @@
     });
   }
 
+  function canonicalTimestamp(value) {
+    const raw=text(value);
+    if (!raw) return null;
+    const parsed=Date.parse(raw);
+    return Number.isFinite(parsed) ? new Date(parsed).toISOString() : null;
+  }
+
+  function buildSourceFreshness({ spatialIndex = null, recentDelta = null, sourceStates = {} } = {}) {
+    const timestampByKey=Object.freeze({
+      spatialIndex:Object.freeze({
+        data_at:canonicalTimestamp(spatialIndex?.generated_at),
+        basis:"generated_at",
+        missing_reason:"SPATIAL_INDEX_GENERATED_AT_NOT_EXPOSED"
+      }),
+      recentDelta:Object.freeze({
+        data_at:canonicalTimestamp(recentDelta?.latest_at),
+        basis:"latest_tracked_mutation",
+        missing_reason:recentDelta?.available === false ? "RECENT_DELTA_SOURCE_UNAVAILABLE" : "RECENT_DELTA_HAS_NO_TRACKED_MUTATION"
+      })
+    });
+    const missingReasonByKey=Object.freeze({
+      persons:"PERSON_RUNTIME_DATA_TIMESTAMP_NOT_EXPOSED",
+      personDomains:"PERSON_DOMAIN_DATA_TIMESTAMP_NOT_EXPOSED",
+      nonTimeline:"NON_TIMELINE_DATA_TIMESTAMP_NOT_EXPOSED",
+      systemIdentity:"RUNTIME_IDENTITY_DATA_TIMESTAMP_NOT_EXPOSED"
+    });
+
+    const rows=Object.entries(sourceStates || {}).map(([key,state])=>{
+      const intrinsic=timestampByKey[key] || null;
+      const dataAt=intrinsic?.data_at || null;
+      const readAt=canonicalTimestamp(state?.loaded_at);
+      return Object.freeze({
+        key,
+        label:state?.label || key,
+        status:state?.status || "idle",
+        data_at:dataAt,
+        data_basis:dataAt ? intrinsic?.basis || null : null,
+        data_timestamp_known:Boolean(dataAt),
+        data_timestamp_unavailable_reason:dataAt ? null : intrinsic?.missing_reason || missingReasonByKey[key] || "SOURCE_DATA_TIMESTAMP_NOT_EXPOSED",
+        read_at:readAt,
+        read_timestamp_known:Boolean(readAt)
+      });
+    });
+
+    const dataTimestampKnown=rows.filter((row)=>row.data_timestamp_known).length;
+    const readTimestampKnown=rows.filter((row)=>row.read_timestamp_known).length;
+    return Object.freeze({
+      rows:Object.freeze(rows),
+      total_sources:rows.length,
+      data_timestamp_known:dataTimestampKnown,
+      data_timestamp_unknown:Math.max(0,rows.length-dataTimestampKnown),
+      read_timestamp_known:readTimestampKnown
+    });
+  }
+
   function buildSystemStrip(systemIdentityResult = null, sourceStates = {}) {
     const identity = systemIdentityResult?.identity && typeof systemIdentityResult.identity === "object"
       ? systemIdentityResult.identity
@@ -689,6 +744,7 @@
     const systemStrip = buildSystemStrip(systemIdentityResult, sourceStates);
     const coverageHeatmap = buildEraRegionHeatmap({ personResult, spatialIndex });
     const completenessMatrix = buildCompletenessMatrix({ personResult, domainResult, spatialIndex });
+    const sourceFreshness = buildSourceFreshness({ spatialIndex, recentDelta, sourceStates });
 
     const sourceList = Object.entries(sourceStates).map(([key, state]) => Object.freeze({
       key,
@@ -722,6 +778,7 @@
       system_strip:systemStrip,
       coverage_heatmap:coverageHeatmap,
       completeness_matrix:completenessMatrix,
+      source_freshness:sourceFreshness,
       quality:Object.freeze({
         no_runtime_activity:noActivity,
         spatial_unresolved:spatial.unresolved,
@@ -732,5 +789,5 @@
     });
   }
 
-  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildRecentActivityTimeline, buildSystemStrip, buildEraRegionHeatmap, buildCompletenessMatrix, buildDashboardSnapshot });
+  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildRecentActivityTimeline, canonicalTimestamp, buildSourceFreshness, buildSystemStrip, buildEraRegionHeatmap, buildCompletenessMatrix, buildDashboardSnapshot });
 });
