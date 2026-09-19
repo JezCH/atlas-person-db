@@ -1,0 +1,36 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-19",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "d0d8dd1e1dfae1f7e1ec9e8dfb1deeeedac207bc",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Apply the user's final adjudication of Alfred Dreyfus as governance. His historical representation is the Dreyfus Affair and the French state's military-judicial-political crisis rather than battlefield command; governance is the least-distorting canonical domain. Elizabeth Báthory is removed from the ATLAS Person roster instead of forcing any representative_domain."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-FINAL-HOLD-CLOSURE-20260919",
+    "queue_issue": 977,
+    "assignment_count": 1,
+    "deletions_outside_domain_apply": 1,
+    "distribution": {
+      "governance": 1,
+      "military": 0,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 0,
+      "exploration": 0
+    }
+  },
+  "entries": [
+    {
+      "person_id": "0da7334b-bc56-4dad-bc01-f859b7160b37",
+      "canonical_name_en": "Alfred Dreyfus",
+      "preferred_name_ko": "알프레드 드레퓌스",
+      "representative_domain": "governance"
+    }
+  ]
+}
