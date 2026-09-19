@@ -20,9 +20,10 @@ test("time projection is globally linear at every supported camera zoom", () => 
   }
 });
 
-test("camera zoom is bounded to 500-800 percent", () => {
-  assert.match(view, /const CAMERA_MIN_ZOOM = 5;/);
-  assert.match(view, /const CAMERA_MAX_ZOOM = 8;/);
+test("camera zoom is bounded to 300-1200 percent with a 500 default", () => {
+  assert.match(view, /const CAMERA_MIN_ZOOM = 3;/);
+  assert.match(view, /const CAMERA_DEFAULT_ZOOM = 5;/);
+  assert.match(view, /const CAMERA_MAX_ZOOM = 12;/);
   assert.match(view, /const CAMERA_ZOOM_STEP = 1\.25;/);
   assert.match(view, /Math\.max\(CAMERA_MIN_ZOOM, numeric\)/);
   assert.doesNotMatch(view, /TIME_CAMERA_MIN_ZOOM/);
