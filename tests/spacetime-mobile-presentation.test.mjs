@@ -29,13 +29,24 @@ test("mobile presentation keeps semantic zoom at the reviewed 500 to 800 percent
 });
 
 
-test("mobile toolbar uses separate search and zoom rows with touch-sized controls", () => {
-  assert.match(css, /\.spacetime-toolbar\{display:grid;grid-template-columns:1fr;gap:6px/);
-  assert.match(css, /\.spacetime-controls\{display:grid;grid-template-columns:1fr;gap:6px;width:100%;min-width:0\}/);
-  assert.match(css, /\.spacetime-controls label\{display:grid;grid-template-columns:44px minmax\(0,1fr\)/);
-  assert.match(css, /\.spacetime-camera\{display:grid;grid-template-columns:44px minmax\(68px,1fr\) 44px 72px/);
-  assert.match(css, /\.spacetime-camera button,\.spacetime-camera output\{height:44px/);
+test("mobile toolbar keeps separate rows while using compact controls", () => {
+  assert.match(css, /\.spacetime-toolbar\{display:grid;grid-template-columns:1fr;gap:4px;max-width:100%;padding:5px 6px/);
+  assert.match(css, /\.spacetime-controls\{display:grid;grid-template-columns:1fr;gap:4px;width:100%;min-width:0\}/);
+  assert.match(css, /\.spacetime-controls label\{display:grid;grid-template-columns:38px minmax\(0,1fr\)/);
+  assert.match(css, /\.spacetime-controls input\{width:100%;min-width:0;height:38px\}/);
+  assert.match(css, /\.spacetime-camera\{display:grid;grid-template-columns:38px minmax\(62px,1fr\) 38px 64px/);
+  assert.match(css, /\.spacetime-camera button,\.spacetime-camera output\{height:38px/);
   assert.match(css, /\.spacetime-precision-legend\{display:none\}/);
+});
+
+test("mobile vertical chrome is compact without changing timeline geometry", () => {
+  assert.match(css, /\.spacetime-scroll\{height:54vh;min-height:400px;scrollbar-gutter:auto;touch-action:pan-x pan-y\}/);
+  assert.match(css, /\.spacetime-status-row\{max-width:100%;display:flex;flex-wrap:wrap;gap:3px;overflow:visible;margin-bottom:4px\}/);
+  assert.match(css, /\.spacetime-meanwhile\.is-empty span\{display:none\}/);
+  assert.match(css, /\.spacetime-sticky-inspector\.is-empty\{min-height:0;padding:8px 10px\}/);
+  assert.match(css, /\.spacetime-sticky-inspector\.is-empty p\{display:none\}/);
+  assert.match(css, /\.spacetime-minimap-surface\{height:92px\}/);
+  assert.match(css, /@media\(max-width:560px\)\{\.spacetime-minimap\{width:100%\}\.spacetime-minimap-surface\{height:84px\}/);
 });
 
 test("mobile 500 percent header prioritizes macroregions and defers leaf labels until zoom", () => {
@@ -100,7 +111,7 @@ test("camera interactions derive mobile insets from rendered geometry rather tha
 test("mobile spacetime remains contained inside its own scroll viewport", () => {
   assert.match(css, /@media\(max-width:760px\)\{[^}]*\.person-spacetime-mount\{width:100%;max-width:100%;min-width:0;overflow-x:clip;contain:inline-size\}/);
   assert.match(css, /\.spacetime-workspace,\.spacetime-frame,\.spacetime-scroll\{width:100%;max-width:100%;min-width:0\}/);
-  assert.match(css, /\.spacetime-scroll\{scrollbar-gutter:auto;touch-action:pan-x pan-y\}/);
+  assert.match(css, /\.spacetime-scroll\{height:54vh;min-height:400px;scrollbar-gutter:auto;touch-action:pan-x pan-y\}/);
   assert.match(view, /data-spacetime-presentation="\$\{responsive\.mobile \? "mobile" : "desktop"\}"/);
 });
 
