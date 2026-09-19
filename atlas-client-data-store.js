@@ -11,7 +11,8 @@
     persons: Object.freeze({ key:"persons", label:"Person Runtime", url:personReader.ENDPOINT }),
     personDomains: Object.freeze({ key:"personDomains", label:"Person Domain", url:"/api/atlas-person-domain" }),
     spatialIndex: Object.freeze({ key:"spatialIndex", label:"Spatial Index", url:"./atlas-polity-spatial-index.json" }),
-    nonTimeline: Object.freeze({ key:"nonTimeline", label:"Non-timeline Registry", url:"./non-timeline-persons.json" })
+    nonTimeline: Object.freeze({ key:"nonTimeline", label:"Non-timeline Registry", url:"./non-timeline-persons.json" }),
+    recentDelta: Object.freeze({ key:"recentDelta", label:"Recent Delta", url:"/api/atlas-read?__atlas_read_surface=recent-delta" })
   });
 
   const cache = new Map();
@@ -154,6 +155,31 @@
     }, { force });
   }
 
+  function normalizeRecentDeltaPayload(payload) {
+    if (payload?.ok !== true || payload?.schema !== "atlas-recent-delta/v1" || !Array.isArray(payload.rows)) {
+      throw new Error("INVALID_RECENT_DELTA_RESPONSE");
+    }
+    const rows = payload.rows.map((row) => Object.freeze({
+      occurred_at:String(row?.occurred_at || "").trim(),
+      kind:String(row?.kind || "").trim(),
+      operation:String(row?.operation || "").trim(),
+      person_id:row?.person_id == null ? null : String(row.person_id).trim() || null,
+      display_name:row?.display_name == null ? null : String(row.display_name).trim() || null,
+      change_count:Number(row?.change_count || 0)
+    })).filter((row) => row.occurred_at && row.kind && row.operation && Number.isFinite(row.change_count));
+    return Object.freeze({
+      schema:payload.schema,
+      source:payload.source || null,
+      limit:Number(payload.limit || rows.length),
+      rows:Object.freeze(rows),
+      coverage:Object.freeze({ ...(payload.coverage || {}) })
+    });
+  }
+
+  function loadRecentDelta({ force = false } = {}) {
+    return shared("recentDelta", async () => normalizeRecentDeltaPayload(await getJson(SOURCES.recentDelta.url)), { force });
+  }
+
   function invalidate(key) {
     if (key) {
       cache.delete(key);
@@ -175,6 +201,7 @@
     patchPersonDomain,
     loadSpatialIndex,
     loadNonTimelinePersons,
+    loadRecentDelta,
     getSourceState,
     sourceStates,
     invalidate

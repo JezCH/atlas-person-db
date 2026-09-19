@@ -304,11 +304,53 @@
     });
   }
 
+  function buildRecentDelta(recentDeltaResult = null) {
+    if (!recentDeltaResult || !Array.isArray(recentDeltaResult.rows)) return Object.freeze({
+      available:false,
+      rows:Object.freeze([]),
+      latest_at:null,
+      tracked_sources:Object.freeze([]),
+      gaps:Object.freeze(["RECENT_DELTA_SOURCE_UNAVAILABLE"])
+    });
+    const labelFor = (row) => {
+      const key = `${text(row?.kind)}:${text(row?.operation)}`;
+      const labels = {
+        "authoring:create_activity":"Activity 등록",
+        "profile:set_person_korean_name":"한글명 수정",
+        "profile:set_person_external_reference":"외부참조 수정",
+        "correction:relationship_correction":"Activity 보정",
+        "merge:person_merge":"인물 병합"
+      };
+      return labels[key] || text(row?.operation) || text(row?.kind) || "변경";
+    };
+    const rows = recentDeltaResult.rows.map((row) => Object.freeze({
+      occurred_at:text(row?.occurred_at) || null,
+      kind:text(row?.kind),
+      operation:text(row?.operation),
+      label:labelFor(row),
+      person_id:text(row?.person_id) || null,
+      display_name:text(row?.display_name) || null,
+      change_count:Number(row?.change_count || 0)
+    })).filter((row) => row.occurred_at && row.kind && row.operation);
+    const coverage = recentDeltaResult.coverage || {};
+    const tracked = ["authoring","profile","correction","merge"].filter((key) => coverage[key] === true);
+    const gaps = [];
+    if (coverage.delete_person !== true) gaps.push(text(coverage.delete_person_reason) || "DELETE_PERSON_NOT_TRACKED");
+    return Object.freeze({
+      available:true,
+      rows:Object.freeze(rows),
+      latest_at:rows[0]?.occurred_at || null,
+      tracked_sources:Object.freeze(tracked),
+      gaps:Object.freeze(gaps)
+    });
+  }
+
   function buildDashboardSnapshot({
     personResult,
     domainResult = null,
     spatialIndex = null,
     nonTimelineRows = null,
+    recentDeltaResult = null,
     sourceStates = {}
   } = {}) {
     const persons = personResult?.persons || [];
@@ -347,6 +389,7 @@
     const attentionQueue = buildAttentionQueue({ personResult, domainResult, spatialIndex });
     const kpiDrilldown = buildKpiDrilldown({ personResult, attentionQueue });
     const incompleteBreakdown = buildIncompleteBreakdown({ personResult, domainResult, spatialIndex });
+    const recentDelta = buildRecentDelta(recentDeltaResult);
 
     const sourceList = Object.entries(sourceStates).map(([key, state]) => Object.freeze({
       key,
@@ -375,6 +418,7 @@
       attention_queue:attentionQueue,
       kpi_drilldown:kpiDrilldown,
       incomplete_breakdown:incompleteBreakdown,
+      recent_delta:recentDelta,
       quality:Object.freeze({
         no_runtime_activity:noActivity,
         spatial_unresolved:spatial.unresolved,
@@ -385,5 +429,5 @@
     });
   }
 
-  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildDashboardSnapshot });
+  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildDashboardSnapshot });
 });
