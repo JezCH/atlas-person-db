@@ -74,18 +74,24 @@
     </article>`;
   }
 
-  function recentDeltaCard(row) {
-    const person = row?.display_name || (row?.person_id ? row.person_id : "Project-wide");
-    const count = Number(row?.change_count || 0);
-    const detail = count > 1 ? `${person} · ${count.toLocaleString("ko-KR")} changes` : person;
-    const timestamp = row?.occurred_at
-      ? new Intl.DateTimeFormat("ko-KR",{dateStyle:"short",timeStyle:"short"}).format(new Date(row.occurred_at))
+  function recentTimelineEntry(entry) {
+    const person = entry?.display_name || (entry?.person_id ? entry.person_id : "Project-wide");
+    const timestamp = entry?.occurred_at
+      ? new Intl.DateTimeFormat("ko-KR",{dateStyle:"short",timeStyle:"short"}).format(new Date(entry.occurred_at))
       : "—";
-    return `<article class="dashboard-source-card" data-source-state="ready">
-      <span class="dashboard-source-dot" aria-hidden="true"></span>
-      <div><strong>${escapeHtml(row?.label || row?.operation || row?.kind || "Change")}</strong><small>${escapeHtml(detail)}</small></div>
-      <b>${escapeHtml(timestamp)}</b>
+    const count = Number(entry?.change_count || 0);
+    return `<article class="dashboard-timeline-entry" data-timeline-kind="${escapeHtml(entry?.kind || "unknown")}">
+      <span class="dashboard-timeline-node" aria-hidden="true"></span>
+      <div class="dashboard-timeline-copy">
+        <div><strong>${escapeHtml(entry?.label || entry?.operation || entry?.kind || "Change")}</strong><span class="dashboard-unit-badge">${escapeHtml(entry?.kind || "unknown")}</span></div>
+        <small>${escapeHtml(person)}</small>
+      </div>
+      <div class="dashboard-timeline-meta"><b>${escapeHtml(timestamp)}</b><small>${count > 0 ? `${value(count)} changes` : "change count unavailable"}</small></div>
     </article>`;
+  }
+
+  function recentTimelineSummary(timeline) {
+    return (timeline?.kind_summary || []).map((item) => `<span><b>${escapeHtml(item.kind)}</b> ${value(item.event_count)} events · ${value(item.change_count)} changes</span>`).join("");
   }
 
   function systemCard(label, primary, detail, state = "ready") {
@@ -161,6 +167,7 @@
     const b = snapshot.incomplete_breakdown;
     const kd = snapshot.kpi_drilldown;
     const rd = snapshot.recent_delta;
+    const timeline = snapshot.recent_activity_timeline;
     const sys = snapshot.system_strip;
     const heatmap = snapshot.coverage_heatmap;
     const completeness = snapshot.completeness_matrix;
@@ -227,14 +234,16 @@
         </div>
       </section>
 
-      <section class="dashboard-panel card">
-        <div class="dashboard-panel-head"><div><p class="eyebrow">RECENT DELTA</p><h3>최근 추적 변경</h3></div><span>${rd.available ? `latest ${escapeHtml(rd.latest_at || "—")}` : "source unavailable"}</span></div>
-        <div class="dashboard-source-list">
-          ${rd.available
-            ? (rd.rows.length ? rd.rows.map(recentDeltaCard).join("") : '<article class="dashboard-source-card" data-source-state="idle"><span class="dashboard-source-dot" aria-hidden="true"></span><div><strong>추적 변경 없음</strong><small>현재 ledger 결과에 표시할 변경이 없습니다.</small></div><b>0</b></article>')
-            : '<article class="dashboard-source-card" data-source-state="error"><span class="dashboard-source-dot" aria-hidden="true"></span><div><strong>Recent Delta unavailable</strong><small>canonical mutation ledger를 읽지 못했습니다.</small></div><b>—</b></article>'}
-        </div>
+      <section class="dashboard-panel card" aria-label="최근 프로젝트 변경 타임라인">
+        <div class="dashboard-panel-head"><div><p class="eyebrow">RECENT DELTA · RECENT ACTIVITY TIMELINE</p><h3>최근 추적 변경 타임라인</h3></div><span>${timeline.available ? `${value(timeline.event_count)} events · ${value(timeline.total_change_count)} changes` : "source unavailable"}</span></div>
+        ${timeline.available
+          ? (timeline.entries.length
+            ? `<div class="dashboard-timeline">${timeline.entries.map(recentTimelineEntry).join("")}</div>`
+            : '<div class="dashboard-heatmap-unavailable">현재 canonical mutation ledger에 표시할 변경이 없습니다.</div>')
+          : '<div class="dashboard-heatmap-unavailable">Recent Delta canonical source unavailable</div>'}
+        <div class="dashboard-timeline-summary">${timeline.available ? recentTimelineSummary(timeline) : ""}</div>
         <div class="dashboard-progress-meta">
+          <span>Person-scoped ${timeline.available ? value(timeline.person_scoped_count) : "—"} · Project-wide ${timeline.available ? value(timeline.project_wide_count) : "—"}</span>
           <span>Tracked ${escapeHtml((rd.tracked_sources || []).join(" · ") || "—")}</span>
           <span>${rd.gaps?.length ? `Coverage gap · ${escapeHtml(rd.gaps.join(", "))}` : "Tracked mutation coverage complete"}</span>
         </div>

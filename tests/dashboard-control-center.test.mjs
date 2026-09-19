@@ -563,3 +563,67 @@ test("Completeness Matrix is derived from existing canonical snapshots without a
   assert.match(fs.readFileSync(new URL("../atlas-dashboard-model.js",import.meta.url),"utf8"),/function buildCompletenessMatrix/);
   assert.doesNotMatch(storeSource,/completeness/i);
 });
+
+
+test("Recent Activity Timeline reuses normalized Recent Delta and sorts canonical events newest-first", () => {
+  const delta=model.buildRecentDelta({
+    rows:[
+      {occurred_at:"2026-09-19T01:00:00.000Z",kind:"authoring",operation:"create_activity",person_id:"p1",display_name:"인물 1",change_count:1},
+      {occurred_at:"2026-09-19T03:00:00.000Z",kind:"profile",operation:"set_person_external_reference",person_id:"p2",display_name:"인물 2",change_count:2},
+      {occurred_at:"2026-09-19T02:00:00.000Z",kind:"correction",operation:"relationship_correction",person_id:null,display_name:null,change_count:3}
+    ],
+    coverage:{authoring:true,profile:true,correction:true,merge:false,delete_person:false,delete_person_reason:"PERSON_DELETE_IMMUTABLE_AUDIT_NOT_EXPOSED"}
+  });
+  const timeline=model.buildRecentActivityTimeline(delta);
+  assert.equal(timeline.available,true);
+  assert.deepEqual(timeline.entries.map((entry)=>entry.kind),["profile","correction","authoring"]);
+  assert.equal(timeline.event_count,3);
+  assert.equal(timeline.total_change_count,6);
+  assert.equal(timeline.person_scoped_count,2);
+  assert.equal(timeline.project_wide_count,1);
+  assert.equal(timeline.latest_at,"2026-09-19T03:00:00.000Z");
+  assert.deepEqual(timeline.tracked_sources,["authoring","profile","correction"]);
+  assert.deepEqual(timeline.gaps,["PERSON_DELETE_IMMUTABLE_AUDIT_NOT_EXPOSED"]);
+});
+
+test("Recent Activity Timeline aggregates event and change counts by canonical mutation kind without a new source", () => {
+  const timeline=model.buildRecentActivityTimeline({
+    available:true,
+    rows:[
+      {occurred_at:"2026-09-19T03:00:00.000Z",kind:"profile",operation:"a",label:"A",person_id:"p1",display_name:"P1",change_count:1},
+      {occurred_at:"2026-09-19T02:00:00.000Z",kind:"profile",operation:"b",label:"B",person_id:"p2",display_name:"P2",change_count:2},
+      {occurred_at:"2026-09-19T01:00:00.000Z",kind:"merge",operation:"c",label:"C",person_id:"p3",display_name:"P3",change_count:1}
+    ],
+    tracked_sources:["profile","merge"],
+    gaps:[]
+  });
+  assert.deepEqual(timeline.kind_summary,[
+    {kind:"profile",event_count:2,change_count:3},
+    {kind:"merge",event_count:1,change_count:1}
+  ]);
+  assert.doesNotMatch(storeSource,/recentActivityTimeline|recent-activity-timeline/i);
+});
+
+test("Recent Activity Timeline preserves unavailable Recent Delta as unknown instead of zero activity", () => {
+  const timeline=model.buildRecentActivityTimeline({
+    available:false,
+    rows:[],
+    tracked_sources:[],
+    gaps:["RECENT_DELTA_SOURCE_UNAVAILABLE"]
+  });
+  assert.equal(timeline.available,false);
+  assert.equal(timeline.event_count,null);
+  assert.equal(timeline.total_change_count,null);
+  assert.equal(timeline.person_scoped_count,null);
+  assert.equal(timeline.project_wide_count,null);
+  assert.deepEqual(timeline.gaps,["RECENT_DELTA_SOURCE_UNAVAILABLE"]);
+});
+
+test("Dashboard replaces duplicate Recent Delta cards with one timeline view while retaining coverage metadata", () => {
+  assert.match(dashboardSource,/RECENT ACTIVITY TIMELINE/);
+  assert.match(dashboardSource,/dashboard-timeline-entry/);
+  assert.match(dashboardSource,/timeline\.person_scoped_count/);
+  assert.match(dashboardSource,/Coverage gap/);
+  assert.doesNotMatch(dashboardSource,/function recentDeltaCard/);
+  assert.doesNotMatch(dashboardSource,/fetch\s*\(/);
+});

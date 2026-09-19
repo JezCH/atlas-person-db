@@ -349,6 +349,65 @@
     });
   }
 
+  function buildRecentActivityTimeline(recentDelta = null) {
+    if (!recentDelta?.available || !Array.isArray(recentDelta.rows)) return Object.freeze({
+      available:false,
+      entries:Object.freeze([]),
+      kind_summary:Object.freeze([]),
+      event_count:null,
+      total_change_count:null,
+      person_scoped_count:null,
+      project_wide_count:null,
+      latest_at:null,
+      tracked_sources:Object.freeze(Array.isArray(recentDelta?.tracked_sources) ? [...recentDelta.tracked_sources] : []),
+      gaps:Object.freeze(Array.isArray(recentDelta?.gaps) ? [...recentDelta.gaps] : ["RECENT_DELTA_SOURCE_UNAVAILABLE"])
+    });
+
+    const entries = recentDelta.rows
+      .map((row,index) => ({ row, index, timestamp:Date.parse(row?.occurred_at || "") }))
+      .filter((item) => Number.isFinite(item.timestamp))
+      .sort((left,right) => right.timestamp-left.timestamp || left.index-right.index)
+      .map((item,index) => Object.freeze({
+        sequence:index+1,
+        occurred_at:item.row.occurred_at,
+        kind:text(item.row.kind),
+        operation:text(item.row.operation),
+        label:text(item.row.label) || text(item.row.operation) || text(item.row.kind) || "변경",
+        person_id:text(item.row.person_id) || null,
+        display_name:text(item.row.display_name) || null,
+        change_count:Math.max(0,Number(item.row.change_count || 0))
+      }));
+
+    const kindMap = new Map();
+    let totalChangeCount = 0;
+    let personScopedCount = 0;
+    for (const entry of entries) {
+      totalChangeCount += entry.change_count;
+      if (entry.person_id || entry.display_name) personScopedCount += 1;
+      const current = kindMap.get(entry.kind) || { kind:entry.kind, event_count:0, change_count:0 };
+      current.event_count += 1;
+      current.change_count += entry.change_count;
+      kindMap.set(entry.kind,current);
+    }
+
+    const kindSummary = [...kindMap.values()]
+      .sort((left,right) => right.event_count-left.event_count || left.kind.localeCompare(right.kind))
+      .map((item) => Object.freeze({ ...item }));
+
+    return Object.freeze({
+      available:true,
+      entries:Object.freeze(entries),
+      kind_summary:Object.freeze(kindSummary),
+      event_count:entries.length,
+      total_change_count:totalChangeCount,
+      person_scoped_count:personScopedCount,
+      project_wide_count:Math.max(0,entries.length-personScopedCount),
+      latest_at:entries[0]?.occurred_at || null,
+      tracked_sources:Object.freeze([...(recentDelta.tracked_sources || [])]),
+      gaps:Object.freeze([...(recentDelta.gaps || [])])
+    });
+  }
+
   function buildSystemStrip(systemIdentityResult = null, sourceStates = {}) {
     const identity = systemIdentityResult?.identity && typeof systemIdentityResult.identity === "object"
       ? systemIdentityResult.identity
@@ -626,6 +685,7 @@
     const kpiDrilldown = buildKpiDrilldown({ personResult, attentionQueue });
     const incompleteBreakdown = buildIncompleteBreakdown({ personResult, domainResult, spatialIndex });
     const recentDelta = buildRecentDelta(recentDeltaResult);
+    const recentActivityTimeline = buildRecentActivityTimeline(recentDelta);
     const systemStrip = buildSystemStrip(systemIdentityResult, sourceStates);
     const coverageHeatmap = buildEraRegionHeatmap({ personResult, spatialIndex });
     const completenessMatrix = buildCompletenessMatrix({ personResult, domainResult, spatialIndex });
@@ -658,6 +718,7 @@
       kpi_drilldown:kpiDrilldown,
       incomplete_breakdown:incompleteBreakdown,
       recent_delta:recentDelta,
+      recent_activity_timeline:recentActivityTimeline,
       system_strip:systemStrip,
       coverage_heatmap:coverageHeatmap,
       completeness_matrix:completenessMatrix,
@@ -671,5 +732,5 @@
     });
   }
 
-  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildSystemStrip, buildEraRegionHeatmap, buildCompletenessMatrix, buildDashboardSnapshot });
+  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildRecentActivityTimeline, buildSystemStrip, buildEraRegionHeatmap, buildCompletenessMatrix, buildDashboardSnapshot });
 });
