@@ -121,6 +121,7 @@
         left: { name: "Japan", ko: "일본", polity_id: "e029b047-544a-52c7-8897-4e494ac72af4" },
         right: { name: "Empire of Japan", ko: "일본 제국", polity_id: "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6" },
         rationale: "기존 reviewed model은 stable Japan identity와 temporal state-form을 분리해야 한다고 판정했습니다.",
+        presentation_note: "동일 stable Japan identity로 정리하더라도 전쟁기 일본 제국과 전후·현대 일본의 국호·state-form·상징은 연대별로 분리 표시해야 합니다. 욱일기 계열은 national flag가 아니라 군기·군함기 계열이므로 national flag와 별도 symbol type으로 취급합니다.",
         suggested_action: "merge",
         status: "PRODUCTION_APPLIED_RETIRED",
         reviewed_decision: "merge",
