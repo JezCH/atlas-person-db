@@ -101,11 +101,11 @@
 
       <section class="dashboard-kpi-grid" aria-label="핵심 통계">
         <article class="dashboard-kpi card"><small>PERSONS</small><strong>${value(k.persons)}</strong><span>historical ${value(k.historical)} · 기타 ${value(k.other_historicity)}</span></article>
+        <article class="dashboard-kpi card"><small>DOMAIN COVERAGE</small><strong>${pct(w.domain.percentage)}</strong><span>잔여 ${value(w.domain.remaining)}</span></article>
+        <article class="dashboard-kpi card"><small>NAMUWIKI REVIEW</small><strong>${pct(w.namuwiki.percentage)}</strong><span>잔여 ${value(w.namuwiki.remaining)} · 연결 ${value(w.namuwiki.linked)}</span></article>
+        <article class="dashboard-kpi card"><small>SPATIAL READY</small><strong>${pct(w.spatial.percentage)}</strong><span>잔여 ${value(w.spatial.remaining)}</span></article>
         <article class="dashboard-kpi card"><small>RUNTIME ACTIVITIES</small><strong>${value(k.activities)}</strong><span>Person Runtime projection</span></article>
         <article class="dashboard-kpi card"><small>USED POLITIES</small><strong>${value(k.polities)}</strong><span>현재 Person Activity에서 참조</span></article>
-        <article class="dashboard-kpi card"><small>DOMAIN COVERAGE</small><strong>${pct(w.domain.percentage)}</strong><span>잔여 ${value(w.domain.remaining)}</span></article>
-        <article class="dashboard-kpi card"><small>NAMUWIKI REVIEW</small><strong>${pct(w.namuwiki.percentage)}</strong><span>연결 ${value(w.namuwiki.linked)} · 없음확인 ${value(w.namuwiki.not_found)}</span></article>
-        <article class="dashboard-kpi card"><small>SPATIAL READY</small><strong>${pct(w.spatial.percentage)}</strong><span>잔여 ${value(w.spatial.remaining)}</span></article>
       </section>
 
       <section class="dashboard-panel card">
