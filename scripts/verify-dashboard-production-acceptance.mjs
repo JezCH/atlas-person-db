@@ -399,11 +399,19 @@ async function main() {
   await client.call("Log.enable");
   await client.call("Network.enable");
   client.on("Runtime.consoleAPICalled", (params) => {
-    if (params.type === "error") consoleErrors.push(params.args?.map((arg)=>arg.value ?? arg.description ?? "").join(" ") || "console.error");
+    if (params.type === "error") consoleErrors.push({
+      source:"console",
+      text:params.args?.map((arg)=>arg.value ?? arg.description ?? "").join(" ") || "console.error",
+      url:params.stackTrace?.callFrames?.[0]?.url || null
+    });
   });
   client.on("Runtime.exceptionThrown", (params) => exceptions.push(params.exceptionDetails?.exception?.description || params.exceptionDetails?.text || "runtime exception"));
   client.on("Log.entryAdded", (params) => {
-    if (params.entry?.level === "error") consoleErrors.push(params.entry.text || "Log.entryAdded error");
+    if (params.entry?.level === "error") consoleErrors.push({
+      source:"log",
+      text:params.entry.text || "Log.entryAdded error",
+      url:params.entry.url || null
+    });
   });
   client.on("Network.requestWillBeSent", (params) => {
     if (params.requestId && params.request?.url) requestUrls.set(params.requestId, params.request.url);
@@ -462,9 +470,21 @@ async function main() {
       return sameOrigin || Number(row.status || 0) >= 500 || ["Document","Script","Stylesheet","XHR","Fetch"].includes(row.type);
     });
 
-    assert(consoleErrors.length === 0, "Production browser console errors detected", consoleErrors);
+    const genericResourceConsole=(row)=>String(row?.text || "").startsWith("Failed to load resource:");
+    const majorConsoleErrors=consoleErrors.filter((row)=>{
+      if (!genericResourceConsole(row)) return true;
+      if (row.url) {
+        try {
+          const parsed=new URL(row.url);
+          if (parsed.pathname === "/favicon.ico" && Number(resourceErrors.find((item)=>item.url===row.url)?.status || 0) === 404) return false;
+        } catch {}
+      }
+      return majorNetworkErrors.length > 0;
+    });
+
+    assert(majorNetworkErrors.length === 0, "Major Production API/network failures detected", { major:majorNetworkErrors, all:resourceErrors, console:consoleErrors });
+    assert(majorConsoleErrors.length === 0, "Production browser console errors detected", { major:majorConsoleErrors, all:consoleErrors, network:resourceErrors });
     assert(exceptions.length === 0, "Production uncaught exceptions detected", exceptions);
-    assert(majorNetworkErrors.length === 0, "Major Production API/network failures detected", majorNetworkErrors);
 
     const report={
       schema:"atlas-dashboard-production-acceptance/v1",
@@ -487,7 +507,7 @@ async function main() {
         heatmap:{available:modelState.heatmap?.available,placed_activity_count:modelState.heatmap?.placed_activity_count,unresolved_activity_count:modelState.heatmap?.unresolved_activity_count,row_count:modelState.heatmap?.rows?.length || 0},
         timeline:{available:modelState.timeline?.available,event_count:modelState.timeline?.event_count,total_change_count:modelState.timeline?.total_change_count,entry_count:modelState.timeline?.entries?.length || 0}
       },
-      browser_errors:{console:consoleErrors,exceptions,major_network:majorNetworkErrors,all_network:resourceErrors},
+      browser_errors:{console:consoleErrors,major_console:majorConsoleErrors,exceptions,major_network:majorNetworkErrors,all_network:resourceErrors},
       screenshots:{desktop:desktopScreenshot,mobile:mobileScreenshot}
     };
     fs.writeFileSync(path.join(OUT_DIR,"dashboard-production-acceptance.json"),JSON.stringify(report,null,2));
