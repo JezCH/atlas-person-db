@@ -1,0 +1,44 @@
+{
+  "schema": "atlas-reviewed-spatial-corrections/v1",
+  "correction_id": "reviewed-state-form-polity-retirement-batch1-20260919",
+  "baseline": "afdee488dcc965e0431825969f350ee05693920d",
+  "reviewed_at": "2026-09-19T14:20:38Z",
+  "changes": [
+    {
+      "polity_id": "09ff1776-171f-435a-a444-4b0463e48137",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": "central-europe"
+      },
+      "disposition": "remove_orphan",
+      "reason": "Principality of Hungary UUID was retired after its sole Activity was relinked to the Kingdom of Hungary survivor and its 997-c.1000 state-form label was preserved as a temporal designation."
+    },
+    {
+      "polity_id": "0a0ed67e-ab5b-4b43-8c3c-a32c32aa3653",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": "iberia"
+      },
+      "disposition": "remove_orphan",
+      "reason": "Caliphate of Cordoba UUID is an Activity orphan after reviewed same-identity relink to the Cordoban survivor; its 929-1031 state-form label is preserved as a temporal designation."
+    },
+    {
+      "polity_id": "4a92bbb3-6532-4dab-b515-837ad344ec6c",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": "balkans"
+      },
+      "disposition": "remove_orphan",
+      "reason": "Principality of Bulgaria UUID is an Activity orphan after reviewed same-identity relink to the Kingdom of Bulgaria survivor; its 1887-1908 state-form label is preserved as a temporal designation."
+    },
+    {
+      "polity_id": "a7049680-e80e-40a0-9aec-4efeaeb0f301",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": "balkans"
+      },
+      "disposition": "remove_orphan",
+      "reason": "Principality of Montenegro UUID is an Activity orphan after reviewed same-identity relink to the Kingdom of Montenegro survivor; its 1860-1910 state-form label is preserved as a temporal designation."
+    }
+  ]
+}
