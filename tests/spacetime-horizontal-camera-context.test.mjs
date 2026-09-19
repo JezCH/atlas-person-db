@@ -35,7 +35,7 @@ test("window resize restores normalized horizontal center", () => {
 test("window resize preserves historical time at viewport center", () => {
   assert.match(viewSource, /pendingViewportCameraOrdinal\s*=\s*cameraCenterOrdinal/);
   assert.match(viewSource, /projection\.worldToScreenY\(pendingViewportCameraOrdinal\)/);
-  assert.match(viewSource, /CAMERA_HEADER_HEIGHT \+ centerY - cameraViewportCenterY\(scroll\)/);
+  assert.match(viewSource, /cameraHeaderHeight\(scroll\) \+ centerY - cameraViewportCenterY\(scroll\)/);
 });
 
 test("unified pointer zoom explicitly preserves horizontal ratio and historical ordinal", () => {
