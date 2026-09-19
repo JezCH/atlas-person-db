@@ -345,12 +345,53 @@
     });
   }
 
+  function buildSystemStrip(systemIdentityResult = null, sourceStates = {}) {
+    const identity = systemIdentityResult?.identity && typeof systemIdentityResult.identity === "object"
+      ? systemIdentityResult.identity
+      : null;
+    const provider = identity ? text(identity.provider) || null : null;
+    const environment = identity ? text(identity.environment) || null : null;
+    const gitCommitSha = identity ? text(identity.git_commit_sha) || null : null;
+    const gitCommitRef = identity ? text(identity.git_commit_ref) || null : null;
+    const region = identity ? text(identity.region) || null : null;
+    const identityComplete = Boolean(provider && environment && gitCommitSha && gitCommitRef);
+    const productionMain = environment && gitCommitRef
+      ? environment === "production" && gitCommitRef === "main"
+      : null;
+
+    const states = Object.values(sourceStates || {});
+    const sourceAvailable = states.length > 0;
+    const ready = sourceAvailable ? states.filter((state) => state?.status === "ready").length : null;
+    const errors = sourceAvailable ? states.filter((state) => state?.status === "error").length : null;
+    const loading = sourceAvailable ? states.filter((state) => state?.status === "loading").length : null;
+
+    return Object.freeze({
+      available:Boolean(identity),
+      provider,
+      environment,
+      git_commit_sha:gitCommitSha,
+      git_commit_short:gitCommitSha ? gitCommitSha.slice(0,12) : null,
+      git_commit_ref:gitCommitRef,
+      region,
+      identity_complete:identityComplete,
+      production_main:productionMain,
+      source_health:Object.freeze({
+        available:sourceAvailable,
+        total:sourceAvailable ? states.length : null,
+        ready,
+        errors,
+        loading
+      })
+    });
+  }
+
   function buildDashboardSnapshot({
     personResult,
     domainResult = null,
     spatialIndex = null,
     nonTimelineRows = null,
     recentDeltaResult = null,
+    systemIdentityResult = null,
     sourceStates = {}
   } = {}) {
     const persons = personResult?.persons || [];
@@ -390,6 +431,7 @@
     const kpiDrilldown = buildKpiDrilldown({ personResult, attentionQueue });
     const incompleteBreakdown = buildIncompleteBreakdown({ personResult, domainResult, spatialIndex });
     const recentDelta = buildRecentDelta(recentDeltaResult);
+    const systemStrip = buildSystemStrip(systemIdentityResult, sourceStates);
 
     const sourceList = Object.entries(sourceStates).map(([key, state]) => Object.freeze({
       key,
@@ -419,6 +461,7 @@
       kpi_drilldown:kpiDrilldown,
       incomplete_breakdown:incompleteBreakdown,
       recent_delta:recentDelta,
+      system_strip:systemStrip,
       quality:Object.freeze({
         no_runtime_activity:noActivity,
         spatial_unresolved:spatial.unresolved,
@@ -429,5 +472,5 @@
     });
   }
 
-  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildDashboardSnapshot });
+  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildRecentDelta, buildSystemStrip, buildDashboardSnapshot });
 });
