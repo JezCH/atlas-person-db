@@ -58,13 +58,14 @@ test("subregion context is always available at the readable floor", () => {
   assert.doesNotMatch(semanticAxis, /stage: "macroregion"/);
 });
 
-test("spacetime top chrome is compact without dropping live status telemetry", () => {
-  assert.match(view, /인물의 활동 시기와 검토된 공간 배치를 함께 봅니다\./);
+test("spacetime top chrome keeps controls and status without duplicate explanatory copy", () => {
+  assert.match(view, /<section class="spacetime-toolbar card">\s*<div class="spacetime-controls">/);
+  assert.doesNotMatch(view, /spacetime-toolbar-copy/);
+  assert.doesNotMatch(view, /spacetime-explore-help/);
   assert.match(view, /근거 없는 위치는 자동 추정하지 않습니다\./);
   assert.match(view, /spacetimeDomPersonCount/);
   assert.match(view, /spacetimeDeferredLabelCount/);
-  assert.doesNotMatch(view, /가로 base world는 900px 하한/);
-  assert.doesNotMatch(view, /canonical spatial index가 제공하는 검토된 macroregion만 좌표로 사용합니다/);
+  assert.match(css, /\.spacetime-toolbar\{padding:8px 10px;margin-bottom:8px\}/);
 });
 
 test("the timeline remains a map-like camera viewport", () => {
