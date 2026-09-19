@@ -121,6 +121,16 @@ test("touch pinch inside spacetime controls the internal 500 to 800 percent came
   assert.match(viewCss, /\.spacetime-scroll\{height:54vh;min-height:400px;scrollbar-gutter:auto;touch-action:pan-x pan-y\}/);
 });
 
+test("two-finger gestures inside spacetime suppress simultaneous browser zoom", () => {
+  assert.match(viewSource, /const preventBrowserPinch = \(event\) => \{/);
+  assert.match(viewSource, /if \(!isInsideScroll\(event\.target\)\) return;/);
+  assert.match(viewSource, /if \(event\.touches && event\.touches\.length < 2\) return;/);
+  assert.match(viewSource, /mount\.addEventListener\("touchstart", preventBrowserPinch, \{ passive: false \}\)/);
+  assert.match(viewSource, /mount\.addEventListener\("touchmove", preventBrowserPinch, \{ passive: false \}\)/);
+  assert.match(viewSource, /mount\.addEventListener\("gesturestart"/);
+  assert.match(viewSource, /mount\.addEventListener\("gesturechange"/);
+});
+
 test("pinch outside spacetime remains browser page zoom", () => {
   assert.match(indexSource, /<meta name="viewport" content="width=device-width, initial-scale=1\.0" \/>/);
   assert.doesNotMatch(indexSource, /user-scalable\s*=\s*no/i);
