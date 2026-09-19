@@ -70,7 +70,10 @@ test("spacetime top chrome merges controls legend and integrity status into comp
   assert.doesNotMatch(view, /spacetime-meanwhile card is-empty/);
   assert.match(css, /\.spacetime-toolbar\{display:flex;align-items:center;justify-content:flex-start;gap:10px;padding:6px 8px;margin-bottom:4px;overflow-x:auto/);
   assert.match(css, /\.spacetime-status-row\{display:flex;gap:4px;flex-wrap:nowrap;margin-bottom:4px;overflow-x:auto/);
-  assert.match(css, /\.spacetime-controls label\{display:flex;align-items:center/);\n  assert.match(css, /\.spacetime-camera\{display:flex;align-items:center/);\n  assert.match(css, /\.spacetime-precision-legend\{[^}]*flex-wrap:nowrap/);\n});
+  assert.match(css, /\.spacetime-controls label\{display:flex;align-items:center/);
+  assert.match(css, /\.spacetime-camera\{display:flex;align-items:center/);
+  assert.match(css, /\.spacetime-precision-legend\{[^}]*flex-wrap:nowrap/);
+});
 
 test("the timeline remains a map-like camera viewport", () => {
   assert.match(css, /\.spacetime-scroll\{[^}]*overflow:auto/);
