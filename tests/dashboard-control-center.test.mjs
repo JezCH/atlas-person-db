@@ -820,3 +820,11 @@ test("Production browser acceptance enforces mobile touch-size and metadata over
   assert.match(acceptance,/Mobile Dashboard metadata rows overflow horizontally/);
   assert.match(acceptance,/Mobile Dashboard panel headers overflow horizontally/);
 });
+
+test("Production browser acceptance runs only against deployed main or an explicit SHA", () => {
+  const workflow=fs.readFileSync(new URL("../.github/workflows/atlas-dashboard-production-acceptance.yml", import.meta.url),"utf8");
+  assert.doesNotMatch(workflow,/^\s{2}pull_request:/m);
+  assert.match(workflow,/^\s{2}push:/m);
+  assert.match(workflow,/workflow_dispatch:/);
+  assert.match(workflow,/EXPECTED_SHA="\$GITHUB_SHA"/);
+});
