@@ -8,8 +8,9 @@
   const ERA_AXIS_WIDTH = 68;
   const DEFAULT_TIMELINE_HEIGHT = 4200;
   const CAMERA_HEADER_HEIGHT = 36;
-  const CAMERA_MIN_ZOOM = 5;
-  const CAMERA_MAX_ZOOM = 8;
+  const CAMERA_MIN_ZOOM = 3;
+  const CAMERA_DEFAULT_ZOOM = 5;
+  const CAMERA_MAX_ZOOM = 12;
   const CAMERA_ZOOM_STEP = 1.25;
   const GLOBAL_EXTENT_COMPRESSION = 0.748;
   const MOBILE_VIEWPORT_MAX_WIDTH = 760;
@@ -19,10 +20,10 @@
   const MOBILE_PRESENTATION_SCALE = 0.46;
   const FOCUS_DETAIL_ZOOM = 6.5;
   const RUNTIME_ASSETS = Object.freeze([
-    ["./atlas-person-spacetime-time-projection.js?v=20260831-uniform-500-floor", "ATLAS_PERSON_SPACETIME_TIME_PROJECTION"],
+    ["./atlas-person-spacetime-time-projection.js?v=20260920-range-300-1200", "ATLAS_PERSON_SPACETIME_TIME_PROJECTION"],
     ["./atlas-person-spacetime-space-axis.js?v=20260903-south-asia-r3", "ATLAS_PERSON_SPACETIME_SPACE_AXIS"],
     ["./atlas-person-spacetime-presentation-layout.js?v=20260903-south-asia-r3", "ATLAS_PERSON_SPACETIME_PRESENTATION_LAYOUT"],
-    ["./atlas-person-spacetime-semantic-axis.js?v=20260903-place-lod", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
+    ["./atlas-person-spacetime-semantic-axis.js?v=20260920-range-300-1200", "ATLAS_PERSON_SPACETIME_SEMANTIC_AXIS"],
     ["./atlas-person-spacetime-uncertainty.js?v=20260903-c6", "ATLAS_PERSON_SPACETIME_UNCERTAINTY"],
     ["./atlas-person-spacetime-temporal-certainty.js?v=20260906-boundary-certainty", "ATLAS_PERSON_SPACETIME_TEMPORAL_CERTAINTY"],
     ["./atlas-person-spacetime-inspector.js?v=20260903-c8", "ATLAS_PERSON_SPACETIME_INSPECTOR"],
@@ -34,7 +35,7 @@
     ["./atlas-person-spacetime-spatial-compile.js?v=20260903-taxonomy-r2", "ATLAS_PERSON_SPACETIME_SPATIAL_COMPILE"],
     ["./atlas-person-spacetime-person-tracks.js?v=20260902-inspector-evidence", "ATLAS_PERSON_SPACETIME_PERSON_TRACKS"],
     ["./atlas-person-spacetime-political-placement.js?v=20260918-opposition-context", "ATLAS_PERSON_SPACETIME_POLITICAL_PLACEMENT"],
-    ["./atlas-person-spacetime-lod.js?v=20260831-500-floor", "ATLAS_PERSON_SPACETIME_LOD"],
+    ["./atlas-person-spacetime-lod.js?v=20260920-range-300-1200", "ATLAS_PERSON_SPACETIME_LOD"],
     ["./atlas-person-spacetime-label-engine.js?v=20260903-cjk-band-zone", "ATLAS_PERSON_SPACETIME_LABEL_ENGINE"]
   ]);
 
@@ -58,7 +59,7 @@
   let pendingFocusPersonId = null;
   let resizeBound = false;
   let resizeFrame = 0;
-  let cameraZoom = CAMERA_MIN_ZOOM;
+  let cameraZoom = CAMERA_DEFAULT_ZOOM;
   let cameraScrollTop = 0;
   let cameraScrollLeft = 0;
   let cameraHorizontalGeometry = null;
@@ -1318,7 +1319,7 @@
     </section>
     ${renderMeanwhile(meanwhileSummary)}
     <div class="spacetime-workspace">
-    <section class="spacetime-frame card${responsive.mobile ? " is-mobile-presentation" : ""}" data-spacetime-presentation="${responsive.mobile ? "mobile" : "desktop"}" data-spacetime-zoom="${Math.round(cameraZoom * 100)}" style="--spacetime-axis-width:${responsive.axisWidth}px;--spacetime-header-height:${responsive.headerHeight}px;--spacetime-era-axis-width:${responsive.eraAxisWidth}px;--spacetime-year-axis-width:${responsive.axisWidth - responsive.eraAxisWidth}px"><div class="spacetime-scroll" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 Person track 및 등록 인물 밀도 분포">
+    <section class="spacetime-frame card${responsive.mobile ? " is-mobile-presentation" : ""}" data-spacetime-presentation="${responsive.mobile ? "mobile" : "desktop"}" data-spacetime-zoom="${Math.round(cameraZoom * 100)}" data-spacetime-overview="${cameraZoom <= CAMERA_DEFAULT_ZOOM ? "true" : "false"}" style="--spacetime-axis-width:${responsive.axisWidth}px;--spacetime-header-height:${responsive.headerHeight}px;--spacetime-era-axis-width:${responsive.eraAxisWidth}px;--spacetime-year-axis-width:${responsive.axisWidth - responsive.eraAxisWidth}px"><div class="spacetime-scroll" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 Person track 및 등록 인물 밀도 분포">
       <div class="spacetime-sticky-corner"><span>시대</span><span>연도<small>${escapeHtml(timeAxis.stage_label)}</small></span></div>
       <div class="spacetime-region-head" style="width:${contentWidth}px">
         <div class="spacetime-region-head-layer is-macro" style="opacity:${spaceHeader.macro_opacity}">${spaceHeader.macroregions.map((region) => `<div class="spacetime-region-head-band" data-spacetime-band="${escapeHtml(region.code)}" style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${escapeHtml(region.code)}</small></div>`).join("")}</div>
@@ -1396,7 +1397,7 @@
     mount.querySelectorAll("[data-spacetime-meanwhile-person]").forEach((button) => button.addEventListener("click", () => selectPerson(mount, button.dataset.spacetimeMeanwhilePerson, { focus: true })));
     mount.querySelector("#spacetimeCameraZoomOut")?.addEventListener("click", () => requestCameraZoom(mount, cameraZoom / CAMERA_ZOOM_STEP));
     mount.querySelector("#spacetimeCameraZoomIn")?.addEventListener("click", () => requestCameraZoom(mount, cameraZoom * CAMERA_ZOOM_STEP));
-    mount.querySelector("#spacetimeCameraZoomReset")?.addEventListener("click", () => requestCameraZoom(mount, CAMERA_MIN_ZOOM));
+    mount.querySelector("#spacetimeCameraZoomReset")?.addEventListener("click", () => requestCameraZoom(mount, CAMERA_DEFAULT_ZOOM));
     mount.querySelectorAll("[data-spacetime-search-result]").forEach((button) => button.addEventListener("click", () => selectPerson(mount, button.dataset.spacetimeSearchResult, { focus: true })));
     mount.querySelectorAll("[data-spacetime-inspector-activity]").forEach((button) => button.addEventListener("click", () => selectActivity(mount, selectedPersonId, button.dataset.spacetimeInspectorActivity, { focus: false })));
     mount.querySelector("#spacetimePrevPerson")?.addEventListener("click", () => {
