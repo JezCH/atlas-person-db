@@ -72,11 +72,19 @@
         ? { left: 0, width: canvasWidth }
         : declaredBand;
       let accepted = null;
-      for (const left of candidateLefts(row, band, options)) {
-        const candidate = { ...row, left };
-        if (placed.some((other) => overlap(candidate, other, options.gap))) continue;
-        accepted = candidate;
-        break;
+      const minLeft = finite(band?.left, 0);
+      const bandWidth = Math.max(0, finite(band?.width, canvasWidth));
+      const maxLeft = Math.max(minLeft, minLeft + bandWidth - row.width);
+      const originalCandidate = { ...row, left:Math.min(maxLeft, Math.max(minLeft, row.left)) };
+      if (!placed.some((other) => overlap(originalCandidate, other, options.gap))) {
+        accepted = originalCandidate;
+      } else {
+        for (const left of candidateLefts(row, band, options)) {
+          const candidate = { ...row, left };
+          if (placed.some((other) => overlap(candidate, other, options.gap))) continue;
+          accepted = candidate;
+          break;
+        }
       }
       if (!accepted) {
         accepted = { ...row };
