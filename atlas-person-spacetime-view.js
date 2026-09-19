@@ -12,6 +12,11 @@
   const CAMERA_MAX_ZOOM = 8;
   const CAMERA_ZOOM_STEP = 1.25;
   const GLOBAL_EXTENT_COMPRESSION = 0.748;
+  const MOBILE_VIEWPORT_MAX_WIDTH = 760;
+  const MOBILE_AXIS_WIDTH = 96;
+  const MOBILE_ERA_AXIS_WIDTH = 44;
+  const MOBILE_HEADER_HEIGHT = 34;
+  const MOBILE_PRESENTATION_SCALE = 0.46;
   const FOCUS_DETAIL_ZOOM = 6.5;
   const RUNTIME_ASSETS = Object.freeze([
     ["./atlas-person-spacetime-time-projection.js?v=20260831-uniform-500-floor", "ATLAS_PERSON_SPACETIME_TIME_PROJECTION"],
@@ -206,9 +211,38 @@
     return `${Math.round(cameraZoom * 100)}%`;
   }
 
+  function responsivePresentationMetrics(viewportWidth) {
+    const viewport = Number(viewportWidth);
+    const mobile = Number.isFinite(viewport) && viewport <= MOBILE_VIEWPORT_MAX_WIDTH;
+    return Object.freeze({
+      mobile,
+      axisWidth: mobile ? MOBILE_AXIS_WIDTH : AXIS_WIDTH,
+      eraAxisWidth: mobile ? MOBILE_ERA_AXIS_WIDTH : ERA_AXIS_WIDTH,
+      headerHeight: mobile ? MOBILE_HEADER_HEIGHT : CAMERA_HEADER_HEIGHT,
+      extentScale: mobile ? MOBILE_PRESENTATION_SCALE : 1
+    });
+  }
+
+  function cameraHeaderHeight(scroll) {
+    const canvas = scroll?.querySelector?.(".spacetime-canvas");
+    const offsetTop = Number(canvas?.offsetTop);
+    if (offsetTop > 0) return offsetTop;
+    const styleTop = Number.parseFloat(canvas?.style?.top || "");
+    return styleTop > 0 ? styleTop : CAMERA_HEADER_HEIGHT;
+  }
+
+  function cameraInsets(scroll) {
+    const geometry = horizontalCameraGeometry(scroll);
+    return Object.freeze({
+      left: geometry?.axis_width ?? AXIS_WIDTH,
+      top: cameraHeaderHeight(scroll)
+    });
+  }
+
   function cameraViewportCenterY(scroll) {
-    const usableHeight = Math.max(1, scroll.clientHeight - CAMERA_HEADER_HEIGHT);
-    return CAMERA_HEADER_HEIGHT + usableHeight / 2;
+    const headerHeight = cameraHeaderHeight(scroll);
+    const usableHeight = Math.max(1, scroll.clientHeight - headerHeight);
+    return headerHeight + usableHeight / 2;
   }
 
   function captureRenderFocus(mount) {
@@ -277,13 +311,14 @@
     cameraScrollTop = scroll.scrollTop;
     cameraScrollLeft = scroll.scrollLeft;
     if (!projection?.screenToWorldOrdinal) return;
-    const canvasY = Math.max(0, scroll.scrollTop + cameraViewportCenterY(scroll) - CAMERA_HEADER_HEIGHT);
+    const canvasY = Math.max(0, scroll.scrollTop + cameraViewportCenterY(scroll) - cameraHeaderHeight(scroll));
     cameraCenterOrdinal = projection.screenToWorldOrdinal(canvasY);
   }
 
   function cameraViewportCenterX(scroll) {
-    const usableWidth = Math.max(1, scroll.clientWidth - AXIS_WIDTH);
-    return AXIS_WIDTH + usableWidth / 2;
+    const axisWidth = horizontalCameraGeometry(scroll)?.axis_width ?? AXIS_WIDTH;
+    const usableWidth = Math.max(1, scroll.clientWidth - axisWidth);
+    return axisWidth + usableWidth / 2;
   }
 
   function horizontalPointerRatio(scroll, viewportX) {
@@ -314,9 +349,10 @@
     if (Math.abs(clampedZoom - cameraZoom) < 1e-9) return;
     const rawViewportX = Number.isFinite(Number(viewportX)) ? Number(viewportX) : cameraViewportCenterX(scroll);
     const rawViewportY = Number.isFinite(Number(viewportY)) ? Number(viewportY) : cameraViewportCenterY(scroll);
-    const safeViewportX = Math.min(scroll.clientWidth, Math.max(AXIS_WIDTH, rawViewportX));
-    const safeViewportY = Math.min(scroll.clientHeight, Math.max(CAMERA_HEADER_HEIGHT, rawViewportY));
-    const currentCanvasY = Math.max(0, scroll.scrollTop + safeViewportY - CAMERA_HEADER_HEIGHT);
+    const insets = cameraInsets(scroll);
+    const safeViewportX = Math.min(scroll.clientWidth, Math.max(insets.left, rawViewportX));
+    const safeViewportY = Math.min(scroll.clientHeight, Math.max(insets.top, rawViewportY));
+    const currentCanvasY = Math.max(0, scroll.scrollTop + safeViewportY - insets.top);
     pendingCameraAnchor = {
       ordinal: currentTimelineProjection.screenToWorldOrdinal(currentCanvasY),
       viewport_y: safeViewportY,
@@ -764,14 +800,14 @@
       const anchorY = projection.worldToScreenY(pendingCameraAnchor.ordinal);
       const restoredLeft = scrollLeftForHorizontalPointerRatio(scroll, pendingCameraAnchor.horizontal_ratio, pendingCameraAnchor.viewport_x);
       scroll.scrollLeft = restoredLeft == null ? cameraScrollLeft : restoredLeft;
-      scroll.scrollTop = Math.max(0, CAMERA_HEADER_HEIGHT + anchorY - pendingCameraAnchor.viewport_y);
+      scroll.scrollTop = Math.max(0, cameraHeaderHeight(scroll) + anchorY - pendingCameraAnchor.viewport_y);
       pendingCameraAnchor = null;
     } else if (pendingViewportHorizontalRatio != null || pendingViewportCameraOrdinal != null) {
       const restoredScrollLeft = scrollLeftForHorizontalCameraRatio(scroll, pendingViewportHorizontalRatio);
       scroll.scrollLeft = restoredScrollLeft == null ? cameraScrollLeft : restoredScrollLeft;
       if (pendingViewportCameraOrdinal != null && projection?.worldToScreenY) {
         const centerY = projection.worldToScreenY(pendingViewportCameraOrdinal);
-        scroll.scrollTop = Math.max(0, CAMERA_HEADER_HEIGHT + centerY - cameraViewportCenterY(scroll));
+        scroll.scrollTop = Math.max(0, cameraHeaderHeight(scroll) + centerY - cameraViewportCenterY(scroll));
       } else {
         scroll.scrollTop = cameraScrollTop;
       }
@@ -790,10 +826,11 @@
     const { exploration } = runtime();
     const item = navigationItems.find((candidate) => candidate.person_id === personId);
     if (!item) return false;
+    const insets = cameraInsets(scroll);
     const target = exploration.focusScrollTarget(item,
       { width: scroll.clientWidth, height: scroll.clientHeight },
       { scrollWidth: scroll.scrollWidth, scrollHeight: scroll.scrollHeight },
-      { leftInset: AXIS_WIDTH, topInset: CAMERA_HEADER_HEIGHT }
+      { leftInset: insets.left, topInset: insets.top }
     );
     if (!target) return false;
     scroll.scrollLeft = target.left;
@@ -814,7 +851,7 @@
       { width: scroll.clientWidth, height: scroll.clientHeight },
       { width: contentWidth, height: timelineHeight },
       size,
-      { left: AXIS_WIDTH, top: CAMERA_HEADER_HEIGHT }
+      cameraInsets(scroll)
     );
     viewport.style.left = `${rect.left}px`;
     viewport.style.top = `${rect.top}px`;
@@ -906,7 +943,7 @@
         { width: scroll.clientWidth, height: scroll.clientHeight },
         { width: contentWidth, height: timelineHeight },
         size,
-        { left: AXIS_WIDTH, top: CAMERA_HEADER_HEIGHT }
+        cameraInsets(scroll)
       );
       scroll.scrollLeft = target.left;
       scroll.scrollTop = target.top;
@@ -968,7 +1005,7 @@
         { left: scroll.scrollLeft, top: scroll.scrollTop },
         { width: scroll.clientWidth, height: scroll.clientHeight },
         world,
-        { left: AXIS_WIDTH, top: CAMERA_HEADER_HEIGHT }
+        cameraInsets(scroll)
       );
       const forced = forcedIds();
       const personItems = performance.cullProjectedItems(state.projectedTracks, cullRect, forced);
@@ -1086,13 +1123,15 @@
     const renderFocus = captureRenderFocus(mount);
     const { timeProjection, spaceAxis, semanticAxis, spatialCompile, exploration, inspector, meanwhile, lod, presentationLayout } = runtime();
     const timeline = timelineRange();
-    const projection = timeProjection.createUniformTimeProjection(timeline.start_year, timeline.end_year, DEFAULT_TIMELINE_HEIGHT * cameraZoom * GLOBAL_EXTENT_COMPRESSION, cameraZoom);
+    const viewportWidth = Number(mount.clientWidth) || window.innerWidth || 1280;
+    const responsive = responsivePresentationMetrics(viewportWidth);
+    const projection = timeProjection.createUniformTimeProjection(timeline.start_year, timeline.end_year, DEFAULT_TIMELINE_HEIGHT * cameraZoom * GLOBAL_EXTENT_COMPRESSION * responsive.extentScale, cameraZoom);
     currentTimelineProjection = projection;
     const timelineHeight = projection.height;
     const compiled = compileAtlas();
     const needle = query.trim().toLocaleLowerCase("ko");
-    const baseWorldWidth = spaceAxis.baseWorldWidthForViewport(Number(mount.clientWidth) || window.innerWidth || 1280, AXIS_WIDTH);
-    const contentWidth = baseWorldWidth * cameraZoom * GLOBAL_EXTENT_COMPRESSION;
+    const baseWorldWidth = spaceAxis.baseWorldWidthForViewport(viewportWidth, responsive.axisWidth);
+    const contentWidth = baseWorldWidth * cameraZoom * GLOBAL_EXTENT_COMPRESSION * responsive.extentScale;
     const regions = spaceAxis.stableRegionLayout(compiled.continuum, contentWidth);
     const spaceHeader = semanticAxis.buildSpaceHeaderPlan(compiled.continuum, contentWidth, cameraZoom, spatialCompile.REVIEWED_PLACE_BINDINGS);
     const timeAxis = semanticAxis.buildTimeAxisPlan(timeline, projection, cameraZoom);
@@ -1144,7 +1183,7 @@
     <section class="spacetime-status-row"><span><b>${visibleTracks.length}</b> ${needle ? "검색" : "전체"} Person track</span><span><b>${primarySegmentCount}</b> 전체 주 위치 구간</span><span><b>${counterpartyCount}</b> 전체 counterparty 제외</span><span><b>${compiled.unresolvedPosition.length}</b> 전체 위치 미확정</span><span><b>${compiled.unresolvedChronology.length}</b> 전체 연대 미확정</span><span><b id="spacetimeDomPersonCount">0</b> viewport Person DOM</span><span><b id="spacetimeDomSegmentCount">0</b> viewport segment DOM</span><span><b id="spacetimeDomLabelCount">0</b> 이름 표시</span><span><b id="spacetimeDeferredLabelCount">0</b> label defer</span><span><b>${escapeHtml(timeAxis.stage_label)}</b> 시간축</span><span><b>${escapeHtml(spaceHeader.stage_label)}</b> 공간축</span><span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> LOD</span><span><b>${escapeHtml(cameraZoomLabel())}</b> 시공간 줌</span>${(compiled.unresolvedPosition.length || compiled.partitioned.relation_review.length) ? '<span class="spacetime-integrity-status"><b>!</b> 근거 없는 위치는 자동 추정하지 않습니다.</span>' : ""}</section>
     ${renderMeanwhile(meanwhileSummary)}
     <div class="spacetime-workspace">
-    <section class="spacetime-frame card" style="--spacetime-axis-width:${AXIS_WIDTH}px;--spacetime-header-height:${CAMERA_HEADER_HEIGHT}px;--spacetime-era-axis-width:${ERA_AXIS_WIDTH}px;--spacetime-year-axis-width:${AXIS_WIDTH - ERA_AXIS_WIDTH}px"><div class="spacetime-scroll" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 Person track 및 등록 인물 밀도 분포">
+    <section class="spacetime-frame card${responsive.mobile ? " is-mobile-presentation" : ""}" data-spacetime-presentation="${responsive.mobile ? "mobile" : "desktop"}" style="--spacetime-axis-width:${responsive.axisWidth}px;--spacetime-header-height:${responsive.headerHeight}px;--spacetime-era-axis-width:${responsive.eraAxisWidth}px;--spacetime-year-axis-width:${responsive.axisWidth - responsive.eraAxisWidth}px"><div class="spacetime-scroll" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 Person track 및 등록 인물 밀도 분포">
       <div class="spacetime-sticky-corner"><span>시대</span><span>연도<small>${escapeHtml(timeAxis.stage_label)}</small></span></div>
       <div class="spacetime-region-head" style="width:${contentWidth}px">
         <div class="spacetime-region-head-layer is-macro" style="opacity:${spaceHeader.macro_opacity}">${spaceHeader.macroregions.map((region) => `<div class="spacetime-region-head-band" data-spacetime-band="${escapeHtml(region.code)}" style="left:${region.left}px;width:${region.width}px"><strong>${escapeHtml(region.label)}</strong><small>${escapeHtml(region.code)}</small></div>`).join("")}</div>
