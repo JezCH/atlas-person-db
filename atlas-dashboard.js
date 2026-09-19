@@ -88,6 +88,14 @@
     </article>`;
   }
 
+  function systemCard(label, primary, detail, state = "ready") {
+    return `<article class="dashboard-source-card" data-source-state="${escapeHtml(state)}">
+      <span class="dashboard-source-dot" aria-hidden="true"></span>
+      <div><strong>${escapeHtml(label)}</strong><small>${escapeHtml(detail || "")}</small></div>
+      <b>${escapeHtml(primary == null || primary === "" ? "—" : primary)}</b>
+    </article>`;
+  }
+
   function sourceCard(source) {
     const ready = source.status === "ready";
     const loading = source.status === "loading";
@@ -115,6 +123,7 @@
     const b = snapshot.incomplete_breakdown;
     const kd = snapshot.kpi_drilldown;
     const rd = snapshot.recent_delta;
+    const sys = snapshot.system_strip;
     const domainRows = model.DOMAIN_CODES.map((code) => `<div class="dashboard-domain-row" data-domain="${escapeHtml(code)}">
       <span class="dashboard-domain-swatch" aria-hidden="true"></span><span>${escapeHtml(domainRegistry.LABELS[code] || code)}</span><b>${value(snapshot.domain_breakdown[code])}</b>
     </div>`).join("");
@@ -132,6 +141,20 @@
         ${kpiCard({code:"spatial",label:"SPATIAL READY",primary:pct(w.spatial.percentage),detail:`${value(w.spatial.done)} / ${value(w.spatial.total)} · 잔여 ${value(w.spatial.remaining)}`,drilldown:kd.spatial})}
         ${kpiCard({code:"activities",label:"RUNTIME ACTIVITIES",primary:value(k.activities),detail:"Person Runtime projection",drilldown:kd.activities})}
         ${kpiCard({code:"polities",label:"USED POLITIES",primary:value(k.polities),detail:"현재 Person Activity에서 참조",drilldown:kd.polities})}
+      </section>
+
+      <section class="dashboard-panel card" aria-label="시스템 및 Production 상태">
+        <div class="dashboard-panel-head"><div><p class="eyebrow">SYSTEM / PRODUCTION</p><h3>현재 실행 환경</h3></div><span>${sys.available ? "runtime identity" : "identity unavailable"}</span></div>
+        <div class="dashboard-source-list">
+          ${systemCard("ENVIRONMENT",sys.environment,sys.production_main === true ? "Production · main" : sys.production_main === false ? "Production/main 조합 아님" : "환경 판정 불가",sys.available ? "ready" : "error")}
+          ${systemCard("DEPLOYED GIT",sys.git_commit_short,sys.git_commit_ref ? `ref ${sys.git_commit_ref}` : "commit/ref unavailable",sys.git_commit_sha && sys.git_commit_ref ? "ready" : "idle")}
+          ${systemCard("RUNTIME",sys.provider,sys.region ? `region ${sys.region}` : "region unavailable",sys.available ? "ready" : "error")}
+          ${systemCard("SHARED SOURCES",sys.source_health.ready == null ? null : `${sys.source_health.ready}/${sys.source_health.total}`,sys.source_health.available ? `errors ${sys.source_health.errors} · loading ${sys.source_health.loading}` : "source states unavailable",sys.source_health.errors > 0 ? "error" : sys.source_health.available ? "ready" : "idle")}
+        </div>
+        <div class="dashboard-progress-meta">
+          <span>${sys.identity_complete ? "Runtime identity complete" : "Runtime identity partial"}</span>
+          <span>GitHub Actions 상태는 runtime identity와 별도</span>
+        </div>
       </section>
 
       <section class="dashboard-panel card">
@@ -250,12 +273,13 @@
     const serial = ++requestSerial;
     renderLoading(root);
 
-    const [persons, domains, spatial, nonTimeline, recentDelta] = await Promise.allSettled([
+    const [persons, domains, spatial, nonTimeline, recentDelta, systemIdentity] = await Promise.allSettled([
       store.loadPersons({ force }),
       store.loadPersonDomains({ force }),
       store.loadSpatialIndex({ force }),
       store.loadNonTimelinePersons({ force }),
-      store.loadRecentDelta({ force })
+      store.loadRecentDelta({ force }),
+      store.loadSystemIdentity({ force })
     ]);
     if (serial !== requestSerial || root !== mountedRoot || !root.isConnected) return;
 
@@ -272,6 +296,7 @@
       spatialIndex:settledValue(spatial),
       nonTimelineRows:settledValue(nonTimeline),
       recentDeltaResult:settledValue(recentDelta),
+      systemIdentityResult:settledValue(systemIdentity),
       sourceStates:store.sourceStates()
     });
     renderSnapshot(root, snapshot);
