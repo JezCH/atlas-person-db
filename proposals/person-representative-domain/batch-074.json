@@ -1,0 +1,64 @@
+{
+  "schema": "atlas-person-representative-domain-proposal/v1",
+  "status": "reviewed",
+  "production_snapshot_date": "2026-09-19",
+  "source_surface": "/api/atlas-person-domain",
+  "source_main_sha": "d9f21a47f6ad631901503b4fd1e9f319935398f5",
+  "policy": {
+    "automatic_role_backfill": false,
+    "secondary_domains": false,
+    "decision": "Apply the user's explicit adjudication of the remaining cross-domain cases. Esther and Ezra are represented by religion; Marie Antoinette and Orélie-Antoine de Tounens by governance; Po'pay is represented by military leadership of the Pueblo Revolt and explicitly supersedes the immediately preceding governance assignment. Miguel Hidalgo y Costilla already matches the approved governance value in Production and is not rewritten."
+  },
+  "review_scope": {
+    "task_key": "PERSON-DOMAIN-USER-ADJUDICATION-6-20260919",
+    "queue_issue": 977,
+    "assignment_count": 5,
+    "distribution": {
+      "governance": 2,
+      "military": 1,
+      "knowledge": 0,
+      "technology": 0,
+      "commerce": 0,
+      "culture": 0,
+      "religion": 2,
+      "exploration": 0
+    },
+    "already_matching_production": 1,
+    "corrections": 1,
+    "new_assignments": 4
+  },
+  "entries": [
+    {
+      "person_id": "54974991-4ded-4385-bfe5-60c1ba351d84",
+      "canonical_name_en": "Esther",
+      "preferred_name_ko": "에스더",
+      "representative_domain": "religion"
+    },
+    {
+      "person_id": "80f9df6b-638d-4869-81cd-e91cde6a2b81",
+      "canonical_name_en": "Ezra",
+      "preferred_name_ko": "에스라",
+      "representative_domain": "religion"
+    },
+    {
+      "person_id": "932971a6-68d9-44ec-9d05-2550c8f42562",
+      "canonical_name_en": "Po'pay",
+      "preferred_name_ko": "포파이",
+      "representative_domain": "military",
+      "previous_representative_domain": "governance",
+      "supersedes_source": "batch-073.json"
+    },
+    {
+      "person_id": "e84961d3-ccf7-4e75-a14d-37c3187bdaa1",
+      "canonical_name_en": "Marie Antoinette",
+      "preferred_name_ko": "마리 앙투아네트",
+      "representative_domain": "governance"
+    },
+    {
+      "person_id": "d8b1f134-5ffd-428e-8139-8305a9e9440f",
+      "canonical_name_en": "Orélie-Antoine de Tounens",
+      "preferred_name_ko": "오렐리 앙투안 드 투낭",
+      "representative_domain": "governance"
+    }
+  ]
+}
