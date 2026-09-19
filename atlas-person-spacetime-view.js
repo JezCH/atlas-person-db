@@ -1215,8 +1215,11 @@
         <div id="spacetimeLabelLayer" class="spacetime-runtime-layer"></div>
         <div id="spacetimeActivityLayer" class="spacetime-runtime-layer"></div>
       </div>
-    </div>${renderMinimap()}</section>
-    ${renderStickyInspector(selectedTrack, navigationItems.length)}
+    </div></section>
+    <aside class="spacetime-sidecar">
+      ${renderMinimap()}
+      ${renderStickyInspector(selectedTrack, navigationItems.length)}
+    </aside>
     </div>
     <section class="spacetime-unresolved-grid"><article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">PLACEMENT REVIEW</p><h3>위치 미확정</h3></div><strong>${compiled.unresolvedPosition.length}</strong></div><p>검토된 정치체 권역·장소 기능으로 가로 위치를 확정할 수 없어 좌표를 만들지 않은 Activity입니다.</p>${unresolvedRows(compiled.unresolvedPosition)}</article><article class="card"><div class="spacetime-unresolved-head"><div><p class="eyebrow">CHRONOLOGY REVIEW</p><h3>연대 미확정</h3></div><strong>${compiled.unresolvedChronology.length}</strong></div><p>Activity 시작·종료 연도를 둘 다 확정할 수 없는 경우 세로축에 임의 기간을 만들지 않습니다.</p>${unresolvedRows(compiled.unresolvedChronology)}</article></section>`;
 

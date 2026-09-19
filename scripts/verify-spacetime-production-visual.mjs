@@ -273,7 +273,7 @@ async function collectMobile(client) {
       cornerWidth:rect(corner).width,
       cornerHeight:rect(corner).height,
       headerHeight:rect(header).height,
-      minimapWidth:rect(minimap).width,
+      minimapRect:rect(minimap),
       searchRect:rect(searchLabel),
       cameraRect:rect(camera),
       macroOpacity:Number(getComputedStyle(macroLayer).opacity),
@@ -481,7 +481,8 @@ async function main() {
     assert(mobile.scrollWidth / mobile.scrollClientWidth < 5.5, "Mobile spacetime still opens as an excessively long desktop canvas", mobile);
     assert(mobile.scrollOverflowX === "auto" || mobile.scrollOverflowX === "scroll", "Mobile horizontal movement is not owned by the spacetime viewport", mobile);
     assert(mobile.frameRect.left >= -0.5 && mobile.frameRect.right <= mobile.viewport.width + 0.5, "Mobile spacetime frame escapes the viewport", mobile);
-    assert(mobile.minimapWidth <= 158, "Mobile minimap is wider than the compact contract", mobile);
+    assert(mobile.minimapRect.top >= mobile.frameRect.bottom - 0.5, "Mobile minimap overlaps the spacetime data frame", mobile);
+    assert(mobile.minimapRect.left >= mobile.frameRect.left - 0.5 && mobile.minimapRect.right <= mobile.frameRect.right + 0.5, "Mobile minimap escapes the spacetime workspace width", mobile);
     assert(mobile.cameraRect.top >= mobile.searchRect.bottom + 3, "Mobile search and zoom controls did not split into separate rows", mobile);
     assert(mobile.macroOpacity > 0.99 && mobile.subregionOpacity < 0.01, "Mobile 500% header did not prioritize macroregions", mobile);
     assert(mobile.statusSummaryVisible && !mobile.statusMoreOpen, "Mobile secondary status details are not collapsed by default", mobile);
