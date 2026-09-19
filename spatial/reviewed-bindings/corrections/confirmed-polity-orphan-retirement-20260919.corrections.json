@@ -1,0 +1,71 @@
+{
+  "schema": "atlas-reviewed-spatial-corrections/v1",
+  "correction_id": "confirmed-polity-orphan-retirement-20260919",
+  "baseline": "74d50b05f7bdeb711d49befcb548e5c339b2c7ca",
+  "reviewed_at": "2026-09-19T12:44:00Z",
+  "changes": [
+    {
+      "polity_id": "a1e5baa6-51e0-433e-8087-d800dd1cb3a2",
+      "expected": {
+        "region_code": "east-asia",
+        "subregion_code": "manchuria"
+      },
+      "disposition": "remove_orphan",
+      "reason": "Liao dynasty duplicate retired after exact Production orphan audit; remove stale static spatial binding."
+    },
+    {
+      "polity_id": "14113865-1569-521a-bae5-8ae070f4817d",
+      "expected": {
+        "region_code": "east-asia",
+        "subregion_code": null
+      },
+      "disposition": "remove_orphan",
+      "reason": "Ming dynasty duplicate retired after exact Production orphan audit; remove stale static spatial binding."
+    },
+    {
+      "polity_id": "8e0c3472-867d-5165-89c2-cb7866f6a5ed",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": "russia-volga"
+      },
+      "disposition": "remove_orphan",
+      "reason": "Tsardom of Russia duplicate/state-form UUID retired after relink and exact Production orphan audit; remove stale static spatial binding."
+    },
+    {
+      "polity_id": "7f146e58-c3e9-5af7-8cb8-346f03cd7cf6",
+      "expected": {
+        "region_code": "east-asia",
+        "subregion_code": "japan"
+      },
+      "disposition": "remove_orphan",
+      "reason": "Empire of Japan state-form UUID retired after relink and exact Production orphan audit; remove stale static spatial binding."
+    },
+    {
+      "polity_id": "80810807-0abb-5255-b40c-1945f4073eb1",
+      "expected": {
+        "region_code": "south-asia",
+        "subregion_code": null
+      },
+      "disposition": "remove_orphan",
+      "reason": "Shakya alias duplicate retired after exact Production orphan audit; remove stale static spatial binding."
+    },
+    {
+      "polity_id": "c591bebb-90a3-5a96-90c5-9870ddd7f637",
+      "expected": {
+        "region_code": "americas",
+        "subregion_code": null
+      },
+      "disposition": "remove_orphan",
+      "reason": "Haudenosaunee Confederacy alias duplicate retired after exact Production orphan audit; remove stale static spatial binding."
+    },
+    {
+      "polity_id": "efc86adb-7fc7-5efe-9c4d-7cd8e224890f",
+      "expected": {
+        "region_code": "europe",
+        "subregion_code": null
+      },
+      "disposition": "remove_orphan",
+      "reason": "Swedish Empire state-form UUID retired after exact Production orphan audit; remove stale static spatial binding."
+    }
+  ]
+}
