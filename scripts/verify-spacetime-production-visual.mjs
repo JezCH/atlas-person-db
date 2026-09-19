@@ -257,6 +257,7 @@ async function collectMobile(client) {
     const rect=(el)=>{const r=el.getBoundingClientRect();return {left:r.left,top:r.top,right:r.right,bottom:r.bottom,width:r.width,height:r.height};};
     const frame=q(".spacetime-frame"), scroll=q(".spacetime-scroll"), canvas=q(".spacetime-canvas");
     const header=q(".spacetime-region-head"), corner=q(".spacetime-sticky-corner"), minimap=q(".spacetime-minimap");
+    const minimapSurface=q(".spacetime-minimap-surface"), emptyInspector=q(".spacetime-sticky-inspector.is-empty");
     const searchLabel=q(".spacetime-controls label"), camera=q(".spacetime-camera"), statusMore=q(".spacetime-status-more");
     const macroLayer=q(".spacetime-region-head-layer.is-macro"), subregionLayer=q(".spacetime-region-head-layer.is-subregion");
     return {
@@ -267,6 +268,7 @@ async function collectMobile(client) {
       bodyScrollWidth:Math.max(document.documentElement.scrollWidth,document.body.scrollWidth),
       frameRect:rect(frame),
       scrollClientWidth:scroll.clientWidth,
+      scrollClientHeight:scroll.clientHeight,
       scrollWidth:scroll.scrollWidth,
       scrollOverflowX:getComputedStyle(scroll).overflowX,
       canvasWidth:rect(canvas).width,
@@ -274,6 +276,8 @@ async function collectMobile(client) {
       cornerHeight:rect(corner).height,
       headerHeight:rect(header).height,
       minimapRect:rect(minimap),
+      minimapSurfaceRect:rect(minimapSurface),
+      emptyInspectorRect:emptyInspector ? rect(emptyInspector) : null,
       searchRect:rect(searchLabel),
       cameraRect:rect(camera),
       macroOpacity:Number(getComputedStyle(macroLayer).opacity),
@@ -483,7 +487,11 @@ async function main() {
     assert(mobile.frameRect.left >= -0.5 && mobile.frameRect.right <= mobile.viewport.width + 0.5, "Mobile spacetime frame escapes the viewport", mobile);
     assert(mobile.minimapRect.top >= mobile.frameRect.bottom - 0.5, "Mobile minimap overlaps the spacetime data frame", mobile);
     assert(mobile.minimapRect.left >= mobile.frameRect.left - 0.5 && mobile.minimapRect.right <= mobile.frameRect.right + 0.5, "Mobile minimap escapes the spacetime workspace width", mobile);
-    assert(mobile.cameraRect.top >= mobile.searchRect.bottom + 3, "Mobile search and zoom controls did not split into separate rows", mobile);
+    assert(mobile.scrollClientHeight >= 398 && mobile.scrollClientHeight <= 470, "Mobile spacetime viewport is outside the compact vertical range", mobile);
+    assert(mobile.minimapSurfaceRect.height <= 94, "Mobile minimap surface is taller than the compact contract", mobile);
+    assert(!mobile.emptyInspectorRect || mobile.emptyInspectorRect.height <= 72, "Empty mobile inspector is too tall", mobile);
+    assert(mobile.cameraRect.height <= 40 && mobile.searchRect.height <= 40, "Mobile controls are taller than the compact contract", mobile);
+    assert(mobile.cameraRect.top >= mobile.searchRect.bottom + 2, "Mobile search and zoom controls did not split into separate rows", mobile);
     assert(mobile.macroOpacity > 0.99 && mobile.subregionOpacity < 0.01, "Mobile 500% header did not prioritize macroregions", mobile);
     assert(mobile.statusSummaryVisible && !mobile.statusMoreOpen, "Mobile secondary status details are not collapsed by default", mobile);
     await screenshot(client, "spacetime-mobile-390.png");
