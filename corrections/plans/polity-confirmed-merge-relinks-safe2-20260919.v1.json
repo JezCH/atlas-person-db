@@ -1,0 +1,122 @@
+{
+  "schema": "atlas-stage2-correction-v2-execution-plan/v1",
+  "batch_id": "polity_confirmed_merge_relinks_safe2_20260919_v1",
+  "as_of": "2026-09-19",
+  "status": "USER_APPROVED_EXACT_NAME_DUPLICATE_POLITY_RELINKS",
+  "release_order": 591,
+  "contract": "stage2/contracts/correction-v2-current.v1.json",
+  "decision_authority": "User instruction 2026-09-19. Safe microbatch limited to exact/case-only duplicate polity identities whose exact-before rows passed the previous combined dry-run before a later Northern Yuan legacy_source_key drift stopped the batch.",
+  "execution_rules": {
+    "exact_live_before_snapshot_required": true,
+    "preserve_all_existing_normalized_source_links_and_locators": true,
+    "semantic_identity_change_forbidden": false,
+    "territory_geometry_mutation_forbidden": true,
+    "physical_person_merge_forbidden": true,
+    "production_executable": false,
+    "production_mutation_authorized": false
+  },
+  "operations": [
+    {
+      "case_id": "polity-merge-liao-case-duplicate",
+      "type": "rewrite_activity",
+      "activity_id": "fb8ef26a-4930-4042-a328-cf075333ac3f",
+      "baseline_before": {
+        "person_id": "fdc9069c-e2fd-41d7-885d-dcb409957c3b",
+        "polity_id": "a1e5baa6-51e0-433e-8087-d800dd1cb3a2",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 982,
+        "activity_end": 1031,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 2
+      },
+      "after": {
+        "activity_id": "fb8ef26a-4930-4042-a328-cf075333ac3f",
+        "person_id": "fdc9069c-e2fd-41d7-885d-dcb409957c3b",
+        "polity_id": "c7414968-29fc-5749-bfda-bf4dab331dd8",
+        "relation_type_id": "7ca4de8f-01d4-542c-acc1-a06848c6742c",
+        "role_id": "2a2e0e91-3db2-5d2f-a2f0-c70713ecf77e",
+        "period_basis_id": "b5ebe21e-4e81-5678-8e0e-7f66ff56992b",
+        "activity_start": 982,
+        "activity_start_detail": {
+          "year": 982,
+          "month": 10,
+          "day": 14,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1031,
+        "activity_end_detail": {
+          "year": 1031,
+          "month": 6,
+          "day": 25,
+          "granularity": "day",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    },
+    {
+      "case_id": "polity-merge-ming-case-duplicate",
+      "type": "rewrite_activity",
+      "activity_id": "c97fe904-9afe-4195-bc36-26e51c60a9d0",
+      "baseline_before": {
+        "person_id": "9d96d247-feeb-5069-bd11-98ea9ce1fdb7",
+        "polity_id": "14113865-1569-521a-bae5-8ae070f4817d",
+        "role_id": "42f56dea-7d07-4d64-8ea2-72767a25e4c2",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1405,
+        "activity_end": 1433,
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "source_count": 1
+      },
+      "after": {
+        "activity_id": "c97fe904-9afe-4195-bc36-26e51c60a9d0",
+        "person_id": "9d96d247-feeb-5069-bd11-98ea9ce1fdb7",
+        "polity_id": "756460ea-0f77-519e-9e91-43dfb694926a",
+        "relation_type_id": "0fc4827f-8543-52f7-9e9a-3173b0c698a7",
+        "role_id": "42f56dea-7d07-4d64-8ea2-72767a25e4c2",
+        "period_basis_id": "b00e85f9-aa05-5bd1-b5d5-0bc3a2f73d2e",
+        "activity_start": 1405,
+        "activity_start_detail": {
+          "year": 1405,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "activity_end": 1433,
+        "activity_end_detail": {
+          "year": 1433,
+          "month": null,
+          "day": null,
+          "granularity": "year",
+          "certainty": "exact",
+          "calendar": "unspecified_historical"
+        },
+        "confidence": "well_established",
+        "chronology_status": "reviewed",
+        "legacy_source_key": null,
+        "notes_policy": "PRESERVE_EXACT_LIVE_NOTES",
+        "add_source_links": []
+      }
+    }
+  ],
+  "stage2_assertions": [],
+  "polity_relation_assertions": [],
+  "result": {
+    "rewrite_activity_count": 2,
+    "production_mutation_authorized": false
+  }
+}
