@@ -2,7 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 
-// Read-only live Production acceptance; no dashboard truth is authored here.\nconst DEBUG_URL = process.env.ATLAS_CDP_URL || "http://127.0.0.1:9222";
+// Read-only live Production acceptance; no dashboard truth is authored here.
+const DEBUG_URL = process.env.ATLAS_CDP_URL || "http://127.0.0.1:9222";
 const PRODUCTION_ORIGIN = process.env.ATLAS_PRODUCTION_ORIGIN || "https://atlas-person-db.vercel.app";
 const EXPECTED_RUNTIME_SHA = String(process.env.ATLAS_EXPECTED_RUNTIME_SHA || "").trim();
 const OUT_DIR = process.env.ATLAS_DASHBOARD_ACCEPTANCE_OUT_DIR || "artifacts/dashboard-production-acceptance";
