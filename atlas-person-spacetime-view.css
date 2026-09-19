@@ -224,5 +224,7 @@
 .spacetime-frame.is-mobile-presentation[data-spacetime-zoom="500"] .spacetime-subregion-line{opacity:.16!important}
 .spacetime-frame.is-mobile-presentation[data-spacetime-zoom="500"] .spacetime-region-head-layer.is-macro .spacetime-region-head-band strong{font-size:10px}
 .spacetime-frame.is-mobile-presentation[data-spacetime-zoom="500"] .spacetime-region-head-layer.is-macro .spacetime-region-head-band small{display:none}
+.spacetime-frame.is-mobile-presentation .spacetime-sticky-corner{z-index:35}
+.spacetime-frame.is-mobile-presentation .spacetime-region-head{z-index:30}
 }
 @media(max-width:560px){.spacetime-minimap{width:156px}.spacetime-minimap-surface{height:96px}.spacetime-minimap-head strong{font-size:9px}}
