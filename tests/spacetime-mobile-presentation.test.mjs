@@ -92,10 +92,10 @@ test("mobile presentation applies one uniform physical projection scale to both 
 test("390px mobile viewport starts near four screen widths instead of the former ten-plus", () => {
   const axis = numericConstant("MOBILE_AXIS_WIDTH");
   const scale = numericConstant("MOBILE_PRESENTATION_SCALE");
-  const minZoom = numericConstant("CAMERA_MIN_ZOOM");
+  const defaultZoom = numericConstant("CAMERA_DEFAULT_ZOOM");
   const compression = numericConstant("GLOBAL_EXTENT_COMPRESSION");
   const base = spaceAxis.baseWorldWidthForViewport(390, axis);
-  const extent = base * minZoom * compression * scale;
+  const extent = base * defaultZoom * compression * scale;
 
   assert.equal(base, 900);
   assert.ok(extent >= 1300 && extent <= 1700, `unexpected mobile extent: ${extent}`);
