@@ -781,3 +781,26 @@ test("Dashboard system strip uses operator labels while retaining runtime identi
   assert.match(block,/공통 원본/);
   assert.doesNotMatch(block,/DEPLOYED GIT|SHARED SOURCES|commit\/ref unavailable|source states unavailable/);
 });
+
+test("Dashboard actionable controls share visible hover focus and pointer affordance", () => {
+  assert.match(dashboardCssSource,/dashboard-kpi-action:not\(:disabled\)::after\{content:"↗"/);
+  assert.match(dashboardCssSource,/dashboard-issue-grid button:not\(:disabled\):hover/);
+  assert.match(dashboardCssSource,/dashboard-completeness td button:hover/);
+  assert.match(dashboardCssSource,/dashboard-tool-actions \.btn:hover/);
+  assert.match(dashboardCssSource,/dashboard-kpi-action:focus-visible,\.dashboard-issue-grid button:focus-visible,\.dashboard-completeness td button:focus-visible,\.dashboard-tool-actions \.btn:focus-visible/);
+});
+
+test("Dashboard disabled attention controls never keep clickable hover affordance", () => {
+  assert.match(dashboardCssSource,/dashboard-issue-grid button:disabled\{cursor:default;opacity:\.58;background:#f3f4f6\}/);
+  assert.match(dashboardCssSource,/dashboard-issue-grid button:disabled:hover\{border-color:#e2e6ed;background:#f3f4f6;box-shadow:none;transform:none\}/);
+});
+
+test("Completeness drill-down values render as compact action pills without changing drill-down data attributes", () => {
+  assert.match(dashboardCssSource,/dashboard-completeness td button\{display:inline-flex;align-items:center;gap:4px;padding:3px 7px;border:1px solid #dbe0ff;border-radius:999px;background:#f7f8ff;text-decoration:none\}/);
+  assert.match(dashboardCssSource,/dashboard-completeness td button::after\{content:"→"/);
+  assert.match(dashboardSource,/data-dashboard-completeness=/);
+});
+
+test("Dashboard actionable motion respects reduced-motion preference", () => {
+  assert.match(dashboardCssSource,/@media\(prefers-reduced-motion:reduce\)/);
+});
