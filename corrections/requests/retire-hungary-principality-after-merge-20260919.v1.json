@@ -11,7 +11,7 @@
     {
       "type": "retire_polity_if_orphan",
       "case_id": "polity-retire:hungary-principality-after-merge",
-      "review_reason": "REVIEWED_SAME_IDENTITY_STATE_FORM_MERGE",
+      "review_reason": "GOVERNANCE_CONTEXT_DUPLICATE_POLITY",
       "expected_polity": {
         "id": "09ff1776-171f-435a-a444-4b0463e48137",
         "canonical_key": "Principality of Hungary",
