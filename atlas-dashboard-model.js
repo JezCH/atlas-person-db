@@ -163,6 +163,70 @@
     });
   }
 
+  function buildKpiDrilldown({ personResult, attentionQueue } = {}) {
+    const persons = personResult?.persons || [];
+    const personIds = Object.freeze(persons.map((person) => text(person?.id)).filter(Boolean).sort());
+    const byAttention = Object.fromEntries((attentionQueue?.items || []).map((item) => [item.code,item]));
+    const personTarget = (code, label) => {
+      const item = byAttention[code];
+      const ids = Array.isArray(item?.person_ids) ? Object.freeze([...item.person_ids]) : null;
+      return Object.freeze({
+        code,
+        label,
+        available:Array.isArray(ids),
+        mode:"person_ids",
+        route:"persons",
+        person_ids:ids,
+        target_count:ids == null ? null : ids.length,
+        unavailable_reason:ids == null ? item?.unavailable_reason || "TARGET_SET_UNAVAILABLE" : null
+      });
+    };
+    return Object.freeze({
+      persons:Object.freeze({
+        code:"persons",
+        label:"전체 인물",
+        available:true,
+        mode:"all_persons",
+        route:"persons",
+        person_ids:personIds,
+        target_count:personIds.length,
+        unavailable_reason:null
+      }),
+      activities:Object.freeze({
+        code:"activities",
+        label:"Runtime Activities",
+        available:false,
+        mode:"activity",
+        route:null,
+        person_ids:null,
+        target_count:null,
+        unavailable_reason:"ACTIVITY_UNIT_DRILLDOWN_NOT_EXPOSED"
+      }),
+      polities:Object.freeze({
+        code:"polities",
+        label:"Used Polities",
+        available:false,
+        mode:"polity",
+        route:null,
+        person_ids:null,
+        target_count:null,
+        unavailable_reason:"POLITY_UNIT_DRILLDOWN_NOT_EXPOSED"
+      }),
+      domain:personTarget("domain","대표 분야 미분류"),
+      namuwiki:personTarget("namuwiki","나무위키 미검토"),
+      spatial:Object.freeze({
+        code:"spatial",
+        label:"Spatial Ready",
+        available:false,
+        mode:"activity",
+        route:null,
+        person_ids:null,
+        target_count:null,
+        unavailable_reason:"SPATIAL_KPI_IS_ACTIVITY_UNIT_USE_ATTENTION_PERSON_TARGETS"
+      })
+    });
+  }
+
   function buildIncompleteBreakdown({ personResult, domainResult = null, spatialIndex = null } = {}) {
     const persons = personResult?.persons || [];
     const domainAvailable = Boolean(domainResult && domainResult.by_person_id && typeof domainResult.by_person_id === "object");
@@ -281,6 +345,7 @@
     const spatial = spatialStatus(personResult, spatialIndex);
     const polityCount = uniquePolityIds(personResult).size;
     const attentionQueue = buildAttentionQueue({ personResult, domainResult, spatialIndex });
+    const kpiDrilldown = buildKpiDrilldown({ personResult, attentionQueue });
     const incompleteBreakdown = buildIncompleteBreakdown({ personResult, domainResult, spatialIndex });
 
     const sourceList = Object.entries(sourceStates).map(([key, state]) => Object.freeze({
@@ -308,6 +373,7 @@
       }),
       domain_breakdown:Object.freeze(domainBreakdown),
       attention_queue:attentionQueue,
+      kpi_drilldown:kpiDrilldown,
       incomplete_breakdown:incompleteBreakdown,
       quality:Object.freeze({
         no_runtime_activity:noActivity,
@@ -321,5 +387,5 @@
     });
   }
 
-  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildIncompleteBreakdown, buildDashboardSnapshot });
+  return Object.freeze({ DOMAIN_CODES, percent, uniquePolityIds, spatialStatus, personPolityIds, buildAttentionQueue, buildKpiDrilldown, buildIncompleteBreakdown, buildDashboardSnapshot });
 });
