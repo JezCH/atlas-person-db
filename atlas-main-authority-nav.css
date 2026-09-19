@@ -14,12 +14,6 @@
 .authority-state-grid small { display: block; margin-bottom: 8px; color: #7c8596; font-size: 10px; font-weight: 900; letter-spacing: .08em; }
 .authority-state-grid h3 { margin: 0 0 8px; font-size: 18px; }
 .authority-state-grid p { margin: 0; color: #657086; line-height: 1.6; }
-.authority-dashboard-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.authority-domain-card { min-width: 0; padding: 18px; border: 1px solid #dfe4ee; border-radius: 16px; background: #fff; box-shadow: 0 10px 28px rgba(28,39,66,.05); text-align: left; cursor: pointer; }
-.authority-domain-card:hover { border-color: #bfc6dc; background: #fbfcff; }
-.authority-domain-card:focus-visible { outline: 3px solid rgba(89,103,217,.18); border-color: #5967d9; }
-.authority-domain-card strong { display: block; margin: 10px 0 6px; font-size: 18px; color: #263047; }
-.authority-domain-card p { margin: 0; color: #657086; line-height: 1.5; }
 .nav-list .nav-item[data-atlas-domain], .mobile-nav button[data-atlas-domain] { cursor: pointer; }
 .nav-list .nav-item[data-atlas-domain] small, .mobile-nav button[data-atlas-domain] small { margin-left: auto; }
 .mobile-search input:disabled { opacity: .65; cursor: not-allowed; }
@@ -29,5 +23,4 @@
 @media (max-width: 700px) {
   .authority-shell-head { display: grid; }
   .authority-status { width: fit-content; }
-  .authority-dashboard-grid { grid-template-columns: 1fr; }
 }
