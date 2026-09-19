@@ -12,6 +12,7 @@ const dashboardSource = fs.readFileSync(new URL("../atlas-dashboard.js", import.
 const externalSource = fs.readFileSync(new URL("../atlas-person-external-references.js", import.meta.url), "utf8");
 const mainSource = fs.readFileSync(new URL("../atlas-person-main.js", import.meta.url), "utf8");
 const spacetimeSource = fs.readFileSync(new URL("../atlas-person-spacetime-view.js", import.meta.url), "utf8");
+const statusSummarySource = fs.readFileSync(new URL("../status-summary.js", import.meta.url), "utf8");
 
 test("dashboard model derives progress from canonical snapshots without stored dashboard counters", () => {
   const persons = [
@@ -182,4 +183,13 @@ test("breakdown UI keeps unavailable reasons visibly unknown and never invents d
   assert.match(dashboardSource, /unavailable_reason/);
   assert.doesNotMatch(dashboardSource, /Historical ambiguity|Conflict review|Explicit HOLD/);
   assert.doesNotMatch(dashboardSource, /fetch\s*\(/);
+});
+
+
+test("legacy status summary reuses shared Person Runtime instead of issuing a duplicate normalized read", () => {
+  assert.match(statusSummarySource, /ATLAS_CLIENT_DATA_STORE/);
+  assert.match(statusSummarySource, /dataStore\.loadPersons\(\{ force \}\)/);
+  assert.match(statusSummarySource, /activity_count/);
+  assert.doesNotMatch(statusSummarySource, /AtlasReader\.loadPersonPolitics/);
+  assert.doesNotMatch(statusSummarySource, /\/api\/atlas-read/);
 });

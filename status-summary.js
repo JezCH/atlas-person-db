@@ -1,6 +1,8 @@
 (() => {
   "use strict";
 
+  const dataStore = window.ATLAS_CLIENT_DATA_STORE;
+
   const style = document.createElement("style");
   style.textContent = `
     .admin-nav-link{display:grid;grid-template-columns:22px 1fr auto;text-decoration:none;color:#aeb9cb;border-radius:9px;padding:11px 12px;font-weight:700}
@@ -63,13 +65,13 @@
     section.dataset.state = "loading";
     section.innerHTML = `<div class="registration-summary-main"><span class="registration-summary-dot" aria-hidden="true"></span><div><div id="registrationSummaryTitle" class="registration-summary-title">Normalized V2 상태 확인 중</div><div id="registrationSummaryDetail" class="registration-summary-detail">서버 direct read API로 현재 활동 데이터를 확인하고 있습니다.</div></div></div><div class="registration-summary-actions"><button id="registrationSummaryRefresh" class="registration-summary-link" type="button" aria-label="V2 DB 상태 다시 확인">다시 확인</button><a class="registration-summary-link" href="./admin.html" aria-label="관리자 페이지">관리자 페이지</a></div>`;
     toolbar.insertAdjacentElement("afterend", section);
-    section.querySelector("#registrationSummaryRefresh").addEventListener("click", verifySummary);
+    section.querySelector("#registrationSummaryRefresh").addEventListener("click", () => verifySummary({ force:true }));
     return section;
   }
 
   let requestSerial = 0;
 
-  async function verifySummary() {
+  async function verifySummary({ force = false } = {}) {
     const serial = ++requestSerial;
     const box = document.getElementById("registrationSummary") || buildSummary();
     if (!box) return;
@@ -79,23 +81,23 @@
     if (refreshButton) refreshButton.disabled = true;
     box.dataset.state = "loading";
     title.textContent = "Normalized V2 상태 확인 중";
-    detail.textContent = "서버 direct read API에서 현재 활동 레코드를 조회하고 있습니다.";
+    detail.textContent = "shared Person Runtime 기준 원본에서 현재 활동 레코드를 확인하고 있습니다.";
 
     try {
-      if (!window.AtlasReader?.loadPersonPolitics) throw new Error("V2 reader 모듈을 찾지 못했습니다.");
-      const outcome = await window.AtlasReader.loadPersonPolitics();
+      if (!dataStore?.loadPersons) throw new Error("shared Person Runtime store를 찾지 못했습니다.");
+      const result = await dataStore.loadPersons({ force });
       if (serial !== requestSerial) return;
-      if (outcome?.error) throw outcome.error;
-      const rows = Array.isArray(outcome?.data) ? outcome.data : [];
+      const persons = Array.isArray(result?.persons) ? result.persons : [];
+      const activityCount = persons.reduce((sum, person) => sum + Number(person?.activity_count || 0), 0);
       box.dataset.state = "ok";
-      title.textContent = "Normalized V2 정상";
-      detail.textContent = `${rows.length}개 활동 레코드 · server direct read 연결됨`;
+      title.textContent = "Person Runtime 정상";
+      detail.textContent = `${activityCount}개 활동 레코드 · shared Person Runtime 연결됨`;
     } catch (error) {
       if (serial !== requestSerial) return;
       console.error("ATLAS normalized V2 summary failed", error);
       box.dataset.state = "error";
       title.textContent = "V2 DB 확인 실패";
-      detail.textContent = error?.message || "서버 direct read API를 확인하세요.";
+      detail.textContent = error?.message || "shared Person Runtime 기준 원본을 확인하세요.";
     } finally {
       if (serial === requestSerial && refreshButton) refreshButton.disabled = false;
     }
