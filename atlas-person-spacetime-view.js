@@ -405,7 +405,7 @@
 
   function renderMeanwhile(summary) {
     if (!summary || meanwhileSelectedOrdinal == null) {
-      return '<section class="spacetime-meanwhile card is-empty" aria-label="동시대 탐색"><div><small>MEANWHILE</small><strong>동시대 보기</strong><span>Activity·연도·빈 시공간을 선택해 동시대 인물을 봅니다.</span></div></section>';
+      return '<section class="spacetime-meanwhile is-empty" aria-label="동시대 탐색"><div><small>MEANWHILE</small><strong>동시대 보기</strong><span>Activity·연도·빈 시공간을 선택해 동시대 인물을 봅니다.</span></div></section>';
     }
     const momentLabel = meanwhileMomentLabel();
     const sourceLabel = meanwhileSelectionSource === "activity" ? "선택 Activity 중간 시점" : "직접 선택 시점";
@@ -1138,11 +1138,10 @@
         <label>검색<input id="spacetimeSearch" type="search" value="${escapeHtml(query)}" placeholder="인물·정치체·역할 검색" /></label>
         <div class="spacetime-camera" role="group" aria-label="시공간 확대"><span>시공간 확대</span><button id="spacetimeCameraZoomOut" type="button" aria-label="시공간 축소">−</button><output id="spacetimeCameraZoomValue">${escapeHtml(cameraZoomLabel())}</output><button id="spacetimeCameraZoomIn" type="button" aria-label="시공간 확대">+</button><button id="spacetimeCameraZoomReset" type="button">500%</button></div>
       </div>
+      <div class="spacetime-precision-legend"><strong>공간 배치 정밀도</strong><span><i class="is-place"></i>Place</span><span><i class="is-subregion"></i>Subregion 범위</span><span><i class="is-macroregion"></i>Macroregion 범위</span><small>점선은 배치 정밀도 범위이며 실제 이동 경로가 아닙니다.</small></div>
     </section>
     ${renderSearchResults(searchItems, needle)}
-    <section class="spacetime-precision-legend card"><strong>공간 배치 정밀도</strong><span><i class="is-place"></i>Place</span><span><i class="is-subregion"></i>Subregion 범위</span><span><i class="is-macroregion"></i>Macroregion 범위</span><small>점선은 배치 정밀도 범위이며 실제 이동 경로가 아닙니다.</small></section>
-    <section class="spacetime-status-row"><span><b>${visibleTracks.length}</b> ${needle ? "검색" : "전체"} Person track</span><span><b>${primarySegmentCount}</b> 전체 주 위치 구간</span><span><b>${counterpartyCount}</b> 전체 counterparty 제외</span><span><b>${compiled.unresolvedPosition.length}</b> 전체 위치 미확정</span><span><b>${compiled.unresolvedChronology.length}</b> 전체 연대 미확정</span><span><b id="spacetimeDomPersonCount">0</b> viewport Person DOM</span><span><b id="spacetimeDomSegmentCount">0</b> viewport segment DOM</span><span><b id="spacetimeDomLabelCount">0</b> 이름 표시</span><span><b id="spacetimeDeferredLabelCount">0</b> label defer</span><span><b>${escapeHtml(timeAxis.stage_label)}</b> 시간축</span><span><b>${escapeHtml(spaceHeader.stage_label)}</b> 공간축</span><span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> LOD</span><span><b>${escapeHtml(cameraZoomLabel())}</b> 시공간 줌</span></section>
-    ${(compiled.unresolvedPosition.length || compiled.partitioned.relation_review.length) ? `<section class="spacetime-integrity-note card"><strong>근거 없는 위치는 자동 추정하지 않습니다.</strong></section>` : ""}
+    <section class="spacetime-status-row"><span><b>${visibleTracks.length}</b> ${needle ? "검색" : "전체"} Person track</span><span><b>${primarySegmentCount}</b> 전체 주 위치 구간</span><span><b>${counterpartyCount}</b> 전체 counterparty 제외</span><span><b>${compiled.unresolvedPosition.length}</b> 전체 위치 미확정</span><span><b>${compiled.unresolvedChronology.length}</b> 전체 연대 미확정</span><span><b id="spacetimeDomPersonCount">0</b> viewport Person DOM</span><span><b id="spacetimeDomSegmentCount">0</b> viewport segment DOM</span><span><b id="spacetimeDomLabelCount">0</b> 이름 표시</span><span><b id="spacetimeDeferredLabelCount">0</b> label defer</span><span><b>${escapeHtml(timeAxis.stage_label)}</b> 시간축</span><span><b>${escapeHtml(spaceHeader.stage_label)}</b> 공간축</span><span><b>${escapeHtml(lod.representationStage(lodWeights))}</b> LOD</span><span><b>${escapeHtml(cameraZoomLabel())}</b> 시공간 줌</span>${(compiled.unresolvedPosition.length || compiled.partitioned.relation_review.length) ? '<span class="spacetime-integrity-status"><b>!</b> 근거 없는 위치는 자동 추정하지 않습니다.</span>' : ""}</section>
     ${renderMeanwhile(meanwhileSummary)}
     <div class="spacetime-workspace">
     <section class="spacetime-frame card" style="--spacetime-axis-width:${AXIS_WIDTH}px;--spacetime-header-height:${CAMERA_HEADER_HEIGHT}px;--spacetime-era-axis-width:${ERA_AXIS_WIDTH}px;--spacetime-year-axis-width:${AXIS_WIDTH - ERA_AXIS_WIDTH}px"><div class="spacetime-scroll" tabindex="0" aria-label="역사 시간과 검토된 정치체 권역에 따른 Person track 및 등록 인물 밀도 분포">
